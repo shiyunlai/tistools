@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<!-- 所有modules中的工程采用统一的groupId，除非在工程的pom.xml中设置groupId（不建议） -->
 	<groupId>org.tis</groupId>
@@ -18,7 +17,8 @@
 		<module>tools-service-devmgr</module>
 		<module>tools-web-boss</module>
 		<module>tools-web-tools</module>
-	</modules>
+    <module>tools-maven-plugin</module>
+  </modules>
 	<properties>
 		<!-- Common libs -->
 		<!--<spring.bom.version>3.2.9.RELEASE</spring.bom.version> -->

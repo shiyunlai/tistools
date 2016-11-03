@@ -1,5 +1,5 @@
-TIS项目开发&管理工具 tools
-=========================
+TTT (The TIS Tools,TIS项目开发&管理工具)
+==========================================
 
 技术背景
 
@@ -12,15 +12,23 @@ TIS项目开发&管理工具 tools
 
 ##	quick start
 
-	//TODO 上传github后，编写quick start
+	1、git clone https://github.com/shiyunlai/tistools.git
 	
-	1、 git clone http:....
-	.....
+	2、mvn eclipse:eclipse
 	
+	3、mvn install
+	
+	4、eclipse --> import... --> Existing Maven Porjects...
+	
+	6、eclipse --> Run --> Run Configuration... --> Java Application --> 双击，指定执行 org.tis.tools.provider.devmgr.StartProviderDevmgr
+		也可直接定位到 org.tis.tools.provider.devmgr.StartProviderDevmgr.java 右键 --> Run as --> Java Application
+	
+	7、启动 tools-web
+		
+## TODO list
 
-	come on....
-	//FIXED 1、移植pm工具  (ok)
 	//TODO  2、开发用户模块
+
 
 ##	在tools工程集中新增一个服务提供者工程步骤
 	
