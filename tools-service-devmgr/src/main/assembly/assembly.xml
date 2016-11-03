@@ -1,0 +1,33 @@
+<!--
+ - Copyright 2016 org TIS.
+-->
+<assembly>
+	<id>assembly</id>
+	<formats>
+		<format>tar.gz</format>
+	</formats>
+	<includeBaseDirectory>true</includeBaseDirectory>
+	<fileSets>
+		<!-- 打包启动脚本到bin目录 -->
+		<fileSet>
+			<directory>${project.build.directory}/runtime/META-INF/assembly/bin</directory>
+			<outputDirectory>bin</outputDirectory>
+			<fileMode>0755</fileMode>
+		</fileSet>
+		<!-- 只打包dubbo.properties到conf目录 -->
+		<fileSet>
+			<directory>src/main/resources</directory>
+			<includes>
+                <include>dubbo.properties</include>
+            </includes>
+			<outputDirectory>conf</outputDirectory>
+			<fileMode>0644</fileMode>
+		</fileSet>
+	</fileSets>
+	<!-- 将scope为runtime的依赖包打包到lib目录下。 -->  
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory>lib</outputDirectory>
+		</dependencySet>
+	</dependencySets>
+</assembly>
