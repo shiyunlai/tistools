@@ -24,17 +24,16 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
 /**
- * Goal which touches a timestamp file.
- *
- * @goal touch
- * 
- * @phase process-sources
+ * <pre>
+ * 测试Maven扩展：输出工程信息，且在输出信息前加上前缀 prefix
+ * -Dprefix=AAAAAA 指定前缀为 AAAAAA
+ * </pre>
  */
 
 @Mojo(name = "test")
 public class TestMojo extends AbstractMojo {
 
-	/*
+	/**
 	 * project 表示该插件持有一个到MavenProject的引用，当客户方在执行该插件时，这里的project字段便表示客户工程。
 	 * 这里我们并没有对project进行初始化，但是“@Parameter( defaultValue = "${project}")"”中的${project}即表示当前的客户工程，
 	 * Maven在运行时会通过依赖注入自动将客户工程对象赋给project字段
@@ -43,7 +42,7 @@ public class TestMojo extends AbstractMojo {
 	private MavenProject project;
 
 	
-	/*
+	/**
 	 * 可通过 -Dprefix=uuuu 设置prefix的值
 	 * 不设置将默认为 ttttttt
 	 */

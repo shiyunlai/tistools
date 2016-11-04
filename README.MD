@@ -18,7 +18,7 @@
 >> [用户权限](/tools-service-user/README-user.md)  
 >> [开发管理](/tools-service-devmgr/README-devmgr.md)  
 >> [业务日志分析](/tools-service-biztrace/README-biztrace.md)  
->> [自动生成交换xsd](/tools-maven-plugin/README-tools-maven-plugin.md)  
+>> [对maven的扩展](/tools-maven-plugin/README-tools-maven-plugin.md)  
 
 ## TODO list
 

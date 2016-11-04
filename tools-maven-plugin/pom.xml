@@ -32,4 +32,23 @@
             <version>2.2.1</version>
         </dependency>
 	</dependencies>
+	
+	<build>
+		<plugins>
+			<!-- 
+				配置本插件的前缀为 ttt
+				mvn ttt:test
+				mvn ttt:gen-xsd 
+			-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-plugin-plugin</artifactId>
+				<version>3.2</version> <!-- 坑爹啊， 3.2之前的版本不能识别 @Mojo  -->
+				<configuration>
+					<!-- 为本插件指定前缀 -->
+					<goalPrefix>ttt</goalPrefix>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

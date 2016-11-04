@@ -13,4 +13,14 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+  
+  <build>
+		<plugins>
+	     <!--  <plugin>
+	        <groupId>org.tis</groupId>
+	        <artifactId>tools-maven-plugin</artifactId>
+	        <version>0.0.1</version>
+	      </plugin> -->
+		</plugins>
+  </build>
 </project>
