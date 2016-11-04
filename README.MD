@@ -15,15 +15,16 @@
 
 ## 主要功能
 > 目录  
->> [用户权限](##quick start)  
->> [开发管理](##quick start)  
->> [业务日志分析](##quick start)  
->> [自动生成交换xsd](##quick start)  
+>> [用户权限](/tools-service-user/README-user.md)  
+>> [开发管理](/tools-service-devmgr/README-devmgr.md)  
+>> [业务日志分析](/tools-service-biztrace/README-biztrace.md)  
+>> [自动生成交换xsd](/tools-maven-plugin/README-tools-maven-plugin.md)  
 
 ## TODO list
 
-	//TODO 开发用户模块
+	//TODO 开发机构用户模块
 	//TODO 集成gendao能力
+	//TODO 增加tools工程集的持续基础能力
 
 ##	quick start
 
@@ -47,7 +48,7 @@
 
 ##	开发说明
 
-###	如何在tools工程集中新增一个dubbo服务提供者XXX ？
+###	如何在tools工程集中新增一个dubbo服务提供者XXX  
 
 #### 1. 新建java工程(必须是maven工程)  
 
@@ -181,7 +182,7 @@
 
 #### 1. 创建工程(必须是maven工程)  
 
-1. 步骤参考 [如何在tools工程集中新增一个dubbo服务提供者XXX ？](##)
+1. 步骤参考[如何在tools工程集中新增一个dubbo服务提供者XXX ？](#如何在tools工程集中新增一个dubbo服务提供者xxx)
 2. 消费者工程类型，目前可以是jar或war
 	```xml
 	<packaging>war</packaging>
@@ -282,6 +283,30 @@ mvn jetty:run
 		org.tis.tools.model.vo.devmgr
 		org.tis.tools.model.dto.devmgr
 		...
+
+#### 单元测试规范：
+
+1. 使用Junit 4进行单元测试；
+1. 提供给外部模块调用的方法都必须有单元测试；
+2. 通过AllTests.java以套件的方式组织所有单元测试类，如下：
+	``` java
+	/**
+	 * bronsp-maven-plugin 工程的测试套件
+	 * @author megapro
+	 *
+	 */
+	@RunWith(Suite.class)
+	@SuiteClasses({
+			HumpClassNameTest.class,
+			CommonUtilTest.class,
+			FreeMarkerUtilTest.class,
+			KeyWordUtilTest.class,
+			Xml22BeanUtilTest.class
+		})
+	public class AllTests {}
+	```
+
+#### 持续集成规范：//TODO
 
 
 ## 问题
