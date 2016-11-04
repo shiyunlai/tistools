@@ -289,7 +289,7 @@ mvn jetty:run
 1. 使用Junit 4进行单元测试；
 1. 提供给外部模块调用的方法都必须有单元测试；
 2. 通过AllTests.java以套件的方式组织所有单元测试类，如下：
-	``` java
+``` java
 	/**
 	 * bronsp-maven-plugin 工程的测试套件
 	 * @author megapro
@@ -304,7 +304,7 @@ mvn jetty:run
 			Xml22BeanUtilTest.class
 		})
 	public class AllTests {}
-	```
+```
 
 #### 持续集成规范：//TODO
 
