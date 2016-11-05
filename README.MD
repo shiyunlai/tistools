@@ -311,6 +311,26 @@ mvn jetty:run
 
 ## 问题
 
-1、通过maven archetype新建新增工程时，如何默认jdk版本为1.8？
+1、通过maven archetype新建新增工程时，如何默认jdk版本为1.8 ？  
+	解决：
+	设置Maven全局setting.xml，在 profiles 节点之间增加一下配置  
+``` xml
+<profiles>
+...
+	<profile>
+	    <id>jdk18</id>
+	    <activation>  
+	        <activeByDefault>true</activeByDefault>  
+	        <jdk>1.8</jdk>  
+	    </activation>
+	    <properties>
+	        <maven.compiler.source>1.8</maven.compiler.source>
+	        <maven.compiler.target>1.8</maven.compiler.target>
+	        <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+	    </properties>  
+	</profile>
+...
+</profiles>
+```
 
 2、
