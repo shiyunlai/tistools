@@ -182,7 +182,7 @@
 
 #### 1. 创建工程(必须是maven工程)  
 
-1. 步骤参考[如何在tools工程集中新增一个dubbo服务提供者XXX ？](#如何在tools工程集中新增一个dubbo服务提供者xxx)
+1. 步骤参考 [如何在tools工程集中新增一个dubbo服务提供者XXX ？] (#如何在tools工程集中新增一个dubbo服务提供者xxx)
 2. 消费者工程类型，目前可以是jar或war
 	```xml
 	<packaging>war</packaging>
@@ -272,8 +272,41 @@ mvn jetty:run
 	组织： org.tis
 	产品： tools
 
-	功能： 如：service服务、model模型...
-	限定： 如：model功能时，会有vo、po、dto....，service时会有api、impl等.....
+	功能： 如：service服务、model模型...，详情见下表：
+
+
+|   功能         | 说明                                                   |
+| :------------- | :----------------------------------------------------- |
+|util         |业务域内的基础工具实现 |
+|helper       |帮助类，一些顶层逻辑的编写和整合 |
+|base         |基础能力，同common一样，但偏向业务域范围内的‘基础’|
+|model        |数据模型定义，其中可进步分类为：po、vo、dto等用途(见：功能类型限定)|
+|dao          |持久层功能实现|
+|biz          |业务逻辑层，完成业务域中的业务逻辑实现|
+|controller   |业访问控制，处理业务领域范围内的action请求，一般只做服务提供者时无这个功能划分|
+|service      |服务，业务领域对外提供的服务能力|
+|more by req  |根据实际情况扩充|
+
+
+	限定： 如：model功能时，会有vo、po、dto....，service时会有api、impl等.....，详情见下表：
+
+  限定        |  说明     
+-------------|-------------
+api          |API接口定义，API是对外提供的服务接口，一旦提供很少变更，建议兼容而不是变更
+spi          |SPI接口定义，SPI是模块为支持不同的实现预留的内部扩展接口，参加jdbc
+impl         |对某个业务域中功能的实现
+po           |持久对象(persistant object)，对应数据模型(数据库)，可以看成是与数据库中的表相映
+             |射的java对象.最简单的PO就是对应数据库中某个表中的一条记录,多个记录可以用PO的集合
+			 |（PO本身也可有部分业务逻辑的处理）。
+			 |如： com.bronsp.user.model.po
+vo           |值对象(value object)，仅仅包含数据，根据需要抽象出的业务对象,可以和表对应,也可以
+             |不，常用于返回界面中需要的数据信息。
+			 |如： com.bronsp.user.model.vo
+dto          |传输对象(data transfer object)，对远程调用等需要大量传输对象的抽象。
+             |如： com.bronsp.user.model.dto
+more by req  |API接口定义，API是对外提供的服务接口，一旦提供很少变更，建议兼容而不是变更
+
+
 	模块： 如：devmgr 开发管理，user 用户....
 
 	package举例：
