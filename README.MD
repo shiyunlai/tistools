@@ -2,6 +2,12 @@
 ###### ___(The TIS Tools，TIS项目开发&管理工具)___
 ---
 
+## 开发成员
+
+	shiyunlai55555
+	hanbenyuan
+	caodongqian
+
 ## 技术背景
 
 > 实践分布式服务开发  
