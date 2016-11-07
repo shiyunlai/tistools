@@ -17,8 +17,10 @@
 		<module>tools-service-devmgr</module>
 		<module>tools-web-boss</module>
 		<module>tools-web-tools</module>
-    <module>tools-maven-plugin</module>
-  </modules>
+	    <module>tools-maven-plugin</module>
+	    <module>tools-facade-biztrace</module>
+	    <module>tools-service-biztrace</module>
+	</modules>
 	<properties>
 		<!-- Common libs -->
 		<!--<spring.bom.version>3.2.9.RELEASE</spring.bom.version> -->
