@@ -1,0 +1,170 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="#">业务日志查询</a>
+        <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <a href="#">日志信息列表</a>
+    </li>
+</ul>
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- Begin: life time stats -->
+        <div class="portlet light portlet-fit portlet-datatable bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-shopping-cart"></i> 业务日志查询列表 </div>
+                <!--
+                <div class="actions">
+                    <button class="btn btn-sm blue filter-submit margin-bottom" ng-click="empAdd()">新增员工 </button>
+                </div>
+                -->
+            </div>
+            <div class="portlet-body">
+                <div ng-show="biz.totalInfoFlag">
+                    <!--<div class ="bizLogHandle">-->
+                        <!--<label class="biz-label">请输入日志路径:</label>-->
+                        <!--<input class="input-text" type="text"  ng-model="biz.path" ng-change="change(biz.path)">-->
+                        <!--<input class="input-button" type="button" value="解析日志" ng-disabled="biz.isDisable" ng-click="reslover(biz.path)">-->
+                        <!--<input class="input-button" type="button" value="分析日志" ng-click="analyzer()">-->
+                        <!--<div id="biz-oper-desc"><span>说明:输入路径如C:/Users/HP/Desktop/M2/logtest后解析日志,然后点击分析选择要分析的日期</span></div>-->
+                    <!--</div>-->
+
+                    <div>
+                        <input type="radio" ng-if="biz.is_selected1=='false'" ng-checked="false" ng-click="a1()">
+                        <input type="radio" ng-if="biz.is_selected1=='true'" ng-checked="true">
+                        <!--<input type="radio" ng-checked="true">-->
+                        <span class="biz-span">按条件查询</span>
+                        &nbsp;&nbsp;
+                        <input type="radio" ng-if="biz.is_selected2=='false'" ng-checked="false" ng-click="a2()">
+                        <input type="radio" ng-if="biz.is_selected2=='true'" ng-checked="true">
+                        <span class="biz-span">按耗时排名查询</span>
+                    </div>
+
+                    <div class ="bizLogHandle" ng-if="biz.is_selected1=='true'">
+                        <label class="biz-label">交易流水号</label>
+                        <input class="input-text" type="text" ng-model="biz.trans_serial">
+                        &nbsp;&nbsp;
+                        <label class="biz-label">交易日期</label>
+                        <input class="input-text" type="date" ng-model="biz.trans_date">
+                        <input class="input-button" type="button" value="查询" ng-click="queryByConditions(biz.trans_serial,biz.trans_date)">
+                        <input class="input-button" type="button" value="重置" ng-click="cleardata()">
+                    </div>
+
+                    <div class ="bizLogHandle" ng-if="biz.is_selected2=='true'">
+                        <label class="biz-label">耗时排名</label>
+                        &nbsp;&nbsp;
+                        <span class="biz-label">前</span>
+                        <input class="input-text" type="text" ng-model="pre_index">
+
+                        <input class="input-button" type="button" value="查询" ng-click="queryByRanking(pre_index)">
+                    </div>
+
+                    <div class="table-container">
+                        <table class="table table-striped table-bordered table-hover table-checkable">
+                            <thead>
+                                <tr role="row" class="heading">
+                                    <th width="5%">序号</th>
+                                    <th width="10%">交易流水号</th>
+                                    <th width="10%">日期</th>
+                                    <th width="10%">交互次数</th>
+                                    <th width="10%">办理耗时(毫秒)</th>
+                                    <th width="10%">办理耗时排名</th>
+                                    <th width="10%">交易码-名称</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="d in biz.queryResult" ng-class-odd="'odd'" ng-class-even="'even'">
+                                    <td>{{$index+1}}</td>
+                                    <td><a ng-click="showDetailInfo(d)">{{d.trans_serial}}</a></td>
+                                    <td>{{d.trans_date}}</td>
+                                    <td>{{d.request_times}}</td>
+                                    <td>{{d.handle_time}}</td>
+                                    <td>{{d.ranking}}</td>
+                                    <td>{{d.trans_code}}-{{d.trans_name}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div ng-if="biz.detailInfoFlag">
+                    <div>
+                        <label class="biz-detail-label">交易流水号:</label>
+                        <span class="biz-detail-span">{{biz.detail.trans_serial}}</span>
+                        &nbsp;&nbsp;<label class="biz-detail-label">交易代码:</label>
+                        <span class="biz-detail-span">{{biz.detail.trans_code}}</span>
+                        &nbsp;&nbsp;<label class="biz-detail-label">交易名称:</label>
+                        <span class="biz-detail-span">{{biz.detail.trans_name}}</span>
+                        &nbsp;&nbsp;<label class="biz-detail-label">执行耗时:</label>
+                        <span class="biz-detail-span">{{biz.detail.spend_time}}毫秒</span>
+                        &nbsp;&nbsp;<label class="biz-detail-label">耗时排序:</label>
+                        <span class="biz-detail-span">{{biz.detail.spend_time_index}}</span>
+                        &nbsp;&nbsp;<input class="input-button" type="button" value="返回" ng-click="returnTotalInfo()">
+                        <div id="biz-title"><span>业务办理步骤</span></div>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="table table-striped table-bordered table-hover table-checkable">
+                            <thead>
+                            <tr role="row" class="heading">
+                                <th width="5%">序号</th>
+                                <th width="10%">UUID</th>
+                                <th width="10%">执行时间</th>
+                                <th width="10%">耗时(毫秒)</th>
+                                <th width="10%">描述</th>
+                                <th width="10%">步骤数据</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="d in biz.detail.stepInfo" ng-class-odd="'odd'" ng-class-even="'even'">
+                                    <td>{{$index+1}}</td>
+                                    <td><a>{{d.uuid}}</a></td>
+                                    <td>{{d.time}}</td>
+                                    <td>{{d.timeConsuming}}</td>
+                                    <td>{{d.desc}}</td>
+                                    <td id="biz-detail-td-text"><textarea ng-readonly="true" ng-dblclick="showStepData(d.data)">{{d.data}}</textarea></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+
+                <!--开始table尾部分页以及工具栏-->
+                <div class="row" >
+                    <div class="col-md-8 col-sm-12" >
+                        <div class="dataTables_paginate">
+                            <div class="pagination-panel">
+                                第 <a ng-click="getPerPage()"
+                                     class="btn btn-sm default prev" title="Prev"><i
+                                    class="fa fa-angle-left"></i></a><input type="text"
+                                                                            ng-model="biz.page.currentPage"
+                                                                            class="pagination-panel-input form-control input-mini input-inline input-sm"
+                                                                            maxlenght="5" style="text-align: center; margin: 0 5px;"><a
+                                    ng-click="getPostPage()"
+                                    class="btn btn-sm default next" title="Next"><i
+                                    class="fa fa-angle-right"></i></a> 页,&nbsp;&nbsp;&nbsp;总<span
+                                    class="pagination-panel-total">{{biz.page.totalPages}}</span>页
+                            </div>
+                        </div>
+                        <div class="dataTables_length">
+                            <label><span class="seperator">|</span>每页 <select
+                                    ng-model="biz.page.itemsperpage"
+                                    class="form-control input-xsmall input-sm input-inline" ng-options="i for i in [10,20,50,100,150]">
+                            </select> 条</label>
+                        </div>
+                        <div class="dataTables_info" role="status" aria-live="polite">
+                            <span class="seperator">|</span>总计{{biz.page.totalItems}}
+                            条
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12"></div>
+                </div>
+                <!--结束table尾部分页以及工具栏-->
+            </div>
+        </div>
+    </div>
+</div>

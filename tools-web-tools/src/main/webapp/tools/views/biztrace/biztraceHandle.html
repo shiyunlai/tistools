@@ -1,0 +1,37 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="#">业务日志</a>
+        <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <a href="#">业务日志分析</a>
+    </li>
+</ul>
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- Begin: life time stats -->
+        <div class="portlet light portlet-fit portlet-datatable bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-shopping-cart"></i> 业务日志分析 </div>
+            </div>
+            <div class="portlet-body">
+                <div class ="bizLogHandle">
+                    <label class="biz-label">请输入日志路径:</label>
+                    <!--<input class="fileinput thumbnail" type="file"  id="uploadFile" file-model="myFile" multiple ng-hide="true">-->
+                    <input class="input-text" type="text"  ng-model="biz.path" ng-change="checkPathIsEmpty(biz.path)">
+                    <!--<input class="input-button" type="button" value="导入"  ng-disabled="biz.isDisable" ng-click="upload()">-->
+                    <input class="input-button" type="button" value="解析日志" ng-disabled="biz.isDisable" ng-click="showReslovePanel(biz.path)">
+                    <input class="input-button" type="button" value="分析日志" ng-click="analyzer()">
+                    <div id="biz-oper-desc">
+                        <span>说明:手工将文件放到远程路径<span class="biz-path-desc">E:/fileUpload/xxx/yyyyMMdd(年月日)</span>(xxx是建一个文件夹存放自己的日志),
+                               然后在日志路径处输入如:<span class="biz-path-desc">E:/fileUpload/xxx</span>后点击解析日志,解析后再进行日志的分析
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

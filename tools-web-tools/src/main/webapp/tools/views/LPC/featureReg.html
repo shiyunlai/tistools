@@ -1,0 +1,304 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="#">版本检查工具</a>
+        <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <a href="#">开发分支登记</a>
+    </li>
+</ul>
+
+<!--<button type="button"  class="btn btn-primary" ng-click="alertModal('态弹出窗主体内容')">点击我会弹出模态弹出窗</button>-->
+<div id="mymodal" class="modal show" ng-show="lpc.showModal" ng-include="'views/mymodal.html'"></div>
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- Begin: life time stats -->
+        <div class="portlet light portlet-fit portlet-datatable bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-shopping-cart"></i>开发分支登记 </div>
+            </div>
+
+            <div class="portlet-body">
+                <div class="form-horizontal" ng-show="lpc.showMainPanel">
+                    <div class ="control-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="control-label col-md-5">工作编号:</label>
+                                <div class="col-md-7">
+                                    <input type="text" class="form-control"  ng-model="lpc.workId">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="control-label col-md-5">任务编号:</label>
+                                <div class="col-md-7">
+                                    <input class="form-control" type="text" ng-model="lpc.taskId">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="control-label col-md-5">分支类型:</label>
+                                <div class="col-md-7">
+                                    <select class=" form-control" ng-model="lpc.featureType">
+                                        <option></option>
+                                        <option value="Feature">Feature</option>
+                                        <option value="Hotfix">Hotfix</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="control-label col-md-5">开发负责人:</label>
+                                <div class="col-md-7">
+                                    <input class="form-control"type="text" ng-model="lpc.developer">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="control-label col-md-5">分支处理状态:</label>
+                                <div class="col-md-7">
+                                    <select class=" form-control" ng-model="lpc.status">
+                                        <option></option>
+                                        <option value="0">0 - 正在开发</option>
+                                        <option value="1">1 - SIT</option>
+                                        <option value="2">2 - UAT1</option>
+                                        <option value="3">3 - UAT</option>
+                                        <option value="4">4 - UAT-P</option>
+                                        <option value="5">5 - 可上PP</option>
+                                        <option value="6">6 - 已上PP</option>
+                                        <option value="7">7 - PP完成</option>
+                                        <option value="8">8 - 已投产</option>
+                                        <option value="9">9 - 合并会主干</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="col-md-2"></div>
+                                <button type="button" class="btn btn-primary col-md-3" ng-click="query()">查询</button>
+                                <div class="col-md-2"></div>
+                                <button type="button" class="btn btn-primary col-md-3" ng-click="reset()">重置</button>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <table class="table table-striped table-hover table-bordered" style="table-layout:fixed;word-wrap: break-word">
+                        <thead>
+                        <tr role="row" class="heading">
+                            <th width="3%" class="text-center"><input type="checkbox" ng-model="lpc.selectAll" ng-click="selectAllRecord()"></th>
+                            <th width="10%" class="text-center">工作编号</th>
+                            <th width="15%" class="text-center">开发分支</th>
+                            <th width="10%" class="text-center">分支类型</th>
+                            <th width="10%" class="text-center">分支状态</th>
+                            <th width="10%" class="text-center">投产日期</th>
+                            <th width="10%" class="text-center">开发负责人</th>
+                            <th width="25%" class="text-center">需求描述</th>
+                            <th width="7%" class="text-center">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="d in lpc.queryResult" class="text-center">
+                            <td><input type="checkbox" ng-model="isChecked" ng-checked="lpc.selectAll" ng-click="selectOneRecord(isChecked,d.workId)"></td>
+                            <td>{{d.workId}}</td>
+                            <td>{{d.branchId}}</td>
+                            <td>{{d.branchType}}</td>
+                            <td>
+                                {{d.status}}
+                            </td>
+                            <td>{{d.releaseDate}}</td>
+                            <td>{{d.developer}}</td>
+                            <td>{{d.workDesc}}</td>
+                            <td><a ng-click="modify(d.workId)">修改</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <!--开始table尾部分页以及工具栏-->
+                    <div class="row" >
+                        <div class="col-md-8 col-sm-12" >
+                            <div class="dataTables_paginate">
+                                <div class="pagination-panel">
+                                    第 <a ng-click="getPerPage()"
+                                         class="btn btn-sm default prev" title="Prev"><i
+                                        class="fa fa-angle-left"></i></a><input type="text"
+                                                                                ng-model="lpc.page.currentPage"
+                                                                                class="pagination-panel-input form-control input-mini input-inline input-sm"
+                                                                                maxlenght="5" style="text-align: center; margin: 0 5px;"><a
+                                        ng-click="getPostPage()"
+                                        class="btn btn-sm default next" title="Next"><i
+                                        class="fa fa-angle-right"></i></a> 页,&nbsp;&nbsp;&nbsp;总<span
+                                        class="pagination-panel-total">{{lpc.page.totalPages}}</span>页
+                                </div>
+                            </div>
+                            <div class="dataTables_length">
+                                <label><span class="seperator">|</span>每页 <select
+                                        ng-model="lpc.page.itemsperpage"
+                                        class="form-control input-xsmall input-sm input-inline" ng-options="i for i in [5,10,20,50,100,150]">
+                                </select> 条</label>
+                            </div>
+                            <div class="dataTables_info" role="status" aria-live="polite">
+                                <span class="seperator">|</span>总计{{lpc.page.totalItems}}
+                                条
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <div class="col-md-2"></div>
+                            <button type="button" class="btn btn-primary col-md-3" ng-click="delete()">删除</button>
+                            <div class="col-md-2"></div>
+                            <button type="button" class="btn btn-primary col-md-3" ng-click="add()">新增分支</button>
+                        </div>
+                    </div>
+                    <!--结束table尾部分页以及工具栏-->
+                </div>
+
+
+                <div class="form-horizontal" ng-show="lpc.showEditPanel">
+                    <form ng-submit="save()" name="editPanel_form" novalidate>
+                    <div class ="control-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="control-label col-md-3"><span class="text-info">*</span>工作编号:</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control"
+                                           ng-readonly="lpc.workIdIsRead" ng-model="lpc.edit.workId" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="control-label col-md-3"><span class="text-info">*</span>任务编号:</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" ng-model="lpc.edit.taskId" required>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="control-label col-md-3">工作描述:</label>
+                                <div class="col-md-9">
+                                    <textarea class="form-control" ng-model="lpc.edit.workDesc">
+                                    </textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="control-label col-md-3"><span class="text-info">*</span>开发分支:</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" ng-readonly="lpc.featureIdIsRead" ng-model="lpc.edit.featureId" required>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="control-label col-md-3"><span class="text-info">*</span>分支类型:</label>
+                                <div class="col-md-9">
+                                    <select class=" form-control" ng-model="lpc.edit.featureType" required>
+                                        <option value="Feature">Feature 功能特性分支</option>
+                                        <option value="Hotfix">Hotfix 解决问题分支</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="control-label col-md-3"><span class="text-info">*</span>分支状态:</label>
+                                <div class="col-md-9">
+                                    <select class=" form-control" ng-model="lpc.edit.status" required>
+                                        <option value="0">正在开发</option>
+                                        <option value="1">SIT</option>
+                                        <option value="2">UAT1</option>
+                                        <option value="3">UAT</option>
+                                        <option value="4">UAT-P</option>
+                                        <option value="5">可上PP</option>
+                                        <option value="6">以上PP</option>
+                                        <option value="7">PP完成</option>
+                                        <option value="8">已投产</option>
+                                        <option value="9">合并会主干</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="control-label col-md-3"><span class="text-info">*</span>分支管理员:</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" ng-model="lpc.edit.featureMgr" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="control-label col-md-3"><span class="text-info">*</span>分支申请日:</label>
+                                <div class="col-md-9">
+                                    <input type="date" class="form-control" ng-model="lpc.edit.openDate" required>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="control-label col-md-3"><span class="text-info">*</span>清单文件名:</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" ng-model="lpc.edit.listFileName" required>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="control-label col-md-3"><span class="text-info">*</span>开发负责人:</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" ng-model="lpc.edit.developer" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="control-label col-md-3"><span class="text-info">*</span>投产负责人:</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" ng-model="lpc.edit.releaser" required>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="control-label col-md-3"><span class="text-info">*</span>投产日期:</label>
+                                <div class="col-md-9">
+                                    <input type="date" class="form-control" ng-model="lpc.edit.releaseDate" required>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-primary col-md-10" ng-click="cancel()">取消</button>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary col-md-10">保存</button>
+                            </div>
+                            <small class="lead text-danger"
+                                   ng-show="editPanel_form.$error.required && lpc.edit.submit">
+                                保存之前,请填写带<span class="text-info">*</span>的必输信息
+                            </small>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

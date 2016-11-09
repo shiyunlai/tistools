@@ -1,0 +1,93 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="#">业务日志查询</a>
+        <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <a href="#">日志汇总列表</a>
+    </li>
+</ul>
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- Begin: life time stats -->
+        <div class="portlet light portlet-fit portlet-datatable bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-shopping-cart"></i> 业务日志查询列表 </div>
+                <!--
+                <div class="actions">
+                    <button class="btn btn-sm blue filter-submit margin-bottom" ng-click="empAdd()">新增员工 </button>
+                </div>
+                -->
+            </div>
+            <div class="portlet-body">
+                <div>
+                    <div class ="bizLogHandle">
+                        <label class="biz-label">交易起始日期</label>
+                        <input class="input-text" type="date" ng-model="biz.trans_date_start">
+                        &nbsp;&nbsp;
+                        <label class="biz-label">交易结束日期</label>
+                        <input class="input-text" type="date" ng-model="biz.trans_date_end">
+                        <input class="input-button" type="button" value="查询" ng-click="querySumInfo(biz.trans_date_start,biz.trans_date_end)">
+                    </div>
+
+                    <div class="table-container">
+                        <table class="table table-striped table-bordered table-hover table-checkable">
+                            <thead>
+                                <tr role="row" class="heading">
+                                    <th width="10%">序号</th>
+                                    <th width="20%">交易日期</th>
+                                    <th width="20%">BIZ日志行数</th>
+                                    <th width="20%">交易流水数量</th>
+                                    <th width="20%">R/S交互次数</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="d in biz.queryResult" ng-class-odd="'odd'" ng-class-even="'even'">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{d.transDate}}</td>
+                                    <td>{{d.dayLogLines}}</td>
+                                    <td>{{d.dayTransSerials}}</td>
+                                    <td>{{d.dayRSTimes}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!--开始table尾部分页以及工具栏-->
+                <div class="row" >
+                    <div class="col-md-8 col-sm-12" >
+                        <div class="dataTables_paginate">
+                            <div class="pagination-panel">
+                                第 <a ng-click="getPerPage()"
+                                     class="btn btn-sm default prev" title="Prev"><i
+                                    class="fa fa-angle-left"></i></a><input type="text"
+                                                                            ng-model="biz.page.currentPage"
+                                                                            class="pagination-panel-input form-control input-mini input-inline input-sm"
+                                                                            maxlenght="5" style="text-align: center; margin: 0 5px;"><a
+                                    ng-click="getPostPage()"
+                                    class="btn btn-sm default next" title="Next"><i
+                                    class="fa fa-angle-right"></i></a> 页,&nbsp;&nbsp;&nbsp;总<span
+                                    class="pagination-panel-total">{{biz.page.totalPages}}</span>页
+                            </div>
+                        </div>
+                        <div class="dataTables_length">
+                            <label><span class="seperator">|</span>每页 <select
+                                    ng-model="biz.page.itemsperpage"
+                                    class="form-control input-xsmall input-sm input-inline" ng-options="i for i in [10,20,50,100,150]">
+                            </select> 条</label>
+                        </div>
+                        <div class="dataTables_info" role="status" aria-live="polite">
+                            <span class="seperator">|</span>总计{{biz.page.totalItems}}
+                            条
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12"></div>
+                </div>
+                <!--结束table尾部分页以及工具栏-->
+            </div>
+        </div>
+    </div>
+</div>

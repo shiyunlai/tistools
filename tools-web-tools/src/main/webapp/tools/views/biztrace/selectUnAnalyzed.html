@@ -1,0 +1,14 @@
+<div class="modelMeg">
+    <div><span>请选择要分析的日志的日期:</span></div>
+    <!--<span>{{$rootScope.unanalyzedBizLogDates}}</span>-->
+    <ul>
+        <li ng-repeat="logdate in unanalyzedBizLogDates">
+            <input type="checkbox" ng-model="isChecked" ng-click="check(isChecked,logdate)">
+            <span>{{logdate}}</span>
+        </li>
+    </ul>
+    <div id="model-button-middle">
+        <input class="input-button" type="button" value="确认" ng-click="ok()">
+        <input class="input-button" type="button" value="取消" ng-click="cancel()">
+    </div>
+</div>

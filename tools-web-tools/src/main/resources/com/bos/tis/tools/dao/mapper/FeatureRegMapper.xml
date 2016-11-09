@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bos.tis.tools.dao.mapper.FeatureRegMapper">
+	<resultMap type="FeatureReg" id="branchInfoResultMap">  
+        <id property="branchId" column="dev_branch"/>  
+        <result property="workId" column="work_id"/>  
+        <result property="workDesc" column="work_desc"/>  
+        <result property="artfId" column="artf_id"/>  
+        <result property="branchType" column="branch_type"/>  
+        <result property="branchMgr" column="branch_mgr"/>  
+        <result property="openDate" column="open_date"/>
+        <result property="status" column="status"/>  
+        <result property="listFileName" column="list_file_name"/>  
+        <result property="developer" column="developer"/>
+        <result property="releaser" column="releaser"/>  
+        <result property="releaseDate" column="release_date"/>            	    
+    </resultMap>
+    
+    <!-- 查询 -->  
+	<select id="query" parameterType="FeatureReg" resultType="FeatureReg" resultMap="branchInfoResultMap">  		 
+	        select * from work_dev_branch where 1=1 
+			<if test="branchId != null" >
+				and dev_branch = #{branchId,jdbcType=VARCHAR}
+      		</if>	  
+      		<if test="workId != null" >
+				and work_id = #{workId,jdbcType=VARCHAR}
+      		</if>
+      		<if test="workDesc != null" >
+				and work_desc = #{workDesc,jdbcType=VARCHAR}
+      		</if>
+      		<if test="artfId != null" >
+				and artf_id = #{artfId,jdbcType=VARCHAR}
+      		</if>
+      		<if test="branchType != null" >
+				and branch_type = #{branchType,jdbcType=VARCHAR}
+      		</if>
+      		<if test="branchMgr != null" >
+				and branch_mgr = #{branchMgr,jdbcType=VARCHAR}
+      		</if>
+      		<if test="openDate != null" >
+				and open_date = #{openDate,jdbcType=VARCHAR}
+      		</if>
+      		<if test="status != null" >
+				and status = #{status,jdbcType=VARCHAR}
+      		</if>
+      		<if test="listFileName != null" >
+				and list_file_name = #{listFileName,jdbcType=VARCHAR}
+      		</if>
+      		<if test="developer != null" >
+				and developer = #{developer,jdbcType=VARCHAR}
+      		</if>  
+      		<if test="releaser != null" >
+				and releaser = #{releaser,jdbcType=VARCHAR}
+      		</if> 
+      		<if test="releaseDate != null" >
+				and release_date = #{releaseDate,jdbcType=VARCHAR}
+      		</if>           			        
+	</select>
+	
+	<insert id="insert" parameterType="FeatureReg">
+		insert into work_dev_branch 
+		(	dev_branch,
+			work_id,
+			work_desc,
+			artf_id,
+			branch_type,
+			branch_mgr,
+			open_date,
+			status,
+			list_file_name,
+			developer,
+			releaser,
+			release_date
+		) 
+		values (
+			#{branchId,jdbcType=VARCHAR},
+			#{workId,jdbcType=VARCHAR},
+			#{workDesc,jdbcType=VARCHAR},
+			#{artfId,jdbcType=VARCHAR},
+			#{branchType,jdbcType=VARCHAR},
+			#{branchMgr,jdbcType=VARCHAR},
+			#{openDate,jdbcType=VARCHAR},
+			#{status,jdbcType=VARCHAR},
+			#{listFileName,jdbcType=VARCHAR},
+			#{developer,jdbcType=VARCHAR},
+			#{releaser,jdbcType=VARCHAR},
+			#{releaseDate,jdbcType=VARCHAR}
+		) 
+	</insert>
+	
+	<update id="update" parameterType="FeatureReg">
+		update work_dev_branch set 
+			dev_branch = #{branchId,jdbcType=VARCHAR},
+			work_id = #{workId,jdbcType=VARCHAR},
+			work_desc = #{workDesc,jdbcType=VARCHAR},
+			artf_id = #{artfId,jdbcType=VARCHAR},
+			branch_type = #{branchType,jdbcType=VARCHAR},
+			branch_mgr = #{branchMgr,jdbcType=VARCHAR},
+			open_date = #{openDate,jdbcType=VARCHAR},
+			status = #{status,jdbcType=VARCHAR},
+			list_file_name = #{listFileName,jdbcType=VARCHAR},
+			developer = #{developer,jdbcType=VARCHAR},
+			releaser = #{releaser,jdbcType=VARCHAR},
+			release_date = #{releaseDate,jdbcType=VARCHAR}
+			where dev_branch = #{branchId,jdbcType=VARCHAR}
+	</update>
+	
+	<delete id="delete" parameterType="java.lang.String">
+		delete from work_dev_branch where work_id = #{workId}
+	</delete>
+	
+</mapper>

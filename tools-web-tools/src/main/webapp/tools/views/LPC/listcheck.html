@@ -1,0 +1,231 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="#">版本检查工具</a>
+        <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <a href="#">清单-包检查</a>
+    </li>
+</ul>
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- Begin: life time stats -->
+        <div class="portlet light portlet-fit portlet-datatable bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-shopping-cart"></i> 清单-包检查 </div>
+            </div>
+            <div class="portlet-body">
+                <div class="form-horizontal">
+                    <div class ="control-group">
+                        <!--<div class="row">-->
+                            <!--<div class="col-md-7">-->
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label class="control-label text-info">清单过滤条件:</label>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <!--<div class="row">-->
+                                    <!--<div class="col-md-4">-->
+                                        <!--<label class="control-label col-md-5">工作编号:</label>-->
+                                        <!--<div class="col-md-7">-->
+                                            <!--<input type="text" class="form-control"  ng-model="lpc.workId">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-md-4">-->
+                                        <!--<label class="control-label col-md-5">工作编号:</label>-->
+                                        <!--<div class="col-md-7">-->
+                                            <!--<input type="text" class="form-control"  ng-model="lpc.workId">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-md-4">-->
+                                        <!--<label class="control-label col-md-5">工作编号:</label>-->
+                                        <!--<div class="col-md-7">-->
+                                            <!--<input type="text" class="form-control"  ng-model="lpc.workId">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<br>-->
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="control-label col-md-5">开发人员:</label>
+                                        <div class="col-md-7">
+                                            <input type="text" class="form-control"  ng-model="lpc.developer">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="control-label col-md-5">投产日期:</label>
+                                        <div class="col-md-7">
+                                            <input type="date" class="form-control"  ng-model="lpc.releaseDate">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="col-md-2"></div>
+                                        <button type="button" class="btn btn-primary col-md-4" ng-click="importList()">导入清单文件</button>
+
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label class="control-label text-info">包文件路径:</label>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="row">
+                                    <!--<div class="col-md-1">-->
+                                        <!--<button></button>-->
+                                    <!--</div>-->
+                                    <div class="col-md-5">
+                                        <div class="col-md-12 col-md-offset-1">
+                                            <input type="file"  id="uploadFile" ng-hide="true">
+                                            <div class ="input-group">
+                                                <input id="uploadFile1" class="form-control" type="text" ng-model="lpc.packagePath" placeholder="" readonly>
+                                                <a class="input-group-addon" ng-click="selectUploadFile()">选择文件</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="col-md-1">
+                                            <button type="button" class="btn btn-primary"  ng-click="upload()">上传包文件</button>
+                                        </div>
+                                        <div class="col-md-1 col-md-offset-3">
+                                            <button type="button" class="btn btn-primary"  ng-click="importPackage()">导入包文件</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            <!--</div>-->
+                        <!--</div>-->
+                    </div>
+                    <br>
+
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr role="row" class="heading">
+                                <th width="50%">清单列表&nbsp;&nbsp;
+                                    <input type="checkbox" ng-model="listIsChecked" ng-click="selectAllCommitFile(listIsChecked)">
+                                    <span>全选</span>
+                                </th>
+                                <th width="50%">包列表&nbsp;&nbsp;
+                                    <input type="checkbox" ng-model="packageIsChecked" ng-click="selectAllPackageFile(packageIsChecked)">
+                                    <span>全选</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <ul>
+                                    <li ng-repeat="commitFile in lpc.featureInfoList">
+                                        <input type="checkbox" ng-model="isChecked" ng-checked="listIsChecked" ng-click="selectCommitFile(isChecked,commitFile.listFileName)">
+                                        <span>{{commitFile.listFileName}}</span>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li ng-repeat="packageFile in lpc.package_list">
+                                        <input type="checkbox" ng-model="isChecked" ng-checked="packageIsChecked" ng-click="selectPackageFile(isChecked,packageFile)">
+                                        <span>{{packageFile}}</span>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <br>
+
+                    <div class="row">
+                        <div class ="col-md-6 control-group">
+                            <div class="row">
+                                <div class ="col-md-6 control-group">
+                                    <div class ="input-group">
+                                        <span class="input-group-addon">SVN用户名:</span>
+                                        <input class="form-control" type="text" ng-model="lpc.svnusername" ng-change="checkSvnEmpty()">
+                                    </div>
+                                </div>
+                                <div class ="col-md-6 control-group">
+                                    <div class ="input-group">
+                                        <label class="input-group-addon">SVN密码:</label>
+                                        <input class="form-control" type="password" ng-model="lpc.svnpassword" ng-change="checkSvnEmpty()">
+                                    </div>
+                                </div>
+                             </div>
+                        </div>
+
+                        <div class ="col-md-1 control-group">
+                            <button type="button" class="btn btn-primary" ng-disabled="lpc.disCheck" ng-click="checkList()">检查</button>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class ="control-group">
+                        <span>差异列表</span>
+                    </div>
+
+                    <table class="table table-striped table-hover table-bordered" style="table-layout:fixed;word-wrap: break-word">
+                        <thead>
+                            <tr role="row" class="heading">
+                                <th width="5%">序号</th>
+                                <th width="20%">需求名称</th>
+                                <th width="30%">差异文件</th>
+                                <th width="20%">部署端</th>
+                                <th width="10%">包中是否存在</th>
+                                <th width="10%">负责人</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="d in lpc.queryResult">
+                                <td>{{$index+1}}</td>
+                                <td>{{d.listName}}</td>
+                                <td>{{d.differFile}}</td>
+                                <td>{{d.deployPosition}}</td>
+                                <td>{{d.isExsitInPackage}}</td>
+                                <td>{{d.submitter}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!--开始table尾部分页以及工具栏-->
+                    <div class="row" >
+                        <div class="col-md-8 col-sm-12" >
+                            <div class="dataTables_paginate">
+                                <div class="pagination-panel">
+                                    第 <a ng-click="getPerPage()"
+                                         class="btn btn-sm default prev" title="Prev"><i
+                                        class="fa fa-angle-left"></i></a><input type="text"
+                                                                                ng-model="lpc.page.currentPage"
+                                                                                class="pagination-panel-input form-control input-mini input-inline input-sm"
+                                                                                maxlenght="5" style="text-align: center; margin: 0 5px;"><a
+                                        ng-click="getPostPage()"
+                                        class="btn btn-sm default next" title="Next"><i
+                                        class="fa fa-angle-right"></i></a> 页,&nbsp;&nbsp;&nbsp;总<span
+                                        class="pagination-panel-total">{{lpc.page.totalPages}}</span>页
+                                </div>
+                            </div>
+                            <div class="dataTables_length">
+                                <label><span class="seperator">|</span>每页 <select
+                                        ng-model="lpc.page.itemsperpage"
+                                        class="form-control input-xsmall input-sm input-inline" ng-options="i for i in [10,20,50,100,150]">
+                                </select> 条</label>
+                            </div>
+                            <div class="dataTables_info" role="status" aria-live="polite">
+                                <span class="seperator">|</span>总计{{lpc.page.totalItems}}
+                                条
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12"></div>
+                    </div>
+                    <!--结束table尾部分页以及工具栏-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

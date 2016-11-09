@@ -13,13 +13,14 @@
 		<module>tools-common</module>
 		<module>tools-common-assembly</module>
 		<module>tools-core</module>
+		<module>tools-facade-biztrace</module>
 		<module>tools-facade-devmgr</module>
+		<module>tools-maven-plugin</module>
+		<module>tools-service-biztrace</module>
 		<module>tools-service-devmgr</module>
 		<module>tools-web-boss</module>
+		<!-- <module>tools-web-tools3</module> -->
 		<module>tools-web-tools</module>
-	    <module>tools-maven-plugin</module>
-	    <module>tools-facade-biztrace</module>
-	    <module>tools-service-biztrace</module>
 	</modules>
 	<properties>
 		<!-- Common libs -->

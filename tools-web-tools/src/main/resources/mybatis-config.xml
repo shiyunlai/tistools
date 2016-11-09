@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">  
+<configuration>  
+    <typeAliases>  
+        <typeAlias alias="FeatureReg" type="com.bos.tis.tools.dao.model.FeatureReg"/>  
+    </typeAliases>  
+    <mappers>  
+        <mapper resource="com/bos/tis/tools/dao/mapper/FeatureRegMapper.xml" />  
+    </mappers>  
+</configuration>

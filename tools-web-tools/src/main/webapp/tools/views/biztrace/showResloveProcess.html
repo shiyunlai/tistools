@@ -1,0 +1,22 @@
+<div class="modelMeg">
+    <div><span>解析的日志文件:</span></div>
+
+    <div id="model-div-scroll">
+        <ul>
+            <li ng-repeat="resolver in resolvingFileList">
+                <span>{{$index+1}}.</span><span>{{resolver.path}}</span>&nbsp;&nbsp;<span>{{resolver.status}}</span>
+            </li>
+        </ul>
+    </div>
+
+    <div>
+        <div class="model-process-bar-father">
+            <div class="model-process-bar-child" ng-style="processBarStyle"></div>
+        </div>
+        <span>文件解析已完成:{{resolvedRatio|number:0}}%</span>
+    </div>
+
+    <div id="model-button-middle">
+        <input class="input-button" type="button" value="关闭" ng-click="cancel()">
+    </div>
+</div>

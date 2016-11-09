@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
+    <file url="file://$PROJECT_DIR$/assets/global/plugins/angularjs/angular-sanitize.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/controllers/Emp/EmpController.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/controllers/LPC/FeatureRegController.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/controllers/LPC/ListCheckController.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/controllers/Menu/MenuController.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/controllers/Role/RoleController.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/controllers/Transset/TranssetController.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/controllers/User/UserController.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/controllers/Zd_Menu/Zd_menu_Controller.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/controllers/ZuzhijigouController.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/controllers/biztrace/biztraceHandleController.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/controllers/biztrace/biztraceQueryController.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/controllers/biztrace/biztraceSumQueryController.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/controllers/biztrace/redisCleanController.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/controllers/jiaoyiguanli/jiaoyiguanli_controller.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/main.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/tpl/footer.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/tpl/sidebar.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/views/dashboard.html" charset="UTF-8" />
+  </component>
+</project>

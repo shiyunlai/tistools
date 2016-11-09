@@ -1,0 +1,31 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="#">tis管理</a>
+        <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <a href="#">redis清理</a>
+    </li>
+</ul>
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- Begin: life time stats -->
+        <div class="portlet light portlet-fit portlet-datatable bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-shopping-cart"></i> redis清理操作 </div>
+            </div>
+            <div class="portlet-body">
+                <div>
+                    <div>
+                        <label class="biz-label">redis占用空间:</label>
+                        <span>{{redis.spaceUsage}}</span>
+                        <span></span>
+                        <input class="input-button" type="button" value="清理" ng-click="redisClean()">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

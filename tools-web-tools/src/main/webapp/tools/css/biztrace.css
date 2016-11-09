@@ -1,0 +1,134 @@
+@charset "utf-8";
+
+textarea{
+    border:none;
+    overflow:hidden;
+}
+
+td textarea{
+    height:100%;
+    width:100%;
+    cursor: pointer;
+}
+
+#biz-detail-td-text{
+    padding:0px;
+}
+
+/*.modelMeg{*/
+    /*height: 400px;*/
+/*}*/
+
+.modelMeg textarea{
+    width:100%;
+    height: 360px;
+}
+
+/*.modelMeg ul{*/
+    /*width:100%;*/
+    /*height: 300px;*/
+/*}*/
+
+#model-div-middle{
+    text-align:center;
+}
+
+#model-button-middle{
+    text-align:center;
+}
+
+.bizLogHandle{
+    margin-bottom: 10px;
+}
+
+.input-text{
+    border: 1px solid #C3CED9;
+    border-radius: 5px 5px 5px 5px;
+    font-size: 14px;
+    height: 31px;
+    width:200px;
+    line-height: 31px;
+    margin-right: 10px;
+    padding: 0
+}
+
+.input-button{
+    width:100px;
+    height:30px;
+    border: 1px solid #C3CED9;
+    border-radius: 5px;
+    padding: 0;
+    background-color:ghostwhite;
+    color:dodgerblue;
+}
+
+.biz-span{
+    margin:0px;
+    padding:0px;
+    font-family:"微软雅黑","黑体","宋体";
+    font-size:20px;
+    font-style:italic;
+    height:36px;
+    color:lightskyblue;
+}
+
+.biz-detail-span{
+    margin:0px;
+    padding:0px;
+    font-family:"微软雅黑","黑体","宋体";
+    font-size:15px;
+    color:darkblue;
+}
+
+.biz-label{
+    margin:0px;
+    padding:0px;
+    font-family:"微软雅黑","黑体","宋体";
+    font-size:10px;
+}
+
+.biz-detail-label{
+    margin:0px;
+    padding:0px;
+    font-family:"Times New Roman";
+    font-size:15px;
+}
+
+#biz-title{
+    font-size:20px;
+    font-family:"Georgia";
+    color:#999999
+}
+
+#biz-oper-desc{
+    font-size:20px;
+    color:grey;
+}
+
+.biz-path-desc{
+    font-size:20px;
+    color:deeppink;
+}
+
+#model-div-scroll{
+    width:100%;
+    height:300px;
+    overflow:auto;
+}
+
+.model-process-bar-father{
+    width:100%;
+    height:30px;
+    border:1px solid #C3CED9;
+}
+
+.model-process-bar-child{
+    width:0%;
+    height:100%;
+    background-color:deepskyblue;
+}
+
+#mymodal{
+    top:25%;
+    left:5%
+}
