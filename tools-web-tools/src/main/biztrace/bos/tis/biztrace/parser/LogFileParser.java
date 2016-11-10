@@ -3,22 +3,13 @@ package bos.tis.biztrace.parser;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.bos.tis.tools.util.AjaxUtils;
 
 import redis.clients.jedis.Jedis;
 import bos.tis.biztrace.TISLogFile;

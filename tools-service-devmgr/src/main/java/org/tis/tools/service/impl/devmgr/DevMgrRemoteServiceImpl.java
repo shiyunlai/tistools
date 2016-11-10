@@ -6,7 +6,7 @@ package org.tis.tools.service.impl.devmgr;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.tis.tools.base.webapp.Page;
+import org.tis.tools.base.Page;
 import org.tis.tools.model.vo.devmgr.DevelopBranchInfo;
 import org.tis.tools.service.api.devmgr.DevMgrRemoteService;
 

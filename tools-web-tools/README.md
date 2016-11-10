@@ -62,17 +62,19 @@
 			
 		至此，原tools工程的dubbo服务化改造完成！！！
 		
-		
+### 进行分布式工程切分，实现分布式服务开发和部署运行 web-tools工程作为服务消费者调用其他服务提供者，实现功能
+	
+	重构 com.bos.tis.tools.util 包路径下的java，根据功能分别存放到 web-boss和 tools-common
 		
 ### 还要进行的重构
 	
 	//TODO 1：删除无效的jar依赖
-	//TODO 2：删除无用的web资源，减少包体积
+	//TODO 2：删除无用的web资源，减少包体积 ok
 	//TODO 3：抽取redis等第三发工具的参数为properties方式
-	//TODO 4：清理pm
-	//TODO 5：删除无效web开发资源
+	//TODO 4：清理pm ok
+	//TODO 5：删除无效web开发资源 ok
 	//TODO 6：进行分布式工程切分，实现分布式服务开发和部署运行 web-tools工程作为服务消费者调用其他服务提供者，实现功能
-	//TODO 7：整理一下tools工程的README.MD，也分 主README 和各工程的README
+	//TODO 7：整理一下tools工程的README.MD，也分 主README 和各工程的README ok
 	
 
 ### quick start

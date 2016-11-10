@@ -18,7 +18,8 @@ import java.util.Map;
 
 
 
-import com.bos.tis.tools.webapp.controller.ListCheckController;
+
+import org.tis.tools.webapp.controller.ListCheckController;
 
 import redis.clients.jedis.Jedis;
 import bos.tis.biztrace.redis.AbstractRedisHandler;
