@@ -1,4 +1,4 @@
-package org.tis.tools.web.base.controller;
+package org.tis.tools.base.web.controller;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -19,8 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.tis.tools.base.Page;
 import org.tis.tools.base.WhereCondition;
-import org.tis.tools.web.base.util.JSONPropertyStrategyWrapper;
-import org.tis.tools.web.base.util.JsonDateProcessor;
+import org.tis.tools.base.web.util.JSONPropertyStrategyWrapper;
+import org.tis.tools.base.web.util.JsonDateProcessor;
 
 public class BaseController {
 	

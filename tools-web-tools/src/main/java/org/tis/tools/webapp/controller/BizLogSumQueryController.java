@@ -16,8 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.tis.tools.web.base.controller.BaseController;
-import org.tis.tools.web.base.util.AjaxUtils;
+import org.tis.tools.base.web.controller.BaseController;
+import org.tis.tools.base.web.util.AjaxUtils;
 
 import bos.tis.biztrace.report.DayLogInfoSumReport;
 

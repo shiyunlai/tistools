@@ -65,7 +65,18 @@
 ### 进行分布式工程切分，实现分布式服务开发和部署运行 web-tools工程作为服务消费者调用其他服务提供者，实现功能
 	
 	重构 com.bos.tis.tools.util 包路径下的java，根据功能分别存放到 web-boss和 tools-common
-		
+	
+	完成第一次重构，运行测试
+	
+	新增 model-devmgr.xml (mvn bronsp:gen-dao -DgenType=ddl)自动生成sql脚本，新建数据库表 
+	
+	
+	
+	接下来启动 tools-web-tools测试，
+	
+	然后继续重构
+	
+	
 ### 还要进行的重构
 	
 	//TODO 1：删除无效的jar依赖

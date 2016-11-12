@@ -1,4 +1,4 @@
-package org.tis.tools.web.base.util;
+package org.tis.tools.base.web.util;
 
 import org.apache.commons.lang.StringUtils;
 

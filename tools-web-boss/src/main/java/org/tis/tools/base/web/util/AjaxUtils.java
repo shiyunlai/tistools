@@ -4,7 +4,7 @@
  * Created by su.zhang
  * Copyright (C) 2013 su.zhang, All rights reserved.
  */
-package org.tis.tools.web.base.util;
+package org.tis.tools.base.web.util;
 
 import java.io.IOException;
 import java.util.HashMap;

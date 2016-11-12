@@ -4,7 +4,7 @@
  * Created by Jackie
  * Copyright (C) 2013 lanmosoft.com, All rights reserved.
  */
-package org.tis.tools.web.base.util;
+package org.tis.tools.base.web.util;
 
 import net.sf.json.JsonConfig;
 import net.sf.json.processors.JsonValueProcessor;

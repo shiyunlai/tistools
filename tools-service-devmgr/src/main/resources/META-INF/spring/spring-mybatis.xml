@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ - Copyright 1999-2011 Alibaba Group.
+ -  
+ - Licensed under the Apache License, Version 2.0 (the "License");
+ - you may not use this file except in compliance with the License.
+ - You may obtain a copy of the License at
+ -  
+ -      http://www.apache.org/licenses/LICENSE-2.0
+ -  
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS,
+ - WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ - See the License for the specific language governing permissions and
+ - limitations under the License.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://code.alibabatech.com/schema/dubbo 
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- ======= -->	
+	<!-- MyBatis -->
+	<!-- ======= -->	
+	
+	<!-- mySQL数据源 -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://${database_url}/${database_name}?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8"/>
+        <property name="username" value="${database_username}"/>
+        <property name="password" value="${database_password}"/>
+		<property name="initialSize" value="15" />
+		<property name="maxActive" value="15" />
+		<property name="maxIdle" value="15" /> 
+	    <property name="minIdle" value="15" /> 
+	    <property name="maxWait" value="6000" /> 
+	    <property name="testOnBorrow" value="true"/> 
+	    <property name="testWhileIdle" value="true"/> 
+	    <property name="validationQuery" value="SELECT  1"/> 
+	     <property name="poolPreparedStatements" value="true"/>
+        <property name="defaultAutoCommit" value="true"/>
+	</bean>
+	
+	<!-- oracle数据源 -->
+	<!--
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${database_driverClassName}" />
+		 <property name="url" value="${database_url}" />
+		<property name="username" value="${database_username}"/>
+        <property name="password" value="${database_password}"/>
+
+		<property name="defaultAutoCommit" value="true" />
+		最大连接数
+		<property name="maxActive">
+			<value>5</value>
+		</property>
+		资源池初始化连接数
+		<property name="initialSize">
+			<value>5</value>
+		</property>
+		最大等待时间
+		<property name="maxWait">
+			<value>60000</value>
+		</property>
+		最大空余连接数
+		<property name="maxIdle">
+			<value>20</value>
+		</property>
+		最小空余连接数
+		<property name="minIdle">
+			<value>20</value>
+		</property>
+		超时后是否回收资源
+		<property name="removeAbandoned">
+			<value>true</value>
+		</property>
+		超时回收资源时间
+		<property name="removeAbandonedTimeout">
+			<value>180</value>
+		</property>
+		<property name="connectionProperties">
+			<value>clientEncoding=GBK</value>
+		</property>
+		自动重连的validate校验
+		<property name="testWhileIdle">
+			<value>true</value>
+		</property> 打开检查,用异步线程evict进行检查
+		<property name="testOnBorrow">
+			<value>false</value>
+		</property>
+		<property name="testOnReturn">
+			<value>false</value>
+		</property>
+		<property name="validationQuery">
+			<value>select sysdate from dual</value>
+		</property>
+		<property name="validationQueryTimeout">
+			<value>1</value>
+		</property>
+		<property name="timeBetweenEvictionRunsMillis">
+			<value>30000</value>
+		</property>
+		<property name="numTestsPerEvictionRun">
+			<value>20</value>
+		</property>
+	</bean> 
+	-->
+    
+    <!-- Transaction manager for a single JDBC DataSource -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean id="transactionTemplate"
+		class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+	</bean>
+
+	<!-- define the SqlSessionFactory -->
+    <bean id="sqlSessionFactory1" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="typeAliasesPackage" value="org.tis.tools.dao.mapper" />
+    </bean>
+    
+    <!-- <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:sql.cfg.xml" />
+		<property name="mapperLocations">
+			<list>
+				配置MyBaties影射文件
+				<value>classpath:/mapper/bcc/*Mapper.xml</value>
+				<value>classpath:/mapper/sys/*Mapper.xml</value>
+			</list>
+		</property>
+	</bean> -->
+    
+	<!-- scan for mappers and let them be autowired -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="org.tis.tools.dao.mapper" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory1" />
+    </bean>
+	
+</beans>
