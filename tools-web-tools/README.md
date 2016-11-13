@@ -68,13 +68,11 @@
 	
 	完成第一次重构，运行测试
 	
-	新增 model-devmgr.xml (mvn bronsp:gen-dao -DgenType=ddl)自动生成sql脚本，新建数据库表 
+	1、bronsp:gen-sdo 生成的代码支持分布式框架
+		
+	2、接下来启动 tools-web-tools测试，
 	
-	
-	
-	接下来启动 tools-web-tools测试，
-	
-	然后继续重构
+	3、然后继续重构
 	
 	
 ### 还要进行的重构
