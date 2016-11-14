@@ -11,11 +11,11 @@ public class SimpleSequenceUtilTest {
 
 	@Test
 	public void test() {
-		System.out.println(SimpleSequenceUtil.instance.getId());
-		Assert.assertEquals(17, SimpleSequenceUtil.instance.getId().length());
-		Assert.assertEquals(26, SimpleSequenceUtil.instance.getId("shiyunlai").length());
-		Assert.assertNotSame(SimpleSequenceUtil.instance.getId("shiyunlai"), 
-				SimpleSequenceUtil.instance.getId("shiyunlai"));
+		System.out.println(SequenceSimpleUtil.instance.getId());
+		Assert.assertEquals(17, SequenceSimpleUtil.instance.getId().length());
+		Assert.assertEquals(26, SequenceSimpleUtil.instance.getId("shiyunlai").length());
+		Assert.assertNotSame(SequenceSimpleUtil.instance.getId("shiyunlai"), 
+				SequenceSimpleUtil.instance.getId("shiyunlai"));
 		Assert.assertEquals("无重复", isReSequence(1000));//一秒内 1000个不重复的序号
 		Assert.assertEquals("无重复", isReSequence(5000));//一秒内 5000个不重复的序号
 		Assert.assertEquals("无重复", isReSequence(10000));//一秒内 10000个不重复的序号
@@ -34,7 +34,7 @@ public class SimpleSequenceUtilTest {
 		
 		long start = System.currentTimeMillis() ;
 		for( int i =0 ; i < reTimes ; i ++ ){
-			temp = SimpleSequenceUtil.instance.getId() ;
+			temp = SequenceSimpleUtil.instance.getId() ;
 			if( l.contains(temp) ){
 				return "重复："+temp ;
 			}else{

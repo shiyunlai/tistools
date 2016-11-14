@@ -8,22 +8,22 @@ import java.util.Date;
 
 /**
  * <pre>
- * 序号工具的简单实现
+ * 序号工具的简单工具类
  * 适用于非分布式部署情况(不确保多台服务器同时运行时产生相同ID)，
  * 实现机制：当前秒 ＋ 四位顺序号
  * </pre>
  * @author megapro
  *
  */
-public class SimpleSequenceUtil {
+public class SequenceSimpleUtil {
 
-	public static final SimpleSequenceUtil instance = new SimpleSequenceUtil() ; 
+	public static final SequenceSimpleUtil instance = new SequenceSimpleUtil() ; 
 	
 	private  static int i=0;
 	private  static int maxSeqNo = 1000 ; 
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
-	private SimpleSequenceUtil(){
+	private SequenceSimpleUtil(){
 	}
 	
 	/**

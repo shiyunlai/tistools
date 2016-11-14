@@ -91,7 +91,7 @@
 						<configuration>
 							<artifactItems>
 								<artifactItem>
-									<groupId>com.bosh.tis</groupId>
+									<groupId>org.tis</groupId>
 									<artifactId>${project.parent.artifactId}-common-assembly</artifactId>
 									<version>${tis_tools_version}</version>
 									<outputDirectory>${project.build.directory}/runtime</outputDirectory>
