@@ -12,7 +12,7 @@ package org.tis.tools.service.biztrace;
  * @author megapro
  *
  */
-public class RunDubboProviderBiztrace {
+public class StartProviderBiztrace {
 
 	/**
 	 * @param args

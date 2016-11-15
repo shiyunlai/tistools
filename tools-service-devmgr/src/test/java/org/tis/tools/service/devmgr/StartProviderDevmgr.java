@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tis.tools.provider.devmgr;
+package org.tis.tools.service.devmgr;
 
 
 /**
