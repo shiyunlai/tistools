@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.tis.tools.base.web.controller.BaseController;
 import org.tis.tools.base.web.util.AjaxUtils;
 
-import bos.tis.biztrace.handler.BizLogDateHandler;
-import bos.tis.biztrace.handler.RedisHandler;
-
 @Controller
 @RequestMapping("/RedisCleanController")
 public class RedisCleanController extends BaseController{
@@ -27,7 +24,8 @@ public class RedisCleanController extends BaseController{
 		try {
 			logger.info("RedisCleanController getRedisSpaceUsage request : received!" );
 			
-			String redisSpace = RedisHandler.instance.getRedisSpaceUsage();
+			String redisSpace = null ; 
+			//redisSpace = RedisHandler.instance.getRedisSpaceUsage();
 			
 			logger.info("RedisCleanController getRedisSpaceUsage response : " + redisSpace);
 			AjaxUtils.ajaxJson(response, JSONObject.fromObject("{redisSpace:"+redisSpace+"}", jsonConfig).toString());
@@ -45,7 +43,8 @@ public class RedisCleanController extends BaseController{
 		try {
 			logger.info("RedisCleanController getResolveredLogDate request : received!" );
 			
-			Set<String> resolvedDates = BizLogDateHandler.instance.getResolvedBizLogDate();
+			Set<String> resolvedDates = null ; 
+			//resolvedDates = BizLogDateHandler.instance.getResolvedBizLogDate();
 			
 			logger.info("RedisCleanController getResolveredLogDate response : " + resolvedDates);
 			AjaxUtils.ajaxJson(response, JSONArray.fromObject(resolvedDates, jsonConfig).toString());
@@ -66,7 +65,7 @@ public class RedisCleanController extends BaseController{
 			Object[] dateArry = jsonArry.toArray();
 			
 			for(int i=0;i<dateArry.length;i++){
-				RedisHandler.instance.cleanRedisSpace(dateArry[i].toString());
+				//RedisHandler.instance.cleanRedisSpace(dateArry[i].toString());
 			}
 			
 			AjaxUtils.ajaxJsonSuccessMessage(response, "success");

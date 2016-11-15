@@ -1,8 +1,8 @@
 package org.tis.tools.webapp.controller;
 
-import java.io.File;
-import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,99 +12,43 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.tis.tools.base.web.controller.BaseController;
 import org.tis.tools.base.web.util.AjaxUtils;
-
-import bos.tis.biztrace.BizTraceAnalyManage;
-import bos.tis.biztrace.handler.BizLogDateHandler;
-import bos.tis.biztrace.parser.LogFileParser;
-import bos.tis.biztrace.upload.FileUploadServiceI;
-import bos.tis.biztrace.upload.FileUploadServiceImpl;
-import bos.tis.biztrace.utils.RunConfig;
-import bos.tis.lpctools.util.HelperUtil;
+import org.tis.tools.service.api.biztrace.BiztraceFileInfo;
+import org.tis.tools.service.api.biztrace.IBiztraceRService;
+import org.tis.tools.service.api.biztrace.ParseProcessInfo;
 
 
 @Controller
-@RequestMapping("/BizLogHandleController")
+@RequestMapping("/biztrace") //REBUILD BizLogHandleController--> biztrace
 public class BizLogHandleController extends BaseController{
-	boolean resolverOverFlag = false;
 	
-	@RequestMapping("/upload")
-	public String upload(ModelMap model,@RequestParam MultipartFile file,
-			HttpServletRequest request,HttpServletResponse response){
-		try {			
-			logger.info("BizLogHandleController upload request : " + file);
-
-//			InputStream is = file.getInputStream();
-//			InputStreamReader isr = new InputStreamReader(is);
-//			BufferedReader reader = new BufferedReader(isr);
-//			
-//			StringBuilder s= new StringBuilder();
-//			String tempString = null;
-//			while ((tempString = reader.readLine()) != null){  
-//				s.append(tempString);
-//			}
-//			System.out.println(s.toString());
-//			
-//			reader.close();
-			InputStream data = file.getInputStream();			
-			FileUploadServiceI uploader = new FileUploadServiceImpl();
-			uploader.upload("Biztrace/"+file.getOriginalFilename(), data);
-			
-			String remotepath = "E:/fileUpload/Biztrace"+file.getOriginalFilename();
-			//解压文件
-			HelperUtil.unZipFiles(remotepath, "E:/fileUpload/Biztrace");
-			//删除压缩文件
-			File zipFile = new File(remotepath);
-			if(zipFile.exists()){
-				zipFile.delete();
-			}
-			
-//			File newfile = new File("C:/Users/HP/Desktop/"+file.getName());	
-//			
-//			FileOutputStream fos = new FileOutputStream(newfile);
-//			OutputStreamWriter writer = new OutputStreamWriter(fos,"UTF-8");
-//			writer.write(s.toString());
-//			writer.flush();
-//			writer.close();
-//			boolean flag = file.createNewFile();
-			//FileUploaderClient.instance.upload(file);
-			logger.info("BizLogHandleController upload response : 文件上传成功!");
-			AjaxUtils.ajaxJsonSuccessMessage(response, "success");
-		} catch (Exception e) {
-			AjaxUtils.ajaxJsonErrorMessage(response, "异常");
-			logger.error("BizLogHandleController upload exception : " ,e);
-		}
-		return null;		
-	}
+	
+	@Autowired
+	IBiztraceRService biztraceRService ;
+	
+	boolean resolverOverFlag = false;
 	
 	@RequestMapping("/reslover")
 	public String reslover(ModelMap model,@RequestBody String content,
 			HttpServletRequest request,HttpServletResponse response){
-		try {			
+		
+		try {
+			
 			logger.info("BizLogHandleController reslover request : " + content);
 			
-			LogFileParser.fileParsedNum = 0;
-			LogFileParser.fileReadNum = 0;
-			LogFileParser.fileParseRecord.clear();
-			resolverOverFlag = false;
+			//TODO content转为 fixedBiztraces
+			List<BiztraceFileInfo> fixedBiztraces = new ArrayList<BiztraceFileInfo>() ; 
 			
-			//String logFilesPath = "E:/fileUpload";
-			//String logFilesPath = "C:/Users/HP/Desktop/M2/logtest";
-			String logFilesPath = content;
-			if(logFilesPath==null || "".equals(logFilesPath)){
-				return null;
-			}
-					
-			BizTraceAnalyManage.instance.resolve(logFilesPath, RunConfig.threadNum);
+			biztraceRService.resolveBiztraceFixed(fixedBiztraces) ; 
 			
 			AjaxUtils.ajaxJsonSuccessMessage(response, "success");
+			
 			logger.info("BizLogHandleController reslover response : " + response);
 		} catch (Exception e) {
 			AjaxUtils.ajaxJsonErrorMessage(response, "异常");
@@ -119,23 +63,19 @@ public class BizLogHandleController extends BaseController{
 		try {			
 			logger.info("BizLogHandleController getResloverProcess request : " + content);
 			
-			int fileTotalNum = BizTraceAnalyManage.instance.getFileTotalNum();		
-			if(fileTotalNum == 0){
-				return null;
-			}
-			if(LogFileParser.fileReadNum == fileTotalNum){
-				resolverOverFlag = true;
-			}
+			ParseProcessInfo processInfo = biztraceRService.getResolveProcess()  ;
+			
 			Map<String,Object> result = new HashMap<String,Object>();
 			result.put("resolverOverFlag", resolverOverFlag);
-			result.put("fileTotalNum", fileTotalNum);
-			result.put("fileReadNum", LogFileParser.fileReadNum);
-			result.put("fileParsedNum", LogFileParser.fileParsedNum);
-			result.put("fileParseRecord", LogFileParser.fileParseRecord);
+			result.put("fileTotalNum", processInfo.getTotalLogFiles());
+//			result.put("fileReadNum", processInfo.fileReadNum);
+//			result.put("fileParsedNum", processInfo.fileParsedNum);
+//			result.put("fileParseRecord", processInfo.fileParseRecord);
 
 			AjaxUtils.ajaxJson(response, JSONObject.fromObject(result, jsonConfig).toString());			
-			//AjaxUtils.ajaxJsonSuccessMessage(response, "success");
+			
 			logger.info("BizLogHandleController getResloverProcess response : " + result.toString());
+			
 		} catch (Exception e) {
 			AjaxUtils.ajaxJsonErrorMessage(response, "异常");
 			logger.error("BizLogHandleController getResloverProcess exception : " ,e);
@@ -150,14 +90,10 @@ public class BizLogHandleController extends BaseController{
 		try {
 			logger.info("BizLogHandleController analyzer request : " + content);
 			
-			JSONArray jsonArry = JSONArray.fromObject(content);			
-			Object[] dateArry = jsonArry.toArray();
+			List<String> analyseDate = new ArrayList<String>() ;
+			//TOOD content 中传输指定好的日期
 			
-			for(int i=0;i<dateArry.length;i++){
-				BizTraceAnalyManage.instance.analyze(dateArry[i].toString());
-			}
-			
-			BizLogDateHandler.instance.deleteAnalyzedBizLogDate(dateArry);
+			biztraceRService.analyseBiztrace(analyseDate) ; 
 			
 			AjaxUtils.ajaxJsonSuccessMessage(response, "success");
 			logger.info("BizLogHandleController analyzer response : ok" );
@@ -176,7 +112,9 @@ public class BizLogHandleController extends BaseController{
 				logger.info("BizLogHandleController getUnanalyedDate request : " + content);
 			}
 			
-			Set<String> unanalyedDates = BizLogDateHandler.instance.getUnanalyzedBizLogDate();
+			Set<String> unanalyedDates = null ; 
+			
+			//unanalyedDates = BizLogDateHandler.instance.getUnanalyzedBizLogDate();
 				
 			AjaxUtils.ajaxJson(response, JSONArray.fromObject(unanalyedDates, jsonConfig).toString());
 		} catch (Exception e) {

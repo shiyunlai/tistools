@@ -19,11 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.tis.tools.base.web.controller.BaseController;
 import org.tis.tools.base.web.util.AjaxUtils;
 
-import bos.tis.biztrace.report.DayLogInfoSumReport;
-
 @Controller
 @RequestMapping("/BizLogSumQueryController")
 public class BizLogSumQueryController extends BaseController{
+	
 	@RequestMapping("/dayLogSumInfoReport")
 	public String dayLogSumInfoReport(ModelMap model,@RequestBody String content,
 			HttpServletRequest request,HttpServletResponse response){
@@ -52,7 +51,8 @@ public class BizLogSumQueryController extends BaseController{
 			for(long n=start_millis;n<=end_millis;n+=oneDayMillis){
 				Date date = new Date(n);
 				String dataStr = sdf.format(date);
-				Map<String,String> result = DayLogInfoSumReport.instance.report(dataStr);
+				Map<String,String> result = null ; 
+				//result = DayLogInfoSumReport.instance.report(dataStr);
 				if(result == null || result.isEmpty()){
 					continue;
 				}

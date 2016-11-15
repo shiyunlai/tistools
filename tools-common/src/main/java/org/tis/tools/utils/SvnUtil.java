@@ -1,4 +1,4 @@
-package bos.tis.lpctools.util;
+package org.tis.tools.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -20,6 +20,7 @@ import org.tmatesoft.svn.core.wc.SVNWCUtil;
 
 
 public class SvnUtil {
+	
 	private static String url = "http://48.1.1.62/svn/repos/tip";  
     private static SVNRepository repository = null;  
     private static String userName;

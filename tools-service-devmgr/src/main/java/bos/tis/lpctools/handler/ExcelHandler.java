@@ -4,32 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import org.tis.tools.webapp.controller.ListCheckController;
-
 import redis.clients.jedis.Jedis;
-import bos.tis.biztrace.redis.AbstractRedisHandler;
-import bos.tis.biztrace.utils.RunConfig;
+import redis.clients.jedis.JedisPool;
 import bos.tis.lpctools.entity.CommitListContent;
 import bos.tis.lpctools.util.HelperUtil;
 import bos.tis.lpctools.util.ParamsConfig;
 
-public class ExcelHandler extends AbstractRedisHandler{
+public class ExcelHandler {
 	
+	protected final JedisPool jedisPool=null ;//TODO 为了代码编译通过，临时写死
 	private Jedis jedis ;
 	private List<CommitListContent> commitListContents = null;
 	public static final ExcelHandler instance = new ExcelHandler() ;

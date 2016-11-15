@@ -16,11 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.tis.tools.base.web.controller.BaseController;
 import org.tis.tools.base.web.util.AjaxUtils;
 
-import bos.tis.biztrace.BizTraceAnalyManage;
-import bos.tis.biztrace.report.BodyInfoByRankReport;
-import bos.tis.biztrace.report.BodyInfoReport;
-import bos.tis.biztrace.report.ShowTransTimeConsumingDetailReport;
-
 @Controller
 @RequestMapping("/BizLogQueryController")
 public class BizLogQueryController extends BaseController{
@@ -81,7 +76,8 @@ public class BizLogQueryController extends BaseController{
 			String trans_serial = jsonObj.getString("trans_serial");
 			String trans_date = jsonObj.getString("trans_date");
 			
-			List<Map<String,String>> results = BodyInfoReport.instance.report(trans_serial, trans_date);
+			List<Map<String,String>> results = null ; 
+			//results = BodyInfoReport.instance.report(trans_serial, trans_date);
 			
 			logger.info("BizLogQueryController bodyInfoReport response : "+JSONArray.fromObject(results, jsonConfig).toString());
 			AjaxUtils.ajaxJson(response, JSONArray.fromObject(results, jsonConfig).toString());
@@ -100,7 +96,8 @@ public class BizLogQueryController extends BaseController{
 				logger.info("BizLogQueryController bodyInfoByRankReport request : " + content);
 			}
 						
-			List<Map<String,String>> results = BodyInfoByRankReport.instance.report(Integer.parseInt(content));
+			List<Map<String,String>> results = null ; 
+			//results = BodyInfoByRankReport.instance.report(Integer.parseInt(content));
 			
 			logger.info("BizLogQueryController bodyInfoByRankReport response : "+JSONArray.fromObject(results, jsonConfig).toString());
 			AjaxUtils.ajaxJson(response, JSONArray.fromObject(results, jsonConfig).toString());
@@ -119,8 +116,9 @@ public class BizLogQueryController extends BaseController{
 				logger.info("BizLogQueryController detailInfoReport request : " + content);
 			}
 					
-			BizTraceAnalyManage.instance.showSerialDetail(content);
-			List<Map<String,String>> results = ShowTransTimeConsumingDetailReport.results;
+			List<Map<String,String>> results = null ; 
+//			BizTraceAnalyManage.instance.showSerialDetail(content);
+//			results = ShowTransTimeConsumingDetailReport.results;
 			
 			logger.info("BizLogQueryController detailInfoReport response : " + JSONArray.fromObject(results, jsonConfig).toString());
 			AjaxUtils.ajaxJson(response, JSONArray.fromObject(results, jsonConfig).toString());

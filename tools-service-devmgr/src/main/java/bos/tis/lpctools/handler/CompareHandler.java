@@ -1,21 +1,17 @@
 package bos.tis.lpctools.handler;
 
 import java.io.File;
-import java.io.FileFilter;
-import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.tis.tools.utils.SvnUtil;
 import org.tmatesoft.svn.core.SVNException;
 
 import bos.tis.lpctools.entity.CommitListContent;
-import bos.tis.lpctools.util.HelperUtil;
 import bos.tis.lpctools.util.ParamsConfig;
-import bos.tis.lpctools.util.SvnUtil;
 
 public class CompareHandler {
 	

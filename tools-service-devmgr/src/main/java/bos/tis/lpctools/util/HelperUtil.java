@@ -13,7 +13,6 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -21,49 +20,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import java.util.zip.ZipInputStream;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.tis.tools.webapp.controller.ListCheckController;
-
-import bos.tis.biztrace.utils.Helper;
+import org.tis.tools.utils.DirectoryUtil;
 
 
 
 public class HelperUtil {
-	/**
-	 * 获取某个路径下符合条件的子文件
-	 * @param path	路径
-	 * @param fileFilterFlag 过滤标志
-	 * @return
-	 */
-	public static List<File> listFiles(String path,final String fileFilterFlag){
-		List<File> files = null;
-		try {
-			files = Helper.listFile(path,true,new FileFilter(){
-				@Override
-				public boolean accept(File pathname) {			
-					if( pathname.getAbsolutePath().indexOf(fileFilterFlag) > 0 ){
-						return true ; 
-					}
-					
-					return false;
-				}
-			}) ;
-		} catch (Exception e) {
-			e.printStackTrace();	
-			throw new IllegalArgumentException(path+"路径不存在!");
-		}
-				
-		return files;
-	}
 	
 	/**
 	 * 解析excel文件

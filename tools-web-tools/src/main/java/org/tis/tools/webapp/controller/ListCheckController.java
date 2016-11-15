@@ -1,59 +1,35 @@
 package org.tis.tools.webapp.controller;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.tis.tools.base.web.controller.BaseController;
-import org.tis.tools.base.web.util.AjaxUtils;
-
-import bos.tis.biztrace.upload.FileUploadServiceI;
-import bos.tis.biztrace.upload.FileUploadServiceImpl;
-import bos.tis.lpctools.entity.CommitListContent;
-import bos.tis.lpctools.handler.CompareHandler;
-import bos.tis.lpctools.handler.PackageHandler;
-import bos.tis.lpctools.util.HelperUtil;
-import bos.tis.lpctools.util.ParamsConfig;
-import bos.tis.lpctools.util.SvnUtil;
 
 @Controller
 @RequestMapping("/ListCheckController")
 public class ListCheckController extends BaseController{
-	@RequestMapping("/upload")
-	public String upload(ModelMap model,@RequestParam MultipartFile file,
-			HttpServletRequest request,HttpServletResponse response){
-		try {			
-			logger.info("ListCheckController upload request : " + file);
-		
-			InputStream data = file.getInputStream();			
-			FileUploadServiceI uploader = new FileUploadServiceImpl();
-			uploader.upload("ListCheck/"+file.getOriginalFilename(), data);		 
-			
-			logger.info("ListCheckController upload response : 文件上传成功!");
-			AjaxUtils.ajaxJsonSuccessMessage(response, "success");
-		} catch (Exception e) {
-			AjaxUtils.ajaxJsonErrorMessage(response, e.getMessage());
-			logger.error("ListCheckController upload exception : " ,e);
-		}
-		return null;		
-	}
-		
+	
+//	不会在用文件上传的方式来传递布丁清单, 布补丁信息已经录入到数据库（devmgr模块）
+//	@RequestMapping("/upload")
+//	public String upload(ModelMap model,@RequestParam MultipartFile file,
+//			HttpServletRequest request,HttpServletResponse response){
+//		try {			
+//			logger.info("ListCheckController upload request : " + file);
+//		
+//			InputStream data = file.getInputStream();			
+//			FileUploadServiceI uploader = new FileUploadServiceImpl();
+//			uploader.upload("ListCheck/"+file.getOriginalFilename(), data);		 
+//			
+//			logger.info("ListCheckController upload response : 文件上传成功!");
+//			AjaxUtils.ajaxJsonSuccessMessage(response, "success");
+//		} catch (Exception e) {
+//			AjaxUtils.ajaxJsonErrorMessage(response, e.getMessage());
+//			logger.error("ListCheckController upload exception : " ,e);
+//		}
+//		return null;		
+//	}
+
+	
+/** temp del start by shiyl 重新设计清单&包管理模块功能、devmgr服务接口后再开发 
 	@RequestMapping("/importFile")
 	public String importFile(ModelMap model,@RequestBody String content,
 			HttpServletRequest request,HttpServletResponse response){
@@ -165,6 +141,8 @@ public class ListCheckController extends BaseController{
 		}
 		return null;		
 	}
+	
+	temp del end **/
 	
 	
 //	@RequestMapping("/getList")
