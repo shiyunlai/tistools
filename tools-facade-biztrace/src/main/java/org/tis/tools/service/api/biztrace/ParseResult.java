@@ -14,12 +14,16 @@ import java.util.List;
  *
  */
 public class ParseResult implements Serializable {
-
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1122766043482167154L;
 	
+	//当前解析进度信息
+	private ParseProcessInfo currParseProcessInfo ; 
+	
+	//解析处理基本信息
 	private List<SimpleParseStatics> parseInfo ; 
 	
 	public List<SimpleParseStatics> getParseInfo(){

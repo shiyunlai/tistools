@@ -4,6 +4,7 @@
 package org.tis.tools.service.api.biztrace;
 
 import java.util.List;
+import java.util.Map;
 
 import org.tis.tools.service.exception.biztrace.BiztraceRServiceException;
 
@@ -31,7 +32,15 @@ public interface IBiztraceRService {
 	 * @return 按日分组的解析结果
 	 * @throws BiztraceRServiceException 执行失败时抛出异常
 	 */
-	public ParseResult parseBiztraceFixed(List<BiztraceFileInfo> fixedBiztraces) throws BiztraceRServiceException ; 
+	public ParseResult resolveBiztraceFixed(List<BiztraceFileInfo> fixedBiztraces) throws BiztraceRServiceException ; 
+	
+	
+	/**
+	 * 获取当前解析进度信息
+	 * @return
+	 */
+	public ParseProcessInfo getResolveProcess() ; 
+	
 	
 	/**
 	 * 分析<code>fixedDay</code>指定日期范围内的业务日志明细

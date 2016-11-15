@@ -6,6 +6,7 @@ import java.util.List;
 import org.tis.tools.service.api.biztrace.AnalyseResult;
 import org.tis.tools.service.api.biztrace.BiztraceFileInfo;
 import org.tis.tools.service.api.biztrace.IBiztraceRService;
+import org.tis.tools.service.api.biztrace.ParseProcessInfo;
 import org.tis.tools.service.api.biztrace.ParseResult;
 import org.tis.tools.service.biztrace.BizTraceAnalyManage;
 import org.tis.tools.service.biztrace.TISLogFile;
@@ -51,10 +52,17 @@ public class BiztraceRService implements IBiztraceRService
 	}
 
 	@Override
-	public ParseResult parseBiztraceFixed(List<BiztraceFileInfo> fixedBiztraces)
+	public ParseResult resolveBiztraceFixed(List<BiztraceFileInfo> fixedBiztraces)
 			throws BiztraceRServiceException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public ParseProcessInfo getResolveProcess() {
+		
+		//TODO Auto-generated method stub
+		return null ; 
 	}
 
 	@Override
@@ -63,7 +71,5 @@ public class BiztraceRService implements IBiztraceRService
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 	
 }

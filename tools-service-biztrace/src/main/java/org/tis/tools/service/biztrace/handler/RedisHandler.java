@@ -13,7 +13,7 @@ public class RedisHandler extends AbstractRedisHandler{
 	private String redisDbSize;
 	public static final RedisHandler instance = new RedisHandler() ;
 	
-	public String getRedisSpaceUsage(){		
+	public String getRedisSpaceUsage(){
 		try{
 			jedis = jedisPool.getResource() ;
 			String redisInfo = jedis.info();
