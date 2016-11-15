@@ -150,6 +150,7 @@
 		<protostuff_version>1.0.8</protostuff_version>
 		<junrar_version>0.7</junrar_version>
 		<svnkit_version>1.7.11</svnkit_version>
+		<poi_version>3.10-FINAL</poi_version>
 		
 	</properties>
 	<dependencyManagement>
@@ -690,6 +691,19 @@
 				<artifactId>svnkit</artifactId>
 				<version>${svnkit_version}</version>
 			</dependency>
+			
+			<!-- poi -->
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi-ooxml</artifactId>
+				<version>${poi_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi-scratchpad</artifactId>
+				<version>${poi_version}</version>
+			</dependency>
+			
 			<!--### Common libs end ### -->
 		</dependencies>
 	</dependencyManagement>
