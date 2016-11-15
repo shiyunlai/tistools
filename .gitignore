@@ -33,10 +33,11 @@ target/
 
 autogen/
 
-dubbo/output/
+dubbo/
+
+logs/
 
 #暂时不提交tools-web-tools
 tools-web-tools3/
 
-
-tools-web-tools/src/main/webapp/.idea/encodings.xml
+tools-web-tools/src/main/webapp/.idea/
