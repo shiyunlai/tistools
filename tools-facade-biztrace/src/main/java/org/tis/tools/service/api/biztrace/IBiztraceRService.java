@@ -15,7 +15,7 @@ import org.tis.tools.service.exception.biztrace.BiztraceRServiceException;
  * @author megapro
  *
  */
-public interface IBiztraceAgentRService {
+public interface IBiztraceRService {
 	
 	/**
 	 * 列出当前有那些biztrace的日志文件

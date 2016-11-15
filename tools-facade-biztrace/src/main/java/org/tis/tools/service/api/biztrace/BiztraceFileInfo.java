@@ -75,4 +75,12 @@ public class BiztraceFileInfo implements Serializable {
 		this.fileSize = fileSize;
 	}
 	
+	public String toString(){
+		StringBuffer sb = new StringBuffer() ; 
+		sb.append(filePath).append("\t") ;
+		sb.append(fileName).append("\t") ;
+		sb.append(lastModifedTime).append("\t") ;
+		sb.append(fileSize).append("/KB").append("\t") ;
+		return sb.toString() ; 
+	}
 }

@@ -27,10 +27,10 @@
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>commons-pool</groupId>
 			<artifactId>commons-pool</artifactId>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>

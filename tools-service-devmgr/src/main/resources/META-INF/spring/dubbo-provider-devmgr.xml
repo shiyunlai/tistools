@@ -35,7 +35,9 @@
 	
 	<!-- 暴露服务 -->
 	<dubbo:service group="devmgr" version="1.0" interface="org.tis.tools.service.api.devmgr.DevMgrRemoteService" ref="devMgrRemoteServiceImpl"  protocol="dubbo"  timeout="3000" />
+	<dubbo:service group="devmgr" version="1.0" interface="org.tis.tools.service.api.devmgr.FeatureRegRemoteService" ref="featureRegRemoteServiceImpl"  protocol="dubbo"  timeout="3000" />
 
 	<!-- 具体实现 -->
     <bean id="devMgrRemoteServiceImpl" class="org.tis.tools.service.impl.devmgr.DevMgrRemoteServiceImpl" />
+    <bean id="featureRegRemoteServiceImpl" class="org.tis.tools.service.impl.devmgr.FeatureRegRemoteServiceImpl" />
 </beans>

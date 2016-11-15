@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.tis.tools.service.api.biztrace.AnalyseResult;
 import org.tis.tools.service.api.biztrace.BiztraceFileInfo;
-import org.tis.tools.service.api.biztrace.IBiztraceAgentRService;
+import org.tis.tools.service.api.biztrace.IBiztraceRService;
 import org.tis.tools.service.api.biztrace.ParseResult;
 import org.tis.tools.service.biztrace.BizTraceAnalyManage;
 import org.tis.tools.service.biztrace.TISLogFile;
@@ -19,13 +19,14 @@ import org.tis.tools.utils.TimeUtil;
  * @author megapro
  *
  */
-public class BSBiztraceAgentRService implements IBiztraceAgentRService
+public class BiztraceRService implements IBiztraceRService
 {
 
 	@Override
 	public List<BiztraceFileInfo> listBiztraces()
 			throws BiztraceRServiceException {
 		
+		//TODO 修改为本地BS的日志路径
 		String bsPath = "/Users/megapro/temp" ; 
 		String bsLogPath = bsPath + "/logs/" ; 
 		

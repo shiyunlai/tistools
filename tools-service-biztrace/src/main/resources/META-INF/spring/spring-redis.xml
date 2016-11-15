@@ -20,24 +20,58 @@
 	<!-- Redis -->
 	<!-- ======= -->
 
-	<!-- redis 非集群 -->
+	<!-- 使用主备(master-slaver)方式 -->
 	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
-        <property name="maxTotal"      value="${redis.pool.maxTotal}"  />
-        <property name="maxIdle"       value="${redis.pool.maxIdle}" />
-        <property name="MaxWaitMillis" value="${redis.pool.MaxWaitMillis}" />
-        <property name="testOnBorrow"  value="${redis.testOnBorrow}"/>
-        <property name="testOnReturn"  value="${redis.testOnReturn}"/>
+        <property name="maxTotal" value="10" />
+        <property name="maxIdle" value="2" />
+        <property name="minIdle" value="0" />
+        <property name="MaxWaitMillis" value="1000" />
+        <property name="testOnBorrow" value="true"/>
+        <property name="testOnReturn" value="true"/>
+        <!-- <property name="testWhileIdle" value="true"/> -->
     </bean>
-    
+	
     <bean id="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool"  scope="singleton">
         <constructor-arg index="0" ref="jedisPoolConfig" />
         <constructor-arg index="1">
             <list>
-                <bean class="redis.clients.jedis.JedisShardInfo">
-                    <constructor-arg name="host" value="${redis.uri}" />
+                <bean name="master" class="redis.clients.jedis.JedisShardInfo">
+                    <constructor-arg name="host" value="${redis.host}" />
+                    <constructor-arg name="port" value="${redis.port}" />
+                    <constructor-arg name="name" value="${redis.name}" />
+                    <constructor-arg name="timeout" value="${redis.soTimeout}" />
+                </bean>
+                <bean name="slaver" class="redis.clients.jedis.JedisShardInfo">
+                    <constructor-arg name="host" value="${redis.host}" />
+                    <constructor-arg name="port" value="${redis.port}" />
+                    <constructor-arg name="name" value="${redis.name}" />
+                    <constructor-arg name="timeout" value="${redis.soTimeout}" />
                 </bean>
             </list>
         </constructor-arg>
     </bean>
-	
+
+	<!-- 使用sentinel pool方式 
+	https://my.oschina.net/dxqr/blog/711578
+	-->
+	<!-- 
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxTotal" value="50" />
+		<property name="maxIdle" value="10" />
+		<property name="minIdle" value="0" />
+	</bean>
+
+	<bean id="jedisPool" class="redis.clients.jedis.JedisSentinelPool">
+		<constructor-arg index="0" value="mymaster" />
+		<constructor-arg index="1">
+			<set>
+				<value>172.16.154.232:7031</value>
+				<value>172.16.154.233:7031</value>
+			</set>
+		</constructor-arg>
+		<constructor-arg index="2" ref="jedisPoolConfig" />
+		<constructor-arg index="3" value="600000" />
+		<constructor-arg index="4" value="foobared" />
+	</bean> -->
+    
 </beans>

@@ -12,6 +12,9 @@
     <context:annotation-config/>
 
     <!-- Activates scanning of @Service -->
-    <context:component-scan base-package="d.service"/>
+    <context:component-scan base-package="org.tis,bos.tis"/>
+    
+     <!-- 引入Dubbo配置 -->
+    <import resource="dubbo-consumer.xml" />
     
 </beans>

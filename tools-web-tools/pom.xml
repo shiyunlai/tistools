@@ -570,6 +570,10 @@
 			<artifactId>tools-web-boss</artifactId>
 			<version>0.0.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.tis</groupId>
+			<artifactId>tools-facade-biztrace</artifactId>
+		</dependency>
 	</dependencies>
 
 	<properties>
