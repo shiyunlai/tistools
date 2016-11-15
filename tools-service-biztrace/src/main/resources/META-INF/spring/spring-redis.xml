@@ -22,30 +22,31 @@
 
 	<!-- 使用主备(master-slaver)方式 -->
 	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
-        <property name="maxTotal" value="10" />
-        <property name="maxIdle" value="2" />
-        <property name="minIdle" value="0" />
-        <property name="MaxWaitMillis" value="1000" />
-        <property name="testOnBorrow" value="true"/>
-        <property name="testOnReturn" value="true"/>
-        <!-- <property name="testWhileIdle" value="true"/> -->
+        <property name="maxTotal" value="${redis.maxTotal}" />
+        <property name="maxIdle" value="${redis.maxIdle}" />
+        <property name="minIdle" value="${redis.minIdle}" />
+        <property name="MaxWaitMillis" value="${redis.MaxWaitMillis}" />
+        <property name="testOnBorrow" value="${redis.testOnBorrow}"/>
+        <property name="testOnReturn" value="${redis.testOnReturn}"/>
+        <!-- <property name="testWhileIdle" value="${redis.testWhileIdle}"/> -->
     </bean>
 	
     <bean id="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool"  scope="singleton">
         <constructor-arg index="0" ref="jedisPoolConfig" />
         <constructor-arg index="1">
             <list>
+            	<!-- ## //TODO 要支持redis集群 -->
                 <bean name="master" class="redis.clients.jedis.JedisShardInfo">
                     <constructor-arg name="host" value="${redis.host}" />
                     <constructor-arg name="port" value="${redis.port}" />
                     <constructor-arg name="name" value="${redis.name}" />
-                    <constructor-arg name="timeout" value="${redis.soTimeout}" />
+                    <constructor-arg name="timeout" value="${redis.timeout}" />
                 </bean>
                 <bean name="slaver" class="redis.clients.jedis.JedisShardInfo">
                     <constructor-arg name="host" value="${redis.host}" />
                     <constructor-arg name="port" value="${redis.port}" />
                     <constructor-arg name="name" value="${redis.name}" />
-                    <constructor-arg name="timeout" value="${redis.soTimeout}" />
+                    <constructor-arg name="timeout" value="${redis.timeout}" />
                 </bean>
             </list>
         </constructor-arg>
