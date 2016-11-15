@@ -36,6 +36,11 @@
 			<groupId>com.github.junrar</groupId>
 			<artifactId>junrar</artifactId>
 		</dependency>
+		<!-- svnkit -->
+		<dependency>
+			<groupId>org.tmatesoft.svnkit</groupId>
+			<artifactId>svnkit</artifactId>
+		</dependency>
 
 	</dependencies>
 </project>

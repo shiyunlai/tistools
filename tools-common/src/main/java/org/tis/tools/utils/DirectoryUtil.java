@@ -17,7 +17,33 @@ import java.util.List;
  */
 public class DirectoryUtil {
 
-	
+	/**
+	 * 根据文件后缀,列出目录下指定的文件
+	 * @param path	路径
+	 * @param recusive 递归方式
+	 * @param subfix 文件后缀
+	 * @return
+	 */
+	public static List<File> listFile(String path,boolean recusive , final String subfix){
+		List<File> files = null;
+		
+		try {
+			files = listFile(path,recusive,new FileFilter(){
+				@Override
+				public boolean accept(File pathname) {
+					if( pathname.getAbsolutePath().endsWith(subfix) ){
+						return true ; 
+					}
+					return false;
+				}
+			}) ;
+		} catch (Exception e) {
+			e.printStackTrace();	
+			throw new IllegalArgumentException(path+"路径不存在!");
+		}
+		
+		return files;
+	}
 
 	/**
 	 * 列出目录下指定的文件
@@ -35,7 +61,7 @@ public class DirectoryUtil {
 	/**
 	 * 遍历dir目录下所有文件
 	 * @param dir 遍历目录
-	 * @param recusive 是否递归遍历子目录
+	 * @param recusive 是否递归遍历子目录 true递归 false只遍历一级目录
 	 * @param filter 过滤文件条件
 	 * @return
 	 * @throws Exception
