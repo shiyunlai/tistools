@@ -546,11 +546,6 @@
 		</dependency>
 
 		<!-- svnkit -->
-		<dependency>
-			<groupId>org.tmatesoft.svnkit</groupId>
-			<artifactId>svnkit</artifactId>
-			<version>1.7.11</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.tis</groupId>
