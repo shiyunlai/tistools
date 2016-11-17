@@ -12,8 +12,14 @@
 		此处申明引入服务，但是，如果这些服务没有被初始化，则这些服务不会立即向注册中心注册 
 		如：只有在 OrgController.java 中作为 @Autowired，该服务才会想注册中心注册，也才能在注册中心看见该服务。
 	-->
-	
+
 	<!-- 声明需要暴露的服务接口 -->
-	<dubbo:reference id="biztraceRService" group="biztrace" version="1.0" interface="org.tis.tools.service.api.biztrace.IBiztraceRService" check="false"/>
+	<dubbo:reference 
+		id="biztraceRService" 
+		group="biztrace"
+		version="1.0" 
+		interface="org.tis.tools.service.api.biztrace.IBiztraceRService" 
+		check="false" 
+		loadbalance="byhost" /><!-- 使用了扩展loadbalance，根据指定ip调用服务提供者 -->
 	
 </beans>

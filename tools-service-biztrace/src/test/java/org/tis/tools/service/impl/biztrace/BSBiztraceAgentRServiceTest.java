@@ -13,7 +13,7 @@ public class BSBiztraceAgentRServiceTest {
 	@Test
 	public void test() {
 		BiztraceRService biztraceRService = new BiztraceRService() ; 
-		List<BiztraceFileInfo> ll = biztraceRService.listBiztraces() ;
+		List<BiztraceFileInfo> ll = biztraceRService.listBiztraces("127.0.0.1:20883") ;
 		for( BiztraceFileInfo info : ll ){
 			System.out.println(info);
 		}

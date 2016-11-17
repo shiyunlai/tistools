@@ -13,6 +13,7 @@ import net.sf.json.util.JSONUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,11 +48,12 @@ public class BizTest extends BaseController {
 	IBiztraceRService biztraceRService ;
 
 	@ResponseBody
-	@RequestMapping(value="/biztrace/list",method=RequestMethod.GET)
-	public String getBranchCode(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value="/biztrace/{providerHost}/list",method=RequestMethod.GET)
+	public String getBranchCode(HttpServletRequest request, @PathVariable String providerHost,
+			HttpServletResponse response) {
 		
-		System.out.println("调用biztrace服务，列出日志文件");
-		List<BiztraceFileInfo> logFileList = biztraceRService.listBiztraces() ;
+		System.out.println("调用<"+providerHost+">biztrace服务，列出日志文件");
+		List<BiztraceFileInfo> logFileList = biztraceRService.listBiztraces(providerHost) ;
 		for(BiztraceFileInfo f : logFileList ){
 			System.out.println( f );
 		}

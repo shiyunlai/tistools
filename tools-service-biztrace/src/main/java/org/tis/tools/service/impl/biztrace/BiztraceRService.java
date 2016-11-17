@@ -24,9 +24,10 @@ public class BiztraceRService implements IBiztraceRService
 {
 
 	@Override
-	public List<BiztraceFileInfo> listBiztraces()
+	public List<BiztraceFileInfo> listBiztraces( String providerHost )
 			throws BiztraceRServiceException {
 		
+		System.out.println("haha....<"+providerHost+">干活，列出所有日志文件名！" );
 		//TODO 修改为本地BS的日志路径
 		String bsPath = "/Users/megapro/temp" ; 
 		String bsLogPath = bsPath + "/logs/" ; 
