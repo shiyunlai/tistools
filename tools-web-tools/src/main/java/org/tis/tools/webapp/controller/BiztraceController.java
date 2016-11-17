@@ -18,8 +18,8 @@ import org.tis.tools.base.web.controller.BaseController;
 import org.tis.tools.base.web.util.AjaxUtils;
 import org.tis.tools.service.api.biztrace.BiztraceFileInfo;
 import org.tis.tools.service.api.biztrace.IBiztraceRService;
-import org.tis.tools.webapp.impl.biztracemgr.BiztraceManager;
-import org.tis.tools.webapp.spi.biztracemgr.BiztraceAgentInfo;
+import org.tis.tools.webapp.impl.dubboinfo.BiztraceManager;
+import org.tis.tools.webapp.spi.dubboinfo.DubboServiceInfo;
 
 import net.sf.json.JSONArray;
 
@@ -55,7 +55,7 @@ public class BiztraceController extends BaseController{
 		try {
 			logger.info("list agents : " );
 			
-			List<BiztraceAgentInfo> agents = BiztraceManager.instance.getBiztraceAgentList()  ;
+			List<DubboServiceInfo> agents = BiztraceManager.instance.getBiztraceProviderList()  ;
 			
 			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(agents).toString());
 			

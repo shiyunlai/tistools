@@ -1,18 +1,18 @@
 /**
  * 
  */
-package org.tis.tools.webapp.impl.biztracemgr;
+package org.tis.tools.webapp.impl.dubboinfo;
 
 import java.util.List;
 
-import org.tis.tools.webapp.spi.biztracemgr.BiztraceAgentInfo;
-import org.tis.tools.webapp.spi.biztracemgr.IBiztraceManager;
+import org.tis.tools.webapp.spi.dubboinfo.DubboServiceInfo;
+import org.tis.tools.webapp.spi.dubboinfo.IDubboInfoManager;
 
 /**
  * @author megapro
  *
  */
-public class BiztraceManager implements IBiztraceManager {
+public class BiztraceManager implements IDubboInfoManager {
 	
 	public static BiztraceManager instance = new BiztraceManager() ; 
 	
@@ -24,7 +24,7 @@ public class BiztraceManager implements IBiztraceManager {
 	 * 获取所有biztrace代理服务信息列表
 	 * @return
 	 */
-	public List<BiztraceAgentInfo> getBiztraceAgentList() {
+	public List<DubboServiceInfo> getBiztraceProviderList() {
 		
 		//TODO 
 		//解析当前应用目录下 dubbo/output/tools-web-tools.cache 

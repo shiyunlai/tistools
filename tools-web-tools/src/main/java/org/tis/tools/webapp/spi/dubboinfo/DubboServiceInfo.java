@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tis.tools.webapp.spi.biztracemgr;
+package org.tis.tools.webapp.spi.dubboinfo;
 
 import java.io.Serializable;
 
@@ -10,9 +10,9 @@ import com.alibaba.dubbo.common.URL;
 /**
  * <pre>
  * 
- * biztrace服务提供者信息
+ * Dubbo服务信息
  * 
- * 每个BiztraceAgentInfo对应一个业务日志代理服务，以dubbo的服务提供者实现，其信息结构为：
+ * 来自对.cache文件的解析
  * 
  * dubbo\://192.168.0.102\:20883/org.tis.tools.service.api.biztrace.IBiztraceRService?
 	anyhost\=true&
@@ -35,7 +35,7 @@ import com.alibaba.dubbo.common.URL;
  * @author megapro
  *
  */
-public class BiztraceAgentInfo implements Serializable {
+public class DubboServiceInfo implements Serializable {
 
 	/**
 	 * 
@@ -49,7 +49,7 @@ public class BiztraceAgentInfo implements Serializable {
 	private String protocol = null;
 	private String serviceName = null;
 
-	public BiztraceAgentInfo(String url) {
+	public DubboServiceInfo(String url) {
 		dubboProviderUrl = URL.valueOf(url);
 		this.setHost(dubboProviderUrl.getHost());
 		this.setPort(dubboProviderUrl.getPort());
