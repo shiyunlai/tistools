@@ -27,13 +27,9 @@
 
 *.searchable
 
-*.cache
-
 target/
 
 autogen/
-
-dubbo/output/
 
 logs/
 

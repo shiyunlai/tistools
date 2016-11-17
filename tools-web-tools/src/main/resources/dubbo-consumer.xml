@@ -12,7 +12,7 @@
 	<dubbo:application name="tools-web-tools" />
 
 	<!-- 使用zookeeper注册中心暴露服务地址 -->
-	<dubbo:registry address="zookeeper://127.0.0.1:2181" file="dubbo/output/tools-web-tools.cache"/>
+	<dubbo:registry address="zookeeper://127.0.0.1:2181" file="cache/tools-web-tools.cache"/>
 	
 	<import resource="dubbo-reference-devmgr.xml"/>
 	<import resource="dubbo-reference-biztrace.xml"/>
