@@ -66,7 +66,7 @@
 		
 ### 进行分布式工程切分，实现分布式服务开发和部署运行 web-tools工程作为服务消费者调用其他服务提供者，实现功能
 	
-	重构 com.bos.tis.tools.util 包路径下的java，根据功能分别存放到 web-boss和 tools-common
+	重构 com.bos.tis.tools.util 包路径下的java，根据功能分别存放到 web-boss和 tools-common  ok
 	
 	完成第一次重构，运行测试
 	
@@ -98,7 +98,10 @@
 	
 	//TODO 8：获取zookeeper节点信息，得知当前有那些biztrace代理服务
 	
-	//TODO 9：与biztrace代理服务进行点对点服务调用
+	//TODO 9：与biztrace代理服务进行点对点服务调用 ok - 暂时扩展dubbo的负载均衡机制实现（更好的应该扩展路由，待研究）
+	
+	//TODO 10：继续整理移植到 tools-service-biztrace中的代码，恢复原biztrace功能（界面除外）
+	//TODO 11：研究下 shiro 框架是否能用作 机构人员权限管理
 	
 	
 	

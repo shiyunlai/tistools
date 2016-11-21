@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tis.tools.utils;
+package org.tis.tools.common.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

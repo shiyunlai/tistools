@@ -146,7 +146,7 @@
 		<jaxb-api.version>2.2</jaxb-api.version>
 		<ehcache.version>2.6.2</ehcache.version>
 		<ehcache.web.version>2.0.4</ehcache.web.version>
-		<pinyin4j.version>2.5.1</pinyin4j.version>
+		<pinyin4j.version>2.5.0</pinyin4j.version>
 		<protostuff_version>1.0.8</protostuff_version>
 		<junrar_version>0.7</junrar_version>
 		<svnkit_version>1.7.11</svnkit_version>
@@ -673,11 +673,10 @@
 				<version>${ehcache.web.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.belerweb</groupId>
-				<artifactId>pinyin4j</artifactId>
+	       		<groupId>net.sourceforge.pinyin4j</groupId>
+	            <artifactId>pinyin4j</artifactId>
 				<version>${pinyin4j.version}</version>
-			</dependency>
-			
+	        </dependency>
 			<!-- junrar -->
 			<dependency>
 				<groupId>com.github.junrar</groupId>

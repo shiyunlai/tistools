@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tis.tools.utils;
+package org.tis.tools.common.utils;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -88,4 +88,38 @@ public class DirectoryUtil {
 		
 		return allFiles ; 
 	}
+	
+	
+	/**
+	 * <pre>
+	 * 获取应用主路径
+	 * 如：
+	 * 应用biztrace 部署于 tis用户目录app下， /tis/app/biztrace
+	 * 本方法返回 /tis/app
+	 * 应用biztrace 部署于 tis用户目录app下， C:/tis/app/biztrace
+	 * 本方法返回 C:/tis/app
+	 * </pre>
+	 * @return
+	 */
+	public static String getAppMainDirectory(){
+		String str = System.getProperty("user.dir") ; 
+		return str ; 
+	}
+	
+	
+	/**
+	 *  <pre>
+	 * 获取类clazz的根路径
+	 * 如：Abc.class 位于工程 C:/tis/app/biztrace/lib/abc.jar中，则返回: C:/tis/app/biztrace
+	 * </pre>
+	 * @param clazz
+	 * @return
+	 */
+	public static String getClassRootDirectory(Class<?> clazz){
+		
+		File f = new File(clazz.getClass().getResource("/").getPath());
+        //System.out.println(f);
+		return f.getAbsolutePath() ;
+	}
+	
 }

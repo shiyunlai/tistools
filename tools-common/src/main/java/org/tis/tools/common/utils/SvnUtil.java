@@ -1,4 +1,4 @@
-package org.tis.tools.utils;
+package org.tis.tools.common.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;

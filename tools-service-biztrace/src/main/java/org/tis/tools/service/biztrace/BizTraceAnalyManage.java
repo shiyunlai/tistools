@@ -13,6 +13,8 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tis.tools.common.utils.BasicUtil;
+import org.tis.tools.common.utils.DirectoryUtil;
 import org.tis.tools.service.biztrace.TISLogFile.LogTypeEnum;
 import org.tis.tools.service.biztrace.analyzer.TransTimeConsumingAnalyzer;
 import org.tis.tools.service.biztrace.parser.LogFileParser;
@@ -21,8 +23,6 @@ import org.tis.tools.service.biztrace.report.TopsTransTimeConsumingReport;
 import org.tis.tools.service.biztrace.report.TotalRequestServiceTypeReport;
 import org.tis.tools.service.biztrace.report.TotalRequestTimesReport;
 import org.tis.tools.service.biztrace.report.TotalTransSumReport;
-import org.tis.tools.utils.BasicUtil;
-import org.tis.tools.utils.DirectoryUtil;
 
 
 /**

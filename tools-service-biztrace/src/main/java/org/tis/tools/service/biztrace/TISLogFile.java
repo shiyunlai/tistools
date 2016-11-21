@@ -6,9 +6,9 @@ package org.tis.tools.service.biztrace;
 import java.io.File;
 import java.io.Serializable;
 
+import org.tis.tools.common.utils.TimeUtil;
 import org.tis.tools.service.biztrace.parser.BizTraceResolver;
 import org.tis.tools.service.biztrace.parser.DefaultResolver;
-import org.tis.tools.utils.TimeUtil;
 
 /**
  * TIS系统的日志文件

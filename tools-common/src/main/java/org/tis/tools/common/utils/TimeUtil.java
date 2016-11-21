@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tis.tools.utils;
+package org.tis.tools.common.utils;
 
 import java.text.DateFormat;
 import java.text.ParseException;

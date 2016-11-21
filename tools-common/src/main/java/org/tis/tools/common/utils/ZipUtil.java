@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tis.tools.utils;
+package org.tis.tools.common.utils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

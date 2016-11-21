@@ -1,4 +1,4 @@
-package org.tis.tools.utils;
+package org.tis.tools.common.utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import junit.framework.Assert;
 
 import org.junit.Test;
+import org.tis.tools.common.utils.SequenceSimpleUtil;
 
 public class SimpleSequenceUtilTest {
 

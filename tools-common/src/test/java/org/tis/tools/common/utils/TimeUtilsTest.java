@@ -1,4 +1,4 @@
-package org.tis.tools.utils;
+package org.tis.tools.common.utils;
 
 import static org.junit.Assert.*;
 
@@ -8,6 +8,7 @@ import java.util.Date;
 import junit.framework.Assert;
 
 import org.junit.Test;
+import org.tis.tools.common.utils.TimeUtil;
 
 public class TimeUtilsTest {
 

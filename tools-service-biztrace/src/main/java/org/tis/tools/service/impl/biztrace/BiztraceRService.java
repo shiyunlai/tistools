@@ -3,6 +3,7 @@ package org.tis.tools.service.impl.biztrace;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.tis.tools.common.utils.TimeUtil;
 import org.tis.tools.service.api.biztrace.AnalyseResult;
 import org.tis.tools.service.api.biztrace.BiztraceFileInfo;
 import org.tis.tools.service.api.biztrace.IBiztraceRService;
@@ -11,7 +12,6 @@ import org.tis.tools.service.api.biztrace.ParseResult;
 import org.tis.tools.service.biztrace.BizTraceAnalyManage;
 import org.tis.tools.service.biztrace.TISLogFile;
 import org.tis.tools.service.exception.biztrace.BiztraceRServiceException;
-import org.tis.tools.utils.TimeUtil;
 
 
 /**
@@ -28,7 +28,7 @@ public class BiztraceRService implements IBiztraceRService
 			throws BiztraceRServiceException {
 		
 		System.out.println("haha....<"+providerHost+">干活，列出所有日志文件名！" );
-		//TODO 修改为本地BS的日志路径
+		//TODO 修改为本地BS的日志路径 默认biztrace与bs同目录部署，于是 ../bs/logs/就是日志目录位置
 		String bsPath = "/Users/megapro/temp" ; 
 		String bsLogPath = bsPath + "/logs/" ; 
 		

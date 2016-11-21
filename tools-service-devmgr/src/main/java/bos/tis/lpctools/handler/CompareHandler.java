@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.tis.tools.utils.SvnUtil;
+import org.tis.tools.common.utils.SvnUtil;
 import org.tmatesoft.svn.core.SVNException;
 
 import bos.tis.lpctools.entity.CommitListContent;

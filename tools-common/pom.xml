@@ -29,7 +29,7 @@
 			<artifactId>commons-lang</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.belerweb</groupId>
+			<groupId>net.sourceforge.pinyin4j</groupId>
 			<artifactId>pinyin4j</artifactId>
 		</dependency>
 		<dependency>

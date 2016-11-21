@@ -25,7 +25,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.tis.tools.utils.DirectoryUtil;
+import org.tis.tools.common.utils.DirectoryUtil;
 
 
 

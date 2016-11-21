@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tis.tools.utils;
+package org.tis.tools.common.utils;
 
 import static org.junit.Assert.*;
 
@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
+import org.tis.tools.common.utils.BasicUtil;
 
 /**
  * @author megapro
