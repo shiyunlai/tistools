@@ -15,7 +15,7 @@ import org.tis.tools.common.utils.TimeUtil;
 import org.tis.tools.service.biztrace.BizTraceLogRecord;
 import org.tis.tools.service.biztrace.TransStepTimeConsuming;
 import org.tis.tools.service.biztrace.TransTimeConsuming;
-import org.tis.tools.service.biztrace.utils.RunConfig;
+import org.tis.tools.service.biztrace.helper.RunConfig;
 
 import redis.clients.jedis.Jedis;
 

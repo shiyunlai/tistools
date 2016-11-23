@@ -3,7 +3,7 @@
  */
 package org.tis.tools.service.biztrace.report;
 
-import org.tis.tools.service.biztrace.utils.RunConfig;
+import org.tis.tools.service.biztrace.helper.RunConfig;
 
 import redis.clients.jedis.Jedis;
 

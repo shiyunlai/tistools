@@ -45,7 +45,7 @@ public class BizLogHandleController extends BaseController{
 			//TODO content转为 fixedBiztraces
 			List<BiztraceFileInfo> fixedBiztraces = new ArrayList<BiztraceFileInfo>() ; 
 			
-			biztraceRService.resolveBiztraceFixed(fixedBiztraces) ; 
+			biztraceRService.resolveAndAnalyseBiztraceFixed(fixedBiztraces) ; 
 			
 			AjaxUtils.ajaxJsonSuccessMessage(response, "success");
 			
@@ -93,7 +93,7 @@ public class BizLogHandleController extends BaseController{
 			List<String> analyseDate = new ArrayList<String>() ;
 			//TOOD content 中传输指定好的日期
 			
-			biztraceRService.analyseBiztrace(analyseDate) ; 
+			//biztraceRService.analyseBiztrace(analyseDate) ; 
 			
 			AjaxUtils.ajaxJsonSuccessMessage(response, "success");
 			logger.info("BizLogHandleController analyzer response : ok" );

@@ -11,8 +11,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tis.tools.service.biztrace.TISLogFile;
+import org.tis.tools.service.biztrace.helper.RunConfig;
 import org.tis.tools.service.biztrace.redis.AbstractRedisHandler;
-import org.tis.tools.service.biztrace.utils.RunConfig;
 
 import redis.clients.jedis.Jedis;
 

@@ -6,8 +6,8 @@ package org.tis.tools.service.biztrace.parser;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tis.tools.service.biztrace.BizTraceLogRecord;
+import org.tis.tools.service.biztrace.helper.RunConfig;
 import org.tis.tools.service.biztrace.redis.RedisClientTemplate;
-import org.tis.tools.service.biztrace.utils.RunConfig;
 
 import redis.clients.jedis.Jedis;
 

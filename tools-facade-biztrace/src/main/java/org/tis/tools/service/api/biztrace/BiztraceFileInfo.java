@@ -3,6 +3,7 @@
  */
 package org.tis.tools.service.api.biztrace;
 
+import java.io.File;
 import java.io.Serializable;
 
 /**
@@ -13,12 +14,14 @@ import java.io.Serializable;
  *
  */
 public class BiztraceFileInfo implements Serializable {
-
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6996719204574284215L;
 
+	private File logFile ;
+	
 	private String fileName  ;
 	
 	private String filePath  ; 
@@ -26,7 +29,7 @@ public class BiztraceFileInfo implements Serializable {
 	private String lastModifedTime; 
 	
 	private long fileSize ; //以KB为单位
-
+	
 	/**
 	 * 日志文件名称（无路径信息）
 	 * @return
@@ -75,6 +78,18 @@ public class BiztraceFileInfo implements Serializable {
 		this.fileSize = fileSize;
 	}
 	
+	/**
+	 * 日志文件
+	 * @return
+	 */
+	public File getLogFile() {
+		return logFile;
+	}
+
+	public void setLogFile(File logFile) {
+		this.logFile = logFile;
+	}
+
 	public String toString(){
 		StringBuffer sb = new StringBuffer() ; 
 		sb.append(filePath).append("\t") ;

@@ -20,30 +20,4 @@ public class BSBiztraceAgentRServiceTest {
 			System.out.println(info);
 		}
 	}
-	
-	@Test
-	public void test2(){
-		// D:\git\daotie\daotie
-		String str = System.getProperty("user.dir") ; 
-		System.out.println(str);
-		
-		 // 第一种：获取类加载的根路径   D:\git\daotie\daotie\target\classes
-        File f = new File(this.getClass().getResource("/").getPath());
-        System.out.println(f);
-        
-        // 获取当前类的所在工程路径; 如果不加“/”  获取当前类的加载目录  D:\git\daotie\daotie\target\classes\my
-        File f2 = new File(this.getClass().getResource("").getPath());
-        System.out.println(f2);
-        
-        // 第二种：获取项目路径    D:\git\daotie\daotie
-        File directory = new File("");// 参数为空
-        String courseFile=null;
-		try {
-			courseFile = directory.getCanonicalPath();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        System.out.println(courseFile);
-	}
 }

@@ -10,7 +10,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.tis.tools.service.biztrace.BizTraceLogRecord;
-import org.tis.tools.service.biztrace.utils.RunConfig;
+import org.tis.tools.service.biztrace.helper.RunConfig;
 
 import redis.clients.jedis.Jedis;
 

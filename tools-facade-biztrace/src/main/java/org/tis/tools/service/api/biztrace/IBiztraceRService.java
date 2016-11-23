@@ -18,6 +18,7 @@ import org.tis.tools.service.exception.biztrace.BiztraceRServiceException;
  */
 public interface IBiztraceRService {
 	
+	
 	/**
 	 * 列出当前有那些biztrace的日志文件
 	 * @param providerHost 代理服务地址 ip:port
@@ -28,12 +29,12 @@ public interface IBiztraceRService {
 	
 	
 	/**
-	 * 解析<code>fixedBiztraces</code>指定范围内的业务日志文件
+	 * 解析并分析<code>fixedBiztraces</code>指定范围内的业务日志文件
 	 * @param fixedBiztraces 指定范围内的业务日志文件
 	 * @return 按日分组的解析结果
 	 * @throws BiztraceRServiceException 执行失败时抛出异常
 	 */
-	public ParseResult resolveBiztraceFixed(List<BiztraceFileInfo> fixedBiztraces) throws BiztraceRServiceException ; 
+	public ParseResult resolveAndAnalyseBiztraceFixed(List<BiztraceFileInfo> fixedBiztraces) throws BiztraceRServiceException ; 
 	
 	
 	/**
@@ -42,11 +43,11 @@ public interface IBiztraceRService {
 	 */
 	public ParseProcessInfo getResolveProcess() ; 
 	
-	
-	/**
-	 * 分析<code>fixedDay</code>指定日期范围内的业务日志明细
-	 * @param fixedDay 指定日期列表,其中每个日期格式为yyyy-MM-dd
-	 * @throws BiztraceRServiceException 执行失败时抛出异常
-	 */
-	public AnalyseResult analyseBiztrace( List<String/*yyyy-MM-dd*/> fixedDay ) throws BiztraceRServiceException ;
+	//TODO 定义一些对日志分析结果的查询接口
+//	/**
+//	 * 分析<code>fixedDay</code>指定日期范围内的业务日志明细
+//	 * @param fixedDay 指定日期列表,其中每个日期格式为yyyy-MM-dd
+//	 * @throws BiztraceRServiceException 执行失败时抛出异常
+//	 */
+//	public AnalyseResult analyseBiztrace( List<String/*yyyy-MM-dd*/> fixedDay ) throws BiztraceRServiceException ;
 }

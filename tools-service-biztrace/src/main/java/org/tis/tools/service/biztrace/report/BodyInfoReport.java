@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.tis.tools.service.biztrace.helper.RunConfig;
 import org.tis.tools.service.biztrace.redis.AbstractRedisHandler;
-import org.tis.tools.service.biztrace.utils.RunConfig;
 
 import redis.clients.jedis.Jedis;
 

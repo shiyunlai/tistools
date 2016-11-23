@@ -3,11 +3,13 @@
  */
 package org.tis.tools.webapp.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,12 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.tis.tools.base.web.controller.BaseController;
 import org.tis.tools.base.web.util.AjaxUtils;
+import org.tis.tools.base.web.util.JSONUtils;
 import org.tis.tools.service.api.biztrace.BiztraceFileInfo;
 import org.tis.tools.service.api.biztrace.IBiztraceRService;
+import org.tis.tools.service.api.biztrace.ParseResult;
 import org.tis.tools.webapp.impl.dubboinfo.BiztraceManager;
 import org.tis.tools.webapp.spi.dubboinfo.DubboServiceInfo;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**
  * <pre>
@@ -98,7 +103,9 @@ public class BiztraceController extends BaseController{
 	/**
 	 * 分析业务日志
 	 * @param providerHost 日志代理服务
-	 * @param logFiles 分析文件范围，为空，则指全部；POST传输
+	 * @param logFiles 指定分析文件范围
+	 * <br/>指定日志文件范围 {"type":"part","logs":["biztrace.log.1","biztrace.log.2",....]}
+	 * <br/>指定全部日志文件 {"type":"all"}
 	 * @param request
 	 * @param response
 	 * @return
@@ -106,13 +113,36 @@ public class BiztraceController extends BaseController{
 	@RequestMapping(value="/analyse/{providerHost}",method=RequestMethod.POST)
 	public String analyseLog(@PathVariable String providerHost,@RequestBody String logFiles,
 			HttpServletRequest request,HttpServletResponse response){
+		
 		try {
 			logger.info("analyse biztrace : " + providerHost);
 			
-			//TODO 调用分析过程....
-			List<BiztraceFileInfo> logList = biztraceRService.listBiztraces(providerHost) ;
+			//解析文件范围
+			JSONObject jsonLogFiles = JSONObject.fromObject(logFiles);
+			String type = JSONUtils.getStr(jsonLogFiles, "type") ;
+			if( StringUtils.isEmpty(type) ){
+				AjaxUtils.ajaxJsonErrorMessage(response, "请指定日志文件范围！");
+				return null ; 
+			}
 			
-			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(logList).toString());
+			List<BiztraceFileInfo> logList = biztraceRService.listBiztraces(providerHost) ;//取出当前所有日志文件
+			
+			if( StringUtils.equals(type, "part") ){
+				JSONArray logsList = jsonLogFiles.getJSONArray("logs") ; 
+				List<String> fixedLogFile = (List<String>) JSONArray.toArray(logsList) ; 
+				//如果只指定了部分，泽剔除未指定的内容
+				for( BiztraceFileInfo i : logList ){
+					if( fixedLogFile.contains(i.getFileName()) ){
+						continue ; 
+					}else{
+						logList.remove(i) ; 
+					}
+				}
+			}
+			
+			ParseResult rResult = biztraceRService.resolveAndAnalyseBiztraceFixed(logList);//只解析全部或指定的日志文件
+			
+			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(rResult).toString());
 			
 			logger.info("analyse biztrace : ok" );
 		}

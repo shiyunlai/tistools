@@ -39,9 +39,29 @@ public class TISLogFile implements Serializable{
 	
 	public void setLogFile(File f ) {
 		this.logFile = f ; 
-		setDateFromPath(f.getAbsolutePath()) ; 
+		//setDateFromPath(f.getAbsolutePath()) ; 
 	}
 	
+	public File getLogFile(  ) {
+		return this.logFile  ;
+	}
+	
+	public String getDateStr() {
+		return dateStr;
+	}
+
+	public void setDateStr(String dateStr) {
+		this.dateStr = dateStr;
+	}
+
+	public LogTypeEnum getLogTypeEnum() {
+		return logTypeEnum;
+	}
+
+	public void setLogTypeEnum(LogTypeEnum logTypeEnum) {
+		this.logTypeEnum = logTypeEnum;
+	}
+
 	/**
 	 * <pre>
 	 * 从文件路径中解析出日期信息
@@ -54,6 +74,7 @@ public class TISLogFile implements Serializable{
 	 * @param absolutePath 文件全路径名
 	 * @return
 	 */
+	@Deprecated
 	private void setDateFromPath(String absolutePath) {
 		
 		// 确定日记类型 

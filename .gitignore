@@ -31,6 +31,8 @@ target/
 
 autogen/
 
+conf/
+
 logs/
 
 #暂时不提交tools-web-tools

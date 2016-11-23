@@ -2,8 +2,8 @@ package org.tis.tools.service.biztrace.handler;
 
 import java.util.Set;
 
+import org.tis.tools.service.biztrace.helper.RunConfig;
 import org.tis.tools.service.biztrace.redis.AbstractRedisHandler;
-import org.tis.tools.service.biztrace.utils.RunConfig;
 
 import redis.clients.jedis.Jedis;
 

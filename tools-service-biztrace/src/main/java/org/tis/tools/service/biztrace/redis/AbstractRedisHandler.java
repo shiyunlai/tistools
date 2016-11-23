@@ -4,7 +4,7 @@
 package org.tis.tools.service.biztrace.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.tis.tools.service.biztrace.utils.RunConfig;
+import org.tis.tools.service.biztrace.helper.RunConfig;
 
 import redis.clients.jedis.JedisPool;
 

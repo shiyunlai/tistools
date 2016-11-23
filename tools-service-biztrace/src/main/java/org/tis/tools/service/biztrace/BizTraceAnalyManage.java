@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.common.utils.DirectoryUtil;
+import org.tis.tools.service.api.biztrace.BiztraceFileInfo;
 import org.tis.tools.service.biztrace.TISLogFile.LogTypeEnum;
 import org.tis.tools.service.biztrace.analyzer.TransTimeConsumingAnalyzer;
 import org.tis.tools.service.biztrace.parser.LogFileParser;
@@ -134,7 +135,7 @@ public class BizTraceAnalyManage
 		logger.debug(BasicUtil.concat("启动",threads,"个线程","解析日志目录:",path));
 		
 		//日志文件分组，每个线程要处理多少日志文件
-		Map<String, List<TISLogFile>> groupFiles;
+		Map<String, List<TISLogFile>> groupFiles=null;
 		try {
 			groupFiles = groupLogFiles(path,threads);
 		} catch (Exception e1) {
@@ -143,18 +144,103 @@ public class BizTraceAnalyManage
 			return ; 
 		}
 		
-		Set<Entry<String, List<TISLogFile>>> groups = groupFiles.entrySet() ;
-		Iterator<Entry<String, List<TISLogFile>>> i = groups.iterator() ;
+		doParser(groupFiles);
+	}
+
+
+	/**
+	 * 以threads个线程同时执行对logFiles日志文件的解析处理
+	 * @param logFiles
+	 * @param threads
+	 */
+	public void resolve(List<BiztraceFileInfo> logFiles, int threads) {
 		
-		//每组启动一个线程并行解析
-		while( i.hasNext() ){
-			LogFileParser parser = new LogFileParser() ; 
-			Entry<String, List<TISLogFile>> e = i.next() ;
-			parser.setFiles(e.getValue()) ;//该线程要解析日志文件			
-			Thread t = new Thread(parser) ; 
-			t.setName("THREAD_LOG_RESLOVE_GROUP:"+e.getKey());//线程名称
+		//为了兼容原有解析程序(TISLogFile) --start 丑陋了点
+		List<TISLogFile> logs = new ArrayList<TISLogFile>() ; 
+		for( BiztraceFileInfo i : logFiles){
+			TISLogFile t = new TISLogFile() ;
+			t.setLogFile(i.getLogFile());
+			t.setDateStr(i.getLastModifedTime().substring(0, 8));//yyyyMMdd
+			t.setLogTypeEnum(LogTypeEnum.LOG_BIZTRACE);
+			logs.add(t) ;
+		}
+		//-- end 丑陋了点
+		
+		// 日志文件分组，每个线程要处理多少日志文件
+		Map<String, List<TISLogFile>> groupFiles=null;
+		try {
+			groupFiles = groupLogFiles(logs, threads);
+		} catch (Exception e1) {
+			logger.error("日志文件分组失败！" + e1.getMessage());
+			e1.printStackTrace();
+			return;
+		}
+		
+		doParser(groupFiles);
+	}
+	
+	/**
+	 * 有几组就启动几个线程同时执行解析
+	 * @param groupFiles
+	 */
+	private void doParser(Map<String, List<TISLogFile>> groupFiles) {
+		if (null == groupFiles) {
+			return;
+		}
+		
+		Set<Entry<String, List<TISLogFile>>> groups = groupFiles.entrySet();
+		Iterator<Entry<String, List<TISLogFile>>> i = groups.iterator();
+
+		// 每组启动一个线程并行解析
+		while (i.hasNext()) {
+			LogFileParser parser = new LogFileParser();
+			Entry<String, List<TISLogFile>> e = i.next();
+			parser.setFiles(e.getValue());// 该线程要解析日志文件
+			Thread t = new Thread(parser);
+			t.setName("THREAD_LOG_RESLOVE_GROUP:" + e.getKey());// 线程名称
 			t.start();
 		}
+	}
+	
+	
+	/**
+	 * 把logs平均分为groups组
+	 * @param logs
+	 * @param groups
+	 * @return
+	 * @throws Exception
+	 */
+	public Map<String, List<TISLogFile>> groupLogFiles(List<TISLogFile> logs, int groups) throws Exception
+	{
+		
+		Map<String, List<TISLogFile>> groupFiles = new HashMap<String, List<TISLogFile>>() ;
+		setFileTotalNum(logs.size());
+		
+		logger.debug(BasicUtil.concat("一共有 ",logs.size()," 个日志文件")) ;
+		
+		//将文件分为groups组
+		int num = logs.size() / groups  ;   //每组文件数
+		logger.debug(BasicUtil.concat("每组分配文件数 ",num)) ;
+		
+		for( int i = 0 ; i < groups ; i ++ ){
+			
+			List<TISLogFile>  group = null ;
+			
+			if( i == (groups-1) ){
+				group = logs.subList(i*num, logs.size()) ;//最后一组
+				logger.debug(BasicUtil.concat("最后一组分配文件数 ",group.size())) ;
+			}else{
+				if( num != 0 ){
+					group = logs.subList(i*num, i*num+num) ;
+				}else{
+					continue ;//只分一组
+				}
+			}
+			
+			groupFiles.put(""+i, group) ;//平均每组放num个文件
+		}
+		
+		return groupFiles ; 
 	}
 	
 	/**
@@ -166,36 +252,10 @@ public class BizTraceAnalyManage
 	 */
 	public Map<String, List<TISLogFile>> groupLogFiles(String path,int groups) throws Exception {
 		
-		Map<String, List<TISLogFile>> groupFiles = new HashMap<String, List<TISLogFile>>() ;
-		
 		//所有需要解析的日志文件
 		List<TISLogFile> allLogFiles = listLogFiles(path) ;
-		
-		setFileTotalNum(allLogFiles.size());
-		
-		logger.debug(BasicUtil.concat("一共有 ",allLogFiles.size()," 个日志文件")) ;
-		
-		//将文件分为groups组
-		int num = allLogFiles.size() / groups  ;   //每组文件数
-		logger.debug(BasicUtil.concat("每组分配文件数 ",num)) ;
-		
-		for( int i = 0 ; i < groups ; i ++ ){
-			
-			List<TISLogFile>  group = null ;
-			
-			if( i == (groups-1) ){
-				group = allLogFiles.subList(i*num, allLogFiles.size()) ;//最后一组
-				logger.debug(BasicUtil.concat("最后一组分配文件数 ",group.size())) ;
-			}else{
-				if( num != 0 ){
-					group = allLogFiles.subList(i*num, i*num+num) ;
-				}else{
-					continue ;//只分一组
-				}
-			}
-			
-			groupFiles.put(""+i, group) ;//平均每组放num个文件
-		}
+
+		Map<String, List<TISLogFile>> groupFiles = groupLogFiles(allLogFiles, groups) ;
 		
 		return groupFiles;
 	}

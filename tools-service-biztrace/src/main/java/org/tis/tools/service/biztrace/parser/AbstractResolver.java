@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.service.biztrace.IBizTraceResolver;
 import org.tis.tools.service.biztrace.TISLogFile;
-import org.tis.tools.service.biztrace.utils.RunConfig;
+import org.tis.tools.service.biztrace.helper.RunConfig;
 
 import redis.clients.jedis.Jedis;
 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tis.tools.service.biztrace.utils;
+package org.tis.tools.service.biztrace.helper;
 
 /**
  * 运行配置
@@ -55,7 +55,7 @@ public class RunConfig {
 	/** key pattern : 某日日志汇总信息的map集合 。如： day-sumLogInfo-map:2016-07-18 */
 	public static final String KP_MAP_SUMLOGINFO = "day-sumLogInfo-map:%s" ;
 	
-	/** key pattern : 所有被解析日志的日期set集合 。如： resolved-date-set */
+	/** key pattern : 所有被解析日志的日期set集合(解析过哪些天的日志文件) 。如： resolved-date-set */
 	public static final String KP_SET_RESOLVED_DATE = "resolved-date-set" ;
 	
 	

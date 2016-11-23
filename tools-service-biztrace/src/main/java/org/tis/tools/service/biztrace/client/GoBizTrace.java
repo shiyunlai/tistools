@@ -4,9 +4,9 @@
 package org.tis.tools.service.biztrace.client;
 
 import org.tis.tools.service.biztrace.BizTraceAnalyManage;
+import org.tis.tools.service.biztrace.helper.RunConfig;
 import org.tis.tools.service.biztrace.redis.AbstractRedisHandler;
 import org.tis.tools.service.biztrace.report.BodyInfoReport;
-import org.tis.tools.service.biztrace.utils.RunConfig;
 
 import redis.clients.jedis.Jedis;
 
