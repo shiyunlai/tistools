@@ -21,18 +21,18 @@ import redis.clients.jedis.Jedis;
 public class TotalRequestServiceTypeReport extends AbstractReporter{
 
 	@Override
-	public String doReport(String date, Jedis jedis) {
+	public String doReport(String date) {
 		
 		List<ServiceTypeStatistical> l = new ArrayList<ServiceTypeStatistical>() ;
 
 		// 查找 set-type:2017-09-08:* 所有keypattern，然后逐个遍历累计
 		String keyPattern = String.format(RunConfig.KP_SET_REQUEST_TYPE, date,"*");
-		Set<String> keys = jedis.keys(keyPattern) ;
+		Set<String> keys = redisClientTemplate.keys(keyPattern) ;
 		int types = keys.size() ;//服务类型数
 		for( String key : keys ){
 			ServiceTypeStatistical a = new ServiceTypeStatistical() ;
 			a.serviceTypeName = key ;
-			a.requestNum = jedis.scard(key) ; //某种类型有几次请求交互
+			a.requestNum = redisClientTemplate.scard(key) ; //某种类型有几次请求交互
 			l.add(a) ;
 		}
 		

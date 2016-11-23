@@ -12,8 +12,6 @@ import org.apache.commons.lang.StringUtils;
 import org.tis.tools.service.biztrace.BizTraceLogRecord;
 import org.tis.tools.service.biztrace.helper.RunConfig;
 
-import redis.clients.jedis.Jedis;
-
 import com.dyuproject.protostuff.ProtostuffIOUtil;
 import com.dyuproject.protostuff.runtime.RuntimeSchema;
 
@@ -24,7 +22,8 @@ import com.dyuproject.protostuff.runtime.RuntimeSchema;
  */
 public class ShowTransTimeConsumingDetailReport extends AbstractReporter {
 
-	private RuntimeSchema<TransactionTimeConsuming> schemaTTC = RuntimeSchema.createFrom(TransactionTimeConsuming.class);
+	private RuntimeSchema<TransactionTimeConsuming> schemaTTC = RuntimeSchema
+			.createFrom(TransactionTimeConsuming.class);
 
 	private String serialNo = null ; 
 	
@@ -65,13 +64,18 @@ public class ShowTransTimeConsumingDetailReport extends AbstractReporter {
 			.append(totalTimeConsuming).append("毫秒,")
 			.append(totalTimeConsuming/1000).append("秒,")
 			.append(totalTimeConsuming/1000/60).append("分") ; 
-			if( isDetail ){
-				sb.append(" 耗时步骤详情为:").append("\n") ; 
-				sb.append("\t\t秒").append("\t毫秒").append("\t\t执行时间点").append("\t\t\t时间点毫秒数").append("\t描述").append("\n");
-				for( StepTimeConsuming stc : stepDtl ){
-					sb.append("\t\t").append(stc.toString(isDetail) ); 
+			if (isDetail) {
+				sb.append(" 耗时步骤详情为:").append("\n");
+				sb.append("\t\t秒")
+					.append("\t毫秒")
+					.append("\t\t执行时间点")
+					.append("\t\t\t时间点毫秒数")
+					.append("\t描述")
+					.append("\n");
+				for (StepTimeConsuming stc : stepDtl) {
+					sb.append("\t\t").append(stc.toString(isDetail));
 				}
-			}else{
+			} else {
 				sb.append("\n");
 			}
 			return sb.toString() ;
@@ -119,7 +123,7 @@ public class ShowTransTimeConsumingDetailReport extends AbstractReporter {
 	 * @return 
 	 */
 	@Override
-	protected String doReport(String date, Jedis jedis) {
+	protected String doReport(String date) {
 		
 		if( StringUtils.isEmpty( this.serialNo ) ){
 			throw new RuntimeException("必须指定一个交易流水号！");
@@ -130,7 +134,7 @@ public class ShowTransTimeConsumingDetailReport extends AbstractReporter {
 		//StringBuffer sb = new StringBuffer() ;
 		
 		//取交易耗时对象
-		byte[] b = jedis.get( keyPattern.getBytes() ) ; 
+		byte[] b = redisClientTemplate.get( keyPattern.getBytes() ) ; 
 		
 		TransactionTimeConsuming ttc = schemaTTC.newMessage();
 		ProtostuffIOUtil.mergeFrom(b, ttc, schemaTTC);//反序列化为对象

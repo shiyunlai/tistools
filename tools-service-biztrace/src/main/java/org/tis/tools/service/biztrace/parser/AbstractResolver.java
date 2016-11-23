@@ -13,10 +13,12 @@ import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.service.biztrace.IBizTraceResolver;
 import org.tis.tools.service.biztrace.TISLogFile;
 import org.tis.tools.service.biztrace.helper.RunConfig;
+import org.tis.tools.service.biztrace.redis.RedisClientTemplate;
 
 import redis.clients.jedis.Jedis;
 
@@ -34,13 +36,16 @@ import redis.clients.jedis.Jedis;
  */
 public abstract class AbstractResolver implements IBizTraceResolver {
 
+	@Autowired
+	RedisClientTemplate redisClientTemplate ; 
+	
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	/* (non-Javadoc)
 	 * @see bos.tis.biztrace.IBizTraceResolver#resolve(bos.tis.biztrace.TISLogFile)
 	 */
 	@Override
-	public long resolve(TISLogFile logFile,Jedis jedis) throws IOException {
+	public long resolve(TISLogFile logFile) throws IOException {
 		
 		String line = null;
 		long lineNum = 0 ; 
@@ -61,7 +66,7 @@ public abstract class AbstractResolver implements IBizTraceResolver {
 			if ( !isCompletedLine( line ) ) {
 				continue ;
 			} else {
-				doResolve(sb.toString(),jedis) ;//把一整行日志哪去解析
+				doResolve(sb.toString()) ;//把一整行日志哪去解析
 				sb.replace(0, sb.length(), "");//清空临时字符串	
 			}
 		}
@@ -75,12 +80,12 @@ public abstract class AbstractResolver implements IBizTraceResolver {
 		}
 		sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String keyPattern = String.format(RunConfig.KP_DAY_LOG_LINES, sdf.format(date)) ;
-		String totalLinesStr = jedis.get(keyPattern);	
+		String totalLinesStr = redisClientTemplate.get(keyPattern);	
 		if(totalLinesStr==null || "".equals(totalLinesStr)){
-			jedis.set(keyPattern, lineNum+"");
+			redisClientTemplate.set(keyPattern, lineNum+"");
 		}else{
 			long totalLines = Long.parseLong(totalLinesStr);
-			jedis.set(keyPattern, lineNum+totalLines+"");
+			redisClientTemplate.set(keyPattern, lineNum+totalLines+"");
 		}
 		
 		logger.debug(BasicUtil.concat("行数 ",lineNum));
@@ -101,5 +106,5 @@ public abstract class AbstractResolver implements IBizTraceResolver {
 	 * @param wholeLine
 	 * @param jedis
 	 */
-	protected abstract void doResolve(String wholeLine,Jedis jedis) ; 
+	protected abstract void doResolve(String wholeLine) ; 
 }

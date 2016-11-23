@@ -8,24 +8,17 @@ import java.util.Set;
 import org.tis.tools.service.biztrace.helper.RunConfig;
 import org.tis.tools.service.biztrace.redis.AbstractRedisHandler;
 
-import redis.clients.jedis.Jedis;
-
 public class BodyInfoReport extends AbstractRedisHandler{
-	private Jedis jedis ;
+	
 	public static final BodyInfoReport instance = new BodyInfoReport() ;
 	private List<Map<String,String>> results = null;
-	
-//	public BodyInfoReport(){
-//		results = new ArrayList<Map<String,String>>();
-//	}
 	
 	public List<Map<String,String>> report(String serialNo,String date){
 		results = new ArrayList<Map<String,String>>();		
 		try {
-			jedis = jedisPool.getResource() ;
 			
 			if("".equals(serialNo) && "".equals(date)){
-				Set<String> serialNos = jedis.zrevrange(RunConfig.KP_SOTEDSET_SERIALNO_SORTBYTIME, 0, -1);
+				Set<String> serialNos = redisClientTemplate.zrevrange(RunConfig.KP_SOTEDSET_SERIALNO_SORTBYTIME, 0, -1);
 				for(String serial_no : serialNos){
 					queryBySerialNo(serial_no);
 				}
@@ -37,7 +30,6 @@ public class BodyInfoReport extends AbstractRedisHandler{
 		} catch (Exception e) {
 			e.printStackTrace(); 
 		}finally{
-			jedis.close();
 		}
 		
 		return results;
@@ -46,16 +38,15 @@ public class BodyInfoReport extends AbstractRedisHandler{
 	private void queryByDate(String date){
 		//取出date日所有的流水号
 		String keyPattern = String.format(RunConfig.KP_SET_SERIALNOS, date) ;
-		Set<String> serialNos = jedis.smembers(keyPattern) ;
+		Set<String> serialNos = redisClientTemplate.smembers(keyPattern) ;
 		for(String serialNo : serialNos){
 			queryBySerialNo(serialNo);			
-		}			
+		}
 	}
 	
 	private void queryBySerialNo(String serialNo){
 		String keyPattern = String.format(RunConfig.KP_ANALYZED_SERIALNO, serialNo) ;
-		Map<String,String> result = jedis.hgetAll(keyPattern);
+		Map<String,String> result = redisClientTemplate.hgetAll(keyPattern);
 		results.add(result);		
 	}
-	
 }

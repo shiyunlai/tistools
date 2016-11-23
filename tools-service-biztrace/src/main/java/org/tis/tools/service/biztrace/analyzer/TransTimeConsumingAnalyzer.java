@@ -17,11 +17,11 @@ import org.tis.tools.service.biztrace.TransStepTimeConsuming;
 import org.tis.tools.service.biztrace.TransTimeConsuming;
 import org.tis.tools.service.biztrace.helper.RunConfig;
 
-import redis.clients.jedis.Jedis;
-
 import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.ProtostuffIOUtil;
 import com.dyuproject.protostuff.runtime.RuntimeSchema;
+
+import redis.clients.jedis.Jedis;
 
 /**
  * 交易耗时分析
@@ -31,8 +31,9 @@ import com.dyuproject.protostuff.runtime.RuntimeSchema;
 public class TransTimeConsumingAnalyzer extends AbstractAnalyzer {
 
 	private RuntimeSchema<TransTimeConsuming> schemaTTC = RuntimeSchema.createFrom(TransTimeConsuming.class);
-	private RuntimeSchema<BizTraceLogRecord> schemaBizTraceLogRecord = RuntimeSchema.createFrom(BizTraceLogRecord.class);
-	
+	private RuntimeSchema<BizTraceLogRecord> schemaBizTraceLogRecord = RuntimeSchema
+			.createFrom(BizTraceLogRecord.class);
+
 	/**
 	 * <pre>
 	 * 分析某笔交易的执行过程:
@@ -47,11 +48,11 @@ public class TransTimeConsumingAnalyzer extends AbstractAnalyzer {
 	 * @param jedis
 	 */
 	@Override
-	protected void doAnalyzed(String date, Jedis jedis) {
+	protected void doAnalyzed(String date) {
 		
 		//取出date日所有的流水号
 		String keyPattern = String.format(RunConfig.KP_SET_SERIALNOS, date) ;
-		Set<String> serialNos = jedis.sinter(keyPattern) ;
+		Set<String> serialNos = redisClientTemplate.sinter(keyPattern) ;
 		
 		//根据流水号取交易日志map
 		String ttcPattern = String.format(RunConfig.KP_ZSET_DATE_TTC, date) ;
@@ -65,7 +66,7 @@ public class TransTimeConsumingAnalyzer extends AbstractAnalyzer {
 			Map<String,String> bizAnalyResult = new HashMap<String,String>();
 			
 			keyPattern = String.format(RunConfig.KP_MAP_SERIALNO,serialNo) ;
-			Map<byte[],byte[]> transBiztrace = jedis.hgetAll(keyPattern.getBytes()) ; 
+			Map<byte[],byte[]> transBiztrace = redisClientTemplate.hgetAll(keyPattern.getBytes()) ; 
 			TransTimeConsuming ttc = calculate(transBiztrace,serialNo,bizAnalyResult) ;//计算交易耗时
 			ttc.serialNo = serialNo ;
 			
@@ -75,20 +76,20 @@ public class TransTimeConsumingAnalyzer extends AbstractAnalyzer {
 			bizAnalyResult.put("trans_serial",serialNo);	
 			
 			String kp_analyzed_serialNo = String.format(RunConfig.KP_ANALYZED_SERIALNO, serialNo) ;
-			jedis.hmset(kp_analyzed_serialNo, bizAnalyResult);
+			redisClientTemplate.hmset(kp_analyzed_serialNo, bizAnalyResult);
 			
-			jedis.zadd(RunConfig.KP_SOTEDSET_SERIALNO_SORTBYTIME, ttc.totalTimeConsuming, serialNo);
+			redisClientTemplate.zadd(RunConfig.KP_SOTEDSET_SERIALNO_SORTBYTIME, ttc.totalTimeConsuming, serialNo);
 			
 			//保存交易耗时 ttc
 			byte[] ttcKeyPattern = String.format(RunConfig.KP_STR_TTC, serialNo).getBytes() ;
-			jedis.set(ttcKeyPattern, chg2Bytes(ttc)) ;
+			redisClientTemplate.set(ttcKeyPattern, chg2Bytes(ttc)) ;
 			
 			//收集交易耗时
-			jedis.zadd( ttcPattern.getBytes(), ttc.totalTimeConsuming, ttcKeyPattern ) ;
+			redisClientTemplate.zadd( ttcPattern.getBytes(), ttc.totalTimeConsuming, ttcKeyPattern ) ;
 		}
 		
 		String linesPattern = String.format(RunConfig.KP_DAY_LOG_LINES, date) ;
-		String totalLinesStr = jedis.get(linesPattern);
+		String totalLinesStr = redisClientTemplate.get(linesPattern);
 		long totalLines = 0;
 		if(totalLinesStr!=null && !"".equals(totalLinesStr)){
 			totalLines = Long.parseLong(totalLinesStr);
@@ -100,7 +101,7 @@ public class TransTimeConsumingAnalyzer extends AbstractAnalyzer {
 		
 		//保存当日日志汇总信息
 		String kp_map_sumLogInfo = String.format(RunConfig.KP_MAP_SUMLOGINFO, date) ;
-		jedis.hmset(kp_map_sumLogInfo, dayLogSumMap);
+		redisClientTemplate.hmset(kp_map_sumLogInfo, dayLogSumMap);
 	}
 
 	/**

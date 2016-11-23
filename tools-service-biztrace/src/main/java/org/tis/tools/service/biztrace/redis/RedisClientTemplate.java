@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import redis.clients.jedis.BinaryClient.LIST_POSITION;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisShardInfo;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPipeline;
@@ -22,9 +23,13 @@ import redis.clients.jedis.SortingParams;
 import redis.clients.jedis.Tuple;
 
 /**
- * 
+ * <pre>
  * Redis操作实现类
  * 
+ *	//TODO 参照redis.clients.jedis.Jedis的接口API说明，完善本类中的方法注释
+ *	//TODO 为每个API方法写单元测试验证正确性 
+ * 
+ * </pre>
  * @author megapro
  *
  */
@@ -644,7 +649,6 @@ public class RedisClientTemplate {
         boolean broken = false;
         try {
             result = shardedJedis.hkeys(key);
-
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             broken = true;
@@ -3103,4 +3107,53 @@ public class RedisClientTemplate {
         }
         return result;
     }
+    
+    /**
+     * 返回redis中满足keyPattern的所有key 
+     * <br/>//FIXME 需要测试验证一下，是否真能返回集群下所有节点上的key
+     * @param keyPattern
+     * @return
+     */
+	public Set<String> keys(String keyPattern) {
+		ShardedJedis shardedJedis = redisDataSource.getRedisClient();
+		Set<String> result = null;
+        if (shardedJedis == null) {
+            return result;
+        }
+        boolean broken = false;
+        try {
+    		Collection<Jedis> jediss = shardedJedis.getAllShards() ;
+    		for(Jedis j: jediss ){
+    			result.addAll(j.keys(keyPattern)) ;
+    		}
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            broken = true;
+        } finally {
+            redisDataSource.returnResource(shardedJedis, broken);
+        }
+        return result;		
+	}
+
+	
+	public Set<String> sinter(String keyPattern) {
+		ShardedJedis shardedJedis = redisDataSource.getRedisClient();
+		Set<String> result = null;
+        if (shardedJedis == null) {
+            return result;
+        }
+        boolean broken = false;
+        try {
+    		Collection<Jedis> jediss = shardedJedis.getAllShards() ;
+    		for(Jedis j: jediss ){
+    			result.addAll(j.sinter(keyPattern)) ;
+    		}
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            broken = true;
+        } finally {
+            redisDataSource.returnResource(shardedJedis, broken);
+        }
+        return result;		
+	}
 }

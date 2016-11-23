@@ -10,8 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.tis.tools.service.biztrace.IBizTraceResolver;
 import org.tis.tools.service.biztrace.TISLogFile;
 
-import redis.clients.jedis.Jedis;
-
 /**
  * 
  * 默认日志解析器，不做任何处理
@@ -27,7 +25,7 @@ public class DefaultResolver implements IBizTraceResolver {
 	 * @see bos.tis.biztrace.IBizTraceResolver#resolve(bos.tis.biztrace.TISLogFile, redis.clients.jedis.Jedis)
 	 */
 	@Override
-	public long resolve(TISLogFile logFile, Jedis jedis) throws IOException {
+	public long resolve(TISLogFile logFile) throws IOException {
 		logger.warn("默认Resolver实现！无解析处理....");
 		return 0;
 	}

@@ -8,23 +8,17 @@ import java.util.Set;
 import org.tis.tools.service.biztrace.helper.RunConfig;
 import org.tis.tools.service.biztrace.redis.AbstractRedisHandler;
 
-import redis.clients.jedis.Jedis;
-
 public class BodyInfoByRankReport extends AbstractRedisHandler{
-	private Jedis jedis ;
-	public static final BodyInfoByRankReport instance = new BodyInfoByRankReport() ;
-	private List<Map<String,String>> results = null;
 	
-//	public BodyInfoByRankReport(){
-//		results = new ArrayList<Map<String,String>>();
-//	}
+	public static final BodyInfoByRankReport instance = new BodyInfoByRankReport() ;
+	
+	private List<Map<String,String>> results = null;
 	
 	public List<Map<String,String>> report(int pre_index){
 		results = new ArrayList<Map<String,String>>();
 		try {
-			jedis = jedisPool.getResource() ;
 			
-			Set<String> serialNos = jedis.zrevrange(RunConfig.KP_SOTEDSET_SERIALNO_SORTBYTIME, 0, -1);
+			Set<String> serialNos = redisClientTemplate.zrevrange(RunConfig.KP_SOTEDSET_SERIALNO_SORTBYTIME, 0, -1);
 			
 			int index = 0;
 			for(String serialNo : serialNos){
@@ -32,14 +26,13 @@ public class BodyInfoByRankReport extends AbstractRedisHandler{
 					break;
 				}
 				String keyPattern = String.format(RunConfig.KP_ANALYZED_SERIALNO, serialNo) ;
-				Map<String,String> result = jedis.hgetAll(keyPattern);
+				Map<String,String> result = redisClientTemplate.hgetAll(keyPattern);
 				results.add(result);				
 				index++;
 			}
 		} catch (Exception e) {
 			e.printStackTrace(); 
 		}finally{
-			jedis.close();
 		}
 		
 		return results;

@@ -14,8 +14,6 @@ import org.tis.tools.service.biztrace.TISLogFile;
 import org.tis.tools.service.biztrace.helper.RunConfig;
 import org.tis.tools.service.biztrace.redis.AbstractRedisHandler;
 
-import redis.clients.jedis.Jedis;
-
 /**
  * 解析日志文件
  * @author megapro
@@ -26,14 +24,14 @@ public class LogFileParser extends AbstractRedisHandler implements Runnable {
 	public static int fileParsedNum = 0; //本次解析的文件数
 	public static int fileReadNum = 0;  //本次读取到文件数
 	public static Map<String,String> fileParseRecord = new HashMap<String, String>(); //存放文件解析的状态
-	private Jedis jedis = null ; 
+	//private Jedis jedis = null ; 
 	private List<TISLogFile> logFiles = null ; 
 	private final static Logger logger = LoggerFactory.getLogger(LogFileParser.class);
 	//public static List<String> unparseredLogFiles = new ArrayList<String>(); 
 	@Override
 	public void run() {
 		
-		jedis = jedisPool.getResource() ;
+		//jedis = jedisPool.getResource() ;
 		
 		for( TISLogFile logFile : logFiles ){
 			try {
@@ -45,7 +43,7 @@ public class LogFileParser extends AbstractRedisHandler implements Runnable {
 			}
 		}
 
-		jedis.close();
+		//jedis.close();
 	}
 
 	/**
@@ -64,7 +62,7 @@ public class LogFileParser extends AbstractRedisHandler implements Runnable {
 			//result.put(logFile.logFile.getAbsolutePath(), "");
 			//AjaxUtils.ajaxJson(response, JSONObject.fromObject("{}", jsonConfig).toString());
 			
-			logFile.logTypeEnum.resolver.resolve(logFile, jedis); //FIXME 重构不在传入jedis对象
+			logFile.logTypeEnum.resolver.resolve(logFile); //FIXME 重构不在传入jedis对象
 			
 			logger.info(
 					new StringBuffer()
@@ -101,7 +99,12 @@ public class LogFileParser extends AbstractRedisHandler implements Runnable {
 	private boolean isResolvedLogFile(TISLogFile logFile) {
 		
 		// 通过查询Redis确定，是否已经解析过
-		if( jedis.sismember(
+//		if( jedis.sismember(
+//				String.format(RunConfig.KP_SET_RESOLVED_LOG_FILE, logFile.dateStr), 
+//				logFile.logFile.getAbsolutePath() ) ){
+//			return true ; //已解析
+//		}
+		if( this.redisClientTemplate.sismember(
 				String.format(RunConfig.KP_SET_RESOLVED_LOG_FILE, logFile.dateStr), 
 				logFile.logFile.getAbsolutePath() ) ){
 			return true ; //已解析
@@ -116,8 +119,8 @@ public class LogFileParser extends AbstractRedisHandler implements Runnable {
 		}
 		sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
-		jedis.sadd(RunConfig.KP_SET_RESOLVED_DATE, sdf.format(date));
-		jedis.sadd(RunConfig.KP_UNANALYZED_DATE, sdf.format(date));
+		redisClientTemplate.sadd(RunConfig.KP_SET_RESOLVED_DATE, sdf.format(date));
+		redisClientTemplate.sadd(RunConfig.KP_UNANALYZED_DATE, sdf.format(date));
 		return false;//未解析
 	}
 
@@ -126,7 +129,7 @@ public class LogFileParser extends AbstractRedisHandler implements Runnable {
 	 * @param logFile 已经解析的文件
 	 */
 	private void saveResolvedLogFile(TISLogFile logFile) {
-		jedis.sadd(
+		redisClientTemplate.sadd(
 				String.format(RunConfig.KP_SET_RESOLVED_LOG_FILE, logFile.dateStr), 
 				logFile.logFile.getAbsolutePath()) ;
 	}
