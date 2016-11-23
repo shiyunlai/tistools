@@ -22,9 +22,14 @@
 
 ## TODO list
 
+	//OK 加入dubbo能力
+	//OK 对redis使用方式的重构
+
+	//TODO 开发一个公共调用controller的页面： 输入controller地址、post/get.. 协议、调用数据，调用结束，无格式要求，把返回结果展示出来；
 	//TODO 开发机构用户模块
 	//TODO 集成gendao能力
-	//TODO 增加tools工程集的持续基础能力
+	//TODO 增加tools工程集的持续继承能力
+
 
 ##	quick start
 
