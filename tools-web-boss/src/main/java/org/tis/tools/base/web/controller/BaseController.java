@@ -25,7 +25,7 @@ import org.tis.tools.base.web.retcode.RetCodeEnum;
 import org.tis.tools.base.web.util.JSONPropertyStrategyWrapper;
 import org.tis.tools.base.web.util.JsonDateProcessor;
 
-public class BaseController {
+public abstract class BaseController {
 	
 	protected final Logger       logger = LoggerFactory.getLogger(this.getClass());
 	
@@ -33,7 +33,7 @@ public class BaseController {
 	protected TransactionTemplate transactionTemplate;
 
 	//每个controller行为处理返回结果
-	protected final Map<String, Map<String, Object>> result ;
+	protected final Map<String, Object> responseMsg ;
 	
 	protected JsonConfig jsonConfig;
 	
@@ -46,7 +46,7 @@ public class BaseController {
 				new JsonDateProcessor());
 		jsonConfig.setPropertySetStrategy(new JSONPropertyStrategyWrapper(
 				PropertySetStrategy.DEFAULT));
-		result = createResult();
+		responseMsg = createResponse();
 	}
 
 	protected void initWanNengChaXun(JSONObject jsonObj, WhereCondition wc) {
@@ -134,14 +134,11 @@ public class BaseController {
 	 * </pre>
 	 * @return
 	 */
-	protected Map<String, Map<String, Object>> createResult() {
-		Map<String, Map<String, Object>> result = new HashMap<String, Map<String, Object>>();
-		Map<String, Object> temp = new HashMap<String, Object>();
-		result.put("result", temp) ;
+	protected Map<String, Object> createResponse() {
+		Map<String, Object> resp = new HashMap<String, Object>();
 		//默认成功
-		returnRetCode(temp,RetCodeEnum._0000_SUCC) ; 
-		
-		return result ;
+		returnRetCode(resp,RetCodeEnum._0000_SUCC) ; 
+		return resp ;
 	}
 	
 	/**
@@ -150,15 +147,8 @@ public class BaseController {
 	 * @param retCode
 	 */
 	protected void returnRetCode(RetCodeEnum retCode){
-		Map<String, Object> temp = result.get("result") ;
-		returnRetCode(temp,retCode) ; 
+		returnRetCode(responseMsg,retCode) ; 
 	}
-	
-	private void returnRetCode(Map<String, Object> temp, RetCodeEnum retCode){
-		temp.put("retCode", retCode.retCode);
-		temp.put("retMsg" , retCode.retMsg);
-	}
-	
 	
 	/**
 	 * 返回处理响应数据
@@ -166,8 +156,11 @@ public class BaseController {
 	 * @param value
 	 */
 	protected void returnResponseData(String key, Object value){
-		Map<String, Object> temp = result.get("result") ;
-		temp.put("key", value);
+		responseMsg.put(key, value);
 	}
 	
+	private void returnRetCode(Map<String, Object> resp, RetCodeEnum retCode){
+		resp.put("retCode", retCode.retCode);
+		resp.put("retMsg" , retCode.retMsg);
+	}
 }

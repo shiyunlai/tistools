@@ -40,8 +40,8 @@ MetronicApp.controller('commonCaller_controller', function ($filter,$rootScope, 
         console.log( requestInfo ) ;
         var promise = commonCaller_service.callTest( requestInfo ) ;
         promise.then(function(data){
-            console.log( requestInfo ) ;
-            $scope.responseJsonData = data.data ;
+            console.log( data ) ;
+            $scope.responseJsonData = data ;
         })
 
     }

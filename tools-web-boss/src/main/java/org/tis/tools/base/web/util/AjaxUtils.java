@@ -61,6 +61,18 @@ public class AjaxUtils {
     public static final String MESSAGE = "message";
     /**
      * <p>
+     * Field EXTRA_MESSAGE: 额外信息（一般在异常时使用）
+     * </p>
+     */
+    public static final String EXTRA_MESSAGE = "extraMessage";
+    /**
+     * <p>
+     * Field ERROR_MESSAGE: 处理异常提示信息
+     * </p>
+     */
+    public static final String ERROR_MESSAGE = "处理时发生异常";
+    /**
+     * <p>
      * Field CONTENT: 内容
      * </p>
      */
@@ -191,7 +203,7 @@ public class AjaxUtils {
      * @param message 信息字符串
      * @return null
      */
-    public static String ajaxJsonSuccessMessageWithParam(HttpServletResponse response, String message,Map<String,String>param) {
+    public static String ajaxJsonSuccessMessageWithParam(HttpServletResponse response, String message,Map<String,String> param) {
         Map<String, String> jsonMap = new HashMap<String, String>();
         jsonMap.put(SUCCESS, "true");
         jsonMap.put(STATUS, SUCCESS);
@@ -221,15 +233,29 @@ public class AjaxUtils {
     /**
      * <p>Description: 输出JSON错误消息，返回null</p>
      * @param response HttpServletResponse对象
-     * @param message 信息字符串
      * @return null
      */
-    public static String ajaxJsonErrorMessage(HttpServletResponse response, String message) {
+    public static String ajaxJsonErrorMessage(HttpServletResponse response) {
         Map<String, String> jsonMap = new HashMap<String, String>();
         jsonMap.put(STATUS, ERROR);
-        jsonMap.put(MESSAGE, message);
+        jsonMap.put(MESSAGE, ERROR_MESSAGE);
         JSONObject jsonObject = JSONObject.fromObject(jsonMap);
         return ajax(response, jsonObject.toString(), "text/html");
+    }
+    
+    /**
+     * <p>Description: 输出JSON错误消息，返回null</p>
+     * @param response HttpServletResponse对象
+     * @param extraMessage 信息字符串
+     * @return null
+     */
+    public static String ajaxJsonErrorMessage(HttpServletResponse response, String extraMessage) {
+    	Map<String, String> jsonMap = new HashMap<String, String>();
+    	jsonMap.put(STATUS, ERROR);
+    	jsonMap.put(MESSAGE, extraMessage);
+    	jsonMap.put(EXTRA_MESSAGE, extraMessage);
+    	JSONObject jsonObject = JSONObject.fromObject(jsonMap);
+    	return ajax(response, jsonObject.toString(), "text/html");
     }
 
     /**

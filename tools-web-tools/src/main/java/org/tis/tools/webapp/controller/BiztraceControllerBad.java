@@ -8,6 +8,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,9 +28,6 @@ import org.tis.tools.service.api.biztrace.ParseProcessInfo;
 import org.tis.tools.webapp.impl.dubboinfo.BiztraceManager;
 import org.tis.tools.webapp.spi.dubboinfo.DubboServiceInfo;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 /**
  * <pre>
  * 业务日志管理Controller
@@ -42,7 +42,7 @@ import net.sf.json.JSONObject;
  */
 @Controller
 @RequestMapping("/biztrace")
-public class BiztraceController extends BaseController{
+public class BiztraceControllerBad extends BaseController{
 
 	@Autowired
 	IBiztraceRService biztraceRService ; 
@@ -54,7 +54,8 @@ public class BiztraceController extends BaseController{
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value="/list/agents",method=RequestMethod.GET)
+	@ResponseBody
+	@RequestMapping(value="/list/agents",method=RequestMethod.POST)
 	public String listAgents(HttpServletRequest request,HttpServletResponse response){
 		
 		try {
@@ -65,7 +66,7 @@ public class BiztraceController extends BaseController{
 			//返回代理节点信息
 			returnResponseData("agents", agents);
 			
-			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(result).toString());
+			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(responseMsg).toString());
 			
 			logger.info("list agents : ok" );
 		}
@@ -95,7 +96,7 @@ public class BiztraceController extends BaseController{
 			
 			returnResponseData("logFiles", logList);
 			
-			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(result).toString());
+			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(responseMsg).toString());
 			
 			logger.info("list logfile : ok" );
 		}
@@ -150,7 +151,7 @@ public class BiztraceController extends BaseController{
 			
 			biztraceRService.resolveAndAnalyseBiztraceFixed(logList);//解析指定的日志文件
 			
-			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(result).toString());
+			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(responseMsg).toString());
 			
 			logger.info("analyse biztrace : ok" );
 		}
@@ -179,7 +180,7 @@ public class BiztraceController extends BaseController{
 		
 		returnResponseData("process", process);//返回进度信息
 		
-		AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(result).toString());
+		AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(responseMsg).toString());
 		
 		return null ; 
 	}

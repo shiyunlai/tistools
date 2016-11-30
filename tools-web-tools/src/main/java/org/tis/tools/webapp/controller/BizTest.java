@@ -42,7 +42,7 @@ public class BizTest extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("/test")
-	public String test(ModelMap model,@RequestBody String content,
+	public String test(ModelMap model,@RequestBody String dddd,
 			HttpServletRequest request,HttpServletResponse response){
 		
 		/*
@@ -54,11 +54,11 @@ public class BizTest extends BaseController {
 		try {
 			
 			if(logger.isInfoEnabled()){
-				logger.info("testController test request : " + content);
+				logger.info("testController test request : " + dddd);
 			}
 			
 			// 取请求数据
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.fromObject(dddd);
 			String trans_serial = jsonObj.getString("trans_serial");
 			System.out.println("trans_serial:"+trans_serial);
 			
@@ -69,7 +69,7 @@ public class BizTest extends BaseController {
 			returnResponseData("trans_serial", trans_serial); 
 			returnResponseData("date_time", new Date()); 
 			
-			String jsonData = JSONArray.fromObject(result).toString() ; 
+			String jsonData = JSONArray.fromObject(responseMsg).toString() ; 
 			System.out.println("response json data :"+ jsonData);
 			AjaxUtils.ajaxJsonSuccessMessage(response, jsonData);
 			

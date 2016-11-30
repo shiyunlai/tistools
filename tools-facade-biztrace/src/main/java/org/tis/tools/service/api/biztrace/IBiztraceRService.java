@@ -21,11 +21,11 @@ public interface IBiztraceRService {
 	
 	/**
 	 * 列出当前有那些biztrace的日志文件
-	 * @param providerHost 代理服务地址 ip:port
+	 * @param agentHost 代理服务地址 ip:port
 	 * @return  日志文件列表（按最近修改时间由新到旧排序）
 	 * @throws BiztraceRServiceException 执行失败时抛出异常
 	 */
-	public List<BiztraceFileInfo> listBiztraces(String providerHost) throws BiztraceRServiceException ;
+	public List<BiztraceFileInfo> listBiztraces(String agentHost) throws BiztraceRServiceException ;
 	
 	
 	/**

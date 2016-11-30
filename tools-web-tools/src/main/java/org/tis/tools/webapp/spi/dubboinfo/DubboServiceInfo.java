@@ -43,42 +43,59 @@ public class DubboServiceInfo implements Serializable {
 	private static final long serialVersionUID = 6816377331633395709L;
 
 	// (代理)封装dubbo的URL，只提供有用的几个信息
-	private URL dubboProviderUrl;
+//	private URL dubboProviderUrl;
 	private String host = null;
 	private int port = 0;
 	private String protocol = null;
 	private String serviceName = null;
 
-	public DubboServiceInfo(String url) {
-		dubboProviderUrl = URL.valueOf(url);
-		this.setHost(dubboProviderUrl.getHost());
-		this.setPort(dubboProviderUrl.getPort());
-		this.setProtocol(dubboProviderUrl.getProtocol());
-		this.setServiceName(dubboProviderUrl.getServiceName());
-	}
+//	public DubboServiceInfo(String url) {
+//		dubboProviderUrl = URL.valueOf(url);
+//		this.setHost(dubboProviderUrl.getHost());
+//		this.setPort(dubboProviderUrl.getPort());
+//		this.setProtocol(dubboProviderUrl.getProtocol());
+//		this.setServiceName(dubboProviderUrl.getServiceName());
+//	}
 	
 	public DubboServiceInfo(){
 		
 	}
-
-	public URL getUrl() {
-		return this.dubboProviderUrl;
-	}
-
+	
+//	public URL getUrl() {
+//		return this.dubboProviderUrl;
+//	}
+//
+//	public String getHost() {
+//		return this.dubboProviderUrl.getHost();
+//	}
+//
+//	public int getPort() {
+//		return this.dubboProviderUrl.getPort();
+//	}
+//
+//	public String getProtocol() {
+//		return this.dubboProviderUrl.getProtocol();
+//	}
+//
+//	public String getServiceName() {
+//		return this.dubboProviderUrl.getServiceName();
+//	}
+	
+	
 	public String getHost() {
-		return this.dubboProviderUrl.getHost();
+		return this.host  ;
 	}
 
 	public int getPort() {
-		return this.dubboProviderUrl.getPort();
+		return this.port ; 
 	}
 
 	public String getProtocol() {
-		return this.dubboProviderUrl.getProtocol();
+		return this.protocol ; 
 	}
 
 	public String getServiceName() {
-		return this.dubboProviderUrl.getServiceName();
+		return this.serviceName ; 
 	}
 
 	public void setHost(String host) {

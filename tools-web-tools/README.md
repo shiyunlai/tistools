@@ -263,11 +263,13 @@ Plugin execution not covered by lifecycle configuration: org.codehaus.mojo:build
 		//TODO @曹冬前 
 		
 －－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
-	错误：
+	问题：如何实现 JSONArray.fromObject(responseMsg).toString()  时，只对指定属性的json化？
 	
-	原因：
+	目的：有些对象的属性信息可以被过滤掉
 	
-	解决：
+	解决：参考 JsonDateProcessor 实践一下
+	
+	
 －－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
 	错误：
 	
