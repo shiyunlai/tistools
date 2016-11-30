@@ -2,7 +2,7 @@ package org.tis.tools.service.api.devmgr;
 
 import java.util.List;
 
-import org.tis.tools.base.webapp.Page;
+import org.tis.tools.base.Page;
 import org.tis.tools.model.vo.devmgr.DevelopBranchInfo;
 
 /**

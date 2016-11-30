@@ -546,11 +546,6 @@
 		</dependency>
 
 		<!-- svnkit -->
-		<dependency>
-			<groupId>org.tmatesoft.svnkit</groupId>
-			<artifactId>svnkit</artifactId>
-			<version>1.7.11</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.tis</groupId>
@@ -560,6 +555,19 @@
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.tis</groupId>
+			<artifactId>tools-common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.tis</groupId>
+			<artifactId>tools-web-boss</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.tis</groupId>
+			<artifactId>tools-facade-biztrace</artifactId>
 		</dependency>
 	</dependencies>
 

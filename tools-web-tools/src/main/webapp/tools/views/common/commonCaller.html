@@ -1,0 +1,114 @@
+<ul class="page-breadcrumb breadcrumb">
+
+</ul>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light" >
+            <div class="portlet-title">
+                <div class="caption font-green-sharp">
+                    <i class="icon-settings font-green-sharp"></i>
+                    <span class="caption-subject bold uppercase">请求信息</span>
+                    <span class="caption-helper hide"></span>
+                </div>
+            </div>
+
+            <div class="portlet-body">
+                <form class="form-horizontal" role="form">
+
+                    <div class="form-body">
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Protocol:</label>
+                            <div class="col-md-3">
+                                <div class="btn-group">
+                                    <label class="btn btn-info" ng-model="requestInfo.protocol" btn-radio="'https'" uncheckable>https</label>
+                                    <label class="btn btn-info" ng-model="requestInfo.protocol" btn-radio="'http'" uncheckable>http</label>
+                                </div>
+                            </div>
+
+                            <label class="col-md-2 control-label">Method:</label>
+                            <div class="col-md-4">
+                                <div class="btn-group">
+                                    <label class="btn btn-info" ng-model="requestInfo.method" btn-radio="'POST'" uncheckable>POST</label>
+                                    <label class="btn btn-info" ng-model="requestInfo.method" btn-radio="'GET'" uncheckable>GET</label>
+                                    <label class="btn btn-info" ng-model="requestInfo.method" btn-radio="'PUT'" uncheckable>PUT</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Host:</label>
+                            <div class="col-md-3">
+                                <input type="text" ng-model="requestInfo.host" class="form-control">
+                            </div>
+                            <label class="col-md-2 control-label">Port:</label>
+                            <div class="col-md-3">
+                                <input type="text" ng-model="requestInfo.port" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">RequestMapping:</label>
+                            <div class="col-md-8">
+                                <input type="text" ng-model="requestInfo.mapping" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-if="requestInfo.method='POST'">
+                            <label class="col-md-2 control-label">postJsonData:</label>
+                            <div class="col-md-8">
+                                <input type="text" ng-model="requestInfo.postJsonData" class="form-control">
+                            </div>
+                        </div>
+
+                        <!--&lt;!&ndash; POST请求时json参数 &ndash;&gt;-->
+                        <!--<div class="form-group" ng-if="requestInfo.method='POST'">-->
+                            <!--<label class="col-md-2 control-label">json:</label>-->
+                            <!--<div class="col-md-8">-->
+                                <!--<input type="text" ng-model="requestInfo.postJsonData" class="form-control">-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                        <!--&lt;!&ndash; GET请求时参数列表&ndash;&gt;-->
+                        <!--<div class="form-group" ng-if="requestInfo.method='GET'">-->
+                            <!--&lt;!&ndash; list 参数列表 &ndash;&gt;-->
+                        <!--</div>-->
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Final Url:</label>
+                            <div class="col-md-8">
+                                <pre>{{finalUrl}}</pre>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-8">
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-default btn-sm" ng-click="btnCall(requestInfo)">Call</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light" >
+            <div class="portlet-title">
+                <div class="caption font-green-sharp">
+                    <i class="icon-settings font-green-sharp"></i>
+                    <span class="caption-subject bold uppercase">响应信息</span>
+                    <span class="caption-helper hide"></span>
+                </div>
+            </div>
+            <div>处理状态:{{responseJsonData.status}}<div>
+            <div>是否成功:{{responseJsonData.success}}<div>
+            <div>响应信息:{{responseJsonData.message}}<div>
+        </div>
+    </div>
+</div>

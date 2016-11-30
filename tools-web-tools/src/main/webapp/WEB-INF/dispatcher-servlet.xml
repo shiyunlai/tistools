@@ -8,7 +8,7 @@
                 http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
     <!-- Scans the classpath of this application for @Components to deploy as beans -->
-    <context:component-scan base-package="com.bos.tis.tools.webapp"/>
+    <context:component-scan base-package="org.tis.tools.webapp"/>
 
 
     <!--<mvc:resources location="/assets/" mapping="/assets/**"/>-->
@@ -34,7 +34,7 @@
     <mvc:interceptors>
     	<mvc:interceptor>
     		<mvc:mapping path="/**"/>
-    		<bean class="com.bos.tis.tools.filter.SecurityInterceptor" />
+    		<bean class="org.tis.tools.webapp.SecurityInterceptor" />
     	</mvc:interceptor>
     
     	<!-- <mvc:interceptor>
@@ -72,7 +72,8 @@
         <property name="requestContextAttribute" value="rc"/>
         <property name="contentType" value="text/html;charset=UTF-8"></property>
         <property name="prefix" value="/"/>
-        <property name="suffix" value=".ftl.html"/>
+        <!-- <property name="suffix" value=".ftl.html"/> -->
+        <property name="suffix" value=".ftl"/>
          
     </bean>
      <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

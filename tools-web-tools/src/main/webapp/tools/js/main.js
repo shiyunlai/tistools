@@ -529,6 +529,12 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             data: {pageTitle: 'User Help'}      
         })
 
+        .state("commonCaller",{
+            url:"/commonCaller.html",
+            templateUrl:"views/common/commonCaller.html",
+            data: {pageTitle: '通用Controller调用'},
+            controller:"commonCaller_controller"
+        })
 
         .state("biztraceHandle",{
             url:"/biztraceHandle.html",
