@@ -20,22 +20,41 @@ import org.tis.tools.common.utils.DirectoryUtil;
  */
 public class BiztraceHelper {
 
-	/**
-	 * 获取BS路径
-	 * @return
-	 */
-	public static String getBSHome() {
-		String root = DirectoryUtil.getAppMainDirectory() ; 
+	public final static BiztraceHelper instance = new BiztraceHelper() ; 
+	private Properties p = new Properties();   
+	private String root = ""; 
+	
+	private BiztraceHelper(){
+		init() ; 
+	}
+	
+	private void init() {
+		root = DirectoryUtil.getAppMainDirectory() ; 
 		String biztracePros = root + "/conf/biztrace.properties" ; 
-		Properties p = new Properties();   
 		try {
 			InputStream in = new BufferedInputStream(new FileInputStream(biztracePros));   
 			p.load(in);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * 获取BS路径
+	 * @return 如果从biztrace.properties中取不到，默认返回当前目录/../bs
+	 */
+	public String getBSHome() {
 		//返回配置文件中BS_HOME，如果没有或者读取.properties文件失败,则默认返回本应用同目录的bs路径
 		String temp = p.getProperty("BS_HOME",root+"/../bs");
 		return temp ; 
+	}
+	
+	/**
+	 * 获取工作线程数
+	 * @return  如果从biztrace.properties中取不到，默认返回5个
+	 */
+	public int getWorkerThreads(){
+		String temp = p.getProperty("WORKER_THREADS","5") ; //取不到就默认5个
+		return Integer.valueOf(temp).intValue() ;
 	}
 }

@@ -104,7 +104,8 @@
 
     <servlet-mapping>
         <servlet-name>sitemesh-freemarker</servlet-name>
-        <url-pattern>*.ftl.html</url-pattern>
+        <!-- <url-pattern>*.ftl.html</url-pattern> -->
+        <url-pattern>*.ftl</url-pattern>
     </servlet-mapping>
 
 

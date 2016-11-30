@@ -2,6 +2,8 @@ package org.tis.tools.base.web.controller;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.tis.tools.base.Page;
 import org.tis.tools.base.WhereCondition;
+import org.tis.tools.base.web.retcode.RetCodeEnum;
 import org.tis.tools.base.web.util.JSONPropertyStrategyWrapper;
 import org.tis.tools.base.web.util.JsonDateProcessor;
 
@@ -27,8 +30,11 @@ public class BaseController {
 	protected final Logger       logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	TransactionTemplate transactionTemplate;
+	protected TransactionTemplate transactionTemplate;
 
+	//每个controller行为处理返回结果
+	protected final Map<String, Map<String, Object>> result ;
+	
 	protected JsonConfig jsonConfig;
 	
 	public BaseController() {
@@ -40,6 +46,7 @@ public class BaseController {
 				new JsonDateProcessor());
 		jsonConfig.setPropertySetStrategy(new JSONPropertyStrategyWrapper(
 				PropertySetStrategy.DEFAULT));
+		result = createResult();
 	}
 
 	protected void initWanNengChaXun(JSONObject jsonObj, WhereCondition wc) {
@@ -120,6 +127,47 @@ public class BaseController {
 		return page;
 	}
 
-
-
+	/**
+	 * <pre>
+	 * 构造处理结果返回结构
+	 * 结构示意：{"result":{"retCode":"","retMsg":"",....}}
+	 * </pre>
+	 * @return
+	 */
+	protected Map<String, Map<String, Object>> createResult() {
+		Map<String, Map<String, Object>> result = new HashMap<String, Map<String, Object>>();
+		Map<String, Object> temp = new HashMap<String, Object>();
+		result.put("result", temp) ;
+		//默认成功
+		returnRetCode(temp,RetCodeEnum._0000_SUCC) ; 
+		
+		return result ;
+	}
+	
+	/**
+	 * 返回错误码
+	 * @param result
+	 * @param retCode
+	 */
+	protected void returnRetCode(RetCodeEnum retCode){
+		Map<String, Object> temp = result.get("result") ;
+		returnRetCode(temp,retCode) ; 
+	}
+	
+	private void returnRetCode(Map<String, Object> temp, RetCodeEnum retCode){
+		temp.put("retCode", retCode.retCode);
+		temp.put("retMsg" , retCode.retMsg);
+	}
+	
+	
+	/**
+	 * 返回处理响应数据
+	 * @param key
+	 * @param value
+	 */
+	protected void returnResponseData(String key, Object value){
+		Map<String, Object> temp = result.get("result") ;
+		temp.put("key", value);
+	}
+	
 }

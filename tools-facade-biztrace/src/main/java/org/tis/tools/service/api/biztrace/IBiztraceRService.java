@@ -34,7 +34,7 @@ public interface IBiztraceRService {
 	 * @return 按日分组的解析结果
 	 * @throws BiztraceRServiceException 执行失败时抛出异常
 	 */
-	public ParseResult resolveAndAnalyseBiztraceFixed(List<BiztraceFileInfo> fixedBiztraces) throws BiztraceRServiceException ; 
+	public void resolveAndAnalyseBiztraceFixed(List<BiztraceFileInfo> fixedBiztraces) throws BiztraceRServiceException ; 
 	
 	
 	/**

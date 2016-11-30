@@ -1,14 +1,10 @@
 package org.tis.tools.webapp.controller;
 
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sf.json.JSONObject;
-import net.sf.json.util.JSONUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,31 +18,70 @@ import org.tis.tools.base.web.controller.BaseController;
 import org.tis.tools.base.web.util.AjaxUtils;
 import org.tis.tools.service.api.biztrace.BiztraceFileInfo;
 import org.tis.tools.service.api.biztrace.IBiztraceRService;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import net.sf.json.util.JSONUtils;
+
+
 @Controller
 @RequestMapping("/testController")
 public class BizTest extends BaseController {
 	
+	@Autowired
+	IBiztraceRService biztraceRService ;
+	
+	
+	/**
+	 * 示意controller开发的基本程序范式
+	 * @param model
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
 	@RequestMapping("/test")
 	public String test(ModelMap model,@RequestBody String content,
 			HttpServletRequest request,HttpServletResponse response){
-		Map<String,Object> result = new HashMap<String,Object>();
+		
+		/*
+		 * 取：取请求数据
+		 * 调：调用业务逻辑
+		 * 返：返回响应结果
+		 * 转：调整页面视图(一般不用，在前端MVC框架中自己已经完成了页面的跳转路由)
+		 */
 		try {
+			
 			if(logger.isInfoEnabled()){
 				logger.info("testController test request : " + content);
 			}
+			
+			// 取请求数据
 			JSONObject jsonObj = JSONObject.fromObject(content);
 			String trans_serial = jsonObj.getString("trans_serial");
 			System.out.println("trans_serial:"+trans_serial);
+			
+			// 处理数据，调用业务逻辑
+			// TODO 业务逻辑
+			
+			// 返回响应数据
+			returnResponseData("trans_serial", trans_serial); 
+			returnResponseData("date_time", new Date()); 
+			
+			String jsonData = JSONArray.fromObject(result).toString() ; 
+			System.out.println("response json data :"+ jsonData);
+			AjaxUtils.ajaxJsonSuccessMessage(response, jsonData);
+			
 		} catch (Exception e) {
 			AjaxUtils.ajaxJsonErrorMessage(response, "异常");
 			logger.error("testController test exception : " ,e);
 		}
+		
+		// 跳转视图
 		return null;
 	}
 	
-	@Autowired
-	IBiztraceRService biztraceRService ;
-
 	@ResponseBody
 	@RequestMapping(value="/biztrace/{providerHost}/list",method=RequestMethod.GET)
 	public String getBranchCode(HttpServletRequest request, @PathVariable String providerHost,

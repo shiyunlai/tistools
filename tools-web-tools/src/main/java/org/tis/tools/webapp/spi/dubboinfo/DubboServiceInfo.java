@@ -56,6 +56,10 @@ public class DubboServiceInfo implements Serializable {
 		this.setProtocol(dubboProviderUrl.getProtocol());
 		this.setServiceName(dubboProviderUrl.getServiceName());
 	}
+	
+	public DubboServiceInfo(){
+		
+	}
 
 	public URL getUrl() {
 		return this.dubboProviderUrl;

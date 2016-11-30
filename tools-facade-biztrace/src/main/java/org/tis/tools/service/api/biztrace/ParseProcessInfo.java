@@ -4,6 +4,7 @@
 package org.tis.tools.service.api.biztrace;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 
@@ -24,20 +25,17 @@ public class ParseProcessInfo implements Serializable {
 	private boolean isParsing = false ;
 	
 	//总共有多少个日志文件需要解析
-	private int totalLogFiles ;
+	private List<String> totalLogFiles ;
 	
 	//已经解析完的文件
-	private int parsedLogFiles ;
+	private List<String> parsedLogFiles ;
 	
 	//正在解析的日志文件名称
-	private String parsingLogFileName ; 
+	private List<String> parsingLogFileName ; 
 	
-	//TODO 其他进度信息
+	//当前解析进度百分比 最多两位小数，避免小数问题，以long传输，如： 35.55%  则传输 3555，除10000得到实际值
+	private long parsedProcess ;
 
-	/**
-	 * 是否正在执行日志解析处理 
-	 * @return true - 执行中， false - 未执行(无需显示进度条)
-	 */
 	public boolean isParsing() {
 		return isParsing;
 	}
@@ -46,28 +44,48 @@ public class ParseProcessInfo implements Serializable {
 		this.isParsing = isParsing;
 	}
 
-	public int getTotalLogFiles() {
+	/**
+	 * 总共有多少个日志文件需要解析
+	 * @return
+	 */
+	public List<String> getTotalLogFiles() {
 		return totalLogFiles;
 	}
 
-	public void setTotalLogFiles(int totalLogFiles) {
+	public void setTotalLogFiles(List<String> totalLogFiles) {
 		this.totalLogFiles = totalLogFiles;
 	}
 
-	public int getParsedLogFiles() {
+	/**
+	 * 已经解析完的文件
+	 * @return
+	 */
+	public List<String> getParsedLogFiles() {
 		return parsedLogFiles;
 	}
 
-	public void setParsedLogFiles(int parsedLogFiles) {
+	public void setParsedLogFiles(List<String> parsedLogFiles) {
 		this.parsedLogFiles = parsedLogFiles;
 	}
 
-	public String getParsingLogFileName() {
+	/**
+	 * 正在解析的日志文件名称
+	 * @return
+	 */
+	public List<String> getParsingLogFileName() {
 		return parsingLogFileName;
 	}
 
-	public void setParsingLogFileName(String parsingLogFileName) {
+	public void setParsingLogFileName(List<String> parsingLogFileName) {
 		this.parsingLogFileName = parsingLogFileName;
 	}
+
+	public long getParsedProcess() {
+		return parsedProcess;
+	}
+
+	public void setParsedProcess(long parsedProcess) {
+		this.parsedProcess = parsedProcess;
+	} 
 	
 }

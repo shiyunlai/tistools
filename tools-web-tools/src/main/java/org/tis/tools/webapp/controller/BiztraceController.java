@@ -3,7 +3,6 @@
  */
 package org.tis.tools.webapp.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,12 +15,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.base.web.controller.BaseController;
 import org.tis.tools.base.web.util.AjaxUtils;
 import org.tis.tools.base.web.util.JSONUtils;
 import org.tis.tools.service.api.biztrace.BiztraceFileInfo;
 import org.tis.tools.service.api.biztrace.IBiztraceRService;
-import org.tis.tools.service.api.biztrace.ParseResult;
+import org.tis.tools.service.api.biztrace.ParseProcessInfo;
 import org.tis.tools.webapp.impl.dubboinfo.BiztraceManager;
 import org.tis.tools.webapp.spi.dubboinfo.DubboServiceInfo;
 
@@ -32,10 +32,10 @@ import net.sf.json.JSONObject;
  * <pre>
  * 业务日志管理Controller
  * 
- * GET	http://.../biztrce/agents	查询日志代理服务列表
- * GET	http://.../biztrace/list/{providerHost}	查询指定服务器的业务日志文件列表
- * POST	http://.../analyse/{providerHost}	分析业务日志
- * GET	http://.../analyse/{providerHost}/process	
+ * GET	http://.../biztrce/list/agents	查询日志代理服务列表
+ * GET	http://.../biztrce/list/{providerHost}	查询指定服务器的业务日志文件列表
+ * POST	http://.../biztrce/analyse/{providerHost}	分析业务日志
+ * GET	http://.../biztrce/analyse/{providerHost}/process	
  * </pre>
  * @author megapro
  *
@@ -62,7 +62,10 @@ public class BiztraceController extends BaseController{
 			
 			List<DubboServiceInfo> agents = BiztraceManager.instance.getBiztraceProviderList()  ;
 			
-			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(agents).toString());
+			//返回代理节点信息
+			returnResponseData("agents", agents);
+			
+			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(result).toString());
 			
 			logger.info("list agents : ok" );
 		}
@@ -71,6 +74,7 @@ public class BiztraceController extends BaseController{
 			logger.error("list agents exception : " , e );
 		}
 		
+//		return "{key:\"123\"}" ; 
 		return null ; 
 	}
 	
@@ -81,6 +85,7 @@ public class BiztraceController extends BaseController{
 	 * @param response
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping(value="/list/{providerHost}",method=RequestMethod.GET)
 	public String listLogFiles(@PathVariable String providerHost,HttpServletRequest request,HttpServletResponse response){
 		try {
@@ -88,7 +93,9 @@ public class BiztraceController extends BaseController{
 			
 			List<BiztraceFileInfo> logList = biztraceRService.listBiztraces(providerHost) ;
 			
-			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(logList).toString());
+			returnResponseData("logFiles", logList);
+			
+			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(result).toString());
 			
 			logger.info("list logfile : ok" );
 		}
@@ -110,6 +117,7 @@ public class BiztraceController extends BaseController{
 	 * @param response
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping(value="/analyse/{providerHost}",method=RequestMethod.POST)
 	public String analyseLog(@PathVariable String providerHost,@RequestBody String logFiles,
 			HttpServletRequest request,HttpServletResponse response){
@@ -140,9 +148,9 @@ public class BiztraceController extends BaseController{
 				}
 			}
 			
-			ParseResult rResult = biztraceRService.resolveAndAnalyseBiztraceFixed(logList);//只解析全部或指定的日志文件
+			biztraceRService.resolveAndAnalyseBiztraceFixed(logList);//解析指定的日志文件
 			
-			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(rResult).toString());
+			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(result).toString());
 			
 			logger.info("analyse biztrace : ok" );
 		}
@@ -155,21 +163,26 @@ public class BiztraceController extends BaseController{
 	}
 	
 	/**
-	 * 查询分析进度
+	 * 查询分析进度,解析日志文件期间，前端循环调用本接口，实现解析进度条展示
 	 * @param providerHost 日志代理服务
 	 * @param request
 	 * @param response
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping(value="/analyse/{providerHost}/process",method=RequestMethod.GET)
 	public String analyseProcess(@PathVariable String providerHost,
 			HttpServletRequest request,HttpServletResponse response){
 		
 		//TODO 调用对应日志代理服务，获取当前分析进度
+		ParseProcessInfo process = biztraceRService.getResolveProcess() ; 
+		
+		returnResponseData("process", process);//返回进度信息
+		
+		AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(result).toString());
 		
 		return null ; 
 	}
-	
 	
 	//TODO 增加其他分析结果查询功能
 	

@@ -9,7 +9,7 @@
     <context:annotation-config/>
 
     <!-- Activates scanning of @Repository and @Service -->
-    <context:component-scan base-package="org.tis"/>
+    <context:component-scan base-package="org.tis.tools.webapp"/>
 
     <!-- Add new DAOs here -->
 

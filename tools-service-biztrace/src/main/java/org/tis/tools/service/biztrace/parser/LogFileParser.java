@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,17 +22,16 @@ import org.tis.tools.service.biztrace.redis.AbstractRedisHandler;
  */
 public class LogFileParser extends AbstractRedisHandler implements Runnable {
 	
-	public static int fileParsedNum = 0; //本次解析的文件数
-	public static int fileReadNum = 0;  //本次读取到文件数
-	public static Map<String,String> fileParseRecord = new HashMap<String, String>(); //存放文件解析的状态
-	//private Jedis jedis = null ; 
+	//FIXME 已解析文件 / 所有日志文件 ＝ 解析进度（粗力度）
+	public static AtomicInteger allLogNum = new AtomicInteger(); //所有日志文件数
+	public static AtomicInteger parsedNum = new AtomicInteger();  //已解析
+	public static Map<String,String> fileParseRecord = new HashMap<String, String>(); //存放文件解析的状态明细
+	
 	private List<TISLogFile> logFiles = null ; 
 	private final static Logger logger = LoggerFactory.getLogger(LogFileParser.class);
-	//public static List<String> unparseredLogFiles = new ArrayList<String>(); 
+	
 	@Override
 	public void run() {
-		
-		//jedis = jedisPool.getResource() ;
 		
 		for( TISLogFile logFile : logFiles ){
 			try {
@@ -41,9 +41,9 @@ public class LogFileParser extends AbstractRedisHandler implements Runnable {
 				e.printStackTrace();
 			}finally{
 			}
+			
+			parsedNum.incrementAndGet(); //完成一个日志文件的解析
 		}
-
-		//jedis.close();
 	}
 
 	/**
@@ -72,19 +72,23 @@ public class LogFileParser extends AbstractRedisHandler implements Runnable {
 			
 			saveResolvedLogFile(logFile) ;
 			
-			fileParsedNum++;
+			//fileParsedNum++;
 			fileParseRecord.put(logFile.logFile.getAbsolutePath(), "解析完成");
 		}else{			
 			fileParseRecord.put(logFile.logFile.getAbsolutePath(), "文件已经解析过");
 			logger.warn("文件已经解析过！ "+logFile.toString());	
 		}
 		
-		fileReadNum++;
+		//fileReadNum++;
 	}
 
 
 	public void setFiles(List<TISLogFile> files) {
+		
 		this.logFiles = files ;
+		
+		//累计日志文件数量
+		allLogNum.getAndAdd(files.size()) ;
 	}
 	
 	public List<TISLogFile> getFiles() {
