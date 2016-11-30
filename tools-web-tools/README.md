@@ -1,4 +1,15 @@
 
+### 开发过程
+
+2016-11-30
+
+	开发框架基本成型
+	
+	后续：
+	1、可持续生长：整理开发模型PPT
+	2、一个完整的例子：BizLogController中的功能完整的开发
+
+
 
 ###	对web-tools工程的重构过程
 
@@ -68,13 +79,11 @@
 	
 	重构 com.bos.tis.tools.util 包路径下的java，根据功能分别存放到 web-boss和 tools-common  ok
 	
-	完成第一次重构，运行测试
+	完成第一次重构，运行测试 ok
 	
-	1、bronsp:gen-sdo 生成的代码支持分布式框架
+	1、bronsp:gen-sdo 生成的代码支持分布式框架 ok
 		
-	2、接下来启动 tools-web-tools测试，
-	
-	3、然后继续重构
+	2、接下来启动 tools-web-tools测试， ok
 	
 	
 ### 还要进行的重构
