@@ -85,15 +85,20 @@ public class BizlogController extends BaseController {
 	}
 	
 	/**
+	 * <pre>
 	 * 查询当前所有的业务日志文件列表
+	 * 技术说明：
+	 * {agentHost:.+}，是使用SpEL来表示，避免当url中带有: . 这样的字符时，参数截取不全；
+	 * 也可以@PathVariable("{agentHost:[a-zA-Z0-9\.]+}")
+	 * 还可以用这种方式解决 /{agentHost}/list ；
+	 * </pre>
 	 * @param agentHost url中指定代理服务所在的主机服务名称 ip:port
 	 * @param request
 	 * @param response
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/{agentHost}/list",method=RequestMethod.GET) //能够完整的获得 agentHost，如： http://localhost:8089/tis/log/172.13.0.13:20883/list 则 agentHost=172.13.0.13:20883
-//	@RequestMapping(value="/list/{agentHost}",method=RequestMethod.GET) //不能完整的获得 agentHost，如： http://localhost:8089/tis/log/list／172.13.0.13:20883 则 agentHost=172.13.0
+	@RequestMapping(value="/list/{agentHost:.+}",method=RequestMethod.GET)
 	public String listLogFiles(@PathVariable String agentHost,HttpServletRequest request,HttpServletResponse response){
 		try {
 			logger.info("list logfile : " + agentHost);
