@@ -1,5 +1,8 @@
 package org.tis.tools.webapp.controller.old;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.tis.tools.base.web.controller.BaseController;
@@ -165,4 +168,11 @@ public class ListCheckController extends BaseController{
 //		}
 //		return null;		
 //	}
+	
+	private Map<String, Object> responseMsg ;
+	@Override
+	public Map<String, Object> getResponseCache() {
+		responseMsg = new HashMap<String, Object> () ;
+		return responseMsg ;
+	}
 }

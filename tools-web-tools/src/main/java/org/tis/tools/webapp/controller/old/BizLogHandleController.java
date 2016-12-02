@@ -123,4 +123,11 @@ public class BizLogHandleController extends BaseController{
 		}
 		return null;		
 	}
+	
+	private Map<String, Object> responseMsg ;
+	@Override
+	public Map<String, Object> getResponseCache() {
+		responseMsg = new HashMap<String, Object> () ;
+		return responseMsg ;
+	}
 }

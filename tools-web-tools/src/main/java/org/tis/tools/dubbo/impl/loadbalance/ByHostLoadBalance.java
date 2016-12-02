@@ -17,9 +17,9 @@ import com.alibaba.dubbo.rpc.cluster.LoadBalance;
  * <pre>
  * 根据服务端主机名（IP:PORT）进行负载
  * 间接实现了调用指定主机的服务
- * 消费者： http://springmvc-ip:port/biztrace/{targetProvider}/list
+ * 消费者： http://springmvc-ip:port/$appName/log/list/{targetProvider}
  * 其中targetProvider为服务端主机名，满足 IP:PORT格式
- * 如： http://springmvc-ip:port/biztrace/192.168.224.102:20883/list
+ * 如： http://springmvc-ip:port/tis/log/list/192.168.224.102:20883
  * 则会选择 dubbo:192.168.224.102:20883 这个服务提供者执行调用 
  * </pre>
  * @author megapro

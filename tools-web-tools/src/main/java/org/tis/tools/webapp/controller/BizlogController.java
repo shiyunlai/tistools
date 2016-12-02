@@ -1,6 +1,8 @@
 package org.tis.tools.webapp.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +12,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.base.web.controller.BaseController;
+import org.tis.tools.base.web.retcode.RetCodeEnum;
 import org.tis.tools.base.web.util.AjaxUtils;
 import org.tis.tools.base.web.util.JSONUtils;
 import org.tis.tools.service.api.biztrace.BiztraceFileInfo;
@@ -59,8 +63,12 @@ public class BizlogController extends BaseController {
 			
 			List<DubboServiceInfo> agents = BiztraceManager.instance.getBiztraceProviderList()  ;
 			
-			//返回代理节点信息
-			returnResponseData("agents", agents);
+			if( agents == null || agents.size() == 0 ){
+				returnRetCode(RetCodeEnum._9002_NONE_PROVIDER);
+			}else{
+				//返回代理节点信息
+				returnResponseData("agents", agents);
+			}
 			
 			String back = JSONArray.fromObject(responseMsg).toString() ; 
 			logger.debug("agents："+back) ;
@@ -84,7 +92,8 @@ public class BizlogController extends BaseController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/list/{agentHost}",method=RequestMethod.GET)
+	@RequestMapping(value="/{agentHost}/list",method=RequestMethod.GET) //能够完整的获得 agentHost，如： http://localhost:8089/tis/log/172.13.0.13:20883/list 则 agentHost=172.13.0.13:20883
+//	@RequestMapping(value="/list/{agentHost}",method=RequestMethod.GET) //不能完整的获得 agentHost，如： http://localhost:8089/tis/log/list／172.13.0.13:20883 则 agentHost=172.13.0
 	public String listLogFiles(@PathVariable String agentHost,HttpServletRequest request,HttpServletResponse response){
 		try {
 			logger.info("list logfile : " + agentHost);
@@ -191,5 +200,12 @@ public class BizlogController extends BaseController {
 		}
 
 		return null ; 
+	}
+
+	private Map<String, Object> responseMsg ;
+	@Override
+	public Map<String, Object> getResponseCache() {
+		responseMsg = new HashMap<String, Object> () ;
+		return responseMsg ;
 	}
 }
