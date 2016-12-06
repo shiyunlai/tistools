@@ -160,7 +160,7 @@ public class BizTraceAnalyManage
 		for( BiztraceFileInfo i : logFiles){
 			TISLogFile t = new TISLogFile() ;
 			t.setLogFile(i.getLogFile());
-			t.setDateStr(i.getLastModifedTime().substring(0, 8));//yyyyMMdd
+			t.setDateStr(i.getLastModifedTime().substring(0, 10));//yyyyMMdd
 			t.setLogTypeEnum(LogTypeEnum.LOG_BIZTRACE);
 			logs.add(t) ;
 		}

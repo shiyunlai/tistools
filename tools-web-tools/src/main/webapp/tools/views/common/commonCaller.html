@@ -55,24 +55,21 @@
                             </div>
                         </div>
 
-                        <div class="form-group" ng-if="requestInfo.method='POST'">
+                        <!-- POST请求时参数列表-->
+                        <div class="form-group" ng-if="requestInfo.method=='POST'">
                             <label class="col-md-2 control-label">postJsonData:</label>
                             <div class="col-md-8">
                                 <input type="text" ng-model="requestInfo.postJsonData" class="form-control">
                             </div>
                         </div>
 
-                        <!--&lt;!&ndash; POST请求时json参数 &ndash;&gt;-->
-                        <!--<div class="form-group" ng-if="requestInfo.method='POST'">-->
-                            <!--<label class="col-md-2 control-label">json:</label>-->
+                        <!--&lt;!&ndash; GET请求时参数列表&ndash;&gt;-->
+                        <!--<div class="form-group" ng-if="requestInfo.method=='GET'">-->
+                            <!--<label class="col-md-2 control-label">parms{{index}}:</label>-->
                             <!--<div class="col-md-8">-->
                                 <!--<input type="text" ng-model="requestInfo.postJsonData" class="form-control">-->
+                                <!--<input type="text" ng-model="requestInfo.postJsonData" class="form-control">-->
                             <!--</div>-->
-                        <!--</div>-->
-
-                        <!--&lt;!&ndash; GET请求时参数列表&ndash;&gt;-->
-                        <!--<div class="form-group" ng-if="requestInfo.method='GET'">-->
-                            <!--&lt;!&ndash; list 参数列表 &ndash;&gt;-->
                         <!--</div>-->
 
                         <div class="form-group">

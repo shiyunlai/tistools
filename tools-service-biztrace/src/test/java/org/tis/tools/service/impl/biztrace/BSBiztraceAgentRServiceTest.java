@@ -1,12 +1,7 @@
 package org.tis.tools.service.impl.biztrace;
 
-import static org.junit.Assert.*;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.tis.tools.service.api.biztrace.BiztraceFileInfo;
 
@@ -20,4 +15,5 @@ public class BSBiztraceAgentRServiceTest {
 			System.out.println(info);
 		}
 	}
+	
 }

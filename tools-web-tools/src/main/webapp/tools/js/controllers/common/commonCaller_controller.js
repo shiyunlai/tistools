@@ -18,10 +18,10 @@ MetronicApp.controller('commonCaller_controller', function ($filter,$rootScope, 
      */
     $scope.requestInfo.host = 'localhost';
     $scope.requestInfo.port = '8089';
-    $scope.requestInfo.mapping = '/tis/testController/test';
+    $scope.requestInfo.mapping = '/tis/log/analyse/172.20.10.9:20883';
     $scope.requestInfo.protocol = 'http';
     $scope.requestInfo.method = 'POST';
-    $scope.requestInfo.postJsonData = "{trans_serial:\"123123\"}";
+    $scope.requestInfo.postJsonData = "{\"type\":\"part\",\"logs\":[\"biztrace.log.1\",\"biztrace.log.2\"]}";
 
     $scope.finalUrl= assemblyUrl(requestInfo);
 
