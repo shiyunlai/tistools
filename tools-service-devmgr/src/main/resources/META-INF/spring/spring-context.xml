@@ -29,13 +29,14 @@
 	<!-- ====== -->
 	<!-- spring -->
 	<!-- ====== -->
-	<context:property-placeholder location="
+	<!-- <context:property-placeholder location="
 		classpath:dubbo.properties,
 		classpath:mybatis.properties,
 		classpath:mail.properties,
-		classpath:redis.properties"/>
+		classpath:redis.properties"/> -->
+	<context:property-placeholder location="classpath*:META-INF/*.properties"/>
 	
-	<context:component-scan base-package="com.bosh.tis.tools" />
+	<context:component-scan base-package="org.tis.tools" />
 	
 	<context:annotation-config /> 
 	

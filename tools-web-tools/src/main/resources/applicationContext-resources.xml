@@ -1,11 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?><!-- bak the file by lanmosoft.com -->
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+   		http://www.springframework.org/schema/context 
+   		http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
     <!-- <context:property-placeholder location="classpath:lanmo.properties,classpath:mail.properties"/> -->
-    
-    <bean id="configBean" class="com.bos.tis.tools.base.CustomizedPropertyPlaceholderConfigurer">
+    <bean id="configBean" class="org.tis.tools.webapp.CustomizedPropertyPlaceholderConfigurer">
     	<property name="locations">
 	    	<list>
 	    	 	<value>classpath:db.properties</value>
@@ -47,7 +50,6 @@
 		 <property name="url" value="jdbc:oracle:thin:@${database_url}:${database_name}" />
 		<property name="username" value="${database_username}"/>
         <property name="password" value="${database_password}"/>
-
 		<property name="defaultAutoCommit" value="true" />
 		<!-- 最大连接数 -->
 		<property name="maxActive">
@@ -119,18 +121,16 @@
 
     <!-- Activates scanning of @Autowired -->
     <context:annotation-config/>
-
-        <!-- define the SqlSessionFactory -->
+    
+	<!-- define the SqlSessionFactory -->
     <bean id="sqlSessionFactory1" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="typeAliasesPackage" value="com.bos.tis.tools.dao.model" />
-        <property name="configLocation" value="classpath:mybatis-config.xml" /> 
+        <property name="typeAliasesPackage" value="org.tis.tools.dao.mapper" />
     </bean>
         <!-- scan for mappers and let them be autowired -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.bos.tis.tools.dao.mapper" />
+        <property name="basePackage" value="org.tis.tools.dao.mapper" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory1" />
     </bean>
-
   
 </beans>

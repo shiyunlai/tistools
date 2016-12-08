@@ -15,6 +15,29 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
+		<!-- spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<!-- <version>${spring.bom.version}</version> -->
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<!-- <version>${spring.bom.version}</version> -->
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<!-- <version>${spring.bom.version}</version> -->
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<!-- <version>${spring.bom.version}</version> -->
+		</dependency>
+
 		<!-- zookeeper & zkclient -->
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>
@@ -40,7 +63,23 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>dubbo</artifactId>
 		</dependency>
-
+		
+		<!-- redis客户端:Jedis -->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+		</dependency>
+		
+		<!-- poi -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-scratchpad</artifactId>
+		</dependency>
+		
 		<!-- tis tools -->
 		<dependency>
 			<groupId>org.tis</groupId>
@@ -68,7 +107,7 @@
 						<configuration>
 							<artifactItems>
 								<artifactItem>
-									<groupId>com.bosh.tis</groupId>
+									<groupId>org.tis</groupId>
 									<artifactId>${project.parent.artifactId}-common-assembly</artifactId>
 									<version>${tis_tools_version}</version>
 									<outputDirectory>${project.build.directory}/runtime</outputDirectory>
