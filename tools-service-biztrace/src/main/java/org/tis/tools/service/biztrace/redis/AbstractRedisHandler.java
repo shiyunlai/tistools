@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author megapro
  *
  */
-public abstract class AbstractRedisHandler {
+public class AbstractRedisHandler {
 
 	@Autowired
 	protected RedisClientTemplate redisClientTemplate ; 

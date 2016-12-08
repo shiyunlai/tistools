@@ -34,11 +34,13 @@ public class LogFileParser extends AbstractRedisHandler implements Runnable {
 	public void run() {
 		
 		for( TISLogFile logFile : logFiles ){
+			
 			try {
 				doParse(logFile) ;
-			} catch (IOException e) {
-				System.err.println("解析文件失败："+logFile);
+			} catch (Exception e) {
+				logger.warn("解析文件失败："+logFile.getLogFile().getAbsolutePath(), e.getMessage());
 				e.printStackTrace();
+				continue ; 
 			}finally{
 			}
 			

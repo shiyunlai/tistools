@@ -18,6 +18,8 @@
 －－－－
 	问题：dubbo服务启动后，无法自动注入RedisClientTemplate对象到LogFileParser.java中
 	
+	查 dubbo redis ....
+	
 	原因：
 	
 	解决：
