@@ -37,8 +37,8 @@
 		classpath:redis.properties"/>
 	<!-- <context:property-placeholder location="classpath*:META-INF/*.properties"/> -->
 	
-	<context:component-scan base-package="org.tis.tools" />
-	
 	<context:annotation-config /> 
+
+	<context:component-scan base-package="org.tis.tools.service" />
 	
 </beans>

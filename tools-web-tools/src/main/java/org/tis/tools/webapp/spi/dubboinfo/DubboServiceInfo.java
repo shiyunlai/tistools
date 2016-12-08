@@ -10,7 +10,7 @@ import com.alibaba.dubbo.common.URL;
 /**
  * <pre>
  * 
- * Dubbo服务信息
+ * Dubbo服务信息（VO对象）
  * 
  * 来自对.cache文件的解析
  * 

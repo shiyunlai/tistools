@@ -1,15 +1,20 @@
 package org.tis.tools.webapp.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.base.web.controller.BaseController;
+import org.tis.tools.base.web.retcode.RetCodeEnum;
 import org.tis.tools.base.web.util.AjaxUtils;
 import org.tis.tools.base.web.util.JSONUtils;
 import org.tis.tools.service.api.biztrace.BiztraceFileInfo;
@@ -59,8 +65,12 @@ public class BizlogController extends BaseController {
 			
 			List<DubboServiceInfo> agents = BiztraceManager.instance.getBiztraceProviderList()  ;
 			
-			//返回代理节点信息
-			returnResponseData("agents", agents);
+			if( agents == null || agents.size() == 0 ){
+				returnRetCode(RetCodeEnum._9002_NONE_PROVIDER);
+			}else{
+				//返回代理节点信息
+				returnResponseData("agents", agents);
+			}
 			
 			String back = JSONArray.fromObject(responseMsg).toString() ; 
 			logger.debug("agents："+back) ;
@@ -77,14 +87,20 @@ public class BizlogController extends BaseController {
 	}
 	
 	/**
+	 * <pre>
 	 * 查询当前所有的业务日志文件列表
+	 * 技术说明：
+	 * {agentHost:.+}，是使用SpEL来表示，避免当url中带有: . 这样的字符时，参数截取不全；
+	 * 也可以@PathVariable("{agentHost:[a-zA-Z0-9\.]+}")
+	 * 还可以用这种方式解决 /{agentHost}/list ；
+	 * </pre>
 	 * @param agentHost url中指定代理服务所在的主机服务名称 ip:port
 	 * @param request
 	 * @param response
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/list/{agentHost}",method=RequestMethod.GET)
+	@RequestMapping(value="/list/{agentHost:.+}",method=RequestMethod.GET)
 	public String listLogFiles(@PathVariable String agentHost,HttpServletRequest request,HttpServletResponse response){
 		try {
 			logger.info("list logfile : " + agentHost);
@@ -116,7 +132,7 @@ public class BizlogController extends BaseController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/analyse/{agentHost}",method=RequestMethod.POST)
+	@RequestMapping(value="/analyse/{agentHost:.+}",method=RequestMethod.POST)
 	public String analyseLog(@PathVariable String agentHost,@RequestBody String logFiles,
 			HttpServletRequest request,HttpServletResponse response){
 		
@@ -133,21 +149,20 @@ public class BizlogController extends BaseController {
 			}
 			
 			List<BiztraceFileInfo> logList = biztraceRService.listBiztraces(agentHost) ;//取出当前所有日志文件
-			
+			List<BiztraceFileInfo> resList = new ArrayList<BiztraceFileInfo>() ; 
 			if( StringUtils.equals(type, "part") ){
 				JSONArray logsList = jsonLogFiles.getJSONArray("logs") ; 
-				List<String> fixedLogFile = (List<String>) JSONArray.toArray(logsList) ; 
-				//如果只指定了部分，泽剔除未指定的内容
+				List<String> files = (List<String>)JSONSerializer.toJava(logsList) ;
 				for( BiztraceFileInfo i : logList ){
-					if( fixedLogFile.contains(i.getFileName()) ){
-						continue ; 
+					if( files.contains(i.getFileName()) ){
+						resList.add(i) ;//只收集指定的日志文件用作解析
 					}else{
-						logList.remove(i) ; 
+						continue ; 
 					}
 				}
 			}
 			
-			biztraceRService.resolveAndAnalyseBiztraceFixed(logList);//解析指定的日志文件
+			biztraceRService.resolveAndAnalyseBiztraceFixed(resList);//解析指定的日志文件
 			
 			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(responseMsg).toString());
 			
@@ -191,5 +206,12 @@ public class BizlogController extends BaseController {
 		}
 
 		return null ; 
+	}
+
+	private Map<String, Object> responseMsg ;
+	@Override
+	public Map<String, Object> getResponseCache() {
+		responseMsg = new HashMap<String, Object> () ;
+		return responseMsg ;
 	}
 }

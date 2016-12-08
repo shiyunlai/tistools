@@ -1,6 +1,8 @@
 package org.tis.tools.webapp.controller.old;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -187,5 +189,12 @@ public class FeatureRegController extends BaseController{
 			logger.error("FeatureRegController update exception : " ,e);
 		}
 		return null;		
+	}
+	
+	private Map<String, Object> responseMsg ;
+	@Override
+	public Map<String, Object> getResponseCache() {
+		responseMsg = new HashMap<String, Object> () ;
+		return responseMsg ;
 	}
 }

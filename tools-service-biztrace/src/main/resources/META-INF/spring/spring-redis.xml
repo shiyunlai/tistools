@@ -37,15 +37,15 @@
             <list>
             	<!-- ## //TODO 要支持redis集群 -->
                 <bean name="master" class="redis.clients.jedis.JedisShardInfo">
-                    <constructor-arg name="host" value="${redis.host}" />
-                    <constructor-arg name="port" value="${redis.port}" />
-                    <constructor-arg name="name" value="${redis.name}" />
+                    <constructor-arg name="host" value="${redis.host.master}" />
+                    <constructor-arg name="port" value="${redis.port.master}" />
+                    <constructor-arg name="name" value="${redis.name.master}" />
                     <constructor-arg name="timeout" value="${redis.timeout}" />
                 </bean>
                 <bean name="slaver" class="redis.clients.jedis.JedisShardInfo">
-                    <constructor-arg name="host" value="${redis.host}" />
-                    <constructor-arg name="port" value="${redis.port}" />
-                    <constructor-arg name="name" value="${redis.name}" />
+                    <constructor-arg name="host" value="${redis.host.slaver}" />
+                    <constructor-arg name="port" value="${redis.port.slaver}" />
+                    <constructor-arg name="name" value="${redis.name.slaver}" />
                     <constructor-arg name="timeout" value="${redis.timeout}" />
                 </bean>
             </list>

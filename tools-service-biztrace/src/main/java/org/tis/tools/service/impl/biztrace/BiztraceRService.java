@@ -44,6 +44,7 @@ public class BiztraceRService implements IBiztraceRService
 			List<TISLogFile> ll= BizTraceAnalyManage.instance.listLogFiles(bsLogPath) ;
 			for( TISLogFile f : ll ){
 				BiztraceFileInfo info = new BiztraceFileInfo( ) ;
+				info.setLogFile(f.getLogFile());
 				info.setFileName(f.logFile.getName());
 				info.setFilePath(f.logFile.getPath());
 				info.setFileSize(f.logFile.length());//单位KB

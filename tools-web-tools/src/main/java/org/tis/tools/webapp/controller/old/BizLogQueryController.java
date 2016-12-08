@@ -1,5 +1,6 @@
 package org.tis.tools.webapp.controller.old;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -146,5 +147,12 @@ public class BizLogQueryController extends BaseController{
 //		}
 //		return null;		
 //	}
+	
+	private Map<String, Object> responseMsg ;
+	@Override
+	public Map<String, Object> getResponseCache() {
+		responseMsg = new HashMap<String, Object> () ;
+		return responseMsg ;
+	}
 		
 }

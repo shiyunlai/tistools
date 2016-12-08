@@ -32,9 +32,6 @@ public abstract class BaseController {
 	@Autowired
 	protected TransactionTemplate transactionTemplate;
 
-	//每个controller行为处理返回结果
-	protected final Map<String, Object> responseMsg ;
-	
 	protected JsonConfig jsonConfig;
 	
 	public BaseController() {
@@ -46,8 +43,50 @@ public abstract class BaseController {
 				new JsonDateProcessor());
 		jsonConfig.setPropertySetStrategy(new JSONPropertyStrategyWrapper(
 				PropertySetStrategy.DEFAULT));
-		responseMsg = createResponse();
+		createResponseCache();
 	}
+	
+	/**
+	 * <pre>
+	 * 构造处理结果返回结构
+	 * 结构示意：{"result":{"retCode":"","retMsg":"",....}}
+	 * </pre>
+	 * @return
+	 */
+	private void createResponseCache() {
+		Map<String, Object> resp = getResponseCache() ;
+		//默认成功
+		returnRetCode(resp,RetCodeEnum._0000_SUCC) ; 
+	}
+
+	/**
+	 * 返回错误码
+	 * @param result
+	 * @param retCode
+	 */
+	protected void returnRetCode(RetCodeEnum retCode){
+		returnRetCode(getResponseCache(),retCode) ; 
+	}
+	
+	/**
+	 * 返回处理响应数据
+	 * @param key
+	 * @param value
+	 */
+	protected void returnResponseData(String key, Object value){
+		getResponseCache().put(key, value);
+	}
+	
+	private void returnRetCode(Map<String, Object> resp, RetCodeEnum retCode){
+		resp.put("retCode", retCode.retCode);
+		resp.put("retMsg" , retCode.retMsg);
+	}
+	
+	/**
+	 * 要求子类构造自己的响应数据
+	 * @return
+	 */
+	public abstract Map<String, Object> getResponseCache() ;
 
 	protected void initWanNengChaXun(JSONObject jsonObj, WhereCondition wc) {
 		// 查询项
@@ -125,42 +164,5 @@ public abstract class BaseController {
 			page = new Page();
 		}
 		return page;
-	}
-
-	/**
-	 * <pre>
-	 * 构造处理结果返回结构
-	 * 结构示意：{"result":{"retCode":"","retMsg":"",....}}
-	 * </pre>
-	 * @return
-	 */
-	protected Map<String, Object> createResponse() {
-		Map<String, Object> resp = new HashMap<String, Object>();
-		//默认成功
-		returnRetCode(resp,RetCodeEnum._0000_SUCC) ; 
-		return resp ;
-	}
-	
-	/**
-	 * 返回错误码
-	 * @param result
-	 * @param retCode
-	 */
-	protected void returnRetCode(RetCodeEnum retCode){
-		returnRetCode(responseMsg,retCode) ; 
-	}
-	
-	/**
-	 * 返回处理响应数据
-	 * @param key
-	 * @param value
-	 */
-	protected void returnResponseData(String key, Object value){
-		responseMsg.put(key, value);
-	}
-	
-	private void returnRetCode(Map<String, Object> resp, RetCodeEnum retCode){
-		resp.put("retCode", retCode.retCode);
-		resp.put("retMsg" , retCode.retMsg);
 	}
 }

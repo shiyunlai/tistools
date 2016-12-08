@@ -34,11 +34,13 @@ public class LogFileParser extends AbstractRedisHandler implements Runnable {
 	public void run() {
 		
 		for( TISLogFile logFile : logFiles ){
+			
 			try {
 				doParse(logFile) ;
-			} catch (IOException e) {
-				System.err.println("解析文件失败："+logFile);
+			} catch (Exception e) {
+				logger.warn("解析文件失败："+logFile.getLogFile().getAbsolutePath(), e.getMessage());
 				e.printStackTrace();
+				continue ; 
 			}finally{
 			}
 			
@@ -59,10 +61,7 @@ public class LogFileParser extends AbstractRedisHandler implements Runnable {
 			
 			long start = System.currentTimeMillis() ;
 			
-			//result.put(logFile.logFile.getAbsolutePath(), "");
-			//AjaxUtils.ajaxJson(response, JSONObject.fromObject("{}", jsonConfig).toString());
-			
-			logFile.logTypeEnum.resolver.resolve(logFile); //FIXME 重构不在传入jedis对象
+			logFile.logTypeEnum.resolver.resolve(logFile); 
 			
 			logger.info(
 					new StringBuffer()

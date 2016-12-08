@@ -1,5 +1,7 @@
 package org.tis.tools.webapp.controller.old;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -75,5 +77,12 @@ public class RedisCleanController extends BaseController{
 			logger.error("RedisCleanController cleanRedisSpace exception : " ,e);
 		}
 		return null;		
+	}
+	
+	private Map<String, Object> responseMsg ;
+	@Override
+	public Map<String, Object> getResponseCache() {
+		responseMsg = new HashMap<String, Object> () ;
+		return responseMsg ;
 	}
 }
