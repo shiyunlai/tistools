@@ -39,6 +39,12 @@
 	
 	<context:annotation-config /> 
 
-	<context:component-scan base-package="org.tis.tools.service" />
+	<context:component-scan base-package="org.tis.tools.service" >
+	</context:component-scan>
+	
+	<context:component-scan base-package="org.tis.tools.service.biztrace.redis">
+    </context:component-scan>
+    
+    <import resource="spring-redis.xml"/>
 	
 </beans>

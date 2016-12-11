@@ -20,8 +20,10 @@ import org.tis.tools.service.exception.biztrace.BiztraceRServiceException;
 
 
 /**
- * 
- * BS服务器的‘业务日志分析代理服务’实现
+ * <pre>
+ * Dubbo服务提供者实现类
+ * 功能：BS服务器的‘业务日志分析代理服务’实现
+ * </pre>
  * @author megapro
  *
  */

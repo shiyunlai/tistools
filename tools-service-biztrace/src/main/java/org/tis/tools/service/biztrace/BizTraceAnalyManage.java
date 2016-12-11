@@ -18,6 +18,7 @@ import org.tis.tools.common.utils.DirectoryUtil;
 import org.tis.tools.service.api.biztrace.BiztraceFileInfo;
 import org.tis.tools.service.biztrace.TISLogFile.LogTypeEnum;
 import org.tis.tools.service.biztrace.analyzer.TransTimeConsumingAnalyzer;
+import org.tis.tools.service.biztrace.helper.SpringContextUtil;
 import org.tis.tools.service.biztrace.parser.LogFileParser;
 import org.tis.tools.service.biztrace.report.ShowTransTimeConsumingDetailReport;
 import org.tis.tools.service.biztrace.report.TopsTransTimeConsumingReport;
@@ -193,7 +194,8 @@ public class BizTraceAnalyManage
 
 		// 每组启动一个线程并行解析
 		while (i.hasNext()) {
-			LogFileParser parser = new LogFileParser();
+			//LogFileParser parser = new LogFileParser(); //FIXME 直接new，则无法借助Spring进行属性的自动注入
+			LogFileParser parser = SpringContextUtil.getBean("logFileParser") ; 
 			Entry<String, List<TISLogFile>> e = i.next();
 			parser.setFiles(e.getValue());// 该线程要解析日志文件
 			Thread t = new Thread(parser);
