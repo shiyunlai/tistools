@@ -7,8 +7,7 @@ import java.io.File;
 import java.io.Serializable;
 
 import org.tis.tools.common.utils.TimeUtil;
-import org.tis.tools.service.biztrace.parser.BizTraceResolver;
-import org.tis.tools.service.biztrace.parser.DefaultResolver;
+import org.tis.tools.service.biztrace.helper.SpringContextUtil;
 
 /**
  * TIS系统的日志文件
@@ -98,7 +97,8 @@ public class TISLogFile implements Serializable{
 	 */
 	public static enum LogTypeEnum implements Serializable{
 		
-		LOG_BIZTRACE("biztrace.log",new BizTraceResolver()) ,
+//		LOG_BIZTRACE("biztrace.log",new BizTraceResolver()) ,//FIXME 直接new则无法启用Spring
+		LOG_BIZTRACE("biztrace.log","bizTraceResolver") ,//此处指定解析器的Component名称，见具体java类 @Component
 		
 		//LOG_BTPTRACE("btp-trace.log",new DefaultResolver()) ,
 
@@ -112,18 +112,17 @@ public class TISLogFile implements Serializable{
 		
 		//LOG_TRACE("trace.log",new DefaultResolver()) ,//FIXME 文件命名有冲突，导致 biztrace和btp-trace 类型映射错误，需要Pattern解决
 
-		LOG_BS("bs.log",new DefaultResolver());
-		//LOG_BS("bs.log",new BSResolver());
+		LOG_BS("bs.log","defaultResolver");
 		
 		/** 文件标志缀 */
 		String suffixTag = null ;
 		
 		/** 日志文件拆分解析器 */
-		public IBizTraceResolver resolver = null ; 
+		public String resolverName = null ; 
 		
-		private LogTypeEnum(String suffixTag,IBizTraceResolver resolver ){
+		private LogTypeEnum(String suffixTag,String resolver ){
 			this.suffixTag = suffixTag ; 
-			this.resolver = resolver ; 
+			this.resolverName = resolver ; 
 		}
 		
 		public String getSuffixTag() {
@@ -134,16 +133,28 @@ public class TISLogFile implements Serializable{
 			this.suffixTag = suffixTag;
 		}
 
+		/**
+		 * 获得日志拆分解析器实现对象
+		 * @return
+		 */
 		public IBizTraceResolver getResolver() {
-			return resolver;
+			return SpringContextUtil.getBean(this.getResolverName());
 		}
 
-		public void setResolver(IBizTraceResolver resolver) {
-			this.resolver = resolver;
+		/**
+		 * 获得日志拆分解析器名称
+		 * @return
+		 */
+		public String getResolverName() {
+			return resolverName;
+		}
+
+		public void setResolverName(String resolver) {
+			this.resolverName = resolver;
 		}
 
 		public String toString(){
-			return suffixTag; 
+			return "日志文件:" + this.suffixTag + " 对应的解析器为：" + this.resolverName; 
 		}
 	}
 }

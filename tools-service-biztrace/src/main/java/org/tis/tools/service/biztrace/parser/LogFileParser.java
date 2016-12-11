@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 import org.tis.tools.service.biztrace.TISLogFile;
 import org.tis.tools.service.biztrace.helper.RunConfig;
 import org.tis.tools.service.biztrace.redis.AbstractRedisHandler;
@@ -20,6 +21,7 @@ import org.tis.tools.service.biztrace.redis.AbstractRedisHandler;
  * @author megapro
  * 
  */
+@Repository("logFileParser")
 public class LogFileParser extends AbstractRedisHandler implements Runnable {
 	
 	//FIXME 已解析文件 / 所有日志文件 ＝ 解析进度（粗力度）
@@ -61,7 +63,7 @@ public class LogFileParser extends AbstractRedisHandler implements Runnable {
 			
 			long start = System.currentTimeMillis() ;
 			
-			logFile.logTypeEnum.resolver.resolve(logFile); 
+			logFile.logTypeEnum.getResolver().resolve(logFile); 
 			
 			logger.info(
 					new StringBuffer()
