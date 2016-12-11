@@ -7,6 +7,8 @@ import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.tis.tools.service.biztrace.IBizTraceResolver;
 import org.tis.tools.service.biztrace.TISLogFile;
 
@@ -17,6 +19,7 @@ import org.tis.tools.service.biztrace.TISLogFile;
  * @author megapro
  *
  */
+@Repository("defaultResolver")
 public class DefaultResolver implements IBizTraceResolver {
 
 	private final static Logger logger = LoggerFactory.getLogger(DefaultResolver.class);
