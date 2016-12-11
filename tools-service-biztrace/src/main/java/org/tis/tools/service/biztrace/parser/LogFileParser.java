@@ -101,12 +101,6 @@ public class LogFileParser extends AbstractRedisHandler implements Runnable {
 	 */
 	private boolean isResolvedLogFile(TISLogFile logFile) {
 		
-		// 通过查询Redis确定，是否已经解析过
-//		if( jedis.sismember(
-//				String.format(RunConfig.KP_SET_RESOLVED_LOG_FILE, logFile.dateStr), 
-//				logFile.logFile.getAbsolutePath() ) ){
-//			return true ; //已解析
-//		}
 		if( this.redisClientTemplate.sismember(
 				String.format(RunConfig.KP_SET_RESOLVED_LOG_FILE, logFile.dateStr), 
 				logFile.logFile.getAbsolutePath() ) ){
