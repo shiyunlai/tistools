@@ -169,7 +169,7 @@ public class BizlogController extends BaseController {
 			logger.info("analyse biztrace : ok" );
 		}
 		catch (Exception e) {
-			AjaxUtils.ajaxJsonErrorMessage(response);
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getMessage());
 			logger.error("analyse biztrace exception : " , e );
 		}
 		

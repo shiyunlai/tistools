@@ -20,7 +20,7 @@
 	<!-- Redis -->
 	<!-- ======= -->
 
-	<!-- 使用主备(master-slaver)方式 -->
+	<!-- Spring + redis(主备 master-slaver方式) -->
 	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
         <property name="maxTotal" value="${redis.maxTotal}" />
         <property name="maxIdle" value="${redis.maxIdle}" />
@@ -74,5 +74,11 @@
 		<constructor-arg index="3" value="600000" />
 		<constructor-arg index="4" value="foobared" />
 	</bean> -->
+	
+	
+	<!-- 使用集群方式的redis 
+	http://blog.csdn.net/u010739551/article/details/52438101
+	-->
+	<!-- //TODO spring + redis(集群) -->
     
 </beans>
