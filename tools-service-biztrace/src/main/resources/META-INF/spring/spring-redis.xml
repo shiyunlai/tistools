@@ -54,6 +54,7 @@
 
 	<!-- 使用sentinel pool方式 
 	https://my.oschina.net/dxqr/blog/711578
+	或参考兴业项目工程 from-hongchao
 	-->
 	<!-- 
 	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
