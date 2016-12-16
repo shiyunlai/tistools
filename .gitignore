@@ -41,3 +41,5 @@ logs/
 tools-web-tools3/
 
 tools-web-tools/src/main/webapp/.idea/
+
+tools-web-tools/cache/.tools-web-tools.cache.swp
