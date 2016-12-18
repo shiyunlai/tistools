@@ -49,9 +49,21 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-2 control-label">RequestMapping:</label>
+                            <label class="col-md-2 control-label">AppName:</label>
                             <div class="col-md-8">
-                                <input type="text" ng-model="requestInfo.mapping" class="form-control">
+                                <input type="text" ng-model="requestInfo.app_name" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">ParentReqMapping:</label>
+                            <div class="col-md-8">
+                                <input type="text" ng-model="requestInfo.parent_mapping" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">ChildReqMapping:</label>
+                            <div class="col-md-8">
+                                <input type="text" ng-model="requestInfo.child_mapping" class="form-control">
                             </div>
                         </div>
 
@@ -63,21 +75,46 @@
                             </div>
                         </div>
 
-                        <!--&lt;!&ndash; GET请求时参数列表&ndash;&gt;-->
-                        <!--<div class="form-group" ng-if="requestInfo.method=='GET'">-->
-                            <!--<label class="col-md-2 control-label">parms{{index}}:</label>-->
-                            <!--<div class="col-md-8">-->
-                                <!--<input type="text" ng-model="requestInfo.postJsonData" class="form-control">-->
-                                <!--<input type="text" ng-model="requestInfo.postJsonData" class="form-control">-->
-                            <!--</div>-->
-                        <!--</div>-->
+                        <!-- GET请求时参数列表-->
+                        <div class="form-group" ng-if="requestInfo.method=='GET'">
+                            <label class="col-md-2 control-label">params:</label>
+                            <div class="col-md-8">
+                                <div class="form-body">
+                                    <table class="table table-hover">
+                                        <tbody>
+                                            <tr>
+                                                <th ng-form="subform" width="20%">KEY</th>
+                                                <th ng-form="subform" width="20%">VALUE</th>
+                                                <th ng-form="subform" width="20%"></th>
+                                            </tr>
+                                            <tr ng-repeat="d in paramValues track by $index">
+                                                <td ng-form="subform" width="20%"><input ng-model="d.paramKey" type="text"  class="form-control {{subform.$invalid&&'lanmo-warning'}}"/></td>
+                                                <td ng-form="subform" width="20%"><input ng-model="d.paramVal" type="text"  class="form-control {{subform.$invalid&&'lanmo-warning'}}"/></td>
+                                                <td width="20%">
+                                                    <a href ng-click="addParamItem($index)" class="btn btn-icon-only green"><i class="fa fa-plus"></i></a>
+                                                    <a ng-if="paramValues.length>1" href ng-click="delParamItem($index)" class="btn btn-icon-only red"><i class="fa fa-minus"></i></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
 
-                        <div class="form-group">
+                        <div class="form-group" ng-if="requestInfo.method=='POST'">
                             <label class="col-md-2 control-label">Final Url:</label>
                             <div class="col-md-8">
                                 <pre>{{finalUrl}}</pre>
                             </div>
                         </div>
+                        <div class="form-group" ng-if="requestInfo.method=='GET'">
+                            <label class="col-md-2 control-label">Final Url:</label>
+                            <div class="col-md-8">
+                                <pre>{{finalUrl}}</pre>
+                            </div>
+                        </div>
+
+
 
                         <div class="form-group">
                             <div class="col-md-8">
@@ -103,9 +140,30 @@
                     <span class="caption-helper hide"></span>
                 </div>
             </div>
-            <div>处理状态:{{responseJsonData.status}}<div>
-            <div>是否成功:{{responseJsonData.success}}<div>
-            <div>响应信息:{{responseJsonData.message}}<div>
+            <div class="portlet-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">处理状态:</label>
+                            <div class="col-md-8" style="padding-top: 6px">
+                                {{responseJsonData.status}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">是否成功:</label>
+                            <div class="col-md-8" style="padding-top: 6px">
+                                <div>{{responseJsonData.success}}</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">响应信息:</label>
+                            <div class="col-md-8" style="padding-top: 6px">
+                                <div>{{responseJsonData.message}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
