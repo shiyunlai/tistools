@@ -42,14 +42,56 @@
 	
 	解决：增加SpringContextUtil，从而可以借助Spring的依赖注入进行对象的创建。
 		见SpringContextUtil.getBean()
-	
-－－－－
-	问题：
-	原因：
-	解决：
 
 －－－－
-	问题：
+	问题：集成disconf时，找不到disconf.properteis文件
+	原因：没有放到正确的问题
+	解决：src/main/resources/disconf.properties
+	
+－－－－
+	问题：集成disconf时，报错
+		
+		2016-12-19 05:29:47,484 - com.baidu.disconf.client.watch.WatchFactory -8790 [main] ERROR  - cannot get watch module
+java.lang.Exception: cannot get: RemoteUrl [url=/api/zoo/hosts, serverList=[127.0.0.1:7067], urls=[http://127.0.0.1:7067/api/zoo/hosts]]
+	at com.baidu.disconf.core.common.restful.impl.RestfulMgrImpl.getJsonData(RestfulMgrImpl.java:75)
+		...
+		
+		2016-12-19 05:29:47,694 - com.baidu.disconf.client.core.processor.impl.DisconfFileCoreProcessorImpl -9000 [main] DEBUG  - ==============	start to process disconf file: biztrace.properties	=============================
+2016-12-19 05:31:17,032 - com.baidu.disconf.client.core.processor.impl.DisconfFileCoreProcessorImpl -98338 [main] ERROR  - java.lang.RuntimeException: HTTP GET Request Failed with Error code : 404
+java.lang.RuntimeException: HTTP GET Request Failed with Error code : 404
+	at com.baidu.disconf.core.common.restful.core.RestUtil.restGet(RestUtil.java:36)
+	
+	分析：
+		在浏览器中直接输入 http://127.0.0.1:7067/api/zoo/hosts 报404
+		跟着代码 RestfulMgrImpl 75行 查看url为： http://127.0.0.1:7067/api/web/config/list/configs?app=tools-service-biztrace&env=local&version=shiyl&key=biztrace.properties，在浏览器中直接输入改地址，报404
+		
+	原因：
+		很明细了，是url不正确，
+		因为tomcat中设置了应用路径为 disconf-web
+		<Context path="/disconf-web" docBase="/Users/megapro/Soft/disconf/war"></Context>
+		因此，请求地址 应该是 
+		http://ip:port/disconf-web
+		
+		此处程序中调试时发现为 http://127.0.0.1:7067/api/zoo/hosts ，明细没有 disconf-web 
+		但是又不能呢直接修改tomcat为
+		<Context path="" docBase="/Users/megapro/Soft/disconf/war"></Context>
+		否则disconf控制台将登陆不了（原因见 /disconf-base/war/html/assets/js/jquery-1.11.0.js 中8950行 url.url ="/disconf-web"+url.url;）
+		
+	解决：
+		
+		临时解决，修改 disconf.properties文件 
+		disconf.conf_server_host=127.0.0.1:7067 
+		为
+		disconf.conf_server_host=127.0.0.1:7067/disconf-web
+		
+－－－－
+	问题：解决了 404问题后，启动，报错
+	2016-12-19 06:08:49,385 - com.baidu.disconf.client.core.processor.impl.DisconfFileCoreProcessorImpl -1894 [main] DEBUG  - ==============	start to process disconf file: mail.properteis	=============================
+2016-12-19 06:08:49,390 - com.baidu.disconf.client.core.processor.impl.DisconfFileCoreProcessorImpl -1899 [main] ERROR  - java.lang.RuntimeException: 配置文件不存在
+java.lang.RuntimeException: 配置文件不存在
+	at com.baidu.disconf.client.core.processor.impl.DisconfFileCoreProcessorImpl.updateOneConfFile(DisconfFileCoreProcessorImpl.java:106)
+	
+	
 	原因：
 	解决：
 	

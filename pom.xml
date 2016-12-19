@@ -151,7 +151,8 @@
 		<junrar_version>0.7</junrar_version>
 		<svnkit_version>1.7.11</svnkit_version>
 		<poi_version>3.10-FINAL</poi_version>
-		
+		<disconf_version>2.6.36-luban</disconf_version>
+		 
 	</properties>
 	<dependencyManagement>
 
@@ -702,7 +703,14 @@
 				<artifactId>poi-scratchpad</artifactId>
 				<version>${poi_version}</version>
 			</dependency>
-			
+
+			<!-- disconf -->
+			<dependency>
+				<groupId>com.baidu.disconf</groupId>
+				<artifactId>disconf-client</artifactId>
+				<version>${disconf_version}</version>
+			</dependency>
+        
 			<!--### Common libs end ### -->
 		</dependencies>
 	</dependencyManagement>
