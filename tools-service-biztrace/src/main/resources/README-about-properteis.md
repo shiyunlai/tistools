@@ -5,5 +5,8 @@
 5.mybatis.properties
 6.redis.properties
 
-1，2，3 部署到 conf
-1,2,3,4,5,6 上传到disconf-web
+eclipse运行时：均需要这些properties
+
+打包部署时（见assembly.xml）：
+	2，3 部署到 conf
+	1,2,3,4,5,6 上传到disconf-web，可以不打包到 jar中
