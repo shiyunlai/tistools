@@ -108,13 +108,11 @@ java.lang.RuntimeException: 配置文件不存在
 	
 	
 	原因：
-		mail.properties 文件内容为空
+		META-INF/spring/spring-disconf.xml中 mail.properteis 文件后缀拼写错误，导致disconf找不到配置项
 		
 	解决：
 		
-		暂时解决，当前还不使用mail能力，因此删除mail.properteis
-		
-		最终解决，mail.properteis文件有值后，重新上传disconf-web
+		修改为 mail.properties
 		
 －－－－
 	问题：
