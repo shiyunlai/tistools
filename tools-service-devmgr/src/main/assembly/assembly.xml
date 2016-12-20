@@ -18,7 +18,8 @@
 		<fileSet>
 			<directory>src/main/resources</directory>
 			<includes>
-                <include>dubbo.properties</include>
+                <include>disconf.properties</include><!-- disconf.properties, disconf启动配置 -->
+                <include>dubbo.properties</include><!-- dubbo.properties,dubbo启动配置，部署时，供start.sh脚本使用 -->
             </includes>
 			<outputDirectory>conf</outputDirectory>
 			<fileMode>0644</fileMode>

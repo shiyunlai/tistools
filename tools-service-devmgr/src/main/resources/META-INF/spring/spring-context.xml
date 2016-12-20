@@ -26,18 +26,14 @@
 		http://code.alibabatech.com/schema/dubbo 
 		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-	<!-- ====== -->
-	<!-- spring -->
-	<!-- ====== -->
-	<!-- <context:property-placeholder location="
-		classpath:dubbo.properties,
-		classpath:mybatis.properties,
-		classpath:mail.properties,
-		classpath:redis.properties"/> -->
-	<context:property-placeholder location="classpath*:META-INF/*.properties"/>
+	<!--                          -->
+	<!-- Spring 核心配置 -->
+	<!--                          -->
 	
-	<context:component-scan base-package="org.tis.tools" />
-	
+	<!-- enable autowire -->
 	<context:annotation-config /> 
+
+	<!-- auto scan -->
+	<context:component-scan base-package="org.tis.tools.service" />
 	
 </beans>
