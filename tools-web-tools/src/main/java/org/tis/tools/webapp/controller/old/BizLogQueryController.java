@@ -150,8 +150,10 @@ public class BizLogQueryController extends BaseController{
 	
 	private Map<String, Object> responseMsg ;
 	@Override
-	public Map<String, Object> getResponseCache() {
-		responseMsg = new HashMap<String, Object> () ;
+	public Map<String, Object> getResponseMessage() {
+		if( null == responseMsg ){
+			responseMsg = new HashMap<String, Object> () ;
+		}
 		return responseMsg ;
 	}
 		

@@ -32,12 +32,14 @@ import org.tis.tools.webapp.impl.dubboinfo.BiztraceManager;
 import org.tis.tools.webapp.spi.dubboinfo.DubboServiceInfo;
 
 /**
+ * <pre>
  * 业务日志Controller
  * 
  * GET	http://.../log/agents	查询日志代理服务列表
  * GET	http://.../log/list/{providerHost}	查询指定服务器的业务日志文件列表
  * POST	http://.../log/analyse/{providerHost}	分析业务日志
  * GET	http://.../log/analyse/process/{providerHost}	
+ * </pre>
  * 
  * @author megapro
  *
@@ -109,7 +111,9 @@ public class BizlogController extends BaseController {
 			
 			returnResponseData("logFiles", logList);
 			
-			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(responseMsg).toString());
+			String back = JSONArray.fromObject(responseMsg,jsonConfig).toString() ; 
+			logger.debug("responseMsg1："+back) ;
+			AjaxUtils.ajaxJsonSuccessMessage(response, back);
 			
 			logger.info("list logfile : ok" );
 		}
@@ -208,10 +212,15 @@ public class BizlogController extends BaseController {
 		return null ; 
 	}
 
+	/**
+	 * 每个controller定义自己的返回信息变量
+	 */
 	private Map<String, Object> responseMsg ;
 	@Override
-	public Map<String, Object> getResponseCache() {
-		responseMsg = new HashMap<String, Object> () ;
+	public Map<String, Object> getResponseMessage() {
+		if( null == responseMsg ){
+			responseMsg = new HashMap<String, Object> () ;
+		}
 		return responseMsg ;
 	}
 }

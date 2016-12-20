@@ -13,7 +13,7 @@
 
 	<!-- 使用zookeeper注册中心暴露服务地址 -->
 	<!-- //TODO 可以做properties配置抽取，进一步固化dubbo配置文件，以便自动化生成 -->
-	<dubbo:registry address="zookeeper://127.0.0.1:2181" file="cache/tools-web-tools.cache"/>
+	<dubbo:registry address="zookeeper://127.0.0.1:2181" file="dubbo/cache/tools-web-tools.cache"/>
 	
 	<import resource="dubbo-reference-devmgr.xml"/>
 	<import resource="dubbo-reference-biztrace.xml"/>
