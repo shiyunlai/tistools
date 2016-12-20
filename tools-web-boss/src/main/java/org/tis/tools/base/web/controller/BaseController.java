@@ -1,5 +1,6 @@
 package org.tis.tools.base.web.controller;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,7 +25,14 @@ import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.web.retcode.RetCodeEnum;
 import org.tis.tools.base.web.util.JSONPropertyStrategyWrapper;
 import org.tis.tools.base.web.util.JsonDateProcessor;
+import org.tis.tools.base.web.util.JsonFileProcessor;
 
+/**
+ * Controller 的抽象类
+ * 
+ * @author megapro
+ *
+ */
 public abstract class BaseController {
 	
 	protected final Logger       logger = LoggerFactory.getLogger(this.getClass());
@@ -41,6 +49,8 @@ public abstract class BaseController {
 		jsonConfig = new JsonConfig();
 		jsonConfig.registerJsonValueProcessor(Date.class,
 				new JsonDateProcessor());
+		jsonConfig.registerJsonValueProcessor(File.class,
+				new JsonFileProcessor());
 		jsonConfig.setPropertySetStrategy(new JSONPropertyStrategyWrapper(
 				PropertySetStrategy.DEFAULT));
 		createResponseCache();
@@ -54,7 +64,7 @@ public abstract class BaseController {
 	 * @return
 	 */
 	private void createResponseCache() {
-		Map<String, Object> resp = getResponseCache() ;
+		Map<String, Object> resp = getResponseMessage() ;
 		//默认成功
 		returnRetCode(resp,RetCodeEnum._0000_SUCC) ; 
 	}
@@ -65,7 +75,7 @@ public abstract class BaseController {
 	 * @param retCode
 	 */
 	protected void returnRetCode(RetCodeEnum retCode){
-		returnRetCode(getResponseCache(),retCode) ; 
+		returnRetCode(getResponseMessage(),retCode) ; 
 	}
 	
 	/**
@@ -74,7 +84,7 @@ public abstract class BaseController {
 	 * @param value
 	 */
 	protected void returnResponseData(String key, Object value){
-		getResponseCache().put(key, value);
+		getResponseMessage().put(key, value);
 	}
 	
 	private void returnRetCode(Map<String, Object> resp, RetCodeEnum retCode){
@@ -86,7 +96,7 @@ public abstract class BaseController {
 	 * 要求子类构造自己的响应数据
 	 * @return
 	 */
-	public abstract Map<String, Object> getResponseCache() ;
+	public abstract Map<String, Object> getResponseMessage() ;
 
 	protected void initWanNengChaXun(JSONObject jsonObj, WhereCondition wc) {
 		// 查询项

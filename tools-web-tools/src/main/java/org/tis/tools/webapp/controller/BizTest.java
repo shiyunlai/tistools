@@ -100,7 +100,7 @@ public class BizTest extends BaseController {
 
 	private Map<String, Object> responseMsg ;
 	@Override
-	public Map<String, Object> getResponseCache() {
+	public Map<String, Object> getResponseMessage() {
 		responseMsg = new HashMap<String, Object> () ;
 		return responseMsg ;
 	}
