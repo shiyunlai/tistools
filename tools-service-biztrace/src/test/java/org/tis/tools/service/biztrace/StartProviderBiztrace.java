@@ -23,10 +23,14 @@ public class StartProviderBiztrace {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		extRouter() ;
+		//extRouter() ;
 		com.alibaba.dubbo.container.Main.main(args);
 	}
 
+	/**
+	 * 注册路由
+	 * 参考： http://blog.csdn.net/u012345283/article/details/51789196
+	 */
 	private static void extRouter() {
 		RegistryFactory registryFactory = ExtensionLoader.getExtensionLoader(RegistryFactory.class).getAdaptiveExtension();
         Registry registry = registryFactory.getRegistry(URL.valueOf("zookeeper://127.0.0.1:2181"));
