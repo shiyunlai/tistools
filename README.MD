@@ -33,9 +33,16 @@
 	//OK 加入dubbo能力
 	//OK 对redis使用方式的重构
 
-	//TODO 开发一个公共调用controller的页面： 输入controller地址、post/get.. 协议、调用数据，调用结束，无格式要求，把返回结果展示出来；
+	//OK 开发一个公共调用controller的页面： 输入controller地址、post/get.. 协议、调用数据，调用结束，无格式要求，把返回结果展示出来；
+	//OK 集成disconf
 	
-	//TODO 开发机构用户模块
+	branch: develop_use_disconf
+	//TODO disconf改造 tools-service-XXX
+	//TODO disconf改造 tools-web-XXX 
+	
+	//TODO 开发机构用户模块（机构、业务机构、岗位、组织、人员）
+	//TODO 开发权限管理模块(角色、操作员、数据操作权限、应用功能操作权限、操作员角色权限)
+	
 	//TODO 集成gendao能力
 	//TODO 增加tools工程集的持续继承能力
 
