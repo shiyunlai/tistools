@@ -8,14 +8,16 @@
        http://code.alibabatech.com/schema/dubbo  
        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
+	<description>tools-web-tools作为展现层和接入层，以服务消费者身份，只负责服务调用。</description>
+	
 	<!-- 提供方应用信息，用于计算依赖关系 -->
-	<dubbo:application name="tools-web-tools" />
+	<dubbo:application name="${dubbo.application.name}"  owner="${dubbo.application.owner}" organization="${dubbo.application.organization}"/>
 
 	<!-- 使用zookeeper注册中心暴露服务地址 -->
 	<!-- //TODO 可以做properties配置抽取，进一步固化dubbo配置文件，以便自动化生成 -->
-	<dubbo:registry address="zookeeper://127.0.0.1:2181" file="dubbo/cache/tools-web-tools.cache"/>
+	<dubbo:registry address="${dubbo.registry.address}" file="dubbo/cache/${dubbo.application.name}.cache"/>
 	
 	<import resource="dubbo-reference-devmgr.xml"/>
 	<import resource="dubbo-reference-biztrace.xml"/>
-
+	
 </beans>
