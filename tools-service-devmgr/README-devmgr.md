@@ -18,26 +18,42 @@
 2、 在service-new工程中新建 src/main/assembly 目录，并且拷贝 assembly.xml到该目录下（内容无需修改）；
 
 3、 在service-new工程中新建 src/main/resources目录，并且拷贝*.xml 和 *.properties到目录下（根据工程意图修改其中的配置内容）；
-	spring-context.xml Spring的配置参数
-	spring-mybatis.xml mybatis的配置参数
-	spring-*.xml       通过Spring集成更多功能时的配置文件
-	dubbo-provider.xml 作为dubbo服务提供这的配置参数
+	META-INF/spring/spring-context.xml Spring的配置参数
+	META-INF/spring/spring-disconf.xml disconf的配置文件
+	META-INF/spring/spring-mybatis.xml mybatis的配置参数
+	META-INF/spring/spring-redis.xml redis相关的配置文件
+	...
+	META-INF/spring/dubbo-provider.xml dubbo服务提供者配置信息
+	META-INF/spring/dubbo-provider-xxx.xml dubbo服务注册配置文件(可对服务进行分组定义）
+	...
 	
-	*.properties 作为如上.xml文件中抽取出来的配置属性文件（//TODO 预留将来通过disconf管理）
+4、 拷贝*.properties 到 src/main/resources目录。
 	
-4、 	在src/test/java目录下新建 测试启动类，可直接拷贝 RunServiceDevmgr.java ，重构名称即可（无需其他修改，在eclipse中启动调试时使用）。
+	disconf.properties
+	dubbo.properties
+	mail.properties
+	mybatis.properties
+	redis.properties
+	...
+	
+	*.properties作为 3中配置文件中的变量配置文件
+	
+	如果已经使用disconf，则将这些文件都上传disconf-web进行管理 ( 新建配置文件 )
+	上传disconf-web后，记得调整 src/main/resources/META-INF/spring/spring-disconf.xml 中相关信息，以便启动时找到正确的配置。
+	
+5、 	为eclipse中启动服务提供者，在src/test/java目录下新建测试启动类，参考：可直接拷贝 RunServiceDevmgr.java ，重构名称即可。
 
-5、 调整service-new中的POM.xml,统一工程管理方式
+6、 调整service-new中的POM.xml,统一工程管理方式
 
-5.1、删除pom.xml中以下节点（删除后maven自动取parent的值代替）:
+6.1、删除pom.xml中以下节点（删除后maven自动取parent的值代替）:
 	project-->groupId
 	project-->version
 	
-5.2、建议每个工程的artifactId前缀都采用统一名称，如： xxx-service-trans、xxx-service-org
+6.2、建议每个工程的artifactId前缀都采用统一名称，如： xxx-service-trans、xxx-service-org
 	
 	注：5.1、5.2两个步骤同样适用于新建普通的jar工程(maven-archetype-quickstart)上
 
-5.3、在pom.xml中加入以下build片段（本工程范围内使用，无需调整），统一安装介质形式：Main方式启动
+6.3、在pom.xml中加入以下build片段（在tools产品范围内使用，内容无需调整），统一安装介质形式：Main方式启动
 	
 	...
 	
@@ -90,12 +106,15 @@
 	
 	...
 
-6、别忘记依赖必要的jar
+7、别忘记依赖必要的jar
 	zookeeper
 	zkclient
 	dubbo
+	disconf
+	spring
+	....
 	
-	//TODO 开发自己的Dubbo archetypes
+8、完成项目骨架搭建...进入开发！
 
 ## 接下来，体验良好的maven构建管理过程：
 
@@ -125,13 +144,12 @@
 	3.2、通过telnet ，如： telnet ip port 链接后可直接查看服务基本信息 
 		（参见： http://dubbo.io/Telnet+Command+Reference-zh.htm ）
 
-
 4、检测服务
 	
 	4.1、 //TODO 开发接口测试界面（自动代码生成）
 	
 	
-## 在业务工程中引入并调用服务提供者提供的服务：（例子：参加 web-tools 工程）
+## 在业务工程中引入并调用服务提供者提供的服务：（例子：参加 tools-web-tools 工程）
 
 
 ## 问题

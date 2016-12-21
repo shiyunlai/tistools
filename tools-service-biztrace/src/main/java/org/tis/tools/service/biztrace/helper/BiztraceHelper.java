@@ -3,13 +3,12 @@
  */
 package org.tis.tools.service.biztrace.helper;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
+import org.apache.commons.lang.StringUtils;
 import org.tis.tools.common.utils.DirectoryUtil;
+
+import com.baidu.disconf.client.usertools.DisconfDataGetter;
 
 /**
  * 
@@ -21,7 +20,6 @@ import org.tis.tools.common.utils.DirectoryUtil;
 public class BiztraceHelper {
 
 	public final static BiztraceHelper instance = new BiztraceHelper() ; 
-	private Properties p = new Properties();   
 	private String root = ""; 
 	
 	private BiztraceHelper(){
@@ -30,13 +28,6 @@ public class BiztraceHelper {
 	
 	private void init() {
 		root = DirectoryUtil.getAppMainDirectory() ; 
-		String biztracePros = root + "/conf/biztrace.properties" ; 
-		try {
-			InputStream in = new BufferedInputStream(new FileInputStream(biztracePros));   
-			p.load(in);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	/**
@@ -45,7 +36,10 @@ public class BiztraceHelper {
 	 */
 	public String getBSHome() {
 		//返回配置文件中BS_HOME，如果没有或者读取.properties文件失败,则默认返回本应用同目录的bs路径
-		String temp = p.getProperty("BS_HOME",root+"/../bs");
+		String temp = DisconfDataGetter.getByFileItem("biztrace.properties", "BS_HOME").toString() ;
+		if( StringUtils.isEmpty(temp) ){
+			temp= root+"/../bs" ; //默认
+		}
 		return temp ; 
 	}
 	
@@ -54,7 +48,10 @@ public class BiztraceHelper {
 	 * @return  如果从biztrace.properties中取不到，默认返回5个
 	 */
 	public int getWorkerThreads(){
-		String temp = p.getProperty("WORKER_THREADS","5") ; //取不到就默认5个
+		String temp = DisconfDataGetter.getByFileItem("biztrace.properties", "WORKER_THREADS").toString() ;
+		if( StringUtils.isEmpty(temp) ){
+			temp = "5" ; //取不到就默认5个
+		}
 		return Integer.valueOf(temp).intValue() ;
 	}
 }

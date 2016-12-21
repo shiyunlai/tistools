@@ -28,7 +28,7 @@ public class BiztraceManager implements IDubboInfoManager {
 	/** 一个provider服务提供者信息开始标识 */
 	private static final String DUBBO_SIGN = "dubbo://";
 	/** duboo服务注册缓存文件 */
-	private static final String CACHE_TOOLS_WEB_TOOLS_CACHE = "/cache/tools-web-tools.cache";
+	private static final String CACHE_TOOLS_WEB_TOOLS_CACHE = "dubbo/cache/tools-web-tools.cache";//fixme 重构 使用disoncf
 	/** biztrace 服务的url开头标示字符串 */
 	private static final String BIZTRACE_SERVICE_HEADSTR = "biztrace/org.tis.tools.service.api.biztrace.IBiztraceRService";
 	
@@ -47,7 +47,7 @@ public class BiztraceManager implements IDubboInfoManager {
 		boolean mocker = false ; //true模拟 
 		
 		if( !mocker ){
-			String cacheFile = DirectoryUtil.getAppMainDirectory() +CACHE_TOOLS_WEB_TOOLS_CACHE; 
+			String cacheFile = DirectoryUtil.getAppMainDirectory() +"/"+CACHE_TOOLS_WEB_TOOLS_CACHE; 
 			return resolveCacheFIle(cacheFile) ; 
 		}else{
 			
