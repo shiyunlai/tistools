@@ -32,13 +32,19 @@
 
 	//OK 加入dubbo能力
 	//OK 对redis使用方式的重构
-
-	//TODO 开发一个公共调用controller的页面： 输入controller地址、post/get.. 协议、调用数据，调用结束，无格式要求，把返回结果展示出来；
+	//OK 开发一个公共调用controller的页面： 输入controller地址、post/get.. 协议、调用数据，调用结束，无格式要求，把返回结果展示出来；
+	//OK 集成disconf
+	//OK disconf改造 tools-service-XXX
+	//Ok disconf改造 tools-web-XXX 
+	//TODO 增加 tools-maven-plugin 的使用说明，为应用模块开发做准备
 	
-	//TODO 开发机构用户模块
-	//TODO 集成gendao能力
-	//TODO 增加tools工程集的持续继承能力
-
+	//TODO 开发机构用户模块（机构、业务机构、岗位、组织、人员）
+	//TODO 开发权限管理模块(角色、操作员、数据操作权限、应用功能操作权限、操作员角色权限)
+	
+	//TODO 增加tools工程集的持续继承能力 jenkins
+	//TODO 扩展dubbo的路由，实现根据ip:port调用指定的服务提供者 
+		思路： 找github上dubbo的分支，看其他开发者有无这方面的开发经验
+	//TODO 如何通过mvn编译后输出支持集中式部署的系统
 
 ##	quick start
 

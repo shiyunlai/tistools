@@ -38,6 +38,11 @@
 			<!-- <version>${spring.bom.version}</version> -->
 		</dependency>
 
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+		</dependency>
+		
 		<!-- zookeeper & zkclient -->
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>
@@ -58,6 +63,12 @@
 			<artifactId>zkclient</artifactId>
 		</dependency>
 
+		<!-- disconf -->
+		<dependency>
+			<groupId>com.baidu.disconf</groupId>
+			<artifactId>disconf-client</artifactId>
+		</dependency>
+		
 		<!-- dubbo -->
 		<dependency>
 			<groupId>com.alibaba</groupId>

@@ -62,7 +62,6 @@
 		class="com.baidu.disconf.client.addons.properties.ReloadablePropertiesFactoryBean">
 		<property name="locations">
 			<list>
-				<value>biztrace.properties</value>
 				<value>dubbo.properties</value>
 				<value>log4j.xml</value>
 				<value>mail.properties</value>

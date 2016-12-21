@@ -2,30 +2,60 @@
 <beans xmlns="http://www.springframework.org/schema/beans" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop.xsd 
    		http://www.springframework.org/schema/context 
    		http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
-    <!-- <context:property-placeholder location="classpath:lanmo.properties,classpath:mail.properties"/> -->
-    <bean id="configBean" class="org.tis.tools.webapp.CustomizedPropertyPlaceholderConfigurer">
-    	<property name="locations">
-	    	<list>
-	    	 	<value>classpath:db.properties</value>
-	    	 	<value>classpath:mysql.properties</value>
-	        </list>
-	    </property>
+
+    <!-- disconf begin -->
+	
+	<!-- 支持 cglib的aop -->
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+	<!-- disconf自动扫描的package范围，支持扫描多包，逗号分隔 -->
+	<bean id="disconfMgrBean" class="com.baidu.disconf.client.DisconfMgrBean"
+	      destroy-method="destroy">
+	    <property name="scanPackage" value="org.tis.tools.config"/>
 	</bean>
+	<bean id="disconfMgrBean2" class="com.baidu.disconf.client.DisconfMgrBeanSecond"
+	      init-method="init" destroy-method="destroy">
+	</bean>
+	<!-- 使用托管方式的disconf配置(无代码侵入) 其中以下*.properties文件的配置信息会被placehold-->
+	<bean id="configproperties_no_reloadable_disconf"
+		class="com.baidu.disconf.client.addons.properties.ReloadablePropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>dubbo.properties</value>
+				<value>log4j.xml</value>
+				<value>logback.xml</value>
+				<value>mail.properties</value>
+				<value>mysql.properties</value>
+				<value>oracle.properties</value>
+			</list>
+		</property>
+	</bean>
+	<!--disconf 托管文件 配置更改会自动reload--> 
+	<bean id="propertyConfigurer"
+		class="com.baidu.disconf.client.addons.properties.ReloadingPropertyPlaceholderConfigurer">
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="propertiesArray">
+			<list>
+				<ref bean="configproperties_no_reloadable_disconf" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- disconf end -->
 
     <!-- mySQL数据源 -->
-	 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"> 
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://${database_url}/${database_name}?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8"/>
-        <property name="username" value="${database_username}"/>
-           <!--
-        <property name="password" value="tis"/>
-        -->
+        <property name="username" value="${database_password}"/>
 		<property name="initialSize" value="15" />
 		<property name="maxActive" value="15" />
 		<property name="maxIdle" value="15" /> 
@@ -36,56 +66,54 @@
 	    <property name="validationQuery" value="SELECT  1"/> 
 	     <property name="poolPreparedStatements" value="true"/>
         <property name="defaultAutoCommit" value="true"/>
-        
         <property name="testOnReturn" value="true" />
         <property name="minEvictableIdleTimeMillis" value="1800000" />
         <property name="numTestsPerEvictionRun" value="3" />
 	</bean>
 	
 	
-	<!-- oracle数据源 -->
-	
-	<bean id="dataSource111111" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+	<!-- oracle数据源（使用oracle数据库时再打开）
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
 		 <property name="url" value="jdbc:oracle:thin:@${database_url}:${database_name}" />
 		<property name="username" value="${database_username}"/>
         <property name="password" value="${database_password}"/>
 		<property name="defaultAutoCommit" value="true" />
-		<!-- 最大连接数 -->
+		最大连接数
 		<property name="maxActive">
 			<value>5</value>
 		</property>
-		<!-- 资源池初始化连接数 -->
+		资源池初始化连接数
 		<property name="initialSize">
 			<value>5</value>
 		</property>
-		<!-- 最大等待时间 -->
+		最大等待时间
 		<property name="maxWait">
 			<value>60000</value>
 		</property>
-		<!-- 最大空余连接数 -->
+		最大空余连接数
 		<property name="maxIdle">
 			<value>20</value>
 		</property>
-		<!-- 最小空余连接数 -->
+		最小空余连接数
 		<property name="minIdle">
 			<value>20</value>
 		</property>
-		<!-- 超时后是否回收资源 -->
+		超时后是否回收资源
 		<property name="removeAbandoned">
 			<value>true</value>
 		</property>
-		<!-- 超时回收资源时间 -->
+		超时回收资源时间
 		<property name="removeAbandonedTimeout">
 			<value>180</value>
 		</property>
 		<property name="connectionProperties">
 			<value>clientEncoding=GBK</value>
 		</property>
-		<!-- 自动重连的validate校验 -->
+		自动重连的validate校验
 		<property name="testWhileIdle">
 			<value>true</value>
-		</property> <!-- 打开检查,用异步线程evict进行检查 -->
+		</property> 打开检查,用异步线程evict进行检查
 		<property name="testOnBorrow">
 			<value>false</value>
 		</property>
@@ -104,7 +132,7 @@
 		<property name="numTestsPerEvictionRun">
 			<value>20</value>
 		</property>
-	</bean>
+	</bean> -->
 	
     
     <!-- Transaction manager for a single JDBC DataSource -->
@@ -119,9 +147,6 @@
 		</property>
 	</bean>
 
-    <!-- Activates scanning of @Autowired -->
-    <context:annotation-config/>
-    
 	<!-- define the SqlSessionFactory -->
     <bean id="sqlSessionFactory1" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
