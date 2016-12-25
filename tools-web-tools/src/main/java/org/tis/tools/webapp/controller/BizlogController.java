@@ -61,6 +61,7 @@ public class BizlogController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value="/agents",method=RequestMethod.GET)
 	public String listAgents(HttpServletRequest request,HttpServletResponse response){
+		responseMsg.clear();
 		
 		try {
 			logger.info("list agents : " );
@@ -104,6 +105,9 @@ public class BizlogController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value="/list/{agentHost:.+}",method=RequestMethod.GET)
 	public String listLogFiles(@PathVariable String agentHost,HttpServletRequest request,HttpServletResponse response){
+		
+		responseMsg.clear();
+		
 		try {
 			logger.info("list logfile : " + agentHost);
 			
@@ -139,7 +143,7 @@ public class BizlogController extends BaseController {
 	@RequestMapping(value="/analyse/{agentHost:.+}",method=RequestMethod.POST)
 	public String analyseLog(@PathVariable String agentHost,@RequestBody String logFiles,
 			HttpServletRequest request,HttpServletResponse response){
-		
+		responseMsg.clear();
 		try {
 			logger.info("analyse agentHost : " + agentHost);
 			logger.info("analyse logFiles : " + logFiles);

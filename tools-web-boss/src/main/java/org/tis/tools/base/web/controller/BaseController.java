@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.ezmorph.object.DateMorpher;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
+import net.sf.json.util.CycleDetectionStrategy;
 import net.sf.json.util.PropertySetStrategy;
 
 import org.apache.commons.lang.StringUtils;
@@ -47,6 +48,8 @@ public abstract class BaseController {
 				new DateMorpher(new String[] { "yyyy-MM-dd HH:mm:ss" ,"yyyy-MM-dd"
 				}));
 		jsonConfig = new JsonConfig();
+		//修复cycle错误
+		jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
 		jsonConfig.registerJsonValueProcessor(Date.class,
 				new JsonDateProcessor());
 		jsonConfig.registerJsonValueProcessor(File.class,

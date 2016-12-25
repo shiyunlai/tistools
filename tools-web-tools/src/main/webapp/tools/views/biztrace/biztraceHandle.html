@@ -10,26 +10,82 @@
 
 <div class="row">
     <div class="col-md-12">
-        <!-- Begin: life time stats -->
-        <div class="portlet light portlet-fit portlet-datatable bordered">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="fa fa-shopping-cart"></i> 业务日志分析 </div>
-            </div>
-            <div class="portlet-body">
-                <div class ="bizLogHandle">
-                    <label class="biz-label">请输入日志路径:</label>
-                    <!--<input class="fileinput thumbnail" type="file"  id="uploadFile" file-model="myFile" multiple ng-hide="true">-->
-                    <input class="input-text" type="text"  ng-model="biz.path" ng-change="checkPathIsEmpty(biz.path)">
-                    <!--<input class="input-button" type="button" value="导入"  ng-disabled="biz.isDisable" ng-click="upload()">-->
-                    <input class="input-button" type="button" value="解析日志" ng-disabled="biz.isDisable" ng-click="showReslovePanel(biz.path)">
-                    <input class="input-button" type="button" value="分析日志" ng-click="analyzer()">
-                    <div id="biz-oper-desc">
-                        <span>说明:手工将文件放到远程路径<span class="biz-path-desc">E:/fileUpload/xxx/yyyyMMdd(年月日)</span>(xxx是建一个文件夹存放自己的日志),
-                               然后在日志路径处输入如:<span class="biz-path-desc">E:/fileUpload/xxx</span>后点击解析日志,解析后再进行日志的分析
-                        </span>
+        <div class="col-md-3">
+            <div class="portlet light portlet-fit portlet-datatable bordered">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-shopping-cart"></i>服务器列表
                     </div>
-
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse" data-original-title="" title="">
+                        </a>
+                        <a href="#portlet-config" data-toggle="modal" class="config" data-original-title="" title="">
+                        </a>
+                        <a href="javascript:;" ng-click="reloadga();" class="reload" data-original-title="" title="">
+                        </a>
+                        <a href="javascript:;" class="remove" data-original-title="" title="">
+                        </a>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <ul class="list-group">
+                        <li class="list-group-item"  ng-repeat="d in fuwu track by $index" ng-class-odd="'odd'" ng-class-even="'even'">
+                            <a ng-click="load(d)">{{ d.serviceName | limitTo:10}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Begin: life time stats -->
+        <div class="col-md-9">
+            <div class="portlet light portlet-fit portlet-datatable bordered">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-shopping-cart"></i>服务器日志详情
+                    </div>
+                    <div class="tools">
+                        <button type="button" class="btn btn-primary" ng-click="fenxi(tb.port);">分析</button>
+                        <button type="button" class="btn btn-primary" ng-click="bizfx(sel)">备份</button>
+                        <button type="button" class="btn btn-primary">删除</button>
+                    </div>
+                    <div class="col-md-12">
+                    <div class="col-md-3"><span><h4>Appname:{{tb.serviceName | limitTo:10}}</h4></span></div>
+                    <div class="col-md-3"><span><h4>AdminPort:{{tb.port}}</h4></span></div>
+                    <div class="col-md-3"><span><h4>日志占用:{{tb.size}}</h4></span></div>
+                    <div class="col-md-3"><span><h4>日志文件:{{tb.num}}</h4></span></div>
+                    </div>
+                </div>
+                <div class="portlet-body flip-scroll">
+                    <table class="table table-bordered table-striped table-condensed flip-content">
+                        <thead class="flip-content">
+                        <tr>
+                            <th width="10%">
+                                全选<label class="mt-checkbox mt-checkbox-outline mt-checkbox-single"><input type="checkbox" class="checkboxes" ng-model="headcheck" ng-click="biz.checkAll(!headcheck)"/><span></span></label>
+                            </th>
+                            <th width="20%">
+                                名称
+                            </th>
+                            <th width="20%">
+                                大小
+                            </th>
+                            <th width="30%">
+                                修改时间
+                            </th>
+                            <th width="20%">
+                                路径
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="c in biz.dataList" ng-class-odd="'odd'" ng-class-even="'even'">
+                            <td><label class="mt-checkbox mt-checkbox-outline mt-checkbox-single"><input type="checkbox" class="checkboxes" ng-model="c.checked"/><span></span></label>
+                            <td>{{c.fileName}}</td>
+                            <td>{{c.fileSize}}</td>
+                            <td>{{c.lastModifedTime}}</td>
+                            <td>{{c.filePath}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

@@ -36,7 +36,7 @@ public class BiztraceHelper {
 	 */
 	public String getBSHome() {
 		//返回配置文件中BS_HOME，如果没有或者读取.properties文件失败,则默认返回本应用同目录的bs路径
-		String temp = DisconfDataGetter.getByFileItem("biztrace.properties", "BS_HOME").toString() ;
+		String temp = /**DisconfDataGetter.getByFileItem("biztrace.properties", "BS_HOME").toString()**/"" ;
 		if( StringUtils.isEmpty(temp) ){
 			temp= root+"/../bs" ; //默认
 		}
@@ -48,7 +48,7 @@ public class BiztraceHelper {
 	 * @return  如果从biztrace.properties中取不到，默认返回5个
 	 */
 	public int getWorkerThreads(){
-		String temp = DisconfDataGetter.getByFileItem("biztrace.properties", "WORKER_THREADS").toString() ;
+		String temp = /**DisconfDataGetter.getByFileItem("biztrace.properties", "WORKER_THREADS").toString()**/"" ;
 		if( StringUtils.isEmpty(temp) ){
 			temp = "5" ; //取不到就默认5个
 		}

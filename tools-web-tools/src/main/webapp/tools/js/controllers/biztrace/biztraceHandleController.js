@@ -9,6 +9,94 @@ MetronicApp.controller('biztraceHandle_controller', function ($filter,$rootScope
     var biz = {};
     $scope.biz = biz;
     biz.isDisable = true;
+    //新增code
+    var fuwu = [];
+    $scope.reloadga = function () {
+        fuwu.splice(0,fuwu.length);
+        $scope.fuwu = fuwu;
+        biztraceHandle_service.loadfuwu().then(function(datas){
+            var a = angular.fromJson(datas.message);
+            if(a[0].agents == undefined){
+                fuwu.push({"serviceName":"当前没有服务"});
+                $scope.fuwu = fuwu;
+                return;
+            }
+            for(var i = 0; i < a.length; i++){
+                fuwu.push(a[0].agents[i]);
+            }
+            $scope.fuwu = fuwu;
+        });
+    }
+    //初始化服务器列表
+    $scope.reloadga();
+    //初始化日志列表
+    $scope.load = function (service) {
+        var tb = {};
+        alert(JSON.stringify(service));
+        tb = service;
+        $scope.tb = tb ;
+        biztraceHandle_service.loadfile(service).then(function(datas){
+          alert(JSON.stringify(datas.message));
+            var a = angular.fromJson(datas.message);
+            alert(JSON.stringify(a[0].logFiles))
+            biz.dataList = a[0].logFiles;
+            var b = 0 ;
+            for(var i=0 ; i < biz.dataList.length ; i++){
+                b = b + biz.dataList[i].fileSize;
+            }
+            tb.num = biz.dataList.length;
+            tb.size = b;
+            $scope.tb = tb;
+            $scope.biz.dataList = biz.dataList;
+        });
+    }
+    //公共初始化方法的一部分
+    biz.checkAll = function (headcheck) {
+        if (!headcheck) {
+            if (biz.dataList != undefined) {
+                for (var i = 0; i < biz.dataList.length; i++) {
+                    biz.dataList[i].checked = true;
+                }
+            }
+        } else {
+            if (biz.dataList != undefined) {
+                for (var i = 0; i<biz.dataList.length; i++) {
+                    if( biz.dataList[i]!=null){
+                        biz.dataList[i].checked = false;
+                    }
+                }
+            }
+
+        }
+    }
+    biz.getSelectItems = function () {
+        var res = filterFilter(biz.dataList, function (record) {
+            return record.checked;
+        });
+        return res;
+    }
+    //点击分析,将日志送往redis
+    $scope.fenxi = function (service) {
+        var sel = biz.getSelectItems();
+        if(sel.length>0){
+            if(confirm("确认开始分析选中的日志？")){
+            alert(JSON.stringify(sel));
+                var jsondata = {};
+                jsondata.type = "part";
+                jsondata.logs = [];
+                jsondata.port = service;
+                for(var i = 0 ; i < sel.length ; i ++){
+                    jsondata.logs.push(sel[i].fileName);
+                }
+                alert(JSON.stringify(jsondata));
+            var res = biztraceHandle_service.analyzeLog(jsondata).then(function(datas){
+                alert(JSON.stringify(datas));
+            });
+
+        }
+     }
+    };
+
 
 
     //上传文件
