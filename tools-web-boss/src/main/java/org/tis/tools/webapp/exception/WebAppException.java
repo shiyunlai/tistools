@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tis.tools.base.web.exception;
+package org.tis.tools.webapp.exception;
 
 /**
  * 

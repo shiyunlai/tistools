@@ -1,4 +1,4 @@
-package org.tis.tools.base.web.util;
+package org.tis.tools.webapp.util;
 
 import net.sf.json.JSONObject;
 

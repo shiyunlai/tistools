@@ -14,11 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.tis.tools.base.web.controller.BaseController;
-import org.tis.tools.base.web.util.AjaxUtils;
 import org.tis.tools.service.api.biztrace.BiztraceFileInfo;
 import org.tis.tools.service.api.biztrace.IBiztraceRService;
 import org.tis.tools.service.api.biztrace.ParseProcessInfo;
+import org.tis.tools.webapp.controller.BaseController;
+import org.tis.tools.webapp.util.AjaxUtils;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;

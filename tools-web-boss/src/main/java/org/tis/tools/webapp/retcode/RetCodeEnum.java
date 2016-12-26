@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tis.tools.base.web.retcode;
+package org.tis.tools.webapp.retcode;
 
 import java.util.Map;
 
