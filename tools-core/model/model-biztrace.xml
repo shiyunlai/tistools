@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<bizmodel name="业务日志" id="biztrace" mainpackage="org.tis.tools" >
+
+	<desc>对账户业务域的模型定义，包括：总账、分户账、账户明细、账户变更明细、开销户登记博</desc>
+	<prjWeb>tools-web-tools</prjWeb>
+	<prjCore>tools-core</prjCore>
+	<prjFacade>tools-facade-biztrace</prjFacade>
+	<prjService>tools-service-biztrace</prjService>
+	
+	<models>
+		<model name="业务日志" id="tb_biz_trace" desc="业务日志明细记录，记录一笔交易关键执行路径" ext="2,1000" >
+			<field name="唯一ID"  id="ID" type="string" length="128" />
+			<field name="试卷编码"  id="paper_code" type="string" length="128" />
+			<field name="课程编码"  id="course_code" type="string" length="128" />
+			<field name="顺序号"  id="seq_no" type="long" length="8" />
+			<field name="考卷名称"  id="paper_name" type="string" length="1024" />
+			<field name="卷首语"  id="paper_desc" type="string" length="40000" />
+			<field name="多媒体信息"  id="multi_media_info" type="string" length="1024" />
+			<field name="考试时间"  id="time_exam" type="long" length="8" />
+			<field name="是否允许重考"  id="is_re_exam" type="string" length="8" />
+			<field name="重考次数限制"  id="times_re_exam" type="long" length="8" />
+			<field name="默认每题得分"  id="def_per_score" type="long" length="8" />
+			<field name="题目排序规则"  id="rule_sort_question" type="string" length="8" />
+			<field name="题目答案排序规则"  id="rule_sort_answer" type="string" length="8" />
+			<field name="答案反馈方式"  id="feedback_type" type="string" length="8" />
+			<field name="预期年化利率"     id="expect_fixed" type="bigdecimal" length="10,6" />
+			<field name="不生成PO对象"     id="not_gen_po" type="bigdecimal" length="10,6" physical="false"/>
+			<field name="delstatus" id="delstatus" />
+			<field name="creatorId" id="creatorId" />
+			<field name="creatorName" id="creatorName" />
+			<field name="creatorCode" id="creatorCode" />
+			<field name="creatorIdPath" id="creatorIdPath" />
+			<field name="creatorNamePath" id="creatorNamePath" />
+			<field name="creatorCodePath" id="creatorCodePath" />
+			<field name="createTime" id="createTime" type="datetime" />
+			<field name="modifiedTime" id="modifiedTime" type="datetime" />
+		</model>
+		
+		<model name="业务异常" id="tb_biz_exception" desc="业务日志异常信息" ext="3,256">
+			<field name="唯一ID"  id="ID" type="string" length="128" />
+			<field name="试卷编码"  id="paper_code" type="string" length="128" />
+			<field name="课程编码"  id="course_code" type="string" length="128" />
+			<field name="顺序号"  id="seq_no" type="long" length="8" />
+			<field name="考卷名称"  id="paper_name" type="string" length="1024" />
+			<field name="卷首语"  id="paper_desc" type="string" length="40000" />
+		</model>
+	</models>
+</bizmodel>
