@@ -3,17 +3,11 @@ package org.tis.tools.webapp.controller;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sf.ezmorph.object.DateMorpher;
-import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
-import net.sf.json.util.PropertySetStrategy;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -22,10 +16,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.tis.tools.base.Page;
 import org.tis.tools.base.WhereCondition;
+import org.tis.tools.service.base.SequenceService;
 import org.tis.tools.webapp.retcode.RetCodeEnum;
 import org.tis.tools.webapp.util.JSONPropertyStrategyWrapper;
 import org.tis.tools.webapp.util.JsonDateProcessor;
 import org.tis.tools.webapp.util.JsonFileProcessor;
+
+import net.sf.ezmorph.object.DateMorpher;
+import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
+import net.sf.json.util.PropertySetStrategy;
 
 /**
  * Controller 的抽象类
@@ -33,13 +33,16 @@ import org.tis.tools.webapp.util.JsonFileProcessor;
  * @author megapro
  *
  */
-public abstract class BaseController {
+abstract public class BaseController {
 	
 	protected final Logger       logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	protected TransactionTemplate transactionTemplate;
 
+	@Autowired
+	protected SequenceService sequenceBiz ;
+	
 	protected JsonConfig jsonConfig;
 	
 	public BaseController() {
