@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?> 
-<bizmodel name="业务日志" id="biztrace" mainpackage="org.tis.tools" >
+<bizmodel name="业务日志" id="biztracetest" mainpackage="org.tis.tools" >
 
 	<desc>对账户业务域的模型定义，包括：总账、分户账、账户明细、账户变更明细、开销户登记博</desc>
 	<prjWeb>tools-web-tools</prjWeb>
@@ -8,7 +8,7 @@
 	<prjService>tools-service-biztrace</prjService>
 	
 	<models>
-		<model name="业务日志" id="tb_biz_trace" desc="业务日志明细记录，记录一笔交易关键执行路径" ext="2,1000" >
+		<model name="业务日志" id="tb_biz_trace" desc="业务日志明细记录，记录一笔交易关键执行路径" ext="2,1000">
 			<field name="唯一ID"  id="ID" type="string" length="128" />
 			<field name="试卷编码"  id="paper_code" type="string" length="128" />
 			<field name="课程编码"  id="course_code" type="string" length="128" />
