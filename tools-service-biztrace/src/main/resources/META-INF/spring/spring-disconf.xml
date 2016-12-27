@@ -51,14 +51,15 @@
 	      init-method="init" destroy-method="destroy">
 	</bean>
 	
-	<!-- 使用托管方式的disconf配置(无代码侵入) 
+	<!-- 配置方式可进一步参照：http://disconf.readthedocs.io/zh_CN/latest/tutorial-client/src/Tutorial8.html -->
+	<!-- 使用托管方式的disconf配置(无代码侵入, 配置更改会自动reload)
 	其中以下*.properties文件的配置信息会被placehold
 		dubbo.properties
 		mail.properties
 		mybatis.properties
 		redis.properties
 	-->
-	<bean id="configproperties_no_reloadable_disconf"
+	<bean id="configproperties_reloadable_disconf"
 		class="com.baidu.disconf.client.addons.properties.ReloadablePropertiesFactoryBean">
 		<property name="locations">
 			<list>
@@ -71,12 +72,6 @@
 			</list>
 		</property>
 	</bean>
-
-
-	<!--  不会自动reload
-	<bean id="disconfPropertyConfigurer"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> -->	
-	
 	<!--disconf 托管文件 配置更改会自动reload--> 
 	<bean id="propertyConfigurer"
 		class="com.baidu.disconf.client.addons.properties.ReloadingPropertyPlaceholderConfigurer">
@@ -84,7 +79,7 @@
 		<property name="ignoreUnresolvablePlaceholders" value="true" />
 		<property name="propertiesArray">
 			<list>
-				<ref bean="configproperties_no_reloadable_disconf" />
+				<ref bean="configproperties_reloadable_disconf" />
 			</list>
 		</property>
 	</bean>  

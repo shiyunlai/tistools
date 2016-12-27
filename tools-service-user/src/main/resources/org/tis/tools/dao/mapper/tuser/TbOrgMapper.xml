@@ -1,0 +1,153 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.mapper.tuser.TbOrgMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.tuser.TbOrg">
+	    INSERT INTO tb_org (id
+  ,paper_code
+  ,course_code
+  ,seq_no
+  ,paper_name
+  ,paper_desc
+  ,ext0
+  ,ext1
+  ,ext2
+  )
+	    VALUES (#{id,jdbcType=VARCHAR},
+  #{paper_code,jdbcType=VARCHAR},
+  #{course_code,jdbcType=VARCHAR},
+  #{seq_no,jdbcType=BIGINT},
+  #{paper_name,jdbcType=VARCHAR},
+  #{paper_desc,jdbcType=VARCHAR},
+  #{ext0,jdbcType=VARCHAR},
+  #{ext1,jdbcType=VARCHAR},
+  #{ext2,jdbcType=VARCHAR}
+  )
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.tuser.TbOrg">
+    	UPDATE tb_org 
+	    <set>
+		<if test="id != null" >
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+		<if test="paper_code != null" >
+        paper_code = #{paper_code,jdbcType=VARCHAR},
+      </if>
+		<if test="course_code != null" >
+        course_code = #{course_code,jdbcType=VARCHAR},
+      </if>
+		<if test="seq_no != null" >
+        seq_no = #{seq_no,jdbcType=BIGINT},
+      </if>
+		<if test="paper_name != null" >
+        paper_name = #{paper_name,jdbcType=VARCHAR},
+      </if>
+		<if test="paper_desc != null" >
+        paper_desc = #{paper_desc,jdbcType=VARCHAR},
+      </if>
+		<if test="ext0 != null" >
+        ext0 = #{ext0,jdbcType=VARCHAR},
+      </if>
+		<if test="ext1 != null" >
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+		<if test="ext2 != null" >
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+	    </set>
+	    WHERE id = #{id}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.tuser.TbOrg">
+    	UPDATE tb_org 
+	    <set>
+        id = #{id,jdbcType=VARCHAR},
+        paper_code = #{paper_code,jdbcType=VARCHAR},
+        course_code = #{course_code,jdbcType=VARCHAR},
+        seq_no = #{seq_no,jdbcType=BIGINT},
+        paper_name = #{paper_name,jdbcType=VARCHAR},
+        paper_desc = #{paper_desc,jdbcType=VARCHAR},
+        ext0 = #{ext0,jdbcType=VARCHAR},
+        ext1 = #{ext1,jdbcType=VARCHAR},
+        ext2 = #{ext2,jdbcType=VARCHAR},
+	    </set>
+	    WHERE id = #{id}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from tb_org where id = #{id}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from tb_org <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE tb_org 
+	   <set>
+		<if test="domain.id != null" >
+        id = #{domain.id,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.paper_code != null" >
+        paper_code = #{domain.paper_code,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.course_code != null" >
+        course_code = #{domain.course_code,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.seq_no != null" >
+        seq_no = #{domain.seq_no,jdbcType=BIGINT},
+      </if>
+		<if test="domain.paper_name != null" >
+        paper_name = #{domain.paper_name,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.paper_desc != null" >
+        paper_desc = #{domain.paper_desc,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.ext0 != null" >
+        ext0 = #{domain.ext0,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.ext1 != null" >
+        ext1 = #{domain.ext1,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.ext2 != null" >
+        ext2 = #{domain.ext2,jdbcType=VARCHAR},
+      </if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadById" parameterType="String" resultType="org.tis.tools.model.po.tuser.TbOrg">
+		select <include refid="Base_Column_List"/> from tb_org where id = #{id}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.tuser.TbOrg" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from tb_org <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from tb_org <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+	  id
+,paper_code
+,course_code
+,seq_no
+,paper_name
+,paper_desc
+,ext0
+,ext1
+,ext2
+	</sql>
+</mapper>
