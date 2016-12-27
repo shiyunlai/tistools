@@ -15,10 +15,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.tis.tools.base.web.controller.BaseController;
-import org.tis.tools.base.web.util.AjaxUtils;
 import org.tis.tools.model.vo.devmgr.FeatureReg;
 import org.tis.tools.service.api.devmgr.FeatureRegRemoteService;
+import org.tis.tools.webapp.controller.BaseController;
+import org.tis.tools.webapp.util.AjaxUtils;
 
 @Controller
 @RequestMapping("/FeatureRegController")
