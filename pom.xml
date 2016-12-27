@@ -22,6 +22,10 @@
 		<module>tools-web-boss</module>
 		<!-- <module>tools-web-tools3</module> -->
 		<module>tools-web-tools</module>
+		<module>tools-facade-user</module>
+		
+		<module>tools-service-user</module>
+		<module>tools-web-user</module>
 	</modules>
 	<properties>
 		<!-- Common libs -->

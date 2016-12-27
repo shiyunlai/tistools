@@ -95,6 +95,10 @@
 
 	maven建立工程资料：[Maven学习总结(三)——使用Maven构建项目](http://www.cnblogs.com/xdp-gacl/p/4240930.html,"来自cnblogs孤傲苍狼")
 
+1. 注意：
+	archetypeArtifactId=maven-archetype-quickstart 建立java工程
+	archetypeArtifactId=maven-archetype-webapp 建立web工程
+
 #### 2. 增加dubbo配置（作为服务提供者）  
 
 1. 参照 tools-service-devmgr 增加dubbo配置文件:  

@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?> 
-<bizmodel name="业务日志" id="biztracetest" mainpackage="org.tis.tools" >
+<bizmodel name="用户业务域" id="tuser" mainpackage="org.tis.tools" >
 
-	<desc>对账户业务域的模型定义，包括：总账、分户账、账户明细、账户变更明细、开销户登记博</desc>
-	<prjWeb>tools-web-tools</prjWeb>
-	<prjCore>tools-core</prjCore>
-	<prjFacade>tools-facade-biztrace</prjFacade>
-	<prjService>tools-service-biztrace</prjService>
+	<desc>用户业务域模型定义</desc>
+	
+	<!-- 用户域相关的工程 -->
+	<prjCore>tools-core</prjCore><!-- 模型位置 -->
+	<prjWeb>tools-web-user</prjWeb><!-- webapp 应用代码 -->
+	<prjFacade>tools-facade-user</prjFacade><!-- 远程服务接口定义 -->
+	<prjService>tools-service-user</prjService><!-- 服务实现 -->
 	
 	<models>
-		<model name="业务日志" id="tb_biz_trace" desc="业务日志明细记录，记录一笔交易关键执行路径" ext="2,1000">
+		<model name="用户" id="tb_user" desc="用户记录表" ext="2,1000">
 			<field name="唯一ID"  id="ID" type="string" length="128" />
 			<field name="试卷编码"  id="paper_code" type="string" length="128" />
 			<field name="课程编码"  id="course_code" type="string" length="128" />
@@ -36,7 +38,7 @@
 			<field name="modifiedTime" id="modifiedTime" type="datetime" />
 		</model>
 		
-		<model name="业务异常" id="tb_biz_exception" desc="业务日志异常信息" ext="3,256">
+		<model name="机构" id="tb_org" desc="机构记录表" ext="3,256">
 			<field name="唯一ID"  id="ID" type="string" length="128" />
 			<field name="试卷编码"  id="paper_code" type="string" length="128" />
 			<field name="课程编码"  id="course_code" type="string" length="128" />
