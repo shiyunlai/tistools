@@ -22,4 +22,6 @@
 		check="false" 
 		loadbalance="byhost" /><!-- 使用了扩展loadbalance，根据指定ip调用服务提供者 -->
 	
+	
+	
 </beans>

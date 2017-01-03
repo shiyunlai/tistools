@@ -1,22 +1,21 @@
 package org.tis.tools.service.redis;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import redis.clients.jedis.Jedis;
 
 public class RedisTest {
-	public static void main(String[] args) {
-		// Connecting to Redis server on localhost
-
-		//实例化一个客户端
-
-		Jedis jedis = new Jedis("localhost");
-
-		//=================================================
-
-		// check whether server is running or not
-
-		//ping下，看看是否通的
-
-		System.out.println("Server is running: " + jedis.ping());
+	@Before
+	public void Init(){
+	
 	}
+	@Test
+	public void test(){
+		Jedis jedis = new Jedis("localhost");
+		
+		System.out.println(jedis.smembers("set-resolved-log-file:2016-12-20"));
+	}
+	
 	
 }

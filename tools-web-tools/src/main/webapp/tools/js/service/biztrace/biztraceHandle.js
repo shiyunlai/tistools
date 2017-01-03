@@ -18,8 +18,15 @@ MetronicApp.factory('biztraceHandle_service',['$http', '$q', function ($http,$q)
         return res;
     }
 
+    service.getProcess = function (service) {
+        var res = $http.get("http://localhost:8089/tis/log/analyse/process/"+service,"").then(function (response){
+           return response.data;
+        });
+        return res;
+    }
+
     service.analyzeLog = function (jsondata){
-        var res = $http.post("http://localhost:8089/tis/log//analyse/"+jsondata.port,jsondata).then(function (response){
+        var res = $http.post("http://localhost:8089/tis/log/analyse/"+jsondata.port,jsondata).then(function (response){
            return response.data;
         });
         return res;

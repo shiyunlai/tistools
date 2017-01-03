@@ -30,6 +30,7 @@ public interface IBiztraceRService {
 	
 	/**
 	 * 解析并分析<code>fixedBiztraces</code>指定范围内的业务日志文件
+	 * 异步服务
 	 * @param fixedBiztraces 指定范围内的业务日志文件
 	 * @return 按日分组的解析结果
 	 * @throws BiztraceRServiceException 执行失败时抛出异常
@@ -49,5 +50,5 @@ public interface IBiztraceRService {
 //	 * @param fixedDay 指定日期列表,其中每个日期格式为yyyy-MM-dd
 //	 * @throws BiztraceRServiceException 执行失败时抛出异常
 //	 */
-//	public AnalyseResult analyseBiztrace( List<String/*yyyy-MM-dd*/> fixedDay ) throws BiztraceRServiceException ;
+	public AnalyseResult analyseBiztrace( List<String/*yyyy-MM-dd*/> fixedDay ) throws BiztraceRServiceException ;
 }

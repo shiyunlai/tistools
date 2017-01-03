@@ -50,7 +50,7 @@ public class BiztraceHelper {
 	public int getWorkerThreads(){
 		String temp = /**DisconfDataGetter.getByFileItem("biztrace.properties", "WORKER_THREADS").toString()**/"" ;
 		if( StringUtils.isEmpty(temp) ){
-			temp = "5" ; //取不到就默认5个
+			temp = "1" ; //取不到就默认5个
 		}
 		return Integer.valueOf(temp).intValue() ;
 	}

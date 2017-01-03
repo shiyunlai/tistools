@@ -13,7 +13,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class Test {
 
 	public static void main(String[] args) {
-        ApplicationContext ac =  new ClassPathXmlApplicationContext("classpath:/data-source.xml");
+        ApplicationContext ac =  new ClassPathXmlApplicationContext("classpat:main/resources/META-INF/spring/spring-context.xml");
         RedisClientTemplate redisClient = (RedisClientTemplate)ac.getBean("redisClientTemplate");
         redisClient.set("a", "abc");
         System.out.println(redisClient.get("a"));

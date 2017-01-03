@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tis.tools.common.utils.MoneyUtil;
 import org.tis.tools.common.utils.TimeUtil;
+import org.tis.tools.service.api.biztrace.AnalyseResult;
 import org.tis.tools.service.api.biztrace.BiztraceFileInfo;
 import org.tis.tools.service.api.biztrace.IBiztraceRService;
 import org.tis.tools.service.api.biztrace.ParseProcessInfo;
@@ -27,7 +28,7 @@ import org.tis.tools.service.exception.biztrace.BiztraceRServiceException;
  * @author megapro
  *
  */
-public class BiztraceRService implements IBiztraceRService
+public  class BiztraceRService implements IBiztraceRService
 {
 	
 	public final Logger logger = LoggerFactory.getLogger(this.getClass()) ;
@@ -49,7 +50,7 @@ public class BiztraceRService implements IBiztraceRService
 				info.setLogFile(f.getLogFile());
 				info.setFileName(f.logFile.getName());
 				info.setFilePath(f.logFile.getPath());
-				info.setFileSize(f.logFile.length());//单位KB
+				info.setFileSize(f.logFile.length()/1024);//单位KB
 				info.setLastModifedTime(TimeUtil.longToDateStr(f.logFile.lastModified(),null));
 				logFiles.add(info) ; 
 			}
@@ -79,17 +80,25 @@ public class BiztraceRService implements IBiztraceRService
 		//解析进度
 		info.setParsedProcess(
 				MoneyUtil.multiply(MoneyUtil.divide(
+						new BigDecimal(LogFileParser.parsedNum.get()),
 						new BigDecimal(LogFileParser.allLogNum.get()), 
-						new BigDecimal(LogFileParser.parsedNum.get()) , 
 						2, 
-						RoundingMode.HALF_UP), new BigDecimal(10000)).longValue() 
+						RoundingMode.HALF_UP), new BigDecimal(100)).longValue() 
 				); 
 		
 		info.setParsedLogFiles(null);
 		
 		//More ....
-		
+		if(info.getParsedProcess() == 100){
+			info.setParsing(true);
+		}
 		return info ; 
+	}
+
+	@Override
+	public AnalyseResult analyseBiztrace(List<String> fixedDay) throws BiztraceRServiceException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

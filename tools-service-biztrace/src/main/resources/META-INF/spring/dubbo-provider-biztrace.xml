@@ -34,7 +34,9 @@
 	<!-- ============================================================= -->
 	
 	<!-- 暴露服务 -->
-	<dubbo:service group="biztrace" version="1.0" interface="org.tis.tools.service.api.biztrace.IBiztraceRService" ref="biztraceRService" protocol="dubbo"  timeout="3000" />
+	<dubbo:service group="biztrace" version="1.0" interface="org.tis.tools.service.api.biztrace.IBiztraceRService" ref="biztraceRService" protocol="dubbo"  timeout="3000" >
+		<dubbo:method name="resolveAndAnalyseBiztraceFixed" async="true"></dubbo:method>
+	</dubbo:service>
 
 	<!-- 具体实现 -->
     <bean id="biztraceRService" class="org.tis.tools.service.impl.biztrace.BiztraceRService" /> 

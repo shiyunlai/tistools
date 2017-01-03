@@ -36,17 +36,17 @@ public class LogFileParser extends AbstractRedisHandler implements Runnable {
 	public void run() {
 		
 		for( TISLogFile logFile : logFiles ){
-			
 			try {
-				doParse(logFile) ;
+				if( doParse(logFile) ){
+					System.out.println(2);
+					parsedNum.getAndIncrement();//完成一个日志文件的解析
+				}
 			} catch (Exception e) {
 				logger.warn("解析文件失败："+logFile.getLogFile().getAbsolutePath(), e.getMessage());
 				e.printStackTrace();
 				continue ; 
 			}finally{
 			}
-			
-			parsedNum.incrementAndGet(); //完成一个日志文件的解析
 		}
 	}
 
@@ -55,7 +55,7 @@ public class LogFileParser extends AbstractRedisHandler implements Runnable {
 	 * @param fileName
 	 * @throws IOException 
 	 */
-	private void doParse(TISLogFile logFile) throws IOException {
+	private boolean doParse(TISLogFile logFile) throws IOException {
 		
 		if( !isResolvedLogFile(logFile) )
 		{
@@ -75,9 +75,11 @@ public class LogFileParser extends AbstractRedisHandler implements Runnable {
 			
 			//fileParsedNum++;
 			fileParseRecord.put(logFile.logFile.getAbsolutePath(), "解析完成");
+			return true;
 		}else{			
 			fileParseRecord.put(logFile.logFile.getAbsolutePath(), "文件已经解析过");
 			logger.warn("文件已经解析过！ "+logFile.toString());	
+			return false;
 		}
 		
 		//fileReadNum++;

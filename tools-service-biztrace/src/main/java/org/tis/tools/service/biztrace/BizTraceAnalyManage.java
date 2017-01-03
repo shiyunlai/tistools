@@ -241,6 +241,13 @@ public class BizTraceAnalyManage
 			
 			groupFiles.put(""+i, group) ;//平均每组放num个文件
 		}
+		for( Entry<String, List<TISLogFile>> entry : groupFiles.entrySet() ){
+			System.out.println( "key====" + entry.getKey() );
+			for( TISLogFile tisLogFile : entry.getValue() ){
+				System.out.println("\t");
+				System.out.println(tisLogFile);
+			}
+		}
 		
 		return groupFiles ; 
 	}

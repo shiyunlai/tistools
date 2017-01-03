@@ -173,10 +173,11 @@ public class BizTraceResolver extends AbstractResolver {
 			return null;
 
 		idx1 += key.length();
-		int idx2 = line.indexOf("}@EXPT", idx1);
-		if (idx2 < 0)
+		int idx2 = line.indexOf("}", idx1);
+		if (idx2 < 0){
 			System.out.println("line: " + line);
-
+			return null;
+		}
 		String serialNoStr = line.substring(idx1, idx2);
 		// return serialNoStr.replace('.', ',');
 		return serialNoStr;

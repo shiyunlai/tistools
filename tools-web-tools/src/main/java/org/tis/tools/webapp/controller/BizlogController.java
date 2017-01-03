@@ -25,6 +25,7 @@ import org.tis.tools.base.web.controller.BaseController;
 import org.tis.tools.base.web.retcode.RetCodeEnum;
 import org.tis.tools.base.web.util.AjaxUtils;
 import org.tis.tools.base.web.util.JSONUtils;
+import org.tis.tools.service.api.biztrace.AnalyseResult;
 import org.tis.tools.service.api.biztrace.BiztraceFileInfo;
 import org.tis.tools.service.api.biztrace.IBiztraceRService;
 import org.tis.tools.service.api.biztrace.ParseProcessInfo;
@@ -195,7 +196,7 @@ public class BizlogController extends BaseController {
 	@RequestMapping(value="/analyse/process/{agentHost}",method=RequestMethod.GET)
 	public String analyseProcess(@PathVariable String agentHost,
 			HttpServletRequest request,HttpServletResponse response){
-		
+		responseMsg.clear();
 		try {
 			logger.info("analyse process : "+ agentHost);
 
@@ -215,6 +216,21 @@ public class BizlogController extends BaseController {
 
 		return null ; 
 	}
+	/**
+	 * 查询解析后日志信息
+	
+	@ResponseBody
+	@RequestMapping(value="/query",method=RequestMethod.GET)
+	public String queryLog(@PathVariable String agentHost,
+			HttpServletRequest request,HttpServletResponse response){
+		try {
+			logger.info("查询结果");
+			AnalyseResult asr = biztraceRService.analyseBiztrace(new ArrayList<>());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	} */
 
 	/**
 	 * 每个controller定义自己的返回信息变量
@@ -225,6 +241,7 @@ public class BizlogController extends BaseController {
 		if( null == responseMsg ){
 			responseMsg = new HashMap<String, Object> () ;
 		}
+		//加入clear
 		return responseMsg ;
 	}
 }
