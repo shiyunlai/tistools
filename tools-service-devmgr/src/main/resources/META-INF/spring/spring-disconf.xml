@@ -58,7 +58,7 @@
 		mybatis.properties
 		redis.properties
 	-->
-	<bean id="configproperties_no_reloadable_disconf"
+	<bean id="configproperties_reloadable_disconf"
 		class="com.baidu.disconf.client.addons.properties.ReloadablePropertiesFactoryBean">
 		<property name="locations">
 			<list>
@@ -83,7 +83,7 @@
 		<property name="ignoreUnresolvablePlaceholders" value="true" />
 		<property name="propertiesArray">
 			<list>
-				<ref bean="configproperties_no_reloadable_disconf" />
+				<ref bean="configproperties_reloadable_disconf" />
 			</list>
 		</property>
 	</bean>  
