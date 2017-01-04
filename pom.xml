@@ -22,6 +22,10 @@
 		<module>tools-web-boss</module>
 		<!-- <module>tools-web-tools3</module> -->
 		<module>tools-web-tools</module>
+		<module>tools-facade-user</module>
+		
+		<module>tools-service-user</module>
+		<module>tools-web-user</module>
 	</modules>
 	<properties>
 		<!-- Common libs -->
@@ -242,6 +246,7 @@
 				<artifactId>spring-webmvc</artifactId>
 				<version>${spring.bom.version}</version>
 			</dependency>
+			
 			<dependency>
 				<groupId>org.javassist</groupId>
 				<artifactId>javassist</artifactId>
@@ -508,7 +513,27 @@
 				<artifactId>log4j-slf4j-impl</artifactId>
 				<version>${log4j2_version}</version>
 			</dependency>
+			
 			<!-- Test libs -->
+			<dependency>
+			<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>${spring.bom.version}</version>
+				<scope>test</scope>
+				<optional>true</optional>
+			</dependency>
+		    <dependency>
+		        <groupId>org.mockito</groupId>
+		        <artifactId>mockito-all</artifactId>
+		        <version>1.9.5</version>
+		        <scope>test</scope>
+		    </dependency>
+		      <dependency> 
+		          <groupId>org.hamcrest</groupId> 
+		          <artifactId>hamcrest-core</artifactId> 
+		          <version>1.3</version> 
+		          <scope>test</scope> 
+		      </dependency>
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
@@ -540,6 +565,8 @@
 				<version>${easymock_version}</version>
 				<scope>test</scope>
 			</dependency>
+			<!-- Test lib end -->
+			
 			<dependency>
 				<groupId>cglib</groupId>
 				<artifactId>cglib-nodep</artifactId>

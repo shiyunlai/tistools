@@ -14,11 +14,11 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.tis.tools.base.web.util.JSONPropertyStrategyWrapper;
-import org.tis.tools.base.web.util.JSONUtils;
-import org.tis.tools.base.web.util.JsonDateProcessor;
-import org.tis.tools.base.web.util.JsonFileProcessor;
 import org.tis.tools.service.api.biztrace.BiztraceFileInfo;
+import org.tis.tools.webapp.util.JSONPropertyStrategyWrapper;
+import org.tis.tools.webapp.util.JSONUtils;
+import org.tis.tools.webapp.util.JsonDateProcessor;
+import org.tis.tools.webapp.util.JsonFileProcessor;
 
 import net.sf.ezmorph.object.DateMorpher;
 import net.sf.json.JSONArray;

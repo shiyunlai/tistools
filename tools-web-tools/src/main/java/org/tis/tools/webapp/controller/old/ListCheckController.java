@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.tis.tools.base.web.controller.BaseController;
+import org.tis.tools.webapp.controller.BaseController;
 
 @Controller
 @RequestMapping("/ListCheckController")
