@@ -11,6 +11,7 @@ MetronicApp.factory('commonCaller_service',['$http', '$q', function ($http,$q) {
         var urlStr = assemblyUrl( requestInfo ) ;
 
         // POST 请求
+
         if( requestInfo.method == "POST" ){
             var res = $http.post(urlStr,{data:requestInfo.postJsonData}).then(function (response) {
                 return response.data;

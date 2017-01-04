@@ -1,0 +1,233 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.mapper.tuser.AcOperatorMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.tuser.AcOperator">
+	    INSERT INTO AC_OPERATOR (operatorid
+  ,userid
+  ,password
+  ,invaldate
+  ,operatorname
+  ,authmode
+  ,status
+  ,unlocktime
+  ,menutype
+  ,lastlogin
+  ,errcount
+  ,startdate
+  ,enddate
+  ,validtime
+  ,maccode
+  ,ipaddress
+  ,email
+  )
+	    VALUES (#{operatorid,jdbcType=INTEGER},
+  #{userid,jdbcType=VARCHAR},
+  #{password,jdbcType=VARCHAR},
+  #{invaldate,jdbcType=TIMESTAMP},
+  #{operatorname,jdbcType=VARCHAR},
+  #{authmode,jdbcType=VARCHAR},
+  #{status,jdbcType=VARCHAR},
+  #{unlocktime,jdbcType=TIMESTAMP},
+  #{menutype,jdbcType=VARCHAR},
+  #{lastlogin,jdbcType=TIMESTAMP},
+  #{errcount,jdbcType=INTEGER},
+  #{startdate,jdbcType=TIMESTAMP},
+  #{enddate,jdbcType=TIMESTAMP},
+  #{validtime,jdbcType=VARCHAR},
+  #{maccode,jdbcType=VARCHAR},
+  #{ipaddress,jdbcType=VARCHAR},
+  #{email,jdbcType=VARCHAR}
+  )
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.tuser.AcOperator">
+    	UPDATE AC_OPERATOR 
+	    <set>
+		<if test="operatorid != null" >
+        operatorid = #{operatorid,jdbcType=INTEGER},
+      </if>
+		<if test="userid != null" >
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+		<if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+		<if test="invaldate != null" >
+        invaldate = #{invaldate,jdbcType=TIMESTAMP},
+      </if>
+		<if test="operatorname != null" >
+        operatorname = #{operatorname,jdbcType=VARCHAR},
+      </if>
+		<if test="authmode != null" >
+        authmode = #{authmode,jdbcType=VARCHAR},
+      </if>
+		<if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+		<if test="unlocktime != null" >
+        unlocktime = #{unlocktime,jdbcType=TIMESTAMP},
+      </if>
+		<if test="menutype != null" >
+        menutype = #{menutype,jdbcType=VARCHAR},
+      </if>
+		<if test="lastlogin != null" >
+        lastlogin = #{lastlogin,jdbcType=TIMESTAMP},
+      </if>
+		<if test="errcount != null" >
+        errcount = #{errcount,jdbcType=INTEGER},
+      </if>
+		<if test="startdate != null" >
+        startdate = #{startdate,jdbcType=TIMESTAMP},
+      </if>
+		<if test="enddate != null" >
+        enddate = #{enddate,jdbcType=TIMESTAMP},
+      </if>
+		<if test="validtime != null" >
+        validtime = #{validtime,jdbcType=VARCHAR},
+      </if>
+		<if test="maccode != null" >
+        maccode = #{maccode,jdbcType=VARCHAR},
+      </if>
+		<if test="ipaddress != null" >
+        ipaddress = #{ipaddress,jdbcType=VARCHAR},
+      </if>
+		<if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+	    </set>
+	    WHERE id = #{id}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.tuser.AcOperator">
+    	UPDATE AC_OPERATOR 
+	    <set>
+        operatorid = #{operatorid,jdbcType=INTEGER},
+        userid = #{userid,jdbcType=VARCHAR},
+        password = #{password,jdbcType=VARCHAR},
+        invaldate = #{invaldate,jdbcType=TIMESTAMP},
+        operatorname = #{operatorname,jdbcType=VARCHAR},
+        authmode = #{authmode,jdbcType=VARCHAR},
+        status = #{status,jdbcType=VARCHAR},
+        unlocktime = #{unlocktime,jdbcType=TIMESTAMP},
+        menutype = #{menutype,jdbcType=VARCHAR},
+        lastlogin = #{lastlogin,jdbcType=TIMESTAMP},
+        errcount = #{errcount,jdbcType=INTEGER},
+        startdate = #{startdate,jdbcType=TIMESTAMP},
+        enddate = #{enddate,jdbcType=TIMESTAMP},
+        validtime = #{validtime,jdbcType=VARCHAR},
+        maccode = #{maccode,jdbcType=VARCHAR},
+        ipaddress = #{ipaddress,jdbcType=VARCHAR},
+        email = #{email,jdbcType=VARCHAR},
+	    </set>
+	    WHERE id = #{id}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from AC_OPERATOR where id = #{id}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from AC_OPERATOR <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE AC_OPERATOR 
+	   <set>
+		<if test="domain.operatorid != null" >
+        operatorid = #{domain.operatorid,jdbcType=INTEGER},
+      </if>
+		<if test="domain.userid != null" >
+        userid = #{domain.userid,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.password != null" >
+        password = #{domain.password,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.invaldate != null" >
+        invaldate = #{domain.invaldate,jdbcType=TIMESTAMP},
+      </if>
+		<if test="domain.operatorname != null" >
+        operatorname = #{domain.operatorname,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.authmode != null" >
+        authmode = #{domain.authmode,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.status != null" >
+        status = #{domain.status,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.unlocktime != null" >
+        unlocktime = #{domain.unlocktime,jdbcType=TIMESTAMP},
+      </if>
+		<if test="domain.menutype != null" >
+        menutype = #{domain.menutype,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.lastlogin != null" >
+        lastlogin = #{domain.lastlogin,jdbcType=TIMESTAMP},
+      </if>
+		<if test="domain.errcount != null" >
+        errcount = #{domain.errcount,jdbcType=INTEGER},
+      </if>
+		<if test="domain.startdate != null" >
+        startdate = #{domain.startdate,jdbcType=TIMESTAMP},
+      </if>
+		<if test="domain.enddate != null" >
+        enddate = #{domain.enddate,jdbcType=TIMESTAMP},
+      </if>
+		<if test="domain.validtime != null" >
+        validtime = #{domain.validtime,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.maccode != null" >
+        maccode = #{domain.maccode,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.ipaddress != null" >
+        ipaddress = #{domain.ipaddress,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.email != null" >
+        email = #{domain.email,jdbcType=VARCHAR},
+      </if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadById" parameterType="String" resultType="org.tis.tools.model.po.tuser.AcOperator">
+		select <include refid="Base_Column_List"/> from AC_OPERATOR where id = #{id}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.tuser.AcOperator" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from AC_OPERATOR <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from AC_OPERATOR <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+	  operatorid
+,userid
+,password
+,invaldate
+,operatorname
+,authmode
+,status
+,unlocktime
+,menutype
+,lastlogin
+,errcount
+,startdate
+,enddate
+,validtime
+,maccode
+,ipaddress
+,email
+	</sql>
+</mapper>

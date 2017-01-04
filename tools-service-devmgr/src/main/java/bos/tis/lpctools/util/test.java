@@ -36,7 +36,7 @@ public class test {
 		private static String url =  "http://48.1.1.62/svn/repos/tip/development/branches/docs/A_project_development/02_development/05_patch_list/0111_SALM开发流程管理/List";
 		
 		//private static String url = "http://48.1.1.62/svn/repos/tip/development/branches/Feature/Feature_201605051043/bos.tis.bs/bos.tis.bs.common/src/bos/tis/bs/api/enums";
-	    private static SVNRepository repository = null; 
+	    private static SVNRepository repository = null;  
 	
 	 public static void setupLibrary() {  
 	        DAVRepositoryFactory.setup();  

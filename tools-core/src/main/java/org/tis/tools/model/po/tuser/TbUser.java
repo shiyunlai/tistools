@@ -17,7 +17,7 @@ import java.io.Serializable;
  * 定义来自 ： 
  *  业务域：tuser
  *  模型：tb_user 用户
- *  定义文件：/Users/megapro/Develop/tis/tools/tools-core/model/model-user.xml
+ *  定义文件：D:\GitSpace\tistools\tools-core\model\model-user.xml
  * </pre>
  * @author mvn bronsp:gendao
  *

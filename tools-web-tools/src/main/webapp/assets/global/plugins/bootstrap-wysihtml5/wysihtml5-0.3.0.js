@@ -4714,9 +4714,9 @@ wysihtml5.dom.observe = function(element, eventNames, handler) {
  *    });
  *    // => <div><div><span>foo bar</span></div></div>
  *
- *    var userHTML = '<table><tbody><tr><td>I'tools a table!</td></tr></tbody></table>';
+ *    var userHTML = '<table><tbody><tr><td>I'm a table!</td></tr></tbody></table>';
  *    wysihtml5.dom.parse(userHTML);
- *    // => '<span><span><span><span>I'tools a table!</span></span></span></span>'
+ *    // => '<span><span><span><span>I'm a table!</span></span></span></span>'
  *
  *    var userHTML = '<div>foobar<br>foobar</div>';
  *    wysihtml5.dom.parse(userHTML, {

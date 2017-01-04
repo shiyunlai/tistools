@@ -1,0 +1,93 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.mapper.tuser.AcOperatorroleMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.tuser.AcOperatorrole">
+	    INSERT INTO AC_OPERATORROLE (operatorid
+  ,roleid
+  ,auth
+  )
+	    VALUES (#{operatorid,jdbcType=INTEGER},
+  #{roleid,jdbcType=VARCHAR},
+  #{auth,jdbcType=VARCHAR}
+  )
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.tuser.AcOperatorrole">
+    	UPDATE AC_OPERATORROLE 
+	    <set>
+		<if test="operatorid != null" >
+        operatorid = #{operatorid,jdbcType=INTEGER},
+      </if>
+		<if test="roleid != null" >
+        roleid = #{roleid,jdbcType=VARCHAR},
+      </if>
+		<if test="auth != null" >
+        auth = #{auth,jdbcType=VARCHAR},
+      </if>
+	    </set>
+	    WHERE id = #{id}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.tuser.AcOperatorrole">
+    	UPDATE AC_OPERATORROLE 
+	    <set>
+        operatorid = #{operatorid,jdbcType=INTEGER},
+        roleid = #{roleid,jdbcType=VARCHAR},
+        auth = #{auth,jdbcType=VARCHAR},
+	    </set>
+	    WHERE id = #{id}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from AC_OPERATORROLE where id = #{id}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from AC_OPERATORROLE <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE AC_OPERATORROLE 
+	   <set>
+		<if test="domain.operatorid != null" >
+        operatorid = #{domain.operatorid,jdbcType=INTEGER},
+      </if>
+		<if test="domain.roleid != null" >
+        roleid = #{domain.roleid,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.auth != null" >
+        auth = #{domain.auth,jdbcType=VARCHAR},
+      </if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadById" parameterType="String" resultType="org.tis.tools.model.po.tuser.AcOperatorrole">
+		select <include refid="Base_Column_List"/> from AC_OPERATORROLE where id = #{id}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.tuser.AcOperatorrole" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from AC_OPERATORROLE <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from AC_OPERATORROLE <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+	  operatorid
+,roleid
+,auth
+	</sql>
+</mapper>

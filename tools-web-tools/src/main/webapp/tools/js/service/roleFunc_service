@@ -1,0 +1,26 @@
+/**
+ * Created by HP on 2016/9/19.
+ */
+MetronicApp.factory('roleFUnc_service',['$http', '$q', function ($http,$q) {
+
+    var service={};
+
+    service.getFunc = function(role){
+        var res;
+        if(isdebug){
+
+        }else{
+
+            res=  $http.post('http://localhost:8089/tis'+'/ngres/gonggong/changliang/list/leibie', {"role":role}).then(function (response) {
+                return response.data;
+            });
+            //  return [{"createTime":null,"guige":"b","id":"","idpath":"","leixing":"","mingcheng":"a","modifiedTime":null,"namepath":"","page":null,"toporgid":""}];
+        }
+        return res;
+    };
+
+
+    return service;
+}]);
+
+

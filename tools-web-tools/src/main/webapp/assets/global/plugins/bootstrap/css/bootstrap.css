@@ -5183,6 +5183,10 @@ button.close {
   .modal-lg {
     width: 900px; } }
 
+@media (min-width: 1292px) {
+  .modal-zdy {
+    width: 1200px; } }
+
 .tooltip {
   position: absolute;
   z-index: 1030;

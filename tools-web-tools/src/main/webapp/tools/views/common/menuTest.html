@@ -1,0 +1,17 @@
+<div class="col-md-12">
+    <div class="col-md-2">
+        <lable>选择操作员</lable>
+    </div>
+    <div class="col-md-10" >
+        <select ng-model="operator" ng-change="menuChange(operator)">
+            <option value="operator1">操作员1</option>
+            <option value="operator2">操作员2</option>
+            <option value="operator3">操作员3</option>
+        </select>
+        <div ng-if="operator == 'operator1'">
+        </div>
+        <div ng-if="operator == 'operator2'">
+        </div>
+
+    </div>
+</div>

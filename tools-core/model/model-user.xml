@@ -1,32 +1,120 @@
-<?xml version="1.0" encoding="UTF-8" ?> 
-<bizmodel name="用户业务域" id="tuser" mainpackage="org.tis.tools" >
+<?xml version="1.0" encoding="UTF-8" ?>
+<bizmodel name="用户业务域" id="tuser" mainpackage="org.tis.tools">
 
 	<desc>用户业务域模型定义</desc>
-	
+
 	<!-- 用户域相关的工程 -->
 	<prjCore>tools-core</prjCore><!-- 模型位置 -->
 	<prjWeb>tools-web-user</prjWeb><!-- webapp 应用代码 -->
 	<prjFacade>tools-facade-user</prjFacade><!-- 远程服务接口定义 -->
 	<prjService>tools-service-user</prjService><!-- 服务实现 -->
-	
+
+
+
 	<models>
+		<model name="角色" id="AC_ROLE">
+			<field name="角色代号" id="ROLEID" type="string" length="64" />
+			<field name="角色名称" id="ROLENAME" type="string" length="64" />
+			<field name="角色类别" id="ROLETYPE" type="string" length="256" />
+			<field name="角色描述" id="ROLEDESC" type="string" length="256" />
+			<field name="应用编号" id="APPID" type="int" length="10" />
+		</model>
+
+		<model name="应用系统" id="AC_APPLICATION">
+			<field name="应用代码" id="APPCODE" type="string" length="10" />
+			<field name="应用编号" id="APPID" type="string" length="10" />
+			<field name="应用名称" id="APPNAME" type="string" length="50" />
+			<field name="应用类型" id="APPTYPE" type="string" length="255" />
+			<field name="是否开通" id="ISOPEN" type="string" length="1" />
+			<field name="开通日期" id="OPENDATE" type="datetime" />
+			<field name="访问地址" id="URL" type="string" length="64" />
+			<field name="应用描述" id="APPDESC" type="string" length="512" />
+			<field name="管理维护人员" id="MAINTENANCE" type="string" length="10" />
+			<field name="应用管理角色" id="MANAROLE" type="string" length="64" />
+			<field name="备注" id="DEMO" type="string" length="512" />
+			<field name="开是否接入集中工作平台" id="INIWP" type="string" length="1" />
+			<field name="是否接入集中任务中心" id="INTASKCENTER" type="string"
+				length="1" />
+			<field name="IP" id="IPADDR" type="string" length="50" />
+			<field name="端口" id="IPPORT" type="string" length="10" />
+
+		</model>
+
+		<model name="权限集(角色)功能对应关系" id="AC_ROLEFUNC">
+			<field name="角色编号" id="ROLEID" type="string" length="64" />
+			<field name="功能编号" id="FUNCCODE" type="string" length="255" />
+			<field name="应用编号" id="APPID" type="int" length="10" />
+			<field name="功能组编号" id="FUNCGROUPID" type="int" length="10" />
+		</model>
+
+		<model name="操作员" id="AC_OPERATOR">
+			<field name="操作员编号" id="OPERATORID" type="int" length="18" />
+			<field name="登录用户名" id="USERID" type="string" length="64" />
+			<field name="密码" id="PASSWORD" type="string" length="100" />
+			<field name="密码失效日期" id="INVALDATE" type="datetime" />
+			<field name="操作员名称" id="OPERATORNAME" type="string" length="64" />
+			<field name="认证模式" id="AUTHMODE" type="string" length="255" />
+			<field name="操作员状态" id="STATUS" type="string" length="255" />
+			<field name="解锁时间" id="UNLOCKTIME" type="datetime" />
+			<field name="菜单风格" id="MENUTYPE" type="string" length="255" />
+			<field name="最近登录时间" id="LASTLOGIN" type="datetime" />
+			<field name="最新错误登录次数" id="ERRCOUNT" type="int" length="10" />
+			<field name="有效开始日期" id="STARTDATE" type="datetime" />
+			<field name="有效截止日期" id="ENDDATE" type="datetime" />
+			<field name="有效时间范围" id="VALIDTIME" type="string" length="255" />
+			<field name="MAC码" id="MACCODE" type="string" length="128" />
+			<field name="IP地址" id="IPADDRESS" type="string" length="128" />
+			<field name="邮箱" id="EMAIL" type="string" length="255" />
+		</model>
+
+		<model name="功能组" id="AC_FUNCGROUP">
+			<field name="功能组编号" id="FUNCGROUPID" type="int" length="10" />
+			<field name="应用编号" id="APPID" type="int" length="10" />
+			<field name="功能组名称" id="FUNCGROUPNAME" type="string" length="40" />
+			<field name="上级功能组" id="PARENTGROUP" type="int" length="10" />
+			<field name="节点层次" id="GROUPLEVEL" type="int" />
+			<field name="功能组路径序列" id="FUNCGROUPSEQ" type="string" length="256" />
+			<field name="是否叶子节点" id="ISLEAF" type="string" length="1" />
+			<field name="子节点数" id="SUBCOUNT" type="int" length="10" />
+		</model>
+
+		<model name="功能" id="AC_FUNCTION">
+			<field name="功能编号" id="FUNCCODE" type="string" length="255" />
+			<field name="功能组编号" id="FUNCGROUPID" type="int" length="10" />
+			<field name="功能名称" id="FUNCNAME" type="string" length="128" />
+			<field name="功能描述" id="FUNCDESC" type="string" length="512" />
+			<field name="功能调用入口" id="FUNCACTION" type="string" length="256" />
+			<field name="输入参数" id="PARAINFO" type="string" length="256" />
+			<field name="是否验证权限" id="ISCHECK" type="string" length="1" />
+			<field name="功能类型" id="FUNCTYPE" type="string" length="255" />
+			<field name="可否定义为菜单" id="ISMENU" type="string" length="1" />
+		</model>
+		<model name="操作员与权限集（角色）对应关系" id="AC_OPERATORROLE">
+			<field name="操作员编号" id="OPERATORID" type="int" length="18" />
+			<field name="角色编号" id="ROLEID" type="string" length="64" />
+			<field name="是否可分级授权" id="AUTH" type="string" length="255" />
+		</model>
 		<model name="用户" id="tb_user" desc="用户记录表" ext="2,1000">
-			<field name="唯一ID"  id="ID" type="string" length="128" />
-			<field name="试卷编码"  id="paper_code" type="string" length="128" />
-			<field name="课程编码"  id="course_code" type="string" length="128" />
-			<field name="顺序号"  id="seq_no" type="long" length="8" />
-			<field name="考卷名称"  id="paper_name" type="string" length="1024" />
-			<field name="卷首语"  id="paper_desc" type="string" length="40000" />
-			<field name="多媒体信息"  id="multi_media_info" type="string" length="1024" />
-			<field name="考试时间"  id="time_exam" type="long" length="8" />
-			<field name="是否允许重考"  id="is_re_exam" type="string" length="8" />
-			<field name="重考次数限制"  id="times_re_exam" type="long" length="8" />
-			<field name="默认每题得分"  id="def_per_score" type="long" length="8" />
-			<field name="题目排序规则"  id="rule_sort_question" type="string" length="8" />
-			<field name="题目答案排序规则"  id="rule_sort_answer" type="string" length="8" />
-			<field name="答案反馈方式"  id="feedback_type" type="string" length="8" />
-			<field name="预期年化利率"     id="expect_fixed" type="bigdecimal" length="10,6" />
-			<field name="不生成PO对象"     id="not_gen_po" type="bigdecimal" length="10,6" physical="false"/>
+			<field name="唯一ID" id="ID" type="string" length="128" />
+			<field name="试卷编码" id="paper_code" type="string" length="128" />
+			<field name="课程编码" id="course_code" type="string" length="128" />
+			<field name="顺序号" id="seq_no" type="long" length="8" />
+			<field name="考卷名称" id="paper_name" type="string" length="1024" />
+			<field name="卷首语" id="paper_desc" type="string" length="40000" />
+			<field name="多媒体信息" id="multi_media_info" type="string" length="1024" />
+			<field name="考试时间" id="time_exam" type="long" length="8" />
+			<field name="是否允许重考" id="is_re_exam" type="string" length="8" />
+			<field name="重考次数限制" id="times_re_exam" type="long" length="8" />
+			<field name="默认每题得分" id="def_per_score" type="long" length="8" />
+			<field name="题目排序规则" id="rule_sort_question" type="string"
+				length="8" />
+			<field name="题目答案排序规则" id="rule_sort_answer" type="string"
+				length="8" />
+			<field name="答案反馈方式" id="feedback_type" type="string" length="8" />
+			<field name="预期年化利率" id="expect_fixed" type="bigdecimal"
+				length="10,6" />
+			<field name="不生成PO对象" id="not_gen_po" type="bigdecimal" length="10,6"
+				physical="false" />
 			<field name="delstatus" id="delstatus" />
 			<field name="creatorId" id="creatorId" />
 			<field name="creatorName" id="creatorName" />
@@ -37,14 +125,14 @@
 			<field name="createTime" id="createTime" type="datetime" />
 			<field name="modifiedTime" id="modifiedTime" type="datetime" />
 		</model>
-		
+
 		<model name="机构" id="tb_org" desc="机构记录表" ext="3,256">
-			<field name="唯一ID"  id="ID" type="string" length="128" />
-			<field name="试卷编码"  id="paper_code" type="string" length="128" />
-			<field name="课程编码"  id="course_code" type="string" length="128" />
-			<field name="顺序号"  id="seq_no" type="long" length="8" />
-			<field name="考卷名称"  id="paper_name" type="string" length="1024" />
-			<field name="卷首语"  id="paper_desc" type="string" length="40000" />
+			<field name="唯一ID" id="ID" type="string" length="128" />
+			<field name="试卷编码" id="paper_code" type="string" length="128" />
+			<field name="课程编码" id="course_code" type="string" length="128" />
+			<field name="顺序号" id="seq_no" type="long" length="8" />
+			<field name="考卷名称" id="paper_name" type="string" length="1024" />
+			<field name="卷首语" id="paper_desc" type="string" length="40000" />
 		</model>
 	</models>
 </bizmodel>

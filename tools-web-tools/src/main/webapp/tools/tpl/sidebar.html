@@ -1,7 +1,19 @@
 <div class="page-sidebar navbar-collapse collapse">
     <ul class="page-sidebar-menu" data-keep-expanded="true" data-auto-scroll="true" data-slide-speed="200" ng-class="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}">
-        <li class="heading">
-            <h3>菜单栏</h3>
+        <li class="sidebar-search-wrapper">
+            <form class="sidebar-search sidebar-search-bordered" action="#" method="POST">
+                <a href="javascript:;" class="remove">
+                    <i class="icon-close"></i>
+                </a>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
+                        <a href="javascript:;" class="btn submit">
+                            <i class="icon-magnifier"></i>
+                        </a>
+                    </span>
+                </div>
+            </form>
         </li>
         <li class="start nav-item">
             <a href="#/dashboard.html">
@@ -11,15 +23,15 @@
         </li>
 
 
-        <li class="nav-item">
-            <a href="javascript:;">
+        <li class="start nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="icon-wrench"></i>
                 <span class="title">项目工具</span>
                 <span class="arrow "></span>
             </a>
             <ul class="sub-menu">
                 <li class="nav-item">
-                    <a href="javascript:;">
+                    <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="icon-wrench"></i>
                         <span class="title">业务日志</span>
                         <span class="arrow "></span>
@@ -44,7 +56,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="#">
+                    <a href="#" class="nav-link nav-toggle">
                         <i class="icon-wrench"></i>
                         <span class="title">版本检查工具</span>
                         <span class="arrow "></span>
@@ -66,7 +78,7 @@
         </li>
 
         <li class="start nav-item">
-            <a href="javascript:;">
+            <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="icon-wrench"></i>
                 <span class="title">测试工具</span>
                 <span class="arrow "></span>
@@ -77,18 +89,23 @@
                         <i class="icon-puzzle"></i>通用Controller调用</span>
                     </a>
                 </li>
+                <li>
+                    <a href="#/menuTest.html">
+                        <i class="icon-puzzle"></i>动态菜单测试</span>
+                    </a>
+                </li>
             </ul>
         </li>
 
         <li class="start nav-item">
-            <a href="javascript:;">
+            <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="icon-wrench"></i>
                 <span class="title">系统管理</span>
                 <span class="arrow "></span>
             </a>
             <ul class="sub-menu">
                 <li class="nav-item">
-                    <a href="#">
+                    <a href="#" class="nav-link nav-toggle">
                         <i class="icon-wrench"></i>
                         <span class="title">redis管理</span>
                         <span class="arrow "></span>
@@ -102,8 +119,47 @@
                     </ul>
                 </li>
             </ul>
+        </li>
+
+        <li class="start nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-wrench"></i>
+                <span class="title">组织管理</span>
+                <span class="arrow "></span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a href="#/om_organization.html">
+                        <i class="icon-puzzle"></i>机构人员管理</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="start nav-item" ng-repeat="ap in settings.dyn_menu | orderBy: '-sequence':'desc'">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-wrench"></i>
+                <span class="title">{{ap.appName}}</span>
+                <span class="arrow "></span>
+            </a>
+            <ul class="sub-menu" >
+                <li class="nav-item" ng-repeat="fg in ap.funcGroup">
+                    <a href="#" class="nav-link nav-toggle">
+                        <i class="icon-wrench"></i>
+                        <span class="title">{{fg.funGroupName}}</span>
+                        <span class="arrow "></span>
+                    </a>
+                    <ul class="sub-menu" >
+                        <li ng-repeat="fun in fg.func| orderBy: '-sequence':'desc'">
+                            <a href="">
+                                <i class="icon-puzzle"></i>{{fun.funcName}}***{{fun.sequence}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
 
         </li>
+
 
     </ul>
     <!-- END SIDEBAR MENU -->
