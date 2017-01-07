@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.mapper.torg.OmOrganizationMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.torg.OmOrganization">
+	    INSERT INTO OM_ORGANIZATION (id
+  ,orgid
+  ,orgcode
+  ,orgname
+  ,orglevel
+  ,orgdegree
+  ,parentorgid
+  ,orgseq
+  ,orgtype
+  ,orgaddr
+  ,zipcode
+  ,manaposition
+  ,managerid
+  ,orgmanager
+  ,linkman
+  ,linktel
+  ,email
+  ,weburl
+  ,startdate
+  ,enddate
+  ,status
+  ,area
+  ,createtime
+  ,lastupdate
+  ,updator
+  ,sortno
+  ,isleaf
+  ,subcount
+  ,remark
+  )
+	    VALUES (#{id,jdbcType=VARCHAR},
+  #{orgid,jdbcType=INTEGER},
+  #{orgcode,jdbcType=VARCHAR},
+  #{orgname,jdbcType=VARCHAR},
+  #{orglevel,jdbcType=INTEGER},
+  #{orgdegree,jdbcType=VARCHAR},
+  #{parentorgid,jdbcType=INTEGER},
+  #{orgseq,jdbcType=VARCHAR},
+  #{orgtype,jdbcType=VARCHAR},
+  #{orgaddr,jdbcType=VARCHAR},
+  #{zipcode,jdbcType=VARCHAR},
+  #{manaposition,jdbcType=INTEGER},
+  #{managerid,jdbcType=INTEGER},
+  #{orgmanager,jdbcType=VARCHAR},
+  #{linkman,jdbcType=VARCHAR},
+  #{linktel,jdbcType=VARCHAR},
+  #{email,jdbcType=VARCHAR},
+  #{weburl,jdbcType=VARCHAR},
+  #{startdate,jdbcType=TIMESTAMP},
+  #{enddate,jdbcType=TIMESTAMP},
+  #{status,jdbcType=VARCHAR},
+  #{area,jdbcType=VARCHAR},
+  #{createtime,jdbcType=TIMESTAMP},
+  #{lastupdate,jdbcType=TIMESTAMP},
+  #{updator,jdbcType=INTEGER},
+  #{sortno,jdbcType=INTEGER},
+  #{isleaf,jdbcType=VARCHAR},
+  #{subcount,jdbcType=INTEGER},
+  #{remark,jdbcType=VARCHAR}
+  )
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.torg.OmOrganization">
+    	UPDATE OM_ORGANIZATION 
+	    <set>
+		<if test="id != null" >
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+		<if test="orgid != null" >
+        orgid = #{orgid,jdbcType=INTEGER},
+      </if>
+		<if test="orgcode != null" >
+        orgcode = #{orgcode,jdbcType=VARCHAR},
+      </if>
+		<if test="orgname != null" >
+        orgname = #{orgname,jdbcType=VARCHAR},
+      </if>
+		<if test="orglevel != null" >
+        orglevel = #{orglevel,jdbcType=INTEGER},
+      </if>
+		<if test="orgdegree != null" >
+        orgdegree = #{orgdegree,jdbcType=VARCHAR},
+      </if>
+		<if test="parentorgid != null" >
+        parentorgid = #{parentorgid,jdbcType=INTEGER},
+      </if>
+		<if test="orgseq != null" >
+        orgseq = #{orgseq,jdbcType=VARCHAR},
+      </if>
+		<if test="orgtype != null" >
+        orgtype = #{orgtype,jdbcType=VARCHAR},
+      </if>
+		<if test="orgaddr != null" >
+        orgaddr = #{orgaddr,jdbcType=VARCHAR},
+      </if>
+		<if test="zipcode != null" >
+        zipcode = #{zipcode,jdbcType=VARCHAR},
+      </if>
+		<if test="manaposition != null" >
+        manaposition = #{manaposition,jdbcType=INTEGER},
+      </if>
+		<if test="managerid != null" >
+        managerid = #{managerid,jdbcType=INTEGER},
+      </if>
+		<if test="orgmanager != null" >
+        orgmanager = #{orgmanager,jdbcType=VARCHAR},
+      </if>
+		<if test="linkman != null" >
+        linkman = #{linkman,jdbcType=VARCHAR},
+      </if>
+		<if test="linktel != null" >
+        linktel = #{linktel,jdbcType=VARCHAR},
+      </if>
+		<if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+		<if test="weburl != null" >
+        weburl = #{weburl,jdbcType=VARCHAR},
+      </if>
+		<if test="startdate != null" >
+        startdate = #{startdate,jdbcType=TIMESTAMP},
+      </if>
+		<if test="enddate != null" >
+        enddate = #{enddate,jdbcType=TIMESTAMP},
+      </if>
+		<if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+		<if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+		<if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+		<if test="lastupdate != null" >
+        lastupdate = #{lastupdate,jdbcType=TIMESTAMP},
+      </if>
+		<if test="updator != null" >
+        updator = #{updator,jdbcType=INTEGER},
+      </if>
+		<if test="sortno != null" >
+        sortno = #{sortno,jdbcType=INTEGER},
+      </if>
+		<if test="isleaf != null" >
+        isleaf = #{isleaf,jdbcType=VARCHAR},
+      </if>
+		<if test="subcount != null" >
+        subcount = #{subcount,jdbcType=INTEGER},
+      </if>
+		<if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+	    </set>
+	    WHERE id = #{id}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.torg.OmOrganization">
+    	UPDATE OM_ORGANIZATION 
+	    <set>
+        id = #{id,jdbcType=VARCHAR},
+        orgid = #{orgid,jdbcType=INTEGER},
+        orgcode = #{orgcode,jdbcType=VARCHAR},
+        orgname = #{orgname,jdbcType=VARCHAR},
+        orglevel = #{orglevel,jdbcType=INTEGER},
+        orgdegree = #{orgdegree,jdbcType=VARCHAR},
+        parentorgid = #{parentorgid,jdbcType=INTEGER},
+        orgseq = #{orgseq,jdbcType=VARCHAR},
+        orgtype = #{orgtype,jdbcType=VARCHAR},
+        orgaddr = #{orgaddr,jdbcType=VARCHAR},
+        zipcode = #{zipcode,jdbcType=VARCHAR},
+        manaposition = #{manaposition,jdbcType=INTEGER},
+        managerid = #{managerid,jdbcType=INTEGER},
+        orgmanager = #{orgmanager,jdbcType=VARCHAR},
+        linkman = #{linkman,jdbcType=VARCHAR},
+        linktel = #{linktel,jdbcType=VARCHAR},
+        email = #{email,jdbcType=VARCHAR},
+        weburl = #{weburl,jdbcType=VARCHAR},
+        startdate = #{startdate,jdbcType=TIMESTAMP},
+        enddate = #{enddate,jdbcType=TIMESTAMP},
+        status = #{status,jdbcType=VARCHAR},
+        area = #{area,jdbcType=VARCHAR},
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+        lastupdate = #{lastupdate,jdbcType=TIMESTAMP},
+        updator = #{updator,jdbcType=INTEGER},
+        sortno = #{sortno,jdbcType=INTEGER},
+        isleaf = #{isleaf,jdbcType=VARCHAR},
+        subcount = #{subcount,jdbcType=INTEGER},
+        remark = #{remark,jdbcType=VARCHAR},
+	    </set>
+	    WHERE id = #{id}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from OM_ORGANIZATION where id = #{id}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from OM_ORGANIZATION <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE OM_ORGANIZATION 
+	   <set>
+		<if test="domain.id != null" >
+        id = #{domain.id,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.orgid != null" >
+        orgid = #{domain.orgid,jdbcType=INTEGER},
+      </if>
+		<if test="domain.orgcode != null" >
+        orgcode = #{domain.orgcode,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.orgname != null" >
+        orgname = #{domain.orgname,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.orglevel != null" >
+        orglevel = #{domain.orglevel,jdbcType=INTEGER},
+      </if>
+		<if test="domain.orgdegree != null" >
+        orgdegree = #{domain.orgdegree,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.parentorgid != null" >
+        parentorgid = #{domain.parentorgid,jdbcType=INTEGER},
+      </if>
+		<if test="domain.orgseq != null" >
+        orgseq = #{domain.orgseq,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.orgtype != null" >
+        orgtype = #{domain.orgtype,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.orgaddr != null" >
+        orgaddr = #{domain.orgaddr,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.zipcode != null" >
+        zipcode = #{domain.zipcode,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.manaposition != null" >
+        manaposition = #{domain.manaposition,jdbcType=INTEGER},
+      </if>
+		<if test="domain.managerid != null" >
+        managerid = #{domain.managerid,jdbcType=INTEGER},
+      </if>
+		<if test="domain.orgmanager != null" >
+        orgmanager = #{domain.orgmanager,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.linkman != null" >
+        linkman = #{domain.linkman,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.linktel != null" >
+        linktel = #{domain.linktel,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.email != null" >
+        email = #{domain.email,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.weburl != null" >
+        weburl = #{domain.weburl,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.startdate != null" >
+        startdate = #{domain.startdate,jdbcType=TIMESTAMP},
+      </if>
+		<if test="domain.enddate != null" >
+        enddate = #{domain.enddate,jdbcType=TIMESTAMP},
+      </if>
+		<if test="domain.status != null" >
+        status = #{domain.status,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.area != null" >
+        area = #{domain.area,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.createtime != null" >
+        createtime = #{domain.createtime,jdbcType=TIMESTAMP},
+      </if>
+		<if test="domain.lastupdate != null" >
+        lastupdate = #{domain.lastupdate,jdbcType=TIMESTAMP},
+      </if>
+		<if test="domain.updator != null" >
+        updator = #{domain.updator,jdbcType=INTEGER},
+      </if>
+		<if test="domain.sortno != null" >
+        sortno = #{domain.sortno,jdbcType=INTEGER},
+      </if>
+		<if test="domain.isleaf != null" >
+        isleaf = #{domain.isleaf,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.subcount != null" >
+        subcount = #{domain.subcount,jdbcType=INTEGER},
+      </if>
+		<if test="domain.remark != null" >
+        remark = #{domain.remark,jdbcType=VARCHAR},
+      </if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadById" parameterType="String" resultType="org.tis.tools.model.po.torg.OmOrganization">
+		select <include refid="Base_Column_List"/> from OM_ORGANIZATION where id = #{id}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.torg.OmOrganization" parameterType="org.tis.tools.base.WhereCondition" >
+    	<if test="length > 0 and url == 'oracle'" >
+    	select <include refid="Base_Column_List" /> from
+   			(select a.*,rownum row_num from
+      			(</if>
+      			select <include refid="Base_Column_List" /> from OM_ORGANIZATION <include refid="Where_Clause" />
+        			<if test="orderBy != null" >${orderBy}</if>
+        			<if test="length > 0 and url == 'mysql'" >LIMIT ${offset}, ${length}</if>
+        		<if test="length > 0 and url == 'oracle'" >) a
+   			) b 
+		where b.row_num between ${offset} and ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from OM_ORGANIZATION <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+	  id
+,orgid
+,orgcode
+,orgname
+,orglevel
+,orgdegree
+,parentorgid
+,orgseq
+,orgtype
+,orgaddr
+,zipcode
+,manaposition
+,managerid
+,orgmanager
+,linkman
+,linktel
+,email
+,weburl
+,startdate
+,enddate
+,status
+,area
+,createtime
+,lastupdate
+,updator
+,sortno
+,isleaf
+,subcount
+,remark
+	</sql>
+</mapper>

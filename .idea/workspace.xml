@@ -2,553 +2,77 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a4162937-4555-48d7-ba0e-4d74c29cffd3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ad.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ae.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/af.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ag.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ai.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/al.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/am.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/an.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ao.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ar.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/as.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/at.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/au.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/aw.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ax.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/az.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ba.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/bb.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/bd.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/be.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/bf.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/bg.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/bh.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/bi.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/bj.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/bm.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/bn.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/bo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/br.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/bs.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/bt.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/bv.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/bw.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/by.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/bz.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ca.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/catalonia.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/cc.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/cd.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/cf.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/cg.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ch.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ci.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ck.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/cl.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/cm.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/cn.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/co.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/cr.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/cs.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/cu.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/cv.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/cx.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/cy.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/cz.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/de.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/dj.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/dk.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/dm.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/do.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/dz.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ec.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ee.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/eg.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/eh.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/england.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/er.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/es.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/et.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/europeanunion.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/fam.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/fi.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/fj.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/fk.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/fm.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/fo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/fr.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ga.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/gb.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/gd.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ge.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/gf.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/gh.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/gi.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/gl.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/gm.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/gn.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/gp.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/gq.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/gr.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/gs.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/gt.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/gu.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/gw.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/gy.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/hk.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/hm.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/hn.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/hr.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ht.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/hu.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/id.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ie.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/il.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/in.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/io.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/iq.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ir.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/is.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/it.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/jm.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/jo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/jp.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ke.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/kg.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/kh.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ki.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/km.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/kn.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/kp.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/kr.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/kw.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ky.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/kz.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/la.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/lb.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/lc.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/li.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/lk.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/lr.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ls.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/lt.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/lu.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/lv.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ly.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ma.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/mc.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/md.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/me.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/mg.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/mh.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/mk.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ml.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/mm.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/mn.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/mo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/mp.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/mq.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/mr.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/flags/ms.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/tistools.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/AcApplication.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/AcFuncgroup.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/AcFunction.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/AcOperator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/AcOperatorrole.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/AcRole.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/AcRolefunc.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-facade-org/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-facade-org/src/main/java/org/tools/facade/org/App.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-facade-org/src/test/java/org/tools/facade/org/AppTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-facade-user/src/main/java/org/tis/tools/rservice/tuser/IAcApplicationRService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-facade-user/src/main/java/org/tis/tools/rservice/tuser/IAcFuncgroupRService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-facade-user/src/main/java/org/tis/tools/rservice/tuser/IAcFunctionRService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-facade-user/src/main/java/org/tis/tools/rservice/tuser/IAcOperatorRService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-facade-user/src/main/java/org/tis/tools/rservice/tuser/IAcOperatorroleRService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-facade-user/src/main/java/org/tis/tools/rservice/tuser/IAcRoleRService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-facade-user/src/main/java/org/tis/tools/rservice/tuser/IAcRolefuncRService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-org/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-org/src/main/java/org/tools/service/org/App.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-org/src/test/java/org/tools/service/org/AppTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/dao/mapper/tuser/AcApplicationMapper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/dao/mapper/tuser/AcFuncgroupMapper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/dao/mapper/tuser/AcFunctionMapper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/dao/mapper/tuser/AcOperatorMapper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/dao/mapper/tuser/AcOperatorroleMapper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/dao/mapper/tuser/AcRoleMapper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/dao/mapper/tuser/AcRolefuncMapper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/rservice/tuser/AcApplicationRServiceImpl.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/rservice/tuser/AcFuncgroupRServiceImpl.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/rservice/tuser/AcFunctionRServiceImpl.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/rservice/tuser/AcOperatorRServiceImpl.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/rservice/tuser/AcOperatorroleRServiceImpl.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/rservice/tuser/AcRoleRServiceImpl.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/rservice/tuser/AcRolefuncRServiceImpl.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/service/tuser/AcApplicationService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/service/tuser/AcFuncgroupService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/service/tuser/AcFunctionService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/service/tuser/AcOperatorService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/service/tuser/AcOperatorroleService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/service/tuser/AcRoleService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/service/tuser/AcRolefuncService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/resources/org/tis/tools/dao/mapper/tuser/AcApplicationMapper.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/resources/org/tis/tools/dao/mapper/tuser/AcFuncgroupMapper.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/resources/org/tis/tools/dao/mapper/tuser/AcFunctionMapper.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/resources/org/tis/tools/dao/mapper/tuser/AcOperatorMapper.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/resources/org/tis/tools/dao/mapper/tuser/AcOperatorroleMapper.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/resources/org/tis/tools/dao/mapper/tuser/AcRoleMapper.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-service-user/src/main/resources/org/tis/tools/dao/mapper/tuser/AcRolefuncMapper.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/img/social/Thumbs.db" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/css/custom.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/css/custom.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/css/layout.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/css/layout.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/css/themes/default.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/css/themes/default.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/css/themes/light.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/css/themes/light.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/ajax-loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/ajax-modal-loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/arrow-down.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/avatar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/avatar1.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/avatar10.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/avatar11.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/avatar1_small.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/avatar2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/avatar3.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/avatar3_small.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/avatar4.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/avatar5.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/avatar6.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/avatar7.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/avatar8.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/avatar9.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/hor-menu-red-arrow.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/icon-color-close.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/icon-color.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/icon-img-down.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/icon-img-up.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/inbox-nav-arrow-blue.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/loading-spinner-blue.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/loading-spinner-default.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/loading-spinner-grey.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/logo-big-white.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/logo-big.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/logo-default.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/logo-light.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/logo.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/menu-toggler.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/photo1.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/photo2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/remove-icon-small.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/search_icon_light.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/sidebar-toggle-dark.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/img/sidebar-toggle-light.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/scripts/demo.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/scripts/demo.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/scripts/layout.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/layout4/scripts/layout.min.js" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/service/orgManage/organization_service.js" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-core/model/templates/biz/Mapper2.java.ftl" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/AcApplication.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/AcFuncgroup.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/AcFunction.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/AcOperator.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/AcOperatorrole.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/AcRole.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/AcRolefunc.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-facade-org/src/main/java/org/tools/facade/org/App.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-facade-user/src/main/java/org/tis/tools/rservice/tuser/IAcApplicationRService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-facade-user/src/main/java/org/tis/tools/rservice/tuser/IAcFuncgroupRService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-facade-user/src/main/java/org/tis/tools/rservice/tuser/IAcFunctionRService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-facade-user/src/main/java/org/tis/tools/rservice/tuser/IAcOperatorRService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-facade-user/src/main/java/org/tis/tools/rservice/tuser/IAcOperatorroleRService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-facade-user/src/main/java/org/tis/tools/rservice/tuser/IAcRoleRService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-facade-user/src/main/java/org/tis/tools/rservice/tuser/IAcRolefuncRService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-org/src/test/java/org/tools/service/org/AppTest.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/dao/mapper/tuser/AcApplicationMapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/dao/mapper/tuser/AcFuncgroupMapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/dao/mapper/tuser/AcFunctionMapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/dao/mapper/tuser/AcOperatorMapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/dao/mapper/tuser/AcOperatorroleMapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/dao/mapper/tuser/AcRoleMapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/dao/mapper/tuser/AcRolefuncMapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/rservice/tuser/AcApplicationRServiceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/rservice/tuser/AcFuncgroupRServiceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/rservice/tuser/AcFunctionRServiceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/rservice/tuser/AcOperatorRServiceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/rservice/tuser/AcOperatorroleRServiceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/rservice/tuser/AcRoleRServiceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/rservice/tuser/AcRolefuncRServiceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/service/tuser/AcApplicationService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/service/tuser/AcFuncgroupService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/service/tuser/AcFunctionService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/service/tuser/AcOperatorService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/service/tuser/AcOperatorroleService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/service/tuser/AcRoleService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/service/tuser/AcRolefuncService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/resources/org/tis/tools/dao/mapper/tuser/AcApplicationMapper.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/resources/org/tis/tools/dao/mapper/tuser/AcFuncgroupMapper.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/resources/org/tis/tools/dao/mapper/tuser/AcFunctionMapper.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/resources/org/tis/tools/dao/mapper/tuser/AcOperatorMapper.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/resources/org/tis/tools/dao/mapper/tuser/AcOperatorroleMapper.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/resources/org/tis/tools/dao/mapper/tuser/AcRoleMapper.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/resources/org/tis/tools/dao/mapper/tuser/AcRolefuncMapper.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-user/src/main/java/org/tis/tools/webapp/controller/tuser/AcApplicationController.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-user/src/main/java/org/tis/tools/webapp/controller/tuser/AcFuncgroupController.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-user/src/main/java/org/tis/tools/webapp/controller/tuser/AcFunctionController.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-user/src/main/java/org/tis/tools/webapp/controller/tuser/AcOperatorController.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-user/src/main/java/org/tis/tools/webapp/controller/tuser/AcOperatorroleController.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-user/src/main/java/org/tis/tools/webapp/controller/tuser/AcRoleController.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-user/src/main/java/org/tis/tools/webapp/controller/tuser/AcRolefuncController.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-core/model/model-user.xml" afterPath="$PROJECT_DIR$/tools-core/model/model-user.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/TbOrg.java" afterPath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/TbOrg.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/TbUser.java" afterPath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/TbUser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-service-biztrace/src/main/resources/disconf.properties" afterPath="$PROJECT_DIR$/tools-service-biztrace/src/main/resources/disconf.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-service-devmgr/src/main/java/bos/tis/lpctools/util/test.java" afterPath="$PROJECT_DIR$/tools-service-devmgr/src/main/java/bos/tis/lpctools/util/test.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/resources/applicationContext-service.xml" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/resources/applicationContext-service.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/resources/disconf.properties" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/resources/disconf.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/resources/oracle.properties" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/resources/oracle.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-colorpicker/less/colorpicker.less" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-colorpicker/less/colorpicker.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-confirmation/README.md" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-confirmation/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datepaginator/README.md" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datepaginator/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.standalone.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.standalone.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-daterangepicker/README.md" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-daterangepicker/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/LICENSE" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/LICENSE" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/README.md" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.bg.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.bg.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.ca.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.ca.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.cs.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.cs.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.da.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.da.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.de.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.de.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.es.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.es.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.fi.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.fi.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.fr.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.fr.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.he.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.he.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.hr.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.hr.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.hu.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.hu.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.id.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.id.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.is.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.is.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.it.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.it.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.ja.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.ja.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.kr.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.kr.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.lt.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.lt.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.lv.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.lv.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.ms.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.ms.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.nb.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.nb.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.nl.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.nl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.pl.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.pl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.pt-BR.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.pt-BR.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.pt.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.pt.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.ro.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.ro.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.rs-latin.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.rs-latin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.rs.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.rs.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.ru.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.ru.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.sk.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.sk.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.sl.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.sl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.sv.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.sv.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.sw.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.sw.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.th.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.th.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.tr.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.tr.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.ua.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.ua.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.uk.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.uk.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-TW.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-TW.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-editable/CHANGELOG.txt" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-editable/CHANGELOG.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-editable/README.md" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-editable/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-editable/bootstrap-editable/css/bootstrap-editable.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-editable/bootstrap-editable/css/bootstrap-editable.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-editable/bootstrap-editable/js/bootstrap-editable.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-editable/bootstrap-editable/js/bootstrap-editable.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-editable/inputs-ext/address/address.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-editable/inputs-ext/address/address.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-editable/inputs-ext/address/address.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-editable/inputs-ext/address/address.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-editable/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/bootstrap-wysihtml5-0.0.2.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-editable/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/bootstrap-wysihtml5-0.0.2.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-editable/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/bootstrap-wysihtml5-0.0.2.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-editable/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/bootstrap-wysihtml5-0.0.2.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-editable/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/wysihtml5-0.3.0.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-editable/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/wysihtml5-0.3.0.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-editable/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/wysihtml5-0.3.0.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-editable/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/wysihtml5-0.3.0.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-editable/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/wysiwyg-color.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-editable/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/wysiwyg-color.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-editable/inputs-ext/wysihtml5/wysihtml5.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-editable/inputs-ext/wysihtml5/wysihtml5.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-hover-dropdown/LICENSE" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-hover-dropdown/LICENSE" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-hover-dropdown/README.md" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-hover-dropdown/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-maxlength/LICENSE" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-maxlength/LICENSE" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-maxlength/README.md" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-maxlength/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-modal/LICENSE" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-modal/LICENSE" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-modal/README.md" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-modal/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-pwstrength/GPL-LICENSE.txt" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-pwstrength/GPL-LICENSE.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-pwstrength/MIT-LICENSE.txt" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-pwstrength/MIT-LICENSE.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-pwstrength/README.md" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-pwstrength/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-pwstrength/pwstrength-bootstrap.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-pwstrength/pwstrength-bootstrap.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-select/LICENSE" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-select/LICENSE" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-select/js/i18n/defaults-ar_AR.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-select/js/i18n/defaults-ar_AR.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-select/js/i18n/defaults-ar_AR.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-select/js/i18n/defaults-ar_AR.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-select/js/i18n/defaults-fi_FI.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-select/js/i18n/defaults-fi_FI.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-select/js/i18n/defaults-fi_FI.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-select/js/i18n/defaults-fi_FI.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-select/js/i18n/defaults-id_ID.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-select/js/i18n/defaults-id_ID.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-select/js/i18n/defaults-id_ID.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-select/js/i18n/defaults-id_ID.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-select/js/i18n/defaults-nb_NO.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-select/js/i18n/defaults-nb_NO.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-select/js/i18n/defaults-nb_NO.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-select/js/i18n/defaults-nb_NO.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-selectsplitter/LICENSE" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-selectsplitter/LICENSE" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-selectsplitter/README.md" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-selectsplitter/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-selectsplitter/bootstrap-selectsplitter.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-selectsplitter/bootstrap-selectsplitter.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-sessiontimeout/LICENSE.md" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-sessiontimeout/LICENSE.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-sessiontimeout/README.md" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-sessiontimeout/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-sessiontimeout/bootstrap-session-timeout.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-sessiontimeout/bootstrap-session-timeout.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-ar-AR.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-ar-AR.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-ar-AR.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-ar-AR.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-bg-BG.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-bg-BG.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-bg-BG.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-bg-BG.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-ca-ES.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-ca-ES.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-ca-ES.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-ca-ES.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-cs-CZ.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-cs-CZ.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-cs-CZ.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-cs-CZ.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-da-DK.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-da-DK.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-da-DK.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-da-DK.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-de-DE.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-de-DE.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-de-DE.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-de-DE.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-es-ES.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-es-ES.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-es-ES.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-es-ES.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-es-EU.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-es-EU.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-es-EU.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-es-EU.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-fa-IR.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-fa-IR.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-fa-IR.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-fa-IR.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-fi-FI.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-fi-FI.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-fi-FI.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-fi-FI.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-fr-FR.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-fr-FR.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-fr-FR.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-fr-FR.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-he-IL.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-he-IL.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-he-IL.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-he-IL.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-hu-HU.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-hu-HU.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-hu-HU.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-hu-HU.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-id-ID.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-id-ID.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-id-ID.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-id-ID.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-it-IT.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-it-IT.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-it-IT.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-it-IT.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-ja-JP.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-ja-JP.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-ja-JP.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-ja-JP.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-ko-KR.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-ko-KR.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-ko-KR.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-ko-KR.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-lt-LT.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-lt-LT.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-lt-LT.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-lt-LT.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-nb-NO.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-nb-NO.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-nb-NO.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-nb-NO.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-nl-NL.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-nl-NL.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-nl-NL.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-nl-NL.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-pl-PL.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-pl-PL.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-pl-PL.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-pl-PL.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-pt-BR.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-pt-BR.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-pt-BR.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-pt-BR.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-pt-PT.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-pt-PT.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-pt-PT.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-pt-PT.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-ro-RO.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-ro-RO.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-ro-RO.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-ro-RO.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-ru-RU.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-ru-RU.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-ru-RU.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-ru-RU.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-sk-SK.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-sk-SK.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-sk-SK.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-sk-SK.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-sl-SI.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-sl-SI.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-sl-SI.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-sl-SI.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-sr-RS-Latin.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-sr-RS-Latin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-sr-RS-Latin.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-sr-RS-Latin.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-sr-RS.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-sr-RS.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-sr-RS.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-sr-RS.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-sv-SE.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-sv-SE.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-sv-SE.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-sv-SE.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-th-TH.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-th-TH.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-th-TH.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-th-TH.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-tr-TR.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-tr-TR.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-tr-TR.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-tr-TR.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-uk-UA.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-uk-UA.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-uk-UA.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-uk-UA.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-vi-VN.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-vi-VN.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-vi-VN.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-vi-VN.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-zh-CN.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-zh-CN.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-zh-CN.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-zh-CN.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-zh-TW.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-zh-TW.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-zh-TW.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/lang/summernote-zh-TW.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/summernote.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/summernote.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/summernote.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-summernote/summernote.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-switch/LICENSE" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-switch/LICENSE" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-switch/README.md" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-switch/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-tabdrop/css/tabdrop.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-tabdrop/css/tabdrop.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-tagsinput/bootstrap-tagsinput-angular.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-tagsinput/bootstrap-tagsinput-angular.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-timepicker/LICENSE" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-timepicker/LICENSE" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-timepicker/README.md" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-timepicker/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-toastr/README.md" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-toastr/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-toastr/toastr.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-toastr/toastr.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-toastr/toastr.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-toastr/toastr.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-toastr/toastr.min.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-toastr/toastr.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-toastr/toastr.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-toastr/toastr.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-toastr/toastr.min.js.map" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-toastr/toastr.min.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-typeahead/README.md" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-typeahead/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wizard/MIT-LICENSE.txt" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wizard/MIT-LICENSE.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wizard/README.md" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wizard/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.ar-AR.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.ar-AR.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.bg-BG.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.bg-BG.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.ca-CT.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.ca-CT.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.cs-CZ.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.cs-CZ.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.da-DK.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.da-DK.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.de-DE.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.de-DE.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.el-GR.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.el-GR.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.es-AR.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.es-AR.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.es-ES.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.es-ES.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.fr-FR.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.fr-FR.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.it-IT.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.it-IT.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.ja-JP.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.ja-JP.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.ko-KR.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.ko-KR.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.lt-LT.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.lt-LT.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.mo-MD.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.mo-MD.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.nb-NB.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.nb-NB.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.nl-NL.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.nl-NL.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.pt-BR.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.pt-BR.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.ru-RU.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.ru-RU.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.sk-SK.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.sk-SK.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.sv-SE.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.sv-SE.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.tr-TR.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.tr-TR.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.ua-UA.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.ua-UA.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.zh-CN.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.zh-CN.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.zh-TW.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.zh-TW.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap/css/bootstrap.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap/css/bootstrap.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap/css/bootstrap.min.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/bootstrap/css/bootstrap.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/codemirror/mode/asn.1/asn.1.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/codemirror/mode/asn.1/asn.1.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/codemirror/mode/asn.1/index.html" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/codemirror/mode/asn.1/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/codemirror/mode/ttcn-cfg/index.html" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/codemirror/mode/ttcn-cfg/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/codemirror/mode/ttcn-cfg/ttcn-cfg.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/codemirror/mode/ttcn-cfg/ttcn-cfg.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/font-awesome/css/font-awesome.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/font-awesome/css/font-awesome.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/font-awesome/css/font-awesome.min.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/font-awesome/css/font-awesome.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/font-awesome/fonts/fontawesome-webfont.svg" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/font-awesome/fonts/fontawesome-webfont.svg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/jquery-slimscroll/README.md" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/jquery-slimscroll/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/jquery-slimscroll/slimScroll.jquery.json" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/jquery-slimscroll/slimScroll.jquery.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/jquery.input-ip-address-control-1.0.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/jquery.input-ip-address-control-1.0.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/plupload/js/jquery.plupload.queue/jquery.plupload.queue.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/plupload/js/jquery.plupload.queue/jquery.plupload.queue.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/plupload/js/jquery.ui.plupload/css/jquery.ui.plupload.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/plupload/js/jquery.ui.plupload/css/jquery.ui.plupload.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/plupload/js/jquery.ui.plupload/jquery.ui.plupload.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/plupload/js/jquery.ui.plupload/jquery.ui.plupload.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/simple-line-icons/License.txt" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/simple-line-icons/License.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/simple-line-icons/Readme.txt" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/simple-line-icons/Readme.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/simple-line-icons/fonts/Simple-Line-Icons.dev.svg" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/simple-line-icons/fonts/Simple-Line-Icons.dev.svg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/simple-line-icons/fonts/Simple-Line-Icons.svg" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/simple-line-icons/fonts/Simple-Line-Icons.svg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/simple-line-icons/icons-lte-ie7.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/simple-line-icons/icons-lte-ie7.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/simple-line-icons/simple-line-icons.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/simple-line-icons/simple-line-icons.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/global/scripts/quick-sidebar.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/global/scripts/quick-sidebar.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/global/scripts/quick-sidebar.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/layouts/global/scripts/quick-sidebar.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/pages/css/about.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/pages/css/about.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/pages/css/about.min.css" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/pages/css/about.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/pages/scripts/components-bootstrap-select.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/pages/scripts/components-bootstrap-select.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/pages/scripts/components-select2.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/pages/scripts/components-select2.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/pages/scripts/dashboard.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/pages/scripts/dashboard.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/pages/scripts/dashboard.min.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/pages/scripts/dashboard.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-core/model/templates/biz/BizService.java.ftl" afterPath="$PROJECT_DIR$/tools-core/model/templates/biz/BizService.java.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-core/model/templates/biz/Controller.java.ftl" afterPath="$PROJECT_DIR$/tools-core/model/templates/biz/Controller.java.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-core/model/templates/biz/Mapper.xml.ftl" afterPath="$PROJECT_DIR$/tools-core/model/templates/biz/Mapper.xml.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-core/model/templates/biz/Model.java.ftl" afterPath="$PROJECT_DIR$/tools-core/model/templates/biz/Model.java.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-core/model/templates/biz/RServiceApi.java.ftl" afterPath="$PROJECT_DIR$/tools-core/model/templates/biz/RServiceApi.java.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-core/model/templates/biz/RServiceImpl.java.ftl" afterPath="$PROJECT_DIR$/tools-core/model/templates/biz/RServiceImpl.java.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/base/WhereCondition.java" afterPath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/base/WhereCondition.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-facade-org/pom.xml" afterPath="$PROJECT_DIR$/tools-facade-org/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-service-org/pom.xml" afterPath="$PROJECT_DIR$/tools-service-org/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/pom.xml" afterPath="$PROJECT_DIR$/tools-web-tools/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/resources/dubbo-consumer.xml" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/resources/dubbo-consumer.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/index.html" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/controllers/orgManage/organization_controller.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/controllers/orgManage/organization_controller.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/main.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/service/common/commonCaller_service.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/service/common/commonCaller_service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/m_login.html" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/m_login.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/tpl/header.html" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/tpl/header.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/tpl/sidebar.html" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/tpl/sidebar.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/LPC/featureReg.html" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/LPC/featureReg.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/LPC/listcheck.html" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/LPC/listcheck.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/biztrace/biztraceHandle.html" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/biztrace/biztraceHandle.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/biztrace/biztraceQuery.html" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/biztrace/biztraceQuery.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/biztrace/biztraceSumQuery.html" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/biztrace/biztraceSumQuery.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/biztrace/redisClean.html" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/biztrace/redisClean.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/common/commonCaller.html" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/common/commonCaller.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/dashboard.html" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/dashboard.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/orgManage/om_organization.html" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/orgManage/om_organization.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -569,8 +93,8 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="12600">
-              <caret line="602" column="39" lean-forward="false" selection-start-line="602" selection-start-column="18" selection-end-line="602" selection-end-column="39" />
+            <state relative-caret-position="84">
+              <caret line="6" column="39" lean-forward="false" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -579,8 +103,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3696">
-              <caret line="176" column="64" lean-forward="false" selection-start-line="176" selection-start-column="64" selection-end-line="176" selection-end-column="64" />
+            <state relative-caret-position="3717">
+              <caret line="177" column="59" lean-forward="false" selection-start-line="177" selection-start-column="59" selection-end-line="177" selection-end-column="59" />
               <folding />
             </state>
           </provider>
@@ -589,8 +113,8 @@
       <file leaf-file-name="commonCaller_service.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/service/common/commonCaller_service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+            <state relative-caret-position="420">
+              <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -599,8 +123,8 @@
       <file leaf-file-name="sidebar.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/tpl/sidebar.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2562">
-              <caret line="122" column="0" lean-forward="false" selection-start-line="122" selection-start-column="0" selection-end-line="122" selection-end-column="0" />
+            <state relative-caret-position="756">
+              <caret line="36" column="34" lean-forward="false" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -609,38 +133,59 @@
       <file leaf-file-name="organization_controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/controllers/orgManage/organization_controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1890">
-              <caret line="97" column="38" lean-forward="false" selection-start-line="97" selection-start-column="38" selection-end-line="97" selection-end-column="38" />
+            <state relative-caret-position="231">
+              <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
               <folding>
-                <element signature="e#2910#3155#0" expanded="false" />
+                <element signature="e#519#5054#0" expanded="false" />
+                <element signature="e#3055#3300#0" expanded="false" />
+                <element signature="e#5298#6740#0" expanded="false" />
+                <element signature="e#6904#15401#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="om_organization.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="global.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/scripts/global.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1953">
+              <caret line="93" column="32" lean-forward="false" selection-start-line="93" selection-start-column="32" selection-end-line="93" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="organization_service.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/service/orgManage/organization_service.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="294">
+              <caret line="14" column="45" lean-forward="false" selection-start-line="14" selection-start-column="45" selection-end-line="14" selection-end-column="45" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="om_organization.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/orgManage/om_organization.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="181" column="77" lean-forward="false" selection-start-line="181" selection-start-column="77" selection-end-line="181" selection-end-column="77" />
+            <state relative-caret-position="2898">
+              <caret line="138" column="82" lean-forward="false" selection-start-line="138" selection-start-column="82" selection-end-line="138" selection-end-column="82" />
               <folding>
-                <element signature="n#tab#0;n#tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="false" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#tab#0;n#tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#th#6;n#tr#0;n#thead#0;n#table#0;n#div#0;n#div#0;n#tab#0;n#tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#tab#0;n#tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
-                <element signature="e#11109#11115#0" expanded="true" />
-                <element signature="e#11115#11121#0" expanded="true" />
-                <element signature="e#11121#11127#0" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#tab#0;n#tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
-                <element signature="n#tab#1;n#tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="false" />
-                <element signature="n#div#0;n#tab#1;n#tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="false" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#tab#1;n#tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#th#8;n#tr#0;n#thead#0;n#table#0;n#div#0;n#div#0;n#tab#1;n#tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#tab#1;n#tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
-                <element signature="e#23377#23383#0" expanded="true" />
-                <element signature="e#23383#23389#0" expanded="true" />
-                <element signature="e#23389#23395#0" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#tab#1;n#tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#4;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#uib-tab#0;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#uib-tab#0;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="e#11183#11189#0" expanded="true" />
+                <element signature="e#11189#11195#0" expanded="true" />
+                <element signature="e#11195#11201#0" expanded="true" />
+                <element signature="n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="false" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#th#8;n#tr#0;n#thead#0;n#table#0;n#div#0;n#div#0;n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="e#32597#32603#0" expanded="true" />
+                <element signature="e#32603#32609#0" expanded="true" />
+                <element signature="e#32609#32615#0" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -662,6 +207,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -683,7 +229,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/tools-web-tools/target/tools-web-tools-0.0.1/tools/js/main.js" />
         <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/dashboard.html" />
         <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/biztrace/biztraceHandle.html" />
         <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/biztrace/biztraceQuery.html" />
@@ -700,15 +245,17 @@
         <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/menuloader.html" />
         <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/menuTest.html" />
         <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/controllers/dyncMenu_controller.js" />
-        <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/service/common/commonCaller_service.js" />
         <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/common/menuTest.html" />
         <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/controllers/common/dyncMenu_controller.js" />
         <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/m_login.html" />
-        <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/index.html" />
-        <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/main.js" />
         <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/tpl/sidebar.html" />
-        <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/orgManage/om_organization.html" />
+        <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/service/common/commonCaller_service.js" />
+        <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/index.html" />
         <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/controllers/orgManage/organization_controller.js" />
+        <option value="$PROJECT_DIR$/tools-web-tools/target/tools-web-tools-0.0.1/tools/js/main.js" />
+        <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/main.js" />
+        <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/orgManage/om_organization.html" />
+        <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/service/orgManage/organization_service.js" />
       </list>
     </option>
   </component>
@@ -720,8 +267,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
+    <option name="width" value="1932" />
     <option name="height" value="1056" />
   </component>
   <component name="ProjectView">
@@ -739,6 +285,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1017,6 +565,86 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="service" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tistools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tistools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools-web-tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="service" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="orgManage" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tistools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tistools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools-web-tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -1129,14 +757,12 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="D:/workspace/Brons-Governor" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="js.eslint.eslintPackage" value="" />
     <property name="SearchEverywhereHistoryKey" value="ThemePanelCOntroller&#9;null&#9;null&#10;dashboard.html&#9;FILE&#9;file://D:/GitSpace/tistools/tools-web-tools/src/main/webapp/tools/views/dashboard.html" />
@@ -1235,34 +861,59 @@
       <workItem from="1483358894370" duration="9295000" />
       <workItem from="1483404902806" duration="20880000" />
       <workItem from="1483449659605" duration="7579000" />
-      <workItem from="1483490798226" duration="2253000" />
+      <workItem from="1483490798226" duration="4663000" />
+      <workItem from="1483535956216" duration="595000" />
+      <workItem from="1483578332255" duration="1459000" />
+      <workItem from="1483595504497" duration="7592000" />
+      <workItem from="1483615535619" duration="2948000" />
+      <workItem from="1483662530966" duration="598000" />
+      <workItem from="1483687766329" duration="1411000" />
+      <workItem from="1483760156623" duration="2450000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="58804000" />
+    <option name="totallyTimeSpent" value="78267000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="0" width="1932" height="1056" extended-state="0" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1859375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18580376" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32910052" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18580376" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32910052" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="processedProjectFiles" value="true" />
@@ -1271,25 +922,12 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/tools-web-tools/target/tools-web-tools-0.0.1/tools/js/main.js" />
-    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/tpl/tpl1/quick-sidebar.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2755">
-          <caret line="530" column="54" lean-forward="true" selection-start-line="530" selection-start-column="54" selection-end-line="530" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/biztrace/biztraceHandle.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="13" column="5" lean-forward="false" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/tpl/tpl1/header.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-4188">
@@ -1566,42 +1204,79 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/main.js">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/webstorm.jar!/resources/html5-schema/html5/common.rnc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12600">
-          <caret line="602" column="39" lean-forward="false" selection-start-line="602" selection-start-column="18" selection-end-line="602" selection-end-column="39" />
-          <folding />
+        <state relative-caret-position="305">
+          <caret line="124" column="18" lean-forward="false" selection-start-line="124" selection-start-column="18" selection-end-line="124" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/tpl/sidebar.html">
+    <entry file="file://$PROJECT_DIR$/tools-web-tools/target/tools-web-tools-0.0.1/tools/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2562">
-          <caret line="122" column="0" lean-forward="false" selection-start-line="122" selection-start-column="0" selection-end-line="122" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="21">
+          <caret line="6" column="14" lean-forward="false" selection-start-line="6" selection-start-column="14" selection-end-line="6" selection-end-column="39" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/service/common/commonCaller_service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+        <state relative-caret-position="420">
+          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3696">
-          <caret line="176" column="64" lean-forward="false" selection-start-line="176" selection-start-column="64" selection-end-line="176" selection-end-column="64" />
+        <state relative-caret-position="3717">
+          <caret line="177" column="59" lean-forward="false" selection-start-line="177" selection-start-column="59" selection-end-line="177" selection-end-column="59" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/webstorm.jar!/resources/html5-schema/html5/common.rnc">
+    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="124" column="18" lean-forward="false" selection-start-line="124" selection-start-column="18" selection-end-line="124" selection-end-column="18" />
+        <state relative-caret-position="84">
+          <caret line="6" column="39" lean-forward="false" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/tpl/sidebar.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="756">
+          <caret line="36" column="34" lean-forward="false" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/scripts/global.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1953">
+          <caret line="93" column="32" lean-forward="false" selection-start-line="93" selection-start-column="32" selection-end-line="93" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/orgManage/om_organization.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2898">
+          <caret line="138" column="82" lean-forward="false" selection-start-line="138" selection-start-column="82" selection-end-line="138" selection-end-column="82" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#4;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#uib-tab#0;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#uib-tab#0;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="e#11183#11189#0" expanded="true" />
+            <element signature="e#11189#11195#0" expanded="true" />
+            <element signature="e#11195#11201#0" expanded="true" />
+            <element signature="n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#th#8;n#tr#0;n#thead#0;n#table#0;n#div#0;n#div#0;n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="e#32597#32603#0" expanded="true" />
+            <element signature="e#32603#32609#0" expanded="true" />
+            <element signature="e#32609#32615#0" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1615,36 +1290,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/controllers/orgManage/organization_controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1890">
-          <caret line="97" column="38" lean-forward="false" selection-start-line="97" selection-start-column="38" selection-end-line="97" selection-end-column="38" />
+        <state relative-caret-position="231">
+          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding>
-            <element signature="e#2910#3155#0" expanded="false" />
+            <element signature="e#519#5054#0" expanded="false" />
+            <element signature="e#3055#3300#0" expanded="false" />
+            <element signature="e#5298#6740#0" expanded="false" />
+            <element signature="e#6904#15401#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/orgManage/om_organization.html">
+    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/service/orgManage/organization_service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="181" column="77" lean-forward="false" selection-start-line="181" selection-start-column="77" selection-end-line="181" selection-end-column="77" />
+        <state relative-caret-position="294">
+          <caret line="14" column="45" lean-forward="false" selection-start-line="14" selection-start-column="45" selection-end-line="14" selection-end-column="45" />
           <folding>
-            <element signature="n#tab#0;n#tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#tab#0;n#tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#th#6;n#tr#0;n#thead#0;n#table#0;n#div#0;n#div#0;n#tab#0;n#tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#tab#0;n#tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
-            <element signature="e#11109#11115#0" expanded="true" />
-            <element signature="e#11115#11121#0" expanded="true" />
-            <element signature="e#11121#11127#0" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#tab#0;n#tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
-            <element signature="n#tab#1;n#tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="false" />
-            <element signature="n#div#0;n#tab#1;n#tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#tab#1;n#tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#th#8;n#tr#0;n#thead#0;n#table#0;n#div#0;n#div#0;n#tab#1;n#tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#tab#1;n#tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
-            <element signature="e#23377#23383#0" expanded="true" />
-            <element signature="e#23383#23389#0" expanded="true" />
-            <element signature="e#23389#23395#0" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#tab#1;n#tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>

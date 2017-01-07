@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,8 +17,7 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 /**
  * <p>
@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * Date: 2013年11月9日
  * </p>
  */
-public class WhereCondition  {
+public class WhereCondition implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -46,7 +46,7 @@ public class WhereCondition  {
 	
 	private static String url = "oracle" ;
 	
-	final Logger logger = LoggerFactory.getLogger(this.getClass());
+	//final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	public void init() {
 //	   String temp = getServletContext().getInitParameter("url").split(":")[1]; 
@@ -565,7 +565,7 @@ public class WhereCondition  {
 		this.length = length;
 	}
 
-	public class Condition {
+	public class Condition implements Serializable{
 		String field;
 		Object value;
 		String clause;

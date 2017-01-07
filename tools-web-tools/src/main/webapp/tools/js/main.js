@@ -4,7 +4,7 @@
 
 /* Metronic App */
 var isdebug = false;
-var manurl = 'http://localhost:8081/monitor';
+var manurl = 'http://localhost:8089/tis';
 var MetronicApp = angular.module("MetronicApp", [
     "ui.router",
     "ui.bootstrap",
@@ -603,7 +603,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProv
             url: "/om_organization.html",
             templateUrl: "views/orgManage/om_organization.html",
             data: {pageTitle: '机构人员管理'},
-            controller: "org_controller"
+            controller: "orgList_controller"
         })
 
 

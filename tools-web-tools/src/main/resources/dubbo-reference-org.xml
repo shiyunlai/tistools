@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+       http://www.springframework.org/schema/beans/spring-beans.xsd  
+       http://code.alibabatech.com/schema/dubbo  
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- 
+		此处申明引入服务，但是，如果这些服务没有被初始化，则这些服务不会立即向注册中心注册 
+		如：只有在 OrgController.java 中作为 @Autowired，该服务才会想注册中心注册，也才能在注册中心看见该服务。
+	-->
+
+	<!-- 声明需要暴露的服务接口 -->
+	<dubbo:reference 
+		id="omOrganizationRService" 
+		group="org"
+		version="1.0" 
+		interface="org.tis.tools.rservice.torg.IOmOrganizationRService" 
+		check="false" /><!-- 使用了扩展loadbalance，根据指定ip调用服务提供者 -->
+	
+</beans>

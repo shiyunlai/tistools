@@ -1,0 +1,41 @@
+/**
+ * 
+ */
+package org.tools.service.org;
+
+import com.alibaba.dubbo.common.URL;
+import com.alibaba.dubbo.common.extension.ExtensionLoader;
+import com.alibaba.dubbo.registry.Registry;
+import com.alibaba.dubbo.registry.RegistryFactory;
+
+/**
+ * 
+ * 测试启动类
+ * 
+ * 在eclipse中启动本模块时使用
+ * 
+ * @author megapro
+ *
+ */
+public class StartProviderOrg {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		//extRouter() ;
+		com.alibaba.dubbo.container.Main.main(args);
+	}
+
+	/**
+	 * 注册路由
+	 * 参考： http://blog.csdn.net/u012345283/article/details/51789196
+	 */
+	private static void extRouter() {
+		RegistryFactory registryFactory = ExtensionLoader.getExtensionLoader(RegistryFactory.class).getAdaptiveExtension();
+        Registry registry = registryFactory.getRegistry(URL.valueOf("zookeeper://127.0.0.1:2181"));
+        registry.register(URL.valueOf(
+                "routers://0.0.0.0/com.alibaba.dubbo.examples.merge.api.MergeService?name=test&category=routers&router=custom&dynamic=false"));
+	}
+
+}

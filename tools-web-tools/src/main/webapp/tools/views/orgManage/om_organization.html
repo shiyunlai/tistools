@@ -12,476 +12,351 @@
 <h3 class="page-title">
     <small></small>
 </h3>
+<div class="row">
 
-<div class="col-md-3">
-    <div class="portlet green-meadow box">
-        <div class="portlet-title">
-            <div class="caption">
-                <i class="fa fa-cogs"></i>机构管理
-            </div>
-            <div class="tools">
-                <a href="javascript:;" class="reload">
-                </a>
-            </div>
-        </div>
-        <div class="portlet-body">
-            <div id="org_tree" class="tree-demo">
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="col-md-9">
-    <div class="portlet light bordered ">
-        <div class="portlet-body">
-            <div class="row">
-                <div class="form">
-                    <!-- BEGIN FORM-->
-                    <form action="#" name="myform" class="form-horizontal">
-                        <div class="form-body">
-                            <tabset>
-                                <tab heading="机构查询" ng-click="toXiajijigou()" >
-                                    <!-- BEGIN FORM-->
-
-                                    <div class="form-body dataTables_wrapper dataTables_extended_wrapper no-footer">
-                                        <!--开始table-->
-                                        <div class="table-scrollable" style="overflow-y: auto">
-                                            <table class="table table-striped table-bordered table-hover">
-                                                <thead>
-                                                <tr role="row" class="heading">
-                                                    <th width="5%">
-                                                        序号
-                                                    </th>
-                                                    <th width="15%">
-                                                        机构名称
-                                                    </th>
-                                                    <th width="10%">
-                                                        机构代码
-                                                    </th>
-                                                    <th width="10%">
-                                                        机构类型
-                                                    </th>
-                                                    <th width="15%">
-                                                        机构状态
-                                                    </th>
-                                                    <th width="10%">
-                                                        工作状态
-                                                    </th>
-                                                    <th width="10%">
-                                                        <div style="width:120px">操作</div>
-                                                    </th>
-                                                </tr>
-                                                <tr role="row" class="filter">
-                                                    <td></td>
-                                                    <td>
-                                                        <input type="text" class="form-control form-filter input-sm"
-                                                               ng-model="jigou.searchForm.searchItems.org_name_lk">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="form-control form-filter input-sm"
-                                                               ng-model="jigou.searchForm.searchItems.org_code_lk">
-                                                    </td>
-                                                    <td>
-                                                        <select name="" class="form-control form-filter input-sm"
-                                                                ng-model="jigou.searchForm.searchItems.org_type_eq">
-                                                            <option value=""></option>
-                                                            <option value="0">总行</option>
-                                                            <option value="1">总行部室</option>
-                                                            <option value="2">一级分行</option>
-                                                            <option value="3">二级分行</option>
-                                                            <option value="4">区域总部</option>
-                                                            <option value="5">支行</option>
-                                                            <option value="6">网点</option>
-                                                            <!--<option ng-repeat="a in xiajicaidan.dataList1" ng-if="a.dict_name=='org_type'" value="{{a.dict_key}}">{{a.dict_value}}</option>-->
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select name="" class="form-control form-filter input-sm"
-                                                                ng-model="jigou.searchForm.searchItems.org_status_eq">
-                                                            <option value=""></option>
-                                                            <option value="0">正常</option>
-                                                            <option value="1">停用</option>
-                                                            <!--<option ng-repeat="a in xiajicaidan.dataList1" ng-if="a.dict_name=='org_status'" value="{{a.dict_key}}">{{a.dict_value}}</option>-->
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select name="" class="form-control form-filter input-sm"
-                                                                ng-model="jigou.searchForm.searchItems.org_work_status_eq">
-                                                            <option value=""></option>
-                                                            <option value="0">营业</option>
-                                                            <option value="1">签退</option>
-                                                            <!--<option ng-repeat="a in xiajicaidan.dataList1" ng-if="a.dict_name=='org_work_status'" value="{{a.dict_key}}">{{a.dict_value}}</option>-->
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <button class="btn btn-xs  filter-submit margin-bottom"
-                                                                ng-click="jigou.search1()">
-                                                            <i class="fa fa-search"></i> 查找
-                                                        </button>
-                                                        <button class="btn btn-xs  filter-cancel"
-                                                                ng-click="jigou.reset()">
-                                                            <i class="fa fa-times"></i> 重置
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="d in jigou.dataList">
-                                                    <td>{{$index+1}}</td>
-                                                    <td>{{d.org_name}}</td>
-                                                    <td>{{d.org_code}}</td>
-                                                    <td>{{d.org_type=='0'&&'总行'||d.org_type=='1'&&'总行部室'||d.org_type=='2'&&'一级分行'||d.org_type=='3'&&'二级分行'||d.org_type=='4'&&'区域总部'||d.org_type=='5'&&'支行'||d.org_type=='6'&&'网点'}}</td>
-                                                    <td>{{d.org_status=='0'&&'正常'||d.org_status=='0'&&'停用'}}</td>
-                                                    <td>{{d.org_work_status=='0'&&'营业'||d.org_work_status=='1'&&'签退'}}</td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-primary filter-cancel" ng-click="xiajijigouedit(d.id)"> 编辑</button>
-                                                        <button class="btn btn-sm btn-danger filter-cancel" ng-click="xiajijigoudelete(d)">删除</button>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <!--结束table-->
-                                        <!--开始table尾部分页以及工具栏-->
-                                        <div class="row">
-                                            <div class="col-md-8 col-sm-12">
-                                                <div class="dataTables_paginate paging_bootstrap_extended">
-                                                    <div class="pagination-panel">
-                                                        第 <a ng-click="jigou.searchForm.prePage()"
-                                                             class="btn btn-sm default prev" title="Prev"><i
-                                                            class="fa fa-angle-left"></i></a><input type="text"
-                                                                                                    ng-model="jigou.searchForm.page.currentPage"
-                                                                                                    class="pagination-panel-input form-control input-mini input-inline input-sm"
-                                                                                                    maxlenght="5" style="text-align: center; margin: 0 5px;"><a
-                                                            ng-click="jigou.searchForm.nextPage()"
-                                                            class="btn btn-sm default next" title="Next"><i
-                                                            class="fa fa-angle-right"></i></a> 页,&nbsp;&nbsp;&nbsp;总<span
-                                                            class="pagination-panel-total">{{jigou.searchForm.page.totalPages}}</span>页
-                                                    </div>
-                                                </div>
-                                                <div class="dataTables_length">
-                                                    <label><span class="seperator">|</span>每页 <select
-                                                            ng-model="jigou.searchForm.page.itemsperpage"
-                                                            class="form-control input-xsmall input-sm input-inline" ng-options="i for i in [10,20,50,100,150]">
-                                                    </select> 条</label>
-                                                </div>
-                                                <div class="dataTables_info" role="status" aria-live="polite">
-                                                    <span class="seperator">|</span>总计{{jigou.searchForm.page.totalItems}}
-                                                    条
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 col-sm-12">
-                                                <div class="actions btn-set" style="float: right;">
-                                                    <button type="button" name="back" class="btn btn-primary" ng-if="wd.item.org_code != null&&index==1" ng-click="OrgXiajiAdd(wd.item.org_code)"> 新增下级机构
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </tab>
-                                <tab heading="人员查询" ng-click="toXiajijigou()" >
-                                    <!-- BEGIN FORM-->
-
-                                    <div class="form-body dataTables_wrapper dataTables_extended_wrapper no-footer">
-                                        <!--开始table-->
-                                        <div class="table-scrollable" style="overflow-y: auto">
-                                            <table class="table table-striped table-bordered table-hover">
-                                                <thead>
-                                                <tr role="row" class="heading">
-                                                    <th width="5%">
-                                                        序号
-                                                    </th>
-                                                    <th width="15%">
-                                                        人员代码
-                                                    </th>
-                                                    <th width="10%">
-                                                        人员姓名
-                                                    </th>
-                                                    <th width="5%">
-                                                        性别
-                                                    </th>
-                                                    <th width="5%">
-                                                        人员状态
-                                                    </th>
-                                                    <th width="10%">
-                                                        所属机构
-                                                    </th>
-                                                    <th width="10%">
-                                                        所属岗位
-                                                    </th>
-                                                    <th width="10%">
-                                                        用户登录名
-                                                    </th>
-                                                    <th width="10%">
-                                                        <div style="width:120px">操作</div>
-                                                    </th>
-                                                </tr>
-                                                <tr role="row" class="filter">
-                                                    <td></td>
-                                                    <td>
-                                                        <input type="text" class="form-control form-filter input-sm"
-                                                               ng-model="jigou.searchForm.searchItems.org_name_lk">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="form-control form-filter input-sm"
-                                                               ng-model="jigou.searchForm.searchItems.org_code_lk">
-                                                    </td>
-                                                    <td>
-                                                        <select name="" class="form-control form-filter input-sm"
-                                                                ng-model="jigou.searchForm.searchItems.org_type_eq">
-                                                            <option value=""></option>
-                                                            <option value="0">总行</option>
-                                                            <option value="1">总行部室</option>
-                                                            <option value="2">一级分行</option>
-                                                            <option value="3">二级分行</option>
-                                                            <option value="4">区域总部</option>
-                                                            <option value="5">支行</option>
-                                                            <option value="6">网点</option>
-                                                            <!--<option ng-repeat="a in xiajicaidan.dataList1" ng-if="a.dict_name=='org_type'" value="{{a.dict_key}}">{{a.dict_value}}</option>-->
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select name="" class="form-control form-filter input-sm"
-                                                                ng-model="jigou.searchForm.searchItems.org_status_eq">
-                                                            <option value=""></option>
-                                                            <option value="0">正常</option>
-                                                            <option value="1">停用</option>
-                                                            <!--<option ng-repeat="a in xiajicaidan.dataList1" ng-if="a.dict_name=='org_status'" value="{{a.dict_key}}">{{a.dict_value}}</option>-->
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select name="" class="form-control form-filter input-sm"
-                                                                ng-model="jigou.searchForm.searchItems.org_work_status_eq">
-                                                            <option value=""></option>
-                                                            <option value="0">营业</option>
-                                                            <option value="1">签退</option>
-                                                            <!--<option ng-repeat="a in xiajicaidan.dataList1" ng-if="a.dict_name=='org_work_status'" value="{{a.dict_key}}">{{a.dict_value}}</option>-->
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <button class="btn btn-xs  filter-submit margin-bottom"
-                                                                ng-click="jigou.search1()">
-                                                            <i class="fa fa-search"></i> 查找
-                                                        </button>
-                                                        <button class="btn btn-xs  filter-cancel"
-                                                                ng-click="jigou.reset()">
-                                                            <i class="fa fa-times"></i> 重置
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="d in jigou.dataList">
-                                                    <td>{{$index+1}}</td>
-                                                    <td>{{d.org_name}}</td>
-                                                    <td>{{d.org_code}}</td>
-                                                    <td>{{d.org_type=='0'&&'总行'||d.org_type=='1'&&'总行部室'||d.org_type=='2'&&'一级分行'||d.org_type=='3'&&'二级分行'||d.org_type=='4'&&'区域总部'||d.org_type=='5'&&'支行'||d.org_type=='6'&&'网点'}}</td>
-                                                    <td>{{d.org_status=='0'&&'正常'||d.org_status=='0'&&'停用'}}</td>
-                                                    <td>{{d.org_work_status=='0'&&'营业'||d.org_work_status=='1'&&'签退'}}</td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-primary filter-cancel" ng-click="xiajijigouedit(d.id)"> 编辑</button>
-                                                        <button class="btn btn-sm btn-danger filter-cancel" ng-click="xiajijigoudelete(d)">删除</button>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <!--结束table-->
-                                        <!--开始table尾部分页以及工具栏-->
-                                        <div class="row">
-                                            <div class="col-md-8 col-sm-12">
-                                                <div class="dataTables_paginate paging_bootstrap_extended">
-                                                    <div class="pagination-panel">
-                                                        第 <a ng-click="jigou.searchForm.prePage()"
-                                                             class="btn btn-sm default prev" title="Prev"><i
-                                                            class="fa fa-angle-left"></i></a><input type="text"
-                                                                                                    ng-model="jigou.searchForm.page.currentPage"
-                                                                                                    class="pagination-panel-input form-control input-mini input-inline input-sm"
-                                                                                                    maxlenght="5" style="text-align: center; margin: 0 5px;"><a
-                                                            ng-click="jigou.searchForm.nextPage()"
-                                                            class="btn btn-sm default next" title="Next"><i
-                                                            class="fa fa-angle-right"></i></a> 页,&nbsp;&nbsp;&nbsp;总<span
-                                                            class="pagination-panel-total">{{jigou.searchForm.page.totalPages}}</span>页
-                                                    </div>
-                                                </div>
-                                                <div class="dataTables_length">
-                                                    <label><span class="seperator">|</span>每页 <select
-                                                            ng-model="jigou.searchForm.page.itemsperpage"
-                                                            class="form-control input-xsmall input-sm input-inline" ng-options="i for i in [10,20,50,100,150]">
-                                                    </select> 条</label>
-                                                </div>
-                                                <div class="dataTables_info" role="status" aria-live="polite">
-                                                    <span class="seperator">|</span>总计{{jigou.searchForm.page.totalItems}}
-                                                    条
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 col-sm-12">
-                                                <div class="actions btn-set" style="float: right;">
-                                                    <button type="button" name="back" class="btn btn-primary" ng-if="wd.item.org_code != null&&index==1" ng-click="OrgXiajiAdd(wd.item.org_code)"> 新增下级机构
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </tab>
-                            </tabset>
-                        </div>
-                    </form>
-                    <!-- END FORM-->
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<!--<div class="row">
     <div class="col-md-12">
-        &lt;!&ndash; Begin: life time stats &ndash;&gt;
         <div class="portlet light portlet-fit portlet-datatable bordered">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-shopping-cart"></i> 控制属性定义 </div>
-                <div class="actions">
-                    <button class="btn btn-sm btn-primary filter-submit margin-bottom" ng-click="AttrAdd()">新增 </button>
-                </div>
+                    <i class="fa fa-shopping-cart"></i> 机构人员管理 </div>
             </div>
             <div class="portlet-body">
                 <div class="table-container">
-                    <table class="table table-striped table-bordered table-hover table-checkable">
-                        <thead>
-                        <tr role="row" class="heading">
-                            <th width="5%">
-                                序号
-                            </th>
-                            <th width="10%">
-                                控制属性
-                            </th>
-                            <th width="10%">
-                                属性名称
-                            </th>
-                            <th width="8%">
-                                应用类别
-                            </th>
-                            <th width="9%">
-                                操作功能
-                            </th>
-                            <th width="15%">
-                                控制说明
-                            </th>
-                            <th width="10%">
-                                实现类
-                            </th>
-                            <th width="10%">
-                                <div style="width:120px">操作</div>
-                            </th>
-                        </tr>
-                        <tr role="row" class="filter">
-                            <td></td>
-                            <td>
-                                <input type="text" class="form-control form-filter input-sm"
-                                       ng-model="attrs.searchForm.searchItems.attr_key_lk">
-                            </td>
-                            <td>
-                                <input type="text" class="form-control form-filter input-sm"
-                                       ng-model="attrs.searchForm.searchItems.attr_desc_lk">
-                            </td>
-                            <td >
-                                <select name="" class="form-control form-filter input-sm "
-                                        ng-model="attrs.searchForm.searchItems.biz_type_eq"
-                                        ng-change="type2func(attrs.searchForm.searchItems.biz_type_eq)"
-                                        ng-options="attr.biz_type as attr.biz_type for attr in attrs.bizTypeList">
-                                    <option value="">请选择</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select
-                                        name="" class="form-control form-filter input-sm"
-                                        ng-model="attrs.searchForm.searchItems.func_code_eq"
-                                        ng-options="attr.func_code as attr.func_code for attr in attrs.funcCodeList">
-                                    <option value="">请选择</option>
-                                </select>
-                            </td>
-                            <td>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <div class="portlet green-meadow box">
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <i class="fa fa-cogs"></i>机构管理
+                                        </div>
+                                        <div class="tools">
+                                            <a href="javascript:;" class="reload">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body">
+                                        <div id="org_tree" class="tree-demo">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="portlet light box" >
+                                    <div class="portlet-body">
+                                        <div class="row">
+                                                <!-- 机构树根节点显示表单开始-->
+                                                <form action="#" name="myform" class="form-horizontal">
+                                                    <div class="form-body">
+                                                        <uib-tabset>
+                                                            <uib-tab heading="机构查询" ng-click="toXiajijigou()" >
+                                                                <!-- BEGIN FORM-->
+                                                                <div class="portlet-body">
+                                                                    <div class="table-container">
+                                                                        <div class="row">
+                                                                            <div class="col-md-12">
+                                                                                <div class="form">
+                                                                                    <form action="#" name="myform" class="form-horizontal">
+                                                                                        <div class="form-body">
 
-                            </td>
-                            <td>
+                                                                                            <div class="col-md-6">
+                                                                                                <div class="form-group">
+                                                                                                    <label class="control-label col-md-3">机构代码</label>
+                                                                                                    <div class="col-md-7">
+                                                                                                        <input type="text" class="form-control" ng-model="orgs.searchForm.searchItems.orgcode_code_lk"/>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-6">
+                                                                                                <div class="form-group">
+                                                                                                    <label class="control-label col-md-3">机构名称</label>
+                                                                                                    <div class="col-md-7">
+                                                                                                        <input type="text" class="form-control" ng-model="orgs.searchForm.searchItems.orgname_name_lk"/>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-6">
+                                                                                                <div class="form-group">
+                                                                                                    <label class="control-label col-md-3">机构类型</label>
+                                                                                                    <div class="col-md-7">
+                                                                                                        <select class="form-control" ng-model="orgs.searchForm.searchItems.orgtype_eq">
+                                                                                                            <option value=""></option>
+                                                                                                            <option ng-repeat="d in dict.data.valid_flag" value="{{d.item_name}}">{{d.item_name+d.separate_flag+d.item_value}}</option>
+                                                                                                        </select>
+                                                                                                    </div>
 
-                            </td>
-                            <td>
-                                <button class="btn btn-xs  filter-submit margin-bottom"
-                                        ng-click="attrs.search1()">
-                                    <i class="fa fa-search"></i> 查找
-                                </button>
-                                <button class="btn btn-xs  filter-cancel"
-                                        ng-click="attrs.reset()">
-                                    <i class="fa fa-times"></i> 重置
-                                </button>
-                            </td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="d in attrs.dataList" ng-class-odd="'odd'" ng-class-even="'even'">
-                            <td>{{$index+1}}</td>
-                            <td>
-                                {{d.attr_key}}
-                            </td>
-                            <td>
-                                {{d.attr_desc}}
-                            </td>
-                            <td>
-                                {{d.biz_type}}
-                            </td>
-                            <td>
-                                {{d.func_code}}
-                            </td>
-                            <td>
-                                {{d.ctl_desc}}
-                            </td>
-                            <td>
-                                {{imp_class}}
-                            </td>
-                            <td>
-                                <button class="btn btn-sm btn-primary filter-cancel" ng-click="AttrEdit(d.id)"> 编辑 </button>
-                                <button class="btn btn-sm btn-danger filter-cancel" ng-click="AttrDel(d.id)"> 删除 </button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                &lt;!&ndash;开始table尾部分页以及工具栏&ndash;&gt;
-                <div class="row" >
-                    <div class="col-md-8 col-sm-12" >
-                        <div class="dataTables_paginate">
-                            <div class="pagination-panel">
-                                第 <a ng-click="attrs.prePage()"
-                                     class="btn btn-sm default prev" title="Prev"><i
-                                    class="fa fa-angle-left"></i></a><input type="text"
-                                                                            ng-model="attrs.searchForm.page.currentPage"
-                                                                            class="pagination-panel-input form-control input-mini input-inline input-sm"
-                                                                            maxlenght="5" style="text-align: center; margin: 0 5px;"><a
-                                    ng-click="attrs.nextPage()"
-                                    class="btn btn-sm default next" title="Next"><i
-                                    class="fa fa-angle-right"></i></a> 页,&nbsp;&nbsp;&nbsp;总<span
-                                    class="pagination-panel-total">{{attrs.searchForm.page.totalPages}}</span>页
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-6">
+                                                                                                <div class="form-group">
+                                                                                                    <label class="control-label col-md-3">机构状态</label>
+                                                                                                    <div class="col-md-7">
+                                                                                                        <input type="text" class="form-control" ng-model="orgs.searchForm.searchItems.status_lk"/>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="col-md-12" >
+                                                                                                <div class="form-group" style="padding-left: 40%">
+                                                                                                    <div class="col-md-2">
+                                                                                                        <button class="btn btn-sm green filter-submit margin-bottom" ng-click="orgs.search1()">查  询 </button></div>
+                                                                                                    <div class="col-md-2">
+                                                                                                        <button class="btn btn-sm filter-submit margin-bottom" ng-click="orgs.reset()">重  置 </button></div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!--开始table尾部分页以及工具栏-->
+                                                                        <div class="row" >
+                                                                            <div class="col-md-8 col-sm-12" >
+                                                                                <div class="dataTables_paginate">
+                                                                                    <div class="pagination-panel">
+                                                                                        第 <a ng-click="orgs.prePage()"
+                                                                                             class="btn btn-sm default prev" title="Prev"><i
+                                                                                            class="fa fa-angle-left"></i></a><input type="text"
+                                                                                                                                    ng-model="orgs.searchForm.page.currentPage"
+                                                                                                                                    class="pagination-panel-input form-control input-mini input-inline input-sm"
+                                                                                                                                    maxlenght="5" style="text-align: center; margin: 0 5px;"><a
+                                                                                            ng-click="orgs.nextPage()"
+                                                                                            class="btn btn-sm default next" title="Next"><i
+                                                                                            class="fa fa-angle-right"></i></a> 页,&nbsp;&nbsp;&nbsp;总<span
+                                                                                            class="pagination-panel-total">{{orgs.searchForm.page.totalPages}}</span>页
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="dataTables_length">
+                                                                                    <label><span class="seperator">|</span>每页 <select
+                                                                                            ng-model="orgs.searchForm.page.itemsperpage"
+                                                                                            class="form-control input-xsmall input-sm input-inline" ng-options="i for i in [10,20,50,100,150]">
+                                                                                    </select> 条</label>
+                                                                                </div>
+                                                                                <div class="dataTables_info" role="status" aria-live="polite">
+                                                                                    <span class="seperator">|</span>总计{{orgs.searchForm.page.totalItems}}
+                                                                                    条
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!--结束table尾部分页以及工具栏-->
+                                                                        <table class="table table-striped table-bordered table-hover table-checkable ">
+                                                                            <thead>
+                                                                            <tr role="row" class="heading">
+                                                                                <th width="2%" class="table-checkbox ">
+                                                                                    <label class="mt-checkbox mt-checkbox-outline mt-checkbox-single"><input type="checkbox" class="group-checkable" ng-model="headcheck" ng-click="orgs.checkAll(!headcheck)"/><span></span>
+                                                                                    </label>
+                                                                                </th>
+                                                                                <th width="5%">
+                                                                                    序号
+                                                                                </th>
+                                                                                <th width="15%">
+                                                                                    机构代码
+                                                                                </th>
+                                                                                <th width="15%">
+                                                                                    机构名称
+                                                                                </th>
+                                                                                <th width="10%">
+                                                                                    机构类型
+                                                                                </th>
+                                                                                <th width="10%" >
+                                                                                    机构状态
+                                                                                </th>
+                                                                                <th width="10%">
+                                                                                    机构等级
+                                                                                </th>
+                                                                                <th width="15%">
+                                                                                    机构序列
+                                                                                </th>
+                                                                            </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                            <tr ng-repeat="d in orgs.dataList" ng-class-odd="'odd'" ng-class-even="'even'">
+                                                                                <td>
+                                                                                    <label class="mt-checkbox mt-checkbox-outline mt-checkbox-single"><input type="checkbox" class="checkboxes" ng-model="d.checked"/><span></span></label>
+                                                                                </td>
+                                                                                <td>{{$index+1}}</td>
+                                                                                <td>
+                                                                                    {{d.orgcode}}
+                                                                                </td>
+                                                                                <td>
+                                                                                    {{d.orgname}}
+                                                                                </td>
+                                                                                <td>
+                                                                                    {{d.orgtype}}
+                                                                                </td>
+                                                                                <td>
+                                                                                    {{d.status}}
+                                                                                </td>
+                                                                                <td>
+                                                                                    {{d.orgdegree}}
+                                                                                </td>
+                                                                                <td>
+                                                                                    {{d.orgseq}}
+                                                                                </td>
+                                                                            </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </uib-tab>
+                                                            <uib-tab heading="人员查询" ng-click="toXiajijigou()" >
+                                                                <!-- BEGIN FORM-->
+
+                                                                <div class="form-body dataTables_wrapper dataTables_extended_wrapper no-footer">
+                                                                    <!--开始table-->
+                                                                    <div class="table-scrollable" style="overflow-y: auto">
+                                                                        <table class="table table-striped table-bordered table-hover">
+                                                                            <thead>
+                                                                            <tr role="row" class="heading">
+                                                                                <th width="5%">
+                                                                                    序号
+                                                                                </th>
+                                                                                <th width="15%">
+                                                                                    人员代码
+                                                                                </th>
+                                                                                <th width="10%">
+                                                                                    人员姓名
+                                                                                </th>
+                                                                                <th width="5%">
+                                                                                    性别
+                                                                                </th>
+                                                                                <th width="5%">
+                                                                                    人员状态
+                                                                                </th>
+                                                                                <th width="10%">
+                                                                                    所属机构
+                                                                                </th>
+                                                                                <th width="10%">
+                                                                                    所属岗位
+                                                                                </th>
+                                                                                <th width="10%">
+                                                                                    用户登录名
+                                                                                </th>
+                                                                                <th width="10%">
+                                                                                    <div style="width:120px">操作</div>
+                                                                                </th>
+                                                                            </tr>
+                                                                            <tr role="row" class="filter">
+                                                                                <td></td>
+                                                                                <td>
+                                                                                    <input type="text" class="form-control form-filter input-sm"
+                                                                                           ng-model="jigou.searchForm.searchItems.org_name_lk">
+                                                                                </td>
+                                                                                <td>
+                                                                                    <input type="text" class="form-control form-filter input-sm"
+                                                                                           ng-model="jigou.searchForm.searchItems.org_code_lk">
+                                                                                </td>
+                                                                                <td>
+                                                                                    <select name="" class="form-control form-filter input-sm"
+                                                                                            ng-model="jigou.searchForm.searchItems.org_type_eq">
+                                                                                        <option value=""></option>
+                                                                                        <option value="0">总行</option>
+                                                                                        <option value="1">总行部室</option>
+                                                                                        <option value="2">一级分行</option>
+                                                                                        <option value="3">二级分行</option>
+                                                                                        <option value="4">区域总部</option>
+                                                                                        <option value="5">支行</option>
+                                                                                        <option value="6">网点</option>
+                                                                                        <!--<option ng-repeat="a in xiajicaidan.dataList1" ng-if="a.dict_name=='org_type'" value="{{a.dict_key}}">{{a.dict_value}}</option>-->
+                                                                                    </select>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <select name="" class="form-control form-filter input-sm"
+                                                                                            ng-model="jigou.searchForm.searchItems.org_status_eq">
+                                                                                        <option value=""></option>
+                                                                                        <option value="0">正常</option>
+                                                                                        <option value="1">停用</option>
+                                                                                        <!--<option ng-repeat="a in xiajicaidan.dataList1" ng-if="a.dict_name=='org_status'" value="{{a.dict_key}}">{{a.dict_value}}</option>-->
+                                                                                    </select>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <select name="" class="form-control form-filter input-sm"
+                                                                                            ng-model="jigou.searchForm.searchItems.org_work_status_eq">
+                                                                                        <option value=""></option>
+                                                                                        <option value="0">营业</option>
+                                                                                        <option value="1">签退</option>
+                                                                                        <!--<option ng-repeat="a in xiajicaidan.dataList1" ng-if="a.dict_name=='org_work_status'" value="{{a.dict_key}}">{{a.dict_value}}</option>-->
+                                                                                    </select>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <button class="btn btn-xs  filter-submit margin-bottom"
+                                                                                            ng-click="jigou.search1()">
+                                                                                        <i class="fa fa-search"></i> 查找
+                                                                                    </button>
+                                                                                    <button class="btn btn-xs  filter-cancel"
+                                                                                            ng-click="jigou.reset()">
+                                                                                        <i class="fa fa-times"></i> 重置
+                                                                                    </button>
+                                                                                </td>
+                                                                            </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                            <tr ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="d in jigou.dataList">
+                                                                                <td>{{$index+1}}</td>
+                                                                                <td>{{d.org_name}}</td>
+                                                                                <td>{{d.org_code}}</td>
+                                                                                <td>{{d.org_type=='0'&&'总行'||d.org_type=='1'&&'总行部室'||d.org_type=='2'&&'一级分行'||d.org_type=='3'&&'二级分行'||d.org_type=='4'&&'区域总部'||d.org_type=='5'&&'支行'||d.org_type=='6'&&'网点'}}</td>
+                                                                                <td>{{d.org_status=='0'&&'正常'||d.org_status=='0'&&'停用'}}</td>
+                                                                                <td>{{d.org_work_status=='0'&&'营业'||d.org_work_status=='1'&&'签退'}}</td>
+                                                                                <td>
+                                                                                    <button class="btn btn-sm btn-primary filter-cancel" ng-click="xiajijigouedit(d.id)"> 编辑</button>
+                                                                                    <button class="btn btn-sm btn-danger filter-cancel" ng-click="xiajijigoudelete(d)">删除</button>
+                                                                                </td>
+                                                                            </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <!--结束table-->
+                                                                    <!--开始table尾部分页以及工具栏-->
+                                                                    <div class="row">
+                                                                        <div class="col-md-8 col-sm-12">
+                                                                            <div class="dataTables_paginate paging_bootstrap_extended">
+                                                                                <div class="pagination-panel">
+                                                                                    第 <a ng-click="jigou.searchForm.prePage()"
+                                                                                         class="btn btn-sm default prev" title="Prev"><i
+                                                                                        class="fa fa-angle-left"></i></a><input type="text"
+                                                                                                                                ng-model="jigou.searchForm.page.currentPage"
+                                                                                                                                class="pagination-panel-input form-control input-mini input-inline input-sm"
+                                                                                                                                maxlenght="5" style="text-align: center; margin: 0 5px;"><a
+                                                                                        ng-click="jigou.searchForm.nextPage()"
+                                                                                        class="btn btn-sm default next" title="Next"><i
+                                                                                        class="fa fa-angle-right"></i></a> 页,&nbsp;&nbsp;&nbsp;总<span
+                                                                                        class="pagination-panel-total">{{jigou.searchForm.page.totalPages}}</span>页
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="dataTables_length">
+                                                                                <label><span class="seperator">|</span>每页 <select
+                                                                                        ng-model="jigou.searchForm.page.itemsperpage"
+                                                                                        class="form-control input-xsmall input-sm input-inline" ng-options="i for i in [10,20,50,100,150]">
+                                                                                </select> 条</label>
+                                                                            </div>
+                                                                            <div class="dataTables_info" role="status" aria-live="polite">
+                                                                                <span class="seperator">|</span>总计{{jigou.searchForm.page.totalItems}}
+                                                                                条
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-4 col-sm-12">
+                                                                            <div class="actions btn-set" style="float: right;">
+                                                                                <button type="button" name="back" class="btn btn-primary" ng-if="wd.item.org_code != null&&index==1" ng-click="OrgXiajiAdd(wd.item.org_code)"> 新增下级机构
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </uib-tab>
+                                                        </uib-tabset>
+                                                    </div>
+                                                </form>
+                                                <!-- 机构树根节点显示表单结束-->
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
-                        <div class="dataTables_length">
-                            <label><span class="seperator">|</span>每页 <select
-                                    ng-model="attrs.searchForm.page.itemsperpage"
-                                    class="form-control input-xsmall input-sm input-inline" ng-options="i for i in [10,20,50,100,150]">
-                            </select> 条</label>
-                        </div>
-                        <div class="dataTables_info" role="status" aria-live="polite">
-                            <span class="seperator">|</span>总计{{attrs.searchForm.page.totalItems}}
-                            条
-                        </div>
                     </div>
-                    <div class="col-md-4 col-sm-12"></div>
                 </div>
-                &lt;!&ndash;结束table尾部分页以及工具栏&ndash;&gt;
             </div>
         </div>
     </div>
-</div>-->
-
+</div>

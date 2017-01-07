@@ -52,7 +52,7 @@
 	<!-- disconf end -->
 
     <!-- mySQL数据源 -->
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"> 
+    <!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"> 
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://${database_url}/${database_name}?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8"/>
         <property name="username" value="${database_password}"/>
@@ -69,51 +69,52 @@
         <property name="testOnReturn" value="true" />
         <property name="minEvictableIdleTimeMillis" value="1800000" />
         <property name="numTestsPerEvictionRun" value="3" />
-	</bean>
+	</bean> -->
 	
 	
-	<!-- oracle数据源（使用oracle数据库时再打开）
+	<!-- oracle数据源（使用oracle数据库时再打开）-->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
 		 <property name="url" value="jdbc:oracle:thin:@${database_url}:${database_name}" />
 		<property name="username" value="${database_username}"/>
         <property name="password" value="${database_password}"/>
 		<property name="defaultAutoCommit" value="true" />
-		最大连接数
+		<!-- 最大连接数 -->
 		<property name="maxActive">
 			<value>5</value>
 		</property>
-		资源池初始化连接数
+		<!-- 资源池初始化连接数 -->
 		<property name="initialSize">
 			<value>5</value>
 		</property>
-		最大等待时间
+		<!-- 最大等待时间 -->
 		<property name="maxWait">
 			<value>60000</value>
 		</property>
-		最大空余连接数
+		<!-- 最大空余连接数 -->
 		<property name="maxIdle">
 			<value>20</value>
 		</property>
-		最小空余连接数
+		<!-- 最小空余连接数 -->
 		<property name="minIdle">
 			<value>20</value>
 		</property>
-		超时后是否回收资源
+		<!-- 超时后是否回收资源 -->
 		<property name="removeAbandoned">
 			<value>true</value>
 		</property>
-		超时回收资源时间
+		<!-- 超时回收资源时间 -->
 		<property name="removeAbandonedTimeout">
 			<value>180</value>
 		</property>
 		<property name="connectionProperties">
 			<value>clientEncoding=GBK</value>
 		</property>
-		自动重连的validate校验
+		<!-- 自动重连的validate校验 -->
 		<property name="testWhileIdle">
 			<value>true</value>
-		</property> 打开检查,用异步线程evict进行检查
+		</property> 
+		<!-- 打开检查,用异步线程evict进行检查 -->
 		<property name="testOnBorrow">
 			<value>false</value>
 		</property>
@@ -132,7 +133,7 @@
 		<property name="numTestsPerEvictionRun">
 			<value>20</value>
 		</property>
-	</bean> -->
+	</bean> 
 	
     
     <!-- Transaction manager for a single JDBC DataSource -->
