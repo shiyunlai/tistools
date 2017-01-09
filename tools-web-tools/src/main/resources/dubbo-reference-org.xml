@@ -20,5 +20,11 @@
 		version="1.0" 
 		interface="org.tis.tools.rservice.torg.IOmOrganizationRService" 
 		check="false" /><!-- 使用了扩展loadbalance，根据指定ip调用服务提供者 -->
+	<dubbo:reference 
+		id="omEmployeeRService" 
+		group="org"
+		version="1.0" 
+		interface="org.tis.tools.rservice.torg.IOmEmployeeRService" 
+		check="false" />
 	
 </beans>

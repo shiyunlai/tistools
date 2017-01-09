@@ -21,7 +21,7 @@ function action(bdy) {
     COH.TRANSCODE = "TX1313";
     COH.OFSREQHEAD = "";
     COH.tranDate = getYYYYMMDD();
-    COH.TRANSDATE = getFormatTimeHHmmss();
+    COH.TRANSDATE = getFormatTimeHHmmss()
     COH.TRANSTELLER = "";
     COH.AGENTINSTNO = "";
     COH.AUTHTELLER = "";

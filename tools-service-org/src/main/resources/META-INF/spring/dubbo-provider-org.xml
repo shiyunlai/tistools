@@ -35,7 +35,9 @@
 	
 	<!-- 暴露服务 -->
 	<dubbo:service group="org" version="1.0" interface="org.tis.tools.rservice.torg.IOmOrganizationRService" ref="omOrganizationRService"  protocol="dubbo"  timeout="3000" />
+	<dubbo:service group="org" version="1.0" interface="org.tis.tools.rservice.torg.IOmEmployeeRService" ref="omEmployeeRService"  protocol="dubbo"  timeout="3000" />
 	<!-- 具体实现 -->
 	
     <bean id="omOrganizationRService" class="org.tis.tools.rservice.torg.OmOrganizationRServiceImpl" />
+    <bean id="omEmployeeRService" class="org.tis.tools.rservice.torg.OmEmployeeRServiceImpl" />
 </beans>

@@ -12,7 +12,47 @@
 
 
 	<models>
-		<model name="机构信息表" id="OM_ORGANIZATION">
+		<model name="人员信息表" id="OM_EMPLOYEE">
+			<field name="唯一ID" id="ID" type="string" length="128" />
+			<field name="人员编号" id="EMPID" type="int" length="10" />
+			<field name="人员代码" id="EMPCODE" type="string" length="30" />
+			<field name="操作员编号" id="OPERATORID" type="int" length="18" />
+			<field name="操作员登录号" id="USERID" type="string" length="30" />
+			<field name="人员姓名" id="EMPNAME" type="string" length="50" />
+			<field name="人员全名" id="REALNAME" type="string" length="50" />
+			<field name="性别" id="GENDER" type="string" length="255" />
+			<field name="出生日期" id="BIRTHDATE" type="datetime" />
+			<field name="基本岗位" id="POSITION" type="int" length="10" />
+			<field name="状态" id="EMPSTATUS" type="string" length="255" />
+			<field name="证件类型" id="CARDTYPE" type="string" length="255" />
+			<field name="证件号码" id="CARDNO" type="string" length="20" />
+			<field name="入职日期" id="INDATE" type="datetime" />
+			<field name="离职日期" id="OUTDATE" type="datetime" />
+			<field name="办公电话" id="OTEL" type="string" length="12" />
+			<field name="办公地址" id="OADDRESS" type="string" length="255" />
+			<field name="办公邮编" id="OZIPCODE" type="string" length="10" />
+			<field name="办公邮件" id="OEMAIL" type="string" length="128" />
+			<field name="传真号码" id="FAXNO" type="string" length="14" />
+			<field name="手机号码" id="MOBILENO" type="string" length="14" />
+			<field name="MSN号码" id="MSN" type="string" length="16" />
+			<field name="家庭电话" id="HTEL" type="string" length="12" />
+			<field name="家庭地址" id="HADDRESS" type="string" length="128" />
+			<field name="家庭邮编" id="HZIPCODE" type="string" length="10" />
+			<field name="私人电子邮箱" id="PEMAIL" type="string" length="128" />
+			<field name="政治面貌" id="PARTY" type="string" length="255" />
+			<field name="职级" id="DEGREE" type="string" length="255" />
+			<field name="直接主管" id="MAJOR" type="int" length="10" />
+			<field name="可授权角色" id="SPECIALTY" type="string" length="1024" />
+			<field name="工作描述" id="WORKEXP" type="string" length="512" />
+			<field name="注册日期" id="REGDATE" type="datetime" />
+			<field name="创建时间" id="CREATETIME" type="datetime" />
+			<field name="最新更新时间" id="LASTMODYTIME" type="datetime" />
+			<field name="可管理机构" id="ORGIDLIST" type="string" length="128" />
+			<field name="主机构编号" id="ORGID" type="int" length="10" />
+			<field name="备注" id="REMARK" type="string" length="512" />
+		</model>
+
+		<!-- <model name="机构信息表" id="OM_ORGANIZATION">
 			<field name="唯一ID" id="ID" type="string" length="128" />
 			<field name="机构编号" id="ORGID" type="int" length="10" />
 			<field name="机构代码" id="ORGCODE" type="string" length="32" />
@@ -43,6 +83,6 @@
 			<field name="子节点数" id="SUBCOUNT" type="int" length="10" />
 			<field name="备注" id="REMARK" type="string" length="512" />
 		</model>
-
+ -->
 	</models>
 </bizmodel>

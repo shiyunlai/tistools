@@ -2,76 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a4162937-4555-48d7-ba0e-4d74c29cffd3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/service/orgManage/organization_service.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-core/model/templates/biz/Mapper2.java.ftl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/AcApplication.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/AcFuncgroup.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/AcFunction.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/AcOperator.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/AcOperatorrole.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/AcRole.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/model/po/tuser/AcRolefunc.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-facade-org/src/main/java/org/tools/facade/org/App.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-facade-user/src/main/java/org/tis/tools/rservice/tuser/IAcApplicationRService.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-facade-user/src/main/java/org/tis/tools/rservice/tuser/IAcFuncgroupRService.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-facade-user/src/main/java/org/tis/tools/rservice/tuser/IAcFunctionRService.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-facade-user/src/main/java/org/tis/tools/rservice/tuser/IAcOperatorRService.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-facade-user/src/main/java/org/tis/tools/rservice/tuser/IAcOperatorroleRService.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-facade-user/src/main/java/org/tis/tools/rservice/tuser/IAcRoleRService.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-facade-user/src/main/java/org/tis/tools/rservice/tuser/IAcRolefuncRService.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-org/src/test/java/org/tools/service/org/AppTest.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/dao/mapper/tuser/AcApplicationMapper.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/dao/mapper/tuser/AcFuncgroupMapper.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/dao/mapper/tuser/AcFunctionMapper.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/dao/mapper/tuser/AcOperatorMapper.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/dao/mapper/tuser/AcOperatorroleMapper.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/dao/mapper/tuser/AcRoleMapper.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/dao/mapper/tuser/AcRolefuncMapper.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/rservice/tuser/AcApplicationRServiceImpl.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/rservice/tuser/AcFuncgroupRServiceImpl.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/rservice/tuser/AcFunctionRServiceImpl.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/rservice/tuser/AcOperatorRServiceImpl.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/rservice/tuser/AcOperatorroleRServiceImpl.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/rservice/tuser/AcRoleRServiceImpl.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/rservice/tuser/AcRolefuncRServiceImpl.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/service/tuser/AcApplicationService.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/service/tuser/AcFuncgroupService.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/service/tuser/AcFunctionService.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/service/tuser/AcOperatorService.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/service/tuser/AcOperatorroleService.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/service/tuser/AcRoleService.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/java/org/tis/tools/service/tuser/AcRolefuncService.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/resources/org/tis/tools/dao/mapper/tuser/AcApplicationMapper.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/resources/org/tis/tools/dao/mapper/tuser/AcFuncgroupMapper.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/resources/org/tis/tools/dao/mapper/tuser/AcFunctionMapper.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/resources/org/tis/tools/dao/mapper/tuser/AcOperatorMapper.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/resources/org/tis/tools/dao/mapper/tuser/AcOperatorroleMapper.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/resources/org/tis/tools/dao/mapper/tuser/AcRoleMapper.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-service-user/src/main/resources/org/tis/tools/dao/mapper/tuser/AcRolefuncMapper.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-user/src/main/java/org/tis/tools/webapp/controller/tuser/AcApplicationController.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-user/src/main/java/org/tis/tools/webapp/controller/tuser/AcFuncgroupController.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-user/src/main/java/org/tis/tools/webapp/controller/tuser/AcFunctionController.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-user/src/main/java/org/tis/tools/webapp/controller/tuser/AcOperatorController.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-user/src/main/java/org/tis/tools/webapp/controller/tuser/AcOperatorroleController.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-user/src/main/java/org/tis/tools/webapp/controller/tuser/AcRoleController.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools-web-user/src/main/java/org/tis/tools/webapp/controller/tuser/AcRolefuncController.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-core/model/model-user.xml" afterPath="$PROJECT_DIR$/tools-core/model/model-user.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-core/model/templates/biz/BizService.java.ftl" afterPath="$PROJECT_DIR$/tools-core/model/templates/biz/BizService.java.ftl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-core/model/templates/biz/Controller.java.ftl" afterPath="$PROJECT_DIR$/tools-core/model/templates/biz/Controller.java.ftl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-core/model/templates/biz/Mapper.xml.ftl" afterPath="$PROJECT_DIR$/tools-core/model/templates/biz/Mapper.xml.ftl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-core/model/templates/biz/Model.java.ftl" afterPath="$PROJECT_DIR$/tools-core/model/templates/biz/Model.java.ftl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-core/model/templates/biz/RServiceApi.java.ftl" afterPath="$PROJECT_DIR$/tools-core/model/templates/biz/RServiceApi.java.ftl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-core/model/templates/biz/RServiceImpl.java.ftl" afterPath="$PROJECT_DIR$/tools-core/model/templates/biz/RServiceImpl.java.ftl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/base/WhereCondition.java" afterPath="$PROJECT_DIR$/tools-core/src/main/java/org/tis/tools/base/WhereCondition.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-facade-org/pom.xml" afterPath="$PROJECT_DIR$/tools-facade-org/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-service-org/pom.xml" afterPath="$PROJECT_DIR$/tools-service-org/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/pom.xml" afterPath="$PROJECT_DIR$/tools-web-tools/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/resources/dubbo-consumer.xml" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/resources/dubbo-consumer.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/index.html" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-service-org/src/main/resources/META-INF/spring/dubbo-provider-org.xml" afterPath="$PROJECT_DIR$/tools-service-org/src/main/resources/META-INF/spring/dubbo-provider-org.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/resources/dubbo-reference-org.xml" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/resources/dubbo-reference-org.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/controllers/orgManage/organization_controller.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/controllers/orgManage/organization_controller.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/main.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/service/orgManage/organization_service.js" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/service/orgManage/organization_service.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/orgManage/om_organization.html" afterPath="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/orgManage/om_organization.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -93,8 +30,8 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
-              <caret line="6" column="39" lean-forward="false" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="39" />
+            <state relative-caret-position="517">
+              <caret line="603" column="62" lean-forward="true" selection-start-line="603" selection-start-column="26" selection-end-line="603" selection-end-column="62" />
               <folding />
             </state>
           </provider>
@@ -103,7 +40,7 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3717">
+            <state relative-caret-position="1768">
               <caret line="177" column="59" lean-forward="false" selection-start-line="177" selection-start-column="59" selection-end-line="177" selection-end-column="59" />
               <folding />
             </state>
@@ -113,8 +50,8 @@
       <file leaf-file-name="commonCaller_service.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/service/common/commonCaller_service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+            <state relative-caret-position="567">
+              <caret line="27" column="18" lean-forward="false" selection-start-line="27" selection-start-column="12" selection-end-line="29" selection-end-column="15" />
               <folding />
             </state>
           </provider>
@@ -130,73 +67,75 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="organization_controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/controllers/orgManage/organization_controller.js">
+      <file leaf-file-name="components-md.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/css/components-md.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-              <folding>
-                <element signature="e#519#5054#0" expanded="false" />
-                <element signature="e#3055#3300#0" expanded="false" />
-                <element signature="e#5298#6740#0" expanded="false" />
-                <element signature="e#6904#15401#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="21">
+              <caret line="1365" column="1" lean-forward="false" selection-start-line="1365" selection-start-column="1" selection-end-line="1365" selection-end-column="1" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="global.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/scripts/global.js">
+        <entry file="file://$PROJECT_DIR$/tools-web-tools/target/tools-web-tools-0.0.1/tools/js/scripts/global.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1953">
-              <caret line="93" column="32" lean-forward="false" selection-start-line="93" selection-start-column="32" selection-end-line="93" selection-end-column="32" />
+            <state relative-caret-position="1252">
+              <caret line="70" column="4" lean-forward="false" selection-start-line="70" selection-start-column="4" selection-end-line="70" selection-end-column="4" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="organization_service.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="organization_service.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/service/orgManage/organization_service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="14" column="45" lean-forward="false" selection-start-line="14" selection-start-column="45" selection-end-line="14" selection-end-column="45" />
+            <state relative-caret-position="966">
+              <caret line="131" column="0" lean-forward="true" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
+                <element signature="e#178#2383#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="om_organization.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="om_organization.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/orgManage/om_organization.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2898">
-              <caret line="138" column="82" lean-forward="false" selection-start-line="138" selection-start-column="82" selection-end-line="138" selection-end-column="82" />
+            <state relative-caret-position="273">
+              <caret line="13" column="5" lean-forward="false" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
               <folding>
+                <element signature="n#div#0;n#div#1;n#!!top" expanded="false" />
+                <element signature="n#div#0;n#div#0;n#div#0;n#uib-tab#0;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="false" />
+                <element signature="n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#uib-tab#0;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="false" />
                 <element signature="n#style#0;n#div#0;n#div#4;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#uib-tab#0;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#div#1;n#div#0;n#div#0;n#uib-tab#0;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="false" />
                 <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#uib-tab#0;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-                <element signature="e#11183#11189#0" expanded="true" />
-                <element signature="e#11189#11195#0" expanded="true" />
-                <element signature="e#11195#11201#0" expanded="true" />
-                <element signature="n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="false" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#th#8;n#tr#0;n#thead#0;n#table#0;n#div#0;n#div#0;n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-                <element signature="e#32597#32603#0" expanded="true" />
-                <element signature="e#32603#32609#0" expanded="true" />
-                <element signature="e#32609#32615#0" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="e#11358#11364#0" expanded="true" />
+                <element signature="e#11364#11370#0" expanded="true" />
+                <element signature="e#11370#11376#0" expanded="true" />
+                <element signature="n#div#0;n#div#3;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="false" />
+                <element signature="n#style#0;n#div#0;n#div#4;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#div#0;n#div#1;n#div#0;n#div#0;n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="false" />
+                <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="e#27149#27155#0" expanded="true" />
+                <element signature="e#27155#27161#0" expanded="true" />
+                <element signature="e#27161#27167#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="commonCaller.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/common/commonCaller.html">
+      <file leaf-file-name="organization_controller.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/controllers/orgManage/organization_controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="13" selection-end-column="5" />
-              <folding />
+            <state relative-caret-position="315">
+              <caret line="15" column="19" lean-forward="true" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="19" />
+              <folding>
+                <element signature="e#1384#1629#0" expanded="false" />
+                <element signature="e#1762#3364#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -251,11 +190,11 @@
         <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/tpl/sidebar.html" />
         <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/service/common/commonCaller_service.js" />
         <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/index.html" />
-        <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/controllers/orgManage/organization_controller.js" />
         <option value="$PROJECT_DIR$/tools-web-tools/target/tools-web-tools-0.0.1/tools/js/main.js" />
         <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/main.js" />
-        <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/orgManage/om_organization.html" />
         <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/service/orgManage/organization_service.js" />
+        <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/controllers/orgManage/organization_controller.js" />
+        <option value="$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/orgManage/om_organization.html" />
       </list>
     </option>
   </component>
@@ -267,7 +206,8 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
-    <option name="width" value="1932" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
     <option name="height" value="1056" />
   </component>
   <component name="ProjectView">
@@ -285,8 +225,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -417,197 +355,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tistools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tistools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tools-web-tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="orgManage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tistools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tistools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tools-web-tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tistools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tistools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tools-web-tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tistools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tistools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tools-web-tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="service" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tistools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tistools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tools-web-tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="service" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="orgManage" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -675,19 +423,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="orgManage" />
+              <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -712,24 +448,18 @@
               <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
+              <option name="myItemId" value="tistools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tistools" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="LPC" />
+              <option name="myItemId" value="tools-common" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -743,20 +473,18 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tools-web-tools" />
+              <option name="myItemId" value="tools-common" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
+              <option name="myItemId" value="target" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -765,20 +493,20 @@
     <property name="last_opened_file_path" value="D:/workspace/Brons-Governor" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="js.eslint.eslintPackage" value="" />
-    <property name="SearchEverywhereHistoryKey" value="ThemePanelCOntroller&#9;null&#9;null&#10;dashboard.html&#9;FILE&#9;file://D:/GitSpace/tistools/tools-web-tools/src/main/webapp/tools/views/dashboard.html" />
+    <property name="SearchEverywhereHistoryKey" value="tis/tools&#9;FILE&#9;file://D:/GitSpace/tistools/tools-common/target/tools-common-0.0.1.jar&#10;fa-users&#9;null&#9;null&#10;icon-state-danger&#9;null&#9;null&#10;ThemePanelCOntroller&#9;null&#9;null&#10;dashboard.html&#9;FILE&#9;file://D:/GitSpace/tistools/tools-web-tools/src/main/webapp/tools/views/dashboard.html" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\GitSpace\tistools\tools-web-tools\src\main\webapp\tools\js\controllers\common" />
+      <recent name="D:\GitSpace\tistools\tools-web-tools\src\main\webapp\tools\views\common" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\GitSpace\tistools\tools-web-tools\src\main\webapp\tools\js\controllers\orgManage" />
       <recent name="D:\GitSpace\tistools\tools-web-tools\src\main\webapp\assets\pages\img" />
       <recent name="D:\GitSpace\tistools\tools-web-tools\src\main\webapp\tools\js\controllers" />
       <recent name="D:\GitSpace\tistools\tools-web-tools\src\main\webapp\tools\tpl" />
       <recent name="D:\GitSpace\tistools\tools-web-tools\src\main\webapp\assets\layouts\layout\img" />
-      <recent name="D:\GitSpace\tistools\tools-web-tools\src\main\webapp\tools" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\GitSpace\tistools\tools-web-tools\src\main\webapp\tools\js\controllers\common" />
-      <recent name="D:\GitSpace\tistools\tools-web-tools\src\main\webapp\tools\views\common" />
     </key>
   </component>
   <component name="RunManager">
@@ -869,17 +597,23 @@
       <workItem from="1483662530966" duration="598000" />
       <workItem from="1483687766329" duration="1411000" />
       <workItem from="1483760156623" duration="2450000" />
+      <workItem from="1483778312715" duration="9084000" />
+      <workItem from="1483855754343" duration="5189000" />
+      <workItem from="1483923034942" duration="162000" />
+      <workItem from="1483932668807" duration="9302000" />
+      <workItem from="1483956526490" duration="157000" />
+      <workItem from="1483966667663" duration="4707000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="78267000" />
+    <option name="totallyTimeSpent" value="106868000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="0" width="1932" height="1056" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18580376" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.184375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -896,24 +630,6 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32910052" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
-    <layout-to-restore>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18580376" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32910052" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="processedProjectFiles" value="true" />
@@ -928,34 +644,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/tpl/tpl1/header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4188">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/biztrace/redisClean.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="13" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/biztrace/showStepData.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/biztrace/biztraceSumQuery.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="15" column="26" lean-forward="false" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1218,30 +906,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/service/common/commonCaller_service.js">
+    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/common/commonCaller.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="13" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/index.html">
+    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/plugins/font-awesome/css/font-awesome.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3717">
-          <caret line="177" column="59" lean-forward="false" selection-start-line="177" selection-start-column="59" selection-end-line="177" selection-end-column="59" />
-          <folding />
+        <state relative-caret-position="9550">
+          <caret line="701" column="1" lean-forward="false" selection-start-line="701" selection-start-column="1" selection-end-line="701" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="6" column="39" lean-forward="false" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/controllers/orgManage/data1.json" />
     <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/tpl/sidebar.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="756">
@@ -1250,63 +929,97 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/scripts/global.js">
+    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/service/common/commonCaller_service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1953">
-          <caret line="93" column="32" lean-forward="false" selection-start-line="93" selection-start-column="32" selection-end-line="93" selection-end-column="32" />
+        <state relative-caret-position="567">
+          <caret line="27" column="18" lean-forward="false" selection-start-line="27" selection-start-column="12" selection-end-line="29" selection-end-column="15" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/orgManage/om_organization.html">
+    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/assets/global/css/components-md.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2898">
-          <caret line="138" column="82" lean-forward="false" selection-start-line="138" selection-start-column="82" selection-end-line="138" selection-end-column="82" />
+        <state relative-caret-position="21">
+          <caret line="1365" column="1" lean-forward="false" selection-start-line="1365" selection-start-column="1" selection-end-line="1365" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1768">
+          <caret line="177" column="59" lean-forward="false" selection-start-line="177" selection-start-column="59" selection-end-line="177" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/service/orgManage/organization_service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="966">
+          <caret line="131" column="0" lean-forward="true" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
           <folding>
-            <element signature="n#style#0;n#div#0;n#div#4;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#uib-tab#0;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#uib-tab#0;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-            <element signature="e#11183#11189#0" expanded="true" />
-            <element signature="e#11189#11195#0" expanded="true" />
-            <element signature="e#11195#11201#0" expanded="true" />
-            <element signature="n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#th#8;n#tr#0;n#thead#0;n#table#0;n#div#0;n#div#0;n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-            <element signature="e#32597#32603#0" expanded="true" />
-            <element signature="e#32603#32609#0" expanded="true" />
-            <element signature="e#32609#32615#0" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#178#2383#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/common/commonCaller.html">
+    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/scripts/global.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="13" selection-end-column="5" />
+        <state relative-caret-position="809">
+          <caret line="70" column="4" lean-forward="false" selection-start-line="70" selection-start-column="4" selection-end-line="70" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/controllers/orgManage/organization_controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+        <state relative-caret-position="315">
+          <caret line="15" column="19" lean-forward="true" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="19" />
           <folding>
-            <element signature="e#519#5054#0" expanded="false" />
-            <element signature="e#3055#3300#0" expanded="false" />
-            <element signature="e#5298#6740#0" expanded="false" />
-            <element signature="e#6904#15401#0" expanded="false" />
+            <element signature="e#1384#1629#0" expanded="false" />
+            <element signature="e#1762#3364#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/service/orgManage/organization_service.js">
+    <entry file="file://$PROJECT_DIR$/tools-web-tools/target/tools-web-tools-0.0.1/tools/js/scripts/global.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="14" column="45" lean-forward="false" selection-start-line="14" selection-start-column="45" selection-end-line="14" selection-end-column="45" />
+        <state relative-caret-position="1252">
+          <caret line="70" column="4" lean-forward="false" selection-start-line="70" selection-start-column="4" selection-end-line="70" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="517">
+          <caret line="603" column="62" lean-forward="true" selection-start-line="603" selection-start-column="26" selection-end-line="603" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools-web-tools/src/main/webapp/tools/views/orgManage/om_organization.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="13" column="5" lean-forward="false" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#div#0;n#div#1;n#!!top" expanded="false" />
+            <element signature="n#div#0;n#div#0;n#div#0;n#uib-tab#0;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="false" />
+            <element signature="n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#uib-tab#0;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#div#4;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#uib-tab#0;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#div#1;n#div#0;n#div#0;n#uib-tab#0;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#uib-tab#0;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="e#11358#11364#0" expanded="true" />
+            <element signature="e#11364#11370#0" expanded="true" />
+            <element signature="e#11370#11376#0" expanded="true" />
+            <element signature="n#div#0;n#div#3;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#div#4;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#div#0;n#div#1;n#div#0;n#div#0;n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#uib-tab#1;n#uib-tabset#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="e#27149#27155#0" expanded="true" />
+            <element signature="e#27155#27161#0" expanded="true" />
+            <element signature="e#27161#27167#0" expanded="true" />
           </folding>
         </state>
       </provider>
