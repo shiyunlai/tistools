@@ -1,0 +1,123 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.mapper.jnl.TbUniqueMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.jnl.TbUnique">
+	    INSERT INTO tb_unique (id
+  ,unique_code
+  ,sequence_no
+  ,ext0
+  ,ext1
+  ,ext2
+  )
+	    VALUES (#{id,jdbcType=VARCHAR},
+  #{unique_code,jdbcType=VARCHAR},
+  #{sequence_no,jdbcType=BIGINT},
+  #{ext0,jdbcType=VARCHAR},
+  #{ext1,jdbcType=VARCHAR},
+  #{ext2,jdbcType=VARCHAR}
+  )
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.jnl.TbUnique">
+    	UPDATE tb_unique 
+	    <set>
+		<if test="id != null" >
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+		<if test="unique_code != null" >
+        unique_code = #{unique_code,jdbcType=VARCHAR},
+      </if>
+		<if test="sequence_no != null" >
+        sequence_no = #{sequence_no,jdbcType=BIGINT},
+      </if>
+		<if test="ext0 != null" >
+        ext0 = #{ext0,jdbcType=VARCHAR},
+      </if>
+		<if test="ext1 != null" >
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+		<if test="ext2 != null" >
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+	    </set>
+	    WHERE id = #{id}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.jnl.TbUnique">
+    	UPDATE tb_unique 
+	    <set>
+        id = #{id,jdbcType=VARCHAR},
+        unique_code = #{unique_code,jdbcType=VARCHAR},
+        sequence_no = #{sequence_no,jdbcType=BIGINT},
+        ext0 = #{ext0,jdbcType=VARCHAR},
+        ext1 = #{ext1,jdbcType=VARCHAR},
+        ext2 = #{ext2,jdbcType=VARCHAR},
+	    </set>
+	    WHERE id = #{id}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from tb_unique where id = #{id}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from tb_unique <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE tb_unique 
+	   <set>
+		<if test="domain.id != null" >
+        id = #{domain.id,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.unique_code != null" >
+        unique_code = #{domain.unique_code,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.sequence_no != null" >
+        sequence_no = #{domain.sequence_no,jdbcType=BIGINT},
+      </if>
+		<if test="domain.ext0 != null" >
+        ext0 = #{domain.ext0,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.ext1 != null" >
+        ext1 = #{domain.ext1,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.ext2 != null" >
+        ext2 = #{domain.ext2,jdbcType=VARCHAR},
+      </if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadById" parameterType="String" resultType="org.tis.tools.model.po.jnl.TbUnique">
+		select <include refid="Base_Column_List"/> from tb_unique where id = #{id}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.jnl.TbUnique" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from tb_unique <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from tb_unique <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+	  id
+,unique_code
+,sequence_no
+,ext0
+,ext1
+,ext2
+	</sql>
+</mapper>

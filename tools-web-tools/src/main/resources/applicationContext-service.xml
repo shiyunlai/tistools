@@ -18,7 +18,7 @@
    <!--  <mvc:annotation-driven /> -->
 
     <!-- Activates scanning of @Service -->
-    <context:component-scan base-package="org.tis.tools.webapp"/>
+    <context:component-scan base-package="org.tis.tools.webapp,org.tis.tools.service"/>
     
      <!-- 引入Dubbo配置 -->
     <import resource="dubbo-consumer.xml" />

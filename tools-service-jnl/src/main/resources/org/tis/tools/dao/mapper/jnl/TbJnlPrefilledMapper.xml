@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.mapper.jnl.TbJnlPrefilledMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.jnl.TbJnlPrefilled">
+	    INSERT INTO tb_jnl_prefilled (id
+  ,queue_time
+  ,custome_no
+  ,ext0
+  ,ext1
+  ,ext2
+  )
+	    VALUES (#{id,jdbcType=VARCHAR},
+  #{queue_time,jdbcType=TIMESTAMP},
+  #{custome_no,jdbcType=VARCHAR},
+  #{ext0,jdbcType=VARCHAR},
+  #{ext1,jdbcType=VARCHAR},
+  #{ext2,jdbcType=VARCHAR}
+  )
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.jnl.TbJnlPrefilled">
+    	UPDATE tb_jnl_prefilled 
+	    <set>
+		<if test="id != null" >
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+		<if test="queue_time != null" >
+        queue_time = #{queue_time,jdbcType=TIMESTAMP},
+      </if>
+		<if test="custome_no != null" >
+        custome_no = #{custome_no,jdbcType=VARCHAR},
+      </if>
+		<if test="ext0 != null" >
+        ext0 = #{ext0,jdbcType=VARCHAR},
+      </if>
+		<if test="ext1 != null" >
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+		<if test="ext2 != null" >
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+	    </set>
+	    WHERE id = #{id}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.jnl.TbJnlPrefilled">
+    	UPDATE tb_jnl_prefilled 
+	    <set>
+        id = #{id,jdbcType=VARCHAR},
+        queue_time = #{queue_time,jdbcType=TIMESTAMP},
+        custome_no = #{custome_no,jdbcType=VARCHAR},
+        ext0 = #{ext0,jdbcType=VARCHAR},
+        ext1 = #{ext1,jdbcType=VARCHAR},
+        ext2 = #{ext2,jdbcType=VARCHAR},
+	    </set>
+	    WHERE id = #{id}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from tb_jnl_prefilled where id = #{id}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from tb_jnl_prefilled <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE tb_jnl_prefilled 
+	   <set>
+		<if test="domain.id != null" >
+        id = #{domain.id,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.queue_time != null" >
+        queue_time = #{domain.queue_time,jdbcType=TIMESTAMP},
+      </if>
+		<if test="domain.custome_no != null" >
+        custome_no = #{domain.custome_no,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.ext0 != null" >
+        ext0 = #{domain.ext0,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.ext1 != null" >
+        ext1 = #{domain.ext1,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.ext2 != null" >
+        ext2 = #{domain.ext2,jdbcType=VARCHAR},
+      </if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadById" parameterType="String" resultType="org.tis.tools.model.po.jnl.TbJnlPrefilled">
+		select <include refid="Base_Column_List"/> from tb_jnl_prefilled where id = #{id}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.jnl.TbJnlPrefilled" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from tb_jnl_prefilled <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from tb_jnl_prefilled <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+	  id
+,queue_time
+,custome_no
+,ext0
+,ext1
+,ext2
+	</sql>
+</mapper>

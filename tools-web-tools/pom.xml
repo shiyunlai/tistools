@@ -576,6 +576,11 @@
 			<groupId>org.tis</groupId>
 			<artifactId>tools-facade-biztrace</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.tis</groupId>
+			<artifactId>tools-facade-jnl</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 	</dependencies>
 
 	<properties>

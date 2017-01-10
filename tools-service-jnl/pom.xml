@@ -8,25 +8,29 @@
 		<artifactId>tools</artifactId>
 		<version>0.0.1</version>
 	</parent>
-	<artifactId>tools-service-user</artifactId>
-	<name>tools-service-user</name>
+  <artifactId>tools-service-jnl</artifactId>
+	<name>tools-service-jnl</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>dubbo</artifactId>
-		</dependency>
+	        <groupId>com.alibaba</groupId>
+	        <artifactId>dubbo</artifactId>
+      	</dependency>
 		<dependency>
 			<groupId>org.tis</groupId>
-			<artifactId>tools-facade-user</artifactId>
-			<version>0.0.1</version>
+			<artifactId>tools-common</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.tis</groupId>
+			<artifactId>tools-facade-jnl</artifactId>
+			<version>0.0.1</version>
 		</dependency>
 	</dependencies>
 </project>
