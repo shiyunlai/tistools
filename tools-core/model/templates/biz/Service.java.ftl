@@ -21,7 +21,7 @@ import ${mainPackage}.model.po.${bizmodelId}.${poClassNameVar};
 
 
 /**
- * 业务逻辑
+ * ${table.name}(${table.id})基础业务逻辑
  * @author by auto-gen
  *
  */

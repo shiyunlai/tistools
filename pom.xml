@@ -26,6 +26,8 @@
 		
 		<module>tools-service-user</module>
 		<module>tools-web-user</module>
+		<module>tools-facade-jnl</module>
+		<module>tools-service-jnl</module>
 	</modules>
 	<properties>
 		<!-- Common libs -->

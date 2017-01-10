@@ -53,7 +53,7 @@ public class TbUserController extends BaseController {
 			JSONObject job = jsonObj.getJSONObject("item");
 			TbUser p = new TbUser();
 			JSONObject.toBean(job,p,jsonConfig);
-			String id = sequenceBiz.generateId("TbUser");
+			String id = sequenceService.generateId("TbUser");
 			if (StringUtils.isNotEmpty(p.getId())) {
 				tbUserRService.update(p);
 			} else {

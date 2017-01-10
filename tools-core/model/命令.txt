@@ -1,0 +1,2 @@
+-- 生成 jnl 模块dao代码
+mvn bronsp:gen-dao -Dtemplates.path=/Users/megapro/Develop/tis/tools/tools-core/model/templates/biz -Dmodel.file=model-jnl -X -e 

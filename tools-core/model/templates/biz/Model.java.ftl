@@ -26,22 +26,22 @@ public class ${humpClassName(table.id)} implements Serializable {
 	
 	<#list table.fields as field>
 	<#if field.type="string">
-	 private String ${field.id};//${field.name}
+	 private String ${field.id};//${field.name} ${field.desc}
 	 </#if>
 	 <#if field.type="long">
-	 private Long ${field.id};//${field.name}
+	 private Long ${field.id};//${field.name} ${field.desc}
 	 </#if>
 	 <#if field.type="decimal">
-	 private Double ${field.id};//${field.name}
+	 private Double ${field.id};//${field.name} ${field.desc}
 	 </#if>
 	 <#if field.type="bigdecimal">
-	 private BigDecimal ${field.id};//${field.name}
+	 private BigDecimal ${field.id};//${field.name} ${field.desc}
 	 </#if>
 	  <#if field.type="datetime">
-	 private Date ${field.id};//${field.name}
+	 private Date ${field.id};//${field.name} ${field.desc}
 	 </#if>
 	  <#if field.type="int">
-	 private Integer ${field.id};//${field.name}
+	 private Integer ${field.id};//${field.name} ${field.desc}
 	 </#if>
 	</#list>
 	

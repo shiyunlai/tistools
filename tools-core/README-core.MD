@@ -1,7 +1,10 @@
 1. 负责定义tools中各种业务模型；
 
-2. 每个文件定义一个业务模块的模型；
-
+2. 每个文件定义一个业务模块的模型；模型中各属性含义，参见： 
+	
+	bronsp-maven-plugin/model/model-acct.xml
+	或阅读源码 org.bronsp.maven.plugin.gendao.Field.java
+	
 3. 模型文件存放在model/目录下；
 
 4. tools采取分布式开发工程结构，因此每个业务域需建立以下工程，新建工程步骤见 README中(1. 新建java工程)[../README.MD]
