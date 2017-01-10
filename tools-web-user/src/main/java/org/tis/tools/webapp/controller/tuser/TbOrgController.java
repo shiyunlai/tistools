@@ -53,7 +53,7 @@ public class TbOrgController extends BaseController {
 			JSONObject job = jsonObj.getJSONObject("item");
 			TbOrg p = new TbOrg();
 			JSONObject.toBean(job,p,jsonConfig);
-			String id = sequenceBiz.generateId("TbOrg");
+			String id = sequenceService.generateId("TbOrg");
 			if (StringUtils.isNotEmpty(p.getId())) {
 				tbOrgRService.update(p);
 			} else {
