@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<bizmodel name="服务流水业务域" id="jnl" mainpackage="org.tis.tools" >
+
+	<desc>
+		服务流水业务域模型定义，包括：
+		接触阶段（记录清楚无实际执行时的信息）—— 排队流水、预约流水、预填单流水...；
+		业务办理阶段（记录清楚服务执行时、服务完成后的相关信息） —— 
+			服务进行时：交易流水（交易办理日志、凭证流水...）、主机流水...；
+			服务结束后：评价流水、补打记录流水...；
+	</desc>
+	
+	<!-- 本业务领域相关的工程 -->
+	<prjCore>tools-core</prjCore><!-- 模型位置 -->
+	<prjWeb>tools-web-tools</prjWeb><!-- webapp 应用代码 -->
+	<prjFacade>tools-facade-jnl</prjFacade><!-- 远程服务接口定义 -->
+	<prjService>tools-service-jnl</prjService><!-- 服务实现 -->
+	
+	<models>
+		<!-- ＝＝＝＝＝＝＝＝＝＝＝＝＝ -->
+		<!-- 接触阶段 -->
+		<!-- ＝＝＝＝＝＝＝＝＝＝＝＝＝ -->
+		<model name="排队流水" id="tb_jnl_queue" desc="排队流水表" ext="3,1000">
+			<field name="唯一ID"  id="ID" type="string" length="128" />
+			<field name="排队时间"    id="queue_time" type="datetime" />
+			<field name="排队渠道"    id="queue_ch" type="string" length="64"  desc="渠道代码，表示本次排队的来源渠道"/>
+			<field name="排队网点"    id="instno" type="string" length="64"  />
+			<field name="排队机代码"    id="acd_code" type="string" length="64"  desc="Automatic calling distributor排队机的代码"/>
+			<field name="客户号"  id="custome_no"  type="string" length="64" desc="排队在银行的客户号，客户排队后，系统自动收集"/>
+			<!-- .... -->
+		</model>
+		<model name="预约流水" id="tb_jnl_reservation" desc="预约流水表" ext="3,1000">
+			<field name="唯一ID"  id="ID" type="string" length="128" />
+			<field name="预约时间"    id="queue_time" type="datetime" />
+			<field name="客户号"  id="custome_no"  type="string" length="64" desc="排队在银行的客户号，客户排队后，系统自动收集"/>
+			<!-- .... -->
+		</model>
+		<model name="预填流水" id="tb_jnl_prefilled" desc="预填流水表" ext="3,1000">
+			<field name="唯一ID"  id="ID" type="string" length="128" />
+			<field name="预约时间"    id="queue_time" type="datetime" />
+			<field name="客户号"  id="custome_no"  type="string" length="64" desc="排队在银行的客户号，客户排队后，系统自动收集"/>
+			<!-- .... -->
+		</model>
+		
+		<!-- ＝＝＝＝＝＝＝＝＝＝＝＝＝ -->
+		<!-- 业务办理阶段：交易流水（交易办理日志、凭证流水...）、主机流水... -->
+		<!-- ＝＝＝＝＝＝＝＝＝＝＝＝＝ -->
+		<model name="交易流水" id="tb_jnl_trans" desc="交易流水表" ext="3,1000">
+			<field name="唯一ID"  id="ID" type="string" length="128" />
+			<field name="预约时间"    id="queue_time" type="datetime" />
+			<field name="客户号"  id="custome_no"  type="string" length="64" desc="排队在银行的客户号，客户排队后，系统自动收集"/>
+			<!-- .... -->
+		</model>
+		<model name="交易办理日志" id="tb_jnl_trans_log" desc="记录某个交易办理过程中的操作日志明细" ext="3,1000" >
+			<field name="唯一ID"  id="ID" type="string" length="128" />
+			<field name="预约时间"    id="queue_time" type="datetime" />
+			<field name="客户号"  id="custome_no"  type="string" length="64" desc="排队在银行的客户号，客户排队后，系统自动收集"/>
+			<!-- .... -->
+		</model>
+		<model name="凭证流水" id="tb_jnl_voucher" desc="凭证流水表，每个凭证都唯一关联到某个交易" ext="3,1000">
+			<field name="唯一ID"  id="ID" type="string" length="128" />
+			<field name="预约时间"    id="queue_time" type="datetime" />
+			<field name="客户号"  id="custome_no"  type="string" length="64" desc="排队在银行的客户号，客户排队后，系统自动收集"/>
+			<!-- .... -->
+		</model>
+		
+		<model name="主机流水" id="tb_jnl_hosttrans" desc="交易过程中与主机系统的交互流水" ext="3,1000">
+			<field name="唯一ID"  id="ID" type="string" length="128" />
+			<field name="时间"    id="trans_time" type="datetime" />
+			<!-- .... -->
+		</model>
+		
+		<!-- ＝＝＝＝＝＝＝＝＝＝＝＝＝ -->
+		<!-- 服务流水领域基本功能表 -->
+		<!-- ＝＝＝＝＝＝＝＝＝＝＝＝＝ -->
+		<model name="序号表" id="tb_unique" desc="标记某种序号使用数" ext="3,1000">
+			<field name="唯一ID"     id="ID" type="string" length="128" />
+			<field name="序号代码"    id="unique_code" type="string" length="128" desc="某种序号资源的唯一业务标识"/>
+			<field name="序号"       id="sequence_no"  type="long" length="8" desc="使用掉的序号数"/>
+		</model>
+		
+		
+	</models>
+</bizmodel>

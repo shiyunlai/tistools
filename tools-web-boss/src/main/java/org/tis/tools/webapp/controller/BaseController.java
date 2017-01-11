@@ -41,7 +41,7 @@ abstract public class BaseController {
 	protected TransactionTemplate transactionTemplate;
 
 	@Autowired
-	protected SequenceService sequenceBiz ;
+	protected SequenceService sequenceService ;
 	
 	protected JsonConfig jsonConfig;
 	
