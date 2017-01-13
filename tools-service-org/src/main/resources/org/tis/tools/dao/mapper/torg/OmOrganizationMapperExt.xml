@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.tis.tools.dao.mapper.torg.OmOrganizationMapperExt">
+
+
+	<select id="loadEmpByOrg" parameterType="string"
+		resultType="org.tis.tools.model.po.torg.OmEmployee">
+
+		select *
+		from OM_EMPLOYEE e right join
+		(select empid from om_emporg where orgid = #{orgId}) o on e.empid=o.empid
+	</select>
+
+
+	<sql id="Base_Column_List">
+		id
+		,empid
+		,empcode
+		,operatorid
+		,userid
+		,empname
+		,realname
+		,gender
+		,birthdate
+		,position
+		,empstatus
+		,cardtype
+		,cardno
+		,indate
+		,outdate
+		,otel
+		,oaddress
+		,ozipcode
+		,oemail
+		,faxno
+		,mobileno
+		,msn
+		,htel
+		,haddress
+		,hzipcode
+		,pemail
+		,party
+		,degree
+		,major
+		,specialty
+		,workexp
+		,regdate
+		,createtime
+		,lastmodytime
+		,orgidlist
+		,orgid
+		,remark
+	</sql>
+</mapper>

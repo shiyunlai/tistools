@@ -25,7 +25,7 @@ import com.alibaba.dubbo.config.annotation.Service;
  * 定义文件：D:\GitSpace\tistools\tools-core\model\model-user.xml
  * </pre>
  */
-@Service(group = "torg", version = "1.0", interfaceClass = IOmEmployeeRService.class, timeout = 2000, document = "人员信息表的基础远程服务")
+@Service(group = "org", version = "1.0", interfaceClass = IOmEmployeeRService.class, timeout = 2000, document = "人员信息表的基础远程服务")
 public class OmEmployeeRServiceImpl implements IOmEmployeeRService {
 
 	@Autowired

@@ -44,11 +44,11 @@ MetronicApp.factory('organization_service',['$http', '$q', function ($http,$q) {
         return res;
     }
 
-    service.loadById = function(id){
+    service.loadByOrgId = function(orgId){
         var res;
         if(isdebug){
         } else {
-            res = $http.post(manurl + "/AttrController/detail",{id:id}).then(function (response) {
+            res = $http.post(manurl + "/torg/omOrganization/loadByOrgId",{orgId:orgId}).then(function (response) {
                 return response.data;
             });
         }
@@ -70,7 +70,7 @@ MetronicApp.factory('organization_service',['$http', '$q', function ($http,$q) {
         var res;
         if(isdebug){
         } else {
-            res = $http.post(manurl + "/AttrController/save",{item:item}).then(function (response) {
+            res = $http.post(manurl + "/torg/omOrganization/save",{item:item}).then(function (response) {
                 return response.data;
             });
         }
@@ -109,7 +109,7 @@ MetronicApp.factory('employee_service',['$http', '$q', function ($http,$q) {
         var res;
         if(isdebug){
         } else {
-            res = $http.post(manurl + "/AttrController/detail",{id:id}).then(function (response) {
+            res = $http.post(manurl + "/torg/omEmployee/detail",{id:id}).then(function (response) {
                 return response.data;
             });
         }

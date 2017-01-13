@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.mapper.torg.OmEmporgMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.torg.OmEmporg">
+	    INSERT INTO OM_EMPORG (id
+  ,orgid
+  ,empid
+  ,ismain
+  )
+	    VALUES (#{id,jdbcType=VARCHAR},
+  #{orgid,jdbcType=INTEGER},
+  #{empid,jdbcType=INTEGER},
+  #{ismain,jdbcType=VARCHAR}
+  )
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.torg.OmEmporg">
+    	UPDATE OM_EMPORG 
+	    <set>
+		<if test="id != null" >
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+		<if test="orgid != null" >
+        orgid = #{orgid,jdbcType=INTEGER},
+      </if>
+		<if test="empid != null" >
+        empid = #{empid,jdbcType=INTEGER},
+      </if>
+		<if test="ismain != null" >
+        ismain = #{ismain,jdbcType=VARCHAR},
+      </if>
+	    </set>
+	    WHERE id = #{id}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.torg.OmEmporg">
+    	UPDATE OM_EMPORG 
+	    <set>
+        id = #{id,jdbcType=VARCHAR},
+        orgid = #{orgid,jdbcType=INTEGER},
+        empid = #{empid,jdbcType=INTEGER},
+        ismain = #{ismain,jdbcType=VARCHAR},
+	    </set>
+	    WHERE id = #{id}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from OM_EMPORG where id = #{id}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from OM_EMPORG <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE OM_EMPORG 
+	   <set>
+		<if test="domain.id != null" >
+        id = #{domain.id,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.orgid != null" >
+        orgid = #{domain.orgid,jdbcType=INTEGER},
+      </if>
+		<if test="domain.empid != null" >
+        empid = #{domain.empid,jdbcType=INTEGER},
+      </if>
+		<if test="domain.ismain != null" >
+        ismain = #{domain.ismain,jdbcType=VARCHAR},
+      </if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadById" parameterType="String" resultType="org.tis.tools.model.po.torg.OmEmporg">
+		select <include refid="Base_Column_List"/> from OM_EMPORG where id = #{id}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.torg.OmEmporg" parameterType="org.tis.tools.base.WhereCondition" >
+    	<if test="length > 0 and url == 'oracle'" >
+    	select <include refid="Base_Column_List" /> from
+   			(select a.*,rownum row_num from
+      			(</if>
+      			select <include refid="Base_Column_List" /> from OM_EMPORG <include refid="Where_Clause" />
+        			<if test="orderBy != null" >${orderBy}</if>
+        			<if test="length > 0 and url == 'mysql'" >LIMIT ${offset}, ${length}</if>
+        		<if test="length > 0 and url == 'oracle'" >) a
+   			) b 
+		where b.row_num between ${offset} and ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from OM_EMPORG <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+	  id
+,orgid
+,empid
+,ismain
+	</sql>
+</mapper>

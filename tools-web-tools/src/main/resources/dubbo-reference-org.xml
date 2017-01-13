@@ -26,5 +26,11 @@
 		version="1.0" 
 		interface="org.tis.tools.rservice.torg.IOmEmployeeRService" 
 		check="false" />
+	<dubbo:reference 
+		id="omOrganizationRServiceExt" 
+		group="org"
+		version="1.0" 
+		interface="org.tis.tools.rservice.torg.IOmOrganizationRServiceExt" 
+		check="false" />
 	
 </beans>

@@ -12,7 +12,15 @@
 
 
 	<models>
-		<model name="人员信息表" id="OM_EMPLOYEE">
+		<model name="人员机构关系表" id="OM_EMPORG">
+			<field name="唯一ID" id="ID" type="string" length="128" />
+			<field name="机构编号" id="ORGID" type="int" length="10" />
+			<field name="人员编号" id="EMPID" type="int" length="10" />
+			<field name="是否主机构" id="ISMAIN" type="string" length="1" />
+		</model>
+
+
+		<!-- <model name="人员信息表" id="OM_EMPLOYEE">
 			<field name="唯一ID" id="ID" type="string" length="128" />
 			<field name="人员编号" id="EMPID" type="int" length="10" />
 			<field name="人员代码" id="EMPCODE" type="string" length="30" />
@@ -50,39 +58,30 @@
 			<field name="可管理机构" id="ORGIDLIST" type="string" length="128" />
 			<field name="主机构编号" id="ORGID" type="int" length="10" />
 			<field name="备注" id="REMARK" type="string" length="512" />
-		</model>
+		</model> -->
 
-		<!-- <model name="机构信息表" id="OM_ORGANIZATION">
-			<field name="唯一ID" id="ID" type="string" length="128" />
-			<field name="机构编号" id="ORGID" type="int" length="10" />
-			<field name="机构代码" id="ORGCODE" type="string" length="32" />
-			<field name="机构名称" id="ORGNAME" type="string" length="64" />
-			<field name="机构层次" id="ORGLEVEL" type="int" length="2" />
-			<field name="机构等级" id="ORGDEGREE" type="string" length="255" />
-			<field name="父机构编号" id="PARENTORGID" type="int" length="10" />
-			<field name="机构序列" id="ORGSEQ" type="string" length="512" />
-			<field name="机构类型" id="ORGTYPE" type="string" length="12" />
-			<field name="机构地址" id="ORGADDR" type="string" length="256" />
-			<field name="邮编" id="ZIPCODE" type="string" length="10" />
-			<field name="机构主管岗位" id="MANAPOSITION" type="int" length="10" />
-			<field name="机构主管人员" id="MANAGERID" type="int" length="10" />
-			<field name="机构管理员" id="ORGMANAGER" type="string" length="128" />
-			<field name="联系人" id="LINKMAN" type="string" length="30" />
-			<field name="联系电话" id="LINKTEL" type="string" length="20" />
-			<field name="电子邮件" id="EMAIL" type="string" length="128" />
-			<field name="网站地址" id="WEBURL" type="string" length="512" />
-			<field name="生效日期" id="STARTDATE" type="datetime" />
-			<field name="失效日期" id="ENDDATE" type="datetime" />
-			<field name="机构状态" id="STATUS" type="string" length="255" />
-			<field name="所属地域" id="AREA" type="string" length="30" />
-			<field name="创建时间" id="CREATETIME" type="datetime" />
-			<field name="最近更新时间" id="LASTUPDATE" type="datetime" />
-			<field name="最近更新人员" id="UPDATOR" type="int" length="10" />
-			<field name="排列顺序编号" id="SORTNO" type="int" length="128" />
-			<field name="是否叶子节点" id="ISLEAF" type="string" length="1" />
-			<field name="子节点数" id="SUBCOUNT" type="int" length="10" />
-			<field name="备注" id="REMARK" type="string" length="512" />
-		</model>
- -->
+		<!-- <model name="机构信息表" id="OM_ORGANIZATION"> <field name="唯一ID" id="ID" 
+			type="string" length="128" /> <field name="机构编号" id="ORGID" type="int" length="10" 
+			/> <field name="机构代码" id="ORGCODE" type="string" length="32" /> <field name="机构名称" 
+			id="ORGNAME" type="string" length="64" /> <field name="机构层次" id="ORGLEVEL" 
+			type="int" length="2" /> <field name="机构等级" id="ORGDEGREE" type="string" 
+			length="255" /> <field name="父机构编号" id="PARENTORGID" type="int" length="10" 
+			/> <field name="机构序列" id="ORGSEQ" type="string" length="512" /> <field name="机构类型" 
+			id="ORGTYPE" type="string" length="12" /> <field name="机构地址" id="ORGADDR" 
+			type="string" length="256" /> <field name="邮编" id="ZIPCODE" type="string" 
+			length="10" /> <field name="机构主管岗位" id="MANAPOSITION" type="int" length="10" 
+			/> <field name="机构主管人员" id="MANAGERID" type="int" length="10" /> <field name="机构管理员" 
+			id="ORGMANAGER" type="string" length="128" /> <field name="联系人" id="LINKMAN" 
+			type="string" length="30" /> <field name="联系电话" id="LINKTEL" type="string" 
+			length="20" /> <field name="电子邮件" id="EMAIL" type="string" length="128" /> 
+			<field name="网站地址" id="WEBURL" type="string" length="512" /> <field name="生效日期" 
+			id="STARTDATE" type="datetime" /> <field name="失效日期" id="ENDDATE" type="datetime" 
+			/> <field name="机构状态" id="STATUS" type="string" length="255" /> <field name="所属地域" 
+			id="AREA" type="string" length="30" /> <field name="创建时间" id="CREATETIME" 
+			type="datetime" /> <field name="最近更新时间" id="LASTUPDATE" type="datetime" /> 
+			<field name="最近更新人员" id="UPDATOR" type="int" length="10" /> <field name="排列顺序编号" 
+			id="SORTNO" type="int" length="128" /> <field name="是否叶子节点" id="ISLEAF" type="string" 
+			length="1" /> <field name="子节点数" id="SUBCOUNT" type="int" length="10" /> 
+			<field name="备注" id="REMARK" type="string" length="512" /> </model> -->
 	</models>
 </bizmodel>
