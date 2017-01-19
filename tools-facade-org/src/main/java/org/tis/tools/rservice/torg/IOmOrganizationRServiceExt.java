@@ -16,5 +16,7 @@ import org.tis.tools.model.po.torg.OmOrganization;
 public interface IOmOrganizationRServiceExt {
 	
 	public List<OmEmployee> loadEmpByOrg(String orgId);
+	
+	public Integer genOrgId();
 
 }

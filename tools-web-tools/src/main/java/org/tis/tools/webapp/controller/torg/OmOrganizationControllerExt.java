@@ -15,6 +15,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.tis.tools.base.Page;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.model.po.torg.OmEmployee;
 import org.tis.tools.model.po.torg.OmOrganization;
@@ -38,7 +39,15 @@ public class OmOrganizationControllerExt extends BaseController {
 	@Autowired
 	IOmOrganizationRServiceExt omOrganizationRServiceExt;
 	
-	
+	/**
+	 * 加载JsTree节点数据
+	 * 
+	 * @param model
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(value="/treeList",method=RequestMethod.GET)
 	public String testGetController(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -121,8 +130,17 @@ public class OmOrganizationControllerExt extends BaseController {
 		return null;
 	}
 
+	/**
+	 * 根据机构id查询机构信息
+	 * 
+	 * @param model
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(value = "/omOrganization/loadByOrgId")
-	public String executesd1(ModelMap model, @RequestBody String content,
+	public String loadByOrgId(ModelMap model, @RequestBody String content,
 			HttpServletRequest request, HttpServletResponse response) {
 		try {
 			JSONObject jsonObj = JSONObject.fromObject(content);
@@ -137,7 +155,7 @@ public class OmOrganizationControllerExt extends BaseController {
 		return null;
 	}
 	/**
-	 * 新增编辑控制属性
+	 * 新增编辑机构
 	 * 
 	 * @param model
 	 * @param content
@@ -157,6 +175,7 @@ public class OmOrganizationControllerExt extends BaseController {
 			JSONObject jsonObj = JSONObject.fromObject(content);
 			JSONObject job = jsonObj.getJSONObject("item");
 			final OmOrganization p = new OmOrganization();
+		
 			JSONObject.toBean(job, p, jsonConfig);
 			//p.setOrgid(Integer.parseInt(attrValStr));
 			if (StringUtils.isNotEmpty(p.getId())) {
@@ -164,7 +183,8 @@ public class OmOrganizationControllerExt extends BaseController {
 				result.put("retCode", "1");
 				result.put("retMessage", "编辑成功！");
 			} else {
-				wc.andEquals("orgid", p.getOrgid());
+				
+				wc.andEquals("orgcode", p.getOrgcode());
 				List<OmOrganization> orgs = omOrganizationRService.query(wc);
 				if (orgs.size() > 0) {
 					result.put("retCode", "2");
@@ -172,6 +192,19 @@ public class OmOrganizationControllerExt extends BaseController {
 					AjaxUtils.ajaxJson(response, JSONObject.fromObject(result, jsonConfig).toString());
 					return null;
 				}
+				Integer genOrgId = omOrganizationRServiceExt.genOrgId();
+				if(p.getParentorgid() != null) {
+					OmOrganization parOrg = omOrganizationRService.query(new WhereCondition()
+							.andEquals("orgId", p.getParentorgid())).get(0);
+					p.setOrglevel(parOrg.getOrglevel() + 1);
+					p.setOrgseq(parOrg.getOrgseq() + "." + genOrgId );
+					
+				} else {
+					p.setOrglevel(1);
+					p.setOrgseq("." + genOrgId);
+				}
+				p.setOrgid(omOrganizationRServiceExt.genOrgId());
+				
 				p.setId(sequenceBiz.generateId("OmOrganization"));
 				omOrganizationRService.insert(p);
 				result.put("retCode", "1");
@@ -185,6 +218,44 @@ public class OmOrganizationControllerExt extends BaseController {
 		return null;
 	}
 	
+	/**
+	 * 根据机构id查询子机构列表
+	 * 
+	 * @param model
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/omOrganization/loadChildOrgList")
+	public String loadChildOrgList(ModelMap model, @RequestBody String content,
+			HttpServletRequest request, HttpServletResponse response) {
+		try {
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			// 分页对象
+			Page page = getPage(jsonObj);
+			// 服务端排序规则
+			String orderGuize = getOrderGuize(JSONUtils.getStr(jsonObj, "orderGuize"));
+			// 组装查询条件
+			WhereCondition wc = new WhereCondition();
+			wc.setLength(page.getItemsperpage());
+			wc.setOffset((page.getCurrentPage() - 1) * page.getItemsperpage());
+			wc.setOrderBy(orderGuize);
+			initWanNengChaXun(jsonObj, wc);// 万能查询
+			List list = omOrganizationRService.query(wc);
+			JSONArray ja = JSONArray.fromObject(list,jsonConfig);
+			page.setTotalItems(omOrganizationRService.count(wc));
+			Map map = new HashMap();
+			map.put("page", page);
+			map.put("list", ja);
+			String s=JSONObject.fromObject(map,jsonConfig).toString();
+			AjaxUtils.ajaxJson(response,s );
+		} catch (Exception e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, "查询失败!");
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	private Map<String, Object> responseMsg ;
 	@Override

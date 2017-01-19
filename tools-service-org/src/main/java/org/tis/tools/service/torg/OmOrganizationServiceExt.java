@@ -23,5 +23,12 @@ public class OmOrganizationServiceExt {
 		return omOrganizationMapperExt.loadEmpByOrg(orgId);
 		
 	}
+	
+	public Integer genOrgId() {
+		Integer orgId = omOrganizationMapperExt.queryOrgId();
+		omOrganizationMapperExt.updateOrgId(orgId + 1); 
+		return orgId;
+		
+	}
 
 }

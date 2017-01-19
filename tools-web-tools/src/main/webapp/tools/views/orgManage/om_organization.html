@@ -29,7 +29,7 @@
                                 <div class="portlet green-meadow box">
                                     <div class="portlet-title">
                                         <div class="caption">
-                                            <i class="fa fa-cogs"></i>机构管理
+                                            <i class="fa fa-cogs"></i>机构管理{{currentOrgId}}
                                         </div>
                                         <div class="tools">
                                             <a href="javascript:;" class="reload">
@@ -272,7 +272,7 @@
                                                                                             ng-click="orgs.nextPage()"
                                                                                             class="btn btn-sm default next" title="Next"><i
                                                                                             class="fa fa-angle-right"></i></a> 页,&nbsp;&nbsp;&nbsp;总<span
-                                                                                            class="pagination-panel-total">{{orgs.searchForm.page.totalPages}}</span>页
+                                                                                            class="pagination-panel-total">{{emps.searchForm.page.totalPages}}</span>页
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="dataTables_length">
@@ -282,7 +282,7 @@
                                                                                     </select> 条</label>
                                                                                 </div>
                                                                                 <div class="dataTables_info" role="status" aria-live="polite">
-                                                                                    <span class="seperator">|</span>总计{{orgs.searchForm.page.totalItems}}
+                                                                                    <span class="seperator">|</span>总计{{emps.searchForm.page.totalItems}}
                                                                                     条
                                                                                 </div>
                                                                             </div>
@@ -536,7 +536,7 @@
                                                                                                     <button class="btn btn-sm green filter-submit margin-bottom" ng-click="org.saveOrg(org.item)">保存 </button>
                                                                                                 </div>
                                                                                                 <div class="col-md-2">
-                                                                                                    <button class="btn btn-sm filter-submit margin-bottom" ng-click="orgs.reset()">重  置 </button>
+                                                                                                    <button class="btn btn-sm filter-submit margin-bottom" ng-click="org.reset()">重  置 </button>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -548,25 +548,25 @@
                                                                 </div>
                                                             </div>
                                                         </uib-tab>
-                                                        <uib-tab heading="下级机构">
+                                                        <uib-tab heading="下级机构" ng-click="childOrg.initChildOrgList(currentOrgId)">
                                                             <!-- BEGIN FORM-->
                                                             <div class="portlet-body">
                                                                 <div class="table-container">
                                                                     <!--开始table尾部分页以及工具栏-->
                                                                     <div class="row" >
-                                                                        <div class="col-md-8 " >
+                                                                        <div class="col-md-8 col-ms-12" >
                                                                             <div class="dataTables_paginate">
                                                                                 <div class="pagination-panel">
-                                                                                    第 <a ng-click="orgs.prePage()"
+                                                                                    第 <a ng-click="childOrg.prePage()"
                                                                                          class="btn btn-sm default prev" title="Prev"><i
                                                                                         class="fa fa-angle-left"></i></a><input type="text"
                                                                                                                                 ng-model="orgs.searchForm.page.currentPage"
                                                                                                                                 class="pagination-panel-input form-control input-mini input-inline input-sm"
                                                                                                                                 maxlenght="5" style="text-align: center; margin: 0 5px;"><a
-                                                                                        ng-click="orgs.nextPage()"
+                                                                                        ng-click="childOrg.nextPage()"
                                                                                         class="btn btn-sm default next" title="Next"><i
                                                                                         class="fa fa-angle-right"></i></a> 页,&nbsp;&nbsp;&nbsp;总<span
-                                                                                        class="pagination-panel-total">{{orgs.searchForm.page.totalPages}}</span>页
+                                                                                        class="pagination-panel-total">{{childOrg.searchForm.page.totalPages}}</span>页
                                                                                 </div>
                                                                             </div>
                                                                             <div class="dataTables_length">
@@ -576,12 +576,14 @@
                                                                                 </select> 条</label>
                                                                             </div>
                                                                             <div class="dataTables_info" role="status" aria-live="polite">
-                                                                                <span class="seperator">|</span>总计{{orgs.searchForm.page.totalItems}}
+                                                                                <span class="seperator">|</span>总计{{childOrg.searchForm.page.totalItems}}
                                                                                 条
                                                                             </div>
                                                                         </div>
-                                                                        <div class="actions col-md-offset-3 col-md-1">
-                                                                            <button class="btn btn-sm btn-primary filter-submit margin-bottom" ng-click="AttrAdd()">新增 </button>
+                                                                        <div class="actions col-md-4 col-ms-12">
+                                                                            <div style="float: right">
+                                                                            <button class="btn btn-sm btn-primary filter-submit margin-bottom" ng-click="addOrg_win(currentOrgId,org.item.orgname)">新增 </button>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <!--结束table尾部分页以及工具栏-->
@@ -609,7 +611,7 @@
                                                                         </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                        <tr ng-repeat="co in org.childOrgList" ng-class-odd="'odd'" ng-class-even="'even'">
+                                                                        <tr ng-repeat="co in childOrg.dataList" ng-class-odd="'odd'" ng-class-even="'even'">
                                                                             <td>{{$index+1}}</td>
                                                                             <td>
                                                                                 {{co.orgcode}}

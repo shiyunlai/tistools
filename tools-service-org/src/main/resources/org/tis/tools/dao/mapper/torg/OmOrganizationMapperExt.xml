@@ -14,6 +14,14 @@
 		(select empid from om_emporg where orgid = #{orgId}) o on e.empid=o.empid
 	</select>
 
+	<select id="queryOrgId" resultType="Integer">
+		select *  from OM_COUNT
+	</select>
+	
+	<update id="updateOrgId" parameterType="Integer">
+		update OM_COUNT set ORGID = #{orgId}
+	</update>
+	
 
 	<sql id="Base_Column_List">
 		id

@@ -1,5 +1,5 @@
 
-MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $scope, $state, $stateParams, organization_service, employee_service, filterFilter, $modal, $http, $timeout, $interval) {
+MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $scope, $state, $stateParams, organization_service, employee_service,childOrg_service, filterFilter, $modal, $http, $timeout, $interval) {
 
     $scope.$on('$viewContentLoaded', function () {
         // initialize core components
@@ -11,9 +11,19 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
     $scope.orgs = orgs;
     initController($scope, orgs, 'orgs', organization_service, filterFilter);
     orgs.search1();
+
+    var emps = {};
+    $scope.emps = emps;
+    emps.initEmpList = function () {
+        initController($scope, emps, 'emps', employee_service, filterFilter);
+        emps.search1();
+    }
+
+
+
+
     var org = {};
     $scope.org = org;
-
     org.saveOrg = function (item) {
         var promise = organization_service.save(item);
         promise.then(function (data) {
@@ -29,19 +39,58 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
 
     }
 
+    var childOrg = {};
+    $scope.childOrg = childOrg;
+    initController($scope, childOrg, 'childOrg', childOrg_service, filterFilter);
+    childOrg.initChildOrgList = function (data) {
+        childOrg.searchForm.searchItems = {"parentorgid_eq":data }
+        console.log(childOrg.searchForm.searchItems)
+        //searchForm.searchItems
+        childOrg.search1();
+    }
 
-    var emps = {};
-    $scope.emps = emps;
-    initController($scope, emps, 'emps', employee_service, filterFilter);
-    emps.initEmpList = function () {
-        emps.search1();
+    $scope.addOrg_win = function(id,name){
+        openwindow($modal, 'views/orgManage/org_add.html', 'lg',
+            function ($scope, $modalInstance) {
+                var item = {};
+                $scope.item = item;
+                var parentorg = null;
+                $scope.parentorg = parentorg;
+                if(!isNull(id)) {
+                    $scope.parentorg = name;
+                    item.parentorgid = id;
+                }
+
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+                $scope.saveOrg = function(item){
+                    organization_service.save(item).then(function (data) {
+                        if (data.retCode == '1') {
+                            toastr['success'](data.retMessage, "新增成功！");
+                            $modalInstance.close();
+                            $("#org_tree").jstree(true).refresh("#" + id);
+                        } else if(data.retCode == '2') {
+                            toastr['error'](data.retMessage, "新增失败！");
+                        } else {
+                            toastr['error']( "新增异常！");
+                        }
+                    });
+                }
+            }
+        )
+
     }
 
 
 
-    var viewType = "root";
-    $scope.viewType = viewType;
 
+    var viewType = "root";
+    var currentOrgId = "";
+    $scope.viewType = viewType;
+    $scope.currentOrgId = currentOrgId;
+
+    //JsTree
     var orgTree = $("#org_tree");
     orgTree.jstree({
         "core": {
@@ -116,11 +165,16 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
         }
     });
     orgTree.bind("select_node.jstree", function (obj, data) {
-        var a=data.node.data;
+        var viewType =data.node.data;
+        var orgId = data.node.id;
         $scope.$apply(function () {
-            $scope.viewType=a;
+            $scope.viewType= ""
         });
-        if(a == 'org') {
+        $scope.$apply(function () {
+            $scope.viewType= viewType;
+            $scope.currentOrgId = orgId;
+        });
+        if(viewType == 'org') {
             organization_service.loadByOrgId(data.node.id).then(function (res) {
                 if(res.parentorgid == 0) {
                     res.parentorgid = undefined
@@ -128,10 +182,9 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
                 $scope.org.item = res;
             });
         }
+        if(viewType == 'user')
         $scope.$apply(function () {
             $scope.viewType=a;
         });
-
-
     });
 });

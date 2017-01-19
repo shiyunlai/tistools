@@ -1,0 +1,200 @@
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" ng-form="bigform">
+    <div class="col-md-12">
+
+        <div class="portlet light bordered ">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-pencil"></i>新增机构2
+                </div>
+                <div class="actions btn-set">
+                    <button type="button" name="back" class="btn btn-primary" ng-if="bigform.$invalid == false" ng-disabled="bigform.$invalid" popover-trigger="mouseenter" ng-click="saveOrg(item)" > 保存
+                    </button>
+                    <button type="button" name="back" class="btn default" ng-if="bigform.$invalid == true" ng-disabled="bigform.$invalid" popover-trigger="mouseenter" ng-click="saveOrg(item)" > 保存
+                    </button>
+                    <button type="button" name="back" class="btn default" ng-click="cancel()"><i
+                            class="fa fa-angle-left"></i> 返回
+                    </button>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form">
+                                <form action="#" name="myform" class="form-horizontal">
+                                    <div class="form-body">
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">机构代码<span ng-class="{required:myform.orgcode.$invalid}">*</span></label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="item.orgcode" name="orgcode"
+                                                           required/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">机构名称<span ng-class="{required:myform.orgname.$invalid}">*</span></label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="item.orgname" name="orgname" required/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">上级机构3{{parentorg}}</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="parentorg" ng-disabled="parentorg != null"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">机构类型</label>
+                                                <div class="col-md-8">
+                                                    <select class="form-control" ng-model="item.orgtype">
+                                                        <option value="0">总行</option>
+                                                        <option value="1">分行</option>
+                                                        <option value="2">支行</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">机构等级</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="item.orglevel"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">机构状态</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="item.status"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">排列顺序</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="item.orgseq"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">所属地域</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="item.area"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">机构地址</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="item.orgaddr"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">邮编</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="item.zipcode"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">机构主管岗位</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="item.manaposition"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">机构主管人员</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="item.managerid"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">联系人</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="item.linkman"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">联系电话</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="item.linktel"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">电子邮件</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="item.email"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">网站地址</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="item.weburl"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">生效日期</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="item.startdate"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">失效日期</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="item.enddate"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group" >
+                                                <label class="control-label col-md-2">备注</label>
+                                                <div class="col-md-10">
+                                                    <textarea  class="form-control" ng-model="item.remark"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    ComponentsDateTimePickers.init(); // init todo page
+</script>

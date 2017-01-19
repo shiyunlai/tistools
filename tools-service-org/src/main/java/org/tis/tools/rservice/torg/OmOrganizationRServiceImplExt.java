@@ -21,6 +21,12 @@ public class OmOrganizationRServiceImplExt implements IOmOrganizationRServiceExt
 		return omOrganizationServiceExt.loadEmpByOrg(orgId);
 	}
 
+	@Override
+	public Integer genOrgId() {
+		// TODO Auto-generated method stub
+		return omOrganizationServiceExt.genOrgId();
+	}
+
 
 
 }

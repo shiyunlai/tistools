@@ -7,4 +7,8 @@ import org.tis.tools.model.po.torg.OmEmployee;
 public interface OmOrganizationMapperExt {
 
 	public List<OmEmployee> loadEmpByOrg(String orgId);
+	
+	public Integer queryOrgId();
+	
+	public void updateOrgId(Integer orgId);
 }

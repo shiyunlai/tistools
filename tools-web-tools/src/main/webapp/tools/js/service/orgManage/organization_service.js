@@ -18,6 +18,17 @@ MetronicApp.factory('organization_service',['$http', '$q', function ($http,$q) {
         return res;
     }
 
+    service.loadChildOrgList = function(searchForm) {
+        var res;
+        if (isdebug) {
+        } else {
+            res = $http.post(manurl + "/torg/omOrganization/list",searchForm).then(function (response) {
+                return response.data;
+            });
+        }
+        return res;
+    }
+
     service.loadTreeData = function () {
         var res;
         if (isdebug) {
@@ -28,17 +39,6 @@ MetronicApp.factory('organization_service',['$http', '$q', function ($http,$q) {
                 console.log(res1[0].jt)
                 return res1[0].jt
 
-            });
-        }
-        return res;
-    }
-
-    service.funcCodeList = function (selected) {
-        var res;
-        if (isdebug) {
-        } else {
-            res = $http.post(manurl + "/AttrController/attr_func_codeList",{item:selected}).then(function (response) {
-                return response.data;
             });
         }
         return res;
@@ -130,6 +130,22 @@ MetronicApp.factory('employee_service',['$http', '$q', function ($http,$q) {
     }
 
 
+
+    return service;
+}]);
+MetronicApp.factory('childOrg_service',['$http', '$q', function ($http,$q) {
+    var service={};
+
+    service.query = function(searchForm) {
+        var res;
+        if (isdebug) {
+        } else {
+            res = $http.post(manurl + "/torg/omOrganization/loadChildOrgList",searchForm).then(function (response) {
+                return response.data;
+            });
+        }
+        return res;
+    }
 
     return service;
 }]);
