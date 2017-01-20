@@ -44,9 +44,24 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
     initController($scope, childOrg, 'childOrg', childOrg_service, filterFilter);
     childOrg.initChildOrgList = function (data) {
         childOrg.searchForm.searchItems = {"parentorgid_eq":data }
-        console.log(childOrg.searchForm.searchItems)
-        //searchForm.searchItems
         childOrg.search1();
+    }
+    childOrg.del = function (id) {
+        var res = confirm("删除是不可恢复的，你确认要删除吗？");
+        if (res) {
+            var promise = childOrg_service.delete(id);
+            promise.then(function (data) {
+                if(data.retCode == "1") {
+                    toastr['success'](data.retMessage, "恭喜您！")
+                    childOrg.searchN();
+                    $("#org_tree").jstree(true).refresh("#" + currentOrgId);
+                } else if(data.retCode == "2") {
+                    toastr['error'](data.retMessage, "删除失败！");
+                } else {
+                    toastr['error']( "删除异常！");
+                }
+            });
+        }
     }
 
     $scope.addOrg_win = function(id,name){

@@ -147,6 +147,17 @@ MetronicApp.factory('childOrg_service',['$http', '$q', function ($http,$q) {
         return res;
     }
 
+    service.delete = function(id) {
+        var res;
+        if(isdebug){
+        } else {
+            res = $http.post(manurl + "/torg/omOrganization/delOrgById",{id:id}).then(function (response) {
+                return response.data;
+            });
+        }
+        return res;
+    }
+
     return service;
 }]);
 

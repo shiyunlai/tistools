@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -197,11 +199,11 @@ public class OmOrganizationControllerExt extends BaseController {
 					OmOrganization parOrg = omOrganizationRService.query(new WhereCondition()
 							.andEquals("orgId", p.getParentorgid())).get(0);
 					p.setOrglevel(parOrg.getOrglevel() + 1);
-					p.setOrgseq(parOrg.getOrgseq() + "." + genOrgId );
+					p.setOrgseq(parOrg.getOrgseq() + genOrgId + "." );
 					
 				} else {
 					p.setOrglevel(1);
-					p.setOrgseq("." + genOrgId);
+					p.setOrgseq("." + genOrgId + ".");
 				}
 				p.setOrgid(omOrganizationRServiceExt.genOrgId());
 				
@@ -242,10 +244,10 @@ public class OmOrganizationControllerExt extends BaseController {
 			wc.setOffset((page.getCurrentPage() - 1) * page.getItemsperpage());
 			wc.setOrderBy(orderGuize);
 			initWanNengChaXun(jsonObj, wc);// 万能查询
-			List list = omOrganizationRService.query(wc);
+			List<OmOrganization> list = omOrganizationRService.query(wc);
 			JSONArray ja = JSONArray.fromObject(list,jsonConfig);
 			page.setTotalItems(omOrganizationRService.count(wc));
-			Map map = new HashMap();
+			Map<String, Object> map = new HashMap<>();
 			map.put("page", page);
 			map.put("list", ja);
 			String s=JSONObject.fromObject(map,jsonConfig).toString();
@@ -253,6 +255,47 @@ public class OmOrganizationControllerExt extends BaseController {
 		} catch (Exception e) {// TODO
 			AjaxUtils.ajaxJsonErrorMessage(response, "查询失败!");
 			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * 根据id删除机构信息
+	 * 
+	 * @param model
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/omOrganization/delOrgById")
+	public String orgDel(ModelMap model, @RequestBody String content, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try {
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			final String id = jsonObj.getString("id");
+			if (StringUtils.isNotEmpty(id)) {
+				transactionTemplate.execute(new TransactionCallback<Map<String, Object>>() {
+					@Override
+					public Map<String, Object> doInTransaction(TransactionStatus arg0) {
+						WhereCondition wc = new WhereCondition();
+						wc.andEquals("id", id);
+						// 删除
+						omOrganizationRService.deleteByCondition(wc);
+						return null;
+					}
+				});
+				result.put("retCode", "1");
+				result.put("retMessage", "成功删除");
+			} else {
+				result.put("retCode", "2");
+				result.put("retMessage", "id不能为空！");
+			}
+			AjaxUtils.ajaxJson(response, JSONObject.fromObject(result, jsonConfig).toString());
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "删除机构信息异常！");
+			logger.error("删除机构 exception : ", e);
 		}
 		return null;
 	}
