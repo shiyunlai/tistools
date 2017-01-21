@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.mapper.torg.OmPositionMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.torg.OmPosition">
+	    INSERT INTO OM_POSITION (id
+  ,positionid
+  ,posicode
+  ,posiname
+  ,posilevel
+  ,manaposi
+  ,dutyid
+  ,orgid
+  ,positionseq
+  ,positype
+  ,createtime
+  ,lastupdate
+  ,updator
+  ,startdate
+  ,enddate
+  ,status
+  ,isleaf
+  ,subcount
+  )
+	    VALUES (#{id,jdbcType=VARCHAR},
+  #{positionid,jdbcType=INTEGER},
+  #{posicode,jdbcType=VARCHAR},
+  #{posiname,jdbcType=VARCHAR},
+  #{posilevel,jdbcType=INTEGER},
+  #{manaposi,jdbcType=INTEGER},
+  #{dutyid,jdbcType=INTEGER},
+  #{orgid,jdbcType=INTEGER},
+  #{positionseq,jdbcType=VARCHAR},
+  #{positype,jdbcType=VARCHAR},
+  #{createtime,jdbcType=TIMESTAMP},
+  #{lastupdate,jdbcType=TIMESTAMP},
+  #{updator,jdbcType=INTEGER},
+  #{startdate,jdbcType=TIMESTAMP},
+  #{enddate,jdbcType=TIMESTAMP},
+  #{status,jdbcType=VARCHAR},
+  #{isleaf,jdbcType=VARCHAR},
+  #{subcount,jdbcType=INTEGER}
+  )
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.torg.OmPosition">
+    	UPDATE OM_POSITION 
+	    <set>
+		<if test="id != null" >
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+		<if test="positionid != null" >
+        positionid = #{positionid,jdbcType=INTEGER},
+      </if>
+		<if test="posicode != null" >
+        posicode = #{posicode,jdbcType=VARCHAR},
+      </if>
+		<if test="posiname != null" >
+        posiname = #{posiname,jdbcType=VARCHAR},
+      </if>
+		<if test="posilevel != null" >
+        posilevel = #{posilevel,jdbcType=INTEGER},
+      </if>
+		<if test="manaposi != null" >
+        manaposi = #{manaposi,jdbcType=INTEGER},
+      </if>
+		<if test="dutyid != null" >
+        dutyid = #{dutyid,jdbcType=INTEGER},
+      </if>
+		<if test="orgid != null" >
+        orgid = #{orgid,jdbcType=INTEGER},
+      </if>
+		<if test="positionseq != null" >
+        positionseq = #{positionseq,jdbcType=VARCHAR},
+      </if>
+		<if test="positype != null" >
+        positype = #{positype,jdbcType=VARCHAR},
+      </if>
+		<if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+		<if test="lastupdate != null" >
+        lastupdate = #{lastupdate,jdbcType=TIMESTAMP},
+      </if>
+		<if test="updator != null" >
+        updator = #{updator,jdbcType=INTEGER},
+      </if>
+		<if test="startdate != null" >
+        startdate = #{startdate,jdbcType=TIMESTAMP},
+      </if>
+		<if test="enddate != null" >
+        enddate = #{enddate,jdbcType=TIMESTAMP},
+      </if>
+		<if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+		<if test="isleaf != null" >
+        isleaf = #{isleaf,jdbcType=VARCHAR},
+      </if>
+		<if test="subcount != null" >
+        subcount = #{subcount,jdbcType=INTEGER},
+      </if>
+	    </set>
+	    WHERE id = #{id}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.torg.OmPosition">
+    	UPDATE OM_POSITION 
+	    <set>
+        id = #{id,jdbcType=VARCHAR},
+        positionid = #{positionid,jdbcType=INTEGER},
+        posicode = #{posicode,jdbcType=VARCHAR},
+        posiname = #{posiname,jdbcType=VARCHAR},
+        posilevel = #{posilevel,jdbcType=INTEGER},
+        manaposi = #{manaposi,jdbcType=INTEGER},
+        dutyid = #{dutyid,jdbcType=INTEGER},
+        orgid = #{orgid,jdbcType=INTEGER},
+        positionseq = #{positionseq,jdbcType=VARCHAR},
+        positype = #{positype,jdbcType=VARCHAR},
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+        lastupdate = #{lastupdate,jdbcType=TIMESTAMP},
+        updator = #{updator,jdbcType=INTEGER},
+        startdate = #{startdate,jdbcType=TIMESTAMP},
+        enddate = #{enddate,jdbcType=TIMESTAMP},
+        status = #{status,jdbcType=VARCHAR},
+        isleaf = #{isleaf,jdbcType=VARCHAR},
+        subcount = #{subcount,jdbcType=INTEGER},
+	    </set>
+	    WHERE id = #{id}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from OM_POSITION where id = #{id}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from OM_POSITION <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE OM_POSITION 
+	   <set>
+		<if test="domain.id != null" >
+        id = #{domain.id,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.positionid != null" >
+        positionid = #{domain.positionid,jdbcType=INTEGER},
+      </if>
+		<if test="domain.posicode != null" >
+        posicode = #{domain.posicode,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.posiname != null" >
+        posiname = #{domain.posiname,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.posilevel != null" >
+        posilevel = #{domain.posilevel,jdbcType=INTEGER},
+      </if>
+		<if test="domain.manaposi != null" >
+        manaposi = #{domain.manaposi,jdbcType=INTEGER},
+      </if>
+		<if test="domain.dutyid != null" >
+        dutyid = #{domain.dutyid,jdbcType=INTEGER},
+      </if>
+		<if test="domain.orgid != null" >
+        orgid = #{domain.orgid,jdbcType=INTEGER},
+      </if>
+		<if test="domain.positionseq != null" >
+        positionseq = #{domain.positionseq,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.positype != null" >
+        positype = #{domain.positype,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.createtime != null" >
+        createtime = #{domain.createtime,jdbcType=TIMESTAMP},
+      </if>
+		<if test="domain.lastupdate != null" >
+        lastupdate = #{domain.lastupdate,jdbcType=TIMESTAMP},
+      </if>
+		<if test="domain.updator != null" >
+        updator = #{domain.updator,jdbcType=INTEGER},
+      </if>
+		<if test="domain.startdate != null" >
+        startdate = #{domain.startdate,jdbcType=TIMESTAMP},
+      </if>
+		<if test="domain.enddate != null" >
+        enddate = #{domain.enddate,jdbcType=TIMESTAMP},
+      </if>
+		<if test="domain.status != null" >
+        status = #{domain.status,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.isleaf != null" >
+        isleaf = #{domain.isleaf,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.subcount != null" >
+        subcount = #{domain.subcount,jdbcType=INTEGER},
+      </if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadById" parameterType="String" resultType="org.tis.tools.model.po.torg.OmPosition">
+		select <include refid="Base_Column_List"/> from OM_POSITION where id = #{id}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.torg.OmPosition" parameterType="org.tis.tools.base.WhereCondition" >
+    	<if test="length > 0 and url == 'oracle'" >
+    	select <include refid="Base_Column_List" /> from
+   			(select a.*,rownum row_num from
+      			(</if>
+      			select <include refid="Base_Column_List" /> from OM_POSITION <include refid="Where_Clause" />
+        			<if test="orderBy != null" >${orderBy}</if>
+        			<if test="length > 0 and url == 'mysql'" >LIMIT ${offset}, ${length}</if>
+        		<if test="length > 0 and url == 'oracle'" >) a
+   			) b 
+		where b.row_num between ${offset} and ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from OM_POSITION <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+	  id
+,positionid
+,posicode
+,posiname
+,posilevel
+,manaposi
+,dutyid
+,orgid
+,positionseq
+,positype
+,createtime
+,lastupdate
+,updator
+,startdate
+,enddate
+,status
+,isleaf
+,subcount
+	</sql>
+</mapper>

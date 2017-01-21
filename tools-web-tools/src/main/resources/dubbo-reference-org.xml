@@ -32,5 +32,11 @@
 		version="1.0" 
 		interface="org.tis.tools.rservice.torg.IOmOrganizationRServiceExt" 
 		check="false" />
+	<dubbo:reference 
+		id="omPositionRService" 
+		group="org"
+		version="1.0" 
+		interface="org.tis.tools.rservice.torg.IOmPositionRService" 
+		check="false" />
 	
 </beans>

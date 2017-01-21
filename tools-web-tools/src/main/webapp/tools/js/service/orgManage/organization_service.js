@@ -55,6 +55,17 @@ MetronicApp.factory('organization_service',['$http', '$q', function ($http,$q) {
         return res;
     }
 
+    service.loadById = function(id){
+        var res;
+        if(isdebug){
+        } else {
+            res = $http.post(manurl + "/torg/omOrganization/list/id",{id:id}).then(function (response) {
+                return response.data;
+            });
+        }
+        return res;
+    }
+
     service.attrDel = function (id) {
         var res;
         if(isdebug){
@@ -77,16 +88,6 @@ MetronicApp.factory('organization_service',['$http', '$q', function ($http,$q) {
         return res;
     }
 
-    service.dictList = function () {
-        var res;
-        if (isdebug) {
-        } else {
-            res = $http.post(manurl + "/AttrController/dictList").then(function (response) {
-                return response.data;
-            });
-        }
-        return res;
-    }
 
     return service;
 }]);
@@ -157,6 +158,56 @@ MetronicApp.factory('childOrg_service',['$http', '$q', function ($http,$q) {
         }
         return res;
     }
+
+    return service;
+}]);
+MetronicApp.factory('childPosi_service',['$http', '$q', function ($http,$q) {
+    var service={};
+
+    service.query = function(searchForm) {
+        var res;
+        if (isdebug) {
+        } else {
+            res = $http.post(manurl + "/torg/omOrganization/loadChildPosiList",searchForm).then(function (response) {
+                return response.data;
+            });
+        }
+        return res;
+    }
+
+    service.save = function (item) {
+        var res;
+        if(isdebug){
+        } else {
+            res = $http.post(manurl + "/torg/omPosition/save",{item:item}).then(function (response) {
+                return response.data;
+            });
+        }
+        return res;
+    }
+
+    service.delete = function(id) {
+        var res;
+        if(isdebug){
+        } else {
+            res = $http.post(manurl + "/torg/omPosition/delPosiById",{id:id}).then(function (response) {
+                return response.data;
+            });
+        }
+        return res;
+    }
+
+    service.loadById = function(id){
+        var res;
+        if(isdebug){
+        } else {
+            res = $http.post(manurl + "/torg/omPosition/list/id",{id:id}).then(function (response) {
+                return response.data;
+            });
+        }
+        return res;
+    }
+
 
     return service;
 }]);

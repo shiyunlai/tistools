@@ -1,5 +1,5 @@
 
-MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $scope, $state, $stateParams, organization_service, employee_service,childOrg_service, filterFilter, $modal, $http, $timeout, $interval) {
+MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $scope, $state, $stateParams, organization_service, employee_service,childOrg_service, childPosi_service, filterFilter, $modal, $http, $timeout, $interval) {
 
     $scope.$on('$viewContentLoaded', function () {
         // initialize core components
@@ -19,7 +19,12 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
         emps.search1();
     }
 
-
+    var viewType = "root";
+    var currentOrgId = "";
+    var currentOrgName = "";
+    $scope.viewType = viewType;
+    $scope.currentOrgId = currentOrgId;
+    $scope.currentOrgName = currentOrgName;
 
 
     var org = {};
@@ -39,6 +44,7 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
 
     }
 
+    /***下级机构信息---开始*****/
     var childOrg = {};
     $scope.childOrg = childOrg;
     initController($scope, childOrg, 'childOrg', childOrg_service, filterFilter);
@@ -46,36 +52,17 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
         childOrg.searchForm.searchItems = {"parentorgid_eq":data }
         childOrg.search1();
     }
-    childOrg.del = function (id) {
-        var res = confirm("删除是不可恢复的，你确认要删除吗？");
-        if (res) {
-            var promise = childOrg_service.delete(id);
-            promise.then(function (data) {
-                if(data.retCode == "1") {
-                    toastr['success'](data.retMessage, "恭喜您！")
-                    childOrg.searchN();
-                    $("#org_tree").jstree(true).refresh("#" + currentOrgId);
-                } else if(data.retCode == "2") {
-                    toastr['error'](data.retMessage, "删除失败！");
-                } else {
-                    toastr['error']( "删除异常！");
-                }
-            });
-        }
-    }
+    
 
-    $scope.addOrg_win = function(id,name){
+    childOrg.add = function(id,name){
         openwindow($modal, 'views/orgManage/org_add.html', 'lg',
             function ($scope, $modalInstance) {
                 var item = {};
                 $scope.item = item;
-                var parentorg = null;
-                $scope.parentorg = parentorg;
                 if(!isNull(id)) {
                     $scope.parentorg = name;
                     item.parentorgid = id;
                 }
-
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                 };
@@ -97,13 +84,152 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
 
     }
 
+    childOrg.edit = function(id,name){
+        openwindow($modal, 'views/orgManage/org_add.html', 'lg',
+            function ($scope, $modalInstance) {
 
+                organization_service.loadById(id).then(function (res) {
+                    $scope.item = res;
+                    $scope.parentorg = name;
+                });
 
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+                $scope.saveOrg = function(item){
+                    alert(JSON.stringify(item))
+                    organization_service.save(item).then(function (data) {
+                        if (data.retCode == '1') {
+                            toastr['success'](data.retMessage, "编辑成功！");
+                            $modalInstance.close();
+                            $("#org_tree").jstree(true).refresh("#" + id);
+                        } else if(data.retCode == '2') {
+                            toastr['error'](data.retMessage, "编辑失败！");
+                        } else {
+                            toastr['error']( "编辑异常！");
+                        }
+                    });
+                }
+            }
+        )
 
-    var viewType = "root";
-    var currentOrgId = "";
-    $scope.viewType = viewType;
-    $scope.currentOrgId = currentOrgId;
+    }
+    
+    childOrg.del = function (id) {
+        var res = confirm("删除是不可恢复的，你确认要删除吗？");
+        if (res) {
+            var promise = childOrg_service.delete(id);
+            promise.then(function (data) {
+                if(data.retCode == "1") {
+                    toastr['success'](data.retMessage, "恭喜您！")
+                    childOrg.searchN();
+                    $("#org_tree").jstree(true).refresh("#" + currentOrgId);
+                } else if(data.retCode == "2") {
+                    toastr['error'](data.retMessage, "删除失败！");
+                } else {
+                    toastr['error']( "删除异常！");
+                }
+            });
+        }
+    }
+    /***下级机构信息---结束*****/
+
+    /***下级岗位信息---开始*****/
+    var childPosi = {};
+    $scope.childPosi = childPosi;
+    initController($scope, childPosi, 'childPosi', childPosi_service, filterFilter);
+    childPosi.initChildPosiList = function (data) {
+        childPosi.searchForm.searchItems = {"orgid_eq":data }
+        childPosi.search1();
+    }
+
+    childPosi.add = function(id,name){
+        openwindow($modal, 'views/orgManage/posi_add.html', 'lg',
+            function ($scope, $modalInstance) {
+                var item = {};
+                $scope.item = item;
+                if(!isNull(id)) {
+                    $scope.parentorg = name;
+                    item.orgid = id;
+                }
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+                $scope.savePosi = function(item){
+                    childPosi_service.save(item).then(function (data) {
+                        if (data.retCode == '1') {
+                            toastr['success'](data.retMessage, "新增成功！");
+                            $modalInstance.close();
+                            $("#org_tree").jstree(true).refresh("#" + id);
+                        } else if(data.retCode == '2') {
+                            toastr['error'](data.retMessage, "新增失败！");
+                        } else {
+                            toastr['error']( "新增异常！");
+                        }
+                    });
+                }
+            }
+        )
+
+    }
+
+    childPosi.edit = function(id,name){
+        openwindow($modal, 'views/orgManage/posi_add.html', 'lg',
+            function ($scope, $modalInstance) {
+
+                childPosi_service.loadById(id).then(function (res) {
+                    //暂时解决当外键为Integer类型并且为空时，从数据库转换到页面变为0 造成的ORA-02291: 违反完整约束条件 - 未找到父项关键字
+                    if(res.manaposi == 0) {
+                        res.manaposi = undefined;
+                    }
+                    if(res.dutyid == 0) {
+                        res.dutyid = undefined;
+                    }
+                    $scope.item = res;
+                    $scope.parentorg = name;
+                });
+
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+                $scope.savePosi = function(item){
+                    childPosi_service.save(item).then(function (data) {
+
+                        if (data.retCode == '1') {
+                            toastr['success'](data.retMessage, "编辑成功！");
+                            $modalInstance.close();
+                            $("#org_tree").jstree(true).refresh("#" + id);
+                        } else if(data.retCode == '2') {
+                            toastr['error'](data.retMessage, "编辑失败！");
+                        } else {
+                            toastr['error']( "编辑异常！");
+                        }
+                    });
+                }
+            }
+        )
+
+    }
+
+    childPosi.del = function (id) {
+        var res = confirm("删除是不可恢复的，你确认要删除吗？");
+        if (res) {
+            var promise = childPosi_service.delete(id);
+            promise.then(function (data) {
+                if(data.retCode == "1") {
+                    toastr['success'](data.retMessage, "恭喜您！")
+                    childPosi.searchN();
+                    $("#org_tree").jstree(true).refresh("#" + currentOrgId);
+                } else if(data.retCode == "2") {
+                    toastr['error'](data.retMessage, "删除失败！");
+                } else {
+                    toastr['error']( "删除异常！");
+                }
+            });
+        }
+    }
+    /***下级岗位信息---开始*****/
+
 
     //JsTree
     var orgTree = $("#org_tree");
@@ -180,14 +306,17 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
         }
     });
     orgTree.bind("select_node.jstree", function (obj, data) {
+
         var viewType =data.node.data;
         var orgId = data.node.id;
+        var orgName = data.node.text;
         $scope.$apply(function () {
             $scope.viewType= ""
         });
         $scope.$apply(function () {
             $scope.viewType= viewType;
             $scope.currentOrgId = orgId;
+            $scope.currentOrgName = orgName;
         });
         if(viewType == 'org') {
             organization_service.loadByOrgId(data.node.id).then(function (res) {
