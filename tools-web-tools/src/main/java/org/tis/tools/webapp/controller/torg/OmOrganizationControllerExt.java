@@ -92,7 +92,7 @@ public class OmOrganizationControllerExt extends BaseController {
 							orgTree.setData(JsTree.TYPE_ORG);
 							if (omOrganizationRService.query(new WhereCondition()
 									.andEquals("parentorgid", org.getOrgid())).size() > 0 ||
-									omOrganizationRServiceExt.loadEmpByOrg(org.getOrgid().toString()).size() > 0 ||
+									omOrganizationRServiceExt.loadEmpByOrg(new WhereCondition().andEquals("orgid", org.getOrgid().toString())).size() > 0 ||
 									omPositionRService.query(new WhereCondition().andEquals("orgid", org.getOrgid())).size() > 0) {
 								orgTree.setChildren(true);
 							}
@@ -112,7 +112,7 @@ public class OmOrganizationControllerExt extends BaseController {
 							orgTree.setData(JsTree.TYPE_ORG);
 							if (omOrganizationRService.query(new WhereCondition()
 									.andEquals("parentorgid", org.getOrgid())).size() > 0 ||
-									omOrganizationRServiceExt.loadEmpByOrg(org.getOrgid().toString()).size() > 0 ||
+									omOrganizationRServiceExt.loadEmpByOrg(new WhereCondition().andEquals("orgid", org.getOrgid().toString())).size() > 0 ||
 									omPositionRService.query(new WhereCondition().andEquals("orgid", org.getOrgid())).size() > 0) {
 								orgTree.setChildren(true);
 							}
@@ -133,15 +133,15 @@ public class OmOrganizationControllerExt extends BaseController {
 						}
 					}
 					//因人员与机构之间关系涉及中间表，故使用自定义sql语句查询
-					List<OmEmployee> empList = omOrganizationRServiceExt.loadEmpByOrg(id);
+					List<OmEmployee> empList = omOrganizationRServiceExt.loadEmpByOrg(new WhereCondition().andEquals("orgid", id));
 					if (empList != null && empList.size() > 0) {
 						for(OmEmployee emp : empList) {
 							JsTree empTree = new JsTree();
 							empTree.setId(id + "-" + emp.getEmpid().toString());
 							empTree.setText(emp.getEmpname());
 							empTree.setChildren(false);
-							empTree.setIcon(JsTree.USER_ICON);
-							empTree.setData(JsTree.TYPE_USER);
+							empTree.setIcon(JsTree.EMP_ICON);
+							empTree.setData(JsTree.TYPE_EMP);
 							list.add(empTree);
 						}
 					}
@@ -174,7 +174,31 @@ public class OmOrganizationControllerExt extends BaseController {
 			OmOrganization k =  omOrganizationRService.query(new WhereCondition().andEquals("orgid", Integer.parseInt(orgId))).get(0);
 			JSONObject jo = JSONObject.fromObject(k,jsonConfig);
 			AjaxUtils.ajaxJson(response, jo.toString());
-		} catch (Exception e) {// TODO
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "查询失败!");
+			e.printStackTrace();
+		}
+		return null;
+	}
+	/**
+	 * 根据岗位id查询岗位信息
+	 * 
+	 * @param model
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/omPosition/loadByPosiId")
+	public String loadByPosiId(ModelMap model, @RequestBody String content,
+			HttpServletRequest request, HttpServletResponse response) {
+		try {
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			String orgId = JSONUtils.getStr(jsonObj, "posiId");
+			OmPosition k =  omPositionRService.query(new WhereCondition().andEquals("positionid", Integer.parseInt(orgId))).get(0);
+			JSONObject jo = JSONObject.fromObject(k,jsonConfig);
+			AjaxUtils.ajaxJson(response, jo.toString());
+		} catch (Exception e) {
 			AjaxUtils.ajaxJsonErrorMessage(response, "查询失败!");
 			e.printStackTrace();
 		}
@@ -276,7 +300,7 @@ public class OmOrganizationControllerExt extends BaseController {
 			map.put("list", ja);
 			String s=JSONObject.fromObject(map,jsonConfig).toString();
 			AjaxUtils.ajaxJson(response,s );
-		} catch (Exception e) {// TODO
+		} catch (Exception e) {
 			AjaxUtils.ajaxJsonErrorMessage(response, "查询失败!");
 			e.printStackTrace();
 		}
@@ -356,7 +380,7 @@ public class OmOrganizationControllerExt extends BaseController {
 			map.put("list", ja);
 			String s=JSONObject.fromObject(map,jsonConfig).toString();
 			AjaxUtils.ajaxJson(response,s );
-		} catch (Exception e) {// TODO
+		} catch (Exception e) {
 			AjaxUtils.ajaxJsonErrorMessage(response, "查询失败!");
 			e.printStackTrace();
 		}
@@ -467,6 +491,153 @@ public class OmOrganizationControllerExt extends BaseController {
 		return null;
 	}
 	
+	/**
+	 * 根据机构id查询人员列表
+	 * 预先写入"parentorgid_eq":data查询条件
+	 * @param model
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/omOrganization/loadChildEmpList")
+	public String loadChildEmpList(ModelMap model, @RequestBody String content,
+			HttpServletRequest request, HttpServletResponse response) {
+		try {
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			// 分页对象
+			Page page = getPage(jsonObj);
+			// 服务端排序规则
+			String orderGuize = getOrderGuize(JSONUtils.getStr(jsonObj, "orderGuize"));
+			// 组装查询条件
+			WhereCondition wc = new WhereCondition();
+			wc.setLength(page.getItemsperpage());
+			wc.setOffset((page.getCurrentPage() - 1) * page.getItemsperpage());
+			wc.setOrderBy(orderGuize);
+			initWanNengChaXun(jsonObj, wc);// 万能查询
+			List<OmEmployee> list = omOrganizationRServiceExt.loadEmpByOrg(wc);
+			JSONArray ja = JSONArray.fromObject(list,jsonConfig);
+			page.setTotalItems(omOrganizationRServiceExt.countEmpByOrg(wc));
+			Map<String, Object> map = new HashMap<>();
+			map.put("page", page);
+			map.put("list", ja);
+			String s=JSONObject.fromObject(map,jsonConfig).toString();
+			AjaxUtils.ajaxJson(response,s );
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "查询失败!");
+			e.printStackTrace();
+		}
+		return null;
+	}
+	/**
+	 * 新增编辑人员
+	 * 
+	 * @param model
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/omEmployee/save")
+	public String saveEmp(ModelMap model, @RequestBody String content, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		WhereCondition wc = new WhereCondition();
+		try {
+			if (logger.isInfoEnabled()) {
+				logger.info("保存人员信息 request " + content);
+			}
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject job = jsonObj.getJSONObject("item");
+			String orgId = jsonObj.getString("orgid");
+			final OmEmployee p = new OmEmployee();
+		
+			JSONObject.toBean(job, p, jsonConfig);
+			//p.setOrgid(Integer.parseInt(attrValStr));
+			if (StringUtils.isNotEmpty(p.getId())) {
+				p.setLastmodytime(new Date());
+				omEmployeeRService.update(p);
+				result.put("retCode", "1");
+				result.put("retMessage", "编辑成功！");
+			} else {
+				wc.andEquals("empcode", p.getEmpcode());
+				List<OmEmployee> emps = omEmployeeRService.query(wc);
+				if (emps.size() > 0) {
+					result.put("retCode", "2");
+					result.put("retMessage", "人员代码已存在!");
+					AjaxUtils.ajaxJson(response, JSONObject.fromObject(result, jsonConfig).toString());
+					return null;
+				}
+				Integer genId = omOrganizationRServiceExt.genOrgId();
+				p.setEmpid(genId);
+				p.setCreatetime(new Date());
+				p.setId(sequenceBiz.generateId("OmEmployee"));
+				Map<String, Object> params = new HashMap<>();
+				params.put("orgid", orgId);
+				params.put("empid", genId);
+				transactionTemplate.execute(new TransactionCallback<Map<String, Object>>() {
+					@Override
+					public Map<String, Object> doInTransaction(TransactionStatus arg0) {
+						omEmployeeRService.insert(p);
+						omOrganizationRServiceExt.insertEmpWithOrg(params);
+						return null;
+					}
+				});	
+				result.put("retCode", "1");
+				result.put("retMessage", "新增成功！");
+			}
+			AjaxUtils.ajaxJson(response, JSONObject.fromObject(result, jsonConfig).toString());
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "保存人员信息异常!");
+			logger.error("保存人员信息 exception : ", e);
+		}
+		return null;
+	}
+	
+	/**
+	 * 根据id删除成员信息
+	 * 
+	 * @param model
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/omEmployee/delEmpWithOrg")
+	public String empDel(ModelMap model, @RequestBody String content, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try {
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			final String id = jsonObj.getString("id");
+			String empId = jsonObj.getString("empId");
+		
+			if (StringUtils.isNotEmpty(id)) {
+				transactionTemplate.execute(new TransactionCallback<Map<String, Object>>() {
+					@Override
+					public Map<String, Object> doInTransaction(TransactionStatus arg0) {
+						WhereCondition wc = new WhereCondition();
+						wc.andEquals("id", id);
+						// 删除
+						
+						omOrganizationRServiceExt.deleteEmpWithOrg(empId);
+						omEmployeeRService.deleteByCondition(wc);
+						return null;
+					}
+				});
+				result.put("retCode", "1");
+				result.put("retMessage", "成功删除");
+			} else {
+				result.put("retCode", "2");
+				result.put("retMessage", "id不能为空！");
+			}
+			AjaxUtils.ajaxJson(response, JSONObject.fromObject(result, jsonConfig).toString());
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "删除人员信息异常！");
+			logger.error("删除人员 exception : ", e);
+		}
+		return null;
+	}
 	
 	private Map<String, Object> responseMsg ;
 	@Override

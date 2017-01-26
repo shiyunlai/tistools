@@ -1,5 +1,5 @@
 
-MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $scope, $state, $stateParams, organization_service, employee_service,childOrg_service, childPosi_service, filterFilter, $modal, $http, $timeout, $interval) {
+MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $scope, $state, $stateParams, organization_service,position_service, employee_service,childOrg_service, childPosi_service, childEmp_service, filterFilter, $modal, $http, $timeout, $interval) {
 
     $scope.$on('$viewContentLoaded', function () {
         // initialize core components
@@ -44,7 +44,11 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
 
     }
 
-    /***下级机构信息---开始*****/
+    var posi = {};
+    $scope.posi = posi;
+
+
+    /**下级机构信息---开始**/
     var childOrg = {};
     $scope.childOrg = childOrg;
     initController($scope, childOrg, 'childOrg', childOrg_service, filterFilter);
@@ -52,7 +56,6 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
         childOrg.searchForm.searchItems = {"parentorgid_eq":data }
         childOrg.search1();
     }
-    
 
     childOrg.add = function(id,name){
         openwindow($modal, 'views/orgManage/org_add.html', 'lg',
@@ -132,9 +135,9 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
             });
         }
     }
-    /***下级机构信息---结束*****/
+    /**下级机构信息---结束**/
 
-    /***下级岗位信息---开始*****/
+    /**下级岗位信息---开始**/
     var childPosi = {};
     $scope.childPosi = childPosi;
     initController($scope, childPosi, 'childPosi', childPosi_service, filterFilter);
@@ -178,13 +181,8 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
             function ($scope, $modalInstance) {
 
                 childPosi_service.loadById(id).then(function (res) {
-                    //暂时解决当外键为Integer类型并且为空时，从数据库转换到页面变为0 造成的ORA-02291: 违反完整约束条件 - 未找到父项关键字
-                    if(res.manaposi == 0) {
-                        res.manaposi = undefined;
-                    }
-                    if(res.dutyid == 0) {
-                        res.dutyid = undefined;
-                    }
+
+
                     $scope.item = res;
                     $scope.parentorg = name;
                 });
@@ -228,7 +226,104 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
             });
         }
     }
-    /***下级岗位信息---开始*****/
+    /**下级岗位信息---结束**/
+
+    /**下级人员信息---开始**/
+    var childEmp = {};
+    $scope.childEmp = childEmp;
+    initController($scope, childEmp, 'childEmp', childEmp_service, filterFilter);
+    childEmp.initChildEmpList = function (data) {
+        childEmp.searchForm.searchItems = {"orgid_eq":data }
+        childEmp.search1();
+    }
+
+    childEmp.add = function(id){
+        openwindow($modal, 'views/orgManage/emp_add.html', 'lg',
+            function ($scope, $modalInstance) {
+                var requestBody ={};
+                $scope.requestBody = requestBody;
+                var item = {};
+                requestBody.item = item;
+                if(!isNull(id)) {
+                    requestBody.orgid = id;
+                }
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+                $scope.saveEmp = function(data){
+                    childEmp_service.save(data).then(function (data) {
+                        if (data.retCode == '1') {
+                            toastr['success'](data.retMessage, "新增成功！");
+                            $modalInstance.close();
+                            $("#org_tree").jstree(true).refresh("#" + id);
+                        } else if(data.retCode == '2') {
+                            toastr['error'](data.retMessage, "新增失败！");
+                        } else {
+                            toastr['error']( "新增异常！");
+                        }
+                    });
+                }
+            }
+        )
+
+    }
+
+    childEmp.edit = function(empId,orgId){
+        openwindow($modal, 'views/orgManage/emp_add.html', 'lg',
+            function ($scope, $modalInstance) {
+                var requestBody ={};
+                $scope.requestBody = requestBody;
+                var item = {};
+                requestBody.item = item;
+                requestBody.orgid = orgId;
+                childEmp_service.loadById(empId).then(function (res) {
+                    $scope.requestBody.item = res;
+                });
+
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+                $scope.saveEmp = function(item){
+                    childEmp_service.save(item).then(function (data) {
+
+                        if (data.retCode == '1') {
+                            toastr['success'](data.retMessage, "编辑成功！");
+                            $modalInstance.close();
+                            $("#org_tree").jstree(true).refresh("#" + orgId);
+                        } else if(data.retCode == '2') {
+                            toastr['error'](data.retMessage, "编辑失败！");
+                        } else {
+                            toastr['error']( "编辑异常！");
+                        }
+                    });
+                }
+            }
+        )
+
+    }
+
+    childEmp.del = function (id,empId,orgId) {
+        var res = confirm("删除是不可恢复的，并且会同时删除相关组织信息，你确认要删除吗？");
+        if (res) {
+            var params = {};
+            params.id = id;
+            params.empId = empId;
+            params.orgId = orgId;
+            var promise = childEmp_service.delete(params);
+            promise.then(function (data) {
+                if(data.retCode == "1") {
+                    toastr['success'](data.retMessage, "成功！")
+                    childEmp.searchN();
+                    $("#org_tree").jstree(true).refresh("#" + currentOrgId);
+                } else if(data.retCode == "2") {
+                    toastr['error'](data.retMessage, "失败！");
+                } else {
+                    toastr['error']( "删除异常！");
+                }
+            });
+        }
+    }
+    /**下级人员信息---结束**/
 
 
     //JsTree
@@ -326,9 +421,13 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
                 $scope.org.item = res;
             });
         }
-        if(viewType == 'user')
-        $scope.$apply(function () {
-            $scope.viewType=a;
-        });
+        if(viewType == 'user') {
+
+        }
+        if(viewType == 'posi') {
+            position_service.loadByPosiId(data.node.id.split(".")[1]).then(function (res) {
+                $scope.posi.item = res;
+            })
+        }
     });
 });

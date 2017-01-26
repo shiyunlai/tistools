@@ -1,7 +1,9 @@
 package org.tis.tools.rservice.torg;
 
 import java.util.List;
+import java.util.Map;
 
+import org.tis.tools.base.WhereCondition;
 import org.tis.tools.model.po.torg.OmEmployee;
 import org.tis.tools.model.po.torg.OmOrganization;
 
@@ -15,8 +17,14 @@ import org.tis.tools.model.po.torg.OmOrganization;
  */
 public interface IOmOrganizationRServiceExt {
 	
-	public List<OmEmployee> loadEmpByOrg(String orgId);
+	public List<OmEmployee> loadEmpByOrg(WhereCondition wc);
 	
 	public Integer genOrgId();
+
+	public Integer countEmpByOrg(WhereCondition wc);
+
+	public void insertEmpWithOrg(Map<String, Object> params);
+
+	public void deleteEmpWithOrg(String empId);
 
 }

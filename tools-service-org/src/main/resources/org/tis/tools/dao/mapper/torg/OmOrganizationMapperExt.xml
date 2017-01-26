@@ -6,13 +6,41 @@
 <mapper namespace="org.tis.tools.dao.mapper.torg.OmOrganizationMapperExt">
 
 
-	<select id="loadEmpByOrg" parameterType="string"
+	<!-- <select id="loadEmpByOrg" parameterType="string"
 		resultType="org.tis.tools.model.po.torg.OmEmployee">
 
 		select *
 		from OM_EMPLOYEE e right join
 		(select empid from om_emporg where orgid = #{orgId}) o on e.empid=o.empid
+	</select> -->
+	
+	<select id="loadEmpByOrg" resultType="org.tis.tools.model.po.torg.OmEmployee" parameterType="org.tis.tools.base.WhereCondition" >
+		<if test="length > 0 and url == 'oracle'" >
+    	select <include refid="Emp_Column_List" /> from
+    		(select a.*,rownum row_num from
+    			(</if>
+	    		select <include refid="Emp_Column_List" />from (select e.* from OM_EMPLOYEE e right join
+  							(select empid from om_emporg  <include refid="Where_Clause" />) o on e.empid=o.empid ) 
+					<if test="orderBy != null" >${orderBy}</if>
+					<if test="length > 0 " >) a
+			) b
+		where b.row_num between ${offset} and ${length}</if>
 	</select>
+	
+	<select id="countEmpByOrg" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	
+		select count(*) from (select e.* from OM_EMPLOYEE e right join
+  			(select empid from om_emporg  <include refid="Where_Clause" />) o on e.empid=o.empid )
+
+  	</select>
+  	
+  	<insert id="insertEmpWithOrg" >
+  		insert into OM_EMPORG (empid,orgid) values(#{empid},#{orgid})
+  	</insert>
+  	
+  	<delete id="deleteEmpWithOrg" parameterType="java.lang.String">
+  		delete from OM_EMPORG where empid=#{empid}
+  	</delete>
 
 	<select id="queryOrgId" resultType="Integer">
 		select *  from OM_COUNT
@@ -21,10 +49,12 @@
 	<update id="updateOrgId" parameterType="Integer">
 		update OM_COUNT set ORGID = #{orgId}
 	</update>
-	
 
-	<sql id="Base_Column_List">
-		id
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+	<sql id="Emp_Column_List">
+		  	id
 		,empid
 		,empcode
 		,operatorid
@@ -61,5 +91,6 @@
 		,orgidlist
 		,orgid
 		,remark
-	</sql>
+  	</sql>
+
 </mapper>

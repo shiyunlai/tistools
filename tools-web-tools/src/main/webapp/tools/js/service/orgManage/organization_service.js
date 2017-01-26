@@ -134,6 +134,49 @@ MetronicApp.factory('employee_service',['$http', '$q', function ($http,$q) {
 
     return service;
 }]);
+MetronicApp.factory('position_service',['$http', '$q', function ($http,$q) {
+    var service={};
+
+    service.query = function(searchForm) {
+        var res;
+        if (isdebug) {
+        } else {
+            res = $http.post(manurl + "/torg/omEmployee/list",searchForm).then(function (response) {
+                return response.data;
+            });
+        }
+        return res;
+    }
+
+
+    service.loadByPosiId = function(id){
+        var res;
+        if(isdebug){
+        } else {
+            res = $http.post(manurl + "/torg/omPosition/loadByPosiId",{posiId:id}).then(function (response) {
+                return response.data;
+            });
+        }
+        return res;
+    }
+
+
+
+    service.save = function (item) {
+        var res;
+        if(isdebug){
+        } else {
+            res = $http.post(manurl + "/AttrController/save",{item:item}).then(function (response) {
+                return response.data;
+            });
+        }
+        return res;
+    }
+
+
+
+    return service;
+}]);
 MetronicApp.factory('childOrg_service',['$http', '$q', function ($http,$q) {
     var service={};
 
@@ -202,6 +245,56 @@ MetronicApp.factory('childPosi_service',['$http', '$q', function ($http,$q) {
         if(isdebug){
         } else {
             res = $http.post(manurl + "/torg/omPosition/list/id",{id:id}).then(function (response) {
+                return response.data;
+            });
+        }
+        return res;
+    }
+
+
+    return service;
+}]);
+MetronicApp.factory('childEmp_service',['$http', '$q', function ($http,$q) {
+    var service={};
+
+    service.query = function(searchForm) {
+        var res;
+        if (isdebug) {
+        } else {
+            res = $http.post(manurl + "/torg/omOrganization/loadChildEmpList",searchForm).then(function (response) {
+                return response.data;
+            });
+        }
+        return res;
+    }
+
+    service.save = function (item) {
+        var res;
+        if(isdebug){
+        } else {
+            res = $http.post(manurl + "/torg/omEmployee/save",item).then(function (response) {
+                return response.data;
+            });
+        }
+        return res;
+    }
+
+    service.delete = function(item) {
+        var res;
+        if(isdebug){
+        } else {
+            res = $http.post(manurl + "/torg/omPosition/delPosiById",item).then(function (response) {
+                return response.data;
+            });
+        }
+        return res;
+    }
+
+    service.loadById = function(id){
+        var res;
+        if(isdebug){
+        } else {
+            res = $http.post(manurl + "/torg/omEmployee/list/id",{id:id}).then(function (response) {
                 return response.data;
             });
         }

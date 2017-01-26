@@ -1,0 +1,397 @@
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" ng-form="bigform">
+    <div class="col-md-12">
+
+        <div class="portlet light bordered ">
+            <div class="portlet-title">
+                <div ng-if="item.id != null" class="caption">
+                    <i class="fa fa-pencil"></i>编辑人员
+                </div>
+                <div ng-if="item.id == null" class="caption">
+                    <i class="fa fa-pencil"></i>新增人员
+                </div>
+
+                <div class="actions btn-set">
+                    <button type="button" name="back" class="btn btn-primary" ng-if="bigform.$invalid == false" ng-disabled="bigform.$invalid" popover-trigger="mouseenter" ng-click="saveEmp(requestBody)" > 保存
+                    </button>
+                    <button type="button" name="back" class="btn default" ng-if="bigform.$invalid == true" ng-disabled="bigform.$invalid" popover-trigger="mouseenter" ng-click="saveEmp(requestBody)" > 保存
+                    </button>
+                    <button type="button" name="back" class="btn default" ng-click="cancel()"><i
+                            class="fa fa-angle-left"></i> 返回
+                    </button>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form">
+                                <form action="#" name="myform" class="form-horizontal">
+                                    <div class="form-body">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">人员姓名<span ng-class="{required:myform.empname.$invalid}">*</span></label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="requestBody.item.empname" name="empname"
+                                                           required/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">人员代码<span ng-class="{required:myform.empcode.$invalid}">*</span></label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="requestBody.item.empcode" name="empcode" required/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">性别</label>
+                                                <div class="col-md-8">
+                                                    <select class="form-control" ng-model="requestBody.item.gender" >
+                                                        <option value="0">男</option>
+                                                        <option value="1">女</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">出生日期</label>
+                                                <div class="col-md-8">
+                                                    <div class="input-group date date-picker " data-date-format="yyyy-mm-dd">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn default" type="button">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </button>
+                                                        </span>
+                                                        <input type="text" class="form-control form-filter" ng-model="requestBody.item.birthdate" readonly name="birthdate">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">证件类型</label>
+                                                <div class="col-md-8">
+                                                    <select class="form-control" ng-model="requestBody.item.cardtype" >
+                                                        <option value="0">1</option>
+                                                        <option value="1">2</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">证件号码</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="requestBody.item.cardno"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">入职日期</label>
+                                                <div class="col-md-8">
+                                                    <div class="input-group date date-picker" data-date-format="yyyy-mm-dd">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn default" type="button">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </button>
+                                                        </span>
+                                                        <input type="text" class="form-control form-filter" ng-model="requestBody.item.indate" readonly name="indate">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">离职日期</label>
+                                                <div class="col-md-8">
+                                                    <div class="input-group date date-picker" data-date-format="yyyy-mm-dd">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn default" type="button">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </button>
+                                                        </span>
+                                                        <input type="text" class="form-control form-filter" ng-model="requestBody.item.outdate" readonly name="outdate">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">人员状态</label>
+                                                <div class="col-md-8">
+                                                    <select class="form-control" ng-model="requestBody.item.empstatus">
+                                                        <option value="1">正常</option>
+                                                        <option value="2">离职</option>
+                                                        <option value="3">其他</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">办公电话</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="requestBody.item.otel"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">办公邮编</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="requestBody.item.ozipcode"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">办公邮件</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="requestBody.item.oemail"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">传真号码</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="requestBody.item.faxno"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">手机号码</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="requestBody.item.mobileno"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">MSN号码</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="requestBody.item.msn"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">家庭电话</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="requestBody.item.htel"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2">家庭地址</label>
+                                                <div class="col-md-10">
+                                                    <textarea  class="form-control" ng-model="requestBody.item.haddress"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2">办公地址</label>
+                                                <div class="col-md-10">
+                                                    <textarea  class="form-control" ng-model="requestBody.item.oaddress"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">家庭邮编</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="requestBody.item.hzipcode"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">私人邮箱</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="requestBody.item.pemail"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">政治面貌</label>
+                                                <div class="col-md-8">
+                                                    <select class="form-control" ng-model="requestBody.item.PARTY">
+                                                        <option value="1">群众</option>
+                                                        <option value="2">中共党员</option>
+                                                        <option value="3">其他</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">职级</label>
+                                                <div class="col-md-8">
+                                                    <select class="form-control" ng-model="requestBody.item.degree">
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2">直接主管</label>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" ng-model="requestBody.item.major">
+                                                        <option value="1">正常</option>
+                                                        <option value="2">离职</option>
+                                                        <option value="3">其他</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2">可管理机构</label>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" ng-model="requestBody.item.orgidlist">
+                                                        <option value="1">正常</option>
+                                                        <option value="2">离职</option>
+                                                        <option value="3">其他</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2">可授权角色</label>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" ng-model="requestBody.item.specialty">
+                                                        <option value="1">正常</option>
+                                                        <option value="2">离职</option>
+                                                        <option value="3">其他</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2">工作描述</label>
+                                                <div class="col-md-10">
+                                                    <textarea  class="form-control" ng-model="requestBody.item.workexp"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox"  name="operatorFlag" ng-model="operatorFlag"/>操作员
+                                    </div>
+                                    <div class="form-body" ng-if="operatorFlag == true">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">用户登录名<span ng-class="{required:myform.userid.$invalid}">*</span></label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="operator.userid" name="userid"
+                                                           required/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">菜单风格</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="operator.menutype" name="menutype"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2">用户密码<span ng-class="{required:myform.password.$invalid}">*</span></label>
+                                                <div class="col-md-4">
+                                                    <input type="text" class="form-control" ng-model="operator.password" name="password" required/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">密码失效日</label>
+                                                <div class="col-md-8">
+                                                    <div class="input-group date date-picker" data-date-format="yyyy-mm-dd">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn default" type="button">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </button>
+                                                        </span>
+                                                        <input type="text" class="form-control form-filter" ng-model="operator.invaldate" readonly name="birthdate">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">认证模式</label>
+                                                <div class="col-md-8">
+                                                    <select class="form-control" ng-model="operator.authmode">
+                                                        <option value="1">正常</option>
+                                                        <option value="2">离职</option>
+                                                        <option value="3">其他</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">生效日期</label>
+                                                <div class="col-md-8">
+                                                    <div class="input-group date date-picker" data-date-format="yyyy-mm-dd">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn default" type="button">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </button>
+                                                        </span>
+                                                        <input type="text" class="form-control form-filter" ng-model="operator.startdate" readonly name="startdate">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">失效日期</label>
+                                                <div class="col-md-8">
+                                                    <div class="input-group date date-picker" data-date-format="yyyy-mm-dd">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn default" type="button">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </button>
+                                                        </span>
+                                                        <input type="text" class="form-control form-filter" ng-model="operator.enddate" readonly name="enddate">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">操作员状态</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" ng-model="operator.status" name="status"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+

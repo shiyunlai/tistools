@@ -18,7 +18,8 @@
         <div class="portlet light portlet-fit portlet-datatable bordered">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-shopping-cart"></i> 机构人员管理</div>
+                    <i class="fa fa-shopping-cart"></i> 机构人员管理
+                </div>
             </div>
             <div class="portlet-body">
                 <div class="table-container">
@@ -726,7 +727,7 @@
                                                                 </div>
                                                             </div>
                                                         </uib-tab>
-                                                        <uib-tab heading="人员信息" ng-click="childUser.initChildPosiList(currentOrgId)">
+                                                        <uib-tab heading="人员信息" ng-click="childEmp.initChildEmpList(currentOrgId)">
                                                             <!-- BEGIN FORM-->
                                                             <div class="portlet-body">
                                                                 <div class="table-container">
@@ -735,16 +736,16 @@
                                                                         <div class="col-md-8 col-ms-12" >
                                                                             <div class="dataTables_paginate">
                                                                                 <div class="pagination-panel">
-                                                                                    第 <a ng-click="childUser.prePage()"
+                                                                                    第 <a ng-click="childEmp.prePage()"
                                                                                          class="btn btn-sm default prev" title="Prev"><i
                                                                                         class="fa fa-angle-left"></i></a><input type="text"
                                                                                                                                 ng-model="orgs.searchForm.page.currentPage"
                                                                                                                                 class="pagination-panel-input form-control input-mini input-inline input-sm"
                                                                                                                                 maxlenght="5" style="text-align: center; margin: 0 5px;"><a
-                                                                                        ng-click="childUser.nextPage()"
+                                                                                        ng-click="childEmp.nextPage()"
                                                                                         class="btn btn-sm default next" title="Next"><i
                                                                                         class="fa fa-angle-right"></i></a> 页,&nbsp;&nbsp;&nbsp;总<span
-                                                                                        class="pagination-panel-total">{{childUser.searchForm.page.totalPages}}</span>页
+                                                                                        class="pagination-panel-total">{{childEmp.searchForm.page.totalPages}}</span>页
                                                                                 </div>
                                                                             </div>
                                                                             <div class="dataTables_length">
@@ -754,13 +755,13 @@
                                                                                 </select> 条</label>
                                                                             </div>
                                                                             <div class="dataTables_info" role="status" aria-live="polite">
-                                                                                <span class="seperator">|</span>总计{{childUser.searchForm.page.totalItems}}
+                                                                                <span class="seperator">|</span>总计{{childEmp.searchForm.page.totalItems}}
                                                                                 条
                                                                             </div>
                                                                         </div>
                                                                         <div class="actions col-md-4 col-ms-12">
                                                                             <div style="float: right">
-                                                                                <button class="btn btn-sm btn-primary filter-submit margin-bottom" ng-click="childUser.add(currentOrgId,org.item.orgname)">新增 </button>
+                                                                                <button class="btn btn-sm btn-primary filter-submit margin-bottom" ng-click="childEmp.add(currentOrgId)">新增 </button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -772,16 +773,22 @@
                                                                                 序号
                                                                             </th>
                                                                             <th width="15%">
-                                                                                岗位名称
-                                                                            </th>
-                                                                            <th width="20%">
-                                                                                岗位代码
+                                                                                人员代码
                                                                             </th>
                                                                             <th width="15%">
-                                                                                岗位类型
+                                                                                人员姓名
                                                                             </th>
-                                                                            <th width="10%" >
-                                                                                岗位状态
+                                                                            <th width="5%">
+                                                                                性别
+                                                                            </th>
+                                                                            <th width="15%" >
+                                                                                人员状态
+                                                                            </th>
+                                                                            <th width="15%">
+                                                                                操作员ID
+                                                                            </th>
+                                                                            <th width="15%" >
+                                                                                操作员状态
                                                                             </th>
                                                                             <th width="15%">
                                                                                 操作
@@ -789,23 +796,29 @@
                                                                         </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                        <tr ng-repeat="cu in childUser.dataList" ng-class-odd="'odd'" ng-class-even="'even'">
+                                                                        <tr ng-repeat="cu in childEmp.dataList" ng-class-odd="'odd'" ng-class-even="'even'">
                                                                             <td>{{$index+1}}</td>
                                                                             <td>
-                                                                                {{cu.usercode}}
+                                                                                {{cu.empcode}}
                                                                             </td>
                                                                             <td>
-                                                                                {{cp.username}}
+                                                                                {{cu.empname}}
                                                                             </td>
                                                                             <td>
-                                                                                {{cp.positype}}
+                                                                                {{cu.gender}}
                                                                             </td>
                                                                             <td>
-                                                                                {{cp.status}}
+                                                                                {{cu.empstatus}}
                                                                             </td>
                                                                             <td>
-                                                                                <button class="btn btn-sm btn-primary filter-cancel" ng-click="childUser.edit(cu.id,currentOrgName)"> 编辑 </button>
-                                                                                <button class="btn btn-sm btn-danger filter-cancel" ng-click="childUser.del(cu.id)"> 删除 </button>
+                                                                                {{cu.empstatus}}
+                                                                            </td>
+                                                                            <td>
+                                                                                待添加
+                                                                            </td>
+                                                                            <td>
+                                                                                <button class="btn btn-sm btn-primary filter-cancel" ng-click="childEmp.edit(cu.id, currentOrgId)"> 编辑 </button>
+                                                                                <button class="btn btn-sm btn-danger filter-cancel" ng-click="childEmp.del(cu.id, currentOrgId, cu.empid)"> 删除 </button>
                                                                             </td>
                                                                         </tr>
                                                                         </tr>
@@ -825,7 +838,387 @@
                                 </div>
 
                             </div>
-                            <div ng-if="viewType == 'user'"  class="col-md-9">
+                            <div ng-if="viewType == 'posi'"  class="col-md-9">
+                                <div class="portlet-body light box" >
+                                        <uib-tabset>
+                                            <uib-tab heading="岗位基本信息">
+                                                <!-- BEGIN FORM-->
+                                                <div class="portlet-body">
+                                                    <div class="table-container">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form">
+                                                                    <form action="#" name="myform" class="form-horizontal">
+                                                                        <div class="form-body">
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-md-3">岗位名称</label>
+                                                                                    <div class="col-md-7">
+                                                                                        <input type="text" class="form-control" ng-model="posi.item.posiname"/>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-md-3">岗位代码</label>
+                                                                                    <div class="col-md-7">
+                                                                                        <input type="text" class="form-control" ng-model="posi.item.posicode"/>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-md-3">所属机构</label>
+                                                                                    <div class="col-md-7">
+                                                                                        <select class="form-control" ng-model="posi.item.orgid">
+                                                                                            <option value=""></option>
+                                                                                        </select>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-md-3">所属职务</label>
+                                                                                    <div class="col-md-7">
+                                                                                        <input type="text" class="form-control" ng-model="posi.item.dutyid"/>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-md-3">生效时间</label>
+                                                                                    <div class="col-md-7">
+                                                                                        <div class="input-group date date-picker " data-date-format="yyyy-mm-dd">
+                                                                                        <span class="input-group-btn">
+                                                                                            <button class="btn default" type="button">
+                                                                                                <i class="fa fa-calendar"></i>
+                                                                                            </button>
+                                                                                        </span>
+                                                                                            <input type="text" class="form-control form-filter" ng-model="posi.item.startdate" readonly name="posi_startdate">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-md-3">失效时间</label>
+                                                                                    <div class="col-md-7">
+                                                                                        <div class="input-group date date-picker " data-date-format="yyyy-mm-dd">
+                                                                                            <span class="input-group-btn">
+                                                                                                <button class="btn default" type="button">
+                                                                                                    <i class="fa fa-calendar"></i>
+                                                                                                </button>
+                                                                                            </span>
+                                                                                            <input type="text" class="form-control form-filter" ng-model="posi.item.enddate" readonly name="enddate">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-12" >
+                                                                                <div class="form-group" style="padding-left: 40%">
+                                                                                    <div class="col-md-2">
+                                                                                        <button class="btn btn-sm green filter-submit margin-bottom" ng-click="posi.saveOrg(posi.item)">保存 </button>
+                                                                                    </div>
+                                                                                    <div class="col-md-2">
+                                                                                        <button class="btn btn-sm filter-submit margin-bottom" ng-click="posi.item.reset()">重  置 </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </uib-tab>
+                                            <uib-tab heading="下级机构" ng-click="childOrg.initChildOrgList(currentOrgId)">
+                                                <!-- BEGIN FORM-->
+                                                <div class="portlet-body">
+                                                    <div class="table-container">
+                                                        <!--开始table尾部分页以及工具栏-->
+                                                        <div class="row" >
+                                                            <div class="col-md-8 col-ms-12" >
+                                                                <div class="dataTables_paginate">
+                                                                    <div class="pagination-panel">
+                                                                        第 <a ng-click="childOrg.prePage()"
+                                                                             class="btn btn-sm default prev" title="Prev"><i
+                                                                            class="fa fa-angle-left"></i></a><input type="text"
+                                                                                                                    ng-model="orgs.searchForm.page.currentPage"
+                                                                                                                    class="pagination-panel-input form-control input-mini input-inline input-sm"
+                                                                                                                    maxlenght="5" style="text-align: center; margin: 0 5px;"><a
+                                                                            ng-click="childOrg.nextPage()"
+                                                                            class="btn btn-sm default next" title="Next"><i
+                                                                            class="fa fa-angle-right"></i></a> 页,&nbsp;&nbsp;&nbsp;总<span
+                                                                            class="pagination-panel-total">{{childOrg.searchForm.page.totalPages}}</span>页
+                                                                    </div>
+                                                                </div>
+                                                                <div class="dataTables_length">
+                                                                    <label><span class="seperator">|</span>每页 <select
+                                                                            ng-model="orgs.searchForm.page.itemsperpage"
+                                                                            class="form-control input-xsmall input-sm input-inline" ng-options="i for i in [10,20,50,100,150]">
+                                                                    </select> 条</label>
+                                                                </div>
+                                                                <div class="dataTables_info" role="status" aria-live="polite">
+                                                                    <span class="seperator">|</span>总计{{childOrg.searchForm.page.totalItems}}
+                                                                    条
+                                                                </div>
+                                                            </div>
+                                                            <div class="actions col-md-4 col-ms-12">
+                                                                <div style="float: right">
+                                                                    <button class="btn btn-sm btn-primary filter-submit margin-bottom" ng-click="childOrg.add(currentOrgId,org.item.orgname)">新增 </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--结束table尾部分页以及工具栏-->
+                                                        <table class="table table-striped table-bordered table-hover table-checkable ">
+                                                            <thead>
+                                                            <tr role="row" class="heading">
+                                                                <th width="5%">
+                                                                    序号
+                                                                </th>
+                                                                <th width="15%">
+                                                                    机构名称
+                                                                </th>
+                                                                <th width="20%">
+                                                                    机构代码
+                                                                </th>
+                                                                <th width="15%">
+                                                                    机构类型
+                                                                </th>
+                                                                <th width="10%" >
+                                                                    机构状态
+                                                                </th>
+                                                                <th width="15%">
+                                                                    操作
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr ng-repeat="co in childOrg.dataList" ng-class-odd="'odd'" ng-class-even="'even'">
+                                                                <td>{{$index+1}}</td>
+                                                                <td>
+                                                                    {{co.orgname}}
+                                                                </td>
+                                                                <td>
+                                                                    {{co.orgcode}}
+                                                                </td>
+                                                                <td>
+                                                                    {{co.orgtype}}
+                                                                </td>
+                                                                <td>
+                                                                    {{co.status}}
+                                                                </td>
+                                                                <td>
+                                                                    <button class="btn btn-sm btn-primary filter-cancel" ng-click="childOrg.edit(co.id,currentOrgName)"> 编辑 </button>
+                                                                    <button class="btn btn-sm btn-danger filter-cancel" ng-click="childOrg.del(co.id)"> 删除 </button>
+                                                                </td>
+                                                            </tr>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                </div>
+                                            </uib-tab>
+                                            <uib-tab heading="下级岗位" ng-click="childPosi.initChildPosiList(currentOrgId)">
+                                                <!-- BEGIN FORM-->
+                                                <div class="portlet-body">
+                                                    <div class="table-container">
+                                                        <!--开始table尾部分页以及工具栏-->
+                                                        <div class="row" >
+                                                            <div class="col-md-8 col-ms-12" >
+                                                                <div class="dataTables_paginate">
+                                                                    <div class="pagination-panel">
+                                                                        第 <a ng-click="childPosi.prePage()"
+                                                                             class="btn btn-sm default prev" title="Prev"><i
+                                                                            class="fa fa-angle-left"></i></a><input type="text"
+                                                                                                                    ng-model="orgs.searchForm.page.currentPage"
+                                                                                                                    class="pagination-panel-input form-control input-mini input-inline input-sm"
+                                                                                                                    maxlenght="5" style="text-align: center; margin: 0 5px;"><a
+                                                                            ng-click="childPosi.nextPage()"
+                                                                            class="btn btn-sm default next" title="Next"><i
+                                                                            class="fa fa-angle-right"></i></a> 页,&nbsp;&nbsp;&nbsp;总<span
+                                                                            class="pagination-panel-total">{{childPosi.searchForm.page.totalPages}}</span>页
+                                                                    </div>
+                                                                </div>
+                                                                <div class="dataTables_length">
+                                                                    <label><span class="seperator">|</span>每页 <select
+                                                                            ng-model="orgs.searchForm.page.itemsperpage"
+                                                                            class="form-control input-xsmall input-sm input-inline" ng-options="i for i in [10,20,50,100,150]">
+                                                                    </select> 条</label>
+                                                                </div>
+                                                                <div class="dataTables_info" role="status" aria-live="polite">
+                                                                    <span class="seperator">|</span>总计{{childPosi.searchForm.page.totalItems}}
+                                                                    条
+                                                                </div>
+                                                            </div>
+                                                            <div class="actions col-md-4 col-ms-12">
+                                                                <div style="float: right">
+                                                                    <button class="btn btn-sm btn-primary filter-submit margin-bottom" ng-click="childPosi.add(currentOrgId,org.item.orgname)">新增 </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--结束table尾部分页以及工具栏-->
+                                                        <table class="table table-striped table-bordered table-hover table-checkable ">
+                                                            <thead>
+                                                            <tr role="row" class="heading">
+                                                                <th width="5%">
+                                                                    序号
+                                                                </th>
+                                                                <th width="15%">
+                                                                    岗位名称
+                                                                </th>
+                                                                <th width="20%">
+                                                                    岗位代码
+                                                                </th>
+                                                                <th width="15%">
+                                                                    岗位类型
+                                                                </th>
+                                                                <th width="10%" >
+                                                                    岗位状态
+                                                                </th>
+                                                                <th width="15%">
+                                                                    操作
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr ng-repeat="cp in childPosi.dataList" ng-class-odd="'odd'" ng-class-even="'even'">
+                                                                <td>{{$index+1}}</td>
+                                                                <td>
+                                                                    {{cp.posicode}}
+                                                                </td>
+                                                                <td>
+                                                                    {{cp.posiname}}
+                                                                </td>
+                                                                <td>
+                                                                    {{cp.positype}}
+                                                                </td>
+                                                                <td>
+                                                                    {{cp.status}}
+                                                                </td>
+                                                                <td>
+                                                                    <button class="btn btn-sm btn-primary filter-cancel" ng-click="childPosi.edit(cp.id,currentOrgName)"> 编辑 </button>
+                                                                    <button class="btn btn-sm btn-danger filter-cancel" ng-click="childPosi.del(cp.id)"> 删除 </button>
+                                                                </td>
+                                                            </tr>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                </div>
+                                            </uib-tab>
+                                            <uib-tab heading="人员信息" ng-click="childEmp.initChildEmpList(currentOrgId)">
+                                                <!-- BEGIN FORM-->
+                                                <div class="portlet-body">
+                                                    <div class="table-container">
+                                                        <!--开始table尾部分页以及工具栏-->
+                                                        <div class="row" >
+                                                            <div class="col-md-8 col-ms-12" >
+                                                                <div class="dataTables_paginate">
+                                                                    <div class="pagination-panel">
+                                                                        第 <a ng-click="childEmp.prePage()"
+                                                                             class="btn btn-sm default prev" title="Prev"><i
+                                                                            class="fa fa-angle-left"></i></a><input type="text"
+                                                                                                                    ng-model="orgs.searchForm.page.currentPage"
+                                                                                                                    class="pagination-panel-input form-control input-mini input-inline input-sm"
+                                                                                                                    maxlenght="5" style="text-align: center; margin: 0 5px;"><a
+                                                                            ng-click="childEmp.nextPage()"
+                                                                            class="btn btn-sm default next" title="Next"><i
+                                                                            class="fa fa-angle-right"></i></a> 页,&nbsp;&nbsp;&nbsp;总<span
+                                                                            class="pagination-panel-total">{{childEmp.searchForm.page.totalPages}}</span>页
+                                                                    </div>
+                                                                </div>
+                                                                <div class="dataTables_length">
+                                                                    <label><span class="seperator">|</span>每页 <select
+                                                                            ng-model="orgs.searchForm.page.itemsperpage"
+                                                                            class="form-control input-xsmall input-sm input-inline" ng-options="i for i in [10,20,50,100,150]">
+                                                                    </select> 条</label>
+                                                                </div>
+                                                                <div class="dataTables_info" role="status" aria-live="polite">
+                                                                    <span class="seperator">|</span>总计{{childEmp.searchForm.page.totalItems}}
+                                                                    条
+                                                                </div>
+                                                            </div>
+                                                            <div class="actions col-md-4 col-ms-12">
+                                                                <div style="float: right">
+                                                                    <button class="btn btn-sm btn-primary filter-submit margin-bottom" ng-click="childEmp.add(currentOrgId)">新增 </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--结束table尾部分页以及工具栏-->
+                                                        <table class="table table-striped table-bordered table-hover table-checkable ">
+                                                            <thead>
+                                                            <tr role="row" class="heading">
+                                                                <th width="5%">
+                                                                    序号
+                                                                </th>
+                                                                <th width="15%">
+                                                                    人员代码
+                                                                </th>
+                                                                <th width="15%">
+                                                                    人员姓名
+                                                                </th>
+                                                                <th width="5%">
+                                                                    性别
+                                                                </th>
+                                                                <th width="15%" >
+                                                                    人员状态
+                                                                </th>
+                                                                <th width="15%">
+                                                                    操作员ID
+                                                                </th>
+                                                                <th width="15%" >
+                                                                    操作员状态
+                                                                </th>
+                                                                <th width="15%">
+                                                                    操作
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr ng-repeat="cu in childEmp.dataList" ng-class-odd="'odd'" ng-class-even="'even'">
+                                                                <td>{{$index+1}}</td>
+                                                                <td>
+                                                                    {{cu.empcode}}
+                                                                </td>
+                                                                <td>
+                                                                    {{cu.empname}}
+                                                                </td>
+                                                                <td>
+                                                                    {{cu.gender}}
+                                                                </td>
+                                                                <td>
+                                                                    {{cu.empstatus}}
+                                                                </td>
+                                                                <td>
+                                                                    {{cu.empstatus}}
+                                                                </td>
+                                                                <td>
+                                                                    待添加
+                                                                </td>
+                                                                <td>
+                                                                    <button class="btn btn-sm btn-primary filter-cancel" ng-click="childEmp.edit(cu.id, currentOrgId)"> 编辑 </button>
+                                                                    <button class="btn btn-sm btn-danger filter-cancel" ng-click="childEmp.del(cu.id, currentOrgId, cu.empid)"> 删除 </button>
+                                                                </td>
+                                                            </tr>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                </div>
+                                            </uib-tab>
+                                            <uib-tab heading="权限信息">红红火火恍恍惚惚</uib-tab>
+                                        </uib-tabset>
+                                </div>
+
+                            </div>
+                            <div ng-if="viewType == 'emp'"  class="col-md-9">
                                 <div class="portlet light box" >
                                     <div class="portlet-body">
                                         <div class="row">
