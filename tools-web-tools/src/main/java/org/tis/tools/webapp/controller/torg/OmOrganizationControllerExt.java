@@ -28,6 +28,7 @@ import org.tis.tools.rservice.torg.IOmOrganizationRService;
 import org.tis.tools.rservice.torg.IOmOrganizationRServiceExt;
 import org.tis.tools.rservice.torg.IOmPositionRService;
 import org.tis.tools.webapp.JsTree;
+import org.tis.tools.webapp.TreeData;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.util.AjaxUtils;
 import org.tis.tools.webapp.util.JSONUtils;
@@ -69,6 +70,7 @@ public class OmOrganizationControllerExt extends BaseController {
 				logger.info("加载树节点数据" );
 			}
 			String id = request.getParameter("id");
+			String name = request.getParameter("name");
 			List<JsTree> list = new ArrayList<>();			
 			if(id != null) {
 				if("#".equals(id)) {
@@ -77,7 +79,10 @@ public class OmOrganizationControllerExt extends BaseController {
 					jt.setText("机构人员树");
 					jt.setIcon(JsTree.ROOT_TREE_ICON);
 					jt.setChildren(true);
-					jt.setData(JsTree.TYPE_ROOT);
+					jt.setData(new TreeData()
+							.setViewType(JsTree.TYPE_ROOT)
+							.setCurrentId("root")
+							);
 					list.add(jt);
 				} else if("root".equals(id)) {
 					List<OmOrganization> rootList = omOrganizationRService
@@ -89,16 +94,56 @@ public class OmOrganizationControllerExt extends BaseController {
 							orgTree.setId(org.getOrgid().toString());
 							orgTree.setText(org.getOrgname());
 							orgTree.setIcon(JsTree.ORG_ICON);
-							orgTree.setData(JsTree.TYPE_ORG);
-							if (omOrganizationRService.query(new WhereCondition()
-									.andEquals("parentorgid", org.getOrgid())).size() > 0 ||
-									omOrganizationRServiceExt.loadEmpByOrg(new WhereCondition().andEquals("orgid", org.getOrgid().toString())).size() > 0 ||
-									omPositionRService.query(new WhereCondition().andEquals("orgid", org.getOrgid())).size() > 0) {
+							orgTree.setData(new TreeData()
+									.setCurrentId(org.getOrgid().toString())
+									.setViewType(JsTree.TYPE_ORG)
+									.setParentId(id)
+									.setParentName(name));
+							//if (omOrganizationRService.query(new WhereCondition()
+							//		.andEquals("parentorgid", org.getOrgid())).size() > 0 ||
+							//		omOrganizationRServiceExt.loadEmpByOrg(new WhereCondition().andEquals("orgid", org.getOrgid().toString())).size() > 0 ||
+							//		omPositionRService.query(new WhereCondition().andEquals("orgid", org.getOrgid())).size() > 0) {
 								orgTree.setChildren(true);
-							}
+							//}
 							list.add(orgTree);
 						}
 					}
+				} else if(id.startsWith(".")){
+					List<OmPosition> posiList = omPositionRService.query(new WhereCondition()
+							.andEquals("manaposi", id.substring(1)));
+					if (posiList != null && posiList.size() > 0) {
+						for(OmPosition posi : posiList) {
+							JsTree posiTree = new JsTree();
+							posiTree.setId("." + posi.getPositionid().toString());
+							posiTree.setText(posi.getPosiname());
+							posiTree.setIcon(JsTree.POSITION_ICON);
+							posiTree.setData(new TreeData()
+									.setCurrentId(posi.getPositionid().toString())
+									.setParentId(id)
+									.setParentName(name)
+									.setViewType(JsTree.TYPE_POSI));
+							posiTree.setChildren(true);
+							list.add(posiTree);
+						}
+					}
+					//因人员与机构之间关系涉及中间表，故使用自定义sql语句查询
+					List<OmEmployee> empList1 = omOrganizationRServiceExt.loadEmpByPosi(new WhereCondition().andEquals("positionid", id.substring(1)));
+					if (empList1 != null && empList1.size() > 0) {
+						for(OmEmployee emp : empList1) {
+							JsTree empTree = new JsTree();
+							empTree.setId(id + "-" + emp.getEmpid().toString());
+							empTree.setText(emp.getEmpname());
+							empTree.setChildren(false);
+							empTree.setIcon(JsTree.EMP_ICON);
+							empTree.setData(new TreeData()
+									.setCurrentId(emp.getEmpid().toString())
+									.setParentId(id)
+									.setParentName(name)
+									.setViewType(JsTree.TYPE_EMP));
+							list.add(empTree);
+						}
+					}
+					
 				} else {
 					List<OmOrganization> childList = omOrganizationRService
 							.query(new WhereCondition()
@@ -109,26 +154,34 @@ public class OmOrganizationControllerExt extends BaseController {
 							orgTree.setId(org.getOrgid().toString());
 							orgTree.setText(org.getOrgname());
 							orgTree.setIcon(JsTree.ORG_ICON);
-							orgTree.setData(JsTree.TYPE_ORG);
-							if (omOrganizationRService.query(new WhereCondition()
-									.andEquals("parentorgid", org.getOrgid())).size() > 0 ||
-									omOrganizationRServiceExt.loadEmpByOrg(new WhereCondition().andEquals("orgid", org.getOrgid().toString())).size() > 0 ||
-									omPositionRService.query(new WhereCondition().andEquals("orgid", org.getOrgid())).size() > 0) {
+							orgTree.setData(new TreeData()
+									.setViewType(JsTree.TYPE_ORG)
+									.setParentId(id)
+									.setParentName(name)
+									.setCurrentId(org.getOrgid().toString()));
+							//if (omOrganizationRService.query(new WhereCondition()
+							//		.andEquals("parentorgid", org.getOrgid())).size() > 0 ||
+							//		omOrganizationRServiceExt.loadEmpByOrg(new WhereCondition().andEquals("orgid", org.getOrgid().toString())).size() > 0 ||
+							//		omPositionRService.query(new WhereCondition().andEquals("orgid", org.getOrgid())).size() > 0) {
 								orgTree.setChildren(true);
-							}
+							//}
 							list.add(orgTree);
 						}
 					}
 					List<OmPosition> posiList = omPositionRService.query(new WhereCondition()
-							.andEquals("orgid", id));
+							.andEquals("orgid", id).andIsNull("manaposi"));
 					if (posiList != null && posiList.size() > 0) {
 						for(OmPosition posi : posiList) {
 							JsTree posiTree = new JsTree();
-							posiTree.setId(id + "." + posi.getPositionid().toString());
+							posiTree.setId("." + posi.getPositionid().toString());
 							posiTree.setText(posi.getPosiname());
-							posiTree.setChildren(false);
+							posiTree.setChildren(true);
 							posiTree.setIcon(JsTree.POSITION_ICON);
-							posiTree.setData(JsTree.TYPE_POSI);
+							posiTree.setData(new TreeData()
+									.setCurrentId(posi.getPositionid().toString())
+									.setParentId(id)
+									.setParentName(name)
+									.setViewType(JsTree.TYPE_POSI));
 							list.add(posiTree);
 						}
 					}
@@ -141,7 +194,11 @@ public class OmOrganizationControllerExt extends BaseController {
 							empTree.setText(emp.getEmpname());
 							empTree.setChildren(false);
 							empTree.setIcon(JsTree.EMP_ICON);
-							empTree.setData(JsTree.TYPE_EMP);
+							empTree.setData(new TreeData()
+									.setCurrentId(emp.getEmpid().toString())
+									.setParentId(id)
+									.setParentName(name)
+									.setViewType(JsTree.TYPE_EMP));
 							list.add(empTree);
 						}
 					}
@@ -514,15 +571,29 @@ public class OmOrganizationControllerExt extends BaseController {
 			wc.setLength(page.getItemsperpage());
 			wc.setOffset((page.getCurrentPage() - 1) * page.getItemsperpage());
 			wc.setOrderBy(orderGuize);
+			JSONObject jsonObjsearchItems = jsonObj.getJSONObject("searchItems");
 			initWanNengChaXun(jsonObj, wc);// 万能查询
-			List<OmEmployee> list = omOrganizationRServiceExt.loadEmpByOrg(wc);
-			JSONArray ja = JSONArray.fromObject(list,jsonConfig);
-			page.setTotalItems(omOrganizationRServiceExt.countEmpByOrg(wc));
+			//判断查询类型
+			String type = JSONUtils.getStr(jsonObj, "searchType");
 			Map<String, Object> map = new HashMap<>();
-			map.put("page", page);
-			map.put("list", ja);
+			if("org".equals(type)) {
+				List<OmEmployee> list = omOrganizationRServiceExt.loadEmpByOrg(wc);
+				JSONArray ja = JSONArray.fromObject(list,jsonConfig);
+				page.setTotalItems(omOrganizationRServiceExt.countEmpByOrg(wc));
+				map.put("page", page);
+				map.put("list", ja);	
+			}
+			if("posi".equals(type)) {
+				List<OmEmployee> list = omOrganizationRServiceExt.loadEmpByPosi(wc);
+				JSONArray ja = JSONArray.fromObject(list,jsonConfig);
+				page.setTotalItems(omOrganizationRServiceExt.countEmpByPosi(wc));
+				map.put("page", page);
+				map.put("list", ja);	
+			}
+			
 			String s=JSONObject.fromObject(map,jsonConfig).toString();
 			AjaxUtils.ajaxJson(response,s );
+			
 		} catch (Exception e) {
 			AjaxUtils.ajaxJsonErrorMessage(response, "查询失败!");
 			e.printStackTrace();

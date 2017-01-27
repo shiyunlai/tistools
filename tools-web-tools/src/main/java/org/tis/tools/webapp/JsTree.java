@@ -1,7 +1,6 @@
 package org.tis.tools.webapp;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class JsTree implements Serializable {
 
@@ -13,7 +12,7 @@ public class JsTree implements Serializable {
 	private String text;
 	private String icon;
 	private Boolean children;
-	private String data;
+	private TreeData data;
 	public static final String EMP_PLUS_ICON = "fa fa-user-plus icon-state-success";// 新增人员图标
 	public static final String EMP_ICON = "fa fa-user icon-state-danger";// 人员图标
 	public static final String ROOT_TREE_ICON = "fa fa-sitemap icon-state-warning";// 树根节点图标
@@ -55,15 +54,14 @@ public class JsTree implements Serializable {
 		this.icon = icon;
 	}
 
-	public String getData() {
+	public TreeData getData() {
 		return data;
 	}
 
-	public void setData(String data) {
+	public void setData(TreeData data) {
 		this.data = data;
 	}
 
-	
 	@Override
 	public String toString() {
 		return "JsTree [id=" + id + ", text=" + text + "]";

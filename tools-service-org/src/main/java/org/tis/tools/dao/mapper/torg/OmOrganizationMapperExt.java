@@ -19,4 +19,8 @@ public interface OmOrganizationMapperExt {
 	public void insertEmpWithOrg(Map<String, Object> params);
 
 	public void deleteEmpWithOrg(String empId);
+
+	public List<OmEmployee> loadEmpByPosi(WhereCondition wc);
+
+	public Integer countEmpByPosi(WhereCondition wc);
 }

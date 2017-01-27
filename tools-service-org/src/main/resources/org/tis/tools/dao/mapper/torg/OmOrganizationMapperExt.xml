@@ -27,12 +27,32 @@
 		where b.row_num between ${offset} and ${length}</if>
 	</select>
 	
+	<select id="loadEmpByPosi" resultType="org.tis.tools.model.po.torg.OmEmployee" parameterType="org.tis.tools.base.WhereCondition" >
+		<if test="length > 0 and url == 'oracle'" >
+    	select <include refid="Emp_Column_List" /> from
+    		(select a.*,rownum row_num from
+    			(</if>
+	    		select <include refid="Emp_Column_List" />from (select e.* from OM_EMPLOYEE e right join
+  							(select empid from om_empposition  <include refid="Where_Clause" />) o on e.empid=o.empid ) 
+					<if test="orderBy != null" >${orderBy}</if>
+					<if test="length > 0 " >) a
+			) b
+		where b.row_num between ${offset} and ${length}</if>
+	</select>
+	
 	<select id="countEmpByOrg" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
 	
 		select count(*) from (select e.* from OM_EMPLOYEE e right join
   			(select empid from om_emporg  <include refid="Where_Clause" />) o on e.empid=o.empid )
 
   	</select>
+  	<select id="countEmpByPosi" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	
+		select count(*) from (select e.* from OM_EMPLOYEE e right join
+  			(select empid from om_empposition  <include refid="Where_Clause" />) o on e.empid=o.empid )
+
+  	</select>
+  	
   	
   	<insert id="insertEmpWithOrg" >
   		insert into OM_EMPORG (empid,orgid) values(#{empid},#{orgid})

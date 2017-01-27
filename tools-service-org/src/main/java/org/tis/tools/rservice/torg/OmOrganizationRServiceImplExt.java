@@ -6,8 +6,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.model.po.torg.OmEmployee;
-import org.tis.tools.model.po.torg.OmOrganization;
-import org.tis.tools.service.torg.OmOrganizationService;
 import org.tis.tools.service.torg.OmOrganizationServiceExt;
 
 import com.alibaba.dubbo.config.annotation.Service;
@@ -45,6 +43,18 @@ public class OmOrganizationRServiceImplExt implements IOmOrganizationRServiceExt
 	public void deleteEmpWithOrg(String empId) {
 		// TODO Auto-generated method stub
 		omOrganizationServiceExt.deleteEmpWithOrg(empId);
+	}
+
+	@Override
+	public List<OmEmployee> loadEmpByPosi(WhereCondition wc) {
+		// TODO Auto-generated method stub
+		return omOrganizationServiceExt.loadEmpByPosi(wc);
+	}
+
+	@Override
+	public Integer countEmpByPosi(WhereCondition wc) {
+		// TODO Auto-generated method stub
+		return omOrganizationServiceExt.countEmpByPosi(wc);
 	}
 
 

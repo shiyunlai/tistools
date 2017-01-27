@@ -166,7 +166,7 @@ MetronicApp.factory('position_service',['$http', '$q', function ($http,$q) {
         var res;
         if(isdebug){
         } else {
-            res = $http.post(manurl + "/AttrController/save",{item:item}).then(function (response) {
+            res = $http.post(manurl + "/torg/omPosition/save",{item:item}).then(function (response) {
                 return response.data;
             });
         }

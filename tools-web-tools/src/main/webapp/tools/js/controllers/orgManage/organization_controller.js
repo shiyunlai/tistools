@@ -19,12 +19,9 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
         emps.search1();
     }
 
+    //初始界面
     var viewType = "root";
-    var currentOrgId = "";
-    var currentOrgName = "";
     $scope.viewType = viewType;
-    $scope.currentOrgId = currentOrgId;
-    $scope.currentOrgName = currentOrgName;
 
 
     var org = {};
@@ -46,6 +43,20 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
 
     var posi = {};
     $scope.posi = posi;
+    posi.savePosi = function (item) {
+        var promise = position_service.save(item);
+        promise.then(function (data) {
+            if (data.retCode == '1') {
+                toastr['success'](data.retMessage, "更改岗位信息成功！");
+                $("#org_tree").jstree(true).refresh("#" + item.positionid);
+            } else if(data.retCode == '2') {
+                toastr['error'](data.retMessage, "更改岗位信息失败！");
+            } else {
+                toastr['error']( "更改岗位信息异常！");
+            }
+        });
+
+    }
 
 
     /**下级机构信息---开始**/
@@ -142,18 +153,32 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
     $scope.childPosi = childPosi;
     initController($scope, childPosi, 'childPosi', childPosi_service, filterFilter);
     childPosi.initChildPosiList = function (data) {
-        childPosi.searchForm.searchItems = {"orgid_eq":data }
+        if($scope.viewType == 'org') {
+            childPosi.searchForm.searchItems = {"orgid_eq":data,"manaposi_isNul":''}
+        }
+        if($scope.viewType == 'posi') {
+            childPosi.searchForm.searchItems = {"manaposi_eq":data }
+        }
         childPosi.search1();
     }
 
-    childPosi.add = function(id,name){
+    childPosi.add = function(parid,name){
         openwindow($modal, 'views/orgManage/posi_add.html', 'lg',
             function ($scope, $modalInstance) {
                 var item = {};
                 $scope.item = item;
-                if(!isNull(id)) {
-                    $scope.parentorg = name;
-                    item.orgid = id;
+                if(!isNull(parid)) {
+
+                    if($scope.viewType == 'org') {
+                        item.orgid = parid;
+                        $scope.parentorg = name;
+                    }
+                    if($scope.viewType == 'posi') {
+                        item.manaposi = parid;
+                        item.orgid = name;
+                        $scope.parentorg = name;
+                    }
+
                 }
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
@@ -181,8 +206,12 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
             function ($scope, $modalInstance) {
 
                 childPosi_service.loadById(id).then(function (res) {
-
-
+                    if(res.dutyid == 0) {
+                        res.dutyid = undefined
+                    }
+                    if(res.manaposi == 0) {
+                        res.manaposi = undefined
+                    }
                     $scope.item = res;
                     $scope.parentorg = name;
                 });
@@ -233,7 +262,14 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
     $scope.childEmp = childEmp;
     initController($scope, childEmp, 'childEmp', childEmp_service, filterFilter);
     childEmp.initChildEmpList = function (data) {
-        childEmp.searchForm.searchItems = {"orgid_eq":data }
+        if($scope.viewType == 'org') {
+            childEmp.searchForm.searchType = "org";
+            childEmp.searchForm.searchItems = {"orgid_eq":data }
+        }
+        if($scope.viewType == 'posi') {
+            childEmp.searchForm.searchType = "posi";
+            childEmp.searchForm.searchItems = {"positionid_eq":data }
+        }
         childEmp.search1();
     }
 
@@ -339,12 +375,9 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
                 'url' : "http://localhost:8089/tis/torg/treeList",
                 'type':'GET',
                 'data':function (node) {
-                    return { 'id' : node.id };
+                    return { 'id' : node.id, 'name' : node.text};
                 },
-                "dataType" : "json",
-                "success":function(data){
-                    console.log(data)
-                }
+                "dataType" : "json"
             },
         },
         "types": {
@@ -401,17 +434,27 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
         }
     });
     orgTree.bind("select_node.jstree", function (obj, data) {
+        var viewType = data.node.data.viewType;
+        var currentId = data.node.data.currentId;
+        var parentId = data.node.data.parentId;
+        var parentName = data.node.data.parentName;
+        var currentName = data.node.text;
 
-        var viewType =data.node.data;
-        var orgId = data.node.id;
-        var orgName = data.node.text;
+  //      var orgId = data.node.id;
+  //      var orgName = data.node.text;
+        //解决改变点击节点时，数据不刷新
         $scope.$apply(function () {
             $scope.viewType= ""
         });
         $scope.$apply(function () {
             $scope.viewType= viewType;
-            $scope.currentOrgId = orgId;
-            $scope.currentOrgName = orgName;
+            $scope.currentId = currentId;
+            $scope.parentId = parentId;
+            $scope.parentName = parentName;
+            $scope.currentName = currentName;
+
+//            $scope.currentOrgId = orgId;
+//            $scope.currentOrgName = orgName;
         });
         if(viewType == 'org') {
             organization_service.loadByOrgId(data.node.id).then(function (res) {
@@ -426,7 +469,16 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
         }
         if(viewType == 'posi') {
             position_service.loadByPosiId(data.node.id.split(".")[1]).then(function (res) {
+                if(res.dutyid == 0) {
+                    res.dutyid = undefined
+                }
+                if(res.manaposi == 0) {
+                    res.manaposi = undefined
+                }
                 $scope.posi.item = res;
+                $scope.currentPosiId = res.positionid;
+                //不添加此行，日期控件不起作用
+                ComponentsDateTimePickers.init()
             })
         }
     });

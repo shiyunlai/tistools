@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.model.po.torg.OmEmployee;
-import org.tis.tools.model.po.torg.OmOrganization;
 
 /**
  * <pre>
@@ -26,5 +25,9 @@ public interface IOmOrganizationRServiceExt {
 	public void insertEmpWithOrg(Map<String, Object> params);
 
 	public void deleteEmpWithOrg(String empId);
+
+	public List<OmEmployee> loadEmpByPosi(WhereCondition wc);
+
+	public Integer countEmpByPosi(WhereCondition wc);
 
 }

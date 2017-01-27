@@ -143,7 +143,10 @@ abstract public class BaseController {
 				}
 			} else if (StringUtils.endsWith(key, "_neq")) {
 				wc.andNotEquals(key.substring(0, key.length() - 4), value);
-			}else{
+			} else if (StringUtils.endsWith(key, "_isNul")) {
+				wc.andIsNull(key.substring(0, key.length() - 6));
+			}
+			else{
 				if(StringUtils.isNotEmpty(key)&&StringUtils.isNotEmpty(value)){
 					wc.andEquals(key, value);
 				}

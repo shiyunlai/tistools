@@ -48,4 +48,14 @@ public class OmOrganizationServiceExt {
 		omOrganizationMapperExt.deleteEmpWithOrg(empId);		
 	}
 
+	public List<OmEmployee> loadEmpByPosi(WhereCondition wc) {
+		// TODO Auto-generated method stub
+		return omOrganizationMapperExt.loadEmpByPosi(wc);
+	}
+
+	public Integer countEmpByPosi(WhereCondition wc) {
+		// TODO Auto-generated method stub
+		return omOrganizationMapperExt.countEmpByPosi(wc);
+	}
+
 }
