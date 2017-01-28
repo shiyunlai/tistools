@@ -6,7 +6,8 @@
             <div class="portlet-title">
                 <div ng-if="item.id != null" class="caption">
                     <i class="fa fa-pencil"></i>编辑机构
-                </div><div ng-if="item.id == null" class="caption">
+                </div>
+                <div ng-if="item.id == null" class="caption">
                     <i class="fa fa-pencil"></i>新增机构
                 </div>
 
@@ -30,18 +31,18 @@
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="control-label col-md-4">机构代码<span ng-class="{required:myform.orgcode.$invalid}">*</span></label>
+                                                <label class="control-label col-md-4">机构名称<span ng-class="{required:myform.orgname.$invalid}">*</span></label>
                                                 <div class="col-md-8">
-                                                    <input type="text" class="form-control" ng-model="item.orgcode" name="orgcode"
-                                                           required/>
+                                                    <input type="text" class="form-control" ng-model="item.orgname" name="orgname" required/>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="control-label col-md-4">机构名称<span ng-class="{required:myform.orgname.$invalid}">*</span></label>
+                                                <label class="control-label col-md-4">机构代码<span ng-class="{required:myform.orgcode.$invalid}">*</span></label>
                                                 <div class="col-md-8">
-                                                    <input type="text" class="form-control" ng-model="item.orgname" name="orgname" required/>
+                                                    <input type="text" class="form-control" ng-model="item.orgcode" name="orgcode"
+                                                           required/>
                                                 </div>
                                             </div>
                                         </div>

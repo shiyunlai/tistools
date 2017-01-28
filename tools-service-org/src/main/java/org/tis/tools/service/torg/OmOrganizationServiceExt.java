@@ -58,4 +58,14 @@ public class OmOrganizationServiceExt {
 		return omOrganizationMapperExt.countEmpByPosi(wc);
 	}
 
+	public void insertEmpWithPosi(Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		omOrganizationMapperExt.insertEmpWithPosi(params);
+	}
+
+	public void deleteEmpWithPosi(String empId) {
+		// TODO Auto-generated method stub
+		omOrganizationMapperExt.deleteEmpWithPosi(empId);
+	}
+
 }

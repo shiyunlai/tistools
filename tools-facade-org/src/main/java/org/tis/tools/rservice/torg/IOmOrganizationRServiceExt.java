@@ -30,4 +30,8 @@ public interface IOmOrganizationRServiceExt {
 
 	public Integer countEmpByPosi(WhereCondition wc);
 
+	public void insertEmpWithPosi(Map<String, Object> params);
+
+	public void deleteEmpWithPosi(String empId);
+
 }

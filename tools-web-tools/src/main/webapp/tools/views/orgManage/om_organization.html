@@ -670,7 +670,7 @@
                                                                         </div>
                                                                         <div class="actions col-md-4 col-ms-12">
                                                                             <div style="float: right">
-                                                                                <button class="btn btn-sm btn-primary filter-submit margin-bottom" ng-click="childPosi.add(currentId,org.item.orgname)">新增 </button>
+                                                                                <button class="btn btn-sm btn-primary filter-submit margin-bottom" ng-click="childPosi.add(viewType, currentId,org.item.orgname)">新增 </button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -816,7 +816,7 @@
                                                                             </td>
                                                                             <td>
                                                                                 <button class="btn btn-sm btn-primary filter-cancel" ng-click="childEmp.edit(cu.id, currentId)"> 编辑 </button>
-                                                                                <button class="btn btn-sm btn-danger filter-cancel" ng-click="childEmp.del(cu.id, currentId, cu.empid)"> 删除 </button>
+                                                                                <button class="btn btn-sm btn-danger filter-cancel" ng-click="childEmp.del(cu.id, cu.empid)"> 删除 </button>
                                                                             </td>
                                                                         </tr>
                                                                         </tr>
@@ -915,11 +915,14 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-md-12" >
-                                                                                <div class="form-group" style="padding-left: 40%">
-                                                                                    <div class="col-md-2">
+                                                                                <div class="form-group">
+                                                                                    <div class="col-md-6">
+                                                                                        <div style="float: right">
                                                                                         <button class="btn btn-sm green filter-submit margin-bottom" ng-click="posi.savePosi(posi.item)">保存 </button>
+                                                                                        </div>
                                                                                     </div>
-                                                                                    <div class="col-md-2">
+
+                                                                                    <div class="col-md-6">
                                                                                         <button class="btn btn-sm filter-submit margin-bottom" ng-click="posi.item.reset()">重  置 </button>
                                                                                     </div>
                                                                                 </div>
@@ -966,7 +969,7 @@
                                                             </div>
                                                             <div class="actions col-md-4 col-ms-12">
                                                                 <div style="float: right">
-                                                                    <button class="btn btn-sm btn-primary filter-submit margin-bottom" ng-click="childPosi.add(currentId,posi.item.orgid)">新增 </button>
+                                                                    <button class="btn btn-sm btn-primary filter-submit margin-bottom" ng-click="childPosi.add(viewType, currentId, posi.item.orgid)">新增 </button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1055,7 +1058,7 @@
                                                             </div>
                                                             <div class="actions col-md-4 col-ms-12">
                                                                 <div style="float: right">
-                                                                    <button class="btn btn-sm btn-primary filter-submit margin-bottom" ng-click="childEmp.add(currentId)">新增 </button>
+                                                                    <button class="btn btn-sm btn-primary filter-submit margin-bottom" ng-click="childEmp.choose(currentId)">新增 </button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1112,7 +1115,7 @@
                                                                 </td>
                                                                 <td>
                                                                     <button class="btn btn-sm btn-primary filter-cancel" ng-click="childEmp.edit(cu.id, currentId)"> 编辑 </button>
-                                                                    <button class="btn btn-sm btn-danger filter-cancel" ng-click="childEmp.del(cu.id, currentId, cu.empid)"> 删除 </button>
+                                                                    <button class="btn btn-sm btn-danger filter-cancel" ng-click="childEmp.del(cu.id,  cu.empid)"> 删除 </button>
                                                                 </td>
                                                             </tr>
                                                             </tr>

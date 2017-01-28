@@ -57,6 +57,19 @@ public class OmOrganizationRServiceImplExt implements IOmOrganizationRServiceExt
 		return omOrganizationServiceExt.countEmpByPosi(wc);
 	}
 
+	@Override
+	public void insertEmpWithPosi(Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		omOrganizationServiceExt.insertEmpWithPosi(params);
+	}
+
+	@Override
+	public void deleteEmpWithPosi(String empId) {
+		// TODO Auto-generated method stub
+		omOrganizationServiceExt.deleteEmpWithPosi(empId);
+		
+	}
+
 
 
 }

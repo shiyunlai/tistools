@@ -58,8 +58,16 @@
   		insert into OM_EMPORG (empid,orgid) values(#{empid},#{orgid})
   	</insert>
   	
+  	<insert id="insertEmpWithPosi" >
+  		insert into OM_EMPPOSITION (empid,poistionid) values(#{empid},#{positionid})
+  	</insert>
+  	
   	<delete id="deleteEmpWithOrg" parameterType="java.lang.String">
   		delete from OM_EMPORG where empid=#{empid}
+  	</delete>
+  	
+  	<delete id="deleteEmpWithPosi" parameterType="java.lang.String">
+  		delete from OM_EMPPOSITION where empid=#{empid}
   	</delete>
 
 	<select id="queryOrgId" resultType="Integer">

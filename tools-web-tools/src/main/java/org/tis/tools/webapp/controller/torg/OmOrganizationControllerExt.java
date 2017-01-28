@@ -620,9 +620,8 @@ public class OmOrganizationControllerExt extends BaseController {
 			}
 			JSONObject jsonObj = JSONObject.fromObject(content);
 			JSONObject job = jsonObj.getJSONObject("item");
-			String orgId = jsonObj.getString("orgid");
+			String id = jsonObj.getString("id");
 			final OmEmployee p = new OmEmployee();
-		
 			JSONObject.toBean(job, p, jsonConfig);
 			//p.setOrgid(Integer.parseInt(attrValStr));
 			if (StringUtils.isNotEmpty(p.getId())) {
@@ -644,7 +643,7 @@ public class OmOrganizationControllerExt extends BaseController {
 				p.setCreatetime(new Date());
 				p.setId(sequenceBiz.generateId("OmEmployee"));
 				Map<String, Object> params = new HashMap<>();
-				params.put("orgid", orgId);
+				params.put("orgid", id);
 				params.put("empid", genId);
 				transactionTemplate.execute(new TransactionCallback<Map<String, Object>>() {
 					@Override
@@ -666,7 +665,7 @@ public class OmOrganizationControllerExt extends BaseController {
 	}
 	
 	/**
-	 * 根据id删除成员信息
+	 * 根据id删除人员信息
 	 * 
 	 * @param model
 	 * @param content
@@ -674,7 +673,7 @@ public class OmOrganizationControllerExt extends BaseController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping("/omEmployee/delEmpWithOrg")
+	@RequestMapping("/omEmployee/delEmpWithRef")
 	public String empDel(ModelMap model, @RequestBody String content, HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -682,16 +681,14 @@ public class OmOrganizationControllerExt extends BaseController {
 			JSONObject jsonObj = JSONObject.fromObject(content);
 			final String id = jsonObj.getString("id");
 			String empId = jsonObj.getString("empId");
-		
 			if (StringUtils.isNotEmpty(id)) {
 				transactionTemplate.execute(new TransactionCallback<Map<String, Object>>() {
 					@Override
 					public Map<String, Object> doInTransaction(TransactionStatus arg0) {
 						WhereCondition wc = new WhereCondition();
 						wc.andEquals("id", id);
-						// 删除
-						
 						omOrganizationRServiceExt.deleteEmpWithOrg(empId);
+						omOrganizationRServiceExt.deleteEmpWithPosi(empId);
 						omEmployeeRService.deleteByCondition(wc);
 						return null;
 					}

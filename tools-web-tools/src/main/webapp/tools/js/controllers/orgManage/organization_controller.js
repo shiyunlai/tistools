@@ -31,7 +31,7 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
         promise.then(function (data) {
             if (data.retCode == '1') {
                 toastr['success'](data.retMessage, "更改机构信息成功！");
-                $("#org_tree").jstree(true).refresh("#" + item.orgid);
+                $("#org_tree").jstree(true).refresh();
             } else if(data.retCode == '2') {
                 toastr['error'](data.retMessage, "更改机构信息失败！");
             } else {
@@ -48,7 +48,7 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
         promise.then(function (data) {
             if (data.retCode == '1') {
                 toastr['success'](data.retMessage, "更改岗位信息成功！");
-                $("#org_tree").jstree(true).refresh("#" + item.positionid);
+                $("#org_tree").jstree(true).refresh();
             } else if(data.retCode == '2') {
                 toastr['error'](data.retMessage, "更改岗位信息失败！");
             } else {
@@ -85,7 +85,7 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
                         if (data.retCode == '1') {
                             toastr['success'](data.retMessage, "新增成功！");
                             $modalInstance.close();
-                            $("#org_tree").jstree(true).refresh("#" + id);
+                            $("#org_tree").jstree(true).refresh();
                         } else if(data.retCode == '2') {
                             toastr['error'](data.retMessage, "新增失败！");
                         } else {
@@ -116,7 +116,7 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
                         if (data.retCode == '1') {
                             toastr['success'](data.retMessage, "编辑成功！");
                             $modalInstance.close();
-                            $("#org_tree").jstree(true).refresh("#" + id);
+                            $("#org_tree").jstree(true).refresh();
                         } else if(data.retCode == '2') {
                             toastr['error'](data.retMessage, "编辑失败！");
                         } else {
@@ -137,7 +137,7 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
                 if(data.retCode == "1") {
                     toastr['success'](data.retMessage, "恭喜您！")
                     childOrg.searchN();
-                    $("#org_tree").jstree(true).refresh("#" + currentOrgId);
+                    $("#org_tree").jstree(true).refresh();
                 } else if(data.retCode == "2") {
                     toastr['error'](data.retMessage, "删除失败！");
                 } else {
@@ -162,18 +162,18 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
         childPosi.search1();
     }
 
-    childPosi.add = function(parid,name){
+    childPosi.add = function(type,parid,name){
         openwindow($modal, 'views/orgManage/posi_add.html', 'lg',
             function ($scope, $modalInstance) {
                 var item = {};
                 $scope.item = item;
                 if(!isNull(parid)) {
-
-                    if($scope.viewType == 'org') {
+                    alert(type)
+                    if(type == 'org') {
                         item.orgid = parid;
                         $scope.parentorg = name;
                     }
-                    if($scope.viewType == 'posi') {
+                    if(type == 'posi') {
                         item.manaposi = parid;
                         item.orgid = name;
                         $scope.parentorg = name;
@@ -188,7 +188,7 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
                         if (data.retCode == '1') {
                             toastr['success'](data.retMessage, "新增成功！");
                             $modalInstance.close();
-                            $("#org_tree").jstree(true).refresh("#" + id);
+                            $("#org_tree").jstree(true).refresh();
                         } else if(data.retCode == '2') {
                             toastr['error'](data.retMessage, "新增失败！");
                         } else {
@@ -225,7 +225,7 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
                         if (data.retCode == '1') {
                             toastr['success'](data.retMessage, "编辑成功！");
                             $modalInstance.close();
-                            $("#org_tree").jstree(true).refresh("#" + id);
+                            $("#org_tree").jstree(true).refresh();
                         } else if(data.retCode == '2') {
                             toastr['error'](data.retMessage, "编辑失败！");
                         } else {
@@ -246,7 +246,7 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
                 if(data.retCode == "1") {
                     toastr['success'](data.retMessage, "恭喜您！")
                     childPosi.searchN();
-                    $("#org_tree").jstree(true).refresh("#" + currentOrgId);
+                    $("#org_tree").jstree(true).refresh();
                 } else if(data.retCode == "2") {
                     toastr['error'](data.retMessage, "删除失败！");
                 } else {
@@ -281,17 +281,18 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
                 var item = {};
                 requestBody.item = item;
                 if(!isNull(id)) {
-                    requestBody.orgid = id;
+                    requestBody.id = id;
                 }
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                 };
                 $scope.saveEmp = function(data){
+                    alert(JSON.stringify(data))
                     childEmp_service.save(data).then(function (data) {
                         if (data.retCode == '1') {
                             toastr['success'](data.retMessage, "新增成功！");
                             $modalInstance.close();
-                            $("#org_tree").jstree(true).refresh("#" + id);
+                            $("#org_tree").jstree(true).refresh();
                         } else if(data.retCode == '2') {
                             toastr['error'](data.retMessage, "新增失败！");
                         } else {
@@ -311,7 +312,13 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
                 $scope.requestBody = requestBody;
                 var item = {};
                 requestBody.item = item;
-                requestBody.orgid = orgId;
+                requestBody.id = orgId;
+                if($scope.viewType == 'org') {
+                    requestBody.type = 'org';
+                }
+                if($scope.viewType == 'posi') {
+                    requestBody.type = 'posi';
+                }
                 childEmp_service.loadById(empId).then(function (res) {
                     $scope.requestBody.item = res;
                 });
@@ -325,7 +332,7 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
                         if (data.retCode == '1') {
                             toastr['success'](data.retMessage, "编辑成功！");
                             $modalInstance.close();
-                            $("#org_tree").jstree(true).refresh("#" + orgId);
+                            $("#org_tree").jstree(true).refresh();
                         } else if(data.retCode == '2') {
                             toastr['error'](data.retMessage, "编辑失败！");
                         } else {
@@ -338,19 +345,18 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
 
     }
 
-    childEmp.del = function (id,empId,orgId) {
+    childEmp.del = function (id,empId) {
         var res = confirm("删除是不可恢复的，并且会同时删除相关组织信息，你确认要删除吗？");
         if (res) {
             var params = {};
             params.id = id;
             params.empId = empId;
-            params.orgId = orgId;
             var promise = childEmp_service.delete(params);
             promise.then(function (data) {
                 if(data.retCode == "1") {
                     toastr['success'](data.retMessage, "成功！")
                     childEmp.searchN();
-                    $("#org_tree").jstree(true).refresh("#" + currentOrgId);
+                    $("#org_tree").jstree(true).refresh();
                 } else if(data.retCode == "2") {
                     toastr['error'](data.retMessage, "失败！");
                 } else {
@@ -358,6 +364,36 @@ MetronicApp.controller('orgList_controller', function ($filter, $rootScope, $sco
                 }
             });
         }
+    }
+
+    childEmp.choose = function (id) {
+        openwindow($modal, 'views/orgManage/emp_choose.html', 'lg',
+            function ($scope, $modalInstance) {
+                childEmp.searchForm.searchType = "org";
+                childEmp.searchForm.searchItems = {"orgid_eq":data };
+                childEmp.search1();
+                if(!isNull(id)) {
+                    requestBody.id = id;
+                }
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+                $scope.saveEmp = function(data){
+                    alert(JSON.stringify(data))
+                    childEmp_service.save(data).then(function (data) {
+                        if (data.retCode == '1') {
+                            toastr['success'](data.retMessage, "新增成功！");
+                            $modalInstance.close();
+                            $("#org_tree").jstree(true).refresh();
+                        } else if(data.retCode == '2') {
+                            toastr['error'](data.retMessage, "新增失败！");
+                        } else {
+                            toastr['error']( "新增异常！");
+                        }
+                    });
+                }
+            }
+        )
     }
     /**下级人员信息---结束**/
 
