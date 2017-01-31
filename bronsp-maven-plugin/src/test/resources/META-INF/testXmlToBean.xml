@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
+<bean id="10" code="xm1000x">
+
+    <name>x.m</name>
+    <desc>我是描述信息1</desc>
+    
+    <levels>
+        <level key="1">none</level>
+        <level key="2">nothing</level>
+    </levels>
+    
+    <extras>
+    	<extra>
+            <type>0</type>
+            <content>shiyunlai</content>
+        </extra>
+        <extra>
+            <type>1</type>
+            <content>xx.mm.xxextra</content>
+        </extra>
+        <extra>
+            <type>2</type>
+            <content>xx.mm.xx</content>
+        </extra>
+    </extras>
+    
+</bean>

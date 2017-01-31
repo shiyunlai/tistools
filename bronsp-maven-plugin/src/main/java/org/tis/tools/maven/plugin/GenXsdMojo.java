@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.bronsp.maven.plugin;
+package org.tis.tools.maven.plugin;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;

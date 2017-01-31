@@ -1,4 +1,4 @@
-package org.bronsp.maven.plugin;
+package org.tis.tools.maven.plugin;
 
 /*
  * Copyright 2001-2005 The Apache Software Foundation.
