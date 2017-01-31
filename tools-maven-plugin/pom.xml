@@ -16,10 +16,12 @@
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
+			<version>2.3.16</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
 		</dependency>
 		<!-- 扩展Maven插件 -->
 		<dependency>
@@ -43,6 +45,7 @@
 		<dependency>
 			<groupId>com.belerweb</groupId>
 			<artifactId>pinyin4j</artifactId>
+            <version>2.5.1</version>
 		</dependency>
 		<!-- Test -->
 		<dependency>
