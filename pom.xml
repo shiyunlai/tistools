@@ -28,6 +28,7 @@
 		<module>tools-web-user</module>
 		<module>tools-facade-jnl</module>
 		<module>tools-service-jnl</module>
+		<module>tools-maven-plugin</module>
 	</modules>
 	<properties>
 		<!-- Common libs -->
