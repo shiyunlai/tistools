@@ -9,6 +9,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.UnmarshallerHandler;
 import javax.xml.bind.ValidationEvent;
 import javax.xml.bind.ValidationEventHandler;
 
@@ -38,7 +39,7 @@ public class Xml22BeanUtil {
 		File f = new File(filepath);
 		String xmlstr;
 		try {
-			xmlstr = FileUtils.readFileToString(f);
+			xmlstr = FileUtils.readFileToString(f,"utf-8");
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -52,14 +53,19 @@ public class Xml22BeanUtil {
 			um.setEventHandler(new ValidationEventHandler() {
 				public boolean handleEvent(ValidationEvent event) {
 					System.out.println("解析xml有错误:" + event.getMessage());
-					event.getLinkedException().printStackTrace();
+					System.out.println("错误详情:" + event.toString());
+					if( event.getMessage().startsWith("意外的元素") ){
+						return true ;//跳过java中没有定义的属性
+					}
 					throw new RuntimeException(event.getMessage(), event
 							.getLinkedException());
 				}
 			});
+			
 			requestXml = (T) um.unmarshal(new ByteArrayInputStream(xmlstr.getBytes()));
+			
 		} catch (JAXBException e) {
-			e.getMessage();
+			e.printStackTrace();
 		}
 		return requestXml;
 	}
@@ -73,11 +79,13 @@ public class Xml22BeanUtil {
 	 *            xml文件
 	 * @return
 	 */
+	@Deprecated
 	public static <T> T xml2Bean(Class<T> type, String filepath) {
 
 		return xml2Bean(type,new File(filepath) ) ;
 	}
 	
+	@Deprecated
 	public static <T> T xml2Bean(Class<T> type, File xmlFile) {
 		
 		T bean = null;
@@ -100,9 +108,9 @@ public class Xml22BeanUtil {
 	 *            bean对象
 	 * @return 转换后的xml字符串
 	 */
-	public <T> String bean2Xml( T bean) {
+	public <T> String parseToXml( T bean) {
 		
-		return bean2Xml(bean,"utf-8");
+		return parseToXml(bean,"utf-8");
 	}
 	
 	/**
@@ -111,7 +119,7 @@ public class Xml22BeanUtil {
 	 * @param encoding 编码
 	 * @return 转换后的xml字符串
 	 */
-	public <T> String bean2Xml(T bean, String encoding) {
+	public <T> String parseToXml(T bean, String encoding) {
 		
 		String result = null;  
         try {  

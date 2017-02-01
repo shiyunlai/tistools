@@ -4,6 +4,7 @@
 package org.tis.tools.maven.plugin.gendao.ermaster;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.commons.lang.StringUtils;
@@ -33,28 +34,14 @@ import org.apache.commons.lang.StringUtils;
  * @author megapro
  *
  */
+@XmlRootElement(name = "model_property")
 public class ModelProperty {
 	
-	/** 模型属性定义： 工程名称 */
-	public static final String MP_PROJECT_NAME = "Project Name" ;
-	/** 模型属性定义： 模型名称 */
-	public static final String MP_MODEL_NAME = "Model Name" ;
-	/** 模型属性定义： 版本 */
-	public static final String MP_VERSION = "Version" ;
-	/** 模型属性定义： 公司 */
-	public static final String MP_COMPANY = "Company" ;
-	/** 模型属性定义： 作者 */
-	public static final String MP_AUTHOR = "Author" ;
-	/** 模型属性定义： 核心工程名称 */
-	public static final String MP_PRJ_CODE = "prjCore" ;
-	/** 模型属性定义： web工程名称 */
-	public static final String MP_PRJ_WEB = "prjWeb" ;
-	/** 模型属性定义： 接口定义工程名称 */
-	public static final String MP_PRJ_FACADE = "prjFacade" ;
-	/** 模型属性定义： 服务实现工程名称 */
-	public static final String MP_PRJ_SERVICE = "prjService" ;
-	
-	@XmlElement(name="name",required=false)
+	/**
+	 * 属性项名称<br/>
+	 * ERMaster中能定义的属性项范围见{@link ModelPropertyEnum}
+	 */
+	@XmlElement(name="name",required=true)
 	private String name ;
 	
 	@XmlElement(name="value")

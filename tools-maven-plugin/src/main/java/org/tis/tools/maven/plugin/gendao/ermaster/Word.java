@@ -4,6 +4,7 @@
 package org.tis.tools.maven.plugin.gendao.ermaster;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -37,24 +38,45 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author megapro
  *
  */
+@XmlRootElement(name = "word")
 public class Word {
 
-	@XmlElement(name="id",required=false)
+	@XmlElement(name="id")
 	private String id ; 
 	
-	@XmlElement(name="length",required=false)
+	@XmlElement(name="length")
 	private String length ; 
 	
-	@XmlElement(name="description",required=false)
+	@XmlElement(name="decimal")
+	private String decimal ; 
+	
+	@XmlElement(name="array")
+	private String array ; 
+	
+	@XmlElement(name="array_dimension")
+	private String arrayDimension ; 
+	@XmlElement(name="unsigned")
+	private String unsigned ; 
+	@XmlElement(name="zerofill")
+	private String zerofill ; 
+	@XmlElement(name="binary")
+	private String binary ; 
+	@XmlElement(name="args")
+	private String args ; 
+	@XmlElement(name="char_semantics")
+	private String charSemantics ; 
+	
+	
+	@XmlElement(name="description")
 	private String description ;
 
-	@XmlElement(name="logical_name",required=false)
+	@XmlElement(name="logical_name")
 	private String logicalName ;
 
-	@XmlElement(name="physical_name",required=false)
+	@XmlElement(name="physical_name")
 	private String physicalName ;
 
-	@XmlElement(name="type",required=false)
+	@XmlElement(name="type")
 	private String type ;
 	
 	
@@ -105,4 +127,69 @@ public class Word {
 	public void setType(String type) {
 		this.type = type;
 	}
+	
+	@XmlTransient
+	public String getDecimal() {
+		return decimal;
+	}
+	public void setDecimal(String decimal) {
+		this.decimal = decimal;
+	}
+	
+	@XmlTransient
+	public String getArray() {
+		return array;
+	}
+	public void setArray(String array) {
+		this.array = array;
+	}
+	
+	@XmlTransient
+	public String getArrayDimension() {
+		return arrayDimension;
+	}
+	public void setArrayDimension(String arrayDimension) {
+		this.arrayDimension = arrayDimension;
+	}
+	
+	@XmlTransient
+	public String getUnsigned() {
+		return unsigned;
+	}
+	public void setUnsigned(String unsigned) {
+		this.unsigned = unsigned;
+	}
+	
+	@XmlTransient
+	public String getZerofill() {
+		return zerofill;
+	}
+	public void setZerofill(String zerofill) {
+		this.zerofill = zerofill;
+	}
+	
+	@XmlTransient
+	public String getBinary() {
+		return binary;
+	}
+	public void setBinary(String binary) {
+		this.binary = binary;
+	}
+	
+	@XmlTransient
+	public String getArgs() {
+		return args;
+	}
+	public void setArgs(String args) {
+		this.args = args;
+	}
+	
+	@XmlTransient
+	public String getCharSemantics() {
+		return charSemantics;
+	}
+	public void setCharSemantics(String charSemantics) {
+		this.charSemantics = charSemantics;
+	}
+	
 }

@@ -4,6 +4,7 @@
 package org.tis.tools.maven.plugin.gendao.ermaster;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -13,47 +14,49 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author megapro
  *
  */
+@XmlRootElement(name = "normal_column")
 public class NormalColumn {
 	
 	/**
 	 * 对应模型数据字典的id {@link Word#getId()}
 	 */
-	@XmlElement(name = "word_id", required = false)
+	@XmlElement(name = "word_id")
 	private String wordId;
 	
-	@XmlElement(name = "id", required = false)
+	@XmlElement(name = "id")
 	private String id;
 
-	@XmlElement(name = "description", required = false)
+	@XmlElement(name = "description")
 	private String description;
 	
-	@XmlElement(name = "logical_name", required = false)
+	@XmlElement(name = "logical_name")
 	private String logicalName;
 	
-	@XmlElement(name = "physical_name", required = false)
+	@XmlElement(name = "physical_name")
 	private String physicalName;
 	
-	@XmlElement(name = "type", required = false)
+	@XmlElement(name = "type")
 	private String type;
 	
-	@XmlElement(name = "defaultValue", required = false)
+	@XmlElement(name = "default_value")
 	private String defaultValue;
 	
-	@XmlElement(name = "autoIncrement", required = false)
+	@XmlElement(name = "auto_increment")
 	private String autoIncrement;// false 、true
 	
-	@XmlElement(name = "foreignKey", required = false)
+	@XmlElement(name = "foreign_key")
 	private String foreignKey;// false 、true
 	
-	@XmlElement(name = "not_null", required = false)
+	@XmlElement(name = "not_null")
 	private String notNull;// false 、true
 	
-	@XmlElement(name = "primary_key", required = false)
+	@XmlElement(name = "primary_key")
 	private String primaryKey;// false 、true
 	
-	@XmlElement(name = "unique_key", required = false)
+	@XmlElement(name = "unique_key")
 	private String uniqueKey;// false 、true
 
+	
 	@XmlTransient
 	public String getWordId() {
 		return wordId;

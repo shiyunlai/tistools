@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author megapro
  *
  */
+@XmlRootElement(name = "category")
 public class Category {
 
 	@XmlElement(name = "id", required = false)
@@ -29,7 +30,6 @@ public class Category {
 	
 	@XmlElement(name = "node_element")
 	private List<NodeElement> nodeElement = new ArrayList<NodeElement>();
-	
 	
 	@XmlTransient
 	public String getId() {
@@ -51,6 +51,7 @@ public class Category {
 	public List<NodeElement> getNodeElement() {
 		return nodeElement;
 	}
+	
 	public void setNodeElement(List<NodeElement> nodeElement) {
 		this.nodeElement = nodeElement;
 	}

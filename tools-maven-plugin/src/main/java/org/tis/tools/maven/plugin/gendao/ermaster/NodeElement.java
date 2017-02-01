@@ -3,7 +3,7 @@
  */
 package org.tis.tools.maven.plugin.gendao.ermaster;
 
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -13,12 +13,12 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author megapro
  *
  */
+@XmlRootElement(name="node_element")
 public class NodeElement {
 
 	/**
 	 * 节点id，指向Table的id {@link Table#getId()}
 	 */
-	@XmlElement(name = "id", required = false)
 	private String id ;
 
 	@XmlTransient
