@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
 <bean id="10" code="xm1000x">
 
+	<shiyl>hahahhh</shiyl>
+	<shiyl1>hahahhh</shiyl1>
+	<shiyl2>hahahhh</shiyl2>
+	<shiyl3>hahahhh</shiyl3>
+	<shiyl4>hahahhh</shiyl4>
+	<shiyl5>hahahhh</shiyl5>
+	<shiyl6>hahahhh</shiyl6>
     <name>x.m</name>
     <desc>我是描述信息1</desc>
     
     <levels>
+		<shiyl3>hahahhh</shiyl3>
+		<shiyl4>hahahhh</shiyl4>
         <level key="1">none</level>
         <level key="2">nothing</level>
     </levels>
