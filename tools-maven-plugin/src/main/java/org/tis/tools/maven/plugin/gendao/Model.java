@@ -22,7 +22,7 @@ public class Model {
 	private String name;
 	private String id;
 	private String desc;
-	private String ext;// 定义扩展项，如果 ext="10"，则自动生成 ext0,ext1...ext9 十个扩展表字段
+	private String ext;// 定义扩展项，如果 ext="10*128"，则自动生成 ext0,ext1...ext9 十个扩展表字段，长度为128
 	private String type;
 	private List<Field> fields = new ArrayList<Field>();// 模型中的属性
 	
