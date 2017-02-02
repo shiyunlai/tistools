@@ -42,6 +42,10 @@ public class ERMasterModelTest {
 	public static void tearDownAfterClass() throws Exception {
 	}
 
+	@Test
+	public void test1(){
+		
+	}
 	
 	/**
 	 * //FIXME 基于JAXB解析ERMaster，还未解决的问题

@@ -73,6 +73,8 @@ public class ERMasterModelByDom4jTest {
 		Assert.assertEquals("Shiyl", ermModel.getModelPropertyValue(ModelPropertyEnum.MP_AUTHOR));
 		Assert.assertEquals("tools-core", ermModel.getModelPropertyValue(ModelPropertyEnum.MP_PRJ_CODE));
 		Assert.assertEquals("tools-web-${category}", ermModel.getModelPropertyValue(ModelPropertyEnum.MP_PRJ_WEB));
+		Assert.assertEquals("org.tis.ermaster", ermModel.getSettings().getPackageName());
+		Assert.assertEquals("UTF-8", ermModel.getSettings().getSrcFileEncoding());
 		
 		Assert.assertEquals(15, ermModel.getTables().size());
 		Table t11 = ermModel.getTableById("11") ;
