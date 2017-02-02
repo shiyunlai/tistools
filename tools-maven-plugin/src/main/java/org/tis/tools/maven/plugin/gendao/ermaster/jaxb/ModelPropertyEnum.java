@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tis.tools.maven.plugin.gendao.ermaster;
+package org.tis.tools.maven.plugin.gendao.ermaster.jaxb;
 
 /**
  * 

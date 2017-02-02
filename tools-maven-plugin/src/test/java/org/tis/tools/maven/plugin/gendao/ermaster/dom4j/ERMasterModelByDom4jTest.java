@@ -9,6 +9,12 @@ import java.util.List;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.tis.tools.maven.plugin.gendao.ermaster.dom4j.ERMasterModel;
+import org.tis.tools.maven.plugin.gendao.ermaster.dom4j.ModelPropertyEnum;
+import org.tis.tools.maven.plugin.gendao.ermaster.dom4j.NodeElement;
+import org.tis.tools.maven.plugin.gendao.ermaster.dom4j.NormalColumn;
+import org.tis.tools.maven.plugin.gendao.ermaster.dom4j.Table;
+import org.tis.tools.maven.plugin.gendao.ermaster.dom4j.Word;
 
 import junit.framework.Assert;
 
