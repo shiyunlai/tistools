@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tis.tools.maven.plugin.gendao.ermaster.dom4j;
+package org.tis.tools.maven.plugin.gendao.ermaster;
 
 import java.net.URL;
 import java.util.List;
