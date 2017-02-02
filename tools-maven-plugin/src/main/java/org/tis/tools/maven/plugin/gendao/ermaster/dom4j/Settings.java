@@ -18,6 +18,13 @@ public class Settings {
 	private String capital ; 
 	
 	/**
+	 * 生成代码所在的package包路径,会被映射为BizModel的主包路径
+	 */
+	private String packageName ; 
+	
+	private String srcFileEncoding ; 
+	
+	/**
 	 * 模型分类
 	 */
 	private List<Category> categories = new ArrayList<Category>();
@@ -28,6 +35,22 @@ public class Settings {
 	private List<ModelProperty> modelProperties = new ArrayList<ModelProperty>();
 	
 	
+	public String getSrcFileEncoding() {
+		return srcFileEncoding;
+	}
+
+	public void setSrcFileEncoding(String srcFileEncoding) {
+		this.srcFileEncoding = srcFileEncoding;
+	}
+
+	public String getPackageName() {
+		return packageName;
+	}
+
+	public void setPackageName(String packageName) {
+		this.packageName = packageName;
+	}
+
 	public String getDataBase() {
 		return dataBase;
 	}

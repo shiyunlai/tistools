@@ -55,6 +55,7 @@ public class Xml22BeanUtil {
 					System.out.println("解析xml有错误:" + event.getMessage());
 					System.out.println("错误详情:" + event.toString());
 					if( event.getMessage().startsWith("意外的元素") ){
+						System.out.println("跳过java中没有定义的属性!");
 						return true ;//跳过java中没有定义的属性
 					}
 					throw new RuntimeException(event.getMessage(), event

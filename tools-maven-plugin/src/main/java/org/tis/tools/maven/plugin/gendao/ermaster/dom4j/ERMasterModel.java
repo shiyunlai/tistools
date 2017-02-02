@@ -34,8 +34,12 @@ public class ERMasterModel {
 			throw new ModelFileNotExistException("模型文件<"+ermasterFile+">不存在") ;
 		}
 		
+		this.setErmasetFileName(ermasterFile);
+		
 		ParseERMasterModelUtil.parse(mFile,this) ;
 	}
+	
+	private String ermasetFileName ; 
 	
 	/**
 	 * 模型配置信息
@@ -51,6 +55,15 @@ public class ERMasterModel {
 	 * 模型表结构
 	 */
 	private List<Table> tables = new ArrayList<Table>();
+
+	
+	public String getErmasetFileName() {
+		return ermasetFileName;
+	}
+
+	public void setErmasetFileName(String ermasetFileName) {
+		this.ermasetFileName = ermasetFileName;
+	}
 
 	public Settings getSettings() {
 		return settings;

@@ -54,7 +54,7 @@ public class ParseERMasterModelUtil {
 
 		// 解析 settings 节点
 		Element settingsElement = root.element("settings") ;
-		parseSettings(root,settingsElement,ermm) ;
+		parseSettings(settingsElement,ermm) ;
 		
 		// 解析 dictionary 节点
 		Element dictionaryElement = root.element("dictionary") ;
@@ -89,18 +89,18 @@ public class ParseERMasterModelUtil {
 			for(Element colEle : colIt){
 				
 				NormalColumn n = new NormalColumn() ;
-				n.setWordId(colEle.elementText("word_id"));
-				n.setId(colEle.elementText("id"));
-				n.setDescription(colEle.elementText("description"));
-				n.setLogicalName(colEle.elementText("logical_name"));
-				n.setPhysicalName(colEle.elementText("physical_name"));
-				n.setType(colEle.elementText("type"));
-				n.setDefaultValue(colEle.elementText("default_value"));
-				n.setAutoIncrement(colEle.elementText("auto_increment"));
-				n.setForeignKey(colEle.elementText("foreign_key"));
-				n.setNotNull(colEle.elementText("not_null"));
-				n.setPrimaryKey(colEle.elementText("primary_key"));
-				n.setUniqueKey(colEle.elementText("unique_key"));
+				n.setWordId(colEle.elementTextTrim("word_id"));
+				n.setId(colEle.elementTextTrim("id"));
+				n.setDescription(colEle.elementTextTrim("description"));
+				n.setLogicalName(colEle.elementTextTrim("logical_name"));
+				n.setPhysicalName(colEle.elementTextTrim("physical_name"));
+				n.setType(colEle.elementTextTrim("type"));
+				n.setDefaultValue(colEle.elementTextTrim("default_value"));
+				n.setAutoIncrement(colEle.elementTextTrim("auto_increment"));
+				n.setForeignKey(colEle.elementTextTrim("foreign_key"));
+				n.setNotNull(colEle.elementTextTrim("not_null"));
+				n.setPrimaryKey(colEle.elementTextTrim("primary_key"));
+				n.setUniqueKey(colEle.elementTextTrim("unique_key"));
 				
 				t.addNormalColumn(n);
 			}
@@ -120,12 +120,12 @@ public class ParseERMasterModelUtil {
 		while( wordIt.hasNext() ){
 			Element wordEle = wordIt.next() ;
 			Word w = new Word() ;
-			w.setId(wordEle.elementText("id"));
-			w.setLength(wordEle.elementText("length"));
-			w.setLogicalName(wordEle.elementText("logical_name"));
-			w.setPhysicalName(wordEle.elementText("physical_name"));
-			w.setType(wordEle.elementText("type"));
-			w.setDescription(wordEle.elementText("description"));
+			w.setId(wordEle.elementTextTrim("id"));
+			w.setLength(wordEle.elementTextTrim("length"));
+			w.setLogicalName(wordEle.elementTextTrim("logical_name"));
+			w.setPhysicalName(wordEle.elementTextTrim("physical_name"));
+			w.setType(wordEle.elementTextTrim("type"));
+			w.setDescription(wordEle.elementTextTrim("description"));
 			ermm.addWord(w);
 		}
 	}
@@ -142,10 +142,12 @@ public class ParseERMasterModelUtil {
 	 * @param settingsElement
 	 * @param ermm
 	 */
-	private static void parseSettings(Element root , Element settingsElement, ERMasterModel ermm) {
+	private static void parseSettings(Element settingsElement, ERMasterModel ermm) {
 		
 		ermm.getSettings().setDataBase( settingsElement.element("database").getStringValue() );
 		ermm.getSettings().setCapital( settingsElement.element("capital").getStringValue() );
+		ermm.getSettings().setPackageName(settingsElement.element("export_setting").element("export_java_setting").elementTextTrim("package_name") ); 
+		ermm.getSettings().setSrcFileEncoding(settingsElement.element("export_setting").element("export_java_setting").elementTextTrim("src_file_encoding") ); 
 		
 		//获取所有category节点
 		List<Element> categoryIt = settingsElement.selectNodes("category_settings/categories/category") ;
