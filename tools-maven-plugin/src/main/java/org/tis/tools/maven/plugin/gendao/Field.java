@@ -142,4 +142,8 @@ public class Field {
 	public void setKey(String key) {
 		this.key = key;
 	}
+	
+	public String toString(){
+		return this.id +"\t"+ this.name +"\t" + this.type +"\t" + this.length +"\n";
+	}
 }

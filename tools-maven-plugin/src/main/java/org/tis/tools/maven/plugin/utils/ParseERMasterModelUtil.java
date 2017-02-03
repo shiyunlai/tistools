@@ -7,10 +7,12 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.tis.tools.maven.plugin.exception.AssemblyERMaster2BIzmodelException;
 import org.tis.tools.maven.plugin.exception.ParseModelFileException;
 import org.tis.tools.maven.plugin.gendao.ermaster.dom4j.Category;
 import org.tis.tools.maven.plugin.gendao.ermaster.dom4j.ERMasterModel;
@@ -64,8 +66,44 @@ public class ParseERMasterModelUtil {
 		Element contentsElement = root.element("contents") ;
 		parseContents(contentsElement,ermm) ;
 		
+		// 完善 Table中表字段的引用关系
+		unReferenceColumn(ermm) ; 
+		
 	}
 	
+	/**
+	 * ERMaster中的表字段以引用的方式定义，此处要消除引用关系，把引用的内容都放在实际的字段上
+	 * @param ermm
+	 */
+	private static void unReferenceColumn(ERMasterModel ermm) {
+		
+		for( Table t : ermm.getTables() ){
+			
+			for( NormalColumn c : t.getNormalColumns() ){
+				
+				if( StringUtils.isNotEmpty(c.getWordId() ) ){
+					// ERMaster中表的字段都对应到某个字典
+					Word w = ermm.getWordById(c.getWordId());
+					if ( null == w ) {
+						throw new ParseModelFileException(
+								"找不到<" + c.getWordId() + ">对应的模型字典定义!" + "请检查ERMaster定义文件<" + ermm.getErmasetFileName() + ">!");
+					}
+					
+					c.setRefWord(w);//获取引用的模型字典
+				}
+				
+				if( StringUtils.isNotEmpty(c.getReferencedColumn() )){
+					NormalColumn refColumn = ermm.getNormalColumn(c.getReferencedColumn()) ;
+					if ( null == refColumn ) {
+						throw new ParseModelFileException(
+								"找不到<" + c.getReferencedColumn() + ">对应字段定义!" + "请检查ERMaster定义文件<" + ermm.getErmasetFileName() + ">!");
+					}
+					c.setRefNormalColumn(refColumn);
+				}
+			}
+		}
+	}
+
 	/**
 	 * 解析contents节点，获得table定义
 	 * @param contentsElement
@@ -90,6 +128,9 @@ public class ParseERMasterModelUtil {
 				
 				NormalColumn n = new NormalColumn() ;
 				n.setWordId(colEle.elementTextTrim("word_id"));
+				n.setReferencedColumn(colEle.elementTextTrim("referenced_column"));//不是所有节点都有值， 只有引用了其它表（外键）的字典才有
+				n.setRelation(colEle.elementTextTrim("relation"));//引用关系
+				
 				n.setId(colEle.elementTextTrim("id"));
 				n.setDescription(colEle.elementTextTrim("description"));
 				n.setLogicalName(colEle.elementTextTrim("logical_name"));

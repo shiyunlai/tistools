@@ -6,7 +6,6 @@ package org.tis.tools.maven.plugin.gendao.ermaster;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.tis.tools.maven.plugin.exception.AssemblyERMaster2BIzmodelException;
 import org.tis.tools.maven.plugin.gendao.BizModel;
 import org.tis.tools.maven.plugin.gendao.Field;
 import org.tis.tools.maven.plugin.gendao.Model;
@@ -14,7 +13,6 @@ import org.tis.tools.maven.plugin.gendao.ermaster.dom4j.ERMasterModel;
 import org.tis.tools.maven.plugin.gendao.ermaster.dom4j.ModelPropertyEnum;
 import org.tis.tools.maven.plugin.gendao.ermaster.dom4j.NormalColumn;
 import org.tis.tools.maven.plugin.gendao.ermaster.dom4j.Table;
-import org.tis.tools.maven.plugin.gendao.ermaster.dom4j.Word;
 
 /**
  * 
@@ -25,11 +23,15 @@ import org.tis.tools.maven.plugin.gendao.ermaster.dom4j.Word;
  * @author megapro
  *
  */
-public class ERMasterDefinition extends BizModel{
+public class ERMasterDefinition {
 	
 	private ERMasterModel ermm ; 
 	private BizModel bizModel ; 
 	
+	/**
+	 * 构造函阶段完成ERMasterModel适配为BizModel
+	 * @param ermm
+	 */
 	public ERMasterDefinition(ERMasterModel ermm){
 		
 		this.ermm = ermm ; 
@@ -83,7 +85,7 @@ public class ERMasterDefinition extends BizModel{
 	private List<Model> assembleModel(ERMasterModel ermm) {
 		
 		List<Model> mList = new ArrayList<Model>() ; 
-		//每个ERMaster中的表定义为一个Model //TODO 还没有考虑Table之外的模型解析和映射
+		//每个ERMaster中的表定义为一个Model //TODO 还没有考虑Table之外的模型解析和映射，如视图。
 		for( Table t : ermm.getTables() ){
 			
 			Model m = new Model() ; 
@@ -107,28 +109,21 @@ public class ERMasterDefinition extends BizModel{
 		
 		for( NormalColumn c : t.getNormalColumns() ){
 			
-			// ERMaster中表的字段都对应到某个字典
-			Word w = ermm.getWordById(c.getWordId());
-			if (null == w) {
-				throw new AssemblyERMaster2BIzmodelException(
-						"找不到<" + c.getWordId() + ">对应的模型字典定义!" + "请检查ERMaster定义文件<" + ermm.getErmasetFileName() + ">!");
-			}
-			
 			Field f = new Field() ;
-			f.setDesc(w.getDescription());
+			
+			f.setDesc(c.getDescription());
 			f.setForm("");
-			f.setId(w.getPhysicalName());
+			f.setId(c.getPhysicalName());
 			f.setKey(c.getPrimaryKey());
-			f.setLength(w.getLength());
-			f.setName(w.getLogicalName());
+			f.setLength(c.getLength());
+			f.setName(c.getLogicalName());
 			f.setPhysical("true");//因为ERMaster中以Table方式定义，所有都要生成数据库字段
 			f.setSearch("");
-			f.setType(w.getType());
+			f.setType(c.getType());
 			
 			fList.add(f) ;
 		}
 		
 		return fList;
 	}
-	
 }

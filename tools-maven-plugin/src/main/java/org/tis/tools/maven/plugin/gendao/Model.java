@@ -117,6 +117,11 @@ public class Model {
 	}
 	
 	public String toString() {
-		return name + "(" + id + ")";
+		StringBuffer sb = new StringBuffer() ; 
+		sb.append(name + "(" + id + ")" + "\n" ) ; 
+		for( Field f : this.fields){
+			sb.append(f.toString()) ; 
+		}
+		return sb.toString() ; 
 	}
 }

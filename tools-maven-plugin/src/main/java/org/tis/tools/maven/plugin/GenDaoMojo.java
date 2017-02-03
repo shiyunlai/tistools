@@ -18,6 +18,8 @@ import org.tis.tools.maven.plugin.gendao.BizModel;
 import org.tis.tools.maven.plugin.gendao.GenDAOManager;
 import org.tis.tools.maven.plugin.gendao.Model;
 import org.tis.tools.maven.plugin.gendao.TemplateType;
+import org.tis.tools.maven.plugin.gendao.ermaster.ERMasterDefinition;
+import org.tis.tools.maven.plugin.gendao.ermaster.dom4j.ERMasterModel;
 import org.tis.tools.maven.plugin.utils.CommonUtil;
 import org.tis.tools.maven.plugin.utils.FileUtil;
 import org.tis.tools.maven.plugin.utils.KeyWordUtil;
@@ -103,6 +105,21 @@ public class GenDaoMojo extends AbstractMojo {
 	 */
 	@Parameter( property = "templates.path" )
 	private String templatesPath ; 
+	
+	/**
+	 * <br/>模型定义文件类型 -Dmodel.file.type
+	 * <br/>一共两种：xml erm
+	 * <br/>不指定时默认为：xml
+	 * <br/>如： user.xml 只需要 -Dmodel.file=user 即可；
+	 * <br/>如果，指定了 -Dmodel.file.type=erm ， 则通过-Dmodel.file=user指定的文件会被识别为 user.erm
+	 * <br/>如果，指定了 -Dmodel.file.type=xml ， 则通过-Dmodel.file=user指定的文件会被识别为 user.xml
+	 * <br/>但是不支持两种一起指定 不允许 -Dmodel.file.type=xml,erm，将按默认处理
+	 */
+	@Parameter( property = "model.file.type" ,defaultValue=FILE_SUFFIX_XML)
+	private String modelFileType ; 
+	
+	public static final String FILE_SUFFIX_XML = "xml" ; 
+	public static final String FILE_SUFFIX_ERM = "erm" ; 
 	
 	/**
 	 * <br/>模型定义文件名 -Dmodel.file
@@ -243,13 +260,29 @@ public class GenDaoMojo extends AbstractMojo {
 		 */
 		if( null == modelFileName || "".equals(modelFileName) ){
 			getLog().warn("未指定模型文件时，默认处理目录下所有");
-			modelDefFiles = FileUtil.listFilesBySuffix(new File(modelFilePath), ".xml") ; 
+			if( StringUtils.equals(modelFileType, FILE_SUFFIX_XML)){
+				modelDefFiles = FileUtil.listFilesBySuffix(new File(modelFilePath), "."+FILE_SUFFIX_XML) ; 
+			}else if( StringUtils.equals(modelFileType, FILE_SUFFIX_ERM) ){
+				modelDefFiles = FileUtil.listFilesBySuffix(new File(modelFilePath), "."+FILE_SUFFIX_ERM) ; 
+			}else{
+				throw new GenDaoMojoException("不支持后缀<"+modelFileType+">，请指定有效的模型文件后缀！如：-Dmodel.file.type=xml/erm") ; 
+			}
 		}else{
-			String ffile = modelFilePath + modelFileName + ".xml" ; 
+			
+			String ffile = null ; 
+			if( StringUtils.equals(modelFileType, FILE_SUFFIX_XML) ){
+				ffile = modelFilePath + modelFileName + "."+FILE_SUFFIX_XML ; 
+			}else if( StringUtils.equals(modelFileType, FILE_SUFFIX_ERM) ){
+				ffile = modelFilePath + modelFileName + "."+FILE_SUFFIX_ERM ; 
+			}else{
+				throw new GenDaoMojoException("不支持后缀<"+modelFileType+">，请指定有效的模型文件后缀！如：-Dmodel.file.type=xml/erm") ; 
+			}
+			
 			getLog().debug("指定了模型定义文件名称:"+ffile);
 			if( ! new File(ffile).exists() ){
 				throw new GenDaoMojoException("模型定义文件<"+ffile+">不存在!") ; 
 			}
+			
 			modelDefFiles.add(new File(ffile) ) ;
 		}
 		
@@ -260,22 +293,37 @@ public class GenDaoMojo extends AbstractMojo {
 		/*
 		 * 解析模型定义文件
 		 */
-		for( File defFile : modelDefFiles ){
-			
-			BizModel bm = Xml22BeanUtil.xml2Bean(BizModel.class, defFile) ; 
-			bm.setModelDefFile(defFile.getPath()) ; 
-			
-			//以-Dmain.package传入的主包路径为准
-			if( StringUtils.isNotEmpty(mainPackage) ) {
-				bm.setMainpackage(mainPackage);
+		if( StringUtils.equals(modelFileType, FILE_SUFFIX_XML) ){
+			//用xml定义模型
+			for( File defFile : modelDefFiles ){
+				
+				BizModel bm = Xml22BeanUtil.xml2Bean(BizModel.class, defFile) ; 
+				bm.setModelDefFile(defFile.getPath()) ; 
+				
+				//以-Dmain.package传入的主包路径为准
+				if( StringUtils.isNotEmpty(mainPackage) ) {
+					bm.setMainpackage(mainPackage);
+				}
+				
+				//如果model.xml和－D都未设置，则使用默认包路径
+				if( StringUtils.isEmpty(bm.getMainpackage()) ){
+					bm.setMainpackage(defMainPackage);
+				}
+				
+				bizModelList.add( bm ) ;
 			}
-			
-			//如果model.xml和－D都未设置，则使用默认包路径
-			if( StringUtils.isEmpty(bm.getMainpackage()) ){
-				bm.setMainpackage(defMainPackage);
+		}
+		
+		if( StringUtils.equals(modelFileType, FILE_SUFFIX_ERM) ){
+			//用ERMaster定义模型
+			for( File defFile : modelDefFiles ){
+				
+				ERMasterModel ermm = new ERMasterModel(defFile) ; 
+				
+				BizModel bm = new ERMasterDefinition(ermm).getBizModel() ;
+				
+				bizModelList.add( bm ) ;
 			}
-			
-			bizModelList.add( bm ) ;
 		}
 		
 		/*
@@ -309,6 +357,9 @@ public class GenDaoMojo extends AbstractMojo {
 		String [] k = genType.split("\\,") ; 
 		genTypes.clear() ;
 		for( String s : k ){
+			if( StringUtils.equals(modelFileType, FILE_SUFFIX_ERM) && s.equals("ddl") ){
+				continue ; //ERMaster定义模型时，直接用ERMaster的能力生成sql，此处不生成ddl
+			}
 			genTypes.add(s) ;
 		}
 		

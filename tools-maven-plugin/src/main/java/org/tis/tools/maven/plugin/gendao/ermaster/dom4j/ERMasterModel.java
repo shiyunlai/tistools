@@ -23,6 +23,11 @@ import org.tis.tools.maven.plugin.utils.ParseERMasterModelUtil;
  */
 public class ERMasterModel {
 	
+	public ERMasterModel(File ermasterFile ){
+		
+		init(ermasterFile) ;
+	}
+	
 	public ERMasterModel(String ermasterFile) {
 		
 		if( StringUtils.isEmpty(ermasterFile) ){
@@ -30,11 +35,18 @@ public class ERMasterModel {
 		}
 		
 		File mFile = new File(ermasterFile) ; 
-		if( !mFile.exists() ){
-			throw new ModelFileNotExistException("模型文件<"+ermasterFile+">不存在") ;
-		}
 		
 		this.setErmasetFileName(ermasterFile);
+		
+		init(mFile) ;
+		
+	}
+	
+	private void init(File mFile){
+		
+		if( !mFile.exists() ){
+			throw new ModelFileNotExistException("模型文件<"+mFile.getName()+">不存在") ;
+		}
 		
 		ParseERMasterModelUtil.parse(mFile,this) ;
 	}
@@ -181,6 +193,22 @@ public class ERMasterModel {
 			}
 		}
 		
+		return null ; 
+	}
+
+	/**
+	 * 根据id获取字段定义
+	 * @param referencedColumn 如果找不到返回null
+	 */
+	public NormalColumn getNormalColumn(String referencedColumnId) {
+		
+		for( Table t : this.tables ){
+			for( NormalColumn c : t.getNormalColumns() ){
+				if( c.getId().equals(referencedColumnId) ){
+					return c ; 
+				}
+			}
+		}
 		return null ; 
 	}
 }

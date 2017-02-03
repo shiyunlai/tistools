@@ -80,13 +80,11 @@ public class Xml22BeanUtil {
 	 *            xml文件
 	 * @return
 	 */
-	@Deprecated
 	public static <T> T xml2Bean(Class<T> type, String filepath) {
 
 		return xml2Bean(type,new File(filepath) ) ;
 	}
 	
-	@Deprecated
 	public static <T> T xml2Bean(Class<T> type, File xmlFile) {
 		
 		T bean = null;
