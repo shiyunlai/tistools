@@ -11,8 +11,8 @@
 	</page_setting>
 	<category_index>1</category_index>
 	<zoom>1.0</zoom>
-	<x>-12</x>
-	<y>405</y>
+	<x>-16</x>
+	<y>-16</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -187,14 +187,14 @@
 			</connections>
 			<display>true</display>
 			<creation_date>2017-01-18 19:04:59</creation_date>
-			<updated_date>2017-02-02 15:43:12</updated_date>
+			<updated_date>2017-02-03 05:57:44</updated_date>
 			<model_property>
 				<name>Project Name</name>
-				<value>branchplus</value>
+				<value>open branch plus</value>
 			</model_property>
 			<model_property>
 				<name>Model Name</name>
-				<value></value>
+				<value>OPB</value>
 			</model_property>
 			<model_property>
 				<name>Version</name>
@@ -206,7 +206,7 @@
 			</model_property>
 			<model_property>
 				<name>Author</name>
-				<value></value>
+				<value>Shiyl</value>
 			</model_property>
 			<model_property>
 				<name>prjCore</name>
@@ -214,15 +214,15 @@
 			</model_property>
 			<model_property>
 				<name>prjWeb</name>
-				<value>tools-web-${category}</value>
+				<value>tools-core</value>
 			</model_property>
 			<model_property>
 				<name>prjFacade</name>
-				<value>tools-facade-${category}</value>
+				<value>tools-core</value>
 			</model_property>
 			<model_property>
 				<name>prjService</name>
-				<value>tools-service-${category}</value>
+				<value>tools-core</value>
 			</model_property>
 		</model_properties>
 		<table_properties>
