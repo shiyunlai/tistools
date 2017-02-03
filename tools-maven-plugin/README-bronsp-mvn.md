@@ -196,8 +196,58 @@ org.apache.maven.plugin.MojoNotFoundException: Could not find goal 'test' in plu
 			</plugin>
 	```
 
-问题3： ...
+问题3： 在父项目中增加了对Dom4j，和Jaxen的依赖管理（dependencyManage），在eclipse中直接运行单元测试通过，但是编译 mvn clean install 之后，在目标工程(tools-core)中运行本插件，如： mvn tools:help 时，报错：
+'dependencies.dependency.version' for dom4j:dom4j:jar is missing. @
+2 problems were encountered while building the effective model for org.tis:tools-maven-plugin:0.0.1
 
 	原因：
+	上面报错，提示找不到dom4j的版本 —— dom4j:dom4j:jar is missing. @
+	因为对jar包的依赖管理在 tools 父工程中，需要先把父工程也编译，maven运行时，才能找到正确的依赖关系
 
 	解决：
+	编译整体tools项目
+	mvn clean install 
+	之后在运行通过 mvn tools:help
+	
+问题4：.......
+	
+	原因：
+	.....
+	
+	解决： 
+	.....
+		
+问题4：.......
+	
+	原因：
+	.....
+	
+	解决： 
+	.....
+	
+		
+问题4：.......
+	
+	原因：
+	.....
+	
+	解决： 
+	.....
+	
+		
+问题4：.......
+	
+	原因：
+	.....
+	
+	解决： 
+	.....
+	
+		
+问题4：.......
+	
+	原因：
+	.....
+	
+	解决： 
+	.....
