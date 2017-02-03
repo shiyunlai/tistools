@@ -1,2 +1,7 @@
 -- 生成 jnl 模块dao代码
 mvn bronsp:gen-dao -Dtemplates.path=/Users/megapro/Develop/tis/tools/tools-core/model/templates/biz -Dmodel.file=model-jnl -X -e 
+
+-- 使用ERMaster定义的模型文件生成代码
+mvn tools:gen-dao -Dmodel.file.type=erm
+
+

@@ -9,10 +9,10 @@
 		<bottom_margin>30</bottom_margin>
 		<right_margin>30</right_margin>
 	</page_setting>
-	<category_index>1</category_index>
-	<zoom>1.0</zoom>
-	<x>-16</x>
-	<y>-16</y>
+	<category_index>0</category_index>
+	<zoom>2.5</zoom>
+	<x>774</x>
+	<y>396</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -112,7 +112,7 @@
 			<show_referred_tables>false</show_referred_tables>
 			<categories>
 				<category>
-					<id>16</id>
+					<id>17</id>
 					<height>854</height>
 					<width>750</width>
 						<font_name>.SF NS Text</font_name>
@@ -134,7 +134,7 @@
 					<node_element>15</node_element>
 				</category>
 				<category>
-					<id>17</id>
+					<id>18</id>
 					<height>1226</height>
 					<width>1416</width>
 						<font_name>.SF NS Text</font_name>
@@ -187,7 +187,7 @@
 			</connections>
 			<display>true</display>
 			<creation_date>2017-01-18 19:04:59</creation_date>
-			<updated_date>2017-02-03 05:57:44</updated_date>
+			<updated_date>2017-02-03 08:50:55</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value>open branch plus</value>
@@ -8044,6 +8044,23 @@
 				<primary_key_length_of_text>null</primary_key_length_of_text>
 			</table_properties>
 		</table>
+		<note>
+			<id>16</id>
+			<height>492</height>
+			<width>274</width>
+				<font_name>.SF NS Text</font_name>
+				<font_size>9</font_size>
+			<x>-12</x>
+			<y>241</y>
+			<color>
+				<r>128</r>
+				<g>128</g>
+				<b>192</b>
+			</color>
+			<connections>
+			</connections>
+			<text># 表设计规范&#x0A;----&#x0A;## 表名规范：&#x0A;----&#x0A;&#x09;{限定名}_{特征}_{表类型}&#x0A;&#x0A;&#x09;如： JNL_SERVICE_M&#x0A;&#x09;JNL      为限定名，表示流水模块；&#x0A;&#x09;_SERVICE 为特征名，表示服务流水；&#x0A;&#x09;_M       为主表&#x0A;&#x0A;### {限定名}&#x0A;&#x0A;&#x09;通常是一个单词，或者单词的缩写；&#x0A;&#x09;限定名一般是应用的模块名称( modular name )；&#x0A;&#x09;或者是数据库表的作用分类：&#x0A;&#x09;如： HISTORY_*** 开头的表示***这个表的历史数据&#x0A;&#x09;如： SYS_***_*** 为系统级的表&#x0A;&#x09;如： JNL_***_*** 为流水模块相关的表&#x0A;&#x0A;### {特征}&#x0A;&#x09;&#x0A;&#x09;可以是一个或者多个单词，构成对表功能的描述；&#x0A;&#x09;特征表示该表的目的，概述了表中数据的含义。&#x0A;&#x09;特征名多个单词时以下划线分割，结构如：&#x0A;&#x09;{限定名}_{word_word_word}_{表类型}&#x0A;&#x09;建议不要太长；&#x0A;&#x0A;### {表类型}&#x0A;&#x09;&#x0A;&#x09;常用的表类型：&#x0A;&#x09;&#x0A;&#x09;M : 主表（Master）&#x0A;&#x09;D : 明细表（Detail）&#x0A;&#x09;R : 登记薄（Register）&#x0A;&#x09;C : 参数表（Config）&#x0A;&#x09;&#x0A;&#x09;RD : 冗余表 （Redundant），一般是横行冗余字段表&#x0A;&#x09;&#x0A;&#x09;LOG : 日志表（Log）&#x0A;&#x09;&#x0A;&#x09;</text>
+		</note>
 	</contents>
 	<column_groups>
 	</column_groups>

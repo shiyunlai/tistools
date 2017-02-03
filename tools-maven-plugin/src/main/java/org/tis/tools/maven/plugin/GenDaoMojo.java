@@ -300,15 +300,7 @@ public class GenDaoMojo extends AbstractMojo {
 				BizModel bm = Xml22BeanUtil.xml2Bean(BizModel.class, defFile) ; 
 				bm.setModelDefFile(defFile.getPath()) ; 
 				
-				//以-Dmain.package传入的主包路径为准
-				if( StringUtils.isNotEmpty(mainPackage) ) {
-					bm.setMainpackage(mainPackage);
-				}
-				
-				//如果model.xml和－D都未设置，则使用默认包路径
-				if( StringUtils.isEmpty(bm.getMainpackage()) ){
-					bm.setMainpackage(defMainPackage);
-				}
+				perMainPackage4BizModel(defMainPackage, bm);
 				
 				bizModelList.add( bm ) ;
 			}
@@ -321,6 +313,8 @@ public class GenDaoMojo extends AbstractMojo {
 				ERMasterModel ermm = new ERMasterModel(defFile) ; 
 				
 				BizModel bm = new ERMasterDefinition(ermm).getBizModel() ;
+				
+				perMainPackage4BizModel(defMainPackage, bm);
 				
 				bizModelList.add( bm ) ;
 			}
@@ -367,6 +361,30 @@ public class GenDaoMojo extends AbstractMojo {
 		 * 参数准备完成，显示一下各参数值
 		 */
 		showAllConfigurationValue() ; 
+	}
+
+
+	/**
+	 * 为每个BizModel模型设置源码生成package包路径
+	 * @param defMainPackage 缺省包路径
+	 * @param bm
+	 */
+	private void perMainPackage4BizModel(String defMainPackage, BizModel bm) {
+		
+		//如果当前bm中已经有mainpackage信息，则无需设置
+		if( StringUtils.isNotEmpty(bm.getMainpackage()) ){
+			return ; 
+		}
+		
+		//以-Dmain.package传入的主包路径为准
+		if( StringUtils.isNotEmpty(mainPackage) ) {
+			bm.setMainpackage(mainPackage);
+		}
+		
+		//如果model.xml和－D都未设置，则使用默认包路径
+		if( StringUtils.isEmpty(bm.getMainpackage()) ){
+			bm.setMainpackage(defMainPackage);
+		}
 	}
 	
 	private void showAllConfigurationValue() {
