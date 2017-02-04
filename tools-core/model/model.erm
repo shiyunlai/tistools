@@ -9,10 +9,10 @@
 		<bottom_margin>30</bottom_margin>
 		<right_margin>30</right_margin>
 	</page_setting>
-	<category_index>0</category_index>
-	<zoom>2.5</zoom>
-	<x>774</x>
-	<y>396</y>
+	<category_index>1</category_index>
+	<zoom>1.0</zoom>
+	<x>-16</x>
+	<y>427</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -96,7 +96,7 @@
 			</export_image_setting>
 			<export_java_setting>
 				<java_output>src/main/java</java_output>
-				<package_name>org.tis.ermaster</package_name>
+				<package_name>org.tis.tools</package_name>
 				<class_name_suffix></class_name_suffix>
 				<src_file_encoding>UTF-8</src_file_encoding>
 				<with_hibernate>false</with_hibernate>
@@ -112,13 +112,13 @@
 			<show_referred_tables>false</show_referred_tables>
 			<categories>
 				<category>
-					<id>17</id>
+					<id>18</id>
 					<height>854</height>
 					<width>750</width>
 						<font_name>.SF NS Text</font_name>
 						<font_size>9</font_size>
-					<x>240</x>
-					<y>-12</y>
+					<x>276</x>
+					<y>0</y>
 					<color>
 						<r>128</r>
 						<g>128</g>
@@ -131,15 +131,15 @@
 					<node_element>14</node_element>
 					<node_element>0</node_element>
 					<node_element>13</node_element>
-					<node_element>15</node_element>
+					<node_element>17</node_element>
 				</category>
 				<category>
-					<id>18</id>
+					<id>19</id>
 					<height>1226</height>
 					<width>1416</width>
 						<font_name>.SF NS Text</font_name>
 						<font_size>9</font_size>
-					<x>240</x>
+					<x>276</x>
 					<y>0</y>
 					<color>
 						<r>128</r>
@@ -177,7 +177,7 @@
 				<font_name>.SF NS Text</font_name>
 				<font_size>9</font_size>
 			<x>-12</x>
-			<y>-12</y>
+			<y>68</y>
 			<color>
 				<r>255</r>
 				<g>255</g>
@@ -187,7 +187,7 @@
 			</connections>
 			<display>true</display>
 			<creation_date>2017-01-18 19:04:59</creation_date>
-			<updated_date>2017-02-03 08:50:55</updated_date>
+			<updated_date>2017-02-03 09:15:42</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value>open branch plus</value>
@@ -1388,7 +1388,7 @@
 			<args></args>
 			<char_semantics>false</char_semantics>
 			<description></description>
-			<logical_name>测试CHARN</logical_name>
+			<logical_name>测试CHAR(16)</logical_name>
 			<physical_name>TEST_CHARN</physical_name>
 			<type>character(n)</type>
 		</word>
@@ -1452,7 +1452,7 @@
 			<args></args>
 			<char_semantics>false</char_semantics>
 			<description></description>
-			<logical_name>测试DECIMALP</logical_name>
+			<logical_name>测试DECIMAL(12)</logical_name>
 			<physical_name>TEST_DECIMALP</physical_name>
 			<type>decimal(p)</type>
 		</word>
@@ -1468,7 +1468,7 @@
 			<args></args>
 			<char_semantics>false</char_semantics>
 			<description></description>
-			<logical_name>测试DECIMALPS</logical_name>
+			<logical_name>测试DECIMAL(12,4)</logical_name>
 			<physical_name>TEST_DECIMALPS</physical_name>
 			<type>decimal(p,s)</type>
 		</word>
@@ -1500,7 +1500,7 @@
 			<args></args>
 			<char_semantics>false</char_semantics>
 			<description></description>
-			<logical_name>测试DOUBLEMD</logical_name>
+			<logical_name>测试DOUBLE(10,4)</logical_name>
 			<physical_name>TEST_DOUBLEMD</physical_name>
 			<type>double precision(m,d)</type>
 		</word>
@@ -1532,7 +1532,7 @@
 			<args></args>
 			<char_semantics>false</char_semantics>
 			<description></description>
-			<logical_name>测试FLOATMD</logical_name>
+			<logical_name>测试FLOAT(10,4)</logical_name>
 			<physical_name>TEST_FLOATMD</physical_name>
 			<type>float(m,d)</type>
 		</word>
@@ -1548,7 +1548,7 @@
 			<args></args>
 			<char_semantics>false</char_semantics>
 			<description></description>
-			<logical_name>测试FLOATP</logical_name>
+			<logical_name>测试FLOAT(10)</logical_name>
 			<physical_name>TEST_FLOATP</physical_name>
 			<type>float(p)</type>
 		</word>
@@ -1564,7 +1564,7 @@
 			<args></args>
 			<char_semantics>false</char_semantics>
 			<description></description>
-			<logical_name>测试GIBINTN</logical_name>
+			<logical_name>测试GIBINT(8)</logical_name>
 			<physical_name>TEST_GIBINTN</physical_name>
 			<type>bigint(n)</type>
 		</word>
@@ -1596,7 +1596,7 @@
 			<args></args>
 			<char_semantics>false</char_semantics>
 			<description></description>
-			<logical_name>测试INTN</logical_name>
+			<logical_name>测试INT(12)</logical_name>
 			<physical_name>TEST_INTN</physical_name>
 			<type>int(n)</type>
 		</word>
@@ -1644,7 +1644,7 @@
 			<args></args>
 			<char_semantics>false</char_semantics>
 			<description></description>
-			<logical_name>测试VARCHARN</logical_name>
+			<logical_name>测试VARCHAR(32)</logical_name>
 			<physical_name>TEST_VARCHARN</physical_name>
 			<type>varchar(n)</type>
 		</word>
@@ -1962,8 +1962,8 @@
 			<width>267</width>
 				<font_name>.SF NS Text</font_name>
 				<font_size>9</font_size>
-			<x>240</x>
-			<y>120</y>
+			<x>276</x>
+			<y>132</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -2129,7 +2129,7 @@
 			<width>261</width>
 				<font_name>.SF NS Text</font_name>
 				<font_size>9</font_size>
-			<x>244</x>
+			<x>280</x>
 			<y>684</y>
 			<color>
 				<r>128</r>
@@ -2353,7 +2353,7 @@
 			<width>297</width>
 				<font_name>.SF NS Text</font_name>
 				<font_size>9</font_size>
-			<x>564</x>
+			<x>600</x>
 			<y>774</y>
 			<color>
 				<r>128</r>
@@ -2841,7 +2841,7 @@
 			<width>298</width>
 				<font_name>.SF NS Text</font_name>
 				<font_size>9</font_size>
-			<x>900</x>
+			<x>936</x>
 			<y>0</y>
 			<color>
 				<r>128</r>
@@ -3428,7 +3428,7 @@
 			<width>298</width>
 				<font_name>.SF NS Text</font_name>
 				<font_size>9</font_size>
-			<x>900</x>
+			<x>936</x>
 			<y>348</y>
 			<color>
 				<r>128</r>
@@ -3916,7 +3916,7 @@
 			<width>273</width>
 				<font_name>.SF NS Text</font_name>
 				<font_size>9</font_size>
-			<x>560</x>
+			<x>596</x>
 			<y>0</y>
 			<color>
 				<r>128</r>
@@ -4413,7 +4413,7 @@
 			<width>305</width>
 				<font_name>.SF NS Text</font_name>
 				<font_size>9</font_size>
-			<x>560</x>
+			<x>596</x>
 			<y>360</y>
 			<color>
 				<r>128</r>
@@ -5000,7 +5000,7 @@
 			<width>268</width>
 				<font_name>.SF NS Text</font_name>
 				<font_size>9</font_size>
-			<x>241</x>
+			<x>277</x>
 			<y>516</y>
 			<color>
 				<r>128</r>
@@ -5257,7 +5257,7 @@
 			<width>285</width>
 				<font_name>.SF NS Text</font_name>
 				<font_size>9</font_size>
-			<x>244</x>
+			<x>280</x>
 			<y>846</y>
 			<color>
 				<r>128</r>
@@ -5613,7 +5613,7 @@
 			<width>269</width>
 				<font_name>.SF NS Text</font_name>
 				<font_size>9</font_size>
-			<x>240</x>
+			<x>276</x>
 			<y>228</y>
 			<color>
 				<r>128</r>
@@ -5978,7 +5978,7 @@
 			<width>269</width>
 				<font_name>.SF NS Text</font_name>
 				<font_size>9</font_size>
-			<x>240</x>
+			<x>276</x>
 			<y>0</y>
 			<color>
 				<r>128</r>
@@ -6310,7 +6310,7 @@
 			<width>309</width>
 				<font_name>.SF NS Text</font_name>
 				<font_size>9</font_size>
-			<x>900</x>
+			<x>936</x>
 			<y>636</y>
 			<color>
 				<r>128</r>
@@ -6798,7 +6798,7 @@
 			<width>312</width>
 				<font_name>.SF NS Text</font_name>
 				<font_size>9</font_size>
-			<x>899</x>
+			<x>935</x>
 			<y>924</y>
 			<color>
 				<r>128</r>
@@ -7021,8 +7021,8 @@
 			<width>278</width>
 				<font_name>.SF NS Text</font_name>
 				<font_size>9</font_size>
-			<x>240</x>
-			<y>-12</y>
+			<x>276</x>
+			<y>0</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -7155,8 +7155,8 @@
 			<width>267</width>
 				<font_name>.SF NS Text</font_name>
 				<font_size>9</font_size>
-			<x>240</x>
-			<y>252</y>
+			<x>276</x>
+			<y>264</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -7316,14 +7316,48 @@
 				<primary_key_length_of_text>null</primary_key_length_of_text>
 			</table_properties>
 		</table>
-		<table>
+		<note>
 			<id>15</id>
+			<height>492</height>
+			<width>274</width>
+				<font_name>.SF NS Text</font_name>
+				<font_size>9</font_size>
+			<x>-12</x>
+			<y>367</y>
+			<color>
+				<r>128</r>
+				<g>128</g>
+				<b>192</b>
+			</color>
+			<connections>
+			</connections>
+			<text># 表设计规范&#x0A;----&#x0A;## 表名规范：&#x0A;----&#x0A;&#x09;{限定名}_{特征}_{表类型}&#x0A;&#x0A;&#x09;如： JNL_SERVICE_M&#x0A;&#x09;JNL      为限定名，表示流水模块；&#x0A;&#x09;_SERVICE 为特征名，表示服务流水；&#x0A;&#x09;_M       为主表&#x0A;&#x0A;### {限定名}&#x0A;&#x0A;&#x09;通常是一个单词，或者单词的缩写；&#x0A;&#x09;限定名一般是应用的模块名称( modular name )；&#x0A;&#x09;或者是数据库表的作用分类：&#x0A;&#x09;如： HISTORY_*** 开头的表示***这个表的历史数据&#x0A;&#x09;如： SYS_***_*** 为系统级的表&#x0A;&#x09;如： JNL_***_*** 为流水模块相关的表&#x0A;&#x0A;### {特征}&#x0A;&#x09;&#x0A;&#x09;可以是一个或者多个单词，构成对表功能的描述；&#x0A;&#x09;特征表示该表的目的，概述了表中数据的含义。&#x0A;&#x09;特征名多个单词时以下划线分割，结构如：&#x0A;&#x09;{限定名}_{word_word_word}_{表类型}&#x0A;&#x09;建议不要太长；&#x0A;&#x0A;### {表类型}&#x0A;&#x09;&#x0A;&#x09;常用的表类型：&#x0A;&#x09;&#x0A;&#x09;M : 主表（Master）&#x0A;&#x09;D : 明细表（Detail）&#x0A;&#x09;R : 登记薄（Register）&#x0A;&#x09;C : 参数表（Config）&#x0A;&#x09;&#x0A;&#x09;RD : 冗余表 （Redundant），一般是横行冗余字段表&#x0A;&#x09;&#x0A;&#x09;LOG : 日志表（Log）&#x0A;&#x09;&#x0A;&#x09;</text>
+		</note>
+		<note>
+			<id>16</id>
+			<height>52</height>
+			<width>282</width>
+				<font_name>.SF NS Text</font_name>
+				<font_size>9</font_size>
+			<x>-16</x>
+			<y>0</y>
+			<color>
+				<r>128</r>
+				<g>128</g>
+				<b>192</b>
+			</color>
+			<connections>
+			</connections>
+			<text>注意：&#x0A;1、需要增加新的model_property ，请以txt方式编辑本文件；</text>
+		</note>
+		<table>
+			<id>17</id>
 			<height>75</height>
 			<width>162</width>
 				<font_name>.SF NS Text</font_name>
 				<font_size>9</font_size>
-			<x>240</x>
-			<y>420</y>
+			<x>276</x>
+			<y>432</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -8044,23 +8078,6 @@
 				<primary_key_length_of_text>null</primary_key_length_of_text>
 			</table_properties>
 		</table>
-		<note>
-			<id>16</id>
-			<height>492</height>
-			<width>274</width>
-				<font_name>.SF NS Text</font_name>
-				<font_size>9</font_size>
-			<x>-12</x>
-			<y>241</y>
-			<color>
-				<r>128</r>
-				<g>128</g>
-				<b>192</b>
-			</color>
-			<connections>
-			</connections>
-			<text># 表设计规范&#x0A;----&#x0A;## 表名规范：&#x0A;----&#x0A;&#x09;{限定名}_{特征}_{表类型}&#x0A;&#x0A;&#x09;如： JNL_SERVICE_M&#x0A;&#x09;JNL      为限定名，表示流水模块；&#x0A;&#x09;_SERVICE 为特征名，表示服务流水；&#x0A;&#x09;_M       为主表&#x0A;&#x0A;### {限定名}&#x0A;&#x0A;&#x09;通常是一个单词，或者单词的缩写；&#x0A;&#x09;限定名一般是应用的模块名称( modular name )；&#x0A;&#x09;或者是数据库表的作用分类：&#x0A;&#x09;如： HISTORY_*** 开头的表示***这个表的历史数据&#x0A;&#x09;如： SYS_***_*** 为系统级的表&#x0A;&#x09;如： JNL_***_*** 为流水模块相关的表&#x0A;&#x0A;### {特征}&#x0A;&#x09;&#x0A;&#x09;可以是一个或者多个单词，构成对表功能的描述；&#x0A;&#x09;特征表示该表的目的，概述了表中数据的含义。&#x0A;&#x09;特征名多个单词时以下划线分割，结构如：&#x0A;&#x09;{限定名}_{word_word_word}_{表类型}&#x0A;&#x09;建议不要太长；&#x0A;&#x0A;### {表类型}&#x0A;&#x09;&#x0A;&#x09;常用的表类型：&#x0A;&#x09;&#x0A;&#x09;M : 主表（Master）&#x0A;&#x09;D : 明细表（Detail）&#x0A;&#x09;R : 登记薄（Register）&#x0A;&#x09;C : 参数表（Config）&#x0A;&#x09;&#x0A;&#x09;RD : 冗余表 （Redundant），一般是横行冗余字段表&#x0A;&#x09;&#x0A;&#x09;LOG : 日志表（Log）&#x0A;&#x09;&#x0A;&#x09;</text>
-		</note>
 	</contents>
 	<column_groups>
 	</column_groups>
