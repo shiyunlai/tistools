@@ -12,7 +12,7 @@
 	<category_index>1</category_index>
 	<zoom>1.0</zoom>
 	<x>-16</x>
-	<y>427</y>
+	<y>437</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -41,7 +41,7 @@
 		<suspend_validator>false</suspend_validator>
 		<export_setting>
 			<export_ddl_setting>
-				<output_path>tools-core/model/model.sql</output_path>
+				<output_path>model/model.sql</output_path>
 				<encoding>UTF-8</encoding>
 				<line_feed>LF</line_feed>
 				<is_open_after_saved>true</is_open_after_saved>
@@ -96,7 +96,7 @@
 			</export_image_setting>
 			<export_java_setting>
 				<java_output>src/main/java</java_output>
-				<package_name>org.tis.tools</package_name>
+				<package_name>org.tis.ermaster</package_name>
 				<class_name_suffix></class_name_suffix>
 				<src_file_encoding>UTF-8</src_file_encoding>
 				<with_hibernate>false</with_hibernate>
@@ -187,7 +187,7 @@
 			</connections>
 			<display>true</display>
 			<creation_date>2017-01-18 19:04:59</creation_date>
-			<updated_date>2017-02-03 09:15:42</updated_date>
+			<updated_date>2017-02-04 16:04:26</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value>open branch plus</value>
