@@ -9,12 +9,18 @@
 <mapper namespace="${mapperJavaPackageVar}">
   
   	<insert id="insert" parameterType="${poClassPackageVar}">
-	    INSERT INTO ${table.id} (<#list table.fields as field><#if field.physical !="false"><#if field_index == 0>${field.id}<#else>,${field.id}</#if></#if>
-  </#list>)
-	    VALUES (
-	    <#list table.fields as field><#if field.physical !="false">
-			#<#nt>{${field.id},jdbcType=${field.type}}
-			<#if field_has_next>,</#if>
+	    INSERT INTO ${table.id} 
+	    (
+	    	<#list table.fields as field><#if field.physical !="false">
+	    	<#if field_index == 0>${field.id}<#else>,${field.id}</#if></#if>
+	    	</#list>
+	    )
+	    VALUES 
+	    (
+	    <#list table.fields as field>
+	    <#if field.physical !="false">
+			#<#nt>{${field.id},jdbcType=${field.type}}<#if field_has_next>,</#if>
+		</#if>
 		</#list>
   		)
  	</insert>
@@ -152,7 +158,8 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-	  <#list table.fields as field><#if field.physical !="false"><#if field_index == 0>${field.id}<#else>,${field.id}</#if></#if>
-  </#list>
+	  <#list table.fields as field><#if field.physical !="false">
+		<#if field_index == 0>${field.id}<#else>,${field.id}</#if></#if>
+	  </#list>
 	</sql>
 </mapper>
