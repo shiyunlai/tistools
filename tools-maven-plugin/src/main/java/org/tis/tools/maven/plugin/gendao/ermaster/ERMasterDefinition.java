@@ -144,11 +144,59 @@ public class ERMasterDefinition {
 			f.setName(c.getLogicalName());
 			f.setPhysical("true");//因为ERMaster中以Table方式定义，所有都要生成数据库字段
 			f.setSearch("");
-			f.setType(c.getType());
+			f.setType(assembleFieldType(c.getType()));
 			
 			fList.add(f) ;
 		}
 		
 		return fList;
+	}
+
+	private String assembleFieldType(String type) {
+		
+		String t = trimBracket(type) ;
+		
+		/*
+		 * 特殊处理
+		 * character -> char
+		 * integer -> int
+		 * double precision -> double
+		 */
+		if( "character".equals( t )){
+			return "char" ;
+		}
+		if( "integer".equals( t )){
+			return "int" ;
+		}
+		if( "double precision".equals( t )){
+			return "double" ;
+		}
+		return t;
+	}
+	
+	/**
+	 * <pre>
+	 * 把类型上括号去掉
+	 * String type = "char" ;
+	 * trimBracket(type) 输出  char
+	 * 
+	 * String type = "varchar(n)" ;
+	 * trimBracket(type) 输出  varchar
+	 * 
+	 * String type = "float(m,d)" ;
+	 * trimBracket(type) 输出  float
+	 * </pre>
+	 * @param type
+	 * @return
+	 */
+	private String trimBracket(String type) {
+		
+		if( type.indexOf("(") > 0 ){
+			
+			return type.substring(0, type.indexOf("(") );
+		}else{
+			
+			return type ; 
+		}
 	}
 }
