@@ -53,7 +53,7 @@ public class ERMasterModel {
 	/**
 	 * 模型配置信息
 	 */
-	private Settings settings = new Settings() ;;
+	private Settings settings = new Settings() ;
 	
 	/**
 	 * 模型数据字典
@@ -114,6 +114,15 @@ public class ERMasterModel {
 	
 	
 	/////////////// 提供一些快速获取定义信息的方法 ///////////////
+	
+	/**
+	 * 获取所有Category分类定义
+	 * @return 所有Category
+	 */
+	public List<Category> getCategories(){
+		
+		return this.settings.getCategories() ;
+	}
 	
 	/**
 	 * 根据名称取Category，如果没有categoryName对应的分类定义,返回空

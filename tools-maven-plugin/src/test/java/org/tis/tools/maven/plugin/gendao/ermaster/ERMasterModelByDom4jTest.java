@@ -116,11 +116,14 @@ public class ERMasterModelByDom4jTest {
 	public void test2(){
 		
 		ERMasterDefinition ermDef = new ERMasterDefinition(ermm) ;
-		BizModel bizModel = ermDef.getBizModel() ; 
+		List<BizModel> bizModels = ermDef.getBizModels() ; 
 		
-		Assert.assertNotNull(bizModel);
-		System.out.println(bizModel);
-		
+		Assert.assertNotNull(bizModels);
+		Assert.assertEquals(2,bizModels.size());
+		for(BizModel bm : bizModels){
+			System.out.println("\n ====================================== \n");
+			System.out.println(bm);
+		}
 	}
 
 }

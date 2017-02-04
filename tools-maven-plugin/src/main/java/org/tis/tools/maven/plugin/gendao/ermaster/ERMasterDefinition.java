@@ -9,8 +9,10 @@ import java.util.List;
 import org.tis.tools.maven.plugin.gendao.BizModel;
 import org.tis.tools.maven.plugin.gendao.Field;
 import org.tis.tools.maven.plugin.gendao.Model;
+import org.tis.tools.maven.plugin.gendao.ermaster.dom4j.Category;
 import org.tis.tools.maven.plugin.gendao.ermaster.dom4j.ERMasterModel;
 import org.tis.tools.maven.plugin.gendao.ermaster.dom4j.ModelPropertyEnum;
+import org.tis.tools.maven.plugin.gendao.ermaster.dom4j.NodeElement;
 import org.tis.tools.maven.plugin.gendao.ermaster.dom4j.NormalColumn;
 import org.tis.tools.maven.plugin.gendao.ermaster.dom4j.Table;
 
@@ -26,7 +28,9 @@ import org.tis.tools.maven.plugin.gendao.ermaster.dom4j.Table;
 public class ERMasterDefinition {
 	
 	private ERMasterModel ermm ; 
-	private BizModel bizModel ; 
+	
+	// ERMasterModel中通过Category分类来多个模型类型，每个类型适配为一个BizModel
+	private List<BizModel> bizModels ;
 	
 	/**
 	 * 构造函阶段完成ERMasterModel适配为BizModel
@@ -36,60 +40,81 @@ public class ERMasterDefinition {
 		
 		this.ermm = ermm ; 
 		
-		//把ERMasterModel装配并适配为BizModel对象
-		bizModel = assemble(ermm) ;
+		bizModels = assemble(ermm) ;
 	}
 	
 	public ERMasterModel getERMasterModel(){
 		return this.ermm ;
 	}
 	
-	public BizModel getBizModel(){
-		return this.bizModel ; 
+	public List<BizModel> getBizModels(){
+		return this.bizModels ; 
 	}
-	
 	
 	
 	/**
-	 * 适配新的BizModel对象
-	 * @param ermm2 ERMaster模型信息
-	 * @return 适配后的BizModel对象
+	 * <pre>
+	 * 把ERMasterModel适配为BizModel对象
+	 * </pre>
+	 * @param ermm ERMaster模型信息
+	 * @return 适配后的BizModel对象，可能是多个
 	 */
-	private BizModel assemble(ERMasterModel ermm) {
+	private List<BizModel> assemble(ERMasterModel ermm) {
 		
-		BizModel b = new BizModel() ;
+		List<BizModel> bms = new ArrayList<BizModel>() ;
 		
-		b.setDesc(ermm.getModelPropertyValue(ModelPropertyEnum.MP_PROJECT_NAME));
-
-		b.setId(ermm.getModelPropertyValue(ModelPropertyEnum.MP_MODEL_NAME));
+		/*
+		 * 每个category适配为一个BizModel模块；
+		 */
+		for( Category c : ermm.getCategories() ){
+			
+			BizModel b = new BizModel() ;
+			
+			//以Category的Name作为BizModel的ID
+//			b.setId(ermm.getModelPropertyValue(ModelPropertyEnum.MP_MODEL_NAME));
+			b.setId(c.getName());
+			
+			b.setDesc(ermm.getModelPropertyValue(ModelPropertyEnum.MP_PROJECT_NAME));
+			
+			b.setMainpackage(ermm.getSettings().getPackageName());
+			
+			b.setModelDefFile(ermm.getErmasetFileName());
+			
+			b.setModels(assembleModel(ermm,c));
+			
+			b.setName(ermm.getModelPropertyValue(ModelPropertyEnum.MP_MODEL_NAME));
+			
+			b.setPrjCore(ermm.getModelPropertyValue(ModelPropertyEnum.MP_PRJ_CODE));
+			
+			b.setPrjFacade(ermm.getModelPropertyValue(ModelPropertyEnum.MP_PRJ_FACADE));
+			
+			b.setPrjService(ermm.getModelPropertyValue(ModelPropertyEnum.MP_PRJ_SERVICE));
+			
+			b.setPrjWeb(ermm.getModelPropertyValue(ModelPropertyEnum.MP_PRJ_WEB));
+			
+			bms.add(b) ;
+		}
 		
-		b.setMainpackage(ermm.getSettings().getPackageName());
-		
-		b.setModelDefFile(ermm.getErmasetFileName());
-		
-		b.setModels(assembleModel(ermm));
-		
-		b.setName(ermm.getModelPropertyValue(ModelPropertyEnum.MP_MODEL_NAME));
-		
-		b.setPrjCore(ermm.getModelPropertyValue(ModelPropertyEnum.MP_PRJ_CODE));
-		
-		b.setPrjFacade(ermm.getModelPropertyValue(ModelPropertyEnum.MP_PRJ_FACADE));
-		
-		b.setPrjService(ermm.getModelPropertyValue(ModelPropertyEnum.MP_PRJ_SERVICE));
-		
-		b.setPrjWeb(ermm.getModelPropertyValue(ModelPropertyEnum.MP_PRJ_WEB));
-		
-		return b;
+		return bms;
 	}
 	
-	private List<Model> assembleModel(ERMasterModel ermm) {
+	/**
+	 * 适配Category分类下的所有Table
+	 * @param ermm
+	 * @param c
+	 * @return
+	 */
+	private List<Model> assembleModel(ERMasterModel ermm, Category c ) {
 		
 		List<Model> mList = new ArrayList<Model>() ; 
-		//每个ERMaster中的表定义为一个Model //TODO 还没有考虑Table之外的模型解析和映射，如视图。
-		for( Table t : ermm.getTables() ){
+		
+		for( NodeElement n : c.getNodeElement() ){
 			
+			//取出指定的Table定义
+			Table t = ermm.getTableById(n.getId()) ;
+			
+			//每个ERMaster中的表定义为一个Model //TODO 还没有考虑Table之外的模型解析和映射，如视图。
 			Model m = new Model() ; 
-			
 			m.setDesc(t.getDescription());
 			m.setExt("");//ERMaster定义时，不支持 ext:3:198 的方式定义扩展字段
 			m.setFields(assembleField(ermm,t ));

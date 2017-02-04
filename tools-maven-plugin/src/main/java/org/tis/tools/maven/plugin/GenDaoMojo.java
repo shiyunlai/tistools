@@ -312,11 +312,12 @@ public class GenDaoMojo extends AbstractMojo {
 				
 				ERMasterModel ermm = new ERMasterModel(defFile) ; 
 				
-				BizModel bm = new ERMasterDefinition(ermm).getBizModel() ;
+				List<BizModel> bms = new ERMasterDefinition(ermm).getBizModels() ;
 				
-				perMainPackage4BizModel(defMainPackage, bm);
-				
-				bizModelList.add( bm ) ;
+				for( BizModel bm : bms ){
+					perMainPackage4BizModel(defMainPackage, bm);
+					bizModelList.add( bm ) ;
+				}
 			}
 		}
 		
