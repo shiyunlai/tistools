@@ -394,8 +394,7 @@ public class GenDaoMojo extends AbstractMojo {
 		getLog().info("模型定义路径:"+modelFilePath); 
 		if(!StringUtils.isEmpty(fixedModels)) { getLog().info("指定生成模型范围:"+fixedModels); }
 		getLog().info("生成源码的模型包括:"+showModelList(bizModelList));
-		getLog().info("源码的主package:"+mainPackage);
-		getLog().info("生成源码类型包括:"+genType);
+		getLog().info("生成源码类型包括:"+genTypes);
 		getLog().info("===========================================================");
 	}
 	
@@ -404,7 +403,7 @@ public class GenDaoMojo extends AbstractMojo {
 		StringBuffer sb = new StringBuffer() ; 
 		sb.append("\n");
 		for ( BizModel bm : bizModelList ){
-			sb.append(bm.toString()) ;
+			sb.append(bm.toStringSimple()) ;
 		}
 		return sb.toString();
 	}

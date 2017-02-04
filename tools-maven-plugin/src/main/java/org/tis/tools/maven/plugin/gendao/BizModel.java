@@ -173,6 +173,12 @@ public class BizModel implements IGenModelDefine{
 		this.modelDefFile =path;
 	}
 	
+	public String toStringSimple(){
+		StringBuffer sb = new StringBuffer();
+		sb.append("id:").append(id).append("\tdesc:").append(desc).append("\tpackage:").append(mainpackage).append("\tmodel file:").append(modelDefFile).append("\n");
+		return sb.toString() ; 
+	}
+	
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		sb.append(id).append(" ").append(desc).append(" ").append(mainpackage).append(" ").append(modelDefFile).append("\n");

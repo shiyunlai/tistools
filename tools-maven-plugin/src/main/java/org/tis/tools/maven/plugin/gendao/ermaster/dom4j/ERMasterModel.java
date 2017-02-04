@@ -34,12 +34,7 @@ public class ERMasterModel {
 			throw new ModelFileNotExistException("必须指定模型文件！") ;
 		}
 		
-		File mFile = new File(ermasterFile) ; 
-		
-		this.setErmasetFileName(ermasterFile);
-		
-		init(mFile) ;
-		
+		init(new File(ermasterFile)) ;
 	}
 	
 	private void init(File mFile){
@@ -47,6 +42,8 @@ public class ERMasterModel {
 		if( !mFile.exists() ){
 			throw new ModelFileNotExistException("模型文件<"+mFile.getName()+">不存在") ;
 		}
+		
+		this.setErmasetFileName(mFile.getPath());
 		
 		ParseERMasterModelUtil.parse(mFile,this) ;
 	}
