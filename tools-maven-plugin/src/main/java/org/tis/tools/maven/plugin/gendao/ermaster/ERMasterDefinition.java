@@ -120,7 +120,7 @@ public class ERMasterDefinition {
 			m.setFields(assembleField(ermm,t ));
 			m.setId(t.getPhysicalName());
 			m.setName(t.getLogicalName());
-			m.setType("");
+			m.setType("table");//FIXME 目前都是表
 			
 			mList.add(m) ; 
 		}

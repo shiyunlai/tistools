@@ -12,7 +12,6 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-import org.tis.tools.maven.plugin.exception.AssemblyERMaster2BIzmodelException;
 import org.tis.tools.maven.plugin.exception.ParseModelFileException;
 import org.tis.tools.maven.plugin.gendao.ermaster.dom4j.Category;
 import org.tis.tools.maven.plugin.gendao.ermaster.dom4j.ERMasterModel;
@@ -65,6 +64,8 @@ public class ParseERMasterModelUtil {
 		// 解析 contents 节点
 		Element contentsElement = root.element("contents") ;
 		parseContents(contentsElement,ermm) ;
+		
+		// TODO 解析view
 		
 		// 完善 Table中表字段的引用关系
 		unReferenceColumn(ermm) ; 
@@ -163,6 +164,7 @@ public class ParseERMasterModelUtil {
 			Word w = new Word() ;
 			w.setId(wordEle.elementTextTrim("id"));
 			w.setLength(wordEle.elementTextTrim("length"));
+			w.setDecimal(wordEle.elementTextTrim("decimal"));
 			w.setLogicalName(wordEle.elementTextTrim("logical_name"));
 			w.setPhysicalName(wordEle.elementTextTrim("physical_name"));
 			w.setType(wordEle.elementTextTrim("type"));

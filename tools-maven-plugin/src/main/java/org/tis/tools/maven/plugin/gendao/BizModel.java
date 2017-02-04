@@ -183,7 +183,7 @@ public class BizModel implements IGenModelDefine{
 		StringBuffer sb = new StringBuffer();
 		sb.append(id).append(" ").append(desc).append(" ").append(mainpackage).append(" ").append(modelDefFile).append("\n");
 		for( Model m : models ){
-			sb.append("- ").append(m.toString()).append("\n"); 
+			sb.append("-- ").append(m.toString()).append("\n"); 
 		}
 		sb.append("prjCore: ").append(this.prjCore).append("\n") ;
 		sb.append("prjFacade: ").append(this.prjFacade).append("\n") ;

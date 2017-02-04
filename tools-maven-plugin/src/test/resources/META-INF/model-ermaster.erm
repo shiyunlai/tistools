@@ -9,10 +9,10 @@
 		<bottom_margin>30</bottom_margin>
 		<right_margin>30</right_margin>
 	</page_setting>
-	<category_index>1</category_index>
+	<category_index>3</category_index>
 	<zoom>1.0</zoom>
 	<x>-12</x>
-	<y>405</y>
+	<y>-41</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -129,9 +129,8 @@
 					<name>SYS</name>
 					<selected>true</selected>
 					<node_element>14</node_element>
-					<node_element>0</node_element>
 					<node_element>13</node_element>
-					<node_element>15</node_element>
+					<node_element>0</node_element>
 				</category>
 				<category>
 					<id>17</id>
@@ -163,6 +162,25 @@
 					<node_element>5</node_element>
 					<node_element>6</node_element>
 				</category>
+				<category>
+					<id>18</id>
+					<height>1274</height>
+					<width>648</width>
+						<font_name>.SF NS Text</font_name>
+						<font_size>9</font_size>
+					<x>80</x>
+					<y>-48</y>
+					<color>
+						<r>128</r>
+						<g>128</g>
+						<b>192</b>
+					</color>
+					<connections>
+					</connections>
+					<name>TEST</name>
+					<selected>true</selected>
+					<node_element>15</node_element>
+				</category>
 			</categories>
 		</category_settings>
 		<translation_settings>
@@ -187,7 +205,7 @@
 			</connections>
 			<display>true</display>
 			<creation_date>2017-01-18 19:04:59</creation_date>
-			<updated_date>2017-02-02 15:43:12</updated_date>
+			<updated_date>2017-02-04 14:14:41</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value>open branch plus</value>
@@ -215,17 +233,14 @@
 			<model_property>
 				<name>prjWeb</name>
 				<value>tools-core</value>
-				<!-- <value>tools-web-${category}</value> -->
 			</model_property>
 			<model_property>
 				<name>prjFacade</name>
 				<value>tools-core</value>
-				<!-- <value>tools-facade-${category}</value> -->
 			</model_property>
 			<model_property>
 				<name>prjService</name>
 				<value>tools-core</value>
-				<!-- <value>tools-service-${category}</value> -->
 			</model_property>
 		</model_properties>
 		<table_properties>
@@ -7321,12 +7336,12 @@
 		</table>
 		<table>
 			<id>15</id>
-			<height>75</height>
-			<width>162</width>
+			<height>422</height>
+			<width>287</width>
 				<font_name>.SF NS Text</font_name>
 				<font_size>9</font_size>
-			<x>240</x>
-			<y>420</y>
+			<x>216</x>
+			<y>-36</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -7334,8 +7349,8 @@
 			</color>
 			<connections>
 			</connections>
-			<physical_name>SYS_TEST</physical_name>
-			<logical_name>测试</logical_name>
+			<physical_name>TEST_TABLE</physical_name>
+			<logical_name>测试表</logical_name>
 			<description></description>
 			<constraint></constraint>
 			<primary_key_name></primary_key_name>

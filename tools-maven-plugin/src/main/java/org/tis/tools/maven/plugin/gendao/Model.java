@@ -116,12 +116,22 @@ public class Model {
 		this.desc = desc;
 	}
 	
+	//串行化，显示表信息和表字典信息
 	public String toString() {
-		StringBuffer sb = new StringBuffer() ; 
-		sb.append(name + "(" + id + ")" + "\n" ) ; 
+		StringBuffer sb = new StringBuffer(toStringSimple()) ;
 		for( Field f : this.fields){
 			sb.append(f.toString()) ; 
 		}
+		return sb.toString() ; 
+	}
+	
+	//串行化，只显示表信息
+	public String toStringSimple() {
+		StringBuffer sb = new StringBuffer() ; 
+		sb.append(type).append("\t") ;
+		sb.append(id + "(" + name + ":"+ desc + ")" );
+		sb.append(" 字数:").append( this.fields.size() ) ; 
+		sb.append("\n" ) ; 
 		return sb.toString() ; 
 	}
 }

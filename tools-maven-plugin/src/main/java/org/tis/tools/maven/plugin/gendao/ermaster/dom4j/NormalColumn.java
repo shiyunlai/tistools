@@ -160,27 +160,52 @@ public class NormalColumn {
 		this.physicalName = physicalName;
 	}
 	
-	
 	public String getType() {
 		
 		//优先,用refword返回
 		if( this.refWord != null ){//存在对应的模型字段定义 
-			return this.refWord.getType() ;
+			return trimBracket(this.refWord.getType()) ;
 		}
-		
 		
 		//第二,用关联的表字段的refword返回
 		if( this.refNormalColumn != null ){
-			return this.refNormalColumn.getRefWord().getType() ;
+			return trimBracket(this.refNormalColumn.getRefWord().getType()) ;
 		}
 		
 		//第三,用自己的定义返回
 		if( StringUtils.isNotEmpty(type) ){
-			return type;//否则直接取自己的定义
+			return trimBracket(type);//否则直接取自己的定义
 		}
 
 		throw new AssemblyERMaster2BIzmodelException("未获得字段的类型,id="+this.id) ;
 	}
+	
+	/**
+	 * <pre>
+	 * 把类型上括号去掉
+	 * String type = "char" ;
+	 * trimBracket(type) 输出  char
+	 * 
+	 * String type = "varchar(n)" ;
+	 * trimBracket(type) 输出  varchar
+	 * 
+	 * String type = "float(m,d)" ;
+	 * trimBracket(type) 输出  float
+	 * </pre>
+	 * @param type
+	 * @return
+	 */
+	private String trimBracket(String type) {
+		
+		if( type.indexOf("(") > 0 ){
+			
+			return type.substring(0, type.indexOf("(") );
+		}else{
+			
+			return type ; 
+		}
+	}
+
 	public void setType(String type) {
 		this.type = type;
 	}
@@ -198,19 +223,25 @@ public class NormalColumn {
 		
 		//优先,用refword返回
 		if( this.refWord != null ){//存在对应的模型字段定义 
-			if( StringUtils.isNotEmpty(this.refWord.getDecimal())){
+			
+			//ERMaster中值为空时，以"null"表示
+			if( StringUtils.isNotEmpty(this.refWord.getDecimal()) && 
+				!StringUtils.equals("null", this.refWord.getDecimal())  )
+			{
 				return this.refWord.getLength() +","+this.refWord.getDecimal()  ;
 			}else{
-				return this.refWord.getLength();
+				return this.refWord.getLength().equals("null") ? "" : this.refWord.getLength();
 			}
 		}
 		
 		//第二,用关联的表字段的refword返回
 		if( this.refNormalColumn != null ){
-			if( StringUtils.isNotEmpty(this.refNormalColumn.getRefWord().getDecimal())){
+			if( StringUtils.isNotEmpty(this.refNormalColumn.getRefWord().getDecimal()) && 
+				!StringUtils.equals("null", this.refNormalColumn.getRefWord().getDecimal()) )
+			{
 				return this.refNormalColumn.getRefWord().getLength() +","+this.refNormalColumn.getRefWord().getDecimal() ;
 			}else{
-				return this.refNormalColumn.getRefWord().getLength() ;
+				return this.refNormalColumn.getRefWord().getLength().equals("null") ? "" : this.refNormalColumn.getRefWord().getLength();
 			}
 		}
 		
