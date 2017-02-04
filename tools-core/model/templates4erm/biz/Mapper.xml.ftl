@@ -1,7 +1,6 @@
 <#assign wcClassPackageVar="${mainPackage}.base.WhereCondition">
 <#assign poClassPackageVar="${mainPackage}.model.po.${bizmodelId}.${poClassNameVar}">
 <#assign mapperJavaPackageVar="${mainPackage}.dao.mapper.${bizmodelId}.${poClassNameVar}Mapper">
-
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC 
 	"-//mybatis.org//DTD Mapper 3.0//EN" 
@@ -13,25 +12,11 @@
 	    INSERT INTO ${table.id} (<#list table.fields as field><#if field.physical !="false"><#if field_index == 0>${field.id}<#else>,${field.id}</#if></#if>
   </#list>)
 	    VALUES (
-	    
-	    #{id,jdbcType=VARCHAR},
-	    
-	    <#list table.fields as field>
-	    	<#if field.physical !="false">
-		    	<#if field.type =="string">#<#nt>{${field.id},jdbcType=VARCHAR}
-		    	</#if>
-		    	<#if field.type =="long">#<#nt>{${field.id},jdbcType=BIGINT}
-		    	</#if>
-		    	<#if field.type =="decimal">#<#nt>{${field.id},jdbcType=DECIMAL}
-		    	</#if>
-		    	<#if field.type =="bigdecimal">#<#nt>{${field.id},jdbcType=DECIMAL}
-		    	</#if>
-		    	<#if field.type =="datetime">#<#nt>{${field.id},jdbcType=TIMESTAMP}
-		    	</#if><#if field.type =="int">#<#nt>{${field.id},jdbcType=INTEGER}
-		    	</#if><#if field_has_next>,
-		    	</#if>
-		    </#if>
-  </#list>)
+	    <#list table.fields as field><#if field.physical !="false">
+			#<#nt>{${field.id},jdbcType=${field.type}}
+			<#if field_has_next>,</#if>
+		</#list>
+  		)
  	</insert>
  	
  	<update id="update" parameterType="${poClassPackageVar}">
