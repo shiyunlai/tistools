@@ -71,7 +71,7 @@ public class ${poClassName}Controller extends BaseController {
 			JSONObject job = jsonObj.getJSONObject("item");
 			${poClassName} p = new ${poClassName}();
 			JSONObject.toBean(job,p,jsonConfig);
-			String id = sequenceBiz.generateId("${poClassName}");
+			String id = sequenceService.generateId("${poClassName}");
 			if (StringUtils.isNotEmpty(p.getId())) {
 				${serviceAttrVar}.update(p);
 			} else {
