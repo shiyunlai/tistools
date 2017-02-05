@@ -42,21 +42,21 @@ import org.tis.tools.maven.plugin.utils.Xml22BeanUtil;
 public class GenDaoMojo extends AbstractMojo {
 	
 	/**
-	 * (取自当前工程 POM.xml)工程名称，规定同artifactId
+	 * (自动取值)当前工程POM.xml中的工程名称project.artifactId。
 	 */
 	@Parameter( defaultValue = "${project.artifactId}")
 	private String projectName ; 
 	
 	/**
-	 *  (取自当前工程 POM.xml)建议groupId命名含义包括：公司/组织.产品，如： org.fone.bronsp
+	 * (自动取值)当前工程POM.xml中的project.groupId。建议命名含义包括：公司/组织.产品，如： org.fone.bronsp
 	 */
 	@Parameter( defaultValue = "${project.groupId}")
 	private String groupId ; 
 	
 	/**
-	 *  (取自当前工程 POM.xml)artifactId
+	 * (自动取值)当前工程POM.xml中的project.artifactId。
 	 */
-	@Parameter( defaultValue = "${project.artifactId}")
+	@Parameter( defaultValue = "${project.artifactId}" )
 	private String artifactId ; 
 	
 	/**
@@ -65,13 +65,13 @@ public class GenDaoMojo extends AbstractMojo {
 	private String projectDirect ; 
 	
 	/**
-	 *  (取自当前工程 POM.xml)工程源码路径
+	 *  (自动取值)当前工程POM.xml中的工程源码路径project.build.sourceDirectory
 	 */
 	@Parameter( defaultValue = "${project.build.sourceDirectory}")
 	private String sourceDirect ; 
 
 	/**
-	 *  (取自当前工程 POM.xml)工程资源路径
+	 *   (自动取值)当前工程POM.xml中的工程资源路径project.build.resources.resource.directory
 	 */
 	//TODO 为什么获取不到 ${project.build.resources.resource.directory} ？ 
 	@Parameter( defaultValue = "${project.build.resources.resource.directory}")
@@ -79,19 +79,24 @@ public class GenDaoMojo extends AbstractMojo {
 	
 	
 	/**
-	 * 指定主package路径
+	 * -Dmain.package，指定生成代码所在的主package路径<br/>
 	 * <br/>如：-Dmain.package=org.fone.bronsp
-	 * <br/>不指定，系统默认取 ${project.groupId}
-	 * <br/>系统自动过滤并转换java保留字 见 {@link KeyWordUtil}
+	 * <br/>指定生成代码package的方法：
+	 * <br/>1、-Dmain.package=指定包路径；
+	 * <br/>2、以xml定义模型时，在settings/packageName节点指定；
+	 * <br/>3、以ERMaster定义模式是，-Dmain.package=指定包路径
+	 * <br/>4、以上1,2,3都不指定，系统默认使用当前工程groupId作为包路径
+	 * <br/>注：
+	 * <br/>系统自动过滤并转换包路径中的java保留字 见 {@link KeyWordUtil}
 	 * <br/>系统根据生成的源码类型增加“功能模块划分”
-	 * <br/>包命名规范为： 公司/组织 . 产品 . 功能模块划分 . 功能类型限定 . 业务域
+	 * <br/>包命名规范为： ${main.package} . 功能模块划分 . 功能类型限定 . 业务域。如： org.tis.model.po.jnl
 	 */
 	@Parameter( property = "main.package")
     private String mainPackage;
 	
 	/**
-	 * <br/>模型定义文件路径 -Dmodel.file.path
-	 * <br/>通过指定全路径，告知程序模型定义文件位置；
+	 * -Dmodel.file.path，指定模型文件的全路径，告知程序模型定义文件位置<br/>
+	 * <br/>如：-Dmodel.file.path=/Users/megapro/Develop/tis/tools/tools-core/model/model.erm
 	 * <br/>不指定，系统默认为当前工程主路径下 model/ 目录，如： bronsp-service-org/model/
 	 */
 	@Parameter( property = "model.file.path" )
@@ -99,21 +104,21 @@ public class GenDaoMojo extends AbstractMojo {
 	
 	
 	/**
-	 * <br/>指定freemarker模版位置
+	 * -Dtemplates.path，指定freemarker模版位置（全路径）<br/>
+	 * <br/>如：-Dtemplates.path=/Users/megapro/Develop/tis/tools/tools-core/model/templates4erm/biz
 	 * <br/>不指定，则默认在 bronsp-develop-assembly工程 gendao/templates 目录下 （问题一，见README.md）
-	 * <br/>
 	 */
 	@Parameter( property = "templates.path" )
 	private String templatesPath ; 
 	
 	/**
-	 * <br/>模型定义文件类型 -Dmodel.file.type
-	 * <br/>一共两种：xml erm
-	 * <br/>不指定时默认为：xml
-	 * <br/>如： user.xml 只需要 -Dmodel.file=user 即可；
+	 * -Dmodel.file.type，告知程序处理那种类型的模型定义文件。<br/>
+	 * <br/>如：-Dmodel.file.type=xml
+	 * <br/>目前支持两种类型：xml(默认)，erm
 	 * <br/>如果，指定了 -Dmodel.file.type=erm ， 则通过-Dmodel.file=user指定的文件会被识别为 user.erm
 	 * <br/>如果，指定了 -Dmodel.file.type=xml ， 则通过-Dmodel.file=user指定的文件会被识别为 user.xml
-	 * <br/>但是不支持两种一起指定 不允许 -Dmodel.file.type=xml,erm，将按默认处理
+	 * <br/>注：
+	 * <br/>不支持两种一起指定，如：不允许 -Dmodel.file.type=xml,erm （此时，将按默认处理）
 	 */
 	@Parameter( property = "model.file.type" ,defaultValue=FILE_SUFFIX_XML)
 	private String modelFileType ; 
@@ -122,10 +127,12 @@ public class GenDaoMojo extends AbstractMojo {
 	public static final String FILE_SUFFIX_ERM = "erm" ; 
 	
 	/**
-	 * <br/>模型定义文件名 -Dmodel.file
+	 *  -Dmodel.file，指定模型定义文件名<br/>
+	 *  
 	 * <br/>如果不指定，系统默认将modelFilePath目录下所有 *.xml 模型定义全部生成一遍；
 	 * <br/>建议指定模型文件名；
-	 * <br/>无需指定后缀名，如： user.xml 只需要 -Dmodel.file=user 即可；
+	 * <br/>注：
+	 * <br/>无需指定后缀名，如： user.xml 只需要 -Dmodel.file=user 即可。
 	 */
 	@Parameter( property = "model.file" )
 	private String modelFileName ; 
@@ -136,10 +143,10 @@ public class GenDaoMojo extends AbstractMojo {
 	private List<File> modelDefFiles = new ArrayList<File>() ; 
 	
 	/**
-	 * <br/>指定生成哪些模型 -Dfixed.models
+	 * -Dfixed.models，指定生成哪些模型<br/>
+	 * <br/>如： -Dfixed.models=orgInfo,roleInfo ，系统只会生成 模型id为orgInfo,roleInfo的程序代码
 	 * <br/>如果不指定，默认所有模型对象都会生成一遍；
-	 * <br/>一次指定多个模型对象（通过模型的id指定）时用逗号分隔；
-	 * <br/>如： mvn bronsp:gendao -Dfixed.models=orgInfo,roleInfo
+	 * <br/>逗号分隔多个模型对象；
 	 */
 	@Parameter( property = "fixed.models" )
 	private String fixedModels ; 
@@ -151,7 +158,12 @@ public class GenDaoMojo extends AbstractMojo {
 	
 	/**
 	 * <pre>
-	 * 指定生成哪些源码类型
+	 * 
+	 * -Dgen.type， 指定生成哪些类型的代码
+	 * 
+	 * 如： -Dgen.type=model,ui,service 将只生成model、ui、service层的源码
+	 * 不指定则全部生成
+	 * 
 	 * 当前可选类型有：
 	 * 	ddl 数据库脚本，目前生成mysql脚本
 	 * 	model 模型源码，对应数据库表记录PO，对应界面展示对象VO，对应服务传输对象DTO； 
@@ -160,8 +172,6 @@ public class GenDaoMojo extends AbstractMojo {
 	 * 	controller 控制层，处理ui请求；
 	 * 	ui 界面层，提供交互操作能力; 
 	 * 	service 服务层，基于dubbo实现，作为服务提供者对外提供服务能力; 
-	 * 多种类型逗号分隔，如： -Dgen.type=model,ui,service 将生成model、ui、service层的源码
-	 * 不指定则全部生成
 	 * </pre>
 	 */
 	@Parameter( property = "gen.type" , defaultValue="ddl,model,dao,biz,controller,ui,service") 
