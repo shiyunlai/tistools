@@ -28,11 +28,10 @@ import org.tis.tools.maven.plugin.utils.Xml22BeanUtil;
 /**
  * <pre>
  * 生成DAO代码
- * 命令：
- * $mvn tools:gen-dao -Dmodel-file=model-org.xml 
+ * mvn tools:gen-dao -Dmodel-file=model-org.xml 
  * 
- * 约定模型文件存放在当前工程 model路径下， 如： bronsp-service-org/model/model-org.xml；
- * 
+ * 约定规则：
+ * 模型文件存放在当前工程 model路径下， 如： bronsp-service-org/model/model-org.xml；
  * 
  * </pre>
  * @author megapro
