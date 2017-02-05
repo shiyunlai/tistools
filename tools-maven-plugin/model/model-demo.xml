@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!-- 例子： “用户”业务模块 -->
+<bizmodel name="用户" id="userDemo" >
+	<desc>对用户业务域的模型定义，包括：用户信息、注册信息、联系信息等</desc>
+	<models>
+		<model name="用户表" id="tb_user">
+			<field name="唯一ID"  id="ID" type="string" length="128" />
+			<field name="用户名"  id="user_name" type="string" length="128" />
+			<field name="用户编码"  id="user_code" type="string" length="128" />
+			<field name="顺序号"  id="seq_no" type="long" length="8" />
+			<field name="考卷名称"  id="paper_name" type="string" length="1024" />
+			<field name="卷首语"  id="paper_desc" type="string" length="40000" />
+			<field name="多媒体信息"  id="multi_media_info" type="string" length="1024" />
+			<field name="考试时间"  id="time_exam" type="long" length="8" />
+			<field name="是否允许重考"  id="is_re_exam" type="string" length="8" />
+			<field name="重考次数限制"  id="times_re_exam" type="long" length="8" />
+			<field name="默认每题得分"  id="def_per_score" type="long" length="8" />
+			<field name="题目排序规则"  id="rule_sort_question" type="string" length="8" />
+			<field name="题目答案排序规则"  id="rule_sort_answer" type="string" length="8" />
+			<field name="答案反馈方式"  id="feedback_type" type="string" length="8" />
+			<field name="预期年化利率"     id="expect_fixed" type="bigdecimal" length="10,6" />
+			<field name="delstatus" id="delstatus" />
+			<field name="creatorId" id="creatorId" />
+			<field name="creatorName" id="creatorName" />
+			<field name="creatorCode" id="creatorCode" />
+			<field name="creatorIdPath" id="creatorIdPath" />
+			<field name="creatorNamePath" id="creatorNamePath" />
+			<field name="creatorCodePath" id="creatorCodePath" />
+			<field name="createTime" id="createTime" type="datetime" />
+			<field name="modifiedTime" id="modifiedTime" type="datetime" />
+		</model>
+	</models>
+</bizmodel>

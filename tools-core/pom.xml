@@ -65,9 +65,12 @@
 	</dependencies>
 
 	<build>
-		<plugins>
-			<!-- <plugin> <groupId>org.tis</groupId> <artifactId>tools-maven-plugin</artifactId> 
-				<version>0.0.1</version> </plugin> -->
-		</plugins>
-	</build>
+	<plugins>
+		<plugin>
+			<groupId>org.tis</groupId>
+			<artifactId>tools-maven-plugin</artifactId>
+			<version>0.0.1</version>
+		</plugin>
+	</plugins>
+</build>
 </project>
