@@ -6,14 +6,15 @@ mvn bronsp:gen-dao -Dtemplates.path=/Users/megapro/Develop/tis/tools/tools-core/
 cd tools-core
 mvn tools:gen-dao -Dmodel.file.type=erm
 
--- 只生成指定模型：-Dfixed.model=SYS_TEST
+-- 只生成指定模型：-Dfixed.models=SYS_TEST
 -- 只生展示模型信息：-Djust.show=true
 -- 同时指定模版 ： -Dtemplates.path=/Users/megapro/Develop/tis/tools/tools-core/model/templates4erm/biz
 
 mvn tools:gen-dao -Dmodel.file.type=erm -Dtemplates.path=/Users/megapro/Develop/tis/tools/tools-core/model/templates4erm/biz
-mvn tools:gen-dao -Dmodel.file.type=erm -Dfixed.model=SYS_TEST -Dtemplates.path=/Users/megapro/Develop/tis/tools/tools-core/model/templates4erm/biz
 
-mvn tools:gen-dao -Djust.show=true -Dmodel.file.type=erm -Dfixed.model=SYS_TEST -Dtemplates.path=/Users/megapro/Develop/tis/tools/tools-core/model/templates4erm/biz
+mvn tools:gen-dao -Dmodel.file.type=erm -Dfixed.models=SYS_TEST -Dtemplates.path=/Users/megapro/Develop/tis/tools/tools-core/model/templates4erm/biz
+
+mvn tools:gen-dao -Djust.show=true -Dmodel.file.type=erm -Dfixed.models=SYS_TEST -Dtemplates.path=/Users/megapro/Develop/tis/tools/tools-core/model/templates4erm/biz
 
 
 
