@@ -98,4 +98,15 @@ public class FileUtil {
 		
 	}
 
+	/**
+	 * 判断给定的文件路径不存在
+	 * @param directoryStr 文件路径
+	 * @return true 路径不存在 false 路径存在 
+	 */
+	public static boolean isNotExistPath(String directoryStr) {
+		
+		File f = new File(directoryStr) ;
+		return !f.exists();
+	}
+
 }

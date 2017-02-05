@@ -232,15 +232,15 @@
 			</model_property>
 			<model_property>
 				<name>prjWeb</name>
-				<value>tools-core</value>
+				<value>tools-web-tools</value>
 			</model_property>
 			<model_property>
 				<name>prjFacade</name>
-				<value>tools-core</value>
+				<value>tools-facade-${category}</value>
 			</model_property>
 			<model_property>
 				<name>prjService</name>
-				<value>tools-core</value>
+				<value>tools-service-${category}</value>
 			</model_property>
 		</model_properties>
 		<table_properties>

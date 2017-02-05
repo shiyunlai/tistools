@@ -96,7 +96,7 @@
 			</export_image_setting>
 			<export_java_setting>
 				<java_output>src/main/java</java_output>
-				<package_name>org.tis.ermaster</package_name>
+				<package_name>org.tis.tools</package_name>
 				<class_name_suffix></class_name_suffix>
 				<src_file_encoding>UTF-8</src_file_encoding>
 				<with_hibernate>false</with_hibernate>
@@ -214,15 +214,15 @@
 			</model_property>
 			<model_property>
 				<name>prjWeb</name>
-				<value>tools-core</value>
+				<value>tools-web-tools</value>
 			</model_property>
 			<model_property>
 				<name>prjFacade</name>
-				<value>tools-core</value>
+				<value>tools-facade-${category}</value>
 			</model_property>
 			<model_property>
 				<name>prjService</name>
-				<value>tools-core</value>
+				<value>tools-service-${category}</value>
 			</model_property>
 		</model_properties>
 		<table_properties>
