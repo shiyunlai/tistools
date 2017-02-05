@@ -405,7 +405,6 @@ public class GenDaoMojo extends AbstractMojo {
 		getLog().info("代码模版路径:"+templatesPath); 
 		getLog().info("业务模型定义有:"+showModelList(bizModelList));
 		getLog().info("生成源码类型包括:"+genTypes);
-		System.getProperty("");
 		if(StringUtils.isNotEmpty(fixedModels)) { getLog().info("只生成其中的:"+fixedModels); }
 		getLog().info("===========================================================");
 	}
