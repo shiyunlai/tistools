@@ -6,8 +6,7 @@ mvn bronsp:gen-dao -Dtemplates.path=/Users/megapro/Develop/tis/tools/tools-core/
 cd tools-core
 mvn tools:gen-dao -Dmodel.file.type=erm
 
--- 只生成 SYS_TEST
-mvn tools:gen-dao -Dmodel.file.type=erm -Dfixed.model=SYS_TEST
+-- 只生成指定模型：-Dfixed.model=SYS_TEST
+-- 同时指定模版 ： -Dtemplates.path=/Users/megapro/Develop/tis/tools/tools-core/model/templates4erm/biz
 
--- 指定模版
-mvn tools:gen-dao -Dmodel.file.type=erm -Dtemplates.path=/Users/megapro/Develop/tis/tools/tools-core/model/templates4erm/biz
+mvn tools:gen-dao -Dmodel.file.type=erm -Dfixed.model=SYS_TEST -Dtemplates.path=/Users/megapro/Develop/tis/tools/tools-core/model/templates4erm/biz

@@ -1,5 +1,6 @@
 package org.tis.tools.maven.plugin.gendao;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -175,20 +176,23 @@ public class BizModel implements IGenModelDefine{
 	
 	public String toStringSimple(){
 		StringBuffer sb = new StringBuffer();
-		sb.append("id:").append(id).append("\tdesc:").append(desc).append("\tpackage:").append(mainpackage).append("\tmodel file:").append(modelDefFile).append("\n");
+		sb.append("id:").append(id);
+		sb.append("\tdesc:").append(desc);
+		sb.append("\tpackage:").append(mainpackage);
+		sb.append("\tmodel file:").append(modelDefFile.substring(modelDefFile.indexOf(File.separator))).append("\n");
+		sb.append("\t").append("prjCore: ").append(this.prjCore).append("\n") ;
+		sb.append("\t").append("prjFacade: ").append(this.prjFacade).append("\n") ;
+		sb.append("\t").append("prjService: ").append(this.prjService).append("\n") ;
+		sb.append("\t").append("prjWeb: ").append(this.prjWeb).append("\n") ;
 		return sb.toString() ; 
 	}
 	
 	public String toString() {
-		StringBuffer sb = new StringBuffer();
-		sb.append(id).append(" ").append(desc).append(" ").append(mainpackage).append(" ").append(modelDefFile).append("\n");
+		StringBuffer sb = new StringBuffer(toStringSimple());
+		sb.append("包括如下模型定义：").append("\n") ;
 		for( Model m : models ){
 			sb.append("-- ").append(m.toString()).append("\n"); 
 		}
-		sb.append("prjCore: ").append(this.prjCore).append("\n") ;
-		sb.append("prjFacade: ").append(this.prjFacade).append("\n") ;
-		sb.append("prjService: ").append(this.prjService).append("\n") ;
-		sb.append("prjWeb: ").append(this.prjWeb).append("\n") ;
 		return sb.toString();
 	}
 }

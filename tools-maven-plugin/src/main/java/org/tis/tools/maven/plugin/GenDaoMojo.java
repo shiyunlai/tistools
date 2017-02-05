@@ -29,7 +29,7 @@ import org.tis.tools.maven.plugin.utils.Xml22BeanUtil;
  * <pre>
  * 生成DAO代码
  * 命令：
- * $mvn bronsp:gen-dao -Dmodel-file=model-org.xml 
+ * $mvn tools:gen-dao -Dmodel-file=model-org.xml 
  * 
  * 约定模型文件存放在当前工程 model路径下， 如： bronsp-service-org/model/model-org.xml；
  * 
@@ -392,10 +392,12 @@ public class GenDaoMojo extends AbstractMojo {
 		getLog().info("======================= gen-dao info ======================");
 		getLog().info("工程名称:"+projectName); 
 		getLog().info("工程路径:"+projectDirect); 
-		getLog().info("模型定义路径:"+modelFilePath); 
-		if(!StringUtils.isEmpty(fixedModels)) { getLog().info("指定生成模型范围:"+fixedModels); }
-		getLog().info("生成源码的模型包括:"+showModelList(bizModelList));
+		getLog().info("模型定义文件:"+modelFilePath); 
+		getLog().info("代码模版路径:"+templatesPath); 
+		getLog().info("业务模型定义有:"+showModelList(bizModelList));
 		getLog().info("生成源码类型包括:"+genTypes);
+		System.getProperty("");
+		if(StringUtils.isNotEmpty(fixedModels)) { getLog().info("只生成其中的:"+fixedModels); }
 		getLog().info("===========================================================");
 	}
 	

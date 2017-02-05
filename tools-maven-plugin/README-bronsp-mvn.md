@@ -1,56 +1,76 @@
 
-## 移植自bronsp-maven-plugin
+## 移植自tools-maven-plugin，同时，针对tools项目，修正如下描述信息
 
-##	使用说明
+##	基本使用
 
-*	执行以下步骤前先确保已经知晓如何使用本插件(见：使用插件)
+*	执行以下步骤前先确保已经知晓如何使用本插件， 见：[使用插件](使用插件)
 
-*	查看使用帮助
+*	命令举例
 
-	mvn bronsp:help
+	----	
+	mvn tools:gen-dao
+	
+	扫描工程中 model/ 目录下，所有*.xml 模型定义文件，并生成其中模型对应的dao层代码
+
+	----
+	mvn tools:gen-dao -Dmodel.file.type=erm -Dfixed.model=SYS_TEST -Dtemplates.path=/Users/megapro/Develop/tis/tools/tools-core/model/templates4erm/biz
+
+	扫描工程中 model/ 目录下，所有*.erm 模型定义文件，只生成SYS_TEST这个模型，同时使用.../templates4erm/biz 这个目录下的模版文件生成代码
+	
+	命令中的-D参数解释见下文！
+
+## 命令参数解释
 
 *	（必须为maven工程）主工程目录下执行以下命令，自动生成服务端代码：
 
-	mvn bronsp:gen-dao
+	mvn tools:gen-dao
+
+*	查看使用帮助
+
+	mvn tools:help
 
 *	默认模型定义文件位于：主工程/model/ 目录；-Dmodel.file.path可指定模型定义文件存放路径，命令如下：
 
-	mvn bronsp:gen-dao -Dmodel.file.path=/User/temp/
+	mvn tools:gen-dao -Dmodel.file.path=/User/temp/
 
 *	默认处理所有xml文件；也可通过-Dmodel.file指定只处理model-user.xml文件，命令如下：
 
-	mvn bronsp:gen-dao -Dmodel.file.path=/User/temp/ -Dmodel.file=model-user
+	mvn tools:gen-dao -Dmodel.file.path=/User/temp/ -Dmodel.file=model-user
 
 	注：无需指定后缀名
 
 *	指定生成的代码主包路径，命令如下：
 
-	mvn bronsp:gen-dao -Dmain.package=com.bosh.tis
-
+	mvn tools:gen-dao -Dmain.package=com.bosh.tis
+	
 	如上生成User.java，完整的类package为： com.bosh.tis.model.po.User，生成的源码主路径为 主工程/src/main/java/com/bosh/tis/..../*.java
 
 	package规范：
 
 		公司/组织 . 产品 . 功能模块划分 . 功能类型限定 . 业务域
 
-	规则：
+	指定生成代码package的方法：
 		1、-Dmain.package=指定包路径
 		2、model.xml中bizmodel节点的mainpackage属性指定
+		   ERMaster文件中 settings/packageName 节点指定
 		3、以上都不指定，系统默认使用当前工程groupId作为包路径
 
-*	默认系统将使用插件中的自带的模版生成代码；-Dtemplates.path可指定模版位置，命令如下：
+*	-Dtemplates.path可指定模版位置。默认系统将使用插件中的自带的模版生成代码；
 
-	mvn bronsp:gen-dao -Dtemplates.path=/User/gen-dao/templates/
+	如： mvn tools:gen-dao -Dtemplates.path=/User/gen-dao/templates/
+	
+	注：
+		1、需要指定绝对路径；//TODO 可以优化为相对于当前工程路径
 
 *	默认会生成所有加载到的模型；可通过-Dfixed.models指定生成特定模版，命令如下：
 
-	mvn bronsp:gen-dao -Dfixed.models=user,tb_gnl
+	mvn tools:gen-dao -Dfixed.models=user,tb_gnl
 
 	注： 指定多个模型对象（通过模型的id指定）时用逗号分隔；
 
 *	默认为每个模型生成对应的ddl、model、dao、biz、controller、ui、service层源码；可通过-Dgen.type指定层类型，命令如下：
 
-	mvn bronsp:gen-dao -Dgen.type=ddl,model,dao,biz
+	mvn tools:gen-dao -Dgen.type=ddl,model,dao,biz
 
 	注： 多种类型逗号分隔
 
@@ -84,53 +104,53 @@
 	
 ##	模型定义文件规则说明
 
-*	见 bronsp-maven-plugin/model/model-demo.xml,model-acct.xml
-
+*	见 tools-maven-plugin/model/model-demo.xml,model-acct.xml
 
 ##	使用注意项
 
-* 1、使用本命令的工程必须依赖 bronsp-base、bronsp-common 项目，因为生成的源码中包括了类 org.fone.bronsp.base.WhereCondation
+* 1、使用本命令的工程必须依赖 tools-base、tools-common 项目，因为生成的代码中，包括了一些已经指定好的类，如：org.fone.tools.base.WhereCondation
 
 	<dependency>
-		<groupId>org.fone.bronsp</groupId>
-		<artifactId>bronsp-base</artifactId>
+		<groupId>org.fone.tools</groupId>
+		<artifactId>tools-base</artifactId>
 	</dependency>
 
 	<dependency>
-		<groupId>org.fone.bronsp</groupId>
-		<artifactId>bronsp-common</artifactId>
+		<groupId>org.fone.tools</groupId>
+		<artifactId>tools-common</artifactId>
 	</dependency>
 
 
-##	使用插件：
+## 使用插件：
 
-	1、方式一：在pom.xml中通过plugins引入
+	1、方式一：只在某个项目下使用。修改工程pom.xml文件，增加以下配置，引入tools-maven-plugin插件：
 
+		...
 		<build>
 			<plugins>
 		      <plugin>
-		        <groupId>org.fone.bronsp</groupId>
-		        <artifactId>bronsp-maven-plugin</artifactId>
+		        <groupId>org.tools</groupId>
+		        <artifactId>tools-maven-plugin</artifactId>
 		        <version>0.0.1</version>
 		      </plugin>
 			</plugins>
 		</build>
+		...
+		
+		这种方法，只在指定工程生效 tools-maven-plugin 插件能力。
 
-	  使用
-	  	mvn org.fone:bronsp-maven-plugin:0.0.1:"gen-dao"
-	  	或
-	  	mvn bronsp:"gen-dao"
-
-
-	2、方式二(推荐使用)：在maven环境中设置 setting.xml ， ${user.home}/.m2/settings.xml
-
+	2、方式二(推荐使用)：全局可用。修改maven设置 ${user.home}/.m2/settings.xml，增加如下配置： 
+	
+		...
 		<pluginGroups>
-		  <pluginGroup>org.fone.bronsp</pluginGroup>
+			...
+			<pluginGroup>org.tools</pluginGroup>
+			...
 		</pluginGroups>
-
-		注： 此处 pluginGroup 配置的是 插件工程的 groupId
-
-	  之后，所有工程都可以用该插件了 —— 不必每个工程的pom.xml中增加pulgin配置
+		...
+		
+		注： 此处<pluginGroup>配置的是插件工程的groupId。
+		这种方法，所有工程都可以用该插件了 —— 不必每个工程的pom.xml中增加pulgin配置
 
 ## 开发经验
 
@@ -142,24 +162,7 @@
 
 *	如何开发maven插件，参考官网：[扩展maven插件](http://maven.apache.org/guides/plugin/guide-java-plugin-development.html)
 
-
-
-## 如何使用tools-maven-plugin插件
-
-	vi setting.xml
-
-	<pluginGroups>
-	...
-		<pluginGroup>org.tis</pluginGroup>
-	...
-	</pluginGroups>
-
-	在pom文件位置执行：
-
-	mvn tools:test
-
-
-## 问题
+## 开发过程中遇到的问题及解决过程
 
 * 问题1：pom.xml文件中 <packaging> 节点上提示错误信息
 
