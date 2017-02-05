@@ -78,6 +78,14 @@ public class GenDaoMojo extends AbstractMojo {
 	
 	
 	/**
+	 * -Djust.show，只是暂时模型信息，不要生成源码<br/>
+	 * <br/>如：-Djust.show=true
+	 * <br/>不配置为false，会生成代码
+	 */
+	@Parameter( defaultValue = "${just.show}")
+	private String justShow = "false"; 
+	
+	/**
 	 * -Dmain.package，指定生成代码所在的主package路径<br/>
 	 * <br/>如：-Dmain.package=org.fone.bronsp
 	 * <br/>指定生成代码package的方法：
@@ -183,9 +191,14 @@ public class GenDaoMojo extends AbstractMojo {
 	 * @see org.apache.maven.plugin.Mojo#execute()
 	 */
 	public void execute() throws MojoExecutionException, MojoFailureException {
+		
 		getLog().info("generate DAO source code for project :"+projectName);
+		
 		preGenerateConfiguration() ;
-		generateDaoSourceCode() ;
+
+		if( !"true".equals( justShow ) ){
+			generateDaoSourceCode() ;
+		}
 	}
 
 	
@@ -401,11 +414,12 @@ public class GenDaoMojo extends AbstractMojo {
 		getLog().info("======================= gen-dao info ======================");
 		getLog().info("工程名称:"+projectName); 
 		getLog().info("工程路径:"+projectDirect); 
-		getLog().info("模型定义文件:"+modelFilePath); 
+		getLog().info("模型文件类型:"+modelFileType); 
+		getLog().info("模型文件路径:"+modelFilePath); 
 		getLog().info("代码模版路径:"+templatesPath); 
-		getLog().info("业务模型定义有:"+showModelList(bizModelList));
 		getLog().info("生成源码类型包括:"+genTypes);
 		if(StringUtils.isNotEmpty(fixedModels)) { getLog().info("只生成其中的:"+fixedModels); }
+		getLog().info("业务模型定义有:"+showModelList(bizModelList));
 		getLog().info("===========================================================");
 	}
 	
@@ -414,7 +428,11 @@ public class GenDaoMojo extends AbstractMojo {
 		StringBuffer sb = new StringBuffer() ; 
 		sb.append("\n");
 		for ( BizModel bm : bizModelList ){
-			sb.append(bm.toStringSimple()) ;
+			if( "true".equals(justShow) ){
+				sb.append(bm.toString()) ;//只展示信息时，展示详细模型信息
+			}else{
+				sb.append(bm.toStringSimple()) ;
+			}
 		}
 		return sb.toString();
 	}

@@ -144,6 +144,6 @@ public class Field {
 	}
 	
 	public String toString(){
-		return this.id +"\t"+ this.name +"\t" + this.type +"\t" + this.length +"\n";
+		return "\t"+this.id +"\t"+ this.name +"\t" + this.type +"\t" + this.length +"\n";
 	}
 }
