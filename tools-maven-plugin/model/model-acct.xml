@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!-- bizmodel 对某个业务域所有模型的定义，建议每个业务域独立一个定义文件 -->
+<!-- 说明：name，属性，必输。业务域名称 -->
+<!-- 说明：id，属性，必输。业务域唯一ID（避免重复），生成代码时用作package路径，建议采用单个单词作为 bizmodel的id，而不是驼峰规则或者多个单词。 -->
+<!-- 说明：mainpackage，元素，生成代码时，这些业务域的主package,此参数也可 -Dmain.package="org.tis.tools" 的方式传入，且最优先。 -->
+<!-- 说明：desc，元素，业务域描述信息 -->
+<!-- 说明：自动生成的文件清单存放在model目录下 ${model-id}-gen-list.cache -->
+<bizmodel name="账户" id="acct" mainpackage="com.bronsp" >
+
+	<desc>对账户业务域的模型定义，包括：总账、分户账、账户明细、账户变更明细、开销户登记博</desc>
+	
+	<!-- ===================== --><!--
+	通过以下配置指定各种源码生成到的目标工程（即：分布式工程结构）。
+	prjWeb：指定web工程，controller.java，ui相关的源码
+	prjCore：指定模型定义工程，po,vo等，被公用的模型对象代码生成到该工程
+	prjFacade：指定服务接口定义工程，dubbo服务接口定义，接口参数对象生成到该工程
+	prjService：指定服务能力提供工程，*Mapper.java,*.Mapper.xml等，模型的DAO能力代码生成到该工程
+	如果不指定，则所有代码生成在执行所在当前工程（即：单体工程结构）。
+	--><!-- ===================== -->
+	<prjWeb>tools-web-acct</prjWeb>
+	<prjCore>tools-core</prjCore>
+	<prjFacade>tools-facade-acct</prjFacade>
+	<prjService>tools-service-acct</prjService>
+	
+	<!-- 该业务领域(bizmodel)中的模型(model)定义 -->
+	<models>
+		<!-- model -->
+		<!-- model，表示一个模型，定义业务对象的数据结构，系统根据模型生成M-V-C代码，完成数据的读取，插入，更新等基本功能。 -->
+		<!-- 说明：name，属性，模型名称，必须 -->
+		<!-- 说明：id，属性，模型唯一id，一般用表名称。生成代码时转为驼峰规则，如： tb_exampaper_definition 转换 TbExampaperDefinition.java -->
+		<!-- 说明：ext，属性，扩展字段个数，如： ext="3"，则系统自动生成ext0,ext1,ext2三个扩展字段，如：ext="3*128" 则生成的扩展字段为128位字符串-->
+		<!-- 说明：desc，属性，模型描述信息 -->
+		
+		<!-- field -->
+		<!-- 说明：name，属性，字段名称。必须定义。 -->
+		<!-- 说明：id，属性，字段的唯一id，在model范围不能重复。不定义，则系统使用name作为id（拼音）。-->
+		<!-- 说明：type，属性，定义模型某个属性的类型。不定义，默认为string类型。有如下选项 -->
+		<!-- 	type="string" 表示字符串，不设置type时，默认为string类型；不设长度默认128位；-->
+		<!-- 	type="long" 表示整形，同时需要指定length属性；不设长度默认10位；-->
+		<!-- 	type="decimal" 生成Double类型字段，如 private Double amt；不设长度默认15，2；-->
+		<!-- 	type="bigdecimal" 生成BigDecimal类型字段，同时需要指定length，如：length="10,6" 。一般定义金额，费率等金额数字；不设长度默认15，6；-->
+		<!-- 	type="datetime" 表示是日期类型 其他类型包括，long,string，decimal 默认为string类型；无需设置长度；-->
+		<!-- 说明：length，属性，定义字段的长度，与type配合使用，如： type为String时length="32"、type为bigdecimal时lenth="10,6"。不定义，则系统默认长度， -->
+		<!-- 说明：physical，属性，可选true/false，true表示生成数据库字段，false表示不生成数据库字段，但会生成模型中的属性（如果模型中某个字段只是做传输用途，值则应该设置为false）。不定义，则默认为true。； -->
+		<!-- 说明：key，属性，可选true/false，true表示为关键字，false不是。不定义，则默认为false。 -->
+		<!-- 说明：search，属性，可选true/false，true表示为查询字段，false不是。默认为false。 --> 
+		<!-- 说明：form，属性，可选true/false，true表示生产为form表单字段，false不是。则默认为true（不在表单中体现的字段，需要清晰告知）。  -->
+		<!-- 说明：desc，属性，字段描述。可选。 -->
+		<!-- 注意： -->
+		<!-- 1、所有id值会被转为小写字母，如果没设定id，则用name转为拼音。 -->
+		<!--  -->
+		<model name="总账" id="tb_gnl" desc="总账表，记录用户的总账信息" ext="2,1000" >
+			<field name="唯一ID"  id="ID" type="string" length="128" />
+			<field name="试卷编码"  id="paper_code" type="string" length="128" />
+			<field name="课程编码"  id="course_code" type="string" length="128" />
+			<field name="顺序号"  id="seq_no" type="long" length="8" />
+			<field name="考卷名称"  id="paper_name" type="string" length="1024" />
+			<field name="卷首语"  id="paper_desc" type="string" length="40000" />
+			<field name="多媒体信息"  id="multi_media_info" type="string" length="1024" />
+			<field name="考试时间"  id="time_exam" type="long" length="8" />
+			<field name="是否允许重考"  id="is_re_exam" type="string" length="8" />
+			<field name="重考次数限制"  id="times_re_exam" type="long" length="8" />
+			<field name="默认每题得分"  id="def_per_score" type="long" length="8" />
+			<field name="题目排序规则"  id="rule_sort_question" type="string" length="8" />
+			<field name="题目答案排序规则"  id="rule_sort_answer" type="string" length="8" />
+			<field name="答案反馈方式"  id="feedback_type" type="string" length="8" />
+			<field name="预期年化利率"     id="expect_fixed" type="bigdecimal" length="10,6" />
+			<field name="不生成PO对象"     id="not_gen_po" type="bigdecimal" length="10,6" physical="false"/>
+			<field name="delstatus" id="delstatus" />
+			<field name="creatorId" id="creatorId" />
+			<field name="creatorName" id="creatorName" />
+			<field name="creatorCode" id="creatorCode" />
+			<field name="creatorIdPath" id="creatorIdPath" />
+			<field name="creatorNamePath" id="creatorNamePath" />
+			<field name="creatorCodePath" id="creatorCodePath" />
+			<field name="createTime" id="createTime" type="datetime" />
+			<field name="modifiedTime" id="modifiedTime" type="datetime" />
+		</model>
+		
+		<model name="角色信息表" id="btf_role_info" desc="角色信息，存放角色基本信息定义" ext="3,256">
+			<field name="唯一ID"  id="ID" type="string" length="128" />
+			<field name="试卷编码"  id="paper_code" type="string" length="128" />
+			<field name="课程编码"  id="course_code" type="string" length="128" />
+			<field name="顺序号"  id="seq_no" type="long" length="8" />
+			<field name="考卷名称"  id="paper_name" type="string" length="1024" />
+			<field name="卷首语"  id="paper_desc" type="string" length="40000" />
+		</model>
+	</models>
+</bizmodel>

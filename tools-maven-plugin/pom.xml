@@ -13,6 +13,20 @@
 	<name>tools-maven-plugin Maven Mojo</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.16</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+		</dependency>
 		<!-- 扩展Maven插件 -->
 		<dependency>
 			<groupId>org.apache.maven</groupId>
@@ -31,24 +45,46 @@
             <artifactId>maven-project</artifactId>
             <version>2.2.1</version>
         </dependency>
+		<!-- for utils -->
+		<dependency>
+			<groupId>com.belerweb</groupId>
+			<artifactId>pinyin4j</artifactId>
+            <version>2.5.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/dom4j/dom4j -->
+		<dependency>
+		    <groupId>dom4j</groupId>
+		    <artifactId>dom4j</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>jaxen</groupId>
+		    <artifactId>jaxen</artifactId>
+		</dependency>
+		<!-- Test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
+	<description>开发工具（maven插件）</description>
 	
 	<build>
 		<plugins>
 			<!-- 
-				配置本插件的前缀为 ttt
-				mvn ttt:test
-				mvn ttt:gen-xsd 
-			-->
+				配置本插件的前缀, 则可以通过shiyl前缀运行本插件： 
+				mvn shiyl:gendao 
+				如果不配置，则系统将用artifactId名称（brons-maven-plugin）的前缀 brons： 
+				mvn brons:gendao 
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-plugin-plugin</artifactId>
-				<version>3.2</version> <!-- 坑爹啊， 3.2之前的版本不能识别 @Mojo  -->
+				<version>3.2</version>
 				<configuration>
-					<!-- 为本插件指定前缀 -->
-					<goalPrefix>ttt</goalPrefix>
+					为本插件指定前缀
+					<goalPrefix>shiyl</goalPrefix>
 				</configuration>
-			</plugin>
+			</plugin> 
+			-->
 		</plugins>
 	</build>
 </project>
