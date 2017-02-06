@@ -53,6 +53,12 @@
 	
 -----
 
+	扫描工程中 model/ 目录下，所有*.erm 模型定义文件，但只记载并显示模型定义情况（检查模型定义情况）
+
+	mvn tools:gen-dao -Dmodel.file.type=erm -Djust.show=true
+	
+-----
+
 	扫描工程中 model/ 目录下，所有*.erm 模型定义文件，只生成SYS_TEST这个模型，同时使用.../templates4erm/biz 这个目录下的模版文件生成代码
 
 	mvn tools:gen-dao -Dmodel.file.type=erm -Dfixed.model=SYS_TEST -Dtemplates.path=/Users/megapro/Develop/tis/tools/tools-core/model/templates4erm/biz
