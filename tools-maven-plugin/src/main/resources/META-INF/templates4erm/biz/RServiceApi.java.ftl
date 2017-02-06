@@ -42,9 +42,9 @@ public interface ${rServiceClassNameVar} {
 
 	/**
 	 * 删除${table.name}(${table.id})
-	 * @param id 记录id
+	 * @param guid 记录guid
 	 */
-	public void delete(String id);
+	public void delete(String guid);
 
 	/**
 	 * 根据条件删除${table.name}(${table.id})
@@ -75,8 +75,8 @@ public interface ${rServiceClassNameVar} {
 
 	/**
 	 * 根据id查询${table.name}(${table.id})记录
-	 * @param id 记录id
+	 * @param guid 记录guid
 	 * @return 匹配的记录
 	 */
-	public ${poClassName} loadById(String id);
+	public ${poClassName} loadByGuid(String guid);
 }

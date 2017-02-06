@@ -68,8 +68,9 @@ public class TbUserRServiceImpl implements ITbUserRService {
 	}
 
 	@Override
-	public TbUser loadById(String id) {
-		return tbUserService.loadById(id);
+	public TbUser loadByGuid(String guid) {
+		tbUserService.loadByGuid(guid) ;
+		return null;
 	}
 
 }

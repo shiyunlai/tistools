@@ -54,6 +54,8 @@ public abstract class ASourceCodeGenerator<T extends IGenModelDefine> {
 			String sourceDir) throws GenDaoMojoException {
 		
 		System.out.println("执行：" + getGeneratorDescription());
+		
+		//FIXME 对doGen方法还应该在做细化抽象，子类实现doGen时还是有很多重复逻辑
 		doGen(genModelDef, resourcesDir, sourceDir);
 		for (String f : genFiles) {
 			System.out.println("生成:" + f);

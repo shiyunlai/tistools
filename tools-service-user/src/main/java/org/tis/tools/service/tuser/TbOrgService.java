@@ -14,6 +14,7 @@ import org.tis.tools.base.WhereCondition;
 
 import org.tis.tools.dao.mapper.tuser.TbOrgMapper;
 import org.tis.tools.model.po.tuser.TbOrg;
+import org.tis.tools.model.po.tuser.TbUser;
 
 
 /**
@@ -62,7 +63,7 @@ public class TbOrgService {
     	return tbOrgMapper.count(wc);
     }
    
-    public TbOrg loadById(String id){
-    	return tbOrgMapper.loadById(id);
+    public TbOrg loadByGuid(String id){
+    	return tbOrgMapper.loadByGuid(id);
     }
 }

@@ -71,8 +71,8 @@ public interface ITbUserRService {
 
 	/**
 	 * 根据id查询用户(tb_user)记录
-	 * @param id 记录id
+	 * @param guid 记录guid
 	 * @return 匹配的记录
 	 */
-	public TbUser loadById(String id);
+	public TbUser loadByGuid(String guid);
 }

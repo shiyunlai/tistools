@@ -62,7 +62,7 @@ public class TbUserService {
     	return tbUserMapper.count(wc);
     }
    
-    public TbUser loadById(String id){
-    	return tbUserMapper.loadById(id);
+    public TbUser loadByGuid(String guid){
+    	return tbUserMapper.loadByGuid(guid);
     }
 }

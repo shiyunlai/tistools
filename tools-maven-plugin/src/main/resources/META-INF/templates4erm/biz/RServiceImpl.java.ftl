@@ -45,8 +45,8 @@ public class ${implClassName} implements ${apiClassName} {
 	}
 
 	@Override
-	public void delete(String id) {
-		${poServiceAttrVar}.delete(id);
+	public void delete(String guid) {
+		${poServiceAttrVar}.delete(guid);
 	}
 
 	@Override
@@ -70,8 +70,8 @@ public class ${implClassName} implements ${apiClassName} {
 	}
 
 	@Override
-	public ${poClassName} loadById(String id) {
-		return ${poServiceAttrVar}.loadById(id);
+	public ${poClassName} loadByGuid(String guid) {
+		return ${poServiceAttrVar}.loadByGuid(guid);
 	}
 
 }

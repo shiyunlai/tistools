@@ -26,6 +26,8 @@ import junit.framework.Assert;
 public class ERMasterModelByDom4jTest {
 
 	public static ERMasterModel ermm ;
+	public static ERMasterDefinition ermDef ;
+	public static List<BizModel> bizModels ;
 	
 	/**
 	 * @throws java.lang.Exception
@@ -46,6 +48,10 @@ public class ERMasterModelByDom4jTest {
 		System.out.println("测试用的ERMaster模型文件为："+modelXml);
 		
 		ermm = new ERMasterModel(modelXml) ; 
+		
+		ermDef = new ERMasterDefinition(ermm) ;
+		
+		bizModels = ermDef.getBizModels() ; 
 	}
 
 	/**
@@ -132,15 +138,31 @@ public class ERMasterModelByDom4jTest {
 	@Test
 	public void test2(){
 		
-		ERMasterDefinition ermDef = new ERMasterDefinition(ermm) ;
-		List<BizModel> bizModels = ermDef.getBizModels() ; 
-		
 		Assert.assertNotNull(bizModels);
 		Assert.assertEquals(3,bizModels.size());
 		for(BizModel bm : bizModels){
 			System.out.println("\n ====================================== \n");
 			System.out.println(bm);
+			
+			//测试占位符 ${category}是否被成功替换
+			if( bm.getName().equals("SYS") ){
+				
+				Assert.assertEquals("tools-core",bm.getPrjCore());
+				Assert.assertEquals("tools-web-tools",bm.getPrjWeb());
+				Assert.assertEquals("tools-facade-sys",bm.getPrjFacade());
+				Assert.assertEquals("tools-service-sys",bm.getPrjService());
+			}
+			
+			//测试占位符 ${category}是否被成功替换
+			if( bm.getName().equals("JNL") ){
+				
+				Assert.assertEquals("tools-core",bm.getPrjCore());
+				Assert.assertEquals("tools-web-tools",bm.getPrjWeb());
+				Assert.assertEquals("tools-facade-jnl",bm.getPrjFacade());
+				Assert.assertEquals("tools-service-jnl",bm.getPrjService());
+			}
 		}
 	}
-
+	
+	
 }

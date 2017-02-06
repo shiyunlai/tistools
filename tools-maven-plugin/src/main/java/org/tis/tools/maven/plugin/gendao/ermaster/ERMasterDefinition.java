@@ -6,6 +6,7 @@ package org.tis.tools.maven.plugin.gendao.ermaster;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.tis.tools.maven.plugin.gendao.BizModel;
 import org.tis.tools.maven.plugin.gendao.Field;
 import org.tis.tools.maven.plugin.gendao.Model;
@@ -84,13 +85,13 @@ public class ERMasterDefinition {
 			
 			b.setName(ermm.getModelPropertyValue(ModelPropertyEnum.MP_MODEL_NAME));
 			
-			b.setPrjCore(ermm.getModelPropertyValue(ModelPropertyEnum.MP_PRJ_CODE));
+			b.setPrjCore(assemblePlacehold(ermm.getModelPropertyValue(ModelPropertyEnum.MP_PRJ_CODE),c));
 			
-			b.setPrjFacade(ermm.getModelPropertyValue(ModelPropertyEnum.MP_PRJ_FACADE));
+			b.setPrjFacade(assemblePlacehold(ermm.getModelPropertyValue(ModelPropertyEnum.MP_PRJ_FACADE),c));
 			
-			b.setPrjService(ermm.getModelPropertyValue(ModelPropertyEnum.MP_PRJ_SERVICE));
+			b.setPrjService(assemblePlacehold(ermm.getModelPropertyValue(ModelPropertyEnum.MP_PRJ_SERVICE),c));
 			
-			b.setPrjWeb(ermm.getModelPropertyValue(ModelPropertyEnum.MP_PRJ_WEB));
+			b.setPrjWeb(assemblePlacehold(ermm.getModelPropertyValue(ModelPropertyEnum.MP_PRJ_WEB),c));
 			
 			bms.add(b) ;
 		}
@@ -98,6 +99,27 @@ public class ERMasterDefinition {
 		return bms;
 	}
 	
+	/**
+	 * <pre>
+	 * 如果设置了 tools-service-${category} ，需要将 ${category} 转变为真实值 
+	 * 如： 
+	 * 	tools-service-jnl
+	 * 	tools-service-sys
+	 * 当一个erm文件中定义了多个业务域时，会出现这种情况
+	 * </pre>
+	 * @param modelPropertyValue 属性值
+	 * @param c 模型业务域信息
+	 */
+	private String assemblePlacehold(String modelPropertyValue, Category c) {
+		
+		if( modelPropertyValue.indexOf("${category}") > 0 ) {
+			
+			return StringUtils.replace(modelPropertyValue, "${category}", c.getName().toLowerCase(), 1) ; 
+		}
+		
+		return modelPropertyValue;
+	}
+
 	/**
 	 * 适配Category分类下的所有Table
 	 * @param ermm

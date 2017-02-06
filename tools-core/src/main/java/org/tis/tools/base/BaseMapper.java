@@ -37,10 +37,10 @@ public interface BaseMapper<T> {
     public void updateForce(T t);
     
     /**
-     * <p>Description: 根据id删除记录</p>
-     * @param id
+     * <p>Description: 根据guid删除记录</p>
+     * @param guid
      */
-    public void delete(String id);
+    public void delete(String guid);
     
     /**
      * <p>Description: 按条件删除记录</p>
@@ -65,9 +65,9 @@ public interface BaseMapper<T> {
     public int count(WhereCondition wc);
     
     /**
-     * <p>Description: 根据id查询记录</p>
-     * @param id
+     * <p>Description: 根据guid查询记录</p>
+     * @param guid 全局唯一ID
      * @return
      */
-    public T loadById(String id);
+    public T loadByGuid(String guid);
 }

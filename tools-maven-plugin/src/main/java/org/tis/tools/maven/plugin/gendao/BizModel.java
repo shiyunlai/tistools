@@ -189,9 +189,10 @@ public class BizModel implements IGenModelDefine{
 	
 	public String toString() {
 		StringBuffer sb = new StringBuffer(toStringSimple());
+		sb.append("\n\t") ;
 		sb.append("包括如下模型定义：").append("\n") ;
 		for( Model m : models ){
-			sb.append("-- ").append(m.toString()).append("\n"); 
+			sb.append("\t").append("-- ").append(m.toString()).append("\n"); 
 		}
 		return sb.toString();
 	}
