@@ -159,9 +159,19 @@ public class GenDaoMojo extends AbstractMojo {
 	private String fixedModels ; 
 	
 	/**
+	 * 模型文件中定义的所有业务域模型们
+	 */
+	private List<BizModel> bizModelAllinMoedlFile = new ArrayList<BizModel>() ; 
+	
+	/**
 	 * 需要生成DAO代码的业务域模型们
 	 */
-	private List<BizModel> bizModelList = new ArrayList<BizModel>() ; 
+	List<BizModel> bizModelNeedGen = new ArrayList<BizModel>() ;
+	
+	/**
+	 * （因为缺少源码接收工程）不生成DAO代码的业务模型们
+	 */
+	private List<BizModel> filteredModelList = new ArrayList<BizModel>() ; 
 	
 	/**
 	 * <pre>
@@ -324,7 +334,7 @@ public class GenDaoMojo extends AbstractMojo {
 				
 				perMainPackage4BizModel(defMainPackage, bm);
 				
-				bizModelList.add( bm ) ;
+				bizModelAllinMoedlFile.add( bm ) ;
 			}
 		}
 		
@@ -338,34 +348,48 @@ public class GenDaoMojo extends AbstractMojo {
 				
 				for( BizModel bm : bms ){
 					perMainPackage4BizModel(defMainPackage, bm);
-					bizModelList.add( bm ) ;
+					bizModelAllinMoedlFile.add( bm ) ;
 				}
 			}
 		}
 		
 		/*
-		 * 过滤掉指定之外的模型
+		 * 收集实际需要生成源码的业务域
+		 * 1、过滤掉没有facade、service工程接收源码的模型—— 避免生成暂时无所归属的代码
+		 * 2、过滤掉指定之外的模型
 		 */
+		String[] fixedModelsList = {} ; 
 		if( StringUtils.isNotEmpty(fixedModels) ){
+			fixedModelsList = fixedModels.split("\\,");
+		}
+		
+		for( BizModel bm : bizModelAllinMoedlFile ){
 			
-			String[] includes = fixedModels.split("\\,");
+			// 1
+			if( isNotExistSourceProject(bm) ) {
+				filteredModelList.add(bm) ;
+				continue ;//缺少接收自动生成源码的工程时，不生成该业务域模型源码
+			}else{
+				bizModelNeedGen.add(bm) ;
+			}
 			
-			for( String fixedModelName : includes ){
+			// 2
+			if( fixedModelsList.length == 0 ){
+				continue ; // 没有指定过滤模型
+			}
+			
+			List<Model> newModels = new ArrayList<Model>();
+			for( Model m : bm.getModels() ){
 				
-				for( BizModel bm : bizModelList ){
-				
-					List<Model> newModels = new ArrayList<Model>();
-					for( Model m : bm.getModels() ){
-						
-						if( m.getId().equals(fixedModelName) ){
-							newModels.add(m) ; 
-						}else{
-							// 过滤掉没指定的模型
-						}
+				for(String fixedModelName : fixedModelsList){
+					if( m.getId().equalsIgnoreCase(fixedModelName) ){
+						newModels.add(m) ; 
+					}else{
+						// 过滤掉没指定的模型
 					}
-					bm.setModels(newModels);
 				}
 			}
+			bm.setModels(newModels);
 		}
 		
 		/*
@@ -384,6 +408,42 @@ public class GenDaoMojo extends AbstractMojo {
 		 * 参数准备完成，显示一下各参数值
 		 */
 		showAllConfigurationValue() ; 
+	}
+
+
+	/**
+	 * 判断bm模型对应的工程是否不齐全
+	 * <br/>如果bm模型指定的 service,facade 两个工程只要其中一个不存在 则认为不齐全
+	 * @param bm
+	 * @return false 齐全 true 不齐全
+	 */
+	private boolean isNotExistSourceProject(BizModel bm) {
+		
+		try {
+			
+			if( StringUtils.isNotEmpty(bm.getPrjService()) ){
+				String prjServiceDir = CommonUtil.replacePrjNameInMaven(sourceDirect, bm.getPrjService()) ;
+				if( FileUtil.isNotExistPath(prjServiceDir) ){
+					getLog().warn("不生成源码！因为模型<"+bm.getId()+":"+bm.getName()+"> 对应的Service源码工程<"+prjServiceDir+">不存在!");
+					return true ; 
+				}
+			}
+			
+			if( StringUtils.isNotEmpty(bm.getPrjFacade()) ){
+				String prjFacadeDir = CommonUtil.replacePrjNameInMaven(sourceDirect, bm.getPrjFacade()) ;
+				if( FileUtil.isNotExistPath(prjFacadeDir) ){
+					getLog().warn("不生成源码！因为模型<"+bm.getId()+":"+bm.getName()+"> 对应的Facade源码工程<"+prjFacadeDir+">不存在!");
+					return true ; 
+				}
+			}
+			
+		} catch (Exception e) {
+			
+			getLog().error("判断bm模型对应的工程是否齐全时出错，将跳过模型<"+bm.getId()+">的源码生成！",e);
+			return true ; 
+		}
+		
+		return false;//两个工程都存在
 	}
 
 
@@ -418,8 +478,10 @@ public class GenDaoMojo extends AbstractMojo {
 		getLog().info("模型文件路径:"+modelFilePath); 
 		getLog().info("代码模版路径:"+templatesPath); 
 		getLog().info("生成源码类型包括:"+genTypes);
-		if(StringUtils.isNotEmpty(fixedModels)) { getLog().info("只生成其中的:"+fixedModels); }
-		getLog().info("业务模型定义有:"+showModelList(bizModelList));
+		if( StringUtils.isNotEmpty(fixedModels) ) { getLog().info("只生成其中的:"+fixedModels); }
+		getLog().info("业务模型定义有:"+showModelList(bizModelAllinMoedlFile));
+		getLog().info("其中不生成源码的业务域有: "+filteredModelList.size() +" 个");
+		if( filteredModelList.size() > 0 ){getLog().info("他们是："+showModelList(filteredModelList)) ; }
 		getLog().info("===========================================================");
 	}
 	
@@ -450,38 +512,47 @@ public class GenDaoMojo extends AbstractMojo {
 		
 		//初始化freemarker模版
 		if( StringUtils.isEmpty( templatesPath )){
-			GenDAOManager.instance.initWithDef(TemplateType.BIZ); 
+			
+			// 根据模型文件类型选择模版
+			if( this.modelFileType.equals(FILE_SUFFIX_XML) ){
+				
+				GenDAOManager.instance.initWithDef(TemplateType.BIZ); 
+			}else{
+				
+				//使用针对ERM模型的模版文件生成源码
+				GenDAOManager.instance.initWithDef(TemplateType.BIZ_ERM); 
+			}
 		}else{
 			GenDAOManager.instance.initWithFixed(templatesPath);
 		}
 		
 		if( genTypes.contains("ddl") ){
 			//生成数据库脚本
-			GenDAOManager.instance.genDDL(bizModelList, resourcesDirect, sourceDirect);
+			GenDAOManager.instance.genDDL(bizModelAllinMoedlFile, resourcesDirect, sourceDirect);
 		}
 		
 		if( genTypes.contains("model") ){
 			
 			//生成模型PO、VO、DTO
-			GenDAOManager.instance.genModel(bizModelList, resourcesDirect, sourceDirect);
+			GenDAOManager.instance.genModel(bizModelAllinMoedlFile, resourcesDirect, sourceDirect);
 		}
 		
 		if( genTypes.contains("dao") ){
 			
 			//生成dao层代码
-			GenDAOManager.instance.genDAO(bizModelList, resourcesDirect, sourceDirect);
+			GenDAOManager.instance.genDAO(bizModelAllinMoedlFile, resourcesDirect, sourceDirect);
 		}
 		
 		if( genTypes.contains("biz") ){
 			
 			//生成biz业务层代码(Service，Remote Service)
-			GenDAOManager.instance.genBiz(bizModelList, resourcesDirect, sourceDirect);
+			GenDAOManager.instance.genBiz(bizModelAllinMoedlFile, resourcesDirect, sourceDirect);
 		}
 		
 		if( genTypes.contains("controller") ){
 			
 			//生成controller代码
-			GenDAOManager.instance.genController(bizModelList, resourcesDirect, sourceDirect);
+			GenDAOManager.instance.genController(bizModelAllinMoedlFile, resourcesDirect, sourceDirect);
 		}
 
 		if( genTypes.contains("ui") ){
