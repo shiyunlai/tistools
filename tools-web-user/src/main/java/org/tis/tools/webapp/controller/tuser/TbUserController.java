@@ -128,7 +128,7 @@ public class TbUserController extends BaseController {
 			HttpServletRequest request, HttpServletResponse response) {
 		try {
 			JSONObject jsonObj = JSONObject.fromObject(content);
-			TbUser k =  tbUserRService.loadById(JSONUtils.getStr(jsonObj, "id"));
+			TbUser k =  tbUserRService.loadByGuid(JSONUtils.getStr(jsonObj, "id"));
 			JSONObject jo = JSONObject.fromObject(k,jsonConfig);
 			AjaxUtils.ajaxJson(response, jo.toString());
 		} catch (Exception e) {// TODO

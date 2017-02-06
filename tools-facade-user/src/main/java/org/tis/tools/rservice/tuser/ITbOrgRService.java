@@ -70,9 +70,9 @@ public interface ITbOrgRService {
 	public int count(WhereCondition wc);
 
 	/**
-	 * 根据id查询机构(tb_org)记录
-	 * @param id 记录id
+	 * 根据guid查询机构(tb_org)记录
+	 * @param guid 记录guid
 	 * @return 匹配的记录
 	 */
-	public TbOrg loadById(String id);
+	public TbOrg loadByGuid(String guid);
 }

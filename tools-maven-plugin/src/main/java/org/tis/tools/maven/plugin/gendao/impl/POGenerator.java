@@ -13,6 +13,7 @@ import org.tis.tools.maven.plugin.gendao.BizModel;
 import org.tis.tools.maven.plugin.gendao.Model;
 import org.tis.tools.maven.plugin.gendao.api.ASourceCodeGenerator;
 import org.tis.tools.maven.plugin.utils.CommonUtil;
+import org.tis.tools.maven.plugin.utils.FileUtil;
 import org.tis.tools.maven.plugin.utils.FreeMarkerUtil;
 
 
@@ -54,6 +55,12 @@ public class POGenerator extends ASourceCodeGenerator<BizModel> {
 			}else{
 				// 模型中没有定义 prjCore ，则代码生成到当前工程
 				realSourceDir = sourceDir ; 
+			}
+			
+			if( FileUtil.isNotExistPath(realSourceDir) ){
+				System.out.println("不生成以下业务域的源码，因为源码路径不存在：" + realSourceDir);
+				System.out.println(bm.toStringSimple());
+				continue ; //找不到源码存放路径的不生成，避免多定义的模型生成非Maven工程路径，难手工清理
 			}
 			
 			String targetPath = realSourceDir + CommonUtil.package2Path(p) ; 
