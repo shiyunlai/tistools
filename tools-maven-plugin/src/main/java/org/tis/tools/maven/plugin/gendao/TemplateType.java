@@ -14,7 +14,11 @@ public enum TemplateType {
 	
 	BIZ   ("biz",    "/META-INF/templates/biz/") , 
 	ACTION("action", "/META-INF/templates/action/") ,
-	UI    ("ui",     "/META-INF/templates/ui/") 
+	UI    ("ui",     "/META-INF/templates/ui/") ,
+
+	BIZ_ERM   ("biz4erm",    "/META-INF/templates4erm/biz/") , 
+	ACTION_ERM("action4erm", "/META-INF/templates4erm/action/") ,
+	UI_ERM    ("ui4erm",     "/META-INF/templates4erm/ui/") 
 	
 	; 
 	

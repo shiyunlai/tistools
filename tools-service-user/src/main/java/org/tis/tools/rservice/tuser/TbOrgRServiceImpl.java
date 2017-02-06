@@ -68,8 +68,8 @@ public class TbOrgRServiceImpl implements ITbOrgRService {
 	}
 
 	@Override
-	public TbOrg loadById(String id) {
-		return tbOrgService.loadById(id);
+	public TbOrg loadByGuid(String guid) {
+		return tbOrgService.loadByGuid(guid);
 	}
 
 }

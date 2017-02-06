@@ -53,6 +53,12 @@
 	
 -----
 
+	扫描工程中 model/ 目录下，所有*.erm 模型定义文件，但只记载并显示模型定义情况（检查模型定义情况）
+
+	mvn tools:gen-dao -Dmodel.file.type=erm -Djust.show=true
+	
+-----
+
 	扫描工程中 model/ 目录下，所有*.erm 模型定义文件，只生成SYS_TEST这个模型，同时使用.../templates4erm/biz 这个目录下的模版文件生成代码
 
 	mvn tools:gen-dao -Dmodel.file.type=erm -Dfixed.model=SYS_TEST -Dtemplates.path=/Users/megapro/Develop/tis/tools/tools-core/model/templates4erm/biz
@@ -105,10 +111,16 @@
 
 ### 待解决
 
-	TODO0、当前最大的问题，生成的代码，不支持分布式工程结构！！！
 	TODO1、清理功能 —— 清理自动生成的代码（完全清理，部分清理）
+		支持清理功能包括：
+			根据指定文件名匹配清理
+			根据模型分类清理
+			根据模型生成时间段清理
+			根据模型生成源码所在工程清理
+			.... 以开发人员的角度思考清理功能，为提供命令使用效率设计
+			
 	TODO2、设计并实现，dao、biz、controller层的可修改性（解决自动代码修改后，再次生成时，会被覆盖的问题！）
-	TODO3、生成对应的单元测试 gen.type 中增加 test 类型的源码生成能力。
+	TODO3、生成对应的单元测试 gen.type 中增加 test 类型的源码生成能力（基础单元测试代码）。
 	TODO4、 没有做模型的重复检查，如： 1.xml 2.xml两个模型文件中都定义了 acct，目前没有做报错提示；
 	TODO5： 没有生成VO、DTO
 	TODO6： 还未生成ui层代码
@@ -117,6 +129,7 @@
 
 ### 已解决
 
+	
 	FIXED1 如何把FreeMarker模版放在jar包中，使用着无需依赖外部目录？
 
 		见：FreeMarkerUtil中两个init开头的方法；
@@ -125,6 +138,7 @@
 
 		见：ASourceCodeGenerator、IGenModelDefine、gen-daoManager
 	
+	FIXED	TODO0、当前最大的问题，生成的代码，不支持分布式工程结构！！！
 	FIXED3 生成的代码，支持分布式工程结构
 		
 		见开发分支feature_maven_plugin_4_dispro

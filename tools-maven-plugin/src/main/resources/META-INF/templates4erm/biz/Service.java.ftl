@@ -44,8 +44,8 @@ public class ${bizClassNameVar} {
     	${mapperVar}.updateForce(t); 
     }
    
-    public void delete(String id){
-    	${mapperVar}.delete(id);
+    public void delete(String guid){
+    	${mapperVar}.delete(guid);
     }
    
     public void deleteByCondition(WhereCondition wc){
@@ -68,7 +68,7 @@ public class ${bizClassNameVar} {
     	return ${mapperVar}.count(wc);
     }
    
-    public ${poClassNameVar} loadById(String id){
-    	return ${mapperVar}.loadById(id);
+    public ${poClassNameVar} loadByGuid(String guid){
+    	return ${mapperVar}.loadByGuid(guid);
     }
 }

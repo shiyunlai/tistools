@@ -128,7 +128,7 @@ public class TbOrgController extends BaseController {
 			HttpServletRequest request, HttpServletResponse response) {
 		try {
 			JSONObject jsonObj = JSONObject.fromObject(content);
-			TbOrg k =  tbOrgRService.loadById(JSONUtils.getStr(jsonObj, "id"));
+			TbOrg k =  tbOrgRService.loadByGuid(JSONUtils.getStr(jsonObj, "id"));
 			JSONObject jo = JSONObject.fromObject(k,jsonConfig);
 			AjaxUtils.ajaxJson(response, jo.toString());
 		} catch (Exception e) {// TODO
