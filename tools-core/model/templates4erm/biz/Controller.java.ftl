@@ -70,10 +70,10 @@ public class ${poClassName}Controller extends BaseController {
 			${poClassName} p = new ${poClassName}();
 			JSONObject.toBean(job,p,jsonConfig);
 			String id = sequenceService.generateId("${poClassName}");
-			if (StringUtils.isNotEmpty(p.getId())) {
+			if (StringUtils.isNotEmpty(p.getGuid())) {
 				${serviceAttrVar}.update(p);
 			} else {
-				p.setId(id);
+				p.setGuid(id);
 				//initCreate(p, request);
 				${serviceAttrVar}.insert(p);
 			}
@@ -98,7 +98,7 @@ public class ${poClassName}Controller extends BaseController {
 			}
 			List<String> ids = new ArrayList<String>();
 			for (${poClassName} p : list) {
-				ids.add(p.getId());
+				ids.add(p.getGuid());
 			}
 			WhereCondition wc = new WhereCondition();
 			wc.andIn("id", ids);
@@ -146,7 +146,7 @@ public class ${poClassName}Controller extends BaseController {
 			HttpServletRequest request, HttpServletResponse response) {
 		try {
 			JSONObject jsonObj = JSONObject.fromObject(content);
-			${poClassName} k =  ${serviceAttrVar}.loadById(JSONUtils.getStr(jsonObj, "id"));
+			${poClassName} k =  ${serviceAttrVar}.loadByGuid(JSONUtils.getStr(jsonObj, "id"));
 			JSONObject jo = JSONObject.fromObject(k,jsonConfig);
 			AjaxUtils.ajaxJson(response, jo.toString());
 		} catch (Exception e) {// TODO

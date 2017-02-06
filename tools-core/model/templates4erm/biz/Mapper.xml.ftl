@@ -11,89 +11,50 @@
   	<insert id="insert" parameterType="${poClassPackageVar}">
 	    INSERT INTO ${table.id} 
 	    (
-	    	<#list table.fields as field><#if field.physical !="false">
-	    	<#if field_index == 0>${field.id}<#else>,${field.id}</#if></#if>
-	    	</#list>
+<#list table.fields as field>
+<#if field.physical !="false">
+	    	<#if field_index == 0> ${field.id}<#else>,${field.id}</#if>
+</#if>
+</#list>
 	    )
 	    VALUES 
 	    (
-	    <#list table.fields as field>
-	    <#if field.physical !="false">
+<#list table.fields as field>
+<#if field.physical !="false">
 			#<#nt>{${field.id},jdbcType=${field.type}}<#if field_has_next>,</#if>
-		</#if>
-		</#list>
+</#if>
+</#list>
   		)
  	</insert>
  	
  	<update id="update" parameterType="${poClassPackageVar}">
     	UPDATE ${table.id} 
 	    <set>
-<#list table.fields as field><#if field.physical !="false">
-	<#if field.type =="string">
+<#list table.fields as field>
+<#if field.physical !="false">
 		<if test="${field.id} != null" >
-        ${field.id} = #<#nt>{${field.id},jdbcType=VARCHAR},
-      </if>
-	</#if>
-	<#if field.type =="long">
-		<if test="${field.id} != null" >
-        ${field.id} = #<#nt>{${field.id},jdbcType=BIGINT},
-      </if>
-	</#if>
-	<#if field.type =="decimal">
-		<if test="${field.id} != null" >
-        ${field.id} = #<#nt>{${field.id},jdbcType=DECIMAL},
-      </if>
-	</#if>
-	<#if field.type =="bigdecimal">
-		<if test="${field.id} != null" >
-        ${field.id} = #<#nt>{${field.id},jdbcType=DECIMAL},
-      </if>
-	</#if>
-	<#if field.type =="datetime">
-		<if test="${field.id} != null" >
-        ${field.id} = #<#nt>{${field.id},jdbcType=TIMESTAMP},
-      </if>
-	</#if>
-	<#if field.type =="int">
-		<if test="${field.id} != null" >
-        ${field.id} = #<#nt>{${field.id},jdbcType=INTEGER},
-      </if>
-	</#if>
-	</#if>
+			${field.id} = #<#nt>{${field.id},jdbcType=${field.type}}<#if field_has_next>,</#if>
+		</if>
+</#if>
 </#list>
 	    </set>
-	    WHERE id = #<#nt>{id}
+	    WHERE guid = #<#nt>{guid}
  	</update>
  	
  	<update id="updateForce" parameterType="${poClassPackageVar}">
     	UPDATE ${table.id} 
 	    <set>
-	    	<#list table.fields as field><#if field.physical !="false">
-	<#if field.type =="string">
-        ${field.id} = #<#nt>{${field.id},jdbcType=VARCHAR},
-	</#if>
-	<#if field.type =="long">
-        ${field.id} = #<#nt>{${field.id},jdbcType=BIGINT},
-	</#if>
-	<#if field.type =="decimal">
-        ${field.id} = #<#nt>{${field.id},jdbcType=DECIMAL},
-	</#if>
-	<#if field.type =="bigdecimal">
-        ${field.id} = #<#nt>{${field.id},jdbcType=DECIMAL},
-	</#if>
-	<#if field.type =="datetime">
-        ${field.id} = #<#nt>{${field.id},jdbcType=TIMESTAMP},
-	</#if>
-	<#if field.type =="int">
-        ${field.id} = #<#nt>{${field.id},jdbcType=INTEGER},
-	</#if></#if>
-	</#list>
+<#list table.fields as field>
+<#if field.physical !="false">
+		${field.id} = #<#nt>{${field.id},jdbcType=${field.type}}<#if field_has_next>,</#if>
+</#if>
+</#list>
 	    </set>
-	    WHERE id = #<#nt>{id}
+	    WHERE guid = #<#nt>{guid}
  	</update>
  	 
     <delete id="delete" parameterType="java.lang.String">
-	  	delete from ${table.id} where id = #<#nt>{id}
+	  	delete from ${table.id} where guid = #<#nt>{guid}
 	</delete>
 	
 	<delete id="deleteByCondition" parameterType="${wcClassPackageVar}">
@@ -103,44 +64,19 @@
 	 <update id="updateByCondition" parameterType="map">
     	UPDATE ${table.id} 
 	   <set>
-	    	<#list table.fields as field><#if field.physical !="false">
-	<#if field.type =="string">
+<#list table.fields as field>
+<#if field.physical !="false">
 		<if test="domain.${field.id} != null" >
-        ${field.id} = #<#nt>{domain.${field.id},jdbcType=VARCHAR},
-      </if>
-	</#if>
-	<#if field.type =="long">
-		<if test="domain.${field.id} != null" >
-        ${field.id} = #<#nt>{domain.${field.id},jdbcType=BIGINT},
-      </if>
-	</#if>
-	<#if field.type =="decimal">
-		<if test="domain.${field.id} != null" >
-        ${field.id} = #<#nt>{domain.${field.id},jdbcType=DECIMAL},
-      </if>
-	</#if>
-	<#if field.type =="bigdecimal">
-		<if test="domain.${field.id} != null" >
-        ${field.id} = #<#nt>{domain.${field.id},jdbcType=DECIMAL},
-      </if>
-	</#if>
-	<#if field.type =="datetime">
-		<if test="domain.${field.id} != null" >
-        ${field.id} = #<#nt>{domain.${field.id},jdbcType=TIMESTAMP},
-      </if>
-	</#if>
-	<#if field.type =="int">
-		<if test="domain.${field.id} != null" >
-        ${field.id} = #<#nt>{domain.${field.id},jdbcType=INTEGER},
-      </if>
-	</#if></#if>
-	</#list>
+        	${field.id} = #<#nt>{domain.${field.id},jdbcType=${field.type}}
+      	</if>
+</#if>
+</#list>
 	    </set>
 	   <where>$<#nt>{wc.condition}</where>
  	</update>
 	 
-	<select id="loadById" parameterType="String" resultType="${poClassPackageVar}">
-		select <include refid="Base_Column_List"/> from ${table.id} where id = #<#nt>{id}
+	<select id="loadByGuid" parameterType="String" resultType="${poClassPackageVar}">
+		select <include refid="Base_Column_List"/> from ${table.id} where guid = #<#nt>{guid}
 	</select>
 	
     <select id="query" resultType="${poClassPackageVar}" parameterType="${wcClassPackageVar}" >
@@ -159,7 +95,7 @@
   
 	<sql id="Base_Column_List" >
 	  <#list table.fields as field><#if field.physical !="false">
-		<#if field_index == 0>${field.id}<#else>,${field.id}</#if></#if>
+		<#if field_index == 0> ${field.id}<#else>,${field.id}</#if></#if>
 	  </#list>
 	</sql>
 </mapper>
