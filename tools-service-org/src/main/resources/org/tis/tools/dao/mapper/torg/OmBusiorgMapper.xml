@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.mapper.torg.OmBusiorgMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.torg.OmBusiorg">
+	    INSERT INTO OM_BUSIORG (id
+  ,busidomain
+  ,busiorgid
+  ,orgname
+  ,parentid
+  ,orglevel
+  ,orgid
+  ,nodetype
+  ,orgcode
+  ,seqno
+  ,manapos
+  ,sortno
+  ,isleaf
+  ,subcount
+  )
+	    VALUES (#{id,jdbcType=VARCHAR},
+  #{busidomain,jdbcType=VARCHAR},
+  #{busiorgid,jdbcType=INTEGER},
+  #{orgname,jdbcType=VARCHAR},
+  #{parentid,jdbcType=INTEGER},
+  #{orglevel,jdbcType=INTEGER},
+  #{orgid,jdbcType=INTEGER},
+  #{nodetype,jdbcType=VARCHAR},
+  #{orgcode,jdbcType=VARCHAR},
+  #{seqno,jdbcType=VARCHAR},
+  #{manapos,jdbcType=INTEGER},
+  #{sortno,jdbcType=INTEGER},
+  #{isleaf,jdbcType=VARCHAR},
+  #{subcount,jdbcType=INTEGER}
+  )
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.torg.OmBusiorg">
+    	UPDATE OM_BUSIORG 
+	    <set>
+		<if test="id != null" >
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+		<if test="busidomain != null" >
+        busidomain = #{busidomain,jdbcType=VARCHAR},
+      </if>
+		<if test="busiorgid != null" >
+        busiorgid = #{busiorgid,jdbcType=INTEGER},
+      </if>
+		<if test="orgname != null" >
+        orgname = #{orgname,jdbcType=VARCHAR},
+      </if>
+		<if test="parentid != null" >
+        parentid = #{parentid,jdbcType=INTEGER},
+      </if>
+		<if test="orglevel != null" >
+        orglevel = #{orglevel,jdbcType=INTEGER},
+      </if>
+		<if test="orgid != null" >
+        orgid = #{orgid,jdbcType=INTEGER},
+      </if>
+		<if test="nodetype != null" >
+        nodetype = #{nodetype,jdbcType=VARCHAR},
+      </if>
+		<if test="orgcode != null" >
+        orgcode = #{orgcode,jdbcType=VARCHAR},
+      </if>
+		<if test="seqno != null" >
+        seqno = #{seqno,jdbcType=VARCHAR},
+      </if>
+		<if test="manapos != null" >
+        manapos = #{manapos,jdbcType=INTEGER},
+      </if>
+		<if test="sortno != null" >
+        sortno = #{sortno,jdbcType=INTEGER},
+      </if>
+		<if test="isleaf != null" >
+        isleaf = #{isleaf,jdbcType=VARCHAR},
+      </if>
+		<if test="subcount != null" >
+        subcount = #{subcount,jdbcType=INTEGER},
+      </if>
+	    </set>
+	    WHERE id = #{id}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.torg.OmBusiorg">
+    	UPDATE OM_BUSIORG 
+	    <set>
+        id = #{id,jdbcType=VARCHAR},
+        busidomain = #{busidomain,jdbcType=VARCHAR},
+        busiorgid = #{busiorgid,jdbcType=INTEGER},
+        orgname = #{orgname,jdbcType=VARCHAR},
+        parentid = #{parentid,jdbcType=INTEGER},
+        orglevel = #{orglevel,jdbcType=INTEGER},
+        orgid = #{orgid,jdbcType=INTEGER},
+        nodetype = #{nodetype,jdbcType=VARCHAR},
+        orgcode = #{orgcode,jdbcType=VARCHAR},
+        seqno = #{seqno,jdbcType=VARCHAR},
+        manapos = #{manapos,jdbcType=INTEGER},
+        sortno = #{sortno,jdbcType=INTEGER},
+        isleaf = #{isleaf,jdbcType=VARCHAR},
+        subcount = #{subcount,jdbcType=INTEGER},
+	    </set>
+	    WHERE id = #{id}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from OM_BUSIORG where id = #{id}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from OM_BUSIORG <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE OM_BUSIORG 
+	   <set>
+		<if test="domain.id != null" >
+        id = #{domain.id,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.busidomain != null" >
+        busidomain = #{domain.busidomain,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.busiorgid != null" >
+        busiorgid = #{domain.busiorgid,jdbcType=INTEGER},
+      </if>
+		<if test="domain.orgname != null" >
+        orgname = #{domain.orgname,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.parentid != null" >
+        parentid = #{domain.parentid,jdbcType=INTEGER},
+      </if>
+		<if test="domain.orglevel != null" >
+        orglevel = #{domain.orglevel,jdbcType=INTEGER},
+      </if>
+		<if test="domain.orgid != null" >
+        orgid = #{domain.orgid,jdbcType=INTEGER},
+      </if>
+		<if test="domain.nodetype != null" >
+        nodetype = #{domain.nodetype,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.orgcode != null" >
+        orgcode = #{domain.orgcode,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.seqno != null" >
+        seqno = #{domain.seqno,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.manapos != null" >
+        manapos = #{domain.manapos,jdbcType=INTEGER},
+      </if>
+		<if test="domain.sortno != null" >
+        sortno = #{domain.sortno,jdbcType=INTEGER},
+      </if>
+		<if test="domain.isleaf != null" >
+        isleaf = #{domain.isleaf,jdbcType=VARCHAR},
+      </if>
+		<if test="domain.subcount != null" >
+        subcount = #{domain.subcount,jdbcType=INTEGER},
+      </if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadById" parameterType="String" resultType="org.tis.tools.model.po.torg.OmBusiorg">
+		select <include refid="Base_Column_List"/> from OM_BUSIORG where id = #{id}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.torg.OmBusiorg" parameterType="org.tis.tools.base.WhereCondition" >
+    	<if test="length > 0 and url == 'oracle'" >
+    	select <include refid="Base_Column_List" /> from
+   			(select a.*,rownum row_num from
+      			(</if>
+      			select <include refid="Base_Column_List" /> from OM_BUSIORG <include refid="Where_Clause" />
+        			<if test="orderBy != null" >${orderBy}</if>
+        			<if test="length > 0 and url == 'mysql'" >LIMIT ${offset}, ${length}</if>
+        		<if test="length > 0 and url == 'oracle'" >) a
+   			) b 
+		where b.row_num between ${offset} and ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from OM_BUSIORG <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+	  id
+,busidomain
+,busiorgid
+,orgname
+,parentid
+,orglevel
+,orgid
+,nodetype
+,orgcode
+,seqno
+,manapos
+,sortno
+,isleaf
+,subcount
+	</sql>
+</mapper>

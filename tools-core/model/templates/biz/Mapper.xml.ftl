@@ -1,7 +1,6 @@
 <#assign wcClassPackageVar="${mainPackage}.base.WhereCondition">
 <#assign poClassPackageVar="${mainPackage}.model.po.${bizmodelId}.${poClassNameVar}">
 <#assign mapperJavaPackageVar="${mainPackage}.dao.mapper.${bizmodelId}.${poClassNameVar}Mapper">
-
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC 
 	"-//mybatis.org//DTD Mapper 3.0//EN" 
@@ -135,9 +134,16 @@
 	</select>
 	
     <select id="query" resultType="${poClassPackageVar}" parameterType="${wcClassPackageVar}" >
-    	select <include refid="Base_Column_List" /> from ${table.id} <include refid="Where_Clause" />
-        <if test="orderBy != null" >$<#nt>{orderBy}</if>
-        <if test="length > 0" >LIMIT $<#nt>{offset}, $<#nt>{length}</if>
+    	<if test="length > 0 and url == 'oracle'" >
+    	select <include refid="Base_Column_List" /> from
+   			(select a.*,rownum row_num from
+      			(</if>
+      			select <include refid="Base_Column_List" /> from ${table.id} <include refid="Where_Clause" />
+        			<if test="orderBy != null" >$<#nt>{orderBy}</if>
+        			<if test="length > 0 and url == 'mysql'" >LIMIT $<#nt>{offset}, $<#nt>{length}</if>
+        		<if test="length > 0 and url == 'oracle'" >) a
+   			) b 
+		where b.row_num between $<#nt>{offset} and $<#nt>{length}</if>
   	</select>
   
    	<select id="count" resultType="int" parameterType="${wcClassPackageVar}" >

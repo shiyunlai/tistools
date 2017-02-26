@@ -557,11 +557,11 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             controller:"biztraceSumQuery_controller"
         })
 
-        .state("workgroup",{
-            url:"/workgrouphandle.html",
-            templateUrl:"views/workgroup/workgrouphandle.html",
+        .state("busiorg",{
+            url:"/busiorghandle.html",
+            templateUrl:"views/busiorg/busiorghandle.html",
             data: {pageTitle: '工作组管理'},
-            controller:"workgroup_controller"
+            controller:"busiorg_controller"
         })
 
         .state("redis_clean",{

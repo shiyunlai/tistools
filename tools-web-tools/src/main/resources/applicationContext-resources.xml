@@ -55,7 +55,8 @@
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"> 
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://${database_url}/${database_name}?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8"/>
-        <property name="username" value="${database_password}"/>
+        <property name="username" value="${database_username}"/>
+        <property name="password" value="${database_password}"/>
 		<property name="initialSize" value="15" />
 		<property name="maxActive" value="15" />
 		<property name="maxIdle" value="15" /> 
