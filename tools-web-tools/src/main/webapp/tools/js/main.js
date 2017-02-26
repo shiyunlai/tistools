@@ -557,6 +557,16 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             controller:"biztraceSumQuery_controller"
         })
 
+<<<<<<< HEAD
+=======
+        .state("workgroup",{
+            url:"/workgrouphandle.html",
+            templateUrl:"views/workgroup/workgrouphandle.html",
+            data: {pageTitle: '工作组管理'},
+            controller:"workgroup_controller"
+        })
+
+>>>>>>> parent of 477228b... 保存
         .state("redis_clean",{
             url:"/redisClean.html",
             templateUrl:"views/biztrace/redisClean.html",
