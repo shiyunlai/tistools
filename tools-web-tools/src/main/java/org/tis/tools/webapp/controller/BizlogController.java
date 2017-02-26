@@ -16,14 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-<<<<<<< HEAD
-import org.tis.tools.base.web.controller.BaseController;
-import org.tis.tools.base.web.retcode.RetCodeEnum;
-import org.tis.tools.base.web.util.AjaxUtils;
-import org.tis.tools.base.web.util.JSONUtils;
-import org.tis.tools.service.api.biztrace.AnalyseResult;
-=======
->>>>>>> master
 import org.tis.tools.service.api.biztrace.BiztraceFileInfo;
 import org.tis.tools.service.api.biztrace.IBiztraceRService;
 import org.tis.tools.service.api.biztrace.ParseProcessInfo;

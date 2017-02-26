@@ -9,15 +9,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-<<<<<<< HEAD:tools-web-boss/src/main/java/org/tis/tools/base/web/controller/BaseController.java
-import net.sf.ezmorph.object.DateMorpher;
-import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
-import net.sf.json.util.CycleDetectionStrategy;
-import net.sf.json.util.PropertySetStrategy;
-
-=======
->>>>>>> master:tools-web-boss/src/main/java/org/tis/tools/webapp/controller/BaseController.java
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +25,7 @@ import org.tis.tools.webapp.util.JsonFileProcessor;
 import net.sf.ezmorph.object.DateMorpher;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
+import net.sf.json.util.CycleDetectionStrategy;
 import net.sf.json.util.PropertySetStrategy;
 
 /**

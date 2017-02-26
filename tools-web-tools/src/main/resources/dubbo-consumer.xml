@@ -19,5 +19,6 @@
 	
 	<import resource="dubbo-reference-devmgr.xml"/>
 	<import resource="dubbo-reference-biztrace.xml"/>
+	<import resource="dubbo-reference-org.xml"/>
 	
 </beans>

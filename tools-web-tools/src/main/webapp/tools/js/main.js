@@ -558,6 +558,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
         })
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         .state("workgroup",{
             url:"/workgrouphandle.html",
@@ -567,6 +568,15 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
         })
 
 >>>>>>> parent of 477228b... 保存
+=======
+        .state("busiorg",{
+            url:"/busiorghandle.html",
+            templateUrl:"views/busiorg/busiorghandle.html",
+            data: {pageTitle: '工作组管理'},
+            controller:"busiorg_controller"
+        })
+
+>>>>>>> workgroup
         .state("redis_clean",{
             url:"/redisClean.html",
             templateUrl:"views/biztrace/redisClean.html",

@@ -1,50 +1,60 @@
-<?xml version="1.0" encoding="UTF-8" ?> 
-<bizmodel name="用户业务域" id="tuser" mainpackage="org.tis.tools" >
+<?xml version="1.0" encoding="UTF-8" ?>
+<bizmodel name="组织机构域" id="torg" mainpackage="org.tis.tools">
 
-	<desc>用户业务域模型定义</desc>
-	
+	<desc>组织机构域模型定义</desc>
+
 	<!-- 用户域相关的工程 -->
 	<prjCore>tools-core</prjCore><!-- 模型位置 -->
-	<prjWeb>tools-web-user</prjWeb><!-- webapp 应用代码 -->
-	<prjFacade>tools-facade-user</prjFacade><!-- 远程服务接口定义 -->
-	<prjService>tools-service-user</prjService><!-- 服务实现 -->
-	
+	<prjWeb>tools-web-tools</prjWeb><!-- webapp 应用代码 -->
+	<prjFacade>tools-facade-org</prjFacade><!-- 远程服务接口定义 -->
+	<prjService>tools-service-org</prjService><!-- 服务实现 -->
+
 	<models>
-		<model name="用户" id="tb_user" desc="用户记录表" ext="2,1000">
-			<field name="唯一ID"  id="ID" type="string" length="128" />
-			<field name="试卷编码"  id="paper_code" type="string" length="128" />
-			<field name="课程编码"  id="course_code" type="string" length="128" />
-			<field name="顺序号"  id="seq_no" type="long" length="8" />
-			<field name="考卷名称"  id="paper_name" type="string" length="1024" />
-			<field name="卷首语"  id="paper_desc" type="string" length="40000" />
-			<field name="多媒体信息"  id="multi_media_info" type="string" length="1024" />
-			<field name="考试时间"  id="time_exam" type="long" length="8" />
-			<field name="是否允许重考"  id="is_re_exam" type="string" length="8" />
-			<field name="重考次数限制"  id="times_re_exam" type="long" length="8" />
-			<field name="默认每题得分"  id="def_per_score" type="long" length="8" />
-			<field name="题目排序规则"  id="rule_sort_question" type="string" length="8" />
-			<field name="题目答案排序规则"  id="rule_sort_answer" type="string" length="8" />
-			<field name="答案反馈方式"  id="feedback_type" type="string" length="8" />
-			<field name="预期年化利率"     id="expect_fixed" type="bigdecimal" length="10,6" />
-			<field name="不生成PO对象"     id="not_gen_po" type="bigdecimal" length="10,6" physical="false"/>
-			<field name="delstatus" id="delstatus" />
-			<field name="creatorId" id="creatorId" />
-			<field name="creatorName" id="creatorName" />
-			<field name="creatorCode" id="creatorCode" />
-			<field name="creatorIdPath" id="creatorIdPath" />
-			<field name="creatorNamePath" id="creatorNamePath" />
-			<field name="creatorCodePath" id="creatorCodePath" />
-			<field name="createTime" id="createTime" type="datetime" />
-			<field name="modifiedTime" id="modifiedTime" type="datetime" />
+		<model name="业务机构" id="OM_BUSIORG">
+			<field name="唯一ID" id="ID" type="string" length="128" />
+			<field name="业务条线" id="BUSIDOMAIN" type="string" length="255" />
+			<field name="业务机构编号" id="BUSIORGID" type="int" length="10" />
+			<field name="业务机构名称" id="ORGNAME" type="string" length="64" />
+			<field name="上级业务机构" id="PARENTID" type="int" length="10" />
+			<field name="业务机构层次" id="ORGLEVEL" type="int" length="128" />
+			<field name="机构编号" id="ORGID" type="int" length="10" />
+			<field name="节点类型" id="NODETYPE" type="string" length="255" />
+			<field name="机构代号" id="ORGCODE" type="string" length="32" />
+			<field name="序列号" id="SEQNO" type="string" length="256" />
+			<field name="主管岗位" id="MANAPOS" type="int" length="10" />
+			<field name="排列顺序编号" id="SORTNO" type="int" length="128" />
+			<field name="是否叶子节点" id="ISLEAF" type="string" length="1" />
+			<field name="子节点数" id="SUBCOUNT" type="int" length="10" />
 		</model>
-		
-		<model name="机构" id="tb_org" desc="机构记录表" ext="3,256">
-			<field name="唯一ID"  id="ID" type="string" length="128" />
-			<field name="试卷编码"  id="paper_code" type="string" length="128" />
-			<field name="课程编码"  id="course_code" type="string" length="128" />
-			<field name="顺序号"  id="seq_no" type="long" length="8" />
-			<field name="考卷名称"  id="paper_name" type="string" length="1024" />
-			<field name="卷首语"  id="paper_desc" type="string" length="40000" />
-		</model>
+
+
+
+		<!-- <model name="用户" id="tb_user" desc="用户记录表" ext="2,1000"> <field name="唯一ID" 
+			id="ID" type="string" length="128" /> <field name="试卷编码" id="paper_code" 
+			type="string" length="128" /> <field name="课程编码" id="course_code" type="string" 
+			length="128" /> <field name="顺序号" id="seq_no" type="long" length="8" /> <field 
+			name="考卷名称" id="paper_name" type="string" length="1024" /> <field name="卷首语" 
+			id="paper_desc" type="string" length="40000" /> <field name="多媒体信息" id="multi_media_info" 
+			type="string" length="1024" /> <field name="考试时间" id="time_exam" type="long" 
+			length="8" /> <field name="是否允许重考" id="is_re_exam" type="string" length="8" 
+			/> <field name="重考次数限制" id="times_re_exam" type="long" length="8" /> <field 
+			name="默认每题得分" id="def_per_score" type="long" length="8" /> <field name="题目排序规则" 
+			id="rule_sort_question" type="string" length="8" /> <field name="题目答案排序规则" 
+			id="rule_sort_answer" type="string" length="8" /> <field name="答案反馈方式" id="feedback_type" 
+			type="string" length="8" /> <field name="预期年化利率" id="expect_fixed" type="bigdecimal" 
+			length="10,6" /> <field name="不生成PO对象" id="not_gen_po" type="bigdecimal" 
+			length="10,6" physical="false"/> <field name="delstatus" id="delstatus" /> 
+			<field name="creatorId" id="creatorId" /> <field name="creatorName" id="creatorName" 
+			/> <field name="creatorCode" id="creatorCode" /> <field name="creatorIdPath" 
+			id="creatorIdPath" /> <field name="creatorNamePath" id="creatorNamePath" 
+			/> <field name="creatorCodePath" id="creatorCodePath" /> <field name="createTime" 
+			id="createTime" type="datetime" /> <field name="modifiedTime" id="modifiedTime" 
+			type="datetime" /> </model> <model name="机构" id="tb_org" desc="机构记录表" ext="3,256"> 
+			<field name="唯一ID" id="ID" type="string" length="128" /> <field name="试卷编码" 
+			id="paper_code" type="string" length="128" /> <field name="课程编码" id="course_code" 
+			type="string" length="128" /> <field name="顺序号" id="seq_no" type="long" length="8" 
+			/> <field name="考卷名称" id="paper_name" type="string" length="1024" /> <field 
+			name="卷首语" id="paper_desc" type="string" length="40000" /> </model> -->
+
 	</models>
 </bizmodel>

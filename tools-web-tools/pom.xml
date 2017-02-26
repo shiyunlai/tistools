@@ -11,6 +11,37 @@
 	<artifactId>tools-web-tools</artifactId>
 	<packaging>war</packaging>
 	<name>web for tis tools</name>
+
+
+<pluginRepositories>
+
+<pluginRepository> 
+
+    <id>apache.snapshots</id> 
+
+    <name>Apache Snapshots</name> 
+
+    <url> 
+
+        http://repository.apache.org/content/groups/snapshots-group/ 
+
+    </url> 
+
+    <releases> 
+
+        <enabled>false</enabled> 
+
+    </releases> 
+
+    <snapshots> 
+
+        <enabled>true</enabled> 
+
+    </snapshots> 
+
+</pluginRepository>
+
+</pluginRepositories>
 	<dependencies>
 	
 		<!-- disconf start -->
@@ -126,7 +157,7 @@
 		<dependency>
 			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache-core</artifactId>
-			<version>${ehcache.version}</version>
+			<version>${ehcache.version}</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 		<dependency>
 			<groupId>net.sf.ehcache</groupId>
@@ -526,7 +557,7 @@
 			<artifactId>logback-classic</artifactId>
 			<version>1.1.1</version>
 		</dependency>
-
+		
 		<!-- redis客户端:Jedis -->
 		<dependency>
 			<groupId>redis.clients</groupId>
@@ -580,6 +611,11 @@
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-facade-biztrace</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.tis</groupId>
+			<artifactId>tools-facade-org</artifactId>
+			<version>0.0.1</version>
 		</dependency>
 	</dependencies>
 
