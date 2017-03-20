@@ -1,7 +1,7 @@
 
-## 移植自tools-maven-plugin，同时，针对tools项目，修正如下描述信息
+## 自tools-maven-plugin拷贝复用，针对tools项目，做如修改
 
-## 使用插件
+## 使用插件的前提
 	
 	前提：必须是Maven工程！
 	
@@ -37,7 +37,7 @@
 
 ```
 
-##	命令
+##	命令的使用
 
 -----
 
@@ -144,7 +144,7 @@
 		见开发分支feature_maven_plugin_4_dispro
 		
 	
-## 开发经验
+## Maven插件，开发经验
 
 *	关于单元测试
 
