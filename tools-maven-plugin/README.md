@@ -64,6 +64,18 @@
 	mvn tools:gen-dao -Dmodel.file.type=erm -Dfixed.model=SYS_TEST -Dtemplates.path=/Users/megapro/Develop/tis/tools/tools-core/model/templates4erm/biz
 	
 -----
+	
+	扫描工程中 model/ 目录下，所有*.erm 模型定义文件，只生成其中jnl的应用领域，但只记载并显示模型定义情况（检查模型定义情况）
+	
+	mvn tools:gen-dao -Dmodel.file.type=erm -Dfixed.bizmodels=jnl -Djust.show=true
+
+-----
+	
+	扫描工程中 model/ 目录下，所有*.erm 模型定义文件，只生成其中jnl的应用领域
+	
+	mvn tools:gen-dao -Dmodel.file.type=erm -Dfixed.bizmodels=jnl
+	
+-----
 
 	更多使用说明 
 	

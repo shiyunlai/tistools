@@ -150,7 +150,23 @@ public class GenDaoMojo extends AbstractMojo {
 	private List<File> modelDefFiles = new ArrayList<File>() ; 
 	
 	/**
-	 * -Dfixed.models，指定生成哪些模型<br/>
+	 * <br/>-Dfixed.bizmodels，指定需要生成源码的应用域id
+	 * <br/>erm文件中指 category 节点的值
+	 * <br/>xml文件中指 bizmodel 节点的中id的值
+	 * <br/>如果不指定，则默认生成全部应用域
+	 * <br/>逗号分隔多个应用域，如： -Dfixed.bizmodels=jnl,sys
+	 * <br/>不区分大小写
+	 */
+	@Parameter( property = "fixed.bizmodels" )
+	private String fixedBizmodelStr ;
+	
+	/**
+	 * 指定需要生成源码的应用域id们
+	 */
+	private String [] fixedBizmodels ; 
+	
+	/**
+	 * -Dfixed.models，指定生成哪些模型（某个应用域中的模型定义）<br/>
 	 * <br/>如： -Dfixed.models=orgInfo,roleInfo ，系统只会生成 模型id为orgInfo,roleInfo的程序代码
 	 * <br/>如果不指定，默认所有模型对象都会生成一遍；
 	 * <br/>逗号分隔多个模型对象；
@@ -323,6 +339,15 @@ public class GenDaoMojo extends AbstractMojo {
 		}
 		
 		/*
+		 * 收集实际需要生成的应用域id
+		 */
+		if( StringUtils.isNotEmpty( fixedBizmodelStr ) ){
+			fixedBizmodels = fixedBizmodelStr.split("\\,");
+		}else{
+			fixedBizmodels = new String[]{} ; 
+		}
+		
+		/*
 		 * 解析模型定义文件
 		 */
 		if( StringUtils.equals(modelFileType, FILE_SUFFIX_XML) ){
@@ -330,6 +355,9 @@ public class GenDaoMojo extends AbstractMojo {
 			for( File defFile : modelDefFiles ){
 				
 				BizModel bm = Xml22BeanUtil.xml2Bean(BizModel.class, defFile) ; 
+				if( notGenBizmodel(bm) ){
+					continue ; 
+				}
 				bm.setModelDefFile(defFile.getPath()) ; 
 				
 				perMainPackage4BizModel(defMainPackage, bm);
@@ -348,6 +376,9 @@ public class GenDaoMojo extends AbstractMojo {
 				
 				for( BizModel bm : bms ){
 					perMainPackage4BizModel(defMainPackage, bm);
+					if( notGenBizmodel(bm) ){
+						continue ; 
+					}
 					bizModelAllinMoedlFile.add( bm ) ;
 				}
 			}
@@ -408,6 +439,27 @@ public class GenDaoMojo extends AbstractMojo {
 		 * 参数准备完成，显示一下各参数值
 		 */
 		showAllConfigurationValue() ; 
+	}
+
+	/**
+	 * 1、如果fixedBizmodels无任何指定，则所有都要生成
+	 * 2、如果fixedBizmodels有值，则只生成其中指定的bizmodel
+	 * @param bm
+	 * @return true 无需生成 false 需要生成
+	 */
+	private boolean notGenBizmodel(BizModel bm) {
+		
+		if ( fixedBizmodels.length == 0 ){
+			return false ; // 都要生成
+		}
+		
+		for ( String fixed : fixedBizmodels ){
+			if( StringUtils.equalsIgnoreCase(fixed, bm.getId())){
+				return false ; // 指定生成
+			}
+		}
+		
+		return true; // 不在，无需生成
 	}
 
 
