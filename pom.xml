@@ -82,7 +82,7 @@
 		<webx_version>3.1.6</webx_version>
 		<!--<jackson_version>2.3.3</jackson_version> -->
 		<jackson_version>2.7.1</jackson_version>
-
+  		<mysql-version>5.1.37</mysql-version>
 		<commons_pool_version>1.6</commons_pool_version>
 		<commons-lang_version>2.6</commons-lang_version>
 		<commons.collections.version>3.2.1</commons.collections.version>
@@ -694,6 +694,11 @@
 				<groupId>org.mybatis</groupId>
 				<artifactId>mybatis-spring</artifactId>
 				<version>${mybatis-spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql-version}</version>
 			</dependency>
 			<!-- mail -->
 			<dependency>
