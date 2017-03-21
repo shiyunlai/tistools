@@ -122,7 +122,13 @@
 ##	开发日志
 
 ### 待解决
-
+	
+	TODO0、生成tools工程
+	
+		期望的使用方式: 自动生成三个工程，其前缀为tools,业务域名称为jnl，工程名称分别是 tools-facade-jnl、tools-service-jnl、tools-web-jnl
+		
+		mvn tools:gen-project -Dtype=[facade,service,web] -Dbizmodel.name=jnl -Dprefix=tools
+	
 	TODO1、清理功能 —— 清理自动生成的代码（完全清理，部分清理）
 		支持清理功能包括：
 			根据指定文件名匹配清理
