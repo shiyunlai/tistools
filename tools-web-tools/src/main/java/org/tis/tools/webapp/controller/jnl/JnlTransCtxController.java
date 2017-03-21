@@ -17,6 +17,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,7 +39,8 @@ import org.tis.tools.base.Page;
 @RequestMapping(value = "/jnl")
 public class JnlTransCtxController extends BaseController {
 
-	@Reference(group="jnl",version="1.0",interfaceClass=IJnlTransCtxRService.class)
+	//@Reference(group="jnl",version="1.0",interfaceClass=IJnlTransCtxRService.class)
+	@Autowired
 	IJnlTransCtxRService jnlTransCtxRService;
 	
 	@RequestMapping(value = "/jnlTransCtx/edit")
