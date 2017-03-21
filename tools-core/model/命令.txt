@@ -5,10 +5,10 @@ mvn tools:gen-dao -Dmodel.file.type=erm
 
 -- 使用ERMaster定义的模型文件，但只查看模型定义情况
 
-mvn tools:gen-dao -Dmodel.file.type=erm -Djust.show=true
-
+mvn tools:gen-dao -Dmodel.file.type=erm -Dfixed.bizmodels=jnl -Djust.show=true 
 
 -- 更多参数使用
+-- 只生成jnl业务域： -Dfixed.bizmodels=jnl
 -- 只生成指定模型：-Dfixed.models=SYS_TEST
 -- 只生展示模型信息：-Djust.show=true
 -- 同时指定模版 ： -Dtemplates.path=/Users/megapro/Develop/tis/tools/tools-core/model/templates4erm/biz

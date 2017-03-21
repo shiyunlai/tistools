@@ -18,7 +18,6 @@ public class StartProviderJnl {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//extRouter() ;
 		com.alibaba.dubbo.container.Main.main(args);
 	}
 

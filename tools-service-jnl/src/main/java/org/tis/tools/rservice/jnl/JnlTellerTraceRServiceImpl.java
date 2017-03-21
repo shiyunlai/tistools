@@ -69,7 +69,13 @@ public class JnlTellerTraceRServiceImpl implements IJnlTellerTraceRService {
 
 	@Override
 	public JnlTellerTrace loadByGuid(String guid) {
-		return jnlTellerTraceService.loadByGuid(guid);
+		JnlTellerTrace test = new JnlTellerTrace() ; 
+		test.setGuid("123");
+		test.setActionTime("12345678907654");
+		test.setActionType("111");
+		test.setInstno("55566677");
+		return test ;
+		//return jnlTellerTraceService.loadByGuid(guid);
 	}
 
 }
