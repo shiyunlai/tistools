@@ -11,7 +11,7 @@
 	</page_setting>
 	<category_index>1</category_index>
 	<zoom>1.0</zoom>
-	<x>-16</x>
+	<x>118</x>
 	<y>0</y>
 	<default_color>
 		<r>128</r>
@@ -109,7 +109,7 @@
 		</export_setting>
 		<category_settings>
 			<free_layout>false</free_layout>
-			<show_referred_tables>false</show_referred_tables>
+			<show_referred_tables>true</show_referred_tables>
 			<categories>
 				<category>
 					<id>18</id>
@@ -187,7 +187,7 @@
 			</connections>
 			<display>true</display>
 			<creation_date>2017-01-18 19:04:59</creation_date>
-			<updated_date>2017-03-20 22:00:34</updated_date>
+			<updated_date>2017-03-22 09:46:40</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value>open branch plus</value>
