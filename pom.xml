@@ -118,6 +118,8 @@
 		<fst_version>2.44</fst_version>
 		<!-- dubbox -->
 		<dubbo.version>2.8.4a</dubbo.version>
+		<!-- druid -->
+		<druid.version>1.0.18</druid.version>
 		<!-- dbcp -->
 		<commons.dbcp.version>1.3</commons.dbcp.version>
 		<!-- oracle -->
@@ -668,6 +670,12 @@
 				<groupId>com.alibaba</groupId>
 				<artifactId>dubbo</artifactId>
 				<version>${dubbo.version}</version>
+			</dependency>
+			<!-- druid -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid</artifactId>
+				<version>${druid.version}</version>
 			</dependency>
 			<!-- 引入oracle数据库jdbc驱动包 -->
 			<dependency>
