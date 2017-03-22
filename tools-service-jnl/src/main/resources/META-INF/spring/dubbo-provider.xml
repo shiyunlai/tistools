@@ -60,7 +60,6 @@
 		cached 缓存线程池，空闲一分钟自动删除，需要时重建。
 		limited 可伸缩线程池，但池中的线程数只会增长不会收缩。(为避免收缩时突然来了大流量引起的性能问题)。
 	-->
-    <!--  -->
     <dubbo:protocol 
     	name="${dubbo.protocol.name}" 
     	port="${dubbo.protocol.port}" 

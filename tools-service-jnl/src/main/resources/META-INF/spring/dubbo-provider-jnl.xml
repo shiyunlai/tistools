@@ -35,13 +35,30 @@
 	<!-- 暴露服务 -->
 	<!-- 服务提供者：柜员操作日志(JNL_TELLER_TRACE) 基本远程服务 -->
 	<dubbo:service 
+		interface="org.tis.tools.rservice.jnl.IJnlPrefillRService" group="jnl" version="1.0"
+		ref="jnlPrefillRServiceImpl" 
+		protocol="dubbo"  timeout="3000" />
+	<dubbo:service 
+		interface="org.tis.tools.rservice.jnl.IJnlPromotingRService" group="jnl" version="1.0"
+		ref="jnlPromotingRServiceImpl" 
+		protocol="dubbo"  timeout="3000" />
+	<dubbo:service 
 		interface="org.tis.tools.rservice.jnl.IJnlTellerTraceRService" group="jnl" version="1.0"
-		ref="jnlTellerTraceRService" 
+		ref="jnlTellerTraceRServiceImpl" 
+		protocol="dubbo"  timeout="3000" />
+	<dubbo:service 
+		interface="org.tis.tools.rservice.jnl.IJnlRService" group="jnl" version="1.0"
+		ref="jnlRServiceImpl" 
 		protocol="dubbo"  timeout="3000" />
  	
 	<!-- 具体实现 -->
-    <bean id="jnlTellerTraceRService" class="org.tis.tools.rservice.jnl.JnlTellerTraceRServiceImpl" />
+    <bean id="jnlPrefillRServiceImpl" class="org.tis.tools.rservice.jnl.JnlPrefillRServiceImpl" />
     
+    <bean id="jnlPromotingRServiceImpl" class="org.tis.tools.rservice.jnl.JnlPromotingRServiceImpl" />
+    
+    <bean id="jnlTellerTraceRServiceImpl" class="org.tis.tools.rservice.jnl.JnlTellerTraceRServiceImpl" />
+
+    <bean id="jnlRServiceImpl" class="org.tis.tools.rservice.jnl.JnlRServiceImpl" />
     
     
 </beans>
