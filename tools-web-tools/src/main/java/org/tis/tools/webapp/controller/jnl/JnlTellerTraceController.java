@@ -22,11 +22,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.tis.tools.model.po.jnl.JnlCustService;
 import org.tis.tools.model.po.jnl.JnlTellerTrace;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.webapp.controller.BaseController;
 import com.alibaba.dubbo.config.annotation.Reference;
+
+import org.tis.tools.rservice.jnl.IJnlRService;
 import org.tis.tools.rservice.jnl.IJnlTellerTraceRService;
 import org.tis.tools.webapp.util.AjaxUtils;
 import org.tis.tools.webapp.util.JSONUtils;
@@ -42,6 +44,9 @@ public class JnlTellerTraceController extends BaseController {
 	//@Reference(group="jnl",version="1.0",interfaceClass=IJnlTellerTraceRService.class)
 	@Autowired
 	IJnlTellerTraceRService jnlTellerTraceRService;
+	
+	@Autowired
+	IJnlRService jnlRService ;
 	
 	@RequestMapping(value = "/jnlTellerTrace/edit")
 	public String execute(ModelMap model, @RequestBody String content,
@@ -130,7 +135,10 @@ public class JnlTellerTraceController extends BaseController {
 			JSONObject jsonObj = JSONObject.fromObject(content);
 			JnlTellerTrace k =  jnlTellerTraceRService.loadByGuid(JSONUtils.getStr(jsonObj, "id"));
 			JSONObject jo = JSONObject.fromObject(k,jsonConfig);
-			AjaxUtils.ajaxJson(response, jo.toString());
+			
+			//JnlCustService jcs = jnlRService.createCustomService("", "") ; 
+			
+			AjaxUtils.ajaxJson(response, jo.toString() );
 		} catch (Exception e) {// TODO
 			AjaxUtils.ajaxJsonErrorMessage(response, "查询失败!");
 			e.printStackTrace();
