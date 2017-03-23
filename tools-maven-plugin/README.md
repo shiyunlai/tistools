@@ -1,7 +1,7 @@
 
-## 移植自tools-maven-plugin，同时，针对tools项目，修正如下描述信息
+## 自tools-maven-plugin拷贝复用，针对tools项目，做如修改
 
-## 使用插件
+## 使用插件的前提
 	
 	前提：必须是Maven工程！
 	
@@ -37,7 +37,7 @@
 
 ```
 
-##	命令
+##	命令的使用
 
 -----
 
@@ -62,6 +62,18 @@
 	扫描工程中 model/ 目录下，所有*.erm 模型定义文件，只生成SYS_TEST这个模型，同时使用.../templates4erm/biz 这个目录下的模版文件生成代码
 
 	mvn tools:gen-dao -Dmodel.file.type=erm -Dfixed.model=SYS_TEST -Dtemplates.path=/Users/megapro/Develop/tis/tools/tools-core/model/templates4erm/biz
+	
+-----
+	
+	扫描工程中 model/ 目录下，所有*.erm 模型定义文件，只生成其中jnl的应用领域，但只记载并显示模型定义情况（检查模型定义情况）
+	
+	mvn tools:gen-dao -Dmodel.file.type=erm -Dfixed.bizmodels=jnl -Djust.show=true
+
+-----
+	
+	扫描工程中 model/ 目录下，所有*.erm 模型定义文件，只生成其中jnl的应用领域
+	
+	mvn tools:gen-dao -Dmodel.file.type=erm -Dfixed.bizmodels=jnl
 	
 -----
 
@@ -110,7 +122,13 @@
 ##	开发日志
 
 ### 待解决
-
+	
+	TODO0、生成tools工程
+	
+		期望的使用方式: 自动生成三个工程，其前缀为tools,业务域名称为jnl，工程名称分别是 tools-facade-jnl、tools-service-jnl、tools-web-jnl
+		
+		mvn tools:gen-project -Dtype=[facade,service,web] -Dbizmodel.name=jnl -Dprefix=tools
+	
 	TODO1、清理功能 —— 清理自动生成的代码（完全清理，部分清理）
 		支持清理功能包括：
 			根据指定文件名匹配清理
@@ -144,7 +162,7 @@
 		见开发分支feature_maven_plugin_4_dispro
 		
 	
-## 开发经验
+## Maven插件，开发经验
 
 *	关于单元测试
 

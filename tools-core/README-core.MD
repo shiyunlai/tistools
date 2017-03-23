@@ -1,3 +1,4 @@
+
 1. 负责定义tools中各种业务模型；
 
 2. 每个文件定义一个业务模块的模型；模型中各属性含义，参见： 
@@ -37,5 +38,10 @@
 	另外：
 	mvn bronsp:clean  //清理自动生成的源码
 	mvn bronsp:help   //更多命令参考 
+
+6. 代替5，在tools-core工程下执行命令
 	
+	mvn tools:gen-dao -Dmodel.file.type=erm -Dfixed.bizmodels=jnl
+	
+	详见 ./model/命令.txt
 	

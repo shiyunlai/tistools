@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.mapper.jnl.JnlTransCtxMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.jnl.JnlTransCtx">
+	    INSERT INTO JNL_TRANS_CTX 
+	    (
+	    	 guid
+	    	,guid_trans
+	    	,trans_sno
+	    	,trans_phase
+	    	,save_time
+	    	,trans_ctx
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=varchar},
+			#{guid_trans,jdbcType=varchar},
+			#{trans_sno,jdbcType=varchar},
+			#{trans_phase,jdbcType=varchar},
+			#{save_time,jdbcType=varchar},
+			#{trans_ctx,jdbcType=text}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.jnl.JnlTransCtx">
+    	UPDATE JNL_TRANS_CTX 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=varchar},
+		</if>
+		<if test="guid_trans != null" >
+			guid_trans = #{guid_trans,jdbcType=varchar},
+		</if>
+		<if test="trans_sno != null" >
+			trans_sno = #{trans_sno,jdbcType=varchar},
+		</if>
+		<if test="trans_phase != null" >
+			trans_phase = #{trans_phase,jdbcType=varchar},
+		</if>
+		<if test="save_time != null" >
+			save_time = #{save_time,jdbcType=varchar},
+		</if>
+		<if test="trans_ctx != null" >
+			trans_ctx = #{trans_ctx,jdbcType=text}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.jnl.JnlTransCtx">
+    	UPDATE JNL_TRANS_CTX 
+	    <set>
+		guid = #{guid,jdbcType=varchar},
+		guid_trans = #{guid_trans,jdbcType=varchar},
+		trans_sno = #{trans_sno,jdbcType=varchar},
+		trans_phase = #{trans_phase,jdbcType=varchar},
+		save_time = #{save_time,jdbcType=varchar},
+		trans_ctx = #{trans_ctx,jdbcType=text}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from JNL_TRANS_CTX where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from JNL_TRANS_CTX <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE JNL_TRANS_CTX 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=varchar}
+      	</if>
+		<if test="domain.guid_trans != null" >
+        	guid_trans = #{domain.guid_trans,jdbcType=varchar}
+      	</if>
+		<if test="domain.trans_sno != null" >
+        	trans_sno = #{domain.trans_sno,jdbcType=varchar}
+      	</if>
+		<if test="domain.trans_phase != null" >
+        	trans_phase = #{domain.trans_phase,jdbcType=varchar}
+      	</if>
+		<if test="domain.save_time != null" >
+        	save_time = #{domain.save_time,jdbcType=varchar}
+      	</if>
+		<if test="domain.trans_ctx != null" >
+        	trans_ctx = #{domain.trans_ctx,jdbcType=text}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.jnl.JnlTransCtx">
+		select <include refid="Base_Column_List"/> from JNL_TRANS_CTX where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.jnl.JnlTransCtx" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from JNL_TRANS_CTX <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from JNL_TRANS_CTX <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid
+		,guid_trans
+		,trans_sno
+		,trans_phase
+		,save_time
+		,trans_ctx
+	</sql>
+</mapper>
