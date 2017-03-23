@@ -301,6 +301,20 @@ mvn jetty:run
 
 #### package规范：
 
+//FIXME 新的想法，更符合思维逻辑习惯，tools-service-jnl 模块已经如此规范，并且 tools 的maven插件模版也如此实施
+	
+	[公司].[产品].[系统分层].[业务域].[业务域功能模块]
+	如：
+	org.tis.tools.rservice.jnl.integrate
+	[公司.产品] org.tis.tools
+	[系统分层]  rservice
+	[业务域]   jnl
+	[功能模块]  integrate
+	
+	把系统分层放在业务域前的目的是让配置文件中可以统一，不用区分业务域；
+	
+	//另见，![包命名方案](./tis-package-named-rule.png "包命名逻辑")
+	
 	组织.产品.功能.限定.模块
 
 	组织： org.tis
