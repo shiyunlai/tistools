@@ -10,6 +10,8 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 /**
  * 
  * <pre>
@@ -359,4 +361,8 @@ public class ${humpClassName(table.id)} implements Serializable {
     }
 	</#if>
 	</#list>
+	
+	public String toString(){
+		return ToStringBuilder.reflectionToString(this) ; 
+	}
 }
