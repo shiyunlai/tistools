@@ -10,6 +10,8 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 /**
  * 
  * <pre>
@@ -345,4 +347,9 @@ public class JnlCustService implements Serializable {
 	public Integer getTransNum(){
 		return this.transNum ;
     }
+	
+	public String toString(){
+		return ToStringBuilder.reflectionToString(this) ; 
+	}
+	
 }
