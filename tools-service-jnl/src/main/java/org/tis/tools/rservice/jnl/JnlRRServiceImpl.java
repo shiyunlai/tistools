@@ -11,14 +11,11 @@ import org.tis.tools.rservice.jnl.exception.JnlRServiceException;
  * @author megapro
  *
  */
-public class JnlRServiceImpl implements IJnlRService {
+public class JnlRRServiceImpl implements IJnlRRService {
 	
-	/* (non-Javadoc)
-	 * @see org.tis.tools.rservice.jnl.IJnlRService#createCustomService(java.lang.String, java.lang.String)
-	 */
+
 	@Override
-	public JnlCustService createCustomService(String custNo, String serviceType) {
-		
+	public JnlCustService startCustomerService(String custNo, String serviceType) {
 		if( StringUtils.isEmpty( custNo ) ){
 			throw new JnlRServiceException("新建客户服务流水时必须指定客户号!") ;
 		}

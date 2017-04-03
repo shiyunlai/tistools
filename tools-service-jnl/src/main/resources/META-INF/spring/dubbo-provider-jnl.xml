@@ -47,9 +47,9 @@
 		ref="jnlTellerTraceRServiceImpl" 
 		protocol="dubbo"  timeout="3000" />
 	<dubbo:service 
-		interface="org.tis.tools.rservice.jnl.IJnlRService" group="jnl" version="1.0"
-		ref="jnlRServiceImpl" 
-		protocol="dubbo"  timeout="3000" />
+		interface="org.tis.tools.rservice.jnl.IJnlRRService" group="jnl" version="1.0"
+		ref="jnlRRServiceImpl" 
+		protocol="rest"  timeout="2000" connections="100" />
  	
 	<!-- 具体实现 -->
     <bean id="jnlPrefillRServiceImpl" class="org.tis.tools.rservice.jnl.JnlPrefillRServiceImpl" />
@@ -58,7 +58,7 @@
     
     <bean id="jnlTellerTraceRServiceImpl" class="org.tis.tools.rservice.jnl.JnlTellerTraceRServiceImpl" />
 
-    <bean id="jnlRServiceImpl" class="org.tis.tools.rservice.jnl.JnlRServiceImpl" />
+    <bean id="jnlRRServiceImpl" class="org.tis.tools.rservice.jnl.JnlRRServiceImpl" />
     
     
 </beans>

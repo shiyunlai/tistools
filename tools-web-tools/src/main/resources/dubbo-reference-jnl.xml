@@ -36,10 +36,10 @@
 		check="false"/>
 	
 	<dubbo:reference 
-		id="jnlRService"    
+		id="jnlRRService"    
 		group="jnl" 
 		version="1.0" 
-		interface="org.tis.tools.rservice.jnl.IJnlRService"     
+		interface="org.tis.tools.rservice.jnl.IJnlRRService"     
 		check="false"/>
 	
 </beans>
