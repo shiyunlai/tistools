@@ -7,9 +7,18 @@ mvn tools:gen-dao -Dmodel.file.type=erm
 
 mvn tools:gen-dao -Dmodel.file.type=erm -Dfixed.bizmodels=jnl -Djust.show=true 
 
+-- 展示abf.erm中ac模块 的模型结构
+
+mvn tools:gen-dao -Dmodel.file.type=erm -Dmodel-file=abf -Dfixed.bizmodels=ac -Djust.show=true 
+
+
 -- 更多参数使用
+-- 使用指定的模型定义文件 -Dmodel-file=abf
 -- 只生成jnl业务域： -Dfixed.bizmodels=jnl
 -- 只生成指定模型：-Dfixed.models=SYS_TEST
 -- 只生展示模型信息：-Djust.show=true
 -- 同时指定模版 ： -Dtemplates.path=/Users/megapro/Develop/tis/tools/tools-core/model/templates4erm/biz
+
+
+
 
