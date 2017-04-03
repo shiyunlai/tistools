@@ -9,10 +9,10 @@
 		<bottom_margin>30</bottom_margin>
 		<right_margin>30</right_margin>
 	</page_setting>
-	<category_index>2</category_index>
+	<category_index>0</category_index>
 	<zoom>1.0</zoom>
-	<x>521</x>
-	<y>265</y>
+	<x>-16</x>
+	<y>568</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -187,7 +187,7 @@
 			</connections>
 			<display>true</display>
 			<creation_date>2017-01-18 19:04:59</creation_date>
-			<updated_date>2017-03-31 21:25:48</updated_date>
+			<updated_date>2017-04-03 09:54:34</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value>open branch plus</value>
@@ -4830,7 +4830,7 @@
 			</color>
 			<connections>
 			</connections>
-			<text># 表设计规范&#x0A;----&#x0A;## 表名规范：&#x0A;----&#x0A;&#x09;{限定名}_{特征}_{表类型}&#x0A;&#x0A;&#x09;如： JNL_SERVICE_M&#x0A;&#x09;JNL      为限定名，表示流水模块；&#x0A;&#x09;_SERVICE 为特征名，表示服务流水；&#x0A;&#x09;_M       为主表&#x0A;&#x0A;### {限定名}&#x0A;&#x0A;&#x09;通常是一个单词，或者单词的缩写；&#x0A;&#x09;限定名一般是应用的模块名称( modular name )；&#x0A;&#x09;或者是数据库表的作用分类：&#x0A;&#x09;如： HISTORY_*** 开头的表示***这个表的历史数据&#x0A;&#x09;如： SYS_***_*** 为系统级的表&#x0A;&#x09;如： JNL_***_*** 为流水模块相关的表&#x0A;&#x09;如： AC_**** 为权限管理的表&#x0A;&#x09;如： OM_**** 为组织管理的表&#x0A;&#x09;。。。。。&#x0A;&#x0A;### {特征}&#x0A;&#x09;&#x0A;&#x09;可以是一个或者多个单词，构成对表功能的描述；&#x0A;&#x09;特征表示该表的目的，概述了表中数据的含义。&#x0A;&#x09;特征名多个单词时以下划线分割，结构如：&#x0A;&#x09;{限定名}_{word_word_word}_{表类型}&#x0A;&#x09;建议不要太长；&#x0A;&#x0A;### {表类型}&#x0A;&#x09;&#x0A;&#x09;常用的表类型：&#x0A;&#x09;&#x0A;&#x09;M : 主表（Master）&#x0A;&#x09;D : 明细表（Detail）&#x0A;&#x09;R : 登记薄（Register）&#x0A;&#x09;C : 参数表（Config）&#x0A;&#x09;&#x0A;&#x09;RD : 冗余表 （Redundant），一般是横行冗余字段表&#x0A;&#x09;&#x0A;&#x09;LOG : 日志表（Log）&#x0A;&#x0A;## 表字段设计规范&#x0A;----&#x0A;1、所有表必须有GUID字段，且主键（原来为ID）；&#x0A;&#x0A;2、减少用业务含义的字段做外键关联&#x0A;   （更改数据时，不用修改关联表）；&#x0A;&#x0A;3、表之间的外键关联用GUID_{表描述}；&#x0A;&#x0A;4、数据库层面不做外键关联关系，&#x0A;      数据间关系通过程序代码实现；</text>
+			<text># 表设计规范&#x0A;----&#x0A;## 表名规范：&#x0A;----&#x0A;&#x09;{限定名}_{特征}_{表类型}&#x0A;&#x0A;&#x09;如： JNL_SERVICE_M&#x0A;&#x09;JNL      为限定名，表示流水模块；&#x0A;&#x09;_SERVICE 为特征名，表示服务流水；&#x0A;&#x09;_M       为主表&#x0A;&#x0A;### {限定名}&#x0A;&#x0A;&#x09;通常是一个单词，或者单词的缩写；&#x0A;&#x09;限定名一般是应用的模块名称( modular name )；&#x0A;&#x09;或者是数据库表的作用分类：&#x0A;&#x09;如： HISTORY_*** 开头的表示***这个表的历史数据&#x0A;&#x09;如： SYS_***_*** 为系统级的表&#x0A;&#x09;如： JNL_***_*** 为流水模块相关的表&#x0A;&#x09;如： AC_**** 为权限管理的表&#x0A;&#x09;如： OM_**** 为组织管理的表&#x0A;&#x09;。。。。。&#x0A;&#x0A;### {特征}&#x0A;&#x09;&#x0A;&#x09;可以是一个或者多个单词，构成对表功能的描述；&#x0A;&#x09;特征表示该表的目的，概述了表中数据的含义。&#x0A;&#x09;特征名多个单词时以下划线分割，结构如：&#x0A;&#x09;{限定名}_{word_word_word}_{表类型}&#x0A;&#x09;建议不要太长；&#x0A;&#x0A;### {表类型}&#x0A;&#x09;&#x0A;&#x09;常用的表类型：&#x0A;&#x09;&#x0A;&#x09;M : 主表（Master）&#x0A;&#x09;D : 明细表（Detail）&#x0A;&#x09;R : 登记薄（Register）&#x0A;&#x09;C : 参数表（Config）&#x0A;&#x09;&#x0A;&#x09;RD : 冗余表 （Redundant），一般是横行冗余字段表&#x0A;&#x09;&#x0A;&#x09;LOG : 日志表（Log）&#x0A;&#x0A;## 表字段设计规范&#x0A;----&#x0A;1、所有实体表必须有GUID字段，且主键（原来为ID）；&#x0A;      关系映射表，无需GUID字段；&#x0A;&#x0A;2、减少用业务含义的字段做外键关联&#x0A;   （更改数据时，不用修改关联表）；&#x0A;&#x0A;3、表之间的外键关联用GUID_{表描述}；&#x0A;&#x0A;4、数据库层面不做外键关联关系，&#x0A;      数据间关系通过程序代码实现；</text>
 		</note>
 		<note>
 			<id>10</id>
