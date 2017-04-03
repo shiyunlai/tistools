@@ -269,4 +269,14 @@ public class NormalColumn {
 	public void setUniqueKey(String uniqueKey) {
 		this.uniqueKey = uniqueKey;
 	}
+
+	@Override
+	public String toString() {
+		return "NormalColumn [wordId=" + wordId + ", referencedColumn=" + referencedColumn + ", relation=" + relation
+				+ ", id=" + id + ", description=" + description + ", logicalName=" + logicalName + ", physicalName="
+				+ physicalName + ", type=" + type + ", defaultValue=" + defaultValue + ", autoIncrement="
+				+ autoIncrement + ", foreignKey=" + foreignKey + ", notNull=" + notNull + ", primaryKey=" + primaryKey
+				+ ", uniqueKey=" + uniqueKey + ", refWord=" + refWord + ", refNormalColumn=" + refNormalColumn + "]";
+	}
+	
 }

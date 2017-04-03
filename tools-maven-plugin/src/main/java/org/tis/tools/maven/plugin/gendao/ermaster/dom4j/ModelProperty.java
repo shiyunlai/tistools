@@ -65,4 +65,9 @@ public class ModelProperty {
 	public boolean equals(Object obj) {
 		return ((ModelProperty)obj).getName().equals(this.getName()) ;
 	}
+
+	@Override
+	public String toString() {
+		return "ModelProperty [name=" + name + ", value=" + value + "]";
+	}
 }

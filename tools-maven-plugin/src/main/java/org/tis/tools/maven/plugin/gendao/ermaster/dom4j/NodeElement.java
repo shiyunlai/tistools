@@ -29,4 +29,9 @@ public class NodeElement {
 	public boolean equals(Object obj) {
 		return ((NodeElement)obj).getId().equals(this.getId());
 	}
+
+	@Override
+	public String toString() {
+		return "NodeElement [id=" + id + "]";
+	}
 }

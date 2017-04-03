@@ -217,4 +217,10 @@ public class ERMasterModel {
 		}
 		return null ; 
 	}
+
+	@Override
+	public String toString() {
+		return "ERMasterModel [ermasetFileName=" + ermasetFileName + ", settings=" + settings + ", words=" + words
+				+ ", tables=" + tables + "]";
+	}
 }

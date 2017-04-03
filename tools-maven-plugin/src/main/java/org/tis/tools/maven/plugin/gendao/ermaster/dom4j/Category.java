@@ -58,4 +58,9 @@ public class Category {
 		Category a = (Category)obj ;
 		return a.getId().equals(this.getId());//如果id相等则认为 两个对象相等
 	}
+	@Override
+	public String toString() {
+		return "Category [id=" + id + ", name=" + name + ", nodeElement=" + nodeElement + "]";
+	}
+	
 }
