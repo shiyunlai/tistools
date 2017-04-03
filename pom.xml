@@ -30,7 +30,11 @@
 		<module>tools-facade-jnl</module>
 		<module>tools-service-jnl</module>
 		<module>tools-maven-plugin</module>
-		
+
+		<module>tools-facade-om</module>
+		<module>tools-service-om</module>
+		<module>tools-facade-ac</module>
+		<module>tools-service-ac</module>
 	</modules>
 	<properties>
 		<!-- Common libs -->
