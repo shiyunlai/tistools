@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.mapper.ac.AcOperatorFuncMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.ac.AcOperatorFunc">
+	    INSERT INTO AC_OPERATOR_FUNC 
+	    (
+	    	 guid_operator
+	    	,guid_func
+	    	,auth_type
+	    	,start_date
+	    	,end_date
+	    	,guid_app
+	    	,guid_funcgroup
+	    )
+	    VALUES 
+	    (
+			#{guid_operator,jdbcType=varchar},
+			#{guid_func,jdbcType=varchar},
+			#{auth_type,jdbcType=varchar},
+			#{start_date,jdbcType=date},
+			#{end_date,jdbcType=date},
+			#{guid_app,jdbcType=varchar},
+			#{guid_funcgroup,jdbcType=varchar}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.ac.AcOperatorFunc">
+    	UPDATE AC_OPERATOR_FUNC 
+	    <set>
+		<if test="guid_operator != null" >
+			guid_operator = #{guid_operator,jdbcType=varchar},
+		</if>
+		<if test="guid_func != null" >
+			guid_func = #{guid_func,jdbcType=varchar},
+		</if>
+		<if test="auth_type != null" >
+			auth_type = #{auth_type,jdbcType=varchar},
+		</if>
+		<if test="start_date != null" >
+			start_date = #{start_date,jdbcType=date},
+		</if>
+		<if test="end_date != null" >
+			end_date = #{end_date,jdbcType=date},
+		</if>
+		<if test="guid_app != null" >
+			guid_app = #{guid_app,jdbcType=varchar},
+		</if>
+		<if test="guid_funcgroup != null" >
+			guid_funcgroup = #{guid_funcgroup,jdbcType=varchar}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.ac.AcOperatorFunc">
+    	UPDATE AC_OPERATOR_FUNC 
+	    <set>
+		guid_operator = #{guid_operator,jdbcType=varchar},
+		guid_func = #{guid_func,jdbcType=varchar},
+		auth_type = #{auth_type,jdbcType=varchar},
+		start_date = #{start_date,jdbcType=date},
+		end_date = #{end_date,jdbcType=date},
+		guid_app = #{guid_app,jdbcType=varchar},
+		guid_funcgroup = #{guid_funcgroup,jdbcType=varchar}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from AC_OPERATOR_FUNC where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from AC_OPERATOR_FUNC <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE AC_OPERATOR_FUNC 
+	   <set>
+		<if test="domain.guid_operator != null" >
+        	guid_operator = #{domain.guid_operator,jdbcType=varchar}
+      	</if>
+		<if test="domain.guid_func != null" >
+        	guid_func = #{domain.guid_func,jdbcType=varchar}
+      	</if>
+		<if test="domain.auth_type != null" >
+        	auth_type = #{domain.auth_type,jdbcType=varchar}
+      	</if>
+		<if test="domain.start_date != null" >
+        	start_date = #{domain.start_date,jdbcType=date}
+      	</if>
+		<if test="domain.end_date != null" >
+        	end_date = #{domain.end_date,jdbcType=date}
+      	</if>
+		<if test="domain.guid_app != null" >
+        	guid_app = #{domain.guid_app,jdbcType=varchar}
+      	</if>
+		<if test="domain.guid_funcgroup != null" >
+        	guid_funcgroup = #{domain.guid_funcgroup,jdbcType=varchar}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.ac.AcOperatorFunc">
+		select <include refid="Base_Column_List"/> from AC_OPERATOR_FUNC where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.ac.AcOperatorFunc" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from AC_OPERATOR_FUNC <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from AC_OPERATOR_FUNC <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid_operator
+		,guid_func
+		,auth_type
+		,start_date
+		,end_date
+		,guid_app
+		,guid_funcgroup
+	</sql>
+</mapper>

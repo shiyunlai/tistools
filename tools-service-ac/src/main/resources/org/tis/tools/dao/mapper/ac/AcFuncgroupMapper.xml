@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.mapper.ac.AcFuncgroupMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.ac.AcFuncgroup">
+	    INSERT INTO AC_FUNCGROUP 
+	    (
+	    	 guid
+	    	,guid_app
+	    	,funcgroup_name
+	    	,guid_parents
+	    	,group_level
+	    	,funcgroup_seq
+	    	,isleaf
+	    	,sub_count
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=varchar},
+			#{guid_app,jdbcType=varchar},
+			#{funcgroup_name,jdbcType=varchar},
+			#{guid_parents,jdbcType=varchar},
+			#{group_level,jdbcType=decimal},
+			#{funcgroup_seq,jdbcType=varchar},
+			#{isleaf,jdbcType=char},
+			#{sub_count,jdbcType=decimal}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.ac.AcFuncgroup">
+    	UPDATE AC_FUNCGROUP 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=varchar},
+		</if>
+		<if test="guid_app != null" >
+			guid_app = #{guid_app,jdbcType=varchar},
+		</if>
+		<if test="funcgroup_name != null" >
+			funcgroup_name = #{funcgroup_name,jdbcType=varchar},
+		</if>
+		<if test="guid_parents != null" >
+			guid_parents = #{guid_parents,jdbcType=varchar},
+		</if>
+		<if test="group_level != null" >
+			group_level = #{group_level,jdbcType=decimal},
+		</if>
+		<if test="funcgroup_seq != null" >
+			funcgroup_seq = #{funcgroup_seq,jdbcType=varchar},
+		</if>
+		<if test="isleaf != null" >
+			isleaf = #{isleaf,jdbcType=char},
+		</if>
+		<if test="sub_count != null" >
+			sub_count = #{sub_count,jdbcType=decimal}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.ac.AcFuncgroup">
+    	UPDATE AC_FUNCGROUP 
+	    <set>
+		guid = #{guid,jdbcType=varchar},
+		guid_app = #{guid_app,jdbcType=varchar},
+		funcgroup_name = #{funcgroup_name,jdbcType=varchar},
+		guid_parents = #{guid_parents,jdbcType=varchar},
+		group_level = #{group_level,jdbcType=decimal},
+		funcgroup_seq = #{funcgroup_seq,jdbcType=varchar},
+		isleaf = #{isleaf,jdbcType=char},
+		sub_count = #{sub_count,jdbcType=decimal}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from AC_FUNCGROUP where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from AC_FUNCGROUP <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE AC_FUNCGROUP 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=varchar}
+      	</if>
+		<if test="domain.guid_app != null" >
+        	guid_app = #{domain.guid_app,jdbcType=varchar}
+      	</if>
+		<if test="domain.funcgroup_name != null" >
+        	funcgroup_name = #{domain.funcgroup_name,jdbcType=varchar}
+      	</if>
+		<if test="domain.guid_parents != null" >
+        	guid_parents = #{domain.guid_parents,jdbcType=varchar}
+      	</if>
+		<if test="domain.group_level != null" >
+        	group_level = #{domain.group_level,jdbcType=decimal}
+      	</if>
+		<if test="domain.funcgroup_seq != null" >
+        	funcgroup_seq = #{domain.funcgroup_seq,jdbcType=varchar}
+      	</if>
+		<if test="domain.isleaf != null" >
+        	isleaf = #{domain.isleaf,jdbcType=char}
+      	</if>
+		<if test="domain.sub_count != null" >
+        	sub_count = #{domain.sub_count,jdbcType=decimal}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.ac.AcFuncgroup">
+		select <include refid="Base_Column_List"/> from AC_FUNCGROUP where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.ac.AcFuncgroup" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from AC_FUNCGROUP <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from AC_FUNCGROUP <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid
+		,guid_app
+		,funcgroup_name
+		,guid_parents
+		,group_level
+		,funcgroup_seq
+		,isleaf
+		,sub_count
+	</sql>
+</mapper>
