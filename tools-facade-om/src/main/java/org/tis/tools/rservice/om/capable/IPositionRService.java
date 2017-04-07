@@ -14,9 +14,18 @@ import org.tis.tools.rservice.om.exception.PositionManagementException;
 
 /**
  * <pre>
-* 对OM组织模块中岗位（Position）概念对象的管理服务功能；
+* 
+* 岗位
+* 
+* 机构下可设置多个岗位，岗位是职务在机构下的实例
+* 工作组下可设置多个岗位，岗位是职务在工作组下的实例
+* 
+* 本接口定义了对OM组织模块中岗位（Position）概念对象的管理服务功能；
+* 
 * 满足《4.4.2 岗位管理用例》描述中的功能需求，如：新增岗位、查询岗位信息等；
+* 
 * 这些功能主要供Branch Manager这样的管理型系统使用；
+* 
  * </pre>
  * 
  * @author megapro
@@ -122,7 +131,7 @@ public interface IPositionRService {
 	 * <pre>
 	 * 深度拷贝岗位
 	 * 
-	 * 可指定拷贝内容包括：
+	 * 可指定深度复制内容包括：
 	 * 是否拷贝子岗位（直到叶节点岗位）
 	 * 是否拷贝岗位下员工关系（新增岗位必须在同机构内）
 	 * 是否拷贝应用关系
