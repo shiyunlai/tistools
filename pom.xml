@@ -23,10 +23,10 @@
 		<module>tools-web-boss</module>
 		<!-- <module>tools-web-tools3</module> -->
 		<module>tools-web-tools</module>
-		<module>tools-facade-user</module>
 		
-		<module>tools-service-user</module>
-		<module>tools-web-user</module>
+		
+		
+		
 		<module>tools-facade-jnl</module>
 		<module>tools-service-jnl</module>
 		<module>tools-maven-plugin</module>
