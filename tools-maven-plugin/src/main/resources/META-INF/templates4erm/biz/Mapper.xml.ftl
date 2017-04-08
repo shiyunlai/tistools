@@ -1,6 +1,6 @@
 <#assign wcClassPackageVar="${mainPackage}.base.WhereCondition">
 <#assign poClassPackageVar="${mainPackage}.model.po.${bizmodelId}.${poClassNameVar}">
-<#assign mapperJavaPackageVar="${mainPackage}.dao.mapper.${bizmodelId}.${poClassNameVar}Mapper">
+<#assign mapperJavaPackageVar="${mainPackage}.dao.${bizmodelId}.${poClassNameVar}Mapper">
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC 
 	"-//mybatis.org//DTD Mapper 3.0//EN" 
