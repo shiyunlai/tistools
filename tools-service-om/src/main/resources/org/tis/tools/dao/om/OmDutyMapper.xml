@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.mapper.om.OmDutyMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.om.OmDuty">
+	    INSERT INTO OM_DUTY 
+	    (
+	    	 guid
+	    	,duty_code
+	    	,duty_name
+	    	,duty_type
+	    	,guid_parents
+	    	,isleaf
+	    	,sub_count
+	    	,duty_level
+	    	,duty_seq
+	    	,remark
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=varchar},
+			#{duty_code,jdbcType=varchar},
+			#{duty_name,jdbcType=varchar},
+			#{duty_type,jdbcType=varchar},
+			#{guid_parents,jdbcType=varchar},
+			#{isleaf,jdbcType=char},
+			#{sub_count,jdbcType=decimal},
+			#{duty_level,jdbcType=decimal},
+			#{duty_seq,jdbcType=varchar},
+			#{remark,jdbcType=varchar}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.om.OmDuty">
+    	UPDATE OM_DUTY 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=varchar},
+		</if>
+		<if test="duty_code != null" >
+			duty_code = #{duty_code,jdbcType=varchar},
+		</if>
+		<if test="duty_name != null" >
+			duty_name = #{duty_name,jdbcType=varchar},
+		</if>
+		<if test="duty_type != null" >
+			duty_type = #{duty_type,jdbcType=varchar},
+		</if>
+		<if test="guid_parents != null" >
+			guid_parents = #{guid_parents,jdbcType=varchar},
+		</if>
+		<if test="isleaf != null" >
+			isleaf = #{isleaf,jdbcType=char},
+		</if>
+		<if test="sub_count != null" >
+			sub_count = #{sub_count,jdbcType=decimal},
+		</if>
+		<if test="duty_level != null" >
+			duty_level = #{duty_level,jdbcType=decimal},
+		</if>
+		<if test="duty_seq != null" >
+			duty_seq = #{duty_seq,jdbcType=varchar},
+		</if>
+		<if test="remark != null" >
+			remark = #{remark,jdbcType=varchar}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.om.OmDuty">
+    	UPDATE OM_DUTY 
+	    <set>
+		guid = #{guid,jdbcType=varchar},
+		duty_code = #{duty_code,jdbcType=varchar},
+		duty_name = #{duty_name,jdbcType=varchar},
+		duty_type = #{duty_type,jdbcType=varchar},
+		guid_parents = #{guid_parents,jdbcType=varchar},
+		isleaf = #{isleaf,jdbcType=char},
+		sub_count = #{sub_count,jdbcType=decimal},
+		duty_level = #{duty_level,jdbcType=decimal},
+		duty_seq = #{duty_seq,jdbcType=varchar},
+		remark = #{remark,jdbcType=varchar}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from OM_DUTY where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from OM_DUTY <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE OM_DUTY 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=varchar}
+      	</if>
+		<if test="domain.duty_code != null" >
+        	duty_code = #{domain.duty_code,jdbcType=varchar}
+      	</if>
+		<if test="domain.duty_name != null" >
+        	duty_name = #{domain.duty_name,jdbcType=varchar}
+      	</if>
+		<if test="domain.duty_type != null" >
+        	duty_type = #{domain.duty_type,jdbcType=varchar}
+      	</if>
+		<if test="domain.guid_parents != null" >
+        	guid_parents = #{domain.guid_parents,jdbcType=varchar}
+      	</if>
+		<if test="domain.isleaf != null" >
+        	isleaf = #{domain.isleaf,jdbcType=char}
+      	</if>
+		<if test="domain.sub_count != null" >
+        	sub_count = #{domain.sub_count,jdbcType=decimal}
+      	</if>
+		<if test="domain.duty_level != null" >
+        	duty_level = #{domain.duty_level,jdbcType=decimal}
+      	</if>
+		<if test="domain.duty_seq != null" >
+        	duty_seq = #{domain.duty_seq,jdbcType=varchar}
+      	</if>
+		<if test="domain.remark != null" >
+        	remark = #{domain.remark,jdbcType=varchar}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.om.OmDuty">
+		select <include refid="Base_Column_List"/> from OM_DUTY where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.om.OmDuty" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from OM_DUTY <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from OM_DUTY <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid
+		,duty_code
+		,duty_name
+		,duty_type
+		,guid_parents
+		,isleaf
+		,sub_count
+		,duty_level
+		,duty_seq
+		,remark
+	</sql>
+</mapper>

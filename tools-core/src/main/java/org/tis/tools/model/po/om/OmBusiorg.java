@@ -42,7 +42,10 @@ public class OmBusiorg implements Serializable {
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：记录的全局性唯一ID，系统自动生成； 一般根据实体做规则标识，以增强阅读性和辨识度， 如：操作员的数据主键规则为 operator-xxxx-xxxx-xxxx 功能的数据主键规则为 function-xxxx-xxxx-xxxx */
 	private String guid ;
 	
-	/** 字段类型：varchar<br/>字段名：业务机构编码<br/>描述：业务上对业务机构的编码 */
+	/** 字段类型：varchar<br/>字段名：节点类型<br/>描述：业务字典 DICT_OM_NODETYPE 该业务机构的节点类型，虚拟节点，机构节点，如果是机构节点，则对应机构信息表的一个机构 */
+	private String nodeType ;
+	
+	/** 字段类型：varchar<br/>字段名：业务机构代码<br/>描述：业务上对业务机构的编码 */
 	private String busiorgCode ;
 	
 	/** 字段类型：varchar<br/>字段名：业务条线<br/>描述：取值范围业务菜单 DICT_OM_BUSIDOMAIN */
@@ -62,9 +65,6 @@ public class OmBusiorg implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：主管岗位<br/>描述： */
 	private String guidPosition ;
-	
-	/** 字段类型：varchar<br/>字段名：节点类型<br/>描述：业务字典 DICT_OM_NODETYPE 该业务机构的节点类型，虚拟节点，机构节点，如果是机构节点，则对应机构信息表的一个机构 */
-	private String nodeType ;
 	
 	/** 字段类型：varchar<br/>字段名：机构代号<br/>描述： */
 	private String orgCode ;
@@ -102,19 +102,38 @@ public class OmBusiorg implements Serializable {
     }
 	
 	/**
-	 * Set the 业务机构编码.
+	 * Set the 节点类型.
+	 * 
+	 * @param nodeType
+	 *            节点类型
+	 */
+	public void setNodeType(String nodeType) {
+ 		this.nodeType = nodeType == null ? null : nodeType.trim() ;
+    }
+    
+    /**
+	 * Get the 节点类型.
+	 * 
+	 * @return 节点类型
+	 */
+	public String getNodeType(){
+		return this.nodeType ;
+    }
+	
+	/**
+	 * Set the 业务机构代码.
 	 * 
 	 * @param busiorgCode
-	 *            业务机构编码
+	 *            业务机构代码
 	 */
 	public void setBusiorgCode(String busiorgCode) {
  		this.busiorgCode = busiorgCode == null ? null : busiorgCode.trim() ;
     }
     
     /**
-	 * Get the 业务机构编码.
+	 * Get the 业务机构代码.
 	 * 
-	 * @return 业务机构编码
+	 * @return 业务机构代码
 	 */
 	public String getBusiorgCode(){
 		return this.busiorgCode ;
@@ -235,25 +254,6 @@ public class OmBusiorg implements Serializable {
 	 */
 	public String getGuidPosition(){
 		return this.guidPosition ;
-    }
-	
-	/**
-	 * Set the 节点类型.
-	 * 
-	 * @param nodeType
-	 *            节点类型
-	 */
-	public void setNodeType(String nodeType) {
- 		this.nodeType = nodeType == null ? null : nodeType.trim() ;
-    }
-    
-    /**
-	 * Get the 节点类型.
-	 * 
-	 * @return 节点类型
-	 */
-	public String getNodeType(){
-		return this.nodeType ;
     }
 	
 	/**

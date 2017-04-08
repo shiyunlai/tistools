@@ -15,10 +15,10 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /**
  * 
  * <pre>
- * 岗位/职位
+ * 岗位
  * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/abf.erm
  * 业务域：om
- * 模型：OM_POSITION 岗位/职位
+ * 模型：OM_POSITION 岗位
  *
  * 岗位定义表
 岗位是职务在机构上的实例化表现（某个机构／部门中对某个职务（Responsibility）的工作定义）；

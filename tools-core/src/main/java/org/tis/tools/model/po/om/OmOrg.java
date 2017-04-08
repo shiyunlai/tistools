@@ -36,11 +36,20 @@ public class OmOrg implements Serializable {
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：记录的全局性唯一ID，系统自动生成； 一般根据实体做规则标识，以增强阅读性和辨识度， 如：操作员的数据主键规则为 operator-xxxx-xxxx-xxxx 功能的数据主键规则为 function-xxxx-xxxx-xxxx */
 	private String guid ;
 	
-	/** 字段类型：varchar<br/>字段名：机构代码<br/>描述：业务上对机构实体的编码 */
+	/** 字段类型：varchar<br/>字段名：机构代码<br/>描述：业务上对机构实体的编码。 一般根据机构等级和机构类型进行有规则的编码。 */
 	private String orgCode ;
 	
 	/** 字段类型：varchar<br/>字段名：机构名称<br/>描述： */
 	private String orgName ;
+	
+	/** 字段类型：varchar<br/>字段名：机构类型<br/>描述：见业务字典： DICT_OM_ORGTYPE 如：总公司/总部部门/分公司/分公司部门... */
+	private String orgType ;
+	
+	/** 字段类型：varchar<br/>字段名：机构等级<br/>描述：见业务字典： DICT_OM_ORGDEGREE 如：总行，分行，海外分行... */
+	private String orgDegree ;
+	
+	/** 字段类型：varchar<br/>字段名：机构状态<br/>描述：见业务字典： DICT_OM_ORGSTATUS */
+	private String orgStatus ;
 	
 	/** 字段类型：decimal<br/>字段名：机构层次<br/>描述： */
 	private BigDecimal orgLevel ;
@@ -48,14 +57,8 @@ public class OmOrg implements Serializable {
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述： */
 	private String guidParents ;
 	
-	/** 字段类型：varchar<br/>字段名：机构等级<br/>描述：见业务字典： DICT_OM_ORGDEGREE 如：总行，分行，海外分行... */
-	private String orgDegree ;
-	
 	/** 字段类型：varchar<br/>字段名：机构序列<br/>描述：类似面包屑导航，明确示意出本机构所处层级归属 格式： 父机构编码.父机构编码.本机构编码 */
 	private String orgSeq ;
-	
-	/** 字段类型：varchar<br/>字段名：机构类型<br/>描述：见业务字典： DICT_OM_ORGTYPE 如：总公司/总部部门/分公司/分公司部门... */
-	private String orgType ;
 	
 	/** 字段类型：varchar<br/>字段名：机构地址<br/>描述： */
 	private String orgAddr ;
@@ -89,9 +92,6 @@ public class OmOrg implements Serializable {
 	
 	/** 字段类型：date<br/>字段名：失效日期<br/>描述： */
 	private Date endDate ;
-	
-	/** 字段类型：varchar<br/>字段名：机构状态<br/>描述：见业务字典： DICT_OM_ORGSTATUS */
-	private String orgStatus ;
 	
 	/** 字段类型：varchar<br/>字段名：所属地域<br/>描述：见业务字典： DICT_SD_AREA */
 	private String area ;
@@ -176,6 +176,63 @@ public class OmOrg implements Serializable {
     }
 	
 	/**
+	 * Set the 机构类型.
+	 * 
+	 * @param orgType
+	 *            机构类型
+	 */
+	public void setOrgType(String orgType) {
+ 		this.orgType = orgType == null ? null : orgType.trim() ;
+    }
+    
+    /**
+	 * Get the 机构类型.
+	 * 
+	 * @return 机构类型
+	 */
+	public String getOrgType(){
+		return this.orgType ;
+    }
+	
+	/**
+	 * Set the 机构等级.
+	 * 
+	 * @param orgDegree
+	 *            机构等级
+	 */
+	public void setOrgDegree(String orgDegree) {
+ 		this.orgDegree = orgDegree == null ? null : orgDegree.trim() ;
+    }
+    
+    /**
+	 * Get the 机构等级.
+	 * 
+	 * @return 机构等级
+	 */
+	public String getOrgDegree(){
+		return this.orgDegree ;
+    }
+	
+	/**
+	 * Set the 机构状态.
+	 * 
+	 * @param orgStatus
+	 *            机构状态
+	 */
+	public void setOrgStatus(String orgStatus) {
+ 		this.orgStatus = orgStatus == null ? null : orgStatus.trim() ;
+    }
+    
+    /**
+	 * Get the 机构状态.
+	 * 
+	 * @return 机构状态
+	 */
+	public String getOrgStatus(){
+		return this.orgStatus ;
+    }
+	
+	/**
 	 * Set the 机构层次.
 	 * 
 	 * @param orgLevel
@@ -217,25 +274,6 @@ public class OmOrg implements Serializable {
     }
 	
 	/**
-	 * Set the 机构等级.
-	 * 
-	 * @param orgDegree
-	 *            机构等级
-	 */
-	public void setOrgDegree(String orgDegree) {
- 		this.orgDegree = orgDegree == null ? null : orgDegree.trim() ;
-    }
-    
-    /**
-	 * Get the 机构等级.
-	 * 
-	 * @return 机构等级
-	 */
-	public String getOrgDegree(){
-		return this.orgDegree ;
-    }
-	
-	/**
 	 * Set the 机构序列.
 	 * 
 	 * @param orgSeq
@@ -252,25 +290,6 @@ public class OmOrg implements Serializable {
 	 */
 	public String getOrgSeq(){
 		return this.orgSeq ;
-    }
-	
-	/**
-	 * Set the 机构类型.
-	 * 
-	 * @param orgType
-	 *            机构类型
-	 */
-	public void setOrgType(String orgType) {
- 		this.orgType = orgType == null ? null : orgType.trim() ;
-    }
-    
-    /**
-	 * Get the 机构类型.
-	 * 
-	 * @return 机构类型
-	 */
-	public String getOrgType(){
-		return this.orgType ;
     }
 	
 	/**
@@ -480,25 +499,6 @@ public class OmOrg implements Serializable {
 	 */
 	public Date getEndDate(){
 		return this.endDate ;
-    }
-	
-	/**
-	 * Set the 机构状态.
-	 * 
-	 * @param orgStatus
-	 *            机构状态
-	 */
-	public void setOrgStatus(String orgStatus) {
- 		this.orgStatus = orgStatus == null ? null : orgStatus.trim() ;
-    }
-    
-    /**
-	 * Get the 机构状态.
-	 * 
-	 * @return 机构状态
-	 */
-	public String getOrgStatus(){
-		return this.orgStatus ;
     }
 	
 	/**

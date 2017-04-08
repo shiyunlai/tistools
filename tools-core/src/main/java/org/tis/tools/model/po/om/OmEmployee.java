@@ -15,10 +15,10 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /**
  * 
  * <pre>
- * 人员
+ * 员工
  * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/abf.erm
  * 业务域：om
- * 模型：OM_EMPLOYEE 人员
+ * 模型：OM_EMPLOYEE 员工
  *
  * 人员信息表
 人员至少隶属于一个机构；
@@ -37,31 +37,22 @@ public class OmEmployee implements Serializable {
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：记录的全局性唯一ID，系统自动生成； 一般根据实体做规则标识，以增强阅读性和辨识度， 如：操作员的数据主键规则为 operator-xxxx-xxxx-xxxx 功能的数据主键规则为 function-xxxx-xxxx-xxxx */
 	private String guid ;
 	
-	/** 字段类型：varchar<br/>字段名：人员代码<br/>描述： */
+	/** 字段类型：varchar<br/>字段名：员工代码<br/>描述： */
 	private String empCode ;
 	
-	/** 字段类型：varchar<br/>字段名：人员姓名<br/>描述： */
+	/** 字段类型：varchar<br/>字段名：员工姓名<br/>描述： */
 	private String empName ;
 	
-	/** 字段类型：varchar<br/>字段名：人员全名<br/>描述： */
+	/** 字段类型：varchar<br/>字段名：员工全名<br/>描述： */
 	private String empRealname ;
 	
-	/** 字段类型：varchar<br/>字段名：性别<br/>描述： */
+	/** 字段类型：varchar<br/>字段名：性别<br/>描述：见业务菜单：DICT_OM_GENDER */
 	private String gender ;
 	
-	/** 字段类型：date<br/>字段名：出生日期<br/>描述： */
-	private Date birthdate ;
-	
-	/** 字段类型：varchar<br/>字段名：人员状态<br/>描述：见业务字典： DICT_OM_EMPSTATUS */
+	/** 字段类型：varchar<br/>字段名：员工状态<br/>描述：见业务字典： DICT_OM_EMPSTATUS */
 	private String empstatus ;
 	
-	/** 字段类型：varchar<br/>字段名：证件类型<br/>描述：见业务字典： DICT_SD_PAPERTYPE */
-	private String paperType ;
-	
-	/** 字段类型：varchar<br/>字段名：证件号码<br/>描述： */
-	private String paperNo ;
-	
-	/** 字段类型：varchar<br/>字段名：人员职级<br/>描述：见业务字典： DICT_OM_EMPDEGREE */
+	/** 字段类型：varchar<br/>字段名：员工职级<br/>描述：见业务字典： DICT_OM_EMPDEGREE */
 	private String empDegree ;
 	
 	/** 字段类型：varchar<br/>字段名：主机构编号<br/>描述：人员所属主机构编号（冗余设计） */
@@ -99,6 +90,15 @@ public class OmEmployee implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：MSN号码<br/>描述： */
 	private String msn ;
+	
+	/** 字段类型：varchar<br/>字段名：证件类型<br/>描述：见业务字典： DICT_SD_PAPERTYPE */
+	private String paperType ;
+	
+	/** 字段类型：varchar<br/>字段名：证件号码<br/>描述： */
+	private String paperNo ;
+	
+	/** 字段类型：date<br/>字段名：出生日期<br/>描述： */
+	private Date birthdate ;
 	
 	/** 字段类型：varchar<br/>字段名：家庭电话<br/>描述： */
 	private String htel ;
@@ -163,57 +163,57 @@ public class OmEmployee implements Serializable {
     }
 	
 	/**
-	 * Set the 人员代码.
+	 * Set the 员工代码.
 	 * 
 	 * @param empCode
-	 *            人员代码
+	 *            员工代码
 	 */
 	public void setEmpCode(String empCode) {
  		this.empCode = empCode == null ? null : empCode.trim() ;
     }
     
     /**
-	 * Get the 人员代码.
+	 * Get the 员工代码.
 	 * 
-	 * @return 人员代码
+	 * @return 员工代码
 	 */
 	public String getEmpCode(){
 		return this.empCode ;
     }
 	
 	/**
-	 * Set the 人员姓名.
+	 * Set the 员工姓名.
 	 * 
 	 * @param empName
-	 *            人员姓名
+	 *            员工姓名
 	 */
 	public void setEmpName(String empName) {
  		this.empName = empName == null ? null : empName.trim() ;
     }
     
     /**
-	 * Get the 人员姓名.
+	 * Get the 员工姓名.
 	 * 
-	 * @return 人员姓名
+	 * @return 员工姓名
 	 */
 	public String getEmpName(){
 		return this.empName ;
     }
 	
 	/**
-	 * Set the 人员全名.
+	 * Set the 员工全名.
 	 * 
 	 * @param empRealname
-	 *            人员全名
+	 *            员工全名
 	 */
 	public void setEmpRealname(String empRealname) {
  		this.empRealname = empRealname == null ? null : empRealname.trim() ;
     }
     
     /**
-	 * Get the 人员全名.
+	 * Get the 员工全名.
 	 * 
-	 * @return 人员全名
+	 * @return 员工全名
 	 */
 	public String getEmpRealname(){
 		return this.empRealname ;
@@ -239,95 +239,38 @@ public class OmEmployee implements Serializable {
     }
 	
 	/**
-	 * Set the 出生日期.
-	 * 
-	 * @param birthdate
-	 *            出生日期
-	 */
-	public void setBirthdate(Date birthdate) {
- 		this.birthdate = birthdate ;
-    }
-    
-    /**
-	 * Get the 出生日期.
-	 * 
-	 * @return 出生日期
-	 */
-	public Date getBirthdate(){
-		return this.birthdate ;
-    }
-	
-	/**
-	 * Set the 人员状态.
+	 * Set the 员工状态.
 	 * 
 	 * @param empstatus
-	 *            人员状态
+	 *            员工状态
 	 */
 	public void setEmpstatus(String empstatus) {
  		this.empstatus = empstatus == null ? null : empstatus.trim() ;
     }
     
     /**
-	 * Get the 人员状态.
+	 * Get the 员工状态.
 	 * 
-	 * @return 人员状态
+	 * @return 员工状态
 	 */
 	public String getEmpstatus(){
 		return this.empstatus ;
     }
 	
 	/**
-	 * Set the 证件类型.
-	 * 
-	 * @param paperType
-	 *            证件类型
-	 */
-	public void setPaperType(String paperType) {
- 		this.paperType = paperType == null ? null : paperType.trim() ;
-    }
-    
-    /**
-	 * Get the 证件类型.
-	 * 
-	 * @return 证件类型
-	 */
-	public String getPaperType(){
-		return this.paperType ;
-    }
-	
-	/**
-	 * Set the 证件号码.
-	 * 
-	 * @param paperNo
-	 *            证件号码
-	 */
-	public void setPaperNo(String paperNo) {
- 		this.paperNo = paperNo == null ? null : paperNo.trim() ;
-    }
-    
-    /**
-	 * Get the 证件号码.
-	 * 
-	 * @return 证件号码
-	 */
-	public String getPaperNo(){
-		return this.paperNo ;
-    }
-	
-	/**
-	 * Set the 人员职级.
+	 * Set the 员工职级.
 	 * 
 	 * @param empDegree
-	 *            人员职级
+	 *            员工职级
 	 */
 	public void setEmpDegree(String empDegree) {
  		this.empDegree = empDegree == null ? null : empDegree.trim() ;
     }
     
     /**
-	 * Get the 人员职级.
+	 * Get the 员工职级.
 	 * 
-	 * @return 人员职级
+	 * @return 员工职级
 	 */
 	public String getEmpDegree(){
 		return this.empDegree ;
@@ -559,6 +502,63 @@ public class OmEmployee implements Serializable {
 	 */
 	public String getMsn(){
 		return this.msn ;
+    }
+	
+	/**
+	 * Set the 证件类型.
+	 * 
+	 * @param paperType
+	 *            证件类型
+	 */
+	public void setPaperType(String paperType) {
+ 		this.paperType = paperType == null ? null : paperType.trim() ;
+    }
+    
+    /**
+	 * Get the 证件类型.
+	 * 
+	 * @return 证件类型
+	 */
+	public String getPaperType(){
+		return this.paperType ;
+    }
+	
+	/**
+	 * Set the 证件号码.
+	 * 
+	 * @param paperNo
+	 *            证件号码
+	 */
+	public void setPaperNo(String paperNo) {
+ 		this.paperNo = paperNo == null ? null : paperNo.trim() ;
+    }
+    
+    /**
+	 * Get the 证件号码.
+	 * 
+	 * @return 证件号码
+	 */
+	public String getPaperNo(){
+		return this.paperNo ;
+    }
+	
+	/**
+	 * Set the 出生日期.
+	 * 
+	 * @param birthdate
+	 *            出生日期
+	 */
+	public void setBirthdate(Date birthdate) {
+ 		this.birthdate = birthdate ;
+    }
+    
+    /**
+	 * Get the 出生日期.
+	 * 
+	 * @return 出生日期
+	 */
+	public Date getBirthdate(){
+		return this.birthdate ;
     }
 	
 	/**

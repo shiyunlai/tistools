@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.mapper.om.OmGroupMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.om.OmGroup">
+	    INSERT INTO OM_GROUP 
+	    (
+	    	 guid
+	    	,group_code
+	    	,group_name
+	    	,group_type
+	    	,group_status
+	    	,group_desc
+	    	,guid_org
+	    	,guid_parents
+	    	,isleaf
+	    	,sub_count
+	    	,group_level
+	    	,group_seq
+	    	,start_date
+	    	,end_date
+	    	,guid_emp_manager
+	    	,createtime
+	    	,lastupdate
+	    	,updator
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=varchar},
+			#{group_code,jdbcType=varchar},
+			#{group_name,jdbcType=varchar},
+			#{group_type,jdbcType=varchar},
+			#{group_status,jdbcType=varchar},
+			#{group_desc,jdbcType=varchar},
+			#{guid_org,jdbcType=varchar},
+			#{guid_parents,jdbcType=varchar},
+			#{isleaf,jdbcType=char},
+			#{sub_count,jdbcType=decimal},
+			#{group_level,jdbcType=decimal},
+			#{group_seq,jdbcType=varchar},
+			#{start_date,jdbcType=date},
+			#{end_date,jdbcType=date},
+			#{guid_emp_manager,jdbcType=varchar},
+			#{createtime,jdbcType=timestamp},
+			#{lastupdate,jdbcType=date},
+			#{updator,jdbcType=varchar}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.om.OmGroup">
+    	UPDATE OM_GROUP 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=varchar},
+		</if>
+		<if test="group_code != null" >
+			group_code = #{group_code,jdbcType=varchar},
+		</if>
+		<if test="group_name != null" >
+			group_name = #{group_name,jdbcType=varchar},
+		</if>
+		<if test="group_type != null" >
+			group_type = #{group_type,jdbcType=varchar},
+		</if>
+		<if test="group_status != null" >
+			group_status = #{group_status,jdbcType=varchar},
+		</if>
+		<if test="group_desc != null" >
+			group_desc = #{group_desc,jdbcType=varchar},
+		</if>
+		<if test="guid_org != null" >
+			guid_org = #{guid_org,jdbcType=varchar},
+		</if>
+		<if test="guid_parents != null" >
+			guid_parents = #{guid_parents,jdbcType=varchar},
+		</if>
+		<if test="isleaf != null" >
+			isleaf = #{isleaf,jdbcType=char},
+		</if>
+		<if test="sub_count != null" >
+			sub_count = #{sub_count,jdbcType=decimal},
+		</if>
+		<if test="group_level != null" >
+			group_level = #{group_level,jdbcType=decimal},
+		</if>
+		<if test="group_seq != null" >
+			group_seq = #{group_seq,jdbcType=varchar},
+		</if>
+		<if test="start_date != null" >
+			start_date = #{start_date,jdbcType=date},
+		</if>
+		<if test="end_date != null" >
+			end_date = #{end_date,jdbcType=date},
+		</if>
+		<if test="guid_emp_manager != null" >
+			guid_emp_manager = #{guid_emp_manager,jdbcType=varchar},
+		</if>
+		<if test="createtime != null" >
+			createtime = #{createtime,jdbcType=timestamp},
+		</if>
+		<if test="lastupdate != null" >
+			lastupdate = #{lastupdate,jdbcType=date},
+		</if>
+		<if test="updator != null" >
+			updator = #{updator,jdbcType=varchar}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.om.OmGroup">
+    	UPDATE OM_GROUP 
+	    <set>
+		guid = #{guid,jdbcType=varchar},
+		group_code = #{group_code,jdbcType=varchar},
+		group_name = #{group_name,jdbcType=varchar},
+		group_type = #{group_type,jdbcType=varchar},
+		group_status = #{group_status,jdbcType=varchar},
+		group_desc = #{group_desc,jdbcType=varchar},
+		guid_org = #{guid_org,jdbcType=varchar},
+		guid_parents = #{guid_parents,jdbcType=varchar},
+		isleaf = #{isleaf,jdbcType=char},
+		sub_count = #{sub_count,jdbcType=decimal},
+		group_level = #{group_level,jdbcType=decimal},
+		group_seq = #{group_seq,jdbcType=varchar},
+		start_date = #{start_date,jdbcType=date},
+		end_date = #{end_date,jdbcType=date},
+		guid_emp_manager = #{guid_emp_manager,jdbcType=varchar},
+		createtime = #{createtime,jdbcType=timestamp},
+		lastupdate = #{lastupdate,jdbcType=date},
+		updator = #{updator,jdbcType=varchar}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from OM_GROUP where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from OM_GROUP <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE OM_GROUP 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=varchar}
+      	</if>
+		<if test="domain.group_code != null" >
+        	group_code = #{domain.group_code,jdbcType=varchar}
+      	</if>
+		<if test="domain.group_name != null" >
+        	group_name = #{domain.group_name,jdbcType=varchar}
+      	</if>
+		<if test="domain.group_type != null" >
+        	group_type = #{domain.group_type,jdbcType=varchar}
+      	</if>
+		<if test="domain.group_status != null" >
+        	group_status = #{domain.group_status,jdbcType=varchar}
+      	</if>
+		<if test="domain.group_desc != null" >
+        	group_desc = #{domain.group_desc,jdbcType=varchar}
+      	</if>
+		<if test="domain.guid_org != null" >
+        	guid_org = #{domain.guid_org,jdbcType=varchar}
+      	</if>
+		<if test="domain.guid_parents != null" >
+        	guid_parents = #{domain.guid_parents,jdbcType=varchar}
+      	</if>
+		<if test="domain.isleaf != null" >
+        	isleaf = #{domain.isleaf,jdbcType=char}
+      	</if>
+		<if test="domain.sub_count != null" >
+        	sub_count = #{domain.sub_count,jdbcType=decimal}
+      	</if>
+		<if test="domain.group_level != null" >
+        	group_level = #{domain.group_level,jdbcType=decimal}
+      	</if>
+		<if test="domain.group_seq != null" >
+        	group_seq = #{domain.group_seq,jdbcType=varchar}
+      	</if>
+		<if test="domain.start_date != null" >
+        	start_date = #{domain.start_date,jdbcType=date}
+      	</if>
+		<if test="domain.end_date != null" >
+        	end_date = #{domain.end_date,jdbcType=date}
+      	</if>
+		<if test="domain.guid_emp_manager != null" >
+        	guid_emp_manager = #{domain.guid_emp_manager,jdbcType=varchar}
+      	</if>
+		<if test="domain.createtime != null" >
+        	createtime = #{domain.createtime,jdbcType=timestamp}
+      	</if>
+		<if test="domain.lastupdate != null" >
+        	lastupdate = #{domain.lastupdate,jdbcType=date}
+      	</if>
+		<if test="domain.updator != null" >
+        	updator = #{domain.updator,jdbcType=varchar}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.om.OmGroup">
+		select <include refid="Base_Column_List"/> from OM_GROUP where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.om.OmGroup" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from OM_GROUP <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from OM_GROUP <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid
+		,group_code
+		,group_name
+		,group_type
+		,group_status
+		,group_desc
+		,guid_org
+		,guid_parents
+		,isleaf
+		,sub_count
+		,group_level
+		,group_seq
+		,start_date
+		,end_date
+		,guid_emp_manager
+		,createtime
+		,lastupdate
+		,updator
+	</sql>
+</mapper>

@@ -15,10 +15,10 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /**
  * 
  * <pre>
- * 人员岗位对应关系
+ * 员工岗位对应关系
  * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/abf.erm
  * 业务域：om
- * 模型：OM_EMP_POSITION 人员岗位对应关系
+ * 模型：OM_EMP_POSITION 员工岗位对应关系
  *
  * 定义人员和岗位的对应关系，需要注明，一个人员可以设定一个基本岗位
  *

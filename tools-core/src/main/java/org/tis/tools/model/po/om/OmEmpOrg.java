@@ -15,10 +15,10 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /**
  * 
  * <pre>
- * 人员隶属机构关系表
+ * 员工隶属机构关系表
  * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/abf.erm
  * 业务域：om
- * 模型：OM_EMP_ORG 人员隶属机构关系表
+ * 模型：OM_EMP_ORG 员工隶属机构关系表
  *
  * 定义人员和机构的关系表（机构有哪些人员）。
 允许一个人员同时在多个机构，但是只能有一个主机构。
@@ -39,7 +39,7 @@ public class OmEmpOrg implements Serializable {
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述： */
 	private String guidOrg ;
 	
-	/** 字段类型：char<br/>字段名：是否主机构<br/>描述：取值来自业务菜单： DICT_YON 必须有且只能有一个主机构 */
+	/** 字段类型：char<br/>字段名：是否主机构<br/>描述：取值来自业务菜单： DICT_YON 必须有且只能有一个主机构，默认N，人员管理时程序检查当前是否只有一条主机构； */
 	private String ismain ;
 	
 	

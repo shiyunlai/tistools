@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.mapper.om.OmAppGroupMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.om.OmAppGroup">
+	    INSERT INTO OM_APP_GROUP 
+	    (
+	    	 guid_app
+	    	,guid_group
+	    )
+	    VALUES 
+	    (
+			#{guid_app,jdbcType=decimal},
+			#{guid_group,jdbcType=varchar}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.om.OmAppGroup">
+    	UPDATE OM_APP_GROUP 
+	    <set>
+		<if test="guid_app != null" >
+			guid_app = #{guid_app,jdbcType=decimal},
+		</if>
+		<if test="guid_group != null" >
+			guid_group = #{guid_group,jdbcType=varchar}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.om.OmAppGroup">
+    	UPDATE OM_APP_GROUP 
+	    <set>
+		guid_app = #{guid_app,jdbcType=decimal},
+		guid_group = #{guid_group,jdbcType=varchar}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from OM_APP_GROUP where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from OM_APP_GROUP <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE OM_APP_GROUP 
+	   <set>
+		<if test="domain.guid_app != null" >
+        	guid_app = #{domain.guid_app,jdbcType=decimal}
+      	</if>
+		<if test="domain.guid_group != null" >
+        	guid_group = #{domain.guid_group,jdbcType=varchar}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.om.OmAppGroup">
+		select <include refid="Base_Column_List"/> from OM_APP_GROUP where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.om.OmAppGroup" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from OM_APP_GROUP <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from OM_APP_GROUP <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid_app
+		,guid_group
+	</sql>
+</mapper>

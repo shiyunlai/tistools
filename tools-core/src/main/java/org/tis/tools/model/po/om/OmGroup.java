@@ -36,8 +36,8 @@ public class OmGroup implements Serializable {
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：记录的全局性唯一ID，系统自动生成； 一般根据实体做规则标识，以增强阅读性和辨识度， 如：操作员的数据主键规则为 operator-xxxx-xxxx-xxxx 功能的数据主键规则为 function-xxxx-xxxx-xxxx */
 	private String guid ;
 	
-	/** 字段类型：decimal<br/>字段名：工作组编号<br/>描述：业务上对工作组的编码 */
-	private BigDecimal groupCode ;
+	/** 字段类型：varchar<br/>字段名：工作组代码<br/>描述：业务上对工作组的编码 */
+	private String groupCode ;
 	
 	/** 字段类型：varchar<br/>字段名：工作组名称<br/>描述： */
 	private String groupName ;
@@ -108,25 +108,22 @@ public class OmGroup implements Serializable {
     }
 	
 	/**
-	 * Set the 工作组编号.
+	 * Set the 工作组代码.
 	 * 
 	 * @param groupCode
-	 *            工作组编号
+	 *            工作组代码
 	 */
-	public void setGroupCode(BigDecimal groupCode) {
- 		this.groupCode = groupCode ;
+	public void setGroupCode(String groupCode) {
+ 		this.groupCode = groupCode == null ? null : groupCode.trim() ;
     }
     
     /**
-	 * Get the 工作组编号.
+	 * Get the 工作组代码.
 	 * 
-	 * @return 工作组编号，如果setGroupCode时原值为空，返回BigDecimal(0d)
+	 * @return 工作组代码
 	 */
-	public BigDecimal getGroupCode(){
-		if(groupCode==null){
-			return new BigDecimal(0d);
-		}
-		return groupCode;
+	public String getGroupCode(){
+		return this.groupCode ;
     }
 	
 	/**
