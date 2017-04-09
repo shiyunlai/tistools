@@ -3,6 +3,8 @@
  */
 package org.tis.tools.rservice.om.exception;
 
+import org.tis.tools.base.exception.ToolsRuntimeException;
+
 /**
  * 
  * 职务维护服务异常对象
@@ -10,11 +12,15 @@ package org.tis.tools.rservice.om.exception;
  * @author megapro
  *
  */
-public class DutyManagementException extends RuntimeException {
+public class DutyManagementException  extends ToolsRuntimeException {
+
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
+	public DutyManagementException(String code) {
+		super(code);
+	}
 }
