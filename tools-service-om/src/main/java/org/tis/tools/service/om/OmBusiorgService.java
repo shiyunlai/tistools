@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import org.tis.tools.base.WhereCondition;
 
-import org.tis.tools.dao.mapper.om.OmBusiorgMapper;
+import org.tis.tools.dao.om.OmBusiorgMapper;
 import org.tis.tools.model.po.om.OmBusiorg;
 
 

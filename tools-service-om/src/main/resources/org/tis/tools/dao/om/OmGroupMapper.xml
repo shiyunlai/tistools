@@ -3,7 +3,7 @@
 	"-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
-<mapper namespace="org.tis.tools.dao.mapper.om.OmGroupMapper">
+<mapper namespace="org.tis.tools.dao.om.OmGroupMapper">
   
   	<insert id="insert" parameterType="org.tis.tools.model.po.om.OmGroup">
 	    INSERT INTO OM_GROUP 

@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.model.po.om.OmPosition;
-import org.tis.tools.rservice.om.IOmPositionRService;
+import org.tis.tools.rservice.om.basic.IOmPositionRService;
 import org.tis.tools.service.om.OmPositionService;
 
 import com.alibaba.dubbo.config.annotation.Service;

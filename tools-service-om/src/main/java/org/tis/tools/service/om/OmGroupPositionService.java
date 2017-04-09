@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import org.tis.tools.base.WhereCondition;
 
-import org.tis.tools.dao.mapper.om.OmGroupPositionMapper;
+import org.tis.tools.dao.om.OmGroupPositionMapper;
 import org.tis.tools.model.po.om.OmGroupPosition;
 
 

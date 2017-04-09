@@ -3,7 +3,7 @@
 	"-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
-<mapper namespace="org.tis.tools.dao.mapper.om.OmBusiorgMapper">
+<mapper namespace="org.tis.tools.dao.om.OmBusiorgMapper">
   
   	<insert id="insert" parameterType="org.tis.tools.model.po.om.OmBusiorg">
 	    INSERT INTO OM_BUSIORG 

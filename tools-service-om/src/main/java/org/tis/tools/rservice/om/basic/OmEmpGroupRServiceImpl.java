@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.model.po.om.OmEmpGroup;
-import org.tis.tools.rservice.om.IOmEmpGroupRService;
+import org.tis.tools.rservice.om.basic.IOmEmpGroupRService;
 import org.tis.tools.service.om.OmEmpGroupService;
 
 import com.alibaba.dubbo.config.annotation.Service;

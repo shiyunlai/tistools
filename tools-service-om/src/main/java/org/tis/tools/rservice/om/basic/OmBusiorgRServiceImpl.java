@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.model.po.om.OmBusiorg;
-import org.tis.tools.rservice.om.IOmBusiorgRService;
+import org.tis.tools.rservice.om.basic.IOmBusiorgRService;
 import org.tis.tools.service.om.OmBusiorgService;
 
 import com.alibaba.dubbo.config.annotation.Service;

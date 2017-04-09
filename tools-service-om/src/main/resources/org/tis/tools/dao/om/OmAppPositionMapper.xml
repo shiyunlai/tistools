@@ -3,7 +3,7 @@
 	"-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
-<mapper namespace="org.tis.tools.dao.mapper.om.OmAppPositionMapper">
+<mapper namespace="org.tis.tools.dao.om.OmAppPositionMapper">
   
   	<insert id="insert" parameterType="org.tis.tools.model.po.om.OmAppPosition">
 	    INSERT INTO OM_APP_POSITION 
