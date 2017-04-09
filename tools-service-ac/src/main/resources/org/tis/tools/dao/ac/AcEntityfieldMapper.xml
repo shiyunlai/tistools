@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.ac.AcEntityfieldMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.ac.AcEntityfield">
+	    INSERT INTO AC_ENTITYFIELD 
+	    (
+	    	 guid
+	    	,guid_entity
+	    	,field_name
+	    	,field_desc
+	    	,display_format
+	    	,doclist_code
+	    	,checkbox_value
+	    	,fk_inputurl
+	    	,fk_fielddesc
+	    	,fk_columnname
+	    	,fk_tablename
+	    	,desc_fieldname
+	    	,ref_type
+	    	,field_type
+	    	,display_order
+	    	,column_name
+	    	,width
+	    	,default_value
+	    	,min_value
+	    	,max_value
+	    	,length_value
+	    	,precision_value
+	    	,validate_type
+	    	,ismodify
+	    	,isdisplay
+	    	,isinput
+	    	,ispk
+	    	,isautokey
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=varchar},
+			#{guid_entity,jdbcType=varchar},
+			#{field_name,jdbcType=varchar},
+			#{field_desc,jdbcType=varchar},
+			#{display_format,jdbcType=varchar},
+			#{doclist_code,jdbcType=varchar},
+			#{checkbox_value,jdbcType=varchar},
+			#{fk_inputurl,jdbcType=varchar},
+			#{fk_fielddesc,jdbcType=varchar},
+			#{fk_columnname,jdbcType=varchar},
+			#{fk_tablename,jdbcType=varchar},
+			#{desc_fieldname,jdbcType=varchar},
+			#{ref_type,jdbcType=varchar},
+			#{field_type,jdbcType=varchar},
+			#{display_order,jdbcType=decimal},
+			#{column_name,jdbcType=varchar},
+			#{width,jdbcType=decimal},
+			#{default_value,jdbcType=varchar},
+			#{min_value,jdbcType=varchar},
+			#{max_value,jdbcType=varchar},
+			#{length_value,jdbcType=decimal},
+			#{precision_value,jdbcType=decimal},
+			#{validate_type,jdbcType=varchar},
+			#{ismodify,jdbcType=char},
+			#{isdisplay,jdbcType=char},
+			#{isinput,jdbcType=char},
+			#{ispk,jdbcType=char},
+			#{isautokey,jdbcType=char}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.ac.AcEntityfield">
+    	UPDATE AC_ENTITYFIELD 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=varchar},
+		</if>
+		<if test="guid_entity != null" >
+			guid_entity = #{guid_entity,jdbcType=varchar},
+		</if>
+		<if test="field_name != null" >
+			field_name = #{field_name,jdbcType=varchar},
+		</if>
+		<if test="field_desc != null" >
+			field_desc = #{field_desc,jdbcType=varchar},
+		</if>
+		<if test="display_format != null" >
+			display_format = #{display_format,jdbcType=varchar},
+		</if>
+		<if test="doclist_code != null" >
+			doclist_code = #{doclist_code,jdbcType=varchar},
+		</if>
+		<if test="checkbox_value != null" >
+			checkbox_value = #{checkbox_value,jdbcType=varchar},
+		</if>
+		<if test="fk_inputurl != null" >
+			fk_inputurl = #{fk_inputurl,jdbcType=varchar},
+		</if>
+		<if test="fk_fielddesc != null" >
+			fk_fielddesc = #{fk_fielddesc,jdbcType=varchar},
+		</if>
+		<if test="fk_columnname != null" >
+			fk_columnname = #{fk_columnname,jdbcType=varchar},
+		</if>
+		<if test="fk_tablename != null" >
+			fk_tablename = #{fk_tablename,jdbcType=varchar},
+		</if>
+		<if test="desc_fieldname != null" >
+			desc_fieldname = #{desc_fieldname,jdbcType=varchar},
+		</if>
+		<if test="ref_type != null" >
+			ref_type = #{ref_type,jdbcType=varchar},
+		</if>
+		<if test="field_type != null" >
+			field_type = #{field_type,jdbcType=varchar},
+		</if>
+		<if test="display_order != null" >
+			display_order = #{display_order,jdbcType=decimal},
+		</if>
+		<if test="column_name != null" >
+			column_name = #{column_name,jdbcType=varchar},
+		</if>
+		<if test="width != null" >
+			width = #{width,jdbcType=decimal},
+		</if>
+		<if test="default_value != null" >
+			default_value = #{default_value,jdbcType=varchar},
+		</if>
+		<if test="min_value != null" >
+			min_value = #{min_value,jdbcType=varchar},
+		</if>
+		<if test="max_value != null" >
+			max_value = #{max_value,jdbcType=varchar},
+		</if>
+		<if test="length_value != null" >
+			length_value = #{length_value,jdbcType=decimal},
+		</if>
+		<if test="precision_value != null" >
+			precision_value = #{precision_value,jdbcType=decimal},
+		</if>
+		<if test="validate_type != null" >
+			validate_type = #{validate_type,jdbcType=varchar},
+		</if>
+		<if test="ismodify != null" >
+			ismodify = #{ismodify,jdbcType=char},
+		</if>
+		<if test="isdisplay != null" >
+			isdisplay = #{isdisplay,jdbcType=char},
+		</if>
+		<if test="isinput != null" >
+			isinput = #{isinput,jdbcType=char},
+		</if>
+		<if test="ispk != null" >
+			ispk = #{ispk,jdbcType=char},
+		</if>
+		<if test="isautokey != null" >
+			isautokey = #{isautokey,jdbcType=char}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.ac.AcEntityfield">
+    	UPDATE AC_ENTITYFIELD 
+	    <set>
+		guid = #{guid,jdbcType=varchar},
+		guid_entity = #{guid_entity,jdbcType=varchar},
+		field_name = #{field_name,jdbcType=varchar},
+		field_desc = #{field_desc,jdbcType=varchar},
+		display_format = #{display_format,jdbcType=varchar},
+		doclist_code = #{doclist_code,jdbcType=varchar},
+		checkbox_value = #{checkbox_value,jdbcType=varchar},
+		fk_inputurl = #{fk_inputurl,jdbcType=varchar},
+		fk_fielddesc = #{fk_fielddesc,jdbcType=varchar},
+		fk_columnname = #{fk_columnname,jdbcType=varchar},
+		fk_tablename = #{fk_tablename,jdbcType=varchar},
+		desc_fieldname = #{desc_fieldname,jdbcType=varchar},
+		ref_type = #{ref_type,jdbcType=varchar},
+		field_type = #{field_type,jdbcType=varchar},
+		display_order = #{display_order,jdbcType=decimal},
+		column_name = #{column_name,jdbcType=varchar},
+		width = #{width,jdbcType=decimal},
+		default_value = #{default_value,jdbcType=varchar},
+		min_value = #{min_value,jdbcType=varchar},
+		max_value = #{max_value,jdbcType=varchar},
+		length_value = #{length_value,jdbcType=decimal},
+		precision_value = #{precision_value,jdbcType=decimal},
+		validate_type = #{validate_type,jdbcType=varchar},
+		ismodify = #{ismodify,jdbcType=char},
+		isdisplay = #{isdisplay,jdbcType=char},
+		isinput = #{isinput,jdbcType=char},
+		ispk = #{ispk,jdbcType=char},
+		isautokey = #{isautokey,jdbcType=char}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from AC_ENTITYFIELD where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from AC_ENTITYFIELD <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE AC_ENTITYFIELD 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=varchar}
+      	</if>
+		<if test="domain.guid_entity != null" >
+        	guid_entity = #{domain.guid_entity,jdbcType=varchar}
+      	</if>
+		<if test="domain.field_name != null" >
+        	field_name = #{domain.field_name,jdbcType=varchar}
+      	</if>
+		<if test="domain.field_desc != null" >
+        	field_desc = #{domain.field_desc,jdbcType=varchar}
+      	</if>
+		<if test="domain.display_format != null" >
+        	display_format = #{domain.display_format,jdbcType=varchar}
+      	</if>
+		<if test="domain.doclist_code != null" >
+        	doclist_code = #{domain.doclist_code,jdbcType=varchar}
+      	</if>
+		<if test="domain.checkbox_value != null" >
+        	checkbox_value = #{domain.checkbox_value,jdbcType=varchar}
+      	</if>
+		<if test="domain.fk_inputurl != null" >
+        	fk_inputurl = #{domain.fk_inputurl,jdbcType=varchar}
+      	</if>
+		<if test="domain.fk_fielddesc != null" >
+        	fk_fielddesc = #{domain.fk_fielddesc,jdbcType=varchar}
+      	</if>
+		<if test="domain.fk_columnname != null" >
+        	fk_columnname = #{domain.fk_columnname,jdbcType=varchar}
+      	</if>
+		<if test="domain.fk_tablename != null" >
+        	fk_tablename = #{domain.fk_tablename,jdbcType=varchar}
+      	</if>
+		<if test="domain.desc_fieldname != null" >
+        	desc_fieldname = #{domain.desc_fieldname,jdbcType=varchar}
+      	</if>
+		<if test="domain.ref_type != null" >
+        	ref_type = #{domain.ref_type,jdbcType=varchar}
+      	</if>
+		<if test="domain.field_type != null" >
+        	field_type = #{domain.field_type,jdbcType=varchar}
+      	</if>
+		<if test="domain.display_order != null" >
+        	display_order = #{domain.display_order,jdbcType=decimal}
+      	</if>
+		<if test="domain.column_name != null" >
+        	column_name = #{domain.column_name,jdbcType=varchar}
+      	</if>
+		<if test="domain.width != null" >
+        	width = #{domain.width,jdbcType=decimal}
+      	</if>
+		<if test="domain.default_value != null" >
+        	default_value = #{domain.default_value,jdbcType=varchar}
+      	</if>
+		<if test="domain.min_value != null" >
+        	min_value = #{domain.min_value,jdbcType=varchar}
+      	</if>
+		<if test="domain.max_value != null" >
+        	max_value = #{domain.max_value,jdbcType=varchar}
+      	</if>
+		<if test="domain.length_value != null" >
+        	length_value = #{domain.length_value,jdbcType=decimal}
+      	</if>
+		<if test="domain.precision_value != null" >
+        	precision_value = #{domain.precision_value,jdbcType=decimal}
+      	</if>
+		<if test="domain.validate_type != null" >
+        	validate_type = #{domain.validate_type,jdbcType=varchar}
+      	</if>
+		<if test="domain.ismodify != null" >
+        	ismodify = #{domain.ismodify,jdbcType=char}
+      	</if>
+		<if test="domain.isdisplay != null" >
+        	isdisplay = #{domain.isdisplay,jdbcType=char}
+      	</if>
+		<if test="domain.isinput != null" >
+        	isinput = #{domain.isinput,jdbcType=char}
+      	</if>
+		<if test="domain.ispk != null" >
+        	ispk = #{domain.ispk,jdbcType=char}
+      	</if>
+		<if test="domain.isautokey != null" >
+        	isautokey = #{domain.isautokey,jdbcType=char}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.ac.AcEntityfield">
+		select <include refid="Base_Column_List"/> from AC_ENTITYFIELD where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.ac.AcEntityfield" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from AC_ENTITYFIELD <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from AC_ENTITYFIELD <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid
+		,guid_entity
+		,field_name
+		,field_desc
+		,display_format
+		,doclist_code
+		,checkbox_value
+		,fk_inputurl
+		,fk_fielddesc
+		,fk_columnname
+		,fk_tablename
+		,desc_fieldname
+		,ref_type
+		,field_type
+		,display_order
+		,column_name
+		,width
+		,default_value
+		,min_value
+		,max_value
+		,length_value
+		,precision_value
+		,validate_type
+		,ismodify
+		,isdisplay
+		,isinput
+		,ispk
+		,isautokey
+	</sql>
+</mapper>

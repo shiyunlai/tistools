@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.ac.AcAppMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.ac.AcApp">
+	    INSERT INTO AC_APP 
+	    (
+	    	 guid
+	    	,app_code
+	    	,app_name
+	    	,app_type
+	    	,isopen
+	    	,open_date
+	    	,url
+	    	,app_desc
+	    	,guid_emp_maintenance
+	    	,guid_role_maintenance
+	    	,remark
+	    	,iniwp
+	    	,intaskcenter
+	    	,ip_addr
+	    	,ip_port
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=varchar},
+			#{app_code,jdbcType=varchar},
+			#{app_name,jdbcType=varchar},
+			#{app_type,jdbcType=varchar},
+			#{isopen,jdbcType=char},
+			#{open_date,jdbcType=date},
+			#{url,jdbcType=varchar},
+			#{app_desc,jdbcType=varchar},
+			#{guid_emp_maintenance,jdbcType=varchar},
+			#{guid_role_maintenance,jdbcType=varchar},
+			#{remark,jdbcType=varchar},
+			#{iniwp,jdbcType=char},
+			#{intaskcenter,jdbcType=char},
+			#{ip_addr,jdbcType=varchar},
+			#{ip_port,jdbcType=varchar}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.ac.AcApp">
+    	UPDATE AC_APP 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=varchar},
+		</if>
+		<if test="app_code != null" >
+			app_code = #{app_code,jdbcType=varchar},
+		</if>
+		<if test="app_name != null" >
+			app_name = #{app_name,jdbcType=varchar},
+		</if>
+		<if test="app_type != null" >
+			app_type = #{app_type,jdbcType=varchar},
+		</if>
+		<if test="isopen != null" >
+			isopen = #{isopen,jdbcType=char},
+		</if>
+		<if test="open_date != null" >
+			open_date = #{open_date,jdbcType=date},
+		</if>
+		<if test="url != null" >
+			url = #{url,jdbcType=varchar},
+		</if>
+		<if test="app_desc != null" >
+			app_desc = #{app_desc,jdbcType=varchar},
+		</if>
+		<if test="guid_emp_maintenance != null" >
+			guid_emp_maintenance = #{guid_emp_maintenance,jdbcType=varchar},
+		</if>
+		<if test="guid_role_maintenance != null" >
+			guid_role_maintenance = #{guid_role_maintenance,jdbcType=varchar},
+		</if>
+		<if test="remark != null" >
+			remark = #{remark,jdbcType=varchar},
+		</if>
+		<if test="iniwp != null" >
+			iniwp = #{iniwp,jdbcType=char},
+		</if>
+		<if test="intaskcenter != null" >
+			intaskcenter = #{intaskcenter,jdbcType=char},
+		</if>
+		<if test="ip_addr != null" >
+			ip_addr = #{ip_addr,jdbcType=varchar},
+		</if>
+		<if test="ip_port != null" >
+			ip_port = #{ip_port,jdbcType=varchar}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.ac.AcApp">
+    	UPDATE AC_APP 
+	    <set>
+		guid = #{guid,jdbcType=varchar},
+		app_code = #{app_code,jdbcType=varchar},
+		app_name = #{app_name,jdbcType=varchar},
+		app_type = #{app_type,jdbcType=varchar},
+		isopen = #{isopen,jdbcType=char},
+		open_date = #{open_date,jdbcType=date},
+		url = #{url,jdbcType=varchar},
+		app_desc = #{app_desc,jdbcType=varchar},
+		guid_emp_maintenance = #{guid_emp_maintenance,jdbcType=varchar},
+		guid_role_maintenance = #{guid_role_maintenance,jdbcType=varchar},
+		remark = #{remark,jdbcType=varchar},
+		iniwp = #{iniwp,jdbcType=char},
+		intaskcenter = #{intaskcenter,jdbcType=char},
+		ip_addr = #{ip_addr,jdbcType=varchar},
+		ip_port = #{ip_port,jdbcType=varchar}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from AC_APP where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from AC_APP <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE AC_APP 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=varchar}
+      	</if>
+		<if test="domain.app_code != null" >
+        	app_code = #{domain.app_code,jdbcType=varchar}
+      	</if>
+		<if test="domain.app_name != null" >
+        	app_name = #{domain.app_name,jdbcType=varchar}
+      	</if>
+		<if test="domain.app_type != null" >
+        	app_type = #{domain.app_type,jdbcType=varchar}
+      	</if>
+		<if test="domain.isopen != null" >
+        	isopen = #{domain.isopen,jdbcType=char}
+      	</if>
+		<if test="domain.open_date != null" >
+        	open_date = #{domain.open_date,jdbcType=date}
+      	</if>
+		<if test="domain.url != null" >
+        	url = #{domain.url,jdbcType=varchar}
+      	</if>
+		<if test="domain.app_desc != null" >
+        	app_desc = #{domain.app_desc,jdbcType=varchar}
+      	</if>
+		<if test="domain.guid_emp_maintenance != null" >
+        	guid_emp_maintenance = #{domain.guid_emp_maintenance,jdbcType=varchar}
+      	</if>
+		<if test="domain.guid_role_maintenance != null" >
+        	guid_role_maintenance = #{domain.guid_role_maintenance,jdbcType=varchar}
+      	</if>
+		<if test="domain.remark != null" >
+        	remark = #{domain.remark,jdbcType=varchar}
+      	</if>
+		<if test="domain.iniwp != null" >
+        	iniwp = #{domain.iniwp,jdbcType=char}
+      	</if>
+		<if test="domain.intaskcenter != null" >
+        	intaskcenter = #{domain.intaskcenter,jdbcType=char}
+      	</if>
+		<if test="domain.ip_addr != null" >
+        	ip_addr = #{domain.ip_addr,jdbcType=varchar}
+      	</if>
+		<if test="domain.ip_port != null" >
+        	ip_port = #{domain.ip_port,jdbcType=varchar}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.ac.AcApp">
+		select <include refid="Base_Column_List"/> from AC_APP where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.ac.AcApp" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from AC_APP <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from AC_APP <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid
+		,app_code
+		,app_name
+		,app_type
+		,isopen
+		,open_date
+		,url
+		,app_desc
+		,guid_emp_maintenance
+		,guid_role_maintenance
+		,remark
+		,iniwp
+		,intaskcenter
+		,ip_addr
+		,ip_port
+	</sql>
+</mapper>
