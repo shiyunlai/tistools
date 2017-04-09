@@ -60,8 +60,6 @@ public interface IOrgRService {
 	 */
 	String genOrgCode(String orgDegree, String orgType) throws OrgManagementException;
 
-	//FIXME 可以根据机构代码规则，新增genOrgCode条线接口
-	
 	/**
 	 * <pre>
 	 * 新建一个（机构树）根节点机构。
@@ -101,14 +99,14 @@ public interface IOrgRService {
 	 *            机构类型
 	 * @param orgDegree
 	 *            机构等级
-	 * @param guidParents
-	 *            父机构GUID
+	 * @param parentsOrgCode
+	 *            父机构代码
 	 * @param sortNo
 	 *            位于机构树的排列顺序，如果为0或null，则排到最后。
 	 * @return 新建机构信息
 	 * @throws OrgManagementException
 	 */
-	OmOrg createChildOrg(String orgCode, String orgName, String orgType, String orgDegree, String guidParents,
+	OmOrg createChildOrg(String orgCode, String orgName, String orgType, String orgDegree, String parentsOrgCode,
 			int sortNo) throws OrgManagementException;
 	
 	/**
@@ -116,6 +114,7 @@ public interface IOrgRService {
 	 * 新建一个子节点机构
 	 * 
 	 * 说明：
+	 * 以OmOrg指定入参时，需要调用者指定父机构GUID；
 	 * 系统检查“机构代码、机构名称、机构类型、机构等级、父机构GUID”等必输字段，通过后新建机构；
 	 * 新建后，机构状态停留在‘停用’；
 	 * </pre>
@@ -145,24 +144,24 @@ public interface IOrgRService {
 	
 	/**
 	 * <pre>
-	 * 移动机构，及调整机构层级，将机构（guid）从原父机构（fromGuidParents）调整到新父机构（toGuidParents）下。
+	 * 移动机构，及调整机构层级，将机构（orgCode）从原父机构（fromParentsOrgCode）调整到新父机构（toParentsOrgCode）下。
 	 * 如果机构有下级机构，逻辑上会被一同拖动（重新生成并修改‘机构序列’），
 	 * 一般在机构树上拖拽机构节点时执行。
 	 * </pre>
 	 * 
-	 * @param guid
-	 *            待调整机构的GUID
-	 * @param fromGuidParents
-	 *            原父机构GUID
-	 * @param toGuidParents
-	 *            新父机构GUID
+	 * @param orgCode
+	 *            待调整机构代码
+	 * @param fromParentsOrgCode
+	 *            原父机构代码
+	 * @param toParentsOrgCode
+	 *            新父机构代码（可空，表示将原机构提升为根节点机构）
 	 * @param toSortNo
 	 *            位于新父机构树下的顺序号，如果为0或null，则排到最后。
 	 * @return false - 调整失败(机构保持原层级顺序)</br>
 	 *         true - 调整成功
 	 * @throws OrgManagementException
 	 */
-	boolean moveOrg(String guid, String fromGuidParents, String toGuidParents, int toSortNo)
+	boolean moveOrg(String orgCode, String fromParentsOrgCode, String toParentsOrgCode, int toSortNo)
 			throws OrgManagementException;
 
 	/**
@@ -244,53 +243,23 @@ public interface IOrgRService {
 	
 	/**
 	 * <pre>
-	 * （根据guid）启用机构
+	 * （根据orgCode）启用机构
 	 * 
 	 * 说明：
 	 * 将机构状态从'停用'转变为'正常'
 	 * </pre>
 	 * 
-	 * @param guid
-	 *            机构GUID
-	 * @return 启用后的机构信息
-	 * @throws OrgManagementException
-	 */
-	OmOrg enabledOrgByGuid( String guid ) throws OrgManagementException;
-	
-	/**
-	 * <pre>
-	 * （根据机构代码）启用机构
-	 * 
-	 * 说明：
-	 * 调用enabledOrgByGuid()
-	 * </pre>
-	 * 
 	 * @param orgCode
 	 *            机构代码
 	 * @return 启用后的机构信息
 	 * @throws OrgManagementException
 	 */
-	OmOrg enabledOrgByOrgCode(String orgCode) throws OrgManagementException;
-
-	/**
-	 * <pre>
-	 * （根据guid）重新启用机构
-	 * 
-	 * </pre>
-	 * 
-	 * @param guid
-	 *            机构GUID
-	 * @return 重启后的机构
-	 * @throws OrgManagementException
-	 */
-	OmOrg reenabledOrgByGuid( String guid )  throws OrgManagementException;
+	OmOrg enabledOrg( String orgCode ) throws OrgManagementException;
 	
 	/**
 	 * <pre>
 	 * （根据机构代码）重新启用机构
 	 * 
-	 * 说明：
-	 * 调用reenabledOrgByGuid()
 	 * </pre>
 	 * 
 	 * @param orgCode
@@ -298,29 +267,14 @@ public interface IOrgRService {
 	 * @return 重启后的机构
 	 * @throws OrgManagementException
 	 */
-	OmOrg reenabledOrgByOrgCode( String orgCode )  throws OrgManagementException;
+	OmOrg reenabledOrg( String orgCode )  throws OrgManagementException;
 
-	/**
-	 * <pre>
-	 * （根据guid）停用机构
-	 * 
-	 * 说明：
-	 * 停用机构，意味着去掉机构智能，停用后的机构回到‘停用’状态，可被删除。
-	 * </pre>
-	 * 
-	 * @param guid
-	 *            机构guid
-	 * @return 停用后的机构信息
-	 * @throws OrgManagementException
-	 */
-	OmOrg disabledOrgByGuid( String guid )  throws OrgManagementException;
-	
 	/**
 	 * <pre>
 	 * （根据机构代码）停用机构
 	 * 
 	 * 说明：
-	 * 调用disabledOrgByGuid()
+	 * 停用机构，意味着去掉机构智能，停用后的机构回到‘停用’状态，可被删除；
 	 * </pre>
 	 * 
 	 * @param orgCode
@@ -328,27 +282,12 @@ public interface IOrgRService {
 	 * @return 停用后的机构信息
 	 * @throws OrgManagementException
 	 */
-	OmOrg disabledOrgByOrgCode( String orgCode )  throws OrgManagementException;
+	OmOrg disabledOrg( String orgCode )  throws OrgManagementException;
 	
 	/**
 	 * <pre>
-	 * （根据guid）注销机构
+	 * 根据机构代码注销机构
 	 * 
-	 * </pre>
-	 * 
-	 * @param guid
-	 *            机构guid
-	 * @return 注销后的机构
-	 * @throws OrgManagementException
-	 */
-	OmOrg cancelOrgByGuid(String guid)  throws OrgManagementException;
-
-	/**
-	 * <pre>
-	 * （根据guid）注销机构
-	 * 
-	 * 说明：
-	 * 调用cancelOrgByGuid()
 	 * </pre>
 	 * 
 	 * @param orgCode
@@ -356,23 +295,8 @@ public interface IOrgRService {
 	 * @return 注销后的机构
 	 * @throws OrgManagementException
 	 */
-	OmOrg cancelOrgByOrgCode(String orgCode) throws OrgManagementException;
+	OmOrg cancelOrg(String orgCode) throws OrgManagementException;
 	
-	/**
-	 * <pre>
-	 * 根据guid删除（记录删除）机构
-	 * 
-	 * 说明：
-	 * 只能删除处于‘停用’状态的机构记录；
-	 * </pre>
-	 * 
-	 * @param guid
-	 *            待删除机构的guid
-	 * 
-	 * @throws OrgManagementException
-	 */
-	void deleteOrgByGuid(String guid) throws OrgManagementException;
-
 	/**
 	 * <pre>
 	 * 根据org_code删除（记录删除）机构
@@ -385,7 +309,7 @@ public interface IOrgRService {
 	 *            待删除机构的org_code（机构代码）
 	 * @throws OrgManagementException
 	 */
-	void deleteOrgByOrgCode(String orgCode) throws OrgManagementException;
+	void deleteOrg(String orgCode) throws OrgManagementException;
 	
 	/**
 	 * <pre>
@@ -412,25 +336,14 @@ public interface IOrgRService {
 	
 	/**
 	 * <pre>
-	 * 根据guid查询机构记录
-	 * </pre>
-	 * 
-	 * @param guid
-	 *            机构guid
-	 * @return 对应的机构记录，无记录返回null
-	 */
-	OmOrg queryOrgByGuid(String guid);
-
-	/**
-	 * <pre>
-	 * 根据org_code查询机构记录
+	 * 根据机构代码（orgCode）查询机构记录
 	 * </pre>
 	 * 
 	 * @param orgCode
 	 *            机构代码
 	 * @return 对应的机构记录，无记录返回null
 	 */
-	OmOrg queryOrgByOrgCode(String orgCode);
+	OmOrg queryOrg(String orgCode);
 
 	/**
 	 * <pre>
@@ -448,21 +361,7 @@ public interface IOrgRService {
 	
 	/**
 	 * <pre>
-	 * 根据guid查询机构下直属子机构记录（只包括第一层）
-	 * 
-	 * 说明：
-	 * 一般在展示机构树时调用
-	 * </pre>
-	 * 
-	 * @param guid
-	 *            机构guid
-	 * @return 子机构记录们，无记录返回null
-	 */
-	List<OmOrg> queryChildsOrgByGuid(String guid);
-	
-	/**
-	 * <pre>
-	 * 根据org_code查询机构下直属子机构记录（只包括第一层）
+	 * 查询机构下直属子机构记录（只包括第一层）
 	 * 
 	 * 说明：
 	 * 一般在展示机构树时调用
@@ -472,19 +371,8 @@ public interface IOrgRService {
 	 *            机构代码
 	 * @return 子机构记录们，无记录返回null
 	 */
-	List<OmOrg> queryChildOrgByOrgCode(String orgCode);
-	
-	/**
-	 * <pre>
-	 * 根据org_code查询机构下所有子机构记录（该机构下，完整的树结构，意味着嵌套查询所有层级的子机构）
-	 * </pre>
-	 * 
-	 * @param guid
-	 *            机构guid
-	 * @return 子机构记录们，无记录返回null
-	 */
-	List<OmOrg> queryAllChildOrgByGuid(String guid);
-	
+	List<OmOrg> queryChilds(String orgCode);
+
 	/**
 	 * <pre>
 	 * 查询机构（orgCode）下所有子机构记录（该机构下，完整的树结构，意味着嵌套查询所有层级的子机构）
@@ -494,7 +382,7 @@ public interface IOrgRService {
 	 *            机构代码
 	 * @return 子机构记录们，无记录返回null
 	 */
-	List<OmOrg> queryAllChildOrgByOrgCode(String orgCode) ;
+	List<OmOrg> queryAllChilds(String orgCode) ;
 
 	/**
 	 * <pre>
@@ -507,7 +395,7 @@ public interface IOrgRService {
 	 *            查询条件
 	 * @return 子机构记录们，无记录返回null
 	 */
-	List<OmOrg> queryChildOrgByCondition(String orgCode, OmOrg orgCondition);
+	List<OmOrg> queryChildsByCondition(String orgCode, OmOrg orgCondition);
 
 	/**
 	 * <pre>
@@ -520,7 +408,7 @@ public interface IOrgRService {
 	 *            人员过滤条件
 	 * @return 从属于该机构的人员们
 	 */
-	List<OmEmployee> queryEmployeeBelong(String orgCode, OmEmployee empCondition) ;
+	List<OmEmployee> queryEmployee(String orgCode, OmEmployee empCondition) ;
 	
 	/**
 	 * <pre>
@@ -533,6 +421,6 @@ public interface IOrgRService {
 	 *            岗位过滤条件
 	 * @return 从属于该机构的岗位记录
 	 */
-	List<OmPosition> queryPositionBelong(String orgCode, OmPosition positionCondition) ;
+	List<OmPosition> queryPosition(String orgCode, OmPosition positionCondition) ;
 	
 }

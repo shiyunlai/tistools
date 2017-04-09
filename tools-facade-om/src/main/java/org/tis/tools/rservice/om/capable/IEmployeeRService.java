@@ -197,7 +197,7 @@ public interface IEmployeeRService {
 	 *            true - 指定为主机构</br>
 	 *            false - 不是主机构（默认）
 	 */
-	void assignBelongingOrg(String empCode, String orgCode, boolean isMain) throws EmployeeManagementException;
+	void assignOrg(String empCode, String orgCode, boolean isMain) throws EmployeeManagementException;
 
 	/**
 	 * <pre>
@@ -214,7 +214,7 @@ public interface IEmployeeRService {
 	 *            机构代码，作为员工的最新主机构
 	 * @throws EmployeeManagementException
 	 */
-	void assignMainOrg(String empCode, String mainOrgCode) throws EmployeeManagementException;
+	void fixMainOrg(String empCode, String mainOrgCode) throws EmployeeManagementException;
 
 	/**
 	 * <pre>
@@ -249,9 +249,9 @@ public interface IEmployeeRService {
 	 * @param toOrgCode
 	 *            新隶属机构
 	 * @param isMain
-	 *            指定新隶属机构（toOrgCode）是否为主机构 </br>
+	 *            指定新隶属机构（toOrgCode）为主机构 </br>
 	 *            true - 指定为主机构</br>
-	 *            false - 不是主机构（默认）
+	 *            false - 不做改变（默认）
 	 * @return 最新员工信息
 	 * @throws EmployeeManagementException
 	 */

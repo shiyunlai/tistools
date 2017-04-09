@@ -271,16 +271,50 @@ public interface IPositionRService {
 	 * ==========================================
 	 */
 	
-	//FIXME 此处返回 OmPosition 数据库DO对象，对于调用者来说并不友好，应该将其中的数据主键guid转化为业务代码 —— 其他＊RService中如是 
-	OmPosition queryPosition(String positionCode) ;
+	/**
+	 * <pre>
+	 * 查询岗位信息
+	 * </pre>
+	 * 
+	 * @param positionCode
+	 *            岗位代码
+	 * @return 岗位信息对象
+	 */
+	// FIXME 此处返回 OmPosition 数据库DO对象，对于调用者来说并不友好，应该将其中的数据主键guid转化为业务代码 —— 其他＊RService中如是
+	OmPosition queryPosition(String positionCode);
 	
-	List<OmPosition> queryChildPosition(String positionCode) ;
+	/**
+	 * 查询（一级）子岗位 
+	 * @param positionCode
+	 * @return
+	 */
+	List<OmPosition> queryChilds(String positionCode) ;
 	
+	/**
+	 * 查询属于岗位的员工列表 
+	 * @param positionCode
+	 * @return
+	 */
 	List<OmEmployee> queryEmployee(String positionCode) ;
 
+	/**
+	 * 查询与岗位相关的应用列表 
+	 * @param positionCode
+	 * @return
+	 */
 	List<AcApp> queryApp(String positionCode) ;
 
+	/**
+	 * 查询与岗位相关的工作组列表 
+	 * @param positionCode
+	 * @return
+	 */
 	List<OmGroup> queryGroup(String positionCode) ;
 
+	/**
+	 * 查询岗位权限（角色）集
+	 * @param positionCode
+	 * @return
+	 */
 	List<AcRole> queryRole(String positionCode) ;
 }

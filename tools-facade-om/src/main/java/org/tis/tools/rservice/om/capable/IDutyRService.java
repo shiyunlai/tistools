@@ -56,7 +56,6 @@ public interface IDutyRService {
 	 * 
 	 * 说明：
 	 * 系统补全其余字段信息；
-	 * 
 	 * </pre>
 	 * 
 	 * @param dutyCode
@@ -65,12 +64,12 @@ public interface IDutyRService {
 	 *            职务名称
 	 * @param dutyType
 	 *            职务套别（类型）
-	 * @param guidParents
-	 *            父职务（可空，表示根职务）
+	 * @param parentsDutyCode
+	 *            父职务代码（可空，表示根职务）
 	 * @return 新职务对象
 	 * @throws DutyManagementException
 	 */
-	OmDuty createDuty(String dutyCode, String dutyName, String dutyType, String guidParents)
+	OmDuty createDuty(String dutyCode, String dutyName, String dutyType, String parentsDutyCode)
 			throws DutyManagementException;
 
 	/**
@@ -92,7 +91,7 @@ public interface IDutyRService {
 
 	/**
 	 * <pre>
-	 * 复制已有职务（fromDutyCode）为新职务（newDutyCode），并作为父职务（toGuidParents）的子职务
+	 * 复制已有职务（fromDutyCode）为新职务（newDutyCode），并作为父职务（toParentsDutyCode）的子职务
 	 * 
 	 * 说明：
 	 * 只做职务表（OM_DUTY）的记录复制；
@@ -102,31 +101,31 @@ public interface IDutyRService {
 	 *            已有职务
 	 * @param newDutyCode
 	 *            新职务
-	 * @param toGuidParents
-	 *            父职务guid
+	 * @param toParentsDutyCode
+	 *            父职务代码
 	 * @return 新职务对象
 	 * @throws DutyManagementException
 	 */
-	OmDuty copyDuty(String fromDutyCode, String newDutyCode, String toGuidParents) throws DutyManagementException;
+	OmDuty copyDuty(String fromDutyCode, String newDutyCode, String toParentsDutyCode) throws DutyManagementException;
 
 	/**
 	 * <pre>
-	 * 将职务（guid）从原父职务节点（fromGuidParents）下移动到新的父职务节点（toGuidParents）下
+	 * 将职务（dutyCode）从原父职务节点（fromParentsDutyCode）下移动到新的父职务节点（toParentsDutyCode）下
 	 * 
 	 * 说明：
 	 * 被移动职务的下级职务同时被变更归属（修改‘职务序列号’）
 	 * </pre>
 	 * 
-	 * @param guid
-	 *            被移动的职务guid
-	 * @param fromGuidParents
+	 * @param dutyCode
+	 *            被移动的职务代码
+	 * @param fromParentsDutyCode
 	 *            原父节点guid
-	 * @param toGuidParents
+	 * @param toParentsDutyCode
 	 *            新父节点guid
 	 * @return 移动后的职务对象
 	 * @throws DutyManagementException
 	 */
-	OmDuty moveDuty(String guid, String fromGuidParents , String toGuidParents ) throws DutyManagementException;
+	OmDuty moveDuty(String dutyCode, String fromParentsDutyCode , String toParentsDutyCode ) throws DutyManagementException;
 	
 	/**
 	 * <pre>
