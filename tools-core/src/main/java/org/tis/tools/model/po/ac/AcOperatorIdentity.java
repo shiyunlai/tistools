@@ -35,7 +35,7 @@ public class AcOperatorIdentity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	
-	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：记录的全局性唯一ID，系统自动生成； 一般根据实体做规则标识，以增强阅读性和辨识度， 如：操作员的数据主键规则为 operator-xxxx-xxxx-xxxx 功能的数据主键规则为 function-xxxx-xxxx-xxxx */
+	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：记录的全局性唯一ID，系统自动生成； */
 	private String guid ;
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述： */

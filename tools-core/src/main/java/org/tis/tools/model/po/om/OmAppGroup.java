@@ -32,8 +32,8 @@ public class OmAppGroup implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	
-	/** 字段类型：decimal<br/>字段名：应用GUID<br/>描述： */
-	private BigDecimal guidApp ;
+	/** 字段类型：varchar<br/>字段名：应用GUID<br/>描述： */
+	private String guidApp ;
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述： */
 	private String guidGroup ;
@@ -45,20 +45,17 @@ public class OmAppGroup implements Serializable {
 	 * @param guidApp
 	 *            应用GUID
 	 */
-	public void setGuidApp(BigDecimal guidApp) {
- 		this.guidApp = guidApp ;
+	public void setGuidApp(String guidApp) {
+ 		this.guidApp = guidApp == null ? null : guidApp.trim() ;
     }
     
     /**
 	 * Get the 应用GUID.
 	 * 
-	 * @return 应用GUID，如果setGuidApp时原值为空，返回BigDecimal(0d)
+	 * @return 应用GUID
 	 */
-	public BigDecimal getGuidApp(){
-		if(guidApp==null){
-			return new BigDecimal(0d);
-		}
-		return guidApp;
+	public String getGuidApp(){
+		return this.guidApp ;
     }
 	
 	/**

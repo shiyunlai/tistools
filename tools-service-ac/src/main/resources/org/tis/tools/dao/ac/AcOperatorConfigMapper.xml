@@ -20,7 +20,7 @@
 	    (
 			#{guid,jdbcType=varchar},
 			#{guid_operator,jdbcType=varchar},
-			#{guid_app,jdbcType=decimal},
+			#{guid_app,jdbcType=varchar},
 			#{config_type,jdbcType=varchar},
 			#{config_name,jdbcType=varchar},
 			#{config_value,jdbcType=varchar},
@@ -38,7 +38,7 @@
 			guid_operator = #{guid_operator,jdbcType=varchar},
 		</if>
 		<if test="guid_app != null" >
-			guid_app = #{guid_app,jdbcType=decimal},
+			guid_app = #{guid_app,jdbcType=varchar},
 		</if>
 		<if test="config_type != null" >
 			config_type = #{config_type,jdbcType=varchar},
@@ -61,7 +61,7 @@
 	    <set>
 		guid = #{guid,jdbcType=varchar},
 		guid_operator = #{guid_operator,jdbcType=varchar},
-		guid_app = #{guid_app,jdbcType=decimal},
+		guid_app = #{guid_app,jdbcType=varchar},
 		config_type = #{config_type,jdbcType=varchar},
 		config_name = #{config_name,jdbcType=varchar},
 		config_value = #{config_value,jdbcType=varchar},
@@ -88,7 +88,7 @@
         	guid_operator = #{domain.guid_operator,jdbcType=varchar}
       	</if>
 		<if test="domain.guid_app != null" >
-        	guid_app = #{domain.guid_app,jdbcType=decimal}
+        	guid_app = #{domain.guid_app,jdbcType=varchar}
       	</if>
 		<if test="domain.config_type != null" >
         	config_type = #{domain.config_type,jdbcType=varchar}

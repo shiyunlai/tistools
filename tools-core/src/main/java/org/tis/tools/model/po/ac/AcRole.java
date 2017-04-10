@@ -32,13 +32,13 @@ public class AcRole implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	
-	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：记录的全局性唯一ID，系统自动生成； 一般根据实体做规则标识，以增强阅读性和辨识度， 如：操作员的数据主键规则为 operator-xxxx-xxxx-xxxx 功能的数据主键规则为 function-xxxx-xxxx-xxxx */
+	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：记录的全局性唯一ID，系统自动生成； */
 	private String guid ;
 	
-	/** 字段类型：decimal<br/>字段名：隶属应用GUID<br/>描述： */
-	private BigDecimal guidApp ;
+	/** 字段类型：varchar<br/>字段名：隶属应用GUID<br/>描述： */
+	private String guidApp ;
 	
-	/** 字段类型：varchar<br/>字段名：角色代号<br/>描述：业务上对角色的编码 */
+	/** 字段类型：varchar<br/>字段名：角色代码<br/>描述：业务上对角色的编码 */
 	private String roleCode ;
 	
 	/** 字段类型：varchar<br/>字段名：角色名称<br/>描述： */
@@ -76,36 +76,33 @@ public class AcRole implements Serializable {
 	 * @param guidApp
 	 *            隶属应用GUID
 	 */
-	public void setGuidApp(BigDecimal guidApp) {
- 		this.guidApp = guidApp ;
+	public void setGuidApp(String guidApp) {
+ 		this.guidApp = guidApp == null ? null : guidApp.trim() ;
     }
     
     /**
 	 * Get the 隶属应用GUID.
 	 * 
-	 * @return 隶属应用GUID，如果setGuidApp时原值为空，返回BigDecimal(0d)
+	 * @return 隶属应用GUID
 	 */
-	public BigDecimal getGuidApp(){
-		if(guidApp==null){
-			return new BigDecimal(0d);
-		}
-		return guidApp;
+	public String getGuidApp(){
+		return this.guidApp ;
     }
 	
 	/**
-	 * Set the 角色代号.
+	 * Set the 角色代码.
 	 * 
 	 * @param roleCode
-	 *            角色代号
+	 *            角色代码
 	 */
 	public void setRoleCode(String roleCode) {
  		this.roleCode = roleCode == null ? null : roleCode.trim() ;
     }
     
     /**
-	 * Get the 角色代号.
+	 * Get the 角色代码.
 	 * 
-	 * @return 角色代号
+	 * @return 角色代码
 	 */
 	public String getRoleCode(){
 		return this.roleCode ;

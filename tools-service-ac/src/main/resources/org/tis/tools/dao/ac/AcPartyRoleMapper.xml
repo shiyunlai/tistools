@@ -15,7 +15,7 @@
 	    VALUES 
 	    (
 			#{partytype,jdbcType=varchar},
-			#{guid_party,jdbcType=decimal},
+			#{guid_party,jdbcType=varchar},
 			#{guid_role,jdbcType=varchar}
   		)
  	</insert>
@@ -27,7 +27,7 @@
 			partytype = #{partytype,jdbcType=varchar},
 		</if>
 		<if test="guid_party != null" >
-			guid_party = #{guid_party,jdbcType=decimal},
+			guid_party = #{guid_party,jdbcType=varchar},
 		</if>
 		<if test="guid_role != null" >
 			guid_role = #{guid_role,jdbcType=varchar}
@@ -40,7 +40,7 @@
     	UPDATE AC_PARTY_ROLE 
 	    <set>
 		partytype = #{partytype,jdbcType=varchar},
-		guid_party = #{guid_party,jdbcType=decimal},
+		guid_party = #{guid_party,jdbcType=varchar},
 		guid_role = #{guid_role,jdbcType=varchar}
 	    </set>
 	    WHERE guid = #{guid}
@@ -61,7 +61,7 @@
         	partytype = #{domain.partytype,jdbcType=varchar}
       	</if>
 		<if test="domain.guid_party != null" >
-        	guid_party = #{domain.guid_party,jdbcType=decimal}
+        	guid_party = #{domain.guid_party,jdbcType=varchar}
       	</if>
 		<if test="domain.guid_role != null" >
         	guid_role = #{domain.guid_role,jdbcType=varchar}

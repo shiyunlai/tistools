@@ -16,7 +16,7 @@
 	    (
 			#{guid_operator,jdbcType=varchar},
 			#{guid_role,jdbcType=varchar},
-			#{auth,jdbcType=decimal}
+			#{auth,jdbcType=varchar}
   		)
  	</insert>
  	
@@ -30,7 +30,7 @@
 			guid_role = #{guid_role,jdbcType=varchar},
 		</if>
 		<if test="auth != null" >
-			auth = #{auth,jdbcType=decimal}
+			auth = #{auth,jdbcType=varchar}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -41,7 +41,7 @@
 	    <set>
 		guid_operator = #{guid_operator,jdbcType=varchar},
 		guid_role = #{guid_role,jdbcType=varchar},
-		auth = #{auth,jdbcType=decimal}
+		auth = #{auth,jdbcType=varchar}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -64,7 +64,7 @@
         	guid_role = #{domain.guid_role,jdbcType=varchar}
       	</if>
 		<if test="domain.auth != null" >
-        	auth = #{domain.auth,jdbcType=decimal}
+        	auth = #{domain.auth,jdbcType=varchar}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>

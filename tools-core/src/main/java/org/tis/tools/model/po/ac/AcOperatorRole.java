@@ -38,8 +38,8 @@ public class AcOperatorRole implements Serializable {
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述： */
 	private String guidRole ;
 	
-	/** 字段类型：decimal<br/>字段名：是否可分级授权<br/>描述：预留字段，暂不使用。意图将操作员所拥有的权限赋予其他操作员。 */
-	private BigDecimal auth ;
+	/** 字段类型：varchar<br/>字段名：是否可分级授权<br/>描述：预留字段，暂不使用。意图将操作员所拥有的权限赋予其他操作员。 */
+	private String auth ;
 	
 	
 	/**
@@ -86,20 +86,17 @@ public class AcOperatorRole implements Serializable {
 	 * @param auth
 	 *            是否可分级授权
 	 */
-	public void setAuth(BigDecimal auth) {
- 		this.auth = auth ;
+	public void setAuth(String auth) {
+ 		this.auth = auth == null ? null : auth.trim() ;
     }
     
     /**
 	 * Get the 是否可分级授权.
 	 * 
-	 * @return 是否可分级授权，如果setAuth时原值为空，返回BigDecimal(0d)
+	 * @return 是否可分级授权
 	 */
-	public BigDecimal getAuth(){
-		if(auth==null){
-			return new BigDecimal(0d);
-		}
-		return auth;
+	public String getAuth(){
+		return this.auth ;
     }
 	
 	public String toString(){

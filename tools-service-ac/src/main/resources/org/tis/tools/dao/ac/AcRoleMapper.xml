@@ -18,7 +18,7 @@
 	    VALUES 
 	    (
 			#{guid,jdbcType=varchar},
-			#{guid_app,jdbcType=decimal},
+			#{guid_app,jdbcType=varchar},
 			#{role_code,jdbcType=varchar},
 			#{role_name,jdbcType=varchar},
 			#{role_type,jdbcType=varchar},
@@ -33,7 +33,7 @@
 			guid = #{guid,jdbcType=varchar},
 		</if>
 		<if test="guid_app != null" >
-			guid_app = #{guid_app,jdbcType=decimal},
+			guid_app = #{guid_app,jdbcType=varchar},
 		</if>
 		<if test="role_code != null" >
 			role_code = #{role_code,jdbcType=varchar},
@@ -55,7 +55,7 @@
     	UPDATE AC_ROLE 
 	    <set>
 		guid = #{guid,jdbcType=varchar},
-		guid_app = #{guid_app,jdbcType=decimal},
+		guid_app = #{guid_app,jdbcType=varchar},
 		role_code = #{role_code,jdbcType=varchar},
 		role_name = #{role_name,jdbcType=varchar},
 		role_type = #{role_type,jdbcType=varchar},
@@ -79,7 +79,7 @@
         	guid = #{domain.guid,jdbcType=varchar}
       	</if>
 		<if test="domain.guid_app != null" >
-        	guid_app = #{domain.guid_app,jdbcType=decimal}
+        	guid_app = #{domain.guid_app,jdbcType=varchar}
       	</if>
 		<if test="domain.role_code != null" >
         	role_code = #{domain.role_code,jdbcType=varchar}

@@ -13,7 +13,7 @@
 	    )
 	    VALUES 
 	    (
-			#{guid_app,jdbcType=decimal},
+			#{guid_app,jdbcType=varchar},
 			#{guid_position,jdbcType=varchar}
   		)
  	</insert>
@@ -22,7 +22,7 @@
     	UPDATE OM_APP_POSITION 
 	    <set>
 		<if test="guid_app != null" >
-			guid_app = #{guid_app,jdbcType=decimal},
+			guid_app = #{guid_app,jdbcType=varchar},
 		</if>
 		<if test="guid_position != null" >
 			guid_position = #{guid_position,jdbcType=varchar}
@@ -34,7 +34,7 @@
  	<update id="updateForce" parameterType="org.tis.tools.model.po.om.OmAppPosition">
     	UPDATE OM_APP_POSITION 
 	    <set>
-		guid_app = #{guid_app,jdbcType=decimal},
+		guid_app = #{guid_app,jdbcType=varchar},
 		guid_position = #{guid_position,jdbcType=varchar}
 	    </set>
 	    WHERE guid = #{guid}
@@ -52,7 +52,7 @@
     	UPDATE OM_APP_POSITION 
 	   <set>
 		<if test="domain.guid_app != null" >
-        	guid_app = #{domain.guid_app,jdbcType=decimal}
+        	guid_app = #{domain.guid_app,jdbcType=varchar}
       	</if>
 		<if test="domain.guid_position != null" >
         	guid_position = #{domain.guid_position,jdbcType=varchar}

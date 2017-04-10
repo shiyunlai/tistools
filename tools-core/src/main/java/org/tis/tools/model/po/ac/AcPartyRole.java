@@ -35,8 +35,8 @@ public class AcPartyRole implements Serializable {
 	/** 字段类型：varchar<br/>字段名：组织对象类型<br/>描述：取值范围，见业务字典 DICT_OM_PARTYTYPE 如：机构、工作组、岗位、职务 */
 	private String partytype ;
 	
-	/** 字段类型：decimal<br/>字段名：组织对象GUID<br/>描述：根据组织类型存储对应组织的GUID */
-	private BigDecimal guidParty ;
+	/** 字段类型：varchar<br/>字段名：组织对象GUID<br/>描述：根据组织类型存储对应组织的GUID */
+	private String guidParty ;
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述： */
 	private String guidRole ;
@@ -67,20 +67,17 @@ public class AcPartyRole implements Serializable {
 	 * @param guidParty
 	 *            组织对象GUID
 	 */
-	public void setGuidParty(BigDecimal guidParty) {
- 		this.guidParty = guidParty ;
+	public void setGuidParty(String guidParty) {
+ 		this.guidParty = guidParty == null ? null : guidParty.trim() ;
     }
     
     /**
 	 * Get the 组织对象GUID.
 	 * 
-	 * @return 组织对象GUID，如果setGuidParty时原值为空，返回BigDecimal(0d)
+	 * @return 组织对象GUID
 	 */
-	public BigDecimal getGuidParty(){
-		if(guidParty==null){
-			return new BigDecimal(0d);
-		}
-		return guidParty;
+	public String getGuidParty(){
+		return this.guidParty ;
     }
 	
 	/**
