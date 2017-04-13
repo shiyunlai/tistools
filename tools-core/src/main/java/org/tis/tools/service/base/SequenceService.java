@@ -28,12 +28,16 @@ public class SequenceService {
 	}
 	
 	/**
-	 * 获取带有获取者信息的唯一id字符串
+	 * 获取带有获取者（gainer）标识的唯一id字符串
 	 * @param gainer 获取者信息
-	 * @return 
+	 * @return gainer＋id
 	 */
 	public String generateId(String gainer){
 		return gainer + getId() ; 
+	}
+	
+	public int genSequentialNo(String gainer){
+		return 0 ;//key=gainer value=N++
 	}
 	
 }
