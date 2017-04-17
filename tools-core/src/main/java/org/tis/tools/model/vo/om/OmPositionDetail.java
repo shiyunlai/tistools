@@ -2,12 +2,16 @@
  * auto generated
  * Copyright (C) 2016 bronsp.com, All rights reserved.
  */
-package org.tis.tools.model.po.om;
+package org.tis.tools.model.vo.om;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.tis.tools.model.po.ac.AcApp;
+import org.tis.tools.model.po.om.OmDuty;
+import org.tis.tools.model.po.om.OmEmployee;
+import org.tis.tools.model.po.om.OmGroup;
+import org.tis.tools.model.po.om.OmPosition;
 
 /**
  * 

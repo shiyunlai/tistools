@@ -1,7 +1,10 @@
-package org.tis.tools.model.po.om;
+package org.tis.tools.model.vo.om;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import org.tis.tools.model.po.om.OmBusiorg;
+import org.tis.tools.model.po.om.OmOrg;
 
 /**
  * 业务机构详情（360信息）

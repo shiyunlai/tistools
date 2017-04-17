@@ -4,7 +4,7 @@
 package org.tis.tools.rservice.om.capable;
 
 import org.tis.tools.model.po.om.OmEmployee;
-import org.tis.tools.model.po.om.OmEmployeeDetail;
+import org.tis.tools.model.vo.om.OmEmployeeDetail;
 import org.tis.tools.rservice.om.exception.EmployeeManagementException;
 
 /**

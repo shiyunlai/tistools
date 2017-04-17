@@ -1,10 +1,15 @@
 /**
  * 
  */
-package org.tis.tools.model.po.om;
+package org.tis.tools.model.vo.om;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import org.tis.tools.model.po.om.OmEmpGroup;
+import org.tis.tools.model.po.om.OmEmpOrg;
+import org.tis.tools.model.po.om.OmEmpPosition;
+import org.tis.tools.model.po.om.OmEmployee;
 
 /**
  * <pre>

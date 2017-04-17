@@ -16,7 +16,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * 
  * <pre>
  * 操作日志
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/ABF-oracle.erm
+ * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/ABForacle.erm
  * 业务域：log
  * 模型：SYS_OPERATOR_LOG 操作日志
  *

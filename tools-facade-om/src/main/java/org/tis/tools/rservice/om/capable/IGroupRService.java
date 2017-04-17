@@ -9,7 +9,7 @@ import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcRole;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmGroup;
-import org.tis.tools.model.po.om.OmPositionDetail;
+import org.tis.tools.model.vo.om.OmPositionDetail;
 import org.tis.tools.rservice.om.exception.GroupManagementException;
 
 /**

@@ -6,7 +6,7 @@ package org.tis.tools.rservice.om.capable;
 import java.util.List;
 
 import org.tis.tools.model.po.om.OmBusiorg;
-import org.tis.tools.model.po.om.OmBusiorgDetail;
+import org.tis.tools.model.vo.om.OmBusiorgDetail;
 import org.tis.tools.rservice.om.exception.BusiOrgManagementException;
 
 /**

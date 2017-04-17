@@ -1,10 +1,13 @@
 /**
  * 
  */
-package org.tis.tools.model.po.om;
+package org.tis.tools.model.vo.om;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import org.tis.tools.model.po.om.OmDuty;
+import org.tis.tools.model.po.om.OmPosition;
 
 /**
  * 

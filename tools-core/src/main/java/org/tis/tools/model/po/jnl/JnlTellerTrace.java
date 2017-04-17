@@ -16,7 +16,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * 
  * <pre>
  * 柜员操作日志
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-mysql.erm
+ * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNLmysql.erm
  * 业务域：jnl
  * 模型：JNL_TELLER_TRACE 柜员操作日志
  *

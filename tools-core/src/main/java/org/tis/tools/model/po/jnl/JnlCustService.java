@@ -16,7 +16,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * 
  * <pre>
  * 客户服务流水
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-oracle.erm
+ * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNLoracle.erm
  * 业务域：jnl
  * 模型：JNL_CUST_SERVICE 客户服务流水
  *
