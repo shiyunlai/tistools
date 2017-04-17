@@ -10,11 +10,13 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 /**
  * 
  * <pre>
  * 交易业务要素
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/model.erm
+ * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-oracle.erm
  * 业务域：jnl
  * 模型：JNL_TRANS_FEATURE 交易业务要素
  *
@@ -140,4 +142,8 @@ public class JnlTransFeature implements Serializable {
 	public String getTransData(){
 		return this.transData ;
     }
+	
+	public String toString(){
+		return ToStringBuilder.reflectionToString(this) ; 
+	}
 }

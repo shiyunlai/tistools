@@ -10,11 +10,13 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 /**
  * 
  * <pre>
  * 主机交易流水
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/model.erm
+ * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-oracle.erm
  * 业务域：jnl
  * 模型：JNL_HOSTTRANS 主机交易流水
  *
@@ -318,4 +320,8 @@ public class JnlHosttrans implements Serializable {
 	public String getHostErrMsg(){
 		return this.hostErrMsg ;
     }
+	
+	public String toString(){
+		return ToStringBuilder.reflectionToString(this) ; 
+	}
 }

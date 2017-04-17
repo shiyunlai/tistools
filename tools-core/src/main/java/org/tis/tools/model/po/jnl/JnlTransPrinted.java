@@ -10,11 +10,13 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 /**
  * 
  * <pre>
  * 交易输出凭证流水
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/model.erm
+ * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-oracle.erm
  * 业务域：jnl
  * 模型：JNL_TRANS_PRINTED 交易输出凭证流水
  *
@@ -250,4 +252,8 @@ public class JnlTransPrinted implements Serializable {
 	public Integer getPrintedNum(){
 		return this.printedNum ;
     }
+	
+	public String toString(){
+		return ToStringBuilder.reflectionToString(this) ; 
+	}
 }

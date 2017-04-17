@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.jnl.JnlTransPrintedMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.jnl.JnlTransPrinted">
+	    INSERT INTO JNL_TRANS_PRINTED 
+	    (
+	    	 guid
+	    	,guid_trans
+	    	,trans_sno
+	    	,trans_code
+	    	,voucher_code
+	    	,printed_data
+	    	,voucher_img_id
+	    	,printed_date
+	    	,last_printed_time
+	    	,printed_num
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=varchar},
+			#{guid_trans,jdbcType=varchar},
+			#{trans_sno,jdbcType=varchar},
+			#{trans_code,jdbcType=varchar},
+			#{voucher_code,jdbcType=varchar},
+			#{printed_data,jdbcType=text},
+			#{voucher_img_id,jdbcType=varchar},
+			#{printed_date,jdbcType=char},
+			#{last_printed_time,jdbcType=char},
+			#{printed_num,jdbcType=int}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.jnl.JnlTransPrinted">
+    	UPDATE JNL_TRANS_PRINTED 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=varchar},
+		</if>
+		<if test="guid_trans != null" >
+			guid_trans = #{guid_trans,jdbcType=varchar},
+		</if>
+		<if test="trans_sno != null" >
+			trans_sno = #{trans_sno,jdbcType=varchar},
+		</if>
+		<if test="trans_code != null" >
+			trans_code = #{trans_code,jdbcType=varchar},
+		</if>
+		<if test="voucher_code != null" >
+			voucher_code = #{voucher_code,jdbcType=varchar},
+		</if>
+		<if test="printed_data != null" >
+			printed_data = #{printed_data,jdbcType=text},
+		</if>
+		<if test="voucher_img_id != null" >
+			voucher_img_id = #{voucher_img_id,jdbcType=varchar},
+		</if>
+		<if test="printed_date != null" >
+			printed_date = #{printed_date,jdbcType=char},
+		</if>
+		<if test="last_printed_time != null" >
+			last_printed_time = #{last_printed_time,jdbcType=char},
+		</if>
+		<if test="printed_num != null" >
+			printed_num = #{printed_num,jdbcType=int}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.jnl.JnlTransPrinted">
+    	UPDATE JNL_TRANS_PRINTED 
+	    <set>
+		guid = #{guid,jdbcType=varchar},
+		guid_trans = #{guid_trans,jdbcType=varchar},
+		trans_sno = #{trans_sno,jdbcType=varchar},
+		trans_code = #{trans_code,jdbcType=varchar},
+		voucher_code = #{voucher_code,jdbcType=varchar},
+		printed_data = #{printed_data,jdbcType=text},
+		voucher_img_id = #{voucher_img_id,jdbcType=varchar},
+		printed_date = #{printed_date,jdbcType=char},
+		last_printed_time = #{last_printed_time,jdbcType=char},
+		printed_num = #{printed_num,jdbcType=int}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from JNL_TRANS_PRINTED where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from JNL_TRANS_PRINTED <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE JNL_TRANS_PRINTED 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=varchar}
+      	</if>
+		<if test="domain.guid_trans != null" >
+        	guid_trans = #{domain.guid_trans,jdbcType=varchar}
+      	</if>
+		<if test="domain.trans_sno != null" >
+        	trans_sno = #{domain.trans_sno,jdbcType=varchar}
+      	</if>
+		<if test="domain.trans_code != null" >
+        	trans_code = #{domain.trans_code,jdbcType=varchar}
+      	</if>
+		<if test="domain.voucher_code != null" >
+        	voucher_code = #{domain.voucher_code,jdbcType=varchar}
+      	</if>
+		<if test="domain.printed_data != null" >
+        	printed_data = #{domain.printed_data,jdbcType=text}
+      	</if>
+		<if test="domain.voucher_img_id != null" >
+        	voucher_img_id = #{domain.voucher_img_id,jdbcType=varchar}
+      	</if>
+		<if test="domain.printed_date != null" >
+        	printed_date = #{domain.printed_date,jdbcType=char}
+      	</if>
+		<if test="domain.last_printed_time != null" >
+        	last_printed_time = #{domain.last_printed_time,jdbcType=char}
+      	</if>
+		<if test="domain.printed_num != null" >
+        	printed_num = #{domain.printed_num,jdbcType=int}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.jnl.JnlTransPrinted">
+		select <include refid="Base_Column_List"/> from JNL_TRANS_PRINTED where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.jnl.JnlTransPrinted" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from JNL_TRANS_PRINTED <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from JNL_TRANS_PRINTED <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid
+		,guid_trans
+		,trans_sno
+		,trans_code
+		,voucher_code
+		,printed_data
+		,voucher_img_id
+		,printed_date
+		,last_printed_time
+		,printed_num
+	</sql>
+</mapper>

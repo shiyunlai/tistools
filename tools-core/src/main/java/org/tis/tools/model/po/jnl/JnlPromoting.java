@@ -10,11 +10,13 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 /**
  * 
  * <pre>
  * 营销流水
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/model.erm
+ * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-oracle.erm
  * 业务域：jnl
  * 模型：JNL_PROMOTING 营销流水
  *
@@ -316,4 +318,8 @@ public class JnlPromoting implements Serializable {
 	public String getPromotingFeedback(){
 		return this.promotingFeedback ;
     }
+	
+	public String toString(){
+		return ToStringBuilder.reflectionToString(this) ; 
+	}
 }

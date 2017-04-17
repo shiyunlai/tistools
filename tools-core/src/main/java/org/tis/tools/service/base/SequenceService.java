@@ -37,7 +37,7 @@ public class SequenceService {
 	}
 	
 	public int genSequentialNo(String gainer){
-		return 0 ;//key=gainer value=N++
+		return 0 ;//TODO key=gainer value=N++
 	}
 	
 }

@@ -23,4 +23,8 @@ public class OrgManagementException extends ToolsRuntimeException {
 	public OrgManagementException(String code) {
 		super(code);
 	}
+	
+	public OrgManagementException(String code, Object[] placeholders) {
+		super(code,placeholders) ;
+	}
 }

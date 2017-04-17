@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.jnl.JnlCustServiceMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.jnl.JnlCustService">
+	    INSERT INTO JNL_CUST_SERVICE 
+	    (
+	    	 guid
+	    	,service_sno
+	    	,start_time
+	    	,end_time
+	    	,cust_no
+	    	,cust_level
+	    	,paper_no
+	    	,paper_type
+	    	,cust_service_ctx
+	    	,service_interval
+	    	,service_type
+	    	,service_appraise
+	    	,service_status
+	    	,trans_num
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=varchar},
+			#{service_sno,jdbcType=varchar},
+			#{start_time,jdbcType=varchar},
+			#{end_time,jdbcType=varchar},
+			#{cust_no,jdbcType=varchar},
+			#{cust_level,jdbcType=varchar},
+			#{paper_no,jdbcType=varchar},
+			#{paper_type,jdbcType=char},
+			#{cust_service_ctx,jdbcType=text},
+			#{service_interval,jdbcType=int},
+			#{service_type,jdbcType=varchar},
+			#{service_appraise,jdbcType=varchar},
+			#{service_status,jdbcType=char},
+			#{trans_num,jdbcType=int}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.jnl.JnlCustService">
+    	UPDATE JNL_CUST_SERVICE 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=varchar},
+		</if>
+		<if test="service_sno != null" >
+			service_sno = #{service_sno,jdbcType=varchar},
+		</if>
+		<if test="start_time != null" >
+			start_time = #{start_time,jdbcType=varchar},
+		</if>
+		<if test="end_time != null" >
+			end_time = #{end_time,jdbcType=varchar},
+		</if>
+		<if test="cust_no != null" >
+			cust_no = #{cust_no,jdbcType=varchar},
+		</if>
+		<if test="cust_level != null" >
+			cust_level = #{cust_level,jdbcType=varchar},
+		</if>
+		<if test="paper_no != null" >
+			paper_no = #{paper_no,jdbcType=varchar},
+		</if>
+		<if test="paper_type != null" >
+			paper_type = #{paper_type,jdbcType=char},
+		</if>
+		<if test="cust_service_ctx != null" >
+			cust_service_ctx = #{cust_service_ctx,jdbcType=text},
+		</if>
+		<if test="service_interval != null" >
+			service_interval = #{service_interval,jdbcType=int},
+		</if>
+		<if test="service_type != null" >
+			service_type = #{service_type,jdbcType=varchar},
+		</if>
+		<if test="service_appraise != null" >
+			service_appraise = #{service_appraise,jdbcType=varchar},
+		</if>
+		<if test="service_status != null" >
+			service_status = #{service_status,jdbcType=char},
+		</if>
+		<if test="trans_num != null" >
+			trans_num = #{trans_num,jdbcType=int}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.jnl.JnlCustService">
+    	UPDATE JNL_CUST_SERVICE 
+	    <set>
+		guid = #{guid,jdbcType=varchar},
+		service_sno = #{service_sno,jdbcType=varchar},
+		start_time = #{start_time,jdbcType=varchar},
+		end_time = #{end_time,jdbcType=varchar},
+		cust_no = #{cust_no,jdbcType=varchar},
+		cust_level = #{cust_level,jdbcType=varchar},
+		paper_no = #{paper_no,jdbcType=varchar},
+		paper_type = #{paper_type,jdbcType=char},
+		cust_service_ctx = #{cust_service_ctx,jdbcType=text},
+		service_interval = #{service_interval,jdbcType=int},
+		service_type = #{service_type,jdbcType=varchar},
+		service_appraise = #{service_appraise,jdbcType=varchar},
+		service_status = #{service_status,jdbcType=char},
+		trans_num = #{trans_num,jdbcType=int}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from JNL_CUST_SERVICE where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from JNL_CUST_SERVICE <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE JNL_CUST_SERVICE 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=varchar}
+      	</if>
+		<if test="domain.service_sno != null" >
+        	service_sno = #{domain.service_sno,jdbcType=varchar}
+      	</if>
+		<if test="domain.start_time != null" >
+        	start_time = #{domain.start_time,jdbcType=varchar}
+      	</if>
+		<if test="domain.end_time != null" >
+        	end_time = #{domain.end_time,jdbcType=varchar}
+      	</if>
+		<if test="domain.cust_no != null" >
+        	cust_no = #{domain.cust_no,jdbcType=varchar}
+      	</if>
+		<if test="domain.cust_level != null" >
+        	cust_level = #{domain.cust_level,jdbcType=varchar}
+      	</if>
+		<if test="domain.paper_no != null" >
+        	paper_no = #{domain.paper_no,jdbcType=varchar}
+      	</if>
+		<if test="domain.paper_type != null" >
+        	paper_type = #{domain.paper_type,jdbcType=char}
+      	</if>
+		<if test="domain.cust_service_ctx != null" >
+        	cust_service_ctx = #{domain.cust_service_ctx,jdbcType=text}
+      	</if>
+		<if test="domain.service_interval != null" >
+        	service_interval = #{domain.service_interval,jdbcType=int}
+      	</if>
+		<if test="domain.service_type != null" >
+        	service_type = #{domain.service_type,jdbcType=varchar}
+      	</if>
+		<if test="domain.service_appraise != null" >
+        	service_appraise = #{domain.service_appraise,jdbcType=varchar}
+      	</if>
+		<if test="domain.service_status != null" >
+        	service_status = #{domain.service_status,jdbcType=char}
+      	</if>
+		<if test="domain.trans_num != null" >
+        	trans_num = #{domain.trans_num,jdbcType=int}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.jnl.JnlCustService">
+		select <include refid="Base_Column_List"/> from JNL_CUST_SERVICE where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.jnl.JnlCustService" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from JNL_CUST_SERVICE <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from JNL_CUST_SERVICE <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid
+		,service_sno
+		,start_time
+		,end_time
+		,cust_no
+		,cust_level
+		,paper_no
+		,paper_type
+		,cust_service_ctx
+		,service_interval
+		,service_type
+		,service_appraise
+		,service_status
+		,trans_num
+	</sql>
+</mapper>

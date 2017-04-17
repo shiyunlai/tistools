@@ -16,7 +16,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * 
  * <pre>
  * 功能操作行为
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/abf.erm
+ * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/ABF-oracle.erm
  * 业务域：ac
  * 模型：AC_BEHAVIOR 功能操作行为
  *

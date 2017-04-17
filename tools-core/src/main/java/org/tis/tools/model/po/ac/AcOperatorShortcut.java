@@ -16,11 +16,11 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * 
  * <pre>
  * 操作员快捷菜单
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/abf.erm
+ * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/ABF-oracle.erm
  * 业务域：ac
  * 模型：AC_OPERATOR_SHORTCUT 操作员快捷菜单
  *
- * 用户自定义的快捷菜单，以应用系统进行区分；
+ * 用户自定义的快捷菜单（以应用系统进行区分）；
 快捷菜单中的功能可在快捷菜单面板中点击启动，也可通过对应的快捷按键启动（限于按键数量，只提供 CTRL ＋ 0 ～ 9 ，一共10个快捷按键，其余快捷交易只能通过快捷面板中点击启动。
  *
  * </pre>

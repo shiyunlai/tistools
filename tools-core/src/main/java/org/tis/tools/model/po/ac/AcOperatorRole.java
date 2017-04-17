@@ -16,7 +16,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * 
  * <pre>
  * 操作员与权限集（角色）对应关系
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/abf.erm
+ * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/ABF-oracle.erm
  * 业务域：ac
  * 模型：AC_OPERATOR_ROLE 操作员与权限集（角色）对应关系
  *

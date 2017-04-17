@@ -16,7 +16,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * 
  * <pre>
  * 员工
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/abf.erm
+ * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/ABF-oracle.erm
  * 业务域：om
  * 模型：OM_EMPLOYEE 员工
  *
@@ -118,7 +118,7 @@ public class OmEmployee implements Serializable {
 	/** 字段类型：varchar<br/>字段名：操作员编号<br/>描述： */
 	private String guidOperator ;
 	
-	/** 字段类型：varchar<br/>字段名：操作员登录号<br/>描述： */
+	/** 字段类型：varchar<br/>字段名：操作员<br/>描述：登陆用户id */
 	private String userId ;
 	
 	/** 字段类型：varchar<br/>字段名：可授权角色<br/>描述：限定了该人员对应的操作员登陆系统时，可为其他操作员分配角色的范围； 可选内容来自角色表（AC_ROLE），json数组形式，如： [{roleid:"444555"},{roleid:"999888"},....] */
@@ -676,19 +676,19 @@ public class OmEmployee implements Serializable {
     }
 	
 	/**
-	 * Set the 操作员登录号.
+	 * Set the 操作员.
 	 * 
 	 * @param userId
-	 *            操作员登录号
+	 *            操作员
 	 */
 	public void setUserId(String userId) {
  		this.userId = userId == null ? null : userId.trim() ;
     }
     
     /**
-	 * Get the 操作员登录号.
+	 * Get the 操作员.
 	 * 
-	 * @return 操作员登录号
+	 * @return 操作员
 	 */
 	public String getUserId(){
 		return this.userId ;

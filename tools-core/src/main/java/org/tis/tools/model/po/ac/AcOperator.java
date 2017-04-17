@@ -16,7 +16,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * 
  * <pre>
  * 操作员
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/abf.erm
+ * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/ABF-oracle.erm
  * 业务域：ac
  * 模型：AC_OPERATOR 操作员
  *
@@ -44,7 +44,7 @@ public class AcOperator implements Serializable {
 	/** 字段类型：date<br/>字段名：密码失效日期<br/>描述： */
 	private Date invalDate ;
 	
-	/** 字段类型：varchar<br/>字段名：操作员名称<br/>描述：一般同人员姓名 EMP_NAME */
+	/** 字段类型：varchar<br/>字段名：操作员姓名<br/>描述：记录当前操作员姓名（只记录当前值，不随之改变） */
 	private String operatorName ;
 	
 	/** 字段类型：varchar<br/>字段名：认证模式<br/>描述：取值来自业务菜单：DICT_AC_AUTHMODE 如：本地密码认证、LDAP认证、等 可以多选，以逗号分隔，且按照出现先后顺序进行认证； 如： pwd,captcha 表示输入密码，并且还需要验证码 */
@@ -164,19 +164,19 @@ public class AcOperator implements Serializable {
     }
 	
 	/**
-	 * Set the 操作员名称.
+	 * Set the 操作员姓名.
 	 * 
 	 * @param operatorName
-	 *            操作员名称
+	 *            操作员姓名
 	 */
 	public void setOperatorName(String operatorName) {
  		this.operatorName = operatorName == null ? null : operatorName.trim() ;
     }
     
     /**
-	 * Get the 操作员名称.
+	 * Get the 操作员姓名.
 	 * 
-	 * @return 操作员名称
+	 * @return 操作员姓名
 	 */
 	public String getOperatorName(){
 		return this.operatorName ;

@@ -10,11 +10,13 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 /**
  * 
  * <pre>
  * 交易流水
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/model.erm
+ * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-oracle.erm
  * 业务域：jnl
  * 模型：JNL_TRANS 交易流水
  *
@@ -45,7 +47,7 @@ public class JnlTrans implements Serializable {
 	/** 字段类型：varchar<br/>字段名：交易来源<br/>描述：启动本交易的来源方式，见业务字典： DICT_TRANS_ORIGIN */
 	private String transOrigin ;
 	
-	/** 字段类型：varchar<br/>字段名：来源GUID<br/>描述：对应本交易启动来源的GUID 如：预填单启动时，本字段记录预填流水GUID；关联启动时，本字段记录关联交易的交易流水GUID；为空时，表示柜员直接启动的交易； */
+	/** 字段类型：varchar<br/>字段名：来源GUID<br/>描述：对应本交易启动来源的GUID 如：预填单启动时，本字段记录预填流水GUID； 关联启动时，本字段记录关联交易的交易流水GUID； 为空时，表示柜员直接启动的交易； */
 	private String guidOrigin ;
 	
 	/** 字段类型：varchar<br/>字段名：交易代码<br/>描述： */
@@ -382,4 +384,8 @@ public class JnlTrans implements Serializable {
 	public String getTransErrMsg(){
 		return this.transErrMsg ;
     }
+	
+	public String toString(){
+		return ToStringBuilder.reflectionToString(this) ; 
+	}
 }

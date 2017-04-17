@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.jnl.JnlEnqueueMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.jnl.JnlEnqueue">
+	    INSERT INTO JNL_ENQUEUE 
+	    (
+	    	 guid
+	    	,guid_cust_service
+	    	,service_sno
+	    	,enqueue_no
+	    	,enqueue_biz_type
+	    	,chn_code
+	    	,enqueue_in_time
+	    	,enqueue_code
+	    	,cust_no
+	    	,cust_name
+	    	,cust_level
+	    	,paper_type
+	    	,paper_no
+	    	,call_teller
+	    	,call_time
+	    	,call_instno
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=varchar},
+			#{guid_cust_service,jdbcType=varchar},
+			#{service_sno,jdbcType=varchar},
+			#{enqueue_no,jdbcType=int},
+			#{enqueue_biz_type,jdbcType=varchar},
+			#{chn_code,jdbcType=varchar},
+			#{enqueue_in_time,jdbcType=varchar},
+			#{enqueue_code,jdbcType=varchar},
+			#{cust_no,jdbcType=varchar},
+			#{cust_name,jdbcType=varchar},
+			#{cust_level,jdbcType=varchar},
+			#{paper_type,jdbcType=char},
+			#{paper_no,jdbcType=varchar},
+			#{call_teller,jdbcType=varchar},
+			#{call_time,jdbcType=varchar},
+			#{call_instno,jdbcType=varchar}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.jnl.JnlEnqueue">
+    	UPDATE JNL_ENQUEUE 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=varchar},
+		</if>
+		<if test="guid_cust_service != null" >
+			guid_cust_service = #{guid_cust_service,jdbcType=varchar},
+		</if>
+		<if test="service_sno != null" >
+			service_sno = #{service_sno,jdbcType=varchar},
+		</if>
+		<if test="enqueue_no != null" >
+			enqueue_no = #{enqueue_no,jdbcType=int},
+		</if>
+		<if test="enqueue_biz_type != null" >
+			enqueue_biz_type = #{enqueue_biz_type,jdbcType=varchar},
+		</if>
+		<if test="chn_code != null" >
+			chn_code = #{chn_code,jdbcType=varchar},
+		</if>
+		<if test="enqueue_in_time != null" >
+			enqueue_in_time = #{enqueue_in_time,jdbcType=varchar},
+		</if>
+		<if test="enqueue_code != null" >
+			enqueue_code = #{enqueue_code,jdbcType=varchar},
+		</if>
+		<if test="cust_no != null" >
+			cust_no = #{cust_no,jdbcType=varchar},
+		</if>
+		<if test="cust_name != null" >
+			cust_name = #{cust_name,jdbcType=varchar},
+		</if>
+		<if test="cust_level != null" >
+			cust_level = #{cust_level,jdbcType=varchar},
+		</if>
+		<if test="paper_type != null" >
+			paper_type = #{paper_type,jdbcType=char},
+		</if>
+		<if test="paper_no != null" >
+			paper_no = #{paper_no,jdbcType=varchar},
+		</if>
+		<if test="call_teller != null" >
+			call_teller = #{call_teller,jdbcType=varchar},
+		</if>
+		<if test="call_time != null" >
+			call_time = #{call_time,jdbcType=varchar},
+		</if>
+		<if test="call_instno != null" >
+			call_instno = #{call_instno,jdbcType=varchar}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.jnl.JnlEnqueue">
+    	UPDATE JNL_ENQUEUE 
+	    <set>
+		guid = #{guid,jdbcType=varchar},
+		guid_cust_service = #{guid_cust_service,jdbcType=varchar},
+		service_sno = #{service_sno,jdbcType=varchar},
+		enqueue_no = #{enqueue_no,jdbcType=int},
+		enqueue_biz_type = #{enqueue_biz_type,jdbcType=varchar},
+		chn_code = #{chn_code,jdbcType=varchar},
+		enqueue_in_time = #{enqueue_in_time,jdbcType=varchar},
+		enqueue_code = #{enqueue_code,jdbcType=varchar},
+		cust_no = #{cust_no,jdbcType=varchar},
+		cust_name = #{cust_name,jdbcType=varchar},
+		cust_level = #{cust_level,jdbcType=varchar},
+		paper_type = #{paper_type,jdbcType=char},
+		paper_no = #{paper_no,jdbcType=varchar},
+		call_teller = #{call_teller,jdbcType=varchar},
+		call_time = #{call_time,jdbcType=varchar},
+		call_instno = #{call_instno,jdbcType=varchar}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from JNL_ENQUEUE where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from JNL_ENQUEUE <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE JNL_ENQUEUE 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=varchar}
+      	</if>
+		<if test="domain.guid_cust_service != null" >
+        	guid_cust_service = #{domain.guid_cust_service,jdbcType=varchar}
+      	</if>
+		<if test="domain.service_sno != null" >
+        	service_sno = #{domain.service_sno,jdbcType=varchar}
+      	</if>
+		<if test="domain.enqueue_no != null" >
+        	enqueue_no = #{domain.enqueue_no,jdbcType=int}
+      	</if>
+		<if test="domain.enqueue_biz_type != null" >
+        	enqueue_biz_type = #{domain.enqueue_biz_type,jdbcType=varchar}
+      	</if>
+		<if test="domain.chn_code != null" >
+        	chn_code = #{domain.chn_code,jdbcType=varchar}
+      	</if>
+		<if test="domain.enqueue_in_time != null" >
+        	enqueue_in_time = #{domain.enqueue_in_time,jdbcType=varchar}
+      	</if>
+		<if test="domain.enqueue_code != null" >
+        	enqueue_code = #{domain.enqueue_code,jdbcType=varchar}
+      	</if>
+		<if test="domain.cust_no != null" >
+        	cust_no = #{domain.cust_no,jdbcType=varchar}
+      	</if>
+		<if test="domain.cust_name != null" >
+        	cust_name = #{domain.cust_name,jdbcType=varchar}
+      	</if>
+		<if test="domain.cust_level != null" >
+        	cust_level = #{domain.cust_level,jdbcType=varchar}
+      	</if>
+		<if test="domain.paper_type != null" >
+        	paper_type = #{domain.paper_type,jdbcType=char}
+      	</if>
+		<if test="domain.paper_no != null" >
+        	paper_no = #{domain.paper_no,jdbcType=varchar}
+      	</if>
+		<if test="domain.call_teller != null" >
+        	call_teller = #{domain.call_teller,jdbcType=varchar}
+      	</if>
+		<if test="domain.call_time != null" >
+        	call_time = #{domain.call_time,jdbcType=varchar}
+      	</if>
+		<if test="domain.call_instno != null" >
+        	call_instno = #{domain.call_instno,jdbcType=varchar}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.jnl.JnlEnqueue">
+		select <include refid="Base_Column_List"/> from JNL_ENQUEUE where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.jnl.JnlEnqueue" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from JNL_ENQUEUE <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from JNL_ENQUEUE <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid
+		,guid_cust_service
+		,service_sno
+		,enqueue_no
+		,enqueue_biz_type
+		,chn_code
+		,enqueue_in_time
+		,enqueue_code
+		,cust_no
+		,cust_name
+		,cust_level
+		,paper_type
+		,paper_no
+		,call_teller
+		,call_time
+		,call_instno
+	</sql>
+</mapper>

@@ -51,14 +51,16 @@ public interface IOrgRService {
 	/**
 	 * 生成机构代码
 	 * 
+	 * @param areaCode
+	 *            区域代码
 	 * @param orgDegree
-	 *            机构等级（可空）
+	 *            机构等级
 	 * @param orgType
-	 *            机构类型（可空）
+	 *            机构类型
 	 * @return 机构代码
 	 * @throws OrgManagementException
 	 */
-	String genOrgCode(String orgDegree, String orgType) throws OrgManagementException;
+	String genOrgCode(String areaCode, String orgDegree, String orgType) throws OrgManagementException;
 
 	/**
 	 * <pre>
