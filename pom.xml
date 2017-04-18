@@ -32,9 +32,9 @@
 		<module>tools-maven-plugin</module>
 
 		<module>tools-facade-om</module>
-		<module>tools-service-om</module>
+		
 		<module>tools-facade-ac</module>
-		<module>tools-service-ac</module>
+		
 
 		<module>tools-facade-sys</module>
 		<module>tools-service-abf</module>

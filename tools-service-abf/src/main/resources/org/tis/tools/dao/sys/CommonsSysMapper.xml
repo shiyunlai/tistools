@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.sys.CommonsSysMapper">
+  
+  <!-- 根据业务字典（dictKey）和字典项（itemValue）查询字典项的实际值 -->
+ 	<select id="querySendValue" parameterType="Map" resultType="String">
+ 		select i.send_value 
+ 		from sys_dict d , sys_dict_item i 
+ 		where d.dict_key = #{dictKey} and d.guid = i.guid_dict and i.item_value = #{itemValue} 
+ 	</select>
+ 	
+</mapper>

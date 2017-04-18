@@ -9,22 +9,22 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tis.tools.rservice.om.exception.OrgManagementException;
+import org.tis.tools.rservice.sys.capable.DictConstants;
 import org.tis.tools.service.base.SequenceService;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
-import org.tis.tools.service.om.IGenOrgCode;
-import org.tools.facade.sys.DictConstants;
-import org.tools.facade.sys.IDictRService;
+import org.tis.tools.service.sys.SysDictServiceExt;
+import org.tis.tools.spi.om.IOrgCodeGenerator;
 
 /**
  * 上海银行机构代码生成
  * @author megapro
  *
  */
-@Service("boshGenOrgCode")
-public class BOSHGenOrgCode implements IGenOrgCode {
+@Service
+public class BOSHGenOrgCode implements IOrgCodeGenerator{
 	
 	@Autowired
-	IDictRService dictRService  ; 
+	SysDictServiceExt sysDictServiceExt  ; 
 	
 	@Autowired
 	SequenceService sequenceService ;
@@ -65,17 +65,17 @@ public class BOSHGenOrgCode implements IGenOrgCode {
 		StringBuffer sb = new StringBuffer() ;
 		
 		// 机构等级
-		sb.append(dictRService.getActualValue(DictConstants.DICT_OM_ORGDEGREE, orgDegree)) ;
+		sb.append(sysDictServiceExt.getActualValue(DictConstants.DICT_OM_ORGDEGREE, orgDegree)) ;
 		// 地区码
-		sb.append(dictRService.getActualValue(DictConstants.DICT_SD_AREA, areaCode)) ;
+		sb.append(sysDictServiceExt.getActualValue(DictConstants.DICT_SD_AREA, areaCode)) ;
 		// 序号， 以 BOSHGenOrgCode.class.getName() 唯一key，顺序编号
-		sb.append(toSeqNO(sequenceService.genSequentialNo(BOSHGenOrgCode.class.getName()))) ;//TODO 五位机构顺序号
+		sb.append(toSeqNO(sequenceService.getNextSeqNo(BOSHGenOrgCode.class.getName()))) ;//TODO 五位机构顺序号
 		
 		return sb.toString();
 	}
 
 	/**
-	 * 把当前机构数量转为5位字符串
+	 * 把当前机构数量转为5位字符串，不足部分以0左补齐
 	 * @param totalOrgCount
 	 * @return
 	 */
@@ -83,7 +83,7 @@ public class BOSHGenOrgCode implements IGenOrgCode {
 		
 		String t = String.valueOf(totalOrgCount).toString() ;
 		
-		return org.tis.tools.common.utils.StringUtils.fillLeft(t, 5, '0');
+		return org.tis.tools.common.utils.StringUtils.leftPad(t, 5, '0');
 		
 	}
 

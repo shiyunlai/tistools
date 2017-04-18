@@ -226,11 +226,14 @@
 	<!-- ================================= 针对myBatis的配置项 ======================= -->  
 
 	<!-- define the SqlSessionFactory -->
-    <bean id="sqlSessionFactory1" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <!-- 实例化sqlSessionFactory时需要使用上述配置好的数据源以及SQL映射文件 -->  
-        <property name="dataSource" ref="dataSource" />
-        <property name="typeAliasesPackage" value="org.tis.tools.dao.mapper" />
-    </bean>
+	<bean id="sqlSessionFactory1" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 实例化sqlSessionFactory时需要使用上述配置好的数据源以及SQL映射文件 -->
+		<property name="dataSource" ref="dataSource" />
+		<property name="typeAliasesPackage"
+			value="org.tis.tools.dao.ac,
+				   org.tis.tools.dao.om,
+				   org.tis.tools.dao.sys" />
+	</bean>
     
     <!-- <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
@@ -247,7 +250,10 @@
 	<!-- scan for mappers and let them be autowired -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
      	<!-- 扫描org.tis.tools.dao.mapper这个包以及它的子包下的所有映射接口类 --> 
-        <property name="basePackage" value="org.tis.tools.dao.mapper" />
+        <property name="basePackage" 
+        	value="org.tis.tools.dao.ac,
+        		   org.tis.tools.dao.om,
+        		   org.tis.tools.dao.sys" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory1" />
     </bean>
 	

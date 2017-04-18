@@ -13,7 +13,10 @@ import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.po.om.OmPosition;
 import org.tis.tools.rservice.om.exception.OrgManagementException;
-import org.tis.tools.service.om.IGenOrgCode;
+import org.tis.tools.service.om.BOSHGenOrgCode;
+import org.tis.tools.spi.om.IOrgCodeGenerator;
+
+import com.alibaba.dubbo.config.annotation.Service;
 
 /**
  * <pre>
@@ -27,7 +30,7 @@ import org.tis.tools.service.om.IGenOrgCode;
 public class OrgRServiceImpl implements IOrgRService {
 
 	@Autowired
-	IGenOrgCode boshGenOrgCode ;
+	BOSHGenOrgCode boshGenOrgCode ;
 	
 	/* (non-Javadoc)
 	 * @see org.tis.tools.rservice.om.capable.IOrgRService#genOrgCode(java.lang.String, java.lang.String)

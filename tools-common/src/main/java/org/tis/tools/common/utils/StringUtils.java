@@ -8,7 +8,7 @@ package org.tis.tools.common.utils;
  *
  */
 public class StringUtils {
-
+	
 	/**
 	 * <pre>
 	 * 在字符（target）左边补充字符（filler），并返回总长度为len的字符串
@@ -24,13 +24,13 @@ public class StringUtils {
 	 *            目标字符串
 	 * @param len
 	 *            总长度
-	 * @param filler
+	 * @param alexin
 	 *            填充字符
 	 * @return 填充后的字符串
 	 */
-	public static String fillLeft(String target, int len, char filler) {
-		//TODO 在字符（target）左边补充字符（filler），并返回总长度为len的字符串
-		return null;
+	public static String leftPad(String target, int len, char alexin) {
+		// 在字符（target）左边补充字符（alexin），并返回总长度为len的字符串
+		return org.apache.commons.lang.StringUtils.leftPad(target, len, alexin) ;
 	}
 	
 	/**
@@ -48,12 +48,13 @@ public class StringUtils {
 	 *            目标字符串
 	 * @param len
 	 *            总长度
-	 * @param filler
+	 * @param alexin
 	 *            填充字符
 	 * @return 填充后的字符串
 	 */
-	public static String fillRight(String target, int len, char filler) {
+	public static String rightPad(String target, int len, char alexin) {
 		//在字符（target）右边补充字符（filler），并返回总长度为len的字符串
-		return null;
+		return org.apache.commons.lang.StringUtils.rightPad(target, len, alexin);
 	}
+	
 }

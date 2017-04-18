@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+       http://www.springframework.org/schema/beans/spring-beans.xsd  
+       http://code.alibabatech.com/schema/dubbo  
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<description>tools-designe作为consumer，对provider提供的服务进行测试。</description>
+	
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<dubbo:application name="tools-design"  owner="shiyl" organization="org.tis"/>
+
+	<!-- 使用zookeeper注册中心暴露服务地址 -->
+	<!-- //TODO 可以做properties配置抽取，进一步固化dubbo配置文件，以便自动化生成 -->
+	<dubbo:registry address="zookeeper://139.196.145.67:2181" file="dubbo/cache/tools-design.cache"/>
+	
+</beans>

@@ -5,6 +5,9 @@ package org.tis.tools.common.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * <pre>
@@ -85,4 +88,56 @@ public class SequenceSimpleUtil {
 		String a=merNO+sdf.format(new Date())+((System.currentTimeMillis()+"").substring(3));
 		return a;
 	}
+	
+	/**
+	 * 随机启动的序号资源
+	 */
+	private static ConcurrentMap<String, AtomicInteger> seqNoResources = new ConcurrentHashMap<String, AtomicInteger>();
+	
+	/**
+	 * <pre>
+	 * 获取seqKey对应的下一个序号资源
+	 * 
+	 * 注意：
+	 * 系统不负责保留seqKey对应的序号资源状态，当系统重启后，序号资源会置0，从头开始数数。
+	 * </pre>
+	 * 
+	 * @param seqKey
+	 *            序号键值
+	 * @return 序号数
+	 */
+	public int getNextSeqNo(String seqKey) {
+
+		if (!seqNoResources.containsKey(seqKey)) {
+			AtomicInteger seqNos = new AtomicInteger(0);
+			seqNoResources.put(seqKey, seqNos);
+		}
+		
+		return seqNoResources.get(seqKey).incrementAndGet();
+	}
+	
+	/**
+	 * <pre>
+	 * 获取seqKey对应的下一个序号资源
+	 * 
+	 * 注意：
+	 * 系统不负责保留seqKey对应的序号资源状态，当系统重启后，序号资源会置0，从头开始数数。
+	 * </pre>
+	 * 
+	 * @param seqKey
+	 *            序号键值
+	 * @param delta
+	 *            增量
+	 * @return 序号数
+	 */
+	public int getNextSeqNo(String seqKey,int delta) {
+
+		if (!seqNoResources.containsKey(seqKey)) {
+			AtomicInteger seqNos = new AtomicInteger(0);
+			seqNoResources.put(seqKey, seqNos);
+		}
+
+		return seqNoResources.get(seqKey).addAndGet(delta) ;
+	}
+
 }
