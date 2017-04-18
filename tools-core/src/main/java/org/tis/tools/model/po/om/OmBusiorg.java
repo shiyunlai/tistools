@@ -39,7 +39,7 @@ public class OmBusiorg implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	
-	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：记录的全局性唯一ID，系统自动生成； */
+	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
 	private String guid ;
 	
 	/** 字段类型：varchar<br/>字段名：节点类型<br/>描述：业务字典 DICT_OM_NODETYPE 该业务机构的节点类型，虚拟节点，机构节点，如果是机构节点，则对应机构信息表的一个机构 */

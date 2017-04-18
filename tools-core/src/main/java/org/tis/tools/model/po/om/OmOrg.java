@@ -33,7 +33,7 @@ public class OmOrg implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	
-	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：记录的全局性唯一ID，系统自动生成； */
+	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
 	private String guid ;
 	
 	/** 字段类型：varchar<br/>字段名：机构代码<br/>描述：业务上对机构实体的编码。 一般根据机构等级和机构类型进行有规则的编码。 */
