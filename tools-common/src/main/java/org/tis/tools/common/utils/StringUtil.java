@@ -9,7 +9,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @author megapro
  *
  */
-public class StringUtils {
+public class StringUtil {
 	
 	/**
 	 * <pre>
@@ -69,6 +69,22 @@ public class StringUtils {
 	public static String toString(Object obj) {
 		
 		return ToStringBuilder.reflectionToString(obj) ;
+	}
+
+	/**
+	 * 判断所有str字符串是否都为非空。
+	 * 只要有一个为空，则返回false
+	 * @param strs
+	 * @return true 都非空  false 有空值
+	 */
+	public static boolean noEmpty(String... strs) {
+		
+		for( String s : strs ){
+			if( org.apache.commons.lang.StringUtils.isEmpty(s) ) {
+				return false ; //只要有一个为空，则返回false
+			}
+		}
+		return true;
 	}
 	
 }
