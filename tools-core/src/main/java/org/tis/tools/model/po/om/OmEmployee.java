@@ -10,7 +10,7 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.tis.tools.common.utils.StringUtils;
 
 /**
  * 
@@ -139,7 +139,7 @@ public class OmEmployee implements Serializable {
 	/** 字段类型：timestamp<br/>字段名：创建时间<br/>描述： */
 	private Date createtime ;
 	
-	/** 字段类型：date<br/>字段名：最新更新时间<br/>描述： */
+	/** 字段类型：timestamp<br/>字段名：最新更新时间<br/>描述： */
 	private Date lastmodytime ;
 	
 	
@@ -828,6 +828,6 @@ public class OmEmployee implements Serializable {
     }
 	
 	public String toString(){
-		return ToStringBuilder.reflectionToString(this) ; 
+		return StringUtils.toString(this) ; 
 	}
 }

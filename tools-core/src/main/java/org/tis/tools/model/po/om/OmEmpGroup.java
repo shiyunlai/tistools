@@ -10,7 +10,7 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.tis.tools.common.utils.StringUtils;
 
 /**
  * 
@@ -79,6 +79,6 @@ public class OmEmpGroup implements Serializable {
     }
 	
 	public String toString(){
-		return ToStringBuilder.reflectionToString(this) ; 
+		return StringUtils.toString(this) ; 
 	}
 }

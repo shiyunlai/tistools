@@ -10,7 +10,7 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.tis.tools.common.utils.StringUtils;
 
 /**
  * 
@@ -51,6 +51,9 @@ public class OmGroup implements Serializable {
 	/** 字段类型：varchar<br/>字段名：工作组描述<br/>描述： */
 	private String groupDesc ;
 	
+	/** 字段类型：varchar<br/>字段名：负责人<br/>描述：选择范围来自 OM_EMPLOYEE表 */
+	private String guidEmpManager ;
+	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述： */
 	private String guidOrg ;
 	
@@ -75,13 +78,10 @@ public class OmGroup implements Serializable {
 	/** 字段类型：date<br/>字段名：工作组有效截止日期<br/>描述： */
 	private Date endDate ;
 	
-	/** 字段类型：varchar<br/>字段名：负责人<br/>描述：选择范围来自 OM_EMPLOYEE表 */
-	private String guidEmpManager ;
-	
 	/** 字段类型：timestamp<br/>字段名：创建时间<br/>描述： */
 	private Date createtime ;
 	
-	/** 字段类型：date<br/>字段名：最近更新时间<br/>描述： */
+	/** 字段类型：timestamp<br/>字段名：最近更新时间<br/>描述： */
 	private Date lastupdate ;
 	
 	/** 字段类型：varchar<br/>字段名：最近更新人员<br/>描述： */
@@ -200,6 +200,25 @@ public class OmGroup implements Serializable {
 	 */
 	public String getGroupDesc(){
 		return this.groupDesc ;
+    }
+	
+	/**
+	 * Set the 负责人.
+	 * 
+	 * @param guidEmpManager
+	 *            负责人
+	 */
+	public void setGuidEmpManager(String guidEmpManager) {
+ 		this.guidEmpManager = guidEmpManager == null ? null : guidEmpManager.trim() ;
+    }
+    
+    /**
+	 * Get the 负责人.
+	 * 
+	 * @return 负责人
+	 */
+	public String getGuidEmpManager(){
+		return this.guidEmpManager ;
     }
 	
 	/**
@@ -361,25 +380,6 @@ public class OmGroup implements Serializable {
     }
 	
 	/**
-	 * Set the 负责人.
-	 * 
-	 * @param guidEmpManager
-	 *            负责人
-	 */
-	public void setGuidEmpManager(String guidEmpManager) {
- 		this.guidEmpManager = guidEmpManager == null ? null : guidEmpManager.trim() ;
-    }
-    
-    /**
-	 * Get the 负责人.
-	 * 
-	 * @return 负责人
-	 */
-	public String getGuidEmpManager(){
-		return this.guidEmpManager ;
-    }
-	
-	/**
 	 * Set the 创建时间.
 	 * 
 	 * @param createtime
@@ -437,6 +437,6 @@ public class OmGroup implements Serializable {
     }
 	
 	public String toString(){
-		return ToStringBuilder.reflectionToString(this) ; 
+		return StringUtils.toString(this) ; 
 	}
 }

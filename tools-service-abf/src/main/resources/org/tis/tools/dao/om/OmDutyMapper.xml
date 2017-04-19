@@ -21,16 +21,16 @@
 	    )
 	    VALUES 
 	    (
-			#{guid,jdbcType=varchar},
-			#{duty_code,jdbcType=varchar},
-			#{duty_name,jdbcType=varchar},
-			#{duty_type,jdbcType=varchar},
-			#{guid_parents,jdbcType=varchar},
-			#{isleaf,jdbcType=char},
-			#{sub_count,jdbcType=decimal},
-			#{duty_level,jdbcType=decimal},
-			#{duty_seq,jdbcType=varchar},
-			#{remark,jdbcType=varchar}
+			#{guid,jdbcType=VARCHAR},
+			#{dutyCode,jdbcType=VARCHAR},
+			#{dutyName,jdbcType=VARCHAR},
+			#{dutyType,jdbcType=VARCHAR},
+			#{guidParents,jdbcType=VARCHAR},
+			#{isleaf,jdbcType=CHAR},
+			#{subCount,jdbcType=DECIMAL},
+			#{dutyLevel,jdbcType=DECIMAL},
+			#{dutySeq,jdbcType=VARCHAR},
+			#{remark,jdbcType=VARCHAR}
   		)
  	</insert>
  	
@@ -38,34 +38,34 @@
     	UPDATE OM_DUTY 
 	    <set>
 		<if test="guid != null" >
-			guid = #{guid,jdbcType=varchar},
+			guid = #{guid,jdbcType=VARCHAR},
 		</if>
 		<if test="duty_code != null" >
-			duty_code = #{duty_code,jdbcType=varchar},
+			duty_code = #{dutyCode,jdbcType=VARCHAR},
 		</if>
 		<if test="duty_name != null" >
-			duty_name = #{duty_name,jdbcType=varchar},
+			duty_name = #{dutyName,jdbcType=VARCHAR},
 		</if>
 		<if test="duty_type != null" >
-			duty_type = #{duty_type,jdbcType=varchar},
+			duty_type = #{dutyType,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_parents != null" >
-			guid_parents = #{guid_parents,jdbcType=varchar},
+			guid_parents = #{guidParents,jdbcType=VARCHAR},
 		</if>
 		<if test="isleaf != null" >
-			isleaf = #{isleaf,jdbcType=char},
+			isleaf = #{isleaf,jdbcType=CHAR},
 		</if>
 		<if test="sub_count != null" >
-			sub_count = #{sub_count,jdbcType=decimal},
+			sub_count = #{subCount,jdbcType=DECIMAL},
 		</if>
 		<if test="duty_level != null" >
-			duty_level = #{duty_level,jdbcType=decimal},
+			duty_level = #{dutyLevel,jdbcType=DECIMAL},
 		</if>
 		<if test="duty_seq != null" >
-			duty_seq = #{duty_seq,jdbcType=varchar},
+			duty_seq = #{dutySeq,jdbcType=VARCHAR},
 		</if>
 		<if test="remark != null" >
-			remark = #{remark,jdbcType=varchar}
+			remark = #{remark,jdbcType=VARCHAR}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -74,16 +74,16 @@
  	<update id="updateForce" parameterType="org.tis.tools.model.po.om.OmDuty">
     	UPDATE OM_DUTY 
 	    <set>
-		guid = #{guid,jdbcType=varchar},
-		duty_code = #{duty_code,jdbcType=varchar},
-		duty_name = #{duty_name,jdbcType=varchar},
-		duty_type = #{duty_type,jdbcType=varchar},
-		guid_parents = #{guid_parents,jdbcType=varchar},
-		isleaf = #{isleaf,jdbcType=char},
-		sub_count = #{sub_count,jdbcType=decimal},
-		duty_level = #{duty_level,jdbcType=decimal},
-		duty_seq = #{duty_seq,jdbcType=varchar},
-		remark = #{remark,jdbcType=varchar}
+		guid = #{guid,jdbcType=VARCHAR},
+		duty_code = #{dutyCode,jdbcType=VARCHAR},
+		duty_name = #{dutyName,jdbcType=VARCHAR},
+		duty_type = #{dutyType,jdbcType=VARCHAR},
+		guid_parents = #{guidParents,jdbcType=VARCHAR},
+		isleaf = #{isleaf,jdbcType=CHAR},
+		sub_count = #{subCount,jdbcType=DECIMAL},
+		duty_level = #{dutyLevel,jdbcType=DECIMAL},
+		duty_seq = #{dutySeq,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -100,34 +100,34 @@
     	UPDATE OM_DUTY 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=varchar}
+        	guid = #{domain.guid,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.duty_code != null" >
-        	duty_code = #{domain.duty_code,jdbcType=varchar}
+        	duty_code = #{domain.dutyCode,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.duty_name != null" >
-        	duty_name = #{domain.duty_name,jdbcType=varchar}
+        	duty_name = #{domain.dutyName,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.duty_type != null" >
-        	duty_type = #{domain.duty_type,jdbcType=varchar}
+        	duty_type = #{domain.dutyType,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_parents != null" >
-        	guid_parents = #{domain.guid_parents,jdbcType=varchar}
+        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.isleaf != null" >
-        	isleaf = #{domain.isleaf,jdbcType=char}
+        	isleaf = #{domain.isleaf,jdbcType=CHAR}
       	</if>
 		<if test="domain.sub_count != null" >
-        	sub_count = #{domain.sub_count,jdbcType=decimal}
+        	sub_count = #{domain.subCount,jdbcType=DECIMAL}
       	</if>
 		<if test="domain.duty_level != null" >
-        	duty_level = #{domain.duty_level,jdbcType=decimal}
+        	duty_level = #{domain.dutyLevel,jdbcType=DECIMAL}
       	</if>
 		<if test="domain.duty_seq != null" >
-        	duty_seq = #{domain.duty_seq,jdbcType=varchar}
+        	duty_seq = #{domain.dutySeq,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.remark != null" >
-        	remark = #{domain.remark,jdbcType=varchar}
+        	remark = #{domain.remark,jdbcType=VARCHAR}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>

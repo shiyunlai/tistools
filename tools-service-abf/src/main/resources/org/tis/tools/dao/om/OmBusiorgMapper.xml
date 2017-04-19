@@ -25,20 +25,20 @@
 	    )
 	    VALUES 
 	    (
-			#{guid,jdbcType=varchar},
-			#{node_type,jdbcType=varchar},
-			#{busiorg_code,jdbcType=varchar},
-			#{busi_domain,jdbcType=varchar},
-			#{busiorg_name,jdbcType=varchar},
-			#{busiorg_level,jdbcType=decimal},
-			#{guid_org,jdbcType=varchar},
-			#{guid_parents,jdbcType=varchar},
-			#{guid_position,jdbcType=varchar},
-			#{org_code,jdbcType=varchar},
-			#{seqno,jdbcType=varchar},
-			#{sortno,jdbcType=decimal},
-			#{isleaf,jdbcType=char},
-			#{sub_count,jdbcType=decimal}
+			#{guid,jdbcType=VARCHAR},
+			#{nodeType,jdbcType=VARCHAR},
+			#{busiorgCode,jdbcType=VARCHAR},
+			#{busiDomain,jdbcType=VARCHAR},
+			#{busiorgName,jdbcType=VARCHAR},
+			#{busiorgLevel,jdbcType=DECIMAL},
+			#{guidOrg,jdbcType=VARCHAR},
+			#{guidParents,jdbcType=VARCHAR},
+			#{guidPosition,jdbcType=VARCHAR},
+			#{orgCode,jdbcType=VARCHAR},
+			#{seqno,jdbcType=VARCHAR},
+			#{sortno,jdbcType=DECIMAL},
+			#{isleaf,jdbcType=CHAR},
+			#{subCount,jdbcType=DECIMAL}
   		)
  	</insert>
  	
@@ -46,46 +46,46 @@
     	UPDATE OM_BUSIORG 
 	    <set>
 		<if test="guid != null" >
-			guid = #{guid,jdbcType=varchar},
+			guid = #{guid,jdbcType=VARCHAR},
 		</if>
 		<if test="node_type != null" >
-			node_type = #{node_type,jdbcType=varchar},
+			node_type = #{nodeType,jdbcType=VARCHAR},
 		</if>
 		<if test="busiorg_code != null" >
-			busiorg_code = #{busiorg_code,jdbcType=varchar},
+			busiorg_code = #{busiorgCode,jdbcType=VARCHAR},
 		</if>
 		<if test="busi_domain != null" >
-			busi_domain = #{busi_domain,jdbcType=varchar},
+			busi_domain = #{busiDomain,jdbcType=VARCHAR},
 		</if>
 		<if test="busiorg_name != null" >
-			busiorg_name = #{busiorg_name,jdbcType=varchar},
+			busiorg_name = #{busiorgName,jdbcType=VARCHAR},
 		</if>
 		<if test="busiorg_level != null" >
-			busiorg_level = #{busiorg_level,jdbcType=decimal},
+			busiorg_level = #{busiorgLevel,jdbcType=DECIMAL},
 		</if>
 		<if test="guid_org != null" >
-			guid_org = #{guid_org,jdbcType=varchar},
+			guid_org = #{guidOrg,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_parents != null" >
-			guid_parents = #{guid_parents,jdbcType=varchar},
+			guid_parents = #{guidParents,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_position != null" >
-			guid_position = #{guid_position,jdbcType=varchar},
+			guid_position = #{guidPosition,jdbcType=VARCHAR},
 		</if>
 		<if test="org_code != null" >
-			org_code = #{org_code,jdbcType=varchar},
+			org_code = #{orgCode,jdbcType=VARCHAR},
 		</if>
 		<if test="seqno != null" >
-			seqno = #{seqno,jdbcType=varchar},
+			seqno = #{seqno,jdbcType=VARCHAR},
 		</if>
 		<if test="sortno != null" >
-			sortno = #{sortno,jdbcType=decimal},
+			sortno = #{sortno,jdbcType=DECIMAL},
 		</if>
 		<if test="isleaf != null" >
-			isleaf = #{isleaf,jdbcType=char},
+			isleaf = #{isleaf,jdbcType=CHAR},
 		</if>
 		<if test="sub_count != null" >
-			sub_count = #{sub_count,jdbcType=decimal}
+			sub_count = #{subCount,jdbcType=DECIMAL}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -94,20 +94,20 @@
  	<update id="updateForce" parameterType="org.tis.tools.model.po.om.OmBusiorg">
     	UPDATE OM_BUSIORG 
 	    <set>
-		guid = #{guid,jdbcType=varchar},
-		node_type = #{node_type,jdbcType=varchar},
-		busiorg_code = #{busiorg_code,jdbcType=varchar},
-		busi_domain = #{busi_domain,jdbcType=varchar},
-		busiorg_name = #{busiorg_name,jdbcType=varchar},
-		busiorg_level = #{busiorg_level,jdbcType=decimal},
-		guid_org = #{guid_org,jdbcType=varchar},
-		guid_parents = #{guid_parents,jdbcType=varchar},
-		guid_position = #{guid_position,jdbcType=varchar},
-		org_code = #{org_code,jdbcType=varchar},
-		seqno = #{seqno,jdbcType=varchar},
-		sortno = #{sortno,jdbcType=decimal},
-		isleaf = #{isleaf,jdbcType=char},
-		sub_count = #{sub_count,jdbcType=decimal}
+		guid = #{guid,jdbcType=VARCHAR},
+		node_type = #{nodeType,jdbcType=VARCHAR},
+		busiorg_code = #{busiorgCode,jdbcType=VARCHAR},
+		busi_domain = #{busiDomain,jdbcType=VARCHAR},
+		busiorg_name = #{busiorgName,jdbcType=VARCHAR},
+		busiorg_level = #{busiorgLevel,jdbcType=DECIMAL},
+		guid_org = #{guidOrg,jdbcType=VARCHAR},
+		guid_parents = #{guidParents,jdbcType=VARCHAR},
+		guid_position = #{guidPosition,jdbcType=VARCHAR},
+		org_code = #{orgCode,jdbcType=VARCHAR},
+		seqno = #{seqno,jdbcType=VARCHAR},
+		sortno = #{sortno,jdbcType=DECIMAL},
+		isleaf = #{isleaf,jdbcType=CHAR},
+		sub_count = #{subCount,jdbcType=DECIMAL}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -124,46 +124,46 @@
     	UPDATE OM_BUSIORG 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=varchar}
+        	guid = #{domain.guid,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.node_type != null" >
-        	node_type = #{domain.node_type,jdbcType=varchar}
+        	node_type = #{domain.nodeType,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.busiorg_code != null" >
-        	busiorg_code = #{domain.busiorg_code,jdbcType=varchar}
+        	busiorg_code = #{domain.busiorgCode,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.busi_domain != null" >
-        	busi_domain = #{domain.busi_domain,jdbcType=varchar}
+        	busi_domain = #{domain.busiDomain,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.busiorg_name != null" >
-        	busiorg_name = #{domain.busiorg_name,jdbcType=varchar}
+        	busiorg_name = #{domain.busiorgName,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.busiorg_level != null" >
-        	busiorg_level = #{domain.busiorg_level,jdbcType=decimal}
+        	busiorg_level = #{domain.busiorgLevel,jdbcType=DECIMAL}
       	</if>
 		<if test="domain.guid_org != null" >
-        	guid_org = #{domain.guid_org,jdbcType=varchar}
+        	guid_org = #{domain.guidOrg,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_parents != null" >
-        	guid_parents = #{domain.guid_parents,jdbcType=varchar}
+        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_position != null" >
-        	guid_position = #{domain.guid_position,jdbcType=varchar}
+        	guid_position = #{domain.guidPosition,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.org_code != null" >
-        	org_code = #{domain.org_code,jdbcType=varchar}
+        	org_code = #{domain.orgCode,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.seqno != null" >
-        	seqno = #{domain.seqno,jdbcType=varchar}
+        	seqno = #{domain.seqno,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.sortno != null" >
-        	sortno = #{domain.sortno,jdbcType=decimal}
+        	sortno = #{domain.sortno,jdbcType=DECIMAL}
       	</if>
 		<if test="domain.isleaf != null" >
-        	isleaf = #{domain.isleaf,jdbcType=char}
+        	isleaf = #{domain.isleaf,jdbcType=CHAR}
       	</if>
 		<if test="domain.sub_count != null" >
-        	sub_count = #{domain.sub_count,jdbcType=decimal}
+        	sub_count = #{domain.subCount,jdbcType=DECIMAL}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>

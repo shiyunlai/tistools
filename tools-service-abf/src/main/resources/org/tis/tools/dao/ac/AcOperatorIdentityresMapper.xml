@@ -14,9 +14,9 @@
 	    )
 	    VALUES 
 	    (
-			#{guid_identity,jdbcType=varchar},
-			#{ac_resourcetype,jdbcType=varchar},
-			#{guid_ac_resource,jdbcType=varchar}
+			#{guidIdentity,jdbcType=VARCHAR},
+			#{acResourcetype,jdbcType=VARCHAR},
+			#{guidAcResource,jdbcType=VARCHAR}
   		)
  	</insert>
  	
@@ -24,13 +24,13 @@
     	UPDATE AC_OPERATOR_IDENTITYRES 
 	    <set>
 		<if test="guid_identity != null" >
-			guid_identity = #{guid_identity,jdbcType=varchar},
+			guid_identity = #{guidIdentity,jdbcType=VARCHAR},
 		</if>
 		<if test="ac_resourcetype != null" >
-			ac_resourcetype = #{ac_resourcetype,jdbcType=varchar},
+			ac_resourcetype = #{acResourcetype,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_ac_resource != null" >
-			guid_ac_resource = #{guid_ac_resource,jdbcType=varchar}
+			guid_ac_resource = #{guidAcResource,jdbcType=VARCHAR}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -39,9 +39,9 @@
  	<update id="updateForce" parameterType="org.tis.tools.model.po.ac.AcOperatorIdentityres">
     	UPDATE AC_OPERATOR_IDENTITYRES 
 	    <set>
-		guid_identity = #{guid_identity,jdbcType=varchar},
-		ac_resourcetype = #{ac_resourcetype,jdbcType=varchar},
-		guid_ac_resource = #{guid_ac_resource,jdbcType=varchar}
+		guid_identity = #{guidIdentity,jdbcType=VARCHAR},
+		ac_resourcetype = #{acResourcetype,jdbcType=VARCHAR},
+		guid_ac_resource = #{guidAcResource,jdbcType=VARCHAR}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -58,13 +58,13 @@
     	UPDATE AC_OPERATOR_IDENTITYRES 
 	   <set>
 		<if test="domain.guid_identity != null" >
-        	guid_identity = #{domain.guid_identity,jdbcType=varchar}
+        	guid_identity = #{domain.guidIdentity,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.ac_resourcetype != null" >
-        	ac_resourcetype = #{domain.ac_resourcetype,jdbcType=varchar}
+        	ac_resourcetype = #{domain.acResourcetype,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_ac_resource != null" >
-        	guid_ac_resource = #{domain.guid_ac_resource,jdbcType=varchar}
+        	guid_ac_resource = #{domain.guidAcResource,jdbcType=VARCHAR}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>

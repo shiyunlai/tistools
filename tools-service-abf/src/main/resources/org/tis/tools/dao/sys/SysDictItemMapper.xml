@@ -17,12 +17,12 @@
 	    )
 	    VALUES 
 	    (
-			#{guid,jdbcType=varchar},
-			#{guid_dict,jdbcType=varchar},
-			#{item_name,jdbcType=varchar},
-			#{item_value,jdbcType=varchar},
-			#{send_value,jdbcType=varchar},
-			#{seqno,jdbcType=decimal}
+			#{guid,jdbcType=VARCHAR},
+			#{guidDict,jdbcType=VARCHAR},
+			#{itemName,jdbcType=VARCHAR},
+			#{itemValue,jdbcType=VARCHAR},
+			#{sendValue,jdbcType=VARCHAR},
+			#{seqno,jdbcType=DECIMAL}
   		)
  	</insert>
  	
@@ -30,22 +30,22 @@
     	UPDATE SYS_DICT_ITEM 
 	    <set>
 		<if test="guid != null" >
-			guid = #{guid,jdbcType=varchar},
+			guid = #{guid,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_dict != null" >
-			guid_dict = #{guid_dict,jdbcType=varchar},
+			guid_dict = #{guidDict,jdbcType=VARCHAR},
 		</if>
 		<if test="item_name != null" >
-			item_name = #{item_name,jdbcType=varchar},
+			item_name = #{itemName,jdbcType=VARCHAR},
 		</if>
 		<if test="item_value != null" >
-			item_value = #{item_value,jdbcType=varchar},
+			item_value = #{itemValue,jdbcType=VARCHAR},
 		</if>
 		<if test="send_value != null" >
-			send_value = #{send_value,jdbcType=varchar},
+			send_value = #{sendValue,jdbcType=VARCHAR},
 		</if>
 		<if test="seqno != null" >
-			seqno = #{seqno,jdbcType=decimal}
+			seqno = #{seqno,jdbcType=DECIMAL}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -54,12 +54,12 @@
  	<update id="updateForce" parameterType="org.tis.tools.model.po.sys.SysDictItem">
     	UPDATE SYS_DICT_ITEM 
 	    <set>
-		guid = #{guid,jdbcType=varchar},
-		guid_dict = #{guid_dict,jdbcType=varchar},
-		item_name = #{item_name,jdbcType=varchar},
-		item_value = #{item_value,jdbcType=varchar},
-		send_value = #{send_value,jdbcType=varchar},
-		seqno = #{seqno,jdbcType=decimal}
+		guid = #{guid,jdbcType=VARCHAR},
+		guid_dict = #{guidDict,jdbcType=VARCHAR},
+		item_name = #{itemName,jdbcType=VARCHAR},
+		item_value = #{itemValue,jdbcType=VARCHAR},
+		send_value = #{sendValue,jdbcType=VARCHAR},
+		seqno = #{seqno,jdbcType=DECIMAL}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -76,22 +76,22 @@
     	UPDATE SYS_DICT_ITEM 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=varchar}
+        	guid = #{domain.guid,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_dict != null" >
-        	guid_dict = #{domain.guid_dict,jdbcType=varchar}
+        	guid_dict = #{domain.guidDict,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.item_name != null" >
-        	item_name = #{domain.item_name,jdbcType=varchar}
+        	item_name = #{domain.itemName,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.item_value != null" >
-        	item_value = #{domain.item_value,jdbcType=varchar}
+        	item_value = #{domain.itemValue,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.send_value != null" >
-        	send_value = #{domain.send_value,jdbcType=varchar}
+        	send_value = #{domain.sendValue,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.seqno != null" >
-        	seqno = #{domain.seqno,jdbcType=decimal}
+        	seqno = #{domain.seqno,jdbcType=DECIMAL}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>

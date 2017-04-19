@@ -13,8 +13,8 @@
 	    )
 	    VALUES 
 	    (
-			#{guid_role,jdbcType=varchar},
-			#{guid_datascope,jdbcType=varchar}
+			#{guidRole,jdbcType=VARCHAR},
+			#{guidDatascope,jdbcType=VARCHAR}
   		)
  	</insert>
  	
@@ -22,10 +22,10 @@
     	UPDATE AC_ROLE_DATASCOPE 
 	    <set>
 		<if test="guid_role != null" >
-			guid_role = #{guid_role,jdbcType=varchar},
+			guid_role = #{guidRole,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_datascope != null" >
-			guid_datascope = #{guid_datascope,jdbcType=varchar}
+			guid_datascope = #{guidDatascope,jdbcType=VARCHAR}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -34,8 +34,8 @@
  	<update id="updateForce" parameterType="org.tis.tools.model.po.ac.AcRoleDatascope">
     	UPDATE AC_ROLE_DATASCOPE 
 	    <set>
-		guid_role = #{guid_role,jdbcType=varchar},
-		guid_datascope = #{guid_datascope,jdbcType=varchar}
+		guid_role = #{guidRole,jdbcType=VARCHAR},
+		guid_datascope = #{guidDatascope,jdbcType=VARCHAR}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -52,10 +52,10 @@
     	UPDATE AC_ROLE_DATASCOPE 
 	   <set>
 		<if test="domain.guid_role != null" >
-        	guid_role = #{domain.guid_role,jdbcType=varchar}
+        	guid_role = #{domain.guidRole,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_datascope != null" >
-        	guid_datascope = #{domain.guid_datascope,jdbcType=varchar}
+        	guid_datascope = #{domain.guidDatascope,jdbcType=VARCHAR}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>

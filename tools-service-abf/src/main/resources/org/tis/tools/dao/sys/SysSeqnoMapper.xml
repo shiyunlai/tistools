@@ -15,10 +15,10 @@
 	    )
 	    VALUES 
 	    (
-			#{seq_key,jdbcType=varchar},
-			#{seq_no,jdbcType=decimal},
-			#{reset,jdbcType=varchar},
-			#{reset_params,jdbcType=varchar}
+			#{seqKey,jdbcType=VARCHAR},
+			#{seqNo,jdbcType=DECIMAL},
+			#{reset,jdbcType=VARCHAR},
+			#{resetParams,jdbcType=VARCHAR}
   		)
  	</insert>
  	
@@ -26,16 +26,16 @@
     	UPDATE SYS_SEQNO 
 	    <set>
 		<if test="seq_key != null" >
-			seq_key = #{seq_key,jdbcType=varchar},
+			seq_key = #{seqKey,jdbcType=VARCHAR},
 		</if>
 		<if test="seq_no != null" >
-			seq_no = #{seq_no,jdbcType=decimal},
+			seq_no = #{seqNo,jdbcType=DECIMAL},
 		</if>
 		<if test="reset != null" >
-			reset = #{reset,jdbcType=varchar},
+			reset = #{reset,jdbcType=VARCHAR},
 		</if>
 		<if test="reset_params != null" >
-			reset_params = #{reset_params,jdbcType=varchar}
+			reset_params = #{resetParams,jdbcType=VARCHAR}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -44,10 +44,10 @@
  	<update id="updateForce" parameterType="org.tis.tools.model.po.sys.SysSeqno">
     	UPDATE SYS_SEQNO 
 	    <set>
-		seq_key = #{seq_key,jdbcType=varchar},
-		seq_no = #{seq_no,jdbcType=decimal},
-		reset = #{reset,jdbcType=varchar},
-		reset_params = #{reset_params,jdbcType=varchar}
+		seq_key = #{seqKey,jdbcType=VARCHAR},
+		seq_no = #{seqNo,jdbcType=DECIMAL},
+		reset = #{reset,jdbcType=VARCHAR},
+		reset_params = #{resetParams,jdbcType=VARCHAR}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -64,16 +64,16 @@
     	UPDATE SYS_SEQNO 
 	   <set>
 		<if test="domain.seq_key != null" >
-        	seq_key = #{domain.seq_key,jdbcType=varchar}
+        	seq_key = #{domain.seqKey,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.seq_no != null" >
-        	seq_no = #{domain.seq_no,jdbcType=decimal}
+        	seq_no = #{domain.seqNo,jdbcType=DECIMAL}
       	</if>
 		<if test="domain.reset != null" >
-        	reset = #{domain.reset,jdbcType=varchar}
+        	reset = #{domain.reset,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.reset_params != null" >
-        	reset_params = #{domain.reset_params,jdbcType=varchar}
+        	reset_params = #{domain.resetParams,jdbcType=VARCHAR}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>

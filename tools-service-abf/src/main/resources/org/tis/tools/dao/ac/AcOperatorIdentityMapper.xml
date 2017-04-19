@@ -16,11 +16,11 @@
 	    )
 	    VALUES 
 	    (
-			#{guid,jdbcType=varchar},
-			#{guid_operator,jdbcType=varchar},
-			#{identity_name,jdbcType=varchar},
-			#{identity_flag,jdbcType=char},
-			#{seq_no,jdbcType=decimal}
+			#{guid,jdbcType=VARCHAR},
+			#{guidOperator,jdbcType=VARCHAR},
+			#{identityName,jdbcType=VARCHAR},
+			#{identityFlag,jdbcType=CHAR},
+			#{seqNo,jdbcType=DECIMAL}
   		)
  	</insert>
  	
@@ -28,19 +28,19 @@
     	UPDATE AC_OPERATOR_IDENTITY 
 	    <set>
 		<if test="guid != null" >
-			guid = #{guid,jdbcType=varchar},
+			guid = #{guid,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_operator != null" >
-			guid_operator = #{guid_operator,jdbcType=varchar},
+			guid_operator = #{guidOperator,jdbcType=VARCHAR},
 		</if>
 		<if test="identity_name != null" >
-			identity_name = #{identity_name,jdbcType=varchar},
+			identity_name = #{identityName,jdbcType=VARCHAR},
 		</if>
 		<if test="identity_flag != null" >
-			identity_flag = #{identity_flag,jdbcType=char},
+			identity_flag = #{identityFlag,jdbcType=CHAR},
 		</if>
 		<if test="seq_no != null" >
-			seq_no = #{seq_no,jdbcType=decimal}
+			seq_no = #{seqNo,jdbcType=DECIMAL}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -49,11 +49,11 @@
  	<update id="updateForce" parameterType="org.tis.tools.model.po.ac.AcOperatorIdentity">
     	UPDATE AC_OPERATOR_IDENTITY 
 	    <set>
-		guid = #{guid,jdbcType=varchar},
-		guid_operator = #{guid_operator,jdbcType=varchar},
-		identity_name = #{identity_name,jdbcType=varchar},
-		identity_flag = #{identity_flag,jdbcType=char},
-		seq_no = #{seq_no,jdbcType=decimal}
+		guid = #{guid,jdbcType=VARCHAR},
+		guid_operator = #{guidOperator,jdbcType=VARCHAR},
+		identity_name = #{identityName,jdbcType=VARCHAR},
+		identity_flag = #{identityFlag,jdbcType=CHAR},
+		seq_no = #{seqNo,jdbcType=DECIMAL}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -70,19 +70,19 @@
     	UPDATE AC_OPERATOR_IDENTITY 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=varchar}
+        	guid = #{domain.guid,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_operator != null" >
-        	guid_operator = #{domain.guid_operator,jdbcType=varchar}
+        	guid_operator = #{domain.guidOperator,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.identity_name != null" >
-        	identity_name = #{domain.identity_name,jdbcType=varchar}
+        	identity_name = #{domain.identityName,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.identity_flag != null" >
-        	identity_flag = #{domain.identity_flag,jdbcType=char}
+        	identity_flag = #{domain.identityFlag,jdbcType=CHAR}
       	</if>
 		<if test="domain.seq_no != null" >
-        	seq_no = #{domain.seq_no,jdbcType=decimal}
+        	seq_no = #{domain.seqNo,jdbcType=DECIMAL}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>

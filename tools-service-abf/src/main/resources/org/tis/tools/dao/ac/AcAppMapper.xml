@@ -26,21 +26,21 @@
 	    )
 	    VALUES 
 	    (
-			#{guid,jdbcType=varchar},
-			#{app_code,jdbcType=varchar},
-			#{app_name,jdbcType=varchar},
-			#{app_type,jdbcType=varchar},
-			#{isopen,jdbcType=char},
-			#{open_date,jdbcType=date},
-			#{url,jdbcType=varchar},
-			#{app_desc,jdbcType=varchar},
-			#{guid_emp_maintenance,jdbcType=varchar},
-			#{guid_role_maintenance,jdbcType=varchar},
-			#{remark,jdbcType=varchar},
-			#{iniwp,jdbcType=char},
-			#{intaskcenter,jdbcType=char},
-			#{ip_addr,jdbcType=varchar},
-			#{ip_port,jdbcType=varchar}
+			#{guid,jdbcType=VARCHAR},
+			#{appCode,jdbcType=VARCHAR},
+			#{appName,jdbcType=VARCHAR},
+			#{appType,jdbcType=VARCHAR},
+			#{isopen,jdbcType=CHAR},
+			#{openDate,jdbcType=TIMESTAMP},
+			#{url,jdbcType=VARCHAR},
+			#{appDesc,jdbcType=VARCHAR},
+			#{guidEmpMaintenance,jdbcType=VARCHAR},
+			#{guidRoleMaintenance,jdbcType=VARCHAR},
+			#{remark,jdbcType=VARCHAR},
+			#{iniwp,jdbcType=CHAR},
+			#{intaskcenter,jdbcType=CHAR},
+			#{ipAddr,jdbcType=VARCHAR},
+			#{ipPort,jdbcType=VARCHAR}
   		)
  	</insert>
  	
@@ -48,49 +48,49 @@
     	UPDATE AC_APP 
 	    <set>
 		<if test="guid != null" >
-			guid = #{guid,jdbcType=varchar},
+			guid = #{guid,jdbcType=VARCHAR},
 		</if>
 		<if test="app_code != null" >
-			app_code = #{app_code,jdbcType=varchar},
+			app_code = #{appCode,jdbcType=VARCHAR},
 		</if>
 		<if test="app_name != null" >
-			app_name = #{app_name,jdbcType=varchar},
+			app_name = #{appName,jdbcType=VARCHAR},
 		</if>
 		<if test="app_type != null" >
-			app_type = #{app_type,jdbcType=varchar},
+			app_type = #{appType,jdbcType=VARCHAR},
 		</if>
 		<if test="isopen != null" >
-			isopen = #{isopen,jdbcType=char},
+			isopen = #{isopen,jdbcType=CHAR},
 		</if>
 		<if test="open_date != null" >
-			open_date = #{open_date,jdbcType=date},
+			open_date = #{openDate,jdbcType=TIMESTAMP},
 		</if>
 		<if test="url != null" >
-			url = #{url,jdbcType=varchar},
+			url = #{url,jdbcType=VARCHAR},
 		</if>
 		<if test="app_desc != null" >
-			app_desc = #{app_desc,jdbcType=varchar},
+			app_desc = #{appDesc,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_emp_maintenance != null" >
-			guid_emp_maintenance = #{guid_emp_maintenance,jdbcType=varchar},
+			guid_emp_maintenance = #{guidEmpMaintenance,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_role_maintenance != null" >
-			guid_role_maintenance = #{guid_role_maintenance,jdbcType=varchar},
+			guid_role_maintenance = #{guidRoleMaintenance,jdbcType=VARCHAR},
 		</if>
 		<if test="remark != null" >
-			remark = #{remark,jdbcType=varchar},
+			remark = #{remark,jdbcType=VARCHAR},
 		</if>
 		<if test="iniwp != null" >
-			iniwp = #{iniwp,jdbcType=char},
+			iniwp = #{iniwp,jdbcType=CHAR},
 		</if>
 		<if test="intaskcenter != null" >
-			intaskcenter = #{intaskcenter,jdbcType=char},
+			intaskcenter = #{intaskcenter,jdbcType=CHAR},
 		</if>
 		<if test="ip_addr != null" >
-			ip_addr = #{ip_addr,jdbcType=varchar},
+			ip_addr = #{ipAddr,jdbcType=VARCHAR},
 		</if>
 		<if test="ip_port != null" >
-			ip_port = #{ip_port,jdbcType=varchar}
+			ip_port = #{ipPort,jdbcType=VARCHAR}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -99,21 +99,21 @@
  	<update id="updateForce" parameterType="org.tis.tools.model.po.ac.AcApp">
     	UPDATE AC_APP 
 	    <set>
-		guid = #{guid,jdbcType=varchar},
-		app_code = #{app_code,jdbcType=varchar},
-		app_name = #{app_name,jdbcType=varchar},
-		app_type = #{app_type,jdbcType=varchar},
-		isopen = #{isopen,jdbcType=char},
-		open_date = #{open_date,jdbcType=date},
-		url = #{url,jdbcType=varchar},
-		app_desc = #{app_desc,jdbcType=varchar},
-		guid_emp_maintenance = #{guid_emp_maintenance,jdbcType=varchar},
-		guid_role_maintenance = #{guid_role_maintenance,jdbcType=varchar},
-		remark = #{remark,jdbcType=varchar},
-		iniwp = #{iniwp,jdbcType=char},
-		intaskcenter = #{intaskcenter,jdbcType=char},
-		ip_addr = #{ip_addr,jdbcType=varchar},
-		ip_port = #{ip_port,jdbcType=varchar}
+		guid = #{guid,jdbcType=VARCHAR},
+		app_code = #{appCode,jdbcType=VARCHAR},
+		app_name = #{appName,jdbcType=VARCHAR},
+		app_type = #{appType,jdbcType=VARCHAR},
+		isopen = #{isopen,jdbcType=CHAR},
+		open_date = #{openDate,jdbcType=TIMESTAMP},
+		url = #{url,jdbcType=VARCHAR},
+		app_desc = #{appDesc,jdbcType=VARCHAR},
+		guid_emp_maintenance = #{guidEmpMaintenance,jdbcType=VARCHAR},
+		guid_role_maintenance = #{guidRoleMaintenance,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR},
+		iniwp = #{iniwp,jdbcType=CHAR},
+		intaskcenter = #{intaskcenter,jdbcType=CHAR},
+		ip_addr = #{ipAddr,jdbcType=VARCHAR},
+		ip_port = #{ipPort,jdbcType=VARCHAR}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -130,49 +130,49 @@
     	UPDATE AC_APP 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=varchar}
+        	guid = #{domain.guid,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.app_code != null" >
-        	app_code = #{domain.app_code,jdbcType=varchar}
+        	app_code = #{domain.appCode,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.app_name != null" >
-        	app_name = #{domain.app_name,jdbcType=varchar}
+        	app_name = #{domain.appName,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.app_type != null" >
-        	app_type = #{domain.app_type,jdbcType=varchar}
+        	app_type = #{domain.appType,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.isopen != null" >
-        	isopen = #{domain.isopen,jdbcType=char}
+        	isopen = #{domain.isopen,jdbcType=CHAR}
       	</if>
 		<if test="domain.open_date != null" >
-        	open_date = #{domain.open_date,jdbcType=date}
+        	open_date = #{domain.openDate,jdbcType=TIMESTAMP}
       	</if>
 		<if test="domain.url != null" >
-        	url = #{domain.url,jdbcType=varchar}
+        	url = #{domain.url,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.app_desc != null" >
-        	app_desc = #{domain.app_desc,jdbcType=varchar}
+        	app_desc = #{domain.appDesc,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_emp_maintenance != null" >
-        	guid_emp_maintenance = #{domain.guid_emp_maintenance,jdbcType=varchar}
+        	guid_emp_maintenance = #{domain.guidEmpMaintenance,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_role_maintenance != null" >
-        	guid_role_maintenance = #{domain.guid_role_maintenance,jdbcType=varchar}
+        	guid_role_maintenance = #{domain.guidRoleMaintenance,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.remark != null" >
-        	remark = #{domain.remark,jdbcType=varchar}
+        	remark = #{domain.remark,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.iniwp != null" >
-        	iniwp = #{domain.iniwp,jdbcType=char}
+        	iniwp = #{domain.iniwp,jdbcType=CHAR}
       	</if>
 		<if test="domain.intaskcenter != null" >
-        	intaskcenter = #{domain.intaskcenter,jdbcType=char}
+        	intaskcenter = #{domain.intaskcenter,jdbcType=CHAR}
       	</if>
 		<if test="domain.ip_addr != null" >
-        	ip_addr = #{domain.ip_addr,jdbcType=varchar}
+        	ip_addr = #{domain.ipAddr,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.ip_port != null" >
-        	ip_port = #{domain.ip_port,jdbcType=varchar}
+        	ip_port = #{domain.ipPort,jdbcType=VARCHAR}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>

@@ -17,12 +17,12 @@
 	    )
 	    VALUES 
 	    (
-			#{guid_role,jdbcType=varchar},
-			#{guid_entity,jdbcType=varchar},
-			#{isadd,jdbcType=char},
-			#{isdel,jdbcType=char},
-			#{ismodify,jdbcType=char},
-			#{isview,jdbcType=char}
+			#{guidRole,jdbcType=VARCHAR},
+			#{guidEntity,jdbcType=VARCHAR},
+			#{isadd,jdbcType=CHAR},
+			#{isdel,jdbcType=CHAR},
+			#{ismodify,jdbcType=CHAR},
+			#{isview,jdbcType=CHAR}
   		)
  	</insert>
  	
@@ -30,22 +30,22 @@
     	UPDATE AC_ROLE_ENTITY 
 	    <set>
 		<if test="guid_role != null" >
-			guid_role = #{guid_role,jdbcType=varchar},
+			guid_role = #{guidRole,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_entity != null" >
-			guid_entity = #{guid_entity,jdbcType=varchar},
+			guid_entity = #{guidEntity,jdbcType=VARCHAR},
 		</if>
 		<if test="isadd != null" >
-			isadd = #{isadd,jdbcType=char},
+			isadd = #{isadd,jdbcType=CHAR},
 		</if>
 		<if test="isdel != null" >
-			isdel = #{isdel,jdbcType=char},
+			isdel = #{isdel,jdbcType=CHAR},
 		</if>
 		<if test="ismodify != null" >
-			ismodify = #{ismodify,jdbcType=char},
+			ismodify = #{ismodify,jdbcType=CHAR},
 		</if>
 		<if test="isview != null" >
-			isview = #{isview,jdbcType=char}
+			isview = #{isview,jdbcType=CHAR}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -54,12 +54,12 @@
  	<update id="updateForce" parameterType="org.tis.tools.model.po.ac.AcRoleEntity">
     	UPDATE AC_ROLE_ENTITY 
 	    <set>
-		guid_role = #{guid_role,jdbcType=varchar},
-		guid_entity = #{guid_entity,jdbcType=varchar},
-		isadd = #{isadd,jdbcType=char},
-		isdel = #{isdel,jdbcType=char},
-		ismodify = #{ismodify,jdbcType=char},
-		isview = #{isview,jdbcType=char}
+		guid_role = #{guidRole,jdbcType=VARCHAR},
+		guid_entity = #{guidEntity,jdbcType=VARCHAR},
+		isadd = #{isadd,jdbcType=CHAR},
+		isdel = #{isdel,jdbcType=CHAR},
+		ismodify = #{ismodify,jdbcType=CHAR},
+		isview = #{isview,jdbcType=CHAR}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -76,22 +76,22 @@
     	UPDATE AC_ROLE_ENTITY 
 	   <set>
 		<if test="domain.guid_role != null" >
-        	guid_role = #{domain.guid_role,jdbcType=varchar}
+        	guid_role = #{domain.guidRole,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_entity != null" >
-        	guid_entity = #{domain.guid_entity,jdbcType=varchar}
+        	guid_entity = #{domain.guidEntity,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.isadd != null" >
-        	isadd = #{domain.isadd,jdbcType=char}
+        	isadd = #{domain.isadd,jdbcType=CHAR}
       	</if>
 		<if test="domain.isdel != null" >
-        	isdel = #{domain.isdel,jdbcType=char}
+        	isdel = #{domain.isdel,jdbcType=CHAR}
       	</if>
 		<if test="domain.ismodify != null" >
-        	ismodify = #{domain.ismodify,jdbcType=char}
+        	ismodify = #{domain.ismodify,jdbcType=CHAR}
       	</if>
 		<if test="domain.isview != null" >
-        	isview = #{domain.isview,jdbcType=char}
+        	isview = #{domain.isview,jdbcType=CHAR}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>

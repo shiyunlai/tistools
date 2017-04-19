@@ -19,14 +19,14 @@
 	    )
 	    VALUES 
 	    (
-			#{guid,jdbcType=varchar},
-			#{guid_app,jdbcType=varchar},
-			#{funcgroup_name,jdbcType=varchar},
-			#{guid_parents,jdbcType=varchar},
-			#{group_level,jdbcType=decimal},
-			#{funcgroup_seq,jdbcType=varchar},
-			#{isleaf,jdbcType=char},
-			#{sub_count,jdbcType=decimal}
+			#{guid,jdbcType=VARCHAR},
+			#{guidApp,jdbcType=VARCHAR},
+			#{funcgroupName,jdbcType=VARCHAR},
+			#{guidParents,jdbcType=VARCHAR},
+			#{groupLevel,jdbcType=DECIMAL},
+			#{funcgroupSeq,jdbcType=VARCHAR},
+			#{isleaf,jdbcType=CHAR},
+			#{subCount,jdbcType=DECIMAL}
   		)
  	</insert>
  	
@@ -34,28 +34,28 @@
     	UPDATE AC_FUNCGROUP 
 	    <set>
 		<if test="guid != null" >
-			guid = #{guid,jdbcType=varchar},
+			guid = #{guid,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_app != null" >
-			guid_app = #{guid_app,jdbcType=varchar},
+			guid_app = #{guidApp,jdbcType=VARCHAR},
 		</if>
 		<if test="funcgroup_name != null" >
-			funcgroup_name = #{funcgroup_name,jdbcType=varchar},
+			funcgroup_name = #{funcgroupName,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_parents != null" >
-			guid_parents = #{guid_parents,jdbcType=varchar},
+			guid_parents = #{guidParents,jdbcType=VARCHAR},
 		</if>
 		<if test="group_level != null" >
-			group_level = #{group_level,jdbcType=decimal},
+			group_level = #{groupLevel,jdbcType=DECIMAL},
 		</if>
 		<if test="funcgroup_seq != null" >
-			funcgroup_seq = #{funcgroup_seq,jdbcType=varchar},
+			funcgroup_seq = #{funcgroupSeq,jdbcType=VARCHAR},
 		</if>
 		<if test="isleaf != null" >
-			isleaf = #{isleaf,jdbcType=char},
+			isleaf = #{isleaf,jdbcType=CHAR},
 		</if>
 		<if test="sub_count != null" >
-			sub_count = #{sub_count,jdbcType=decimal}
+			sub_count = #{subCount,jdbcType=DECIMAL}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -64,14 +64,14 @@
  	<update id="updateForce" parameterType="org.tis.tools.model.po.ac.AcFuncgroup">
     	UPDATE AC_FUNCGROUP 
 	    <set>
-		guid = #{guid,jdbcType=varchar},
-		guid_app = #{guid_app,jdbcType=varchar},
-		funcgroup_name = #{funcgroup_name,jdbcType=varchar},
-		guid_parents = #{guid_parents,jdbcType=varchar},
-		group_level = #{group_level,jdbcType=decimal},
-		funcgroup_seq = #{funcgroup_seq,jdbcType=varchar},
-		isleaf = #{isleaf,jdbcType=char},
-		sub_count = #{sub_count,jdbcType=decimal}
+		guid = #{guid,jdbcType=VARCHAR},
+		guid_app = #{guidApp,jdbcType=VARCHAR},
+		funcgroup_name = #{funcgroupName,jdbcType=VARCHAR},
+		guid_parents = #{guidParents,jdbcType=VARCHAR},
+		group_level = #{groupLevel,jdbcType=DECIMAL},
+		funcgroup_seq = #{funcgroupSeq,jdbcType=VARCHAR},
+		isleaf = #{isleaf,jdbcType=CHAR},
+		sub_count = #{subCount,jdbcType=DECIMAL}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -88,28 +88,28 @@
     	UPDATE AC_FUNCGROUP 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=varchar}
+        	guid = #{domain.guid,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_app != null" >
-        	guid_app = #{domain.guid_app,jdbcType=varchar}
+        	guid_app = #{domain.guidApp,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.funcgroup_name != null" >
-        	funcgroup_name = #{domain.funcgroup_name,jdbcType=varchar}
+        	funcgroup_name = #{domain.funcgroupName,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_parents != null" >
-        	guid_parents = #{domain.guid_parents,jdbcType=varchar}
+        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.group_level != null" >
-        	group_level = #{domain.group_level,jdbcType=decimal}
+        	group_level = #{domain.groupLevel,jdbcType=DECIMAL}
       	</if>
 		<if test="domain.funcgroup_seq != null" >
-        	funcgroup_seq = #{domain.funcgroup_seq,jdbcType=varchar}
+        	funcgroup_seq = #{domain.funcgroupSeq,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.isleaf != null" >
-        	isleaf = #{domain.isleaf,jdbcType=char}
+        	isleaf = #{domain.isleaf,jdbcType=CHAR}
       	</if>
 		<if test="domain.sub_count != null" >
-        	sub_count = #{domain.sub_count,jdbcType=decimal}
+        	sub_count = #{domain.subCount,jdbcType=DECIMAL}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>

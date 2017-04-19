@@ -20,31 +20,31 @@
 	    	,position_seq
 	    	,guid_parents
 	    	,guid_duty
+	    	,start_date
+	    	,end_date
 	    	,createtime
 	    	,lastupdate
 	    	,updator
-	    	,start_date
-	    	,end_date
 	    )
 	    VALUES 
 	    (
-			#{guid,jdbcType=varchar},
-			#{guid_org,jdbcType=varchar},
-			#{position_code,jdbcType=varchar},
-			#{position_name,jdbcType=varchar},
-			#{position_type,jdbcType=varchar},
-			#{position_status,jdbcType=varchar},
-			#{isleaf,jdbcType=char},
-			#{sub_count,jdbcType=decimal},
-			#{position_level,jdbcType=decimal},
-			#{position_seq,jdbcType=varchar},
-			#{guid_parents,jdbcType=varchar},
-			#{guid_duty,jdbcType=varchar},
-			#{createtime,jdbcType=timestamp},
-			#{lastupdate,jdbcType=date},
-			#{updator,jdbcType=varchar},
-			#{start_date,jdbcType=date},
-			#{end_date,jdbcType=date}
+			#{guid,jdbcType=VARCHAR},
+			#{guidOrg,jdbcType=VARCHAR},
+			#{positionCode,jdbcType=VARCHAR},
+			#{positionName,jdbcType=VARCHAR},
+			#{positionType,jdbcType=VARCHAR},
+			#{positionStatus,jdbcType=VARCHAR},
+			#{isleaf,jdbcType=CHAR},
+			#{subCount,jdbcType=DECIMAL},
+			#{positionLevel,jdbcType=DECIMAL},
+			#{positionSeq,jdbcType=VARCHAR},
+			#{guidParents,jdbcType=VARCHAR},
+			#{guidDuty,jdbcType=VARCHAR},
+			#{startDate,jdbcType=DATE},
+			#{endDate,jdbcType=DATE},
+			#{createtime,jdbcType=TIMESTAMP},
+			#{lastupdate,jdbcType=TIMESTAMP},
+			#{updator,jdbcType=VARCHAR}
   		)
  	</insert>
  	
@@ -52,55 +52,55 @@
     	UPDATE OM_POSITION 
 	    <set>
 		<if test="guid != null" >
-			guid = #{guid,jdbcType=varchar},
+			guid = #{guid,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_org != null" >
-			guid_org = #{guid_org,jdbcType=varchar},
+			guid_org = #{guidOrg,jdbcType=VARCHAR},
 		</if>
 		<if test="position_code != null" >
-			position_code = #{position_code,jdbcType=varchar},
+			position_code = #{positionCode,jdbcType=VARCHAR},
 		</if>
 		<if test="position_name != null" >
-			position_name = #{position_name,jdbcType=varchar},
+			position_name = #{positionName,jdbcType=VARCHAR},
 		</if>
 		<if test="position_type != null" >
-			position_type = #{position_type,jdbcType=varchar},
+			position_type = #{positionType,jdbcType=VARCHAR},
 		</if>
 		<if test="position_status != null" >
-			position_status = #{position_status,jdbcType=varchar},
+			position_status = #{positionStatus,jdbcType=VARCHAR},
 		</if>
 		<if test="isleaf != null" >
-			isleaf = #{isleaf,jdbcType=char},
+			isleaf = #{isleaf,jdbcType=CHAR},
 		</if>
 		<if test="sub_count != null" >
-			sub_count = #{sub_count,jdbcType=decimal},
+			sub_count = #{subCount,jdbcType=DECIMAL},
 		</if>
 		<if test="position_level != null" >
-			position_level = #{position_level,jdbcType=decimal},
+			position_level = #{positionLevel,jdbcType=DECIMAL},
 		</if>
 		<if test="position_seq != null" >
-			position_seq = #{position_seq,jdbcType=varchar},
+			position_seq = #{positionSeq,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_parents != null" >
-			guid_parents = #{guid_parents,jdbcType=varchar},
+			guid_parents = #{guidParents,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_duty != null" >
-			guid_duty = #{guid_duty,jdbcType=varchar},
-		</if>
-		<if test="createtime != null" >
-			createtime = #{createtime,jdbcType=timestamp},
-		</if>
-		<if test="lastupdate != null" >
-			lastupdate = #{lastupdate,jdbcType=date},
-		</if>
-		<if test="updator != null" >
-			updator = #{updator,jdbcType=varchar},
+			guid_duty = #{guidDuty,jdbcType=VARCHAR},
 		</if>
 		<if test="start_date != null" >
-			start_date = #{start_date,jdbcType=date},
+			start_date = #{startDate,jdbcType=DATE},
 		</if>
 		<if test="end_date != null" >
-			end_date = #{end_date,jdbcType=date}
+			end_date = #{endDate,jdbcType=DATE},
+		</if>
+		<if test="createtime != null" >
+			createtime = #{createtime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="lastupdate != null" >
+			lastupdate = #{lastupdate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updator != null" >
+			updator = #{updator,jdbcType=VARCHAR}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -109,23 +109,23 @@
  	<update id="updateForce" parameterType="org.tis.tools.model.po.om.OmPosition">
     	UPDATE OM_POSITION 
 	    <set>
-		guid = #{guid,jdbcType=varchar},
-		guid_org = #{guid_org,jdbcType=varchar},
-		position_code = #{position_code,jdbcType=varchar},
-		position_name = #{position_name,jdbcType=varchar},
-		position_type = #{position_type,jdbcType=varchar},
-		position_status = #{position_status,jdbcType=varchar},
-		isleaf = #{isleaf,jdbcType=char},
-		sub_count = #{sub_count,jdbcType=decimal},
-		position_level = #{position_level,jdbcType=decimal},
-		position_seq = #{position_seq,jdbcType=varchar},
-		guid_parents = #{guid_parents,jdbcType=varchar},
-		guid_duty = #{guid_duty,jdbcType=varchar},
-		createtime = #{createtime,jdbcType=timestamp},
-		lastupdate = #{lastupdate,jdbcType=date},
-		updator = #{updator,jdbcType=varchar},
-		start_date = #{start_date,jdbcType=date},
-		end_date = #{end_date,jdbcType=date}
+		guid = #{guid,jdbcType=VARCHAR},
+		guid_org = #{guidOrg,jdbcType=VARCHAR},
+		position_code = #{positionCode,jdbcType=VARCHAR},
+		position_name = #{positionName,jdbcType=VARCHAR},
+		position_type = #{positionType,jdbcType=VARCHAR},
+		position_status = #{positionStatus,jdbcType=VARCHAR},
+		isleaf = #{isleaf,jdbcType=CHAR},
+		sub_count = #{subCount,jdbcType=DECIMAL},
+		position_level = #{positionLevel,jdbcType=DECIMAL},
+		position_seq = #{positionSeq,jdbcType=VARCHAR},
+		guid_parents = #{guidParents,jdbcType=VARCHAR},
+		guid_duty = #{guidDuty,jdbcType=VARCHAR},
+		start_date = #{startDate,jdbcType=DATE},
+		end_date = #{endDate,jdbcType=DATE},
+		createtime = #{createtime,jdbcType=TIMESTAMP},
+		lastupdate = #{lastupdate,jdbcType=TIMESTAMP},
+		updator = #{updator,jdbcType=VARCHAR}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -142,55 +142,55 @@
     	UPDATE OM_POSITION 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=varchar}
+        	guid = #{domain.guid,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_org != null" >
-        	guid_org = #{domain.guid_org,jdbcType=varchar}
+        	guid_org = #{domain.guidOrg,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.position_code != null" >
-        	position_code = #{domain.position_code,jdbcType=varchar}
+        	position_code = #{domain.positionCode,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.position_name != null" >
-        	position_name = #{domain.position_name,jdbcType=varchar}
+        	position_name = #{domain.positionName,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.position_type != null" >
-        	position_type = #{domain.position_type,jdbcType=varchar}
+        	position_type = #{domain.positionType,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.position_status != null" >
-        	position_status = #{domain.position_status,jdbcType=varchar}
+        	position_status = #{domain.positionStatus,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.isleaf != null" >
-        	isleaf = #{domain.isleaf,jdbcType=char}
+        	isleaf = #{domain.isleaf,jdbcType=CHAR}
       	</if>
 		<if test="domain.sub_count != null" >
-        	sub_count = #{domain.sub_count,jdbcType=decimal}
+        	sub_count = #{domain.subCount,jdbcType=DECIMAL}
       	</if>
 		<if test="domain.position_level != null" >
-        	position_level = #{domain.position_level,jdbcType=decimal}
+        	position_level = #{domain.positionLevel,jdbcType=DECIMAL}
       	</if>
 		<if test="domain.position_seq != null" >
-        	position_seq = #{domain.position_seq,jdbcType=varchar}
+        	position_seq = #{domain.positionSeq,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_parents != null" >
-        	guid_parents = #{domain.guid_parents,jdbcType=varchar}
+        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_duty != null" >
-        	guid_duty = #{domain.guid_duty,jdbcType=varchar}
-      	</if>
-		<if test="domain.createtime != null" >
-        	createtime = #{domain.createtime,jdbcType=timestamp}
-      	</if>
-		<if test="domain.lastupdate != null" >
-        	lastupdate = #{domain.lastupdate,jdbcType=date}
-      	</if>
-		<if test="domain.updator != null" >
-        	updator = #{domain.updator,jdbcType=varchar}
+        	guid_duty = #{domain.guidDuty,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.start_date != null" >
-        	start_date = #{domain.start_date,jdbcType=date}
+        	start_date = #{domain.startDate,jdbcType=DATE}
       	</if>
 		<if test="domain.end_date != null" >
-        	end_date = #{domain.end_date,jdbcType=date}
+        	end_date = #{domain.endDate,jdbcType=DATE}
+      	</if>
+		<if test="domain.createtime != null" >
+        	createtime = #{domain.createtime,jdbcType=TIMESTAMP}
+      	</if>
+		<if test="domain.lastupdate != null" >
+        	lastupdate = #{domain.lastupdate,jdbcType=TIMESTAMP}
+      	</if>
+		<if test="domain.updator != null" >
+        	updator = #{domain.updator,jdbcType=VARCHAR}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>
@@ -227,10 +227,10 @@
 		,position_seq
 		,guid_parents
 		,guid_duty
+		,start_date
+		,end_date
 		,createtime
 		,lastupdate
 		,updator
-		,start_date
-		,end_date
 	</sql>
 </mapper>

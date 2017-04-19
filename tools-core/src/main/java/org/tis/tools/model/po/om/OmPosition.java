@@ -10,7 +10,7 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.tis.tools.common.utils.StringUtils;
 
 /**
  * 
@@ -71,20 +71,20 @@ public class OmPosition implements Serializable {
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述： */
 	private String guidDuty ;
 	
-	/** 字段类型：timestamp<br/>字段名：创建时间<br/>描述： */
-	private Date createtime ;
-	
-	/** 字段类型：date<br/>字段名：最近更新时间<br/>描述： */
-	private Date lastupdate ;
-	
-	/** 字段类型：varchar<br/>字段名：最近更新人员<br/>描述： */
-	private String updator ;
-	
 	/** 字段类型：date<br/>字段名：岗位有效开始日期<br/>描述： */
 	private Date startDate ;
 	
 	/** 字段类型：date<br/>字段名：岗位有效截止日期<br/>描述： */
 	private Date endDate ;
+	
+	/** 字段类型：timestamp<br/>字段名：创建时间<br/>描述： */
+	private Date createtime ;
+	
+	/** 字段类型：timestamp<br/>字段名：最近更新时间<br/>描述： */
+	private Date lastupdate ;
+	
+	/** 字段类型：varchar<br/>字段名：最近更新人员<br/>描述： */
+	private String updator ;
 	
 	
 	/**
@@ -322,6 +322,44 @@ public class OmPosition implements Serializable {
     }
 	
 	/**
+	 * Set the 岗位有效开始日期.
+	 * 
+	 * @param startDate
+	 *            岗位有效开始日期
+	 */
+	public void setStartDate(Date startDate) {
+ 		this.startDate = startDate ;
+    }
+    
+    /**
+	 * Get the 岗位有效开始日期.
+	 * 
+	 * @return 岗位有效开始日期
+	 */
+	public Date getStartDate(){
+		return this.startDate ;
+    }
+	
+	/**
+	 * Set the 岗位有效截止日期.
+	 * 
+	 * @param endDate
+	 *            岗位有效截止日期
+	 */
+	public void setEndDate(Date endDate) {
+ 		this.endDate = endDate ;
+    }
+    
+    /**
+	 * Get the 岗位有效截止日期.
+	 * 
+	 * @return 岗位有效截止日期
+	 */
+	public Date getEndDate(){
+		return this.endDate ;
+    }
+	
+	/**
 	 * Set the 创建时间.
 	 * 
 	 * @param createtime
@@ -378,45 +416,7 @@ public class OmPosition implements Serializable {
 		return this.updator ;
     }
 	
-	/**
-	 * Set the 岗位有效开始日期.
-	 * 
-	 * @param startDate
-	 *            岗位有效开始日期
-	 */
-	public void setStartDate(Date startDate) {
- 		this.startDate = startDate ;
-    }
-    
-    /**
-	 * Get the 岗位有效开始日期.
-	 * 
-	 * @return 岗位有效开始日期
-	 */
-	public Date getStartDate(){
-		return this.startDate ;
-    }
-	
-	/**
-	 * Set the 岗位有效截止日期.
-	 * 
-	 * @param endDate
-	 *            岗位有效截止日期
-	 */
-	public void setEndDate(Date endDate) {
- 		this.endDate = endDate ;
-    }
-    
-    /**
-	 * Get the 岗位有效截止日期.
-	 * 
-	 * @return 岗位有效截止日期
-	 */
-	public Date getEndDate(){
-		return this.endDate ;
-    }
-	
 	public String toString(){
-		return ToStringBuilder.reflectionToString(this) ; 
+		return StringUtils.toString(this) ; 
 	}
 }

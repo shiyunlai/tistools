@@ -17,12 +17,12 @@
 	    )
 	    VALUES 
 	    (
-			#{guid,jdbcType=varchar},
-			#{guid_entity,jdbcType=varchar},
-			#{priv_name,jdbcType=varchar},
-			#{data_op_type,jdbcType=varchar},
-			#{entity_name,jdbcType=varchar},
-			#{filter_sql_string,jdbcType=varchar}
+			#{guid,jdbcType=VARCHAR},
+			#{guidEntity,jdbcType=VARCHAR},
+			#{privName,jdbcType=VARCHAR},
+			#{dataOpType,jdbcType=VARCHAR},
+			#{entityName,jdbcType=VARCHAR},
+			#{filterSqlString,jdbcType=VARCHAR}
   		)
  	</insert>
  	
@@ -30,22 +30,22 @@
     	UPDATE AC_DATASCOPE 
 	    <set>
 		<if test="guid != null" >
-			guid = #{guid,jdbcType=varchar},
+			guid = #{guid,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_entity != null" >
-			guid_entity = #{guid_entity,jdbcType=varchar},
+			guid_entity = #{guidEntity,jdbcType=VARCHAR},
 		</if>
 		<if test="priv_name != null" >
-			priv_name = #{priv_name,jdbcType=varchar},
+			priv_name = #{privName,jdbcType=VARCHAR},
 		</if>
 		<if test="data_op_type != null" >
-			data_op_type = #{data_op_type,jdbcType=varchar},
+			data_op_type = #{dataOpType,jdbcType=VARCHAR},
 		</if>
 		<if test="entity_name != null" >
-			entity_name = #{entity_name,jdbcType=varchar},
+			entity_name = #{entityName,jdbcType=VARCHAR},
 		</if>
 		<if test="filter_sql_string != null" >
-			filter_sql_string = #{filter_sql_string,jdbcType=varchar}
+			filter_sql_string = #{filterSqlString,jdbcType=VARCHAR}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -54,12 +54,12 @@
  	<update id="updateForce" parameterType="org.tis.tools.model.po.ac.AcDatascope">
     	UPDATE AC_DATASCOPE 
 	    <set>
-		guid = #{guid,jdbcType=varchar},
-		guid_entity = #{guid_entity,jdbcType=varchar},
-		priv_name = #{priv_name,jdbcType=varchar},
-		data_op_type = #{data_op_type,jdbcType=varchar},
-		entity_name = #{entity_name,jdbcType=varchar},
-		filter_sql_string = #{filter_sql_string,jdbcType=varchar}
+		guid = #{guid,jdbcType=VARCHAR},
+		guid_entity = #{guidEntity,jdbcType=VARCHAR},
+		priv_name = #{privName,jdbcType=VARCHAR},
+		data_op_type = #{dataOpType,jdbcType=VARCHAR},
+		entity_name = #{entityName,jdbcType=VARCHAR},
+		filter_sql_string = #{filterSqlString,jdbcType=VARCHAR}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -76,22 +76,22 @@
     	UPDATE AC_DATASCOPE 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=varchar}
+        	guid = #{domain.guid,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_entity != null" >
-        	guid_entity = #{domain.guid_entity,jdbcType=varchar}
+        	guid_entity = #{domain.guidEntity,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.priv_name != null" >
-        	priv_name = #{domain.priv_name,jdbcType=varchar}
+        	priv_name = #{domain.privName,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.data_op_type != null" >
-        	data_op_type = #{domain.data_op_type,jdbcType=varchar}
+        	data_op_type = #{domain.dataOpType,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.entity_name != null" >
-        	entity_name = #{domain.entity_name,jdbcType=varchar}
+        	entity_name = #{domain.entityName,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.filter_sql_string != null" >
-        	filter_sql_string = #{domain.filter_sql_string,jdbcType=varchar}
+        	filter_sql_string = #{domain.filterSqlString,jdbcType=VARCHAR}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>

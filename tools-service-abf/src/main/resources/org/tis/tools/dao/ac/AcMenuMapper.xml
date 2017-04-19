@@ -28,23 +28,23 @@
 	    )
 	    VALUES 
 	    (
-			#{guid,jdbcType=varchar},
-			#{guid_app,jdbcType=varchar},
-			#{guid_func,jdbcType=varchar},
-			#{menu_name,jdbcType=varchar},
-			#{menu_label,jdbcType=varchar},
-			#{menu_code,jdbcType=varchar},
-			#{isleaf,jdbcType=char},
-			#{ui_entry,jdbcType=varchar},
-			#{menu_level,jdbcType=decimal},
-			#{guid_parents,jdbcType=varchar},
-			#{guid_root,jdbcType=varchar},
-			#{display_order,jdbcType=decimal},
-			#{image_path,jdbcType=varchar},
-			#{expand_path,jdbcType=varchar},
-			#{menu_seq,jdbcType=varchar},
-			#{open_mode,jdbcType=varchar},
-			#{sub_count,jdbcType=decimal}
+			#{guid,jdbcType=VARCHAR},
+			#{guidApp,jdbcType=VARCHAR},
+			#{guidFunc,jdbcType=VARCHAR},
+			#{menuName,jdbcType=VARCHAR},
+			#{menuLabel,jdbcType=VARCHAR},
+			#{menuCode,jdbcType=VARCHAR},
+			#{isleaf,jdbcType=CHAR},
+			#{uiEntry,jdbcType=VARCHAR},
+			#{menuLevel,jdbcType=DECIMAL},
+			#{guidParents,jdbcType=VARCHAR},
+			#{guidRoot,jdbcType=VARCHAR},
+			#{displayOrder,jdbcType=DECIMAL},
+			#{imagePath,jdbcType=VARCHAR},
+			#{expandPath,jdbcType=VARCHAR},
+			#{menuSeq,jdbcType=VARCHAR},
+			#{openMode,jdbcType=VARCHAR},
+			#{subCount,jdbcType=DECIMAL}
   		)
  	</insert>
  	
@@ -52,55 +52,55 @@
     	UPDATE AC_MENU 
 	    <set>
 		<if test="guid != null" >
-			guid = #{guid,jdbcType=varchar},
+			guid = #{guid,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_app != null" >
-			guid_app = #{guid_app,jdbcType=varchar},
+			guid_app = #{guidApp,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_func != null" >
-			guid_func = #{guid_func,jdbcType=varchar},
+			guid_func = #{guidFunc,jdbcType=VARCHAR},
 		</if>
 		<if test="menu_name != null" >
-			menu_name = #{menu_name,jdbcType=varchar},
+			menu_name = #{menuName,jdbcType=VARCHAR},
 		</if>
 		<if test="menu_label != null" >
-			menu_label = #{menu_label,jdbcType=varchar},
+			menu_label = #{menuLabel,jdbcType=VARCHAR},
 		</if>
 		<if test="menu_code != null" >
-			menu_code = #{menu_code,jdbcType=varchar},
+			menu_code = #{menuCode,jdbcType=VARCHAR},
 		</if>
 		<if test="isleaf != null" >
-			isleaf = #{isleaf,jdbcType=char},
+			isleaf = #{isleaf,jdbcType=CHAR},
 		</if>
 		<if test="ui_entry != null" >
-			ui_entry = #{ui_entry,jdbcType=varchar},
+			ui_entry = #{uiEntry,jdbcType=VARCHAR},
 		</if>
 		<if test="menu_level != null" >
-			menu_level = #{menu_level,jdbcType=decimal},
+			menu_level = #{menuLevel,jdbcType=DECIMAL},
 		</if>
 		<if test="guid_parents != null" >
-			guid_parents = #{guid_parents,jdbcType=varchar},
+			guid_parents = #{guidParents,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_root != null" >
-			guid_root = #{guid_root,jdbcType=varchar},
+			guid_root = #{guidRoot,jdbcType=VARCHAR},
 		</if>
 		<if test="display_order != null" >
-			display_order = #{display_order,jdbcType=decimal},
+			display_order = #{displayOrder,jdbcType=DECIMAL},
 		</if>
 		<if test="image_path != null" >
-			image_path = #{image_path,jdbcType=varchar},
+			image_path = #{imagePath,jdbcType=VARCHAR},
 		</if>
 		<if test="expand_path != null" >
-			expand_path = #{expand_path,jdbcType=varchar},
+			expand_path = #{expandPath,jdbcType=VARCHAR},
 		</if>
 		<if test="menu_seq != null" >
-			menu_seq = #{menu_seq,jdbcType=varchar},
+			menu_seq = #{menuSeq,jdbcType=VARCHAR},
 		</if>
 		<if test="open_mode != null" >
-			open_mode = #{open_mode,jdbcType=varchar},
+			open_mode = #{openMode,jdbcType=VARCHAR},
 		</if>
 		<if test="sub_count != null" >
-			sub_count = #{sub_count,jdbcType=decimal}
+			sub_count = #{subCount,jdbcType=DECIMAL}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -109,23 +109,23 @@
  	<update id="updateForce" parameterType="org.tis.tools.model.po.ac.AcMenu">
     	UPDATE AC_MENU 
 	    <set>
-		guid = #{guid,jdbcType=varchar},
-		guid_app = #{guid_app,jdbcType=varchar},
-		guid_func = #{guid_func,jdbcType=varchar},
-		menu_name = #{menu_name,jdbcType=varchar},
-		menu_label = #{menu_label,jdbcType=varchar},
-		menu_code = #{menu_code,jdbcType=varchar},
-		isleaf = #{isleaf,jdbcType=char},
-		ui_entry = #{ui_entry,jdbcType=varchar},
-		menu_level = #{menu_level,jdbcType=decimal},
-		guid_parents = #{guid_parents,jdbcType=varchar},
-		guid_root = #{guid_root,jdbcType=varchar},
-		display_order = #{display_order,jdbcType=decimal},
-		image_path = #{image_path,jdbcType=varchar},
-		expand_path = #{expand_path,jdbcType=varchar},
-		menu_seq = #{menu_seq,jdbcType=varchar},
-		open_mode = #{open_mode,jdbcType=varchar},
-		sub_count = #{sub_count,jdbcType=decimal}
+		guid = #{guid,jdbcType=VARCHAR},
+		guid_app = #{guidApp,jdbcType=VARCHAR},
+		guid_func = #{guidFunc,jdbcType=VARCHAR},
+		menu_name = #{menuName,jdbcType=VARCHAR},
+		menu_label = #{menuLabel,jdbcType=VARCHAR},
+		menu_code = #{menuCode,jdbcType=VARCHAR},
+		isleaf = #{isleaf,jdbcType=CHAR},
+		ui_entry = #{uiEntry,jdbcType=VARCHAR},
+		menu_level = #{menuLevel,jdbcType=DECIMAL},
+		guid_parents = #{guidParents,jdbcType=VARCHAR},
+		guid_root = #{guidRoot,jdbcType=VARCHAR},
+		display_order = #{displayOrder,jdbcType=DECIMAL},
+		image_path = #{imagePath,jdbcType=VARCHAR},
+		expand_path = #{expandPath,jdbcType=VARCHAR},
+		menu_seq = #{menuSeq,jdbcType=VARCHAR},
+		open_mode = #{openMode,jdbcType=VARCHAR},
+		sub_count = #{subCount,jdbcType=DECIMAL}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -142,55 +142,55 @@
     	UPDATE AC_MENU 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=varchar}
+        	guid = #{domain.guid,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_app != null" >
-        	guid_app = #{domain.guid_app,jdbcType=varchar}
+        	guid_app = #{domain.guidApp,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_func != null" >
-        	guid_func = #{domain.guid_func,jdbcType=varchar}
+        	guid_func = #{domain.guidFunc,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.menu_name != null" >
-        	menu_name = #{domain.menu_name,jdbcType=varchar}
+        	menu_name = #{domain.menuName,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.menu_label != null" >
-        	menu_label = #{domain.menu_label,jdbcType=varchar}
+        	menu_label = #{domain.menuLabel,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.menu_code != null" >
-        	menu_code = #{domain.menu_code,jdbcType=varchar}
+        	menu_code = #{domain.menuCode,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.isleaf != null" >
-        	isleaf = #{domain.isleaf,jdbcType=char}
+        	isleaf = #{domain.isleaf,jdbcType=CHAR}
       	</if>
 		<if test="domain.ui_entry != null" >
-        	ui_entry = #{domain.ui_entry,jdbcType=varchar}
+        	ui_entry = #{domain.uiEntry,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.menu_level != null" >
-        	menu_level = #{domain.menu_level,jdbcType=decimal}
+        	menu_level = #{domain.menuLevel,jdbcType=DECIMAL}
       	</if>
 		<if test="domain.guid_parents != null" >
-        	guid_parents = #{domain.guid_parents,jdbcType=varchar}
+        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_root != null" >
-        	guid_root = #{domain.guid_root,jdbcType=varchar}
+        	guid_root = #{domain.guidRoot,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.display_order != null" >
-        	display_order = #{domain.display_order,jdbcType=decimal}
+        	display_order = #{domain.displayOrder,jdbcType=DECIMAL}
       	</if>
 		<if test="domain.image_path != null" >
-        	image_path = #{domain.image_path,jdbcType=varchar}
+        	image_path = #{domain.imagePath,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.expand_path != null" >
-        	expand_path = #{domain.expand_path,jdbcType=varchar}
+        	expand_path = #{domain.expandPath,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.menu_seq != null" >
-        	menu_seq = #{domain.menu_seq,jdbcType=varchar}
+        	menu_seq = #{domain.menuSeq,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.open_mode != null" >
-        	open_mode = #{domain.open_mode,jdbcType=varchar}
+        	open_mode = #{domain.openMode,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.sub_count != null" >
-        	sub_count = #{domain.sub_count,jdbcType=decimal}
+        	sub_count = #{domain.subCount,jdbcType=DECIMAL}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>

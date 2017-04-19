@@ -14,6 +14,7 @@
 	    	,group_type
 	    	,group_status
 	    	,group_desc
+	    	,guid_emp_manager
 	    	,guid_org
 	    	,guid_parents
 	    	,isleaf
@@ -22,31 +23,30 @@
 	    	,group_seq
 	    	,start_date
 	    	,end_date
-	    	,guid_emp_manager
 	    	,createtime
 	    	,lastupdate
 	    	,updator
 	    )
 	    VALUES 
 	    (
-			#{guid,jdbcType=varchar},
-			#{group_code,jdbcType=varchar},
-			#{group_name,jdbcType=varchar},
-			#{group_type,jdbcType=varchar},
-			#{group_status,jdbcType=varchar},
-			#{group_desc,jdbcType=varchar},
-			#{guid_org,jdbcType=varchar},
-			#{guid_parents,jdbcType=varchar},
-			#{isleaf,jdbcType=char},
-			#{sub_count,jdbcType=decimal},
-			#{group_level,jdbcType=decimal},
-			#{group_seq,jdbcType=varchar},
-			#{start_date,jdbcType=date},
-			#{end_date,jdbcType=date},
-			#{guid_emp_manager,jdbcType=varchar},
-			#{createtime,jdbcType=timestamp},
-			#{lastupdate,jdbcType=date},
-			#{updator,jdbcType=varchar}
+			#{guid,jdbcType=VARCHAR},
+			#{groupCode,jdbcType=VARCHAR},
+			#{groupName,jdbcType=VARCHAR},
+			#{groupType,jdbcType=VARCHAR},
+			#{groupStatus,jdbcType=VARCHAR},
+			#{groupDesc,jdbcType=VARCHAR},
+			#{guidEmpManager,jdbcType=VARCHAR},
+			#{guidOrg,jdbcType=VARCHAR},
+			#{guidParents,jdbcType=VARCHAR},
+			#{isleaf,jdbcType=CHAR},
+			#{subCount,jdbcType=DECIMAL},
+			#{groupLevel,jdbcType=DECIMAL},
+			#{groupSeq,jdbcType=VARCHAR},
+			#{startDate,jdbcType=DATE},
+			#{endDate,jdbcType=DATE},
+			#{createtime,jdbcType=TIMESTAMP},
+			#{lastupdate,jdbcType=TIMESTAMP},
+			#{updator,jdbcType=VARCHAR}
   		)
  	</insert>
  	
@@ -54,58 +54,58 @@
     	UPDATE OM_GROUP 
 	    <set>
 		<if test="guid != null" >
-			guid = #{guid,jdbcType=varchar},
+			guid = #{guid,jdbcType=VARCHAR},
 		</if>
 		<if test="group_code != null" >
-			group_code = #{group_code,jdbcType=varchar},
+			group_code = #{groupCode,jdbcType=VARCHAR},
 		</if>
 		<if test="group_name != null" >
-			group_name = #{group_name,jdbcType=varchar},
+			group_name = #{groupName,jdbcType=VARCHAR},
 		</if>
 		<if test="group_type != null" >
-			group_type = #{group_type,jdbcType=varchar},
+			group_type = #{groupType,jdbcType=VARCHAR},
 		</if>
 		<if test="group_status != null" >
-			group_status = #{group_status,jdbcType=varchar},
+			group_status = #{groupStatus,jdbcType=VARCHAR},
 		</if>
 		<if test="group_desc != null" >
-			group_desc = #{group_desc,jdbcType=varchar},
-		</if>
-		<if test="guid_org != null" >
-			guid_org = #{guid_org,jdbcType=varchar},
-		</if>
-		<if test="guid_parents != null" >
-			guid_parents = #{guid_parents,jdbcType=varchar},
-		</if>
-		<if test="isleaf != null" >
-			isleaf = #{isleaf,jdbcType=char},
-		</if>
-		<if test="sub_count != null" >
-			sub_count = #{sub_count,jdbcType=decimal},
-		</if>
-		<if test="group_level != null" >
-			group_level = #{group_level,jdbcType=decimal},
-		</if>
-		<if test="group_seq != null" >
-			group_seq = #{group_seq,jdbcType=varchar},
-		</if>
-		<if test="start_date != null" >
-			start_date = #{start_date,jdbcType=date},
-		</if>
-		<if test="end_date != null" >
-			end_date = #{end_date,jdbcType=date},
+			group_desc = #{groupDesc,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_emp_manager != null" >
-			guid_emp_manager = #{guid_emp_manager,jdbcType=varchar},
+			guid_emp_manager = #{guidEmpManager,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_org != null" >
+			guid_org = #{guidOrg,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_parents != null" >
+			guid_parents = #{guidParents,jdbcType=VARCHAR},
+		</if>
+		<if test="isleaf != null" >
+			isleaf = #{isleaf,jdbcType=CHAR},
+		</if>
+		<if test="sub_count != null" >
+			sub_count = #{subCount,jdbcType=DECIMAL},
+		</if>
+		<if test="group_level != null" >
+			group_level = #{groupLevel,jdbcType=DECIMAL},
+		</if>
+		<if test="group_seq != null" >
+			group_seq = #{groupSeq,jdbcType=VARCHAR},
+		</if>
+		<if test="start_date != null" >
+			start_date = #{startDate,jdbcType=DATE},
+		</if>
+		<if test="end_date != null" >
+			end_date = #{endDate,jdbcType=DATE},
 		</if>
 		<if test="createtime != null" >
-			createtime = #{createtime,jdbcType=timestamp},
+			createtime = #{createtime,jdbcType=TIMESTAMP},
 		</if>
 		<if test="lastupdate != null" >
-			lastupdate = #{lastupdate,jdbcType=date},
+			lastupdate = #{lastupdate,jdbcType=TIMESTAMP},
 		</if>
 		<if test="updator != null" >
-			updator = #{updator,jdbcType=varchar}
+			updator = #{updator,jdbcType=VARCHAR}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -114,24 +114,24 @@
  	<update id="updateForce" parameterType="org.tis.tools.model.po.om.OmGroup">
     	UPDATE OM_GROUP 
 	    <set>
-		guid = #{guid,jdbcType=varchar},
-		group_code = #{group_code,jdbcType=varchar},
-		group_name = #{group_name,jdbcType=varchar},
-		group_type = #{group_type,jdbcType=varchar},
-		group_status = #{group_status,jdbcType=varchar},
-		group_desc = #{group_desc,jdbcType=varchar},
-		guid_org = #{guid_org,jdbcType=varchar},
-		guid_parents = #{guid_parents,jdbcType=varchar},
-		isleaf = #{isleaf,jdbcType=char},
-		sub_count = #{sub_count,jdbcType=decimal},
-		group_level = #{group_level,jdbcType=decimal},
-		group_seq = #{group_seq,jdbcType=varchar},
-		start_date = #{start_date,jdbcType=date},
-		end_date = #{end_date,jdbcType=date},
-		guid_emp_manager = #{guid_emp_manager,jdbcType=varchar},
-		createtime = #{createtime,jdbcType=timestamp},
-		lastupdate = #{lastupdate,jdbcType=date},
-		updator = #{updator,jdbcType=varchar}
+		guid = #{guid,jdbcType=VARCHAR},
+		group_code = #{groupCode,jdbcType=VARCHAR},
+		group_name = #{groupName,jdbcType=VARCHAR},
+		group_type = #{groupType,jdbcType=VARCHAR},
+		group_status = #{groupStatus,jdbcType=VARCHAR},
+		group_desc = #{groupDesc,jdbcType=VARCHAR},
+		guid_emp_manager = #{guidEmpManager,jdbcType=VARCHAR},
+		guid_org = #{guidOrg,jdbcType=VARCHAR},
+		guid_parents = #{guidParents,jdbcType=VARCHAR},
+		isleaf = #{isleaf,jdbcType=CHAR},
+		sub_count = #{subCount,jdbcType=DECIMAL},
+		group_level = #{groupLevel,jdbcType=DECIMAL},
+		group_seq = #{groupSeq,jdbcType=VARCHAR},
+		start_date = #{startDate,jdbcType=DATE},
+		end_date = #{endDate,jdbcType=DATE},
+		createtime = #{createtime,jdbcType=TIMESTAMP},
+		lastupdate = #{lastupdate,jdbcType=TIMESTAMP},
+		updator = #{updator,jdbcType=VARCHAR}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -148,58 +148,58 @@
     	UPDATE OM_GROUP 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=varchar}
+        	guid = #{domain.guid,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.group_code != null" >
-        	group_code = #{domain.group_code,jdbcType=varchar}
+        	group_code = #{domain.groupCode,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.group_name != null" >
-        	group_name = #{domain.group_name,jdbcType=varchar}
+        	group_name = #{domain.groupName,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.group_type != null" >
-        	group_type = #{domain.group_type,jdbcType=varchar}
+        	group_type = #{domain.groupType,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.group_status != null" >
-        	group_status = #{domain.group_status,jdbcType=varchar}
+        	group_status = #{domain.groupStatus,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.group_desc != null" >
-        	group_desc = #{domain.group_desc,jdbcType=varchar}
-      	</if>
-		<if test="domain.guid_org != null" >
-        	guid_org = #{domain.guid_org,jdbcType=varchar}
-      	</if>
-		<if test="domain.guid_parents != null" >
-        	guid_parents = #{domain.guid_parents,jdbcType=varchar}
-      	</if>
-		<if test="domain.isleaf != null" >
-        	isleaf = #{domain.isleaf,jdbcType=char}
-      	</if>
-		<if test="domain.sub_count != null" >
-        	sub_count = #{domain.sub_count,jdbcType=decimal}
-      	</if>
-		<if test="domain.group_level != null" >
-        	group_level = #{domain.group_level,jdbcType=decimal}
-      	</if>
-		<if test="domain.group_seq != null" >
-        	group_seq = #{domain.group_seq,jdbcType=varchar}
-      	</if>
-		<if test="domain.start_date != null" >
-        	start_date = #{domain.start_date,jdbcType=date}
-      	</if>
-		<if test="domain.end_date != null" >
-        	end_date = #{domain.end_date,jdbcType=date}
+        	group_desc = #{domain.groupDesc,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_emp_manager != null" >
-        	guid_emp_manager = #{domain.guid_emp_manager,jdbcType=varchar}
+        	guid_emp_manager = #{domain.guidEmpManager,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_org != null" >
+        	guid_org = #{domain.guidOrg,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_parents != null" >
+        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.isleaf != null" >
+        	isleaf = #{domain.isleaf,jdbcType=CHAR}
+      	</if>
+		<if test="domain.sub_count != null" >
+        	sub_count = #{domain.subCount,jdbcType=DECIMAL}
+      	</if>
+		<if test="domain.group_level != null" >
+        	group_level = #{domain.groupLevel,jdbcType=DECIMAL}
+      	</if>
+		<if test="domain.group_seq != null" >
+        	group_seq = #{domain.groupSeq,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.start_date != null" >
+        	start_date = #{domain.startDate,jdbcType=DATE}
+      	</if>
+		<if test="domain.end_date != null" >
+        	end_date = #{domain.endDate,jdbcType=DATE}
       	</if>
 		<if test="domain.createtime != null" >
-        	createtime = #{domain.createtime,jdbcType=timestamp}
+        	createtime = #{domain.createtime,jdbcType=TIMESTAMP}
       	</if>
 		<if test="domain.lastupdate != null" >
-        	lastupdate = #{domain.lastupdate,jdbcType=date}
+        	lastupdate = #{domain.lastupdate,jdbcType=TIMESTAMP}
       	</if>
 		<if test="domain.updator != null" >
-        	updator = #{domain.updator,jdbcType=varchar}
+        	updator = #{domain.updator,jdbcType=VARCHAR}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>
@@ -230,6 +230,7 @@
 		,group_type
 		,group_status
 		,group_desc
+		,guid_emp_manager
 		,guid_org
 		,guid_parents
 		,isleaf
@@ -238,7 +239,6 @@
 		,group_seq
 		,start_date
 		,end_date
-		,guid_emp_manager
 		,createtime
 		,lastupdate
 		,updator

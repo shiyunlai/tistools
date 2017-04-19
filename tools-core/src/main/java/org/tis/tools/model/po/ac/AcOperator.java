@@ -10,7 +10,7 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.tis.tools.common.utils.StringUtils;
 
 /**
  * 
@@ -35,23 +35,23 @@ public class AcOperator implements Serializable {
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
 	private String guid ;
 	
+	/** 字段类型：varchar<br/>字段名：操作员姓名<br/>描述：记录当前操作员姓名（只记录当前值，不随之改变） */
+	private String operatorName ;
+	
 	/** 字段类型：varchar<br/>字段名：登录用户名<br/>描述： */
 	private String userId ;
 	
 	/** 字段类型：varchar<br/>字段名：密码<br/>描述： */
 	private String password ;
 	
-	/** 字段类型：date<br/>字段名：密码失效日期<br/>描述： */
-	private Date invalDate ;
+	/** 字段类型：varchar<br/>字段名：操作员状态<br/>描述：取值来自业务菜单：DICT_AC_OPERATOR_STATUS 正常，挂起，注销，锁定... 系统处理状态间的流转 */
+	private String operatorStatus ;
 	
-	/** 字段类型：varchar<br/>字段名：操作员姓名<br/>描述：记录当前操作员姓名（只记录当前值，不随之改变） */
-	private String operatorName ;
+	/** 字段类型：timestamp<br/>字段名：密码失效日期<br/>描述：指定失效时间具体到时分秒 */
+	private Date invalDate ;
 	
 	/** 字段类型：varchar<br/>字段名：认证模式<br/>描述：取值来自业务菜单：DICT_AC_AUTHMODE 如：本地密码认证、LDAP认证、等 可以多选，以逗号分隔，且按照出现先后顺序进行认证； 如： pwd,captcha 表示输入密码，并且还需要验证码 */
 	private String authMode ;
-	
-	/** 字段类型：varchar<br/>字段名：操作员状态<br/>描述：取值来自业务菜单：DICT_AC_OPERATOR_STATUS 正常，挂起，注销，锁定... 系统处理状态间的流转 */
-	private String operatorStatus ;
 	
 	/** 字段类型：decimal<br/>字段名：锁定次数限制<br/>描述：登陆错误超过本数字，系统锁定操作员，默认5次。 可为操作员单独设置； */
 	private BigDecimal lockLimit ;
@@ -59,10 +59,10 @@ public class AcOperator implements Serializable {
 	/** 字段类型：decimal<br/>字段名：当前错误登录次数<br/>描述： */
 	private BigDecimal errCount ;
 	
-	/** 字段类型：date<br/>字段名：锁定时间<br/>描述： */
+	/** 字段类型：timestamp<br/>字段名：锁定时间<br/>描述： */
 	private Date lockTime ;
 	
-	/** 字段类型：date<br/>字段名：解锁时间<br/>描述：当状态为锁定时，解锁的时间 */
+	/** 字段类型：timestamp<br/>字段名：解锁时间<br/>描述：当状态为锁定时，解锁的时间 */
 	private Date unlockTime ;
 	
 	/** 字段类型：varchar<br/>字段名：菜单风格<br/>描述：取值来自业务菜单：DICT_AC_MENUTYPE 用户登录后菜单的风格 */
@@ -107,6 +107,25 @@ public class AcOperator implements Serializable {
     }
 	
 	/**
+	 * Set the 操作员姓名.
+	 * 
+	 * @param operatorName
+	 *            操作员姓名
+	 */
+	public void setOperatorName(String operatorName) {
+ 		this.operatorName = operatorName == null ? null : operatorName.trim() ;
+    }
+    
+    /**
+	 * Get the 操作员姓名.
+	 * 
+	 * @return 操作员姓名
+	 */
+	public String getOperatorName(){
+		return this.operatorName ;
+    }
+	
+	/**
 	 * Set the 登录用户名.
 	 * 
 	 * @param userId
@@ -145,6 +164,25 @@ public class AcOperator implements Serializable {
     }
 	
 	/**
+	 * Set the 操作员状态.
+	 * 
+	 * @param operatorStatus
+	 *            操作员状态
+	 */
+	public void setOperatorStatus(String operatorStatus) {
+ 		this.operatorStatus = operatorStatus == null ? null : operatorStatus.trim() ;
+    }
+    
+    /**
+	 * Get the 操作员状态.
+	 * 
+	 * @return 操作员状态
+	 */
+	public String getOperatorStatus(){
+		return this.operatorStatus ;
+    }
+	
+	/**
 	 * Set the 密码失效日期.
 	 * 
 	 * @param invalDate
@@ -164,25 +202,6 @@ public class AcOperator implements Serializable {
     }
 	
 	/**
-	 * Set the 操作员姓名.
-	 * 
-	 * @param operatorName
-	 *            操作员姓名
-	 */
-	public void setOperatorName(String operatorName) {
- 		this.operatorName = operatorName == null ? null : operatorName.trim() ;
-    }
-    
-    /**
-	 * Get the 操作员姓名.
-	 * 
-	 * @return 操作员姓名
-	 */
-	public String getOperatorName(){
-		return this.operatorName ;
-    }
-	
-	/**
 	 * Set the 认证模式.
 	 * 
 	 * @param authMode
@@ -199,25 +218,6 @@ public class AcOperator implements Serializable {
 	 */
 	public String getAuthMode(){
 		return this.authMode ;
-    }
-	
-	/**
-	 * Set the 操作员状态.
-	 * 
-	 * @param operatorStatus
-	 *            操作员状态
-	 */
-	public void setOperatorStatus(String operatorStatus) {
- 		this.operatorStatus = operatorStatus == null ? null : operatorStatus.trim() ;
-    }
-    
-    /**
-	 * Get the 操作员状态.
-	 * 
-	 * @return 操作员状态
-	 */
-	public String getOperatorStatus(){
-		return this.operatorStatus ;
     }
 	
 	/**
@@ -436,6 +436,6 @@ public class AcOperator implements Serializable {
     }
 	
 	public String toString(){
-		return ToStringBuilder.reflectionToString(this) ; 
+		return StringUtils.toString(this) ; 
 	}
 }

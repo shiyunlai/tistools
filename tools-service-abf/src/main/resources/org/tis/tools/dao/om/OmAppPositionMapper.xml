@@ -13,8 +13,8 @@
 	    )
 	    VALUES 
 	    (
-			#{guid_app,jdbcType=varchar},
-			#{guid_position,jdbcType=varchar}
+			#{guidApp,jdbcType=VARCHAR},
+			#{guidPosition,jdbcType=VARCHAR}
   		)
  	</insert>
  	
@@ -22,10 +22,10 @@
     	UPDATE OM_APP_POSITION 
 	    <set>
 		<if test="guid_app != null" >
-			guid_app = #{guid_app,jdbcType=varchar},
+			guid_app = #{guidApp,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_position != null" >
-			guid_position = #{guid_position,jdbcType=varchar}
+			guid_position = #{guidPosition,jdbcType=VARCHAR}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -34,8 +34,8 @@
  	<update id="updateForce" parameterType="org.tis.tools.model.po.om.OmAppPosition">
     	UPDATE OM_APP_POSITION 
 	    <set>
-		guid_app = #{guid_app,jdbcType=varchar},
-		guid_position = #{guid_position,jdbcType=varchar}
+		guid_app = #{guidApp,jdbcType=VARCHAR},
+		guid_position = #{guidPosition,jdbcType=VARCHAR}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -52,10 +52,10 @@
     	UPDATE OM_APP_POSITION 
 	   <set>
 		<if test="domain.guid_app != null" >
-        	guid_app = #{domain.guid_app,jdbcType=varchar}
+        	guid_app = #{domain.guidApp,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_position != null" >
-        	guid_position = #{domain.guid_position,jdbcType=varchar}
+        	guid_position = #{domain.guidPosition,jdbcType=VARCHAR}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>

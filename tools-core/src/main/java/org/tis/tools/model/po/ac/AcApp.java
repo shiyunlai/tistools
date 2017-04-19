@@ -10,7 +10,7 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.tis.tools.common.utils.StringUtils;
 
 /**
  * 
@@ -47,7 +47,7 @@ public class AcApp implements Serializable {
 	/** 字段类型：char<br/>字段名：是否开通<br/>描述：取值来自业务菜单： DICT_YON 默认为N，新建后，必须执行应用开通操作，才被开通。 */
 	private String isopen ;
 	
-	/** 字段类型：date<br/>字段名：开通日期<br/>描述： */
+	/** 字段类型：timestamp<br/>字段名：开通时间<br/>描述：记录到时分秒 */
 	private Date openDate ;
 	
 	/** 字段类型：varchar<br/>字段名：访问地址<br/>描述： */
@@ -174,19 +174,19 @@ public class AcApp implements Serializable {
     }
 	
 	/**
-	 * Set the 开通日期.
+	 * Set the 开通时间.
 	 * 
 	 * @param openDate
-	 *            开通日期
+	 *            开通时间
 	 */
 	public void setOpenDate(Date openDate) {
  		this.openDate = openDate ;
     }
     
     /**
-	 * Get the 开通日期.
+	 * Get the 开通时间.
 	 * 
-	 * @return 开通日期
+	 * @return 开通时间
 	 */
 	public Date getOpenDate(){
 		return this.openDate ;
@@ -364,6 +364,6 @@ public class AcApp implements Serializable {
     }
 	
 	public String toString(){
-		return ToStringBuilder.reflectionToString(this) ; 
+		return StringUtils.toString(this) ; 
 	}
 }
