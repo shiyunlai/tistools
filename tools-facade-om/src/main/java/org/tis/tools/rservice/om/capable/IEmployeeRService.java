@@ -3,9 +3,9 @@
  */
 package org.tis.tools.rservice.om.capable;
 
+import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.vo.om.OmEmployeeDetail;
-import org.tis.tools.rservice.om.exception.EmployeeManagementException;
 
 /**
 * <pre>
@@ -50,9 +50,9 @@ public interface IEmployeeRService {
 	 * @param empDegree
 	 *            员工职级（可空）
 	 * @return 员工代码（emp_code）
-	 * @throws EmployeeManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	String genEmpCode(String orgCode, String empDegree) throws EmployeeManagementException;
+	String genEmpCode(String orgCode, String empDegree) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -76,10 +76,10 @@ public interface IEmployeeRService {
 	 * @param positionCode
 	 *            员工所在基本岗位代码
 	 * @return
-	 * @throws EmployeeManagementException
+	 * @throws ToolsRuntimeException
 	 */
 	OmEmployee createEmployee(String empCode, String empName, String gender, String empDegree, String orgCode,
-			String positionCode) throws EmployeeManagementException;
+			String positionCode) throws ToolsRuntimeException;
 
 	/**
 	 * <pre>
@@ -93,9 +93,9 @@ public interface IEmployeeRService {
 	 * @param newEmployee
 	 *            新员工信息
 	 * @return 新建员工
-	 * @throws EmployeeManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmEmployee createEmployee(OmEmployee newEmployee) throws EmployeeManagementException;
+	OmEmployee createEmployee(OmEmployee newEmployee) throws ToolsRuntimeException;
 
 	/**
 	 * <pre>
@@ -112,9 +112,9 @@ public interface IEmployeeRService {
 	 * @param newEmpCode
 	 *            新员工代码（必输）
 	 * @return 新员工信息
-	 * @throws EmployeeManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmEmployee copyEmployee(String fromEmpCode, String newEmpCode) throws EmployeeManagementException;
+	OmEmployee copyEmployee(String fromEmpCode, String newEmpCode) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -134,10 +134,10 @@ public interface IEmployeeRService {
 	 * @param newEmpCode
 	 *            新员工代码（必输）
 	 * @return 新员工信息
-	 * @throws EmployeeManagementException
+	 * @throws ToolsRuntimeException
 	 */
 	OmEmployee copyEmployee(String fromOrgCode, String fromEmpCode, String toOrgCode, String newEmpCode)
-			throws EmployeeManagementException;
+			throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -174,10 +174,10 @@ public interface IEmployeeRService {
 	 * @param copyConfig
 	 *            指定拷贝内容
 	 * @return
-	 * @throws EmployeeManagementException
+	 * @throws ToolsRuntimeException
 	 */
 	OmEmployee copyEmployeeDeep(String fromEmpCode, String newEmpCode, EmployeeCopyConfig copyConfig)
-			throws EmployeeManagementException;
+			throws ToolsRuntimeException;
 
 	/**
 	 * <pre>
@@ -197,7 +197,7 @@ public interface IEmployeeRService {
 	 *            true - 指定为主机构</br>
 	 *            false - 不是主机构（默认）
 	 */
-	void assignOrg(String empCode, String orgCode, boolean isMain) throws EmployeeManagementException;
+	void assignOrg(String empCode, String orgCode, boolean isMain) throws ToolsRuntimeException;
 
 	/**
 	 * <pre>
@@ -212,9 +212,9 @@ public interface IEmployeeRService {
 	 *            员工代码
 	 * @param mainOrgCode
 	 *            机构代码，作为员工的最新主机构
-	 * @throws EmployeeManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	void fixMainOrg(String empCode, String mainOrgCode) throws EmployeeManagementException;
+	void fixMainOrg(String empCode, String mainOrgCode) throws ToolsRuntimeException;
 
 	/**
 	 * <pre>
@@ -228,9 +228,9 @@ public interface IEmployeeRService {
 	 * @param newEmployee
 	 *            跟新后的员工信息
 	 * @return 修改后的员工信息
-	 * @throws EmployeeManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmEmployee updateEmployee(OmEmployee newEmployee) throws EmployeeManagementException;
+	OmEmployee updateEmployee(OmEmployee newEmployee) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -253,10 +253,10 @@ public interface IEmployeeRService {
 	 *            true - 指定为主机构</br>
 	 *            false - 不做改变（默认）
 	 * @return 最新员工信息
-	 * @throws EmployeeManagementException
+	 * @throws ToolsRuntimeException
 	 */
 	OmEmployee moveToNewOrg(String empCode, String fromOrgCode, String toOrgCode, boolean isMain)
-			throws EmployeeManagementException;
+			throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -279,10 +279,10 @@ public interface IEmployeeRService {
 	 *            true - 指定为基本岗位 </br>
 	 *            false - 不是基本岗位
 	 * @return 最新员工信息
-	 * @throws EmployeeManagementException
+	 * @throws ToolsRuntimeException
 	 */
 	OmEmployee moveToNewPosition(String empCode, String fromPositionCode, String toPositionCode, boolean isMain)
-			throws EmployeeManagementException;
+			throws ToolsRuntimeException;
 
 	/**
 	 * <pre>
@@ -296,9 +296,9 @@ public interface IEmployeeRService {
 	 * @param empCode
 	 *            员工代码
 	 * @return 被删除的员工信息
-	 * @throws EmployeeManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmEmployee deleteEmployee(String empCode) throws EmployeeManagementException;
+	OmEmployee deleteEmployee(String empCode) throws ToolsRuntimeException;
 	
 	/*
 	 * ==========================================

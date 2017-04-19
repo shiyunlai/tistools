@@ -5,12 +5,12 @@ package org.tis.tools.rservice.om.capable;
 
 import java.util.List;
 
+import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcRole;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmGroup;
 import org.tis.tools.model.vo.om.OmPositionDetail;
-import org.tis.tools.rservice.om.exception.GroupManagementException;
 
 /**
 * <pre>
@@ -66,10 +66,10 @@ public interface IGroupRService {
 	 * @param groupType
 	 *            工作组类型（值来自业务菜单： DICT_OM_GROUPTYPE）
 	 * @return 工作组代码
-	 * @throws GroupManagementException
+	 * @throws ToolsRuntimeException
 	 * 
 	 */
-	String genGroupCode(String groupType) throws GroupManagementException;
+	String genGroupCode(String groupType) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -93,9 +93,9 @@ public interface IGroupRService {
 	 * @param parentGroupCode
 	 *            父工作组代码
 	 * @return 新增的工作组对象
-	 * @throws GroupManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmGroup createGroup(String groupCode, String groupType, String groupName, String orgCode, String parentGroupCode )  throws GroupManagementException ;
+	OmGroup createGroup(String groupCode, String groupType, String groupName, String orgCode, String parentGroupCode )  throws ToolsRuntimeException ;
 	
 	/**
 	 * <pre>
@@ -111,9 +111,9 @@ public interface IGroupRService {
 	 * @param newOmGroup
 	 *            新工作组对象
 	 * @return 新增的工作组对象
-	 * @throws GroupManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmGroup createGroup(OmGroup newOmGroup )  throws GroupManagementException ;
+	OmGroup createGroup(OmGroup newOmGroup )  throws ToolsRuntimeException ;
 	
 	/**
 	 * <pre>
@@ -133,9 +133,9 @@ public interface IGroupRService {
 	 * @param toParentGroupCode
 	 *            新工作组的父工作组
 	 * @return 拷贝新增的工作组对象
-	 * @throws GroupManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmGroup copyGroup(String fromGroupCode, String newGroupCode, String toOrgCode, String toParentGroupCode )  throws GroupManagementException ;
+	OmGroup copyGroup(String fromGroupCode, String newGroupCode, String toOrgCode, String toParentGroupCode )  throws ToolsRuntimeException ;
 	
 	/**
 	 * <pre>
@@ -174,10 +174,10 @@ public interface IGroupRService {
 	 *            true - 拷贝 </br>
 	 *            false - 不拷贝
 	 * @return 拷贝新增的工作组对象
-	 * @throws GroupManagementException
+	 * @throws ToolsRuntimeException
 	 */
 	OmGroup copyGroupDeep(String fromGroupCode, String newGroupCode, String toOrgCode, String toParentGroupCode,
-			boolean copyChild, boolean copyApp, boolean copyPosition, boolean copyEmployee ) throws GroupManagementException ; 
+			boolean copyChild, boolean copyApp, boolean copyPosition, boolean copyEmployee ) throws ToolsRuntimeException ; 
 	
 	/**
 	 * <pre>
@@ -197,9 +197,9 @@ public interface IGroupRService {
 	 * @param toParentGroupCode
 	 *            新父工作组代码（如果隶属机构不同被移动工作组，则属于移动了隶属机构关系）
 	 * @return 移动后的工作组对象
-	 * @throws GroupManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmGroup moveGroup(String groupCode, String fromParentGroupCode, String toParentGroupCode) throws GroupManagementException  ;
+	OmGroup moveGroup(String groupCode, String fromParentGroupCode, String toParentGroupCode) throws ToolsRuntimeException  ;
 	
 	/**
 	 * <pre>
@@ -213,9 +213,9 @@ public interface IGroupRService {
 	 * @param newOmGroup
 	 *            新工作组对象
 	 * @return 修改后的工作组对象
-	 * @throws GroupManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmGroup updateGroup(OmGroup newOmGroup) throws GroupManagementException  ;
+	OmGroup updateGroup(OmGroup newOmGroup) throws ToolsRuntimeException  ;
 	
 	/**
 	 * <pre>
@@ -227,9 +227,9 @@ public interface IGroupRService {
 	 * 
 	 * </pre>
 	 * @param groupCode 工作组代码
-	 * @throws GroupManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	void deleteGroup(String groupCode ) throws GroupManagementException  ;
+	void deleteGroup(String groupCode ) throws ToolsRuntimeException  ;
 	
 	/*
 	 * ========================================== 
@@ -254,9 +254,9 @@ public interface IGroupRService {
 	 * 
 	 * @param groupCode
 	 *            工作组代码
-	 * @throws GroupManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	void cancelGroup(String groupCode) throws GroupManagementException  ;
+	void cancelGroup(String groupCode) throws ToolsRuntimeException  ;
 	
 	/**
 	 * <pre>
@@ -270,9 +270,9 @@ public interface IGroupRService {
 	 *            是否同时重新启用子工作组</br>
 	 *            true - 启用 </br>
 	 *            false - 不启用（默认）
-	 * @throws GroupManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	void reenableGroup(String groupCode, boolean reenableChile) throws GroupManagementException  ;
+	void reenableGroup(String groupCode, boolean reenableChile) throws ToolsRuntimeException  ;
 	
 	/*
 	 * ========================================== 

@@ -6,10 +6,10 @@ package org.tis.tools.rservice.om.capable;
 import java.util.List;
 
 import org.tis.tools.base.WhereCondition;
+import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.po.om.OmPosition;
-import org.tis.tools.rservice.om.exception.OrgManagementException;
 
 //FIXME 接口实现时注意
 // 1、每个接口的返回值，目前简单以模型对象“占位”，考虑数据结构的合理性，具体实现时，应编写更有针对性的VO对象；
@@ -58,9 +58,9 @@ public interface IOrgRService {
 	 * @param orgType
 	 *            机构类型
 	 * @return 机构代码
-	 * @throws OrgManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	String genOrgCode(String areaCode, String orgDegree, String orgType) throws OrgManagementException;
+	String genOrgCode(String areaCode, String orgDegree, String orgType) throws ToolsRuntimeException;
 
 	/**
 	 * <pre>
@@ -80,9 +80,9 @@ public interface IOrgRService {
 	 * @param orgDegree
 	 *            机构等级
 	 * @return 新建机构信息
-	 * @throws OrgManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmOrg createRootOrg(String orgCode, String orgName, String orgType, String orgDegree) throws OrgManagementException;
+	OmOrg createRootOrg(String orgCode, String orgName, String orgType, String orgDegree) throws ToolsRuntimeException;
 
 	/**
 	 * <pre>
@@ -106,10 +106,10 @@ public interface IOrgRService {
 	 * @param sortNo
 	 *            位于机构树的排列顺序，如果为0或null，则排到最后。
 	 * @return 新建机构信息
-	 * @throws OrgManagementException
+	 * @throws ToolsRuntimeException
 	 */
 	OmOrg createChildOrg(String orgCode, String orgName, String orgType, String orgDegree, String parentsOrgCode,
-			int sortNo) throws OrgManagementException;
+			int sortNo) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -124,9 +124,9 @@ public interface IOrgRService {
 	 * @param newOrg
 	 *            新机构信息
 	 * @return 新建机构信息
-	 * @throws OrgManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmOrg createChildOrg(OmOrg newOrg) throws OrgManagementException;
+	OmOrg createChildOrg(OmOrg newOrg) throws ToolsRuntimeException;
 
 	/**
 	 * <pre>
@@ -140,9 +140,9 @@ public interface IOrgRService {
 	 * @param omOrg
 	 *            待修改机构信息
 	 * @return 修改后的机构信息
-	 * @throws OrgManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	void updateOrg(OmOrg omOrg) throws OrgManagementException;
+	void updateOrg(OmOrg omOrg) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -161,10 +161,10 @@ public interface IOrgRService {
 	 *            位于新父机构树下的顺序号，如果为0或null，则排到最后。
 	 * @return false - 调整失败(机构保持原层级顺序)</br>
 	 *         true - 调整成功
-	 * @throws OrgManagementException
+	 * @throws ToolsRuntimeException
 	 */
 	boolean moveOrg(String orgCode, String fromParentsOrgCode, String toParentsOrgCode, int toSortNo)
-			throws OrgManagementException;
+			throws ToolsRuntimeException;
 
 	/**
 	 * <pre>
@@ -180,9 +180,9 @@ public interface IOrgRService {
 	 * @param newOrgCode
 	 *            新的机构代码（必须指定）
 	 * @return 新机构
-	 * @throws OrgManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmOrg copyOrg(String copyFromOrgCode, String newOrgCode) throws OrgManagementException;
+	OmOrg copyOrg(String copyFromOrgCode, String newOrgCode) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -227,10 +227,10 @@ public interface IOrgRService {
 	 *            true - 复制 </br>
 	 *            false - 不复制（默认）
 	 * @return 新机构信息
-	 * @throws OrgManagementException
+	 * @throws ToolsRuntimeException
 	 */
 	OmOrg copyOrgDeep(String copyFromOrgCode, String newOrgCode, boolean copyOrgRole, boolean copyPosition,
-			boolean copyPositionRole, boolean copyGroup, boolean copyGroupRole) throws OrgManagementException;
+			boolean copyPositionRole, boolean copyGroup, boolean copyGroupRole) throws ToolsRuntimeException;
 
 	/*
 	 * ==========================================
@@ -254,9 +254,9 @@ public interface IOrgRService {
 	 * @param orgCode
 	 *            机构代码
 	 * @return 启用后的机构信息
-	 * @throws OrgManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmOrg enabledOrg( String orgCode ) throws OrgManagementException;
+	OmOrg enabledOrg( String orgCode ) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -267,9 +267,9 @@ public interface IOrgRService {
 	 * @param orgCode
 	 *            机构代码
 	 * @return 重启后的机构
-	 * @throws OrgManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmOrg reenabledOrg( String orgCode )  throws OrgManagementException;
+	OmOrg reenabledOrg( String orgCode )  throws ToolsRuntimeException;
 
 	/**
 	 * <pre>
@@ -282,9 +282,9 @@ public interface IOrgRService {
 	 * @param orgCode
 	 *            机构代码
 	 * @return 停用后的机构信息
-	 * @throws OrgManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmOrg disabledOrg( String orgCode )  throws OrgManagementException;
+	OmOrg disabledOrg( String orgCode )  throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -295,9 +295,9 @@ public interface IOrgRService {
 	 * @param orgCode
 	 *            机构代码
 	 * @return 注销后的机构
-	 * @throws OrgManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmOrg cancelOrg(String orgCode) throws OrgManagementException;
+	OmOrg cancelOrg(String orgCode) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -309,9 +309,9 @@ public interface IOrgRService {
 	 * 
 	 * @param orgCode
 	 *            待删除机构的org_code（机构代码）
-	 * @throws OrgManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	void deleteOrg(String orgCode) throws OrgManagementException;
+	void deleteOrg(String orgCode) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -323,7 +323,7 @@ public interface IOrgRService {
 	 * </pre>
 	 * @param wc 条件
 	 */
-	void deleteOrgsByCondition(WhereCondition wc) throws OrgManagementException;
+	void deleteOrgsByCondition(WhereCondition wc) throws ToolsRuntimeException;
 	
 	/*
 	 * ==========================================

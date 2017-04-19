@@ -5,12 +5,12 @@ package org.tis.tools.rservice.om.capable;
 
 import java.util.List;
 
+import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcRole;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmGroup;
 import org.tis.tools.model.po.om.OmPosition;
-import org.tis.tools.rservice.om.exception.PositionManagementException;
 
 /**
  * <pre>
@@ -56,9 +56,9 @@ public interface IPositionRService {
 	 * @param positionType
 	 *            岗位类别（值来自业务菜单：DICT_OM_POSITYPE）
 	 * @return 岗位代码
-	 * @throws PositionManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	String genPositionCode(String positionType) throws PositionManagementException;
+	String genPositionCode(String positionType) throws ToolsRuntimeException;
 
 	/**
 	 * <pre>
@@ -84,10 +84,10 @@ public interface IPositionRService {
 	 * @param parentPositionCode
 	 *            父岗位代码
 	 * @return 新增岗位对象
-	 * @throws PositionManagementException
+	 * @throws ToolsRuntimeException
 	 */
 	OmPosition createPosition(String orgCode, String dutyCode, String positionCode, String positionName,
-			String positionType, String parentPositionCode) throws PositionManagementException;
+			String positionType, String parentPositionCode) throws ToolsRuntimeException;
 
 	/**
 	 * <pre>
@@ -102,9 +102,9 @@ public interface IPositionRService {
 	 * 
 	 * @param newOmPosition
 	 * @return 新增岗位对象
-	 * @throws PositionManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmPosition createPosition(OmPosition newOmPosition) throws PositionManagementException;
+	OmPosition createPosition(OmPosition newOmPosition) throws ToolsRuntimeException;
 
 	/**
 	 * <pre>
@@ -122,10 +122,10 @@ public interface IPositionRService {
 	 * @param toOrgCode
 	 *            新岗位所属机构
 	 * @return 新增岗位对象
-	 * @throws PositionManagementException
+	 * @throws ToolsRuntimeException
 	 */
 	OmPosition copyPosition(String fromPositionCode, String newPositionCode, String toOrgCode)
-			throws PositionManagementException;
+			throws ToolsRuntimeException;
 
 	/**
 	 * <pre>
@@ -169,11 +169,11 @@ public interface IPositionRService {
 	 *            true - 拷贝 </br>
 	 *            false - 不拷贝
 	 * @return 新增岗位对象
-	 * @throws PositionManagementException
+	 * @throws ToolsRuntimeException
 	 */
 	OmPosition copyPositionDeep(String fromPositionCode, String newPositionCode, String toOrgCode, boolean copyChild,
 			boolean copyEmployee, boolean copyApp, boolean copyGroup, boolean copyRole)
-					throws PositionManagementException;
+					throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -195,10 +195,10 @@ public interface IPositionRService {
 	 * @param toParentPositionCode
 	 *            移动到父岗位代码
 	 * @return 移动后的岗位对象
-	 * @throws PositionManagementException
+	 * @throws ToolsRuntimeException
 	 */
 	OmPosition movePosition(String fromOrgCode, String fromParentPositionCode, String toOrgCode,
-			String toParentPositionCode) throws PositionManagementException;
+			String toParentPositionCode) throws ToolsRuntimeException;
 
 	/**
 	 * <pre>
@@ -212,9 +212,9 @@ public interface IPositionRService {
 	 * @param position
 	 *            岗位代码
 	 * @return 新岗位对象
-	 * @throws PositionManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmPosition updatePosition(OmPosition position) throws PositionManagementException;
+	OmPosition updatePosition(OmPosition position) throws ToolsRuntimeException;
 
 	/*
 	 * ========================================== 
@@ -238,9 +238,9 @@ public interface IPositionRService {
 	 * 
 	 * @param position
 	 *            岗位代码
-	 * @throws PositionManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	void cancelPosition(String positionCode) throws PositionManagementException;
+	void cancelPosition(String positionCode) throws ToolsRuntimeException;
 
 	/**
 	 * <pre>
@@ -253,9 +253,9 @@ public interface IPositionRService {
 	 * 
 	 * @param positionCode
 	 *            岗位代码
-	 * @throws PositionManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	void reenablePosition(String positionCode) throws PositionManagementException;
+	void reenablePosition(String positionCode) throws ToolsRuntimeException;
 	
 	/*
 	 * ========================================== 

@@ -5,11 +5,11 @@ package org.tis.tools.rservice.om.capable;
 
 import java.util.List;
 
+import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.ac.AcRole;
 import org.tis.tools.model.po.om.OmDuty;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmPosition;
-import org.tis.tools.rservice.om.exception.DutyManagementException;
 
 /**
  * 
@@ -46,9 +46,9 @@ public interface IDutyRService {
 	 * @param dutyType
 	 *            职务套别（值必须来自业务字典 DICT_OM_DUTYTYPE）
 	 * @return 职务代码
-	 * @exception DutyManagementException
+	 * @exception ToolsRuntimeException
 	 */
-	String genDutyCode(String dutyType) throws DutyManagementException;
+	String genDutyCode(String dutyType) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -67,10 +67,10 @@ public interface IDutyRService {
 	 * @param parentsDutyCode
 	 *            父职务代码（可空，表示根职务）
 	 * @return 新职务对象
-	 * @throws DutyManagementException
+	 * @throws ToolsRuntimeException
 	 */
 	OmDuty createDuty(String dutyCode, String dutyName, String dutyType, String parentsDutyCode)
-			throws DutyManagementException;
+			throws ToolsRuntimeException;
 
 	/**
 	 * <pre>
@@ -85,9 +85,9 @@ public interface IDutyRService {
 	 * @param newOmDuty
 	 *            新职务信息
 	 * @return 新职务对象
-	 * @throws DutyManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmDuty createDuty(OmDuty newOmDuty) throws DutyManagementException;
+	OmDuty createDuty(OmDuty newOmDuty) throws ToolsRuntimeException;
 
 	/**
 	 * <pre>
@@ -104,9 +104,9 @@ public interface IDutyRService {
 	 * @param toParentsDutyCode
 	 *            父职务代码
 	 * @return 新职务对象
-	 * @throws DutyManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmDuty copyDuty(String fromDutyCode, String newDutyCode, String toParentsDutyCode) throws DutyManagementException;
+	OmDuty copyDuty(String fromDutyCode, String newDutyCode, String toParentsDutyCode) throws ToolsRuntimeException;
 
 	/**
 	 * <pre>
@@ -123,9 +123,9 @@ public interface IDutyRService {
 	 * @param toParentsDutyCode
 	 *            新父节点guid
 	 * @return 移动后的职务对象
-	 * @throws DutyManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmDuty moveDuty(String dutyCode, String fromParentsDutyCode , String toParentsDutyCode ) throws DutyManagementException;
+	OmDuty moveDuty(String dutyCode, String fromParentsDutyCode , String toParentsDutyCode ) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -138,9 +138,9 @@ public interface IDutyRService {
 	 * @param omDuty
 	 *            待修改的职务信息
 	 * @return 最新的职务对象
-	 * @throws DutyManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmDuty updateDuty(OmDuty omDuty) throws DutyManagementException;
+	OmDuty updateDuty(OmDuty omDuty) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -154,9 +154,9 @@ public interface IDutyRService {
 	 * 
 	 * @param dutyCode
 	 *            职务代码
-	 * @exception DutyManagementException
+	 * @exception ToolsRuntimeException
 	 */
-	void deleteDuty(String dutyCode) throws DutyManagementException;;
+	void deleteDuty(String dutyCode) throws ToolsRuntimeException;;
 	
 	/*
 	 * ==========================================

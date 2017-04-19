@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.tis.tools.model.po.om.OmBusiorg;
 import org.tis.tools.model.vo.om.OmBusiorgDetail;
-import org.tis.tools.rservice.om.exception.BusiOrgManagementException;
+import org.tis.tools.base.exception.ToolsRuntimeException;
 
 /**
  * <pre>
@@ -60,10 +60,10 @@ public interface IBusiOrgRService {
 	 * @param busiDomainName
 	 *            业务条线名称
 	 * @return 业务字典DICT_OM_BUSIDOMAIN对象
-	 * @throws BusiOrgManagementException
+	 * @throws ToolsRuntimeException
 	 */
 	// TODO 业务字典完成后，修改返回类型为业务字典对象
-	Object createBusiDomain(String busiDomainCode, String busiDomainName) throws BusiOrgManagementException;
+	Object createBusiDomain(String busiDomainCode, String busiDomainName) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -76,9 +76,9 @@ public interface IBusiOrgRService {
 	 * 
 	 * @param busiDomainCode
 	 *            业务条线／套别
-	 * @throws BusiOrgManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	void deleteBusiDomain(String busiDomainCode) throws BusiOrgManagementException;
+	void deleteBusiDomain(String busiDomainCode) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -116,9 +116,9 @@ public interface IBusiOrgRService {
 	 * </pre>
 	 * @param nodeType 节点类型（值来自业务字典DICT_OM_NODETYPE）
 	 * @return 业务机构代码
-	 * @exception BusiOrgManagementException
+	 * @exception ToolsRuntimeException
 	 */
-	String genBusiorgCode( String nodeType ) throws BusiOrgManagementException;
+	String genBusiorgCode( String nodeType ) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -140,10 +140,10 @@ public interface IBusiOrgRService {
 	 * @param parentsBusiorgCode
 	 *            父业务机构代码
 	 * @return 新业务机构对象
-	 * @exception BusiOrgManagementException
+	 * @exception ToolsRuntimeException
 	 */
 	OmBusiorg createRealityBusiorg(String newBusiorgCode, String newBusiorgName, String orgCode, String busiDomain,
-			String parentsBusiorgCode) throws BusiOrgManagementException;
+			String parentsBusiorgCode) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -160,10 +160,10 @@ public interface IBusiOrgRService {
 	 * @param parentsBusiorgCode
 	 *            父业务机构代码
 	 * @return 新业务机构对象
-	 * @throws BusiOrgManagementException
+	 * @throws ToolsRuntimeException
 	 */
 	OmBusiorg createDummyBusiorg(String newBusiorgCode, String newBusiorgName, String busiDomain,
-			String parentsBusiorgCode) throws BusiOrgManagementException;
+			String parentsBusiorgCode) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -180,9 +180,9 @@ public interface IBusiOrgRService {
 	 * @param toParentsBusiorgCode
 	 *            新业务机构的父业务机构
 	 * @return 新增的业务机构对象
-	 * @throws BusiOrgManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmBusiorg copyBusiorg(String fromBusiorgCode, String newBusiorgCode, String toParentsBusiorgCode) throws BusiOrgManagementException;
+	OmBusiorg copyBusiorg(String fromBusiorgCode, String newBusiorgCode, String toParentsBusiorgCode) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -201,9 +201,9 @@ public interface IBusiOrgRService {
 	 * @param toParentsBusiorgCode
 	 *            新业务机构的父业务机构
 	 * @return 新增的业务机构对象
-	 * @throws BusiOrgManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmBusiorg copyBusiorgDeep(String fromBusiorgCode, String newBusiorgCode, String toParentsBusiorgCode) throws BusiOrgManagementException;
+	OmBusiorg copyBusiorgDeep(String fromBusiorgCode, String newBusiorgCode, String toParentsBusiorgCode) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -217,9 +217,9 @@ public interface IBusiOrgRService {
 	 * @param toParentsBusiorgCode
 	 *            新父业务机构
 	 * @return 移动后的业务机构信息对象
-	 * @throws BusiOrgManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmBusiorg moveBusiorg(String busiorgCode, String fromParentsBusiorgCode, String toParentsBusiorgCode) throws BusiOrgManagementException;
+	OmBusiorg moveBusiorg(String busiorgCode, String fromParentsBusiorgCode, String toParentsBusiorgCode) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -233,9 +233,9 @@ public interface IBusiOrgRService {
 	 * @param newOmBusiorg
 	 *            新业务机构
 	 * @return 修改后的业务机构信息对象
-	 * @throws BusiOrgManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	OmBusiorg updateBusiorg(OmBusiorg newOmBusiorg) throws BusiOrgManagementException;
+	OmBusiorg updateBusiorg(OmBusiorg newOmBusiorg) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -248,9 +248,9 @@ public interface IBusiOrgRService {
 	 * 
 	 * @param busiorgCode
 	 *            待删除的业务机构代码
-	 * @throws BusiOrgManagementException
+	 * @throws ToolsRuntimeException
 	 */
-	void deleteBusiorg(String busiorgCode) throws BusiOrgManagementException ;
+	void deleteBusiorg(String busiorgCode) throws ToolsRuntimeException ;
 	
 	/*
 	 * ========================================== 
