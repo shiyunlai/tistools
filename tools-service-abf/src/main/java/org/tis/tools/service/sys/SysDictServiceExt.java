@@ -22,7 +22,7 @@ import org.tis.tools.service.sys.exception.SYSExceptionCodes;
  */
 @Service
 public class SysDictServiceExt {
-
+	
 	@Autowired
 	CommonsSysMapper commonsSysMapper;
 	
@@ -48,5 +48,26 @@ public class SysDictServiceExt {
 		return commonsSysMapper.querySendValue(parameters);
 	}
 	
+	/**
+	 * 根据字典和字典项取实际值，如果不存在则返回默认值（defaultValue）
+	 * 
+	 * @param dictKey
+	 *            业务字典
+	 * @param itemValue
+	 *            业务字典项
+	 * @param defaultValue
+	 *            默认值
+	 * @return 实际值（如果不存在，则返回默认值）
+	 */
+	public String getActualValue(String dictKey, String itemValue, String defaultValue) {
+		
+		String actualValue = getActualValue( dictKey,itemValue ) ; 
+		if( StringUtils.isEmpty(actualValue) ){
+			System.out.println("找不到对应的业务字典！业务字典："+dictKey+" 字典项："+itemValue);//TODO log4j2 warn
+			return defaultValue ; 
+		}else{
+			return actualValue ; 
+		}
+	}
 	
 }
