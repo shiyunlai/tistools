@@ -21,7 +21,7 @@
 	    (
 <#list table.fields as field>
 <#if field.physical !="false">
-			#<#nt>{${field.id},jdbcType=${field.type}}<#if field_has_next>,</#if>
+			#<#nt>{${humpClassName(field.id)?uncap_first},jdbcType=${field.type?upper_case}}<#if field_has_next>,</#if>
 </#if>
 </#list>
   		)
@@ -33,7 +33,7 @@
 <#list table.fields as field>
 <#if field.physical !="false">
 		<if test="${field.id} != null" >
-			${field.id} = #<#nt>{${field.id},jdbcType=${field.type}}<#if field_has_next>,</#if>
+			${field.id} = #<#nt>{${humpClassName(field.id)?uncap_first},jdbcType=${field.type?upper_case}}<#if field_has_next>,</#if>
 		</if>
 </#if>
 </#list>
@@ -46,7 +46,7 @@
 	    <set>
 <#list table.fields as field>
 <#if field.physical !="false">
-		${field.id} = #<#nt>{${field.id},jdbcType=${field.type}}<#if field_has_next>,</#if>
+		${field.id} = #<#nt>{${humpClassName(field.id)?uncap_first},jdbcType=${field.type?upper_case}}<#if field_has_next>,</#if>
 </#if>
 </#list>
 	    </set>
@@ -67,7 +67,7 @@
 <#list table.fields as field>
 <#if field.physical !="false">
 		<if test="domain.${field.id} != null" >
-        	${field.id} = #<#nt>{domain.${field.id},jdbcType=${field.type}}
+        	${field.id} = #<#nt>{domain.${humpClassName(field.id)?uncap_first},jdbcType=${field.type?upper_case}}
       	</if>
 </#if>
 </#list>
