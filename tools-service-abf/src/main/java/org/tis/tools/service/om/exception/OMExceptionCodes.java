@@ -6,7 +6,7 @@ package org.tis.tools.service.om.exception;
 /**
  * <pre>
  * OM模块的异常码定义.</br>
- * 范围： OM-00-0000 ~ OM-00-9999
+ * 范围： OM-0000 ~ OM-9999
  * </pre>
  * 
  * @author megapro
@@ -20,14 +20,9 @@ public class OMExceptionCodes {
 	private static final String R_EX_PREFIX = "OM";
 	
 	/**
-	 * 异常：查找类路径下的META-INF资源错误.<br>
-	 */
-	public static final String FIND_META_INF_RESOURCE_ERROR = R_EX_CODE("00-0001");
-
-	/**
 	 * 异常：缺少生成机构代码所需的参数
 	 */
-	public static final String LAKE_PARMS_FOR_GEN_ORGCODE = R_EX_CODE("00-0002");
+	public static final String LAKE_PARMS_FOR_GEN_ORGCODE = R_EX_CODE("0001");
 	
 	/**
 	 * 以烤串方式拼接异常码

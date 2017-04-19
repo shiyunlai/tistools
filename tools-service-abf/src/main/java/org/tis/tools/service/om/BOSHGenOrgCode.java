@@ -3,11 +3,14 @@
  */
 package org.tis.tools.service.om;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tis.tools.base.WhereCondition;
+import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.rservice.om.exception.OrgManagementException;
 import org.tis.tools.rservice.sys.capable.DictConstants;
 import org.tis.tools.service.base.SequenceService;
@@ -29,8 +32,12 @@ public class BOSHGenOrgCode implements IOrgCodeGenerator{
 	@Autowired
 	SequenceService sequenceService ;
 	
+	@Autowired
+	OmOrgService omOrgService ; 
+	
 	/**
 	 * <pre>
+	 * 生成一个未被使用的机构代码。
 	 * parms中需要指定的参数对包括：
 	 * orgDegree 机构等级
 	 * areaCode  地区码
@@ -69,7 +76,15 @@ public class BOSHGenOrgCode implements IOrgCodeGenerator{
 		// 地区码
 		sb.append(sysDictServiceExt.getActualValue(DictConstants.DICT_SD_AREA, areaCode)) ;
 		// 序号， 以 BOSHGenOrgCode.class.getName() 唯一key，顺序编号
-		sb.append(toSeqNO(sequenceService.getNextSeqNo(BOSHGenOrgCode.class.getName()))) ;//TODO 五位机构顺序号
+		sb.append(toSeqNO(sequenceService.getNextSeqNo(BOSHGenOrgCode.class.getName()))) ;//五位机构顺序号
+		
+		//TODO 检查机构代码未被使用，否则要重新生成，直到新机构代码可用
+//		WhereCondition wc = new WhereCondition() ; 
+//		wc.andEquals(OmOrg.ORG_CODE, sb.toString()) ; 
+//		List<OmOrg> orgs = omOrgService.query(wc) ; 
+//		if( orgs.size() !=0 ){
+//			
+//		}
 		
 		return sb.toString();
 	}
