@@ -31,6 +31,12 @@ public class ${humpClassName(table.id)} implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/* ${table.id} table's columns definition */
+	<#list table.fields as field>
+	/** ${field.id?upper_case} ：${field.name}<br/><br/>${field.desc} */
+	public static final String ${field.id?upper_case} = "${field.id}" ; 
+	</#list>
+	
 	<#list table.fields as field>
 	<#assign fieldIdVar="${humpClassName(field.id)?uncap_first}">
 	
