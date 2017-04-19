@@ -31,6 +31,28 @@ public class OmDuty implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/* OM_DUTY table's columns definition */
+	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
+	public static final String GUID = "guid" ; 
+	/** DUTY_CODE ：职务代码<br/><br/> */
+	public static final String DUTY_CODE = "duty_code" ; 
+	/** DUTY_NAME ：职务名称<br/><br/> */
+	public static final String DUTY_NAME = "duty_name" ; 
+	/** DUTY_TYPE ：职务套别<br/><br/>见业务字典： DICT_OM_DUTYTYPE 例如科技类，审计类等 */
+	public static final String DUTY_TYPE = "duty_type" ; 
+	/** GUID_PARENTS ：数据主键<br/><br/> */
+	public static final String GUID_PARENTS = "guid_parents" ; 
+	/** ISLEAF ：是否叶子节点<br/><br/>取值来自业务菜单：DICT_YON */
+	public static final String ISLEAF = "isleaf" ; 
+	/** SUB_COUNT ：子节点数<br/><br/> */
+	public static final String SUB_COUNT = "sub_count" ; 
+	/** DUTY_LEVEL ：职务层次<br/><br/> */
+	public static final String DUTY_LEVEL = "duty_level" ; 
+	/** DUTY_SEQ ：职务序列号<br/><br/>职务的面包屑定位信息 */
+	public static final String DUTY_SEQ = "duty_seq" ; 
+	/** REMARK ：备注<br/><br/> */
+	public static final String REMARK = "remark" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
 	private String guid ;

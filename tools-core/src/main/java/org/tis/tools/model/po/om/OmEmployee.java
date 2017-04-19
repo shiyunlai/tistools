@@ -33,6 +33,80 @@ public class OmEmployee implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/* OM_EMPLOYEE table's columns definition */
+	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
+	public static final String GUID = "guid" ; 
+	/** EMP_CODE ：员工代码<br/><br/> */
+	public static final String EMP_CODE = "emp_code" ; 
+	/** EMP_NAME ：员工姓名<br/><br/> */
+	public static final String EMP_NAME = "emp_name" ; 
+	/** EMP_REALNAME ：员工全名<br/><br/> */
+	public static final String EMP_REALNAME = "emp_realname" ; 
+	/** GENDER ：性别<br/><br/>见业务菜单：DICT_OM_GENDER */
+	public static final String GENDER = "gender" ; 
+	/** EMPSTATUS ：员工状态<br/><br/>见业务字典： DICT_OM_EMPSTATUS */
+	public static final String EMPSTATUS = "empstatus" ; 
+	/** EMP_DEGREE ：员工职级<br/><br/>见业务字典： DICT_OM_EMPDEGREE */
+	public static final String EMP_DEGREE = "emp_degree" ; 
+	/** GUID_ORG ：主机构编号<br/><br/>人员所属主机构编号（冗余设计） */
+	public static final String GUID_ORG = "guid_org" ; 
+	/** GUID_POSITION ：基本岗位<br/><br/> */
+	public static final String GUID_POSITION = "guid_position" ; 
+	/** GUID_EMP_MAJOR ：直接主管<br/><br/> */
+	public static final String GUID_EMP_MAJOR = "guid_emp_major" ; 
+	/** INDATE ：入职日期<br/><br/> */
+	public static final String INDATE = "indate" ; 
+	/** OUTDATE ：离职日期<br/><br/> */
+	public static final String OUTDATE = "outdate" ; 
+	/** OTEL ：办公电话<br/><br/> */
+	public static final String OTEL = "otel" ; 
+	/** OADDRESS ：办公地址<br/><br/> */
+	public static final String OADDRESS = "oaddress" ; 
+	/** OZIPCODE ：办公邮编<br/><br/>见业务字典： DICT_SD_ZIPCODE */
+	public static final String OZIPCODE = "ozipcode" ; 
+	/** OEMAIL ：办公邮件<br/><br/> */
+	public static final String OEMAIL = "oemail" ; 
+	/** FAXNO ：传真号码<br/><br/> */
+	public static final String FAXNO = "faxno" ; 
+	/** MOBILENO ：手机号码<br/><br/> */
+	public static final String MOBILENO = "mobileno" ; 
+	/** MSN ：MSN号码<br/><br/> */
+	public static final String MSN = "msn" ; 
+	/** PAPER_TYPE ：证件类型<br/><br/>见业务字典： DICT_SD_PAPERTYPE */
+	public static final String PAPER_TYPE = "paper_type" ; 
+	/** PAPER_NO ：证件号码<br/><br/> */
+	public static final String PAPER_NO = "paper_no" ; 
+	/** BIRTHDATE ：出生日期<br/><br/> */
+	public static final String BIRTHDATE = "birthdate" ; 
+	/** HTEL ：家庭电话<br/><br/> */
+	public static final String HTEL = "htel" ; 
+	/** HADDRESS ：家庭地址<br/><br/> */
+	public static final String HADDRESS = "haddress" ; 
+	/** HZIPCODE ：家庭邮编<br/><br/>见业务字典： DICT_SD_ZIPCODE */
+	public static final String HZIPCODE = "hzipcode" ; 
+	/** PARTY ：政治面貌<br/><br/>见业务字典： DICT_SD_PARTY */
+	public static final String PARTY = "party" ; 
+	/** PEMAIL ：私人电子邮箱<br/><br/> */
+	public static final String PEMAIL = "pemail" ; 
+	/** GUID_OPERATOR ：操作员编号<br/><br/> */
+	public static final String GUID_OPERATOR = "guid_operator" ; 
+	/** USER_ID ：操作员<br/><br/>登陆用户id */
+	public static final String USER_ID = "user_id" ; 
+	/** SPECIALTY ：可授权角色<br/><br/>限定了该人员对应的操作员登陆系统时，可为其他操作员分配角色的范围； 可选内容来自角色表（AC_ROLE），json数组形式，如： [{roleid:"444555"},{roleid:"999888"},....] */
+	public static final String SPECIALTY = "specialty" ; 
+	/** ORG_LIST ：可管理机构<br/><br/>限定了本人员对应的操作员可维护哪些机构信息（机构，人员等与机构关联的信息），json数组形式，如： [{orgid:"123"},{orgid:"456"},....] 如果为空，则表示无任何机构的管理权限 */
+	public static final String ORG_LIST = "org_list" ; 
+	/** WORKEXP ：工作描述<br/><br/> */
+	public static final String WORKEXP = "workexp" ; 
+	/** REMARK ：备注<br/><br/> */
+	public static final String REMARK = "remark" ; 
+	/** REGDATE ：注册日期<br/><br/>首次新增人员记录数据的日期 */
+	public static final String REGDATE = "regdate" ; 
+	/** CREATETIME ：创建时间<br/><br/> */
+	public static final String CREATETIME = "createtime" ; 
+	/** LASTMODYTIME ：最新更新时间<br/><br/> */
+	public static final String LASTMODYTIME = "lastmodytime" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
 	private String guid ;

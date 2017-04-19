@@ -34,6 +34,18 @@ public class AcOperatorIdentity implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/* AC_OPERATOR_IDENTITY table's columns definition */
+	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
+	public static final String GUID = "guid" ; 
+	/** GUID_OPERATOR ：数据主键<br/><br/> */
+	public static final String GUID_OPERATOR = "guid_operator" ; 
+	/** IDENTITY_NAME ：身份名称<br/><br/> */
+	public static final String IDENTITY_NAME = "identity_name" ; 
+	/** IDENTITY_FLAG ：默认身份标志<br/><br/>见业务字典： DICT_YON 只能有一个默认身份 Y是默认身份 N不是默认身份 */
+	public static final String IDENTITY_FLAG = "identity_flag" ; 
+	/** SEQ_NO ：显示顺序<br/><br/> */
+	public static final String SEQ_NO = "seq_no" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
 	private String guid ;

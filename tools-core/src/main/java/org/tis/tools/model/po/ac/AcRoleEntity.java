@@ -32,6 +32,20 @@ public class AcRoleEntity implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/* AC_ROLE_ENTITY table's columns definition */
+	/** GUID_ROLE ：数据主键<br/><br/> */
+	public static final String GUID_ROLE = "guid_role" ; 
+	/** GUID_ENTITY ：数据主键<br/><br/> */
+	public static final String GUID_ENTITY = "guid_entity" ; 
+	/** ISADD ：可增加<br/><br/>取值来自业务菜单： DICT_YON */
+	public static final String ISADD = "isadd" ; 
+	/** ISDEL ：可删除<br/><br/>取值来自业务菜单： DICT_YON */
+	public static final String ISDEL = "isdel" ; 
+	/** ISMODIFY ：可修改<br/><br/>取值来自业务菜单： DICT_YON */
+	public static final String ISMODIFY = "ismodify" ; 
+	/** ISVIEW ：可查看<br/><br/>取值来自业务菜单： DICT_YON */
+	public static final String ISVIEW = "isview" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述： */
 	private String guidRole ;

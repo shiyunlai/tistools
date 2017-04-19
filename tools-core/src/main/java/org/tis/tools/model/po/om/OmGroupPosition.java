@@ -31,6 +31,12 @@ public class OmGroupPosition implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/* OM_GROUP_POSITION table's columns definition */
+	/** GUID_GROUP ：数据主键<br/><br/> */
+	public static final String GUID_GROUP = "guid_group" ; 
+	/** GUID_POSITION ：数据主键<br/><br/> */
+	public static final String GUID_POSITION = "guid_position" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述： */
 	private String guidGroup ;

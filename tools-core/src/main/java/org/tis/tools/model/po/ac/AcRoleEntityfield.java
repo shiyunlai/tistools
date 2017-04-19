@@ -32,6 +32,16 @@ public class AcRoleEntityfield implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/* AC_ROLE_ENTITYFIELD table's columns definition */
+	/** GUID_ROLE ：数据主键<br/><br/> */
+	public static final String GUID_ROLE = "guid_role" ; 
+	/** GUID_ENTITYFIELD ：数据主键<br/><br/> */
+	public static final String GUID_ENTITYFIELD = "guid_entityfield" ; 
+	/** ISMODIFY ：可修改<br/><br/>取值来自业务菜单： DICT_YON */
+	public static final String ISMODIFY = "ismodify" ; 
+	/** ISVIEW ：可查看<br/><br/>取值来自业务菜单： DICT_YON */
+	public static final String ISVIEW = "isview" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述： */
 	private String guidRole ;

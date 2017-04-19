@@ -38,6 +38,36 @@ public class OmBusiorg implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/* OM_BUSIORG table's columns definition */
+	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
+	public static final String GUID = "guid" ; 
+	/** NODE_TYPE ：节点类型<br/><br/>业务字典 DICT_OM_NODETYPE 该业务机构的节点类型，虚拟节点，机构节点，如果是机构节点，则对应机构信息表的一个机构 */
+	public static final String NODE_TYPE = "node_type" ; 
+	/** BUSIORG_CODE ：业务机构代码<br/><br/>业务上对业务机构的编码 */
+	public static final String BUSIORG_CODE = "busiorg_code" ; 
+	/** BUSI_DOMAIN ：业务条线<br/><br/>取值范围业务菜单 DICT_OM_BUSIDOMAIN */
+	public static final String BUSI_DOMAIN = "busi_domain" ; 
+	/** BUSIORG_NAME ：业务机构名称<br/><br/> */
+	public static final String BUSIORG_NAME = "busiorg_name" ; 
+	/** BUSIORG_LEVEL ：业务机构层次<br/><br/> */
+	public static final String BUSIORG_LEVEL = "busiorg_level" ; 
+	/** GUID_ORG ：数据主键<br/><br/> */
+	public static final String GUID_ORG = "guid_org" ; 
+	/** GUID_PARENTS ：数据主键<br/><br/> */
+	public static final String GUID_PARENTS = "guid_parents" ; 
+	/** GUID_POSITION ：主管岗位<br/><br/> */
+	public static final String GUID_POSITION = "guid_position" ; 
+	/** ORG_CODE ：机构代号<br/><br/> */
+	public static final String ORG_CODE = "org_code" ; 
+	/** SEQNO ：序列号<br/><br/>业务机构的面包屑导航信息 */
+	public static final String SEQNO = "seqno" ; 
+	/** SORTNO ：排列顺序编号<br/><br/> */
+	public static final String SORTNO = "sortno" ; 
+	/** ISLEAF ：是否叶子节点<br/><br/>见业务字典： DICT_YON */
+	public static final String ISLEAF = "isleaf" ; 
+	/** SUB_COUNT ：子节点数<br/><br/> */
+	public static final String SUB_COUNT = "sub_count" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
 	private String guid ;

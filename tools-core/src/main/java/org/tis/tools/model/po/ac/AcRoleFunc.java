@@ -31,6 +31,16 @@ public class AcRoleFunc implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/* AC_ROLE_FUNC table's columns definition */
+	/** GUID_ROLE ：数据主键<br/><br/> */
+	public static final String GUID_ROLE = "guid_role" ; 
+	/** GUID_FUNC ：数据主键<br/><br/> */
+	public static final String GUID_FUNC = "guid_func" ; 
+	/** GUID_APP ：应用GUID<br/><br/>冗余字段 */
+	public static final String GUID_APP = "guid_app" ; 
+	/** GUID_FUNCGROUP ：功能组GUID<br/><br/>冗余字段 */
+	public static final String GUID_FUNCGROUP = "guid_funcgroup" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述： */
 	private String guidRole ;

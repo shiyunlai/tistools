@@ -38,6 +38,22 @@ public class AcOperatorConfig implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/* AC_OPERATOR_CONFIG table's columns definition */
+	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
+	public static final String GUID = "guid" ; 
+	/** GUID_OPERATOR ：数据主键<br/><br/> */
+	public static final String GUID_OPERATOR = "guid_operator" ; 
+	/** GUID_APP ：应用GUID<br/><br/> */
+	public static final String GUID_APP = "guid_app" ; 
+	/** CONFIG_TYPE ：配置类型<br/><br/>见业务字典： DICT_AC_CONFIGTYPE */
+	public static final String CONFIG_TYPE = "config_type" ; 
+	/** CONFIG_NAME ：配置名<br/><br/> */
+	public static final String CONFIG_NAME = "config_name" ; 
+	/** CONFIG_VALUE ：配置值<br/><br/> */
+	public static final String CONFIG_VALUE = "config_value" ; 
+	/** ISVALID ：是否启用<br/><br/>见业务菜单： DICT_YON */
+	public static final String ISVALID = "isvalid" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
 	private String guid ;

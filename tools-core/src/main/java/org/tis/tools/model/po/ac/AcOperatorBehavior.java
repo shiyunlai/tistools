@@ -33,6 +33,14 @@ public class AcOperatorBehavior implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/* AC_OPERATOR_BEHAVIOR table's columns definition */
+	/** GUID_OPERATOR ：数据主键<br/><br/> */
+	public static final String GUID_OPERATOR = "guid_operator" ; 
+	/** GUID_BEHAVIOR ：数据主键<br/><br/> */
+	public static final String GUID_BEHAVIOR = "guid_behavior" ; 
+	/** AUTH_TYPE ：授权标志<br/><br/>取值来自业务菜单：DICT_AC_AUTHTYPE 如：特别禁止、特别允许 */
+	public static final String AUTH_TYPE = "auth_type" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述： */
 	private String guidOperator ;

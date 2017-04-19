@@ -31,6 +31,14 @@ public class OmEmpPosition implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/* OM_EMP_POSITION table's columns definition */
+	/** GUID_EMP ：数据主键<br/><br/> */
+	public static final String GUID_EMP = "guid_emp" ; 
+	/** GUID_POSITION ：数据主键<br/><br/> */
+	public static final String GUID_POSITION = "guid_position" ; 
+	/** ISMAIN ：是否主岗位<br/><br/>取值来自业务菜单：DICT_YON 只能有一个主岗位 */
+	public static final String ISMAIN = "ismain" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述： */
 	private String guidEmp ;

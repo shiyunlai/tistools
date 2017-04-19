@@ -34,6 +34,14 @@ public class AcOperatorIdentityres implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/* AC_OPERATOR_IDENTITYRES table's columns definition */
+	/** GUID_IDENTITY ：数据主键<br/><br/> */
+	public static final String GUID_IDENTITY = "guid_identity" ; 
+	/** AC_RESOURCETYPE ：资源类型<br/><br/>资源：操作员所拥有的权限来源 见业务字典： DICT_AC_RESOURCETYPE 表示：角色编号或者组织编号（如机构编号，工作组编号） */
+	public static final String AC_RESOURCETYPE = "ac_resourcetype" ; 
+	/** GUID_AC_RESOURCE ：资源GUID<br/><br/>根据资源类型对应到不同权限资源的GUID */
+	public static final String GUID_AC_RESOURCE = "guid_ac_resource" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述： */
 	private String guidIdentity ;

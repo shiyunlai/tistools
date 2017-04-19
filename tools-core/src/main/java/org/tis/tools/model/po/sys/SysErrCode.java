@@ -31,6 +31,16 @@ public class SysErrCode implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/* SYS_ERR_CODE table's columns definition */
+	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier） */
+	public static final String GUID = "guid" ; 
+	/** ERRCODE_KIND ：错误代码分类<br/><br/>见业务字典： DICT_ERRCODE_KIND SYS 系统错误码 TRANS 交易错误码 */
+	public static final String ERRCODE_KIND = "errcode_kind" ; 
+	/** ERR_CODE ：错误代码<br/><br/> */
+	public static final String ERR_CODE = "err_code" ; 
+	/** ERR_MSG ：错误信息<br/><br/> */
+	public static final String ERR_MSG = "err_msg" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier） */
 	private String guid ;

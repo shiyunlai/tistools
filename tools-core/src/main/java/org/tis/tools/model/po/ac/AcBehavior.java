@@ -33,6 +33,16 @@ public class AcBehavior implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/* AC_BEHAVIOR table's columns definition */
+	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
+	public static final String GUID = "guid" ; 
+	/** GUID_FUNC ：数据主键<br/><br/> */
+	public static final String GUID_FUNC = "guid_func" ; 
+	/** BEHAVIOR_CODE ：操作行为编码<br/><br/>每个操作行为的代码标识 */
+	public static final String BEHAVIOR_CODE = "behavior_code" ; 
+	/** BEHAVIOR_DESC ：操作行为描述<br/><br/> */
+	public static final String BEHAVIOR_DESC = "behavior_desc" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
 	private String guid ;

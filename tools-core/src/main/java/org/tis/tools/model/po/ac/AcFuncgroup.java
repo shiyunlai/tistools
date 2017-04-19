@@ -34,6 +34,24 @@ public class AcFuncgroup implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/* AC_FUNCGROUP table's columns definition */
+	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
+	public static final String GUID = "guid" ; 
+	/** GUID_APP ：数据主键<br/><br/> */
+	public static final String GUID_APP = "guid_app" ; 
+	/** FUNCGROUP_NAME ：功能组名称<br/><br/> */
+	public static final String FUNCGROUP_NAME = "funcgroup_name" ; 
+	/** GUID_PARENTS ：数据主键<br/><br/> */
+	public static final String GUID_PARENTS = "guid_parents" ; 
+	/** GROUP_LEVEL ：节点层次<br/><br/> */
+	public static final String GROUP_LEVEL = "group_level" ; 
+	/** FUNCGROUP_SEQ ：功能组路径序列<br/><br/> */
+	public static final String FUNCGROUP_SEQ = "funcgroup_seq" ; 
+	/** ISLEAF ：是否叶子节点<br/><br/>取值来自业务菜单： DICT_YON */
+	public static final String ISLEAF = "isleaf" ; 
+	/** SUB_COUNT ：子节点数<br/><br/>对功能组进行子节点的增加、删除时需要同步维护 */
+	public static final String SUB_COUNT = "sub_count" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
 	private String guid ;

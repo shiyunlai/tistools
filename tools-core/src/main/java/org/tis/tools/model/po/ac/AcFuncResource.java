@@ -32,6 +32,20 @@ public class AcFuncResource implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/* AC_FUNC_RESOURCE table's columns definition */
+	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
+	public static final String GUID = "guid" ; 
+	/** GUID_FUNC ：数据主键<br/><br/> */
+	public static final String GUID_FUNC = "guid_func" ; 
+	/** RES_TYPE ：资源类型<br/><br/>见业务字典： DICT_AC_FUNCRESTYPE 如：JSP、页面流、逻辑流等 */
+	public static final String RES_TYPE = "res_type" ; 
+	/** RES_PATH ：资源路径<br/><br/> */
+	public static final String RES_PATH = "res_path" ; 
+	/** COMPACK_NAME ：构件包名<br/><br/> */
+	public static final String COMPACK_NAME = "compack_name" ; 
+	/** RES_SHOW_NAME ：资源显示名称<br/><br/> */
+	public static final String RES_SHOW_NAME = "res_show_name" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
 	private String guid ;

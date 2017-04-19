@@ -31,6 +31,20 @@ public class AcRole implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/* AC_ROLE table's columns definition */
+	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
+	public static final String GUID = "guid" ; 
+	/** GUID_APP ：隶属应用GUID<br/><br/> */
+	public static final String GUID_APP = "guid_app" ; 
+	/** ROLE_CODE ：角色代码<br/><br/>业务上对角色的编码 */
+	public static final String ROLE_CODE = "role_code" ; 
+	/** ROLE_NAME ：角色名称<br/><br/> */
+	public static final String ROLE_NAME = "role_name" ; 
+	/** ROLE_TYPE ：角色类别<br/><br/>取值范围见 DICT_AC_ROLETYPE */
+	public static final String ROLE_TYPE = "role_type" ; 
+	/** ROLE_DESC ：角色描述<br/><br/> */
+	public static final String ROLE_DESC = "role_desc" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
 	private String guid ;

@@ -32,6 +32,42 @@ public class AcOperatorMenu implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/* AC_OPERATOR_MENU table's columns definition */
+	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
+	public static final String GUID = "guid" ; 
+	/** GUID_OPERATOR ：数据主键<br/><br/> */
+	public static final String GUID_OPERATOR = "guid_operator" ; 
+	/** GUID_APP ：应用GUID<br/><br/> */
+	public static final String GUID_APP = "guid_app" ; 
+	/** GUID_FUNC ：功能GUID<br/><br/> */
+	public static final String GUID_FUNC = "guid_func" ; 
+	/** MENU_NAME ：菜单名称<br/><br/> */
+	public static final String MENU_NAME = "menu_name" ; 
+	/** MENU_LABEL ：菜单显示（中文）<br/><br/> */
+	public static final String MENU_LABEL = "menu_label" ; 
+	/** GUID_PARENTS ：数据主键<br/><br/> */
+	public static final String GUID_PARENTS = "guid_parents" ; 
+	/** ISLEAF ：是否叶子菜单<br/><br/> */
+	public static final String ISLEAF = "isleaf" ; 
+	/** UI_ENTRY ：UI入口<br/><br/>针对EXT模式提供，例如abf_auth/function/module.xml */
+	public static final String UI_ENTRY = "ui_entry" ; 
+	/** MENU_LEVEL ：菜单层次<br/><br/>原类型smallint */
+	public static final String MENU_LEVEL = "menu_level" ; 
+	/** GUID_ROOT ：根菜单GUID<br/><br/> */
+	public static final String GUID_ROOT = "guid_root" ; 
+	/** DISPLAY_ORDER ：显示顺序<br/><br/>原类型smallint */
+	public static final String DISPLAY_ORDER = "display_order" ; 
+	/** IMAGE_PATH ：菜单图片路径<br/><br/> */
+	public static final String IMAGE_PATH = "image_path" ; 
+	/** EXPAND_PATH ：菜单展开图片路径<br/><br/> */
+	public static final String EXPAND_PATH = "expand_path" ; 
+	/** MENU_SEQ ：菜单路径序列<br/><br/> */
+	public static final String MENU_SEQ = "menu_seq" ; 
+	/** OPEN_MODE ：页面打开方式<br/><br/>数值取自业务菜单： DICT_AC_OPENMODE 如：主窗口打开、弹出窗口打开... */
+	public static final String OPEN_MODE = "open_mode" ; 
+	/** SUB_COUNT ：子节点数<br/><br/> */
+	public static final String SUB_COUNT = "sub_count" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
 	private String guid ;

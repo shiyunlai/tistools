@@ -32,6 +32,28 @@ public class AcFunc implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/* AC_FUNC table's columns definition */
+	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
+	public static final String GUID = "guid" ; 
+	/** GUID_FUNCGROUP ：数据主键<br/><br/> */
+	public static final String GUID_FUNCGROUP = "guid_funcgroup" ; 
+	/** FUNC_CODE ：功能编号<br/><br/>业务上对功能的编码 */
+	public static final String FUNC_CODE = "func_code" ; 
+	/** FUNC_NAME ：功能名称<br/><br/> */
+	public static final String FUNC_NAME = "func_name" ; 
+	/** FUNC_DESC ：功能描述<br/><br/> */
+	public static final String FUNC_DESC = "func_desc" ; 
+	/** FUNC_ACTION ：功能调用入口<br/><br/> */
+	public static final String FUNC_ACTION = "func_action" ; 
+	/** PARA_INFO ：输入参数<br/><br/>需要定义参数规范 */
+	public static final String PARA_INFO = "para_info" ; 
+	/** FUNC_TYPE ：功能类型<br/><br/>取值来自业务菜单：DICT_AC_FUNCTYPE 如：页面流、交易流、渠道服务、柜面交易... */
+	public static final String FUNC_TYPE = "func_type" ; 
+	/** ISCHECK ：是否验证权限<br/><br/>取值来自业务菜单： DICT_YON */
+	public static final String ISCHECK = "ischeck" ; 
+	/** ISMENU ：可否定义为菜单<br/><br/>取值来自业务菜单：DICT_YON。 该功能是否可以作为菜单入口，如果作为菜单入口，则会展示在菜单树（有些接口服务功能无需挂在菜单上） */
+	public static final String ISMENU = "ismenu" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
 	private String guid ;

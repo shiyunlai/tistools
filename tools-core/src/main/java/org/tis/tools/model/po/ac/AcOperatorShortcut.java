@@ -32,6 +32,24 @@ public class AcOperatorShortcut implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/* AC_OPERATOR_SHORTCUT table's columns definition */
+	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
+	public static final String GUID = "guid" ; 
+	/** GUID_OPERATOR ：数据主键<br/><br/> */
+	public static final String GUID_OPERATOR = "guid_operator" ; 
+	/** GUID_FUNC ：功能GUID<br/><br/> */
+	public static final String GUID_FUNC = "guid_func" ; 
+	/** GUID_FUNCGROUP ：功能组GUID<br/><br/>冗余字段，方便为快捷键分组 */
+	public static final String GUID_FUNCGROUP = "guid_funcgroup" ; 
+	/** GUID_APP ：应用GUID<br/><br/>冗余字段，方便为快捷键分组 */
+	public static final String GUID_APP = "guid_app" ; 
+	/** ORDER_NO ：排列顺序<br/><br/>原类型smallint */
+	public static final String ORDER_NO = "order_no" ; 
+	/** IMAGE_PATH ：快捷菜单图片路径<br/><br/> */
+	public static final String IMAGE_PATH = "image_path" ; 
+	/** SHORTCUT_KEY ：快捷按键<br/><br/>如：CTRL+1 表示启动TX010505，本字段记录 CTRL+1 这个信息 */
+	public static final String SHORTCUT_KEY = "shortcut_key" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
 	private String guid ;

@@ -31,6 +31,22 @@ public class AcOperatorFunc implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/* AC_OPERATOR_FUNC table's columns definition */
+	/** GUID_OPERATOR ：数据主键<br/><br/> */
+	public static final String GUID_OPERATOR = "guid_operator" ; 
+	/** GUID_FUNC ：数据主键<br/><br/> */
+	public static final String GUID_FUNC = "guid_func" ; 
+	/** AUTH_TYPE ：授权标志<br/><br/>取值来自业务菜单：DICT_AC_AUTHTYPE 如：特别禁止、特别允许 */
+	public static final String AUTH_TYPE = "auth_type" ; 
+	/** START_DATE ：有效开始日期<br/><br/> */
+	public static final String START_DATE = "start_date" ; 
+	/** END_DATE ：有效截至日期<br/><br/> */
+	public static final String END_DATE = "end_date" ; 
+	/** GUID_APP ：应用GUID<br/><br/>冗余字段 */
+	public static final String GUID_APP = "guid_app" ; 
+	/** GUID_FUNCGROUP ：功能组GUID<br/><br/>冗余字段 */
+	public static final String GUID_FUNCGROUP = "guid_funcgroup" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述： */
 	private String guidOperator ;

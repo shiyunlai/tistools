@@ -31,6 +31,16 @@ public class SysChannelCtl implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/* SYS_CHANNEL_CTL table's columns definition */
+	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier） */
+	public static final String GUID = "guid" ; 
+	/** CHN_CODE ：渠道代码<br/><br/>记录接触系统对应的渠道代码 */
+	public static final String CHN_CODE = "chn_code" ; 
+	/** CHN_NAME ：渠道名称<br/><br/> */
+	public static final String CHN_NAME = "chn_name" ; 
+	/** CHN_REMARK ：渠道备注信息<br/><br/> */
+	public static final String CHN_REMARK = "chn_remark" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier） */
 	private String guid ;
