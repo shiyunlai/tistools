@@ -3,20 +3,22 @@
  */
 package org.tis.tools.rservice.om.capable;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tis.tools.base.WhereCondition;
+import org.tis.tools.common.utils.SequenceSimpleUtil;
+import org.tis.tools.model.def.om.OMConstants;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.po.om.OmPosition;
 import org.tis.tools.rservice.om.exception.OrgManagementException;
 import org.tis.tools.service.om.BOSHGenOrgCode;
-import org.tis.tools.spi.om.IOrgCodeGenerator;
-
-import com.alibaba.dubbo.config.annotation.Service;
+import org.tis.tools.service.om.OmOrgService;
 
 /**
  * <pre>
@@ -32,11 +34,15 @@ public class OrgRServiceImpl implements IOrgRService {
 	@Autowired
 	BOSHGenOrgCode boshGenOrgCode ;
 	
+	@Autowired
+	OmOrgService omOrgService ; 
+	
+	
 	/* (non-Javadoc)
 	 * @see org.tis.tools.rservice.om.capable.IOrgRService#genOrgCode(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public String genOrgCode(String areaCode, String orgDegree, String orgType) throws OrgManagementException {
+	public String genOrgCode(String areaCode, String orgDegree, String orgType) {
 		Map<String,String> parms = new HashMap<String,String>() ;
 		parms.put("orgDegree", orgDegree) ; 
 		parms.put("areaCode", areaCode) ; 
@@ -49,8 +55,29 @@ public class OrgRServiceImpl implements IOrgRService {
 	@Override
 	public OmOrg createRootOrg(String orgCode, String orgName, String orgType, String orgDegree)
 			throws OrgManagementException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		OmOrg org = new OmOrg() ; 
+		
+		//补充信息
+		org.setGuid(SequenceSimpleUtil.instance.getUUID());//补充GUID
+		org.setOrgStatus(OMConstants.OM_ORGSTATUS_STOP);//补充机构状态，新增机构初始状态为 停用
+		org.setOrgLevel(new BigDecimal(0));//补充机构层次，根节点层次为 0
+		org.setGuidParents("");//补充父机构，根节点没有父机构
+		org.setCreateTime(new Date());//补充创建时间
+		org.setLastUpdate(new Date());//补充最近更新时间
+		org.setIsleaf("N");//根节点 N-不是叶子节点
+		org.setSubCount(new BigDecimal(0));//新增时子节点数为0
+		
+		//收集入参
+		org.setOrgCode(orgCode);
+		org.setOrgName(orgName);
+		org.setOrgType(orgType);
+		org.setOrgDegree(orgDegree);
+		
+		//新增机构
+		omOrgService.insert(org);
+		
+		return org;
 	}
 
 	/* (non-Javadoc)
