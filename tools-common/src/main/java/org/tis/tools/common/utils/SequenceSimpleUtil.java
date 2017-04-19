@@ -5,6 +5,7 @@ package org.tis.tools.common.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -138,6 +139,16 @@ public class SequenceSimpleUtil {
 		}
 
 		return seqNoResources.get(seqKey).addAndGet(delta) ;
+	}
+	
+	/**
+	 * 取一个UUID
+	 * 	
+	 * @return UUID字符串（去掉了'-'字符）
+	 */
+	public String getUUID() {
+		String uuid =  UUID.randomUUID().toString().replace("-", "") ;//去掉了'-'字符
+		return uuid ; 
 	}
 
 }

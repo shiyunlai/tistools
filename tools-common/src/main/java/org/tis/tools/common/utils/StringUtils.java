@@ -3,6 +3,8 @@
  */
 package org.tis.tools.common.utils;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 /**
  * @author megapro
  *
@@ -55,6 +57,18 @@ public class StringUtils {
 	public static String rightPad(String target, int len, char alexin) {
 		//在字符（target）右边补充字符（filler），并返回总长度为len的字符串
 		return org.apache.commons.lang.StringUtils.rightPad(target, len, alexin);
+	}
+	
+	/**
+	 * 将对象进行字符串序列化
+	 * 
+	 * @param obj
+	 *            任意对象
+	 * @return 序列化后的字符串
+	 */
+	public static String toString(Object obj) {
+		
+		return ToStringBuilder.reflectionToString(obj) ;
 	}
 	
 }
