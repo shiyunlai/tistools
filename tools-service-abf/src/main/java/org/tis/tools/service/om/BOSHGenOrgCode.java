@@ -3,14 +3,11 @@
  */
 package org.tis.tools.service.om;
 
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.tis.tools.base.WhereCondition;
-import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.rservice.om.exception.OrgManagementException;
 import org.tis.tools.rservice.sys.capable.DictConstants;
 import org.tis.tools.service.base.SequenceService;

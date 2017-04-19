@@ -23,6 +23,11 @@ public class OMExceptionCodes {
 	 * 异常：缺少生成机构代码所需的参数
 	 */
 	public static final String LAKE_PARMS_FOR_GEN_ORGCODE = R_EX_CODE("0001");
+
+	/**
+	 * 异常：机构代码对应的机构不存在
+	 */
+	public static final String ORGANIZATION_NOT_EXIST_BY_ORG_CODE = R_EX_CODE("0002");
 	
 	/**
 	 * 以烤串方式拼接异常码

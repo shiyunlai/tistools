@@ -48,7 +48,7 @@ public class SequenceService {
 	 * @return 下一个序号
 	 */
 	public int getNextSeqNo(String seqKey) {
-		return SequenceSimpleUtil.instance.getNextSeqNo(seqKey) ; 
+		return SequenceSimpleUtil.instance.nextSeqNoSinceStart(seqKey) ;
 	}
 
 }

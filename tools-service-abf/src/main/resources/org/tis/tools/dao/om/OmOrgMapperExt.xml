@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.om.OmOrgMapperExt">
+  
+  	
+	<select id="loadByOrgCode" parameterType="String" resultType="org.tis.tools.model.po.om.OmOrg">
+		select <include refid="Base_Column_List"/> from OM_ORG where ORG_CODE = #{orgCode}
+	</select>
+	
+	<sql id="Base_Column_List" >
+		 guid
+		,org_code
+		,org_name
+		,org_type
+		,org_degree
+		,org_status
+		,org_level
+		,guid_parents
+		,org_seq
+		,org_addr
+		,zipcode
+		,guid_position
+		,guid_emp_master
+		,guid_emp_manager
+		,link_man
+		,link_tel
+		,email
+		,web_url
+		,start_date
+		,end_date
+		,area
+		,create_time
+		,last_update
+		,updator
+		,sort_no
+		,isleaf
+		,sub_count
+		,remark
+	</sql>
+</mapper>

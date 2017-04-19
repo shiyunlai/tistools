@@ -9,9 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tis.tools.base.WhereCondition;
+import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.common.utils.SequenceSimpleUtil;
+import org.tis.tools.common.utils.SimpleSequenceUtilTest;
 import org.tis.tools.model.def.om.OMConstants;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmOrg;
@@ -19,6 +22,8 @@ import org.tis.tools.model.po.om.OmPosition;
 import org.tis.tools.rservice.om.exception.OrgManagementException;
 import org.tis.tools.service.om.BOSHGenOrgCode;
 import org.tis.tools.service.om.OmOrgService;
+import org.tis.tools.service.om.OmOrgServiceExt;
+import org.tis.tools.service.om.exception.OMExceptionCodes;
 
 /**
  * <pre>
@@ -36,6 +41,9 @@ public class OrgRServiceImpl implements IOrgRService {
 	
 	@Autowired
 	OmOrgService omOrgService ; 
+	
+	@Autowired
+	OmOrgServiceExt omOrgServiceExt ; 
 	
 	
 	/* (non-Javadoc)
@@ -59,7 +67,7 @@ public class OrgRServiceImpl implements IOrgRService {
 		OmOrg org = new OmOrg() ; 
 		
 		//补充信息
-		org.setGuid(SequenceSimpleUtil.instance.getUUID());//补充GUID
+		org.setGuid(SequenceSimpleUtil.instance.genGUIDStr("ORG"));//补充GUID
 		org.setOrgStatus(OMConstants.OM_ORGSTATUS_STOP);//补充机构状态，新增机构初始状态为 停用
 		org.setOrgLevel(new BigDecimal(0));//补充机构层次，根节点层次为 0
 		org.setGuidParents("");//补充父机构，根节点没有父机构
@@ -67,6 +75,7 @@ public class OrgRServiceImpl implements IOrgRService {
 		org.setLastUpdate(new Date());//补充最近更新时间
 		org.setIsleaf("N");//根节点 N-不是叶子节点
 		org.setSubCount(new BigDecimal(0));//新增时子节点数为0
+		org.setOrgSeq(org.getGuid());//设置机构序列,根机构直接用guid
 		
 		//收集入参
 		org.setOrgCode(orgCode);
@@ -123,7 +132,42 @@ public class OrgRServiceImpl implements IOrgRService {
 	 */
 	@Override
 	public OmOrg copyOrg(String copyFromOrgCode, String newOrgCode) throws OrgManagementException {
-		// TODO Auto-generated method stub
+		
+		if (!omOrgServiceExt.isExit(newOrgCode)) {
+			throw new OrgManagementException(OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE,
+					BasicUtil.wrap(newOrgCode), "拷贝机构时，新机构代码已经存在！");
+		}
+
+		if (!omOrgServiceExt.isExit(copyFromOrgCode)) {
+			throw new OrgManagementException(OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE,
+					BasicUtil.wrap(copyFromOrgCode), "拷贝机构时，找不到参照机构！");
+		}
+		
+		//获取参照机构记录
+		OmOrg newOrg = omOrgServiceExt.loadByOrgCode(copyFromOrgCode) ; 
+		
+		//修改为新增机构
+		newOrg.setGuid(SequenceSimpleUtil.instance.genGUIDStr("ORG"));
+		newOrg.setOrgCode(newOrgCode) ;
+		newOrg.setOrgStatus(OMConstants.OM_ORGSTATUS_STOP);//新机构状态 停用
+		newOrg.setOrgSeq(chgOrgSeq(newOrg.getOrgSeq(),newOrg.getGuid()));//设置新的机构序列
+		
+		omOrgService.insert(newOrg);
+		return newOrg;
+	}
+
+	/**
+	 * 修改为新的机构序列
+	 * 
+	 * @param oldOrgSeq
+	 *            原机构序列
+	 * @param guid
+	 *            机构GUID
+	 * @return 新的机构序列
+	 */
+	private String chgOrgSeq(String oldOrgSeq, String guid) {
+		//把最后一个.后面的跟新为 guid
+		
 		return null;
 	}
 
