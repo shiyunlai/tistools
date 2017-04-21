@@ -31,11 +31,13 @@ public class OmAppPosition implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "OM_APP_POSITION" ; 
 	/* OM_APP_POSITION table's columns definition */
 	/** GUID_APP ：应用GUID<br/><br/> */
-	public static final String GUID_APP = "guid_app" ; 
+	public static final String COLUMN_GUID_APP = "guid_app" ; 
 	/** GUID_POSITION ：岗位GUID<br/><br/> */
-	public static final String GUID_POSITION = "guid_position" ; 
+	public static final String COLUMN_GUID_POSITION = "guid_position" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：应用GUID<br/>描述： */

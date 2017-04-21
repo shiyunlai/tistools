@@ -31,19 +31,21 @@ public class AcDatascope implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "AC_DATASCOPE" ; 
 	/* AC_DATASCOPE table's columns definition */
 	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
-	public static final String GUID = "guid" ; 
+	public static final String COLUMN_GUID = "guid" ; 
 	/** GUID_ENTITY ：实体GUID<br/><br/> */
-	public static final String GUID_ENTITY = "guid_entity" ; 
+	public static final String COLUMN_GUID_ENTITY = "guid_entity" ; 
 	/** PRIV_NAME ：数据范围权限名称<br/><br/> */
-	public static final String PRIV_NAME = "priv_name" ; 
+	public static final String COLUMN_PRIV_NAME = "priv_name" ; 
 	/** DATA_OP_TYPE ：数据操作类型<br/><br/>取值来自业务菜单：DICT_AC_DATAOPTYPE 对本数据范围内的数据，可以做哪些操作：增加、修改、删除、查询 如果为空，表示都不限制； 多个操作用逗号分隔，如： 增加,修改,删除 */
-	public static final String DATA_OP_TYPE = "data_op_type" ; 
+	public static final String COLUMN_DATA_OP_TYPE = "data_op_type" ; 
 	/** ENTITY_NAME ：实体名称<br/><br/> */
-	public static final String ENTITY_NAME = "entity_name" ; 
+	public static final String COLUMN_ENTITY_NAME = "entity_name" ; 
 	/** FILTER_SQL_STRING ：过滤SQL<br/><br/>例： (orgSEQ IS NULL or orgSEQ like '$[SessionEntity/orgSEQ]%') 通过本SQL，限定了数据范围 */
-	public static final String FILTER_SQL_STRING = "filter_sql_string" ; 
+	public static final String COLUMN_FILTER_SQL_STRING = "filter_sql_string" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

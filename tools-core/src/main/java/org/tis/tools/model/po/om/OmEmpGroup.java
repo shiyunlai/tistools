@@ -32,11 +32,13 @@ public class OmEmpGroup implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "OM_EMP_GROUP" ; 
 	/* OM_EMP_GROUP table's columns definition */
 	/** GUID_EMP ：员工GUID<br/><br/> */
-	public static final String GUID_EMP = "guid_emp" ; 
+	public static final String COLUMN_GUID_EMP = "guid_emp" ; 
 	/** GUID_GROUP ：隶属工作组GUID<br/><br/> */
-	public static final String GUID_GROUP = "guid_group" ; 
+	public static final String COLUMN_GUID_GROUP = "guid_group" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：员工GUID<br/>描述： */

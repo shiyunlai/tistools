@@ -33,19 +33,21 @@ public class JnlTransCtx implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "JNL_TRANS_CTX" ; 
 	/* JNL_TRANS_CTX table's columns definition */
 	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier） */
-	public static final String GUID = "guid" ; 
+	public static final String COLUMN_GUID = "guid" ; 
 	/** GUID_TRANS ：交易流水ID<br/><br/>关联交易流水记录 */
-	public static final String GUID_TRANS = "guid_trans" ; 
+	public static final String COLUMN_GUID_TRANS = "guid_trans" ; 
 	/** TRANS_SNO ：交易流水号<br/><br/> */
-	public static final String TRANS_SNO = "trans_sno" ; 
+	public static final String COLUMN_TRANS_SNO = "trans_sno" ; 
 	/** TRANS_PHASE ：交易阶段<br/><br/>交易执行到某个阶段，见业务字典： DICT_TRANS_PHASE */
-	public static final String TRANS_PHASE = "trans_phase" ; 
+	public static final String COLUMN_TRANS_PHASE = "trans_phase" ; 
 	/** SAVE_TIME ：保存时间<br/><br/>yyyyMMddHHmmssSSS */
-	public static final String SAVE_TIME = "save_time" ; 
+	public static final String COLUMN_SAVE_TIME = "save_time" ; 
 	/** TRANS_CTX ：交易上下文<br/><br/> */
-	public static final String TRANS_CTX = "trans_ctx" ; 
+	public static final String COLUMN_TRANS_CTX = "trans_ctx" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier） */

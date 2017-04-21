@@ -32,63 +32,65 @@ public class OmOrg implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "OM_ORG" ; 
 	/* OM_ORG table's columns definition */
 	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
-	public static final String GUID = "guid" ; 
+	public static final String COLUMN_GUID = "guid" ; 
 	/** ORG_CODE ：机构代码<br/><br/>业务上对机构实体的编码。 一般根据机构等级和机构类型进行有规则的编码。 */
-	public static final String ORG_CODE = "org_code" ; 
+	public static final String COLUMN_ORG_CODE = "org_code" ; 
 	/** ORG_NAME ：机构名称<br/><br/> */
-	public static final String ORG_NAME = "org_name" ; 
+	public static final String COLUMN_ORG_NAME = "org_name" ; 
 	/** ORG_TYPE ：机构类型<br/><br/>见业务字典： DICT_OM_ORGTYPE 如：总公司/总部部门/分公司/分公司部门... */
-	public static final String ORG_TYPE = "org_type" ; 
+	public static final String COLUMN_ORG_TYPE = "org_type" ; 
 	/** ORG_DEGREE ：机构等级<br/><br/>见业务字典： DICT_OM_ORGDEGREE 如：总行，分行，海外分行... */
-	public static final String ORG_DEGREE = "org_degree" ; 
+	public static final String COLUMN_ORG_DEGREE = "org_degree" ; 
 	/** ORG_STATUS ：机构状态<br/><br/>见业务字典： DICT_OM_ORGSTATUS */
-	public static final String ORG_STATUS = "org_status" ; 
+	public static final String COLUMN_ORG_STATUS = "org_status" ; 
 	/** ORG_LEVEL ：机构层次<br/><br/> */
-	public static final String ORG_LEVEL = "org_level" ; 
+	public static final String COLUMN_ORG_LEVEL = "org_level" ; 
 	/** GUID_PARENTS ：父机构GUID<br/><br/> */
-	public static final String GUID_PARENTS = "guid_parents" ; 
+	public static final String COLUMN_GUID_PARENTS = "guid_parents" ; 
 	/** ORG_SEQ ：机构序列<br/><br/>类似面包屑导航，以“.”分割所有父机构GUID，明确示意出本机构所处层级归属 格式： 父机构GUID.父机构GUID....本机构GUID */
-	public static final String ORG_SEQ = "org_seq" ; 
+	public static final String COLUMN_ORG_SEQ = "org_seq" ; 
 	/** ORG_ADDR ：机构地址<br/><br/> */
-	public static final String ORG_ADDR = "org_addr" ; 
+	public static final String COLUMN_ORG_ADDR = "org_addr" ; 
 	/** ZIPCODE ：邮编<br/><br/>见业务字典： DICT_SD_ZIPCODE */
-	public static final String ZIPCODE = "zipcode" ; 
+	public static final String COLUMN_ZIPCODE = "zipcode" ; 
 	/** GUID_POSITION ：机构主管岗位GUID<br/><br/> */
-	public static final String GUID_POSITION = "guid_position" ; 
+	public static final String COLUMN_GUID_POSITION = "guid_position" ; 
 	/** GUID_EMP_MASTER ：机构主管人员GUID<br/><br/> */
-	public static final String GUID_EMP_MASTER = "guid_emp_master" ; 
+	public static final String COLUMN_GUID_EMP_MASTER = "guid_emp_master" ; 
 	/** GUID_EMP_MANAGER ：机构管理员GUID<br/><br/>机构管理员能够给本机构的人员进行授权，多个机构管理员之间用,分隔 */
-	public static final String GUID_EMP_MANAGER = "guid_emp_manager" ; 
+	public static final String COLUMN_GUID_EMP_MANAGER = "guid_emp_manager" ; 
 	/** LINK_MAN ：联系人姓名<br/><br/> */
-	public static final String LINK_MAN = "link_man" ; 
+	public static final String COLUMN_LINK_MAN = "link_man" ; 
 	/** LINK_TEL ：联系电话<br/><br/> */
-	public static final String LINK_TEL = "link_tel" ; 
+	public static final String COLUMN_LINK_TEL = "link_tel" ; 
 	/** EMAIL ：电子邮件<br/><br/> */
-	public static final String EMAIL = "email" ; 
+	public static final String COLUMN_EMAIL = "email" ; 
 	/** WEB_URL ：网站地址<br/><br/> */
-	public static final String WEB_URL = "web_url" ; 
+	public static final String COLUMN_WEB_URL = "web_url" ; 
 	/** START_DATE ：生效日期<br/><br/> */
-	public static final String START_DATE = "start_date" ; 
+	public static final String COLUMN_START_DATE = "start_date" ; 
 	/** END_DATE ：失效日期<br/><br/> */
-	public static final String END_DATE = "end_date" ; 
+	public static final String COLUMN_END_DATE = "end_date" ; 
 	/** AREA ：所属地域<br/><br/>见业务字典： DICT_SD_AREA */
-	public static final String AREA = "area" ; 
+	public static final String COLUMN_AREA = "area" ; 
 	/** CREATE_TIME ：创建时间<br/><br/> */
-	public static final String CREATE_TIME = "create_time" ; 
+	public static final String COLUMN_CREATE_TIME = "create_time" ; 
 	/** LAST_UPDATE ：最近更新时间<br/><br/> */
-	public static final String LAST_UPDATE = "last_update" ; 
+	public static final String COLUMN_LAST_UPDATE = "last_update" ; 
 	/** UPDATOR ：最近更新人员<br/><br/> */
-	public static final String UPDATOR = "updator" ; 
+	public static final String COLUMN_UPDATOR = "updator" ; 
 	/** SORT_NO ：排列顺序编号<br/><br/>维护时，可手工指定从0开始的自然数字；如果为空，系统将按照机构代码排序。 */
-	public static final String SORT_NO = "sort_no" ; 
+	public static final String COLUMN_SORT_NO = "sort_no" ; 
 	/** ISLEAF ：是否叶子节点<br/><br/>系统根据当前是否有下级机构判断更新（见业务字典 DICT_YON） */
-	public static final String ISLEAF = "isleaf" ; 
+	public static final String COLUMN_ISLEAF = "isleaf" ; 
 	/** SUB_COUNT ：子节点数<br/><br/>维护时系统根据当前拥有子机构／部分数实时更新 */
-	public static final String SUB_COUNT = "sub_count" ; 
+	public static final String COLUMN_SUB_COUNT = "sub_count" ; 
 	/** REMARK ：备注<br/><br/> */
-	public static final String REMARK = "remark" ; 
+	public static final String COLUMN_REMARK = "remark" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

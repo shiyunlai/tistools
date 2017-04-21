@@ -31,21 +31,23 @@ public class AcOperatorFunc implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "AC_OPERATOR_FUNC" ; 
 	/* AC_OPERATOR_FUNC table's columns definition */
 	/** GUID_OPERATOR ：操作员GUID<br/><br/> */
-	public static final String GUID_OPERATOR = "guid_operator" ; 
+	public static final String COLUMN_GUID_OPERATOR = "guid_operator" ; 
 	/** GUID_FUNC ：功能GUID<br/><br/> */
-	public static final String GUID_FUNC = "guid_func" ; 
+	public static final String COLUMN_GUID_FUNC = "guid_func" ; 
 	/** AUTH_TYPE ：授权标志<br/><br/>取值来自业务菜单：DICT_AC_AUTHTYPE 如：特别禁止、特别允许 */
-	public static final String AUTH_TYPE = "auth_type" ; 
+	public static final String COLUMN_AUTH_TYPE = "auth_type" ; 
 	/** START_DATE ：有效开始日期<br/><br/> */
-	public static final String START_DATE = "start_date" ; 
+	public static final String COLUMN_START_DATE = "start_date" ; 
 	/** END_DATE ：有效截至日期<br/><br/> */
-	public static final String END_DATE = "end_date" ; 
+	public static final String COLUMN_END_DATE = "end_date" ; 
 	/** GUID_APP ：应用GUID<br/><br/>冗余字段 */
-	public static final String GUID_APP = "guid_app" ; 
+	public static final String COLUMN_GUID_APP = "guid_app" ; 
 	/** GUID_FUNCGROUP ：功能组GUID<br/><br/>冗余字段 */
-	public static final String GUID_FUNCGROUP = "guid_funcgroup" ; 
+	public static final String COLUMN_GUID_FUNCGROUP = "guid_funcgroup" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：操作员GUID<br/>描述： */

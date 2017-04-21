@@ -31,27 +31,29 @@ public class JnlTransPrinted implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "JNL_TRANS_PRINTED" ; 
 	/* JNL_TRANS_PRINTED table's columns definition */
 	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier） */
-	public static final String GUID = "guid" ; 
+	public static final String COLUMN_GUID = "guid" ; 
 	/** GUID_TRANS ：交易流水ID<br/><br/>关联交易流水记录 */
-	public static final String GUID_TRANS = "guid_trans" ; 
+	public static final String COLUMN_GUID_TRANS = "guid_trans" ; 
 	/** TRANS_SNO ：交易流水号<br/><br/> */
-	public static final String TRANS_SNO = "trans_sno" ; 
+	public static final String COLUMN_TRANS_SNO = "trans_sno" ; 
 	/** TRANS_CODE ：交易代码<br/><br/> */
-	public static final String TRANS_CODE = "trans_code" ; 
+	public static final String COLUMN_TRANS_CODE = "trans_code" ; 
 	/** VOUCHER_CODE ：凭证代码<br/><br/>凭证格式的代码 */
-	public static final String VOUCHER_CODE = "voucher_code" ; 
+	public static final String COLUMN_VOUCHER_CODE = "voucher_code" ; 
 	/** PRINTED_DATA ：打印数据<br/><br/>存储生成的打印数据（已经是打印机执行编码） */
-	public static final String PRINTED_DATA = "printed_data" ; 
+	public static final String COLUMN_PRINTED_DATA = "printed_data" ; 
 	/** VOUCHER_IMG_ID ：凭证影像ID<br/><br/>存储交易凭证电子影像对应的记录ID，根据此ID，可查找对应的电子凭证影像记录。 如：影像套号 但不是每笔交易都有电子影像 */
-	public static final String VOUCHER_IMG_ID = "voucher_img_id" ; 
+	public static final String COLUMN_VOUCHER_IMG_ID = "voucher_img_id" ; 
 	/** PRINTED_DATE ：打印日期<br/><br/>首次打印凭证的日期yyyyMMdd */
-	public static final String PRINTED_DATE = "printed_date" ; 
+	public static final String COLUMN_PRINTED_DATE = "printed_date" ; 
 	/** LAST_PRINTED_TIME ：上次打印日期<br/><br/>记录最近一次打印的时间yyyyMMddHHmmSSsss */
-	public static final String LAST_PRINTED_TIME = "last_printed_time" ; 
+	public static final String COLUMN_LAST_PRINTED_TIME = "last_printed_time" ; 
 	/** PRINTED_NUM ：打印次数<br/><br/>凭证被打印的次数，每次打印都＋1 */
-	public static final String PRINTED_NUM = "printed_num" ; 
+	public static final String COLUMN_PRINTED_NUM = "printed_num" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier） */

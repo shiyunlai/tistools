@@ -32,21 +32,23 @@ public class AcOperatorShortcut implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "AC_OPERATOR_SHORTCUT" ; 
 	/* AC_OPERATOR_SHORTCUT table's columns definition */
 	/** GUID_OPERATOR ：操作员GUID<br/><br/> */
-	public static final String GUID_OPERATOR = "guid_operator" ; 
+	public static final String COLUMN_GUID_OPERATOR = "guid_operator" ; 
 	/** GUID_FUNC ：功能GUID<br/><br/> */
-	public static final String GUID_FUNC = "guid_func" ; 
+	public static final String COLUMN_GUID_FUNC = "guid_func" ; 
 	/** GUID_FUNCGROUP ：功能组GUID<br/><br/>冗余字段，方便为快捷键分组 */
-	public static final String GUID_FUNCGROUP = "guid_funcgroup" ; 
+	public static final String COLUMN_GUID_FUNCGROUP = "guid_funcgroup" ; 
 	/** GUID_APP ：应用GUID<br/><br/>冗余字段，方便为快捷键分组 */
-	public static final String GUID_APP = "guid_app" ; 
+	public static final String COLUMN_GUID_APP = "guid_app" ; 
 	/** ORDER_NO ：排列顺序<br/><br/>原类型smallint */
-	public static final String ORDER_NO = "order_no" ; 
+	public static final String COLUMN_ORDER_NO = "order_no" ; 
 	/** IMAGE_PATH ：快捷菜单图片路径<br/><br/> */
-	public static final String IMAGE_PATH = "image_path" ; 
+	public static final String COLUMN_IMAGE_PATH = "image_path" ; 
 	/** SHORTCUT_KEY ：快捷按键<br/><br/>如：CTRL+1 表示启动TX010505，本字段记录 CTRL+1 这个信息 */
-	public static final String SHORTCUT_KEY = "shortcut_key" ; 
+	public static final String COLUMN_SHORTCUT_KEY = "shortcut_key" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：操作员GUID<br/>描述： */

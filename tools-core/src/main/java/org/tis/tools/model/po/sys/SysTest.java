@@ -31,49 +31,51 @@ public class SysTest implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "SYS_TEST" ; 
 	/* SYS_TEST table's columns definition */
 	/** TEST_BIGINT ：测试BIGINT<br/><br/> */
-	public static final String TEST_BIGINT = "test_bigint" ; 
+	public static final String COLUMN_TEST_BIGINT = "test_bigint" ; 
 	/** TEST_GIBINTN ：测试GIBINT(8)<br/><br/> */
-	public static final String TEST_GIBINTN = "test_gibintn" ; 
+	public static final String COLUMN_TEST_GIBINTN = "test_gibintn" ; 
 	/** TEST_CHAR ：测试CHAR<br/><br/> */
-	public static final String TEST_CHAR = "test_char" ; 
+	public static final String COLUMN_TEST_CHAR = "test_char" ; 
 	/** TEST_CHARN ：测试CHAR(16)<br/><br/> */
-	public static final String TEST_CHARN = "test_charn" ; 
+	public static final String COLUMN_TEST_CHARN = "test_charn" ; 
 	/** TEST_DATE ：测试DATE<br/><br/> */
-	public static final String TEST_DATE = "test_date" ; 
+	public static final String COLUMN_TEST_DATE = "test_date" ; 
 	/** TEST_DATETIME ：测试DATETIME<br/><br/> */
-	public static final String TEST_DATETIME = "test_datetime" ; 
+	public static final String COLUMN_TEST_DATETIME = "test_datetime" ; 
 	/** TEST_DECIMAL ：测试DECIMAL<br/><br/> */
-	public static final String TEST_DECIMAL = "test_decimal" ; 
+	public static final String COLUMN_TEST_DECIMAL = "test_decimal" ; 
 	/** TEST_DECIMALP ：测试DECIMAL(12)<br/><br/> */
-	public static final String TEST_DECIMALP = "test_decimalp" ; 
+	public static final String COLUMN_TEST_DECIMALP = "test_decimalp" ; 
 	/** TEST_DECIMALPS ：测试DECIMAL(12,4)<br/><br/> */
-	public static final String TEST_DECIMALPS = "test_decimalps" ; 
+	public static final String COLUMN_TEST_DECIMALPS = "test_decimalps" ; 
 	/** TEST_DOUBLE ：测试DOUBLE<br/><br/> */
-	public static final String TEST_DOUBLE = "test_double" ; 
+	public static final String COLUMN_TEST_DOUBLE = "test_double" ; 
 	/** TEST_DOUBLEMD ：测试DOUBLE(10,4)<br/><br/> */
-	public static final String TEST_DOUBLEMD = "test_doublemd" ; 
+	public static final String COLUMN_TEST_DOUBLEMD = "test_doublemd" ; 
 	/** TEST_FLOAT ：测试FLOAT<br/><br/> */
-	public static final String TEST_FLOAT = "test_float" ; 
+	public static final String COLUMN_TEST_FLOAT = "test_float" ; 
 	/** TEST_FLOATP ：测试FLOAT(10)<br/><br/> */
-	public static final String TEST_FLOATP = "test_floatp" ; 
+	public static final String COLUMN_TEST_FLOATP = "test_floatp" ; 
 	/** TEST_FLOATMD ：测试FLOAT(10,4)<br/><br/> */
-	public static final String TEST_FLOATMD = "test_floatmd" ; 
+	public static final String COLUMN_TEST_FLOATMD = "test_floatmd" ; 
 	/** TEST_INT ：测试INT<br/><br/> */
-	public static final String TEST_INT = "test_int" ; 
+	public static final String COLUMN_TEST_INT = "test_int" ; 
 	/** TEST_INTN ：测试INT(12)<br/><br/> */
-	public static final String TEST_INTN = "test_intn" ; 
+	public static final String COLUMN_TEST_INTN = "test_intn" ; 
 	/** TEST_TIME ：测试TIME<br/><br/> */
-	public static final String TEST_TIME = "test_time" ; 
+	public static final String COLUMN_TEST_TIME = "test_time" ; 
 	/** TEST_TIMESTAMP ：测试TIMESTAMP<br/><br/> */
-	public static final String TEST_TIMESTAMP = "test_timestamp" ; 
+	public static final String COLUMN_TEST_TIMESTAMP = "test_timestamp" ; 
 	/** TEST_VARCHARN ：测试VARCHAR(32)<br/><br/> */
-	public static final String TEST_VARCHARN = "test_varcharn" ; 
+	public static final String COLUMN_TEST_VARCHARN = "test_varcharn" ; 
 	/** TSET_TEXT ：测试TEXT<br/><br/> */
-	public static final String TSET_TEXT = "tset_text" ; 
+	public static final String COLUMN_TSET_TEXT = "tset_text" ; 
 	/** TEST_BLOB ：测试BLOB<br/><br/> */
-	public static final String TEST_BLOB = "test_blob" ; 
+	public static final String COLUMN_TEST_BLOB = "test_blob" ; 
 	
 	
 	/** 字段类型：bigint<br/>字段名：测试BIGINT<br/>描述： */

@@ -38,19 +38,21 @@ public class AcOperatorConfig implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "AC_OPERATOR_CONFIG" ; 
 	/* AC_OPERATOR_CONFIG table's columns definition */
 	/** GUID_OPERATOR ：操作员GUID<br/><br/> */
-	public static final String GUID_OPERATOR = "guid_operator" ; 
+	public static final String COLUMN_GUID_OPERATOR = "guid_operator" ; 
 	/** GUID_APP ：应用GUID<br/><br/> */
-	public static final String GUID_APP = "guid_app" ; 
+	public static final String COLUMN_GUID_APP = "guid_app" ; 
 	/** CONFIG_TYPE ：配置类型<br/><br/>见业务字典： DICT_AC_CONFIGTYPE */
-	public static final String CONFIG_TYPE = "config_type" ; 
+	public static final String COLUMN_CONFIG_TYPE = "config_type" ; 
 	/** CONFIG_NAME ：配置名<br/><br/> */
-	public static final String CONFIG_NAME = "config_name" ; 
+	public static final String COLUMN_CONFIG_NAME = "config_name" ; 
 	/** CONFIG_VALUE ：配置值<br/><br/> */
-	public static final String CONFIG_VALUE = "config_value" ; 
+	public static final String COLUMN_CONFIG_VALUE = "config_value" ; 
 	/** ISVALID ：是否启用<br/><br/>见业务菜单： DICT_YON */
-	public static final String ISVALID = "isvalid" ; 
+	public static final String COLUMN_ISVALID = "isvalid" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：操作员GUID<br/>描述： */

@@ -31,63 +31,65 @@ public class AcEntityfield implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "AC_ENTITYFIELD" ; 
 	/* AC_ENTITYFIELD table's columns definition */
 	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
-	public static final String GUID = "guid" ; 
+	public static final String COLUMN_GUID = "guid" ; 
 	/** GUID_ENTITY ：隶属实体GUID<br/><br/> */
-	public static final String GUID_ENTITY = "guid_entity" ; 
+	public static final String COLUMN_GUID_ENTITY = "guid_entity" ; 
 	/** FIELD_NAME ：属性名称<br/><br/> */
-	public static final String FIELD_NAME = "field_name" ; 
+	public static final String COLUMN_FIELD_NAME = "field_name" ; 
 	/** FIELD_DESC ：属性描述<br/><br/> */
-	public static final String FIELD_DESC = "field_desc" ; 
+	public static final String COLUMN_FIELD_DESC = "field_desc" ; 
 	/** DISPLAY_FORMAT ：显示格式<br/><br/>如：属性为日期时，可以设置显示格式 yyyy/MM/dd； 当查询出数据，返回给调用着之前生效本显示格式（返回的数据已经被格式化）； */
-	public static final String DISPLAY_FORMAT = "display_format" ; 
+	public static final String COLUMN_DISPLAY_FORMAT = "display_format" ; 
 	/** DOCLIST_CODE ：代码大类<br/><br/> */
-	public static final String DOCLIST_CODE = "doclist_code" ; 
+	public static final String COLUMN_DOCLIST_CODE = "doclist_code" ; 
 	/** CHECKBOX_VALUE ：CHECKBOX_VALUE<br/><br/> */
-	public static final String CHECKBOX_VALUE = "checkbox_value" ; 
+	public static final String COLUMN_CHECKBOX_VALUE = "checkbox_value" ; 
 	/** FK_INPUTURL ：外键录入URL<br/><br/> */
-	public static final String FK_INPUTURL = "fk_inputurl" ; 
+	public static final String COLUMN_FK_INPUTURL = "fk_inputurl" ; 
 	/** FK_FIELDDESC ：外键描述字段名<br/><br/> */
-	public static final String FK_FIELDDESC = "fk_fielddesc" ; 
+	public static final String COLUMN_FK_FIELDDESC = "fk_fielddesc" ; 
 	/** FK_COLUMNNAME ：外键列名<br/><br/> */
-	public static final String FK_COLUMNNAME = "fk_columnname" ; 
+	public static final String COLUMN_FK_COLUMNNAME = "fk_columnname" ; 
 	/** FK_TABLENAME ：外键表名<br/><br/> */
-	public static final String FK_TABLENAME = "fk_tablename" ; 
+	public static final String COLUMN_FK_TABLENAME = "fk_tablename" ; 
 	/** DESC_FIELDNAME ：描述字段名<br/><br/> */
-	public static final String DESC_FIELDNAME = "desc_fieldname" ; 
+	public static final String COLUMN_DESC_FIELDNAME = "desc_fieldname" ; 
 	/** REF_TYPE ：引用类型<br/><br/>0 业务字典 1 其他表 */
-	public static final String REF_TYPE = "ref_type" ; 
+	public static final String COLUMN_REF_TYPE = "ref_type" ; 
 	/** FIELD_TYPE ：字段类型<br/><br/>0 字符串 1 整数 2 小数 3 日期 4 日期时间 5 CHECKBOX 6 引用 */
-	public static final String FIELD_TYPE = "field_type" ; 
+	public static final String COLUMN_FIELD_TYPE = "field_type" ; 
 	/** DISPLAY_ORDER ：顺序<br/><br/> */
-	public static final String DISPLAY_ORDER = "display_order" ; 
+	public static final String COLUMN_DISPLAY_ORDER = "display_order" ; 
 	/** COLUMN_NAME ：数据库列名<br/><br/> */
-	public static final String COLUMN_NAME = "column_name" ; 
+	public static final String COLUMN_COLUMN_NAME = "column_name" ; 
 	/** WIDTH ：宽度<br/><br/> */
-	public static final String WIDTH = "width" ; 
+	public static final String COLUMN_WIDTH = "width" ; 
 	/** DEFAULT_VALUE ：缺省值<br/><br/> */
-	public static final String DEFAULT_VALUE = "default_value" ; 
+	public static final String COLUMN_DEFAULT_VALUE = "default_value" ; 
 	/** MIN_VALUE ：最小值<br/><br/> */
-	public static final String MIN_VALUE = "min_value" ; 
+	public static final String COLUMN_MIN_VALUE = "min_value" ; 
 	/** MAX_VALUE ：最大值<br/><br/> */
-	public static final String MAX_VALUE = "max_value" ; 
+	public static final String COLUMN_MAX_VALUE = "max_value" ; 
 	/** LENGTH_VALUE ：长度<br/><br/> */
-	public static final String LENGTH_VALUE = "length_value" ; 
+	public static final String COLUMN_LENGTH_VALUE = "length_value" ; 
 	/** PRECISION_VALUE ：小数位<br/><br/> */
-	public static final String PRECISION_VALUE = "precision_value" ; 
+	public static final String COLUMN_PRECISION_VALUE = "precision_value" ; 
 	/** VALIDATE_TYPE ：页面校验类型<br/><br/> */
-	public static final String VALIDATE_TYPE = "validate_type" ; 
+	public static final String COLUMN_VALIDATE_TYPE = "validate_type" ; 
 	/** ISMODIFY ：是否可修改<br/><br/>取值来自业务菜单： DICT_YON */
-	public static final String ISMODIFY = "ismodify" ; 
+	public static final String COLUMN_ISMODIFY = "ismodify" ; 
 	/** ISDISPLAY ：是否显示<br/><br/>取值来自业务菜单： DICT_YON */
-	public static final String ISDISPLAY = "isdisplay" ; 
+	public static final String COLUMN_ISDISPLAY = "isdisplay" ; 
 	/** ISINPUT ：是否必须填写<br/><br/>取值来自业务菜单： DICT_YON */
-	public static final String ISINPUT = "isinput" ; 
+	public static final String COLUMN_ISINPUT = "isinput" ; 
 	/** ISPK ：是否是主键<br/><br/>取值来自业务菜单： DICT_YON */
-	public static final String ISPK = "ispk" ; 
+	public static final String COLUMN_ISPK = "ispk" ; 
 	/** ISAUTOKEY ：是否自动产生主键<br/><br/>取值来自业务菜单： DICT_YON */
-	public static final String ISAUTOKEY = "isautokey" ; 
+	public static final String COLUMN_ISAUTOKEY = "isautokey" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

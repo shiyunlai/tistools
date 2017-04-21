@@ -31,13 +31,15 @@ public class AcPartyRole implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "AC_PARTY_ROLE" ; 
 	/* AC_PARTY_ROLE table's columns definition */
 	/** PARTY_TYPE ：组织对象类型<br/><br/>取值范围，见业务字典 DICT_OM_PARTYTYPE 如：机构、工作组、岗位、职务 */
-	public static final String PARTY_TYPE = "party_type" ; 
+	public static final String COLUMN_PARTY_TYPE = "party_type" ; 
 	/** GUID_PARTY ：组织对象GUID<br/><br/>根据组织类型存储对应组织的GUID */
-	public static final String GUID_PARTY = "guid_party" ; 
+	public static final String COLUMN_GUID_PARTY = "guid_party" ; 
 	/** GUID_ROLE ：拥有角色GUID<br/><br/> */
-	public static final String GUID_ROLE = "guid_role" ; 
+	public static final String COLUMN_GUID_ROLE = "guid_role" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：组织对象类型<br/>描述：取值范围，见业务字典 DICT_OM_PARTYTYPE 如：机构、工作组、岗位、职务 */

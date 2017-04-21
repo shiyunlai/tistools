@@ -31,15 +31,17 @@ public class SysSeqno implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "SYS_SEQNO" ; 
 	/* SYS_SEQNO table's columns definition */
 	/** SEQ_KEY ：序号键值<br/><br/> */
-	public static final String SEQ_KEY = "seq_key" ; 
+	public static final String COLUMN_SEQ_KEY = "seq_key" ; 
 	/** SEQ_NO ：序号数<br/><br/>顺序增加的数字 */
-	public static final String SEQ_NO = "seq_no" ; 
+	public static final String COLUMN_SEQ_NO = "seq_no" ; 
 	/** RESET ：重置方式<br/><br/>来自业务字典： DICT_SYS_RESET 如： 不重置（默认） 按天重置 按周重置 自定义重置周期（按指定时间间隔重置） ... */
-	public static final String RESET = "reset" ; 
+	public static final String COLUMN_RESET = "reset" ; 
 	/** RESET_PARAMS ：重置处理参数<br/><br/>重置程序执行时的输入参数，通过本参数指定六重置周期，重置执行时间，重置起始数字等 */
-	public static final String RESET_PARAMS = "reset_params" ; 
+	public static final String COLUMN_RESET_PARAMS = "reset_params" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：序号键值<br/>描述： */

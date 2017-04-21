@@ -38,35 +38,37 @@ public class OmBusiorg implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "OM_BUSIORG" ; 
 	/* OM_BUSIORG table's columns definition */
 	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
-	public static final String GUID = "guid" ; 
+	public static final String COLUMN_GUID = "guid" ; 
 	/** NODE_TYPE ：节点类型<br/><br/>业务字典 DICT_OM_NODETYPE 该业务机构的节点类型，虚拟节点，机构节点，如果是机构节点，则对应机构信息表的一个机构 */
-	public static final String NODE_TYPE = "node_type" ; 
+	public static final String COLUMN_NODE_TYPE = "node_type" ; 
 	/** BUSIORG_CODE ：业务机构代码<br/><br/>业务上对业务机构的编码 */
-	public static final String BUSIORG_CODE = "busiorg_code" ; 
+	public static final String COLUMN_BUSIORG_CODE = "busiorg_code" ; 
 	/** BUSI_DOMAIN ：业务条线<br/><br/>取值范围业务菜单 DICT_OM_BUSIDOMAIN */
-	public static final String BUSI_DOMAIN = "busi_domain" ; 
+	public static final String COLUMN_BUSI_DOMAIN = "busi_domain" ; 
 	/** BUSIORG_NAME ：业务机构名称<br/><br/> */
-	public static final String BUSIORG_NAME = "busiorg_name" ; 
+	public static final String COLUMN_BUSIORG_NAME = "busiorg_name" ; 
 	/** BUSIORG_LEVEL ：业务机构层次<br/><br/> */
-	public static final String BUSIORG_LEVEL = "busiorg_level" ; 
+	public static final String COLUMN_BUSIORG_LEVEL = "busiorg_level" ; 
 	/** GUID_ORG ：对应实体机构GUID<br/><br/> */
-	public static final String GUID_ORG = "guid_org" ; 
+	public static final String COLUMN_GUID_ORG = "guid_org" ; 
 	/** GUID_PARENTS ：父业务机构GUID<br/><br/> */
-	public static final String GUID_PARENTS = "guid_parents" ; 
+	public static final String COLUMN_GUID_PARENTS = "guid_parents" ; 
 	/** GUID_POSITION ：主管岗位<br/><br/> */
-	public static final String GUID_POSITION = "guid_position" ; 
+	public static final String COLUMN_GUID_POSITION = "guid_position" ; 
 	/** ORG_CODE ：机构代号<br/><br/> */
-	public static final String ORG_CODE = "org_code" ; 
+	public static final String COLUMN_ORG_CODE = "org_code" ; 
 	/** SEQNO ：序列号<br/><br/>业务机构的面包屑导航信息 */
-	public static final String SEQNO = "seqno" ; 
+	public static final String COLUMN_SEQNO = "seqno" ; 
 	/** SORTNO ：排列顺序编号<br/><br/> */
-	public static final String SORTNO = "sortno" ; 
+	public static final String COLUMN_SORTNO = "sortno" ; 
 	/** ISLEAF ：是否叶子节点<br/><br/>见业务字典： DICT_YON */
-	public static final String ISLEAF = "isleaf" ; 
+	public static final String COLUMN_ISLEAF = "isleaf" ; 
 	/** SUB_COUNT ：子节点数<br/><br/> */
-	public static final String SUB_COUNT = "sub_count" ; 
+	public static final String COLUMN_SUB_COUNT = "sub_count" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

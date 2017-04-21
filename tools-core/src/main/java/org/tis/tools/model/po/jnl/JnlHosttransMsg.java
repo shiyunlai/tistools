@@ -32,17 +32,19 @@ public class JnlHosttransMsg implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "JNL_HOSTTRANS_MSG" ; 
 	/* JNL_HOSTTRANS_MSG table's columns definition */
 	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier） */
-	public static final String GUID = "guid" ; 
+	public static final String COLUMN_GUID = "guid" ; 
 	/** GUID_HOSTTRANS ：主机交易流水ID<br/><br/>关联主机交易流水记录 */
-	public static final String GUID_HOSTTRANS = "guid_hosttrans" ; 
+	public static final String COLUMN_GUID_HOSTTRANS = "guid_hosttrans" ; 
 	/** MSG_TYPE ：报文类型<br/><br/>见业务字典：DICT_MSG_TYPE */
-	public static final String MSG_TYPE = "msg_type" ; 
+	public static final String COLUMN_MSG_TYPE = "msg_type" ; 
 	/** EXEC_TIME ：执行时间<br/><br/>存储到毫秒级别的时间 yyyyMMddHHmmssSSS */
-	public static final String EXEC_TIME = "exec_time" ; 
+	public static final String COLUMN_EXEC_TIME = "exec_time" ; 
 	/** MSG_INFO ：报文信息<br/><br/>报文内容 */
-	public static final String MSG_INFO = "msg_info" ; 
+	public static final String COLUMN_MSG_INFO = "msg_info" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier） */

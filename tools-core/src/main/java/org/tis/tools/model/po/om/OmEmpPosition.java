@@ -31,13 +31,15 @@ public class OmEmpPosition implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "OM_EMP_POSITION" ; 
 	/* OM_EMP_POSITION table's columns definition */
 	/** GUID_EMP ：员工GUID<br/><br/> */
-	public static final String GUID_EMP = "guid_emp" ; 
+	public static final String COLUMN_GUID_EMP = "guid_emp" ; 
 	/** GUID_POSITION ：所在岗位GUID<br/><br/> */
-	public static final String GUID_POSITION = "guid_position" ; 
+	public static final String COLUMN_GUID_POSITION = "guid_position" ; 
 	/** ISMAIN ：是否主岗位<br/><br/>取值来自业务菜单：DICT_YON 只能有一个主岗位 */
-	public static final String ISMAIN = "ismain" ; 
+	public static final String COLUMN_ISMAIN = "ismain" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：员工GUID<br/>描述： */

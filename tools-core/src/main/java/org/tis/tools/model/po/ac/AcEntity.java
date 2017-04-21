@@ -31,35 +31,37 @@ public class AcEntity implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "AC_ENTITY" ; 
 	/* AC_ENTITY table's columns definition */
 	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
-	public static final String GUID = "guid" ; 
+	public static final String COLUMN_GUID = "guid" ; 
 	/** GUID_APP ：隶属应用GUID<br/><br/> */
-	public static final String GUID_APP = "guid_app" ; 
+	public static final String COLUMN_GUID_APP = "guid_app" ; 
 	/** ENTITY_NAME ：实体名称<br/><br/> */
-	public static final String ENTITY_NAME = "entity_name" ; 
+	public static final String COLUMN_ENTITY_NAME = "entity_name" ; 
 	/** TABLE_NAME ：数据库表名<br/><br/> */
-	public static final String TABLE_NAME = "table_name" ; 
+	public static final String COLUMN_TABLE_NAME = "table_name" ; 
 	/** ENTITY_DESC ：实体描述<br/><br/> */
-	public static final String ENTITY_DESC = "entity_desc" ; 
+	public static final String COLUMN_ENTITY_DESC = "entity_desc" ; 
 	/** DISPLAY_ORDER ：顺序<br/><br/> */
-	public static final String DISPLAY_ORDER = "display_order" ; 
+	public static final String COLUMN_DISPLAY_ORDER = "display_order" ; 
 	/** ENTITY_TYPE ：实体类型<br/><br/>取值来自业务字典：DICT_AC_ENTITYTYPE 0-表 1-视图 2-查询实体 3-内存对象（系统运行时才存在） */
-	public static final String ENTITY_TYPE = "entity_type" ; 
+	public static final String COLUMN_ENTITY_TYPE = "entity_type" ; 
 	/** ISADD ：是否可增加<br/><br/>取值来自业务菜单： DICT_YON */
-	public static final String ISADD = "isadd" ; 
+	public static final String COLUMN_ISADD = "isadd" ; 
 	/** ISDEL ：是否可删除<br/><br/>取值来自业务菜单： DICT_YON */
-	public static final String ISDEL = "isdel" ; 
+	public static final String COLUMN_ISDEL = "isdel" ; 
 	/** ISMODIFY ：可修改<br/><br/>取值来自业务菜单： DICT_YON */
-	public static final String ISMODIFY = "ismodify" ; 
+	public static final String COLUMN_ISMODIFY = "ismodify" ; 
 	/** ISVIEW ：可查看<br/><br/>取值来自业务菜单： DICT_YON */
-	public static final String ISVIEW = "isview" ; 
+	public static final String COLUMN_ISVIEW = "isview" ; 
 	/** ISPAGE ：是否需要分页显示<br/><br/>取值来自业务菜单： DICT_YON */
-	public static final String ISPAGE = "ispage" ; 
+	public static final String COLUMN_ISPAGE = "ispage" ; 
 	/** PAGE_LEN ：每页记录数<br/><br/> */
-	public static final String PAGE_LEN = "page_len" ; 
+	public static final String COLUMN_PAGE_LEN = "page_len" ; 
 	/** CHECK_REF ：删除记录检查引用关系<br/><br/>根据引用关系定义，检查关联记录是否需要同步删除； 引用关系定义格式： table.column/[Y/N];table.column/[Y/N];... 举例： 假如，存在实体acct，且引用关系定义如下 guid:tws_abc.acct_guid/Y;tws_nnn.acctid/N; 当前删除acct实体guid＝9988的记录，系统自动执行引用关系删除，逻辑如下： 查找tws_abc 表，acct_guid = 9988 的记录，并删除； 查找tws_nnn 表，acctid=9988的记录，但不删除； 如果采用系统默认的命名方式，规则可以简化为： guid:tws_abc/Y;tws_nnn/N; 则 查找tws_abc 表，acct_guid = 9988 的记录，并删除； 查找tws_nnn 表，acct_guid = 9988 的记录，但不删除； 前提，必须基于实体的GUID进行引用。 */
-	public static final String CHECK_REF = "check_ref" ; 
+	public static final String COLUMN_CHECK_REF = "check_ref" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

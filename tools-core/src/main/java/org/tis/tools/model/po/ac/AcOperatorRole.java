@@ -31,13 +31,15 @@ public class AcOperatorRole implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "AC_OPERATOR_ROLE" ; 
 	/* AC_OPERATOR_ROLE table's columns definition */
 	/** GUID_OPERATOR ：操作员GUID<br/><br/> */
-	public static final String GUID_OPERATOR = "guid_operator" ; 
+	public static final String COLUMN_GUID_OPERATOR = "guid_operator" ; 
 	/** GUID_ROLE ：拥有角色GUID<br/><br/> */
-	public static final String GUID_ROLE = "guid_role" ; 
+	public static final String COLUMN_GUID_ROLE = "guid_role" ; 
 	/** AUTH ：是否可分级授权<br/><br/>预留字段，暂不使用。意图将操作员所拥有的权限赋予其他操作员。 */
-	public static final String AUTH = "auth" ; 
+	public static final String COLUMN_AUTH = "auth" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：操作员GUID<br/>描述： */

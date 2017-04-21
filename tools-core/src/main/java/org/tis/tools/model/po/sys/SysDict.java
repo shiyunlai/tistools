@@ -31,27 +31,29 @@ public class SysDict implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "SYS_DICT" ; 
 	/* SYS_DICT table's columns definition */
 	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
-	public static final String GUID = "guid" ; 
+	public static final String COLUMN_GUID = "guid" ; 
 	/** DICT_KEY ：业务字典<br/><br/> */
-	public static final String DICT_KEY = "dict_key" ; 
+	public static final String COLUMN_DICT_KEY = "dict_key" ; 
 	/** DICT_TYPE ：类型<br/><br/>见业务字典： DICT_TYPE a 应用级（带业务含义的业务字典，应用开发时可扩展） s 系统级（平台自己的业务字典） */
-	public static final String DICT_TYPE = "dict_type" ; 
+	public static final String COLUMN_DICT_TYPE = "dict_type" ; 
 	/** DICT_NAME ：字典名称<br/><br/> */
-	public static final String DICT_NAME = "dict_name" ; 
+	public static final String COLUMN_DICT_NAME = "dict_name" ; 
 	/** DICT_DESC ：解释说明<br/><br/> */
-	public static final String DICT_DESC = "dict_desc" ; 
+	public static final String COLUMN_DICT_DESC = "dict_desc" ; 
 	/** DEFAULT_VALUE ：业务字典默认值<br/><br/>指定某个字典项（ITEM_VALUE）为本业务字典的默认值（用于扶助View层实现展示默认值） */
-	public static final String DEFAULT_VALUE = "default_value" ; 
+	public static final String COLUMN_DEFAULT_VALUE = "default_value" ; 
 	/** FROM_TABLE ：字典项来源表<br/><br/>如果业务字典用来描述某个表中的字段选项，则本字段保存表名； 其他情况默认为空； */
-	public static final String FROM_TABLE = "from_table" ; 
+	public static final String COLUMN_FROM_TABLE = "from_table" ; 
 	/** USE_COLUMN ：使用列作为字典项<br/><br/>如果业务字典用来描述某个表中的字段选项，则本字段保存字段名； 其他情况默认为空； */
-	public static final String USE_COLUMN = "use_column" ; 
+	public static final String COLUMN_USE_COLUMN = "use_column" ; 
 	/** GUID_PARENTS ：父字典GUID<br/><br/>根节点时为空，子节点时存储其父业务字典的GUID */
-	public static final String GUID_PARENTS = "guid_parents" ; 
+	public static final String COLUMN_GUID_PARENTS = "guid_parents" ; 
 	/** SEQNO ：顺序号<br/><br/>顺序号，从0开始排，按小到大排序 */
-	public static final String SEQNO = "seqno" ; 
+	public static final String COLUMN_SEQNO = "seqno" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

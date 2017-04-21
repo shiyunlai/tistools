@@ -32,13 +32,15 @@ public class OmEmpOrg implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "OM_EMP_ORG" ; 
 	/* OM_EMP_ORG table's columns definition */
 	/** GUID_EMP ：员工GUID<br/><br/> */
-	public static final String GUID_EMP = "guid_emp" ; 
+	public static final String COLUMN_GUID_EMP = "guid_emp" ; 
 	/** GUID_ORG ：隶属机构GUID<br/><br/> */
-	public static final String GUID_ORG = "guid_org" ; 
+	public static final String COLUMN_GUID_ORG = "guid_org" ; 
 	/** ISMAIN ：是否主机构<br/><br/>取值来自业务菜单： DICT_YON 必须有且只能有一个主机构，默认N，人员管理时程序检查当前是否只有一条主机构； */
-	public static final String ISMAIN = "ismain" ; 
+	public static final String COLUMN_ISMAIN = "ismain" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：员工GUID<br/>描述： */

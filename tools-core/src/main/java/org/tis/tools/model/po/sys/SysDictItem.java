@@ -31,19 +31,21 @@ public class SysDictItem implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "SYS_DICT_ITEM" ; 
 	/* SYS_DICT_ITEM table's columns definition */
 	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
-	public static final String GUID = "guid" ; 
+	public static final String COLUMN_GUID = "guid" ; 
 	/** GUID_DICT ：隶属业务字典<br/><br/> */
-	public static final String GUID_DICT = "guid_dict" ; 
+	public static final String COLUMN_GUID_DICT = "guid_dict" ; 
 	/** ITEM_NAME ：字典项名称<br/><br/> */
-	public static final String ITEM_NAME = "item_name" ; 
+	public static final String COLUMN_ITEM_NAME = "item_name" ; 
 	/** ITEM_VALUE ：字典项<br/><br/> */
-	public static final String ITEM_VALUE = "item_value" ; 
+	public static final String COLUMN_ITEM_VALUE = "item_value" ; 
 	/** SEND_VALUE ：实际值<br/><br/>实际值，及选中字典项后，实际发送值给系统的数值。 */
-	public static final String SEND_VALUE = "send_value" ; 
+	public static final String COLUMN_SEND_VALUE = "send_value" ; 
 	/** SEQNO ：顺序号<br/><br/>顺序号，从0开始排，按小到大排序 */
-	public static final String SEQNO = "seqno" ; 
+	public static final String COLUMN_SEQNO = "seqno" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

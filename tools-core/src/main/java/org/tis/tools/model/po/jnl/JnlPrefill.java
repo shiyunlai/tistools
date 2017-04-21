@@ -33,33 +33,35 @@ public class JnlPrefill implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "JNL_PREFILL" ; 
 	/* JNL_PREFILL table's columns definition */
 	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier） */
-	public static final String GUID = "guid" ; 
+	public static final String COLUMN_GUID = "guid" ; 
 	/** GUID_CUST_SERVICE ：服务流水ID<br/><br/>关联服务流水记录 */
-	public static final String GUID_CUST_SERVICE = "guid_cust_service" ; 
+	public static final String COLUMN_GUID_CUST_SERVICE = "guid_cust_service" ; 
 	/** SERVICE_SNO ：服务流水号<br/><br/> */
-	public static final String SERVICE_SNO = "service_sno" ; 
+	public static final String COLUMN_SERVICE_SNO = "service_sno" ; 
 	/** PREFILL_DATE ：预填日期<br/><br/> */
-	public static final String PREFILL_DATE = "prefill_date" ; 
+	public static final String COLUMN_PREFILL_DATE = "prefill_date" ; 
 	/** PREFILL_TIME ：预填时间<br/><br/>yyyyMMddHHmmSSsss */
-	public static final String PREFILL_TIME = "prefill_time" ; 
+	public static final String COLUMN_PREFILL_TIME = "prefill_time" ; 
 	/** TRANS_CODE ：交易代码<br/><br/> */
-	public static final String TRANS_CODE = "trans_code" ; 
+	public static final String COLUMN_TRANS_CODE = "trans_code" ; 
 	/** PREFILL_DATA ：预填数据<br/><br/> */
-	public static final String PREFILL_DATA = "prefill_data" ; 
+	public static final String COLUMN_PREFILL_DATA = "prefill_data" ; 
 	/** PREFILL_STATUS ：预填处理状态<br/><br/>见业务字典：DICT_PREFILL_STATUS */
-	public static final String PREFILL_STATUS = "prefill_status" ; 
+	public static final String COLUMN_PREFILL_STATUS = "prefill_status" ; 
 	/** PREFILL_CHN ：预填渠道<br/><br/>预填来源渠道（渠道代码） */
-	public static final String PREFILL_CHN = "prefill_chn" ; 
+	public static final String COLUMN_PREFILL_CHN = "prefill_chn" ; 
 	/** TELLER_NO ：柜员代码<br/><br/>本次接触活动的柜员 */
-	public static final String TELLER_NO = "teller_no" ; 
+	public static final String COLUMN_TELLER_NO = "teller_no" ; 
 	/** INSTNO ：机构编码<br/><br/> */
-	public static final String INSTNO = "instno" ; 
+	public static final String COLUMN_INSTNO = "instno" ; 
 	/** TRANS_TELLER ：交易柜员<br/><br/>本次交易操作的柜员代码 */
-	public static final String TRANS_TELLER = "trans_teller" ; 
+	public static final String COLUMN_TRANS_TELLER = "trans_teller" ; 
 	/** TRANS_INSTNO ：交易机构<br/><br/>本次交易发生所在机构 */
-	public static final String TRANS_INSTNO = "trans_instno" ; 
+	public static final String COLUMN_TRANS_INSTNO = "trans_instno" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier） */

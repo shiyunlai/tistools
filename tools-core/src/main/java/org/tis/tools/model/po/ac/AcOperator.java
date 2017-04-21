@@ -31,43 +31,45 @@ public class AcOperator implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "AC_OPERATOR" ; 
 	/* AC_OPERATOR table's columns definition */
 	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
-	public static final String GUID = "guid" ; 
+	public static final String COLUMN_GUID = "guid" ; 
 	/** OPERATOR_NAME ：操作员姓名<br/><br/>记录当前操作员姓名（只记录当前值，不随之改变） */
-	public static final String OPERATOR_NAME = "operator_name" ; 
+	public static final String COLUMN_OPERATOR_NAME = "operator_name" ; 
 	/** USER_ID ：登录用户名<br/><br/> */
-	public static final String USER_ID = "user_id" ; 
+	public static final String COLUMN_USER_ID = "user_id" ; 
 	/** PASSWORD ：密码<br/><br/> */
-	public static final String PASSWORD = "password" ; 
+	public static final String COLUMN_PASSWORD = "password" ; 
 	/** OPERATOR_STATUS ：操作员状态<br/><br/>取值来自业务菜单：DICT_AC_OPERATOR_STATUS 正常，挂起，注销，锁定... 系统处理状态间的流转 */
-	public static final String OPERATOR_STATUS = "operator_status" ; 
+	public static final String COLUMN_OPERATOR_STATUS = "operator_status" ; 
 	/** INVAL_DATE ：密码失效日期<br/><br/>指定失效时间具体到时分秒 */
-	public static final String INVAL_DATE = "inval_date" ; 
+	public static final String COLUMN_INVAL_DATE = "inval_date" ; 
 	/** AUTH_MODE ：认证模式<br/><br/>取值来自业务菜单：DICT_AC_AUTHMODE 如：本地密码认证、LDAP认证、等 可以多选，以逗号分隔，且按照出现先后顺序进行认证； 如： pwd,captcha 表示输入密码，并且还需要验证码 */
-	public static final String AUTH_MODE = "auth_mode" ; 
+	public static final String COLUMN_AUTH_MODE = "auth_mode" ; 
 	/** LOCK_LIMIT ：锁定次数限制<br/><br/>登陆错误超过本数字，系统锁定操作员，默认5次。 可为操作员单独设置； */
-	public static final String LOCK_LIMIT = "lock_limit" ; 
+	public static final String COLUMN_LOCK_LIMIT = "lock_limit" ; 
 	/** ERR_COUNT ：当前错误登录次数<br/><br/> */
-	public static final String ERR_COUNT = "err_count" ; 
+	public static final String COLUMN_ERR_COUNT = "err_count" ; 
 	/** LOCK_TIME ：锁定时间<br/><br/> */
-	public static final String LOCK_TIME = "lock_time" ; 
+	public static final String COLUMN_LOCK_TIME = "lock_time" ; 
 	/** UNLOCK_TIME ：解锁时间<br/><br/>当状态为锁定时，解锁的时间 */
-	public static final String UNLOCK_TIME = "unlock_time" ; 
+	public static final String COLUMN_UNLOCK_TIME = "unlock_time" ; 
 	/** MENU_TYPE ：菜单风格<br/><br/>取值来自业务菜单：DICT_AC_MENUTYPE 用户登录后菜单的风格 */
-	public static final String MENU_TYPE = "menu_type" ; 
+	public static final String COLUMN_MENU_TYPE = "menu_type" ; 
 	/** LAST_LOGIN ：最近登录时间<br/><br/> */
-	public static final String LAST_LOGIN = "last_login" ; 
+	public static final String COLUMN_LAST_LOGIN = "last_login" ; 
 	/** START_DATE ：有效开始日期<br/><br/>启用操作员时设置，任何时间可设置； */
-	public static final String START_DATE = "start_date" ; 
+	public static final String COLUMN_START_DATE = "start_date" ; 
 	/** END_DATE ：有效截止日期<br/><br/>启用操作员时设置，任何时间可设置； */
-	public static final String END_DATE = "end_date" ; 
+	public static final String COLUMN_END_DATE = "end_date" ; 
 	/** VALID_TIME ：允许时间范围<br/><br/>定义一个规则表达式，表示允许操作的有效时间范围，格式为： [{begin:"HH:mm",end:"HH:mm"},{begin:"HH:mm",end:"HH:mm"},...] 如： [{begin:"08:00",end:"11:30"},{begin:"14:30",end:"17:00"}] 表示，该操作员被允许每天有两个时间段进行系统操作，分别 早上08:00 - 11:30，下午14:30 － 17:00 */
-	public static final String VALID_TIME = "valid_time" ; 
+	public static final String COLUMN_VALID_TIME = "valid_time" ; 
 	/** MAC_CODE ：允许MAC码<br/><br/>允许设置多个MAC，以逗号分隔，控制操作员只能在这些机器上登陆。 */
-	public static final String MAC_CODE = "mac_code" ; 
+	public static final String COLUMN_MAC_CODE = "mac_code" ; 
 	/** IP_ADDRESS ：允许IP地址<br/><br/>允许设置多个IP地址 */
-	public static final String IP_ADDRESS = "ip_address" ; 
+	public static final String COLUMN_IP_ADDRESS = "ip_address" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

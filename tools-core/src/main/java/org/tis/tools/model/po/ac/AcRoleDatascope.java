@@ -32,11 +32,13 @@ public class AcRoleDatascope implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "AC_ROLE_DATASCOPE" ; 
 	/* AC_ROLE_DATASCOPE table's columns definition */
 	/** GUID_ROLE ：角色GUID<br/><br/> */
-	public static final String GUID_ROLE = "guid_role" ; 
+	public static final String COLUMN_GUID_ROLE = "guid_role" ; 
 	/** GUID_DATASCOPE ：拥有数据范围GUID<br/><br/> */
-	public static final String GUID_DATASCOPE = "guid_datascope" ; 
+	public static final String COLUMN_GUID_DATASCOPE = "guid_datascope" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：角色GUID<br/>描述： */

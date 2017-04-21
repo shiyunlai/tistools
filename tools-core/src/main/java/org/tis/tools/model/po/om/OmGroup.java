@@ -32,43 +32,45 @@ public class OmGroup implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "OM_GROUP" ; 
 	/* OM_GROUP table's columns definition */
 	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
-	public static final String GUID = "guid" ; 
+	public static final String COLUMN_GUID = "guid" ; 
 	/** GROUP_CODE ：工作组代码<br/><br/>业务上对工作组的编码 */
-	public static final String GROUP_CODE = "group_code" ; 
+	public static final String COLUMN_GROUP_CODE = "group_code" ; 
 	/** GROUP_NAME ：工作组名称<br/><br/> */
-	public static final String GROUP_NAME = "group_name" ; 
+	public static final String COLUMN_GROUP_NAME = "group_name" ; 
 	/** GROUP_TYPE ：工作组类型<br/><br/>见业务字典： DICT_OM_GROUPTYPE */
-	public static final String GROUP_TYPE = "group_type" ; 
+	public static final String COLUMN_GROUP_TYPE = "group_type" ; 
 	/** GROUP_STATUS ：工作组状态<br/><br/>见业务字典： DICT_OM_GROUPSTATUS */
-	public static final String GROUP_STATUS = "group_status" ; 
+	public static final String COLUMN_GROUP_STATUS = "group_status" ; 
 	/** GROUP_DESC ：工作组描述<br/><br/> */
-	public static final String GROUP_DESC = "group_desc" ; 
+	public static final String COLUMN_GROUP_DESC = "group_desc" ; 
 	/** GUID_EMP_MANAGER ：负责人<br/><br/>选择范围来自 OM_EMPLOYEE表 */
-	public static final String GUID_EMP_MANAGER = "guid_emp_manager" ; 
+	public static final String COLUMN_GUID_EMP_MANAGER = "guid_emp_manager" ; 
 	/** GUID_ORG ：隶属机构GUID<br/><br/> */
-	public static final String GUID_ORG = "guid_org" ; 
+	public static final String COLUMN_GUID_ORG = "guid_org" ; 
 	/** GUID_PARENTS ：父工作组GUID<br/><br/> */
-	public static final String GUID_PARENTS = "guid_parents" ; 
+	public static final String COLUMN_GUID_PARENTS = "guid_parents" ; 
 	/** ISLEAF ：是否叶子节点<br/><br/>见业务菜单： DICT_YON */
-	public static final String ISLEAF = "isleaf" ; 
+	public static final String COLUMN_ISLEAF = "isleaf" ; 
 	/** SUB_COUNT ：子节点数<br/><br/> */
-	public static final String SUB_COUNT = "sub_count" ; 
+	public static final String COLUMN_SUB_COUNT = "sub_count" ; 
 	/** GROUP_LEVEL ：工作组层次<br/><br/> */
-	public static final String GROUP_LEVEL = "group_level" ; 
+	public static final String COLUMN_GROUP_LEVEL = "group_level" ; 
 	/** GROUP_SEQ ：工作组序列<br/><br/>本工作组的面包屑定位信息 */
-	public static final String GROUP_SEQ = "group_seq" ; 
+	public static final String COLUMN_GROUP_SEQ = "group_seq" ; 
 	/** START_DATE ：工作组有效开始日期<br/><br/> */
-	public static final String START_DATE = "start_date" ; 
+	public static final String COLUMN_START_DATE = "start_date" ; 
 	/** END_DATE ：工作组有效截止日期<br/><br/> */
-	public static final String END_DATE = "end_date" ; 
+	public static final String COLUMN_END_DATE = "end_date" ; 
 	/** CREATETIME ：创建时间<br/><br/> */
-	public static final String CREATETIME = "createtime" ; 
+	public static final String COLUMN_CREATETIME = "createtime" ; 
 	/** LASTUPDATE ：最近更新时间<br/><br/> */
-	public static final String LASTUPDATE = "lastupdate" ; 
+	public static final String COLUMN_LASTUPDATE = "lastupdate" ; 
 	/** UPDATOR ：最近更新人员<br/><br/> */
-	public static final String UPDATOR = "updator" ; 
+	public static final String COLUMN_UPDATOR = "updator" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

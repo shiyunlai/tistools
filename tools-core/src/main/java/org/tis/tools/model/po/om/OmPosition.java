@@ -34,41 +34,43 @@ public class OmPosition implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "OM_POSITION" ; 
 	/* OM_POSITION table's columns definition */
 	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
-	public static final String GUID = "guid" ; 
+	public static final String COLUMN_GUID = "guid" ; 
 	/** GUID_ORG ：隶属机构GUID<br/><br/> */
-	public static final String GUID_ORG = "guid_org" ; 
+	public static final String COLUMN_GUID_ORG = "guid_org" ; 
 	/** POSITION_CODE ：岗位代码<br/><br/>业务上对岗位的编码 */
-	public static final String POSITION_CODE = "position_code" ; 
+	public static final String COLUMN_POSITION_CODE = "position_code" ; 
 	/** POSITION_NAME ：岗位名称<br/><br/> */
-	public static final String POSITION_NAME = "position_name" ; 
+	public static final String COLUMN_POSITION_NAME = "position_name" ; 
 	/** POSITION_TYPE ：岗位类别<br/><br/>见业务字典： DICT_OM_POSITYPE 机构岗位，工作组岗位 */
-	public static final String POSITION_TYPE = "position_type" ; 
+	public static final String COLUMN_POSITION_TYPE = "position_type" ; 
 	/** POSITION_STATUS ：岗位状态<br/><br/>见业务字典： DICT_OM_POSISTATUS */
-	public static final String POSITION_STATUS = "position_status" ; 
+	public static final String COLUMN_POSITION_STATUS = "position_status" ; 
 	/** ISLEAF ：是否叶子岗位<br/><br/>见业务字典： DICT_YON */
-	public static final String ISLEAF = "isleaf" ; 
+	public static final String COLUMN_ISLEAF = "isleaf" ; 
 	/** SUB_COUNT ：子节点数<br/><br/> */
-	public static final String SUB_COUNT = "sub_count" ; 
+	public static final String COLUMN_SUB_COUNT = "sub_count" ; 
 	/** POSITION_LEVEL ：岗位层次<br/><br/> */
-	public static final String POSITION_LEVEL = "position_level" ; 
+	public static final String COLUMN_POSITION_LEVEL = "position_level" ; 
 	/** POSITION_SEQ ：岗位序列<br/><br/>岗位的面包屑定位信息 */
-	public static final String POSITION_SEQ = "position_seq" ; 
+	public static final String COLUMN_POSITION_SEQ = "position_seq" ; 
 	/** GUID_PARENTS ：父岗位GUID<br/><br/> */
-	public static final String GUID_PARENTS = "guid_parents" ; 
+	public static final String COLUMN_GUID_PARENTS = "guid_parents" ; 
 	/** GUID_DUTY ：所属职务GUID<br/><br/> */
-	public static final String GUID_DUTY = "guid_duty" ; 
+	public static final String COLUMN_GUID_DUTY = "guid_duty" ; 
 	/** START_DATE ：岗位有效开始日期<br/><br/> */
-	public static final String START_DATE = "start_date" ; 
+	public static final String COLUMN_START_DATE = "start_date" ; 
 	/** END_DATE ：岗位有效截止日期<br/><br/> */
-	public static final String END_DATE = "end_date" ; 
+	public static final String COLUMN_END_DATE = "end_date" ; 
 	/** CREATETIME ：创建时间<br/><br/> */
-	public static final String CREATETIME = "createtime" ; 
+	public static final String COLUMN_CREATETIME = "createtime" ; 
 	/** LASTUPDATE ：最近更新时间<br/><br/> */
-	public static final String LASTUPDATE = "lastupdate" ; 
+	public static final String COLUMN_LASTUPDATE = "lastupdate" ; 
 	/** UPDATOR ：最近更新人员<br/><br/> */
-	public static final String UPDATOR = "updator" ; 
+	public static final String COLUMN_UPDATOR = "updator" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

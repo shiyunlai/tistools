@@ -31,33 +31,35 @@ public class LogAbfOperator implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "LOG_ABF_OPERATOR" ; 
 	/* LOG_ABF_OPERATOR table's columns definition */
 	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier） */
-	public static final String GUID = "guid" ; 
+	public static final String COLUMN_GUID = "guid" ; 
 	/** OPERATOR_TYPE ：操作类型<br/><br/>见业务字典：DICT_OPERATOR_TYPE */
-	public static final String OPERATOR_TYPE = "operator_type" ; 
+	public static final String COLUMN_OPERATOR_TYPE = "operator_type" ; 
 	/** OPERATOR_TIME ：操作时间<br/><br/> */
-	public static final String OPERATOR_TIME = "operator_time" ; 
+	public static final String COLUMN_OPERATOR_TIME = "operator_time" ; 
 	/** OPERATOR_RESULT ：操作结果<br/><br/>见业务字典：DICT_OPERATOR_RESULT */
-	public static final String OPERATOR_RESULT = "operator_result" ; 
+	public static final String COLUMN_OPERATOR_RESULT = "operator_result" ; 
 	/** OPERATOR_NAME ：操作员姓名<br/><br/>记录当前操作员姓名（只记录当前值，不随之改变） */
-	public static final String OPERATOR_NAME = "operator_name" ; 
+	public static final String COLUMN_OPERATOR_NAME = "operator_name" ; 
 	/** USER_ID ：操作员<br/><br/>登陆用户id */
-	public static final String USER_ID = "user_id" ; 
+	public static final String COLUMN_USER_ID = "user_id" ; 
 	/** APP_CODE ：应用代码<br/><br/> */
-	public static final String APP_CODE = "app_code" ; 
+	public static final String COLUMN_APP_CODE = "app_code" ; 
 	/** APP_NAME ：应用名称<br/><br/> */
-	public static final String APP_NAME = "app_name" ; 
+	public static final String COLUMN_APP_NAME = "app_name" ; 
 	/** FUNC_CODE ：功能编号<br/><br/>业务上对功能的编码 */
-	public static final String FUNC_CODE = "func_code" ; 
+	public static final String COLUMN_FUNC_CODE = "func_code" ; 
 	/** FUNC_NAME ：功能名称<br/><br/> */
-	public static final String FUNC_NAME = "func_name" ; 
+	public static final String COLUMN_FUNC_NAME = "func_name" ; 
 	/** RESTFUL_RUL ：服务地址<br/><br/>功能对应的RESTFul服务地址 */
-	public static final String RESTFUL_RUL = "restful_rul" ; 
+	public static final String COLUMN_RESTFUL_RUL = "restful_rul" ; 
 	/** STACK_TRACE ：异常堆栈<br/><br/>记录异常堆栈信息，超过4000的部分被自动丢弃 */
-	public static final String STACK_TRACE = "stack_trace" ; 
+	public static final String COLUMN_STACK_TRACE = "stack_trace" ; 
 	/** PROCSS_DESC ：处理描述<br/><br/>记录功能执行时的业务处理信息 */
-	public static final String PROCSS_DESC = "procss_desc" ; 
+	public static final String COLUMN_PROCSS_DESC = "procss_desc" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier） */

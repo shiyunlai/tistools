@@ -35,15 +35,17 @@ public class AcFuncBehavior implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "AC_FUNC_BEHAVIOR" ; 
 	/* AC_FUNC_BEHAVIOR table's columns definition */
 	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
-	public static final String GUID = "guid" ; 
+	public static final String COLUMN_GUID = "guid" ; 
 	/** GUID_FUNC ：功能GUID<br/><br/> */
-	public static final String GUID_FUNC = "guid_func" ; 
+	public static final String COLUMN_GUID_FUNC = "guid_func" ; 
 	/** BHV_CODE ：操作行为编码<br/><br/>每个操作行为的代码标识 */
-	public static final String BHV_CODE = "bhv_code" ; 
+	public static final String COLUMN_BHV_CODE = "bhv_code" ; 
 	/** BHV_DESC ：操作行为描述<br/><br/> */
-	public static final String BHV_DESC = "bhv_desc" ; 
+	public static final String COLUMN_BHV_DESC = "bhv_desc" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

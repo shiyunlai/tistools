@@ -31,15 +31,17 @@ public class AcRoleFunc implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "AC_ROLE_FUNC" ; 
 	/* AC_ROLE_FUNC table's columns definition */
 	/** GUID_ROLE ：角色GUID<br/><br/> */
-	public static final String GUID_ROLE = "guid_role" ; 
+	public static final String COLUMN_GUID_ROLE = "guid_role" ; 
 	/** GUID_FUNC ：拥有功能GUID<br/><br/> */
-	public static final String GUID_FUNC = "guid_func" ; 
+	public static final String COLUMN_GUID_FUNC = "guid_func" ; 
 	/** GUID_APP ：应用GUID<br/><br/>冗余字段 */
-	public static final String GUID_APP = "guid_app" ; 
+	public static final String COLUMN_GUID_APP = "guid_app" ; 
 	/** GUID_FUNCGROUP ：功能组GUID<br/><br/>冗余字段 */
-	public static final String GUID_FUNCGROUP = "guid_funcgroup" ; 
+	public static final String COLUMN_GUID_FUNCGROUP = "guid_funcgroup" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：角色GUID<br/>描述： */

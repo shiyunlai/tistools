@@ -31,17 +31,19 @@ public class JnlTransFeature implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "JNL_TRANS_FEATURE" ; 
 	/* JNL_TRANS_FEATURE table's columns definition */
 	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier） */
-	public static final String GUID = "guid" ; 
+	public static final String COLUMN_GUID = "guid" ; 
 	/** GUID_TRANS ：交易流水ID<br/><br/>关联交易流水记录 */
-	public static final String GUID_TRANS = "guid_trans" ; 
+	public static final String COLUMN_GUID_TRANS = "guid_trans" ; 
 	/** TRANS_SNO ：交易流水号<br/><br/> */
-	public static final String TRANS_SNO = "trans_sno" ; 
+	public static final String COLUMN_TRANS_SNO = "trans_sno" ; 
 	/** TRANS_FIELD ：交易要素<br/><br/>对应交易界面上的字段代码 */
-	public static final String TRANS_FIELD = "trans_field" ; 
+	public static final String COLUMN_TRANS_FIELD = "trans_field" ; 
 	/** TRANS_DATA ：交易数据<br/><br/>交易当时的数据信息，所有信息转换为String的形式存储 */
-	public static final String TRANS_DATA = "trans_data" ; 
+	public static final String COLUMN_TRANS_DATA = "trans_data" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier） */

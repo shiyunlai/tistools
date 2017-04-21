@@ -31,37 +31,39 @@ public class AcApp implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "AC_APP" ; 
 	/* AC_APP table's columns definition */
 	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
-	public static final String GUID = "guid" ; 
+	public static final String COLUMN_GUID = "guid" ; 
 	/** APP_CODE ：应用代码<br/><br/> */
-	public static final String APP_CODE = "app_code" ; 
+	public static final String COLUMN_APP_CODE = "app_code" ; 
 	/** APP_NAME ：应用名称<br/><br/> */
-	public static final String APP_NAME = "app_name" ; 
+	public static final String COLUMN_APP_NAME = "app_name" ; 
 	/** APP_TYPE ：应用类型<br/><br/>取值来自业务菜单： DICT_AC_APPTYPE 如：本地，远程 */
-	public static final String APP_TYPE = "app_type" ; 
+	public static final String COLUMN_APP_TYPE = "app_type" ; 
 	/** ISOPEN ：是否开通<br/><br/>取值来自业务菜单： DICT_YON 默认为N，新建后，必须执行应用开通操作，才被开通。 */
-	public static final String ISOPEN = "isopen" ; 
+	public static final String COLUMN_ISOPEN = "isopen" ; 
 	/** OPEN_DATE ：开通时间<br/><br/>记录到时分秒 */
-	public static final String OPEN_DATE = "open_date" ; 
+	public static final String COLUMN_OPEN_DATE = "open_date" ; 
 	/** URL ：访问地址<br/><br/> */
-	public static final String URL = "url" ; 
+	public static final String COLUMN_URL = "url" ; 
 	/** APP_DESC ：应用描述<br/><br/> */
-	public static final String APP_DESC = "app_desc" ; 
+	public static final String COLUMN_APP_DESC = "app_desc" ; 
 	/** GUID_EMP_MAINTENANCE ：管理维护人员<br/><br/> */
-	public static final String GUID_EMP_MAINTENANCE = "guid_emp_maintenance" ; 
+	public static final String COLUMN_GUID_EMP_MAINTENANCE = "guid_emp_maintenance" ; 
 	/** GUID_ROLE_MAINTENANCE ：应用管理角色<br/><br/> */
-	public static final String GUID_ROLE_MAINTENANCE = "guid_role_maintenance" ; 
+	public static final String COLUMN_GUID_ROLE_MAINTENANCE = "guid_role_maintenance" ; 
 	/** REMARK ：备注<br/><br/> */
-	public static final String REMARK = "remark" ; 
+	public static final String COLUMN_REMARK = "remark" ; 
 	/** INIWP ：是否接入集中工作平台<br/><br/>取值来自业务菜单： DICT_YON */
-	public static final String INIWP = "iniwp" ; 
+	public static final String COLUMN_INIWP = "iniwp" ; 
 	/** INTASKCENTER ：是否接入集中任务中心<br/><br/>取值来自业务菜单： DICT_YON */
-	public static final String INTASKCENTER = "intaskcenter" ; 
+	public static final String COLUMN_INTASKCENTER = "intaskcenter" ; 
 	/** IP_ADDR ：IP<br/><br/> */
-	public static final String IP_ADDR = "ip_addr" ; 
+	public static final String COLUMN_IP_ADDR = "ip_addr" ; 
 	/** IP_PORT ：端口<br/><br/> */
-	public static final String IP_PORT = "ip_port" ; 
+	public static final String COLUMN_IP_PORT = "ip_port" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
