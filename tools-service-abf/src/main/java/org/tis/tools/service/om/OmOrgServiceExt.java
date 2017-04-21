@@ -51,4 +51,16 @@ public class OmOrgServiceExt {
 		}
 		return false;
 	}
+
+	/**
+	 * 检查机构（guid）是否为'空机构'
+	 * 
+	 * @param guid
+	 *            机构guid
+	 * @return true 空机构 false 非空机构
+	 */
+	public boolean isEmptyOrg(String guid) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

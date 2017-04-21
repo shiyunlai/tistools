@@ -52,4 +52,20 @@ public class AcRoleServiceExt {
 		
 		return sets ; 
 	}
+
+	/**
+	 * 删除组织对象的角色集
+	 * 
+	 * @param partyType
+	 *            组织对象类型
+	 * @param guidParty
+	 *            组织对象guid
+	 */
+	public void deletePartyRole(String partyType, String guidParty) {
+		
+		WhereCondition wc = new WhereCondition() ; 
+		wc.andEquals(AcPartyRole.COLUMN_PARTY_TYPE, partyType) ; 
+		wc.andEquals(AcPartyRole.COLUMN_GUID_PARTY, guidParty) ; 
+		acPartyRoleService.deleteByCondition(wc);
+	}
 }

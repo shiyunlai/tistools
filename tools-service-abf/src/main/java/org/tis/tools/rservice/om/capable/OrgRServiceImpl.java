@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
@@ -18,6 +19,7 @@ import org.tis.tools.base.WhereCondition;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.common.utils.ObjectUtil;
 import org.tis.tools.common.utils.StringUtil;
+import org.tis.tools.common.utils.TimeUtil;
 import org.tis.tools.model.def.ACConstants;
 import org.tis.tools.model.def.CommonConstants;
 import org.tis.tools.model.def.GUID;
@@ -409,9 +411,51 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 * @see org.tis.tools.rservice.om.capable.IOrgRService#enabledOrg(java.lang.String)
 	 */
 	@Override
-	public OmOrg enabledOrg(String orgCode) throws OrgManagementException {
-		// TODO Auto-generated method stub
-		return null;
+	public OmOrg enabledOrg(String orgCode,Date startDate, Date endDate) throws OrgManagementException {
+		
+		// 取出机构记录
+		OmOrg org = omOrgServiceExt.loadByOrgCode(orgCode);
+
+		if (StringUtils.equals(org.getOrgStatus(), OMConstants.ORG_STATUS_RUNNING)) {
+			throw new OrgManagementException(OMExceptionCodes.ORG_IS_RUNNING_NEEDLESS_ENABLED, BasicUtil.wrap(orgCode),
+					"机构 {0} 处于正常状态，无需执行启用处理！");
+		}
+
+		if (!StringUtils.equals(org.getOrgStatus(), OMConstants.ORG_STATUS_STOP)) {
+			throw new OrgManagementException(OMExceptionCodes.ORG_IS_NOT_STOP_WHEN_ENABLED,
+					BasicUtil.wrap(orgCode, org.getOrgStatus()), "机构 {0} 当前状态为 {1}，不能执行启用处理！");
+		}
+		
+		if (TimeUtil.compareDate(endDate, startDate) == -1) {
+			throw new OrgManagementException(OMExceptionCodes.INVALID_DATE_SCOPE_WHEN_ENABLED,
+					BasicUtil.wrap(orgCode, endDate, startDate), "启用机构{0}时，失效日期{1}不应该早于生效日期{2}！");
+		}
+
+		// 执行启用 根据guid修改状态、生效、失效日期
+		OmOrg enOrg = new OmOrg();
+		
+		enOrg.setGuid(org.getGuid());
+
+		enOrg.setOrgStatus(OMConstants.ORG_STATUS_RUNNING);
+
+		if (null == startDate) {
+			enOrg.setStartDate(new Date());
+		} else {
+			enOrg.setStartDate(startDate);
+		}
+
+		if (null == endDate) {
+			enOrg.setEndDate(null);// 无失效日期
+		} else {
+			enOrg.setEndDate(endDate);
+		}
+		
+		enOrg.setLastUpdate(new Date() );
+		enOrg.setUpdator(null);//TODO FIXME 怎么取当前操作员身份？ Shiro
+		
+		omOrgService.update(enOrg);
+		
+		return omOrgService.loadByGuid(enOrg.getGuid());//FIXME 想办法减少这次查询处理
 	}
 
 	/* (non-Javadoc)
@@ -445,18 +489,67 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 * @see org.tis.tools.rservice.om.capable.IOrgRService#deleteOrg(java.lang.String)
 	 */
 	@Override
-	public void deleteOrg(String orgCode) throws OrgManagementException {
-		// TODO Auto-generated method stub
+	public void deleteEmptyOrg(String orgCode) throws OrgManagementException {
+		
+		OmOrg delOrg = omOrgServiceExt.loadByOrgCode(orgCode) ; 
+		
+		if (!StringUtils.equals(OMConstants.ORG_STATUS_STOP, delOrg.getOrgStatus())) {
+			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHEN_DEL_MUST_STOP,
+					BasicUtil.wrap(orgCode, delOrg.getOrgStatus()), "不能删除非停用状态机构{0}！当前状态{1}");
+		}
+		
+		if (!omOrgServiceExt.isEmptyOrg(delOrg.getGuid())) {
+			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHEN_DEL_MUST_EMPTY_ORG,
+					BasicUtil.wrap(orgCode, delOrg.getOrgStatus()), "不能删除非空机构{0}！");
+		}
+		
+		try {
+			transactionTemplate.execute(new TransactionCallback<String>() {
+				@Override
+				public String doInTransaction(TransactionStatus arg0) {
+					//删除机构
+					omOrgService.delete(delOrg.getGuid());
+					//删除机构对应权限集映射
+					acRoleServiceExt.deletePartyRole(ACConstants.PARTY_TYPE_ORGANIZATION, delOrg.getGuid());
+					return "";
+				}
+			});
 
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_DEEP_COPY_ORG,
+					BasicUtil.wrap(delOrg.getOrgCode(), e.getCause().getMessage()), "删除机构失败！机构{0} {1}");
+		}
+		
 	}
 
 	/* (non-Javadoc)
 	 * @see org.tis.tools.rservice.om.capable.IOrgRService#deleteOrgsByCondition(org.tis.tools.base.WhereCondition)
 	 */
 	@Override
-	public void deleteOrgsByCondition(WhereCondition wc) throws OrgManagementException {
-		// TODO Auto-generated method stub
+	public void deleteEmptyOrgsByCondition(WhereCondition wc) throws OrgManagementException {
+		
+		List<OmOrg> delOrgs = omOrgService.query(wc) ; 
+		logger.info("即将批量删除机构：\n"+ showDelOrgs(delOrgs));
+		
+		for( OmOrg o : delOrgs ){
+			try {
+				deleteEmptyOrg(o.getOrgCode());
+			} catch (Exception e) {
+				logger.warn("批量删除空机构失败！机构["+o.getOrgCode()+"]",e);
+				continue ; 
+			}
+		}
+	}
 
+	private String showDelOrgs(List<OmOrg> delOrgs) {
+		StringBuffer sb = new StringBuffer();
+		for (OmOrg o : delOrgs) {
+			sb.append(o.getGuid()).append("\t");
+			sb.append(o.getOrgCode()).append("\t");
+			sb.append(o.getOrgName()).append("\n");
+		}
+		return sb.toString();
 	}
 
 	/* (non-Javadoc)

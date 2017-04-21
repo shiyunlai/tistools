@@ -3,6 +3,7 @@
  */
 package org.tis.tools.rservice.om.capable;
 
+import java.util.Date;
 import java.util.List;
 
 import org.tis.tools.base.WhereCondition;
@@ -250,15 +251,20 @@ public interface IOrgRService {
 	 * 
 	 * 说明：
 	 * 将机构状态从'停用'转变为'正常'
+	 * 启用机构时可同时指定生效日期和失效日期
 	 * </pre>
 	 * 
 	 * @param orgCode
 	 *            机构代码
+	 * @param startDate
+	 *            生效日期（不指定，默认为启用时日期）
+	 * @param endDate
+	 *            失效日期（不指定，则没有失效日期）
 	 * @return 启用后的机构信息
 	 * @throws ToolsRuntimeException
 	 */
-	OmOrg enabledOrg( String orgCode ) throws ToolsRuntimeException;
-	
+	OmOrg enabledOrg(String orgCode, Date startDate, Date endDate) throws ToolsRuntimeException;
+
 	/**
 	 * <pre>
 	 * （根据机构代码）重新启用机构
@@ -302,29 +308,35 @@ public interface IOrgRService {
 	
 	/**
 	 * <pre>
-	 * 根据org_code删除（记录删除）机构
+	 * 根据org_code删除（记录删除）空机构
 	 * 
-	 * 说明：
-	 * 只能删除处于‘停用’状态的机构记录；
+	 * <ol>何为‘空机构’：
+	 * <li/>机构状态必须为‘停用’；
+	 * <li/>机构不能存在下级机构；
+	 * <li/>机构不能有关联业务机构定义；
+	 * <li/>机构不能有员工；
+	 * <li/>机构不能有岗位定义；
+	 * <li/>结构不能有工作组；
+	 * </ol>
+	 * <ol>一并删除的关联数据包括：
+	 * <li/>机构对应的角色集映射关系（AC_PARTY_ROLE）；
+	 * <ol/>
 	 * </pre>
 	 * 
 	 * @param orgCode
 	 *            待删除机构的org_code（机构代码）
 	 * @throws ToolsRuntimeException
 	 */
-	void deleteOrg(String orgCode) throws ToolsRuntimeException;
+	void deleteEmptyOrg(String orgCode) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
-	 * 根据条件（WhereCondition）删除机构
+	 * 根据条件（WhereCondition）批量删除空机构
 	 * 
-	 * 说明：
-	 * 可以批量删除机构；
-	 * 但只能删除处于‘停用’状态的机构记录；
 	 * </pre>
 	 * @param wc 条件
 	 */
-	void deleteOrgsByCondition(WhereCondition wc) throws ToolsRuntimeException;
+	void deleteEmptyOrgsByCondition(WhereCondition wc) throws ToolsRuntimeException;
 	
 	/*
 	 * ==========================================
