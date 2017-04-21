@@ -10,7 +10,7 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
-import org.tis.tools.common.utils.StringUtils;
+import org.tis.tools.common.utils.StringUtil;
 
 /**
  * 
@@ -33,7 +33,7 @@ public class AcPartyRole implements Serializable {
 	
 	/* AC_PARTY_ROLE table's columns definition */
 	/** PARTYTYPE ：组织对象类型<br/><br/>取值范围，见业务字典 DICT_OM_PARTYTYPE 如：机构、工作组、岗位、职务 */
-	public static final String PARTYTYPE = "partytype" ; 
+	public static final String PARTY_TYPE = "partytype" ; 
 	/** GUID_PARTY ：组织对象GUID<br/><br/>根据组织类型存储对应组织的GUID */
 	public static final String GUID_PARTY = "guid_party" ; 
 	/** GUID_ROLE ：数据主键<br/><br/> */
@@ -108,6 +108,6 @@ public class AcPartyRole implements Serializable {
     }
 	
 	public String toString(){
-		return StringUtils.toString(this) ; 
+		return StringUtil.toString(this) ; 
 	}
 }

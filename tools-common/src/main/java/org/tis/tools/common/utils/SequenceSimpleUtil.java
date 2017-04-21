@@ -143,16 +143,6 @@ public class SequenceSimpleUtil {
 	}
 	
 	/**
-	 * 取一个UUID
-	 * 	
-	 * @return UUID字符串（去掉了'-'字符）
-	 */
-	public String getUUID() {
-		String uuid =  UUID.randomUUID().toString().replace("-", "") ;//去掉了'-'字符
-		return uuid ; 
-	}
-	
-	/**
 	 * <pre>
 	 * 获取seqKey对应的下一个序号资源，自从系统启动开始从当前秒数顺序步长为1.
 	 * 借助启动后的系统内存实现.
@@ -194,13 +184,23 @@ public class SequenceSimpleUtil {
 	}
 
 	/**
-	 * 产生一个GUID字符串（会带上标识）
-	 * @param string 标识
+	 * 产生一个携带标识（sign）的GUID字符串
+	 * @param sign 标识
 	 * @return
 	 */
-	public String genGUIDStr(String string) {
+	public String GUID(String sign) {
 		
-		return string + nextSeqNoSinceRuntime(string) ;
+		return sign + nextSeqNoSinceRuntime(sign) ;
+	}
+	
+	/**
+	 * 取一个UUID
+	 * 	
+	 * @return UUID字符串（去掉了'-'字符）
+	 */
+	public String UUID() {
+		String uuid =  UUID.randomUUID().toString().replace("-", "") ;//去掉了'-'字符
+		return uuid ; 
 	}
 
 }

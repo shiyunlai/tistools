@@ -10,7 +10,7 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
-import org.tis.tools.common.utils.StringUtils;
+import org.tis.tools.common.utils.StringUtil;
 
 /**
  * 
@@ -135,6 +135,6 @@ public class SysSeqno implements Serializable {
     }
 	
 	public String toString(){
-		return StringUtils.toString(this) ; 
+		return StringUtil.toString(this) ; 
 	}
 }

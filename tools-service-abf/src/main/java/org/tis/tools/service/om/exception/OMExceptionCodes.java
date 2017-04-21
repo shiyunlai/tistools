@@ -30,6 +30,26 @@ public class OMExceptionCodes {
 	public static final String ORGANIZATION_NOT_EXIST_BY_ORG_CODE = R_EX_CODE("0002");
 	
 	/**
+	 * 异常：参数不允许为空
+	 */
+	public static final String PARMS_NOT_ALLOW_EMPTY = R_EX_CODE("0003");
+
+	/**
+	 * 异常：新增根节点机构失败
+	 */
+	public static final String FAILURE_WHRN_CREATE_ROOT_ORG = R_EX_CODE("0004");
+	
+	/**
+	 * 异常：拷贝机构失败
+	 */
+	public static final String FAILURE_WHRN_COPY_ORG = R_EX_CODE("0005");
+
+	/**
+	 * 异常：深度拷贝机构失败
+	 */
+	public static final String FAILURE_WHRN_DEEP_COPY_ORG = R_EX_CODE("0006");
+	
+	/**
 	 * 以烤串方式拼接异常码
 	 * @param code 业务域范围内的异常编码
 	 * @return
