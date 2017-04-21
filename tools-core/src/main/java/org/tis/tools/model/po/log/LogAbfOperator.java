@@ -10,13 +10,13 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.tis.tools.common.utils.StringUtil;
 
 /**
  * 
  * <pre>
  * 操作日志
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNLoracle.erm
+ * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-mysql.erm
  * 业务域：log
  * 模型：LOG_ABF_OPERATOR 操作日志
  *
@@ -31,6 +31,34 @@ public class LogAbfOperator implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/* LOG_ABF_OPERATOR table's columns definition */
+	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier） */
+	public static final String GUID = "guid" ; 
+	/** OPERATOR_TYPE ：操作类型<br/><br/>见业务字典：DICT_OPERATOR_TYPE */
+	public static final String OPERATOR_TYPE = "operator_type" ; 
+	/** OPERATOR_TIME ：操作时间<br/><br/> */
+	public static final String OPERATOR_TIME = "operator_time" ; 
+	/** OPERATOR_RESULT ：操作结果<br/><br/>见业务字典：DICT_OPERATOR_RESULT */
+	public static final String OPERATOR_RESULT = "operator_result" ; 
+	/** OPERATOR_NAME ：操作员姓名<br/><br/>记录当前操作员姓名（只记录当前值，不随之改变） */
+	public static final String OPERATOR_NAME = "operator_name" ; 
+	/** USER_ID ：操作员<br/><br/>登陆用户id */
+	public static final String USER_ID = "user_id" ; 
+	/** APP_CODE ：应用代码<br/><br/> */
+	public static final String APP_CODE = "app_code" ; 
+	/** APP_NAME ：应用名称<br/><br/> */
+	public static final String APP_NAME = "app_name" ; 
+	/** FUNC_CODE ：功能编号<br/><br/>业务上对功能的编码 */
+	public static final String FUNC_CODE = "func_code" ; 
+	/** FUNC_NAME ：功能名称<br/><br/> */
+	public static final String FUNC_NAME = "func_name" ; 
+	/** RESTFUL_RUL ：服务地址<br/><br/>功能对应的RESTFul服务地址 */
+	public static final String RESTFUL_RUL = "restful_rul" ; 
+	/** STACK_TRACE ：异常堆栈<br/><br/>记录异常堆栈信息，超过4000的部分被自动丢弃 */
+	public static final String STACK_TRACE = "stack_trace" ; 
+	/** PROCSS_DESC ：处理描述<br/><br/>记录功能执行时的业务处理信息 */
+	public static final String PROCSS_DESC = "procss_desc" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier） */
 	private String guid ;
@@ -38,8 +66,8 @@ public class LogAbfOperator implements Serializable {
 	/** 字段类型：varchar<br/>字段名：操作类型<br/>描述：见业务字典：DICT_OPERATOR_TYPE */
 	private String operatorType ;
 	
-	/** 字段类型：timestamp<br/>字段名：操作时间<br/>描述： */
-	private Date operatorTime ;
+	/** 字段类型：varchar<br/>字段名：操作时间<br/>描述： */
+	private String operatorTime ;
 	
 	/** 字段类型：varchar<br/>字段名：操作结果<br/>描述：见业务字典：DICT_OPERATOR_RESULT */
 	private String operatorResult ;
@@ -116,8 +144,8 @@ public class LogAbfOperator implements Serializable {
 	 * @param operatorTime
 	 *            操作时间
 	 */
-	public void setOperatorTime(Date operatorTime) {
- 		this.operatorTime = operatorTime ;
+	public void setOperatorTime(String operatorTime) {
+ 		this.operatorTime = operatorTime == null ? null : operatorTime.trim() ;
     }
     
     /**
@@ -125,7 +153,7 @@ public class LogAbfOperator implements Serializable {
 	 * 
 	 * @return 操作时间
 	 */
-	public Date getOperatorTime(){
+	public String getOperatorTime(){
 		return this.operatorTime ;
     }
 	
@@ -320,6 +348,6 @@ public class LogAbfOperator implements Serializable {
     }
 	
 	public String toString(){
-		return ToStringBuilder.reflectionToString(this) ; 
+		return StringUtil.toString(this) ; 
 	}
 }

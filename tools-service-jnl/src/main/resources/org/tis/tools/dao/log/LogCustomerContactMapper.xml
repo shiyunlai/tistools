@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.log.LogCustomerContactMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.log.LogCustomerContact">
+	    INSERT INTO LOG_CUSTOMER_CONTACT 
+	    (
+	    	 guid
+	    	,contact_time
+	    	,chn_code
+	    	,teller_no
+	    	,instno
+	    	,contact_mode
+	    	,cust_no
+	    	,cust_name
+	    	,biz_type
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=VARCHAR},
+			#{contactTime,jdbcType=VARCHAR},
+			#{chnCode,jdbcType=VARCHAR},
+			#{tellerNo,jdbcType=VARCHAR},
+			#{instno,jdbcType=VARCHAR},
+			#{contactMode,jdbcType=VARCHAR},
+			#{custNo,jdbcType=VARCHAR},
+			#{custName,jdbcType=VARCHAR},
+			#{bizType,jdbcType=VARCHAR}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.log.LogCustomerContact">
+    	UPDATE LOG_CUSTOMER_CONTACT 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=VARCHAR},
+		</if>
+		<if test="contact_time != null" >
+			contact_time = #{contactTime,jdbcType=VARCHAR},
+		</if>
+		<if test="chn_code != null" >
+			chn_code = #{chnCode,jdbcType=VARCHAR},
+		</if>
+		<if test="teller_no != null" >
+			teller_no = #{tellerNo,jdbcType=VARCHAR},
+		</if>
+		<if test="instno != null" >
+			instno = #{instno,jdbcType=VARCHAR},
+		</if>
+		<if test="contact_mode != null" >
+			contact_mode = #{contactMode,jdbcType=VARCHAR},
+		</if>
+		<if test="cust_no != null" >
+			cust_no = #{custNo,jdbcType=VARCHAR},
+		</if>
+		<if test="cust_name != null" >
+			cust_name = #{custName,jdbcType=VARCHAR},
+		</if>
+		<if test="biz_type != null" >
+			biz_type = #{bizType,jdbcType=VARCHAR}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.log.LogCustomerContact">
+    	UPDATE LOG_CUSTOMER_CONTACT 
+	    <set>
+		guid = #{guid,jdbcType=VARCHAR},
+		contact_time = #{contactTime,jdbcType=VARCHAR},
+		chn_code = #{chnCode,jdbcType=VARCHAR},
+		teller_no = #{tellerNo,jdbcType=VARCHAR},
+		instno = #{instno,jdbcType=VARCHAR},
+		contact_mode = #{contactMode,jdbcType=VARCHAR},
+		cust_no = #{custNo,jdbcType=VARCHAR},
+		cust_name = #{custName,jdbcType=VARCHAR},
+		biz_type = #{bizType,jdbcType=VARCHAR}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from LOG_CUSTOMER_CONTACT where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from LOG_CUSTOMER_CONTACT <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE LOG_CUSTOMER_CONTACT 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.contact_time != null" >
+        	contact_time = #{domain.contactTime,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.chn_code != null" >
+        	chn_code = #{domain.chnCode,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.teller_no != null" >
+        	teller_no = #{domain.tellerNo,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.instno != null" >
+        	instno = #{domain.instno,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.contact_mode != null" >
+        	contact_mode = #{domain.contactMode,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.cust_no != null" >
+        	cust_no = #{domain.custNo,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.cust_name != null" >
+        	cust_name = #{domain.custName,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.biz_type != null" >
+        	biz_type = #{domain.bizType,jdbcType=VARCHAR}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.log.LogCustomerContact">
+		select <include refid="Base_Column_List"/> from LOG_CUSTOMER_CONTACT where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.log.LogCustomerContact" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from LOG_CUSTOMER_CONTACT <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from LOG_CUSTOMER_CONTACT <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid
+		,contact_time
+		,chn_code
+		,teller_no
+		,instno
+		,contact_mode
+		,cust_no
+		,cust_name
+		,biz_type
+	</sql>
+</mapper>

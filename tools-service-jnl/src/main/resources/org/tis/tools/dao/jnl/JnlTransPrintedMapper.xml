@@ -21,16 +21,16 @@
 	    )
 	    VALUES 
 	    (
-			#{guid,jdbcType=varchar},
-			#{guid_trans,jdbcType=varchar},
-			#{trans_sno,jdbcType=varchar},
-			#{trans_code,jdbcType=varchar},
-			#{voucher_code,jdbcType=varchar},
-			#{printed_data,jdbcType=text},
-			#{voucher_img_id,jdbcType=varchar},
-			#{printed_date,jdbcType=char},
-			#{last_printed_time,jdbcType=char},
-			#{printed_num,jdbcType=int}
+			#{guid,jdbcType=VARCHAR},
+			#{guidTrans,jdbcType=VARCHAR},
+			#{transSno,jdbcType=VARCHAR},
+			#{transCode,jdbcType=VARCHAR},
+			#{voucherCode,jdbcType=VARCHAR},
+			#{printedData,jdbcType=TEXT},
+			#{voucherImgId,jdbcType=VARCHAR},
+			#{printedDate,jdbcType=CHAR},
+			#{lastPrintedTime,jdbcType=CHAR},
+			#{printedNum,jdbcType=INT}
   		)
  	</insert>
  	
@@ -38,34 +38,34 @@
     	UPDATE JNL_TRANS_PRINTED 
 	    <set>
 		<if test="guid != null" >
-			guid = #{guid,jdbcType=varchar},
+			guid = #{guid,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_trans != null" >
-			guid_trans = #{guid_trans,jdbcType=varchar},
+			guid_trans = #{guidTrans,jdbcType=VARCHAR},
 		</if>
 		<if test="trans_sno != null" >
-			trans_sno = #{trans_sno,jdbcType=varchar},
+			trans_sno = #{transSno,jdbcType=VARCHAR},
 		</if>
 		<if test="trans_code != null" >
-			trans_code = #{trans_code,jdbcType=varchar},
+			trans_code = #{transCode,jdbcType=VARCHAR},
 		</if>
 		<if test="voucher_code != null" >
-			voucher_code = #{voucher_code,jdbcType=varchar},
+			voucher_code = #{voucherCode,jdbcType=VARCHAR},
 		</if>
 		<if test="printed_data != null" >
-			printed_data = #{printed_data,jdbcType=text},
+			printed_data = #{printedData,jdbcType=TEXT},
 		</if>
 		<if test="voucher_img_id != null" >
-			voucher_img_id = #{voucher_img_id,jdbcType=varchar},
+			voucher_img_id = #{voucherImgId,jdbcType=VARCHAR},
 		</if>
 		<if test="printed_date != null" >
-			printed_date = #{printed_date,jdbcType=char},
+			printed_date = #{printedDate,jdbcType=CHAR},
 		</if>
 		<if test="last_printed_time != null" >
-			last_printed_time = #{last_printed_time,jdbcType=char},
+			last_printed_time = #{lastPrintedTime,jdbcType=CHAR},
 		</if>
 		<if test="printed_num != null" >
-			printed_num = #{printed_num,jdbcType=int}
+			printed_num = #{printedNum,jdbcType=INT}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -74,16 +74,16 @@
  	<update id="updateForce" parameterType="org.tis.tools.model.po.jnl.JnlTransPrinted">
     	UPDATE JNL_TRANS_PRINTED 
 	    <set>
-		guid = #{guid,jdbcType=varchar},
-		guid_trans = #{guid_trans,jdbcType=varchar},
-		trans_sno = #{trans_sno,jdbcType=varchar},
-		trans_code = #{trans_code,jdbcType=varchar},
-		voucher_code = #{voucher_code,jdbcType=varchar},
-		printed_data = #{printed_data,jdbcType=text},
-		voucher_img_id = #{voucher_img_id,jdbcType=varchar},
-		printed_date = #{printed_date,jdbcType=char},
-		last_printed_time = #{last_printed_time,jdbcType=char},
-		printed_num = #{printed_num,jdbcType=int}
+		guid = #{guid,jdbcType=VARCHAR},
+		guid_trans = #{guidTrans,jdbcType=VARCHAR},
+		trans_sno = #{transSno,jdbcType=VARCHAR},
+		trans_code = #{transCode,jdbcType=VARCHAR},
+		voucher_code = #{voucherCode,jdbcType=VARCHAR},
+		printed_data = #{printedData,jdbcType=TEXT},
+		voucher_img_id = #{voucherImgId,jdbcType=VARCHAR},
+		printed_date = #{printedDate,jdbcType=CHAR},
+		last_printed_time = #{lastPrintedTime,jdbcType=CHAR},
+		printed_num = #{printedNum,jdbcType=INT}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -100,34 +100,34 @@
     	UPDATE JNL_TRANS_PRINTED 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=varchar}
+        	guid = #{domain.guid,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_trans != null" >
-        	guid_trans = #{domain.guid_trans,jdbcType=varchar}
+        	guid_trans = #{domain.guidTrans,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.trans_sno != null" >
-        	trans_sno = #{domain.trans_sno,jdbcType=varchar}
+        	trans_sno = #{domain.transSno,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.trans_code != null" >
-        	trans_code = #{domain.trans_code,jdbcType=varchar}
+        	trans_code = #{domain.transCode,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.voucher_code != null" >
-        	voucher_code = #{domain.voucher_code,jdbcType=varchar}
+        	voucher_code = #{domain.voucherCode,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.printed_data != null" >
-        	printed_data = #{domain.printed_data,jdbcType=text}
+        	printed_data = #{domain.printedData,jdbcType=TEXT}
       	</if>
 		<if test="domain.voucher_img_id != null" >
-        	voucher_img_id = #{domain.voucher_img_id,jdbcType=varchar}
+        	voucher_img_id = #{domain.voucherImgId,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.printed_date != null" >
-        	printed_date = #{domain.printed_date,jdbcType=char}
+        	printed_date = #{domain.printedDate,jdbcType=CHAR}
       	</if>
 		<if test="domain.last_printed_time != null" >
-        	last_printed_time = #{domain.last_printed_time,jdbcType=char}
+        	last_printed_time = #{domain.lastPrintedTime,jdbcType=CHAR}
       	</if>
 		<if test="domain.printed_num != null" >
-        	printed_num = #{domain.printed_num,jdbcType=int}
+        	printed_num = #{domain.printedNum,jdbcType=INT}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>

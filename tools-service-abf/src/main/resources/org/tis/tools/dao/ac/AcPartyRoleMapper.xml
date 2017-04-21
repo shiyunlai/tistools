@@ -8,13 +8,13 @@
   	<insert id="insert" parameterType="org.tis.tools.model.po.ac.AcPartyRole">
 	    INSERT INTO AC_PARTY_ROLE 
 	    (
-	    	 partytype
+	    	 party_type
 	    	,guid_party
 	    	,guid_role
 	    )
 	    VALUES 
 	    (
-			#{partytype,jdbcType=VARCHAR},
+			#{partyType,jdbcType=VARCHAR},
 			#{guidParty,jdbcType=VARCHAR},
 			#{guidRole,jdbcType=VARCHAR}
   		)
@@ -23,8 +23,8 @@
  	<update id="update" parameterType="org.tis.tools.model.po.ac.AcPartyRole">
     	UPDATE AC_PARTY_ROLE 
 	    <set>
-		<if test="partytype != null" >
-			partytype = #{partytype,jdbcType=VARCHAR},
+		<if test="party_type != null" >
+			party_type = #{partyType,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_party != null" >
 			guid_party = #{guidParty,jdbcType=VARCHAR},
@@ -39,7 +39,7 @@
  	<update id="updateForce" parameterType="org.tis.tools.model.po.ac.AcPartyRole">
     	UPDATE AC_PARTY_ROLE 
 	    <set>
-		partytype = #{partytype,jdbcType=VARCHAR},
+		party_type = #{partyType,jdbcType=VARCHAR},
 		guid_party = #{guidParty,jdbcType=VARCHAR},
 		guid_role = #{guidRole,jdbcType=VARCHAR}
 	    </set>
@@ -57,8 +57,8 @@
 	 <update id="updateByCondition" parameterType="map">
     	UPDATE AC_PARTY_ROLE 
 	   <set>
-		<if test="domain.partytype != null" >
-        	partytype = #{domain.partytype,jdbcType=VARCHAR}
+		<if test="domain.party_type != null" >
+        	party_type = #{domain.partyType,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_party != null" >
         	guid_party = #{domain.guidParty,jdbcType=VARCHAR}
@@ -89,7 +89,7 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 partytype
+		 party_type
 		,guid_party
 		,guid_role
 	</sql>

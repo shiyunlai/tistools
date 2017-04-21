@@ -20,6 +20,7 @@
 	mvn tools:gen-dao -Dmodel.file.type=erm -Dmodel.file=abf -Dfixed.bizmodels=ac -Dgen.type=model,dao,biz,service
 	
 	mvn tools:gen-dao -Dmodel.file.type=erm -Dmodel.file=ABF-mysql -Dgen.type=model,dao,biz,service
+	mvn tools:gen-dao -Dmodel.file.type=erm -Dmodel.file=JNL-mysql -Dgen.type=model,dao,biz,service
 
 -- 更多参数使用
 -- 使用指定的模型定义文件 -Dmodel.file=abf

@@ -25,20 +25,20 @@
 	    )
 	    VALUES 
 	    (
-			#{guid,jdbcType=varchar},
-			#{service_sno,jdbcType=varchar},
-			#{start_time,jdbcType=varchar},
-			#{end_time,jdbcType=varchar},
-			#{cust_no,jdbcType=varchar},
-			#{cust_level,jdbcType=varchar},
-			#{paper_no,jdbcType=varchar},
-			#{paper_type,jdbcType=char},
-			#{cust_service_ctx,jdbcType=text},
-			#{service_interval,jdbcType=int},
-			#{service_type,jdbcType=varchar},
-			#{service_appraise,jdbcType=varchar},
-			#{service_status,jdbcType=char},
-			#{trans_num,jdbcType=int}
+			#{guid,jdbcType=VARCHAR},
+			#{serviceSno,jdbcType=VARCHAR},
+			#{startTime,jdbcType=VARCHAR},
+			#{endTime,jdbcType=VARCHAR},
+			#{custNo,jdbcType=VARCHAR},
+			#{custLevel,jdbcType=VARCHAR},
+			#{paperNo,jdbcType=VARCHAR},
+			#{paperType,jdbcType=CHAR},
+			#{custServiceCtx,jdbcType=TEXT},
+			#{serviceInterval,jdbcType=INT},
+			#{serviceType,jdbcType=VARCHAR},
+			#{serviceAppraise,jdbcType=VARCHAR},
+			#{serviceStatus,jdbcType=CHAR},
+			#{transNum,jdbcType=INT}
   		)
  	</insert>
  	
@@ -46,46 +46,46 @@
     	UPDATE JNL_CUST_SERVICE 
 	    <set>
 		<if test="guid != null" >
-			guid = #{guid,jdbcType=varchar},
+			guid = #{guid,jdbcType=VARCHAR},
 		</if>
 		<if test="service_sno != null" >
-			service_sno = #{service_sno,jdbcType=varchar},
+			service_sno = #{serviceSno,jdbcType=VARCHAR},
 		</if>
 		<if test="start_time != null" >
-			start_time = #{start_time,jdbcType=varchar},
+			start_time = #{startTime,jdbcType=VARCHAR},
 		</if>
 		<if test="end_time != null" >
-			end_time = #{end_time,jdbcType=varchar},
+			end_time = #{endTime,jdbcType=VARCHAR},
 		</if>
 		<if test="cust_no != null" >
-			cust_no = #{cust_no,jdbcType=varchar},
+			cust_no = #{custNo,jdbcType=VARCHAR},
 		</if>
 		<if test="cust_level != null" >
-			cust_level = #{cust_level,jdbcType=varchar},
+			cust_level = #{custLevel,jdbcType=VARCHAR},
 		</if>
 		<if test="paper_no != null" >
-			paper_no = #{paper_no,jdbcType=varchar},
+			paper_no = #{paperNo,jdbcType=VARCHAR},
 		</if>
 		<if test="paper_type != null" >
-			paper_type = #{paper_type,jdbcType=char},
+			paper_type = #{paperType,jdbcType=CHAR},
 		</if>
 		<if test="cust_service_ctx != null" >
-			cust_service_ctx = #{cust_service_ctx,jdbcType=text},
+			cust_service_ctx = #{custServiceCtx,jdbcType=TEXT},
 		</if>
 		<if test="service_interval != null" >
-			service_interval = #{service_interval,jdbcType=int},
+			service_interval = #{serviceInterval,jdbcType=INT},
 		</if>
 		<if test="service_type != null" >
-			service_type = #{service_type,jdbcType=varchar},
+			service_type = #{serviceType,jdbcType=VARCHAR},
 		</if>
 		<if test="service_appraise != null" >
-			service_appraise = #{service_appraise,jdbcType=varchar},
+			service_appraise = #{serviceAppraise,jdbcType=VARCHAR},
 		</if>
 		<if test="service_status != null" >
-			service_status = #{service_status,jdbcType=char},
+			service_status = #{serviceStatus,jdbcType=CHAR},
 		</if>
 		<if test="trans_num != null" >
-			trans_num = #{trans_num,jdbcType=int}
+			trans_num = #{transNum,jdbcType=INT}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -94,20 +94,20 @@
  	<update id="updateForce" parameterType="org.tis.tools.model.po.jnl.JnlCustService">
     	UPDATE JNL_CUST_SERVICE 
 	    <set>
-		guid = #{guid,jdbcType=varchar},
-		service_sno = #{service_sno,jdbcType=varchar},
-		start_time = #{start_time,jdbcType=varchar},
-		end_time = #{end_time,jdbcType=varchar},
-		cust_no = #{cust_no,jdbcType=varchar},
-		cust_level = #{cust_level,jdbcType=varchar},
-		paper_no = #{paper_no,jdbcType=varchar},
-		paper_type = #{paper_type,jdbcType=char},
-		cust_service_ctx = #{cust_service_ctx,jdbcType=text},
-		service_interval = #{service_interval,jdbcType=int},
-		service_type = #{service_type,jdbcType=varchar},
-		service_appraise = #{service_appraise,jdbcType=varchar},
-		service_status = #{service_status,jdbcType=char},
-		trans_num = #{trans_num,jdbcType=int}
+		guid = #{guid,jdbcType=VARCHAR},
+		service_sno = #{serviceSno,jdbcType=VARCHAR},
+		start_time = #{startTime,jdbcType=VARCHAR},
+		end_time = #{endTime,jdbcType=VARCHAR},
+		cust_no = #{custNo,jdbcType=VARCHAR},
+		cust_level = #{custLevel,jdbcType=VARCHAR},
+		paper_no = #{paperNo,jdbcType=VARCHAR},
+		paper_type = #{paperType,jdbcType=CHAR},
+		cust_service_ctx = #{custServiceCtx,jdbcType=TEXT},
+		service_interval = #{serviceInterval,jdbcType=INT},
+		service_type = #{serviceType,jdbcType=VARCHAR},
+		service_appraise = #{serviceAppraise,jdbcType=VARCHAR},
+		service_status = #{serviceStatus,jdbcType=CHAR},
+		trans_num = #{transNum,jdbcType=INT}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -124,46 +124,46 @@
     	UPDATE JNL_CUST_SERVICE 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=varchar}
+        	guid = #{domain.guid,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.service_sno != null" >
-        	service_sno = #{domain.service_sno,jdbcType=varchar}
+        	service_sno = #{domain.serviceSno,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.start_time != null" >
-        	start_time = #{domain.start_time,jdbcType=varchar}
+        	start_time = #{domain.startTime,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.end_time != null" >
-        	end_time = #{domain.end_time,jdbcType=varchar}
+        	end_time = #{domain.endTime,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.cust_no != null" >
-        	cust_no = #{domain.cust_no,jdbcType=varchar}
+        	cust_no = #{domain.custNo,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.cust_level != null" >
-        	cust_level = #{domain.cust_level,jdbcType=varchar}
+        	cust_level = #{domain.custLevel,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.paper_no != null" >
-        	paper_no = #{domain.paper_no,jdbcType=varchar}
+        	paper_no = #{domain.paperNo,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.paper_type != null" >
-        	paper_type = #{domain.paper_type,jdbcType=char}
+        	paper_type = #{domain.paperType,jdbcType=CHAR}
       	</if>
 		<if test="domain.cust_service_ctx != null" >
-        	cust_service_ctx = #{domain.cust_service_ctx,jdbcType=text}
+        	cust_service_ctx = #{domain.custServiceCtx,jdbcType=TEXT}
       	</if>
 		<if test="domain.service_interval != null" >
-        	service_interval = #{domain.service_interval,jdbcType=int}
+        	service_interval = #{domain.serviceInterval,jdbcType=INT}
       	</if>
 		<if test="domain.service_type != null" >
-        	service_type = #{domain.service_type,jdbcType=varchar}
+        	service_type = #{domain.serviceType,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.service_appraise != null" >
-        	service_appraise = #{domain.service_appraise,jdbcType=varchar}
+        	service_appraise = #{domain.serviceAppraise,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.service_status != null" >
-        	service_status = #{domain.service_status,jdbcType=char}
+        	service_status = #{domain.serviceStatus,jdbcType=CHAR}
       	</if>
 		<if test="domain.trans_num != null" >
-        	trans_num = #{domain.trans_num,jdbcType=int}
+        	trans_num = #{domain.transNum,jdbcType=INT}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>

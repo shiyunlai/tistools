@@ -16,11 +16,11 @@
 	    )
 	    VALUES 
 	    (
-			#{guid,jdbcType=varchar},
-			#{guid_trans,jdbcType=varchar},
-			#{trans_sno,jdbcType=varchar},
-			#{trans_field,jdbcType=varchar},
-			#{trans_data,jdbcType=varchar}
+			#{guid,jdbcType=VARCHAR},
+			#{guidTrans,jdbcType=VARCHAR},
+			#{transSno,jdbcType=VARCHAR},
+			#{transField,jdbcType=VARCHAR},
+			#{transData,jdbcType=VARCHAR}
   		)
  	</insert>
  	
@@ -28,19 +28,19 @@
     	UPDATE JNL_TRANS_FEATURE 
 	    <set>
 		<if test="guid != null" >
-			guid = #{guid,jdbcType=varchar},
+			guid = #{guid,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_trans != null" >
-			guid_trans = #{guid_trans,jdbcType=varchar},
+			guid_trans = #{guidTrans,jdbcType=VARCHAR},
 		</if>
 		<if test="trans_sno != null" >
-			trans_sno = #{trans_sno,jdbcType=varchar},
+			trans_sno = #{transSno,jdbcType=VARCHAR},
 		</if>
 		<if test="trans_field != null" >
-			trans_field = #{trans_field,jdbcType=varchar},
+			trans_field = #{transField,jdbcType=VARCHAR},
 		</if>
 		<if test="trans_data != null" >
-			trans_data = #{trans_data,jdbcType=varchar}
+			trans_data = #{transData,jdbcType=VARCHAR}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -49,11 +49,11 @@
  	<update id="updateForce" parameterType="org.tis.tools.model.po.jnl.JnlTransFeature">
     	UPDATE JNL_TRANS_FEATURE 
 	    <set>
-		guid = #{guid,jdbcType=varchar},
-		guid_trans = #{guid_trans,jdbcType=varchar},
-		trans_sno = #{trans_sno,jdbcType=varchar},
-		trans_field = #{trans_field,jdbcType=varchar},
-		trans_data = #{trans_data,jdbcType=varchar}
+		guid = #{guid,jdbcType=VARCHAR},
+		guid_trans = #{guidTrans,jdbcType=VARCHAR},
+		trans_sno = #{transSno,jdbcType=VARCHAR},
+		trans_field = #{transField,jdbcType=VARCHAR},
+		trans_data = #{transData,jdbcType=VARCHAR}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -70,19 +70,19 @@
     	UPDATE JNL_TRANS_FEATURE 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=varchar}
+        	guid = #{domain.guid,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_trans != null" >
-        	guid_trans = #{domain.guid_trans,jdbcType=varchar}
+        	guid_trans = #{domain.guidTrans,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.trans_sno != null" >
-        	trans_sno = #{domain.trans_sno,jdbcType=varchar}
+        	trans_sno = #{domain.transSno,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.trans_field != null" >
-        	trans_field = #{domain.trans_field,jdbcType=varchar}
+        	trans_field = #{domain.transField,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.trans_data != null" >
-        	trans_data = #{domain.trans_data,jdbcType=varchar}
+        	trans_data = #{domain.transData,jdbcType=VARCHAR}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>

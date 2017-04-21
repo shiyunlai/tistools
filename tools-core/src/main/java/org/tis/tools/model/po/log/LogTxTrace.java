@@ -10,13 +10,13 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.tis.tools.common.utils.StringUtil;
 
 /**
  * 
  * <pre>
  * 交易操作日志
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNLoracle.erm
+ * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-mysql.erm
  * 业务域：log
  * 模型：LOG_TX_TRACE 交易操作日志
  *
@@ -30,6 +30,28 @@ public class LogTxTrace implements Serializable {
 
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
+	
+	/* LOG_TX_TRACE table's columns definition */
+	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier） */
+	public static final String GUID = "guid" ; 
+	/** INSTNO ：网点代码<br/><br/>本次接触的网点代码 */
+	public static final String INSTNO = "instno" ; 
+	/** TELLER_NO ：柜员代码<br/><br/>本次接触活动的柜员 */
+	public static final String TELLER_NO = "teller_no" ; 
+	/** CHN_CODE ：渠道代码<br/><br/>记录接触系统对应的渠道代码； 来自渠道参数控制表： SYS_CHANNEL_CTL */
+	public static final String CHN_CODE = "chn_code" ; 
+	/** ACTION_TYPE ：操作行为类型<br/><br/>操作行为类型 见业务字典： DICT_ACTION_TYPE */
+	public static final String ACTION_TYPE = "action_type" ; 
+	/** ACTION_TIME ：操作时间<br/><br/> */
+	public static final String ACTION_TIME = "action_time" ; 
+	/** TRANS_SNO ：交易流水号<br/><br/>交易流水号，唯一标识业务的唯一性 */
+	public static final String TRANS_SNO = "trans_sno" ; 
+	/** TRANS_CODE ：交易代码<br/><br/> */
+	public static final String TRANS_CODE = "trans_code" ; 
+	/** TWS_CODE ：工作站编码<br/><br/>柜员工作站编码 */
+	public static final String TWS_CODE = "tws_code" ; 
+	/** REMARK_INFO ：备注信息<br/><br/>记录操作过程中的备注信息，比如存储操作前后某些字典的变化对照 */
+	public static final String REMARK_INFO = "remark_info" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier） */
@@ -254,6 +276,6 @@ public class LogTxTrace implements Serializable {
     }
 	
 	public String toString(){
-		return ToStringBuilder.reflectionToString(this) ; 
+		return StringUtil.toString(this) ; 
 	}
 }

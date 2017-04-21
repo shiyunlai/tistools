@@ -219,7 +219,7 @@
 			</model_property>
 			<model_property>
 				<name>prjService</name>
-				<value>tools-service-${category}</value>
+				<value>tools-service-jnl</value>
 			</model_property>
 		</model_properties>
 		<table_properties>

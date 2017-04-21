@@ -38,6 +38,7 @@
 
 		<module>tools-facade-sys</module>
 		<module>tools-service-abf</module>
+		<module>tools-facade-log</module>
 	</modules>
 	<properties>
 		<!-- Common libs -->

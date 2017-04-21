@@ -8,8 +8,7 @@
   	<insert id="insert" parameterType="org.tis.tools.model.po.ac.AcOperatorShortcut">
 	    INSERT INTO AC_OPERATOR_SHORTCUT 
 	    (
-	    	 guid
-	    	,guid_operator
+	    	 guid_operator
 	    	,guid_func
 	    	,guid_funcgroup
 	    	,guid_app
@@ -19,7 +18,6 @@
 	    )
 	    VALUES 
 	    (
-			#{guid,jdbcType=VARCHAR},
 			#{guidOperator,jdbcType=VARCHAR},
 			#{guidFunc,jdbcType=VARCHAR},
 			#{guidFuncgroup,jdbcType=VARCHAR},
@@ -33,9 +31,6 @@
  	<update id="update" parameterType="org.tis.tools.model.po.ac.AcOperatorShortcut">
     	UPDATE AC_OPERATOR_SHORTCUT 
 	    <set>
-		<if test="guid != null" >
-			guid = #{guid,jdbcType=VARCHAR},
-		</if>
 		<if test="guid_operator != null" >
 			guid_operator = #{guidOperator,jdbcType=VARCHAR},
 		</if>
@@ -64,7 +59,6 @@
  	<update id="updateForce" parameterType="org.tis.tools.model.po.ac.AcOperatorShortcut">
     	UPDATE AC_OPERATOR_SHORTCUT 
 	    <set>
-		guid = #{guid,jdbcType=VARCHAR},
 		guid_operator = #{guidOperator,jdbcType=VARCHAR},
 		guid_func = #{guidFunc,jdbcType=VARCHAR},
 		guid_funcgroup = #{guidFuncgroup,jdbcType=VARCHAR},
@@ -87,9 +81,6 @@
 	 <update id="updateByCondition" parameterType="map">
     	UPDATE AC_OPERATOR_SHORTCUT 
 	   <set>
-		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
-      	</if>
 		<if test="domain.guid_operator != null" >
         	guid_operator = #{domain.guidOperator,jdbcType=VARCHAR}
       	</if>
@@ -134,8 +125,7 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid
-		,guid_operator
+		 guid_operator
 		,guid_func
 		,guid_funcgroup
 		,guid_app

@@ -16,11 +16,11 @@
 	    )
 	    VALUES 
 	    (
-			#{guid,jdbcType=varchar},
-			#{guid_hosttrans,jdbcType=varchar},
-			#{msg_type,jdbcType=char},
-			#{exec_time,jdbcType=varchar},
-			#{msg_info,jdbcType=text}
+			#{guid,jdbcType=VARCHAR},
+			#{guidHosttrans,jdbcType=VARCHAR},
+			#{msgType,jdbcType=CHAR},
+			#{execTime,jdbcType=VARCHAR},
+			#{msgInfo,jdbcType=TEXT}
   		)
  	</insert>
  	
@@ -28,19 +28,19 @@
     	UPDATE JNL_HOSTTRANS_MSG 
 	    <set>
 		<if test="guid != null" >
-			guid = #{guid,jdbcType=varchar},
+			guid = #{guid,jdbcType=VARCHAR},
 		</if>
 		<if test="guid_hosttrans != null" >
-			guid_hosttrans = #{guid_hosttrans,jdbcType=varchar},
+			guid_hosttrans = #{guidHosttrans,jdbcType=VARCHAR},
 		</if>
 		<if test="msg_type != null" >
-			msg_type = #{msg_type,jdbcType=char},
+			msg_type = #{msgType,jdbcType=CHAR},
 		</if>
 		<if test="exec_time != null" >
-			exec_time = #{exec_time,jdbcType=varchar},
+			exec_time = #{execTime,jdbcType=VARCHAR},
 		</if>
 		<if test="msg_info != null" >
-			msg_info = #{msg_info,jdbcType=text}
+			msg_info = #{msgInfo,jdbcType=TEXT}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -49,11 +49,11 @@
  	<update id="updateForce" parameterType="org.tis.tools.model.po.jnl.JnlHosttransMsg">
     	UPDATE JNL_HOSTTRANS_MSG 
 	    <set>
-		guid = #{guid,jdbcType=varchar},
-		guid_hosttrans = #{guid_hosttrans,jdbcType=varchar},
-		msg_type = #{msg_type,jdbcType=char},
-		exec_time = #{exec_time,jdbcType=varchar},
-		msg_info = #{msg_info,jdbcType=text}
+		guid = #{guid,jdbcType=VARCHAR},
+		guid_hosttrans = #{guidHosttrans,jdbcType=VARCHAR},
+		msg_type = #{msgType,jdbcType=CHAR},
+		exec_time = #{execTime,jdbcType=VARCHAR},
+		msg_info = #{msgInfo,jdbcType=TEXT}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -70,19 +70,19 @@
     	UPDATE JNL_HOSTTRANS_MSG 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=varchar}
+        	guid = #{domain.guid,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.guid_hosttrans != null" >
-        	guid_hosttrans = #{domain.guid_hosttrans,jdbcType=varchar}
+        	guid_hosttrans = #{domain.guidHosttrans,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.msg_type != null" >
-        	msg_type = #{domain.msg_type,jdbcType=char}
+        	msg_type = #{domain.msgType,jdbcType=CHAR}
       	</if>
 		<if test="domain.exec_time != null" >
-        	exec_time = #{domain.exec_time,jdbcType=varchar}
+        	exec_time = #{domain.execTime,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.msg_info != null" >
-        	msg_info = #{domain.msg_info,jdbcType=text}
+        	msg_info = #{domain.msgInfo,jdbcType=TEXT}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>

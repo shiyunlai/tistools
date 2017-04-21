@@ -10,13 +10,13 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.tis.tools.common.utils.StringUtil;
 
 /**
  * 
  * <pre>
  * 客户接触日志
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNLoracle.erm
+ * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-mysql.erm
  * 业务域：log
  * 模型：LOG_CUSTOMER_CONTACT 客户接触日志
  *
@@ -33,6 +33,26 @@ public class LogCustomerContact implements Serializable {
 
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
+	
+	/* LOG_CUSTOMER_CONTACT table's columns definition */
+	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier） */
+	public static final String GUID = "guid" ; 
+	/** CONTACT_TIME ：接触时间<br/><br/>yyyyMMddHHmmssSSS */
+	public static final String CONTACT_TIME = "contact_time" ; 
+	/** CHN_CODE ：渠道代码<br/><br/>记录接触系统对应的渠道代码 */
+	public static final String CHN_CODE = "chn_code" ; 
+	/** TELLER_NO ：柜员代码<br/><br/>本次接触活动的柜员 */
+	public static final String TELLER_NO = "teller_no" ; 
+	/** INSTNO ：网点代码<br/><br/>本次接触的网点代码 */
+	public static final String INSTNO = "instno" ; 
+	/** CONTACT_MODE ：接触方式<br/><br/>接触行为类型，见业务字典： DICT_CONTACT_MODE passive － 被动接触 active - 主动接触 */
+	public static final String CONTACT_MODE = "contact_mode" ; 
+	/** CUST_NO ：客户编号<br/><br/>系统中的客户编号 */
+	public static final String CUST_NO = "cust_no" ; 
+	/** CUST_NAME ：客户名称<br/><br/> */
+	public static final String CUST_NAME = "cust_name" ; 
+	/** BIZ_TYPE ：业务类型<br/><br/>对银行业务的类型划分 见业务字典： DICT_BIZ_TYPE */
+	public static final String BIZ_TYPE = "biz_type" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier） */
@@ -235,6 +255,6 @@ public class LogCustomerContact implements Serializable {
     }
 	
 	public String toString(){
-		return ToStringBuilder.reflectionToString(this) ; 
+		return StringUtil.toString(this) ; 
 	}
 }
