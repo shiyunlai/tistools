@@ -23,7 +23,7 @@
 		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
 	<!-- 为来测试：在Spring启动时，调用测试类 -->
-    <bean class="org.tools.design.provider.service.OMServiceTest" init-method="start" >
+    <bean class="org.tools.design.provider.service.OMServiceTest" init-method="callOMRService" >
     	<property name="orgRService" ref="orgRService"></property>
     </bean>
 

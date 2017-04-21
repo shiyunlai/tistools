@@ -29,7 +29,11 @@ public class OMServiceTest {
 		this.orgRService = orgRService;
 	}
 
-	public void start() throws Exception {
+	/**
+	 * 模拟Consumer调用 OM业务域提供的服务
+	 * @throws Exception
+	 */
+	public void callOMRService() throws Exception {
 
 		//新增机构
 		String newOrgCode = testGenOrgCode() ;
@@ -38,6 +42,16 @@ public class OMServiceTest {
 		//拷贝机构（浅）
 		String copyNewOrgCode = testGenOrgCode() ;
 		testCopyOrg(newOrgCode,copyNewOrgCode)  ;
+		
+		//在机构下新增岗位
+		
+		//在机构下新增工作组
+		
+		//在机构下新增员工
+		
+		//指定机构的角色
+		
+		//深度复制
 	}
 
 	private String testGenOrgCode() {
