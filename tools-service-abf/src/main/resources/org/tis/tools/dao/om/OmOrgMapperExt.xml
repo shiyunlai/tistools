@@ -36,7 +36,7 @@
 		,last_update as lastUpdate
 		,updator as updator
 		,sort_no as sortNo
-		,isleaf as isLeaf
+		,isleaf as isleaf
 		,sub_count as subCount
 		,remark as remark
 	</sql>

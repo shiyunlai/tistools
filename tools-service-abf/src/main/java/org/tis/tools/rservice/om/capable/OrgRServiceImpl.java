@@ -316,7 +316,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	private Set<OmGroup> copyFromGroup(String copyFromOrgGuid, String newOrgGuid, boolean copyGroupRole) {
 
 		WhereCondition wc = new WhereCondition();
-		wc.andEquals(OmGroup.GUID_ORG, copyFromOrgGuid);
+		wc.andEquals(OmGroup.COLUMN_GUID_ORG, copyFromOrgGuid);
 		List<OmGroup> groups = omGroupService.query(wc);
 
 		Set<OmGroup> sets = new HashSet<OmGroup>();
@@ -361,7 +361,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 
 		// 根据隶属机构查处岗位记录
 		WhereCondition wc = new WhereCondition() ; 
-		wc.andEquals(OmPosition.GUID_ORG, copyFromOrgGuid) ;
+		wc.andEquals(OmPosition.COLUMN_GUID_ORG, copyFromOrgGuid) ;
 		List<OmPosition> positions = omPositionService.query(wc)  ;
 		
 		Set<OmPosition> copied = new HashSet<OmPosition>() ; 

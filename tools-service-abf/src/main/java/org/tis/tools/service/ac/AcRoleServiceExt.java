@@ -39,8 +39,8 @@ public class AcRoleServiceExt {
 	public Set<AcPartyRole> copyPartyRole(String partyType, String copyFromGuidParty, String toGuidParty){
 		
 		WhereCondition wc = new WhereCondition() ;
-		wc.andEquals(AcPartyRole.PARTY_TYPE, partyType) ; 
-		wc.andEquals(AcPartyRole.GUID_PARTY, copyFromGuidParty) ; 
+		wc.andEquals(AcPartyRole.COLUMN_PARTY_TYPE, partyType) ; 
+		wc.andEquals(AcPartyRole.COLUMN_GUID_PARTY, copyFromGuidParty) ; 
 		List<AcPartyRole> lists = acPartyRoleService.query(wc) ; 
 		
 		Set<AcPartyRole> sets = new HashSet<AcPartyRole>() ; 
