@@ -66,6 +66,10 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.tis</groupId>
+			<artifactId>tools-common</artifactId>
+		</dependency>
 	</dependencies>
 	<description>开发工具（maven插件）</description>
 	
