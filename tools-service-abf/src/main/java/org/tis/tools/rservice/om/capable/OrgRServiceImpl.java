@@ -275,8 +275,9 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 * @param copyGroupRole
 	 * @return
 	 */
-	private OmOrgDetail doCopyOrgDeep(String copyFromOrgCode, String newOrgCode, boolean copyOrgRole, boolean copyPosition,
-			boolean copyPositionRole, boolean copyGroup, boolean copyGroupRole) {
+	private OmOrgDetail doCopyOrgDeep(final String copyFromOrgCode, final String newOrgCode, final boolean copyOrgRole,
+			final boolean copyPosition, final boolean copyPositionRole, final boolean copyGroup,
+			final boolean copyGroupRole) {
 		
 		// 取出参照机构
 		OmOrg copyFromOrg = omOrgServiceExt.loadByOrgCode(copyFromOrgCode); 
