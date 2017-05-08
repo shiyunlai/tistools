@@ -413,29 +413,8 @@ public interface IOrgRService {
 	List<OmOrg> queryChildsByCondition(String orgCode, OmOrg orgCondition);
 
 	/**
-	 * <pre>
-	 * 查询机构（orgCode）下所有人员信息（只返回直属人员，不包括子机构的人员）
-	 * </pre>
-	 * 
-	 * @param orgCode
-	 *            机构代码
-	 * @param empCondition
-	 *            人员过滤条件
-	 * @return 从属于该机构的人员们
+	 * 查询所有根节点机构
+	 * @return
 	 */
-	List<OmEmployee> queryEmployee(String orgCode, OmEmployee empCondition) ;
-	
-	/**
-	 * <pre>
-	 * 查询机构（orgCode）的岗位信息（只返回直属岗位，不包括子机构的岗位）
-	 * </pre>
-	 * 
-	 * @param orgCode
-	 *            机构代码
-	 * @param positionCondition
-	 *            岗位过滤条件
-	 * @return 从属于该机构的岗位记录
-	 */
-	List<OmPosition> queryPosition(String orgCode, OmPosition positionCondition) ;
-	
+	List<OmOrg> queryAllRoot() ;
 }

@@ -42,7 +42,7 @@ public class OmOrgDetail extends OmOrg {
 	/** The set of 工作组. */
 	private Set<OmGroup> omGroupSet;
 
-	/** The set of 机构信息表. */
+	/** The set of 子机构们. */
 	private Set<OmOrg> omOrgSet;
 
 	/** The set of 岗位. */

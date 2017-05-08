@@ -591,6 +591,11 @@
 			<artifactId>tools-facade-ac</artifactId>
 			<version>0.0.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.tis</groupId>
+			<artifactId>tools-facade-om</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 	</dependencies>
 
 	<properties>

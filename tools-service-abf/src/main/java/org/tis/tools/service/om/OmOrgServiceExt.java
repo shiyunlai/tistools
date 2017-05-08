@@ -4,6 +4,9 @@
  */
 package org.tis.tools.service.om;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tis.tools.dao.om.OmOrgMapper;
@@ -62,5 +65,32 @@ public class OmOrgServiceExt {
 	public boolean isEmptyOrg(String guid) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	
+	/**
+	 * 查询第一层下属机构
+	 * @param orgCode 机构代码
+	 * @return 第一层下属机构列表 
+	 */
+	public List<OmOrg> queryFirstChilds( String orgCode ) {
+		List<OmOrg> orgs = omOrgMapperExt.queryFirstChilds(orgCode) ;  
+		if( null == orgs ){
+			orgs = new ArrayList<OmOrg>() ; 
+		}
+		return orgs ; 
+	}
+	
+	/**
+	 * 查询所有根机构
+	 * @return
+	 */
+	public List<OmOrg> queryAllRoot()  {
+		
+		List<OmOrg> orgs = omOrgMapperExt.queryAllRoot() ; 
+		if( null == orgs ){
+			orgs = new ArrayList<OmOrg>() ; 
+		}
+		return orgs ; 
 	}
 }

@@ -3,6 +3,8 @@
  */
 package org.tis.tools.rservice.om.capable;
 
+import java.util.List;
+
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.vo.om.OmEmployeeDetail;
@@ -331,4 +333,17 @@ public interface IEmployeeRService {
 	 * @return 员工详情信息
 	 */
 	OmEmployeeDetail queryEmployeeDetail(String empCode);
+	
+	/**
+	 * <pre>
+	 * 查询机构（orgCode）下所有人员信息（只返回直属人员，不包括子机构的人员）
+	 * </pre>
+	 * 
+	 * @param orgCode
+	 *            机构代码
+	 * @param empCondition
+	 *            人员过滤条件
+	 * @return 从属于该机构的人员们
+	 */
+	List<OmEmployee> queryEmployeeByOrg(String orgCode, OmEmployee empCondition) ;
 }
