@@ -9,10 +9,10 @@
 		<bottom_margin>30</bottom_margin>
 		<right_margin>30</right_margin>
 	</page_setting>
-	<category_index>1</category_index>
-	<zoom>1.0</zoom>
-	<x>-288</x>
-	<y>-600</y>
+	<category_index>2</category_index>
+	<zoom>0.8</zoom>
+	<x>685</x>
+	<y>87</y>
 	<default_color>
 		<r>255</r>
 		<g>0</g>
@@ -247,7 +247,7 @@
 			</connections>
 			<display>true</display>
 			<creation_date>2017-03-28 08:50:33</creation_date>
-			<updated_date>2017-05-05 11:44:50</updated_date>
+			<updated_date>2017-05-07 10:58:30</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -6791,25 +6791,26 @@
 					<referenced_complex_unique_key>null</referenced_complex_unique_key>
 				</relation>
 			</connections>
-			<physical_name>OM_APP_GROUP</physical_name>
-			<logical_name>应用工作组列表</logical_name>
-			<description>应用包含的工作组列表，限定了工作组能选择哪些岗位</description>
+			<physical_name>OM_GROUP_APP</physical_name>
+			<logical_name>工作组应用列表</logical_name>
+			<description>工作组所拥有（允许操作）的应用列表</description>
 			<constraint></constraint>
 			<primary_key_name></primary_key_name>
 			<option></option>
 			<columns>
 				<normal_column>
-					<word_id>102</word_id>
 					<id>22</id>
+					<referenced_column>260</referenced_column>
+					<relation>14</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
-					<logical_name></logical_name>
-					<physical_name></physical_name>
+					<logical_name>工作组GUID</logical_name>
+					<physical_name>GUID_GROUP</physical_name>
 					<type>varchar(n)</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>
-					<foreign_key>false</foreign_key>
+					<foreign_key>true</foreign_key>
 					<not_null>true</not_null>
 					<primary_key>false</primary_key>
 					<unique_key>false</unique_key>
@@ -6832,18 +6833,17 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
+					<word_id>102</word_id>
 					<id>23</id>
-					<referenced_column>260</referenced_column>
-					<relation>14</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
-					<logical_name>工作组GUID</logical_name>
-					<physical_name>GUID_GROUP</physical_name>
+					<logical_name></logical_name>
+					<physical_name></physical_name>
 					<type>varchar(n)</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>
-					<foreign_key>true</foreign_key>
+					<foreign_key>false</foreign_key>
 					<not_null>true</not_null>
 					<primary_key>false</primary_key>
 					<unique_key>false</unique_key>
@@ -7653,25 +7653,26 @@
 					<referenced_complex_unique_key>null</referenced_complex_unique_key>
 				</relation>
 			</connections>
-			<physical_name>OM_APP_POSITION</physical_name>
-			<logical_name>应用岗位列表</logical_name>
-			<description>应用包含的岗位列表信息</description>
+			<physical_name>OM_POSITION_APP</physical_name>
+			<logical_name>岗位应用列表</logical_name>
+			<description>岗位所拥有（允许操作）的应用列表信息</description>
 			<constraint></constraint>
 			<primary_key_name></primary_key_name>
 			<option></option>
 			<columns>
 				<normal_column>
-					<word_id>103</word_id>
 					<id>39</id>
+					<referenced_column>243</referenced_column>
+					<relation>21</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
-					<logical_name></logical_name>
-					<physical_name></physical_name>
+					<logical_name>岗位GUID</logical_name>
+					<physical_name>GUID_POSITION</physical_name>
 					<type>varchar(n)</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>
-					<foreign_key>false</foreign_key>
+					<foreign_key>true</foreign_key>
 					<not_null>true</not_null>
 					<primary_key>false</primary_key>
 					<unique_key>false</unique_key>
@@ -7694,18 +7695,17 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
+					<word_id>103</word_id>
 					<id>40</id>
-					<referenced_column>243</referenced_column>
-					<relation>21</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
-					<logical_name>岗位GUID</logical_name>
-					<physical_name>GUID_POSITION</physical_name>
+					<logical_name></logical_name>
+					<physical_name></physical_name>
 					<type>varchar(n)</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>
-					<foreign_key>true</foreign_key>
+					<foreign_key>false</foreign_key>
 					<not_null>true</not_null>
 					<primary_key>false</primary_key>
 					<unique_key>false</unique_key>
