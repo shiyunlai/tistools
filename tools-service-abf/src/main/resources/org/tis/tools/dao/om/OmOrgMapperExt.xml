@@ -7,7 +7,7 @@
   
   	
 	<select id="loadByOrgCode" parameterType="String" resultType="org.tis.tools.model.po.om.OmOrg">
-		select <include refid="Base_Column_List"/> from om_org where org_code = #{orgCode}
+		select <include refid="Base_Column_List"/> from OM_ORG where org_code = #{orgCode}
 	</select>
 	
 	<sql id="Base_Column_List" >
