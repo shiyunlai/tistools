@@ -564,8 +564,8 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 */
 	@Override
 	public OmOrg queryOrg(String orgCode) {
-		// TODO Auto-generated method stub
-		return null;
+		OmOrg org = omOrgServiceExt.loadByOrgCode(orgCode) ; 
+		return org;
 	}
 
 	/* (non-Javadoc)
@@ -573,8 +573,8 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 */
 	@Override
 	public List<OmOrg> queryOrgsByCondition(WhereCondition wc) {
-		// TODO Auto-generated method stub
-		return null;
+		List<OmOrg> orgs = omOrgService.query(wc) ; 
+		return orgs;
 	}
 
 	/* (non-Javadoc)
@@ -582,8 +582,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 */
 	@Override
 	public List<OmOrg> queryChilds(String orgCode) {
-		// TODO Auto-generated method stub
-		return null;
+		return omOrgServiceExt.queryFirstChilds(orgCode) ;
 	}
 
 	/* (non-Javadoc)
@@ -604,22 +603,10 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.tis.tools.rservice.om.capable.IOrgRService#queryEmployee(java.lang.String, org.tis.tools.model.po.om.OmEmployee)
-	 */
 	@Override
-	public List<OmEmployee> queryEmployee(String orgCode, OmEmployee empCondition) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.tis.tools.rservice.om.capable.IOrgRService#queryPosition(java.lang.String, org.tis.tools.model.po.om.OmPosition)
-	 */
-	@Override
-	public List<OmPosition> queryPosition(String orgCode, OmPosition positionCondition) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<OmOrg> queryAllRoot() {
+		
+		return omOrgServiceExt.queryAllRoot() ;
 	}
 
 }

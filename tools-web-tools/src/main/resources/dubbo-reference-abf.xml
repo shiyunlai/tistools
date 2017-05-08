@@ -13,34 +13,12 @@
 		如：只有在 OrgController.java 中作为 @Autowired，该服务才会想注册中心注册，也才能在注册中心看见该服务。
 	-->
 	
-	<!-- 声明需要暴露的服务接口 
+	<!-- 声明需要暴露的服务接口 -->
 	<dubbo:reference 
-		id="jnlPrefillRService"    
-		group="jnl" 
+		id="orgRService"    
+		group="om" 
 		version="1.0" 
-		interface="org.tis.tools.rservice.jnl.IJnlPrefillRService"     
+		interface="org.tis.tools.rservice.om.capable.IOrgRService"     
 		check="false"/>
-	
-	<dubbo:reference 
-		id="jnlPromotingRService"    
-		group="jnl" 
-		version="1.0" 
-		interface="org.tis.tools.rservice.jnl.IJnlPromotingRService"     
-		check="false"/>
-	
-	<dubbo:reference 
-		id="jnlTellerTraceRService"    
-		group="jnl" 
-		version="1.0" 
-		interface="org.tis.tools.rservice.jnl.IJnlTellerTraceRService"     
-		check="false"/>
-	
-	<dubbo:reference 
-		id="jnlRRService"    
-		group="jnl" 
-		version="1.0" 
-		interface="org.tis.tools.rservice.jnl.IJnlRRService"     
-		check="false"/>
-	-->
 	
 </beans>

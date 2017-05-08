@@ -10,6 +10,17 @@
 		select <include refid="Base_Column_List"/> from OM_ORG where org_code = #{orgCode}
 	</select>
 	
+	<select id="queryFirstChilds" parameterType="String" resultType="org.tis.tools.model.po.om.OmOrg">
+		select <include refid="Base_Column_List"/> from OM_ORG 
+		where guid_parents = (select guid from OM_ORG where org_code = #{orgCode})
+	</select>
+	
+	<select id="queryAllRoot" parameterType="String" resultType="org.tis.tools.model.po.om.OmOrg">
+		select <include refid="Base_Column_List"/> from OM_ORG a 
+		where exists (select guid from OM_ORG where guid_parents = a.org_seq ) 
+		and guid_parents is null ; 
+	</select>
+	
 	<sql id="Base_Column_List" >
 		 guid as guid 
 		,org_code as orgCode
