@@ -244,13 +244,19 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	
 		OmOrgDetail newOrgDetail = null;
 		
+		final String copyFromOrgCode1 = copyFromOrgCode ; 
+		final String newOrgCode1= newOrgCode ;
+		final boolean copyOrgRole1 = copyOrgRole ; 
+		final boolean copyPosition1 = copyPosition ; 
+		final boolean copyPositionRole1 = copyPositionRole ; 
+		final boolean copyGroup1 = copyGroup ; 
+		final boolean copyGroupRole1 = copyGroupRole ; 
 		try {
 			// 确保在一个事物中完成拷贝处理
 			newOrgDetail = transactionTemplate.execute(new TransactionCallback<OmOrgDetail>() {
 				@Override
 				public OmOrgDetail doInTransaction(TransactionStatus arg0) {
-					return doCopyOrgDeep(newOrgCode, newOrgCode, copyGroupRole, copyGroupRole, copyGroupRole,
-							copyGroupRole, copyGroupRole);
+					return doCopyOrgDeep(copyFromOrgCode1, newOrgCode1, copyOrgRole1, copyPosition1, copyPositionRole1, copyGroup1, copyGroupRole1) ;
 				}
 			});
 
@@ -275,9 +281,8 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 * @param copyGroupRole
 	 * @return
 	 */
-	private OmOrgDetail doCopyOrgDeep(final String copyFromOrgCode, final String newOrgCode, final boolean copyOrgRole,
-			final boolean copyPosition, final boolean copyPositionRole, final boolean copyGroup,
-			final boolean copyGroupRole) {
+	private OmOrgDetail doCopyOrgDeep(String copyFromOrgCode, String newOrgCode, boolean copyOrgRole, boolean copyPosition,
+			boolean copyPositionRole, boolean copyGroup, boolean copyGroupRole) {
 		
 		// 取出参照机构
 		OmOrg copyFromOrg = omOrgServiceExt.loadByOrgCode(copyFromOrgCode); 
@@ -504,14 +509,15 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 					BasicUtil.wrap(orgCode, delOrg.getOrgStatus()), "不能删除非空机构{0}！");
 		}
 		
+		final String guid = delOrg.getGuid(); 
 		try {
 			transactionTemplate.execute(new TransactionCallback<String>() {
 				@Override
 				public String doInTransaction(TransactionStatus arg0) {
 					//删除机构
-					omOrgService.delete(delOrg.getGuid());
+					omOrgService.delete(guid);
 					//删除机构对应权限集映射
-					acRoleServiceExt.deletePartyRole(ACConstants.PARTY_TYPE_ORGANIZATION, delOrg.getGuid());
+					acRoleServiceExt.deletePartyRole(ACConstants.PARTY_TYPE_ORGANIZATION, guid);
 					return "";
 				}
 			});
@@ -558,8 +564,8 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 */
 	@Override
 	public OmOrg queryOrg(String orgCode) {
-		// TODO Auto-generated method stub
-		return null;
+		OmOrg org = omOrgServiceExt.loadByOrgCode(orgCode) ; 
+		return org;
 	}
 
 	/* (non-Javadoc)
@@ -567,8 +573,8 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 */
 	@Override
 	public List<OmOrg> queryOrgsByCondition(WhereCondition wc) {
-		// TODO Auto-generated method stub
-		return null;
+		List<OmOrg> orgs = omOrgService.query(wc) ; 
+		return orgs;
 	}
 
 	/* (non-Javadoc)
@@ -576,8 +582,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 */
 	@Override
 	public List<OmOrg> queryChilds(String orgCode) {
-		// TODO Auto-generated method stub
-		return null;
+		return omOrgServiceExt.queryFirstChilds(orgCode) ;
 	}
 
 	/* (non-Javadoc)
@@ -598,22 +603,10 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.tis.tools.rservice.om.capable.IOrgRService#queryEmployee(java.lang.String, org.tis.tools.model.po.om.OmEmployee)
-	 */
 	@Override
-	public List<OmEmployee> queryEmployee(String orgCode, OmEmployee empCondition) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.tis.tools.rservice.om.capable.IOrgRService#queryPosition(java.lang.String, org.tis.tools.model.po.om.OmPosition)
-	 */
-	@Override
-	public List<OmPosition> queryPosition(String orgCode, OmPosition positionCondition) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<OmOrg> queryAllRoot() {
+		
+		return omOrgServiceExt.queryAllRoot() ;
 	}
 
 }

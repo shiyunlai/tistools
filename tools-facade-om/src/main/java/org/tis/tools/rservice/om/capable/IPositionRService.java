@@ -284,6 +284,19 @@ public interface IPositionRService {
 	OmPosition queryPosition(String positionCode);
 	
 	/**
+	 * <pre>
+	 * 查询机构（orgCode）的岗位信息（只返回直属岗位，不包括子机构的岗位）
+	 * </pre>
+	 * 
+	 * @param orgCode
+	 *            机构代码
+	 * @param positionCondition
+	 *            岗位过滤条件
+	 * @return 从属于该机构的岗位记录
+	 */
+	List<OmPosition> queryPositionByOrg(String orgCode, OmPosition positionCondition) ;
+	
+	/**
 	 * 查询（一级）子岗位 
 	 * @param positionCode
 	 * @return
@@ -317,4 +330,5 @@ public interface IPositionRService {
 	 * @return
 	 */
 	List<AcRole> queryRole(String positionCode) ;
+	
 }
