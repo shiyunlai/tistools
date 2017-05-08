@@ -23,7 +23,7 @@ public class I18NException implements Serializable {
 	/**
 	 * 默认异常返回码
 	 */
-	public final static String DEFAULT_ERROR_CODE = "00000000";
+	public final static String DEFAULT_ERROR_CODE = "99-9999";
 
 	private String code = null;
 	private String message = null;
