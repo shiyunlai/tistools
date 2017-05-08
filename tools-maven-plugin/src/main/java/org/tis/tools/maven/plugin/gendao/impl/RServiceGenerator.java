@@ -43,8 +43,8 @@ public class RServiceGenerator extends ASourceCodeGenerator<BizModel> {
 			map.put("defineFile", bm.getModelDefFile());
 			
 			//源码package
-			//规范： 组织.产品.功能划分(rservice).类型限制(api).业务域id
-			String javaPackage    = CommonUtil.normPackageName(bm.getMainpackage() + ".rservice" + "." + bm.getId()); 
+			//规范： 组织.产品.技术分层(rservice).业务域id.业务域分层
+			String javaPackage    = CommonUtil.normPackageName(bm.getMainpackage() + ".rservice" + "." + bm.getId() + ".basic"); 
 			map.put("mainPackage", bm.getMainpackage()) ;
 			map.put("bizmodelId", CommonUtil.normPackageName(bm.getId())) ;//业务领域id
 			

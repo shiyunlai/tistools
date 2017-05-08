@@ -10,11 +10,13 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
+import org.tis.tools.common.utils.StringUtil;
+
 /**
  * 
  * <pre>
  * 主机交易流水
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/model.erm
+ * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-mysql.erm
  * 业务域：jnl
  * 模型：JNL_HOSTTRANS 主机交易流水
  *
@@ -31,11 +33,41 @@ public class JnlHosttrans implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "JNL_HOSTTRANS" ; 
+	/* JNL_HOSTTRANS table's columns definition */
+	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier） */
+	public static final String COLUMN_GUID = "guid" ; 
+	/** GUID_TRANS ：交易流水ID<br/><br/>关联交易流水记录 但不是所有主机交易都能关联到交易流水记录 有些自动发器的主机交易处理就不会有交易流水 */
+	public static final String COLUMN_GUID_TRANS = "guid_trans" ; 
+	/** TRANS_SNO ：交易流水号<br/><br/> */
+	public static final String COLUMN_TRANS_SNO = "trans_sno" ; 
+	/** HOST_CODE ：主机代码<br/><br/>主机系统的服务标识代码，唯一标识了某个主机系统 */
+	public static final String COLUMN_HOST_CODE = "host_code" ; 
+	/** HOSTTRANS_CODE ：主机交易代码<br/><br/> */
+	public static final String COLUMN_HOSTTRANS_CODE = "hosttrans_code" ; 
+	/** HOSTTRANS_NAME ：主机交易名称<br/><br/> */
+	public static final String COLUMN_HOSTTRANS_NAME = "hosttrans_name" ; 
+	/** START_TIME ：开始时间<br/><br/>存储到毫秒级别的时间 yyyyMMddHHmmssSSS */
+	public static final String COLUMN_START_TIME = "start_time" ; 
+	/** END_TIME ：结束时间<br/><br/>yyyyMMddHHmmssSSS */
+	public static final String COLUMN_END_TIME = "end_time" ; 
+	/** HOST_SNO_REQ ：请求主机流水号<br/><br/>唯一标识某次主机请求过程的流水号，由我方生成 */
+	public static final String COLUMN_HOST_SNO_REQ = "host_sno_req" ; 
+	/** HOST_SNO_RSP ：主机响应流水号<br/><br/>主机系统唯一标识本次请求的流水号，由主机方生成，我方在收到后更新 */
+	public static final String COLUMN_HOST_SNO_RSP = "host_sno_rsp" ; 
+	/** HSOTTRANS_STATUS ：主机交易状态<br/><br/>见业务字典：DICT_HSOTTRANS_STATUS */
+	public static final String COLUMN_HSOTTRANS_STATUS = "hsottrans_status" ; 
+	/** HOST_ERR_CODE ：主机错误码<br/><br/>主机系统返回的错误码 */
+	public static final String COLUMN_HOST_ERR_CODE = "host_err_code" ; 
+	/** HOST_ERR_MSG ：主机错误信息<br/><br/>主机系统返回的错误信息，超长的会被自动截取，完整的内容则只能在主机响应报文中获得。 */
+	public static final String COLUMN_HOST_ERR_MSG = "host_err_msg" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier） */
 	private String guid ;
 	
-	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：关联交易流水记录 但不是所有主机交易都能关联到交易流水记录 有些自动发器的主机交易处理就不会有交易流水 */
+	/** 字段类型：varchar<br/>字段名：交易流水ID<br/>描述：关联交易流水记录 但不是所有主机交易都能关联到交易流水记录 有些自动发器的主机交易处理就不会有交易流水 */
 	private String guidTrans ;
 	
 	/** 字段类型：varchar<br/>字段名：交易流水号<br/>描述： */
@@ -92,19 +124,19 @@ public class JnlHosttrans implements Serializable {
     }
 	
 	/**
-	 * Set the 数据主键.
+	 * Set the 交易流水ID.
 	 * 
 	 * @param guidTrans
-	 *            数据主键
+	 *            交易流水ID
 	 */
 	public void setGuidTrans(String guidTrans) {
  		this.guidTrans = guidTrans == null ? null : guidTrans.trim() ;
     }
     
     /**
-	 * Get the 数据主键.
+	 * Get the 交易流水ID.
 	 * 
-	 * @return 数据主键
+	 * @return 交易流水ID
 	 */
 	public String getGuidTrans(){
 		return this.guidTrans ;
@@ -318,4 +350,8 @@ public class JnlHosttrans implements Serializable {
 	public String getHostErrMsg(){
 		return this.hostErrMsg ;
     }
+	
+	public String toString(){
+		return StringUtil.toString(this) ; 
+	}
 }

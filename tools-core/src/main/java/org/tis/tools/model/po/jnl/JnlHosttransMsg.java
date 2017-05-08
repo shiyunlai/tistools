@@ -10,11 +10,13 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
+import org.tis.tools.common.utils.StringUtil;
+
 /**
  * 
  * <pre>
  * 主机交易报文
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/model.erm
+ * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-mysql.erm
  * 业务域：jnl
  * 模型：JNL_HOSTTRANS_MSG 主机交易报文
  *
@@ -30,11 +32,25 @@ public class JnlHosttransMsg implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "JNL_HOSTTRANS_MSG" ; 
+	/* JNL_HOSTTRANS_MSG table's columns definition */
+	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier） */
+	public static final String COLUMN_GUID = "guid" ; 
+	/** GUID_HOSTTRANS ：主机交易流水ID<br/><br/>关联主机交易流水记录 */
+	public static final String COLUMN_GUID_HOSTTRANS = "guid_hosttrans" ; 
+	/** MSG_TYPE ：报文类型<br/><br/>见业务字典：DICT_MSG_TYPE */
+	public static final String COLUMN_MSG_TYPE = "msg_type" ; 
+	/** EXEC_TIME ：执行时间<br/><br/>存储到毫秒级别的时间 yyyyMMddHHmmssSSS */
+	public static final String COLUMN_EXEC_TIME = "exec_time" ; 
+	/** MSG_INFO ：报文信息<br/><br/>报文内容 */
+	public static final String COLUMN_MSG_INFO = "msg_info" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier） */
 	private String guid ;
 	
-	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：关联主机交易流水记录 */
+	/** 字段类型：varchar<br/>字段名：主机交易流水ID<br/>描述：关联主机交易流水记录 */
 	private String guidHosttrans ;
 	
 	/** 字段类型：char<br/>字段名：报文类型<br/>描述：见业务字典：DICT_MSG_TYPE */
@@ -67,19 +83,19 @@ public class JnlHosttransMsg implements Serializable {
     }
 	
 	/**
-	 * Set the 数据主键.
+	 * Set the 主机交易流水ID.
 	 * 
 	 * @param guidHosttrans
-	 *            数据主键
+	 *            主机交易流水ID
 	 */
 	public void setGuidHosttrans(String guidHosttrans) {
  		this.guidHosttrans = guidHosttrans == null ? null : guidHosttrans.trim() ;
     }
     
     /**
-	 * Get the 数据主键.
+	 * Get the 主机交易流水ID.
 	 * 
-	 * @return 数据主键
+	 * @return 主机交易流水ID
 	 */
 	public String getGuidHosttrans(){
 		return this.guidHosttrans ;
@@ -141,4 +157,8 @@ public class JnlHosttransMsg implements Serializable {
 	public String getMsgInfo(){
 		return this.msgInfo ;
     }
+	
+	public String toString(){
+		return StringUtil.toString(this) ; 
+	}
 }

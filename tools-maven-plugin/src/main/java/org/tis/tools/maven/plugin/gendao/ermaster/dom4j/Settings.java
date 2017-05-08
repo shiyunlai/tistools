@@ -99,4 +99,11 @@ public class Settings {
 		
 		this.categories.add(c) ;
 	}
+
+	@Override
+	public String toString() {
+		return "Settings [dataBase=" + dataBase + ", capital=" + capital + ", packageName=" + packageName
+				+ ", srcFileEncoding=" + srcFileEncoding + ", categories=" + categories + ", modelProperties="
+				+ modelProperties + "]";
+	}
 }

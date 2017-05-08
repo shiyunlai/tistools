@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.ac.AcRoleMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.ac.AcRole">
+	    INSERT INTO AC_ROLE 
+	    (
+	    	 guid
+	    	,guid_app
+	    	,role_code
+	    	,role_name
+	    	,role_type
+	    	,role_desc
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=VARCHAR},
+			#{guidApp,jdbcType=VARCHAR},
+			#{roleCode,jdbcType=VARCHAR},
+			#{roleName,jdbcType=VARCHAR},
+			#{roleType,jdbcType=VARCHAR},
+			#{roleDesc,jdbcType=VARCHAR}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.ac.AcRole">
+    	UPDATE AC_ROLE 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_app != null" >
+			guid_app = #{guidApp,jdbcType=VARCHAR},
+		</if>
+		<if test="role_code != null" >
+			role_code = #{roleCode,jdbcType=VARCHAR},
+		</if>
+		<if test="role_name != null" >
+			role_name = #{roleName,jdbcType=VARCHAR},
+		</if>
+		<if test="role_type != null" >
+			role_type = #{roleType,jdbcType=VARCHAR},
+		</if>
+		<if test="role_desc != null" >
+			role_desc = #{roleDesc,jdbcType=VARCHAR}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.ac.AcRole">
+    	UPDATE AC_ROLE 
+	    <set>
+		guid = #{guid,jdbcType=VARCHAR},
+		guid_app = #{guidApp,jdbcType=VARCHAR},
+		role_code = #{roleCode,jdbcType=VARCHAR},
+		role_name = #{roleName,jdbcType=VARCHAR},
+		role_type = #{roleType,jdbcType=VARCHAR},
+		role_desc = #{roleDesc,jdbcType=VARCHAR}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from AC_ROLE where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from AC_ROLE <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE AC_ROLE 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_app != null" >
+        	guid_app = #{domain.guidApp,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.role_code != null" >
+        	role_code = #{domain.roleCode,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.role_name != null" >
+        	role_name = #{domain.roleName,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.role_type != null" >
+        	role_type = #{domain.roleType,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.role_desc != null" >
+        	role_desc = #{domain.roleDesc,jdbcType=VARCHAR}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.ac.AcRole">
+		select <include refid="Base_Column_List"/> from AC_ROLE where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.ac.AcRole" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from AC_ROLE <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from AC_ROLE <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid
+		,guid_app
+		,role_code
+		,role_name
+		,role_type
+		,role_desc
+	</sql>
+</mapper>

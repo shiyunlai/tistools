@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.om.OmOrgMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.om.OmOrg">
+	    INSERT INTO OM_ORG 
+	    (
+	    	 guid
+	    	,org_code
+	    	,org_name
+	    	,org_type
+	    	,org_degree
+	    	,org_status
+	    	,org_level
+	    	,guid_parents
+	    	,org_seq
+	    	,org_addr
+	    	,zipcode
+	    	,guid_position
+	    	,guid_emp_master
+	    	,guid_emp_manager
+	    	,link_man
+	    	,link_tel
+	    	,email
+	    	,web_url
+	    	,start_date
+	    	,end_date
+	    	,area
+	    	,create_time
+	    	,last_update
+	    	,updator
+	    	,sort_no
+	    	,isleaf
+	    	,sub_count
+	    	,remark
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=VARCHAR},
+			#{orgCode,jdbcType=VARCHAR},
+			#{orgName,jdbcType=VARCHAR},
+			#{orgType,jdbcType=VARCHAR},
+			#{orgDegree,jdbcType=VARCHAR},
+			#{orgStatus,jdbcType=VARCHAR},
+			#{orgLevel,jdbcType=DECIMAL},
+			#{guidParents,jdbcType=VARCHAR},
+			#{orgSeq,jdbcType=VARCHAR},
+			#{orgAddr,jdbcType=VARCHAR},
+			#{zipcode,jdbcType=VARCHAR},
+			#{guidPosition,jdbcType=VARCHAR},
+			#{guidEmpMaster,jdbcType=VARCHAR},
+			#{guidEmpManager,jdbcType=VARCHAR},
+			#{linkMan,jdbcType=VARCHAR},
+			#{linkTel,jdbcType=VARCHAR},
+			#{email,jdbcType=VARCHAR},
+			#{webUrl,jdbcType=VARCHAR},
+			#{startDate,jdbcType=DATE},
+			#{endDate,jdbcType=DATE},
+			#{area,jdbcType=VARCHAR},
+			#{createTime,jdbcType=TIMESTAMP},
+			#{lastUpdate,jdbcType=TIMESTAMP},
+			#{updator,jdbcType=VARCHAR},
+			#{sortNo,jdbcType=DECIMAL},
+			#{isleaf,jdbcType=CHAR},
+			#{subCount,jdbcType=DECIMAL},
+			#{remark,jdbcType=VARCHAR}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.om.OmOrg">
+    	UPDATE OM_ORG 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=VARCHAR},
+		</if>
+		<if test="org_code != null" >
+			org_code = #{orgCode,jdbcType=VARCHAR},
+		</if>
+		<if test="org_name != null" >
+			org_name = #{orgName,jdbcType=VARCHAR},
+		</if>
+		<if test="org_type != null" >
+			org_type = #{orgType,jdbcType=VARCHAR},
+		</if>
+		<if test="org_degree != null" >
+			org_degree = #{orgDegree,jdbcType=VARCHAR},
+		</if>
+		<if test="org_status != null" >
+			org_status = #{orgStatus,jdbcType=VARCHAR},
+		</if>
+		<if test="org_level != null" >
+			org_level = #{orgLevel,jdbcType=DECIMAL},
+		</if>
+		<if test="guid_parents != null" >
+			guid_parents = #{guidParents,jdbcType=VARCHAR},
+		</if>
+		<if test="org_seq != null" >
+			org_seq = #{orgSeq,jdbcType=VARCHAR},
+		</if>
+		<if test="org_addr != null" >
+			org_addr = #{orgAddr,jdbcType=VARCHAR},
+		</if>
+		<if test="zipcode != null" >
+			zipcode = #{zipcode,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_position != null" >
+			guid_position = #{guidPosition,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_emp_master != null" >
+			guid_emp_master = #{guidEmpMaster,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_emp_manager != null" >
+			guid_emp_manager = #{guidEmpManager,jdbcType=VARCHAR},
+		</if>
+		<if test="link_man != null" >
+			link_man = #{linkMan,jdbcType=VARCHAR},
+		</if>
+		<if test="link_tel != null" >
+			link_tel = #{linkTel,jdbcType=VARCHAR},
+		</if>
+		<if test="email != null" >
+			email = #{email,jdbcType=VARCHAR},
+		</if>
+		<if test="web_url != null" >
+			web_url = #{webUrl,jdbcType=VARCHAR},
+		</if>
+		<if test="start_date != null" >
+			start_date = #{startDate,jdbcType=DATE},
+		</if>
+		<if test="end_date != null" >
+			end_date = #{endDate,jdbcType=DATE},
+		</if>
+		<if test="area != null" >
+			area = #{area,jdbcType=VARCHAR},
+		</if>
+		<if test="create_time != null" >
+			create_time = #{createTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="last_update != null" >
+			last_update = #{lastUpdate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updator != null" >
+			updator = #{updator,jdbcType=VARCHAR},
+		</if>
+		<if test="sort_no != null" >
+			sort_no = #{sortNo,jdbcType=DECIMAL},
+		</if>
+		<if test="isleaf != null" >
+			isleaf = #{isleaf,jdbcType=CHAR},
+		</if>
+		<if test="sub_count != null" >
+			sub_count = #{subCount,jdbcType=DECIMAL},
+		</if>
+		<if test="remark != null" >
+			remark = #{remark,jdbcType=VARCHAR}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.om.OmOrg">
+    	UPDATE OM_ORG 
+	    <set>
+		guid = #{guid,jdbcType=VARCHAR},
+		org_code = #{orgCode,jdbcType=VARCHAR},
+		org_name = #{orgName,jdbcType=VARCHAR},
+		org_type = #{orgType,jdbcType=VARCHAR},
+		org_degree = #{orgDegree,jdbcType=VARCHAR},
+		org_status = #{orgStatus,jdbcType=VARCHAR},
+		org_level = #{orgLevel,jdbcType=DECIMAL},
+		guid_parents = #{guidParents,jdbcType=VARCHAR},
+		org_seq = #{orgSeq,jdbcType=VARCHAR},
+		org_addr = #{orgAddr,jdbcType=VARCHAR},
+		zipcode = #{zipcode,jdbcType=VARCHAR},
+		guid_position = #{guidPosition,jdbcType=VARCHAR},
+		guid_emp_master = #{guidEmpMaster,jdbcType=VARCHAR},
+		guid_emp_manager = #{guidEmpManager,jdbcType=VARCHAR},
+		link_man = #{linkMan,jdbcType=VARCHAR},
+		link_tel = #{linkTel,jdbcType=VARCHAR},
+		email = #{email,jdbcType=VARCHAR},
+		web_url = #{webUrl,jdbcType=VARCHAR},
+		start_date = #{startDate,jdbcType=DATE},
+		end_date = #{endDate,jdbcType=DATE},
+		area = #{area,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		last_update = #{lastUpdate,jdbcType=TIMESTAMP},
+		updator = #{updator,jdbcType=VARCHAR},
+		sort_no = #{sortNo,jdbcType=DECIMAL},
+		isleaf = #{isleaf,jdbcType=CHAR},
+		sub_count = #{subCount,jdbcType=DECIMAL},
+		remark = #{remark,jdbcType=VARCHAR}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from OM_ORG where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from OM_ORG <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE OM_ORG 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.org_code != null" >
+        	org_code = #{domain.orgCode,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.org_name != null" >
+        	org_name = #{domain.orgName,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.org_type != null" >
+        	org_type = #{domain.orgType,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.org_degree != null" >
+        	org_degree = #{domain.orgDegree,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.org_status != null" >
+        	org_status = #{domain.orgStatus,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.org_level != null" >
+        	org_level = #{domain.orgLevel,jdbcType=DECIMAL}
+      	</if>
+		<if test="domain.guid_parents != null" >
+        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.org_seq != null" >
+        	org_seq = #{domain.orgSeq,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.org_addr != null" >
+        	org_addr = #{domain.orgAddr,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.zipcode != null" >
+        	zipcode = #{domain.zipcode,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_position != null" >
+        	guid_position = #{domain.guidPosition,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_emp_master != null" >
+        	guid_emp_master = #{domain.guidEmpMaster,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_emp_manager != null" >
+        	guid_emp_manager = #{domain.guidEmpManager,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.link_man != null" >
+        	link_man = #{domain.linkMan,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.link_tel != null" >
+        	link_tel = #{domain.linkTel,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.email != null" >
+        	email = #{domain.email,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.web_url != null" >
+        	web_url = #{domain.webUrl,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.start_date != null" >
+        	start_date = #{domain.startDate,jdbcType=DATE}
+      	</if>
+		<if test="domain.end_date != null" >
+        	end_date = #{domain.endDate,jdbcType=DATE}
+      	</if>
+		<if test="domain.area != null" >
+        	area = #{domain.area,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.create_time != null" >
+        	create_time = #{domain.createTime,jdbcType=TIMESTAMP}
+      	</if>
+		<if test="domain.last_update != null" >
+        	last_update = #{domain.lastUpdate,jdbcType=TIMESTAMP}
+      	</if>
+		<if test="domain.updator != null" >
+        	updator = #{domain.updator,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.sort_no != null" >
+        	sort_no = #{domain.sortNo,jdbcType=DECIMAL}
+      	</if>
+		<if test="domain.isleaf != null" >
+        	isleaf = #{domain.isleaf,jdbcType=CHAR}
+      	</if>
+		<if test="domain.sub_count != null" >
+        	sub_count = #{domain.subCount,jdbcType=DECIMAL}
+      	</if>
+		<if test="domain.remark != null" >
+        	remark = #{domain.remark,jdbcType=VARCHAR}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.om.OmOrg">
+		select <include refid="Base_Column_List"/> from OM_ORG where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.om.OmOrg" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from OM_ORG <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from OM_ORG <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid
+		,org_code
+		,org_name
+		,org_type
+		,org_degree
+		,org_status
+		,org_level
+		,guid_parents
+		,org_seq
+		,org_addr
+		,zipcode
+		,guid_position
+		,guid_emp_master
+		,guid_emp_manager
+		,link_man
+		,link_tel
+		,email
+		,web_url
+		,start_date
+		,end_date
+		,area
+		,create_time
+		,last_update
+		,updator
+		,sort_no
+		,isleaf
+		,sub_count
+		,remark
+	</sql>
+</mapper>

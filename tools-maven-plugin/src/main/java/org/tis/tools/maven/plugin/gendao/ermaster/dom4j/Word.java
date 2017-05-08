@@ -168,4 +168,15 @@ public class Word {
 	public boolean equals(Object obj) {
 		return ((Word)obj).getId().equals(this.getId());
 	}
+	
+	@Override
+	public String toString() {
+		return "Word [id=" + id + ", length=" + length + ", decimal=" + decimal + ", array=" + array
+				+ ", arrayDimension=" + arrayDimension + ", unsigned=" + unsigned + ", zerofill=" + zerofill
+				+ ", binary=" + binary + ", args=" + args + ", charSemantics=" + charSemantics + ", description="
+				+ description + ", logicalName=" + logicalName + ", physicalName=" + physicalName + ", type=" + type
+				+ "]";
+	}
+	
+	
 }

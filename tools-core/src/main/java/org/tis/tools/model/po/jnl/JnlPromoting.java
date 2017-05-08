@@ -10,11 +10,13 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
+import org.tis.tools.common.utils.StringUtil;
+
 /**
  * 
  * <pre>
  * 营销流水
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/model.erm
+ * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-mysql.erm
  * 业务域：jnl
  * 模型：JNL_PROMOTING 营销流水
  *
@@ -29,11 +31,41 @@ public class JnlPromoting implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "JNL_PROMOTING" ; 
+	/* JNL_PROMOTING table's columns definition */
+	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier） */
+	public static final String COLUMN_GUID = "guid" ; 
+	/** GUID_CUST_SERVICE ：服务流水ID<br/><br/>关联服务流水 */
+	public static final String COLUMN_GUID_CUST_SERVICE = "guid_cust_service" ; 
+	/** SERVICE_SNO ：服务流水号<br/><br/> */
+	public static final String COLUMN_SERVICE_SNO = "service_sno" ; 
+	/** PROMOTING_ORIGIN ：营销信息来源<br/><br/>标识本营销信息来自何处（可能是应用系统、或自动程序等等...），见业务字典： DICT_PROMOTING_ORIGIN */
+	public static final String COLUMN_PROMOTING_ORIGIN = "promoting_origin" ; 
+	/** PROMOTING_BIZ_TYPE ：营销业务类型<br/><br/>见业务字典： DICT_PROMOTING_BIZ_TYPE */
+	public static final String COLUMN_PROMOTING_BIZ_TYPE = "promoting_biz_type" ; 
+	/** PROMOTING_TITLE ：营销标题<br/><br/>本营销内容的标题信息，有字数限制200个汉字以内 */
+	public static final String COLUMN_PROMOTING_TITLE = "promoting_title" ; 
+	/** PROMOTING_INFO ：营销信息<br/><br/> */
+	public static final String COLUMN_PROMOTING_INFO = "promoting_info" ; 
+	/** PROMOTING_ACTION ：营销行为<br/><br/>本次营销的行为，通常是按钮事件，系统根据本字段进行营销按钮呈现 */
+	public static final String COLUMN_PROMOTING_ACTION = "promoting_action" ; 
+	/** TELLER_NO ：柜员代码<br/><br/>本次接触活动的柜员 */
+	public static final String COLUMN_TELLER_NO = "teller_no" ; 
+	/** INSTNO ：机构编码<br/><br/> */
+	public static final String COLUMN_INSTNO = "instno" ; 
+	/** PROMOTING_DATE ：营销日期<br/><br/> */
+	public static final String COLUMN_PROMOTING_DATE = "promoting_date" ; 
+	/** PROMOTING_TIME ：营销时间<br/><br/>yyyyMMddHHmmSSsss */
+	public static final String COLUMN_PROMOTING_TIME = "promoting_time" ; 
+	/** PROMOTING_FEEDBACK ：营销反馈<br/><br/>见业务字典：DICT_PROMOTING_FEEDBACK */
+	public static final String COLUMN_PROMOTING_FEEDBACK = "promoting_feedback" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier） */
 	private String guid ;
 	
-	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：关联服务流水 */
+	/** 字段类型：varchar<br/>字段名：服务流水ID<br/>描述：关联服务流水 */
 	private String guidCustService ;
 	
 	/** 字段类型：varchar<br/>字段名：服务流水号<br/>描述： */
@@ -90,19 +122,19 @@ public class JnlPromoting implements Serializable {
     }
 	
 	/**
-	 * Set the 数据主键.
+	 * Set the 服务流水ID.
 	 * 
 	 * @param guidCustService
-	 *            数据主键
+	 *            服务流水ID
 	 */
 	public void setGuidCustService(String guidCustService) {
  		this.guidCustService = guidCustService == null ? null : guidCustService.trim() ;
     }
     
     /**
-	 * Get the 数据主键.
+	 * Get the 服务流水ID.
 	 * 
-	 * @return 数据主键
+	 * @return 服务流水ID
 	 */
 	public String getGuidCustService(){
 		return this.guidCustService ;
@@ -316,4 +348,8 @@ public class JnlPromoting implements Serializable {
 	public String getPromotingFeedback(){
 		return this.promotingFeedback ;
     }
+	
+	public String toString(){
+		return StringUtil.toString(this) ; 
+	}
 }

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.ac.AcDatascopeMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.ac.AcDatascope">
+	    INSERT INTO AC_DATASCOPE 
+	    (
+	    	 guid
+	    	,guid_entity
+	    	,priv_name
+	    	,data_op_type
+	    	,entity_name
+	    	,filter_sql_string
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=VARCHAR},
+			#{guidEntity,jdbcType=VARCHAR},
+			#{privName,jdbcType=VARCHAR},
+			#{dataOpType,jdbcType=VARCHAR},
+			#{entityName,jdbcType=VARCHAR},
+			#{filterSqlString,jdbcType=VARCHAR}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.ac.AcDatascope">
+    	UPDATE AC_DATASCOPE 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_entity != null" >
+			guid_entity = #{guidEntity,jdbcType=VARCHAR},
+		</if>
+		<if test="priv_name != null" >
+			priv_name = #{privName,jdbcType=VARCHAR},
+		</if>
+		<if test="data_op_type != null" >
+			data_op_type = #{dataOpType,jdbcType=VARCHAR},
+		</if>
+		<if test="entity_name != null" >
+			entity_name = #{entityName,jdbcType=VARCHAR},
+		</if>
+		<if test="filter_sql_string != null" >
+			filter_sql_string = #{filterSqlString,jdbcType=VARCHAR}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.ac.AcDatascope">
+    	UPDATE AC_DATASCOPE 
+	    <set>
+		guid = #{guid,jdbcType=VARCHAR},
+		guid_entity = #{guidEntity,jdbcType=VARCHAR},
+		priv_name = #{privName,jdbcType=VARCHAR},
+		data_op_type = #{dataOpType,jdbcType=VARCHAR},
+		entity_name = #{entityName,jdbcType=VARCHAR},
+		filter_sql_string = #{filterSqlString,jdbcType=VARCHAR}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from AC_DATASCOPE where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from AC_DATASCOPE <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE AC_DATASCOPE 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_entity != null" >
+        	guid_entity = #{domain.guidEntity,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.priv_name != null" >
+        	priv_name = #{domain.privName,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.data_op_type != null" >
+        	data_op_type = #{domain.dataOpType,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.entity_name != null" >
+        	entity_name = #{domain.entityName,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.filter_sql_string != null" >
+        	filter_sql_string = #{domain.filterSqlString,jdbcType=VARCHAR}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.ac.AcDatascope">
+		select <include refid="Base_Column_List"/> from AC_DATASCOPE where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.ac.AcDatascope" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from AC_DATASCOPE <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from AC_DATASCOPE <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid
+		,guid_entity
+		,priv_name
+		,data_op_type
+		,entity_name
+		,filter_sql_string
+	</sql>
+</mapper>

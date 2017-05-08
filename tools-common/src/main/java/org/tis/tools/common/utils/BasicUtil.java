@@ -138,4 +138,15 @@ public class BasicUtil {
 		}
 		return sb.toString();
 	}
+	
+	/**
+	 * 把多个参数以Object数组形式返回
+	 * 
+	 * @param args
+	 *            不定参数
+	 * @return 参数数组
+	 */
+	public static Object[] wrap(Object... args) {
+		return args;
+	}
 }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.om.OmGroupPositionMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.om.OmGroupPosition">
+	    INSERT INTO OM_GROUP_POSITION 
+	    (
+	    	 guid_group
+	    	,guid_position
+	    )
+	    VALUES 
+	    (
+			#{guidGroup,jdbcType=VARCHAR},
+			#{guidPosition,jdbcType=VARCHAR}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.om.OmGroupPosition">
+    	UPDATE OM_GROUP_POSITION 
+	    <set>
+		<if test="guid_group != null" >
+			guid_group = #{guidGroup,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_position != null" >
+			guid_position = #{guidPosition,jdbcType=VARCHAR}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.om.OmGroupPosition">
+    	UPDATE OM_GROUP_POSITION 
+	    <set>
+		guid_group = #{guidGroup,jdbcType=VARCHAR},
+		guid_position = #{guidPosition,jdbcType=VARCHAR}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from OM_GROUP_POSITION where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from OM_GROUP_POSITION <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE OM_GROUP_POSITION 
+	   <set>
+		<if test="domain.guid_group != null" >
+        	guid_group = #{domain.guidGroup,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_position != null" >
+        	guid_position = #{domain.guidPosition,jdbcType=VARCHAR}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.om.OmGroupPosition">
+		select <include refid="Base_Column_List"/> from OM_GROUP_POSITION where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.om.OmGroupPosition" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from OM_GROUP_POSITION <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from OM_GROUP_POSITION <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid_group
+		,guid_position
+	</sql>
+</mapper>

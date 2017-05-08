@@ -1,15 +1,35 @@
 -- 使用ERMaster定义的模型文件生成代码
 
-cd tools-core
-mvn tools:gen-dao -Dmodel.file.type=erm
+	cd tools-core
+	mvn tools:gen-dao -Dmodel.file.type=erm
 
 -- 使用ERMaster定义的模型文件，但只查看模型定义情况
 
-mvn tools:gen-dao -Dmodel.file.type=erm -Dfixed.bizmodels=jnl -Djust.show=true 
+	mvn tools:gen-dao -Dmodel.file.type=erm -Dfixed.bizmodels=jnl -Djust.show=true 
+
+-- 生成abf.erm中om模块 的模型结构（但不生成controller）
+
+	mvn tools:gen-dao -Dmodel.file.type=erm -Dmodel.file=abf -Dfixed.bizmodels=om -Dgen.type=model,dao,biz,service
+
+-- 展示abf.erm中ac模块 的模型结构
+
+	mvn tools:gen-dao -Dmodel.file.type=erm -Dmodel.file=abf -Dfixed.bizmodels=ac -Djust.show=true 
+
+-- 生成abf.erm中ac模块 的模型结构（但不生成controller）
+
+	mvn tools:gen-dao -Dmodel.file.type=erm -Dmodel.file=abf -Dfixed.bizmodels=ac -Dgen.type=model,dao,biz,service
+	
+	mvn tools:gen-dao -Dmodel.file.type=erm -Dmodel.file=ABF-mysql -Dgen.type=model,dao,biz,service
+	mvn tools:gen-dao -Dmodel.file.type=erm -Dmodel.file=JNL-mysql -Dgen.type=model,dao,biz,service
 
 -- 更多参数使用
+-- 使用指定的模型定义文件 -Dmodel.file=abf
 -- 只生成jnl业务域： -Dfixed.bizmodels=jnl
 -- 只生成指定模型：-Dfixed.models=SYS_TEST
 -- 只生展示模型信息：-Djust.show=true
 -- 同时指定模版 ： -Dtemplates.path=/Users/megapro/Develop/tis/tools/tools-core/model/templates4erm/biz
+-- 生成指定内容 ： -Dgen.type=model,dao,biz,controller,service
+
+
+
 

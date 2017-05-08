@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.ac.AcFuncMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.ac.AcFunc">
+	    INSERT INTO AC_FUNC 
+	    (
+	    	 guid
+	    	,guid_funcgroup
+	    	,func_code
+	    	,func_name
+	    	,func_desc
+	    	,func_action
+	    	,para_info
+	    	,func_type
+	    	,ischeck
+	    	,ismenu
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=VARCHAR},
+			#{guidFuncgroup,jdbcType=VARCHAR},
+			#{funcCode,jdbcType=VARCHAR},
+			#{funcName,jdbcType=VARCHAR},
+			#{funcDesc,jdbcType=VARCHAR},
+			#{funcAction,jdbcType=VARCHAR},
+			#{paraInfo,jdbcType=VARCHAR},
+			#{funcType,jdbcType=VARCHAR},
+			#{ischeck,jdbcType=CHAR},
+			#{ismenu,jdbcType=CHAR}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.ac.AcFunc">
+    	UPDATE AC_FUNC 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_funcgroup != null" >
+			guid_funcgroup = #{guidFuncgroup,jdbcType=VARCHAR},
+		</if>
+		<if test="func_code != null" >
+			func_code = #{funcCode,jdbcType=VARCHAR},
+		</if>
+		<if test="func_name != null" >
+			func_name = #{funcName,jdbcType=VARCHAR},
+		</if>
+		<if test="func_desc != null" >
+			func_desc = #{funcDesc,jdbcType=VARCHAR},
+		</if>
+		<if test="func_action != null" >
+			func_action = #{funcAction,jdbcType=VARCHAR},
+		</if>
+		<if test="para_info != null" >
+			para_info = #{paraInfo,jdbcType=VARCHAR},
+		</if>
+		<if test="func_type != null" >
+			func_type = #{funcType,jdbcType=VARCHAR},
+		</if>
+		<if test="ischeck != null" >
+			ischeck = #{ischeck,jdbcType=CHAR},
+		</if>
+		<if test="ismenu != null" >
+			ismenu = #{ismenu,jdbcType=CHAR}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.ac.AcFunc">
+    	UPDATE AC_FUNC 
+	    <set>
+		guid = #{guid,jdbcType=VARCHAR},
+		guid_funcgroup = #{guidFuncgroup,jdbcType=VARCHAR},
+		func_code = #{funcCode,jdbcType=VARCHAR},
+		func_name = #{funcName,jdbcType=VARCHAR},
+		func_desc = #{funcDesc,jdbcType=VARCHAR},
+		func_action = #{funcAction,jdbcType=VARCHAR},
+		para_info = #{paraInfo,jdbcType=VARCHAR},
+		func_type = #{funcType,jdbcType=VARCHAR},
+		ischeck = #{ischeck,jdbcType=CHAR},
+		ismenu = #{ismenu,jdbcType=CHAR}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from AC_FUNC where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from AC_FUNC <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE AC_FUNC 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_funcgroup != null" >
+        	guid_funcgroup = #{domain.guidFuncgroup,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.func_code != null" >
+        	func_code = #{domain.funcCode,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.func_name != null" >
+        	func_name = #{domain.funcName,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.func_desc != null" >
+        	func_desc = #{domain.funcDesc,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.func_action != null" >
+        	func_action = #{domain.funcAction,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.para_info != null" >
+        	para_info = #{domain.paraInfo,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.func_type != null" >
+        	func_type = #{domain.funcType,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.ischeck != null" >
+        	ischeck = #{domain.ischeck,jdbcType=CHAR}
+      	</if>
+		<if test="domain.ismenu != null" >
+        	ismenu = #{domain.ismenu,jdbcType=CHAR}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.ac.AcFunc">
+		select <include refid="Base_Column_List"/> from AC_FUNC where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.ac.AcFunc" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from AC_FUNC <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from AC_FUNC <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid
+		,guid_funcgroup
+		,func_code
+		,func_name
+		,func_desc
+		,func_action
+		,para_info
+		,func_type
+		,ischeck
+		,ismenu
+	</sql>
+</mapper>

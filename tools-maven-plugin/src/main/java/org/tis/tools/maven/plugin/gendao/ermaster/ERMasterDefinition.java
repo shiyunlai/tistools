@@ -134,6 +134,10 @@ public class ERMasterDefinition {
 			
 			//取出指定的Table定义
 			Table t = ermm.getTableById(n.getId()) ;
+			if( null == t ){
+				System.out.println("模型文件["+ermm.getErmasetFileName()+"] 分类 [category="+c.getId()+"] 节点 [node_element=" +n.getId()+ "] 不存在对应的表模型！");
+				continue ; 
+			}
 			
 			//每个ERMaster中的表定义为一个Model //TODO 还没有考虑Table之外的模型解析和映射，如视图。
 			Model m = new Model() ; 

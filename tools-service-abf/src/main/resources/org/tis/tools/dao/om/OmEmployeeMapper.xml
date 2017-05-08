@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.om.OmEmployeeMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.om.OmEmployee">
+	    INSERT INTO OM_EMPLOYEE 
+	    (
+	    	 guid
+	    	,emp_code
+	    	,emp_name
+	    	,emp_realname
+	    	,gender
+	    	,empstatus
+	    	,emp_degree
+	    	,guid_org
+	    	,guid_position
+	    	,guid_emp_major
+	    	,indate
+	    	,outdate
+	    	,otel
+	    	,oaddress
+	    	,ozipcode
+	    	,oemail
+	    	,faxno
+	    	,mobileno
+	    	,msn
+	    	,paper_type
+	    	,paper_no
+	    	,birthdate
+	    	,htel
+	    	,haddress
+	    	,hzipcode
+	    	,party
+	    	,pemail
+	    	,guid_operator
+	    	,user_id
+	    	,specialty
+	    	,org_list
+	    	,workexp
+	    	,remark
+	    	,regdate
+	    	,createtime
+	    	,lastmodytime
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=VARCHAR},
+			#{empCode,jdbcType=VARCHAR},
+			#{empName,jdbcType=VARCHAR},
+			#{empRealname,jdbcType=VARCHAR},
+			#{gender,jdbcType=VARCHAR},
+			#{empstatus,jdbcType=VARCHAR},
+			#{empDegree,jdbcType=VARCHAR},
+			#{guidOrg,jdbcType=VARCHAR},
+			#{guidPosition,jdbcType=VARCHAR},
+			#{guidEmpMajor,jdbcType=VARCHAR},
+			#{indate,jdbcType=DATE},
+			#{outdate,jdbcType=DATE},
+			#{otel,jdbcType=VARCHAR},
+			#{oaddress,jdbcType=VARCHAR},
+			#{ozipcode,jdbcType=VARCHAR},
+			#{oemail,jdbcType=VARCHAR},
+			#{faxno,jdbcType=VARCHAR},
+			#{mobileno,jdbcType=VARCHAR},
+			#{msn,jdbcType=VARCHAR},
+			#{paperType,jdbcType=VARCHAR},
+			#{paperNo,jdbcType=VARCHAR},
+			#{birthdate,jdbcType=DATE},
+			#{htel,jdbcType=VARCHAR},
+			#{haddress,jdbcType=VARCHAR},
+			#{hzipcode,jdbcType=VARCHAR},
+			#{party,jdbcType=VARCHAR},
+			#{pemail,jdbcType=VARCHAR},
+			#{guidOperator,jdbcType=VARCHAR},
+			#{userId,jdbcType=VARCHAR},
+			#{specialty,jdbcType=VARCHAR},
+			#{orgList,jdbcType=VARCHAR},
+			#{workexp,jdbcType=VARCHAR},
+			#{remark,jdbcType=VARCHAR},
+			#{regdate,jdbcType=DATE},
+			#{createtime,jdbcType=TIMESTAMP},
+			#{lastmodytime,jdbcType=TIMESTAMP}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.om.OmEmployee">
+    	UPDATE OM_EMPLOYEE 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=VARCHAR},
+		</if>
+		<if test="emp_code != null" >
+			emp_code = #{empCode,jdbcType=VARCHAR},
+		</if>
+		<if test="emp_name != null" >
+			emp_name = #{empName,jdbcType=VARCHAR},
+		</if>
+		<if test="emp_realname != null" >
+			emp_realname = #{empRealname,jdbcType=VARCHAR},
+		</if>
+		<if test="gender != null" >
+			gender = #{gender,jdbcType=VARCHAR},
+		</if>
+		<if test="empstatus != null" >
+			empstatus = #{empstatus,jdbcType=VARCHAR},
+		</if>
+		<if test="emp_degree != null" >
+			emp_degree = #{empDegree,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_org != null" >
+			guid_org = #{guidOrg,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_position != null" >
+			guid_position = #{guidPosition,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_emp_major != null" >
+			guid_emp_major = #{guidEmpMajor,jdbcType=VARCHAR},
+		</if>
+		<if test="indate != null" >
+			indate = #{indate,jdbcType=DATE},
+		</if>
+		<if test="outdate != null" >
+			outdate = #{outdate,jdbcType=DATE},
+		</if>
+		<if test="otel != null" >
+			otel = #{otel,jdbcType=VARCHAR},
+		</if>
+		<if test="oaddress != null" >
+			oaddress = #{oaddress,jdbcType=VARCHAR},
+		</if>
+		<if test="ozipcode != null" >
+			ozipcode = #{ozipcode,jdbcType=VARCHAR},
+		</if>
+		<if test="oemail != null" >
+			oemail = #{oemail,jdbcType=VARCHAR},
+		</if>
+		<if test="faxno != null" >
+			faxno = #{faxno,jdbcType=VARCHAR},
+		</if>
+		<if test="mobileno != null" >
+			mobileno = #{mobileno,jdbcType=VARCHAR},
+		</if>
+		<if test="msn != null" >
+			msn = #{msn,jdbcType=VARCHAR},
+		</if>
+		<if test="paper_type != null" >
+			paper_type = #{paperType,jdbcType=VARCHAR},
+		</if>
+		<if test="paper_no != null" >
+			paper_no = #{paperNo,jdbcType=VARCHAR},
+		</if>
+		<if test="birthdate != null" >
+			birthdate = #{birthdate,jdbcType=DATE},
+		</if>
+		<if test="htel != null" >
+			htel = #{htel,jdbcType=VARCHAR},
+		</if>
+		<if test="haddress != null" >
+			haddress = #{haddress,jdbcType=VARCHAR},
+		</if>
+		<if test="hzipcode != null" >
+			hzipcode = #{hzipcode,jdbcType=VARCHAR},
+		</if>
+		<if test="party != null" >
+			party = #{party,jdbcType=VARCHAR},
+		</if>
+		<if test="pemail != null" >
+			pemail = #{pemail,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_operator != null" >
+			guid_operator = #{guidOperator,jdbcType=VARCHAR},
+		</if>
+		<if test="user_id != null" >
+			user_id = #{userId,jdbcType=VARCHAR},
+		</if>
+		<if test="specialty != null" >
+			specialty = #{specialty,jdbcType=VARCHAR},
+		</if>
+		<if test="org_list != null" >
+			org_list = #{orgList,jdbcType=VARCHAR},
+		</if>
+		<if test="workexp != null" >
+			workexp = #{workexp,jdbcType=VARCHAR},
+		</if>
+		<if test="remark != null" >
+			remark = #{remark,jdbcType=VARCHAR},
+		</if>
+		<if test="regdate != null" >
+			regdate = #{regdate,jdbcType=DATE},
+		</if>
+		<if test="createtime != null" >
+			createtime = #{createtime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="lastmodytime != null" >
+			lastmodytime = #{lastmodytime,jdbcType=TIMESTAMP}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.om.OmEmployee">
+    	UPDATE OM_EMPLOYEE 
+	    <set>
+		guid = #{guid,jdbcType=VARCHAR},
+		emp_code = #{empCode,jdbcType=VARCHAR},
+		emp_name = #{empName,jdbcType=VARCHAR},
+		emp_realname = #{empRealname,jdbcType=VARCHAR},
+		gender = #{gender,jdbcType=VARCHAR},
+		empstatus = #{empstatus,jdbcType=VARCHAR},
+		emp_degree = #{empDegree,jdbcType=VARCHAR},
+		guid_org = #{guidOrg,jdbcType=VARCHAR},
+		guid_position = #{guidPosition,jdbcType=VARCHAR},
+		guid_emp_major = #{guidEmpMajor,jdbcType=VARCHAR},
+		indate = #{indate,jdbcType=DATE},
+		outdate = #{outdate,jdbcType=DATE},
+		otel = #{otel,jdbcType=VARCHAR},
+		oaddress = #{oaddress,jdbcType=VARCHAR},
+		ozipcode = #{ozipcode,jdbcType=VARCHAR},
+		oemail = #{oemail,jdbcType=VARCHAR},
+		faxno = #{faxno,jdbcType=VARCHAR},
+		mobileno = #{mobileno,jdbcType=VARCHAR},
+		msn = #{msn,jdbcType=VARCHAR},
+		paper_type = #{paperType,jdbcType=VARCHAR},
+		paper_no = #{paperNo,jdbcType=VARCHAR},
+		birthdate = #{birthdate,jdbcType=DATE},
+		htel = #{htel,jdbcType=VARCHAR},
+		haddress = #{haddress,jdbcType=VARCHAR},
+		hzipcode = #{hzipcode,jdbcType=VARCHAR},
+		party = #{party,jdbcType=VARCHAR},
+		pemail = #{pemail,jdbcType=VARCHAR},
+		guid_operator = #{guidOperator,jdbcType=VARCHAR},
+		user_id = #{userId,jdbcType=VARCHAR},
+		specialty = #{specialty,jdbcType=VARCHAR},
+		org_list = #{orgList,jdbcType=VARCHAR},
+		workexp = #{workexp,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR},
+		regdate = #{regdate,jdbcType=DATE},
+		createtime = #{createtime,jdbcType=TIMESTAMP},
+		lastmodytime = #{lastmodytime,jdbcType=TIMESTAMP}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from OM_EMPLOYEE where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from OM_EMPLOYEE <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE OM_EMPLOYEE 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.emp_code != null" >
+        	emp_code = #{domain.empCode,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.emp_name != null" >
+        	emp_name = #{domain.empName,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.emp_realname != null" >
+        	emp_realname = #{domain.empRealname,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.gender != null" >
+        	gender = #{domain.gender,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.empstatus != null" >
+        	empstatus = #{domain.empstatus,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.emp_degree != null" >
+        	emp_degree = #{domain.empDegree,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_org != null" >
+        	guid_org = #{domain.guidOrg,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_position != null" >
+        	guid_position = #{domain.guidPosition,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_emp_major != null" >
+        	guid_emp_major = #{domain.guidEmpMajor,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.indate != null" >
+        	indate = #{domain.indate,jdbcType=DATE}
+      	</if>
+		<if test="domain.outdate != null" >
+        	outdate = #{domain.outdate,jdbcType=DATE}
+      	</if>
+		<if test="domain.otel != null" >
+        	otel = #{domain.otel,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.oaddress != null" >
+        	oaddress = #{domain.oaddress,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.ozipcode != null" >
+        	ozipcode = #{domain.ozipcode,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.oemail != null" >
+        	oemail = #{domain.oemail,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.faxno != null" >
+        	faxno = #{domain.faxno,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.mobileno != null" >
+        	mobileno = #{domain.mobileno,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.msn != null" >
+        	msn = #{domain.msn,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.paper_type != null" >
+        	paper_type = #{domain.paperType,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.paper_no != null" >
+        	paper_no = #{domain.paperNo,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.birthdate != null" >
+        	birthdate = #{domain.birthdate,jdbcType=DATE}
+      	</if>
+		<if test="domain.htel != null" >
+        	htel = #{domain.htel,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.haddress != null" >
+        	haddress = #{domain.haddress,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.hzipcode != null" >
+        	hzipcode = #{domain.hzipcode,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.party != null" >
+        	party = #{domain.party,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.pemail != null" >
+        	pemail = #{domain.pemail,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_operator != null" >
+        	guid_operator = #{domain.guidOperator,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.user_id != null" >
+        	user_id = #{domain.userId,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.specialty != null" >
+        	specialty = #{domain.specialty,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.org_list != null" >
+        	org_list = #{domain.orgList,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.workexp != null" >
+        	workexp = #{domain.workexp,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.remark != null" >
+        	remark = #{domain.remark,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.regdate != null" >
+        	regdate = #{domain.regdate,jdbcType=DATE}
+      	</if>
+		<if test="domain.createtime != null" >
+        	createtime = #{domain.createtime,jdbcType=TIMESTAMP}
+      	</if>
+		<if test="domain.lastmodytime != null" >
+        	lastmodytime = #{domain.lastmodytime,jdbcType=TIMESTAMP}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.om.OmEmployee">
+		select <include refid="Base_Column_List"/> from OM_EMPLOYEE where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.om.OmEmployee" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from OM_EMPLOYEE <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from OM_EMPLOYEE <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid
+		,emp_code
+		,emp_name
+		,emp_realname
+		,gender
+		,empstatus
+		,emp_degree
+		,guid_org
+		,guid_position
+		,guid_emp_major
+		,indate
+		,outdate
+		,otel
+		,oaddress
+		,ozipcode
+		,oemail
+		,faxno
+		,mobileno
+		,msn
+		,paper_type
+		,paper_no
+		,birthdate
+		,htel
+		,haddress
+		,hzipcode
+		,party
+		,pemail
+		,guid_operator
+		,user_id
+		,specialty
+		,org_list
+		,workexp
+		,remark
+		,regdate
+		,createtime
+		,lastmodytime
+	</sql>
+</mapper>

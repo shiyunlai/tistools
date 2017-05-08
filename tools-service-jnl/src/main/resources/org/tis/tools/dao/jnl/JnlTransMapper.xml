@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.jnl.JnlTransMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.jnl.JnlTrans">
+	    INSERT INTO JNL_TRANS 
+	    (
+	    	 guid
+	    	,guid_cust_service
+	    	,service_sno
+	    	,trans_sno
+	    	,trans_origin
+	    	,guid_origin
+	    	,trans_code
+	    	,trans_name
+	    	,trans_date
+	    	,start_time
+	    	,end_time
+	    	,trans_teller
+	    	,trans_instno
+	    	,trans_status
+	    	,trans_err_code
+	    	,trans_err_msg
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=VARCHAR},
+			#{guidCustService,jdbcType=VARCHAR},
+			#{serviceSno,jdbcType=VARCHAR},
+			#{transSno,jdbcType=VARCHAR},
+			#{transOrigin,jdbcType=VARCHAR},
+			#{guidOrigin,jdbcType=VARCHAR},
+			#{transCode,jdbcType=VARCHAR},
+			#{transName,jdbcType=VARCHAR},
+			#{transDate,jdbcType=CHAR},
+			#{startTime,jdbcType=VARCHAR},
+			#{endTime,jdbcType=VARCHAR},
+			#{transTeller,jdbcType=VARCHAR},
+			#{transInstno,jdbcType=VARCHAR},
+			#{transStatus,jdbcType=VARCHAR},
+			#{transErrCode,jdbcType=VARCHAR},
+			#{transErrMsg,jdbcType=VARCHAR}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.jnl.JnlTrans">
+    	UPDATE JNL_TRANS 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_cust_service != null" >
+			guid_cust_service = #{guidCustService,jdbcType=VARCHAR},
+		</if>
+		<if test="service_sno != null" >
+			service_sno = #{serviceSno,jdbcType=VARCHAR},
+		</if>
+		<if test="trans_sno != null" >
+			trans_sno = #{transSno,jdbcType=VARCHAR},
+		</if>
+		<if test="trans_origin != null" >
+			trans_origin = #{transOrigin,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_origin != null" >
+			guid_origin = #{guidOrigin,jdbcType=VARCHAR},
+		</if>
+		<if test="trans_code != null" >
+			trans_code = #{transCode,jdbcType=VARCHAR},
+		</if>
+		<if test="trans_name != null" >
+			trans_name = #{transName,jdbcType=VARCHAR},
+		</if>
+		<if test="trans_date != null" >
+			trans_date = #{transDate,jdbcType=CHAR},
+		</if>
+		<if test="start_time != null" >
+			start_time = #{startTime,jdbcType=VARCHAR},
+		</if>
+		<if test="end_time != null" >
+			end_time = #{endTime,jdbcType=VARCHAR},
+		</if>
+		<if test="trans_teller != null" >
+			trans_teller = #{transTeller,jdbcType=VARCHAR},
+		</if>
+		<if test="trans_instno != null" >
+			trans_instno = #{transInstno,jdbcType=VARCHAR},
+		</if>
+		<if test="trans_status != null" >
+			trans_status = #{transStatus,jdbcType=VARCHAR},
+		</if>
+		<if test="trans_err_code != null" >
+			trans_err_code = #{transErrCode,jdbcType=VARCHAR},
+		</if>
+		<if test="trans_err_msg != null" >
+			trans_err_msg = #{transErrMsg,jdbcType=VARCHAR}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.jnl.JnlTrans">
+    	UPDATE JNL_TRANS 
+	    <set>
+		guid = #{guid,jdbcType=VARCHAR},
+		guid_cust_service = #{guidCustService,jdbcType=VARCHAR},
+		service_sno = #{serviceSno,jdbcType=VARCHAR},
+		trans_sno = #{transSno,jdbcType=VARCHAR},
+		trans_origin = #{transOrigin,jdbcType=VARCHAR},
+		guid_origin = #{guidOrigin,jdbcType=VARCHAR},
+		trans_code = #{transCode,jdbcType=VARCHAR},
+		trans_name = #{transName,jdbcType=VARCHAR},
+		trans_date = #{transDate,jdbcType=CHAR},
+		start_time = #{startTime,jdbcType=VARCHAR},
+		end_time = #{endTime,jdbcType=VARCHAR},
+		trans_teller = #{transTeller,jdbcType=VARCHAR},
+		trans_instno = #{transInstno,jdbcType=VARCHAR},
+		trans_status = #{transStatus,jdbcType=VARCHAR},
+		trans_err_code = #{transErrCode,jdbcType=VARCHAR},
+		trans_err_msg = #{transErrMsg,jdbcType=VARCHAR}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from JNL_TRANS where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from JNL_TRANS <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE JNL_TRANS 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_cust_service != null" >
+        	guid_cust_service = #{domain.guidCustService,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.service_sno != null" >
+        	service_sno = #{domain.serviceSno,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.trans_sno != null" >
+        	trans_sno = #{domain.transSno,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.trans_origin != null" >
+        	trans_origin = #{domain.transOrigin,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_origin != null" >
+        	guid_origin = #{domain.guidOrigin,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.trans_code != null" >
+        	trans_code = #{domain.transCode,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.trans_name != null" >
+        	trans_name = #{domain.transName,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.trans_date != null" >
+        	trans_date = #{domain.transDate,jdbcType=CHAR}
+      	</if>
+		<if test="domain.start_time != null" >
+        	start_time = #{domain.startTime,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.end_time != null" >
+        	end_time = #{domain.endTime,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.trans_teller != null" >
+        	trans_teller = #{domain.transTeller,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.trans_instno != null" >
+        	trans_instno = #{domain.transInstno,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.trans_status != null" >
+        	trans_status = #{domain.transStatus,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.trans_err_code != null" >
+        	trans_err_code = #{domain.transErrCode,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.trans_err_msg != null" >
+        	trans_err_msg = #{domain.transErrMsg,jdbcType=VARCHAR}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.jnl.JnlTrans">
+		select <include refid="Base_Column_List"/> from JNL_TRANS where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.jnl.JnlTrans" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from JNL_TRANS <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from JNL_TRANS <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid
+		,guid_cust_service
+		,service_sno
+		,trans_sno
+		,trans_origin
+		,guid_origin
+		,trans_code
+		,trans_name
+		,trans_date
+		,start_time
+		,end_time
+		,trans_teller
+		,trans_instno
+		,trans_status
+		,trans_err_code
+		,trans_err_msg
+	</sql>
+</mapper>

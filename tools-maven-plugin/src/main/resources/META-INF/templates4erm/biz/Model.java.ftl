@@ -10,6 +10,8 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
+import org.tis.tools.common.utils.StringUtil;
+
 /**
  * 
  * <pre>
@@ -28,6 +30,14 @@ public class ${humpClassName(table.id)} implements Serializable {
 
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
+	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "${table.id?upper_case}" ; 
+	/* ${table.id} table's columns definition */
+	<#list table.fields as field>
+	/** ${field.id?upper_case} ：${field.name}<br/><br/>${field.desc} */
+	public static final String COLUMN_${field.id?upper_case} = "${field.id}" ; 
+	</#list>
 	
 	<#list table.fields as field>
 	<#assign fieldIdVar="${humpClassName(field.id)?uncap_first}">
@@ -359,4 +369,8 @@ public class ${humpClassName(table.id)} implements Serializable {
     }
 	</#if>
 	</#list>
+	
+	public String toString(){
+		return StringUtil.toString(this) ; 
+	}
 }

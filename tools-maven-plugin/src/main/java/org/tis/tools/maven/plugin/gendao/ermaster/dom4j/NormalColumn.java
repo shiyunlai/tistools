@@ -117,21 +117,22 @@ public class NormalColumn {
 	
 	
 	public String getLogicalName() {
-		
-		if( this.refWord != null ){
-			return this.refWord.getLogicalName() ;
+		// 优先返回当前定义
+		if (StringUtils.isNotEmpty(logicalName)) {
+			return this.logicalName;
+		} else {
+			// 当前无定义，在层层反向追溯定义源头
+			if (this.refNormalColumn != null) {
+				return this.refNormalColumn.getRefWord().getLogicalName();
+			} else {
+				if (this.refWord != null) {
+					return this.refWord.getLogicalName();
+				}
+			}
+			return "";// logicalName允许为空
 		}
-		
-		if( this.refNormalColumn != null ){
-			return this.refNormalColumn.getRefWord().getLogicalName() ;
-		}
-		
-		if( StringUtils.isNotEmpty(logicalName) ){
-			return this.logicalName ;
-		}
-		
-		return "";//logicalName允许为空
 	}
+	
 	public void setLogicalName(String logicalName) {
 		this.logicalName = logicalName;
 	}
@@ -269,4 +270,14 @@ public class NormalColumn {
 	public void setUniqueKey(String uniqueKey) {
 		this.uniqueKey = uniqueKey;
 	}
+
+	@Override
+	public String toString() {
+		return "NormalColumn [wordId=" + wordId + ", referencedColumn=" + referencedColumn + ", relation=" + relation
+				+ ", id=" + id + ", description=" + description + ", logicalName=" + logicalName + ", physicalName="
+				+ physicalName + ", type=" + type + ", defaultValue=" + defaultValue + ", autoIncrement="
+				+ autoIncrement + ", foreignKey=" + foreignKey + ", notNull=" + notNull + ", primaryKey=" + primaryKey
+				+ ", uniqueKey=" + uniqueKey + ", refWord=" + refWord + ", refNormalColumn=" + refNormalColumn + "]";
+	}
+	
 }

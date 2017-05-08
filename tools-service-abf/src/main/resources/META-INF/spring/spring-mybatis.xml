@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ - Copyright 1999-2011 Alibaba Group.
+ -  
+ - Licensed under the Apache License, Version 2.0 (the "License");
+ - you may not use this file except in compliance with the License.
+ - You may obtain a copy of the License at
+ -  
+ -      http://www.apache.org/licenses/LICENSE-2.0
+ -  
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS,
+ - WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ - See the License for the specific language governing permissions and
+ - limitations under the License.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://code.alibabatech.com/schema/dubbo 
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- ================================= 数据源配置 ======================= -->  
+
+	<!-- 数据源类型：druid -->	
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+		
+		<property name="driverClassName" value="${jdbc.driverClassName}" />  
+        <property name="url" value="${jdbc.url}" />  
+        <property name="username" value="${jdbc.username}" />  
+        <property name="password" value="${jdbc.password}" />  
+
+		<!-- 初始化连接大小 -->  
+        <property name="initialSize" value="${jdbc.initialSize}" />  
+        <!-- 连接池最大使用连接数量 -->
+        <property name="maxActive" value="${jdbc.maxActive}" />  
+        <!-- 连接池最小空闲 -->
+        <property name="minIdle" value="${jdbc.minIdle}" />  
+        <!-- 获取连接最大等待时间 -->
+        <property name="maxWait" value="${jdbc.maxWait}" />  
+		
+		
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}" />
+		
+		<!-- 资源检测 -->
+		<property name="validationQuery" value="${jdbc.validationQuery}" />
+		<property name="testWhileIdle" value="${jdbc.testWhileIdle}" />
+		<property name="testOnBorrow" value="${jdbc.testOnBorrow}" />
+		<property name="testOnReturn" value="${jdbc.testOnReturn}" />
+		
+		<!-- 打开removeAbandoned功能 -->  
+        <property name="removeAbandoned" value="${jdbc.removeAbandoned}" />  
+        <!-- 1800秒，也就是30分钟 -->  
+        <property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}" />  
+        <!-- 关闭abanded连接时输出错误日志 -->  
+        <property name="logAbandoned" value="${jdbc.logAbandoned}" />  
+        
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+		<property name="poolPreparedStatements" value="${jdbc.poolPreparedStatements}" />
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="${jdbc.maxPoolPreparedStatementPerConnectionSize}" />
+
+		<!-- 配置监控统计拦截的filters -->
+		<property name="filters" value="${jdbc.filters}" />
+	</bean>
+	
+	<!-- 数据源：dbcp  -->
+	<!-- mysql
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://${database_url}/${database_name}?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8"/>
+        <property name="username" value="${database_username}"/>
+        <property name="password" value="${database_password}"/>
+		<property name="initialSize" value="15" />
+		<property name="maxActive" value="15" />
+		<property name="maxIdle" value="15" /> 
+	    <property name="minIdle" value="15" /> 
+	    <property name="maxWait" value="6000" /> 
+	    <property name="testOnBorrow" value="true"/> 
+	    <property name="testWhileIdle" value="true"/> 
+	    <property name="validationQuery" value="SELECT  1"/> 
+	     <property name="poolPreparedStatements" value="true"/>
+        <property name="defaultAutoCommit" value="true"/>
+	</bean>
+	-->
+	<!-- oracle
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${database_driverClassName}" />
+		 <property name="url" value="${database_url}" />
+		<property name="username" value="${database_username}"/>
+        <property name="password" value="${database_password}"/>
+
+		<property name="defaultAutoCommit" value="true" />
+		最大连接数
+		<property name="maxActive">
+			<value>5</value>
+		</property>
+		资源池初始化连接数
+		<property name="initialSize">
+			<value>5</value>
+		</property>
+		最大等待时间
+		<property name="maxWait">
+			<value>60000</value>
+		</property>
+		最大空余连接数
+		<property name="maxIdle">
+			<value>20</value>
+		</property>
+		最小空余连接数
+		<property name="minIdle">
+			<value>20</value>
+		</property>
+		超时后是否回收资源
+		<property name="removeAbandoned">
+			<value>true</value>
+		</property>
+		超时回收资源时间
+		<property name="removeAbandonedTimeout">
+			<value>180</value>
+		</property>
+		<property name="connectionProperties">
+			<value>clientEncoding=GBK</value>
+		</property>
+		自动重连的validate校验
+		<property name="testWhileIdle">
+			<value>true</value>
+		</property> 打开检查,用异步线程evict进行检查
+		<property name="testOnBorrow">
+			<value>false</value>
+		</property>
+		<property name="testOnReturn">
+			<value>false</value>
+		</property>
+		<property name="validationQuery">
+			<value>select sysdate from dual</value>
+		</property>
+		<property name="validationQueryTimeout">
+			<value>1</value>
+		</property>
+		<property name="timeBetweenEvictionRunsMillis">
+			<value>30000</value>
+		</property>
+		<property name="numTestsPerEvictionRun">
+			<value>20</value>
+		</property>
+	</bean>
+	-->
+    
+    <!-- ================================= Spring事务管理 ======================= --> 
+    
+    <!-- Transaction manager for a single JDBC DataSource -->
+    <bean id="transactionManager" 
+    	class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean id="transactionTemplate"
+		class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+	</bean>
+	
+	<!-- 注解方式配置事物 -->  
+    <!-- <tx:annotation-driven transaction-manager="transactionManager" /> -->  
+     
+    <!-- 拦截器方式配置事物 -->  
+    <!--    
+    <tx:advice id="transactionAdvice" transaction-manager="transactionManager">  
+        <tx:attributes>  
+            <tx:method name="add*" propagation="REQUIRED" />  
+            <tx:method name="append*" propagation="REQUIRED" />  
+            <tx:method name="insert*" propagation="REQUIRED" />  
+            <tx:method name="save*" propagation="REQUIRED" />  
+            <tx:method name="update*" propagation="REQUIRED" />  
+            <tx:method name="modify*" propagation="REQUIRED" />  
+            <tx:method name="edit*" propagation="REQUIRED" />  
+            <tx:method name="delete*" propagation="REQUIRED" />  
+            <tx:method name="remove*" propagation="REQUIRED" />  
+            <tx:method name="repair" propagation="REQUIRED" />  
+            <tx:method name="delAndRepair" propagation="REQUIRED" />  
+  
+            <tx:method name="get*" propagation="SUPPORTS" />  
+            <tx:method name="find*" propagation="SUPPORTS" />  
+            <tx:method name="load*" propagation="SUPPORTS" />  
+            <tx:method name="search*" propagation="SUPPORTS" />  
+            <tx:method name="datagrid*" propagation="SUPPORTS" />  
+  
+            <tx:method name="*" propagation="SUPPORTS" />  
+        <:attributes>  
+    <:advice>  
+      
+    <aop:config>  
+        <aop:pointcut id="transactionPointcut" expression="execution(* com.ouc.service..*Impl.*(..))" />  
+        <aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" />  
+    </aop:config>  
+    -->
+	
+	<!-- 配置druid监控spring jdbc -->  
+    <!--    
+    <bean id="druid-stat-interceptor" class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor">  
+    </bean>  
+      
+    <bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut" scope="prototype">  
+        <property name="patterns">  
+            <list>  
+                <value>com.ouc.service.*<alue>  
+            <st>  
+        </property>  
+    </bean>  
+      
+    <aop:config>  
+        <aop:advisor advice-ref="druid-stat-interceptor" pointcut-ref="druid-stat-pointcut" />  
+    </aop:config>  
+    -->  
+	
+	<!-- ================================= 针对myBatis的配置项 ======================= -->  
+
+	<!-- define the SqlSessionFactory -->
+	<bean id="sqlSessionFactory1" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 实例化sqlSessionFactory时需要使用上述配置好的数据源以及SQL映射文件 -->
+		<property name="dataSource" ref="dataSource" />
+		<property name="typeAliasesPackage"
+			value="org.tis.tools.dao.ac,
+				   org.tis.tools.dao.om,
+				   org.tis.tools.dao.sys" />
+	</bean>
+    
+    <!-- <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:sql.cfg.xml" />
+		<property name="mapperLocations">
+			<list>
+				配置MyBaties影射文件
+				<value>classpath:/mapper/bcc/*Mapper.xml</value>
+				<value>classpath:/mapper/sys/*Mapper.xml</value>
+			</list>
+		</property>
+	</bean> -->
+    
+	<!-- scan for mappers and let them be autowired -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+     	<!-- 扫描org.tis.tools.dao.mapper这个包以及它的子包下的所有映射接口类 --> 
+        <property name="basePackage" 
+        	value="org.tis.tools.dao.ac,
+        		   org.tis.tools.dao.om,
+        		   org.tis.tools.dao.sys" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory1" />
+    </bean>
+	
+</beans>

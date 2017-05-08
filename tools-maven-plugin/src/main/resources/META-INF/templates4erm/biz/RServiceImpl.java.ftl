@@ -11,7 +11,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import ${mainPackage}.base.WhereCondition;
 import ${mainPackage}.model.po.${bizmodelId}.${poClassName};
-import ${mainPackage}.rservice.${bizmodelId}.${apiClassName};
+import ${mainPackage}.rservice.${bizmodelId}.basic.${apiClassName};
 import ${mainPackage}.service.${bizmodelId}.${poServiceClassVar};
 
 import com.alibaba.dubbo.config.annotation.Service;
