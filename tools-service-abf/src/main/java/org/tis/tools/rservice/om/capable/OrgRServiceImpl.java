@@ -244,13 +244,19 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	
 		OmOrgDetail newOrgDetail = null;
 		
+		final String copyFromOrgCode1 = copyFromOrgCode ; 
+		final String newOrgCode1= newOrgCode ;
+		final boolean copyOrgRole1 = copyOrgRole ; 
+		final boolean copyPosition1 = copyPosition ; 
+		final boolean copyPositionRole1 = copyPositionRole ; 
+		final boolean copyGroup1 = copyGroup ; 
+		final boolean copyGroupRole1 = copyGroupRole ; 
 		try {
 			// 确保在一个事物中完成拷贝处理
 			newOrgDetail = transactionTemplate.execute(new TransactionCallback<OmOrgDetail>() {
 				@Override
 				public OmOrgDetail doInTransaction(TransactionStatus arg0) {
-					return doCopyOrgDeep(newOrgCode, newOrgCode, copyGroupRole, copyGroupRole, copyGroupRole,
-							copyGroupRole, copyGroupRole);
+					return doCopyOrgDeep(copyFromOrgCode1, newOrgCode1, copyOrgRole1, copyPosition1, copyPositionRole1, copyGroup1, copyGroupRole1) ;
 				}
 			});
 
@@ -275,9 +281,8 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 * @param copyGroupRole
 	 * @return
 	 */
-	private OmOrgDetail doCopyOrgDeep(final String copyFromOrgCode, final String newOrgCode, final boolean copyOrgRole,
-			final boolean copyPosition, final boolean copyPositionRole, final boolean copyGroup,
-			final boolean copyGroupRole) {
+	private OmOrgDetail doCopyOrgDeep(String copyFromOrgCode, String newOrgCode, boolean copyOrgRole, boolean copyPosition,
+			boolean copyPositionRole, boolean copyGroup, boolean copyGroupRole) {
 		
 		// 取出参照机构
 		OmOrg copyFromOrg = omOrgServiceExt.loadByOrgCode(copyFromOrgCode); 
@@ -504,14 +509,15 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 					BasicUtil.wrap(orgCode, delOrg.getOrgStatus()), "不能删除非空机构{0}！");
 		}
 		
+		final String guid = delOrg.getGuid(); 
 		try {
 			transactionTemplate.execute(new TransactionCallback<String>() {
 				@Override
 				public String doInTransaction(TransactionStatus arg0) {
 					//删除机构
-					omOrgService.delete(delOrg.getGuid());
+					omOrgService.delete(guid);
 					//删除机构对应权限集映射
-					acRoleServiceExt.deletePartyRole(ACConstants.PARTY_TYPE_ORGANIZATION, delOrg.getGuid());
+					acRoleServiceExt.deletePartyRole(ACConstants.PARTY_TYPE_ORGANIZATION, guid);
 					return "";
 				}
 			});
