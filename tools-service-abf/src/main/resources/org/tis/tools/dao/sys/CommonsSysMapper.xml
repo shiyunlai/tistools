@@ -8,7 +8,7 @@
   <!-- 根据业务字典（dictKey）和字典项（itemValue）查询字典项的实际值 -->
  	<select id="querySendValue" parameterType="Map" resultType="String">
  		select i.send_value 
- 		from sys_dict d , sys_dict_item i 
+ 		from SYS_DICT d , SYS_DICT_ITEM i 
  		where d.dict_key = #{dictKey} and d.guid = i.guid_dict and i.item_value = #{itemValue} 
  	</select>
  	
