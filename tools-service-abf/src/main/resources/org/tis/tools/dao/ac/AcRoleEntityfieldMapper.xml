@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.ac.AcRoleEntityfieldMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.ac.AcRoleEntityfield">
+	    INSERT INTO AC_ROLE_ENTITYFIELD 
+	    (
+	    	 guid_role
+	    	,guid_entityfield
+	    	,ismodify
+	    	,isview
+	    )
+	    VALUES 
+	    (
+			#{guidRole,jdbcType=VARCHAR},
+			#{guidEntityfield,jdbcType=VARCHAR},
+			#{ismodify,jdbcType=CHAR},
+			#{isview,jdbcType=CHAR}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.ac.AcRoleEntityfield">
+    	UPDATE AC_ROLE_ENTITYFIELD 
+	    <set>
+		<if test="guid_role != null" >
+			guid_role = #{guidRole,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_entityfield != null" >
+			guid_entityfield = #{guidEntityfield,jdbcType=VARCHAR},
+		</if>
+		<if test="ismodify != null" >
+			ismodify = #{ismodify,jdbcType=CHAR},
+		</if>
+		<if test="isview != null" >
+			isview = #{isview,jdbcType=CHAR}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.ac.AcRoleEntityfield">
+    	UPDATE AC_ROLE_ENTITYFIELD 
+	    <set>
+		guid_role = #{guidRole,jdbcType=VARCHAR},
+		guid_entityfield = #{guidEntityfield,jdbcType=VARCHAR},
+		ismodify = #{ismodify,jdbcType=CHAR},
+		isview = #{isview,jdbcType=CHAR}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from AC_ROLE_ENTITYFIELD where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from AC_ROLE_ENTITYFIELD <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE AC_ROLE_ENTITYFIELD 
+	   <set>
+		<if test="domain.guid_role != null" >
+        	guid_role = #{domain.guidRole,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_entityfield != null" >
+        	guid_entityfield = #{domain.guidEntityfield,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.ismodify != null" >
+        	ismodify = #{domain.ismodify,jdbcType=CHAR}
+      	</if>
+		<if test="domain.isview != null" >
+        	isview = #{domain.isview,jdbcType=CHAR}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.ac.AcRoleEntityfield">
+		select <include refid="Base_Column_List"/> from AC_ROLE_ENTITYFIELD where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.ac.AcRoleEntityfield" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from AC_ROLE_ENTITYFIELD <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from AC_ROLE_ENTITYFIELD <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid_role
+		,guid_entityfield
+		,ismodify
+		,isview
+	</sql>
+</mapper>

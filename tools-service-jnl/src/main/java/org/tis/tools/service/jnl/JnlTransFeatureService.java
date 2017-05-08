@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import org.tis.tools.base.WhereCondition;
 
-import org.tis.tools.dao.mapper.jnl.JnlTransFeatureMapper;
+import org.tis.tools.dao.jnl.JnlTransFeatureMapper;
 import org.tis.tools.model.po.jnl.JnlTransFeature;
 
 

@@ -10,11 +10,13 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
+import org.tis.tools.common.utils.StringUtil;
+
 /**
  * 
  * <pre>
  * 预填流水
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/model.erm
+ * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-mysql.erm
  * 业务域：jnl
  * 模型：JNL_PREFILL 预填流水
  *
@@ -31,11 +33,41 @@ public class JnlPrefill implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "JNL_PREFILL" ; 
+	/* JNL_PREFILL table's columns definition */
+	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier） */
+	public static final String COLUMN_GUID = "guid" ; 
+	/** GUID_CUST_SERVICE ：服务流水ID<br/><br/>关联服务流水记录 */
+	public static final String COLUMN_GUID_CUST_SERVICE = "guid_cust_service" ; 
+	/** SERVICE_SNO ：服务流水号<br/><br/> */
+	public static final String COLUMN_SERVICE_SNO = "service_sno" ; 
+	/** PREFILL_DATE ：预填日期<br/><br/> */
+	public static final String COLUMN_PREFILL_DATE = "prefill_date" ; 
+	/** PREFILL_TIME ：预填时间<br/><br/>yyyyMMddHHmmSSsss */
+	public static final String COLUMN_PREFILL_TIME = "prefill_time" ; 
+	/** TRANS_CODE ：交易代码<br/><br/> */
+	public static final String COLUMN_TRANS_CODE = "trans_code" ; 
+	/** PREFILL_DATA ：预填数据<br/><br/> */
+	public static final String COLUMN_PREFILL_DATA = "prefill_data" ; 
+	/** PREFILL_STATUS ：预填处理状态<br/><br/>见业务字典：DICT_PREFILL_STATUS */
+	public static final String COLUMN_PREFILL_STATUS = "prefill_status" ; 
+	/** PREFILL_CHN ：预填渠道<br/><br/>预填来源渠道（渠道代码） */
+	public static final String COLUMN_PREFILL_CHN = "prefill_chn" ; 
+	/** TELLER_NO ：柜员代码<br/><br/>本次接触活动的柜员 */
+	public static final String COLUMN_TELLER_NO = "teller_no" ; 
+	/** INSTNO ：机构编码<br/><br/> */
+	public static final String COLUMN_INSTNO = "instno" ; 
+	/** TRANS_TELLER ：交易柜员<br/><br/>本次交易操作的柜员代码 */
+	public static final String COLUMN_TRANS_TELLER = "trans_teller" ; 
+	/** TRANS_INSTNO ：交易机构<br/><br/>本次交易发生所在机构 */
+	public static final String COLUMN_TRANS_INSTNO = "trans_instno" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier） */
 	private String guid ;
 	
-	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：关联服务流水记录 */
+	/** 字段类型：varchar<br/>字段名：服务流水ID<br/>描述：关联服务流水记录 */
 	private String guidCustService ;
 	
 	/** 字段类型：varchar<br/>字段名：服务流水号<br/>描述： */
@@ -92,19 +124,19 @@ public class JnlPrefill implements Serializable {
     }
 	
 	/**
-	 * Set the 数据主键.
+	 * Set the 服务流水ID.
 	 * 
 	 * @param guidCustService
-	 *            数据主键
+	 *            服务流水ID
 	 */
 	public void setGuidCustService(String guidCustService) {
  		this.guidCustService = guidCustService == null ? null : guidCustService.trim() ;
     }
     
     /**
-	 * Get the 数据主键.
+	 * Get the 服务流水ID.
 	 * 
-	 * @return 数据主键
+	 * @return 服务流水ID
 	 */
 	public String getGuidCustService(){
 		return this.guidCustService ;
@@ -318,4 +350,8 @@ public class JnlPrefill implements Serializable {
 	public String getTransInstno(){
 		return this.transInstno ;
     }
+	
+	public String toString(){
+		return StringUtil.toString(this) ; 
+	}
 }

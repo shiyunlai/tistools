@@ -10,11 +10,13 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
+import org.tis.tools.common.utils.StringUtil;
+
 /**
  * 
  * <pre>
  * 客户服务流水
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/model.erm
+ * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-mysql.erm
  * 业务域：jnl
  * 模型：JNL_CUST_SERVICE 客户服务流水
  *
@@ -35,6 +37,38 @@ public class JnlCustService implements Serializable {
 
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
+	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "JNL_CUST_SERVICE" ; 
+	/* JNL_CUST_SERVICE table's columns definition */
+	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier） */
+	public static final String COLUMN_GUID = "guid" ; 
+	/** SERVICE_SNO ：服务流水号<br/><br/>某次服务的义务唯一标识，由系统按照规则生成，不能重复 */
+	public static final String COLUMN_SERVICE_SNO = "service_sno" ; 
+	/** START_TIME ：开始时间<br/><br/>存储到毫秒级别的时间 yyyyMMddHHmmssSSS */
+	public static final String COLUMN_START_TIME = "start_time" ; 
+	/** END_TIME ：结束时间<br/><br/>yyyyMMddHHmmssSSS */
+	public static final String COLUMN_END_TIME = "end_time" ; 
+	/** CUST_NO ：客户编号<br/><br/>系统中的客户编号 */
+	public static final String COLUMN_CUST_NO = "cust_no" ; 
+	/** CUST_LEVEL ：客户级别<br/><br/>银行对客户的评级 */
+	public static final String COLUMN_CUST_LEVEL = "cust_level" ; 
+	/** PAPER_NO ：证件号<br/><br/>证件号码 */
+	public static final String COLUMN_PAPER_NO = "paper_no" ; 
+	/** PAPER_TYPE ：证件类型<br/><br/>证件类型，见业务字典： DICT_PAPER_TYPE */
+	public static final String COLUMN_PAPER_TYPE = "paper_type" ; 
+	/** CUST_SERVICE_CTX ：客户服务信息<br/><br/>本次客户服务的上下文。预先获取的关于客户的信息，如：客户基本信息，客户资产信息。。。 便于客户服务过程中柜员使用，提高服务质量； 以JSON格式存储信息； 一般： 1、排队时获取 2、预约时获取 3、身份核查时获取 新客户则为空 */
+	public static final String COLUMN_CUST_SERVICE_CTX = "cust_service_ctx" ; 
+	/** SERVICE_INTERVAL ：服务总时长<br/><br/>从开始服务到结束服务两个状态之间的时长 */
+	public static final String COLUMN_SERVICE_INTERVAL = "service_interval" ; 
+	/** SERVICE_TYPE ：服务类型<br/><br/>银行所提供的客户服务类型 见义务字典： DICT_SERVICE_TYPE */
+	public static final String COLUMN_SERVICE_TYPE = "service_type" ; 
+	/** SERVICE_APPRAISE ：服务评价<br/><br/>对客户服务的评价，见义务字典：DICT_SERVICE_APPRAISE positive 好评 normal 一般 negative 差评 */
+	public static final String COLUMN_SERVICE_APPRAISE = "service_appraise" ; 
+	/** SERVICE_STATUS ：服务状态<br/><br/>详见业务字典： DICT_SERVICE_STATUS start - 开始服务 pause - 暂停服务 finish - 结束服务 */
+	public static final String COLUMN_SERVICE_STATUS = "service_status" ; 
+	/** TRANS_NUM ：总交易笔数<br/><br/>服务过程中成功操作过的交易笔数（包括：柜员操作、系统自动完成、客户自助操作等），事后系统自己统计完善客户服务流水； */
+	public static final String COLUMN_TRANS_NUM = "trans_num" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier） */
@@ -345,4 +379,8 @@ public class JnlCustService implements Serializable {
 	public Integer getTransNum(){
 		return this.transNum ;
     }
+	
+	public String toString(){
+		return StringUtil.toString(this) ; 
+	}
 }

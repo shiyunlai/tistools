@@ -306,11 +306,11 @@ public class TimeUtil {
 	 * 
 	 * @param d1
 	 * @param d2
-	 * @return -1 date1早于date2，如： 20150101 < 20150109<br>
+	 * @return -1 d1早于d2，如： 20150101 < 20150109<br>
 	 *         0 两个日期为同一天<br>
-	 *         1 date1晚于date2，如： 20150105 > 20150101
+	 *         1 d1晚于d2，如： 20150105 > 20150101
 	 */
-	public int compareDate(Date d1, Date d2) {
+	public static int compareDate(Date d1, Date d2) {
 		Calendar c1 = Calendar.getInstance();
 		Calendar c2 = Calendar.getInstance();
 		c1.setTime(d1);

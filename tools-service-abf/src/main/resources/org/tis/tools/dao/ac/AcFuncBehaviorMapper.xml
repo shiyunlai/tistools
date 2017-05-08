@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.ac.AcFuncBehaviorMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.ac.AcFuncBehavior">
+	    INSERT INTO AC_FUNC_BEHAVIOR 
+	    (
+	    	 guid
+	    	,guid_func
+	    	,bhv_code
+	    	,bhv_desc
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=VARCHAR},
+			#{guidFunc,jdbcType=VARCHAR},
+			#{bhvCode,jdbcType=VARCHAR},
+			#{bhvDesc,jdbcType=VARCHAR}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.ac.AcFuncBehavior">
+    	UPDATE AC_FUNC_BEHAVIOR 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_func != null" >
+			guid_func = #{guidFunc,jdbcType=VARCHAR},
+		</if>
+		<if test="bhv_code != null" >
+			bhv_code = #{bhvCode,jdbcType=VARCHAR},
+		</if>
+		<if test="bhv_desc != null" >
+			bhv_desc = #{bhvDesc,jdbcType=VARCHAR}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.ac.AcFuncBehavior">
+    	UPDATE AC_FUNC_BEHAVIOR 
+	    <set>
+		guid = #{guid,jdbcType=VARCHAR},
+		guid_func = #{guidFunc,jdbcType=VARCHAR},
+		bhv_code = #{bhvCode,jdbcType=VARCHAR},
+		bhv_desc = #{bhvDesc,jdbcType=VARCHAR}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from AC_FUNC_BEHAVIOR where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from AC_FUNC_BEHAVIOR <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE AC_FUNC_BEHAVIOR 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_func != null" >
+        	guid_func = #{domain.guidFunc,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.bhv_code != null" >
+        	bhv_code = #{domain.bhvCode,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.bhv_desc != null" >
+        	bhv_desc = #{domain.bhvDesc,jdbcType=VARCHAR}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.ac.AcFuncBehavior">
+		select <include refid="Base_Column_List"/> from AC_FUNC_BEHAVIOR where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.ac.AcFuncBehavior" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from AC_FUNC_BEHAVIOR <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from AC_FUNC_BEHAVIOR <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid
+		,guid_func
+		,bhv_code
+		,bhv_desc
+	</sql>
+</mapper>

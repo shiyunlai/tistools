@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 import ${wcClassPackageVar};
 
-import ${mainPackage}.dao.mapper.${bizmodelId}.${mapperTypeVar};
+import ${mainPackage}.dao.${bizmodelId}.${mapperTypeVar};
 import ${mainPackage}.model.po.${bizmodelId}.${poClassNameVar};
 
 

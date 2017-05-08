@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- - Copyright org tis 2016. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://code.alibabatech.com/schema/dubbo 
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- ======= -->
+	<!-- Redis -->
+	<!-- ======= -->
+
+	<!-- Spring + redis(主备 master-slaver方式) -->
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="${redis.maxTotal}" />
+        <property name="maxIdle" value="${redis.maxIdle}" />
+        <property name="minIdle" value="${redis.minIdle}" />
+        <property name="MaxWaitMillis" value="${redis.MaxWaitMillis}" />
+        <property name="testOnBorrow" value="${redis.testOnBorrow}"/>
+        <property name="testOnReturn" value="${redis.testOnReturn}"/>
+        <!-- <property name="testWhileIdle" value="${redis.testWhileIdle}"/> -->
+    </bean>
+	
+    <bean id="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool"  scope="singleton">
+        <constructor-arg index="0" ref="jedisPoolConfig" />
+        <constructor-arg index="1">
+            <list>
+            	<!-- ## //TODO 要支持redis集群 -->
+                <bean name="master" class="redis.clients.jedis.JedisShardInfo">
+                    <constructor-arg name="host" value="${redis.host.master}" />
+                    <constructor-arg name="port" value="${redis.port.master}" />
+                    <constructor-arg name="name" value="${redis.name.master}" />
+                    <constructor-arg name="timeout" value="${redis.timeout}" />
+                </bean>
+                <bean name="slaver" class="redis.clients.jedis.JedisShardInfo">
+                    <constructor-arg name="host" value="${redis.host.slaver}" />
+                    <constructor-arg name="port" value="${redis.port.slaver}" />
+                    <constructor-arg name="name" value="${redis.name.slaver}" />
+                    <constructor-arg name="timeout" value="${redis.timeout}" />
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+
+	<!-- 使用sentinel pool方式 
+	https://my.oschina.net/dxqr/blog/711578
+	或参考兴业项目工程 from-hongchao
+	-->
+	<!-- 
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxTotal" value="50" />
+		<property name="maxIdle" value="10" />
+		<property name="minIdle" value="0" />
+	</bean>
+
+	<bean id="jedisPool" class="redis.clients.jedis.JedisSentinelPool">
+		<constructor-arg index="0" value="mymaster" />
+		<constructor-arg index="1">
+			<set>
+				<value>172.16.154.232:7031</value>
+				<value>172.16.154.233:7031</value>
+			</set>
+		</constructor-arg>
+		<constructor-arg index="2" ref="jedisPoolConfig" />
+		<constructor-arg index="3" value="600000" />
+		<constructor-arg index="4" value="foobared" />
+	</bean> -->
+	
+	
+	<!-- 使用集群方式的redis 
+	http://blog.csdn.net/u010739551/article/details/52438101
+	-->
+	<!-- //TODO spring + redis(集群) -->
+    
+</beans>

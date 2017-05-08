@@ -103,4 +103,12 @@ public class Table {
 		
 		return null ; 
 	}
+
+	@Override
+	public String toString() {
+		return "Table [id=" + id + ", physicalName=" + physicalName + ", logicalName=" + logicalName + ", description="
+				+ description + ", normalColumns=" + normalColumns + "]";
+	}
+	
+	
 }

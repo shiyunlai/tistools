@@ -10,11 +10,13 @@ import java.sql.Blob;
 import java.sql.Time;
 import java.util.Date;
 
+import org.tis.tools.common.utils.StringUtil;
+
 /**
  * 
  * <pre>
  * 交易业务要素
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/model.erm
+ * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-mysql.erm
  * 业务域：jnl
  * 模型：JNL_TRANS_FEATURE 交易业务要素
  *
@@ -29,11 +31,25 @@ public class JnlTransFeature implements Serializable {
  	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	/** 对应的数据库表名称 */
+	public static final String TABLE_NAME = "JNL_TRANS_FEATURE" ; 
+	/* JNL_TRANS_FEATURE table's columns definition */
+	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier） */
+	public static final String COLUMN_GUID = "guid" ; 
+	/** GUID_TRANS ：交易流水ID<br/><br/>关联交易流水记录 */
+	public static final String COLUMN_GUID_TRANS = "guid_trans" ; 
+	/** TRANS_SNO ：交易流水号<br/><br/> */
+	public static final String COLUMN_TRANS_SNO = "trans_sno" ; 
+	/** TRANS_FIELD ：交易要素<br/><br/>对应交易界面上的字段代码 */
+	public static final String COLUMN_TRANS_FIELD = "trans_field" ; 
+	/** TRANS_DATA ：交易数据<br/><br/>交易当时的数据信息，所有信息转换为String的形式存储 */
+	public static final String COLUMN_TRANS_DATA = "trans_data" ; 
+	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier） */
 	private String guid ;
 	
-	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：关联交易流水记录 */
+	/** 字段类型：varchar<br/>字段名：交易流水ID<br/>描述：关联交易流水记录 */
 	private String guidTrans ;
 	
 	/** 字段类型：varchar<br/>字段名：交易流水号<br/>描述： */
@@ -66,19 +82,19 @@ public class JnlTransFeature implements Serializable {
     }
 	
 	/**
-	 * Set the 数据主键.
+	 * Set the 交易流水ID.
 	 * 
 	 * @param guidTrans
-	 *            数据主键
+	 *            交易流水ID
 	 */
 	public void setGuidTrans(String guidTrans) {
  		this.guidTrans = guidTrans == null ? null : guidTrans.trim() ;
     }
     
     /**
-	 * Get the 数据主键.
+	 * Get the 交易流水ID.
 	 * 
-	 * @return 数据主键
+	 * @return 交易流水ID
 	 */
 	public String getGuidTrans(){
 		return this.guidTrans ;
@@ -140,4 +156,8 @@ public class JnlTransFeature implements Serializable {
 	public String getTransData(){
 		return this.transData ;
     }
+	
+	public String toString(){
+		return StringUtil.toString(this) ; 
+	}
 }

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.sys.SysDictMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.sys.SysDict">
+	    INSERT INTO SYS_DICT 
+	    (
+	    	 guid
+	    	,dict_key
+	    	,dict_type
+	    	,dict_name
+	    	,dict_desc
+	    	,default_value
+	    	,from_table
+	    	,use_column
+	    	,guid_parents
+	    	,seqno
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=VARCHAR},
+			#{dictKey,jdbcType=VARCHAR},
+			#{dictType,jdbcType=CHAR},
+			#{dictName,jdbcType=VARCHAR},
+			#{dictDesc,jdbcType=VARCHAR},
+			#{defaultValue,jdbcType=VARCHAR},
+			#{fromTable,jdbcType=VARCHAR},
+			#{useColumn,jdbcType=VARCHAR},
+			#{guidParents,jdbcType=VARCHAR},
+			#{seqno,jdbcType=DECIMAL}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.sys.SysDict">
+    	UPDATE SYS_DICT 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=VARCHAR},
+		</if>
+		<if test="dict_key != null" >
+			dict_key = #{dictKey,jdbcType=VARCHAR},
+		</if>
+		<if test="dict_type != null" >
+			dict_type = #{dictType,jdbcType=CHAR},
+		</if>
+		<if test="dict_name != null" >
+			dict_name = #{dictName,jdbcType=VARCHAR},
+		</if>
+		<if test="dict_desc != null" >
+			dict_desc = #{dictDesc,jdbcType=VARCHAR},
+		</if>
+		<if test="default_value != null" >
+			default_value = #{defaultValue,jdbcType=VARCHAR},
+		</if>
+		<if test="from_table != null" >
+			from_table = #{fromTable,jdbcType=VARCHAR},
+		</if>
+		<if test="use_column != null" >
+			use_column = #{useColumn,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_parents != null" >
+			guid_parents = #{guidParents,jdbcType=VARCHAR},
+		</if>
+		<if test="seqno != null" >
+			seqno = #{seqno,jdbcType=DECIMAL}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.sys.SysDict">
+    	UPDATE SYS_DICT 
+	    <set>
+		guid = #{guid,jdbcType=VARCHAR},
+		dict_key = #{dictKey,jdbcType=VARCHAR},
+		dict_type = #{dictType,jdbcType=CHAR},
+		dict_name = #{dictName,jdbcType=VARCHAR},
+		dict_desc = #{dictDesc,jdbcType=VARCHAR},
+		default_value = #{defaultValue,jdbcType=VARCHAR},
+		from_table = #{fromTable,jdbcType=VARCHAR},
+		use_column = #{useColumn,jdbcType=VARCHAR},
+		guid_parents = #{guidParents,jdbcType=VARCHAR},
+		seqno = #{seqno,jdbcType=DECIMAL}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from SYS_DICT where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from SYS_DICT <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE SYS_DICT 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.dict_key != null" >
+        	dict_key = #{domain.dictKey,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.dict_type != null" >
+        	dict_type = #{domain.dictType,jdbcType=CHAR}
+      	</if>
+		<if test="domain.dict_name != null" >
+        	dict_name = #{domain.dictName,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.dict_desc != null" >
+        	dict_desc = #{domain.dictDesc,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.default_value != null" >
+        	default_value = #{domain.defaultValue,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.from_table != null" >
+        	from_table = #{domain.fromTable,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.use_column != null" >
+        	use_column = #{domain.useColumn,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_parents != null" >
+        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.seqno != null" >
+        	seqno = #{domain.seqno,jdbcType=DECIMAL}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.sys.SysDict">
+		select <include refid="Base_Column_List"/> from SYS_DICT where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.sys.SysDict" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from SYS_DICT <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from SYS_DICT <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid
+		,dict_key
+		,dict_type
+		,dict_name
+		,dict_desc
+		,default_value
+		,from_table
+		,use_column
+		,guid_parents
+		,seqno
+	</sql>
+</mapper>

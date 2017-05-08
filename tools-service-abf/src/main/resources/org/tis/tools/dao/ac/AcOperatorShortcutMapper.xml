@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.ac.AcOperatorShortcutMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.ac.AcOperatorShortcut">
+	    INSERT INTO AC_OPERATOR_SHORTCUT 
+	    (
+	    	 guid_operator
+	    	,guid_func
+	    	,guid_funcgroup
+	    	,guid_app
+	    	,order_no
+	    	,image_path
+	    	,shortcut_key
+	    )
+	    VALUES 
+	    (
+			#{guidOperator,jdbcType=VARCHAR},
+			#{guidFunc,jdbcType=VARCHAR},
+			#{guidFuncgroup,jdbcType=VARCHAR},
+			#{guidApp,jdbcType=VARCHAR},
+			#{orderNo,jdbcType=DECIMAL},
+			#{imagePath,jdbcType=VARCHAR},
+			#{shortcutKey,jdbcType=VARCHAR}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.ac.AcOperatorShortcut">
+    	UPDATE AC_OPERATOR_SHORTCUT 
+	    <set>
+		<if test="guid_operator != null" >
+			guid_operator = #{guidOperator,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_func != null" >
+			guid_func = #{guidFunc,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_funcgroup != null" >
+			guid_funcgroup = #{guidFuncgroup,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_app != null" >
+			guid_app = #{guidApp,jdbcType=VARCHAR},
+		</if>
+		<if test="order_no != null" >
+			order_no = #{orderNo,jdbcType=DECIMAL},
+		</if>
+		<if test="image_path != null" >
+			image_path = #{imagePath,jdbcType=VARCHAR},
+		</if>
+		<if test="shortcut_key != null" >
+			shortcut_key = #{shortcutKey,jdbcType=VARCHAR}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.ac.AcOperatorShortcut">
+    	UPDATE AC_OPERATOR_SHORTCUT 
+	    <set>
+		guid_operator = #{guidOperator,jdbcType=VARCHAR},
+		guid_func = #{guidFunc,jdbcType=VARCHAR},
+		guid_funcgroup = #{guidFuncgroup,jdbcType=VARCHAR},
+		guid_app = #{guidApp,jdbcType=VARCHAR},
+		order_no = #{orderNo,jdbcType=DECIMAL},
+		image_path = #{imagePath,jdbcType=VARCHAR},
+		shortcut_key = #{shortcutKey,jdbcType=VARCHAR}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from AC_OPERATOR_SHORTCUT where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from AC_OPERATOR_SHORTCUT <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE AC_OPERATOR_SHORTCUT 
+	   <set>
+		<if test="domain.guid_operator != null" >
+        	guid_operator = #{domain.guidOperator,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_func != null" >
+        	guid_func = #{domain.guidFunc,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_funcgroup != null" >
+        	guid_funcgroup = #{domain.guidFuncgroup,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_app != null" >
+        	guid_app = #{domain.guidApp,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.order_no != null" >
+        	order_no = #{domain.orderNo,jdbcType=DECIMAL}
+      	</if>
+		<if test="domain.image_path != null" >
+        	image_path = #{domain.imagePath,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.shortcut_key != null" >
+        	shortcut_key = #{domain.shortcutKey,jdbcType=VARCHAR}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.ac.AcOperatorShortcut">
+		select <include refid="Base_Column_List"/> from AC_OPERATOR_SHORTCUT where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.ac.AcOperatorShortcut" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from AC_OPERATOR_SHORTCUT <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from AC_OPERATOR_SHORTCUT <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid_operator
+		,guid_func
+		,guid_funcgroup
+		,guid_app
+		,order_no
+		,image_path
+		,shortcut_key
+	</sql>
+</mapper>

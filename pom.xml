@@ -15,22 +15,21 @@
 		<module>tools-common-assembly</module>
 		<module>tools-core</module>
 		<module>tools-design</module>
+		<module>tools-maven-plugin</module>
 		<module>tools-facade-biztrace</module>
 		<module>tools-facade-devmgr</module>
-		
+		<module>tools-facade-jnl</module>
+		<module>tools-facade-om</module>
+		<module>tools-facade-ac</module>
+		<module>tools-facade-sys</module>
+		<module>tools-facade-log</module>
+		<module>tools-service-abf</module>
 		<module>tools-service-biztrace</module>
 		<module>tools-service-devmgr</module>
-		<module>tools-web-boss</module>
-		<!-- <module>tools-web-tools3</module> -->
-		<module>tools-web-tools</module>
-		<module>tools-facade-user</module>
-		
-		<module>tools-service-user</module>
-		<module>tools-web-user</module>
-		<module>tools-facade-jnl</module>
 		<module>tools-service-jnl</module>
-		<module>tools-maven-plugin</module>
-		
+		<!-- <module>tools-web-tools3</module> -->
+		<module>tools-web-boss</module>
+		<module>tools-web-tools</module>
 	</modules>
 	<properties>
 		<!-- Common libs -->
@@ -86,7 +85,7 @@
 		<commons_pool_version>1.6</commons_pool_version>
 		<commons-lang_version>2.6</commons-lang_version>
 		<commons.collections.version>3.2.1</commons.collections.version>
-		<commons.beanutils.version>1.8.3</commons.beanutils.version>
+		<commons.beanutils.version>1.9.3</commons.beanutils.version>
 		<tomcat_embed_version>8.0.11</tomcat_embed_version>
 		<!-- Log libs -->
 		<!--<slf4j_version>1.6.2</slf4j_version> -->

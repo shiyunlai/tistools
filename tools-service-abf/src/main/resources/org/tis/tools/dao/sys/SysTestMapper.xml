@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.sys.SysTestMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.sys.SysTest">
+	    INSERT INTO SYS_TEST 
+	    (
+	    	 test_bigint
+	    	,test_gibintn
+	    	,test_char
+	    	,test_charn
+	    	,test_date
+	    	,test_datetime
+	    	,test_decimal
+	    	,test_decimalp
+	    	,test_decimalps
+	    	,test_double
+	    	,test_doublemd
+	    	,test_float
+	    	,test_floatp
+	    	,test_floatmd
+	    	,test_int
+	    	,test_intn
+	    	,test_time
+	    	,test_timestamp
+	    	,test_varcharn
+	    	,tset_text
+	    	,test_blob
+	    )
+	    VALUES 
+	    (
+			#{testBigint,jdbcType=BIGINT},
+			#{testGibintn,jdbcType=BIGINT},
+			#{testChar,jdbcType=CHAR},
+			#{testCharn,jdbcType=CHAR},
+			#{testDate,jdbcType=DATE},
+			#{testDatetime,jdbcType=DATETIME},
+			#{testDecimal,jdbcType=DECIMAL},
+			#{testDecimalp,jdbcType=DECIMAL},
+			#{testDecimalps,jdbcType=DECIMAL},
+			#{testDouble,jdbcType=DOUBLE},
+			#{testDoublemd,jdbcType=DOUBLE},
+			#{testFloat,jdbcType=FLOAT},
+			#{testFloatp,jdbcType=FLOAT},
+			#{testFloatmd,jdbcType=FLOAT},
+			#{testInt,jdbcType=INT},
+			#{testIntn,jdbcType=INT},
+			#{testTime,jdbcType=TIME},
+			#{testTimestamp,jdbcType=TIMESTAMP},
+			#{testVarcharn,jdbcType=VARCHAR},
+			#{tsetText,jdbcType=TEXT},
+			#{testBlob,jdbcType=BLOB}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.sys.SysTest">
+    	UPDATE SYS_TEST 
+	    <set>
+		<if test="test_bigint != null" >
+			test_bigint = #{testBigint,jdbcType=BIGINT},
+		</if>
+		<if test="test_gibintn != null" >
+			test_gibintn = #{testGibintn,jdbcType=BIGINT},
+		</if>
+		<if test="test_char != null" >
+			test_char = #{testChar,jdbcType=CHAR},
+		</if>
+		<if test="test_charn != null" >
+			test_charn = #{testCharn,jdbcType=CHAR},
+		</if>
+		<if test="test_date != null" >
+			test_date = #{testDate,jdbcType=DATE},
+		</if>
+		<if test="test_datetime != null" >
+			test_datetime = #{testDatetime,jdbcType=DATETIME},
+		</if>
+		<if test="test_decimal != null" >
+			test_decimal = #{testDecimal,jdbcType=DECIMAL},
+		</if>
+		<if test="test_decimalp != null" >
+			test_decimalp = #{testDecimalp,jdbcType=DECIMAL},
+		</if>
+		<if test="test_decimalps != null" >
+			test_decimalps = #{testDecimalps,jdbcType=DECIMAL},
+		</if>
+		<if test="test_double != null" >
+			test_double = #{testDouble,jdbcType=DOUBLE},
+		</if>
+		<if test="test_doublemd != null" >
+			test_doublemd = #{testDoublemd,jdbcType=DOUBLE},
+		</if>
+		<if test="test_float != null" >
+			test_float = #{testFloat,jdbcType=FLOAT},
+		</if>
+		<if test="test_floatp != null" >
+			test_floatp = #{testFloatp,jdbcType=FLOAT},
+		</if>
+		<if test="test_floatmd != null" >
+			test_floatmd = #{testFloatmd,jdbcType=FLOAT},
+		</if>
+		<if test="test_int != null" >
+			test_int = #{testInt,jdbcType=INT},
+		</if>
+		<if test="test_intn != null" >
+			test_intn = #{testIntn,jdbcType=INT},
+		</if>
+		<if test="test_time != null" >
+			test_time = #{testTime,jdbcType=TIME},
+		</if>
+		<if test="test_timestamp != null" >
+			test_timestamp = #{testTimestamp,jdbcType=TIMESTAMP},
+		</if>
+		<if test="test_varcharn != null" >
+			test_varcharn = #{testVarcharn,jdbcType=VARCHAR},
+		</if>
+		<if test="tset_text != null" >
+			tset_text = #{tsetText,jdbcType=TEXT},
+		</if>
+		<if test="test_blob != null" >
+			test_blob = #{testBlob,jdbcType=BLOB}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.sys.SysTest">
+    	UPDATE SYS_TEST 
+	    <set>
+		test_bigint = #{testBigint,jdbcType=BIGINT},
+		test_gibintn = #{testGibintn,jdbcType=BIGINT},
+		test_char = #{testChar,jdbcType=CHAR},
+		test_charn = #{testCharn,jdbcType=CHAR},
+		test_date = #{testDate,jdbcType=DATE},
+		test_datetime = #{testDatetime,jdbcType=DATETIME},
+		test_decimal = #{testDecimal,jdbcType=DECIMAL},
+		test_decimalp = #{testDecimalp,jdbcType=DECIMAL},
+		test_decimalps = #{testDecimalps,jdbcType=DECIMAL},
+		test_double = #{testDouble,jdbcType=DOUBLE},
+		test_doublemd = #{testDoublemd,jdbcType=DOUBLE},
+		test_float = #{testFloat,jdbcType=FLOAT},
+		test_floatp = #{testFloatp,jdbcType=FLOAT},
+		test_floatmd = #{testFloatmd,jdbcType=FLOAT},
+		test_int = #{testInt,jdbcType=INT},
+		test_intn = #{testIntn,jdbcType=INT},
+		test_time = #{testTime,jdbcType=TIME},
+		test_timestamp = #{testTimestamp,jdbcType=TIMESTAMP},
+		test_varcharn = #{testVarcharn,jdbcType=VARCHAR},
+		tset_text = #{tsetText,jdbcType=TEXT},
+		test_blob = #{testBlob,jdbcType=BLOB}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from SYS_TEST where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from SYS_TEST <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE SYS_TEST 
+	   <set>
+		<if test="domain.test_bigint != null" >
+        	test_bigint = #{domain.testBigint,jdbcType=BIGINT}
+      	</if>
+		<if test="domain.test_gibintn != null" >
+        	test_gibintn = #{domain.testGibintn,jdbcType=BIGINT}
+      	</if>
+		<if test="domain.test_char != null" >
+        	test_char = #{domain.testChar,jdbcType=CHAR}
+      	</if>
+		<if test="domain.test_charn != null" >
+        	test_charn = #{domain.testCharn,jdbcType=CHAR}
+      	</if>
+		<if test="domain.test_date != null" >
+        	test_date = #{domain.testDate,jdbcType=DATE}
+      	</if>
+		<if test="domain.test_datetime != null" >
+        	test_datetime = #{domain.testDatetime,jdbcType=DATETIME}
+      	</if>
+		<if test="domain.test_decimal != null" >
+        	test_decimal = #{domain.testDecimal,jdbcType=DECIMAL}
+      	</if>
+		<if test="domain.test_decimalp != null" >
+        	test_decimalp = #{domain.testDecimalp,jdbcType=DECIMAL}
+      	</if>
+		<if test="domain.test_decimalps != null" >
+        	test_decimalps = #{domain.testDecimalps,jdbcType=DECIMAL}
+      	</if>
+		<if test="domain.test_double != null" >
+        	test_double = #{domain.testDouble,jdbcType=DOUBLE}
+      	</if>
+		<if test="domain.test_doublemd != null" >
+        	test_doublemd = #{domain.testDoublemd,jdbcType=DOUBLE}
+      	</if>
+		<if test="domain.test_float != null" >
+        	test_float = #{domain.testFloat,jdbcType=FLOAT}
+      	</if>
+		<if test="domain.test_floatp != null" >
+        	test_floatp = #{domain.testFloatp,jdbcType=FLOAT}
+      	</if>
+		<if test="domain.test_floatmd != null" >
+        	test_floatmd = #{domain.testFloatmd,jdbcType=FLOAT}
+      	</if>
+		<if test="domain.test_int != null" >
+        	test_int = #{domain.testInt,jdbcType=INT}
+      	</if>
+		<if test="domain.test_intn != null" >
+        	test_intn = #{domain.testIntn,jdbcType=INT}
+      	</if>
+		<if test="domain.test_time != null" >
+        	test_time = #{domain.testTime,jdbcType=TIME}
+      	</if>
+		<if test="domain.test_timestamp != null" >
+        	test_timestamp = #{domain.testTimestamp,jdbcType=TIMESTAMP}
+      	</if>
+		<if test="domain.test_varcharn != null" >
+        	test_varcharn = #{domain.testVarcharn,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.tset_text != null" >
+        	tset_text = #{domain.tsetText,jdbcType=TEXT}
+      	</if>
+		<if test="domain.test_blob != null" >
+        	test_blob = #{domain.testBlob,jdbcType=BLOB}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.sys.SysTest">
+		select <include refid="Base_Column_List"/> from SYS_TEST where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.sys.SysTest" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from SYS_TEST <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from SYS_TEST <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 test_bigint
+		,test_gibintn
+		,test_char
+		,test_charn
+		,test_date
+		,test_datetime
+		,test_decimal
+		,test_decimalp
+		,test_decimalps
+		,test_double
+		,test_doublemd
+		,test_float
+		,test_floatp
+		,test_floatmd
+		,test_int
+		,test_intn
+		,test_time
+		,test_timestamp
+		,test_varcharn
+		,tset_text
+		,test_blob
+	</sql>
+</mapper>

@@ -1,6 +1,6 @@
 <#assign wcClassPackageVar="${mainPackage}.base.WhereCondition">
 <#assign poClassPackageVar="${mainPackage}.model.po.${bizmodelId}.${poClassNameVar}">
-<#assign mapperJavaPackageVar="${mainPackage}.dao.mapper.${bizmodelId}.${poClassNameVar}Mapper">
+<#assign mapperJavaPackageVar="${mainPackage}.dao.${bizmodelId}.${poClassNameVar}Mapper">
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC 
 	"-//mybatis.org//DTD Mapper 3.0//EN" 
@@ -21,7 +21,7 @@
 	    (
 <#list table.fields as field>
 <#if field.physical !="false">
-			#<#nt>{${field.id},jdbcType=${field.type}}<#if field_has_next>,</#if>
+			#<#nt>{${humpClassName(field.id)?uncap_first},jdbcType=${field.type?upper_case}}<#if field_has_next>,</#if>
 </#if>
 </#list>
   		)
@@ -33,7 +33,7 @@
 <#list table.fields as field>
 <#if field.physical !="false">
 		<if test="${field.id} != null" >
-			${field.id} = #<#nt>{${field.id},jdbcType=${field.type}}<#if field_has_next>,</#if>
+			${field.id} = #<#nt>{${humpClassName(field.id)?uncap_first},jdbcType=${field.type?upper_case}}<#if field_has_next>,</#if>
 		</if>
 </#if>
 </#list>
@@ -46,7 +46,7 @@
 	    <set>
 <#list table.fields as field>
 <#if field.physical !="false">
-		${field.id} = #<#nt>{${field.id},jdbcType=${field.type}}<#if field_has_next>,</#if>
+		${field.id} = #<#nt>{${humpClassName(field.id)?uncap_first},jdbcType=${field.type?upper_case}}<#if field_has_next>,</#if>
 </#if>
 </#list>
 	    </set>
@@ -67,7 +67,7 @@
 <#list table.fields as field>
 <#if field.physical !="false">
 		<if test="domain.${field.id} != null" >
-        	${field.id} = #<#nt>{domain.${field.id},jdbcType=${field.type}}
+        	${field.id} = #<#nt>{domain.${humpClassName(field.id)?uncap_first},jdbcType=${field.type?upper_case}}
       	</if>
 </#if>
 </#list>
@@ -95,7 +95,7 @@
   
 	<sql id="Base_Column_List" >
 	  <#list table.fields as field><#if field.physical !="false">
-		<#if field_index == 0> ${field.id}<#else>,${field.id}</#if></#if>
+		<#if field_index == 0> ${field.id} as {${humpClassName(field.id)?uncap_first}<#else>,${field.id} as {${humpClassName(field.id)?uncap_first}</#if></#if>
 	  </#list>
 	</sql>
 </mapper>
