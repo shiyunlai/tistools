@@ -40,6 +40,12 @@ public class SYSExceptionCodes {
 	public static final String LACK_PARAMETERS_WHEN_INSTER = R_EX_CODE("0004");
 	
 	/**
+	 * 异常：新增数据失败.<br>
+	 */
+	public static final String INSERT_DATA_ERROR = R_EX_CODE("0005");
+	
+	
+	/**
 	 * 以烤串方式拼接异常码
 	 * @param code 业务域范围内的异常编码
 	 * @return

@@ -16,7 +16,22 @@ public class ExceptionCodes {
 	/**
 	 * 异常码前缀（分配给core模块）
 	 */
-	private static final String R_EX_PREFIX = "core";
+	private static final String R_EX_PREFIX = "CORE";
+	
+	/**
+	 * 异常：执行成功.<br>
+	 */
+	public static final int successCode = 200 ;
+
+	/**
+	 * 异常：执行错误.<br>
+	 */
+	public static final int errorCode = 201;
+
+	/**
+	 * 异常：响应失败.<br>
+	 */
+	public static final String ERROR_RESPONSE_CODE = R_EX_CODE("9999");
 	
 	/**
 	 * 异常：查找类路径下的META-INF资源错误.<br>

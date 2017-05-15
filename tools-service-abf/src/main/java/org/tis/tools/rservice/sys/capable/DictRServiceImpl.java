@@ -4,6 +4,8 @@
 package org.tis.tools.rservice.sys.capable;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.common.utils.BasicUtil;
@@ -22,6 +24,8 @@ import org.tis.tools.service.sys.exception.SYSExceptionCodes;
  */
 public class DictRServiceImpl implements IDictRService {
 
+	private static final Logger logger = LoggerFactory.getLogger(DictRServiceImpl.class) ; 
+	
 	@Autowired
 	SysDictService sysDictService; 
 	
@@ -67,7 +71,13 @@ public class DictRServiceImpl implements IDictRService {
 		
 		dict.setGuid(GUID.dict());//补充GUID
 		
-		sysDictService.insert(dict);
+		try {
+			sysDictService.insert(dict);
+		} catch (Exception e) {
+			logger.warn("insert SYS_DICT失败！",e);
+			throw new SysManagementException(SYSExceptionCodes.INSERT_DATA_ERROR,
+					BasicUtil.wrap("SYS_DICT",e.getMessage()));
+		}
 	}
 
 	@Override
@@ -103,7 +113,13 @@ public class DictRServiceImpl implements IDictRService {
 
 		dictItem.setGuid(GUID.dictItem());// 补充GUID
 		
-		sysDictItemService.insert(dictItem);
+		try {
+			sysDictItemService.insert(dictItem);
+		} catch (Exception e) {
+			logger.warn("insert SYS_DICT_ITEM失败！",e);
+			throw new SysManagementException(SYSExceptionCodes.INSERT_DATA_ERROR,
+					BasicUtil.wrap("SYS_DICT_ITEM",e.getMessage()));
+		}
 	}
 
 }
