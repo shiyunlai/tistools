@@ -13,6 +13,7 @@
 		<!-- 建议工程目录名同artifactId -->
 		<module>tools-common</module>
 		<module>tools-common-assembly</module>
+		<module>tools-common-service</module>
 		<module>tools-core</module>
 		<module>tools-design</module>
 		<module>tools-maven-plugin</module>
@@ -179,6 +180,11 @@
 			<dependency>
 				<groupId>org.tis</groupId>
 				<artifactId>tools-common-assembly</artifactId>
+				<version>${tis_tools_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.tis</groupId>
+				<artifactId>tools-common-service</artifactId>
 				<version>${tis_tools_version}</version>
 			</dependency>
 
