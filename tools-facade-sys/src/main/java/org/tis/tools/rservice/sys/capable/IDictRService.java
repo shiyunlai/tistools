@@ -60,7 +60,7 @@ public interface IDictRService {
 	 * @throws SysManagementException
 	 */
 	@POST
-	void addDict( SysDict dict ) throws SysManagementException;
+	void addDict(SysDict dict ) throws SysManagementException;
 	
 	/**
 	 * <pre>

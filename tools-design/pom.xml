@@ -18,6 +18,18 @@
 2、作为consumer进行服务测试；</description>
 
 	<dependencies>
+		<!-- POI解析excel -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.14</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.14</version>
+		</dependency>
+
 		<!-- tis tools -->
 		<dependency>
 			<groupId>org.tis</groupId>
@@ -37,7 +49,7 @@
 			<artifactId>tools-facade-sys</artifactId>
 			<version>0.0.1</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>dubbo</artifactId>
