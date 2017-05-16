@@ -45,7 +45,7 @@ public class DictRServiceImpl implements IDictRService {
 	}
 
 	@Override
-	public void addDict(SysDict dict) throws SysManagementException {
+	public SysDict addDict(SysDict dict) throws SysManagementException {
 		
 		if (null == dict) {
 			throw new SysManagementException(SYSExceptionCodes.NOTNULL_WHEN_INSTER, BasicUtil.wrap("SYS_DICT"));
@@ -78,10 +78,12 @@ public class DictRServiceImpl implements IDictRService {
 			throw new SysManagementException(SYSExceptionCodes.INSERT_DATA_ERROR,
 					BasicUtil.wrap("SYS_DICT",e.getMessage()));
 		}
+		
+		return dict ; 
 	}
 
 	@Override
-	public void addDictItem(SysDictItem dictItem) throws SysManagementException {
+	public SysDictItem addDictItem(SysDictItem dictItem) throws SysManagementException {
 
 		if (null == dictItem) {
 			throw new SysManagementException(SYSExceptionCodes.NOTNULL_WHEN_INSTER, BasicUtil.wrap("SYS_DICT_ITME"));
@@ -120,6 +122,8 @@ public class DictRServiceImpl implements IDictRService {
 			throw new SysManagementException(SYSExceptionCodes.INSERT_DATA_ERROR,
 					BasicUtil.wrap("SYS_DICT_ITEM",e.getMessage()));
 		}
+		
+		return dictItem ; 
 	}
 
 }
