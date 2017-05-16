@@ -195,5 +195,28 @@ public class GUID {
 	
 	///////////////////////////////////////////////////////
 	
+	/**
+	 * 取一个业务字典（SYS_DICT）的数据主键值
+	 * 
+	 * @return
+	 */
+	public static String dict() {
+		
+		return SequenceSimpleUtil.instance.GUID("DICT");
+	}
+	
+	/**
+	 * 取一个业务字典（SYS_DICT）的数据主键值
+	 * 
+	 * @return
+	 */
+	public static String dictItem() {
+		
+		return SequenceSimpleUtil.instance.GUID("DICTITEM");
+	}
+
+	
+	
+	///////////////////////////////////////////////////////
 	//其他模块...
 }
