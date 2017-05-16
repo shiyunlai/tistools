@@ -22,9 +22,14 @@
 		http://code.alibabatech.com/schema/dubbo 
 		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-	<!-- 为来测试：在Spring启动时，调用测试类 -->
+	<!-- 为来测试：在Spring启动时，调用测试类 
     <bean class="org.tools.design.provider.service.OMServiceTest" init-method="callOMRService" >
     	<property name="orgRService" ref="orgRService"></property>
+    </bean>-->
+    
+	<!-- 为来测试：在Spring启动时，调用测试类 -->
+    <bean class="org.tools.design.provider.service.SYSRServiceTest" init-method="callSYSRService" >
+    	<property name="dictRService" ref="dictRService"></property>
     </bean>
 
 </beans>

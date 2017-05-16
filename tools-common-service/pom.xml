@@ -1,19 +1,21 @@
 <?xml version="1.0"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.tis</groupId>
-    <artifactId>tools</artifactId>
-    <version>0.0.1</version>
-  </parent>
-  <artifactId>tools-service-abf</artifactId>
-  <name>tools-service-abf</name>
-  <url>http://maven.apache.org</url>
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-  <dependencies>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.tis</groupId>
+		<artifactId>tools</artifactId>
+		<version>0.0.1</version>
+	</parent>
+	<artifactId>tools-common-service</artifactId>
+	<name>tools-common-service</name>
+	<url>http://maven.apache.org</url>
+	<description>作为服务提供者基础能力的实现工程，将被各 tools-service-XXX引用</description>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<dependencies>
 		<!-- tools -->
 		<dependency>
 			<groupId>org.tis</groupId>
@@ -21,26 +23,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.tis</groupId>
-			<artifactId>tools-common-service</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.tis</groupId>
 			<artifactId>tools-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.tis</groupId>
-			<artifactId>tools-facade-ac</artifactId>
-			<version>0.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.tis</groupId>
-			<artifactId>tools-facade-om</artifactId>
-			<version>0.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.tis</groupId>
-			<artifactId>tools-facade-sys</artifactId>
-			<version>0.0.1</version>
 		</dependency>
 
 		<!-- apache commons -->
@@ -140,24 +123,24 @@
 			<artifactId>resteasy-netty</artifactId>
 		</dependency>
 		<dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-jdk-http</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-jackson-provider</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-jaxb-provider</artifactId>
-        </dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jdk-http</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jackson-provider</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxb-provider</artifactId>
+		</dependency>
 
 		<!-- validation -->
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 		</dependency>
-		
+
 		<!-- druid -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -220,51 +203,4 @@
 		</dependency>
 
 	</dependencies>
-
-	<!-- beg:编译输出部署安装包(以Main方式启动的dubbo服务提供者可重用以下build内容) -->
-	<build>
-		<plugins>
-			<!-- 为部署包准备shell脚本：从 common-assembly 工程中解压得到 -->
-			<plugin>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>unpack</id>
-						<phase>package</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>org.tis</groupId>
-									<artifactId>${project.parent.artifactId}-common-assembly</artifactId>
-									<version>${tis_tools_version}</version>
-									<outputDirectory>${project.build.directory}/runtime</outputDirectory>
-									<includes>META-INF/assembly/**</includes>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- 根据assembly 组装并打包输出部署介质*.gz包 -->
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<descriptor>src/main/assembly/assembly.xml</descriptor>
-				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
-	<!-- end:编译输出部署安装包 -->
 </project>

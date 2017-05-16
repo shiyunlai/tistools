@@ -36,7 +36,8 @@ public class SysDictServiceExt {
 	 * @return 字典项实际值
 	 */
 	public String getActualValue(String dictKey, String itemValue) {
-
+		
+		//TODO 考虑放到缓存，降低数据库查询次数
 		Map<String, String> parameters = new HashMap<String, String>();
 		parameters.put("dictKey", dictKey);
 		parameters.put("itemValue", itemValue);

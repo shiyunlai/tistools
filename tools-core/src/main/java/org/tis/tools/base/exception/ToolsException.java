@@ -12,6 +12,8 @@ import org.tis.tools.base.exception.i18.I18NException;
 /**
  * 
  * Tools检查异常.</br>
+ * 抛出本异常的地方表示系统执行失败了！</br>
+ * 所有业务域的服务处理时，失败抛出的异常必须继承本类.</br>
  * 其他业务域中的检查异常都必须集成于本类.</br>
  * @author megapro
  *

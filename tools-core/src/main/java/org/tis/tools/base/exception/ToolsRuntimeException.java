@@ -10,9 +10,13 @@ import java.util.Locale;
 import org.tis.tools.base.exception.i18.I18NException;
 
 /**
- * 
- * Tools运行时根异常.</br>
- * 其他业务域的运行异常必须集成本类.</br>
+ * <pre>
+ * Tools业务异常根类.</br>
+ * 抛出本异常的地方表示系统执行成功，但是业务处理失败！</br>
+ * 所有业务域的服务处理时，失败抛出的业务异常必须继承本类.</br>
+ * 如：
+ * 转账服务时，系统正常的执行了转账逻辑，但是因账户余额不足，转账业务失败！</br>
+ * </pre>
  * @author megapro
  *
  */
