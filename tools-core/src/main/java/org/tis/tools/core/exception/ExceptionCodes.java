@@ -3,6 +3,7 @@
  */
 package org.tis.tools.core.exception;
 
+
 /**
  * 
  * core模块的异常码定义.</br>
@@ -24,14 +25,14 @@ public class ExceptionCodes {
 	public static final int successCode = 200 ;
 
 	/**
-	 * 异常：执行错误.<br>
+	 * 500 - Internal Server Error 服务器遇到了意料不到的情况，不能完成客户的请求。.<br>
 	 */
-	public static final int errorCode = 201;
+	public static final int errorCode = 500;
 
 	/**
-	 * 异常：响应失败.<br>
+	 * 异常：系统执行失败.<br>
 	 */
-	public static final String ERROR_RESPONSE_CODE = R_EX_CODE("9999");
+	public static final String SYSTEM_PROCESS_FAILURE = R_EX_CODE("9999");
 	
 	/**
 	 * 异常：查找类路径下的META-INF资源错误.<br>

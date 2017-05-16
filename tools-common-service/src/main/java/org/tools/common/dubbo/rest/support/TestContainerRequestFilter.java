@@ -9,6 +9,7 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 
 /**
+ * 服务处理前过滤器
  * @author megapro
  *
  */

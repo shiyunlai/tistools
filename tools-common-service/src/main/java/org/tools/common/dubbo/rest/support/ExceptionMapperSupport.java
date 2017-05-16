@@ -4,6 +4,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
+import org.jboss.resteasy.util.HttpResponseCodes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tis.tools.base.exception.ToolsRuntimeException;
@@ -20,17 +21,19 @@ public class ExceptionMapperSupport implements ExceptionMapper<ToolsRuntimeExcep
 
 	@Override
 	public Response toResponse(ToolsRuntimeException exception) {
-		System.out.println("------------- shiyl ------------");
+		
 		String response;
 		int code;
+		
 		if (exception instanceof ToolsRuntimeException) {
 			ToolsRuntimeException exc = (ToolsRuntimeException) exception;
 			response = "{\"resp_code\":\"" + exc.getCode() + "\",\"resp_info\":\"" + exc.getLocalizedMessage() + "\"}";
-			code = ExceptionCodes.successCode;
-		} else {
-			response = ExceptionCodes.ERROR_RESPONSE_CODE;
+			code = ExceptionCodes.successCode;//业务异常，系统正常处理
+		}
+		else {
+			response = ExceptionCodes.SYSTEM_PROCESS_FAILURE;
 			logger.error(exception.getMessage(), exception);
-			code = ExceptionCodes.errorCode;
+			code = ExceptionCodes.errorCode;//
 		}
 		return Response.ok(response, MediaType.APPLICATION_JSON).status(code).build();
 	}
