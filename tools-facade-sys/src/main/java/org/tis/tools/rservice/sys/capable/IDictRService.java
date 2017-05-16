@@ -57,10 +57,12 @@ public interface IDictRService {
 	 * url: /dict
 	 * </pre>
 	 * @param dict 业务字典
+	 * @return 新增的业务字典记录
 	 * @throws SysManagementException
 	 */
 	@POST
-	void addDict(SysDict dict ) throws SysManagementException;
+
+	SysDict addDict( SysDict dict ) throws SysManagementException;
 	
 	/**
 	 * <pre>
@@ -70,10 +72,11 @@ public interface IDictRService {
 	 * url: /dict/item
 	 * </pre>
 	 * @param dictItem 业务字典项
+	 * @return 新增的业务字典项记录
 	 * @throws SysManagementException
 	 */
 	@POST
 	@Path("/item") 
-	void addDictItem( SysDictItem dictItem ) throws SysManagementException;
+	SysDictItem addDictItem( SysDictItem dictItem ) throws SysManagementException;
 	
 }

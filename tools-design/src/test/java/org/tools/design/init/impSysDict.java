@@ -40,6 +40,9 @@ public class impSysDict {
 	static final String add_sys_dict_item_service = "/dict/item.json";
 
 	public static void main(String[] args) {
+		
+		test() ;
+		
 		/*
 		 * (POI)解析excel获得业务字典和业务字典项
 		 * 
@@ -86,10 +89,12 @@ public class impSysDict {
 	 *            业务字典
 	 * @return
 	 */
-	static boolean addDict(SysDict dict) {
 
-		String url = host + ":" + port + provider + add_sys_dict_service;
-		return callService(url, dict, MediaType.APPLICATION_JSON_TYPE);
+	static SysDict addDict(SysDict dict) {
+		
+		String url = host + ":" + port + provider + add_sys_dict_service ;
+		return callService(url, dict,MediaType.APPLICATION_JSON_TYPE ) ; 
+
 	}
 
 	/**
@@ -99,14 +104,16 @@ public class impSysDict {
 	 *            业务字典项
 	 * @return
 	 */
-	static boolean addDictItm(SysDictItem dictItem) {
 
-		String url = host + ":" + port + provider + add_sys_dict_item_service;
-		return callService(url, dictItem, MediaType.APPLICATION_JSON_TYPE);
+	static SysDictItem addDictItm(SysDictItem dictItem) {
+		
+		String url = host + ":" + port + provider + add_sys_dict_item_service ;
+		return callService(url, dictItem,MediaType.APPLICATION_JSON_TYPE ) ; 
 	}
-
-	static <T> boolean callService(String url, T t, MediaType mediaType) {
-
+	
+	
+	static <T> T callService(String url, T t , MediaType mediaType) {
+		
 		Client client = ClientBuilder.newClient();
 		WebTarget target = client.target(url);
 		Response response = target.request().post(Entity.entity(t, mediaType));
@@ -114,13 +121,33 @@ public class impSysDict {
 			if (response.getStatus() != 200) {
 				System.out.println("Failed with HTTP error code : " + response.getStatus());
 				System.out.println("got result: " + response.readEntity(String.class));
-				return false;
+
+				return null ; 
 			}
-			return true;
+			T tback = (T) response.readEntity(t.getClass()) ; 
+			return tback ; 
+
 		} finally {
 			response.close();
 			client.close();
 		}
+	}
+
+	
+	
+	/**
+	 * 看看测试
+	 * 1、 启动 tools-service-abf
+	 * 2、 执行本测试
+	 */
+	static void test() {
+		SysDict dict = new SysDict() ; 
+		dict.setDictKey("SHIYL_TEST");
+		dict.setDictName("史云来测试");
+		dict.setDictType("A");
+		dict.setDictDesc("增加测试by REST");
+		SysDict kkk = addDict(dict) ; 
+		System.out.println(kkk);
 	}
 
 }
