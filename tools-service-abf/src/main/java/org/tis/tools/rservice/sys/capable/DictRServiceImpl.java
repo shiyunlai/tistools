@@ -45,6 +45,7 @@ public class DictRServiceImpl implements IDictRService {
 	}
 
 	@Override
+	public SysDict addDict(SysDict dict) throws SysManagementException {
 		
 		if (null == dict) {
 			throw new SysManagementException(SYSExceptionCodes.NOTNULL_WHEN_INSTER, BasicUtil.wrap("SYS_DICT"));
