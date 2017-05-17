@@ -30,6 +30,6 @@ public class SYSRServiceTest {
 		SysDictItem dictItem = new SysDictItem() ; 
 		dictRService.addDictItem(dictItem);
 		
-		dictRService.getActualValue("DICT_TEST_BY_JAVA", "DICT_TEST_ITEM") ;
+		dictRService.queryActualValue("DICT_TEST_BY_JAVA", "DICT_TEST_ITEM") ;
 	}
 }

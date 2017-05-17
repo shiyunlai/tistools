@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.tis.tools.model.po.ac.AcPartyRole;
-import org.tis.tools.model.po.ac.AcRole;
 import org.tis.tools.model.po.om.OmBusiorg;
 import org.tis.tools.model.po.om.OmEmpOrg;
 import org.tis.tools.model.po.om.OmGroup;
@@ -15,7 +14,7 @@ import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.po.om.OmPosition;
 
 /**
- * 机构详情信息（360信息）
+ * 机构信息视图对象（360信息）
  * 
  * @author megapro
  *
