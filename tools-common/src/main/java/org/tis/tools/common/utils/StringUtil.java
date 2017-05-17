@@ -3,6 +3,8 @@
  */
 package org.tis.tools.common.utils;
 
+import java.text.MessageFormat;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
@@ -10,6 +12,45 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  *
  */
 public class StringUtil {
+	
+	/**
+	 * 检查输入的参数中是否有空值
+	 * @param strs
+	 * @return
+	 */
+	public static boolean isEmpty(String ... strs){
+		if(strs==null) return true;
+		for(String str : strs){
+			if(str==null || str.trim()==""){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * 进行字符串格式化，使用args顺序替换目标字符串中的占位符
+	 * 
+	 * @param patternStr 如： lexical error at position {0}, encountered {1}, expected {2}
+	 * @param args 
+	 * @return 替换后的字符串
+	 */
+	public static String format(String patternStr, Object ...args){
+		return MessageFormat.format(patternStr, args) ; 
+	}
+	
+	/**
+	 * 将多个字符串按顺序拼接在一起
+	 * @param strings
+	 * @return 拼接好的字符串
+	 */
+	public static String concat(String ...strings) {
+		StringBuffer sb = new StringBuffer() ; 
+		for( String s : strings ){
+			sb.append(s) ; 
+		}
+		return sb.toString() ; 
+	}
 	
 	/**
 	 * <pre>
