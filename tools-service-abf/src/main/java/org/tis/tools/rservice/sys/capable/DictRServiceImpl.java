@@ -3,6 +3,14 @@
  */
 package org.tis.tools.rservice.sys.capable;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,16 +20,23 @@ import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.po.sys.SysDict;
 import org.tis.tools.model.po.sys.SysDictItem;
+import org.tis.tools.model.vo.sys.SysDictDetail;
 import org.tis.tools.rservice.sys.exception.SysManagementException;
 import org.tis.tools.service.sys.SysDictItemService;
 import org.tis.tools.service.sys.SysDictService;
 import org.tis.tools.service.sys.SysDictServiceExt;
 import org.tis.tools.service.sys.exception.SYSExceptionCodes;
 
+import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
+
 /**
+ * 业务字典服务实现
  * @author megapro
  *
  */
+@Path("dict")
+@Consumes({MediaType.APPLICATION_JSON, MediaType.TEXT_XML})
+@Produces({ContentType.APPLICATION_JSON_UTF_8, ContentType.TEXT_XML_UTF_8})
 public class DictRServiceImpl implements IDictRService {
 
 	private static final Logger logger = LoggerFactory.getLogger(DictRServiceImpl.class) ; 
@@ -35,16 +50,20 @@ public class DictRServiceImpl implements IDictRService {
 	@Autowired
 	SysDictServiceExt sysDictServiceExt; 
 	
-	/* (non-Javadoc)
-	 * @see org.tis.tools.rservice.sys.capable.IDictRService#getActualValue(java.lang.String, java.lang.String)
-	 */
 	@Override
-	public String getActualValue(String dictType, String dictItem) throws ToolsRuntimeException {
-		
-		return sysDictServiceExt.getActualValue(dictType, dictItem) ; 
+	@GET
+	@Path("/actual/{dictKey}/{itemValue}")
+	public String queryActualValue(@PathParam("dictKey") String dictKey, @PathParam("itemValue") String itemValue)
+			throws ToolsRuntimeException {
+
+		return sysDictServiceExt.getActualValue(dictKey, itemValue);
 	}
 
+	/**
+	 * url: /dict
+	 */
 	@Override
+	@POST
 	public SysDict addDict(SysDict dict) throws SysManagementException {
 		
 		if (null == dict) {
@@ -82,7 +101,12 @@ public class DictRServiceImpl implements IDictRService {
 		return dict ; 
 	}
 
+	/**
+	 * rest: /dict/item
+	 */
 	@Override
+	@POST
+	@Path("/item") 
 	public SysDictItem addDictItem(SysDictItem dictItem) throws SysManagementException {
 
 		if (null == dictItem) {
@@ -124,6 +148,26 @@ public class DictRServiceImpl implements IDictRService {
 		}
 		
 		return dictItem ; 
+	}
+
+	@Override
+	public SysDictDetail queryDictDetail(String dictKey) throws SysManagementException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public SysDictDetail queryDict(String dictKey) throws SysManagementException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	@GET
+	@Path("/item/{dictKey}/{itemValue}")
+	public SysDictItem queryDictItem(@PathParam("dictKey") String dictKey, @PathParam("itemValue") String itemValue) throws SysManagementException {
+		
+		return sysDictServiceExt.getDictItem(dictKey, itemValue) ; 
 	}
 
 }
