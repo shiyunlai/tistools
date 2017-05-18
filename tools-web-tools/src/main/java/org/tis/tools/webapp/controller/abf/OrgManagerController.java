@@ -24,6 +24,8 @@ import org.tis.tools.rservice.om.capable.IOrgRService;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.util.AjaxUtils;
 
+import com.alibaba.dubbo.common.json.JSONArray;
+
 import net.sf.json.JSONObject;
 
 /**
@@ -47,25 +49,30 @@ public class OrgManagerController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/tree")
-	public String execute(ModelMap model, @RequestBody String content,
+	public String execute(ModelMap model,  @RequestBody String content,
 			String age, HttpServletRequest request, HttpServletResponse response) {
 		try {
 			//收到请求
 			JSONObject jsonObj = JSONObject.fromObject(content);
-			JSONObject job = jsonObj.getJSONObject("item");
-			JnlPrefill p = new JnlPrefill();
-			JSONObject.toBean(job,p,jsonConfig);
+			String id = jsonObj.getString("id");
+			List<OmOrg> rootOrgs;
+			//通过id判断需要加载的节点
+			if("#".equals(id)){
+				//调用远程服务,#:根
+				rootOrgs = orgRService.queryAllRoot() ;
+			}else{
+				rootOrgs = orgRService.queryChilds(id);
+			}
 			
-			//调用远程服务
-			List<OmOrg> rootOrgs = orgRService.queryAllRoot() ; 
-			
-			AjaxUtils.ajaxJson(response, JSONObject.fromObject(rootOrgs).toString());
+			AjaxUtils.ajaxJson(response, net.sf.json.JSONArray.fromObject(rootOrgs).toString());
 		} catch (Exception e) {// TODO
 			AjaxUtils.ajaxJsonErrorMessage(response, "查询根机构树失败!");
 			e.printStackTrace();
 		}
 		return null;
 	}
+	
+	
 	
 	/**
 	 * 每个controller定义自己的返回信息变量

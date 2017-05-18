@@ -17,12 +17,114 @@ function initController($scope, thisobj, thisobjName, thisobj_service, filterFil
 
         }
     }
+
     thisobj.getSelectItems = function () {
         var res = filterFilter(thisobj.dataList, function (record) {
             return record.checked;
         });
         return res;
     }
+
+    //切换标签页
+    thisobj.editMethod = {
+        'none' :'none',
+        'add' : 'add',
+        'edit' : 'edit',
+        'detail' : 'detail',
+        'search' : 'search'
+    };
+    thisobj.view = {
+        'listPage' : 1,
+        'addPage' : 2,
+        'editPage' : 3,
+        'detailPage' : 4,
+        'searchPage' : 5
+    }
+    //页面子标题
+    $scope.editMethod = thisobj.editMethod.none;
+    //当前标签页，1：列表页，2：编辑页
+    $scope.currentView = thisobj.view.listPage;
+    $scope.message = '';
+    $scope.showListPage = function () {
+        if($scope.currentView == thisobj.view.listPage){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    $scope.showEditPage = function () {
+        if($scope.currentView == thisobj.view.addPage
+            || $scope.currentView == thisobj.view.editPage){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    $scope.showDetailPage = function () {
+        if ($scope.currentView == thisobj.view.detailPage) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    $scope.showSearchPage = function () {
+        if ($scope.currentView == thisobj.view.searchPage) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //切换标签页
+    thisobj.switchView = function (view, editMethod) {
+        $scope.currentView = view;
+        $scope.editMethod = editMethod;
+        if ($scope.editMethod == thisobj.editMethod.add) {
+            $scope.editTiTle = '增加' ;
+        } else if ($scope.editMethod == thisobj.editMethod.edit) {
+            $scope.editTiTle = '修改' ;
+        }  else if ($scope.editMethod == thisobj.editMethod.detail) {
+            $scope.editTiTle = '详情';
+        }
+        // if(view  == thisobj.view.listPage) {
+        //     $scope.editMethod = thisobj.editMethod.add;
+        //     $scope.editTiTle = '增加' +suffixTitle;
+        // }
+
+    }
+    thisobj.switchToAddView = function () {
+        if($scope.currentView == thisobj.view.addPage
+            || $scope.currentView == thisobj.view.editPage) {
+            return false;
+        }
+        thisobj.item = {};
+        thisobj.switchView(thisobj.view.addPage, thisobj.editMethod.add);
+    };
+    thisobj.switchToEditView = function () {
+        if ($scope.currentView == thisobj.view.editPage) {
+            return false;
+        }
+        thisobj.switchView(thisobj.view.editPage, thisobj.editMethod.edit);
+    };
+    thisobj.switchToDetailView = function () {
+        if ($scope.currentView == thisobj.view.detailPage) {
+            return false;
+        }
+        thisobj.switchView(thisobj.view.detailPage, thisobj.editMethod.detail);
+    };
+    thisobj.switchToSearchView = function () {
+        if ($scope.currentView == thisobj.view.searchPage) {
+            return false;
+        }
+        thisobj.switchView(thisobj.view.searchPage, thisobj.editMethod.search);
+    }
+    thisobj.switchToListView = function () {
+        if ($scope.currentView == thisobj.view.listPage) {
+            return false;
+        }
+        thisobj.switchView(thisobj.view.listPage, thisobj.editMethod.none);
+        thisobj.searchN();
+    };
 
     //end-
     //begin-初始化第一次进入页面的全局变量，包括：搜索表单，初始查询,grid初始化,翻页初始化
