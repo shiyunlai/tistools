@@ -4,12 +4,13 @@ Metronic AngularJS App Main Script
 
 /* Metronic App */
 var isdebug = false;
-var manurl = 'http://localhost:8081/monitor';
+var manurl = 'http://localhost:8089/tis';
 var MetronicApp = angular.module("MetronicApp", [
     "ui.router", 
     "ui.bootstrap", 
     "oc.lazyLoad",  
-    "ngSanitize"
+    "ngSanitize",
+    'ui.grid'
 ]);
 
 function action(bdy){
@@ -576,6 +577,12 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             templateUrl:"views/LPC/featureReg.html",
             data: {pageTitle: '开发分支登记'},
             controller:"FeatureReg_controller"
+        })
+        .state("abftree",{
+            url:"/abftree.html",
+            templateUrl:"views/org/abftree.html",
+            data: {pageTitle: '组织机构管理'},
+            controller:"abftree_controller"
         })
 }]);
 
