@@ -27,6 +27,7 @@ public interface IDictRService {
 	 * @return 新增的业务字典记录
 	 * @throws SysManagementException
 	 */
+
 	SysDict addDict( SysDict dict ) throws SysManagementException;
 	
 	/**
