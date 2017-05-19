@@ -75,13 +75,13 @@ public class ReadExcelUtils {
      * @return Map 包含单元格数据内容的Map对象 
      * @author zengwendong 
      */  
-    public Map<Integer, Map<Integer,Object>> readExcelContent() throws Exception{  
+    public Map<Integer, Map<Integer,Object>> readExcelContent(String sheetname) throws Exception{  
         if(wb==null){  
             throw new Exception("Workbook对象为空！");  
         }  
         Map<Integer, Map<Integer,Object>> content = new HashMap<Integer, Map<Integer,Object>>();  
-          
-        sheet = wb.getSheetAt(0);  
+        //通过工作表名获取工作表
+        sheet = wb.getSheet(sheetname);  
         // 得到总行数  
         int rowNum = sheet.getLastRowNum();  
         row = sheet.getRow(0);  
@@ -100,7 +100,34 @@ public class ReadExcelUtils {
         }  
         return content;  
     }  
-  
+    /**
+     * 用于读取字表数据
+     */
+    public Map<Integer, Map<Integer,Object>> readExcelContent2(String sheetname) throws Exception{  
+        if(wb==null){  
+            throw new Exception("Workbook对象为空！");  
+        }  
+        Map<Integer, Map<Integer,Object>> content = new HashMap<Integer, Map<Integer,Object>>();  
+        //通过工作表名获取工作表
+        sheet = wb.getSheet(sheetname);  
+        // 得到总行数  
+        int rowNum = sheet.getLastRowNum();  
+        row = sheet.getRow(2);  
+        int colNum = row.getPhysicalNumberOfCells();  
+        // 正文内容应该从第四行开始,第一行为表头的标题  
+        for (int i = 3; i <= rowNum; i++) {  
+            row = sheet.getRow(i);  
+            int j = 0;  
+            Map<Integer,Object> cellValue = new HashMap<Integer, Object>();  
+            while (j < colNum) {  
+                Object obj = getCellFormatValue(row.getCell(j));  
+                cellValue.put(j, obj);  
+                j++;  
+            }  
+            content.put(i, cellValue);  
+        }  
+        return content;  
+    }  
     /** 
      *  
      * 根据Cell类型设置数据 

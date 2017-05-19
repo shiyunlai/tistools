@@ -33,15 +33,13 @@ import org.tis.tools.model.po.sys.SysDictItem;
  */
 public class impSysDict {
 
-	static final String port = "8089";
+	static final String port = "8888";
 	static final String host = "http://localhost";
-	static final String provider = "/service";
-	static final String add_sys_dict_service = "/dict/json";
+	static final String provider = "/services";
+	static final String add_sys_dict_service = "/dict.json";
 	static final String add_sys_dict_item_service = "/dict/item.json";
 
 	public static void main(String[] args) {
-		
-		test() ;
 		
 		/*
 		 * (POI)解析excel获得业务字典和业务字典项
@@ -60,17 +58,31 @@ public class impSysDict {
 			// }
 
 			// 对读取Excel表格内容测试
-			Map<Integer, Map<Integer, Object>> map = excelReader.readExcelContent();
+			Map<Integer, Map<Integer, Object>> map = excelReader.readExcelContent("业务字典");
 			// 遍历结果集,逐条插入
 			SysDict dict = new SysDict();
+			SysDictItem dictItem = new SysDictItem();
 			for (int i = 1; i <= map.size(); i++) {
 				Map rs = map.get(i);
-				if (rs != null) {
+				if (rs.get(0) != null) {
 					dict.setDictName(rs.get(1).toString());
 					dict.setDictKey(rs.get(0).toString());
 					dict.setDictType(rs.get(5).toString());
 					dict.setDictDesc(rs.get(2).toString());
+					
 					addDict(dict);
+					String Guid = dict.getGuid();
+					Map<Integer, Map<Integer, Object>> map2 = excelReader.readExcelContent2(dict.getDictKey());
+					for(int k = 1;k <= map2.size(); k++){
+						Map rs2 = map2.get(k);
+						if(rs2.get(0) != null){
+							dictItem.setGuidDict(Guid);
+							dictItem.setItemName(rs2.get(2).toString());
+							dictItem.setItemValue(rs2.get(0).toString());
+							dictItem.setSendValue(rs2.get(1).toString());
+							addDictItm(dictItem);
+						}
+					}
 				}
 
 			}
@@ -142,8 +154,8 @@ public class impSysDict {
 	 */
 	static void test() {
 		SysDict dict = new SysDict() ; 
-		dict.setDictKey("SHIYL_TEST");
-		dict.setDictName("史云来测试");
+		dict.setDictKey("SHIYL_TEST111");
+		dict.setDictName("来测试");
 		dict.setDictType("A");
 		dict.setDictDesc("增加测试by REST");
 		SysDict kkk = addDict(dict) ; 
