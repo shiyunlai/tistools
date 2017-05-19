@@ -39,6 +39,8 @@
 	//OK disconf改造 tools-service-XXX
 	//Ok disconf改造 tools-web-XXX 
 	//OK 增加 tools-maven-plugin 的使用说明，为应用模块开发做准备（目前 mvn brons:gen-sdo 不适用分布式项目开发）
+	//OK rest相关的annotation放在实现类 见： DictRServiceImpl
+	//OK 同时发布dubbo和rest两种服务协议 见： DictRServiceImpl
 
 	//TODO 增加单元测试能力  分支：develop_use_junit_springtest
 	//TODO 动态菜单树
