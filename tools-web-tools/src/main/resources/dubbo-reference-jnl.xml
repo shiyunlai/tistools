@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+       http://www.springframework.org/schema/beans/spring-beans.xsd  
+       http://code.alibabatech.com/schema/dubbo  
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- 
+		此处申明引入服务，但是，如果这些服务没有被初始化，则这些服务不会立即向注册中心注册 
+		如：只有在 OrgController.java 中作为 @Autowired，该服务才会想注册中心注册，也才能在注册中心看见该服务。
+	-->
+	
+	<!-- 声明需要暴露的服务接口 -->
+	 <dubbo:reference 
+		id="jnlPrefillRService"    
+		group="jnl" 
+		version="1.0" 
+		interface="org.tis.tools.rservice.jnl.IJnlPrefillRService"     
+		check="false"/>
+	
+	<dubbo:reference 
+		id="jnlPromotingRService"    
+		group="jnl" 
+		version="1.0" 
+		interface="org.tis.tools.rservice.jnl.IJnlPromotingRService"     
+		check="false"/>
+
+
+	<dubbo:reference 
+		id="logTxTraceRService" 
+		group="jnl" 
+		version="1.0" 
+		interface="org.tis.tools.rservice.log.basic.ILogTxTraceRService"     
+		check="false"/>
+
+	
+	<!-- dubbo:reference 
+		id="jnlTellerTraceRService"    
+		group="jnl" 
+		version="1.0" 
+		interface="org.tis.tools.rservice.jnl.IJnlTellerTraceRService"     
+		check="false"/> -->
+
+	
+	<dubbo:reference 
+		id="jnlRRService"    
+		group="jnl" 
+		version="1.0" 
+		interface="org.tis.tools.rservice.jnl.IJnlRRService"     
+
+		check="false"/>
+	
+</beans>

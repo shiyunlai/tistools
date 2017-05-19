@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.sys.SysDictItemMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.sys.SysDictItem">
+	    INSERT INTO SYS_DICT_ITEM 
+	    (
+	    	 guid
+	    	,guid_dict
+	    	,item_name
+	    	,item_value
+	    	,send_value
+	    	,seqno
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=VARCHAR},
+			#{guidDict,jdbcType=VARCHAR},
+			#{itemName,jdbcType=VARCHAR},
+			#{itemValue,jdbcType=VARCHAR},
+			#{sendValue,jdbcType=VARCHAR},
+			#{seqno,jdbcType=DECIMAL}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.sys.SysDictItem">
+    	UPDATE SYS_DICT_ITEM 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_dict != null" >
+			guid_dict = #{guidDict,jdbcType=VARCHAR},
+		</if>
+		<if test="item_name != null" >
+			item_name = #{itemName,jdbcType=VARCHAR},
+		</if>
+		<if test="item_value != null" >
+			item_value = #{itemValue,jdbcType=VARCHAR},
+		</if>
+		<if test="send_value != null" >
+			send_value = #{sendValue,jdbcType=VARCHAR},
+		</if>
+		<if test="seqno != null" >
+			seqno = #{seqno,jdbcType=DECIMAL}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.sys.SysDictItem">
+    	UPDATE SYS_DICT_ITEM 
+	    <set>
+		guid = #{guid,jdbcType=VARCHAR},
+		guid_dict = #{guidDict,jdbcType=VARCHAR},
+		item_name = #{itemName,jdbcType=VARCHAR},
+		item_value = #{itemValue,jdbcType=VARCHAR},
+		send_value = #{sendValue,jdbcType=VARCHAR},
+		seqno = #{seqno,jdbcType=DECIMAL}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from SYS_DICT_ITEM where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from SYS_DICT_ITEM <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE SYS_DICT_ITEM 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_dict != null" >
+        	guid_dict = #{domain.guidDict,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.item_name != null" >
+        	item_name = #{domain.itemName,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.item_value != null" >
+        	item_value = #{domain.itemValue,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.send_value != null" >
+        	send_value = #{domain.sendValue,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.seqno != null" >
+        	seqno = #{domain.seqno,jdbcType=DECIMAL}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.sys.SysDictItem">
+		select <include refid="Base_Column_List"/> from SYS_DICT_ITEM where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.sys.SysDictItem" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from SYS_DICT_ITEM <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from SYS_DICT_ITEM <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid
+		,guid_dict
+		,item_name
+		,item_value
+		,send_value
+		,seqno
+	</sql>
+</mapper>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.jnl.JnlPrefillMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.jnl.JnlPrefill">
+	    INSERT INTO JNL_PREFILL 
+	    (
+	    	 guid
+	    	,guid_cust_service
+	    	,service_sno
+	    	,prefill_date
+	    	,prefill_time
+	    	,trans_code
+	    	,prefill_data
+	    	,prefill_status
+	    	,prefill_chn
+	    	,teller_no
+	    	,instno
+	    	,trans_teller
+	    	,trans_instno
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=VARCHAR},
+			#{guidCustService,jdbcType=VARCHAR},
+			#{serviceSno,jdbcType=VARCHAR},
+			#{prefillDate,jdbcType=CHAR},
+			#{prefillTime,jdbcType=VARCHAR},
+			#{transCode,jdbcType=VARCHAR},
+			#{prefillData,jdbcType=TEXT},
+			#{prefillStatus,jdbcType=VARCHAR},
+			#{prefillChn,jdbcType=VARCHAR},
+			#{tellerNo,jdbcType=VARCHAR},
+			#{instno,jdbcType=VARCHAR},
+			#{transTeller,jdbcType=VARCHAR},
+			#{transInstno,jdbcType=VARCHAR}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.jnl.JnlPrefill">
+    	UPDATE JNL_PREFILL 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_cust_service != null" >
+			guid_cust_service = #{guidCustService,jdbcType=VARCHAR},
+		</if>
+		<if test="service_sno != null" >
+			service_sno = #{serviceSno,jdbcType=VARCHAR},
+		</if>
+		<if test="prefill_date != null" >
+			prefill_date = #{prefillDate,jdbcType=CHAR},
+		</if>
+		<if test="prefill_time != null" >
+			prefill_time = #{prefillTime,jdbcType=VARCHAR},
+		</if>
+		<if test="trans_code != null" >
+			trans_code = #{transCode,jdbcType=VARCHAR},
+		</if>
+		<if test="prefill_data != null" >
+			prefill_data = #{prefillData,jdbcType=TEXT},
+		</if>
+		<if test="prefill_status != null" >
+			prefill_status = #{prefillStatus,jdbcType=VARCHAR},
+		</if>
+		<if test="prefill_chn != null" >
+			prefill_chn = #{prefillChn,jdbcType=VARCHAR},
+		</if>
+		<if test="teller_no != null" >
+			teller_no = #{tellerNo,jdbcType=VARCHAR},
+		</if>
+		<if test="instno != null" >
+			instno = #{instno,jdbcType=VARCHAR},
+		</if>
+		<if test="trans_teller != null" >
+			trans_teller = #{transTeller,jdbcType=VARCHAR},
+		</if>
+		<if test="trans_instno != null" >
+			trans_instno = #{transInstno,jdbcType=VARCHAR}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.jnl.JnlPrefill">
+    	UPDATE JNL_PREFILL 
+	    <set>
+		guid = #{guid,jdbcType=VARCHAR},
+		guid_cust_service = #{guidCustService,jdbcType=VARCHAR},
+		service_sno = #{serviceSno,jdbcType=VARCHAR},
+		prefill_date = #{prefillDate,jdbcType=CHAR},
+		prefill_time = #{prefillTime,jdbcType=VARCHAR},
+		trans_code = #{transCode,jdbcType=VARCHAR},
+		prefill_data = #{prefillData,jdbcType=TEXT},
+		prefill_status = #{prefillStatus,jdbcType=VARCHAR},
+		prefill_chn = #{prefillChn,jdbcType=VARCHAR},
+		teller_no = #{tellerNo,jdbcType=VARCHAR},
+		instno = #{instno,jdbcType=VARCHAR},
+		trans_teller = #{transTeller,jdbcType=VARCHAR},
+		trans_instno = #{transInstno,jdbcType=VARCHAR}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from JNL_PREFILL where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from JNL_PREFILL <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE JNL_PREFILL 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_cust_service != null" >
+        	guid_cust_service = #{domain.guidCustService,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.service_sno != null" >
+        	service_sno = #{domain.serviceSno,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.prefill_date != null" >
+        	prefill_date = #{domain.prefillDate,jdbcType=CHAR}
+      	</if>
+		<if test="domain.prefill_time != null" >
+        	prefill_time = #{domain.prefillTime,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.trans_code != null" >
+        	trans_code = #{domain.transCode,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.prefill_data != null" >
+        	prefill_data = #{domain.prefillData,jdbcType=TEXT}
+      	</if>
+		<if test="domain.prefill_status != null" >
+        	prefill_status = #{domain.prefillStatus,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.prefill_chn != null" >
+        	prefill_chn = #{domain.prefillChn,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.teller_no != null" >
+        	teller_no = #{domain.tellerNo,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.instno != null" >
+        	instno = #{domain.instno,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.trans_teller != null" >
+        	trans_teller = #{domain.transTeller,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.trans_instno != null" >
+        	trans_instno = #{domain.transInstno,jdbcType=VARCHAR}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.jnl.JnlPrefill">
+		select <include refid="Base_Column_List"/> from JNL_PREFILL where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.jnl.JnlPrefill" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from JNL_PREFILL <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from JNL_PREFILL <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid
+		,guid_cust_service
+		,service_sno
+		,prefill_date
+		,prefill_time
+		,trans_code
+		,prefill_data
+		,prefill_status
+		,prefill_chn
+		,teller_no
+		,instno
+		,trans_teller
+		,trans_instno
+	</sql>
+</mapper>

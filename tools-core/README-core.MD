@@ -1,4 +1,19 @@
-1. 负责定义tools中各种业务模型；
+
+tools-core的职责：
+	
+	定义业务域的模型 —— model/目录下 erm文件
+	业务域中的模型对象 —— org.tis.tools.model.po.*
+	实现tools基础能力 —— 如：exception、翻页等等
+	基本的异常体系 —— org.tis.tools.core.exception,
+		所有异常都集成自 ToolsRuntimeException 或 ToolsException；
+		各业务域实现自己的 ExceptionCodes 类，定义自己的异常码；
+		异常码格式： 业务域ID-nn-nnnn；
+	
+
+
+============================
+
+1. 负责定义tools中各种业务域的模型；
 
 2. 每个文件定义一个业务模块的模型；模型中各属性含义，参见： 
 	
@@ -37,5 +52,10 @@
 	另外：
 	mvn bronsp:clean  //清理自动生成的源码
 	mvn bronsp:help   //更多命令参考 
+
+6. 代替5，在tools-core工程下执行命令
 	
+	mvn tools:gen-dao -Dmodel.file.type=erm -Dfixed.bizmodels=jnl
+	
+	详见 ./model/命令.txt
 	

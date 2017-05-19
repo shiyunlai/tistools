@@ -11,7 +11,7 @@ if [ -z "$SERVER_NAME" ]; then
     SERVER_NAME=`hostname`
 fi
 
-PIDS=`ps -f | grep java | grep "$CONF_DIR" |awk '{print $2}'`
+PIDS=`ps -ef | grep java | grep "$CONF_DIR" |awk '{print $2}'`
 if [ -z "$PIDS" ]; then
     echo "ERROR: The $SERVER_NAME does not started!"
     exit 1
@@ -32,7 +32,7 @@ while [ $COUNT -lt 1 ]; do
     sleep 1
     COUNT=1
     for PID in $PIDS ; do
-        PID_EXIST=`ps -f -p $PID | grep java`
+        PID_EXIST=`ps -ef -p $PID | grep java`
         if [ -n "$PID_EXIST" ]; then
             COUNT=0
             break

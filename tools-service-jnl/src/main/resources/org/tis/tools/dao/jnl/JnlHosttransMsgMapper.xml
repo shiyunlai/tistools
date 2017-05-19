@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.jnl.JnlHosttransMsgMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.jnl.JnlHosttransMsg">
+	    INSERT INTO JNL_HOSTTRANS_MSG 
+	    (
+	    	 guid
+	    	,guid_hosttrans
+	    	,msg_type
+	    	,exec_time
+	    	,msg_info
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=VARCHAR},
+			#{guidHosttrans,jdbcType=VARCHAR},
+			#{msgType,jdbcType=CHAR},
+			#{execTime,jdbcType=VARCHAR},
+			#{msgInfo,jdbcType=TEXT}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.jnl.JnlHosttransMsg">
+    	UPDATE JNL_HOSTTRANS_MSG 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_hosttrans != null" >
+			guid_hosttrans = #{guidHosttrans,jdbcType=VARCHAR},
+		</if>
+		<if test="msg_type != null" >
+			msg_type = #{msgType,jdbcType=CHAR},
+		</if>
+		<if test="exec_time != null" >
+			exec_time = #{execTime,jdbcType=VARCHAR},
+		</if>
+		<if test="msg_info != null" >
+			msg_info = #{msgInfo,jdbcType=TEXT}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.jnl.JnlHosttransMsg">
+    	UPDATE JNL_HOSTTRANS_MSG 
+	    <set>
+		guid = #{guid,jdbcType=VARCHAR},
+		guid_hosttrans = #{guidHosttrans,jdbcType=VARCHAR},
+		msg_type = #{msgType,jdbcType=CHAR},
+		exec_time = #{execTime,jdbcType=VARCHAR},
+		msg_info = #{msgInfo,jdbcType=TEXT}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from JNL_HOSTTRANS_MSG where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from JNL_HOSTTRANS_MSG <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE JNL_HOSTTRANS_MSG 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_hosttrans != null" >
+        	guid_hosttrans = #{domain.guidHosttrans,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.msg_type != null" >
+        	msg_type = #{domain.msgType,jdbcType=CHAR}
+      	</if>
+		<if test="domain.exec_time != null" >
+        	exec_time = #{domain.execTime,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.msg_info != null" >
+        	msg_info = #{domain.msgInfo,jdbcType=TEXT}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.jnl.JnlHosttransMsg">
+		select <include refid="Base_Column_List"/> from JNL_HOSTTRANS_MSG where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.jnl.JnlHosttransMsg" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from JNL_HOSTTRANS_MSG <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from JNL_HOSTTRANS_MSG <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid
+		,guid_hosttrans
+		,msg_type
+		,exec_time
+		,msg_info
+	</sql>
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+       http://www.springframework.org/schema/beans/spring-beans.xsd  
+       http://code.alibabatech.com/schema/dubbo  
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- ABF 之 OM -->
+	<dubbo:reference id="orgRService" 
+		group="om" version="1.0" interface="org.tis.tools.rservice.om.capable.IOrgRService"
+		check="false" />
+		
+	<!-- ABF 之 SYS -->
+	<dubbo:reference id="dictRService" 
+		group="sys" version="1.0" interface="org.tis.tools.rservice.sys.capable.IDictRService"
+		check="false" />
+	
+</beans>

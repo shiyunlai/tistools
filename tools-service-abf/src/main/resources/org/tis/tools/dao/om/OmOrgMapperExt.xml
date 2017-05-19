@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.om.OmOrgMapperExt">
+  
+  	
+	<select id="loadByOrgCode" parameterType="String" resultType="org.tis.tools.model.po.om.OmOrg">
+		select <include refid="Base_Column_List"/> from OM_ORG where org_code = #{orgCode}
+	</select>
+	
+	<select id="queryFirstChilds" parameterType="String" resultType="org.tis.tools.model.po.om.OmOrg">
+		select <include refid="Base_Column_List"/> from OM_ORG 
+		where guid_parents = (select guid from OM_ORG where org_code = #{orgCode})
+	</select>
+	
+	<select id="queryAllRoot" parameterType="String" resultType="org.tis.tools.model.po.om.OmOrg">
+		select <include refid="Base_Column_List"/> from OM_ORG a 
+		where exists (select guid from OM_ORG where guid_parents = a.org_seq ) 
+		and guid_parents is null ; 
+	</select>
+	
+	<sql id="Base_Column_List" >
+		 guid as guid 
+		,org_code as orgCode
+		,org_name as orgName
+		,org_type as orgType
+		,org_degree as orgDegree
+		,org_status as orgStatus
+		,org_level as orgLevel
+		,guid_parents as guidParents
+		,org_seq as orgSeq
+		,org_addr as orgAddr
+		,zipcode as zipcode
+		,guid_position as guidPosition
+		,guid_emp_master as guidEmpMaster
+		,guid_emp_manager as guidEmpManager
+		,link_man as linkMan
+		,link_tel as linkTel
+		,email as email
+		,web_url as webUrl 
+		,start_date as startDate
+		,end_date as endDate
+		,area as area
+		,create_time as createTime
+		,last_update as lastUpdate
+		,updator as updator
+		,sort_no as sortNo
+		,isleaf as isleaf
+		,sub_count as subCount
+		,remark as remark
+	</sql>
+</mapper>

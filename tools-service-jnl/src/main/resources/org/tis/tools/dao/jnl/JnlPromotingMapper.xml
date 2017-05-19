@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.jnl.JnlPromotingMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.jnl.JnlPromoting">
+	    INSERT INTO JNL_PROMOTING 
+	    (
+	    	 guid
+	    	,guid_cust_service
+	    	,service_sno
+	    	,promoting_origin
+	    	,promoting_biz_type
+	    	,promoting_title
+	    	,promoting_info
+	    	,promoting_action
+	    	,teller_no
+	    	,instno
+	    	,promoting_date
+	    	,promoting_time
+	    	,promoting_feedback
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=VARCHAR},
+			#{guidCustService,jdbcType=VARCHAR},
+			#{serviceSno,jdbcType=VARCHAR},
+			#{promotingOrigin,jdbcType=VARCHAR},
+			#{promotingBizType,jdbcType=VARCHAR},
+			#{promotingTitle,jdbcType=VARCHAR},
+			#{promotingInfo,jdbcType=TEXT},
+			#{promotingAction,jdbcType=VARCHAR},
+			#{tellerNo,jdbcType=VARCHAR},
+			#{instno,jdbcType=VARCHAR},
+			#{promotingDate,jdbcType=CHAR},
+			#{promotingTime,jdbcType=VARCHAR},
+			#{promotingFeedback,jdbcType=VARCHAR}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.jnl.JnlPromoting">
+    	UPDATE JNL_PROMOTING 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_cust_service != null" >
+			guid_cust_service = #{guidCustService,jdbcType=VARCHAR},
+		</if>
+		<if test="service_sno != null" >
+			service_sno = #{serviceSno,jdbcType=VARCHAR},
+		</if>
+		<if test="promoting_origin != null" >
+			promoting_origin = #{promotingOrigin,jdbcType=VARCHAR},
+		</if>
+		<if test="promoting_biz_type != null" >
+			promoting_biz_type = #{promotingBizType,jdbcType=VARCHAR},
+		</if>
+		<if test="promoting_title != null" >
+			promoting_title = #{promotingTitle,jdbcType=VARCHAR},
+		</if>
+		<if test="promoting_info != null" >
+			promoting_info = #{promotingInfo,jdbcType=TEXT},
+		</if>
+		<if test="promoting_action != null" >
+			promoting_action = #{promotingAction,jdbcType=VARCHAR},
+		</if>
+		<if test="teller_no != null" >
+			teller_no = #{tellerNo,jdbcType=VARCHAR},
+		</if>
+		<if test="instno != null" >
+			instno = #{instno,jdbcType=VARCHAR},
+		</if>
+		<if test="promoting_date != null" >
+			promoting_date = #{promotingDate,jdbcType=CHAR},
+		</if>
+		<if test="promoting_time != null" >
+			promoting_time = #{promotingTime,jdbcType=VARCHAR},
+		</if>
+		<if test="promoting_feedback != null" >
+			promoting_feedback = #{promotingFeedback,jdbcType=VARCHAR}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.jnl.JnlPromoting">
+    	UPDATE JNL_PROMOTING 
+	    <set>
+		guid = #{guid,jdbcType=VARCHAR},
+		guid_cust_service = #{guidCustService,jdbcType=VARCHAR},
+		service_sno = #{serviceSno,jdbcType=VARCHAR},
+		promoting_origin = #{promotingOrigin,jdbcType=VARCHAR},
+		promoting_biz_type = #{promotingBizType,jdbcType=VARCHAR},
+		promoting_title = #{promotingTitle,jdbcType=VARCHAR},
+		promoting_info = #{promotingInfo,jdbcType=TEXT},
+		promoting_action = #{promotingAction,jdbcType=VARCHAR},
+		teller_no = #{tellerNo,jdbcType=VARCHAR},
+		instno = #{instno,jdbcType=VARCHAR},
+		promoting_date = #{promotingDate,jdbcType=CHAR},
+		promoting_time = #{promotingTime,jdbcType=VARCHAR},
+		promoting_feedback = #{promotingFeedback,jdbcType=VARCHAR}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from JNL_PROMOTING where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from JNL_PROMOTING <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE JNL_PROMOTING 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_cust_service != null" >
+        	guid_cust_service = #{domain.guidCustService,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.service_sno != null" >
+        	service_sno = #{domain.serviceSno,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.promoting_origin != null" >
+        	promoting_origin = #{domain.promotingOrigin,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.promoting_biz_type != null" >
+        	promoting_biz_type = #{domain.promotingBizType,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.promoting_title != null" >
+        	promoting_title = #{domain.promotingTitle,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.promoting_info != null" >
+        	promoting_info = #{domain.promotingInfo,jdbcType=TEXT}
+      	</if>
+		<if test="domain.promoting_action != null" >
+        	promoting_action = #{domain.promotingAction,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.teller_no != null" >
+        	teller_no = #{domain.tellerNo,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.instno != null" >
+        	instno = #{domain.instno,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.promoting_date != null" >
+        	promoting_date = #{domain.promotingDate,jdbcType=CHAR}
+      	</if>
+		<if test="domain.promoting_time != null" >
+        	promoting_time = #{domain.promotingTime,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.promoting_feedback != null" >
+        	promoting_feedback = #{domain.promotingFeedback,jdbcType=VARCHAR}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.jnl.JnlPromoting">
+		select <include refid="Base_Column_List"/> from JNL_PROMOTING where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.jnl.JnlPromoting" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from JNL_PROMOTING <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from JNL_PROMOTING <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid
+		,guid_cust_service
+		,service_sno
+		,promoting_origin
+		,promoting_biz_type
+		,promoting_title
+		,promoting_info
+		,promoting_action
+		,teller_no
+		,instno
+		,promoting_date
+		,promoting_time
+		,promoting_feedback
+	</sql>
+</mapper>

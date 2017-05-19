@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.jnl.JnlHosttransMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.jnl.JnlHosttrans">
+	    INSERT INTO JNL_HOSTTRANS 
+	    (
+	    	 guid
+	    	,guid_trans
+	    	,trans_sno
+	    	,host_code
+	    	,hosttrans_code
+	    	,hosttrans_name
+	    	,start_time
+	    	,end_time
+	    	,host_sno_req
+	    	,host_sno_rsp
+	    	,hsottrans_status
+	    	,host_err_code
+	    	,host_err_msg
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=VARCHAR},
+			#{guidTrans,jdbcType=VARCHAR},
+			#{transSno,jdbcType=VARCHAR},
+			#{hostCode,jdbcType=VARCHAR},
+			#{hosttransCode,jdbcType=VARCHAR},
+			#{hosttransName,jdbcType=VARCHAR},
+			#{startTime,jdbcType=VARCHAR},
+			#{endTime,jdbcType=VARCHAR},
+			#{hostSnoReq,jdbcType=VARCHAR},
+			#{hostSnoRsp,jdbcType=VARCHAR},
+			#{hsottransStatus,jdbcType=VARCHAR},
+			#{hostErrCode,jdbcType=VARCHAR},
+			#{hostErrMsg,jdbcType=VARCHAR}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.jnl.JnlHosttrans">
+    	UPDATE JNL_HOSTTRANS 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_trans != null" >
+			guid_trans = #{guidTrans,jdbcType=VARCHAR},
+		</if>
+		<if test="trans_sno != null" >
+			trans_sno = #{transSno,jdbcType=VARCHAR},
+		</if>
+		<if test="host_code != null" >
+			host_code = #{hostCode,jdbcType=VARCHAR},
+		</if>
+		<if test="hosttrans_code != null" >
+			hosttrans_code = #{hosttransCode,jdbcType=VARCHAR},
+		</if>
+		<if test="hosttrans_name != null" >
+			hosttrans_name = #{hosttransName,jdbcType=VARCHAR},
+		</if>
+		<if test="start_time != null" >
+			start_time = #{startTime,jdbcType=VARCHAR},
+		</if>
+		<if test="end_time != null" >
+			end_time = #{endTime,jdbcType=VARCHAR},
+		</if>
+		<if test="host_sno_req != null" >
+			host_sno_req = #{hostSnoReq,jdbcType=VARCHAR},
+		</if>
+		<if test="host_sno_rsp != null" >
+			host_sno_rsp = #{hostSnoRsp,jdbcType=VARCHAR},
+		</if>
+		<if test="hsottrans_status != null" >
+			hsottrans_status = #{hsottransStatus,jdbcType=VARCHAR},
+		</if>
+		<if test="host_err_code != null" >
+			host_err_code = #{hostErrCode,jdbcType=VARCHAR},
+		</if>
+		<if test="host_err_msg != null" >
+			host_err_msg = #{hostErrMsg,jdbcType=VARCHAR}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.jnl.JnlHosttrans">
+    	UPDATE JNL_HOSTTRANS 
+	    <set>
+		guid = #{guid,jdbcType=VARCHAR},
+		guid_trans = #{guidTrans,jdbcType=VARCHAR},
+		trans_sno = #{transSno,jdbcType=VARCHAR},
+		host_code = #{hostCode,jdbcType=VARCHAR},
+		hosttrans_code = #{hosttransCode,jdbcType=VARCHAR},
+		hosttrans_name = #{hosttransName,jdbcType=VARCHAR},
+		start_time = #{startTime,jdbcType=VARCHAR},
+		end_time = #{endTime,jdbcType=VARCHAR},
+		host_sno_req = #{hostSnoReq,jdbcType=VARCHAR},
+		host_sno_rsp = #{hostSnoRsp,jdbcType=VARCHAR},
+		hsottrans_status = #{hsottransStatus,jdbcType=VARCHAR},
+		host_err_code = #{hostErrCode,jdbcType=VARCHAR},
+		host_err_msg = #{hostErrMsg,jdbcType=VARCHAR}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from JNL_HOSTTRANS where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from JNL_HOSTTRANS <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE JNL_HOSTTRANS 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_trans != null" >
+        	guid_trans = #{domain.guidTrans,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.trans_sno != null" >
+        	trans_sno = #{domain.transSno,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.host_code != null" >
+        	host_code = #{domain.hostCode,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.hosttrans_code != null" >
+        	hosttrans_code = #{domain.hosttransCode,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.hosttrans_name != null" >
+        	hosttrans_name = #{domain.hosttransName,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.start_time != null" >
+        	start_time = #{domain.startTime,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.end_time != null" >
+        	end_time = #{domain.endTime,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.host_sno_req != null" >
+        	host_sno_req = #{domain.hostSnoReq,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.host_sno_rsp != null" >
+        	host_sno_rsp = #{domain.hostSnoRsp,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.hsottrans_status != null" >
+        	hsottrans_status = #{domain.hsottransStatus,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.host_err_code != null" >
+        	host_err_code = #{domain.hostErrCode,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.host_err_msg != null" >
+        	host_err_msg = #{domain.hostErrMsg,jdbcType=VARCHAR}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.jnl.JnlHosttrans">
+		select <include refid="Base_Column_List"/> from JNL_HOSTTRANS where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.jnl.JnlHosttrans" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from JNL_HOSTTRANS <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from JNL_HOSTTRANS <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid
+		,guid_trans
+		,trans_sno
+		,host_code
+		,hosttrans_code
+		,hosttrans_name
+		,start_time
+		,end_time
+		,host_sno_req
+		,host_sno_rsp
+		,hsottrans_status
+		,host_err_code
+		,host_err_msg
+	</sql>
+</mapper>

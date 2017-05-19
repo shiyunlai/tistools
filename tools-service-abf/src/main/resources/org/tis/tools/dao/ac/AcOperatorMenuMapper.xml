@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.ac.AcOperatorMenuMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.ac.AcOperatorMenu">
+	    INSERT INTO AC_OPERATOR_MENU 
+	    (
+	    	 guid
+	    	,guid_operator
+	    	,guid_app
+	    	,guid_func
+	    	,menu_name
+	    	,menu_label
+	    	,guid_parents
+	    	,isleaf
+	    	,ui_entry
+	    	,menu_level
+	    	,guid_root
+	    	,display_order
+	    	,image_path
+	    	,expand_path
+	    	,menu_seq
+	    	,open_mode
+	    	,sub_count
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=VARCHAR},
+			#{guidOperator,jdbcType=VARCHAR},
+			#{guidApp,jdbcType=VARCHAR},
+			#{guidFunc,jdbcType=VARCHAR},
+			#{menuName,jdbcType=VARCHAR},
+			#{menuLabel,jdbcType=VARCHAR},
+			#{guidParents,jdbcType=VARCHAR},
+			#{isleaf,jdbcType=CHAR},
+			#{uiEntry,jdbcType=VARCHAR},
+			#{menuLevel,jdbcType=DECIMAL},
+			#{guidRoot,jdbcType=VARCHAR},
+			#{displayOrder,jdbcType=DECIMAL},
+			#{imagePath,jdbcType=VARCHAR},
+			#{expandPath,jdbcType=VARCHAR},
+			#{menuSeq,jdbcType=VARCHAR},
+			#{openMode,jdbcType=VARCHAR},
+			#{subCount,jdbcType=DECIMAL}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.ac.AcOperatorMenu">
+    	UPDATE AC_OPERATOR_MENU 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_operator != null" >
+			guid_operator = #{guidOperator,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_app != null" >
+			guid_app = #{guidApp,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_func != null" >
+			guid_func = #{guidFunc,jdbcType=VARCHAR},
+		</if>
+		<if test="menu_name != null" >
+			menu_name = #{menuName,jdbcType=VARCHAR},
+		</if>
+		<if test="menu_label != null" >
+			menu_label = #{menuLabel,jdbcType=VARCHAR},
+		</if>
+		<if test="guid_parents != null" >
+			guid_parents = #{guidParents,jdbcType=VARCHAR},
+		</if>
+		<if test="isleaf != null" >
+			isleaf = #{isleaf,jdbcType=CHAR},
+		</if>
+		<if test="ui_entry != null" >
+			ui_entry = #{uiEntry,jdbcType=VARCHAR},
+		</if>
+		<if test="menu_level != null" >
+			menu_level = #{menuLevel,jdbcType=DECIMAL},
+		</if>
+		<if test="guid_root != null" >
+			guid_root = #{guidRoot,jdbcType=VARCHAR},
+		</if>
+		<if test="display_order != null" >
+			display_order = #{displayOrder,jdbcType=DECIMAL},
+		</if>
+		<if test="image_path != null" >
+			image_path = #{imagePath,jdbcType=VARCHAR},
+		</if>
+		<if test="expand_path != null" >
+			expand_path = #{expandPath,jdbcType=VARCHAR},
+		</if>
+		<if test="menu_seq != null" >
+			menu_seq = #{menuSeq,jdbcType=VARCHAR},
+		</if>
+		<if test="open_mode != null" >
+			open_mode = #{openMode,jdbcType=VARCHAR},
+		</if>
+		<if test="sub_count != null" >
+			sub_count = #{subCount,jdbcType=DECIMAL}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.ac.AcOperatorMenu">
+    	UPDATE AC_OPERATOR_MENU 
+	    <set>
+		guid = #{guid,jdbcType=VARCHAR},
+		guid_operator = #{guidOperator,jdbcType=VARCHAR},
+		guid_app = #{guidApp,jdbcType=VARCHAR},
+		guid_func = #{guidFunc,jdbcType=VARCHAR},
+		menu_name = #{menuName,jdbcType=VARCHAR},
+		menu_label = #{menuLabel,jdbcType=VARCHAR},
+		guid_parents = #{guidParents,jdbcType=VARCHAR},
+		isleaf = #{isleaf,jdbcType=CHAR},
+		ui_entry = #{uiEntry,jdbcType=VARCHAR},
+		menu_level = #{menuLevel,jdbcType=DECIMAL},
+		guid_root = #{guidRoot,jdbcType=VARCHAR},
+		display_order = #{displayOrder,jdbcType=DECIMAL},
+		image_path = #{imagePath,jdbcType=VARCHAR},
+		expand_path = #{expandPath,jdbcType=VARCHAR},
+		menu_seq = #{menuSeq,jdbcType=VARCHAR},
+		open_mode = #{openMode,jdbcType=VARCHAR},
+		sub_count = #{subCount,jdbcType=DECIMAL}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from AC_OPERATOR_MENU where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from AC_OPERATOR_MENU <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE AC_OPERATOR_MENU 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_operator != null" >
+        	guid_operator = #{domain.guidOperator,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_app != null" >
+        	guid_app = #{domain.guidApp,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_func != null" >
+        	guid_func = #{domain.guidFunc,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.menu_name != null" >
+        	menu_name = #{domain.menuName,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.menu_label != null" >
+        	menu_label = #{domain.menuLabel,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.guid_parents != null" >
+        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.isleaf != null" >
+        	isleaf = #{domain.isleaf,jdbcType=CHAR}
+      	</if>
+		<if test="domain.ui_entry != null" >
+        	ui_entry = #{domain.uiEntry,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.menu_level != null" >
+        	menu_level = #{domain.menuLevel,jdbcType=DECIMAL}
+      	</if>
+		<if test="domain.guid_root != null" >
+        	guid_root = #{domain.guidRoot,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.display_order != null" >
+        	display_order = #{domain.displayOrder,jdbcType=DECIMAL}
+      	</if>
+		<if test="domain.image_path != null" >
+        	image_path = #{domain.imagePath,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.expand_path != null" >
+        	expand_path = #{domain.expandPath,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.menu_seq != null" >
+        	menu_seq = #{domain.menuSeq,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.open_mode != null" >
+        	open_mode = #{domain.openMode,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.sub_count != null" >
+        	sub_count = #{domain.subCount,jdbcType=DECIMAL}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.ac.AcOperatorMenu">
+		select <include refid="Base_Column_List"/> from AC_OPERATOR_MENU where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.ac.AcOperatorMenu" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from AC_OPERATOR_MENU <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from AC_OPERATOR_MENU <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid
+		,guid_operator
+		,guid_app
+		,guid_func
+		,menu_name
+		,menu_label
+		,guid_parents
+		,isleaf
+		,ui_entry
+		,menu_level
+		,guid_root
+		,display_order
+		,image_path
+		,expand_path
+		,menu_seq
+		,open_mode
+		,sub_count
+	</sql>
+</mapper>
