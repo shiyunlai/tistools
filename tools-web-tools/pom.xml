@@ -36,7 +36,12 @@
 		<!-- dubbo 相关jar end -->
 
 		<!-- 以下依赖未重构整理过..... -->
-
+		<!-- fastjson -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+		</dependency>
+					
 		<dependency>
 			<groupId>commons-collections</groupId>
 			<artifactId>commons-collections</artifactId>
@@ -594,6 +599,11 @@
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-facade-om</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.tis</groupId>
+			<artifactId>tools-facade-sys</artifactId>
 			<version>0.0.1</version>
 		</dependency>
 	</dependencies>

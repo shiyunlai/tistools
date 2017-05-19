@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.tis.tools.model.po.sys.SysDict;
+import org.tis.tools.rservice.om.capable.IOrgRService;
+import org.tis.tools.rservice.sys.capable.IDictRService;
 import org.tis.tools.service.api.biztrace.BiztraceFileInfo;
 import org.tis.tools.service.api.biztrace.IBiztraceRService;
 import org.tis.tools.webapp.controller.BaseController;
@@ -97,6 +100,25 @@ public class BizTest extends BaseController {
 		
 		return JSONUtils.valueToString(logFileList) ;
 	}
+	
+	
+	@Autowired
+	IDictRService dictRService;
+	
+	@ResponseBody
+	@RequestMapping(value="/abf",method=RequestMethod.POST)
+	public String testABF(HttpServletRequest request, @RequestBody String body,
+			HttpServletResponse response) {
+		
+		System.out.println("请求数据： "+body);
+		
+		SysDict dict = dictRService.queryDict("SHIYL_TEST_NEW") ;
+		System.out.println("结果： "+dict);
+		
+		return JSONUtils.valueToString(body) ;
+	}
+	
+	
 
 	private Map<String, Object> responseMsg ;
 	@Override
