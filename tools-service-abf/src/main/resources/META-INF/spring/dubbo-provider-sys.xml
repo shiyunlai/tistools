@@ -37,7 +37,7 @@
 	<dubbo:service 
 		interface="org.tis.tools.rservice.sys.capable.IDictRService" group="sys" version="1.0"
 		ref="dictRServiceImpl" 
-		protocol="rest"  timeout="3000" />
+		protocol="rest,dubbo"  timeout="3000" />
  	
 	<!-- 具体实现 -->
  	<bean id="dictRServiceImpl" class="org.tis.tools.rservice.sys.capable.DictRServiceImpl" />

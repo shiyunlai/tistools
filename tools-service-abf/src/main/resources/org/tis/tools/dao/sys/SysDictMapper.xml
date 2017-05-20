@@ -13,10 +13,11 @@
 	    	,dict_type
 	    	,dict_name
 	    	,dict_desc
+	    	,guid_parents
 	    	,default_value
 	    	,from_table
-	    	,use_column
-	    	,guid_parents
+	    	,use_for_key
+	    	,use_for_name
 	    	,seqno
 	    )
 	    VALUES 
@@ -26,10 +27,11 @@
 			#{dictType,jdbcType=CHAR},
 			#{dictName,jdbcType=VARCHAR},
 			#{dictDesc,jdbcType=VARCHAR},
+			#{guidParents,jdbcType=VARCHAR},
 			#{defaultValue,jdbcType=VARCHAR},
 			#{fromTable,jdbcType=VARCHAR},
-			#{useColumn,jdbcType=VARCHAR},
-			#{guidParents,jdbcType=VARCHAR},
+			#{useForKey,jdbcType=VARCHAR},
+			#{useForName,jdbcType=VARCHAR},
 			#{seqno,jdbcType=DECIMAL}
   		)
  	</insert>
@@ -52,17 +54,20 @@
 		<if test="dict_desc != null" >
 			dict_desc = #{dictDesc,jdbcType=VARCHAR},
 		</if>
+		<if test="guid_parents != null" >
+			guid_parents = #{guidParents,jdbcType=VARCHAR},
+		</if>
 		<if test="default_value != null" >
 			default_value = #{defaultValue,jdbcType=VARCHAR},
 		</if>
 		<if test="from_table != null" >
 			from_table = #{fromTable,jdbcType=VARCHAR},
 		</if>
-		<if test="use_column != null" >
-			use_column = #{useColumn,jdbcType=VARCHAR},
+		<if test="use_for_key != null" >
+			use_for_key = #{useForKey,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_parents != null" >
-			guid_parents = #{guidParents,jdbcType=VARCHAR},
+		<if test="use_for_name != null" >
+			use_for_name = #{useForName,jdbcType=VARCHAR},
 		</if>
 		<if test="seqno != null" >
 			seqno = #{seqno,jdbcType=DECIMAL}
@@ -79,10 +84,11 @@
 		dict_type = #{dictType,jdbcType=CHAR},
 		dict_name = #{dictName,jdbcType=VARCHAR},
 		dict_desc = #{dictDesc,jdbcType=VARCHAR},
+		guid_parents = #{guidParents,jdbcType=VARCHAR},
 		default_value = #{defaultValue,jdbcType=VARCHAR},
 		from_table = #{fromTable,jdbcType=VARCHAR},
-		use_column = #{useColumn,jdbcType=VARCHAR},
-		guid_parents = #{guidParents,jdbcType=VARCHAR},
+		use_for_key = #{useForKey,jdbcType=VARCHAR},
+		use_for_name = #{useForName,jdbcType=VARCHAR},
 		seqno = #{seqno,jdbcType=DECIMAL}
 	    </set>
 	    WHERE guid = #{guid}
@@ -114,17 +120,20 @@
 		<if test="domain.dict_desc != null" >
         	dict_desc = #{domain.dictDesc,jdbcType=VARCHAR}
       	</if>
+		<if test="domain.guid_parents != null" >
+        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR}
+      	</if>
 		<if test="domain.default_value != null" >
         	default_value = #{domain.defaultValue,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.from_table != null" >
         	from_table = #{domain.fromTable,jdbcType=VARCHAR}
       	</if>
-		<if test="domain.use_column != null" >
-        	use_column = #{domain.useColumn,jdbcType=VARCHAR}
+		<if test="domain.use_for_key != null" >
+        	use_for_key = #{domain.useForKey,jdbcType=VARCHAR}
       	</if>
-		<if test="domain.guid_parents != null" >
-        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR}
+		<if test="domain.use_for_name != null" >
+        	use_for_name = #{domain.useForName,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.seqno != null" >
         	seqno = #{domain.seqno,jdbcType=DECIMAL}
@@ -152,15 +161,16 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid
-		,dict_key
-		,dict_type
-		,dict_name
-		,dict_desc
-		,default_value
-		,from_table
-		,use_column
-		,guid_parents
-		,seqno
+		 guid as guid
+		,dict_key as dictKey
+		,dict_type as dictType
+		,dict_name as dictName
+		,dict_desc as dictDesc
+		,guid_parents as guidParents
+		,default_value as defaultValue
+		,from_table as fromTable
+		,use_for_key as useForKey
+		,use_for_name as useForName
+		,seqno as seqno
 	</sql>
 </mapper>

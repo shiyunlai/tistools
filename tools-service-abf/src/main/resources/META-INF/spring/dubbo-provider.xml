@@ -61,8 +61,8 @@
 		limited 可伸缩线程池，但池中的线程数只会增长不会收缩。(为避免收缩时突然来了大流量引起的性能问题)。
 	-->
     <dubbo:protocol 
-    	name="${dubbo.protocol.name}" 
-    	port="${dubbo.protocol.port}" 
+    	name="dubbo" 
+    	port="20889" 
     	serialization="fastjson" 
     	dispatcher="all" 
     	threadpool="fixed" 

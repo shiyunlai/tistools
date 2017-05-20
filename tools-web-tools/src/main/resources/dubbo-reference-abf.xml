@@ -20,5 +20,12 @@
 		version="1.0" 
 		interface="org.tis.tools.rservice.om.capable.IOrgRService"     
 		check="false"/>
-	
+		
+	<dubbo:reference 
+		id="dictRService"    
+		group="sys" 
+		version="1.0" 
+		interface="org.tis.tools.rservice.sys.capable.IDictRService"     
+		check="false"/>
+		
 </beans>
