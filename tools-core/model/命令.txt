@@ -19,6 +19,10 @@
 
 	mvn tools:gen-dao -Dmodel.file.type=erm -Dmodel.file=abf -Dfixed.bizmodels=ac -Dgen.type=model,dao,biz,service
 	
+	[修改了现有表结构]
+	mvn tools:gen-dao -Dmodel.file.type=erm -Dmodel.file=ABF-mysql -Dfixed.bizmodels=sys -Dgen.type=model,dao
+	
+	
 	mvn tools:gen-dao -Dmodel.file.type=erm -Dmodel.file=ABF-mysql -Dgen.type=model,dao,biz,service
 	mvn tools:gen-dao -Dmodel.file.type=erm -Dmodel.file=JNL-mysql -Dgen.type=model,dao,biz,service
 

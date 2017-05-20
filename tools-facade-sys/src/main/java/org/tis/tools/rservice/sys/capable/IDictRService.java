@@ -52,10 +52,10 @@ public interface IDictRService {
 	 * 
 	 * </pre>
 	 * @param dictKey 字典KEY
-	 * @return 字典信息视图对象
+	 * @return 字典信息视图对象(SysDictDetail)
 	 * @throws SysManagementException
 	 */
-	SysDictDetail queryDictDetail( String dictKey ) throws SysManagementException;
+	SysDict queryDictDetail( String dictKey ) throws SysManagementException;
 	
 	/**
 	 * <pre>
@@ -69,7 +69,7 @@ public interface IDictRService {
 	 * @return
 	 * @throws SysManagementException
 	 */
-	SysDictDetail queryDict( String dictKey ) throws SysManagementException;
+	SysDict queryDict( String dictKey ) throws SysManagementException;
 
 	/**
 	 * <pre>

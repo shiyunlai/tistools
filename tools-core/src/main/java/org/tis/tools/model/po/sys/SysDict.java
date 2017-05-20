@@ -44,14 +44,16 @@ public class SysDict implements Serializable {
 	public static final String COLUMN_DICT_NAME = "dict_name" ; 
 	/** DICT_DESC ：解释说明<br/><br/> */
 	public static final String COLUMN_DICT_DESC = "dict_desc" ; 
+	/** GUID_PARENTS ：父字典GUID<br/><br/> */
+	public static final String COLUMN_GUID_PARENTS = "guid_parents" ; 
 	/** DEFAULT_VALUE ：业务字典默认值<br/><br/>指定某个字典项（ITEM_VALUE）为本业务字典的默认值（用于扶助View层实现展示默认值） */
 	public static final String COLUMN_DEFAULT_VALUE = "default_value" ; 
 	/** FROM_TABLE ：字典项来源表<br/><br/>如果业务字典用来描述某个表中的字段选项，则本字段保存表名； 其他情况默认为空； */
 	public static final String COLUMN_FROM_TABLE = "from_table" ; 
-	/** USE_COLUMN ：使用列作为字典项<br/><br/>如果业务字典用来描述某个表中的字段选项，则本字段保存字段名； 其他情况默认为空； */
-	public static final String COLUMN_USE_COLUMN = "use_column" ; 
-	/** GUID_PARENTS ：父字典GUID<br/><br/>根节点时为空，子节点时存储其父业务字典的GUID */
-	public static final String COLUMN_GUID_PARENTS = "guid_parents" ; 
+	/** USE_FOR_KEY ：作为字典项的列<br/><br/>如果业务字典用来描述某个表中的字段选项，则本字段保存字段名； 其他情况默认为空； */
+	public static final String COLUMN_USE_FOR_KEY = "use_for_key" ; 
+	/** USE_FOR_NAME ：作为字典项名称的列<br/><br/> */
+	public static final String COLUMN_USE_FOR_NAME = "use_for_name" ; 
 	/** SEQNO ：顺序号<br/><br/>顺序号，从0开始排，按小到大排序 */
 	public static final String COLUMN_SEQNO = "seqno" ; 
 	
@@ -71,17 +73,20 @@ public class SysDict implements Serializable {
 	/** 字段类型：varchar<br/>字段名：解释说明<br/>描述： */
 	private String dictDesc ;
 	
+	/** 字段类型：varchar<br/>字段名：父字典GUID<br/>描述： */
+	private String guidParents ;
+	
 	/** 字段类型：varchar<br/>字段名：业务字典默认值<br/>描述：指定某个字典项（ITEM_VALUE）为本业务字典的默认值（用于扶助View层实现展示默认值） */
 	private String defaultValue ;
 	
 	/** 字段类型：varchar<br/>字段名：字典项来源表<br/>描述：如果业务字典用来描述某个表中的字段选项，则本字段保存表名； 其他情况默认为空； */
 	private String fromTable ;
 	
-	/** 字段类型：varchar<br/>字段名：使用列作为字典项<br/>描述：如果业务字典用来描述某个表中的字段选项，则本字段保存字段名； 其他情况默认为空； */
-	private String useColumn ;
+	/** 字段类型：varchar<br/>字段名：作为字典项的列<br/>描述：如果业务字典用来描述某个表中的字段选项，则本字段保存字段名； 其他情况默认为空； */
+	private String useForKey ;
 	
-	/** 字段类型：varchar<br/>字段名：父字典GUID<br/>描述：根节点时为空，子节点时存储其父业务字典的GUID */
-	private String guidParents ;
+	/** 字段类型：varchar<br/>字段名：作为字典项名称的列<br/>描述： */
+	private String useForName ;
 	
 	/** 字段类型：decimal<br/>字段名：顺序号<br/>描述：顺序号，从0开始排，按小到大排序 */
 	private BigDecimal seqno ;
@@ -183,6 +188,25 @@ public class SysDict implements Serializable {
     }
 	
 	/**
+	 * Set the 父字典GUID.
+	 * 
+	 * @param guidParents
+	 *            父字典GUID
+	 */
+	public void setGuidParents(String guidParents) {
+ 		this.guidParents = guidParents == null ? null : guidParents.trim() ;
+    }
+    
+    /**
+	 * Get the 父字典GUID.
+	 * 
+	 * @return 父字典GUID
+	 */
+	public String getGuidParents(){
+		return this.guidParents ;
+    }
+	
+	/**
 	 * Set the 业务字典默认值.
 	 * 
 	 * @param defaultValue
@@ -221,41 +245,41 @@ public class SysDict implements Serializable {
     }
 	
 	/**
-	 * Set the 使用列作为字典项.
+	 * Set the 作为字典项的列.
 	 * 
-	 * @param useColumn
-	 *            使用列作为字典项
+	 * @param useForKey
+	 *            作为字典项的列
 	 */
-	public void setUseColumn(String useColumn) {
- 		this.useColumn = useColumn == null ? null : useColumn.trim() ;
+	public void setUseForKey(String useForKey) {
+ 		this.useForKey = useForKey == null ? null : useForKey.trim() ;
     }
     
     /**
-	 * Get the 使用列作为字典项.
+	 * Get the 作为字典项的列.
 	 * 
-	 * @return 使用列作为字典项
+	 * @return 作为字典项的列
 	 */
-	public String getUseColumn(){
-		return this.useColumn ;
+	public String getUseForKey(){
+		return this.useForKey ;
     }
 	
 	/**
-	 * Set the 父字典GUID.
+	 * Set the 作为字典项名称的列.
 	 * 
-	 * @param guidParents
-	 *            父字典GUID
+	 * @param useForName
+	 *            作为字典项名称的列
 	 */
-	public void setGuidParents(String guidParents) {
- 		this.guidParents = guidParents == null ? null : guidParents.trim() ;
+	public void setUseForName(String useForName) {
+ 		this.useForName = useForName == null ? null : useForName.trim() ;
     }
     
     /**
-	 * Get the 父字典GUID.
+	 * Get the 作为字典项名称的列.
 	 * 
-	 * @return 父字典GUID
+	 * @return 作为字典项名称的列
 	 */
-	public String getGuidParents(){
-		return this.guidParents ;
+	public String getUseForName(){
+		return this.useForName ;
     }
 	
 	/**

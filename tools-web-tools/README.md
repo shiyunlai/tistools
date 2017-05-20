@@ -1,4 +1,7 @@
 
+启动： mvn tomcat7:run
+访问： http://localhost:8089/tis/tools/index.html
+
 ### 开发过程
 
 2016-11-30
