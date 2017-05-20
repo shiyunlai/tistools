@@ -98,9 +98,9 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 seq_key
-		,seq_no
-		,reset
-		,reset_params
+		 seq_key as seqKey
+		,seq_no as seqNo
+		,reset as reset
+		,reset_params as resetParams
 	</sql>
 </mapper>
