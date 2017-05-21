@@ -58,6 +58,11 @@
 
 #### [如何在tools工程集中新增一个dubbo消费者工程XXX](./readme/新增一个服务消费者工程.MD "")
 
+#### [如何发布Dubbo服务](./readme/发布Dubbo服务.MD "")
+
+#### [如何发布RESTFul服务](./readme/发布RESTFul服务.MD "")
+
+
 --------
 
 ##	开发规范
@@ -65,6 +70,8 @@
 #### [工程命名规范](http://www.bronsp.com:8060/index.php?s=/5&page_id=106 "工程命名")
 
 #### [package规范](http://www.bronsp.com:8060/index.php?s=/5&page_id=107 "package命名")
+
+#### [异常&错误码规范](./readme/异常和错误码.MD "异常和错误码")
 
 #### [单元测试规范](./readme/如何进行单元测试.MD "单元测试")
 
