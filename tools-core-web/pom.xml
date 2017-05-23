@@ -8,13 +8,13 @@
 		<artifactId>tools</artifactId>
 		<version>0.0.1</version>
 	</parent>
-	<artifactId>tools-web-boss</artifactId>
-	<name>web-boss</name>
+	<artifactId>tools-core-web</artifactId>
+	<name>tools-core-web</name>
 	<url>http://maven.apache.org</url>
 	<build>
 		<finalName>web-boss</finalName>
 	</build>
-	<description>web工程的基础包</description>
+	<description>web工程的基础包，被web类应用模块依赖。</description>
 
 	<dependencies>
 		<dependency>
@@ -81,7 +81,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.tis</groupId>
-			<artifactId>tools-core</artifactId>
+			<artifactId>tools-core-basic</artifactId>
 		</dependency>
 	</dependencies>
 </project>

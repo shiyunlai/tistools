@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tools.common.dubbo.rest.support;
+package org.tools.core.dubbo.rest.support;
 
 import java.io.IOException;
 import java.util.zip.GZIPOutputStream;

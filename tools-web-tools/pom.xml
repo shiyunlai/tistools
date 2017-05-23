@@ -10,16 +10,16 @@
 	</parent>
 	<artifactId>tools-web-tools</artifactId>
 	<packaging>war</packaging>
-	<name>web for tis tools</name>
+	<name>tools-web-tools</name>
 	<dependencies>
-	
+
 		<!-- disconf start -->
 		<dependency>
 			<groupId>com.baidu.disconf</groupId>
 			<artifactId>disconf-client</artifactId>
 		</dependency>
 		<!-- disconf end -->
-		
+
 		<!-- dubbo 相关jar start -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -41,7 +41,7 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 		</dependency>
-					
+
 		<dependency>
 			<groupId>commons-collections</groupId>
 			<artifactId>commons-collections</artifactId>
@@ -446,7 +446,7 @@
 			<artifactId>velocity</artifactId>
 			<version>${velocity.version}</version>
 		</dependency>
-		<!-- mybatis config <dependency> <groupId>com.oracle</groupId> <artifactId>ojdbc14</artifactId>
+		<!-- mybatis config <dependency> <groupId>com.oracle</groupId> <artifactId>ojdbc14</artifactId> 
 			<version>10.2.0.4.0</version> </dependency> -->
 
 		<!-- 引入oracle数据库jdbc驱动包 -->
@@ -561,21 +561,19 @@
 
 		<dependency>
 			<groupId>org.tis</groupId>
+			<artifactId>tools-common-util</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.tis</groupId>
+			<artifactId>tools-core-basic</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.tis</groupId>
+			<artifactId>tools-core-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.tis</groupId>
 			<artifactId>tools-facade-devmgr</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.tis</groupId>
-			<artifactId>tools-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.tis</groupId>
-			<artifactId>tools-common</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.tis</groupId>
-			<artifactId>tools-web-boss</artifactId>
-			<version>0.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.tis</groupId>
@@ -584,27 +582,22 @@
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-facade-jnl</artifactId>
-			<version>0.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-facade-log</artifactId>
-			<version>0.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-facade-ac</artifactId>
-			<version>0.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-facade-om</artifactId>
-			<version>0.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-facade-sys</artifactId>
-			<version>0.0.1</version>
 		</dependency>
 	</dependencies>
 
@@ -658,7 +651,7 @@
 	<build>
 		<defaultGoal>install</defaultGoal>
 		<plugins>
-			<!-- 指定多个源代码目录、多个资源文件目录 start-->
+			<!-- 指定多个源代码目录、多个资源文件目录 start -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
@@ -678,22 +671,10 @@
 							</sources>
 						</configuration>
 					</execution>
-					<!-- 如果需要增加多个 资源路径（如果无扩展时请封闭，以免造成 build-helper-maven-plugin 插件空指针）
-					<execution>
-						<id>add-resource</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>add-resource</goal>
-						</goals>
-						<configuration>
-							<resources>
-								在这里添加多个resource节点
-								<resource>
-									<directory>${basedir}/src/multimodule/resources</directory>
-								</resource>
-							</resources>
-						</configuration>
-					</execution> -->
+					<!-- 如果需要增加多个 资源路径（如果无扩展时请封闭，以免造成 build-helper-maven-plugin 插件空指针） <execution> 
+						<id>add-resource</id> <phase>generate-resources</phase> <goals> <goal>add-resource</goal> 
+						</goals> <configuration> <resources> 在这里添加多个resource节点 <resource> <directory>${basedir}/src/multimodule/resources</directory> 
+						</resource> </resources> </configuration> </execution> -->
 				</executions>
 			</plugin>
 			<!-- 指定多个源代码目录、多个资源文件目录 end -->
@@ -722,22 +703,23 @@
 						<contextPath>/tis</contextPath>
 					</webApp>
 					<connectors>
-	                    <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-	                        <port>8089</port><!-- 不设置默认为8080，也可 mvn jetty:run -Djetty.port=8089 设置 端口 -->
-	                    </connector>
-                	</connectors>
+						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+							<port>8089</port><!-- 不设置默认为8080，也可 mvn jetty:run -Djetty.port=8089 
+								设置 端口 -->
+						</connector>
+					</connectors>
 					<scanTargetPatterns><!-- 对扫描范围的配置 -->
-		                <scanTargetPattern>
-		                    <directory>src/main/webapp/WEB-INF</directory>
-		                    <excludes>
-		                        <exclude>**/*.jsp</exclude>
-		                    </excludes>
-		                    <includes>
-		                        <include>**/*.properties</include>
-		                        <include>**/*.xml</include>
-		                    </includes>
-		                </scanTargetPattern>
-		            </scanTargetPatterns>
+						<scanTargetPattern>
+							<directory>src/main/webapp/WEB-INF</directory>
+							<excludes>
+								<exclude>**/*.jsp</exclude>
+							</excludes>
+							<includes>
+								<include>**/*.properties</include>
+								<include>**/*.xml</include>
+							</includes>
+						</scanTargetPattern>
+					</scanTargetPatterns>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -790,7 +772,8 @@
 		<!-- Read the contents of the file below to see how to change databases -->
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -824,4 +807,5 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+	<description>tools后台管理</description>
 </project>

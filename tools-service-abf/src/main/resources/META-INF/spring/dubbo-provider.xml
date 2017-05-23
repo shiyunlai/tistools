@@ -73,8 +73,8 @@
 	<dubbo:protocol name="rest" port="8888" keepalive="true"
 		server="netty" iothreads="5" threads="100" contextpath="services" 
 		extension="
-			org.tools.common.dubbo.rest.support.TestContainerRequestFilter,
-			org.tools.common.dubbo.rest.support.CacheControlFilter,
-			org.tools.common.dubbo.rest.support.ExceptionMapperSupport"/>
+			org.tools.core.dubbo.rest.support.TestContainerRequestFilter,
+			org.tools.core.dubbo.rest.support.CacheControlFilter,
+			org.tools.core.dubbo.rest.support.ExceptionMapperSupport"/>
     
 </beans>
