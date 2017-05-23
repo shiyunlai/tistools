@@ -15,6 +15,7 @@
 		<module>tools-common-util</module>
 		<module>tools-core-basic</module>
 		<module>tools-core-service</module>
+		<module>tools-core-web</module>
 		<module>tools-design</module>
 		<module>tools-maven-plugin</module>
 		<module>tools-facade-biztrace</module>
@@ -29,7 +30,6 @@
 		<module>tools-service-devmgr</module>
 		<module>tools-service-jnl</module>
 		<!-- <module>tools-web-tools3</module> -->
-		<module>tools-web-boss</module>
 		<module>tools-web-tools</module>
 	</modules>
 	<properties>
@@ -82,7 +82,7 @@
 		<webx_version>3.1.6</webx_version>
 		<!--<jackson_version>2.3.3</jackson_version> -->
 		<jackson_version>2.7.1</jackson_version>
-  		<mysql-version>5.1.37</mysql-version>
+		<mysql-version>5.1.37</mysql-version>
 		<commons_pool_version>1.6</commons_pool_version>
 		<commons-lang_version>2.6</commons-lang_version>
 		<commons.collections.version>3.2.1</commons.collections.version>
@@ -165,7 +165,7 @@
 		<disconf_version>2.6.36-luban</disconf_version>
 		<dom4j_version>1.6.1</dom4j_version>
 		<jaxen_version>1.1.6</jaxen_version>
-		 
+
 	</properties>
 	<dependencyManagement>
 
@@ -193,6 +193,11 @@
 				<artifactId>tools-core-service</artifactId>
 				<version>${tis_tools_version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.tis</groupId>
+				<artifactId>tools-core-web</artifactId>
+				<version>${tis_tools_version}</version>
+			</dependency>
 
 			<!-- tools facade -->
 			<dependency>
@@ -203,6 +208,31 @@
 			<dependency>
 				<groupId>org.tis</groupId>
 				<artifactId>tools-facade-biztrace</artifactId>
+				<version>${tis_tools_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.tis</groupId>
+				<artifactId>tools-facade-jnl</artifactId>
+				<version>${tis_tools_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.tis</groupId>
+				<artifactId>tools-facade-log</artifactId>
+				<version>${tis_tools_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.tis</groupId>
+				<artifactId>tools-facade-ac</artifactId>
+				<version>${tis_tools_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.tis</groupId>
+				<artifactId>tools-facade-om</artifactId>
+				<version>${tis_tools_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.tis</groupId>
+				<artifactId>tools-facade-sys</artifactId>
 				<version>${tis_tools_version}</version>
 			</dependency>
 
@@ -264,7 +294,7 @@
 				<artifactId>spring-tx</artifactId>
 				<version>${spring.bom.version}</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>org.javassist</groupId>
 				<artifactId>javassist</artifactId>
@@ -506,11 +536,11 @@
 				<version>${jcl_version}</version>
 			</dependency>
 			<dependency>
-                <groupId>commons-logging</groupId>
-                <artifactId>commons-logging</artifactId>
-                <version>${commons-logging_version}</version>
-                <scope>provided</scope>
-            </dependency>
+				<groupId>commons-logging</groupId>
+				<artifactId>commons-logging</artifactId>
+				<version>${commons-logging_version}</version>
+				<scope>provided</scope>
+			</dependency>
 			<dependency>
 				<groupId>log4j</groupId>
 				<artifactId>log4j</artifactId>
@@ -531,27 +561,27 @@
 				<artifactId>log4j-slf4j-impl</artifactId>
 				<version>${log4j2_version}</version>
 			</dependency>
-			
+
 			<!-- Test libs -->
 			<dependency>
-			<groupId>org.springframework</groupId>
+				<groupId>org.springframework</groupId>
 				<artifactId>spring-test</artifactId>
 				<version>${spring.bom.version}</version>
 				<scope>test</scope>
 				<optional>true</optional>
 			</dependency>
-		    <dependency>
-		        <groupId>org.mockito</groupId>
-		        <artifactId>mockito-all</artifactId>
-		        <version>1.9.5</version>
-		        <scope>test</scope>
-		    </dependency>
-		      <dependency> 
-		          <groupId>org.hamcrest</groupId> 
-		          <artifactId>hamcrest-core</artifactId> 
-		          <version>1.3</version> 
-		          <scope>test</scope> 
-		      </dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-all</artifactId>
+				<version>1.9.5</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.hamcrest</groupId>
+				<artifactId>hamcrest-core</artifactId>
+				<version>1.3</version>
+				<scope>test</scope>
+			</dependency>
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
@@ -584,7 +614,7 @@
 				<scope>test</scope>
 			</dependency>
 			<!-- Test lib end -->
-			
+
 			<dependency>
 				<groupId>cglib</groupId>
 				<artifactId>cglib-nodep</artifactId>
@@ -730,24 +760,24 @@
 				<version>${ehcache.web.version}</version>
 			</dependency>
 			<dependency>
-	       		<groupId>net.sourceforge.pinyin4j</groupId>
-	            <artifactId>pinyin4j</artifactId>
+				<groupId>net.sourceforge.pinyin4j</groupId>
+				<artifactId>pinyin4j</artifactId>
 				<version>${pinyin4j.version}</version>
-	        </dependency>
+			</dependency>
 			<!-- junrar -->
 			<dependency>
 				<groupId>com.github.junrar</groupId>
 				<artifactId>junrar</artifactId>
 				<version>${junrar_version}</version>
 			</dependency>
-	
+
 			<!-- svnkit -->
 			<dependency>
 				<groupId>org.tmatesoft.svnkit</groupId>
 				<artifactId>svnkit</artifactId>
 				<version>${svnkit_version}</version>
 			</dependency>
-			
+
 			<!-- poi -->
 			<dependency>
 				<groupId>org.apache.poi</groupId>
@@ -766,21 +796,21 @@
 				<artifactId>disconf-client</artifactId>
 				<version>${disconf_version}</version>
 			</dependency>
-        
-        	<!-- https://mvnrepository.com/artifact/dom4j/dom4j -->
+
+			<!-- https://mvnrepository.com/artifact/dom4j/dom4j -->
 			<dependency>
-			    <groupId>dom4j</groupId>
-			    <artifactId>dom4j</artifactId>
-			    <version>${dom4j_version}</version>
+				<groupId>dom4j</groupId>
+				<artifactId>dom4j</artifactId>
+				<version>${dom4j_version}</version>
 			</dependency>
-			
+
 			<!-- https://mvnrepository.com/artifact/jaxen/jaxen -->
 			<dependency>
-			    <groupId>jaxen</groupId>
-			    <artifactId>jaxen</artifactId>
-			     <version>${jaxen_version}</version>
+				<groupId>jaxen</groupId>
+				<artifactId>jaxen</artifactId>
+				<version>${jaxen_version}</version>
 			</dependency>
-						
+
 
 			<!--### Common libs end ### -->
 		</dependencies>
