@@ -13,7 +13,7 @@
 		<!-- 建议工程目录名同artifactId -->
 		<module>tools-common-assembly</module>
 		<module>tools-common-util</module>
-		<module>tools-core</module>
+		<module>tools-core-basic</module>
 		<module>tools-core-service</module>
 		<module>tools-design</module>
 		<module>tools-maven-plugin</module>
@@ -185,14 +185,12 @@
 			<!-- tools core -->
 			<dependency>
 				<groupId>org.tis</groupId>
-				<artifactId>tools-core-service</artifactId>
+				<artifactId>tools-core-basic</artifactId>
 				<version>${tis_tools_version}</version>
 			</dependency>
-
-			<!-- tools core -->
 			<dependency>
 				<groupId>org.tis</groupId>
-				<artifactId>tools-core</artifactId>
+				<artifactId>tools-core-service</artifactId>
 				<version>${tis_tools_version}</version>
 			</dependency>
 

@@ -18,7 +18,7 @@
 		<!-- tis tools -->
 		<dependency>
 			<groupId>org.tis</groupId>
-			<artifactId>tools-core</artifactId>
+			<artifactId>tools-core-basic</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.tis</groupId>

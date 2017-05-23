@@ -23,7 +23,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.tis</groupId>
-			<artifactId>tools-core</artifactId>
+			<artifactId>tools-core-basic</artifactId>
 		</dependency>
 		<!-- service-jnl 负责提供jnl和log两个业务域的服务能力 -->
 		<dependency>

@@ -8,8 +8,8 @@
 		<artifactId>tools</artifactId>
 		<version>0.0.1</version>
 	</parent>
-	<artifactId>tools-core</artifactId>
-	<name>tools-core</name>
+	<artifactId>tools-core-basic</artifactId>
+	<name>tools-core-basic</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
