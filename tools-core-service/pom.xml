@@ -8,8 +8,8 @@
 		<artifactId>tools</artifactId>
 		<version>0.0.1</version>
 	</parent>
-	<artifactId>tools-common-service</artifactId>
-	<name>tools-common-service</name>
+	<artifactId>tools-core-service</artifactId>
+	<name>tools-core-service</name>
 	<url>http://maven.apache.org</url>
 	<description>作为服务提供者基础能力的实现工程，将被各 tools-service-XXX引用</description>
 	<properties>
@@ -19,11 +19,7 @@
 		<!-- tools -->
 		<dependency>
 			<groupId>org.tis</groupId>
-			<artifactId>tools-common</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.tis</groupId>
-			<artifactId>tools-core</artifactId>
+			<artifactId>tools-core-basic</artifactId>
 		</dependency>
 
 		<!-- apache commons -->
@@ -202,5 +198,9 @@
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.tis</groupId>
+			<artifactId>tools-common-util</artifactId>
+		</dependency>
 	</dependencies>
 </project>
