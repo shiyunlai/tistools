@@ -50,14 +50,14 @@
 
 ## 服务能力
 
-&emsp;&emsp;[基础服务](./tools-service-abf/README.md "Application Basic Framework")  
-&emsp;&emsp;[开发管理](./tools-service-devmgr/README.md "Develop Management")  
-&emsp;&emsp;[日志分析](./tools-service-biztrace/README.md "Business Log and Trace Analyze")  
-&emsp;&emsp;[Maven插件](./tools-maven-plugin/README.md "TTT的Maven扩展插件")  
+&emsp;&emsp;[基础服务](./tools-service-abf/README.MD "Application Basic Framework")  
+&emsp;&emsp;[开发管理](./tools-service-devmgr/README.MD "Develop Management")  
+&emsp;&emsp;[日志分析](./tools-service-biztrace/README.MD "Business Log and Trace Analyze")  
+&emsp;&emsp;[Maven插件](./tools-maven-plugin/README.MD "TTT的Maven扩展插件")  
 
 ## 应用功能
 
-&emsp;&emsp;[后管应用框架](./tools-web-tools/README.md "应用基础框架，提供了OM、AC、SYS等基础管理能力")  
+&emsp;&emsp;[后管应用框架](./tools-web-tools/README.MD "应用基础框架，提供了OM、AC、SYS等基础管理能力")  
 &emsp;&emsp;[手机端应用框架](... "提供一个手机端前端框架，对标‘指旺’")  
 
 --------
