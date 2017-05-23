@@ -1,4 +1,4 @@
-package org.tools.common.dubbo.rest.support;
+package org.tools.core.dubbo.rest.support;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;

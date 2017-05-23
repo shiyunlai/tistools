@@ -16,7 +16,7 @@
   <dependencies>
   	<dependency>
   		<groupId>org.tis</groupId>
-  		<artifactId>tools-common</artifactId>
+  		<artifactId>tools-common-util</artifactId>
   	</dependency>
   	<dependency>
   		<groupId>org.tis</groupId>

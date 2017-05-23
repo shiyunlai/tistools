@@ -11,10 +11,10 @@
 	<name>tools</name>
 	<modules>
 		<!-- 建议工程目录名同artifactId -->
-		<module>tools-common</module>
 		<module>tools-common-assembly</module>
-		<module>tools-common-service</module>
+		<module>tools-common-util</module>
 		<module>tools-core</module>
+		<module>tools-core-service</module>
 		<module>tools-design</module>
 		<module>tools-maven-plugin</module>
 		<module>tools-facade-biztrace</module>
@@ -174,7 +174,7 @@
 			<!-- tools common -->
 			<dependency>
 				<groupId>org.tis</groupId>
-				<artifactId>tools-common</artifactId>
+				<artifactId>tools-common-util</artifactId>
 				<version>${tis_tools_version}</version>
 			</dependency>
 			<dependency>
@@ -182,9 +182,10 @@
 				<artifactId>tools-common-assembly</artifactId>
 				<version>${tis_tools_version}</version>
 			</dependency>
+			<!-- tools core -->
 			<dependency>
 				<groupId>org.tis</groupId>
-				<artifactId>tools-common-service</artifactId>
+				<artifactId>tools-core-service</artifactId>
 				<version>${tis_tools_version}</version>
 			</dependency>
 
