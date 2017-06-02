@@ -48,12 +48,18 @@
 
 ![补图]()
 
+
 ## 服务能力
 
 &emsp;&emsp;[基础服务](./tools-service-abf/README.MD "Application Basic Framework")  
 &emsp;&emsp;[开发管理](./tools-service-devmgr/README.MD "Develop Management")  
 &emsp;&emsp;[日志分析](./tools-service-biztrace/README.MD "Business Log and Trace Analyze")  
 &emsp;&emsp;[Maven插件](./tools-maven-plugin/README.MD "TTT的Maven扩展插件")  
+
+## 服务清单
+
+&emsp;&emsp;[前端需要的服务AC](./readme/前端需要的服务清单-AC.MD "前端需要的服务清单AC")  
+&emsp;&emsp;[前端需要的服务OM](./readme/前端需要的服务清单-OM.MD "前端需要的服务清单OM")  
 
 ## 应用功能
 
