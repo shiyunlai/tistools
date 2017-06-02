@@ -12,7 +12,12 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+<<<<<<< HEAD
+import org.codehaus.jackson.JsonParser.Feature;
+import org.codehaus.jackson.map.ObjectMapper;
+=======
 
+>>>>>>> develop_zzjg
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.model.po.sys.SysDict;
 import org.tis.tools.model.po.sys.SysDictItem;
@@ -64,18 +69,32 @@ public class impSysDict {
 			SysDictItem dictItem = new SysDictItem();
 			for (int i = 1; i <= map.size(); i++) {
 				Map rs = map.get(i);
+<<<<<<< HEAD
+				if (rs.get(0) != null && rs.get(0) != "") {
+=======
 				if (rs.get(0) != null) {
+>>>>>>> develop_zzjg
 					dict.setDictName(rs.get(1).toString());
 					dict.setDictKey(rs.get(0).toString());
 					dict.setDictType(rs.get(5).toString());
 					dict.setDictDesc(rs.get(2).toString());
 					
+<<<<<<< HEAD
+
+					SysDict sd = addDict(dict);
+					String Guid = sd.getGuid();
+					Map<Integer, Map<Integer, Object>> map2 = excelReader.readExcelContent2(dict.getDictKey());
+					for(int k = 3;k <= map2.size(); k++){
+						Map rs2 = map2.get(k);
+						if(rs2.get(0) != null && rs2.get(0) != ""){
+=======
 					addDict(dict);
 					String Guid = dict.getGuid();
 					Map<Integer, Map<Integer, Object>> map2 = excelReader.readExcelContent2(dict.getDictKey());
 					for(int k = 1;k <= map2.size(); k++){
 						Map rs2 = map2.get(k);
 						if(rs2.get(0) != null){
+>>>>>>> develop_zzjg
 							dictItem.setGuidDict(Guid);
 							dictItem.setItemName(rs2.get(2).toString());
 							dictItem.setItemValue(rs2.get(0).toString());
@@ -120,6 +139,12 @@ public class impSysDict {
 	static SysDictItem addDictItm(SysDictItem dictItem) {
 		
 		String url = host + ":" + port + provider + add_sys_dict_item_service ;
+<<<<<<< HEAD
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+
+=======
+>>>>>>> develop_zzjg
 		return callService(url, dictItem,MediaType.APPLICATION_JSON_TYPE ) ; 
 	}
 	
@@ -136,6 +161,11 @@ public class impSysDict {
 
 				return null ; 
 			}
+<<<<<<< HEAD
+			ObjectMapper mapper = new ObjectMapper();
+			mapper.configure(Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+=======
+>>>>>>> develop_zzjg
 			T tback = (T) response.readEntity(t.getClass()) ; 
 			return tback ; 
 

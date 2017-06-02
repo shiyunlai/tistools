@@ -3,6 +3,8 @@
  */
 package org.tis.tools.rservice.sys.capable;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -15,6 +17,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.model.def.GUID;
@@ -157,9 +160,15 @@ public class DictRServiceImpl implements IDictRService {
 	}
 
 	@Override
-	public SysDictDetail queryDict(String dictKey) throws SysManagementException {
-		// TODO Auto-generated method stub
-		return null;
+	public SysDict queryDict(String dictKey) throws SysManagementException {
+		logger.debug("-------- queryDict");
+		WhereCondition wc = new WhereCondition() ; 
+		wc.andEquals(SysDict.COLUMN_DICT_KEY, dictKey) ; 
+		List<SysDict> dicts = sysDictService.query(wc) ; 
+		if( null == dicts || dicts.size() == 0 ){
+			return null;
+		}
+		return dicts.get(0) ;
 	}
 
 	@Override

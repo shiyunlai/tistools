@@ -116,11 +116,11 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid
-		,guid_dict
-		,item_name
-		,item_value
-		,send_value
-		,seqno
+		 guid as guid
+		,guid_dict as guidDict
+		,item_name as itemName
+		,item_value as itemValue
+		,send_value as sendValue
+		,seqno as seqno
 	</sql>
 </mapper>
