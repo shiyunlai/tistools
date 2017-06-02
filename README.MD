@@ -81,6 +81,8 @@
 
 &emsp;&emsp;[package规范](http://www.bronsp.com:8060/index.php?s=/5&page_id=107 "package命名")
 
+&emsp;&emsp;[使用maven扩展插件](./readme/使用Tools的Maven扩展插件.MD "maven扩展插件的使用")
+
 &emsp;&emsp;[异常&错误码规范](./readme/异常和错误码.MD "异常和错误码")
 
 &emsp;&emsp;[单元测试规范](./readme/如何进行单元测试.MD "单元测试")
