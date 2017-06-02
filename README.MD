@@ -49,7 +49,10 @@
 ![补图]()
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop_zzjg
 =======
 >>>>>>> develop_zzjg
 ## 服务能力
@@ -60,11 +63,14 @@
 &emsp;&emsp;[Maven插件](./tools-maven-plugin/README.MD "TTT的Maven扩展插件")  
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ## 服务清单
 
 &emsp;&emsp;[前端需要的服务AC](./readme/前端需要的服务清单-AC.MD "前端需要的服务清单AC")  
 &emsp;&emsp;[前端需要的服务OM](./readme/前端需要的服务清单-OM.MD "前端需要的服务清单OM")  
 
+=======
+>>>>>>> develop_zzjg
 =======
 >>>>>>> develop_zzjg
 ## 应用功能
