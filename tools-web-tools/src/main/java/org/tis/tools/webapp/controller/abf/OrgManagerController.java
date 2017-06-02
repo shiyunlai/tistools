@@ -5,6 +5,7 @@
  */
 package org.tis.tools.webapp.controller.abf;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,8 +60,17 @@ public class OrgManagerController extends BaseController {
 			if("#".equals(id)){
 				//调用远程服务,#:根
 				rootOrgs = orgRService.queryAllRoot() ;
+			}else if(id.startsWith("@")){
+				//TODO
+				//返回机构下岗位信息.根据id查询岗位信息并返回生成树节点.
+				rootOrgs = new ArrayList<OmOrg>();
 			}else{
 				rootOrgs = orgRService.queryChilds(id);
+				OmOrg og = new OmOrg();
+				//为每一个节点增加岗位信息节点
+				og.setOrgName("岗位信息");
+				og.setOrgCode("@"+id);
+				rootOrgs.add(og);
 			}
 			
 			AjaxUtils.ajaxJson(response, net.sf.json.JSONArray.fromObject(rootOrgs).toString());

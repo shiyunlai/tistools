@@ -12,14 +12,11 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import org.codehaus.jackson.JsonParser.Feature;
 import org.codehaus.jackson.map.ObjectMapper;
-
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.model.po.sys.SysDict;
 import org.tis.tools.model.po.sys.SysDictItem;
-
 
 /**
  * <pre>
@@ -74,6 +71,7 @@ public class impSysDict {
 					dict.setDictType(rs.get(5).toString());
 					dict.setDictDesc(rs.get(2).toString());
 					
+
 					SysDict sd = addDict(dict);
 					String Guid = sd.getGuid();
 					Map<Integer, Map<Integer, Object>> map2 = excelReader.readExcelContent2(dict.getDictKey());
@@ -126,6 +124,7 @@ public class impSysDict {
 		String url = host + ":" + port + provider + add_sys_dict_item_service ;
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+
 		return callService(url, dictItem,MediaType.APPLICATION_JSON_TYPE ) ; 
 	}
 	
