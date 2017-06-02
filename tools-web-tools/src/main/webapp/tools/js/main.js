@@ -10,7 +10,12 @@ var MetronicApp = angular.module("MetronicApp", [
     "ui.bootstrap", 
     "oc.lazyLoad",  
     "ngSanitize",
-    'ui.grid'
+    'ui.grid',
+    'ui.grid.selection',
+    'ui.grid.edit',
+    'ui.grid.pagination',
+    'ui.grid.resizeColumns'
+
 ]);
 
 function action(bdy){
