@@ -18,11 +18,11 @@
 		<!-- tis tools -->
 		<dependency>
 			<groupId>org.tis</groupId>
-			<artifactId>tools-core</artifactId>
+			<artifactId>tools-core-basic</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.tis</groupId>
-			<artifactId>tools-common</artifactId>
+			<artifactId>tools-common-util</artifactId>
 		</dependency>
 
 		<!-- dubbo -->

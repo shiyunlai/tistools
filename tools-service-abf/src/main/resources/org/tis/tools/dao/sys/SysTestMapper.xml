@@ -251,26 +251,26 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 test_bigint
-		,test_gibintn
-		,test_char
-		,test_charn
-		,test_date
-		,test_datetime
-		,test_decimal
-		,test_decimalp
-		,test_decimalps
-		,test_double
-		,test_doublemd
-		,test_float
-		,test_floatp
-		,test_floatmd
-		,test_int
-		,test_intn
-		,test_time
-		,test_timestamp
-		,test_varcharn
-		,tset_text
-		,test_blob
+		 test_bigint as testBigint
+		,test_gibintn as testGibintn
+		,test_char as testChar
+		,test_charn as testCharn
+		,test_date as testDate
+		,test_datetime as testDatetime
+		,test_decimal as testDecimal
+		,test_decimalp as testDecimalp
+		,test_decimalps as testDecimalps
+		,test_double as testDouble
+		,test_doublemd as testDoublemd
+		,test_float as testFloat
+		,test_floatp as testFloatp
+		,test_floatmd as testFloatmd
+		,test_int as testInt
+		,test_intn as testIntn
+		,test_time as testTime
+		,test_timestamp as testTimestamp
+		,test_varcharn as testVarcharn
+		,tset_text as tsetText
+		,test_blob as testBlob
 	</sql>
 </mapper>

@@ -68,7 +68,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.tis</groupId>
-			<artifactId>tools-common</artifactId>
+			<artifactId>tools-common-util</artifactId>
 		</dependency>
 	</dependencies>
 	<description>开发工具（maven插件）</description>

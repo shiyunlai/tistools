@@ -17,11 +17,15 @@
 		<!-- tools -->
 		<dependency>
 			<groupId>org.tis</groupId>
-			<artifactId>tools-common</artifactId>
+			<artifactId>tools-common-util</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.tis</groupId>
-			<artifactId>tools-core</artifactId>
+			<artifactId>tools-core-service</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.tis</groupId>
+			<artifactId>tools-core-basic</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.tis</groupId>
@@ -202,7 +206,13 @@
 			<groupId>com.caucho</groupId>
 			<artifactId>hessian</artifactId>
 		</dependency>
-
+		
+		<!-- fastjson -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+		</dependency>
+		
 		<!-- jax-rs -->
 		<dependency>
 			<groupId>javax.ws.rs</groupId>

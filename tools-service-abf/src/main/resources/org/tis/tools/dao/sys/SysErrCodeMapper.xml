@@ -98,9 +98,9 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid
-		,errcode_kind
-		,err_code
-		,err_msg
+		 guid as guid
+		,errcode_kind as errcodeKind
+		,err_code as errCode
+		,err_msg as errMsg
 	</sql>
 </mapper>
