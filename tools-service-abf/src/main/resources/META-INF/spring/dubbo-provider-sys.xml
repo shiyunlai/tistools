@@ -33,9 +33,8 @@
 	<!-- 2、可按找功能分多个配置文件，dubbo启动时会自动扫描加载；                -->
 	<!-- ============================================================= -->
 	<!-- 暴露服务 -->
-	<!-- 服务提供者：业务字典远程服务 -->
 	<dubbo:service 
-		interface="org.tis.tools.rservice.sys.capable.IDictRService" group="sys" version="1.0"
+		interface="org.tis.tools.rservice.sys.capable.IDictRService" group="sys" version="${IDictRService.version}"
 		ref="dictRServiceImpl" 
 		protocol="rest,dubbo"  timeout="3000" />
  	
