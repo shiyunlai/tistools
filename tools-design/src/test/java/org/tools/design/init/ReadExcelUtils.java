@@ -117,9 +117,11 @@ public class ReadExcelUtils {
         // 正文内容应该从第四行开始,第一行为表头的标题  
         for (int i = 3; i <= rowNum; i++) {  
             row = sheet.getRow(i);  
+
             if(row == null){
             		break;
             }
+
             int j = 0;  
             Map<Integer,Object> cellValue = new HashMap<Integer, Object>();  
             while (j < colNum) {  

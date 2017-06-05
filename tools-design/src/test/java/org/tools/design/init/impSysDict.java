@@ -20,7 +20,6 @@ import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.model.po.sys.SysDict;
 import org.tis.tools.model.po.sys.SysDictItem;
 
-
 /**
  * <pre>
  * 导入业务字典
@@ -73,7 +72,8 @@ public class impSysDict {
 					dict.setDictKey(rs.get(0).toString());
 					dict.setDictType(rs.get(5).toString());
 					dict.setDictDesc(rs.get(2).toString());
-					
+				
+
 					SysDict sd = addDict(dict);
 					String Guid = sd.getGuid();
 					Map<Integer, Map<Integer, Object>> map2 = excelReader.readExcelContent2(dict.getDictKey());
@@ -124,8 +124,10 @@ public class impSysDict {
 	static SysDictItem addDictItm(SysDictItem dictItem) {
 		
 		String url = host + ":" + port + provider + add_sys_dict_item_service ;
+
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+
 		return callService(url, dictItem,MediaType.APPLICATION_JSON_TYPE ) ; 
 	}
 	
@@ -142,8 +144,10 @@ public class impSysDict {
 
 				return null ; 
 			}
+
 			ObjectMapper mapper = new ObjectMapper();
 			mapper.configure(Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+
 			T tback = (T) response.readEntity(t.getClass()) ; 
 			return tback ; 
 
