@@ -64,7 +64,7 @@ public class OrgRServiceTest extends SpringJunitSupport{
 		//调用生成机构代码
 		String orgCodeStr = orgRService.genOrgCode(areaCode, orgDegree, orgType) ;
 		
-		Assert.assertEquals("成功生成机构代码不能为空",10, orgCodeStr.length());
+		Assert.assertNotNull("成功生成机构代码不能为空", orgCodeStr);
 		Assert.assertEquals("机构代码共10位",10, orgCodeStr.length());
 		Assert.assertEquals("前两位是机构等级",orgCodeStr.substring(0, 2), orgDegree);
 		Assert.assertEquals("三四五位是地区码",orgCodeStr.substring(3, 5), areaCode);
