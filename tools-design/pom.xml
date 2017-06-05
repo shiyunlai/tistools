@@ -22,12 +22,10 @@
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
-			<version>3.14</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
-			<version>3.14</version>
 		</dependency>
 
 		<!-- tis tools -->
@@ -42,12 +40,10 @@
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-facade-om</artifactId>
-			<version>0.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-facade-sys</artifactId>
-			<version>0.0.1</version>
 		</dependency>
 
 		<dependency>
@@ -222,6 +218,12 @@
 			<groupId>de.ruedigermoeller</groupId>
 			<artifactId>fst</artifactId>
 		</dependency>
+		<!-- 单元测试 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+		</dependency>
 	</dependencies>
+
 
 </project>

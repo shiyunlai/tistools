@@ -10,12 +10,12 @@
 
 	<!-- ABF 之 OM -->
 	<dubbo:reference id="orgRService" 
-		group="om" version="1.0" interface="org.tis.tools.rservice.om.capable.IOrgRService"
+		group="om" version="0.9" interface="org.tis.tools.rservice.om.capable.IOrgRService"
 		check="false" />
 		
 	<!-- ABF 之 SYS -->
 	<dubbo:reference id="dictRService" 
-		group="sys" version="1.0" interface="org.tis.tools.rservice.sys.capable.IDictRService"
+		group="sys" version="0.9" interface="org.tis.tools.rservice.sys.capable.IDictRService"
 		check="false" />
 	
 </beans>
