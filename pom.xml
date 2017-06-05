@@ -16,7 +16,10 @@
 		<module>tools-core-basic</module>
 		<module>tools-core-service</module>
 		<module>tools-core-web</module>
-		<module>tools-design</module>
+		<!-- 
+		design 工程作为单元测试工程，会牵涉起停Spring，因此，不参与统一编译。
+		<module>tools-design</module> 
+		-->
 		<module>tools-maven-plugin</module>
 		<module>tools-facade-biztrace</module>
 		<module>tools-facade-devmgr</module>
