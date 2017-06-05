@@ -34,12 +34,11 @@
 	<!-- ============================================================= -->
 	<!-- 暴露服务 -->
 	<!-- 服务提供者：柜员操作日志(JNL_TELLER_TRACE) 基本远程服务 -->
-	<!-- <dubbo:service 
-		interface="org.tis.tools.rservice.om.capable.IOrgRService" group="om" version="1.0"
-		ref="orgRServiceImpl" 
+	<dubbo:service 
+		interface="org.tis.tools.rservice.ac.basic.IAcAppRService" group="om" version="1.0"
+		ref="acAppRServiceImpl" 
 		protocol="dubbo"  timeout="3000" />
  	
-	具体实现
-    <bean id="orgRServiceImpl" class="org.tis.tools.rservice.om.capable.OrgRServiceImpl" /> -->
-    
+    <bean id="acAppRServiceImpl" class="org.tis.tools.rservice.ac.basic.AcAppRServiceImpl" />
+  
 </beans>
