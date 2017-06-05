@@ -122,13 +122,69 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		return org;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.tis.tools.rservice.om.capable.IOrgRService#createChildOrg(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, int)
+	/**
+	 * <pre>
+	 * 新建一个子节点机构
+	 * 
+	 * 说明：
+	 * 除参数传入字段外，程序按照‘子节点机构’补充其他信息；
+	 * 新建后，机构状态停留在‘停用’；
+	 * </pre>
+	 * 
+	 * @param orgCode
+	 *            机构代码
+	 * @param orgName
+	 *            机构名称
+	 * @param orgType
+	 *            机构类型
+	 * @param orgDegree
+	 *            机构等级
+	 * @param parentsOrgCode
+	 *            父机构代码
+	 * @param sortNo
+	 *            位于机构树的排列顺序，如果为0或null，则排到最后。
+	 * @return 新建机构信息
+	 * @throws ToolsRuntimeException
 	 */
 	@Override
 	public OmOrg createChildOrg(String orgCode, String orgName, String orgType, String orgDegree, String parentsOrgCode,
 			int sortNo) throws OrgManagementException {
-		// TODO Auto-generated method stub
+		
+		//查询父机构信息
+	
+		WhereCondition wc = new WhereCondition() ;
+		List<OmOrg> parentsOrgList=omOrgService.query(wc);
+		OmOrg parentsOrg = parentsOrgList.get(0);
+		String parentsOrgSeq = parentsOrg.getOrgSeq();
+		
+		OmOrg org = new OmOrg() ; 
+		//补充信息
+		org.setGuid(GUID.org());//补充GUID
+		org.setOrgStatus(OMConstants.ORG_STATUS_STOP);//补充机构状态，新增机构初始状态为 停用
+		org.setOrgLevel(new BigDecimal(0));//补充机构层次，根节点层次为 0
+		org.setGuidParents(parentsOrgCode);//补充父机构，根节点没有父机构
+		org.setCreateTime(new Date());//补充创建时间
+		org.setLastUpdate(new Date());//补充最近更新时间
+		org.setIsleaf(CommonConstants.NO);//新增节点都先算叶子节点 Y
+		org.setSubCount(new BigDecimal(0));//新增时子节点数为0
+		String newOrgSeq = parentsOrgSeq+"."+org.getGuid();
+		org.setOrgSeq(newOrgSeq);//设置机构序列,根据父机构的序列+"."+机构的GUID
+		
+		//收集入参
+		org.setOrgCode(orgCode);
+		org.setOrgName(orgName);
+		org.setOrgType(orgType);
+		org.setOrgDegree(orgDegree);
+		
+		// 新增子节点机构
+		try {
+			omOrgService.insert(org);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
+					BasicUtil.wrap(e.getCause().getMessage()), "新增根节点机构失败！{0}");
+		}
+		
 		return null;
 	}
 
