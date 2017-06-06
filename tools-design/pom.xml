@@ -223,6 +223,10 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.tis</groupId>
+			<artifactId>tools-facade-ac</artifactId>
+		</dependency>
 	</dependencies>
 
 
