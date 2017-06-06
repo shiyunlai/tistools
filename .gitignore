@@ -37,6 +37,8 @@ conf/
 
 logs/
 
+download/
+
 #暂时不提交tools-web-tools
 tools-web-tools3/
 
