@@ -48,13 +48,7 @@
 
 ![补图]()
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> develop_zzjg
-=======
->>>>>>> develop_zzjg
 ## 服务能力
 
 &emsp;&emsp;[基础服务](./tools-service-abf/README.MD "Application Basic Framework")  
@@ -62,17 +56,13 @@
 &emsp;&emsp;[日志分析](./tools-service-biztrace/README.MD "Business Log and Trace Analyze")  
 &emsp;&emsp;[Maven插件](./tools-maven-plugin/README.MD "TTT的Maven扩展插件")  
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 ## 服务清单
 
 &emsp;&emsp;[前端需要的服务AC](./readme/前端需要的服务清单-AC.MD "前端需要的服务清单AC")  
 &emsp;&emsp;[前端需要的服务OM](./readme/前端需要的服务清单-OM.MD "前端需要的服务清单OM")  
 
-=======
->>>>>>> develop_zzjg
-=======
->>>>>>> develop_zzjg
+
 ## 应用功能
 
 &emsp;&emsp;[后管应用框架](./tools-web-tools/README.MD "应用基础框架，提供了OM、AC、SYS等基础管理能力")  
