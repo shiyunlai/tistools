@@ -22,7 +22,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
 	private static List<String> bypassList = new ArrayList<String>();
 	static{
 //		业务 
-		bypassList.add("/anios");
+//		bypassList.add("/anios");
 		
 	}
 	
