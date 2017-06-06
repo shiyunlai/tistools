@@ -5,24 +5,34 @@
 angular.module('MetronicApp').controller('application_controller', function($rootScope, $scope ,$modal,$http, $timeout,filterFilter,$uibModal) {
     var biz = {};
     $scope.biz = biz;
-    initController($scope, biz,'biz',biz,filterFilter)//初始化一下，才能使用里面的方法
     //定义权限
-     var applica = false;
+     $scope.biz.applica = false;
 
-    //拿到数据
-/*
-    var box;
-    box = $scope.box = [];
-    $http({
-        url: 'http://g.cn',
-        method: 'POST',
-    }).success(function(data) {
-        $scope.biz = data;
-        console.log(data);
-        return box.push(data);
-    });
-    console.log(box);//undefined
-*/
+    //岗位页签跳转控制
+    var yyflag = {};
+    $scope.yyflag = yyflag;
+    //应用信息
+    var yyxx = false;
+    yyflag.yyxx = yyxx;
+    //功能组列表
+    var gnzlb = false;
+    yyflag.gnzlb = gnzlb;
+    initController($scope, biz,'biz',biz,filterFilter)//初始化一下，才能使用里面的方法
+
+    //初始化tab展现
+    $scope.yyflag.yyxx = true;
+
+    //控制页切换代码
+    yyflag.loadgwdata = function (type) {
+        if(type == 0){
+            $scope.yyflag.yyxx = true;
+            $scope.yyflag.gnzlb = false;
+        }else if (type == 1){
+            $scope.yyflag.gnzlb = true;
+            $scope.yyflag.yyxx = false;
+        }
+    }
+
 
     $http({
         method: 'get',
@@ -353,10 +363,20 @@ angular.module('MetronicApp').controller('application_controller', function($roo
 
     $('#container').on("changed.jstree", function (e, data) {
         if(typeof data.node !== 'undefined'){//拿到结点详情
-            console.log(data)
+            console.log(data.node.parent)
+            if(data.node.parent == '#'){
+                $scope.biz.applica = true;
+                $scope.biz.apptab = false;
+            }else if(data.node.parent == '1'){
+                $scope.biz.apptab = true;
+                $scope.biz.applica = false;
+            }else{
+                $scope.biz.apptab = false;
+            }
             $scope.$apply();
         }
     });
+
 
     //新增页面代码
     $scope.show_win = function(d){
@@ -426,7 +446,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         )
 
     }
-    //删除页面
+    //删除代码
     $scope.transsetDelAll = function () {
         var sel = biz.getSelectItems();//获取到对应的内容
         console.log(sel)
@@ -473,6 +493,42 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 };
             })
 
+    }
+
+    //保存页签
+    $scope.saveDict = function(item){//保存新增的函数
+        console.log(item);
+        $http({
+            method: 'get',
+            url: 'http://localhost:8030/addData?id=4&appname=应用框架模型7&appcode=ABFRAME7&dict_type=远程&dict_open=是&dict_data=2017-06-28&address=无锡&ip=192.168.1.110&port=8070&dict_des=这是添加的数据'
+        }).success(function(data) {
+            toastr['success'](data.retMessage, "保存成功！");
+            $scope.biz.dataList = data;//更新数据
+        }).error(function(data) {
+            // 当响应以错误状态返回时调用
+            console.log('调用错误接口')
+        });
+
+        /* item.saveType = isNull(d) ? 'insert' : 'update';
+         if(!isNull(d)){
+         item.oldItem = angular.copy(d);
+         }
+         toastr['success']("新增成功");
+         $modalInstance.close();
+         console.log(JSON.parse(localStorage.getItem("addlist")));*/
+
+        /* dictionary_service.saveDictionary(item).then(function (data) {
+         if (data.retCode == '1') {
+         toastr['success'](data.retMessage, "新增成功！");
+         $modalInstance.close();
+         dictionary.search1();
+         } else if(data.retCode == '2') {
+         toastr['error'](data.retMessage, "新增失败！");
+         } else {
+         toastr['error']( "新增异常！");
+         }
+         });
+         }*/
     }
 
 

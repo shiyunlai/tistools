@@ -48,7 +48,6 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
     $scope.tabflag = tabflag;
     //生成公共方法
     initController($scope,abftree,"abftree",abftree,filterFilter);
-
     var item = {};
     $scope.item = item;
     abftree.item = item;
@@ -66,9 +65,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
     var items = function customMenu(node) {
         // The default set of all items
         var control;
-
         var it = {
-
             "新建菜单":{
                         "id":"create",
                         "label":"新建机构",
