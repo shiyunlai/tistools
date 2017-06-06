@@ -51,6 +51,16 @@ td textarea{
     margin-right: 10px;
     padding: 0
 }
+.input-appAdd{
+    border: 1px solid #C3CED9;
+    border-radius: 5px 5px 5px 5px;
+    font-size: 14px;
+    height: 31px;
+    width: 100%;
+    line-height: 31px;
+    margin-right: 10px;
+    padding: 0
+}
 
 .input-button{
     width:100px;

@@ -124,6 +124,14 @@ Version: 4.5.6
 <script src="../assets/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
 <!-- END CORE ANGULARJS PLUGINS -->
 
+<!--mockjs start-->
+<script src="http://mockjs.com/dist/mock-min.js"></script>
+<!--兼容angularjs的mock方法 -->
+<script src="js/mock/angular.mock.js"></script>
+<!--自身数据实现地方-->
+<script src="js/mock/Jurisdiction/application_mock.js"></script>
+
+<!--mockjs end-->
 <!--<script src="../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>-->
 
 <!-- BEGIN PROJECT  CSS-->
@@ -151,6 +159,13 @@ Version: 4.5.6
 <script src="js/controllers/org/Abftree_Controller.js" type="text/javascript"></script>
 <script src="js/service/org/abftree_service.js" type="text/javascript"></script>
 <!--org end-->
+<!--Jurisdiction start-->
+<script src="../assets/global/plugins/moment.min.js" type="text/javascript"></script>
+<script src="js/controllers/Jurisdiction/application_Controller.js"></script>
+<script src="js/controllers/Jurisdiction/menu_Controller.js"></script>
+<script src="js/controllers/Jurisdiction/role_controller.js"></script>
+
+<!--Jurisdiction end-->
 <!--jstree start-->
 <script src="../assets/global/plugins/jstree/dist/jstree.js" type="text/javascript"></script>
 <link href="../assets/global/plugins/jstree/dist/themes/default/style.min.css" rel="stylesheet" type="text/css"/>
@@ -179,6 +194,8 @@ Version: 4.5.6
 <script src="js/service/LPC/FeatureReg.js"></script>
 <script src="js/service/pagination_service.js"></script>
 <!--lpc end-->
+
+
 
 <!-- END PROJECT OTHER JS -->
 

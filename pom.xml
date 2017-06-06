@@ -9,6 +9,17 @@
 	<version>0.0.1</version>
 	<packaging>pom</packaging>
 	<name>tools</name>
+	<build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 	<modules>
 		<!-- 建议工程目录名同artifactId -->
 		<module>tools-common-assembly</module>
