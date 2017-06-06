@@ -9,7 +9,6 @@
 		<version>0.0.1</version>
 	</parent>
 	<artifactId>tools-maven-plugin</artifactId>
-	<packaging>maven-plugin</packaging>
 	<name>tools-maven-plugin Maven Mojo</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
