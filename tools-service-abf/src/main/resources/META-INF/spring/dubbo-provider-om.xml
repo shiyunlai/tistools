@@ -34,7 +34,7 @@
 	<!-- ============================================================= -->
 	<!-- 暴露服务 -->
 	<dubbo:service 
-		interface="org.tis.tools.rservice.om.capable.IOrgRService" group="om" version="${IOrgRService_version}"
+		interface="org.tis.tools.rservice.om.capable.IOrgRService" group="om" version="${IOrgRService.version}"
 		ref="orgRServiceImpl" 
 		protocol="dubbo"  timeout="3000" />
  	
