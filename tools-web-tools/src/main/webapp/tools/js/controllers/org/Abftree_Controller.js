@@ -87,7 +87,6 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                                     $scope.add = function (subFrom) {
                                         //TODO.新增逻辑
                                     }
-
                                     $scope.cancel = function () {
                                         $modalInstance.dismiss('cancel');
                                     };

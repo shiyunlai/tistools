@@ -2,28 +2,12 @@
  * Created by wangbo on 2017/6/1.
  */
 
-angular.module('MetronicApp').controller('application_controller', function($rootScope, $scope ,$modal,$http, $timeout,filterFilter,abftree_service) {
+angular.module('MetronicApp').controller('application_controller', function($rootScope, $scope ,$modal,$http, $timeout,filterFilter,$uibModal) {
     var biz = {};
     $scope.biz = biz;
     initController($scope, biz,'biz',biz,filterFilter)//初始化一下，才能使用里面的方法
-   /* $scope.biz.dataList = [
-        {
-            'appname':'应用框架模型1','appcode':'ABFRAME','dict_type':'本地','dict_open':'是','dict_data':'2017-06-01','address':'上海','ip':'192.168.1.101','port':'8080','dict_des':'这里是测试描述页面1'
-        },
-        {
-            'appname':'应用框架模型2','appcode':'ABFRAME','dict_type':'远程','dict_open':'否','dict_data':'2017-06-03','address':'','ip':'192.168.1.105','port':'8080','dict_des':'这里是测试描述页面2'
-        },
-        {
-            'appname':'应用框架模型3','appcode':'ABFRAME','dict_type':'远程','dict_open':'是','dict_data':'2017-06-06','address':'','ip':'192.168.1.101','port':'8080','dict_des':'这里是测试描述页面3'
-        },
-        {
-            'appname':'应用框架模型4','appcode':'ABFRAME','dict_type':'本地','dict_open':'否','dict_data':'2017-06-02','address':'','ip':'192.168.1.100','port':'8080','dict_des':'这里是测试描述页面4'
-        },
-        {
-            'appname':'应用框架模型5','appcode':'ABFRAME','dict_type':'本地','dict_open':'是','dict_data':'2017-06-10','address':'','ip':'192.168.1.101','port':'8080','dict_des':'这里是测试描述页面5'
-        }
-    ]*/
-
+    //定义权限
+     var applica = false;
 
     //拿到数据
 /*
@@ -62,17 +46,18 @@ angular.module('MetronicApp').controller('application_controller', function($roo
 
         // The default set of all items
         var control;
-        if(node.parent == 1){
+        if(node.parent == '#'){
             var it = {
-                "新建菜单":{
-                    "id":"create",
+                "新增应用":{
+                    "id":"createa",
                     "label":"新增应用",
                     "action":function(data){
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
                         console.log(obj)
-                        openwindow($uibModal, 'views/org/addorg_window.html', 'lg',
+                        openwindow($uibModal, 'views/Jurisdiction/applicationAdd.html', 'lg',
                             function ($scope, $modalInstance) {
+                                console.log($modalInstance)
                                 //创建机构实例
                                 var subFrom = {};
                                 $scope.subFrom = subFrom;
@@ -82,75 +67,23 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                 $scope.add = function (subFrom) {
                                     //TODO.新增逻辑
                                 }
-                                $scope.cancel = function () {
-                                    $modalInstance.dismiss('cancel');
-                                };
-                            }
-                        )
-                    }
-                },
 
-                "删除菜单":{
-                    "label":"删除应用",
-                    "action":function(data){
-                        var inst = jQuery.jstree.reference(data.reference),
-                            obj = inst.get_node(data.reference);
-                        if(confirm("确定要删除此菜单？删除后不可恢复。")){
-                            //TODO.删除逻辑
-                        }
-                    }
-                },
-                "拷贝菜单":{
-                    "label":"拷贝应用 ",
-                    "action":function (node) {
-                        var inst = jQuery.jstree.reference(node.reference),
-                            obj = inst.get_node(node.reference);
-                        var og  = $('#container').jstree(true).copy_node(obj,obj);
-                        // console.log(obj)
-                    }
-                },
+                                $scope.saveDict = function(item){//保存新增的函数
+                                    console.log(item);//用户输入的信息
+                                    /*item.item.data=moment(item.item.data).format('YYYY-MM-DD');//转换时间
+                                     localStorage.setItem("addlist",JSON.stringify(item.item));
+                                    //调用添加接口，添加数据*/
+                                    $http({
+                                        method: 'get',
+                                        url: 'http://localhost:8030/addData?id=4&appname=应用框架模型7&appcode=ABFRAME7&dict_type=远程&dict_open=是&dict_data=2017-06-28&address=无锡&ip=192.168.1.110&port=8070&dict_des=这是添加的数据'
+                                    }).success(function(data) {
+                                        toastr['success'](data.retMessage, "新增成功！");
+                                        $modalInstance.close();
+                                    }).error(function(data) {
+                                        // 当响应以错误状态返回时调用
+                                        console.log('调用错误接口')
+                                    });
 
-                "粘贴菜单":{
-                    "label":"粘贴应用",
-                    "action":function (node) {
-                        var inst = jQuery.jstree.reference(node.reference),
-                            obj = inst.get_node(node.reference);
-                        var og  = $('#container').jstree(true).paste(node);
-                        console.log(og)
-                    }
-                },
-                "导入菜单":{
-                    "label":"导入功能",
-                    "action":function (node) {
-                        var inst = jQuery.jstree.reference(node.reference),
-                            obj = inst.get_node(node.reference);
-                        var og  = $('#container').jstree(true).paste(node);
-                        console.log(og)
-                    }
-                },
-            }
-            return it;
-        }
-        if(node.parent == 2){
-            alert('出现')
-            var it = {
-                "新建菜单":{
-                    "id":"create",
-                    "label":"新增应用",
-                    "action":function(data){
-                        var inst = jQuery.jstree.reference(data.reference),
-                            obj = inst.get_node(data.reference);
-                        console.log(obj)
-                        openwindow($uibModal, 'views/org/addorg_window.html', 'lg',
-                            function ($scope, $modalInstance) {
-                                //创建机构实例
-                                var subFrom = {};
-                                $scope.subFrom = subFrom;
-                                //处理新增机构父机构
-                                subFrom.guidParents = obj.original.guid;
-                                //增加方法
-                                $scope.add = function (subFrom) {
-                                    //TODO.新增逻辑
                                 }
                                 $scope.cancel = function () {
                                     $modalInstance.dismiss('cancel');
@@ -160,19 +93,145 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                     }
                 },
 
-                "删除菜单":{
-                    "label":"删除应用",
+                "刷新":{
+                    "label":"刷新",
                     "action":function(data){
-                        var inst = jQuery.jstree.reference(data.reference),
-                            obj = inst.get_node(data.reference);
-                        if(confirm("确定要删除此菜单？删除后不可恢复。")){
-                            //TODO.删除逻辑
-                        }
+
                     }
                 }
             }
             return it;
         }
+        if(node.parent == 1){
+            var it = {
+                "新增功能组":{
+                    "id":"createc",
+                    "label":"新增功能组",
+                    "action":function(data){
+                        var inst = jQuery.jstree.reference(data.reference),
+                            obj = inst.get_node(data.reference);
+                        console.log(obj)
+                        openwindow($uibModal, 'views/org/addorg_window.html', 'lg',
+                            function ($scope, $modalInstance) {
+                                //创建机构实例
+                                var subFrom = {};
+                                $scope.subFrom = subFrom;
+                                //处理新增机构父机构
+                                subFrom.guidParents = obj.original.guid;
+                                //增加方法
+                                $scope.add = function (subFrom) {
+                                    //TODO.新增逻辑
+                                }
+                                $scope.cancel = function () {
+                                    $modalInstance.dismiss('cancel');
+                                };
+                            }
+                        )
+                    }
+                },
+
+                "删除应用":{
+                    "label":"删除应用",
+                    "action":function(data){
+                        var inst = jQuery.jstree.reference(data.reference),
+                            obj = inst.get_node(data.reference);
+                        if(confirm("确定要删除此菜单？删除后不可恢复。")){
+                            //TODO.删除逻辑
+                            $http({
+                                method: 'get',
+                                url: 'http://localhost:8030/removeData?id=1'
+                            }).success(function(data) {
+                                console.log(data);
+                                alert('删除成功')
+                            }).error(function(data) {
+                                // 当响应以错误状态返回时调用
+                                console.log('调用错误接口')
+                            });
+                        }
+                    }
+                },
+                '刷新':{
+                    "label":"刷新",
+                    "action":function(data){
+
+                    }
+                }
+            }
+            return it;
+        }
+        if(node.parent == 2){
+            var it = {
+                "新建子功能组":{
+                    "id":"createb",
+                    "label":"新建子功能组",
+                    "action":function(data){
+                        var inst = jQuery.jstree.reference(data.reference),
+                            obj = inst.get_node(data.reference);
+                        console.log(obj)
+                        openwindow($uibModal, 'views/org/addorg_window.html', 'lg',
+                            function ($scope, $modalInstance) {
+                                //创建机构实例
+                                var subFrom = {};
+                                $scope.subFrom = subFrom;
+                                //处理新增机构父机构
+                                subFrom.guidParents = obj.original.guid;
+                                //增加方法
+                                $scope.add = function (subFrom) {
+                                    //TODO.新增逻辑
+                                }
+                                $scope.cancel = function () {
+                                    $modalInstance.dismiss('cancel');
+                                };
+                            }
+                        )
+                    }
+                },
+
+                "删除功能组":{
+                    "label":"删除功能组",
+                    "action":function(data){
+                        var inst = jQuery.jstree.reference(data.reference),
+                            obj = inst.get_node(data.reference);
+                        if(confirm("确定要删除此菜单？删除后不可恢复。")){
+                            //TODO.删除逻辑
+                        }
+                    }
+                },
+                "新增功能":{
+                    "label":"新增功能 ",
+                    "action":function(data){
+                        var inst = jQuery.jstree.reference(data.reference),
+                            obj = inst.get_node(data.reference);
+                        console.log(obj)
+                        openwindow($uibModal, 'views/Jurisdiction/applicationAdd.html', 'lg',
+                            function ($scope, $modalInstance) {
+                                console.log($modalInstance)
+                                //创建机构实例
+                                var subFrom = {};
+                                $scope.subFrom = subFrom;
+                                //处理新增功能父功能
+                                subFrom.guidParents = obj.original.guid;
+                                //增加方法
+                                $scope.add = function (subFrom) {
+                                    //TODO.新增逻辑
+                                }
+                                $scope.cancel = function () {
+                                    $modalInstance.dismiss('cancel');
+                                };
+                            }
+                        )
+                    }
+                },
+                "刷新":{
+                    "label":"刷新",
+                    "action":function (node) {
+                      //刷新页面
+                    }
+                },
+            }
+            return it;
+        }
+
 
     };
     //组织机构树
@@ -183,11 +242,68 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             },
             // so that create works
             "check_callback" : true,
-            'data': [
-                { "id" : "1", "parent" : "#", "text" : "应用功能管理" },
-                { "id" : "2", "parent" : "1", "text" : "应用基础框架" },
-                { "id" : "3", "parent" : "2", "text" : "测试应用" }
-            ]
+            'data':
+                [{
+                        "id": "1",
+                        "text": "应用功能管理",
+                        "children":
+                            [
+                                {
+                                    "id": "2",
+                                    "text": "应用基础框架",
+                                    "children":
+                                        [
+                                            {
+                                                "id": "4",
+                                                "text": "授权认证",
+                                                "children":[{
+                                                    'id':'75',
+                                                    "text": "登陆策略管理"
+                                                },{
+                                                    'id':'76',
+                                                    "text": "操作员管理"
+                                                },{
+                                                    'id':'77',
+                                                    "text": "Prota资源管理"
+                                                },{
+                                                    'id':'78',
+                                                    "text": "密码设置"
+                                                }
+                                                ]
+                                            },{
+                                            "id": "5",
+                                            "text": "权限管理",
+                                            "children":[{
+                                               'id':'80',
+                                                "text": "应用功能管理",
+                                            },{
+                                                'id':'81',
+                                                "text": "菜单显示",
+                                            },{
+                                                'id':'82',
+                                                "text": "菜单管理",
+                                            },{
+                                                    'id':'83',
+                                                    "text": "约束管理",
+                                                },{
+                                                'id':'84',
+                                                "text": "角色管理",
+                                            },
+
+                                            ]
+                                        },{
+                                            "id": "6",
+                                            "text": "组织管理"
+                                        }]
+                                },
+                                {
+                                    "id": "3",
+                                    "text": "测试应用",
+                                }
+                            ]
+                    }
+                ]
+
 
             /* function (obj, callback) {
                 var jsonarray = [];
@@ -235,6 +351,12 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     }).bind("copy.jstree", function (node,e, data ) {
     })
 
+    $('#container').on("changed.jstree", function (e, data) {
+        if(typeof data.node !== 'undefined'){//拿到结点详情
+            console.log(data)
+            $scope.$apply();
+        }
+    });
 
     //新增页面代码
     $scope.show_win = function(d){
