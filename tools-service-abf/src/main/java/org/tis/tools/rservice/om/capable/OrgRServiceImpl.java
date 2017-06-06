@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.tis.tools.base.WhereCondition;
+import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.common.utils.ObjectUtil;
 import org.tis.tools.common.utils.StringUtil;
@@ -144,15 +145,15 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 * @param sortNo
 	 *            位于机构树的排列顺序，如果为0或null，则排到最后。
 	 * @return 新建机构信息
-	 * @throws ToolsRuntimeException
+	 * @throws OrgManagementException
 	 */
 	@Override
 	public OmOrg createChildOrg(String orgCode, String orgName, String orgType, String orgDegree, String parentsOrgCode,
 			int sortNo) throws OrgManagementException {
 		
 		//查询父机构信息
-	
 		WhereCondition wc = new WhereCondition() ;
+		wc.andEquals("ORG_CODE", parentsOrgCode);
 		List<OmOrg> parentsOrgList=omOrgService.query(wc);
 		OmOrg parentsOrg = parentsOrgList.get(0);
 		String parentsOrgSeq = parentsOrg.getOrgSeq();
@@ -162,10 +163,10 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		org.setGuid(GUID.org());//补充GUID
 		org.setOrgStatus(OMConstants.ORG_STATUS_STOP);//补充机构状态，新增机构初始状态为 停用
 		org.setOrgLevel(new BigDecimal(0));//补充机构层次，根节点层次为 0
-		org.setGuidParents(parentsOrgCode);//补充父机构，根节点没有父机构
+		org.setGuidParents(parentsOrg.getGuid());//补充父机构，根节点没有父机构
 		org.setCreateTime(new Date());//补充创建时间
 		org.setLastUpdate(new Date());//补充最近更新时间
-		org.setIsleaf(CommonConstants.NO);//新增节点都先算叶子节点 Y
+		org.setIsleaf(CommonConstants.YES);//新增节点都先算叶子节点 Y
 		org.setSubCount(new BigDecimal(0));//新增时子节点数为0
 		String newOrgSeq = parentsOrgSeq+"."+org.getGuid();
 		org.setOrgSeq(newOrgSeq);//设置机构序列,根据父机构的序列+"."+机构的GUID
@@ -181,42 +182,139 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 			omOrgService.insert(org);
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
-					BasicUtil.wrap(e.getCause().getMessage()), "新增根节点机构失败！{0}");
+			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_CREATE_CHILD_ORG,
+					BasicUtil.wrap(e.getCause().getMessage()), "新增子节点机构失败！{0}");
 		}
 		
-		return null;
+		// 更新父节点机构   是否叶子节点  节点数  最新更新时间 和最新更新人员
+		parentsOrg.setLastUpdate(new Date());//补充最近更新时间
+		parentsOrg.setUpdator("");//TODO暂时为空
+		int count = parentsOrg.getSubCount().intValue()+1;
+		parentsOrg.setSubCount(new BigDecimal(count));
+		parentsOrg.setIsleaf(CommonConstants.NO);
+		
+		try {
+			omOrgService.update(parentsOrg);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_UPDATE_PARENT_ORG,
+					BasicUtil.wrap(e.getCause().getMessage()), "更新父节点机构失败！{0}");
+		}
+		
+		return org;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.tis.tools.rservice.om.capable.IOrgRService#createChildOrg(org.tis.tools.model.po.om.OmOrg)
+	/**
+	 * <pre>
+	 * 新建一个子节点机构
+	 * 
+	 * 说明：
+	 * 以OmOrg指定入参时，需要调用者指定父机构GUID；
+	 * 系统检查“机构代码、机构名称、机构类型、机构等级、父机构GUID”等必输字段，通过后新建机构；
+	 * 新建后，机构状态停留在‘停用’；
+	 * </pre>
+	 * 
+	 * @param newOrg
+	 *            新机构信息
+	 * @return 新建机构信息
+	 * @throws OrgManagementException
 	 */
 	@Override
 	public OmOrg createChildOrg(OmOrg newOrg) throws OrgManagementException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		// 新增子节点机构
+		try {
+			omOrgService.insert(newOrg);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_CREATE_CHILD_ORG,
+					BasicUtil.wrap(e.getCause().getMessage()), "新增子节点机构失败！{0}");
+		}
+		// 更新父节点机构   是否叶子节点  节点数  最新更新时间 和最新更新人员
+		WhereCondition wc = new WhereCondition() ;
+		wc.andEquals("GUID", newOrg.getGuidParents());
+		List<OmOrg> parentsOrgList=omOrgService.query(wc);
+		OmOrg parentsOrg = parentsOrgList.get(0);
+		parentsOrg.setLastUpdate(new Date());//补充最近更新时间
+		parentsOrg.setUpdator("");//TODO暂时为空
+		int count = parentsOrg.getSubCount().intValue()+1;
+		parentsOrg.setSubCount(new BigDecimal(count));
+		parentsOrg.setIsleaf(CommonConstants.NO);	
+		try {
+			omOrgService.update(parentsOrg);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_UPDATE_PARENT_ORG,
+					BasicUtil.wrap(e.getCause().getMessage()), "更新父节点机构失败！{0}");
+		}
+		
+		return newOrg;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.tis.tools.rservice.om.capable.IOrgRService#updateOrg(org.tis.tools.model.po.om.OmOrg)
+	/**
+	 * <pre>
+	 * 修改机构信息
+	 * 
+	 * 说明：
+	 * 只修改传入对象（omOrg）有值的字段；
+	 * 应避免对（逻辑上）不可直接修改字段的更新，如：机构状态不能直接通过修改而更新；
+	 * </pre>
+	 * 
+	 * @param omOrg
+	 *            待修改机构信息
+	 * @return 修改后的机构信息
+	 * @throws OrgManagementException
 	 */
 	@Override
-	public void updateOrg(OmOrg omOrg) throws OrgManagementException {
-		// TODO Auto-generated method stub
+	public void updateOrg(OmOrg omOrg) throws OrgManagementException {	
+		WhereCondition wc = new WhereCondition() ;
+		wc.andEquals("GUID", omOrg.getGuid());
+		List<OmOrg> orgList=omOrgService.query(wc);
+		OmOrg oldOrg = orgList.get(0);
+		String oldOrgStatus = oldOrg.getOrgStatus();
+		String orgStatus = omOrg.getOrgStatus();
+		if(!oldOrgStatus.equals(orgStatus)){
+			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_UPDATE_ORG_STATUS,null,"机构状态不能直接通过修改而更新！{0}");
+		}
+		try {
+			omOrgService.update(omOrg);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_UPDATE_PARENT_ORG,
+					BasicUtil.wrap(e.getCause().getMessage()), "修改机构信息失败！{0}");
+		}
+		
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.tis.tools.rservice.om.capable.IOrgRService#moveOrg(java.lang.String, java.lang.String, java.lang.String, int)
+	/**
+	 * <pre>
+	 * 移动机构，及调整机构层级，将机构（orgCode）从原父机构（fromParentsOrgCode）调整到新父机构（toParentsOrgCode）下。
+	 * 如果机构有下级机构，逻辑上会被一同拖动（重新生成并修改‘机构序列’），
+	 * 一般在机构树上拖拽机构节点时执行。
+	 * </pre>
+	 * 
+	 * @param orgCode
+	 *            待调整机构代码
+	 * @param fromParentsOrgCode
+	 *            原父机构代码
+	 * @param toParentsOrgCode
+	 *            新父机构代码（可空，表示将原机构提升为根节点机构）
+	 * @param toSortNo
+	 *            位于新父机构树下的顺序号，如果为0或null，则排到最后。
+	 * @return false - 调整失败(机构保持原层级顺序)</br>
+	 *         true - 调整成功
+	 * @throws OrgManagementException
 	 */
 	@Override
 	public boolean moveOrg(String orgCode, String fromParentsOrgCode, String toParentsOrgCode, int toSortNo)
 			throws OrgManagementException {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
-	/* (non-Javadoc)
+	/* *
+	 * (non-Javadoc)
 	 * @see org.tis.tools.rservice.om.capable.IOrgRService#copyOrg(java.lang.String, java.lang.String)
 	 */
 	@Override
