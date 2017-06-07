@@ -2,7 +2,7 @@
  * Created by wangbo on 2017/6/1.
  */
 
-angular.module('MetronicApp').controller('application_controller', function($rootScope, $scope ,$modal,$http, $timeout,filterFilter,$uibModal) {
+angular.module('MetronicApp').controller('application_controller', function($rootScope, $scope ,$modal,$http,i18nService, $timeout,filterFilter,$uibModal) {
     var biz = {};
     $scope.biz = biz;
     //定义权限
@@ -145,7 +145,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                     "action":function(data){
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
-                        if(confirm("确定要删除此菜单？删除后不可恢复。")){
+                        if(confirm("您确认要删除选中的功能组,删除功能组将删除该功能组下的所有子功能组和资源")){
                             //TODO.删除逻辑
                             $http({
                                 method: 'get',
@@ -177,17 +177,18 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                     "action":function(data){
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
-                        console.log(obj)
-                        openwindow($uibModal, 'views/org/addorg_window.html', 'lg',
+                        openwindow($uibModal, 'views/Jurisdiction/childfunctionAdd.html', 'lg',
                             function ($scope, $modalInstance) {
                                 //创建机构实例
-                                var subFrom = {};
-                                $scope.subFrom = subFrom;
+                                var childFrom = {};
+                                $scope.childFrom = childFrom;
                                 //处理新增机构父机构
-                                subFrom.guidParents = obj.original.guid;
+                                childFrom.guidParents = obj.original.guid;
                                 //增加方法
-                                $scope.add = function (subFrom) {
-                                    //TODO.新增逻辑
+                                $scope.addchild = function (childFrom) {
+                                    console.log(childFrom)
+                                    toastr['success']("保存成功！");
+                                    $modalInstance.close();
                                 }
                                 $scope.cancel = function () {
                                     $modalInstance.dismiss('cancel');
@@ -202,7 +203,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                     "action":function(data){
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
-                        if(confirm("确定要删除此菜单？删除后不可恢复。")){
+                        if(confirm("您确认要删除选中的功能组,删除功能组将删除该功能组下的所有子功能组和资源。")){
                             //TODO.删除逻辑
                         }
                     }
@@ -213,17 +214,20 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
                         console.log(obj)
-                        openwindow($uibModal, 'views/Jurisdiction/applicationAdd.html', 'lg',
+                        openwindow($uibModal, 'views/Jurisdiction/afAdd.html', 'lg',
                             function ($scope, $modalInstance) {
                                 console.log($modalInstance)
                                 //创建机构实例
-                                var subFrom = {};
-                                $scope.subFrom = subFrom;
+                                var appFrom = {};
+                                $scope.appFrom = appFrom;
                                 //处理新增功能父功能
-                                subFrom.guidParents = obj.original.guid;
+                                appFrom.guidParents = obj.original.guid;
                                 //增加方法
-                                $scope.add = function (subFrom) {
+                                $scope.add = function (appFrom) {
                                     //TODO.新增逻辑
+                                    toastr['success']("保存成功！");
+                                    $modalInstance.close();
+
                                 }
                                 $scope.cancel = function () {
                                     $modalInstance.dismiss('cancel');
@@ -241,8 +245,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             }
             return it;
         }
-
-
     };
     //组织机构树
     $("#container").jstree({
@@ -359,23 +361,90 @@ angular.module('MetronicApp').controller('application_controller', function($roo
 
         "plugins" : [ "dnd", "state", "types","search","contextmenu" ]
     }).bind("copy.jstree", function (node,e, data ) {
+    }).bind('click.jstree', function(event) {
+        var eventNodeName = event;
+        console.log(eventNodeName)
     })
-
-    $('#container').on("changed.jstree", function (e, data) {
+1
+        $('#container').on("changed.jstree", function (e, data) {
         if(typeof data.node !== 'undefined'){//拿到结点详情
             console.log(data.node.parent)
             if(data.node.parent == '#'){
                 $scope.biz.applica = true;
                 $scope.biz.apptab = false;
+                $scope.biz.appchild = false;
             }else if(data.node.parent == '1'){
                 $scope.biz.apptab = true;
                 $scope.biz.applica = false;
-            }else{
+                $scope.biz.appchild = false;
+            }else if(data.node.parent == '2'){
+                $scope.biz.appchild = true;
+                $scope.biz.applica = false;
+                $scope.biz.apptab = false;
+            } else{
                 $scope.biz.apptab = false;
             }
             $scope.$apply();
         }
     });
+
+    //ui-grid表格模块
+    i18nService.setCurrentLang("zh-cn");
+    $scope.myData = [
+        {id: "0", 'appname':'应用框架模型1', 'appcode':'ABFRAME', 'dict_type':'本地', 'dict_open':'是', 'dict_data':'2017-06-01', 'address':'上海', 'ip':'192.168.1.101', 'port':'8080', 'dict_des':'这里是测试描述页面1'
+        },
+        {id: "1", 'appname':'应用框架模型2', 'appcode':'ABFRAME1', 'dict_type':'远程', 'dict_open':'否', 'dict_data':'2017-06-03', 'address':'苏州', 'ip':'192.168.1.102', 'port':'8081', 'dict_des':'这里是测试描述页面2'
+        },
+        {id: "2", 'appname':'应用框架模型3', 'appcode':'ABFRAME3', 'dict_type':'本地', 'dict_open':'是', 'dict_data':'2017-06-03', 'address':'北京', 'ip':'192.168.1.103', 'port':'8082', 'dict_des':'这里是测试描述页面3'
+        },
+        {id: "3", 'appname':'应用框架模型4', 'appcode':'ABFRAME4', 'dict_type':'本地', 'dict_open':'是', 'dict_data':'2017-06-04', 'address':'深圳', 'ip':'192.168.1.103', 'port':'8083', 'dict_des':'这里是测试描述页面4'
+        },
+        {id: "4", 'appname':'应用框架模型5', 'appcode':'ABFRAME5', 'dict_type':'远程', 'dict_open':'否', 'dict_data':'2017-06-04', 'address':'南京', 'ip':'192.168.1.104', 'port':'8085', 'dict_des':'这里是测试描述页面5'
+        },
+        {id: "5", 'appname':'应用框架模型6', 'appcode':'ABFRAME6', 'dict_type':'本地', 'dict_open':'是', 'dict_data':'2017-06-05', 'address':'佛山', 'ip':'192.168.1.105', 'port':'8086', 'dict_des':'这里是测试描述页面6'}
+    ];
+    //ui-grid 具体配置
+    //下级机构列表
+
+    $scope.gridOptions1 = {
+        data: 'myData',
+        //-------- 分页属性 ----------------
+        enablePagination: true, //是否分页，默认为true
+        enablePaginationControls: true, //使用默认的底部分页
+        paginationPageSizes: [10, 15, 20], //每页显示个数可选项
+        paginationCurrentPage:1, //当前页码
+        paginationPageSize: 10, //每页显示个数
+        //paginationTemplate:"<div></div>", //自定义底部分页代码
+        totalItems : 0, // 总数量
+        useExternalPagination: true,//是否使用分页按钮
+        //是否多选
+        multiSelect:false,
+        onRegisterApi: function(gridApi) {
+            $scope.gridApi = gridApi;
+            //分页按钮事件
+            gridApi.pagination.on.paginationChanged($scope,function(newPage, pageSize) {
+                if(getPage) {
+                    getPage(newPage, pageSize);
+                }
+            });
+            //行选中事件
+            $scope.gridApi.selection.on.rowSelectionChanged($scope,function(row,event){
+                if(row.isSelected){
+                    $scope.selectRow = row.entity;
+                    console.log($scope.selectRow)
+                }
+            });
+        }
+    };
+
+
+    //ui-grid getPage方法
+    var getPage = function(curPage, pageSize) {
+        var firstRow = (curPage - 1) * pageSize;
+        $scope.gridOptions.totalItems = $scope.myData.length;
+        $scope.gridOptions.data = $scope.myData.slice(firstRow, firstRow + pageSize);
+    };
+
 
 
     //新增页面代码
@@ -400,9 +469,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                     }
                 }
                 $scope.saveDict = function(item){//保存新增的函数
-                    /*item.item.data=moment(item.item.data).format('YYYY-MM-DD');//转换时间
-                    localStorage.setItem("addlist",JSON.stringify(item.item));
-                    console.log(item.item)*/
                     //调用添加接口，添加数据
                     $http({
                         method: 'get',
@@ -416,26 +482,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                         console.log('调用错误接口')
                     });
 
-                   /* item.saveType = isNull(d) ? 'insert' : 'update';
-                    if(!isNull(d)){
-                        item.oldItem = angular.copy(d);
-                    }
-                    toastr['success']("新增成功");
-                    $modalInstance.close();
-                    console.log(JSON.parse(localStorage.getItem("addlist")));*/
-
-                    /* dictionary_service.saveDictionary(item).then(function (data) {
-                     if (data.retCode == '1') {
-                     toastr['success'](data.retMessage, "新增成功！");
-                     $modalInstance.close();
-                     dictionary.search1();
-                     } else if(data.retCode == '2') {
-                     toastr['error'](data.retMessage, "新增失败！");
-                     } else {
-                     toastr['error']( "新增异常！");
-                     }
-                     });
-                     }*/
                 }
 
                 $scope.cancel = function () {
@@ -506,39 +552,19 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             // 当响应以错误状态返回时调用
             console.log('调用错误接口')
         });
-
-        /* item.saveType = isNull(d) ? 'insert' : 'update';
-         if(!isNull(d)){
-         item.oldItem = angular.copy(d);
-         }
-         toastr['success']("新增成功");
-         $modalInstance.close();
-         console.log(JSON.parse(localStorage.getItem("addlist")));*/
-
-        /* dictionary_service.saveDictionary(item).then(function (data) {
-         if (data.retCode == '1') {
-         toastr['success'](data.retMessage, "新增成功！");
-         $modalInstance.close();
-         dictionary.search1();
-         } else if(data.retCode == '2') {
-         toastr['error'](data.retMessage, "新增失败！");
-         } else {
-         toastr['error']( "新增异常！");
-         }
-         });
-         }*/
     }
 
     //功能组列表代码模块
     var appcom = {};
     $scope.appcom = appcom;
+    initController($scope, appcom,'appcom',appcom,filterFilter);
     $scope.appcom.dataList = [{'renzhen':'授权认证','nodestrs':'1','appxh':'.1.','isnodes':'否'},
         {'renzhen':'权限管理','nodestrs':'1','appxh':'.2.','isnodes':'否'},
         {'renzhen':'组织管理','nodestrs':'1','appxh':'.3.','isnodes':'否'},
         {'renzhen':'其他管理','nodestrs':'1','appxh':'.4.','isnodes':'否'},
         {'renzhen':'工作流','nodestrs':'1','appxh':'.5.','isnodes':'否'}
     ]
-    initController($scope, appcom,'appcom',appcom,filterFilter)//无法使用?
+    //功能组新增
     $scope.addApp = function(){
             openwindow($modal, 'views/Jurisdiction/appgroupAdd.html', 'lg',//弹出页面
                 function ($scope, $modalInstance) {
@@ -554,6 +580,217 @@ angular.module('MetronicApp').controller('application_controller', function($roo
 
                 }
             )
+    }
+    //功能组修改
+    $scope.exidApp = function(){
 
+    }
+
+
+    /*子功能组页面逻辑*/
+    //岗位页签跳转控制
+    var childflag = {};
+    $scope.childflag = childflag;
+    //功能组信息
+    var gnzxx = false;
+    childflag.gnzxx = gnzxx;
+    //功能组列表
+    var zgnzlb = false;
+    childflag.zgnzlb = zgnzlb;
+    //功能列表
+    var gnlb = false;
+    childflag.gnlb = gnlb;
+
+    //初始化tab展现
+    $scope.childflag.gnzxx = true;
+
+    //控制页切换代码
+    childflag.loadgwdata = function (type) {
+        if(type == 0){
+            $scope.childflag.gnzxx = true;
+            $scope.childflag.zgnzlb = false;
+            $scope.childflag.gnlb = false;
+        }else if (type == 1){
+            $scope.childflag.gnzxx = false;
+            $scope.childflag.zgnzlb = true;
+            $scope.childflag.gnlb = false;
+        }else if(type == 2){
+            $scope.childflag.gnzxx = false;
+            $scope.childflag.zgnzlb = false;
+            $scope.childflag.gnlb = true;
+        }
+    }
+    /* 功能组信息页签逻辑*/
+    $scope.addchild =function(item){
+        console.log(item)
+        toastr['success']("保存成功！");
+    }
+
+    /*子功能组页签内容*/
+    $scope.myDatas = [
+        {id: "0", '功能组名称':'功能组1', '所属功能组':'准备删除', '节点层次':'2', '是否叶子节点':''},
+        {id: "1", '功能组名称':'功能组2', '所属功能组':'准备删除', '节点层次':'2', '是否叶子节点':''},
+    ];
+    //ui-grid 具体配置
+    //下级机构列表
+    $scope.gridOptions2 = {
+        data: 'myDatas',
+        //-------- 分页属性 ----------------
+        enablePagination: true, //是否分页，默认为true
+        enablePaginationControls: true, //使用默认的底部分页
+        paginationPageSizes: [10, 15, 20], //每页显示个数可选项
+        paginationCurrentPage:1, //当前页码
+        paginationPageSize: 10, //每页显示个数
+        //paginationTemplate:"<div></div>", //自定义底部分页代码
+        totalItems : 0, // 总数量
+        useExternalPagination: true,//是否使用分页按钮
+        //是否多选
+        multiSelect:false,
+        onRegisterApi: function(gridApi) {
+            $scope.gridApi = gridApi;
+            //分页按钮事件
+            gridApi.pagination.on.paginationChanged($scope,function(newPage, pageSize) {
+                if(getPage) {
+                    getPage(newPage, pageSize);
+                }
+            });
+            //行选中事件
+            $scope.gridApi.selection.on.rowSelectionChanged($scope,function(row,event){
+                if(row.isSelected){
+                    $scope.selectedRow = row.entity;
+                    console.log($scope.selectedRow)
+                }
+            });
+        }
+    };
+    //子功能组列表新增功能
+    $scope.addchildApp = function(){
+        openwindow($modal, 'views/Jurisdiction/childfunctionAdd.html', 'lg',//弹出页面
+            function ($scope, $modalInstance) {
+                $scope.addchild = function(item){
+                    //新增代码
+                    toastr['success']("保存成功！");
+                    $modalInstance.close();
+                }
+
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            }
+        )
+    }
+
+    //子功能页签编辑页面
+    $scope.exidchildApp = function(){
+        if($scope.selectedRow){
+            openwindow($modal, 'views/Jurisdiction/afAdd.html', 'lg',//弹出页面
+                function ($scope, $modalInstance) {
+                    $scope.add = function(item){
+                        //新增代码
+                        console.log(item)
+                        toastr['success']("保存成功！");
+                        $modalInstance.close();
+                    }
+
+                    $scope.cancel = function () {
+                        $modalInstance.dismiss('cancel');
+                    };
+                }
+            )
+        }else{
+            toastr['error']("请至少选中一条！");
+        }
+    }
+
+    //子功能页签删除方法
+    $scope.appchildDelAll = function(){
+        if($scope.selectedRow){
+            confirm("您确认要删除选中的功能组吗?")
+        }else{
+            toastr['error']("请至少选中一条删除项！");
+        }
+    }
+
+
+    $scope.appfuncAdd = [
+        {id: "0", '功能名称':'测试功能', '功能类型':'页面流', '是否定义为菜单':'否', '所属功能组':'测试功能组'}
+    ];
+    $scope.gridOptions3 = {
+        data: 'appfuncAdd',
+        //-------- 分页属性 ----------------
+        enablePagination: true, //是否分页，默认为true
+        enablePaginationControls: true, //使用默认的底部分页
+        paginationPageSizes: [10, 15, 20], //每页显示个数可选项
+        paginationCurrentPage:1, //当前页码
+        paginationPageSize: 10, //每页显示个数
+        //paginationTemplate:"<div></div>", //自定义底部分页代码
+        totalItems : 0, // 总数量
+        useExternalPagination: true,//是否使用分页按钮
+        //是否多选
+        multiSelect:false,
+        onRegisterApi: function(gridApi) {
+            $scope.gridApi = gridApi;
+            //分页按钮事件
+            gridApi.pagination.on.paginationChanged($scope,function(newPage, pageSize) {
+                if(getPage) {
+                    getPage(newPage, pageSize);
+                }
+            });
+            //行选中事件
+            $scope.gridApi.selection.on.rowSelectionChanged($scope,function(row,event){
+                if(row.isSelected){
+                    $scope.selectRow = row.entity;
+                    console.log($scope.selectRow)
+                }
+            });
+        }
+    };
+
+    //功能列表新增方法
+    $scope.addappList = function(){
+        openwindow($modal, 'views/Jurisdiction/afAdd.html', 'lg',//弹出页面
+            function ($scope, $modalInstance) {
+                $scope.add = function(item){
+                    //新增代码
+                    console.log(item)
+                    toastr['success']("保存成功！");
+                    $modalInstance.close();
+                }
+
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            }
+        )
+    }
+
+    //编辑方法
+    $scope.exitappList = function(){
+        if($scope.selectRow){
+            openwindow($modal, 'views/Jurisdiction/afAdd.html', 'lg',//弹出页面
+                function ($scope, $modalInstance) {
+                    $scope.add = function(item){
+                        //新增代码
+                        console.log(item)
+                        toastr['success']("保存成功！");
+                        $modalInstance.close();
+                    }
+
+                    $scope.cancel = function () {
+                        $modalInstance.dismiss('cancel');
+                    };
+                }
+            )
+        }else{
+            toastr['error']("请至少选中一条！");
+        }
+    }
+    //删除方法
+    $scope.exitapplistDelAll=function(){
+        if( $scope.selectRow){
+            confirm("确认要删除此功能信息吗?")
+        }else{
+            toastr['error']("请至少选中一条！");
+        }
     }
 });

@@ -10,11 +10,7 @@
 	<packaging>pom</packaging>
 	<name>tools</name>
 	<build>
-<<<<<<< HEAD
-    <plugins>
-=======
 	<plugins>
->>>>>>> master
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -22,13 +18,8 @@
           <skip>true</skip>
         </configuration>
       </plugin>
-<<<<<<< HEAD
     </plugins>
   </build>
-=======
-	</plugins>
-	</build>
->>>>>>> master
 	<modules>
 		<!-- 建议工程目录名同artifactId -->
 		<module>tools-common-assembly</module>

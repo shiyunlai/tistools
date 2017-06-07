@@ -18,7 +18,7 @@ var MetronicApp = angular.module("MetronicApp", [
 
 ]);
 
-Mock.mockjax(MetronicApp);
+
 
 function action(bdy){
     var request ={};
