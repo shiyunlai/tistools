@@ -159,12 +159,11 @@
                 </ul>
                 <!--应用页签结束-->
                 <!-- 应用信息开始 -->
-                <div class="tab-content portlet light"  style="height:300px;"  ng-if="yyflag.yyxx">
+                <div class="tab-content portlet light clearfix "   ng-if="yyflag.yyxx">
                     <div class="col-md-12" ng-form="bigform">
                         <div class="portlet-body portlet light" style="height:100%">
                             <div class="tab-content portlet light">
-                              <!-- -->
-                                <form action="#" name="myform" class="form-horizontal">
+                                <form action="#" name="myform" class="form-horizontal" style="height: 100%">
                                     <div class="form-body">
                                         <!--/row-->
                                         <div class="col-md-6">
@@ -272,7 +271,7 @@
                 </div>
                 <!-- 应用信息结束-->
                 <!-- 功能组列表开始-->
-                <div class="tab-content portlet light" style="height: 300px" ng-show="yyflag.gnzlb">
+                <div class="tab-content portlet light clearfix"  ng-show="yyflag.gnzlb">
                     <div class="col-md-12">
                         <div class="portlet-body portlet light">
                             <div class="portlet-body">
@@ -280,35 +279,25 @@
                                         <table class="table table-striped table-bordered table-hover table-checkable">
                                             <thead>
                                             <tr role="row" class="heading">
-                                                <th width="2%" class="table-checkbox">
+                                                <th width="8%" class="table-checkbox">
                                                     <label class="mt-checkbox mt-checkbox-outline mt-checkbox-single"><input type="checkbox" class="group-checkable" ng-model="headcheck" ng-click="biz.checkAll(!headcheck)"/><span></span>
                                                     </label>
                                                 </th>
-                                                <th width="10%">应用名称</th>
-                                                <th width="10%">应用代码</th>
-                                                <th width="10%">应用类别</th>
-                                                <th width="10%">是否开通</th>
-                                                <th width="10%">开通日期</th>
-                                                <th width="10%">访问地址</th>
-                                                <th width="10%">IP</th>
-                                                <th width="10%">端口</th>
-                                                <th width="18%">应用描述</th>
+                                                <th width="23%">功能组名称</th>
+                                                <th width="23%">节点层次</th>
+                                                <th width="23%">功能组序号</th>
+                                                <th width="23%">是否叶子节点</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr ng-repeat="d in biz.dataList" ng-class-odd="'odd'" ng-class-even="'even'">
+                                            <tr ng-repeat = 'd in appcom.dataList' ng-class-odd="'odd'" ng-class-even="'even'">
                                                 <td>
                                                     <label class="mt-checkbox mt-checkbox-outline mt-checkbox-single"><input type="checkbox"  ng-model="d.checked"  class="checkboxes"/><span></span></label>
                                                 </td>
-                                                <td>{{d.appname}}</td>
-                                                <td>{{d.appcode}}</td>
-                                                <td>{{d.dict_type}}</td>
-                                                <td>{{d.dict_open}}</td>
-                                                <td>{{d.dict_data}}</td>
-                                                <td>{{d.address}}</td>
-                                                <td>{{d.ip}}</td>
-                                                <td>{{d.port}}</td>
-                                                <td>{{d.dict_des}}</td>
+                                                <td>{{d.renzhen}}</td>
+                                                <td>{{d.nodestrs}}</td>
+                                                <td>{{d.appxh}}</td>
+                                                <td>{{d.isnodes}}</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -318,7 +307,7 @@
                                 <div class="row" >
                                     <div class="col-md-4 col-sm-12">
                                         <div class="actions btn-set" style="float: left;">
-                                            <button type="button" name="back" class="btn btn-primary" ng-click="show_win()"> 新增
+                                            <button type="button" name="back" class="btn btn-primary" ng-click="addApp()"> 新增
                                             </button>
                                             <button type="button" name="back" class="btn btn-primary" ng-click="show_edit()">  修改
                                             </button>

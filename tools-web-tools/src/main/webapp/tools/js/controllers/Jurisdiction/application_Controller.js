@@ -121,7 +121,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
                         console.log(obj)
-                        openwindow($uibModal, 'views/org/addorg_window.html', 'lg',
+                        openwindow($uibModal, 'views/Jurisdiction/appgroupAdd.html', 'lg',
                             function ($scope, $modalInstance) {
                                 //创建机构实例
                                 var subFrom = {};
@@ -456,10 +456,8 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             url: 'http://localhost:8030/removeData?id=1'
         }).success(function(data) {
             console.log(data);
-            alert('删除成功')
         }).error(function(data) {
             // 当响应以错误状态返回时调用
-            console.log('调用错误接口')
         });
         if(sel.length>0){
             if(confirm("确认要批量删除选中的功能组吗？")){
@@ -531,5 +529,31 @@ angular.module('MetronicApp').controller('application_controller', function($roo
          }*/
     }
 
+    //功能组列表代码模块
+    var appcom = {};
+    $scope.appcom = appcom;
+    $scope.appcom.dataList = [{'renzhen':'授权认证','nodestrs':'1','appxh':'.1.','isnodes':'否'},
+        {'renzhen':'权限管理','nodestrs':'1','appxh':'.2.','isnodes':'否'},
+        {'renzhen':'组织管理','nodestrs':'1','appxh':'.3.','isnodes':'否'},
+        {'renzhen':'其他管理','nodestrs':'1','appxh':'.4.','isnodes':'否'},
+        {'renzhen':'工作流','nodestrs':'1','appxh':'.5.','isnodes':'否'}
+    ]
+    initController($scope, appcom,'appcom',appcom,filterFilter)//无法使用?
+    $scope.addApp = function(){
+            openwindow($modal, 'views/Jurisdiction/appgroupAdd.html', 'lg',//弹出页面
+                function ($scope, $modalInstance) {
+                    $scope.add = function(item){
+                        //新增代码
+                        toastr['success']("保存成功！");
+                        $modalInstance.close();
+                    }
 
+                    $scope.cancel = function () {
+                        $modalInstance.dismiss('cancel');
+                    };
+
+                }
+            )
+
+    }
 });
