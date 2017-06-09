@@ -1,20 +1,35 @@
 <?xml version="1.0"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.tis</groupId>
-    <artifactId>tools</artifactId>
-    <version>0.0.1</version>
-  </parent>
-  <artifactId>tools-facade-sys</artifactId>
-  <name>tools-facade-sys</name>
-  <url>http://maven.apache.org</url>
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-  <dependencies>
-		<!-- tis tools -->
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.tis</groupId>
+		<artifactId>tools</artifactId>
+		<version>0.0.1</version>
+	</parent>
+	<artifactId>tools-facade-sys</artifactId>
+	<version>${tools-facade-sys-version}</version>
+	<name>tools-facade-sys</name>
+	<url>http://maven.apache.org</url>
+	<profiles>
+		<profile>
+			<id>release</id>
+			<properties>
+				<!-- 正式发布版本号：每个工程的版本都是独立定义的 -->
+				<tools-facade-sys-version>1.0.0</tools-facade-sys-version>
+			</properties>
+		</profile>
+	</profiles>
+
+	<properties>
+		<tools-facade-sys-version>0.0.1-SNAPSHOT</tools-facade-sys-version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	
+	<dependencies>
+	
+		<!-- tools common、core -->
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-core-basic</artifactId>
@@ -29,7 +44,6 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>dubbo</artifactId>
 		</dependency>
-
 		<!-- jax-rs -->
 		<dependency>
 			<groupId>javax.ws.rs</groupId>

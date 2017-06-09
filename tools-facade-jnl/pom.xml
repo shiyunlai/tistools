@@ -9,13 +9,26 @@
 		<version>0.0.1</version>
 	</parent>
 	<artifactId>tools-facade-jnl</artifactId>
+	<version>${tools-facade-jnl-version}</version>
 	<name>tools-facade-jnl</name>
 	<url>http://maven.apache.org</url>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<properties>
+				<!-- 正式发布版本号：每个工程的版本都是独立定义的 -->
+				<tools-facade-jnl-version>1.0.0</tools-facade-jnl-version>
+			</properties>
+		</profile>
+	</profiles>
 	<properties>
+		<tools-facade-jnl-version>0.0.1-SNAPSHOT</tools-facade-jnl-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+
 	<dependencies>
-		<!-- tis tools -->
+		<!-- tools common、core -->
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-core-basic</artifactId>
@@ -24,13 +37,12 @@
 			<groupId>org.tis</groupId>
 			<artifactId>tools-common-util</artifactId>
 		</dependency>
-		
+
 		<!-- dubbo -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>dubbo</artifactId>
 		</dependency>
-		
 		<!-- jax-rs -->
 		<dependency>
 			<groupId>javax.ws.rs</groupId>
