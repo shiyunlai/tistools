@@ -41,35 +41,19 @@
     <!-- 右侧展示页面 start -->
     <div class="col-md-9">
         <!-- Begin: life time stats -->
-        <div class="portlet light portlet-fit portlet-datatable bordered" ng-if='biz.applica'>
+        <div class="portlet light portlet-fit portlet-datatable bordered" style="height: 100%" ng-if='biz.applica'>
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-shopping-cart"></i> 应用列表 </div>
             </div>
-            <div class="portlet-body">
-                <div>
-                    <div class ="bizLogHandle">
-                        <label class="biz-label">应用名称</label>
-                        <input class="input-text" type="type" ng-model="biz.trans_date_start">
-                        <label class="biz-label">应用类别</label>
-
-                        <select name="" class="input-text">
-                            <option value="0">本地</option>
-                            <option value="1">远程</option>
-                        </select>
-                        <input class="input-button" type="button" value="查询" ng-click="querySumInfo(biz.trans_date_start,biz.trans_date_end)">
-                    </div>
-
+            <div class="portlet-body" style="min-height:500px; height: 100%" >
                     <div class="table-container">
-                        <div ui-grid="gridOptions1"
+                        <div ui-grid="gridOptions0"
                              ui-grid-edit ui-grid-pagination
-                             ui-grid-selection ui-grid-resize-columns></div>
-                    </div>
-                </div>
-                <!--开始table尾部分页以及工具栏-->
-                <div class="row" >
-                    <div class="col-md-4 col-sm-12">
-                        <div class="actions btn-set" style="float: left;">
+                             ui-grid-selection ui-grid-resize-columns>
+                        </div>
+
+                        <div class="actions btn-set" style="float: right; margin-top:12px;">
                             <button type="button" name="back" class="btn btn-primary" ng-click="show_win()"> 新增
                             </button>
                             <button type="button" name="back" class="btn btn-primary" ng-click="show_edit()">  修改
@@ -78,10 +62,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-12"></div>
                 </div>
-                <!--结束table尾部分页以及工具栏-->
-            </div>
         </div>
         <div class="portlet light portlet-fit portlet-datatable bordered" ng-if='biz.apptab'>
             <div class="portlet-body portlet light">
@@ -104,7 +85,7 @@
                     <div class="col-md-12" ng-form="bigform">
                         <div class="portlet-body portlet light" style="height:100%">
                             <div class="tab-content portlet light">
-                                <form action="#" name="myform" class="form-horizontal" style="height: 100%">
+                                <form action="#" name="myform" class="form-horizontal">
                                     <div class="form-body">
                                         <!--/row-->
                                         <div class="col-md-6">
@@ -212,85 +193,22 @@
                 </div>
                 <!-- 应用信息结束-->
                 <!-- 功能组列表开始-->
-                <div class="tab-content portlet light clearfix"  ng-show="yyflag.gnzlb">
-                    <div class="col-md-12">
-                        <div class="portlet-body portlet light">
-                            <div class="portlet-body">
-                                    <div class="table-container">
-                                        <table class="table table-striped table-bordered table-hover table-checkable">
-                                            <thead>
-                                            <tr role="row" class="heading">
-                                                <th width="8%" class="table-checkbox">
-                                                    <label class="mt-checkbox mt-checkbox-outline mt-checkbox-single"><input type="checkbox" class="group-checkable" ng-model="headcheck" ng-click="appcom.checkAll(!headcheck)"/><span></span>
-                                                    </label>
-                                                </th>
-                                                <th width="23%">功能组名称</th>
-                                                <th width="23%">节点层次</th>
-                                                <th width="23%">功能组序号</th>
-                                                <th width="23%">是否叶子节点</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr ng-repeat = 'd in appcom.dataList' ng-class-odd="'odd'" ng-class-even="'even'">
-                                                <td>
-                                                    <label class="mt-checkbox mt-checkbox-outline mt-checkbox-single"><input type="checkbox"  ng-model="d.checked"  class="checkboxes"/><span></span></label>
-                                                </td>
-                                                <td>{{d.renzhen}}</td>
-                                                <td>{{d.nodestrs}}</td>
-                                                <td>{{d.appxh}}</td>
-                                                <td>{{d.isnodes}}</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                <div class="table-container" ng-if="yyflag.gnzlb">
+                                    <div ui-grid="gridOptions1"
+                                         ui-grid-edit ui-grid-pagination
+                                         ui-grid-selection ui-grid-resize-columns>
+                                    </div>
+                                    <div class="actions btn-set" style="float: right;margin-top: 12px;;">
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="addApp()"> 新增
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="exidApp()">  修改
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-danger" ng-click="funlistDel()"> 删除
+                                        </button>
                                     </div>
                                 </div>
-                                <!--开始table尾部分页以及工具栏-->
-                                <div class="row" >
-                                    <div class="col-md-4 col-sm-12">
-                                        <div class="actions btn-set" style="float: left;">
-                                            <button type="button" name="back" class="btn btn-primary" ng-click="addApp()"> 新增
-                                            </button>
-                                            <button type="button" name="back" class="btn btn-primary" ng-click="exidApp()">  修改
-                                            </button>
-                                            <button type="button" name="back" class="btn btn-danger" ng-click="transsetDelAll()"> 删除
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8 col-sm-12" >
-                                        <div class="dataTables_paginate">
-                                            <div class="pagination-panel">
-                                                第 <a ng-click="getPerPage()"
-                                                     class="btn btn-sm default prev" title="Prev"><i
-                                                    class="fa fa-angle-left"></i></a><input type="text"
-                                                                                            ng-model="biz.page.currentPage"
-                                                                                            class="pagination-panel-input form-control input-mini input-inline input-sm"
-                                                                                            maxlenght="5" style="text-align: center; margin: 0 5px;"><a
-                                                    ng-click="getPostPage()"
-                                                    class="btn btn-sm default next" title="Next"><i
-                                                    class="fa fa-angle-right"></i></a> 页,&nbsp;&nbsp;&nbsp;总<span
-                                                    class="pagination-panel-total">{{biz.page.totalPages}}</span>页
-                                            </div>
-                                        </div>
-                                        <div class="dataTables_length">
-                                            <label><span class="seperator">|</span>每页 <select
-                                                    ng-model="biz.page.itemsperpage"
-                                                    class="form-control input-xsmall input-sm input-inline" ng-options="i for i in [10,20,50,100,150]">
-                                            </select> 条</label>
-                                        </div>
-                                        <div class="dataTables_info" role="status" aria-live="polite">
-                                            <span class="seperator">|</span>总计{{biz.page.totalItems}}
-                                            条
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-12"></div>
-                                </div>
-                                <!--结束table尾部分页以及工具栏-->
-                            </div>
-                        </div>
-                    </div>
-
+                </div>
                 <!-- 功能组列表结束-->
-            </div>
         </div>
         <div class="portlet light portlet-fit portlet-datatable bordered" ng-if='biz.appchild'>
             <div class="portlet-body portlet light">
@@ -361,7 +279,6 @@
                         <div ui-grid="gridOptions2"
                              ui-grid-edit ui-grid-pagination
                              ui-grid-selection ui-grid-resize-columns>
-
                         </div>
                         <div class="actions btn-set" style="float: right; margin-top: 15px;">
                             <button type="button" name="back" class="btn btn-primary" ng-click="addchildApp()"> 新增
@@ -390,6 +307,133 @@
                     </div>
                     <!-- 功能列表-->
         </div>
+        </div>
+        <div class="portlet light portlet-fit portlet-datatable bordered" ng-if='biz.appfund'>
+            <div class="portlet-body portlet light">
+                <!-- 底层功能页签-->
+                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="!tabflag">
+                    <li ng-class="{true:'active',false:''}[appfunflag.gnlist]">
+                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[appfunflag.gnlist]" ng-click="appfunflag.loadgwdata(0)">
+                            <i class="green ace-icon fa fa-bars bigger-120"></i>功能列表
+                        </a>
+                    </li>
+                    <li ng-class="{true:'active',false:''}[appfunflag.zylist]">
+                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[appfunflag.zylist]" ng-click="appfunflag.loadgwdata(1)">
+                            <i class="green ace-icon fa fa-bars bigger-120"></i>资源列表
+                        </a>
+                    </li>
+                </ul>
+                <!--底层功能页签结束-->
+                <!-- 应用信息结束-->
+                <!-- 子功能组列表-->
+                <div class="tab-content portlet light clearfix" ng-if="appfunflag.gnlist">
+                    <form action="#" name="myform" class="form-horizontal ">
+                        <div class="form-body ">
+                            <div class="col-md-6" >
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">功能名称 *</label>
+
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"
+                                               ng-model="appFrom.appname"
+                                               name="id" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" >
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">功能编码 * </label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"
+                                               ng-model="appFrom.appcode"
+                                               name="id" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" >
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">功能类型</label>
+                                    <div class="col-md-8">
+                                        <select class="form-control" name="dict_open" ng-model="appFrom.type">
+                                            <option value="s" selected>页面流</option>
+                                            <option value="a">测试功能</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" >
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">是否定义为菜单</label>
+                                    <div class="col-md-8">
+                                        <select class="form-control" name="dict_open" ng-model="appFrom.menu">
+                                            <option value="n" selected>否</option>
+                                            <option value="s">是</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" >
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">功能调用入口</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control"
+                                               ng-model="appFrom.ready"
+                                               name="id" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" >
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">输入参数</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control"
+                                               ng-model="appFrom.parameter"
+                                               name="id" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" >
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">功能描述</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control"
+                                               ng-model="appFrom.desc"
+                                               name="id" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2"></label>
+                                    <div class="col-md-10">
+                                        <div class="actions btn-set" style="text-align: center">
+                                            <button type="button" name="back" class="btn btn-primary" ng-click="add(appFrom)"> 保存
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- 子功能组列表结束-->
+                <!-- 功能列表-->
+                <div class="tab-content portlet light" ng-if="appfunflag.zylist">
+                    <div ui-grid="gridOptions4"
+                         ui-grid-edit ui-grid-pagination
+                         ui-grid-selection ui-grid-resize-columns>
+                    </div>
+                    <div class="actions btn-set" style="float: right; margin-top: 15px;">
+                        <button type="button" name="back" class="btn btn-primary" ng-click="appfunAddz()"> 新增
+                        </button>
+                        <button type="button" name="back" class="btn btn-primary" ng-click="appfunExit()"> 编辑
+                        </button>
+                        <button type="button" name="back" class="btn btn-danger" ng-click="appfunDelAll()"> 删除
+                        </button>
+                    </div>
+                </div>
+                <!-- 功能列表-->
+            </div>
         </div>
     </div>
 </div>

@@ -462,6 +462,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                     console.log($scope.selectRow)
                 }
             });
+
         }
     };
     //人员信息列表

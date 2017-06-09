@@ -17,7 +17,6 @@ function initController($scope, thisobj, thisobjName, thisobj_service, filterFil
 
         }
     }
-
     thisobj.getSelectItems = function () {
         var res = filterFilter(thisobj.dataList, function (record) {
             return record.checked;
