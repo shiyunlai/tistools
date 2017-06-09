@@ -162,4 +162,5 @@ MetronicApp.controller('biztraceHandle_controller', function ($filter,$rootScope
             modalInstance.close();
         };
     }
+
 });
