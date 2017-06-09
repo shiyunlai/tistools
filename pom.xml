@@ -7,7 +7,7 @@
 	<version>${tools-version}</version>
 	<packaging>pom</packaging>
 	<name>tools</name>
-<<<<<<< HEAD
+
 
 	<build>
 	<plugins>
@@ -22,8 +22,6 @@
   </build>
 
 
-=======
->>>>>>> 1a2d47fa32259e4f5b688ddd2fd4ef8aa3c3ea72
 	<modules>
 		<!-- 建议工程目录名同artifactId -->
 		<module>tools-common-assembly</module>
