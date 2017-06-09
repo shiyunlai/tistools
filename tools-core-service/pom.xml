@@ -9,10 +9,22 @@
 		<version>0.0.1</version>
 	</parent>
 	<artifactId>tools-core-service</artifactId>
+	<version>${tools-core-service-version}</version>
 	<name>tools-core-service</name>
 	<url>http://maven.apache.org</url>
 	<description>作为服务提供者基础能力的实现工程，将被各 tools-service-XXX引用</description>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<properties>
+				<!-- 正式发布版本号：每个工程的版本都是独立定义的 -->
+				<tools-core-service-version>1.0.0</tools-core-service-version>
+			</properties>
+		</profile>
+	</profiles>
 	<properties>
+		<tools-core-service-version>0.0.1-SNAPSHOT</tools-core-service-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
@@ -21,14 +33,16 @@
 			<groupId>org.tis</groupId>
 			<artifactId>tools-core-basic</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.tis</groupId>
+			<artifactId>tools-common-util</artifactId>
+		</dependency>
+		
 		<!-- apache commons -->
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 		</dependency>
-		<!-- <dependency> <groupId>commons-pool</groupId> <artifactId>commons-pool</artifactId> 
-			</dependency> -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
@@ -62,6 +76,10 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
 		</dependency>
 
 		<dependency>
@@ -131,6 +149,11 @@
 			<artifactId>resteasy-jaxb-provider</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-core</artifactId>
+		</dependency>
+				
 		<!-- validation -->
 		<dependency>
 			<groupId>javax.validation</groupId>
@@ -166,6 +189,12 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+
 		<!-- redis客户端:Jedis -->
 		<dependency>
 			<groupId>redis.clients</groupId>
@@ -198,9 +227,5 @@
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.tis</groupId>
-			<artifactId>tools-common-util</artifactId>
-		</dependency>
 	</dependencies>
 </project>

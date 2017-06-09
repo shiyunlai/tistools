@@ -18,7 +18,7 @@ var MetronicApp = angular.module("MetronicApp", [
 
 ]);
 
-Mock.mockjax(MetronicApp);
+
 
 function action(bdy){
     var request ={};
@@ -599,13 +599,13 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
         })
         .state("menuManagement",{
             url:"/menuManagement.html",
-            templateUrl:"views/Jurisdiction/menuManagement.html",
+            templateUrl:"views/Management/menuManagement.html",
             data: {pageTitle: '菜单管理'},
             controller:"menu_controller"
         })
         .state("roleManagement",{
             url:"/roleManagement.html",
-            templateUrl:"views/Jurisdiction/roleManagement.html",
+            templateUrl:"views/roleManage/roleManagement.html",
             data: {pageTitle: '角色管理'},
             controller:"role_controller"
         })

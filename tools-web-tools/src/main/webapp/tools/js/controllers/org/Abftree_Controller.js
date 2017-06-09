@@ -48,7 +48,6 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
     $scope.tabflag = tabflag;
     //生成公共方法
     initController($scope,abftree,"abftree",abftree,filterFilter);
-
     var item = {};
     $scope.item = item;
     abftree.item = item;
@@ -66,9 +65,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
     var items = function customMenu(node) {
         // The default set of all items
         var control;
-
         var it = {
-
             "新建菜单":{
                         "id":"create",
                         "label":"新建机构",
@@ -87,7 +84,6 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                                     $scope.add = function (subFrom) {
                                         //TODO.新增逻辑
                                     }
-
                                     $scope.cancel = function () {
                                         $modalInstance.dismiss('cancel');
                                     };
@@ -466,6 +462,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                     console.log($scope.selectRow)
                 }
             });
+
         }
     };
     //人员信息列表

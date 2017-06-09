@@ -9,9 +9,25 @@
 		<version>0.0.1</version>
 	</parent>
 	<artifactId>tools-maven-plugin</artifactId>
-	<packaging>maven-plugin</packaging>
+	<version>${tools-maven-plugin-version}</version>
 	<name>tools-maven-plugin Maven Mojo</name>
 	<url>http://maven.apache.org</url>
+	<description>开发工具（maven插件）</description>
+	
+	<profiles>
+		<profile>
+			<id>release</id>
+			<properties>
+				<!-- 正式发布版本号：每个工程的版本都是独立定义的 -->
+				<tools-maven-plugin-version>1.0.0</tools-maven-plugin-version>
+			</properties>
+		</profile>
+	</profiles>
+
+	<properties>
+		<tools-maven-plugin-version>0.0.1-SNAPSHOT</tools-maven-plugin-version>
+	</properties>
+		
 	<dependencies>
 		<dependency>
 			<groupId>org.freemarker</groupId>
@@ -66,12 +82,13 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- tools common、core -->
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-common-util</artifactId>
 		</dependency>
 	</dependencies>
-	<description>开发工具（maven插件）</description>
 	
 	<build>
 		<plugins>
