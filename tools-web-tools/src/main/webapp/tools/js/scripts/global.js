@@ -416,3 +416,56 @@ function getYYYYMMDD(){
     var d = dd.getDate()<10?"0"+dd.getDate():dd.getDate(); //获取当前几号，不足10补0
     return y+m+d;
 }
+
+//add by gaojie
+//ui-grid init
+function initgrid($scope, thisobj, thisobj_service, filterFilter,com){
+    thisobj = {
+        data: function () {
+            return [{"text":"123"}];
+        },
+        //-------- 分页属性 ----------------
+        enablePagination: true, //是否分页，默认为true
+        enablePaginationControls: true, //使用默认的底部分页
+        paginationPageSizes: [10, 15, 20], //每页显示个数可选项
+        paginationCurrentPage:1, //当前页码
+        paginationPageSize: 10, //每页显示个数
+        //paginationTemplate:"<div></div>", //自定义底部分页代码
+        totalItems : 0, // 总数量
+        useExternalPagination: true,//是否使用分页按钮
+        //是否多选
+        // multiSelect:false,
+        columnDefs:com,
+        onRegisterApi: function(girdApi) {
+            $scope.girdApi = girdApi;
+            //分页按钮事件
+            $scope.girdApi.pagination.on.paginationChanged($scope,function(newPage, pageSize) {
+                if(thisobj.getPage) {
+                    thisobj.getPage(newPage, pageSize);
+                }
+            });
+            //行选中事件
+            $scope.girdApi.selection.on.rowSelectionChanged($scope,function(row,event){
+                if(row){
+                    $scope.selectRow1 = row.entity;
+                    console.log($scope.selectRow1)
+                    console.log(event)
+                }
+            });
+        }
+    };
+    //ui-grid getPage方法
+    thisobj.getPage = function(curPage, pageSize) {
+        var firstRow = (curPage - 1) * pageSize;
+        thisobj.totalItems = thisobj.data.length;
+        thisobj.data = thisobj.data.slice(firstRow, firstRow + pageSize);
+        //或者像下面这种写法
+        //$scope.myData = mydefalutData.slice(firstRow, firstRow + pageSize);
+    };
+
+    //测试
+    thisobj.getSelectedCount = function () {
+        return $scope.gridApi.selection.getSelectedRows();
+    }
+
+}
