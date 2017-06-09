@@ -22,6 +22,7 @@
   </build>
 
 
+
 	<modules>
 		<!-- 建议工程目录名同artifactId -->
 		<module>tools-common-assembly</module>
