@@ -161,6 +161,10 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                     $scope.gridOptions5.totalItems = $scope.importadd.length;
                                     $scope.gridOptions5.data = $scope.importadd.slice(firstRow, firstRow + pageSize);
                                 };
+                                //多选功能方法，直接var 然后return即可，在导入方调用即可
+                                var importAll = function(){
+                                    return $scope.gridApi.selection.getSelectedRows();
+                                }
                                 //创建机构实例
                                 var subFrom = {};
                                 $scope.subFrom = subFrom;
@@ -168,8 +172,10 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                 subFrom.guidParents = obj.original.guid;
                                 //导入方法
                                 $scope.importAdd = function () {
-                                    if($scope.selectfunRow){
-                                        //TODO.批量导入新增逻辑，循环加入即可
+                                    var dats = importAll();
+                                    if($scope.selectfunRow || dats.length >0){
+                                        console.log(dats)//选中的数据
+                                        //TODO.批量导入新增逻辑，加入数据库即可
                                         toastr['success']("导入成功！");
                                         $modalInstance.close();
                                     }else{
@@ -348,8 +354,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                             ]
                     }
                 ]
-
-
             /* function (obj, callback) {
                 var jsonarray = [];
                 $scope.jsonarray = jsonarray;
