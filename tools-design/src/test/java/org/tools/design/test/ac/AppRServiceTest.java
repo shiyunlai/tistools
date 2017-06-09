@@ -3,18 +3,14 @@
  */
 package org.tools.design.test.ac;
 
+import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.rservice.ac.capable.IAppRService;
-import org.tis.tools.rservice.om.capable.IOrgRService;
-import org.tis.tools.rservice.sys.basic.ISysDictRService;
-import org.tis.tools.rservice.sys.capable.IDictRService;
 import org.tools.design.SpringJunitSupport;
-
-import junit.framework.Assert;
 
 /**
  * 
@@ -29,7 +25,7 @@ public class AppRServiceTest extends SpringJunitSupport{
 	IAppRService appRService;
 	
 	/*
-	 * 测试数据: 生成机构代码所需的数据
+	 * 测试数据: 生成应用代码所需的数据
 	 */
 	private static String appCode = "APP0001"; //应用代码
 	private static String appName = "ZZC" ; //应用名称
@@ -44,7 +40,7 @@ public class AppRServiceTest extends SpringJunitSupport{
 	
 	@Before
 	public void before(){
-		//增加机构数据
+		//增加应用数据
 	
 	}
 	
@@ -56,30 +52,23 @@ public class AppRServiceTest extends SpringJunitSupport{
 	
 	/**
 	 * <pre>
-	 * 案例1:生成机构代码成功
-	 * 判断：机构代码满足既定规则
-	 * 机构代码规则：
-	 * 1.共10位；
-	 * 2.组成结构： 机构等级(两位) + 地区码(三位) + 序号(五位)
+	 * 案例1:生成应用代码成功
+	 * 判断：应用代码满足既定规则
+	 * 应用代码规则：
+	 * 1.共7位；
+	 * 2.组成结构：  应用类型(三位) + 序号(四位)
 	 * </pre>
 	 */
 	@Test
-	public void genOrgCodeSucc() {
+	public void genAppCodeSucc() {
 		
 		AcApp app = appRService.createAcApp(appCode, appName, appType, appDesc, isOpen, openDate, url, ipAddr, ipPort);
-		System.out.println("GUID响应："+app.getGuid());
-		//调用生成机构代码
-//		String orgCodeStr = orgRService.genOrgCode(areaCode, orgDegree, orgType) ;
-//		
-//		Assert.assertEquals("成功生成机构代码不能为空",10, orgCodeStr.length());
-//		Assert.assertEquals("机构代码共10位",10, orgCodeStr.length());
-//		Assert.assertEquals("前两位是机构等级",orgCodeStr.substring(0, 2), orgDegree);
-//		Assert.assertEquals("三四五位是地区码",orgCodeStr.substring(3, 5), areaCode);
-		
+		Assert.assertNotNull("创建APP成功",app);
+		Assert.assertEquals("返回的代码应该相等","APP0001", app.getGuid());		
 	}
 	
 	/**
-	 * 案例2:生成机构代码失败，缺少所需的业务字典
+	 * 案例2:生成应用代码失败，缺少所需的业务字典
 	 */
 	@Test
 	public void genFailureCase() {

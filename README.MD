@@ -76,9 +76,9 @@
 
 &emsp;&emsp;[如何在tools工程集中新增一个dubbo消费者工程XXX](./readme/新增一个服务消费者工程.MD "")
 
-&emsp;&emsp;[如何发布Dubbo服务](./readme/发布Dubbo服务.MD "")
+&emsp;&emsp;[如何发布Dubbo服务](./readme/开发并发布Dubbo服务.MD "")
 
-&emsp;&emsp;[如何发布RESTFul服务](./readme/发布RESTFul服务.MD "")
+&emsp;&emsp;[如何发布RESTFul服务](./readme/开发并发布RESTFul服务.MD "")
 
 
 --------
