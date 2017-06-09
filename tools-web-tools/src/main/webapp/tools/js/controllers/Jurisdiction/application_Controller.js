@@ -68,7 +68,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 "刷新":{
                     "label":"刷新",
                     "action":function(data){
-
+                        $("#container").jstree().refresh();
                     }
                 }
             }
@@ -202,7 +202,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 '刷新':{
                     "label":"刷新",
                     "action":function(data){
-
+                        $("#container").jstree().refresh();
                     }
                 }
             }
@@ -279,6 +279,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                     "label":"刷新",
                     "action":function (node) {
                       //刷新页面
+                        $("#container").jstree().refresh();
                     }
                 },
             }
@@ -307,6 +308,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                             {
                                                 "id": "4",
                                                 "text": "授权认证",
+                                                'type':'fun',
                                                 "children":[{
                                                     'id':'75',
                                                     "text": "登陆策略管理"
@@ -318,33 +320,46 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                                     "text": "Prota资源管理"
                                                 },{
                                                     'id':'78',
-                                                    "text": "密码设置"
-                                                }
+                                                    "text": "密码设置",
+                                                    'type':'childs'
+                                                },
+                                                    {
+                                                        'id':'79',
+                                                        "text": "子功能组",
+                                                        'type':'fun',
+                                                        "children":[{
+                                                            'id':'80',
+                                                            "text": "菜单显示",
+                                                            'type':'childs'
+                                                        }]
+                                                    }
                                                 ]
                                             },{
                                             "id": "5",
                                             "text": "权限管理",
+                                            'type':'fun',
                                             "children":[{
-                                               'id':'80',
+                                               'id':'81',
                                                 "text": "应用功能管理",
                                             },{
-                                                'id':'81',
+                                                'id':'82',
                                                 "text": "菜单显示",
                                             },{
-                                                'id':'82',
+                                                'id':'83',
                                                 "text": "菜单管理",
                                             },{
-                                                    'id':'83',
+                                                    'id':'84',
                                                     "text": "约束管理",
                                                 },{
-                                                'id':'84',
+                                                'id':'85',
                                                 "text": "角色管理",
                                             },
 
                                             ]
                                         },{
                                             "id": "6",
-                                            "text": "组织管理"
+                                            "text": "组织管理",
+                                            'type':'fun',
                                         }]
                                 },
                                 {
@@ -399,6 +414,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     })
     /* 定义树列表改变事件*/
     $('#container').on("changed.jstree", function (e, data) {
+        console.log(data);
         if(typeof data.node !== 'undefined'){//拿到结点详情
             console.log(data.node.parent)
             if(data.node.parent == '#'){
@@ -411,7 +427,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 $scope.biz.appfund = false;
                 $scope.biz.applica = false;
                 $scope.biz.appchild = false;
-            }else if(data.node.parent == '2'){
+            }else if(data.node.original.type == 'fun'){
                 $scope.biz.appfund = false;
                 $scope.biz.appchild = true;
                 $scope.biz.applica = false;
@@ -919,6 +935,9 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     //资源列表
     var zylist = false;
     appfunflag.zylist = zylist;
+    //功能行为
+    var gnactive = false;
+    appfunflag.gnactive = gnactive;
 
     //初始化tab展现
     $scope.appfunflag.gnlist = true;
@@ -928,53 +947,19 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         if(type == 0){
             $scope.appfunflag.gnlist = true;
             $scope.appfunflag.zylist = false;
+            $scope.appfunflag.gnactive = false;
         }else if (type == 1){
             $scope.appfunflag.gnlist = false;
             $scope.appfunflag.zylist = true;
+            $scope.appfunflag.gnactive = false;
+        }else if(type == 2){
+            $scope.appfunflag.gnlist = false;
+            $scope.appfunflag.gnactive = true;
+            $scope.appfunflag.zylist = false;
         }
     }
 
     //资源列表表格处理
-    $scope.appfunAdd = [
-        {'FUNC_NAME':'测试', 'RES_PATH':'测试页面', 'COMPACK_NAME':'测试', 'RES_SHOW_NAME':'测试资源'}
-    ];
-    $scope.gridOptions4 = {
-        data: 'appfunAdd',
-        columnDefs: [{ field: 'FUNC_NAME', displayName: '资源类型'},
-            { field: "RES_PATH", displayName:'资源路径'},
-            { field: "COMPACK_NAME", displayName:'所属构建包'},
-            { field: "RES_SHOW_NAME", displayName:'显示名称'}
-        ],
-        //-------- 分页属性 ----------------
-        enablePagination: true, //是否分页，默认为true
-        enablePaginationControls: true, //使用默认的底部分页
-        paginationPageSizes: [10, 15, 20], //每页显示个数可选项
-        paginationCurrentPage:1, //当前页码
-        paginationPageSize: 10, //每页显示个数
-        //paginationTemplate:"<div></div>", //自定义底部分页代码
-        totalItems : 0, // 总数量
-        useExternalPagination: true,//是否使用分页按钮
-        //是否多选
-        multiSelect:false,
-        onRegisterApi: function(gridApi) {
-            $scope.gridApi = gridApi;
-            //分页按钮事件
-            gridApi.pagination.on.paginationChanged($scope,function(newPage, pageSize) {
-                if(getPagefour) {
-                    getPagefour(newPage, pageSize);
-                }
-            });
-            //行选中事件
-            $scope.gridApi.selection.on.rowSelectionChanged($scope,function(row,event){
-                if(row.isSelected){
-                    $scope.selectfunRow = row.entity;
-                    console.log($scope.selectfunRow)
-                }else{
-                    delete $scope.selectfunRow;//不选中，则清空
-                }
-            });
-        }
-    };
     /*分页功能*/
     var getPagefour = function(curPage, pageSize) {
         var firstRow = (curPage - 1) * pageSize;
@@ -982,24 +967,9 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         $scope.gridOptions4.data = $scope.appfunAdd.slice(firstRow, firstRow + pageSize);
     };
     //资源新增方法
-    $scope.appfunAddz = function(){
-        openwindow($modal, 'views/Jurisdiction/addResources.html', 'lg',//弹出页面
-            function ($scope, $modalInstance) {
-                $scope.add = function(item){
-                    //新增代码
-                    console.log(item)
-                    toastr['success']("保存成功！");
-                    $modalInstance.close();
-                }
 
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            }
-        )
-    }
 
-    //资源编辑方法
+    //资源修改方法
     $scope.appfunExit = function(){
         if($scope.selectfunRow){
             openwindow($modal, 'views/Jurisdiction/addResources.html', 'lg',//弹出页面
@@ -1016,14 +986,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                     };
                 }
             )}else{
-            toastr['error']("请至少选中一条！");
-        }
-    }
-    //资源删除方法
-    $scope.appfunDelAll = function(){
-        if($scope.selectfunRow){
-            confirm("确认要删除此资源吗?")
-        }else{
             toastr['error']("请至少选中一条！");
         }
     }
