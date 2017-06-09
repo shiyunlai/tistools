@@ -10,11 +10,25 @@
 	</parent>
 	<artifactId>tools-core-web</artifactId>
 	<name>tools-core-web</name>
+	<version>${tools-core-web-version}</version>
 	<url>http://maven.apache.org</url>
 	<build>
 		<finalName>web-boss</finalName>
 	</build>
 	<description>web工程的基础包，被web类应用模块依赖。</description>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<properties>
+				<!-- 正式发布版本号：每个工程的版本都是独立定义的 -->
+				<tools-core-web-version>1.0.0</tools-core-web-version>
+			</properties>
+		</profile>
+	</profiles>
+	<properties>
+		<tools-core-web-version>0.0.1-SNAPSHOT</tools-core-web-version>
+	</properties>
 
 	<dependencies>
 		<dependency>

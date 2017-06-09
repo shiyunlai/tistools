@@ -9,28 +9,47 @@
 		<version>0.0.1</version>
 	</parent>
 	<artifactId>tools-service-biztrace</artifactId>
+	<version>${tools-service-biztrace-version}</version>
 	<name>tools-service-biztrace</name>
 	<url>http://maven.apache.org</url>
+	
+	<profiles>
+		<profile>
+			<id>release</id>
+			<properties>
+				<!-- 正式发布版本号：每个工程的版本都是独立定义的 -->
+				<tools-service-biztrace-version>1.0.0</tools-service-biztrace-version>
+			</properties>
+		</profile>
+	</profiles>
+
 	<properties>
+		<tools-service-biztrace-version>0.0.1-SNAPSHOT</tools-service-biztrace-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	<dependencies>
 
-		<!-- tools -->
+	<dependencies>
+		
+		<!-- tools common、core -->
+		<dependency>
+			<groupId>org.tis</groupId>
+			<artifactId>tools-core-basic</artifactId>
+		</dependency>
+		
+		<!-- tools facade-->
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-facade-biztrace</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-
+		
 		<!-- apache commons -->
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 		</dependency>
-		<!-- <dependency>
-			<groupId>commons-pool</groupId>
-			<artifactId>commons-pool</artifactId>
-		</dependency> -->
+		<!-- <dependency> <groupId>commons-pool</groupId> <artifactId>commons-pool</artifactId> 
+			</dependency> -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
@@ -99,7 +118,7 @@
 			<groupId>com.baidu.disconf</groupId>
 			<artifactId>disconf-client</artifactId>
 		</dependency>
-			
+
 		<!-- dubbo -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -147,11 +166,6 @@
 		<dependency>
 			<groupId>com.caucho</groupId>
 			<artifactId>hessian</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.tis</groupId>
-			<artifactId>tools-core-basic</artifactId>
 		</dependency>
 	</dependencies>
 
