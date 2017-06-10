@@ -17,7 +17,6 @@ function initController($scope, thisobj, thisobjName, thisobj_service, filterFil
 
         }
     }
-
     thisobj.getSelectItems = function () {
         var res = filterFilter(thisobj.dataList, function (record) {
             return record.checked;
@@ -417,6 +416,16 @@ function getYYYYMMDD(){
     return y+m+d;
 }
 
+<<<<<<< HEAD
+
+function initGrid($scope, thisobj, data,thisobjName, thisobj_service, filterFilter,cun) {
+    $scope.thisobjName = {
+        data: 'data',
+        columnDefs: cun,
+        //---------切换属性-----------------
+        enableGridMenu: true, //是否显示grid 菜单
+        enableFiltering:true,//打开标识,用于搜索
+=======
 //add by gaojie
 //ui-grid init
 function initgrid($scope, thisobj, thisobj_service, filterFilter,com){
@@ -424,6 +433,7 @@ function initgrid($scope, thisobj, thisobj_service, filterFilter,com){
         data: function () {
             return [{"text":"123"}];
         },
+>>>>>>> origin/master
         //-------- 分页属性 ----------------
         enablePagination: true, //是否分页，默认为true
         enablePaginationControls: true, //使用默认的底部分页
@@ -434,6 +444,24 @@ function initgrid($scope, thisobj, thisobj_service, filterFilter,com){
         totalItems : 0, // 总数量
         useExternalPagination: true,//是否使用分页按钮
         //是否多选
+<<<<<<< HEAD
+        multiSelect:false,
+        onRegisterApi: function(gridApi) {
+            $scope.gridApi = gridApi;
+            //分页按钮事件
+            gridApi.pagination.on.paginationChanged($scope,function(newPage, pageSize) {
+                if(getPage) {
+                    getPage(newPage, pageSize);
+                }
+            });
+            //行选中事件
+            $scope.gridApi.selection.on.rowSelectionChanged($scope,function(row,event){
+                if(row.isSelected){
+                    $scope.selectRow = row.entity;
+                    console.log($scope.selectRow)
+                }else{
+                    delete $scope.selectRow;//制空
+=======
         // multiSelect:false,
         columnDefs:com,
         onRegisterApi: function(girdApi) {
@@ -450,10 +478,19 @@ function initgrid($scope, thisobj, thisobj_service, filterFilter,com){
                     $scope.selectRow1 = row.entity;
                     console.log($scope.selectRow1)
                     console.log(event)
+>>>>>>> origin/master
                 }
             });
         }
     };
+<<<<<<< HEAD
+    //ui-grid getPage方法 分页方法
+    var getPage = function(curPage, pageSize) {
+        var firstRow = (curPage - 1) * pageSize;
+        $scope.gridOptions0.totalItems = $scope.myData.length;
+        $scope.gridOptions0.data = $scope.myData.slice(firstRow, firstRow + pageSize);
+    };
+=======
     //ui-grid getPage方法
     thisobj.getPage = function(curPage, pageSize) {
         var firstRow = (curPage - 1) * pageSize;
@@ -468,4 +505,5 @@ function initgrid($scope, thisobj, thisobj_service, filterFilter,com){
         return $scope.gridApi.selection.getSelectedRows();
     }
 
+>>>>>>> origin/master
 }

@@ -38,8 +38,10 @@
 
 	<profiles>
 		<profile>
-			<!-- | 编译正式版本时：mvn clean install -P release | 发布正式版本时：mvn clean deploy 
-				-P release -->
+			<!-- 
+			| 编译正式版本时：mvn clean install -P release 
+			| 发布正式版本时：mvn clean deploy -P release 
+			-->
 			<id>release</id>
 			<properties>
 				<!-- tools 正式发布版本号：每个工程的版本都是独立定义的 -->
