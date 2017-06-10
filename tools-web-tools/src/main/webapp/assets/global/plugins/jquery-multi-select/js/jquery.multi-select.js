@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
 * MultiSelect v0.9.11
 * Copyright (c) 2012 Louis Cuny
@@ -531,7 +530,6 @@
 }
 
 }(window.jQuery);
-=======
 /*
 * MultiSelect v0.9.11
 * Copyright (c) 2012 Louis Cuny
@@ -1064,4 +1062,3 @@
 }
 
 }(window.jQuery);
->>>>>>> origin/master

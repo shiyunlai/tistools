@@ -173,7 +173,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                 //导入方法
                                 $scope.importAdd = function () {
                                     var dats = importAll();
-                                    if($scope.selectfunRow || dats.length >0){
+                                    if(dats.length >0){
                                         console.log(dats)//选中的数据
                                         //TODO.批量导入新增逻辑，加入数据库即可
                                         toastr['success']("导入成功！");
@@ -941,7 +941,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
 
     //初始化tab展现
     $scope.appfunflag.gnlist = true;
-
     //控制页切换代码
     appfunflag.loadgwdata = function (type) {
         if(type == 0){
@@ -966,28 +965,138 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         $scope.gridOptions4.totalItems = $scope.appfunAdd.length;
         $scope.gridOptions4.data = $scope.appfunAdd.slice(firstRow, firstRow + pageSize);
     };
-    //资源新增方法
+
+    /* 功能tab页面逻辑*/
+    $scope.biz.appedit = function(item){
+        $scope.editflag = !$scope.editflag;//让保存取消方法显现,并且让文本框可以输入
+        console.log(item)
+    }
+    //保存方法
+    $scope.biz.appsave = function () {
+        $scope.editflag = !$scope.editflag;//让保存取消方法显现
+        //调用后台保存逻辑
+    }
+
+    $scope.biz.edit = function(){
+        $scope.editflag = !$scope.editflag;//让保存取消方法显现
+    }
+    //资源修改保存方法
+    $scope.biz.save = function(){
+        $scope.editflag = !$scope.editflag;
+    }
 
 
-    //资源修改方法
-    $scope.appfunExit = function(){
-        if($scope.selectfunRow){
-            openwindow($modal, 'views/Jurisdiction/addResources.html', 'lg',//弹出页面
-                function ($scope, $modalInstance) {
-                    $scope.add = function(item){
-                        //新增代码
-                        console.log(item)
-                        toastr['success']("保存成功！");
-                        $modalInstance.close();
-                    }
-
-                    $scope.cancel = function () {
-                        $modalInstance.dismiss('cancel');
-                    };
+    //功能行为 逻辑
+    $scope.myDataapp = [{'BHVTYPE_CODE': 's', 'BHVTYPE_NAME': '测试类型'}, {'BHVTYPE_CODE': 'a', 'BHVTYPE_NAME': '测试类型11'}]
+    /*定义行为类型列表结构*/
+    $scope.gridOption6 = {
+        data: 'myDataapp',
+        columnDefs: [{field: 'BHVTYPE_CODE', displayName: '行为类型代码'},
+            {field: "BHVTYPE_NAME", displayName: '行为类型名称'}
+        ],
+        //-------- 分页属性 ----------------
+        enablePagination: true, //是否分页，默认为true
+        enablePaginationControls: true, //使用默认的底部分页
+        paginationPageSizes: [10, 15, 20], //每页显示个数可选项
+        paginationCurrentPage: 1, //当前页码
+        paginationPageSize: 10, //每页显示个数
+        //paginationTemplate:"<div></div>", //自定义底部分页代码
+        totalItems: 0, // 总数量
+        useExternalPagination: true,//是否使用分页按钮
+        //是否多选
+        multiSelect:false,
+        onRegisterApi: function (gridApi) {
+            $scope.gridApi = gridApi;
+            //分页按钮事件
+            gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
+                if (getPagefive) {
+                    getPagefive(newPage, pageSize);
                 }
-            )}else{
+            });
+            //行选中事件
+            $scope.gridApi.selection.on.rowSelectionChanged($scope, function (row, event) {
+                if (row.isSelected) {
+                    $scope.selectappRow = row.entity;
+                    $scope.biz.active = false;
+                    console.log(1)
+                }else{
+                    $scope.biz.active = false;
+                    delete $scope.selectappRow;
+                }
+            });
+        }
+    };
+    /*功能列表分页功能*/
+    var getPagefive = function (curPage, pageSize) {
+        var firstRow = (curPage - 1) * pageSize;
+        $scope.gridOption6.totalItems = $scope.myDataapp.length;
+        $scope.gridOption6.data = $scope.myDataapp.slice(firstRow, firstRow + pageSize);
+    };
+
+    //点击查看事件
+    $scope.biz.looking = function(){
+        if($scope.selectappRow){
+            $scope.biz.active = true;
+        }else{
+            $scope.biz.active = false;
+            toastr['error']("请至少选择一种类型");
+        }
+    }
+    /*事件行为列表*/
+    $scope.myDatasapp = [{BHV_CODE:'TXT1001',BHV_NAME:'测试行为1','ISEFFECTIVE': 'Y'}, {'BHV_CODE':'TXT1002','BHV_NAME':'测试行为2','ISEFFECTIVE': 'N'}]
+    $scope.gridOptions7 = {
+        data: 'myDatasapp',
+        columnDefs: [
+            {field: "BHV_NAME", displayName: '行为名称'},
+            {field: "BHV_CODE", displayName: '行为代码'},
+            {field: 'ISEFFECTIVE', displayName: '是否有效'}
+        ],
+        //-------- 分页属性 ----------------
+        enablePagination: true, //是否分页，默认为true
+        enablePaginationControls: true, //使用默认的底部分页
+        paginationPageSizes: [10, 15, 20], //每页显示个数可选项
+        paginationCurrentPage: 1, //当前页码
+        paginationPageSize: 10, //每页显示个数
+        //paginationTemplate:"<div></div>", //自定义底部分页代码
+        totalItems: 0, // 总数量
+        useExternalPagination: true,//是否使用分页按钮
+        //是否多选
+        // multiSelect:false,
+        onRegisterApi: function (gridApi) {
+            $scope.gridApi = gridApi;
+            //分页按钮事件
+            gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
+                if (getPagefrees) {
+                    getPagefrees(newPage, pageSize);
+                }
+            });
+            //行选中事件
+            $scope.gridApi.selection.on.rowSelectionChanged($scope, function (row, event) {
+                if (row.isSelected) {
+                    $scope.selectappRow = row.entity;
+                }else{
+                    delete $scope.selectappRow;
+                }
+            });
+        }
+    };
+    /*功能列表分页功能*/
+    var getPagefrees = function (curPage, pageSize) {
+        var firstRow = (curPage - 1) * pageSize;
+        $scope.gridOptions7.totalItems = $scope.myDatasapp.length;
+        $scope.gridOptions7.data = $scope.myDatasapp.slice(firstRow, firstRow + pageSize);
+    };
+    //多选方法
+    var checkAll = function(){
+        return $scope.gridApi.selection.getSelectedRows();
+    }
+    //功能操作行为保存
+    $scope.biz.sesave = function(){
+        var dats = checkAll()
+        if(dats.length>0){
+            toastr['success']("保存成功");
+        }else{
             toastr['error']("请至少选中一条！");
         }
     }
-
 });
