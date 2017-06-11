@@ -612,7 +612,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
         .state("behavior",{
             url:"/behavior.html",
             templateUrl:"views/behavior/behavior.html",
-            data: {pageTitle: '角色管理'},
+            data: {pageTitle: '功能管理'},
             controller:"behavior_controller"
         })
 }]);

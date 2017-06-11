@@ -977,6 +977,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         //调用后台保存逻辑
     }
 
+
     $scope.biz.edit = function(){
         $scope.editflag = !$scope.editflag;//让保存取消方法显现
     }

@@ -52,7 +52,6 @@
                              ui-grid-edit ui-grid-pagination
                              ui-grid-selection ui-grid-resize-columns>
                         </div>
-
                         <div class="actions btn-set" style="float: right; margin-top:12px;">
                             <button type="button" name="back" class="btn btn-primary" ng-click="show_win()"> 新增
                             </button>
@@ -94,7 +93,7 @@
                                                     <div class="col-md-8">
                                                         <input type="text" class="form-control" ng-model="dictionaryAdd.item.appname"
                                                                required
-                                                               name="dict_key"/>
+                                                               name="dict_key" ng-disabled="!editflag"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -104,7 +103,7 @@
                                                     <div class="col-md-8">
                                                         <input type="text" class="form-control"
                                                                required  ng-model="dictionaryAdd.item.appcode"
-                                                               name="dicts_kesy"/>
+                                                               name="dicts_kesy" ng-disabled="!editflag"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -112,7 +111,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label col-md-4"> 应用类别: </label>
                                                     <div class="col-md-8">
-                                                        <select class="form-control"  name="dict_type" ng-model="dictionaryAdd.item.dict_type" name="dict_type">
+                                                        <select class="form-control"  name="dict_type" ng-model="dictionaryAdd.item.dict_type" name="dict_type" ng-disabled="!editflag">
                                                             <option value=""></option>
                                                             <option value="0">本地</option>
                                                             <option value="1">远程</option>
@@ -124,7 +123,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label col-md-4"> 是否开通: </label>
                                                     <div class="col-md-8">
-                                                        <select class="form-control" name="dict_open" ng-model="dictionaryAdd.item.dict_open">
+                                                        <select class="form-control" name="dict_open" ng-model="dictionaryAdd.item.dict_open" ng-disabled="!editflag">
                                                             <option value=""></option>
                                                             <option value="s">是</option>
                                                             <option value="a">否</option>
@@ -136,7 +135,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label col-md-4"> 开通日期: </label>
                                                     <div class="col-md-8">
-                                                        <input class="input-appAdd" style="" type="date" ng-model="dictionaryAdd.item.data">
+                                                        <input class="input-appAdd" style="" type="date" ng-model="dictionaryAdd.item.data" ng-disabled="!editflag">
                                                     </div>
                                                 </div>
                                             </div>
@@ -145,7 +144,7 @@
                                                     <label class="control-label col-md-4"> IP: </label>
                                                     <div class="col-md-8">
                                                         <input type="text" class="form-control"
-                                                               name="table_name" ng-model="dictionaryAdd.item.ip"/>
+                                                               name="table_name" ng-model="dictionaryAdd.item.ip"  ng-disabled="!editflag"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -154,7 +153,7 @@
                                                     <label class="control-label col-md-4"> 访问地址: </label>
                                                     <div class="col-md-8">
                                                         <input type="text" class="form-control"
-                                                               name="column_name" ng-model="dictionaryAdd.item.address"/>
+                                                               name="column_name" ng-model="dictionaryAdd.item.address" ng-disabled="!editflag" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -163,7 +162,7 @@
                                                     <label class="control-label col-md-4"> 端口: </label>
                                                     <div class="col-md-8">
                                                         <input type="text" class="form-control"
-                                                               name="column_name" ng-model="dictionaryAdd.item.port"/>
+                                                               name="column_name" ng-model="dictionaryAdd.item.port"  ng-disabled="!editflag"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -173,17 +172,30 @@
                                                     <div class="col-md-10">
                                                         <input type="text" class="form-control"
                                                                ng-model="dictionaryAdd.item.des"
-                                                               name="dict_name"/>
+                                                               name="dict_name"  ng-disabled="!editflag"/>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-12" style="text-align: center">
-                                                <button type="button" name="back"  class="btn btn-primary" ng-if="bigform.$invalid == false"  ng-disabled="bigform.$invalid" popover-trigger="mouseenter" ng-click="saveDict(dictionaryAdd)" > 保存
-                                                </button>
-                                                <button type="button" name="back" class="btn default" ng-if="bigform.$invalid == true"  ng-disabled="bigform.$invalid" popover-trigger="mouseenter" > 保存
-                                                </button>
-                                            </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-2"></label>
+                                                    <div class="col-md-10">
+                                                        <div class="actions btn-set" style="float: right;" ng-if="!editflag">
+                                                            <button type="button" name="back" class="btn btn-primary" ng-click="biz.appedit(dictionaryAdd)"> 编辑机构
+                                                            </button>
+                                                        </div>
+                                                        <div class="actions btn-set" style="float: right;" ng-if="editflag">
+                                                            <button type="button" name="back"  class="btn btn-primary" ng-if="bigform.$invalid == false"  ng-disabled="bigform.$invalid" popover-trigger="mouseenter" ng-click="biz.appsave()" > 保存
+                                                            </button>
+                                                            <button type="button" name="back" class="btn default" ng-if="bigform.$invalid == true"  ng-disabled="bigform.$invalid" popover-trigger="mouseenter" > 保存
+                                                            </button>
+                                                            <button type="button" name="back" class="btn btn-danger" ng-click="biz.edit()"> 取消
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
+                                            </div>
                                         </div>
                                     </form>
 
