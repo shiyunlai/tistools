@@ -3,6 +3,12 @@
  */
 package org.tis.tools.rservice.ac.capable;
 
+import java.math.BigDecimal;
+
+import org.tis.tools.model.po.ac.AcApp;
+import org.tis.tools.model.po.ac.AcFunc;
+import org.tis.tools.model.po.ac.AcFuncgroup;
+
 /**
  * <pre>
  * 
@@ -35,4 +41,47 @@ package org.tis.tools.rservice.ac.capable;
  */
 public interface IApplicationRService {
 
+	/**
+	 * 新增应用系统(AC_APP)
+	 * @param appcode 应用代码
+	 * @param appname 应用名称
+	 * @param apptype 应用类型
+	 * @param appdesc 应用描述
+	 * @param isopen 是否开通
+	 * @param openDate 开通时间
+	 * @param url 访问地址
+	 * @param ipaddr IP
+	 * @param ipport 端口
+	 * return  acApp
+	 */
+	public AcApp createAcApp(String appCode, String appName, String appType,String appDesc, 
+			String isOpen, String openDate, String url,String ipAddr, String ipPort);
+
+	/**
+	 * 新增功能组(AC_FUNCGROUP)
+	 * @param guidApp 隶属应用GUID
+	 * @param funcGroupName 功能组名称
+	 * @param guidParents 父功能组GUID
+	 * @param groupLevel 节点层次
+	 * return  AcFuncgroup
+	 */
+	public AcFuncgroup createAcFuncGroup(String guidApp, String funcGroupName, String guidParents,BigDecimal groupLevel);
+
+	
+	/**
+	 * 新增功能(AC_FUNC)
+	 * @param guidFuncGroup 隶属功能组GUID
+	 * @param funcCode 功能编号
+	 * @param funcName 功能名称
+	 * @param funcAction 功能入口
+	 * @param paraInfo 输入参数
+	 * @param funcType 功能类型
+	 * @param isCheck 是否验证权限
+	 * @param isMenu 可否定义为菜单
+	 * return  AcFunc
+	 */
+	public AcFunc createAcFunc(String guidFuncGroup, String funcCode, String funcName,String funcAction,
+			String paraInfo,String funcType,String isCheck,String isMenu);
+
+	
 }
