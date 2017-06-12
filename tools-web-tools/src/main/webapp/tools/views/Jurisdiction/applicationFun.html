@@ -52,7 +52,6 @@
                              ui-grid-edit ui-grid-pagination
                              ui-grid-selection ui-grid-resize-columns>
                         </div>
-
                         <div class="actions btn-set" style="float: right; margin-top:12px;">
                             <button type="button" name="back" class="btn btn-primary" ng-click="show_win()"> 新增
                             </button>
@@ -94,7 +93,7 @@
                                                     <div class="col-md-8">
                                                         <input type="text" class="form-control" ng-model="dictionaryAdd.item.appname"
                                                                required
-                                                               name="dict_key"/>
+                                                               name="dict_key" ng-disabled="!editflag"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -104,7 +103,7 @@
                                                     <div class="col-md-8">
                                                         <input type="text" class="form-control"
                                                                required  ng-model="dictionaryAdd.item.appcode"
-                                                               name="dicts_kesy"/>
+                                                               name="dicts_kesy" ng-disabled="!editflag"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -112,7 +111,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label col-md-4"> 应用类别: </label>
                                                     <div class="col-md-8">
-                                                        <select class="form-control"  name="dict_type" ng-model="dictionaryAdd.item.dict_type" name="dict_type">
+                                                        <select class="form-control"  name="dict_type" ng-model="dictionaryAdd.item.dict_type" name="dict_type" ng-disabled="!editflag">
                                                             <option value=""></option>
                                                             <option value="0">本地</option>
                                                             <option value="1">远程</option>
@@ -124,7 +123,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label col-md-4"> 是否开通: </label>
                                                     <div class="col-md-8">
-                                                        <select class="form-control" name="dict_open" ng-model="dictionaryAdd.item.dict_open">
+                                                        <select class="form-control" name="dict_open" ng-model="dictionaryAdd.item.dict_open" ng-disabled="!editflag">
                                                             <option value=""></option>
                                                             <option value="s">是</option>
                                                             <option value="a">否</option>
@@ -136,7 +135,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label col-md-4"> 开通日期: </label>
                                                     <div class="col-md-8">
-                                                        <input class="input-appAdd" style="" type="date" ng-model="dictionaryAdd.item.data">
+                                                        <input class="input-appAdd" style="" type="date" ng-model="dictionaryAdd.item.data" ng-disabled="!editflag">
                                                     </div>
                                                 </div>
                                             </div>
@@ -145,7 +144,7 @@
                                                     <label class="control-label col-md-4"> IP: </label>
                                                     <div class="col-md-8">
                                                         <input type="text" class="form-control"
-                                                               name="table_name" ng-model="dictionaryAdd.item.ip"/>
+                                                               name="table_name" ng-model="dictionaryAdd.item.ip"  ng-disabled="!editflag"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -154,7 +153,7 @@
                                                     <label class="control-label col-md-4"> 访问地址: </label>
                                                     <div class="col-md-8">
                                                         <input type="text" class="form-control"
-                                                               name="column_name" ng-model="dictionaryAdd.item.address"/>
+                                                               name="column_name" ng-model="dictionaryAdd.item.address" ng-disabled="!editflag" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -163,7 +162,7 @@
                                                     <label class="control-label col-md-4"> 端口: </label>
                                                     <div class="col-md-8">
                                                         <input type="text" class="form-control"
-                                                               name="column_name" ng-model="dictionaryAdd.item.port"/>
+                                                               name="column_name" ng-model="dictionaryAdd.item.port"  ng-disabled="!editflag"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -173,17 +172,30 @@
                                                     <div class="col-md-10">
                                                         <input type="text" class="form-control"
                                                                ng-model="dictionaryAdd.item.des"
-                                                               name="dict_name"/>
+                                                               name="dict_name"  ng-disabled="!editflag"/>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-12" style="text-align: center">
-                                                <button type="button" name="back"  class="btn btn-primary" ng-if="bigform.$invalid == false"  ng-disabled="bigform.$invalid" popover-trigger="mouseenter" ng-click="saveDict(dictionaryAdd)" > 保存
-                                                </button>
-                                                <button type="button" name="back" class="btn default" ng-if="bigform.$invalid == true"  ng-disabled="bigform.$invalid" popover-trigger="mouseenter" > 保存
-                                                </button>
-                                            </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-2"></label>
+                                                    <div class="col-md-10">
+                                                        <div class="actions btn-set" style="float: right;" ng-if="!editflag">
+                                                            <button type="button" name="back" class="btn btn-primary" ng-click="biz.appedit(dictionaryAdd)"> 编辑机构
+                                                            </button>
+                                                        </div>
+                                                        <div class="actions btn-set" style="float: right;" ng-if="editflag">
+                                                            <button type="button" name="back"  class="btn btn-primary" ng-if="bigform.$invalid == false"  ng-disabled="bigform.$invalid" popover-trigger="mouseenter" ng-click="biz.appsave()" > 保存
+                                                            </button>
+                                                            <button type="button" name="back" class="btn default" ng-if="bigform.$invalid == true"  ng-disabled="bigform.$invalid" popover-trigger="mouseenter" > 保存
+                                                            </button>
+                                                            <button type="button" name="back" class="btn btn-danger" ng-click="biz.edit()"> 取消
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
+                                            </div>
                                         </div>
                                     </form>
 
@@ -337,11 +349,10 @@
                                 <div class="col-md-6" >
                                     <div class="form-group">
                                         <label class="control-label col-md-4">功能名称 *</label>
-
                                         <div class="col-md-8">
                                             <input type="text" class="form-control"
                                                    ng-model="appFrom.appname"
-                                                   name="id" />
+                                                   name="id" ng-disabled="!editflag"/>
                                         </div>
                                     </div>
                                 </div>
@@ -351,7 +362,7 @@
                                         <div class="col-md-8">
                                             <input type="text" class="form-control"
                                                    ng-model="appFrom.appcode"
-                                                   name="id" />
+                                                   name="id" ng-disabled="!editflag"/>
                                         </div>
                                     </div>
                                 </div>
@@ -359,7 +370,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-4">功能类型</label>
                                         <div class="col-md-8">
-                                            <select class="form-control" name="dict_open" ng-model="appFrom.type">
+                                            <select class="form-control" name="dict_open" ng-model="appFrom.type" ng-disabled="!editflag">
                                                 <option value="s" selected>页面流</option>
                                                 <option value="a">测试功能</option>
                                             </select>
@@ -370,7 +381,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-4">是否定义为菜单</label>
                                         <div class="col-md-8">
-                                            <select class="form-control" name="dict_open" ng-model="appFrom.menu">
+                                            <select class="form-control" name="dict_open" ng-model="appFrom.menu" ng-disabled="!editflag">
                                                 <option value="n" selected>否</option>
                                                 <option value="s">是</option>
                                             </select>
@@ -383,7 +394,7 @@
                                         <div class="col-md-10">
                                             <input type="text" class="form-control"
                                                    ng-model="appFrom.ready"
-                                                   name="id" />
+                                                   name="id" ng-disabled="!editflag"/>
                                         </div>
                                     </div>
                                 </div>
@@ -393,7 +404,7 @@
                                         <div class="col-md-10">
                                             <input type="text" class="form-control"
                                                    ng-model="appFrom.parameter"
-                                                   name="id" />
+                                                   name="id" ng-disabled="!editflag"/>
                                         </div>
                                     </div>
                                 </div>
@@ -403,7 +414,7 @@
                                         <div class="col-md-10">
                                             <input type="text" class="form-control"
                                                    ng-model="appFrom.desc"
-                                                   name="id" />
+                                                   name="id" ng-disabled="!editflag"/>
                                         </div>
                                     </div>
                                 </div>
@@ -411,8 +422,15 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-2"></label>
                                         <div class="col-md-10">
-                                            <div class="actions btn-set" style="text-align: center">
-                                                <button type="button" name="back" class="btn btn-primary" ng-click="add(appFrom)"> 保存
+                                            <div class="actions btn-set" style="float: right;" ng-if="!editflag">
+                                                <button type="button" name="back" class="btn btn-primary" ng-click="biz.appedit(appFrom)"> 编辑机构
+                                                </button>
+                                            </div>
+                                            <div class="actions btn-set" style="float: right;" ng-if="editflag">
+                                                <button type="button" name="back" class="btn btn-primary" ng-click="biz.appsave()"> 保存
+                                                </button>
+
+                                                <button type="button" name="back" class="btn btn-danger" ng-click="biz.appedit()"> 取消
                                                 </button>
                                             </div>
                                         </div>
@@ -424,25 +442,13 @@
                     <!-- 子功能组列表结束-->
                     <!-- 功能列表-->
                     <div class="tab-content portlet light clearfix" ng-if="appfunflag.zylist">
-                        <!--<div ui-grid="gridOptions4"
-                             ui-grid-edit ui-grid-pagination
-                             ui-grid-selection ui-grid-resize-columns>
-                        </div>
-                        <div class="actions btn-set" style="float: right; margin-top: 15px;">
-                            <button type="button" name="back" class="btn btn-primary" ng-click="appfunAddz()"> 新增
-                            </button>
-                            <button type="button" name="back" class="btn btn-primary" ng-click="appfunExit()"> 编辑
-                            </button>
-                            <button type="button" name="back" class="btn btn-danger" ng-click="appfunDelAll()"> 删除
-                            </button>
-                        </div>-->
                         <form action="#" name="myform" class="form-horizontal ">
                             <div class="form-body ">
                                 <div class="col-md-6" >
                                     <div class="form-group">
                                         <label class="control-label col-md-4">资源类型</label>
                                         <div class="col-md-8">
-                                            <select class="form-control" name="dict_open" ng-model="resourcesFrom.type">
+                                            <select class="form-control" name="dict_open" ng-model="resourcesFrom.type" ng-disabled="!editflag">
                                                 <option value="p" selected>页面流</option>
                                                 <option value="l">逻辑流</option>
                                                 <option value="j">JSP</option>
@@ -454,13 +460,8 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-4">资源路径</label>
                                         <div class="col-md-8">
-<<<<<<< HEAD
-                                            <input type="text" class="form-control"
-                                                   ng-model="resourcesFrom.path"
-                                                   name="id" />
-=======
-                                            <input type="text" class="form-control" ng-model="resourcesFrom.path" name="id"/>
->>>>>>> origin/master
+                                            <!-- 默认设置成只读属性-->
+                                            <input type="text" class="form-control" ng-model="resourcesFrom.path" name="id" ng-readonly="!editflag"/>
                                         </div>
                                     </div>
                                 </div>
@@ -468,13 +469,9 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-4">所属构建包</label>
                                         <div class="col-md-8">
-<<<<<<< HEAD
                                             <input type="text" class="form-control"
                                                    ng-model="resourcesFrom.compackname"
-                                                   name="id" />
-=======
-                                            <input type="text" class="form-control" ng-model="resourcesFrom.compackname" name="id"/>
->>>>>>> origin/master
+                                                   name="id" ng-readonly="!editflag"/>
                                         </div>
                                     </div>
                                 </div>
@@ -482,25 +479,28 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-4">显示名称</label>
                                         <div class="col-md-8">
-<<<<<<< HEAD
                                             <input type="text" class="form-control"
                                                    ng-model="resourcesFrom.shownae"
-                                                   name="id" />
-=======
-                                            <input type="text" class="form-control" ng-model="resourcesFrom.shownae" name="id"/>
->>>>>>> origin/master
+                                                   name="id"  ng-readonly="!editflag"/>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="control-label col-md-2"></label>
-                                        <div class="col-md-10">
-                                            <div class="actions btn-set" style="text-align: center">
-                                                <button type="button" name="back" class="btn btn-primary" ng-click="resourcesExit(resourcesFrom)"> 修改
-                                                </button>
+                                            <div class="col-md-10">
+                                                <div class="actions btn-set" style="float: right;" ng-if="!editflag">
+                                                    <button type="button" name="back" class="btn btn-primary" ng-click="biz.edit()"> 编辑机构
+                                                    </button>
+                                                </div>
+                                                <div class="actions btn-set" style="float: right;" ng-if="editflag">
+                                                    <button type="button" name="back" class="btn btn-primary" ng-click="biz.save()"> 保存
+                                                    </button>
+
+                                                    <button type="button" name="back" class="btn btn-danger" ng-click="biz.edit()"> 取消
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -509,9 +509,49 @@
                     <!-- 功能列表-->
                     <!-- 功能行为-->
                     <div class="tab-content portlet light" ng-if="appfunflag.gnactive">
-                        <p>功能行为类型行为表,调用功能类型表</p>
-                        <!-- 右侧显示-->
-                        <p>把行为添加进入，成为功能操作行为</p>
+                      <div class="row">
+                          <div class="col-md-5">
+                              <div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
+                                  <div class="portlet-title">
+                                      <div class="caption">
+                                          <i class="fa fa-cogs font-green-sharp"></i>
+                                          <span class="caption-subject font-green-sharp bold uppercase">功能行为</span>
+                                      </div>
+                                  </div>
+                                  <div class="portlet-body">
+                                      <div class="tab-content portlet light" >
+                                          <div ui-grid="gridOption6"
+                                               ui-grid-edit ui-grid-pagination
+                                               ui-grid-selection ui-grid-resize-columns></div>
+                                          <div class="actions btn-set" style="float: right; margin-top: 20px;">
+                                              <button type="button" name="back" class="btn btn-primary" ng-click="biz.looking()"> 查看对应行为
+                                              </button>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <!-- 右侧显示-->
+                          <div class="col-md-7 portlet light" style="height:100%;" ng-if="biz.active">
+                              <div class="portlet-title">
+                                  <div class="caption">
+                                      <i class="fa fa-cogs font-green-sharp"></i>
+                                      <span class="caption-subject font-green-sharp bold uppercase">功能操作行为</span>
+                                  </div>
+                              </div>
+                              <div class="portlet-body">
+                                  <div class="tab-content portlet light" >
+                                      <div ui-grid="gridOptions7"
+                                           ui-grid-edit ui-grid-pagination
+                                           ui-grid-selection ui-grid-resize-columns></div>
+                                      <div class="actions btn-set" style="float: right; margin-top: 20px;">
+                                          <button type="button" name="back" class="btn btn-primary" ng-click="biz.sesave()"> 保存
+                                          </button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
                     </div>
                     <!-- 功能行为-->
                 </div>
