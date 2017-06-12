@@ -56,7 +56,7 @@ public class ApplicationRServiceImpl extends BaseRService implements IApplicatio
 	 */
 	@Override
 	public AcApp createAcApp(String appCode, String appName, String appType,String appDesc, 
-			String isOpen, String openDate, String url,String ipAddr, String ipPort) throws AppManagementException{
+			String isOpen, Date openDate, String url,String ipAddr, String ipPort) throws AppManagementException{
 		AcApp acApp=new AcApp();
 		acApp.setGuid(GUID.app());
 		acApp.setAppCode(appCode);//应用代码
@@ -64,7 +64,7 @@ public class ApplicationRServiceImpl extends BaseRService implements IApplicatio
 		acApp.setAppType(appType);//应用类型
 		acApp.setAppDesc(appDesc);//应用描述
 		acApp.setIsopen(isOpen);
-		acApp.setOpenDate(new Date(openDate));
+		acApp.setOpenDate(openDate);
 		acApp.setUrl(url);
 		acApp.setIpAddr(ipAddr);
 		acApp.setIpPort(ipPort);

@@ -4,6 +4,7 @@
 package org.tis.tools.rservice.ac.capable;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcFunc;
@@ -55,7 +56,7 @@ public interface IApplicationRService {
 	 * return  acApp
 	 */
 	public AcApp createAcApp(String appCode, String appName, String appType,String appDesc, 
-			String isOpen, String openDate, String url,String ipAddr, String ipPort);
+			String isOpen, Date openDate, String url,String ipAddr, String ipPort);
 
 	/**
 	 * 新增功能组(AC_FUNCGROUP)
