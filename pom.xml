@@ -2,11 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<!-- 所有modules中的工程采用统一的groupId，除非在工程的pom.xml中设置groupId（不建议） -->
 	<groupId>org.tis</groupId>
 	<artifactId>tools</artifactId>
-	<!-- 所有modules中的工程采用统一的版本，除非在工程的pom.xml中设置version（不建议） -->
-	<version>0.0.1</version>
+	<version>${tools-version}</version>
 	<packaging>pom</packaging>
 	<name>tools</name>
 	<modules>
@@ -16,8 +14,14 @@
 		<module>tools-core-basic</module>
 		<module>tools-core-service</module>
 		<module>tools-core-web</module>
-		<module>tools-design</module>
+		<!-- 
+		tools-design 单独编译
+		<module>tools-design</module> 
+		-->
+		<!-- 
+		tools-maven-plugin 单独编译
 		<module>tools-maven-plugin</module>
+		 -->
 		<module>tools-facade-biztrace</module>
 		<module>tools-facade-devmgr</module>
 		<module>tools-facade-jnl</module>
@@ -29,10 +33,29 @@
 		<module>tools-service-biztrace</module>
 		<module>tools-service-devmgr</module>
 		<module>tools-service-jnl</module>
-		<!-- <module>tools-web-tools3</module> -->
 		<module>tools-web-tools</module>
 	</modules>
+
+	<profiles>
+		<profile>
+			<!-- 
+			| 编译正式版本时：mvn clean install -P release 
+			| 发布正式版本时：mvn clean deploy -P release 
+			-->
+			<id>release</id>
+			<properties>
+				<!-- tools 正式发布版本号：每个工程的版本都是独立定义的 -->
+				<tools-version>1.0.0</tools-version>
+			</properties>
+		</profile>
+	</profiles>
+
 	<properties>
+		<!-- tools快照版本号：每个工程的版本都是独立定义的 -->
+		<tools-version>0.0.1-SNAPSHOT</tools-version>
+		<tools-common-version>0.0.1-SNAPSHOT</tools-common-version>
+		<tools-core-version>0.0.1-SNAPSHOT</tools-core-version>
+
 		<!-- Common libs -->
 		<!--<spring.bom.version>3.2.9.RELEASE</spring.bom.version> -->
 		<spring.bom.version>4.2.4.RELEASE</spring.bom.version>
@@ -116,8 +139,8 @@
 		<kryo_version>2.24.0</kryo_version>
 		<kryo-serializers_version>0.37</kryo-serializers_version>
 		<fst_version>2.44</fst_version>
-		<!-- dubbox -->
-		<dubbo.version>2.8.4a</dubbo.version>
+		<!-- dubbo -->
+		<dubbo-version>2.8.4a</dubbo-version>
 		<!-- druid -->
 		<druid.version>1.0.18</druid.version>
 		<!-- dbcp -->
@@ -147,7 +170,6 @@
 		<maven-surefire-plugin_version>2.17</maven-surefire-plugin_version>
 		<maven-jetty-plugin_version>8.1.15.v20140411</maven-jetty-plugin_version>
 		<avro_maven_plugin_version>1.8.0</avro_maven_plugin_version>
-		<tis_tools_version>0.0.1</tis_tools_version>
 		<!-- mail -->
 		<javamail.version>1.4.1</javamail.version>
 		<!-- servlet -->
@@ -161,105 +183,45 @@
 		<protostuff_version>1.0.8</protostuff_version>
 		<junrar_version>0.7</junrar_version>
 		<svnkit_version>1.7.11</svnkit_version>
-		<poi_version>3.10-FINAL</poi_version>
+		<poi_version_3.10>3.10-FINAL</poi_version_3.10>
+		<poi_version_3.14>3.14</poi_version_3.14>
 		<disconf_version>2.6.36-luban</disconf_version>
 		<dom4j_version>1.6.1</dom4j_version>
 		<jaxen_version>1.1.6</jaxen_version>
-
 	</properties>
+
 	<dependencyManagement>
 
 		<dependencies>
-			<!--### tis tools start ### -->
+			<!-- | tools 公共jar包资源 beg -->
 			<!-- tools common -->
 			<dependency>
 				<groupId>org.tis</groupId>
 				<artifactId>tools-common-util</artifactId>
-				<version>${tis_tools_version}</version>
+				<version>${tools-common-version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.tis</groupId>
 				<artifactId>tools-common-assembly</artifactId>
-				<version>${tis_tools_version}</version>
+				<version>${tools-common-version}</version>
 			</dependency>
 			<!-- tools core -->
 			<dependency>
 				<groupId>org.tis</groupId>
 				<artifactId>tools-core-basic</artifactId>
-				<version>${tis_tools_version}</version>
+				<version>${tools-core-version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.tis</groupId>
 				<artifactId>tools-core-service</artifactId>
-				<version>${tis_tools_version}</version>
+				<version>${tools-core-version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.tis</groupId>
 				<artifactId>tools-core-web</artifactId>
-				<version>${tis_tools_version}</version>
+				<version>${tools-core-version}</version>
 			</dependency>
-
-			<!-- tools facade -->
-			<dependency>
-				<groupId>org.tis</groupId>
-				<artifactId>tools-facade-devmgr</artifactId>
-				<version>${tis_tools_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.tis</groupId>
-				<artifactId>tools-facade-biztrace</artifactId>
-				<version>${tis_tools_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.tis</groupId>
-				<artifactId>tools-facade-jnl</artifactId>
-				<version>${tis_tools_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.tis</groupId>
-				<artifactId>tools-facade-log</artifactId>
-				<version>${tis_tools_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.tis</groupId>
-				<artifactId>tools-facade-ac</artifactId>
-				<version>${tis_tools_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.tis</groupId>
-				<artifactId>tools-facade-om</artifactId>
-				<version>${tis_tools_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.tis</groupId>
-				<artifactId>tools-facade-sys</artifactId>
-				<version>${tis_tools_version}</version>
-			</dependency>
-
-			<!-- tools service -->
-			<dependency>
-				<groupId>org.tis</groupId>
-				<artifactId>tools-service-devmgr</artifactId>
-				<version>${tis_tools_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.tis</groupId>
-				<artifactId>tools-service-biztrace</artifactId>
-				<version>${tis_tools_version}</version>
-			</dependency>
-
-			<!-- tools web -->
-			<dependency>
-				<groupId>org.tis</groupId>
-				<artifactId>tools-web-boss</artifactId>
-				<version>${tis_tools_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.tis</groupId>
-				<artifactId>tools-web-tools</artifactId>
-				<version>${tis_tools_version}</version>
-			</dependency>
-			<!--### tis tools end ### -->
+			<!-- | tools 公共jar包资源 end -->
 
 			<!--### Common libs start ### -->
 			<dependency>
@@ -703,7 +665,7 @@
 			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>dubbo</artifactId>
-				<version>${dubbo.version}</version>
+				<version>${dubbo-version}</version>
 			</dependency>
 			<!-- druid -->
 			<dependency>
@@ -782,12 +744,17 @@
 			<dependency>
 				<groupId>org.apache.poi</groupId>
 				<artifactId>poi-ooxml</artifactId>
-				<version>${poi_version}</version>
+				<version>${poi_version_3.10}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.poi</groupId>
 				<artifactId>poi-scratchpad</artifactId>
-				<version>${poi_version}</version>
+				<version>${poi_version_3.10}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi</artifactId>
+				<version>${poi_version_3.10}</version>
 			</dependency>
 
 			<!-- disconf -->
@@ -811,8 +778,48 @@
 				<version>${jaxen_version}</version>
 			</dependency>
 
-
 			<!--### Common libs end ### -->
 		</dependencies>
 	</dependencyManagement>
+
+	<!-- 1 整体加上对Maven私服的依赖 -->
+	<repositories>
+		<repository>
+			<id>tools_nexus</id>
+			<name>maven-public</name>
+			<url>http://139.196.145.67:8081/repository/maven-public/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
+
+	<!-- 2 发布Maven版本的位置信息 -->
+	<distributionManagement>
+		<snapshotRepository>
+			<id>tools_nexus</id>
+			<name>Snapshots</name>
+			<url>http://139.196.145.67:8081/repository/tistools-snapshot/</url>
+		</snapshotRepository>
+		<repository>
+			<id>tools_nexus</id>
+			<name>Releases</name>
+			<url>http://139.196.145.67:8081/repository/tistools-release/</url>
+		</repository>
+	</distributionManagement>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

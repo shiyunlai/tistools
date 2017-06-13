@@ -82,8 +82,7 @@ Version: 4.5.6
             <!--<div data-ng-include="'tpl/page-head.html'" data-ng-controller="PageHeadController" class="page-head"> </div>-->
             <!-- END PAGE HEAD -->
             <!-- BEGIN ACTUAL CONTENT -->
-            <div ui-view class="fade-in-up">
-
+            <div ui-view class="fade-in-up" style="height:850px;">
             </div>
             <!-- END ACTUAL CONTENT -->
         </div>
@@ -124,7 +123,8 @@ Version: 4.5.6
 <script src="../assets/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
 <!-- END CORE ANGULARJS PLUGINS -->
 
-<!--<script src="../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>-->
+<!--mockjs end-->
+ <script src="../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
 
 <!-- BEGIN PROJECT  CSS-->
 <link href="css/fenye.css" rel="stylesheet" type="text/css"/>
@@ -153,6 +153,15 @@ Version: 4.5.6
 <script src="js/controllers/org/Abftree_qx_Controller.js" type="text/javascript"></script>
 
 <!--org end-->
+<!--Jurisdiction start-->
+<script src="../assets/global/plugins/moment.min.js" type="text/javascript"></script>
+<script src="js/controllers/Jurisdiction/application_Controller.js"></script>
+<script src="js/controllers/Management/menu_Controller.js"></script>
+<script src="js/controllers/roleManage/role_Controller.js"></script>
+<!--Jurisdiction end-->
+<!--behavior start-->
+<script src="js/controllers/behavior/behaviorController.js"></script>
+<!--behavior end-->
 <!--jstree start-->
 <script src="../assets/global/plugins/jstree/dist/jstree.js" type="text/javascript"></script>
 <link href="../assets/global/plugins/jstree/dist/themes/default/style.min.css" rel="stylesheet" type="text/css"/>
@@ -162,11 +171,10 @@ Version: 4.5.6
 <link href="../assets/global/plugins/jquery-multi-select/css/multi-select.css" rel="stylesheet" type="text/css"/>
 <!-- select end -->
 <!--ui-grid start-->
-<!--<script src="../assets/global/plugins/ui-grid/ui-grid.min.js" type="text/javascript"></script>-->
-<script src="http://cdn.bootcss.com/angular-ui-grid/3.1.0/ui-grid.js"></script>
-<!--<link href="../assets/global/plugins/ui-grid/ui-grid.min.css" rel="stylesheet" type="text/css"/>-->
-<link rel="styleSheet" href="http://cdn.bootcss.com/angular-ui-grid/3.1.0/ui-grid.css"/>
+<link rel="stylesheet" href="../assets/global/plugins/angular-ui-grid/ui-grid.min.css"/>
+<script src="../assets/global/plugins/angular-ui-grid/ui-grid.min.js"></script>
 <!--ui-grid end-->
+
 <!--biztrace start-->
 <script src="js/controllers/biztrace/biztraceHandleController.js" type="text/javascript"></script>
 <script src="js/service/biztrace/biztraceHandle.js"></script>

@@ -75,6 +75,26 @@ public class OMExceptionCodes {
 	public static final String FAILURE_WHEN_DEL_MUST_EMPTY_ORG = R_EX_CODE("0010");
 	
 	/**
+	 * 新增子节点机构失败
+	 */
+	public static final String FAILURE_WHRN_CREATE_CHILD_ORG = R_EX_CODE("0011");
+	
+	/**
+	 * 更新父节点机构失败
+	 */
+	public static final String FAILURE_WHRN_UPDATE_PARENT_ORG = R_EX_CODE("0012");
+	
+	/**
+	 * 机构状态不能直接通过修改而更新
+	 */
+	public static final String FAILURE_WHRN_UPDATE_ORG_STATUS = R_EX_CODE("0013");
+		
+	/**
+	 * 更新机构信息失败
+	 */
+	public static final String FAILURE_WHRN_UPDATE_ORG_APP = R_EX_CODE("0014");
+	
+	/**
 	 * 以烤串方式拼接异常码
 	 * @param code 业务域范围内的异常编码
 	 * @return

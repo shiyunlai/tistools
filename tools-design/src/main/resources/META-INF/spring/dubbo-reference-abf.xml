@@ -8,14 +8,25 @@
        http://code.alibabatech.com/schema/dubbo  
        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-	<!-- ABF 之 OM -->
+	<!-- ABF 之 OM 
 	<dubbo:reference id="orgRService" 
-		group="om" version="1.0" interface="org.tis.tools.rservice.om.capable.IOrgRService"
-		check="false" />
-		
-	<!-- ABF 之 SYS -->
+		group="om" version="0.9"  interface="org.tis.tools.rservice.om.capable.IOrgRService"
+		check="false"  />-->
+
+	<!-- ABF 之 SYS 
 	<dubbo:reference id="dictRService" 
-		group="sys" version="1.0" interface="org.tis.tools.rservice.sys.capable.IDictRService"
-		check="false" />
+		group="sys" version="0.9"  interface="org.tis.tools.rservice.sys.capable.IDictRService"
+		check="false"  />-->
+		<!-- 
+		<dubbo:reference id="appRService" 
+		group="ac"  version="0.9"  interface="org.tis.tools.rservice.ac.capable.IAppRService
+		check="false"  />-->
+		<dubbo:reference 
+		id="appRService"    
+		group="ac" 
+		version="0.9" 
+		interface="org.tis.tools.rservice.ac.capable.IAppRService"     
+		check="false"/>
+		
 	
 </beans>
