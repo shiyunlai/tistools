@@ -153,7 +153,7 @@ org.apache.maven.plugin.version.PluginVersionResolutionException: Error resolvin
 	未妥善处理的问题： 父工程中的版本号在每个子工程中都被固定写死了，日后父工程版本号变更时且不是要修改所有子工程！？
 		处理方案：
 		将tools版本号统一在 tools/pom.xml中；
-		相对固定tools父工程版本为 1.0.0；
+		相对固定tools父工程版本为 1.0.0； —— 注意： 设置了tools父工程为1.0.0版本，编译后 会放到 tistools-release 库目录下
 		其他工程版本可按需修改；
 	
 	

@@ -848,7 +848,7 @@
 			<name>maven-public</name>
 			<url>http://139.196.145.67:8081/repository/maven-public/</url>
 			<snapshots>
-				<updatePolicy>always</updatePolicy>
+				<updatePolicy>interval:60</updatePolicy>
 				<enabled>true</enabled>
 			</snapshots>
 			<releases>
@@ -862,7 +862,7 @@
 			<name>maven-public</name>
 			<url>http://139.196.145.67:8081/repository/maven-public/</url>
 			<snapshots>
-				<updatePolicy>always</updatePolicy>
+				<updatePolicy>interval:60</updatePolicy>
 				<enabled>true</enabled>
 			</snapshots>
 			<releases>
