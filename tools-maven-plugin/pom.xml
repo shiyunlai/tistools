@@ -6,28 +6,14 @@
 	<parent>
 		<groupId>org.tis</groupId>
 		<artifactId>tools</artifactId>
-		<version>0.0.1</version>
+		<version>1.0.0</version>
 	</parent>
 	<artifactId>tools-maven-plugin</artifactId>
 	<version>${tools-maven-plugin-version}</version>
 	<name>tools-maven-plugin Maven Mojo</name>
 	<url>http://maven.apache.org</url>
 	<description>开发工具（maven插件）</description>
-	
-	<profiles>
-		<profile>
-			<id>release</id>
-			<properties>
-				<!-- 正式发布版本号：每个工程的版本都是独立定义的 -->
-				<tools-maven-plugin-version>1.0.0</tools-maven-plugin-version>
-			</properties>
-		</profile>
-	</profiles>
-
-	<properties>
-		<tools-maven-plugin-version>0.0.1-SNAPSHOT</tools-maven-plugin-version>
-	</properties>
-		
+	<packaging>maven-plugin</packaging>
 	<dependencies>
 		<dependency>
 			<groupId>org.freemarker</groupId>
@@ -42,6 +28,7 @@
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
+			<!-- <version>2.6</version> -->
 		</dependency>
 		<!-- 扩展Maven插件 -->
 		<dependency>
@@ -57,24 +44,24 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-project</artifactId>
-            <version>2.2.1</version>
-        </dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-project</artifactId>
+			<version>2.2.1</version>
+		</dependency>
 		<!-- for utils -->
 		<dependency>
 			<groupId>com.belerweb</groupId>
 			<artifactId>pinyin4j</artifactId>
-            <version>2.5.1</version>
+			<version>2.5.1</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/dom4j/dom4j -->
 		<dependency>
-		    <groupId>dom4j</groupId>
-		    <artifactId>dom4j</artifactId>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>jaxen</groupId>
-		    <artifactId>jaxen</artifactId>
+			<groupId>jaxen</groupId>
+			<artifactId>jaxen</artifactId>
 		</dependency>
 		<!-- Test -->
 		<dependency>
@@ -82,30 +69,20 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- tools common、core -->
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-common-util</artifactId>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<plugins>
-			<!-- 
-				配置本插件的前缀, 则可以通过shiyl前缀运行本插件： 
-				mvn shiyl:gendao 
-				如果不配置，则系统将用artifactId名称（brons-maven-plugin）的前缀 brons： 
-				mvn brons:gendao 
-			<plugin>
-				<artifactId>maven-plugin-plugin</artifactId>
-				<version>3.2</version>
-				<configuration>
-					为本插件指定前缀
-					<goalPrefix>shiyl</goalPrefix>
-				</configuration>
-			</plugin> 
-			-->
+			<!-- 配置本插件的前缀, 则可以通过shiyl前缀运行本插件： mvn shiyl:gendao 如果不配置，则系统将用artifactId名称（brons-maven-plugin）的前缀 
+				brons： mvn brons:gendao <plugin> <artifactId>maven-plugin-plugin</artifactId> 
+				<version>3.2</version> <configuration> 为本插件指定前缀 <goalPrefix>shiyl</goalPrefix> 
+				</configuration> </plugin> -->
 		</plugins>
 	</build>
 </project>

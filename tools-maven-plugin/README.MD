@@ -103,14 +103,62 @@ org.apache.maven.plugin.MojoNotFoundException: Could not find goal 'test' in plu
 	mvn clean install 
 	之后在运行通过 mvn tools:help
 	
-问题4：.......
-	
-	原因：
-	.....
-	
-	解决： 
-	.....
+问题4：将 tools-maven-plugin 从tools工程集中独立出来，并且正常编译部署（ mvn clean deploy ）到Maven私服，但是在 tools-core-basic 工程下执行命令
+mvn tools:help -X -e 或 mvn tools:gen-dao -X -e 时报错
+
+	分析：
+		1、tools-maven-plugin 已经能独立编译 mvn clean install
+		2、tools-maven-plugin 已经能独立编译部署到 Maven私服 mvn clean deploy 
+		3、查看maven私服，在tistools-snapshot有tools-maven-plugin插件 （ http://139.196.145.67:8081/#browse/browse/components:tistools-snapshot:a4979ccf72dc71286fe66ce3969bdcd3 ） 
+		4、settings.xml 中正确的设置了 <pluginGroup>org.tis</pluginGroup>
+		5、tools-core-basic 工程中正确的设置了 plugin,指定了使用 tools-maven-plugin
+		``` xml
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.tis</groupId>
+						<artifactId>tools-maven-plugin</artifactId>
+						<version>0.0.1-SNAPSHOT</version>
+					</plugin>
+				</plugins>
+			</build>
+		```
+		6、在 tools-core-basic 工程目录下执行 mvn tools:help 报错：
+		[ERROR] Failed to parse plugin descriptor for org.tis:tools-maven-plugin:0.0.1-SNAPSHOT (/Users/megapro/.m2/repository/org/tis/tools-maven-plugin/0.0.1-SNAPSHOT/tools-maven-plugin-0.0.1-SNAPSHOT.jar): No plugin descriptor found at META-INF/maven/plugin.xml -> [Help 1]
+org.apache.maven.plugin.PluginDescriptorParsingException: Failed to parse plugin descriptor for org.tis:tools-maven-plugin:0.0.1-SNAPSHOT (/Users/megapro/.m2/repository/org/tis/tools-maven-plugin/0.0.1-SNAPSHOT/tools-maven-plugin-0.0.1-SNAPSHOT.jar): No plugin descriptor found at META-INF/maven/plugin.xml
+		...
+		Caused by: java.io.IOException: No plugin descriptor found at META-INF/maven/plugin.xml
+		...
 		
+		7、[ERROR] Error resolving version for plugin 'org.tis:tools-maven-plugin' from the repositories [local (/Users/megapro/.m2/repository), central (https://repo.maven.apache.org/maven2)]: Plugin not found in any plugin repository -> [Help 1]
+org.apache.maven.plugin.version.PluginVersionResolutionException: Error resolving version for plugin 'org.tis:tools-maven-plugin' from the repositories [local (/Users/megapro/.m2/repository), central (https://repo.maven.apache.org/maven2)]: Plugin not found in any plugin repository
+		
+		8、Caused by: org.apache.maven.model.resolution.UnresolvableModelException: Failure to find org.tis:tools:pom:0.0.1 in http://139.196.145.67:8081/repository/maven-public/ was cached in the local repository, resolution will not be reattempted until the update interval of tools_nexus has elapsed or updates are forced
+		
+		...
+		各种操作尝试，报错
+	
+	报错：Error resolving version for plugin 'org.tis:tools-maven-plugin' from the repositories [local (/Users/megapro/.m2/repository), central (https://repo.maven.apache.org/maven2)]: Plugin not found in any plugin repository
+	原因：没有正确的设置依赖Maven私服的配置
+	解决：在目标工程的pom.xml中设置上<repositories>
+	
+	报错：No plugin descriptor found at META-INF/maven/plugin.xml
+	原因：pom.xml 中 packaging 设置成了jar，导致maven编译时没有生产 plugin.xml
+	解决：设置<packaging>maven-plugin</packaging>
+	
+	报错：Failure to find org.tis:tools:pom:0.0.1
+	原因：子工程中的父工程版本号为0.0.1，但父工程实际为 0.0.1-SNAPSHOT
+	解决：统一父工程的版本号为 0.0.1-SNAPSHOT
+	
+	未妥善处理的问题： 父工程中的版本号在每个子工程中都被固定写死了，日后父工程版本号变更时且不是要修改所有子工程！？
+		处理方案：
+		将tools版本号统一在 tools/pom.xml中；
+		相对固定tools父工程版本为 1.0.0；
+		其他工程版本可按需修改；
+	
+	
+	之后，清理了Maven私服上的SNAPSHOT版本，重新编译部署 mvn clean deploy
+
 问题4：.......
 	
 	原因：

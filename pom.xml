@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.tis</groupId>
 	<artifactId>tools</artifactId>
-	<version>${tools-version}</version>
+	<version>1.0.0</version>
 	<packaging>pom</packaging>
 	<name>tools</name>
 	<modules>
@@ -18,10 +18,7 @@
 		tools-design 单独编译
 		<module>tools-design</module> 
 		-->
-		<!-- 
-		tools-maven-plugin 单独编译
 		<module>tools-maven-plugin</module>
-		 -->
 		<module>tools-facade-biztrace</module>
 		<module>tools-facade-devmgr</module>
 		<module>tools-facade-jnl</module>
@@ -38,24 +35,70 @@
 
 	<profiles>
 		<profile>
-			<!-- 
+			<!-- 正式版本号定义
 			| 编译正式版本时：mvn clean install -P release 
 			| 发布正式版本时：mvn clean deploy -P release 
 			-->
 			<id>release</id>
 			<properties>
-				<!-- tools 正式发布版本号：每个工程的版本都是独立定义的 -->
 				<tools-version>1.0.0</tools-version>
+				<tools-common-assembly-version>1.0.0</tools-common-assembly-version>
+				<tools-common-util-version>1.0.0</tools-common-util-version>
+				<tools-core-basic-version>1.0.0</tools-core-basic-version>
+				<tools-core-service-version>1.0.0</tools-core-service-version>
+				<tools-core-web-version>1.0.0</tools-core-web-version>
+				<tools-design-version>1.0.0</tools-design-version>
+				<tools-maven-plugin-version>1.0.0</tools-maven-plugin-version>
+				<tools-facade-biztrace-version>1.0.0</tools-facade-biztrace-version>
+				<tools-facade-devmgr-version>1.0.0</tools-facade-devmgr-version>
+				<tools-facade-jnl-version>1.0.0</tools-facade-jnl-version>
+				<tools-facade-om-version>1.0.0</tools-facade-om-version>
+				<tools-facade-ac-version>1.0.0</tools-facade-ac-version>
+				<tools-facade-sys-version>1.0.0</tools-facade-sys-version>
+				<tools-facade-log-version>1.0.0</tools-facade-log-version>
+				<tools-service-abf-version>1.0.0</tools-service-abf-version>
+				<tools-service-biztrace-version>1.0.0</tools-service-biztrace-version>
+				<tools-service-devmgr-version>1.0.0</tools-service-devmgr-version>
+				<tools-service-jnl-version>1.0.0</tools-service-jnl-version>
+				<tools-web-tools-version>1.0.0</tools-web-tools-version>
 			</properties>
 		</profile>
 	</profiles>
 
 	<properties>
-		<!-- tools快照版本号：每个工程的版本都是独立定义的 -->
+	
+		<!-- 快照版本号定义开始 -->
+		<!-- 
+		| 版本号管理规则： 
+		| 1、统一在父工程pom中定义版本号 ； 
+		| 2、每个工程定义自己的版本号 ；
+		| 3、版本号属性名称规范：工程名+"-version" ；
+		| 4、发布快照版本 mvn clean deploy ；
+		| 5、发布正式版本 mvn clean deploy -P release ；
+		-->
 		<tools-version>0.0.1-SNAPSHOT</tools-version>
-		<tools-common-version>0.0.1-SNAPSHOT</tools-common-version>
-		<tools-core-version>0.0.1-SNAPSHOT</tools-core-version>
-
+		<tools-common-assembly-version>0.0.1-SNAPSHOT</tools-common-assembly-version>
+		<tools-common-util-version>0.0.1-SNAPSHOT</tools-common-util-version>
+		<tools-core-basic-version>0.0.1-SNAPSHOT</tools-core-basic-version>
+		<tools-core-service-version>0.0.1-SNAPSHOT</tools-core-service-version>
+		<tools-core-web-version>0.0.1-SNAPSHOT</tools-core-web-version>
+		<tools-design-version>0.0.1-SNAPSHOT</tools-design-version>
+		<tools-maven-plugin-version>0.0.1-SNAPSHOT</tools-maven-plugin-version>
+		<tools-facade-biztrace-version>0.0.1-SNAPSHOT</tools-facade-biztrace-version>
+		<tools-facade-devmgr-version>0.0.1-SNAPSHOT</tools-facade-devmgr-version>
+		<tools-facade-jnl-version>0.0.1-SNAPSHOT</tools-facade-jnl-version>
+		<tools-facade-om-version>0.0.1-SNAPSHOT</tools-facade-om-version>
+		<tools-facade-ac-version>0.0.1-SNAPSHOT</tools-facade-ac-version>
+		<tools-facade-sys-version>0.0.1-SNAPSHOT</tools-facade-sys-version>
+		<tools-facade-log-version>0.0.1-SNAPSHOT</tools-facade-log-version>
+		<tools-service-abf-version>0.0.1-SNAPSHOT</tools-service-abf-version>
+		<tools-service-biztrace-version>0.0.1-SNAPSHOT</tools-service-biztrace-version>
+		<tools-service-devmgr-version>0.0.1-SNAPSHOT</tools-service-devmgr-version>
+		<tools-service-jnl-version>0.0.1-SNAPSHOT</tools-service-jnl-version>
+		<tools-web-tools-version>0.0.1-SNAPSHOT</tools-web-tools-version>
+		<!-- 快照版本号定义结束 -->
+		
+		
 		<!-- Common libs -->
 		<!--<spring.bom.version>3.2.9.RELEASE</spring.bom.version> -->
 		<spring.bom.version>4.2.4.RELEASE</spring.bom.version>
@@ -193,35 +236,51 @@
 	<dependencyManagement>
 
 		<dependencies>
-			<!-- | tools 公共jar包资源 beg -->
+			<!-- | tools 资源 beg -->
 			<!-- tools common -->
 			<dependency>
 				<groupId>org.tis</groupId>
 				<artifactId>tools-common-util</artifactId>
-				<version>${tools-common-version}</version>
+				<version>${tools-common-util-version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.tis</groupId>
 				<artifactId>tools-common-assembly</artifactId>
-				<version>${tools-common-version}</version>
+				<version>${tools-common-assembly-version}</version>
 			</dependency>
 			<!-- tools core -->
 			<dependency>
 				<groupId>org.tis</groupId>
 				<artifactId>tools-core-basic</artifactId>
-				<version>${tools-core-version}</version>
+				<version>${tools-core-basic-version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.tis</groupId>
 				<artifactId>tools-core-service</artifactId>
-				<version>${tools-core-version}</version>
+				<version>${tools-core-service-version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.tis</groupId>
 				<artifactId>tools-core-web</artifactId>
-				<version>${tools-core-version}</version>
+				<version>${tools-core-web-version}</version>
 			</dependency>
-			<!-- | tools 公共jar包资源 end -->
+			<!-- tools facade -->
+			<dependency>
+				<groupId>org.tis</groupId>
+				<artifactId>tools-facade-ac</artifactId>
+				<version>${tools-facade-ac-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.tis</groupId>
+				<artifactId>tools-facade-om</artifactId>
+				<version>${tools-facade-om-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.tis</groupId>
+				<artifactId>tools-facade-sys</artifactId>
+				<version>${tools-facade-sys-version}</version>
+			</dependency>
+			<!-- | tools 资源 end -->
 
 			<!--### Common libs start ### -->
 			<dependency>
@@ -789,6 +848,7 @@
 			<name>maven-public</name>
 			<url>http://139.196.145.67:8081/repository/maven-public/</url>
 			<snapshots>
+				<updatePolicy>always</updatePolicy>
 				<enabled>true</enabled>
 			</snapshots>
 			<releases>
@@ -796,6 +856,20 @@
 			</releases>
 		</repository>
 	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>tools_nexus</id>
+			<name>maven-public</name>
+			<url>http://139.196.145.67:8081/repository/maven-public/</url>
+			<snapshots>
+				<updatePolicy>always</updatePolicy>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
 
 	<!-- 2 发布Maven版本的位置信息 -->
 	<distributionManagement>

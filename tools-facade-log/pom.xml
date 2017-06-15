@@ -6,24 +6,14 @@
 	<parent>
 		<groupId>org.tis</groupId>
 		<artifactId>tools</artifactId>
-		<version>0.0.1</version>
+		<version>1.0.0</version>
 	</parent>
 	<artifactId>tools-facade-log</artifactId>
 	<version>${tools-facade-log-version}</version>
 	<name>tools-facade-log</name>
 	<url>http://maven.apache.org</url>
-	<profiles>
-		<profile>
-			<id>release</id>
-			<properties>
-				<!-- 正式发布版本号：每个工程的版本都是独立定义的 -->
-				<tools-facade-log-version>1.0.0</tools-facade-log-version>
-			</properties>
-		</profile>
-	</profiles>
 
 	<properties>
-		<tools-facade-log-version>0.0.1-SNAPSHOT</tools-facade-log-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
