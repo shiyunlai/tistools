@@ -22,7 +22,7 @@
 		</profile>
 	</profiles>
 	<properties>
-		<tools-facade-ac-version>0.0.1-SNAPSHOT</tools-facade-ac-version>
+		<tools-facade-ac-version>0.0.2-SNAPSHOT</tools-facade-ac-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	
@@ -43,4 +43,16 @@
 			<artifactId>javax.ws.rs-api</artifactId>
 		</dependency>
 	</dependencies>
+		<distributionManagement>
+		<snapshotRepository>
+			<id>tools_nexus</id>
+			<name>Snapshots</name>
+			<url>http://139.196.145.67:8081/repository/tistools-snapshot/</url>
+		</snapshotRepository>
+		<repository>
+			<id>tools_nexus</id>
+			<name>Releases</name>
+			<url>http://139.196.145.67:8081/repository/tistools-release/</url>
+		</repository>
+	</distributionManagement>
 </project>

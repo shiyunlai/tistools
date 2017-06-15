@@ -3,13 +3,20 @@
  */
 package org.tools.design.test.ac;
 
+import java.util.Date;
+import java.util.List;
+
 import junit.framework.Assert;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.tis.tools.base.WhereCondition;
 import org.tis.tools.model.po.ac.AcApp;
+import org.tis.tools.rservice.ac.basic.IAcAppRService;
 import org.tis.tools.rservice.ac.capable.IAppRService;
+import org.tis.tools.rservice.ac.capable.IApplicationRService;
 import org.tools.design.SpringJunitSupport;
 
 /**
@@ -24,15 +31,19 @@ public class AppRServiceTest extends SpringJunitSupport{
 	@Autowired
 	IAppRService appRService;
 	
+	@Autowired
+	IAcAppRService acAppRService;
+	@Autowired
+	IApplicationRService applicationRService;
 	/*
 	 * 测试数据: 生成应用代码所需的数据
 	 */
-	private static String appCode = "APP0001"; //应用代码
-	private static String appName = "ZZC" ; //应用名称
+	private static String appCode = "APP0003"; //应用代码
+	private static String appName = "应用框架模型" ; //应用名称
 	private static String appType = "local" ; //应用类型
 	private static String appDesc = "zzc" ; //描述
 	private static String isOpen = "Y" ; //是否开通
-	private static String openDate = "2017/06/06" ; //开通时间
+	private static Date openDate = new Date("2017/06/13") ; //开通时间
 	private static String url = "http://www.baidu.com/appserver" ; //地址
 	private static String ipAddr = "127.0.0.1" ; //IP地址
 	private static String ipPort = "8083" ; //IP端口
@@ -62,9 +73,15 @@ public class AppRServiceTest extends SpringJunitSupport{
 	@Test
 	public void genAppCodeSucc() {
 		
-		AcApp app = appRService.createAcApp(appCode, appName, appType, appDesc, isOpen, openDate, url, ipAddr, ipPort);
-		Assert.assertNotNull("创建APP成功",app);
-		Assert.assertEquals("返回的代码应该相等","APP0001", app.getGuid());		
+        WhereCondition wc = new WhereCondition();
+		//		WhereCondition wc = new WhereCondition();
+//		List<AcApp> ac = acAppRService.query(wc);
+//		System.out.println("zzc输出"+ac.get(0).getAppName());
+		List<AcApp> acc = acAppRService.query(wc);
+		
+//		AcApp app = applicationRService.createAcApp(appCode, appName, appType, appDesc, isOpen, openDate, url, ipAddr, ipPort);
+//		Assert.assertNotNull("创建APP成功",app);
+//		Assert.assertEquals("返回的代码应该相等","APP0003", app.getGuid());		
 	}
 	
 	/**
