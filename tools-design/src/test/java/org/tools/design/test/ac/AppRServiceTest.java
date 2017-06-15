@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.rservice.ac.basic.IAcAppRService;
-import org.tis.tools.rservice.ac.capable.IAppRService;
 import org.tis.tools.rservice.ac.capable.IApplicationRService;
 import org.tools.design.SpringJunitSupport;
 
@@ -28,8 +27,6 @@ import org.tools.design.SpringJunitSupport;
  */
 public class AppRServiceTest extends SpringJunitSupport{
 	
-	@Autowired
-	IAppRService appRService;
 	
 	@Autowired
 	IAcAppRService acAppRService;
