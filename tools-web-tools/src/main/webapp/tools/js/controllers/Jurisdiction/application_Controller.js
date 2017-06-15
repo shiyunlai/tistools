@@ -2,7 +2,7 @@
  * Created by wangbo on 2017/6/1.
  */
 
-angular.module('MetronicApp').controller('application_controller', function($rootScope, $scope ,$modal,$http,i18nService, $timeout,filterFilter,$uibModal,uiGridConstants) {
+angular.module('MetronicApp').controller('application_controller', function($rootScope, $scope ,$modal,$http,i18nService, $timeout,filterFilter,$uibModal,uiGridConstants,application_service) {
     var biz = {};
     $scope.biz = biz;
     //定义权限
@@ -36,26 +36,17 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                 //处理新增机构父机构
                                 subFrom.guidParents = obj.original.guid;
                                 //增加方法
-                                $scope.add = function (subFrom) {
-                                    //TODO.新增逻辑
-                                }
-
                                 $scope.saveDict = function(item){//保存新增的函数
-                                    console.log(item);//用户输入的信息
-                                    /*item.item.data=moment(item.item.data).format('YYYY-MM-DD');//转换时间
-                                     localStorage.setItem("addlist",JSON.stringify(item.item));
-                                    //调用添加接口，添加数据*/
-                                    $http({
-                                        method: 'get',
-                                        url: 'http://localhost:8030/addData?id=4&appname=应用框架模型7&appcode=ABFRAME7&dict_type=远程&dict_open=是&dict_data=2017-06-28&address=无锡&ip=192.168.1.110&port=8070&dict_des=这是添加的数据'
-                                    }).success(function(data) {
-                                        toastr['success'](data.retMessage, "新增成功！");
-                                        $modalInstance.close();
-                                    }).error(function(data) {
-                                        // 当响应以错误状态返回时调用
-                                        console.log('调用错误接口')
-                                    });
-
+                                    application_service.createAcApp(item).then(function(data){
+                                        if(data.status == "success"){
+                                            toastr['success']("保存成功！");
+                                            $modalInstance.close();
+                                        }else if(data.status == "error"){
+                                            toastr['error'](data.extraMessage,"新增失败!");
+                                        }else{
+                                            toastr['error']( "新增异常！");
+                                        }
+                                    })
                                 }
                                 $scope.cancel = function () {
                                     $modalInstance.dismiss('cancel');
@@ -286,7 +277,8 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             return it;
         }
     };
-    //组织机构树
+
+    //  应用管理树结构
     $("#container").jstree({
         "core" : {
             "themes" : {
@@ -294,96 +286,27 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             },
             // so that create works
             "check_callback" : true,
-            'data':
-                [{
-                        "id": "1",
-                        "text": "应用功能管理",
-                        "children":
-                            [
-                                {
-                                    "id": "2",
-                                    "text": "应用基础框架",
-                                    "children":
-                                        [
-                                            {
-                                                "id": "4",
-                                                "text": "授权认证",
-                                                'type':'fun',
-                                                "children":[{
-                                                    'id':'75',
-                                                    "text": "登陆策略管理"
-                                                },{
-                                                    'id':'76',
-                                                    "text": "操作员管理"
-                                                },{
-                                                    'id':'77',
-                                                    "text": "Prota资源管理"
-                                                },{
-                                                    'id':'78',
-                                                    "text": "密码设置",
-                                                    'type':'childs'
-                                                },
-                                                    {
-                                                        'id':'79',
-                                                        "text": "子功能组",
-                                                        'type':'fun',
-                                                        "children":[{
-                                                            'id':'80',
-                                                            "text": "菜单显示",
-                                                            'type':'childs'
-                                                        }]
-                                                    }
-                                                ]
-                                            },{
-                                            "id": "5",
-                                            "text": "权限管理",
-                                            'type':'fun',
-                                            "children":[{
-                                               'id':'81',
-                                                "text": "应用功能管理",
-                                            },{
-                                                'id':'82',
-                                                "text": "菜单显示",
-                                            },{
-                                                'id':'83',
-                                                "text": "菜单管理",
-                                            },{
-                                                    'id':'84',
-                                                    "text": "约束管理",
-                                                },{
-                                                'id':'85',
-                                                "text": "角色管理",
-                                            },
-
-                                            ]
-                                        },{
-                                            "id": "6",
-                                            "text": "组织管理",
-                                            'type':'fun',
-                                        }]
-                                },
-                                {
-                                    "id": "3",
-                                    "text": "测试应用",
-                                }
-                            ]
-                    }
-                ]
-            /* function (obj, callback) {
+            'data' : function (obj, callback) {
                 var jsonarray = [];
                 $scope.jsonarray = jsonarray;
                 var subFrom = {};
                 subFrom.id = obj.id;
-                abftree_service.loadmaintree(subFrom).then(function (data) {
+                if(isNull(obj.guid)){
+                    subFrom.guid = '';
+                }else{
+                    subFrom.guid = obj.guid;
+                }
+                application_service.query(subFrom).then(function (data) {
                     for(var i = 0 ;i < data.length ; i++){
-                        data[i].text = data[i].orgName;
+                        console.log(data)
+                        data[i].text = data[i].appName;
                         data[i].children = true;
-                        data[i].id = data[i].orgCode;
+                        data[i].id = data[i].appCode;
                     }
                     $scope.jsonarray = angular.copy(data);
                     callback.call(this, $scope.jsonarray);
                 })
-            }*/
+            }
         },
         "types" : {
             "default" : {
@@ -422,7 +345,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 $scope.biz.apptab = false;
                 $scope.biz.appfund = false;
                 $scope.biz.appchild = false;
-            }else if(data.node.parent == '1'){
+            }else if(data.node.parent == "TX1001"){
                 $scope.biz.apptab = true;
                 $scope.biz.appfund = false;
                 $scope.biz.applica = false;
@@ -447,6 +370,8 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     //1、应用功能跟模块逻辑
     //ui-grid表格模块
     i18nService.setCurrentLang("zh-cn");
+
+
     /*应用功能模块逻辑*/
     $scope.myData = [
         {id: "0", 'APP_NAME':'应用框架模型1', 'APP_CODE':'ABFRAME', 'APP_TYPE':'本地', 'ISOPEN':'是', 'OPEN_DATE':'2017-06-01', 'URL':'上海', 'IP_ADDR':'192.168.1.101', 'IP_PORT':'8080', 'APP_DESC':'这里是测试描述页面1'
@@ -461,6 +386,18 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         },
         {id: "5", 'APP_NAME':'应用框架模型6', 'APP_CODE':'ABFRAME6', 'APP_TYPE':'本地', 'ISOPEN':'是', 'OPEN_DATE':'2017-06-05', 'URL':'佛山', 'IP_ADDR':'192.168.1.105', 'IP_PORT':'8086', 'APP_DESC':'这里是测试描述页面6'}
     ];
+
+    //查询
+/*    var item = {};
+    application_service.query(item).then(function(data){
+        console.log(data);//处理数据
+        var datas = angular.fromJson(data.message)
+        console.log(datas[0].item)
+        var des = datas[0].item;
+        for(var i = 0;i<des.length;i++){
+        }
+    })*/
+
     //ui-grid 具体配置
     //应用列表
     $scope.gridOptions0 = {
@@ -525,8 +462,16 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         openwindow($modal, 'views/Jurisdiction/applicationAdd.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
                 $scope.saveDict = function(item){//保存新增的函数
-                    toastr['success']("保存成功！");
-                    $modalInstance.close();
+                    application_service.createAcApp(item).then(function(data){
+                        if(data.status == "success"){
+                            toastr['success']("保存成功！");
+                            $modalInstance.close();
+                        }else if(data.status == "error"){
+                            toastr['error'](data.extraMessage,"新增失败!");
+                        }else{
+                            toastr['error']( "新增异常！");
+                        }
+                    })
                 }
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
@@ -535,8 +480,12 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         )
     }
     //删除代码
-    $scope.transsetDelAll = function () {
+    $scope.transsetDelAll = function (item) {
         if($scope.selectRow){
+            var guid = "APP1497403332";
+            application_service.delete(guid).then(function(data){
+                console.log(data);
+            })
             confirm("确定删除选中的应用吗？删除应用将删除该应用下的所有功能组")
         }else {
             toastr['error']("请至少选择一条记录进行删除！","SORRY！");
@@ -563,6 +512,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             toastr['error']("请至少选中一条！");
         }
     }
+
 
 /*-----------------------------------------------------------------------------------------分割符----------------------------------------------------------------------------------*/
     //2、应用模块逻辑
@@ -661,8 +611,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                         $modalInstance.dismiss('cancel');
                     };
 
-                }
-            )
+                })
     }
     //功能组修改
     $scope.exidApp = function(){
