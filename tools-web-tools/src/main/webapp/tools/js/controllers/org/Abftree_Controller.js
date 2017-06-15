@@ -141,6 +141,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 subFrom.id = obj.id;
                 abftree_service.loadmaintree(subFrom).then(function (data) {
                     for(var i = 0 ;i < data.length ; i++){
+                        console.log(data)
                                 data[i].text = data[i].orgName;
                                 data[i].children = true;
                                 data[i].id = data[i].orgCode;
@@ -413,6 +414,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 $scope.gwflag[i] = false;
             }
             $scope.gwflag.gwyg = true;
+
         }else if (type == 2){
             for(var i in $scope.gwflag){
                 $scope.gwflag[i] = false;

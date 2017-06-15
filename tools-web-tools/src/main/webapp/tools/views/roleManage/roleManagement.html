@@ -11,7 +11,7 @@
 <div>
     <!-- 组织机构树 start -->
     <div class="col-md-6">
-        <div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
+        <div class="portlet light" style="width: 100%;height:848px;overflow-x: hidden;">
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-cogs font-green-sharp"></i>
@@ -36,193 +36,141 @@
     </div>
     <!-- 组织机构树 end -->
     <!-- 右侧展示页面 start -->
-    <div class="col-md-6 portlet light" style="height:100%;">
+    <div class="col-md-6 portlet light" style="height:848px;" ng-show="role.shows">
         <div class="portlet light">
             <div class="portlet-body portlet light">
                 <!--岗位页签-->
                 <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="!tabflag">
-                    <li ng-class="{true:'active',false:''}[gwflag.gwxx]">
-                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.gwxx]" ng-click="abftree.loadgwdata(0)">
-                            <i class="green ace-icon fa fa-bars bigger-120"></i>功能权限
+                    <li ng-class="{true:'active',false:''}[roleflag.limit]">
+                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[roleflag.limit]" ng-click="role.loadgwdata(0)">
+                            <i class="green ace-icon fa fa-bars bigger-120"></i>应用功能权限
                         </a>
                     </li>
-                    <li ng-class="{true:'active',false:''}[gwflag.gwyg]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.gwyg]" ng-click="abftree.loadgwdata(1)">
-                            <i class="green ace-icon fa fa-bars bigger-120"></i>权限分配
+                    <li ng-class="{true:'active',false:''}[roleflag.dist]">
+                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[roleflag.dist]" ng-click="role.loadgwdata(1)">
+                            <i class="green ace-icon fa fa-bars bigger-120"></i>组织角色关系
+                        </a>
+                    </li>
+                    <li ng-class="{true:'active',false:''}[roleflag.operatorer]">
+                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[roleflag.operatorer]" ng-click="role.loadgwdata(7)">
+                            <i class="green ace-icon fa fa-bars bigger-120"></i>权限与操作员
+                            <!-- 也是列表，可以新增删除-->
                         </a>
                     </li>
                 </ul>
-                <!--岗位页签结束-->
-                <div class="tab-content portlet light" ng-if="flag.xqxx">
-                    <!-- 列表页 begin-->
-                    <!-- 机构详情 -->
-                    <form action="#" name="myform" class="form-horizontal clear">
-                        <div class="form-body portlet light">
-                            <div class="col-md-6" >
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">机构状态</label>
-
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control"
-                                               ng-model="abftree.item.orgStatus"
-                                               name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6" style=" visibility: hidden;">
-                                <div class="form-group form-control col-md-8">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">机构代码</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control" ng-model="abftree.item.orgCode" name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">机构名称</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control"
-                                               ng-model="abftree.item.orgName"
-                                               name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">机构类型</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control"
-                                               ng-model="abftree.item.orgType"
-                                               name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">机构等级</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control"
-                                               ng-model="abftree.item.Degree"
-                                               name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">机构地址</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control"
-                                               ng-model="abftree.item.orgAddr"
-                                               name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">邮编</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control"
-                                               ng-model="abftree.item.zipcode"
-                                               name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">联系电话</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control"
-                                               ng-model="abftree.item.linkTel"
-                                               name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">电子邮件</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control"
-                                               ng-model="abftree.item.email"
-                                               name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">网站地址</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control"
-                                               ng-model="abftree.item.webUrl"
-                                               name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">创建时间</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control"
-                                               ng-model="abftree.item.createTime"
-                                               name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="control-label col-md-2">备注</label>
-                                    <div class="col-md-10">
-                                        <input type="text" class="form-control"
-                                               ng-model="abftree.item.remark"
-                                               name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="control-label col-md-2"></label>
-                                    <div class="col-md-10">
-                                        <div class="actions btn-set" style="float: right;" ng-if="!editflag">
-                                            <button type="button" name="back" class="btn btn-primary" ng-click="abftree.test()"> 启用机构
-                                            </button>
-                                            <button type="button" name="back" class="btn btn-primary" ng-click="abftree.edit()"> 编辑机构
-                                            </button>
-                                            <button type="button" name="back" class="btn btn-danger" ng-click="abftree.delete()"> 删除机构
-                                            </button>
-                                        </div>
-                                        <div class="actions btn-set" style="float: right;" ng-if="editflag">
-                                            <button type="button" name="back" class="btn btn-primary" ng-click="abftree.save()"> 保存
-                                            </button>
-
-                                            <button type="button" name="back" class="btn btn-danger" ng-click="abftree.edit()"> 取消
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <!-- 机构详情 end -->
-                    <!-- 列表页 end-->
+                <div class="tab-content portlet light" ng-show="roleflag.limit">
+                    <div class="portlet-body">
+                        <form id="s">
+                            <input type="search" id="q"/>
+                            <button type="submit">检索</button>
+                        </form>
+                        <div id="container"></div>
+                    </div>
+                        <button type="button" name="back" class="btn btn-primary" style="margin-top:15px; margin-left: 20px;" ng-click="role.checkAll()"> 保存
+                        </button>
                 </div>
-                <!--下级机构-->
-                <div class="tab-content portlet light" ng-if="flag.xjjg">
-                    <div ui-grid="gridOptions1"
+                <div class="tab-content portlet light" ng-if="roleflag.dist">
+                    <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" >
+                        <li ng-class="{true:'active',false:''}[rolesflag.operators]">
+                            <a data-toggle="tab" href ng-class="{true:'link',false:''}[rolesflag.operators]" ng-click="role.loadgwdata(2)">
+                                <i class="green ace-icon fa fa-bars bigger-120"></i>操作员
+                            </a>
+                        </li>
+                        <li ng-class="{true:'active',false:''}[rolesflag.org]">
+                            <a  data-toggle="tab" href ng-class="{true:'link',false:''}[rolesflag.org]" ng-click="role.loadgwdata(3)">
+                                <i class="green ace-icon fa fa-bars bigger-120"></i>机构
+                            </a>
+                        </li>
+                        <li ng-class="{true:'active',false:''}[rolesflag.worklist]">
+                            <a  data-toggle="tab" href ng-class="{true:'link',false:''}[rolesflag.worklist]" ng-click="role.loadgwdata(4)">
+                                <i class="green ace-icon fa fa-bars bigger-120"></i>工作组
+                            </a>
+                        </li>
+                        <li ng-class="{true:'active',false:''}[rolesflag.post]">
+                            <a  data-toggle="tab" href ng-class="{true:'link',false:''}[rolesflag.post]" ng-click="role.loadgwdata(5)">
+                                <i class="green ace-icon fa fa-bars bigger-120"></i>岗位
+                            </a>
+                        </li>
+                        <li ng-class="{true:'active',false:''}[rolesflag.position]">
+                            <a  data-toggle="tab" href ng-class="{true:'link',false:''}[rolesflag.position]" ng-click="role.loadgwdata(6)">
+                                <i class="green ace-icon fa fa-bars bigger-120"></i>职位
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content portlet light" ng-show="rolesflag.operators">
+                        <div ui-grid="gridOptions1"
+                             ui-grid-edit ui-grid-pagination
+                             ui-grid-selection ui-grid-resize-columns>
+                        </div>
+                        <div class="actions btn-set" style="float: right; margin-top:12px;">
+                            <button type="button" name="back" class="btn btn-primary" ng-click="role.rolAddone()"> 新增
+                            </button>
+                            <button type="button" name="back" class="btn btn-primary" ng-click="role_rolaEditone()">  修改
+                            </button>
+                            <button type="button" name="back" class="btn btn-danger" ng-click="role_rolaDeleteone()"> 删除
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tab-content portlet light" ng-if="rolesflag.org">
+                        <div ui-grid="gridOptions2"
+                             ui-grid-edit ui-grid-pagination
+                             ui-grid-selection ui-grid-resize-columns>
+                        </div>
+                        <div class="actions btn-set" style="float: right; margin-top:12px;">
+                            <button type="button" name="back" class="btn btn-primary" ng-click="role.orgAdd()"> 新增
+                            </button>
+                            <button type="button" name="back" class="btn btn-primary" ng-click="role_orgEdit()">  修改
+                            </button>
+                            <button type="button" name="back" class="btn btn-danger" ng-click="role_orgDelete()"> 删除
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tab-content portlet light" ng-if="rolesflag.worklist">
+                        <div ui-grid="gridOptions3"
+                             ui-grid-edit ui-grid-pagination
+                             ui-grid-selection ui-grid-resize-columns>
+                        </div>
+                        <div class="actions btn-set" style="float: right; margin-top:12px;">
+                            <button type="button" name="back" class="btn btn-primary" ng-click="role.workAdd()"> 新增
+                            </button>
+                            <button type="button" name="back" class="btn btn-primary" ng-click="role_workEdit()">  修改
+                            </button>
+                            <button type="button" name="back" class="btn btn-danger" ng-click="role_workDelete()"> 删除
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tab-content portlet light" ng-if="rolesflag.post">
+                        <div ui-grid="gridOptions4"
+                             ui-grid-edit ui-grid-pagination
+                             ui-grid-selection ui-grid-resize-columns>
+                        </div>
+                        <div class="actions btn-set" style="float: right; margin-top:12px;">
+                            <button type="button" name="back" class="btn btn-primary" ng-click="role.postAdd()"> 新增
+                            </button>
+                            <button type="button" name="back" class="btn btn-primary" ng-click="role_postEdit()">  修改
+                            </button>
+                            <button type="button" name="back" class="btn btn-danger" ng-click="role_postDelete()"> 删除
+                            </button>
+                    </div>
+                    <div class="tab-content portlet light" ng-show="rolesflag.position">
+                        <p>测试第五个页面</p>
+                    </div>
+                </div>
+                <div class="tab-content portlet light" ng-if="roleflag.operatorer">
+                    <div ui-grid="gridOptioner"
                          ui-grid-edit ui-grid-pagination
-                         ui-grid-selection ui-grid-resize-columns></div>
-                    <div class="actions btn-set" style="float: right;">
-                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addxjjg()"> 新增
+                         ui-grid-selection ui-grid-resize-columns>
+                    </div>
+                    <div class="actions btn-set" style="float: right; margin-top:12px;">
+                        <button type="button" name="back" class="btn btn-primary" ng-click="role.operaAdd()"> 新增
                         </button>
-                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.editxjjg()"> 编辑
+                        <button type="button" name="back" class="btn btn-primary" ng-click="role.operaEdit()">  修改
                         </button>
-                        <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletexjjg()"> 删除
+                        <button type="button" name="back" class="btn btn-danger" ng-click="role.operaDelete()"> 删除
                         </button>
                     </div>
                 </div>
-
+                </div>
             </div>
         </div>
     </div>

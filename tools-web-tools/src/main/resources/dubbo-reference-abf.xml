@@ -17,15 +17,29 @@
 	<dubbo:reference 
 		id="orgRService"    
 		group="om" 
-		version="1.0" 
+		version="0.9" 
 		interface="org.tis.tools.rservice.om.capable.IOrgRService"     
 		check="false"/>
 		
 	<dubbo:reference 
 		id="dictRService"    
 		group="sys" 
-		version="1.0" 
+		version="0.9" 
 		interface="org.tis.tools.rservice.sys.capable.IDictRService"     
 		check="false"/>
-						
+		
+		<dubbo:reference 
+		id="acAppRService"    
+		group="ac" 
+		version="0.9" 
+		interface="org.tis.tools.rservice.ac.basic.IAcAppRService"     
+		check="false"/>
+		
+		<dubbo:reference 
+		id="applicationRService"    
+		group="ac" 
+		version="0.9" 
+		interface="org.tis.tools.rservice.ac.capable.IApplicationRService"     
+		check="false"/>
+		
 </beans>

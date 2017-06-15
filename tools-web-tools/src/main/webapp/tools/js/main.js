@@ -220,9 +220,7 @@ MetronicApp.controller('FooterController', ['$scope', function($scope) {
 MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     // Redirect any unmatched url
     $urlRouterProvider.otherwise("/dashboard.html");
-    
     $stateProvider
-
         // Dashboard
         .state('dashboard', {
             url: "/dashboard.html",
@@ -503,12 +501,9 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                         files: [
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css',
                             '../assets/pages/css/profile.css',
-                            
                             '../assets/global/plugins/jquery.sparkline.min.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
-
                             '../assets/pages/scripts/profile.min.js',
-
                             'js/controllers/UserProfileController.js'
                         ]                    
                     });

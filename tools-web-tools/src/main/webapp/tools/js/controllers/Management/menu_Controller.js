@@ -62,7 +62,8 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);//从数据库中获取所有的数据
                         console.log(obj)
-                                alert('新增子菜单成功')
+                        openwindow($uibModal, 'views/Management/manachildAdd.html', 'lg',
+                            function ($scope, $modalInstance) {
                                 //创建机构实例
                                 var menchFrom = {};
                                 $scope.menchFrom = menchFrom;
@@ -75,17 +76,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                                 $scope.cancel = function () {
                                     $modalInstance.dismiss('cancel');
                                 };
-
-
-                    }
-                },
-                '修改菜单':{
-                    "label":"修改菜单",
-                    "action":function(data){
-                        var inst = jQuery.jstree.reference(data.reference),
-                        obj = inst.get_node(data.reference);//从数据库中获取所有的数据
-                        $scope.editflag = !$scope.editflag;//让保存取消方法显现
-
+                            })
                     }
                 },
                 "删除菜单":{
@@ -121,6 +112,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                 [{
                     "id": "1",
                     "text": "应用菜单",
+                    icon:'icon-state-warning',
                     "children":
                         [
                             {
@@ -145,21 +137,6 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                         ]
                 }
                 ]
-            /* function (obj, callback) {
-             var jsonarray = [];
-             $scope.jsonarray = jsonarray;
-             var subFrom = {};
-             subFrom.id = obj.id;
-             abftree_service.loadmaintree(subFrom).then(function (data) {
-             for(var i = 0 ;i < data.length ; i++){
-             data[i].text = data[i].orgName;
-             data[i].children = true;
-             data[i].id = data[i].orgCode;
-             }
-             $scope.jsonarray = angular.copy(data);
-             callback.call(this, $scope.jsonarray);
-             })
-             }*/
         },
         "types" : {
             "default" : {
@@ -200,15 +177,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                 $scope.menu.menusearch = true;
                 $scope.menu.menushow = false;
             }else if(data.node.original.type == 'fun'){
-                $scope.biz.appfund = false;
-                $scope.biz.appchild = true;
-                $scope.biz.applica = false;
-                $scope.biz.apptab = false;
             }else if(data.node.parent == '5'||data.node.parent == '4'){
-                $scope.biz.appfund = true;
-                $scope.biz.appchild = false;
-                $scope.biz.applica = false;
-                $scope.biz.apptab = false;
             }else{
                 $scope.biz.apptab = false;
             }
@@ -331,7 +300,17 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
     }
     //新增子菜单逻辑
     $scope.menu.childAdd = function(){
-        alert("子菜单添加成功")
+        openwindow($uibModal, 'views/Management/manachildAdd.html', 'lg',// 弹出页面//弹出页面
+            function ($scope, $modalInstance) {
+                //修改页面代码逻辑
+                $scope.add = function(item){//保存新增的函数
+                    toastr['success']("保存成功！");
+                    $modalInstance.close();
+                }
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            })
     }
     //保存方法
     $scope.menu.save = function (item) {

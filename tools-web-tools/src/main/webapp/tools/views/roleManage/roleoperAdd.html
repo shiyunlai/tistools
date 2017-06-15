@@ -1,0 +1,72 @@
+<!-- 新增子集菜单页面 -->
+<div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
+    {{operFrom}}
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs font-green-sharp"></i>
+            <span class="caption-subject font-green-sharp bold uppercase">新增操作员</span>
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="remove" ng-click="cancel()">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body portlet light">
+        <form action="#" name="myforms" class="form-horizontal ">
+            <div class="form-body ">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 操作员姓名</span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" ng-model="operFrom.operName"
+                                   name="dict_key"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 操作员状态:<span ng-class="{required:myforms.required.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" ng-model="operFrom.opertype"
+                                   required name="required"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">登陆用户名</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" ng-model="operFrom.userName"
+                                   name="dict_key"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">认证模式</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="operFrom.authentication"
+                                   name="id" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-2"></label>
+                        <div class="col-md-10">
+                            <div class="actions btn-set" style="float: right;">
+                                <button type="button" name="back"  class="btn btn-primary" ng-if="myforms.$invalid == false"  ng-disabled="myforms.$invalid" popover-trigger="mouseenter" ng-click="add(operFrom)" > 保存
+                                </button>
+                                <button type="button" name="back" class="btn default" ng-if="myforms.$invalid == true"  ng-disabled="myforms.$invalid" popover-trigger="mouseenter" > 保存
+                                </button>
+                                <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
