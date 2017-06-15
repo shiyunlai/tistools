@@ -314,33 +314,33 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid guid
-		,org_code orgCode
-		,org_name orgName
-		,org_type orgType
-		,org_degree orgDegree
-		,org_status orgStatus
-		,org_level orgLevel
-		,guid_parents guidParents
-		,org_seq orgSeq
-		,org_addr orgAddr
-		,zipcode zipcode
-		,guid_position guidPosition
-		,guid_emp_master guidEmpMaster
-		,guid_emp_manager guidEmpManager
-		,link_man linkMan
-		,link_tel linkTel
-		,email email 
-		,web_url webUrl
-		,start_date startDate
-		,end_date endDate
-		,area area 
-		,create_time createTime
-		,last_update lastUpdate
-		,updator updator
-		,sort_no sortNo
-		,isleaf isleaf
-		,sub_count subCount
-		,remark remark
+		 guid as guid
+		,org_code as orgCode
+		,org_name as orgName
+		,org_type as orgType
+		,org_degree as orgDegree
+		,org_status as orgStatus
+		,org_level as orgLevel
+		,guid_parents as guidParents
+		,org_seq as orgSeq
+		,org_addr as orgAddr
+		,zipcode as zipcode
+		,guid_position as guidPosition
+		,guid_emp_master as guidEmpMaster
+		,guid_emp_manager as guidEmpManager
+		,link_man as linkMan
+		,link_tel as linkTel
+		,email as email
+		,web_url as webUrl
+		,start_date as startDate
+		,end_date as endDate
+		,area as area
+		,create_time as createTime
+		,last_update as lastUpdate
+		,updator as updator
+		,sort_no as sortNo
+		,isleaf as isleaf
+		,sub_count as subCount
+		,remark as remark
 	</sql>
 </mapper>

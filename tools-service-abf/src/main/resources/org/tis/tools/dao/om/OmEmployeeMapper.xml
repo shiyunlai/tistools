@@ -386,41 +386,41 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid
-		,emp_code
-		,emp_name
-		,emp_realname
-		,gender
-		,empstatus
-		,emp_degree
-		,guid_org
-		,guid_position
-		,guid_emp_major
-		,indate
-		,outdate
-		,otel
-		,oaddress
-		,ozipcode
-		,oemail
-		,faxno
-		,mobileno
-		,msn
-		,paper_type
-		,paper_no
-		,birthdate
-		,htel
-		,haddress
-		,hzipcode
-		,party
-		,pemail
-		,guid_operator
-		,user_id
-		,specialty
-		,org_list
-		,workexp
-		,remark
-		,regdate
-		,createtime
-		,lastmodytime
+		 guid as guid
+		,emp_code as empCode
+		,emp_name as empName
+		,emp_realname as empRealname
+		,gender as gender
+		,empstatus as empstatus
+		,emp_degree as empDegree
+		,guid_org as guidOrg
+		,guid_position as guidPosition
+		,guid_emp_major as guidEmpMajor
+		,indate as indate
+		,outdate as outdate
+		,otel as otel
+		,oaddress as oaddress
+		,ozipcode as ozipcode
+		,oemail as oemail
+		,faxno as faxno
+		,mobileno as mobileno
+		,msn as msn
+		,paper_type as paperType
+		,paper_no as paperNo
+		,birthdate as birthdate
+		,htel as htel
+		,haddress as haddress
+		,hzipcode as hzipcode
+		,party as party
+		,pemail as pemail
+		,guid_operator as guidOperator
+		,user_id as userId
+		,specialty as specialty
+		,org_list as orgList
+		,workexp as workexp
+		,remark as remark
+		,regdate as regdate
+		,createtime as createtime
+		,lastmodytime as lastmodytime
 	</sql>
 </mapper>

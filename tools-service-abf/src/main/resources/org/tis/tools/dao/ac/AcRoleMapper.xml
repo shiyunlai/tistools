@@ -116,11 +116,11 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid
-		,guid_app
-		,role_code
-		,role_name
-		,role_type
-		,role_desc
+		 guid as guid
+		,guid_app as guidApp
+		,role_code as roleCode
+		,role_name as roleName
+		,role_type as roleType
+		,role_desc as roleDesc
 	</sql>
 </mapper>

@@ -224,23 +224,23 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid
-		,group_code
-		,group_name
-		,group_type
-		,group_status
-		,group_desc
-		,guid_emp_manager
-		,guid_org
-		,guid_parents
-		,isleaf
-		,sub_count
-		,group_level
-		,group_seq
-		,start_date
-		,end_date
-		,createtime
-		,lastupdate
-		,updator
+		 guid as guid
+		,group_code as groupCode
+		,group_name as groupName
+		,group_type as groupType
+		,group_status as groupStatus
+		,group_desc as groupDesc
+		,guid_emp_manager as guidEmpManager
+		,guid_org as guidOrg
+		,guid_parents as guidParents
+		,isleaf as isleaf
+		,sub_count as subCount
+		,group_level as groupLevel
+		,group_seq as groupSeq
+		,start_date as startDate
+		,end_date as endDate
+		,createtime as createtime
+		,lastupdate as lastupdate
+		,updator as updator
 	</sql>
 </mapper>

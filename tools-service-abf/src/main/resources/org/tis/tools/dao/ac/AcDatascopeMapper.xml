@@ -116,11 +116,11 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid
-		,guid_entity
-		,priv_name
-		,data_op_type
-		,entity_name
-		,filter_sql_string
+		 guid as guid
+		,guid_entity as guidEntity
+		,priv_name as privName
+		,data_op_type as dataOpType
+		,entity_name as entityName
+		,filter_sql_string as filterSqlString
 	</sql>
 </mapper>
