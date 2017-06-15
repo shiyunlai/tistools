@@ -223,7 +223,8 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	public OmOrg createChildOrg(OmOrg newOrg) throws OrgManagementException {
 		
 		// 新增子节点机构
-		try {
+		try {	
+			newOrg.setGuid(GUID.org());//补充GUID
 			omOrgService.insert(newOrg);
 		} catch (Exception e) {
 			e.printStackTrace();
