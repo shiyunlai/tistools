@@ -6,23 +6,14 @@
 	<parent>
 		<groupId>org.tis</groupId>
 		<artifactId>tools</artifactId>
-		<version>0.0.1</version>
+		<version>1.0.0</version>
 	</parent>
 	<artifactId>tools-design</artifactId>
-	<version>${tools-design-version]</version>
+	<version>${tools-design-version}</version>
 	<name>tools-design</name>
 	<url>http://maven.apache.org</url>
-	<profiles>
-		<profile>
-			<id>release</id>
-			<properties>
-				<!-- 正式发布版本号：每个工程的版本都是独立定义的 -->
-				<tools-design-version>1.0.0</tools-design-version>
-			</properties>
-		</profile>
-	</profiles>
+
 	<properties>
-		<tools-design-version>0.0.1-SNAPSHOT</tools-design-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -56,7 +47,7 @@
 			<artifactId>tools-facade-sys</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		
+
 		<!-- POI解析excel -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -68,7 +59,7 @@
 			<artifactId>poi-ooxml</artifactId>
 			<version>3.14</version>
 		</dependency>
-		
+
 		<!-- dubbo -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -247,7 +238,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 		</dependency>
-		
+
 	</dependencies>
 
 </project>

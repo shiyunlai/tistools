@@ -6,25 +6,14 @@
 	<parent>
 		<groupId>org.tis</groupId>
 		<artifactId>tools</artifactId>
-		<version>0.0.1</version>
+		<version>1.0.0</version>
 	</parent>
 	<artifactId>tools-facade-devmgr</artifactId>
 	<version>${tools-facade-devmgr-version}</version>
 	<name>tools-facade-devmgr</name>
 	<url>http://maven.apache.org</url>
 
-	<profiles>
-		<profile>
-			<id>release</id>
-			<properties>
-				<!-- 正式发布版本号：每个工程的版本都是独立定义的 -->
-				<tools-facade-devmgr-version>1.0.0</tools-facade-devmgr-version>
-			</properties>
-		</profile>
-	</profiles>
-
 	<properties>
-		<tools-facade-devmgr-version>0.0.1-SNAPSHOT</tools-facade-devmgr-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 

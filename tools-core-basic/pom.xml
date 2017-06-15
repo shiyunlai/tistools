@@ -6,23 +6,13 @@
 	<parent>
 		<groupId>org.tis</groupId>
 		<artifactId>tools</artifactId>
-		<version>0.0.1</version>
+		<version>1.0.0</version>
 	</parent>
 	<artifactId>tools-core-basic</artifactId>
 	<version>${tools-core-basic-version}</version>
 	<name>tools-core-basic</name>
 	<url>http://maven.apache.org</url>
-	<profiles>
-		<profile>
-			<id>release</id>
-			<properties>
-				<!-- 正式发布版本号：每个工程的版本都是独立定义的 -->
-				<tools-core-basic-version>1.0.0</tools-core-basic-version>
-			</properties>
-		</profile>
-	</profiles>
 	<properties>
-		<tools-core-basic-version>0.0.1-SNAPSHOT</tools-core-basic-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
