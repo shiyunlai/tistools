@@ -21,12 +21,6 @@
 		<dubbo:reference id="appRService" 
 		group="ac"  version="0.9"  interface="org.tis.tools.rservice.ac.capable.IAppRService
 		check="false"  />-->
-		<dubbo:reference 
-		id="appRService"    
-		group="ac" 
-		version="0.9" 
-		interface="org.tis.tools.rservice.ac.capable.IAppRService"     
-		check="false"/>
 		
 		<dubbo:reference 
 		id="acAppRService"    
