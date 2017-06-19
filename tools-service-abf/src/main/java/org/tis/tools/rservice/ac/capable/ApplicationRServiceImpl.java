@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.model.def.CommonConstants;
@@ -15,6 +17,7 @@ import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcFunc;
 import org.tis.tools.model.po.ac.AcFuncgroup;
+import org.tis.tools.model.vo.om.OmOrgDetail;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.ac.exception.AppManagementException;
 import org.tis.tools.service.ac.AcAppService;
@@ -67,10 +70,18 @@ public class ApplicationRServiceImpl extends BaseRService implements IApplicatio
 		acApp.setOpenDate(openDate);
 		acApp.setUrl(url);
 		acApp.setIpAddr(ipAddr);
-		acApp.setIpPort(ipPort);
+		acApp.setIpPort(ipPort);	
+		final AcApp newAcApp=acApp;
 		// 新增应用系统
 		try {
-			acAppService.insert(acApp);
+			//新增事务提交机制
+			acApp = transactionTemplate.execute(new TransactionCallback<AcApp>() {
+				@Override
+				public AcApp doInTransaction(TransactionStatus arg0) {
+							acAppService.insert(newAcApp);
+							return newAcApp;
+				}
+			});
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(ACExceptionCodes.FAILURE_WHRN_CREATE_AC_APP,
@@ -111,9 +122,18 @@ public class ApplicationRServiceImpl extends BaseRService implements IApplicatio
 		acFuncgroup.setFuncgroupSeq(funcgroupSeq);
 		acFuncgroup.setIsleaf(CommonConstants.YES);//默认叶子节点
 		acFuncgroup.setSubCount(new BigDecimal(0));//默认无节点数
+		final AcFuncgroup newAcFuncgroup=acFuncgroup;
+		
 		// 新增功能组
 		try {
-			acFuncgroupService.insert(acFuncgroup);
+			//新增事务提交机制
+			acFuncgroup = transactionTemplate.execute(new TransactionCallback<AcFuncgroup>() {
+				@Override
+				public AcFuncgroup doInTransaction(TransactionStatus arg0) {
+					acFuncgroupService.insert(newAcFuncgroup);
+							return newAcFuncgroup;
+				}
+			});
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(ACExceptionCodes.FAILURE_WHRN_CREATE_AC_FUNCGROUP,
@@ -150,15 +170,24 @@ public class ApplicationRServiceImpl extends BaseRService implements IApplicatio
 		acFunc.setFuncType(funcType);
 		acFunc.setIscheck(ischeck);
 		acFunc.setIsmenu(ismenu);
+		final AcFunc newAcFunc=acFunc;
+		
 		// 新增功能
-		try {
-			acFuncService.insert(acFunc);
+		try {	
+			//新增事务提交机制
+			acFunc = transactionTemplate.execute(new TransactionCallback<AcFunc>() {
+				@Override
+				public AcFunc doInTransaction(TransactionStatus arg0) {
+					acFuncService.insert(newAcFunc);
+							return newAcFunc;
+				}
+			});
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(ACExceptionCodes.FAILURE_WHRN_CREATE_AC_FUNC,
 					BasicUtil.wrap(e.getCause().getMessage()), "新增功能失败！{0}");
 		}
-		
 		return acFunc;
 	}
 }
