@@ -17,12 +17,14 @@ import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcFunc;
 import org.tis.tools.model.po.ac.AcFuncgroup;
+import org.tis.tools.model.po.ac.AcMenu;
 import org.tis.tools.model.vo.om.OmOrgDetail;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.ac.exception.AppManagementException;
 import org.tis.tools.service.ac.AcAppService;
 import org.tis.tools.service.ac.AcFuncService;
 import org.tis.tools.service.ac.AcFuncgroupService;
+import org.tis.tools.service.ac.AcMenuService;
 import org.tis.tools.service.ac.exception.ACExceptionCodes;
 
 /**
@@ -42,36 +44,18 @@ public class ApplicationRServiceImpl extends BaseRService implements IApplicatio
 	AcFuncgroupService acFuncgroupService;
 	@Autowired
 	AcFuncService acFuncService;
+	@Autowired
+	AcMenuService acMenuService;
+	
 	/**
 	 * 新增应用系统(AC_APP)
-	 * @param appcode 应用代码
-	 * @param appname 应用名称
-	 * @param apptype 应用类型
-	 * @param appdesc 应用描述
-	 * @param isopen 是否开通
-	 * @param openDate 开通时间
-	 * @param url 访问地址
-	 * @param ipaddr IP
-	 * @param ipport 端口
+	 * @param acApp 应用对象
 	 * return  acApp
-	 * @return 
-	 * @return 
 	 */
 	@Override
-	public AcApp createAcApp(String appCode, String appName, String appType,String appDesc, 
-			String isOpen, Date openDate, String url,String ipAddr, String ipPort) throws AppManagementException{
-		AcApp acApp=new AcApp();
+	public AcApp createAcApp(AcApp acApp) throws AppManagementException{
 		acApp.setGuid(GUID.app());
-		acApp.setAppCode(appCode);//应用代码
-		acApp.setAppName(appName);//应用名称
-		acApp.setAppType(appType);//应用类型
-		acApp.setAppDesc(appDesc);//应用描述
-		acApp.setIsopen(isOpen);
-		acApp.setOpenDate(openDate);
-		acApp.setUrl(url);
-		acApp.setIpAddr(ipAddr);
-		acApp.setIpPort(ipPort);	
-		final AcApp newAcApp=acApp;
+		AcApp newAcApp=acApp;
 		// 新增应用系统
 		try {
 			//新增事务提交机制
@@ -92,22 +76,16 @@ public class ApplicationRServiceImpl extends BaseRService implements IApplicatio
 
 	/**
 	 * 新增功能组(AC_FUNCGROUP)
-	 * @param guidApp 隶属应用GUID
-	 * @param funcgroupName 功能组名称
-	 * @param guidParents 父功能组GUID
-	 * @param groupLevel 节点层次
+	 * @param acFuncgroup 功能组对象
 	 * return  AcFuncgroup
 	 */
 	@Override
-	public AcFuncgroup createAcFuncGroup(String guidApp, String funcgroupName,
-			String guidParents, BigDecimal groupLevel) {
-		AcFuncgroup acFuncgroup = new AcFuncgroup();
-		String guid=GUID.funcGroup();
-		acFuncgroup.setGuid(guid);
-		acFuncgroup.setGuidApp(guidApp);
-		acFuncgroup.setFuncgroupName(funcgroupName);
-		acFuncgroup.setGroupLevel(groupLevel);
+	public AcFuncgroup createAcFuncGroup(AcFuncgroup acFuncgroup) {
+		String guid = GUID.funcGroup();
+		String guidApp = acFuncgroup.getGuidApp();
 		String funcgroupSeq = "";
+		String guidParents = acFuncgroup.getGuidParents();
+		acFuncgroup.setGuid(guid);
 		//根据时候有父功能组设置序列
 		if(guidParents.isEmpty()){
 			funcgroupSeq = guidApp + "." + guid;
@@ -115,15 +93,15 @@ public class ApplicationRServiceImpl extends BaseRService implements IApplicatio
 			acFuncgroup.setGuidParents(guidParents);
 			WhereCondition wc = new WhereCondition();
 			wc.andEquals("GUID", guidApp);
-			List<AcFuncgroup> list = acFuncgroupService.query(wc );
+			List<AcFuncgroup> list = acFuncgroupService.query(wc);
 			String parentSeq = list.get(0).getFuncgroupSeq();
 			funcgroupSeq = parentSeq + "." + guid;
 		}
 		acFuncgroup.setFuncgroupSeq(funcgroupSeq);
 		acFuncgroup.setIsleaf(CommonConstants.YES);//默认叶子节点
 		acFuncgroup.setSubCount(new BigDecimal(0));//默认无节点数
-		final AcFuncgroup newAcFuncgroup=acFuncgroup;
-		
+		AcFuncgroup newAcFuncgroup=acFuncgroup;
+	
 		// 新增功能组
 		try {
 			//新增事务提交机制
@@ -145,33 +123,12 @@ public class ApplicationRServiceImpl extends BaseRService implements IApplicatio
 
 	/**
 	 * 新增功能(AC_FUNC)
-	 * @param guidFuncGroup 隶属功能组GUID
-	 * @param funcCode 功能编号
-	 * @param funcName 功能名称
-	 * @param funcAction 功能入口
-	 * @param paraInfo 输入参数
-	 * @param funcType 功能类型
-	 * @param isCheck 是否验证权限
-	 * @param isMenu 可否定义为菜单
 	 * return  AcFunc
 	 */
 	@Override
-	public AcFunc createAcFunc(String guidFuncgroup, String funcCode,
-			String funcName, String funcAction, String paraInfo,
-			String funcType, String ischeck, String ismenu) {
-		AcFunc acFunc=new AcFunc();
+	public AcFunc createAcFunc(AcFunc acFunc) {
 		acFunc.setGuid(GUID.func());
-		acFunc.setGuidFuncgroup(guidFuncgroup);
-		acFunc.setFuncCode(funcCode);
-		acFunc.setFuncName(funcName);
-		acFunc.setFuncAction(funcAction);
-		acFunc.setParaInfo(paraInfo);
-		acFunc.setFuncType(funcType);
-		acFunc.setFuncType(funcType);
-		acFunc.setIscheck(ischeck);
-		acFunc.setIsmenu(ismenu);
-		final AcFunc newAcFunc=acFunc;
-		
+		AcFunc newAcFunc=acFunc;
 		// 新增功能
 		try {	
 			//新增事务提交机制
@@ -182,7 +139,6 @@ public class ApplicationRServiceImpl extends BaseRService implements IApplicatio
 							return newAcFunc;
 				}
 			});
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(ACExceptionCodes.FAILURE_WHRN_CREATE_AC_FUNC,
@@ -190,4 +146,48 @@ public class ApplicationRServiceImpl extends BaseRService implements IApplicatio
 		}
 		return acFunc;
 	}
+	
+	
+	/**
+	 * 新增菜单(AC_MENU)
+	 * @param acMenu 菜单代码
+	 * return  acMenu 
+	 */
+	@Override
+	public AcMenu createAcMenu(AcMenu acMenu) {
+		String guid=GUID.menu();
+		acMenu.setGuid(guid);
+		acMenu.setIsleaf(CommonConstants.YES);//默认叶子菜单
+		acMenu.setSubCount(new BigDecimal(0));
+		String guidParent = acMenu.getGuidParents();
+		String menuSeq=guid;//默认菜单序列为跟guid
+		AcMenu newAcMenu= acMenu;
+		newAcMenu.setMenuSeq(menuSeq);
+		// 新增功能
+		try {	
+			//新增事务提交机制
+			acMenu = transactionTemplate.execute(new TransactionCallback<AcMenu>() {
+				@Override
+				public AcMenu doInTransaction(TransactionStatus arg0) {
+					if(!guidParent.isEmpty()){
+						WhereCondition wc = new WhereCondition();
+						List<AcMenu> parentMenulist = acMenuService.query(wc);
+						AcMenu parentMenu = parentMenulist.get(0);
+						String newmenuSeq = parentMenu.getMenuSeq()+"."+ menuSeq;
+						newAcMenu.setMenuSeq(newmenuSeq);
+						parentMenu.setSubCount(new BigDecimal(parentMenu.getSubCount().intValue()+1));//节点数加1
+						acMenuService.update(parentMenu);
+					}
+					acMenuService.insert(newAcMenu);
+					return newAcMenu;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(ACExceptionCodes.FAILURE_WHRN_CREATE_AC_MENU,
+					BasicUtil.wrap(e.getCause().getMessage()), "新增菜单失败！{0}");
+		}
+		return acMenu;
+	}
+	
 }
