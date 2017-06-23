@@ -4,7 +4,8 @@
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-cogs font-green-sharp"></i>
-            <span class="caption-subject font-green-sharp bold uppercase">新增角色</span>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="!id">新增角色</span>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="id">编辑角色</span>
         </div>
         <div class="tools">
             <a href="javascript:;" class="remove" ng-click="cancel()">

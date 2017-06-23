@@ -18,7 +18,6 @@ MetronicApp.controller('biztraceHandle_controller', function ($filter,$rootScope
         //var file = $scope.myFile;
         var file = document.getElementById("uploadFile").files[0];
 
-        //alert(file.size/1024/1024);
         fd.append('file', file);
         $http({
             method:'POST',

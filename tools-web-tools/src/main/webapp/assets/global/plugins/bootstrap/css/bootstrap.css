@@ -332,7 +332,10 @@ th {
   content: "\e020"; }
 
 .glyphicon-home:before {
-  content: "\e021"; }
+  content: "\e021";
+  background: red;
+  color:red;
+}
 
 .glyphicon-file:before {
   content: "\e022"; }

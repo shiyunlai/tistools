@@ -1,0 +1,137 @@
+<div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
+    {{operatFrom}}
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs font-green-sharp"></i>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="!id">新增操作员</span>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="id">编辑操作员</span>
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="remove" ng-click="cancel()">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body portlet light">
+        <form action="#" name="myform" class="form-horizontal ">
+            <div class="form-body ">
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">登陆用户名<span ng-class="{required:myform.dict_key1.$invalid}"  >* </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="operatFrom.username" required
+                                   name="dict_key1" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 菜单风格: </label>
+                        <div class="col-md-8">
+                            <select class="form-control"  name="dict_type" ng-model="operatFrom.mode" name="oper_ator">
+                                <option value="">Default模式</option>
+                                <option value="0">自定义模式</option>
+                                <option value="1">自主模式</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">用户密码<span ng-class="{required:myform.dict_key.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" required
+                                   ng-model="operatFrom.userpassword"
+                                   name="dict_key" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 操作员状态: </label>
+                        <div class="col-md-8">
+                            <select class="form-control"  name="dict_type" ng-model="operatFrom.operType" name="oper_ator">
+                                <option value="">正常</option>
+                                <option value="0">注销</option>
+                                <option value="1">暂停</option>
+                                <option value="2">启用</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">操作员名称</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="operatFrom.operstName"
+                                   name="oper_ator" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 认证模式: </label>
+                        <div class="col-md-8">
+                            <select class="form-control"  name="dict_type" ng-model="operatFrom.certification" name="oper_ator">
+                                <option value="">本地密码认证</option>
+                                <option value="0">pwd认证</option>
+                                <option value="1">captcha认证</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">IP地址:</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="operatFrom.iparea"
+                                   name="oper_ator" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">密码失效日期:</label>
+                        <div class="col-md-8 col-md-offset-0">
+                            <input  class="form-control" type="date" ng-model="operatFrom.failureDate" name="oper_ator" />
+                        </div>
+                    </div>
+                </div>
+               <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 有效截止日期: </label>
+                        <div class="col-md-8">
+                            <input class="input-appAdd" style="" type="date"ng-model="operatFrom.cutoffDate" name="oper_ator">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 有效开始日期: </label>
+                        <div class="col-md-8">
+                            <input class="input-appAdd" style="" type="date"ng-model="operatFrom.effectiveDate" name="oper_ator">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-2"></label>
+                        <div class="col-md-10">
+                            <div class="actions btn-set" style="float: right;">
+                                <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="add(menuFrom)" > 保存
+                                </button>
+                                <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存
+                                </button>
+                                <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
