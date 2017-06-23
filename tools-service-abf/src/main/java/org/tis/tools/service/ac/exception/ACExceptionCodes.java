@@ -34,6 +34,13 @@ public class ACExceptionCodes {
 	 */
 	public static final String FAILURE_WHRN_CREATE_AC_FUNC = R_EX_CODE("0003");
 	
+	
+	/**
+	 * 新增菜单失败
+	 */
+	public static final String FAILURE_WHRN_CREATE_AC_MENU = R_EX_CODE("0004");
+	
+	
 	/**
 	 * 以烤串方式拼接异常码
 	 * @param code 业务域范围内的异常编码
