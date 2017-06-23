@@ -1,0 +1,100 @@
+<!-- 重组菜单按钮-->
+<div class="col-md-12">
+    <div class="col-md-6">
+        <div class="portlet light" >
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-cogs font-green-sharp"></i>
+                    <span class="caption-subject font-green-sharp bold uppercase">应用菜单查询</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse">
+                    </a>
+                    <a href="#portlet-config" data-toggle="modal" class="config">
+                    </a>
+                    <a href="javascript:;" class="reload">
+                    </a>
+                    <a href="javascript:;" class="remove">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <form action="#" name="myform" class="form-horizontal clearfix">
+                    <div class="form-body ">
+                        <div class="col-md-6" >
+                            <div class="form-group">
+                                <label class="control-label col-md-4">操作员<span ng-class="{required:myform.dict_key.$invalid}"  >* </span> </label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control"
+                                           ng-model="searchFrom.operuser" required
+                                           name="dict_key" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" >
+                            <div class="form-group">
+                                <label class="control-label col-md-4">应用代码<span ng-class="{required:myform.dict_key1.$invalid}"  >* </span></label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control"
+                                           ng-model="searchFrom.appCode" required
+                                           name="dict_key1" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label col-md-2"></label>
+                                <div class="col-md-10">
+                                    <div class="actions btn-set" style="float: right;">
+                                        <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="opmer.search(searchFrom)" > 查看
+                                        </button>
+                                        <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 查看
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- 树结构列表内容-->
+                   <div id="container" ng-show="opmer.searchok"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 portlet light" style="height:100%;" ng-show="opmer.config">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-cogs font-green-sharp"></i>
+                    <span class="caption-subject font-green-sharp bold uppercase">自定义菜单配置</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse">
+                    </a>
+                    <a href="#portlet-config" data-toggle="modal" class="config">
+                    </a>
+                    <a href="javascript:;" class="reload">
+                    </a>
+                    <a href="javascript:;" class="remove">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <!-- 树结构列表内容-->
+                <div id="container2" ng-show="opmer.searchok"></div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-2"></label>
+                        <div class="col-md-10">
+                            <div class="actions btn-set" style="float: right;">
+                                <button type="button" name="back"  class="btn btn-primary"  popover-trigger="mouseenter" ng-click="opmer.saveconfig()" > 保存
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

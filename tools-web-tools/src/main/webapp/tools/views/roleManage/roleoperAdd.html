@@ -1,10 +1,11 @@
-<!-- 新增子集菜单页面 -->
+<!-- 新增操作员菜单页面 -->
 <div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
     {{operFrom}}
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-cogs font-green-sharp"></i>
-            <span class="caption-subject font-green-sharp bold uppercase">新增操作员</span>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="!id">新增操作员</span>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="id">编辑操作员</span>
         </div>
         <div class="tools">
             <a href="javascript:;" class="remove" ng-click="cancel()">
