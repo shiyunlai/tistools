@@ -4,7 +4,8 @@
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-cogs font-green-sharp"></i>
-            <span class="caption-subject font-green-sharp bold uppercase">新增功能组权限</span>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="!id">新增岗位权限</span>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="id">编辑岗位权限</span>
         </div>
         <div class="tools">
             <a href="javascript:;" class="remove" ng-click="cancel()">
@@ -18,7 +19,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4"> 角色代码</span></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="postFrom.workcode"
+                            <input type="text" class="form-control" ng-model="postFrom.postcode"
                                    name="dict_key"/>
                         </div>
                     </div>

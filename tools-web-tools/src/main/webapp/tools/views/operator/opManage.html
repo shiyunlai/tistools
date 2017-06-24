@@ -1,0 +1,29 @@
+<!--操作员管理页面 opManage -->
+
+<div>
+    <!-- 组织机构树 start -->
+    <div class="col-md-12">
+        <div class="portlet light" style="width: 100%;min-height:848px;height: 100%">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-cogs font-green-sharp"></i>
+                    <span class="caption-subject font-green-sharp bold uppercase">操作员管理</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div ui-grid="gridOptions"
+                     ui-grid-edit ui-grid-pagination
+                     ui-grid-selection ui-grid-resize-columns>
+                </div>
+                <div class="actions btn-set" style="float: right; margin-top:12px;">
+                    <button type="button" name="back" class="btn btn-primary" ng-click="operatAdd()"> 新增
+                    </button>
+                    <button type="button" name="back" class="btn btn-primary" ng-click="operatEdit(4)">  修改
+                    </button>
+                    <button type="button" name="back" class="btn btn-danger" ng-click="operatDel()"> 删除
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

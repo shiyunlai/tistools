@@ -417,13 +417,12 @@ function getYYYYMMDD(){
     return y+m+d;
 }
 
-//add by gaojie
-//ui-grid init
-function initgrid($scope, thisobj, thisobj_service, filterFilter,com){
+
+
+//thisobj--表ID,fun--返回data的方法,com--表列名,筛选配置项,bol--布尔值,是否多选.selection--自定义行选中事件，传入函数即可
+function initgrid($scope, thisobj, fun, filterFilter,com,bol,selection){
     thisobj = {
-        data: function () {
-            return [{"text":"123"}];
-        },
+        data: fun,
         //-------- 分页属性 ----------------
         enablePagination: true, //是否分页，默认为true
         enablePaginationControls: true, //使用默认的底部分页
@@ -434,8 +433,10 @@ function initgrid($scope, thisobj, thisobj_service, filterFilter,com){
         totalItems : 0, // 总数量
         useExternalPagination: true,//是否使用分页按钮
         //是否多选
-        // multiSelect:false,
+        multiSelect:bol,
         columnDefs:com,
+        enableGridMenu: true, //是否显示grid 菜单
+        enableFiltering:true,//打开标识,用于搜索
         onRegisterApi: function(girdApi) {
             $scope.girdApi = girdApi;
             //分页按钮事件
@@ -445,27 +446,20 @@ function initgrid($scope, thisobj, thisobj_service, filterFilter,com){
                 }
             });
             //行选中事件
-            $scope.girdApi.selection.on.rowSelectionChanged($scope,function(row,event){
-                if(row){
-                    $scope.selectRow1 = row.entity;
-                    console.log($scope.selectRow1)
-                    console.log(event)
-                }
-            });
+            $scope.girdApi.selection.on.rowSelectionChanged($scope,selection);
+
+        },
+        getSelectedRows:function () {
+            return $scope.girdApi.selection.getSelectedRows();
         }
     };
-    //ui-grid getPage方法
+
     thisobj.getPage = function(curPage, pageSize) {
         var firstRow = (curPage - 1) * pageSize;
         thisobj.totalItems = thisobj.data.length;
         thisobj.data = thisobj.data.slice(firstRow, firstRow + pageSize);
-        //或者像下面这种写法
-        //$scope.myData = mydefalutData.slice(firstRow, firstRow + pageSize);
+
     };
 
-    //测试
-    thisobj.getSelectedCount = function () {
-        return $scope.gridApi.selection.getSelectedRows();
-    }
-
+    return thisobj;
 }

@@ -214,7 +214,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
         },
         'dnd': {
             'dnd_start': function () {
-                console.log("start");
+                console.log("start");//拖拽开始
             },
             'is_draggable':function (node) {
                 //用于控制节点是否可以拖拽.
@@ -224,7 +224,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
         },
         'callback' : {
             move_node:function (node) {
-                console.log(node)
+                console.log(node)//拖动完成之后事件
             }
         },
 
@@ -248,6 +248,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
         console.log(e);
         console.log(data);
     }).bind("dnd_stop.vakata",function (e,data) {
+        //终止拖拽事件
         console.log(data);
     });
 

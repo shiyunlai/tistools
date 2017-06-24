@@ -68,4 +68,14 @@
     <bean id="acFuncgroupRServiceImpl" class="org.tis.tools.rservice.ac.basic.AcFuncgroupRServiceImpl" />
   
   
+   <!-- 菜单基础服务-->
+  <dubbo:service 
+		interface="org.tis.tools.rservice.ac.basic.IAcMenuRService" group="ac" version="${IOrgRService.version}"
+		ref="acMenuRServiceImpl" 
+		protocol="dubbo"  timeout="3000" />
+ 	
+    <bean id="acMenuRServiceImpl" class="org.tis.tools.rservice.ac.basic.AcMenuRServiceImpl" />
+  
+  
+  
 </beans>
