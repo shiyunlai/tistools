@@ -620,6 +620,18 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             data: {pageTitle: '重组菜单'},
             controller:"reomenu_controller"
         })
+        .state("roleConfig",{
+            url:"/roleConfig.html",
+            templateUrl:"views/operator/roleConfig.html",
+            data: {pageTitle: '操作员个性配置'},
+            controller:"operconfig_controller"
+        })
+        .state("operstatus",{
+            url:"/operstatus.html",
+            templateUrl:"views/operator/operstatus.html",
+            data: {pageTitle: '操作员身份'},
+            controller:"operstatus_controller"
+        })
 }]);
 
 /* Init global settings and run the app */
