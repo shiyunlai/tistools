@@ -262,6 +262,10 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 return true;
             }
         },
+        'search':{
+            show_only_matches:true,
+
+        },
         'callback' : {
             move_node:function (node) {
                 console.log(node)
@@ -323,6 +327,15 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
             $scope.$apply();
         }
     });
+    //jstree 自定义筛选事件
+    // $scope.searchitem = "";
+    // abftree.treesearch = function () {
+    //
+    // }
+    // $rootScope.searchListener = setInterval(abftree.treesearch(), 2000);
+    // $scope.$watch('searchitem', function(newValue, oldValue) {
+    //     console.log(123)
+    // },true);
 
 
 
