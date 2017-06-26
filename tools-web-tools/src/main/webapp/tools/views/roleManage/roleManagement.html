@@ -1,17 +1,7 @@
-<!--角色管理-->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" charset="UTF-8">
-    <title>Title</title>
-</head>
-<style>
-</style>
-<body>
 <div>
     <!-- 组织机构树 start -->
     <div class="col-md-6">
-        <div class="portlet light" style="width: 100%;height:848px;overflow-x: hidden;">
+        <div class="portlet light" style="width: 100%;min-height:848px;height: 100%">
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-cogs font-green-sharp"></i>
@@ -26,7 +16,7 @@
                 <div class="actions btn-set" style="float: right; margin-top:12px;">
                     <button type="button" name="back" class="btn btn-primary" ng-click="role_add()"> 新增
                     </button>
-                    <button type="button" name="back" class="btn btn-primary" ng-click="role_edit()">  修改
+                    <button type="button" name="back" class="btn btn-primary" ng-click="role_edit(4)">  修改
                     </button>
                     <button type="button" name="back" class="btn btn-danger" ng-click="role_delete()"> 删除
                     </button>
@@ -36,7 +26,7 @@
     </div>
     <!-- 组织机构树 end -->
     <!-- 右侧展示页面 start -->
-    <div class="col-md-6 portlet light" style="height:848px;" ng-show="role.shows">
+    <div class="col-md-6 portlet light" style="height:100%;min-height: 848px;" ng-show="role.shows">
         <div class="portlet light">
             <div class="portlet-body portlet light">
                 <!--岗位页签-->
@@ -71,11 +61,6 @@
                 </div>
                 <div class="tab-content portlet light" ng-if="roleflag.dist">
                     <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" >
-                        <li ng-class="{true:'active',false:''}[rolesflag.operators]">
-                            <a data-toggle="tab" href ng-class="{true:'link',false:''}[rolesflag.operators]" ng-click="role.loadgwdata(2)">
-                                <i class="green ace-icon fa fa-bars bigger-120"></i>操作员
-                            </a>
-                        </li>
                         <li ng-class="{true:'active',false:''}[rolesflag.org]">
                             <a  data-toggle="tab" href ng-class="{true:'link',false:''}[rolesflag.org]" ng-click="role.loadgwdata(3)">
                                 <i class="green ace-icon fa fa-bars bigger-120"></i>机构
@@ -91,26 +76,12 @@
                                 <i class="green ace-icon fa fa-bars bigger-120"></i>岗位
                             </a>
                         </li>
-                        <li ng-class="{true:'active',false:''}[rolesflag.position]">
-                            <a  data-toggle="tab" href ng-class="{true:'link',false:''}[rolesflag.position]" ng-click="role.loadgwdata(6)">
-                                <i class="green ace-icon fa fa-bars bigger-120"></i>职位
+                        <li ng-class="{true:'active',false:''}[rolesflag.zhiwei]">
+                            <a  data-toggle="tab" href ng-class="{true:'link',false:''}[rolesflag.zhiwei]" ng-click="role.loadgwdata(6)">
+                                <i class="green ace-icon fa fa-bars bigger-120"></i>职务
                             </a>
                         </li>
                     </ul>
-                    <div class="tab-content portlet light" ng-show="rolesflag.operators">
-                        <div ui-grid="gridOptions1"
-                             ui-grid-edit ui-grid-pagination
-                             ui-grid-selection ui-grid-resize-columns>
-                        </div>
-                        <div class="actions btn-set" style="float: right; margin-top:12px;">
-                            <button type="button" name="back" class="btn btn-primary" ng-click="role.rolAddone()"> 新增
-                            </button>
-                            <button type="button" name="back" class="btn btn-primary" ng-click="role_rolaEditone()">  修改
-                            </button>
-                            <button type="button" name="back" class="btn btn-danger" ng-click="role_rolaDeleteone()"> 删除
-                            </button>
-                        </div>
-                    </div>
                     <div class="tab-content portlet light" ng-if="rolesflag.org">
                         <div ui-grid="gridOptions2"
                              ui-grid-edit ui-grid-pagination
@@ -119,7 +90,7 @@
                         <div class="actions btn-set" style="float: right; margin-top:12px;">
                             <button type="button" name="back" class="btn btn-primary" ng-click="role.orgAdd()"> 新增
                             </button>
-                            <button type="button" name="back" class="btn btn-primary" ng-click="role_orgEdit()">  修改
+                            <button type="button" name="back" class="btn btn-primary" ng-click="role_orgEdit(4)">  修改
                             </button>
                             <button type="button" name="back" class="btn btn-danger" ng-click="role_orgDelete()"> 删除
                             </button>
@@ -133,7 +104,7 @@
                         <div class="actions btn-set" style="float: right; margin-top:12px;">
                             <button type="button" name="back" class="btn btn-primary" ng-click="role.workAdd()"> 新增
                             </button>
-                            <button type="button" name="back" class="btn btn-primary" ng-click="role_workEdit()">  修改
+                            <button type="button" name="back" class="btn btn-primary" ng-click="role_workEdit(4)">  修改
                             </button>
                             <button type="button" name="back" class="btn btn-danger" ng-click="role_workDelete()"> 删除
                             </button>
@@ -147,15 +118,31 @@
                         <div class="actions btn-set" style="float: right; margin-top:12px;">
                             <button type="button" name="back" class="btn btn-primary" ng-click="role.postAdd()"> 新增
                             </button>
-                            <button type="button" name="back" class="btn btn-primary" ng-click="role_postEdit()">  修改
+                            <button type="button" name="back" class="btn btn-primary" ng-click="role_postEdit(4)">  修改
                             </button>
                             <button type="button" name="back" class="btn btn-danger" ng-click="role_postDelete()"> 删除
                             </button>
                     </div>
-                    <div class="tab-content portlet light" ng-show="rolesflag.position">
-                        <p>测试第五个页面</p>
+                    <div class="tab-content portlet light" ng-if="rolesflag.zhiwei">
+                        <p>测试第五个页面12323313213</p>
                     </div>
                 </div>
+                <div class="tab-content portlet light" ng-if="rolesflag.zhiwei">
+                    <div ui-grid="gridOptionzw"
+                         ui-grid-edit ui-grid-pagination
+                         ui-grid-selection ui-grid-resize-columns>
+                    </div>
+                    <div class="actions btn-set" style="float: right; margin-top:12px;">
+                        <button type="button" name="back" class="btn btn-primary" ng-click="role.zhiwuAdd()"> 新增
+                        </button>
+                        <button type="button" name="back" class="btn btn-primary" ng-click="role.zhiwuEdit(4)">  修改
+                        </button>
+                        <button type="button" name="back" class="btn btn-danger" ng-click="role.zhiwuDelete()"> 删除
+                        </button>
+                    </div>
+                </div>
+                </div>
+                <!-- 操作员tab-->
                 <div class="tab-content portlet light" ng-if="roleflag.operatorer">
                     <div ui-grid="gridOptioner"
                          ui-grid-edit ui-grid-pagination
@@ -164,17 +151,14 @@
                     <div class="actions btn-set" style="float: right; margin-top:12px;">
                         <button type="button" name="back" class="btn btn-primary" ng-click="role.operaAdd()"> 新增
                         </button>
-                        <button type="button" name="back" class="btn btn-primary" ng-click="role.operaEdit()">  修改
+                        <button type="button" name="back" class="btn btn-primary" ng-click="role.operaEdit(4)">  修改
                         </button>
                         <button type="button" name="back" class="btn btn-danger" ng-click="role.operaDelete()"> 删除
                         </button>
                     </div>
-                </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- end -->
 </div>
-</body>
-</html>

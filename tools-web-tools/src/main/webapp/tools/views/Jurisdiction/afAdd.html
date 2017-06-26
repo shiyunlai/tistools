@@ -4,7 +4,8 @@
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-cogs font-green-sharp"></i>
-            <span class="caption-subject font-green-sharp bold uppercase">新增功能</span>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="!id">新增功能</span>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="id">编辑功能</span>
         </div>
         <div class="tools">
             <a href="javascript:;" class="remove" ng-click="cancel()">
@@ -16,22 +17,22 @@
             <div class="form-body ">
                 <div class="col-md-6" >
                     <div class="form-group">
-                        <label class="control-label col-md-4">功能名称 *</label>
+                        <label class="control-label col-md-4">功能名称<span ng-class="{required:myform.dict_key.$invalid}"  >* </span></label>
 
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="appFrom.appname"
-                                   name="id" />
+                                   ng-model="appFrom.funcName" required
+                                   name="dict_key" />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6" >
                     <div class="form-group">
-                        <label class="control-label col-md-4">功能编码 * </label>
+                        <label class="control-label col-md-4">功能编码 <span ng-class="{required:myform.dict_key1.$invalid}"  > * </span></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="appFrom.appcode"
-                                   name="id" />
+                            <input type="text"   class="form-control"
+                                   ng-model="appFrom.funcCode" required
+                                   name="dict_key1" />
                         </div>
                     </div>
                 </div>
@@ -39,7 +40,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">功能类型</label>
                             <div class="col-md-8">
-                                <select class="form-control" name="dict_open" ng-model="appFrom.type">
+                                <select class="form-control" name="dict_open" ng-model="appFrom.funcType">
                                     <option value="s" selected>页面流</option>
                                     <option value="a">测试功能</option>
                                 </select>
@@ -50,9 +51,20 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">是否定义为菜单</label>
                         <div class="col-md-8">
-                            <select class="form-control" name="dict_open" ng-model="appFrom.menu">
+                            <select class="form-control" name="dict_open" ng-model="appFrom.isMenu">
                                 <option value="n" selected>否</option>
                                 <option value="s">是</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">是否验证权限</label>
+                        <div class="col-md-8">
+                            <select class="form-control" name="dict_open" ng-model="appFrom.isCheck">
+                                <option value="y" selected>否</option>
+                                <option value="n">是</option>
                             </select>
                         </div>
                     </div>
@@ -62,7 +74,7 @@
                         <label class="control-label col-md-2">功能调用入口</label>
                         <div class="col-md-10">
                         <input type="text" class="form-control"
-                               ng-model="appFrom.ready"
+                               ng-model="appFrom.funcAction"
                                name="id" />
                         </div>
                     </div>
@@ -72,19 +84,9 @@
                         <label class="control-label col-md-2">输入参数</label>
                         <div class="col-md-10">
                         <input type="text" class="form-control"
-                               ng-model="appFrom.parameter"
+                               ng-model="appFrom.paraInfo"
                                name="id" />
                          </div>
-                    </div>
-                </div>
-                <div class="col-md-12" >
-                    <div class="form-group">
-                        <label class="control-label col-md-2">功能描述</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control"
-                                   ng-model="appFrom.desc"
-                                   name="id" />
-                        </div>
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -93,7 +95,10 @@
                         <div class="col-md-10">
 
                             <div class="actions btn-set" style="float: right;">
-                                <button type="button" name="back" class="btn btn-primary" ng-click="add(appFrom)"> 保存
+                                <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="add(appFrom)" > 保存
+                                </button>
+
+                                <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存
                                 </button>
                                 <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
                                 </button>
