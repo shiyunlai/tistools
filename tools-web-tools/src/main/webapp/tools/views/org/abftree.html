@@ -1,493 +1,511 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" charset="UTF-8">
-    <title>Title</title>
-</head>
-<style>
-
-</style>
-<body>
-<div>
-    <!-- 组织机构树 start -->
-    <div class="col-md-3">
-        <div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="fa fa-cogs font-green-sharp"></i>
-                    <span class="caption-subject font-green-sharp bold uppercase">组织机构管理</span>
-                </div>
-                <div class="tools">
-                    <a href="javascript:;" class="collapse">
-                    </a>
-                    <a href="#portlet-config" data-toggle="modal" class="config">
-                    </a>
-                    <a href="javascript:;" class="reload">
-                    </a>
-                    <a href="javascript:;" class="remove">
-                    </a>
-                </div>
-            </div>
-            <div class="portlet-body">
-                <form id="s">
-                    <input type="search" id="q"/>
-                    <button type="submit">检索</button>
-                </form>
-                <div id="container"></div>
-            </div>
-        </div>
-    </div>
-    <!-- 组织机构树 end -->
-    <!-- 右侧展示页面 start -->
-    <div class="col-md-9 portlet light" style="height:100%;">
-        <div class="portlet light">
-            <div class="portlet-body portlet light">
-                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="tabflag">
-                    <li ng-class="{true:'active',false:''}[flag.xqxx]">
-                        <a id="tab-list" data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xqxx]" ng-click="abftree.loaddata(999)">
-                            <i class="green ace-icon fa fa-bars bigger-120"></i>机构详情信息
-                        </a>
-                    </li>
-                    <li ng-class="{true:'active',false:''}[flag.ygxx]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.ygxx]" ng-click="abftree.loaddata(1)">
-                            <i class="green ace-icon fa fa-bars bigger-120"></i>员工列表
-                        </a>
-                    </li>
-                    <li ng-class="{true:'active',false:''}[flag.xjjg]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xjjg]" ng-click="abftree.loaddata(0)">
-                            <i class="green ace-icon fa fa-bars bigger-120"></i>下级机构列表
-                        </a>
-                    </li>
-                    <li ng-class="{true:'active',false:''}[flag.qxxx]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.qxxx]" ng-click="abftree.loaddata(3)">
-                            <i class="green ace-icon fa fa-bars bigger-120"></i>权限信息
-                        </a>
-                    </li>
-                </ul>
-                <!--岗位页签-->
-                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="!tabflag">
-                    <li ng-class="{true:'active',false:''}[gwflag.gwxx]">
-                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.gwxx]" ng-click="abftree.loadgwdata(0)">
-                            <i class="green ace-icon fa fa-bars bigger-120"></i>岗位详情信息
-                        </a>
-                    </li>
-                    <li ng-class="{true:'active',false:''}[gwflag.gwyg]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.gwyg]" ng-click="abftree.loadgwdata(1)">
-                            <i class="green ace-icon fa fa-bars bigger-120"></i>岗位员工列表
-                        </a>
-                    </li>
-                    <li ng-class="{true:'active',false:''}[gwflag.gwyy]">
-                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.gwyy]" ng-click="abftree.loadgwdata(2)">
-                            <i class="green ace-icon fa fa-bars bigger-120"></i>岗位应用列表
-                        </a>
-                    </li>
-                    <li ng-class="{true:'active',false:''}[gwflag.xjgw]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.xjgw]" ng-click="abftree.loadgwdata(3)">
-                            <i class="green ace-icon fa fa-bars bigger-120"></i>下级岗位列表
-                        </a>
-                    </li>
-                    <li ng-class="{true:'active',false:''}[gwflag.gwqx]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.gwqx]" ng-click="abftree.loadgwdata(4)">
-                            <i class="green ace-icon fa fa-bars bigger-120"></i>岗位权限列表
-                        </a>
-                    </li>
-                </ul>
-                <!--岗位页签结束-->
-                <div class="tab-content portlet light" ng-if="flag.xqxx">
-                    <!-- 列表页 begin-->
-                    <!-- 机构详情 -->
-                    <form action="#" name="myform" class="form-horizontal clear">
-                        <div class="form-body portlet light">
-                            <div class="col-md-6" >
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">机构状态</label>
-
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control"
-                                               ng-model="abftree.item.orgStatus"
-                                               name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6" style=" visibility: hidden;">
-                                <div class="form-group form-control col-md-8">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">机构代码</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control" ng-model="abftree.item.orgCode" name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">机构名称</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control"
-                                               ng-model="abftree.item.orgName"
-                                               name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">机构类型</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control"
-                                               ng-model="abftree.item.orgType"
-                                               name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">机构等级</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control"
-                                               ng-model="abftree.item.Degree"
-                                               name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">机构地址</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control"
-                                               ng-model="abftree.item.orgAddr"
-                                               name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">邮编</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control"
-                                               ng-model="abftree.item.zipcode"
-                                               name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">联系电话</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control"
-                                               ng-model="abftree.item.linkTel"
-                                               name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">电子邮件</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control"
-                                               ng-model="abftree.item.email"
-                                               name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">网站地址</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control"
-                                               ng-model="abftree.item.webUrl"
-                                               name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">创建时间</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control"
-                                               ng-model="abftree.item.createTime"
-                                               name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="control-label col-md-2">备注</label>
-                                    <div class="col-md-10">
-                                        <input type="text" class="form-control"
-                                               ng-model="abftree.item.remark"
-                                               name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="control-label col-md-2"></label>
-                                    <div class="col-md-10">
-                                        <div class="actions btn-set" style="float: right;" ng-if="!editflag">
-                                            <button type="button" name="back" class="btn btn-primary" ng-click="abftree.test()"> 启用机构
-                                            </button>
-                                            <button type="button" name="back" class="btn btn-primary" ng-click="abftree.edit()"> 编辑机构
-                                            </button>
-                                            <button type="button" name="back" class="btn btn-danger" ng-click="abftree.delete()"> 删除机构
-                                            </button>
-                                        </div>
-                                        <div class="actions btn-set" style="float: right;" ng-if="editflag">
-                                            <button type="button" name="back" class="btn btn-primary" ng-click="abftree.save()"> 保存
-                                            </button>
-
-                                            <button type="button" name="back" class="btn btn-danger" ng-click="abftree.edit()"> 取消
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <!-- 机构详情 end -->
-                    <!-- 列表页 end-->
-                </div>
-                <!--下级机构-->
-                    <div class="tab-content portlet light" ng-if="flag.xjjg">
-                        <div ui-grid="gridOptions1"
-                             ui-grid-edit ui-grid-pagination
-                             ui-grid-selection ui-grid-resize-columns></div>
-                        <div class="actions btn-set" style="float: right;">
-                            <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addxjjg()"> 新增
-                            </button>
-                            <button type="button" name="back" class="btn btn-primary" ng-click="abftree.editxjjg()"> 编辑
-                            </button>
-                            <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletexjjg()"> 删除
-                            </button>
-                        </div>
-                    </div>
-                <!--下级机构end-->
-                <!--员工信息-->
-                    <div class="tab-content portlet light" ng-if="flag.ygxx">
-                        <div ui-grid="gridOptions2"
-                             ui-grid-edit ui-grid-pagination
-                             ui-grid-selection ui-grid-resize-columns></div>
-                        <div class="actions btn-set" style="float: right;">
-                            <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addyg()"> 新增
-                            </button>
-                            <button type="button" name="back" class="btn btn-primary" ng-click="abftree.edityg()"> 编辑
-                            </button>
-                            <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deleteyg()"> 删除
-                            </button>
-                        </div>
-                    </div>
-                <!--员工信息end-->
-                <!--权限信息start-->
-                    <div class="tab-content portlet light" ng-if="flag.qxxx">
-                        <div  ng-controller="abftree_qx_controller">
-                            <div class="portlet-body form" >
-                                <!-- BEGIN FORM-->
-                                <div style="float: left">
-                                <select  id='pre-selected-options' multiple='multiple' >
-                                    <option value='elem_1' selected>elem 1</option>
-                                    <option value='elem_2'>elem 2</option>
-                                    <option value='elem_3'>elem 3</option>
-                                    <option value='elem_4' selected>elem 4</option>
-                                    <option value='elem_100'>elem 100</option>
-                                </select>
-                                </div>
-                                <!-- END FORM-->
-                                <div class="portlet-body" style="float: left;margin-left:30px;">
-                                    <table class="table table-striped table-bordered table-hover" id="sample_1">
-                                        <thead>
-                                        <tr>
-                                            <th>
-                                               角色功能列表
-                                            </th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>
-                                                Trident
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <!--权限信息end-->
-
-
-                <!-- 岗位详情 -->
-                <div class="tab-content" ng-show="gwflag.gwxx" >
-                    <div class="col-md-12" style="height:100%;">
-                        <div class="portlet-body portlet light">
-                            <div class="tab-content portlet light">
-                                <!-- 列表页 begin-->
-                                <!-- 机构详情 -->
-                                <form action="#" name="myform2" class="form-horizontal clear">
-                                    <div class="form-body portlet light">
-                                        <div class="col-md-6" >
-                                            <div class="form-group">
-                                                <label class="control-label col-md-4">岗位状态</label>
-
-                                                <div class="col-md-8">
-                                                    <input type="text" class="form-control"
-                                                           ng-model="abftree.item.orgStatus"
-                                                           name="id" ng-readonly="!editflag"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6" style=" visibility: hidden;">
-                                            <div class="form-group form-control col-md-8">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label col-md-4">岗位代码</label>
-                                                <div class="col-md-8">
-                                                    <input type="text" class="form-control" ng-model="abftree.item.orgCode" name="id" ng-readonly="!editflag"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label col-md-4">岗位名称</label>
-                                                <div class="col-md-8">
-                                                    <input type="text" class="form-control"
-                                                           ng-model="abftree.item.orgName"
-                                                           name="id" ng-readonly="!editflag"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label col-md-4">岗位类别</label>
-                                                <div class="col-md-8">
-                                                    <input type="text" class="form-control"
-                                                           ng-model="abftree.item.orgType"
-                                                           name="id" ng-readonly="!editflag"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label col-md-4">岗位层次</label>
-                                                <div class="col-md-8">
-                                                    <input type="text" class="form-control"
-                                                           ng-model="abftree.item.Degree"
-                                                           name="id" ng-readonly="!editflag"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label col-md-4">岗位有效开始日期</label>
-                                                <div class="col-md-8">
-                                                    <input type="text" class="form-control"
-                                                           ng-model="abftree.item.orgAddr"
-                                                           name="id" ng-readonly="!editflag"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label col-md-4">岗位有效截止日期</label>
-                                                <div class="col-md-8">
-                                                    <input type="text" class="form-control"
-                                                           ng-model="abftree.item.zipcode"
-                                                           name="id" ng-readonly="!editflag"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label col-md-4">联系电话</label>
-                                                <div class="col-md-8">
-                                                    <input type="text" class="form-control"
-                                                           ng-model="abftree.item.linkTel"
-                                                           name="id" ng-readonly="!editflag"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label col-md-4">电子邮件</label>
-                                                <div class="col-md-8">
-                                                    <input type="text" class="form-control"
-                                                           ng-model="abftree.item.email"
-                                                           name="id" ng-readonly="!editflag"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label col-md-4">网站地址</label>
-                                                <div class="col-md-8">
-                                                    <input type="text" class="form-control"
-                                                           ng-model="abftree.item.webUrl"
-                                                           name="id" ng-readonly="!editflag"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label class="control-label col-md-2"></label>
-                                                <div class="col-md-10">
-                                                    <div class="actions btn-set" style="float: right;" ng-if="!editflag">
-                                                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.test()"> 启用岗位
-                                                        </button>
-                                                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.edit()"> 编辑岗位
-                                                        </button>
-                                                        <button type="button" name="back" class="btn btn-danger" ng-click=""> 删除岗位
-                                                        </button>
-                                                    </div>
-                                                    <div class="actions btn-set" style="float: right;" ng-if="editflag">
-                                                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.save()"> 保存
-                                                        </button>
-
-                                                        <button type="button" name="back" class="btn btn-danger" ng-click="abftree.edit()"> 取消
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                                <!-- 机构详情 end -->
-                                <!-- 列表页 end-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 岗位详情 end -->
-
-                <!-- 岗位员工列表开始 -->
-                <div class="tab-content" ng-if="gwflag.gwyg">
-                    员工列表
-                </div>
-                <!-- 岗位员工列表结束 -->
-
-                <!-- 岗位应用列表开始 -->
-                <div class="tab-content" ng-if="gwflag.gwyy">
-                    应用列表
-                </div>
-                <!-- 岗位应用列表结束 -->
-
-                <!-- 下级岗位列表开始 -->
-                <div class="tab-content" ng-if="gwflag.xjgw">
-                    下级岗位列表
-                </div>
-                <!-- 下级岗位列表结束 -->
-
-                <!-- 岗位权限列表开始 -->
-                <div class="tab-content" ng-if="gwflag.gwqx">
-                    岗位权限列表
-                </div>
-                <!-- 岗位权限列表结束 -->
-            </div>
-        </div>
-    </div>
-    <!-- end -->
+<!--菜单管理-->
+<div class="page-bar ng-scope" style="border-bottom: 1px solid #e7ecf1;">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="#">组织</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <a href="#">组织机构</a>
+        </li>
+    </ul>
 </div>
-</body>
-</html>
+<h3 class="page-title">
+    <small></small>
+</h3>
+<div class="row" ng-form="bigform">
+    <div class="col-md-12" >
+        <div class="portlet light bordered ">
+            <div class="portlet-body">
+                <div class="row">
+                    <!-- 组织机构树 start -->
+                    <div class="col-md-3">
+                        <div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-cogs font-green-sharp"></i>
+                                    <span class="caption-subject font-green-sharp bold uppercase">组织机构管理</span>
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="collapse">
+                                    </a>
+                                    <a href="#portlet-config" data-toggle="modal" class="config">
+                                    </a>
+                                    <a href="javascript:;" class="reload">
+                                    </a>
+                                    <a href="javascript:;" class="remove">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <form id="s">
+                                    <input type="search" id="q"/>
+                                    <button type="submit">检索</button>
+                                </form>
+                                <div id="container"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 组织机构树 end -->
+                    <!-- 右侧展示页面 start -->
+                    <div class="col-md-9 portlet light" style="height:100%;">
+                        <div class="portlet light">
+                            <div class="portlet-body portlet light">
+                                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="tabflag">
+                                    <li ng-class="{true:'active',false:''}[flag.xqxx]">
+                                        <a id="tab-list" data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xqxx]" ng-click="abftree.loaddata(999)">
+                                            <i class="green ace-icon fa fa-bars bigger-120"></i>机构详情信息
+                                        </a>
+                                    </li>
+                                    <li ng-class="{true:'active',false:''}[flag.ygxx]">
+                                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.ygxx]" ng-click="abftree.loaddata(1)">
+                                            <i class="green ace-icon fa fa-bars bigger-120"></i>员工列表
+                                        </a>
+                                    </li>
+                                    <li ng-class="{true:'active',false:''}[flag.xjjg]">
+                                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xjjg]" ng-click="abftree.loaddata(0)">
+                                            <i class="green ace-icon fa fa-bars bigger-120"></i>下级机构列表
+                                        </a>
+                                    </li>
+                                    <li ng-class="{true:'active',false:''}[flag.qxxx]">
+                                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.qxxx]" ng-click="abftree.loaddata(3)">
+                                            <i class="green ace-icon fa fa-bars bigger-120"></i>权限信息
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!--岗位页签-->
+                                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="!tabflag">
+                                    <li ng-class="{true:'active',false:''}[gwflag.gwxx]">
+                                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.gwxx]" ng-click="abftree.loadgwdata(0)">
+                                            <i class="green ace-icon fa fa-bars bigger-120"></i>岗位详情信息
+                                        </a>
+                                    </li>
+                                    <li ng-class="{true:'active',false:''}[gwflag.gwyg]">
+                                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.gwyg]" ng-click="abftree.loadgwdata(1)">
+                                            <i class="green ace-icon fa fa-bars bigger-120"></i>岗位员工列表
+                                        </a>
+                                    </li>
+                                    <li ng-class="{true:'active',false:''}[gwflag.gwyy]">
+                                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.gwyy]" ng-click="abftree.loadgwdata(2)">
+                                            <i class="green ace-icon fa fa-bars bigger-120"></i>岗位应用列表
+                                        </a>
+                                    </li>
+                                    <li ng-class="{true:'active',false:''}[gwflag.xjgw]">
+                                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.xjgw]" ng-click="abftree.loadgwdata(3)">
+                                            <i class="green ace-icon fa fa-bars bigger-120"></i>下级岗位列表
+                                        </a>
+                                    </li>
+                                    <li ng-class="{true:'active',false:''}[gwflag.gwqx]">
+                                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.gwqx]" ng-click="abftree.loadgwdata(4)">
+                                            <i class="green ace-icon fa fa-bars bigger-120"></i>岗位权限列表
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!--岗位页签结束-->
+                                <div class="tab-content portlet light" ng-if="flag.xqxx">
+                                    <!-- 列表页 begin-->
+                                    <!-- 机构详情 -->
+                                    <form action="#" name="myform" class="form-horizontal clear">
+                                        <div class="form-body portlet light">
+                                            <div class="col-md-6" >
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">机构状态</label>
+
+                                                    <div class="col-md-8">
+                                                        <input type="text" class="form-control"
+                                                               ng-model="abftree.item.orgStatus"
+                                                               name="id" ng-readonly="!editflag"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6" style=" visibility: hidden;">
+                                                <div class="form-group form-control col-md-8">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">机构代码</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" class="form-control" ng-model="abftree.item.orgCode" name="id" ng-readonly="!editflag"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">机构名称</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" class="form-control"
+                                                               ng-model="abftree.item.orgName"
+                                                               name="id" ng-readonly="!editflag"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">机构类型</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" class="form-control"
+                                                               ng-model="abftree.item.orgType"
+                                                               name="id" ng-readonly="!editflag"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">机构等级</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" class="form-control"
+                                                               ng-model="abftree.item.Degree"
+                                                               name="id" ng-readonly="!editflag"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">机构地址</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" class="form-control"
+                                                               ng-model="abftree.item.orgAddr"
+                                                               name="id" ng-readonly="!editflag"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">邮编</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" class="form-control"
+                                                               ng-model="abftree.item.zipcode"
+                                                               name="id" ng-readonly="!editflag"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">联系电话</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" class="form-control"
+                                                               ng-model="abftree.item.linkTel"
+                                                               name="id" ng-readonly="!editflag"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">电子邮件</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" class="form-control"
+                                                               ng-model="abftree.item.email"
+                                                               name="id" ng-readonly="!editflag"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">网站地址</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" class="form-control"
+                                                               ng-model="abftree.item.webUrl"
+                                                               name="id" ng-readonly="!editflag"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">创建时间</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" class="form-control"
+                                                               ng-model="abftree.item.createTime"
+                                                               name="id" ng-readonly="!editflag"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-2">备注</label>
+                                                    <div class="col-md-10">
+                                                        <input type="text" class="form-control"
+                                                               ng-model="abftree.item.remark"
+                                                               name="id" ng-readonly="!editflag"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-2"></label>
+                                                    <div class="col-md-10">
+                                                        <div class="actions btn-set" style="float: right;" ng-if="!editflag">
+                                                            <button type="button" name="back" class="btn btn-primary" ng-click="abftree.test()"> 启用机构
+                                                            </button>
+                                                            <button type="button" name="back" class="btn btn-primary" ng-click="abftree.edit()"> 编辑机构
+                                                            </button>
+                                                            <button type="button" name="back" class="btn btn-danger" ng-click="abftree.delete()"> 删除机构
+                                                            </button>
+                                                        </div>
+                                                        <div class="actions btn-set" style="float: right;" ng-if="editflag">
+                                                            <button type="button" name="back" class="btn btn-primary" ng-click="abftree.save()"> 保存
+                                                            </button>
+
+                                                            <button type="button" name="back" class="btn btn-danger" ng-click="abftree.edit()"> 取消
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <!-- 机构详情 end -->
+                                    <!-- 列表页 end-->
+                                </div>
+                                <!--下级机构-->
+                                <div class="tab-content portlet light" ng-if="flag.xjjg">
+                                    <div ui-grid="gridOptions1"
+                                         ui-grid-edit ui-grid-pagination
+                                         ui-grid-selection ui-grid-resize-columns></div>
+                                    <div class="actions btn-set" style="float: right;">
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addxjjg()"> 新增
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.editxjjg()"> 编辑
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletexjjg()"> 删除
+                                        </button>
+                                    </div>
+                                </div>
+                                <!--下级机构end-->
+                                <!--员工信息-->
+                                <div class="tab-content portlet light" ng-if="flag.ygxx">
+                                    <div ui-grid="gridOptions2"
+                                         ui-grid-edit ui-grid-pagination
+                                         ui-grid-selection ui-grid-resize-columns></div>
+                                    <div class="actions btn-set" style="float: right;">
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addyg()"> 新增
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.edityg()"> 编辑
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deleteyg()"> 删除
+                                        </button>
+                                    </div>
+                                </div>
+                                <!--员工信息end-->
+                                <!--权限信息start-->
+                                <div class="tab-content portlet light" ng-if="flag.qxxx">
+                                    <div  ng-controller="abftree_qx_controller">
+                                        <div class="portlet-body form" >
+                                            <!-- BEGIN FORM-->
+                                            <div style="float: left">
+                                                <select  id='pre-selected-options' multiple='multiple' >
+                                                    <option value='elem_1' selected>elem 1</option>
+                                                    <option value='elem_2'>elem 2</option>
+                                                    <option value='elem_3'>elem 3</option>
+                                                    <option value='elem_4' selected>elem 4</option>
+                                                    <option value='elem_100'>elem 100</option>
+                                                </select>
+                                            </div>
+                                            <!-- END FORM-->
+                                            <div class="portlet-body" style="float: left;margin-left:30px;">
+                                                <table class="table table-striped table-bordered table-hover" id="sample_1">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>
+                                                            角色功能列表
+                                                        </th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            Trident
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--权限信息end-->
+
+
+                                <!-- 岗位详情 -->
+                                <div class="tab-content" ng-show="gwflag.gwxx" >
+                                    <div class="col-md-12" style="height:100%;">
+                                        <div class="portlet-body portlet light">
+                                            <div class="tab-content portlet light">
+                                                <!-- 列表页 begin-->
+                                                <!-- 机构详情 -->
+                                                <form action="#" name="myform2" class="form-horizontal clear">
+                                                    <div class="form-body portlet light">
+                                                        <div class="col-md-6" >
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">岗位状态</label>
+
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control"
+                                                                           ng-model="abftree.item.orgStatus"
+                                                                           name="id" ng-readonly="!editflag"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6" style=" visibility: hidden;">
+                                                            <div class="form-group form-control col-md-8">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">岗位代码</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control" ng-model="abftree.item.orgCode" name="id" ng-readonly="!editflag"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">岗位名称</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control"
+                                                                           ng-model="abftree.item.orgName"
+                                                                           name="id" ng-readonly="!editflag"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">岗位类别</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control"
+                                                                           ng-model="abftree.item.orgType"
+                                                                           name="id" ng-readonly="!editflag"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">岗位层次</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control"
+                                                                           ng-model="abftree.item.Degree"
+                                                                           name="id" ng-readonly="!editflag"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">岗位有效开始日期</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control"
+                                                                           ng-model="abftree.item.orgAddr"
+                                                                           name="id" ng-readonly="!editflag"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">岗位有效截止日期</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control"
+                                                                           ng-model="abftree.item.zipcode"
+                                                                           name="id" ng-readonly="!editflag"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">联系电话</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control"
+                                                                           ng-model="abftree.item.linkTel"
+                                                                           name="id" ng-readonly="!editflag"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">电子邮件</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control"
+                                                                           ng-model="abftree.item.email"
+                                                                           name="id" ng-readonly="!editflag"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">网站地址</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control"
+                                                                           ng-model="abftree.item.webUrl"
+                                                                           name="id" ng-readonly="!editflag"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-2"></label>
+                                                                <div class="col-md-10">
+                                                                    <div class="actions btn-set" style="float: right;" ng-if="!editflag">
+                                                                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.test()"> 启用岗位
+                                                                        </button>
+                                                                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.edit()"> 编辑岗位
+                                                                        </button>
+                                                                        <button type="button" name="back" class="btn btn-danger" ng-click=""> 删除岗位
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="actions btn-set" style="float: right;" ng-if="editflag">
+                                                                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.save()"> 保存
+                                                                        </button>
+
+                                                                        <button type="button" name="back" class="btn btn-danger" ng-click="abftree.edit()"> 取消
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <!-- 机构详情 end -->
+                                                <!-- 列表页 end-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 岗位详情 end -->
+
+                                <!-- 岗位员工列表开始 -->
+                                <div class="tab-content" ng-if="gwflag.gwyg">
+                                    员工列表
+                                </div>
+                                <!-- 岗位员工列表结束 -->
+
+                                <!-- 岗位应用列表开始 -->
+                                <div class="tab-content" ng-if="gwflag.gwyy">
+                                    应用列表
+                                </div>
+                                <!-- 岗位应用列表结束 -->
+
+                                <!-- 下级岗位列表开始 -->
+                                <div class="tab-content" ng-if="gwflag.xjgw">
+                                    下级岗位列表
+                                </div>
+                                <!-- 下级岗位列表结束 -->
+
+                                <!-- 岗位权限列表开始 -->
+                                <div class="tab-content" ng-if="gwflag.gwqx">
+                                    岗位权限列表
+                                </div>
+                                <!-- 岗位权限列表结束 -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end -->
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
