@@ -1,0 +1,121 @@
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" ng-form="bigform">
+    <div class="col-md-12">
+        <div class="portlet light bordered ">
+            <div class="portlet-title">
+                <div class="actions btn-set">
+                    <button type="button" name="back" class="btn btn-primary" ng-if="bigform.$invalid == false" ng-disabled="bigform.$invalid" popover-trigger="mouseenter" ng-click="saveDict(dictionaryAdd)" > 保存
+                    </button>
+                    <button type="button" name="back" class="btn default" ng-if="bigform.$invalid == true" ng-disabled="bigform.$invalid" popover-trigger="mouseenter" > 保存
+                    </button>
+                    <button type="button" name="back" class="btn default" ng-click="cancel()"> 关闭
+                    </button>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form">
+                            <!-- BEGIN FORM-->
+                            <form action="#" name="myform" class="form-horizontal">
+                                <div class="form-body">
+                                    <!--/row-->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 应用名称:<span ng-class="{required:myform.dict_key.$invalid}"  > * </span></label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control" ng-model="dictionaryAdd.item.appname"
+                                                       required
+                                                       name="dict_key"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 应用代码: <span   ng-class="{required:myform.dicts_kesy.$invalid}" >* </span></label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control"
+                                                       required  ng-model="dictionaryAdd.item.appcode"
+                                                       name="dicts_kesy"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 应用类别: </label>
+                                            <div class="col-md-8">
+                                                <select class="form-control"  name="dict_type" ng-model="dictionaryAdd.item.dict_type" name="dict_type">
+                                                    <option value=""></option>
+                                                    <option value="0">本地</option>
+                                                    <option value="1">远程</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 是否开通: </label>
+                                            <div class="col-md-8">
+                                                <select class="form-control" name="dict_open" ng-model="dictionaryAdd.item.dict_open">
+                                                    <option value=""></option>
+                                                    <option value="s">是</option>
+                                                    <option value="a">否</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 开通日期: </label>
+                                            <div class="col-md-8">
+                                                <input class="input-appAdd" style="" type="date"ng-model="dictionaryAdd.item.data">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> IP: </label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control"
+                                                       name="table_name" ng-model="dictionaryAdd.item.ip"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 访问地址: </label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control"
+                                                       name="column_name" ng-model="dictionaryAdd.item.address"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 端口: </label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control"
+                                                       name="column_name" ng-model="dictionaryAdd.item.port"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2"> 应用描述: </label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control"
+                                                       ng-model="dictionaryAdd.item.des"
+                                                       name="dict_name"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>

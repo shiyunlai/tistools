@@ -1,6 +1,7 @@
+
 .ms-container{
   background: transparent url('../img/switch.png') no-repeat 50% 50%;
-  width: 370px;
+  width: 400px;
 }
 
 .ms-container:after{
@@ -91,3 +92,9 @@
   color: #aaa;
   cursor: text;
 }
+
+.multi-select {
+  right: auto !important;
+  left: -9999px !important;
+}
+

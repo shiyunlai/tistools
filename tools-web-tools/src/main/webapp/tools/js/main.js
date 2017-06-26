@@ -18,6 +18,8 @@ var MetronicApp = angular.module("MetronicApp", [
 
 ]);
 
+
+
 function action(bdy){
     var request ={};
     var COH = {};
@@ -588,6 +590,30 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             templateUrl:"views/org/abftree.html",
             data: {pageTitle: '组织机构管理'},
             controller:"abftree_controller"
+        })
+        .state("applicationFun",{
+            url:"/applicationFun.html",
+            templateUrl:"views/Jurisdiction/applicationFun.html",
+            data: {pageTitle: '应用功能管理'},
+            controller:"application_controller"
+        })
+        .state("menuManagement",{
+            url:"/menuManagement.html",
+            templateUrl:"views/Management/menuManagement.html",
+            data: {pageTitle: '菜单管理'},
+            controller:"menu_controller"
+        })
+        .state("roleManagement",{
+            url:"/roleManagement.html",
+            templateUrl:"views/roleManage/roleManagement.html",
+            data: {pageTitle: '角色管理'},
+            controller:"role_controller"
+        })
+        .state("behavior",{
+            url:"/behavior.html",
+            templateUrl:"views/behavior/behavior.html",
+            data: {pageTitle: '功能管理'},
+            controller:"behavior_controller"
         })
 }]);
 
