@@ -17,7 +17,7 @@ var ComponentsBootstrapSelect = function () {
 }();
 
 if (App.isAngularJsApp() === false) {
-    jQuery(document).ready(function() {    
-        ComponentsBootstrapSelect.init(); 
+    jQuery(document).ready(function() {
+        ComponentsBootstrapSelect.init();
     });
 }
