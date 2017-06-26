@@ -5,7 +5,9 @@ package org.tis.tools.rservice.ac.capable;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
+import org.tis.tools.base.WhereCondition;
 import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcFunc;
 import org.tis.tools.model.po.ac.AcFuncgroup;
@@ -49,7 +51,31 @@ public interface IApplicationRService {
 	 * return  acApp
 	 */
 	public AcApp createAcApp(AcApp acApp);
+	
+	
+	/**
+	 * 删除应用系统(AC_APP)
+	 * @param guid 应用系统的guid
+	 * return  acApp
+	 */
+	public void deleteAcApp(String guid);
+	
+	
+	/**
+	 * 更新应用系统(AC_APP)
+	 * @param t 新值
+	 */
+	public void updateAcApp(AcApp t);
 
+	/**
+	 * 根据条件查询应用系统(AC_APP)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	public List<AcApp> queryAcApp(WhereCondition wc);
+	
+	
+	
 	/**
 	 * 新增功能组(AC_FUNCGROUP)
 	 * @param acFuncgroup 功能组对象
@@ -59,17 +85,79 @@ public interface IApplicationRService {
 
 	
 	/**
+	 * 删除功能组(AC_FUNCGROUP)
+	 * @param guid 记录guid
+	 */
+	public void deleteAcFuncGroup(String guid);
+	
+	
+	
+	/**
+	 * 更新功能组(AC_FUNCGROUP)
+	 * @param t 新值
+	 */
+	public void updateAcFuncgroup(AcFuncgroup t);
+	
+	
+	/**
+	 * 根据条件查询功能组(AC_FUNCGROUP)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	public List<AcFuncgroup> queryAcFuncgroup(WhereCondition wc);
+	
+	
+	/**
 	 * 新增功能(AC_FUNC)
 	 * @param acFunc 功能对象
 	 * return  AcFunc
 	 */
 	public AcFunc createAcFunc(AcFunc acFunc);
 
+	
+	/**
+	 * 删除功能(AC_FUNC)
+	 * @param guid 记录guid
+	 */
+	public void deleteAcFunc(String guid);
+	
+	/**
+	 * 更新功能(AC_FUNC),只修改t对象有值的字段
+	 * @param t 新值
+	 */
+	public void updateAcFunc(AcFunc t);
+
+	/**
+	 * 根据条件查询功能(AC_FUNC)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	public List<AcFunc> queryAcFunc(WhereCondition wc);
+	
 	/**
 	 * 新增菜单(AC_MENU)
 	 * @param acMenu 菜单对象
 	 * return  AcMenu
 	 */
 	public AcMenu createAcMenu(AcMenu acMenu);
+	
+	/**
+	 * 删除菜单(AC_MENU)
+	 * @param guid 记录guid
+	 */
+	public void deleteAcMenu(String guid);
+	
+	/**
+	 * 更新菜单(AC_MENU),只修改t对象有值的字段
+	 * @param t 新值
+	 */
+	public void updateAcMenu(AcMenu t);
+	
+	/**
+	 * 根据条件查询菜单(AC_MENU)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	public List<AcMenu> queryAcMenu(WhereCondition wc);
 	
 }
