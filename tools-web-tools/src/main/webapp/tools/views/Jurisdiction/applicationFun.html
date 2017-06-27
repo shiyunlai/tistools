@@ -15,7 +15,7 @@
 </h3>
 <div class="row" ng-form="bigform">
     <div class="col-md-12" >
-        <div class="portlet light bordered ">
+        <div class="portlet light bordered">
             <div class="portlet-body">
                 <div class="row">
                     <!-- 组织机构树 start -->
@@ -31,12 +31,12 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="portlet-body"  >
+                            <div class="portlet-body"  style="overflow-y:hidden;">
                                 <form id="s">
                                     <input type="search" id="q"/>
                                     <button type="submit">检索</button>
                                 </form>
-                                <div id="container"></div>
+                                <div id="container" style="margin-top: 20px;"></div>
                             </div>
                         </div>
                     </div>
@@ -83,13 +83,13 @@
                                 <!--应用页签结束-->
                                 <!-- 应用信息开始 -->
                                 <div class="tab-content portlet light clearfix "   ng-if="yyflag.yyxx">
-                                    <div class="col-md-12" ng-form="bigform">
-                                        <div class="portlet-body portlet light" style="height:100%">
+                                    <div class="col-md-12" ng-form="bigform" style="padding-left: 0px;">
+                                        <div class="portlet-body portlet light">
                                             <div class="tab-content portlet light">
                                                 <form action="#" name="myform" class="form-horizontal">
                                                     <div class="form-body">
                                                         <!--/row-->
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-12 col-lg-6">
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4"> 应用名称:<span ng-class="{required:myform.dict_key.$invalid}"  > * </span></label>
                                                                 <div class="col-md-8">
@@ -99,7 +99,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6">
+                                                        <div class="col-lg-6 col-md-12">
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4"> 应用代码: <span   ng-class="{required:myform.dicts_kesy.$invalid}" >* </span></label>
                                                                 <div class="col-md-8">
@@ -109,7 +109,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6">
+                                                        <div class="col-lg-6 col-md-12">
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4"> 应用类别: </label>
                                                                 <div class="col-md-8">
@@ -121,7 +121,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6">
+                                                        <div class="col-lg-6 col-md-12">
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4"> 是否开通: </label>
                                                                 <div class="col-md-8">
@@ -133,7 +133,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6">
+                                                        <div class="col-lg-6 col-md-12">
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4"> 开通日期: </label>
                                                                 <div class="col-md-8">
@@ -141,7 +141,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6">
+                                                        <div class="col-lg-6 col-md-12">
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4"> IP: </label>
                                                                 <div class="col-md-8">
@@ -150,7 +150,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6">
+                                                        <div class="col-lg-6 col-md-12">
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4"> 访问地址: </label>
                                                                 <div class="col-md-8">
@@ -159,7 +159,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6">
+                                                        <div class="col-lg-6 col-md-12">
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4"> 端口: </label>
                                                                 <div class="col-md-8">
@@ -168,17 +168,17 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-12">
+                                                        <div class="col-md-12 col-lg-12">
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-2"> 应用描述: </label>
-                                                                <div class="col-md-10">
+                                                                <label class="control-label col-md-4 col-lg-2"> 应用描述: </label>
+                                                                <div class="col-md-8 col-lg-10">
                                                                     <input type="text" class="form-control"
                                                                            ng-model="dictionaryAdd.item.des"
                                                                            name="dict_name"  ng-disabled="!editflag"/>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-12" style="text-align: center">
+                                                        <div class="col-md-12 " style="text-align: center">
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-2"></label>
                                                                 <div class="col-md-10">
@@ -200,7 +200,6 @@
                                                         </div>
                                                     </div>
                                                 </form>
-
                                             </div>
                                         </div>
                                     </div>

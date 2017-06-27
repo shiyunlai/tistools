@@ -350,7 +350,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                      'id':'80',
                      "text": "菜单显示",
                      'type':'childs',
-                         icon:' fa fa-wrench icon-state-info icon-lg'
+                      icon:' fa fa-wrench icon-state-info icon-lg'
                      }]
                      }
                      ]
@@ -444,7 +444,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 $scope.biz.appchild = true;
                 $scope.biz.applica = false;
                 $scope.biz.apptab = false;
-            }else if(data.node.parent == '5'||data.node.parent == '4'){
+            }else if(data.node.parent == '5'||data.node.parent == '4'||data.node.original.type == 'childs'){
                 $scope.biz.appfund = true;
                 $scope.biz.appchild = false;
                 $scope.biz.applica = false;

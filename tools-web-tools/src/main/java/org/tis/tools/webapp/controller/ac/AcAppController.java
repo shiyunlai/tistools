@@ -35,8 +35,8 @@ import java.math.BigDecimal; //转换
 public class AcAppController extends BaseController {
 	@Autowired
 	IApplicationRService applicationRService;
-	/*@Autowired
-	IAcAppRService acAppRService;*/
+	@Autowired
+	IAcAppRService acAppRService;
 	
 	/**
 	 * appAdd新增应用服务员
