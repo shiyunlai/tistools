@@ -6,26 +6,14 @@
 	<parent>
 		<groupId>org.tis</groupId>
 		<artifactId>tools</artifactId>
-		<version>0.0.1</version>
+		<version>1.0.0</version>
 	</parent>
 	<artifactId>tools-web-tools</artifactId>
 	<version>${tools-web-tools-version}</version>
 	<packaging>war</packaging>
 	<name>tools-web-tools</name>
 
-	<profiles>
-		<profile>
-			<id>release</id>
-			<properties>
-				<!-- 正式发布版本号：每个工程的版本都是独立定义的 -->
-				<tools-web-tools-version>1.0.0</tools-web-tools-version>
-			</properties>
-		</profile>
-	</profiles>
-
 	<properties>
-		<tools-web-tools-version>0.0.1-SNAPSHOT</tools-web-tools-version>
-
 		<maven.test.skip>true</maven.test.skip>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 		<!-- Application settings -->

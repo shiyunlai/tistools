@@ -107,10 +107,10 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid_func
-		,res_type
-		,res_path
-		,compack_name
-		,res_show_name
+		 guid_func as guidFunc
+		,res_type as resType
+		,res_path as resPath
+		,compack_name as compackName
+		,res_show_name as resShowName
 	</sql>
 </mapper>

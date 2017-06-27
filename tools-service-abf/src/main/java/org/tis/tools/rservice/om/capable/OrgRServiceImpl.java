@@ -91,35 +91,39 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	@Override
 	public OmOrg createRootOrg(String orgCode, String orgName, String orgType, String orgDegree)
 			throws OrgManagementException {
+		OmOrg org = new OmOrg();
+		// 补充信息
+		org.setGuid(GUID.org());// 补充GUID
+		org.setOrgStatus(OMConstants.ORG_STATUS_STOP);// 补充机构状态，新增机构初始状态为 停用
+		org.setOrgLevel(new BigDecimal(0));// 补充机构层次，根节点层次为 0
+		org.setGuidParents("");// 补充父机构，根节点没有父机构
+		org.setCreateTime(new Date());// 补充创建时间
+		org.setLastUpdate(new Date());// 补充最近更新时间
+		org.setIsleaf(CommonConstants.YES);// 新增节点都先算叶子节点 Y
+		org.setSubCount(new BigDecimal(0));// 新增时子节点数为0
+		org.setOrgSeq(org.getGuid());// 设置机构序列,根机构直接用guid
 
-		OmOrg org = new OmOrg() ; 
-		
-		//补充信息
-		org.setGuid(GUID.org());//补充GUID
-		org.setOrgStatus(OMConstants.ORG_STATUS_STOP);//补充机构状态，新增机构初始状态为 停用
-		org.setOrgLevel(new BigDecimal(0));//补充机构层次，根节点层次为 0
-		org.setGuidParents("");//补充父机构，根节点没有父机构
-		org.setCreateTime(new Date());//补充创建时间
-		org.setLastUpdate(new Date());//补充最近更新时间
-		org.setIsleaf(CommonConstants.YES);//新增节点都先算叶子节点 Y
-		org.setSubCount(new BigDecimal(0));//新增时子节点数为0
-		org.setOrgSeq(org.getGuid());//设置机构序列,根机构直接用guid
-		
-		//收集入参
+		// 收集入参
 		org.setOrgCode(orgCode);
 		org.setOrgName(orgName);
 		org.setOrgType(orgType);
 		org.setOrgDegree(orgDegree);
-		
+		OmOrg newOrg = org;
 		// 新增机构
 		try {
-			omOrgService.insert(org);
+			org = transactionTemplate.execute(new TransactionCallback<OmOrg>() {
+				@Override
+				public OmOrg doInTransaction(TransactionStatus arg0) {
+					omOrgService.insert(newOrg);
+					return newOrg;
+				}
+			});
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
+			throw new OrgManagementException(
+					OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
 					BasicUtil.wrap(e.getCause().getMessage()), "新增根节点机构失败！{0}");
 		}
-		
 		return org;
 	}
 
@@ -149,56 +153,52 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 */
 	@Override
 	public OmOrg createChildOrg(String orgCode, String orgName, String orgType, String orgDegree, String parentsOrgCode,
-			int sortNo) throws OrgManagementException {
-		
-		//查询父机构信息
-		WhereCondition wc = new WhereCondition() ;
+			int sortNo) throws OrgManagementException {		
+		// 查询父机构信息
+		WhereCondition wc = new WhereCondition();
 		wc.andEquals("ORG_CODE", parentsOrgCode);
-		List<OmOrg> parentsOrgList=omOrgService.query(wc);
+		List<OmOrg> parentsOrgList = omOrgService.query(wc);
 		OmOrg parentsOrg = parentsOrgList.get(0);
 		String parentsOrgSeq = parentsOrg.getOrgSeq();
-		
-		OmOrg org = new OmOrg() ; 
-		//补充信息
-		org.setGuid(GUID.org());//补充GUID
-		org.setOrgStatus(OMConstants.ORG_STATUS_STOP);//补充机构状态，新增机构初始状态为 停用
-		org.setOrgLevel(new BigDecimal(0));//补充机构层次，根节点层次为 0
-		org.setGuidParents(parentsOrg.getGuid());//补充父机构，根节点没有父机构
-		org.setCreateTime(new Date());//补充创建时间
-		org.setLastUpdate(new Date());//补充最近更新时间
-		org.setIsleaf(CommonConstants.YES);//新增节点都先算叶子节点 Y
-		org.setSubCount(new BigDecimal(0));//新增时子节点数为0
-		String newOrgSeq = parentsOrgSeq+"."+org.getGuid();
-		org.setOrgSeq(newOrgSeq);//设置机构序列,根据父机构的序列+"."+机构的GUID
-		
-		//收集入参
+		OmOrg org = new OmOrg();
+		// 补充信息
+		org.setGuid(GUID.org());// 补充GUID
+		org.setOrgStatus(OMConstants.ORG_STATUS_STOP);// 补充机构状态，新增机构初始状态为 停用
+		org.setOrgLevel(new BigDecimal(1));// 补充机构层次，根节点层次为 0
+		org.setGuidParents(parentsOrg.getGuid());// 补充父机构，根节点没有父机构
+		org.setCreateTime(new Date());// 补充创建时间
+		org.setLastUpdate(new Date());// 补充最近更新时间
+		org.setIsleaf(CommonConstants.YES);// 新增节点都先算叶子节点 Y
+		org.setSubCount(new BigDecimal(0));// 新增时子节点数为0
+		String newOrgSeq = parentsOrgSeq + "." + org.getGuid();
+		org.setOrgSeq(newOrgSeq);// 设置机构序列,根据父机构的序列+"."+机构的GUID
+		// 收集入参
 		org.setOrgCode(orgCode);
 		org.setOrgName(orgName);
 		org.setOrgType(orgType);
 		org.setOrgDegree(orgDegree);
-		
-		// 新增子节点机构
-		try {
-			omOrgService.insert(org);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_CREATE_CHILD_ORG,
-					BasicUtil.wrap(e.getCause().getMessage()), "新增子节点机构失败！{0}");
-		}
-		
-		// 更新父节点机构   是否叶子节点  节点数  最新更新时间 和最新更新人员
-		parentsOrg.setLastUpdate(new Date());//补充最近更新时间
-		parentsOrg.setUpdator("");//TODO暂时为空
-		int count = parentsOrg.getSubCount().intValue()+1;
+		// 更新父节点机构 是否叶子节点 节点数 最新更新时间 和最新更新人员
+		parentsOrg.setLastUpdate(new Date());// 补充最近更新时间
+		parentsOrg.setUpdator("");// TODO暂时为空
+		int count = parentsOrg.getSubCount().intValue() + 1;
 		parentsOrg.setSubCount(new BigDecimal(count));
 		parentsOrg.setIsleaf(CommonConstants.NO);
-		
+		OmOrg newOrg=org;
+		// 新增子节点机构
 		try {
-			omOrgService.update(parentsOrg);
+			org = transactionTemplate.execute(new TransactionCallback<OmOrg>() {
+				@Override
+				public OmOrg doInTransaction(TransactionStatus arg0) {
+					omOrgService.insert(newOrg);//新增子节点
+					omOrgService.update(parentsOrg);//更新父节点
+					return newOrg;
+				}
+			});
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_UPDATE_PARENT_ORG,
-					BasicUtil.wrap(e.getCause().getMessage()), "更新父节点机构失败！{0}");
+			throw new OrgManagementException(
+					OMExceptionCodes.FAILURE_WHRN_CREATE_CHILD_ORG,
+					BasicUtil.wrap(e.getCause().getMessage()), "新增子节点机构失败！{0}");
 		}
 		
 		return org;
@@ -220,35 +220,50 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 * @throws OrgManagementException
 	 */
 	@Override
-	public OmOrg createChildOrg(OmOrg newOrg) throws OrgManagementException {
+	public OmOrg createChildOrg(OmOrg org) throws OrgManagementException {
+		// 查询父机构信息
+		org.setGuid(GUID.org());// 补充GUID
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("GUID", org.getGuidParents());
+		List<OmOrg> parentsOrgList = omOrgService.query(wc);
+		OmOrg parentsOrg = parentsOrgList.get(0);
+		String parentsOrgSeq = parentsOrg.getOrgSeq();
+		// 补充信息
+		org.setGuid(GUID.org());// 补充GUID
+		org.setOrgStatus(OMConstants.ORG_STATUS_STOP);// 补充机构状态，新增机构初始状态为 停用
+		org.setOrgLevel(new BigDecimal(1));// 补充机构层次，根节点层次为 0
+		org.setGuidParents(parentsOrg.getGuid());// 补充父机构，根节点没有父机构
+		org.setCreateTime(new Date());// 补充创建时间
+		org.setLastUpdate(new Date());// 补充最近更新时间
+		org.setIsleaf(CommonConstants.YES);// 新增节点都先算叶子节点 Y
+		org.setSubCount(new BigDecimal(0));// 新增时子节点数为0
+		String newOrgSeq = parentsOrgSeq + "." + org.getGuid();
+		org.setOrgSeq(newOrgSeq);// 设置机构序列,根据父机构的序列+"."+机构的GUID
 		
+		// 更新父节点机构 是否叶子节点 节点数 最新更新时间 和最新更新人员
+		parentsOrg.setLastUpdate(new Date());// 补充最近更新时间
+		parentsOrg.setUpdator("");// TODO暂时为空
+		int count = parentsOrg.getSubCount().intValue() + 1;
+		parentsOrg.setSubCount(new BigDecimal(count));
+		parentsOrg.setIsleaf(CommonConstants.NO);
+		OmOrg newOrg=org;
 		// 新增子节点机构
 		try {
-			omOrgService.insert(newOrg);
+			org = transactionTemplate.execute(new TransactionCallback<OmOrg>() {
+				@Override
+				public OmOrg doInTransaction(TransactionStatus arg0) {
+					omOrgService.insert(newOrg);//新增子节点
+					omOrgService.update(parentsOrg);//更新父节点
+					return newOrg;
+				}
+			});
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_CREATE_CHILD_ORG,
+			throw new OrgManagementException(
+					OMExceptionCodes.FAILURE_WHRN_CREATE_CHILD_ORG,
 					BasicUtil.wrap(e.getCause().getMessage()), "新增子节点机构失败！{0}");
 		}
-		// 更新父节点机构   是否叶子节点  节点数  最新更新时间 和最新更新人员
-		WhereCondition wc = new WhereCondition() ;
-		wc.andEquals("GUID", newOrg.getGuidParents());
-		List<OmOrg> parentsOrgList=omOrgService.query(wc);
-		OmOrg parentsOrg = parentsOrgList.get(0);
-		parentsOrg.setLastUpdate(new Date());//补充最近更新时间
-		parentsOrg.setUpdator("");//TODO暂时为空
-		int count = parentsOrg.getSubCount().intValue()+1;
-		parentsOrg.setSubCount(new BigDecimal(count));
-		parentsOrg.setIsleaf(CommonConstants.NO);	
-		try {
-			omOrgService.update(parentsOrg);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_UPDATE_PARENT_ORG,
-					BasicUtil.wrap(e.getCause().getMessage()), "更新父节点机构失败！{0}");
-		}
-		
-		return newOrg;
+		return org;
 	}
 
 	/**

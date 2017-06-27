@@ -134,13 +134,13 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid
-		,guid_app
-		,funcgroup_name
-		,guid_parents
-		,group_level
-		,funcgroup_seq
-		,isleaf
-		,sub_count
+		 guid as guid
+		,guid_app as guidApp
+		,funcgroup_name as funcgroupName
+		,guid_parents as guidParents
+		,group_level as groupLevel
+		,funcgroup_seq as funcgroupSeq
+		,isleaf as isleaf
+		,sub_count as subCount
 	</sql>
 </mapper>

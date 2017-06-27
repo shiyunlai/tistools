@@ -152,15 +152,15 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid
-		,guid_funcgroup
-		,func_code
-		,func_name
-		,func_desc
-		,func_action
-		,para_info
-		,func_type
-		,ischeck
-		,ismenu
+		 guid as guid
+		,guid_funcgroup as guidFuncgroup
+		,func_code as funcCode
+		,func_name as funcName
+		,func_desc as funcDesc
+		,func_action as funcAction
+		,para_info as paraInfo
+		,func_type as funcType
+		,ischeck as ischeck
+		,ismenu as ismenu
 	</sql>
 </mapper>

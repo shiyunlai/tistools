@@ -80,7 +80,7 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid_group
-		,guid_position
+		 guid_group as guidGroup
+		,guid_position as guidPosition
 	</sql>
 </mapper>

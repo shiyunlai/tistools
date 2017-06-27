@@ -116,11 +116,11 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid_operator
-		,guid_app
-		,config_type
-		,config_name
-		,config_value
-		,isvalid
+		 guid_operator as guidOperator
+		,guid_app as guidApp
+		,config_type as configType
+		,config_name as configName
+		,config_value as configValue
+		,isvalid as isvalid
 	</sql>
 </mapper>

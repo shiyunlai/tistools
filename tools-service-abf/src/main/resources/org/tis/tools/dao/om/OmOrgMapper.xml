@@ -314,33 +314,33 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid
-		,org_code
-		,org_name
-		,org_type
-		,org_degree
-		,org_status
-		,org_level
-		,guid_parents
-		,org_seq
-		,org_addr
-		,zipcode
-		,guid_position
-		,guid_emp_master
-		,guid_emp_manager
-		,link_man
-		,link_tel
-		,email
-		,web_url
-		,start_date
-		,end_date
-		,area
-		,create_time
-		,last_update
-		,updator
-		,sort_no
-		,isleaf
-		,sub_count
-		,remark
+		 guid as guid
+		,org_code as orgCode
+		,org_name as orgName
+		,org_type as orgType
+		,org_degree as orgDegree
+		,org_status as orgStatus
+		,org_level as orgLevel
+		,guid_parents as guidParents
+		,org_seq as orgSeq
+		,org_addr as orgAddr
+		,zipcode as zipcode
+		,guid_position as guidPosition
+		,guid_emp_master as guidEmpMaster
+		,guid_emp_manager as guidEmpManager
+		,link_man as linkMan
+		,link_tel as linkTel
+		,email as email
+		,web_url as webUrl
+		,start_date as startDate
+		,end_date as endDate
+		,area as area
+		,create_time as createTime
+		,last_update as lastUpdate
+		,updator as updator
+		,sort_no as sortNo
+		,isleaf as isleaf
+		,sub_count as subCount
+		,remark as remark
 	</sql>
 </mapper>

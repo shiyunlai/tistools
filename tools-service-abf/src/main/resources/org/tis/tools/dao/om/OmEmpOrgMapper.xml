@@ -89,8 +89,8 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid_emp
-		,guid_org
-		,ismain
+		 guid_emp as guidEmp
+		,guid_org as guidOrg
+		,ismain as ismain
 	</sql>
 </mapper>

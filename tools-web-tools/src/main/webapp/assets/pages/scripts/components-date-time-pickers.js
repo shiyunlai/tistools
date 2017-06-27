@@ -12,7 +12,7 @@ var ComponentsDateTimePickers = function () {
         }
 
         /* Workaround to restrict daterange past date select: http://stackoverflow.com/questions/11933173/how-to-restrict-the-selectable-date-ranges-in-bootstrap-datepicker */
-    
+
         // Workaround to fix datepicker position on window scroll
         $( document ).scroll(function(){
             $('#form_modal2 .date-picker').datepicker('place'); //#modal is the id of the modal
@@ -36,7 +36,7 @@ var ComponentsDateTimePickers = function () {
             $('.timepicker-24').timepicker({
                 autoclose: true,
                 minuteStep: 5,
-                showSeconds: false,
+                showSeconds: true,
                 showMeridian: false
             });
 
@@ -78,7 +78,7 @@ var ComponentsDateTimePickers = function () {
             function (start, end) {
                 $('#defaultrange input').val(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
             }
-        );        
+        );
 
         $('#defaultrange_modal').daterangepicker({
                 opens: (App.isRTL() ? 'left' : 'right'),
@@ -92,7 +92,7 @@ var ComponentsDateTimePickers = function () {
             function (start, end) {
                 $('#defaultrange_modal input').val(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
             }
-        );  
+        );
 
         // this is very important fix when daterangepicker is used in modal. in modal when daterange picker is opened and mouse clicked anywhere bootstrap modal removes the modal-open class from the body element.
         // so the below code will fix this issue.
@@ -156,7 +156,7 @@ var ComponentsDateTimePickers = function () {
         $(".form_datetime").datetimepicker({
             autoclose: true,
             isRTL: App.isRTL(),
-            format: "dd MM yyyy - hh:ii",
+            format: "yyyy-mm-dd hh:ii:ss",
             pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left")
         });
 
@@ -238,8 +238,8 @@ var ComponentsDateTimePickers = function () {
 
 }();
 
-if (App.isAngularJsApp() === false) { 
-    jQuery(document).ready(function() {    
-        ComponentsDateTimePickers.init(); 
+if (App.isAngularJsApp() === false) {
+    jQuery(document).ready(function() {
+        ComponentsDateTimePickers.init();
     });
 }

@@ -21,12 +21,22 @@
 		<dubbo:reference id="appRService" 
 		group="ac"  version="0.9"  interface="org.tis.tools.rservice.ac.capable.IAppRService
 		check="false"  />-->
+		
 		<dubbo:reference 
-		id="appRService"    
+		id="acAppRService"    
 		group="ac" 
 		version="0.9" 
-		interface="org.tis.tools.rservice.ac.capable.IAppRService"     
+		interface="org.tis.tools.rservice.ac.basic.IAcAppRService"     
 		check="false"/>
+		
+		<dubbo:reference 
+		id="applicationRService"    
+		group="ac" 
+		version="0.9" 
+		interface="org.tis.tools.rservice.ac.capable.IApplicationRService"     
+		check="false"/>
+		
+		
 		
 	
 </beans>

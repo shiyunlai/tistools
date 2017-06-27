@@ -417,9 +417,11 @@ function getYYYYMMDD(){
     return y+m+d;
 }
 
+
 //add by gaojie
 //ui-grid init
 //thisobj--表ID,fun--返回data的方法,com--表列名,筛选配置项,bol--布尔值,是否多选.selection--自定义行选中
+
 function initgrid($scope, thisobj, fun, filterFilter,com,bol,selection){
     thisobj = {
         data: fun,
@@ -454,7 +456,10 @@ function initgrid($scope, thisobj, fun, filterFilter,com,bol,selection){
         }
     };
 
+
     //ui-grid getPage方法
+
+
     thisobj.getPage = function(curPage, pageSize) {
         var firstRow = (curPage - 1) * pageSize;
         thisobj.totalItems = thisobj.data.length;

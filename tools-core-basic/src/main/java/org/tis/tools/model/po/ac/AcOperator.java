@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 操作员
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/ABF-mysql.erm
+ * 模型文件 ： E:\github\soft\tistools\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_OPERATOR 操作员
  *
@@ -36,12 +36,12 @@ public class AcOperator implements Serializable {
 	/* AC_OPERATOR table's columns definition */
 	/** GUID ：数据主键<br/><br/>全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
 	public static final String COLUMN_GUID = "guid" ; 
-	/** OPERATOR_NAME ：操作员姓名<br/><br/>记录当前操作员姓名（只记录当前值，不随之改变） */
-	public static final String COLUMN_OPERATOR_NAME = "operator_name" ; 
 	/** USER_ID ：登录用户名<br/><br/> */
 	public static final String COLUMN_USER_ID = "user_id" ; 
 	/** PASSWORD ：密码<br/><br/> */
 	public static final String COLUMN_PASSWORD = "password" ; 
+	/** OPERATOR_NAME ：操作员姓名<br/><br/>记录当前操作员姓名（只记录当前值，不随之改变） */
+	public static final String COLUMN_OPERATOR_NAME = "operator_name" ; 
 	/** OPERATOR_STATUS ：操作员状态<br/><br/>取值来自业务菜单：DICT_AC_OPERATOR_STATUS 正常，挂起，注销，锁定... 系统处理状态间的流转 */
 	public static final String COLUMN_OPERATOR_STATUS = "operator_status" ; 
 	/** INVAL_DATE ：密码失效日期<br/><br/>指定失效时间具体到时分秒 */
@@ -75,14 +75,14 @@ public class AcOperator implements Serializable {
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
 	private String guid ;
 	
-	/** 字段类型：varchar<br/>字段名：操作员姓名<br/>描述：记录当前操作员姓名（只记录当前值，不随之改变） */
-	private String operatorName ;
-	
 	/** 字段类型：varchar<br/>字段名：登录用户名<br/>描述： */
 	private String userId ;
 	
 	/** 字段类型：varchar<br/>字段名：密码<br/>描述： */
 	private String password ;
+	
+	/** 字段类型：varchar<br/>字段名：操作员姓名<br/>描述：记录当前操作员姓名（只记录当前值，不随之改变） */
+	private String operatorName ;
 	
 	/** 字段类型：varchar<br/>字段名：操作员状态<br/>描述：取值来自业务菜单：DICT_AC_OPERATOR_STATUS 正常，挂起，注销，锁定... 系统处理状态间的流转 */
 	private String operatorStatus ;
@@ -147,25 +147,6 @@ public class AcOperator implements Serializable {
     }
 	
 	/**
-	 * Set the 操作员姓名.
-	 * 
-	 * @param operatorName
-	 *            操作员姓名
-	 */
-	public void setOperatorName(String operatorName) {
- 		this.operatorName = operatorName == null ? null : operatorName.trim() ;
-    }
-    
-    /**
-	 * Get the 操作员姓名.
-	 * 
-	 * @return 操作员姓名
-	 */
-	public String getOperatorName(){
-		return this.operatorName ;
-    }
-	
-	/**
 	 * Set the 登录用户名.
 	 * 
 	 * @param userId
@@ -201,6 +182,25 @@ public class AcOperator implements Serializable {
 	 */
 	public String getPassword(){
 		return this.password ;
+    }
+	
+	/**
+	 * Set the 操作员姓名.
+	 * 
+	 * @param operatorName
+	 *            操作员姓名
+	 */
+	public void setOperatorName(String operatorName) {
+ 		this.operatorName = operatorName == null ? null : operatorName.trim() ;
+    }
+    
+    /**
+	 * Get the 操作员姓名.
+	 * 
+	 * @return 操作员姓名
+	 */
+	public String getOperatorName(){
+		return this.operatorName ;
     }
 	
 	/**

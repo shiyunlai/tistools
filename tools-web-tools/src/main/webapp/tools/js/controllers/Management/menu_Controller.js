@@ -1,7 +1,7 @@
 /**
  * Created by wangbo on 2017/6/1.
  */
-angular.module('MetronicApp').controller('menu_controller', function($rootScope, $scope, $http, $timeout,i18nService,uiGridConstants,uiGridSelectionService,$uibModal) {
+angular.module('MetronicApp').controller('menu_controller', function($rootScope, $scope, $http, $timeout,i18nService,uiGridConstants,uiGridSelectionService,filterFilter,$uibModal) {
     var menu = {};
     $scope.menu = menu;
     /*0、菜单管理机构树逻辑*/
@@ -62,7 +62,8 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);//从数据库中获取所有的数据
                         console.log(obj)
-                                alert('新增子菜单成功')
+                        openwindow($uibModal, 'views/Management/manachildAdd.html', 'lg',
+                            function ($scope, $modalInstance) {
                                 //创建机构实例
                                 var menchFrom = {};
                                 $scope.menchFrom = menchFrom;
@@ -75,17 +76,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                                 $scope.cancel = function () {
                                     $modalInstance.dismiss('cancel');
                                 };
-
-
-                    }
-                },
-                '修改菜单':{
-                    "label":"修改菜单",
-                    "action":function(data){
-                        var inst = jQuery.jstree.reference(data.reference),
-                        obj = inst.get_node(data.reference);//从数据库中获取所有的数据
-                        $scope.editflag = !$scope.editflag;//让保存取消方法显现
-
+                            })
                     }
                 },
                 "删除菜单":{
@@ -121,45 +112,40 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                 [{
                     "id": "1",
                     "text": "应用菜单",
+                    icon:'fa fa-hospital-o icon-state-info icon-lg ',
                     "children":
                         [
                             {
                                 "id": "2",
                                 "text": "组织管理",
+                                icon:'fa fa-home icon-state-info icon-lg',
                             },
                             {
                                 "id": "3",
                                 "text": "权限管理",
+                                icon:'fa fa-home icon-state-info icon-lg',
                             },
                             {
                                 "id": "4",
                                 "text": "授权认证",
+                                icon:'fa fa-home icon-state-info icon-lg',
                             },
                             {
                             "id": "5",
                             "text": "其他管理",
+                                icon:'fa fa-home icon-state-info icon-lg',
                             },{
                             "id": "6",
                             "text": "工作流",
-                            }
+                            icon:'fa fa-home icon-state-info icon-lg',
+                            },{
+                            "id": "7",
+                            "text": "测试图标",
+                            icon:'fa fa-home icon-state-info icon-lg',
+                        }
                         ]
                 }
                 ]
-            /* function (obj, callback) {
-             var jsonarray = [];
-             $scope.jsonarray = jsonarray;
-             var subFrom = {};
-             subFrom.id = obj.id;
-             abftree_service.loadmaintree(subFrom).then(function (data) {
-             for(var i = 0 ;i < data.length ; i++){
-             data[i].text = data[i].orgName;
-             data[i].children = true;
-             data[i].id = data[i].orgCode;
-             }
-             $scope.jsonarray = angular.copy(data);
-             callback.call(this, $scope.jsonarray);
-             })
-             }*/
         },
         "types" : {
             "default" : {
@@ -200,15 +186,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                 $scope.menu.menusearch = true;
                 $scope.menu.menushow = false;
             }else if(data.node.original.type == 'fun'){
-                $scope.biz.appfund = false;
-                $scope.biz.appchild = true;
-                $scope.biz.applica = false;
-                $scope.biz.apptab = false;
             }else if(data.node.parent == '5'||data.node.parent == '4'){
-                $scope.biz.appfund = true;
-                $scope.biz.appchild = false;
-                $scope.biz.applica = false;
-                $scope.biz.apptab = false;
             }else{
                 $scope.biz.apptab = false;
             }
@@ -226,62 +204,37 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
         {'MENU_NAME':'其他管理','MENU_CODE':'info','ISLEAF':'是','MENU_LABEL':'其他管理','IMAGE_PATH':'test4.com','EXPAND_PATH':'test4.com'},
         {'MENU_NAME':'工作流','MENU_CODE':'work','ISLEAF':'是','MENU_LABEL':'工作流','IMAGE_PATH':'test5.com','EXPAND_PATH':'test5.com'}
     ];
-    //ui-grid 具体配置
-    //应用列表
-    $scope.gridOptions = {
-        data: 'myData',
-        columnDefs: [{ field: 'MENU_NAME', displayName: '菜单名称'},
-            { field: "MENU_CODE", displayName:'菜单代码'},
-            { field: "ISLEAF", displayName:'是否叶子标签'},
-            { field: "MENU_LABEL",displayName:'菜单显示名称'},
-            { field: "IMAGE_PATH",displayName:'菜单闭合路径'},
-            { field: "EXPAND_PATH",displayName:'菜单展开图片路径'}
-        ],
-        //---------切换属性-----------------
-        enableGridMenu: true, //是否显示grid 菜单
-        enableFiltering:true,//打开标识,用于搜索
-        //-------- 分页属性 ----------------
-        enablePagination: true, //是否分页，默认为true
-        enablePaginationControls: true, //使用默认的底部分页
-        paginationPageSizes: [10, 15, 20], //每页显示个数可选项
-        paginationCurrentPage:1, //当前页码
-        paginationPageSize: 10, //每页显示个数
-        //paginationTemplate:"<div></div>", //自定义底部分页代码
-        totalItems : 0, // 总数量
-        useExternalPagination: true,//是否使用分页按钮
-        //是否多选
-        multiSelect:false,
-        onRegisterApi: function(gridApi) {
-            $scope.gridApi = gridApi;
-            //分页按钮事件
-            gridApi.pagination.on.paginationChanged($scope,function(newPage, pageSize) {
-                if(getPage) {
-                    getPage(newPage, pageSize);
-                }
-            });
-            //行选中事件
-            $scope.gridApi.selection.on.rowSelectionChanged($scope,function(row,event){
-                if(row.isSelected){
-                    $scope.selectRow = row.entity;
-                    console.log($scope.selectRow)
-                }else{
-                    delete $scope.selectRow;//制空
-                }
-            });
-        }
-    };
-    //ui-grid getPage方法 分页方法
-    var getPage = function(curPage, pageSize) {
-        var firstRow = (curPage - 1) * pageSize;
-        $scope.gridOptions0.totalItems = $scope.myData.length;
-        $scope.gridOptions0.data = $scope.myData.slice(firstRow, firstRow + pageSize);
-    };
 
+
+    //测试ui-grid
+    var gridOptions = {};
+    $scope.gridOptions = gridOptions;
+    var initdata = function(){
+        return $scope.myData;//数据方法
+    }
+    com = [{ field: 'MENU_NAME', displayName: '菜单名称'},
+        { field: "MENU_CODE", displayName:'菜单代码'},
+        { field: "ISLEAF", displayName:'是否叶子标签'},
+        { field: "MENU_LABEL",displayName:'菜单显示名称'},
+        { field: "IMAGE_PATH",displayName:'菜单闭合路径'},
+        { field: "EXPAND_PATH",displayName:'菜单展开图片路径'}
+
+    ];
+    var f = function(row){
+        if(row.isSelected){
+            $scope.selectRow = row.entity;
+            console.log($scope.selectRow)
+        }else{
+            delete $scope.selectRow;//制空
+        }
+    }
+    $scope.gridOptions = initgrid($scope,gridOptions,initdata(),filterFilter,com,true,f);
     //新增代码
     $scope.menuAdd = function(){
+
         openwindow($uibModal, 'views/Management/manachildAdd.html', 'lg',// 弹出页面
             function ($scope, $modalInstance) {
-                $scope.saveDict = function(item){//保存新增的函数
+                $scope.add = function(item){//保存新增的函数
                     toastr['success']("保存成功！");
                     $modalInstance.close();
                 }
@@ -293,12 +246,14 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
     }
 
     //修改菜单逻辑
-    $scope.menuEdit = function(){
-        if($scope.selectRow){
+    $scope.menuEdit = function(id){
+        var it = $scope.gridOptions.getSelectedRows();//多选事件
+        if(it.length == 1){
             openwindow($uibModal, 'views/Management/manachildAdd.html', 'lg',// 弹出页面//弹出页面
                 function ($scope, $modalInstance) {
+                    $scope.id = id;
                     //修改页面代码逻辑
-                    $scope.saveDict = function(item){//保存新增的函数
+                    $scope.add = function(item){//保存新增的函数
                         toastr['success']("保存成功！");
                         $modalInstance.close();
                     }
@@ -308,14 +263,16 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                     };
                 })
         }else{
-            toastr['error']("请至少选中一条！");
+            toastr['error']("请至少(至多)选中一条！");
         }
     }
 
     //删除代码逻辑
     $scope.menuDelete = function () {
-        if($scope.selectRow){
+        var it = $scope.gridOptions.getSelectedRows();//多选事件
+        if(it.length>0){
             confirm("确定删除选中的菜单吗？删除应用将删除该应用下的所有子菜单")
+            toastr['success']("删除成功！");
         }else {
             toastr['error']("请至少选择一条记录进行删除！","SORRY！");
         }
@@ -331,7 +288,17 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
     }
     //新增子菜单逻辑
     $scope.menu.childAdd = function(){
-        alert("子菜单添加成功")
+        openwindow($uibModal, 'views/Management/menuchildAdd.html', 'lg',// 弹出页面//弹出页面
+            function ($scope, $modalInstance) {
+                //修改页面代码逻辑
+                $scope.add = function(item){//保存新增的函数
+                    toastr['success']("保存成功！");
+                    $modalInstance.close();
+                }
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            })
     }
     //保存方法
     $scope.menu.save = function (item) {

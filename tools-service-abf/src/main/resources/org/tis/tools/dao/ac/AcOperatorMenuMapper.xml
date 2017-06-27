@@ -215,22 +215,22 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid
-		,guid_operator
-		,guid_app
-		,guid_func
-		,menu_name
-		,menu_label
-		,guid_parents
-		,isleaf
-		,ui_entry
-		,menu_level
-		,guid_root
-		,display_order
-		,image_path
-		,expand_path
-		,menu_seq
-		,open_mode
-		,sub_count
+		 guid as guid
+		,guid_operator as guidOperator
+		,guid_app as guidApp
+		,guid_func as guidFunc
+		,menu_name as menuName
+		,menu_label as menuLabel
+		,guid_parents as guidParents
+		,isleaf as isleaf
+		,ui_entry as uiEntry
+		,menu_level as menuLevel
+		,guid_root as guidRoot
+		,display_order as displayOrder
+		,image_path as imagePath
+		,expand_path as expandPath
+		,menu_seq as menuSeq
+		,open_mode as openMode
+		,sub_count as subCount
 	</sql>
 </mapper>
