@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- 
+<!--
 Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.6
 Version: 4.5.6
 -->
@@ -21,41 +21,28 @@ Version: 4.5.6
     <meta content="" name="author"/>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="../assets/global/plugins/googleapis/css/fonts-googleapis.css" rel="stylesheet" type="text/css"/>
-    <link href="../assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet"
-          type="text/css"/>
+    <link href="../assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
-
     <!-- BEGIN DYMANICLY LOADED CSS FILES(all plugin and page related styles must be loaded between GLOBAL and THEME css files ) -->
     <link id="ng_load_plugins_before"/>
     <!-- END DYMANICLY LOADED CSS FILES -->
     <!-- BEGIN THEME STYLES -->
     <!-- DOC: To use 'rounded corners' style just load 'components-rounded.css' stylesheet instead of 'components.css' in the below style tag -->
-    <link href="../assets/global/css/components-rounded.min.css" id="style_components" rel="stylesheet"
-          type="text/css"/>
-    <link href="../assets/global/css/plugins.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../assets/layouts/layout4/css/layout.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../assets/layouts/layout4/css/themes/light.min.css" rel="stylesheet" type="text/css" id="style_color"/>
-    <link href="../assets/layouts/layout4/css/custom.min.css" rel="stylesheet" type="text/css"/>
-    <!-- END THEME STYLES -->
-    <link rel="shortcut icon" href="favicon.ico"/>
+    <link href="../assets/global/css/components.min.css" id="style_components" rel="stylesheet" type="text/css" />
+    <link href="../assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
 
-    <!--<link href="../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css"/>-->
+
+    <link  href="../assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
+    <link  href="../assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color1" />
+    <link  href="../assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="favicon.ico" />
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
-<!-- DOC: Apply "page-header-fixed-mobile" and "page-footer-fixed-mobile" class to body element to force fixed header or footer in mobile devices -->
-<!-- DOC: Apply "page-sidebar-closed" class to the body and "page-sidebar-menu-closed" class to the sidebar menu element to hide the sidebar by default -->
-<!-- DOC: Apply "page-sidebar-hide" class to the body to make the sidebar completely hidden on toggle -->
-<!-- DOC: Apply "page-sidebar-closed-hide-logo" class to the body element to make the logo hidden on sidebar toggle -->
-<!-- DOC: Apply "page-sidebar-hide" class to body element to completely hide the sidebar on sidebar toggle -->
-<!-- DOC: Apply "page-sidebar-fixed" class to have fixed sidebar -->
-<!-- DOC: Apply "page-footer-fixed" class to the body element to have fixed footer -->
-<!-- DOC: Apply "page-sidebar-reversed" class to put the sidebar on the right side -->
-<!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
-
 <body ng-controller="AppController"
       class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-sidebar-closed-hide-logo page-on-load page-sidebar-fixed"
       ng-class="{'page-sidebar-closed': settings.layout.pageSidebarClosed}">
@@ -65,38 +52,28 @@ Version: 4.5.6
     <div class="bounce2"></div>
     <div class="bounce3"></div>
 </div>
-<!-- END PAGE SPINNER -->
-<!-- BEGIN HEADER -->
-<div data-ng-include="'tpl/header.html'" data-ng-controller="HeaderController"
-     class="page-header navbar navbar-fixed-top"></div>
-<!-- END HEADER -->
-<div class="clearfix"></div>
-<!-- BEGIN CONTAINER -->
-<div class="page-container">
-    <!-- BEGIN SIDEBAR -->
+
+
+<div  data-ng-include="'tpl/header.html'" data-ng-controller="HeaderController" class="page-header navbar navbar-fixed-top"></div>
+
+<div  class="clearfix"></div>
+
+<div  class="page-container">
     <div data-ng-include="'tpl/sidebar.html'" data-ng-controller="SidebarController" class="page-sidebar-wrapper"></div>
-    <!-- END SIDEBAR -->
     <div class="page-content-wrapper">
         <div class="page-content">
-            <!-- BEGIN PAGE HEAD -->
-            <!--<div data-ng-include="'tpl/page-head.html'" data-ng-controller="PageHeadController" class="page-head"> </div>-->
-            <!-- END PAGE HEAD -->
-            <!-- BEGIN ACTUAL CONTENT -->
-            <div ui-view class="fade-in-up" style="height:850px;">
-            </div>
-            <!-- END ACTUAL CONTENT -->
+            <div ui-view class="fade-in-up"></div>
         </div>
     </div>
-    <!-- BEGIN QUICK SIDEBAR -->
-    <!--<a href="javascript:;" class="page-quick-sidebar-toggler">-->
-    <!--<i class="icon-login"></i>-->
-    <!--</a>-->
-    <!--<div data-ng-include="'tpl/quick-sidebar.html'" data-ng-controller="QuickSidebarController" class="page-quick-sidebar-wrapper"></div>-->
-    <!-- END QUICK SIDEBAR -->
+    <a href="javascript:;" class="page-quick-sidebar-toggler">
+        <i class="icon-login"></i>
+    </a>
+    <div data-ng-include="'tpl/quick-sidebar.html'" data-ng-controller="QuickSidebarController" class="page-quick-sidebar-wrapper"></div>
 </div>
-<!-- END CONTAINER -->
-<!-- BEGIN FOOTER -->
-<div data-ng-include="'tpl/footer.html'" data-ng-controller="FooterController" class="page-footer"></div>
+<div  data-ng-include="'tpl/footer.html'" data-ng-controller="FooterController" class="page-footer" ></div>
+
+
+
 <!-- END FOOTER -->
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 <!-- BEGIN CORE JQUERY PLUGINS -->
@@ -106,6 +83,13 @@ Version: 4.5.6
 <![endif]-->
 <script src="../assets/global/plugins/jquery.min.js" type="text/javascript"></script>
 <script src="../assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+<!--flowchart -->
+<!--<script src="js/customer/raphael-min.js" type="text/javascript"></script>
+<script src="js/customer/flowchart.min.js" type="text/javascript"></script>-->
+
+<script src="../assets/global/plugins/moment.min.js" type="text/javascript"></script>
 <script src="../assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="../assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"
         type="text/javascript"></script>
@@ -121,23 +105,23 @@ Version: 4.5.6
 <script src="../assets/global/plugins/angularjs/plugins/angular-ui-router.min.js" type="text/javascript"></script>
 <script src="../assets/global/plugins/angularjs/plugins/ocLazyLoad.min.js" type="text/javascript"></script>
 <script src="../assets/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
-<!-- END CORE ANGULARJS PLUGINS -->
 
-<!--mockjs end-->
- <script src="../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/highcharts/js/highcharts.js" type="text/javascript"></script>
+
+<!-- END CORE ANGULARJS PLUGINS -->
 
 <!-- BEGIN PROJECT  CSS-->
 <link href="css/fenye.css" rel="stylesheet" type="text/css"/>
-<!-- END PROJECT CSS -->
+<link href="css/ServiceJournal.css" rel="stylesheet" type="text/css"/>
 
-<!-- START BIZTRACE CSS -->
-<link href="css/biztrace.css" rel="stylesheet" type="text/css"/>
-<!-- END BIZTRACE CSS -->
+<!-- END PROJECT CSS -->
 
 <!-- BEGIN PROJECT GLOBAL JS-->
 <script src="js/main.js" type="text/javascript"></script>
 <script src="js/directives.js" type="text/javascript"></script>
 <script src="js/scripts/global.js"></script>
+
 <!-- END PROJECT GLOBAL JS-->
 
 <!-- BEGIN PROJECT OTHER JS-->
@@ -163,6 +147,9 @@ Version: 4.5.6
 <!--操作员管理  start-->
 <script src="js/controllers/operator/opmeController.js"></script>
 <!--操作员管理  end-->
+<!--操作员个性化配置 start-->
+<script src="js/controllers/operator/oprconfigController.js"></script>
+<!--操作员个性化配置 end-->
 <!--behavior start-->
 <script src="js/controllers/behavior/behaviorController.js"></script>
 <!--behavior end-->
@@ -178,7 +165,6 @@ Version: 4.5.6
 <link rel="stylesheet" href="../assets/global/plugins/angular-ui-grid/ui-grid.min.css"/>
 <script src="../assets/global/plugins/angular-ui-grid/ui-grid.min.js"></script>
 <!--ui-grid end-->
-
 <!--biztrace start-->
 <script src="js/controllers/biztrace/biztraceHandleController.js" type="text/javascript"></script>
 <script src="js/service/biztrace/biztraceHandle.js"></script>
@@ -189,7 +175,6 @@ Version: 4.5.6
 <script src="js/controllers/biztrace/redisCleanController.js" type="text/javascript"></script>
 <script src="js/service/biztrace/redisClean.js"></script>
 <!--biztrace end-->
-
 <!--lpc start-->
 <script src="js/controllers/LPC/ListCheckController.js" type="text/javascript"></script>
 <script src="js/service/LPC/ListCheck.js"></script>
@@ -198,8 +183,7 @@ Version: 4.5.6
 <script src="js/service/pagination_service.js"></script>
 <!--lpc end-->
 
-<!-- END PROJECT OTHER JS -->
-
+<!-- BEGIN APP LEVEL JQUERY SCRIPTS -->
 <!-- BEGIN APP LEVEL JQUERY SCRIPTS -->
 <script src="../assets/global/scripts/app.min.js" type="text/javascript"></script>
 <script src="../assets/layouts/layout4/scripts/layout.min.js" type="text/javascript"></script>
@@ -208,22 +192,41 @@ Version: 4.5.6
 <!-- END APP LEVEL JQUERY SCRIPTS -->
 <!-- END JAVASCRIPTS -->
 
+
+<!-- END APP LEVEL JQUERY SCRIPTS -->
+<!-- END JAVASCRIPTS -->
 <style type="text/css">
-    .lanmo-warning{border-color:#aa1100}
-    .lanmo-error{color:#ebccd1}
-    .lm_window_head{
-        height: 25px;padding: 2px 8px 2px 8px;
+    .lanmo-warning {
+        border-color: #aa1100
     }
-    .lm_window_head .p1{
-        float: left;height: 20px;margin: 0 0
+
+    .lanmo-error {
+        color: #ebccd1
     }
-    .lm_window_head .p2{
-        float: right;height: 20px;;margin: 0 0
+
+    .lm_window_head {
+        height: 25px;
+        padding: 2px 8px 2px 8px;
     }
-    .lm_window_footer{
-        height: 30px;padding: 2px 8px 2px 8px;
+
+    .lm_window_head .p1 {
+        float: left;
+        height: 20px;
+        margin: 0 0
+    }
+
+    .lm_window_head .p2 {
+        float: right;
+        height: 20px;;
+        margin: 0 0
+    }
+
+    .lm_window_footer {
+        height: 30px;
+        padding: 2px 8px 2px 8px;
     }
 </style>
+
 
 <link href="../assets/global/plugins/clockface/css/clockface.css" rel="stylesheet" type="text/css"/>
 <link href="../assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css"/>
@@ -233,13 +236,13 @@ Version: 4.5.6
 <link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-toastr/toastr.min.css"/>
 <script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
 
-<script src="../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+
+<<script src="../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
 <script src="../assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js" type="text/javascript"></script>
 <script src="../assets/global/plugins/clockface/js/clockface.js" type="text/javascript"></script>
 <script src="../assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js" type="text/javascript"></script>
 <script src="../assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 <script src="../assets/pages/scripts/components-date-time-pickers.min.js" type="text/javascript"></script>
-
 <script src="../assets/global/plugins/bootstrap-toastr/toastr.min.js"></script>
 
 <script type="text/javascript">
@@ -263,6 +266,7 @@ Version: 4.5.6
         "hideMethod": "fadeOut"
     }
 </script>
+
 </body>
 <!-- END BODY -->
 

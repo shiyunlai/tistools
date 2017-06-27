@@ -74,10 +74,10 @@
                         <label class="control-label col-md-4"> 认证模式: </label>
                         <div class="col-md-8">
                             <select class="form-control"  name="dict_type" ng-model="operatFrom.certification" name="oper_ator">
-                                <option value="">本地密码认证</option>
-                                <option value="0">pwd认证</option>
-                                <option value="1">captcha认证</option>
-                            </select>
+                            <option value="bd">本地密码认证</option>
+                            <option value="pw">pwd认证</option>
+                            <option value="ca">captcha认证</option>
+                        </select>
                         </div>
                     </div>
                 </div>
@@ -115,7 +115,38 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 员工编号: </label>
+                        <div class="col-md-8">
+                            <select class="form-control"  name="dict_type" ng-model="operatFrom.certification" name="oper_empcode">
+                                <option value="">ST1001</option>
+                                <option value="0">ST1002</option>
+                                <option value="1">ST1003</option>
+                                <option value="2">ST1004</option>
+                                <option value="3">ST1005</option>
+                                <option value="4">ST1006</option>
+                                <option value="5">ST1007</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 员工姓名: </label>
+                        <div class="col-md-8">
+                            <select class="form-control"  name="dict_type" ng-model="operatFrom.certification" name="oper_empname">
+                                <option value="">张三</option>
+                                <option value="0">李四</option>
+                                <option value="1">王二麻子</option>
+                                <option value="2">成哥</option>
+                                <option value="3">杰哥</option>
+                                <option value="4">小波</option>
+                                <option value="5">文琪</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-12">
                     <div class="form-group">
                         <label class="control-label col-md-2"></label>
