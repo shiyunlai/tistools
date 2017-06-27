@@ -21,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.tis.tools.base.WhereCondition;
 import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.po.om.OmPosition;
 import org.tis.tools.rservice.om.capable.IOrgRService;
@@ -96,6 +97,63 @@ public class OrgManagerController extends BaseController {
 		return null;
 	}
 	
+	/**
+	 * 展示筛选机构树
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/search")
+	public String search(ModelMap model,  @RequestBody String content,
+			String age, HttpServletRequest request, HttpServletResponse response) {
+		try {
+			//收到请求
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			String id = jsonObj.getString("id");
+			String name = jsonObj.getString("searchitem");
+			List<OmOrg> rootOrgs = new ArrayList<OmOrg>();
+			List<OmPosition> omp = new ArrayList<OmPosition>();
+			//通过id判断需要加载的节点
+			if("#".equals(id)){
+				//调用远程服务,#:根,筛选
+				WhereCondition wc = new WhereCondition();
+				wc.andEquals("GUID", name);
+				rootOrgs = orgRService.queryOrgsByCondition(wc);
+			}else if(id.startsWith("@")){
+				//TODO
+				//返回机构下岗位信息.根据id查询岗位信息并返回生成树节点.
+				omp = new ArrayList<OmPosition>();
+				for(int i = 2;i<5;i++){
+					OmPosition op = new OmPosition();
+					op.setGuid("@"+String.valueOf(i));
+					op.setPositionCode(String.valueOf(i));
+					op.setPositionName("岗位"+String.valueOf(i)+"号");
+					omp.add(op);
+				}
+			 
+			}else{
+				rootOrgs = orgRService.queryChilds(id);
+				OmOrg og = new OmOrg();
+				//为每一个节点增加岗位信息节点
+				og.setOrgName("岗位信息");
+				og.setOrgCode("@"+id);
+				rootOrgs.add(og);
+			}
+			if(rootOrgs == null || rootOrgs.isEmpty()){
+				AjaxUtils.ajaxJson(response, net.sf.json.JSONArray.fromObject(omp).toString());
+			}else{
+				AjaxUtils.ajaxJson(response, net.sf.json.JSONArray.fromObject(rootOrgs).toString());
+			}
+			
+		} catch (Exception e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, "查询根机构树失败!");
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	@RequestMapping(value = "/add")
 	public String execute1(ModelMap model,  @RequestBody String content,

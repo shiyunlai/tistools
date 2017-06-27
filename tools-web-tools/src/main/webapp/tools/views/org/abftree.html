@@ -30,10 +30,11 @@
             </div>
             <div class="portlet-body">
                 <form id="s">
-                    <input type="search" id="q"/>
-                    <button type="submit">检索</button>
+                    <input type="search" id="q" ng-model="searchitem"/>
+                    <button type="submit" ng-click="abftree.clear()">清空</button>
                 </form>
-                <div id="container"></div>
+                <div id="container" ng-show="showtree"></div>
+                <div id="searchtree" ng-show="!showtree"></div>
             </div>
         </div>
     </div>

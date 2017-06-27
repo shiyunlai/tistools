@@ -293,13 +293,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
         console.log(data);
     }).bind("dnd_stop.vakata",function (e,data) {
         console.log(data);
-    });
-
-
-
-
-    //tree点击事件
-    $('#container').on("changed.jstree", function (e, data) {
+    }).bind("changed.jstree", function (e, data) {
         if(typeof data.node !== 'undefined'){//拿到结点详情
             // console.log(data.node.original.id.indexOf("@"));
             $scope.abftree.item = data.node.original;
@@ -327,15 +321,157 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
             $scope.$apply();
         }
     });
-    //jstree 自定义筛选事件
-    // $scope.searchitem = "";
-    // abftree.treesearch = function () {
+
+
+
+
+    //tree点击事件
+    // $('#container').on("changed.jstree", function (e, data) {
+    //     if(typeof data.node !== 'undefined'){//拿到结点详情
+    //         // console.log(data.node.original.id.indexOf("@"));
+    //         $scope.abftree.item = data.node.original;
+    //         console.log(data.node.original);
+    //         if(data.node.original.id.indexOf("@") == 0){
+    //             for(var i in $scope.flag){
+    //                 flag[i] = false;
+    //             }
+    //             for(var i in $scope.gwflag){
+    //                 gwflag[i] = false;
+    //             }
+    //             $scope.gwflag.gwxx = true;
+    //             $scope.tabflag = false;
+    //         }else {
+    //             for(var i in $scope.gwflag){
+    //                 gwflag[i] = false;
+    //             }
+    //             for(var i in $scope.flag){
+    //                 flag[i] = false;
+    //             }
+    //             $scope.flag.xqxx = true;
+    //             $scope.tabflag = true;
+    //         }
     //
-    // }
-    // $rootScope.searchListener = setInterval(abftree.treesearch(), 2000);
-    // $scope.$watch('searchitem', function(newValue, oldValue) {
-    //     console.log(123)
-    // },true);
+    //         $scope.$apply();
+    //     }
+    // });
+
+    //jstree 自定义筛选事件
+    //筛选字段
+    $scope.searchitem = "";
+    //清空
+    abftree.clear = function () {
+        $scope.searchitem = "";
+    }
+    //控制2个树显示标识,true为默认值,false为筛选状态
+    var showtree = true;
+    $scope.showtree = showtree;
+    abftree.treesearch = function () {
+
+    }
+    $rootScope.searchListener = setInterval(abftree.treesearch(), 2000);
+    $scope.$watch('searchitem', function(newValue, oldValue) {
+        console.log(newValue)
+        if(isNull(newValue)){
+            $scope.showtree = true;
+        }else{
+            console.log(9999)
+            $scope.showtree = false;
+            //筛选重组树
+
+            $("#searchtree").data('jstree', false).empty().jstree({
+                "core" : {
+                    "themes" : {
+                        "responsive": false
+                    },
+                    // so that create works
+                    "check_callback" : true,
+                    'data' : function (obj, callback) {
+                        var jsonarray = [];
+                        $scope.jsonarray = jsonarray;
+                        var subFrom = {};
+                        subFrom.id = obj.id;
+                        subFrom.searchitem = newValue;
+                        abftree_service.loadsearchtree(subFrom).then(function (data) {
+                            if(isNull(data[0].orgName)){
+                                for(var i = 0 ;i < data.length ; i++){
+                                    data[i].text = data[i].positionName;
+                                    data[i].children = true;
+                                    data[i].id = data[i].guid;
+                                }
+                            }else{
+                                for(var i = 0 ;i < data.length ; i++){
+                                    data[i].text = data[i].orgName;
+                                    data[i].children = true;
+                                    data[i].id = data[i].orgCode;
+                                }
+                            }
+
+                            $scope.jsonarray = angular.copy(data);
+                            callback.call(this, $scope.jsonarray);
+                        })
+                    }
+                },
+                "types" : {
+                    "default" : {
+                        "icon" : "fa fa-folder icon-state-warning icon-lg"
+                    },
+                    "file" : {
+                        "icon" : "fa fa-file icon-state-warning icon-lg"
+                    }
+                },
+                "state" : { "key" : "demo3" },
+                "contextmenu":{'items':items},
+                'dnd': {
+                    'dnd_start': function () {
+                        console.log("start");
+                    },
+                    'is_draggable':function (node) {
+                        //用于控制节点是否可以拖拽.
+                        console.log(node)
+                        return true;
+                    }
+                },
+                'search':{
+                    show_only_matches:true,
+
+                },
+                'callback' : {
+                    move_node:function (node) {
+                        console.log(node)
+                    }
+                },
+
+                "plugins" : [ "dnd", "state", "types","search","contextmenu" ]
+            }).bind("changed.jstree", function (e, data) {
+                if(typeof data.node !== 'undefined'){//拿到结点详情
+                    // console.log(data.node.original.id.indexOf("@"));
+                    $scope.abftree.item = data.node.original;
+                    console.log(data.node.original);
+                    if(data.node.original.id.indexOf("@") == 0){
+                        for(var i in $scope.flag){
+                            flag[i] = false;
+                        }
+                        for(var i in $scope.gwflag){
+                            gwflag[i] = false;
+                        }
+                        $scope.gwflag.gwxx = true;
+                        $scope.tabflag = false;
+                    }else {
+                        for(var i in $scope.gwflag){
+                            gwflag[i] = false;
+                        }
+                        for(var i in $scope.flag){
+                            flag[i] = false;
+                        }
+                        $scope.flag.xqxx = true;
+                        $scope.tabflag = true;
+                    }
+
+                    $scope.$apply();
+                }
+            });
+        }
+    },true);
 
 
 
