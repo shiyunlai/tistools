@@ -196,7 +196,6 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-
                                                         </div>
                                                     </div>
                                                 </form>
@@ -254,7 +253,7 @@
                                                         <div class="col-md-8">
                                                             <input type="text" class="form-control"
                                                                    ng-model="childFrom.appname"
-                                                                   name="id" />
+                                                                   name="id"  ng-disabled="!editsflag"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -265,17 +264,78 @@
                                                         <div class="col-md-8">
                                                             <input type="text" class="form-control"
                                                                    ng-model="childFrom.appfunction"
-                                                                   name="id" />
+                                                                   name="id"  ng-disabled="!editsflag"/>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12">
+                                                <div class="col-md-6" >
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4">节点层次 </label>
+                                                        <div class="col-md-8">
+                                                            <input type="text" class="form-control"
+                                                                   ng-model="childFrom.grouplevel"
+                                                                   name="id"  ng-disabled="!editsflag"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6" >
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4">是否叶子节点 </label>
+                                                        <div class="col-md-8">
+                                                            <select class="form-control" name="dict_open" ng-model="childFrom.isleaf" ng-disabled="!editsflag">
+                                                                <option value=""></option>
+                                                                <option value="s">是</option>
+                                                                <option value="a">否</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6" >
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4">子节点数 </label>
+                                                        <div class="col-md-8">
+                                                            <input type="text" class="form-control"
+                                                                   ng-model="childFrom.subcount"
+                                                                   name="id" ng-disabled="!editsflag"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6" >
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4">功能组序号</label>
+                                                        <div class="col-md-8">
+                                                            <input type="text" class="form-control"
+                                                                   ng-model="childFrom.funcgroupseq"
+                                                                   name="id" ng-disabled="!editsflag"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                     <!--           <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label col-md-2"></label>
                                                         <div class="col-md-10">
-
                                                             <div class="actions btn-set" style="float: right;">
                                                                 <button type="button" name="back" class="btn btn-primary" ng-click="addchild(childFrom)"> 保存
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+-->
+                                                <div class="col-md-12 " style="text-align: center">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-2"></label>
+                                                        <div class="col-md-10">
+                                                            <div class="actions btn-set" style="float: right;" ng-if="!editsflag">
+                                                                <button type="button" name="back" class="btn btn-primary" ng-click="biz.addschild(childFrom)"> 编辑机构
+                                                                </button>
+                                                            </div>
+                                                            <div class="actions btn-set" style="float: right;" ng-if="editsflag">
+                                                                <button type="button" name="back"  class="btn btn-primary" ng-if="bigform.$invalid == false"  ng-disabled="bigform.$invalid" popover-trigger="mouseenter" ng-click="biz.functionsave()" > 保存
+                                                                </button>
+                                                                <button type="button" name="back" class="btn default" ng-if="bigform.$invalid == true"  ng-disabled="bigform.$invalid" popover-trigger="mouseenter" > 保存
+                                                                </button>
+                                                                <button type="button" name="back" class="btn btn-danger" ng-click="biz.childsEdit()"> 取消
                                                                 </button>
                                                             </div>
                                                         </div>
