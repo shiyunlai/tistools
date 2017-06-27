@@ -125,12 +125,12 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid_operator
-		,guid_func
-		,auth_type
-		,start_date
-		,end_date
-		,guid_app
-		,guid_funcgroup
+		 guid_operator as guidOperator
+		,guid_func as guidFunc
+		,auth_type as authType
+		,start_date as startDate
+		,end_date as endDate
+		,guid_app as guidApp
+		,guid_funcgroup as guidFuncgroup
 	</sql>
 </mapper>

@@ -3,7 +3,8 @@
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-cogs font-green-sharp"></i>
-            <span class="caption-subject font-green-sharp bold uppercase">新增功能组</span>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="!id">新增功能组</span>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="id">编辑功能组</span>
         </div>
         <div class="tools">
             <a href="javascript:;" class="remove" ng-click="cancel()">
@@ -15,11 +16,62 @@
             <div class="form-body ">
                 <div class="col-md-6" >
                     <div class="form-group">
-                        <label class="control-label col-md-4">功能组名称 *</label>
-
+                        <label class="control-label col-md-4">功能组名称</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="subFrom.appname"
+                                   ng-model="subFrom.funcGroupName"
+                                   name="id" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">所属功能组</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="subFrom.appfunction"
+                                   name="id" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">节点层次</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="subFrom.groupLevel"
+                                   name="id" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">功能组序号</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="subFrom.funcgroupseq"
+                                   name="id" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">是否叶子节点 </label>
+                        <div class="col-md-8">
+                            <select class="form-control" name="dict_open" ng-model="subFrom.isleaf">
+                                <option value=""></option>
+                                <option value="s">是</option>
+                                <option value="a">否</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">子节点数</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="subFrom.subcount"
                                    name="id" />
                         </div>
                     </div>
@@ -28,7 +80,6 @@
                     <div class="form-group">
                         <label class="control-label col-md-2"></label>
                         <div class="col-md-10">
-
                             <div class="actions btn-set" style="float: right;">
                                 <button type="button" name="back" class="btn btn-primary" ng-click="add(subFrom)"> 保存
                                 </button>

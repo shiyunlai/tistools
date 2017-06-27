@@ -197,20 +197,20 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid
-		,app_code
-		,app_name
-		,app_type
-		,isopen
-		,open_date
-		,url
-		,app_desc
-		,guid_emp_maintenance
-		,guid_role_maintenance
-		,remark
-		,iniwp
-		,intaskcenter
-		,ip_addr
-		,ip_port
+		 guid as guid
+		,app_code as appCode
+		,app_name as appName
+		,app_type as appType
+		,isopen as isopen
+		,open_date as openDate
+		,url as url
+		,app_desc as appDesc
+		,guid_emp_maintenance as guidEmpMaintenance
+		,guid_role_maintenance as guidRoleMaintenance
+		,remark as remark
+		,iniwp as iniwp
+		,intaskcenter as intaskcenter
+		,ip_addr as ipAddr
+		,ip_port as ipPort
 	</sql>
 </mapper>

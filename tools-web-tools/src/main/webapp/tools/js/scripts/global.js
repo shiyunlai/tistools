@@ -417,9 +417,15 @@ function getYYYYMMDD(){
     return y+m+d;
 }
 
+<<<<<<< HEAD
 //add by gaojie
 //ui-grid init
 //thisobj--表ID,fun--返回data的方法,com--表列名,筛选配置项,bol--布尔值,是否多选.selection--自定义行选中
+=======
+
+
+//thisobj--表ID,fun--返回data的方法,com--表列名,筛选配置项,bol--布尔值,是否多选.selection--自定义行选中事件，传入函数即可
+>>>>>>> master
 function initgrid($scope, thisobj, fun, filterFilter,com,bol,selection){
     thisobj = {
         data: fun,
@@ -454,11 +460,15 @@ function initgrid($scope, thisobj, fun, filterFilter,com,bol,selection){
         }
     };
 
+<<<<<<< HEAD
     //ui-grid getPage方法
+=======
+>>>>>>> master
     thisobj.getPage = function(curPage, pageSize) {
         var firstRow = (curPage - 1) * pageSize;
         thisobj.totalItems = thisobj.data.length;
         thisobj.data = thisobj.data.slice(firstRow, firstRow + pageSize);
+<<<<<<< HEAD
         //或者像下面这种写法
         //$scope.myData = mydefalutData.slice(firstRow, firstRow + pageSize);
     };
@@ -466,3 +476,10 @@ function initgrid($scope, thisobj, fun, filterFilter,com,bol,selection){
     // var a = $scope.girdApi.selection.getSelectedRows();
     return thisobj;
 }
+=======
+
+    };
+
+    return thisobj;
+}
+>>>>>>> master

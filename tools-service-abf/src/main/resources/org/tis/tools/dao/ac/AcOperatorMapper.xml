@@ -9,9 +9,9 @@
 	    INSERT INTO AC_OPERATOR 
 	    (
 	    	 guid
-	    	,operator_name
 	    	,user_id
 	    	,password
+	    	,operator_name
 	    	,operator_status
 	    	,inval_date
 	    	,auth_mode
@@ -30,9 +30,9 @@
 	    VALUES 
 	    (
 			#{guid,jdbcType=VARCHAR},
-			#{operatorName,jdbcType=VARCHAR},
 			#{userId,jdbcType=VARCHAR},
 			#{password,jdbcType=VARCHAR},
+			#{operatorName,jdbcType=VARCHAR},
 			#{operatorStatus,jdbcType=VARCHAR},
 			#{invalDate,jdbcType=TIMESTAMP},
 			#{authMode,jdbcType=VARCHAR},
@@ -56,14 +56,14 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="operator_name != null" >
-			operator_name = #{operatorName,jdbcType=VARCHAR},
-		</if>
 		<if test="user_id != null" >
 			user_id = #{userId,jdbcType=VARCHAR},
 		</if>
 		<if test="password != null" >
 			password = #{password,jdbcType=VARCHAR},
+		</if>
+		<if test="operator_name != null" >
+			operator_name = #{operatorName,jdbcType=VARCHAR},
 		</if>
 		<if test="operator_status != null" >
 			operator_status = #{operatorStatus,jdbcType=VARCHAR},
@@ -115,9 +115,9 @@
     	UPDATE AC_OPERATOR 
 	    <set>
 		guid = #{guid,jdbcType=VARCHAR},
-		operator_name = #{operatorName,jdbcType=VARCHAR},
 		user_id = #{userId,jdbcType=VARCHAR},
 		password = #{password,jdbcType=VARCHAR},
+		operator_name = #{operatorName,jdbcType=VARCHAR},
 		operator_status = #{operatorStatus,jdbcType=VARCHAR},
 		inval_date = #{invalDate,jdbcType=TIMESTAMP},
 		auth_mode = #{authMode,jdbcType=VARCHAR},
@@ -150,14 +150,14 @@
 		<if test="domain.guid != null" >
         	guid = #{domain.guid,jdbcType=VARCHAR}
       	</if>
-		<if test="domain.operator_name != null" >
-        	operator_name = #{domain.operatorName,jdbcType=VARCHAR}
-      	</if>
 		<if test="domain.user_id != null" >
         	user_id = #{domain.userId,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.password != null" >
         	password = #{domain.password,jdbcType=VARCHAR}
+      	</if>
+		<if test="domain.operator_name != null" >
+        	operator_name = #{domain.operatorName,jdbcType=VARCHAR}
       	</if>
 		<if test="domain.operator_status != null" >
         	operator_status = #{domain.operatorStatus,jdbcType=VARCHAR}
@@ -224,23 +224,23 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid
-		,operator_name
-		,user_id
-		,password
-		,operator_status
-		,inval_date
-		,auth_mode
-		,lock_limit
-		,err_count
-		,lock_time
-		,unlock_time
-		,menu_type
-		,last_login
-		,start_date
-		,end_date
-		,valid_time
-		,mac_code
-		,ip_address
+		 guid as guid
+		,user_id as userId
+		,password as password
+		,operator_name as operatorName
+		,operator_status as operatorStatus
+		,inval_date as invalDate
+		,auth_mode as authMode
+		,lock_limit as lockLimit
+		,err_count as errCount
+		,lock_time as lockTime
+		,unlock_time as unlockTime
+		,menu_type as menuType
+		,last_login as lastLogin
+		,start_date as startDate
+		,end_date as endDate
+		,valid_time as validTime
+		,mac_code as macCode
+		,ip_address as ipAddress
 	</sql>
 </mapper>

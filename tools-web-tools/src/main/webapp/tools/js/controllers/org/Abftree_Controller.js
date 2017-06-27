@@ -223,6 +223,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 var subFrom = {};
                 subFrom.id = obj.id;
                 abftree_service.loadmaintree(subFrom).then(function (data) {
+<<<<<<< HEAD
                     if(isNull(data[0].orgName)){
                         for(var i = 0 ;i < data.length ; i++){
                             data[i].text = data[i].positionName;
@@ -237,6 +238,14 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                         }
                     }
 
+=======
+                    for(var i = 0 ;i < data.length ; i++){
+                        console.log(data)
+                                data[i].text = data[i].orgName;
+                                data[i].children = true;
+                                data[i].id = data[i].orgCode;
+                            }
+>>>>>>> master
                     $scope.jsonarray = angular.copy(data);
                     callback.call(this, $scope.jsonarray);
                 })
@@ -254,7 +263,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
         "contextmenu":{'items':items},
         'dnd': {
             'dnd_start': function () {
-                console.log("start");
+                console.log("start");//拖拽开始
             },
             'is_draggable':function (node) {
                 //用于控制节点是否可以拖拽.
@@ -264,7 +273,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
         },
         'callback' : {
             move_node:function (node) {
-                console.log(node)
+                console.log(node)//拖动完成之后事件
             }
         },
 
@@ -288,6 +297,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
         console.log(e);
         console.log(data);
     }).bind("dnd_stop.vakata",function (e,data) {
+        //终止拖拽事件
         console.log(data);
     });
 
@@ -457,6 +467,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
             }
             console.log($scope.abftree.item);
             $scope.gwflag.gwyg = true;
+<<<<<<< HEAD
             //生成岗位员工列表
             var gwemp = {};
             $scope.gwemp = gwemp;
@@ -471,6 +482,9 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
 
             }
             $scope.gwemp = initgrid($scope, $scope.gwemp,itd(), filterFilter,null,false,select);
+=======
+
+>>>>>>> master
         }else if (type == 2){
             for(var i in $scope.gwflag){
                 $scope.gwflag[i] = false;

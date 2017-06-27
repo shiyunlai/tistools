@@ -3,7 +3,8 @@
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-cogs font-green-sharp"></i>
-            <span class="caption-subject font-green-sharp bold uppercase">新增功能组</span>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="!id">新增子功能组</span>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="id">编辑子功能组</span>
         </div>
         <div class="tools">
             <a href="javascript:;" class="remove" ng-click="cancel()">
@@ -12,10 +13,10 @@
     </div>
     <div class="portlet-body portlet light">
         <form action="#" name="myform" class="form-horizontal ">
-            <div class="form-body ">
+            <div class="form-body">
                 <div class="col-md-6" >
                     <div class="form-group">
-                        <label class="control-label col-md-4">功能组名称 *</label>
+                        <label class="control-label col-md-4">功能组名称</label>
 
                         <div class="col-md-8">
                             <input type="text" class="form-control"
@@ -31,6 +32,48 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="childFrom.appfunction"
+                                   name="id" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">节点层次 </label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="childFrom.grouplevel"
+                                   name="id" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">是否叶子节点 </label>
+                        <div class="col-md-8">
+                            <select class="form-control" name="dict_open" ng-model="childFrom.isleaf">
+                                <option value=""></option>
+                                <option value="s">是</option>
+                                <option value="a">否</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">子节点数 </label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="childFrom.subcount"
+                                   name="id" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">功能组序号</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="childFrom.funcgroupseq"
                                    name="id" />
                         </div>
                     </div>

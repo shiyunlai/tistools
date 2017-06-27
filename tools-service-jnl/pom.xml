@@ -6,25 +6,14 @@
 	<parent>
 		<groupId>org.tis</groupId>
 		<artifactId>tools</artifactId>
-		<version>0.0.1</version>
+		<version>1.0.0</version>
 	</parent>
 	<artifactId>tools-service-jnl</artifactId>
 	<version>${tools-service-jnl-version}</version>
 	<name>tools-service-jnl</name>
 	<url>http://maven.apache.org</url>
 
-	<profiles>
-		<profile>
-			<id>release</id>
-			<properties>
-				<!-- 正式发布版本号：每个工程的版本都是独立定义的 -->
-				<tools-service-jnl-version>1.0.0</tools-service-jnl-version>
-			</properties>
-		</profile>
-	</profiles>
-
 	<properties>
-		<tools-service-jnl-version>0.0.1-SNAPSHOT</tools-service-jnl-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 

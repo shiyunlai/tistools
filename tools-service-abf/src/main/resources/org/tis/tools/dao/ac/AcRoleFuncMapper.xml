@@ -98,9 +98,9 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid_role
-		,guid_func
-		,guid_app
-		,guid_funcgroup
+		 guid_role as guidRole
+		,guid_func as guidFunc
+		,guid_app as guidApp
+		,guid_funcgroup as guidFuncgroup
 	</sql>
 </mapper>
