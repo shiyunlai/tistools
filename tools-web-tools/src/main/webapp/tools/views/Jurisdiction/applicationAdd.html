@@ -30,7 +30,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-4"> 应用名称:<span ng-class="{required:myform.dict_key.$invalid}"  > * </span></label>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control" ng-model="dictionaryAdd.item.appName"
+                                                <input type="text" class="form-control" ng-model="dictionaryAdd.appName"
                                                        required
                                                        name="dict_key"/>
                                             </div>
@@ -41,7 +41,7 @@
                                             <label class="control-label col-md-4"> 应用代码: <span   ng-class="{required:myform.dicts_kesy.$invalid}" >* </span></label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control"
-                                                       required  ng-model="dictionaryAdd.item.appCode"
+                                                       required  ng-model="dictionaryAdd.appCode"
                                                        name="dicts_kesy"/>
                                             </div>
                                         </div>
@@ -50,7 +50,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-4"> 应用类别: </label>
                                             <div class="col-md-8">
-                                                <select class="form-control"  name="dict_type" ng-model="dictionaryAdd.item.appType" name="dict_type">
+                                                <select class="form-control"  name="dict_type" ng-model="dictionaryAdd.appType" name="dict_type">
                                                     <option value=""></option>
                                                     <option value="0">本地</option>
                                                     <option value="1">远程</option>
@@ -62,7 +62,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-4"> 是否开通: </label>
                                             <div class="col-md-8">
-                                                <select class="form-control" name="dict_open" ng-model="dictionaryAdd.item.isOpen">
+                                                <select class="form-control" name="dict_open" ng-model="dictionaryAdd.isOpen">
                                                     <option value=""></option>
                                                     <option value="s">是</option>
                                                     <option value="a">否</option>
@@ -74,7 +74,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-4"> 开通日期: </label>
                                             <div class="col-md-8">
-                                                <input class="input-appAdd" style="" type="date"ng-model="dictionaryAdd.item.openDate">
+                                                <input class="input-appAdd" style="" type="date"ng-model="dictionaryAdd.openDate">
                                             </div>
                                         </div>
                                     </div>
@@ -83,7 +83,7 @@
                                             <label class="control-label col-md-4"> IP: </label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control"
-                                                       name="table_name" ng-model="dictionaryAdd.item.ipAddr"/>
+                                                       name="table_name" ng-model="dictionaryAdd.ipAddr"/>
                                             </div>
                                         </div>
                                     </div>
@@ -92,7 +92,7 @@
                                             <label class="control-label col-md-4"> 访问地址: </label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control"
-                                                       name="column_name" ng-model="dictionaryAdd.item.url"/>
+                                                       name="column_name" ng-model="dictionaryAdd.url"/>
                                             </div>
                                         </div>
                                     </div>
@@ -101,7 +101,7 @@
                                             <label class="control-label col-md-4"> 端口: </label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control"
-                                                       name="column_name" ng-model="dictionaryAdd.item.ipPort"/>
+                                                       name="column_name" ng-model="dictionaryAdd.ipPort"/>
                                             </div>
                                         </div>
                                     </div>
@@ -110,7 +110,7 @@
                                             <label class="control-label col-md-2"> 应用描述: </label>
                                             <div class="col-md-10">
                                                 <input type="text" class="form-control"
-                                                       ng-model="dictionaryAdd.item.appDesc"
+                                                       ng-model="dictionaryAdd.appDesc"
                                                        name="dict_name"/>
                                             </div>
                                         </div>
