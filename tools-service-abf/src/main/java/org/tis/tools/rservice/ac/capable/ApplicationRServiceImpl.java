@@ -103,7 +103,19 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			transactionTemplate.execute(new TransactionCallback<AcApp>() {
 				@Override
 				public AcApp doInTransaction(TransactionStatus arg0) {
-					acAppService.delete(guid);
+					WhereCondition wc =new WhereCondition();
+					wc.andEquals("GUID_APP", guid);
+					List<AcFuncgroup> funcgroup = acFuncgroupService.query(wc);
+					WhereCondition wc1 =new WhereCondition();
+					for(int i =0 ;i < funcgroup.size();i++){
+						String groupid=funcgroup.get(i).getGuid();
+						wc1.clear();
+						wc1.andEquals("GUID_PARENTS", groupid);
+						acFuncService.deleteByCondition(wc1);//删除下面所有的功能
+						
+					}
+					acFuncgroupService.deleteByCondition(wc );//删除下面所有的功能组
+					acAppService.delete(guid);//删除应用
 					return null;
 				}
 			});
@@ -146,7 +158,8 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 *            条件
 	 * @return 满足条件的记录list
 	 */
-	public List<AcApp> queryAcApp(WhereCondition wc) throws AppManagementException {
+	@Override
+	public List<AcApp> queryAcAppList(WhereCondition wc) throws AppManagementException {
 		List<AcApp> acAppList = new ArrayList<AcApp>();
 		
 		try {
@@ -159,7 +172,60 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		}
 		return acAppList;
 	}
+	
+	/**
+	 * 根据条件查询应用系统(AC_APP)
+	 * 
+	 * @param wc
+	 *            条件
+	 * @return 满足条件的记录list
+	 */
+	@Override
+	public List<AcApp> queryAcRootList() throws AppManagementException {
+		List<AcApp> acAppList = new ArrayList<AcApp>();
+		try {
+			WhereCondition wc = new WhereCondition();
+			acAppList = acAppService.query(wc);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_APP,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询应用失败！{0}");
+		}
+		return acAppList;
+	}
+	
 
+	/**
+	 * 根据条件查询应用系统(AC_APP)
+	 * 
+	 * @param wc
+	 *            条件
+	 * @return 满足条件的记录
+	 */
+	@Override
+	public AcApp queryAcApp(String guid) throws AppManagementException {
+		List<AcApp> acAppList = new ArrayList<AcApp>();
+		AcApp acApp = new AcApp();
+		try {
+			WhereCondition wc =new WhereCondition();
+			wc.andEquals("GUID", guid);
+			acAppList = acAppService.query(wc);
+			if(acAppList.size()>0){
+				acApp = acAppList.get(0);
+			}else{
+				throw new AppManagementException(
+						ACExceptionCodes.FAILURE_WHRN_QUERY_AC_NULL,
+						null, "记录不存在！{0}");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_APP,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询应用失败！{0}");
+		}
+		return acApp;
+	}
 	
 	/**
 	 * 新增功能组(AC_FUNCGROUP)
@@ -214,12 +280,26 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 * @param guid
 	 *            记录guid
 	 */
+	@Override
 	public void deleteAcFuncGroup(String guid) throws AppManagementException {
 		try {
 			// 新增事务提交机制
 			transactionTemplate.execute(new TransactionCallback<AcFuncgroup>() {
 				@Override
 				public AcFuncgroup doInTransaction(TransactionStatus arg0) {
+					//删除功能组下子功能组及功能
+					WhereCondition wc =new WhereCondition();
+					wc.andEquals("GUID_PARENTS", guid);
+					acFuncgroupService.deleteByCondition(wc);					
+					List<AcFuncgroup> childGroup = acFuncgroupService.query(wc);
+					//删除下面所有的功能
+					for(int i=0;i<childGroup.size();i++){
+						String childGroupGuid=childGroup.get(i).getGuid();
+						acFuncgroupService.delete(childGroupGuid);
+						wc.clear();
+						wc.andEquals("GUID_FUNCGROUP", childGroupGuid);
+						acFuncService.deleteByCondition(wc);
+					}
 					acFuncgroupService.delete(guid);
 					return null;
 				}
@@ -236,6 +316,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 * 更新功能组(AC_FUNCGROUP)
 	 * @param t 新值
 	 */
+	@Override
 	public void updateAcFuncgroup(AcFuncgroup t) throws AppManagementException {
 		try {
 			transactionTemplate.execute(new TransactionCallback<AcFuncgroup>() {
@@ -259,6 +340,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 * @param wc 条件
 	 * @return 满足条件的记录list
 	 */
+	@Override
 	public List<AcFuncgroup> queryAcFuncgroup(WhereCondition wc)throws AppManagementException {
 		List<AcFuncgroup> acFuncgroupList = new ArrayList<AcFuncgroup>();
 		
@@ -272,6 +354,78 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		}
 		return acFuncgroupList;
 	}
+	
+	/**
+	 * 根据条件查询功能组(AC_FUNCGROUP)
+	 * @param guid 条件
+	 * @return 满足条件的记录list
+	 */
+	@Override
+	public AcFuncgroup queryFuncgroup(String guid)throws AppManagementException {
+		List<AcFuncgroup> acFuncgroupList = new ArrayList<AcFuncgroup>();
+		
+		try {
+			WhereCondition wc = new WhereCondition();
+			wc.andEquals("GUID", guid);
+			acFuncgroupList = acFuncgroupService.query(wc );
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNCGROUP,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能组失败！{0}");
+		}
+		if(acFuncgroupList.size()>0){
+			return acFuncgroupList.get(0);
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * 根据应用id查询功能组(AC_FUNCGROUP)
+	 * @param appGuid
+	 * @return 
+	 */
+	@Override
+	public List<AcFuncgroup> queryAcRootFuncgroup(String appGuid)throws AppManagementException {
+		List<AcFuncgroup> acFuncList = new ArrayList<AcFuncgroup>();
+		
+		try {
+			WhereCondition wc =new WhereCondition();
+			wc.andEquals("GUID_APP", appGuid);
+			wc.andEquals("GUID_PARENTS", "");
+			acFuncList = acFuncgroupService.query(wc );
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNCGROUP,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能组失败！{0}");
+		}
+		return acFuncList;
+	};
+	
+	
+	/**
+	 * 根据功能组ID(AC_FUNCGROUP)
+	 * @param guidParent
+	 * @return 
+	 */
+	@Override
+	public List<AcFuncgroup> queryAcChildFuncgroup(String guidParent)throws AppManagementException {
+		List<AcFuncgroup> acFuncList = new ArrayList<AcFuncgroup>();
+		
+		try {
+			WhereCondition wc =new WhereCondition();
+			wc.andEquals("GUID_PARENTS", guidParent);
+			acFuncList = acFuncgroupService.query(wc );
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNCGROUP,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能组失败！{0}");
+		}
+		return acFuncList;
+	};
 	
 	
 	/**
@@ -363,6 +517,53 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		}
 		return acFuncList;
 	}
+	
+	/**
+	 * 根据条件查询功能(AC_FUNC)
+	 * @param guid 条件
+	 * @return 满足条件的记录list
+	 */
+	@Override
+	public AcFunc queryFunc(String guid)throws AppManagementException {
+		List<AcFunc> acFuncList = new ArrayList<AcFunc>();
+		
+		try {
+			WhereCondition wc =new WhereCondition();
+			wc.andEquals("GUID", guid);
+			acFuncList = acFuncService.query(wc );
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNC,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能失败！{0}");
+		}
+		if(acFuncList.size()>0){
+			return acFuncList.get(0);
+		}
+		return null;
+	}
+	
+	/**
+	 * 根据条件查询功能(AC_FUNC)
+	 * @param groupGuid 条件
+	 * @return 满足条件的记录list
+	 */
+	@Override
+	public List<AcFunc> queryAcGroupFunc(String groupGuid)throws AppManagementException {
+		List<AcFunc> acFuncList = new ArrayList<AcFunc>();
+		
+		try {
+			WhereCondition wc = new WhereCondition();
+			wc.andEquals("GUID_FUNCGROUP", groupGuid);
+			acFuncList = acFuncService.query(wc );
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNC,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能失败！{0}");
+		}
+		return acFuncList;
+	};
 	
 	/**
 	 * 新增菜单(AC_MENU)

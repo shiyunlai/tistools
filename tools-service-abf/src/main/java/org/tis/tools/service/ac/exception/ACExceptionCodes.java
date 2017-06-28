@@ -20,6 +20,11 @@ public class ACExceptionCodes {
 	private static final String R_EX_PREFIX = "AC";
 
 	/**
+	 * 记录不存在
+	 */
+	public static final String FAILURE_WHRN_QUERY_AC_NULL = R_EX_CODE("0000");
+	
+	/**
 	 * 新增应用失败
 	 */
 	public static final String FAILURE_WHRN_CREATE_AC_APP = R_EX_CODE("0001");

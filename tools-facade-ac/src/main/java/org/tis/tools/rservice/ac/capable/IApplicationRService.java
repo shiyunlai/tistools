@@ -75,7 +75,38 @@ public interface IApplicationRService {
 	 * @param wc 条件
 	 * @return 满足条件的记录list
 	 */
-	public List<AcApp> queryAcApp(WhereCondition wc);
+	public List<AcApp> queryAcAppList(WhereCondition wc);
+	
+	/**
+	 * 根据条件查询应用系统(AC_APP)
+	 * @param guid 
+	 * @return 满足条件的记录
+	 */
+	public AcApp queryAcApp(String guid);
+	
+	
+	/**
+	 * 根据条件查询应用系统(AC_APP)
+	 * @param 
+	 * @return 根目录list
+	 */
+	public List<AcApp> queryAcRootList();
+	
+	
+	/**
+	 * 根据应用id查询功能组(AC_FUNCGROUP)
+	 * @param appGuid
+	 * @return 
+	 */
+	public List<AcFuncgroup> queryAcRootFuncgroup(String appGuid);
+	
+	
+	/**
+	 * 根据功能组ID(AC_FUNCGROUP)
+	 * @param guidParent
+	 * @return 
+	 */
+	public List<AcFuncgroup> queryAcChildFuncgroup(String guidParent);
 	
 	/**
 	 * 新增功能组(AC_FUNCGROUP)
@@ -105,6 +136,14 @@ public interface IApplicationRService {
 	public List<AcFuncgroup> queryAcFuncgroup(WhereCondition wc);
 	
 	/**
+	 * 根据条件查询功能组(AC_FUNCGROUP)
+	 * @param guid 条件
+	 * @return 满足条件的记录list
+	 */
+	public AcFuncgroup queryFuncgroup(String guid);
+	
+	
+	/**
 	 * 新增功能(AC_FUNC)
 	 * @param acFunc 功能对象
 	 * return  AcFunc
@@ -130,6 +169,21 @@ public interface IApplicationRService {
 	 * @return 满足条件的记录list
 	 */
 	public List<AcFunc> queryAcFunc(WhereCondition wc);
+	
+	/**
+	 * 根据条件查询功能(AC_FUNC)
+	 * @param guid 条件
+	 * @return 满足条件的记录list
+	 */
+	public AcFunc queryFunc(String guid);
+	
+	
+	/**
+	 * 根据条件查询功能(AC_FUNC)
+	 * @param groupGuid 条件
+	 * @return 满足条件的记录list
+	 */
+	public List<AcFunc> queryAcGroupFunc(String groupGuid);
 	
 	/**
 	 * 新增菜单(AC_MENU)

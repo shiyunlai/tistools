@@ -27,9 +27,6 @@ import org.tools.design.SpringJunitSupport;
  */
 public class AppRServiceTest extends SpringJunitSupport{
 	
-	
-	@Autowired
-	IAcAppRService acAppRService;
 	@Autowired
 	IApplicationRService applicationRService;
 	/*
@@ -69,26 +66,24 @@ public class AppRServiceTest extends SpringJunitSupport{
 	 */
 	@Test
 	public void genAppCodeSucc() {
-		
-//        WhereCondition wc = new WhereCondition();
-		//		WhereCondition wc = new WhereCondition();
-//		List<AcApp> ac = acAppRService.query(wc);
+        WhereCondition wc = new WhereCondition();
 //		System.out.println("zzc输出"+ac.get(0).getAppName());
-//		List<AcApp> acc = acAppRService.query(wc);
-		AcApp ac = new AcApp();
-		ac.setAppCode(appCode);
-		ac.setAppName(appName);
-		ac.setAppType(appType);
-		ac.setAppDesc(appDesc);
-		ac.setIsopen(isopen);
-		ac.setOpenDate(openDate);
-		ac.setUrl(url);
-		ac.setIpAddr(ipAddr);
-		ac.setIpPort(ipPort);
-		
-		AcApp app = applicationRService.createAcApp(ac);
-		Assert.assertNotNull("创建APP成功",app);
-		Assert.assertEquals("返回的代码应该相等","APP0005", app.getAppCode());		
+		List<AcApp> acc = applicationRService.queryAcAppList(wc);
+		System.out.println(acc);
+//		AcApp ac = new AcApp();
+//		ac.setAppCode(appCode);
+//		ac.setAppName(appName);
+//		ac.setAppType(appType);
+//		ac.setAppDesc(appDesc);
+//		ac.setIsopen(isopen);
+//		ac.setOpenDate(openDate);
+//		ac.setUrl(url);
+//		ac.setIpAddr(ipAddr);
+//		ac.setIpPort(ipPort);
+//		
+//		AcApp app = applicationRService.createAcApp(ac);
+//		Assert.assertNotNull("创建APP成功",app);
+//		Assert.assertEquals("返回的代码应该相等","APP0005", app.getAppCode());		
 	}
 	
 	/**
