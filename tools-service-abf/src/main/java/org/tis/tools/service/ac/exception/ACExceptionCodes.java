@@ -103,6 +103,68 @@ public class ACExceptionCodes {
 	 */
 	public static final String FAILURE_WHRN_QUERY_AC_MENU = R_EX_CODE("0016");
 	
+	/**
+	 * 新增功能对应资源失败
+	 */
+	public static final String FAILURE_WHRN_CREATE_AC_FUNCRESOURCE = R_EX_CODE("0017");
+	
+	/**
+	 * 删除功能对应资源失败
+	 */
+	public static final String FAILURE_WHRN_DELETE_AC_FUNCRESOURCE = R_EX_CODE("0018");
+	
+	/**
+	 * 修改功能对应资源失败
+	 */
+	public static final String FAILURE_WHRN_UPDATE_AC_FUNCRESOURCE= R_EX_CODE("0019");
+	
+	/**
+	 * 删除功能对应资源失败
+	 */
+	public static final String FAILURE_WHRN_QUERY_AC_FUNCRESOURCE = R_EX_CODE("0020");
+		
+	/**
+	 * 新增操作员失败
+	 */
+	public static final String FAILURE_WHRN_CREATE_AC_OPERATOR = R_EX_CODE("0021");
+	
+	/**
+	 * 删除操作员失败
+	 */
+	public static final String FAILURE_WHRN_DELETE_AC_OPERATOR = R_EX_CODE("0022");
+	
+	/**
+	 * 修改操作员失败
+	 */
+	public static final String FAILURE_WHRN_UPDATE_AC_OPERATOR= R_EX_CODE("0023");
+	
+	/**
+	 * 查询操作员失败
+	 */
+	public static final String FAILURE_WHRN_QUERY_AC_OPERATOR = R_EX_CODE("0024");
+	
+	/**
+	 * 新增功能操作行为失败
+	 */
+	public static final String FAILURE_WHRN_CREATE_AC_FUNCBEHAVIOR = R_EX_CODE("0025");
+	
+	/**
+	 * 删除功能操作行为失败
+	 */
+	public static final String FAILURE_WHRN_DELETE_AC_FUNCBEHAVIOR = R_EX_CODE("0026");
+	
+	/**
+	 * 修改功能操作行为失败
+	 */
+	public static final String FAILURE_WHRN_UPDATE_AC_FUNCBEHAVIOR= R_EX_CODE("0027");
+	
+	/**
+	 * 查询功能操作行为失败
+	 */
+	public static final String FAILURE_WHRN_QUERY_AC_FUNCBEHAVIOR = R_EX_CODE("0028");
+	
+	
+	
 	
 	/**
 	 * 以烤串方式拼接异常码

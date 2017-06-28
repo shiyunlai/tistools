@@ -17,15 +17,21 @@ import org.tis.tools.model.def.CommonConstants;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcFunc;
+import org.tis.tools.model.po.ac.AcFuncBehavior;
+import org.tis.tools.model.po.ac.AcFuncResource;
 import org.tis.tools.model.po.ac.AcFuncgroup;
 import org.tis.tools.model.po.ac.AcMenu;
+import org.tis.tools.model.po.ac.AcOperator;
 import org.tis.tools.model.vo.om.OmOrgDetail;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.ac.exception.AppManagementException;
 import org.tis.tools.service.ac.AcAppService;
+import org.tis.tools.service.ac.AcFuncBehaviorService;
+import org.tis.tools.service.ac.AcFuncResourceService;
 import org.tis.tools.service.ac.AcFuncService;
 import org.tis.tools.service.ac.AcFuncgroupService;
 import org.tis.tools.service.ac.AcMenuService;
+import org.tis.tools.service.ac.AcOperatorService;
 import org.tis.tools.service.ac.exception.ACExceptionCodes;
 
 /**
@@ -48,6 +54,14 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	AcFuncService acFuncService;
 	@Autowired
 	AcMenuService acMenuService;
+	@Autowired
+	AcFuncResourceService acFuncResourceService;
+	@Autowired
+	AcOperatorService acOperatorService;
+	@Autowired
+	AcFuncBehaviorService acFuncBehaviorService;
+	
+	
 
 	/**
 	 * 新增应用系统(AC_APP)
@@ -357,7 +371,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 *            菜单代码 return acMenu
 	 */
 	@Override
-	public AcMenu createAcMenu(AcMenu acMenu) {
+	public AcMenu createAcMenu(AcMenu acMenu) throws AppManagementException{
 		String guid = GUID.menu();
 		acMenu.setGuid(guid);
 		acMenu.setIsleaf(CommonConstants.YES);// 默认叶子菜单
@@ -461,5 +475,267 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		return acMenuList;
 	}
 
-	
+	/**
+	 * 新增功能资源对应(AC_FUNC_RESOURCE),新增t对象有值的字段
+	 * @param t 新值
+	 */
+	@Override
+	public void createAcFuncResource(AcFuncResource t) throws AppManagementException {
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcFuncResource>() {
+				@Override
+				public AcFuncResource doInTransaction(TransactionStatus arg0) {
+					acFuncResourceService.insert(t);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_FUNCRESOURCE,
+					BasicUtil.wrap(e.getCause().getMessage()), "增加功能对应资源失败！{0}");
+		}
+	}
+
+	/**
+	 * 删除功能资源对应(AC_FUNC_RESOURCE)
+	 * @param guid 记录guid
+	 */
+	@Override
+	public void deleteAcFuncResource(String guid) throws AppManagementException {
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcFuncResource>() {
+				@Override
+				public AcFuncResource doInTransaction(TransactionStatus arg0) {
+					acFuncResourceService.delete(guid);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_FUNCRESOURCE,
+					BasicUtil.wrap(e.getCause().getMessage()), "删除功能对应资源失败！{0}");
+		}
+	}
+
+	/**
+	 * 更新功能资源对应(AC_FUNC_RESOURCE),只修改t对象有值的字段
+	 * @param t 新值
+	 */
+	@Override
+	public void updateAcFuncResource(AcFuncResource t) throws AppManagementException {
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcFuncResource>() {
+				@Override
+				public AcFuncResource doInTransaction(TransactionStatus arg0) {
+					acFuncResourceService.update(t);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_FUNCRESOURCE,
+					BasicUtil.wrap(e.getCause().getMessage()), "更新功能对应资源失败！{0}");
+		}
+	}
+
+	/**
+	 * 根据条件查询功能资源对应(AC_FUNC_RESOURCE)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	@Override
+	public List<AcFuncResource> queryAcFuncResource(WhereCondition wc) throws AppManagementException {
+		List<AcFuncResource> acFuncResourceList = new ArrayList<AcFuncResource>();
+
+		try {
+			acFuncResourceList = acFuncResourceService.query(wc);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNCRESOURCE,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能对应资源失败！{0}");
+		}
+		return acFuncResourceList;
+	}
+
+	/**
+	 * 新增操作员(AC_OPERATOR),新增t对象有值的字段
+	 * @param t 新值
+	 */
+	@Override
+	public void createAcOperator(AcOperator t) throws AppManagementException {
+		t.setGuid(GUID.operaor());
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcOperator>() {
+				@Override
+				public AcOperator doInTransaction(TransactionStatus arg0) {
+					acOperatorService.insert(t);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_OPERATOR,
+					BasicUtil.wrap(e.getCause().getMessage()), "增加操作员失败！{0}");
+		}
+	}
+		
+
+	/**
+	 * 删除操作员(AC_OPERATOR)
+	 * @param guid 记录guid
+	 */
+	@Override
+	public void deleteAcOperator(String guid) throws AppManagementException {
+		//TODO 删除所有操作员相关资源
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcOperator>() {
+				@Override
+				public AcOperator doInTransaction(TransactionStatus arg0) {
+					acOperatorService.delete(guid);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_OPERATOR,
+					BasicUtil.wrap(e.getCause().getMessage()), "删除操作员失败！{0}");
+		}
+	}
+
+	/**
+	 * 更新操作员(AC_OPERATOR),只修改t对象有值的字段
+	 * @param t 新值
+	 */
+	@Override
+	public void updateAcOperator(AcOperator t) throws AppManagementException {
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcOperator>() {
+				@Override
+				public AcOperator doInTransaction(TransactionStatus arg0) {
+					acOperatorService.update(t);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_OPERATOR,
+					BasicUtil.wrap(e.getCause().getMessage()), "更新操作员失败！{0}");
+		}
+	}
+
+		
+	/**
+	 * 根据条件查询操作员(AC_OPERATOR)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	@Override
+	public List<AcOperator> queryAcOperator(WhereCondition wc) throws AppManagementException {
+		List<AcOperator> acOperatorList = new ArrayList<AcOperator>();
+
+		try {
+			acOperatorList = acOperatorService.query(wc);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNCRESOURCE,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能对应资源失败！{0}");
+		}
+		return acOperatorList;
+	}
+
+	/**
+	 * 增加功能操作行为(AC_FUNC_BEHAVIOR),增加t对象有值的字段
+	 * @param t 新值
+	 */
+	@Override
+	public void createAcFuncBehavior(AcFuncBehavior t) throws AppManagementException {
+		t.setGuid(GUID.funcBehavior());
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcFuncBehavior>() {
+				@Override
+				public AcFuncBehavior doInTransaction(TransactionStatus arg0) {
+					acFuncBehaviorService.insert(t);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_FUNCBEHAVIOR,
+					BasicUtil.wrap(e.getCause().getMessage()), "增加功能操作行为失败！{0}");
+		}
+	}
+
+	/**
+	 * 删除功能操作行为(AC_FUNC_BEHAVIOR)
+	 * @param guid 记录guid
+	 */
+	@Override
+	public void deleteAcFuncBehavior(String guid) throws AppManagementException {
+		//TODO 删除功能操作行为相关资源
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcFuncBehavior>() {
+				@Override
+				public AcFuncBehavior doInTransaction(TransactionStatus arg0) {
+					acFuncBehaviorService.delete(guid);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_FUNCBEHAVIOR,
+					BasicUtil.wrap(e.getCause().getMessage()), "删除功能操作行为失败！{0}");
+		}
+	}
+
+	/**
+	 * 更新功能操作行为(AC_FUNC_BEHAVIOR),只修改t对象有值的字段
+	 * @param t 新值
+	 */
+	@Override
+	public void updateAcFuncBehavior(AcFuncBehavior t) throws AppManagementException {
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcFuncBehavior>() {
+				@Override
+				public AcFuncBehavior doInTransaction(TransactionStatus arg0) {
+					acFuncBehaviorService.update(t);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_FUNCBEHAVIOR,
+					BasicUtil.wrap(e.getCause().getMessage()), "更新功能操作行为失败！{0}");
+		}
+	}
+
+	/**
+	 * 根据条件查询功能操作行为(AC_FUNC_BEHAVIOR)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	@Override
+	public List<AcFuncBehavior> queryAcFuncBehavior(WhereCondition wc) throws AppManagementException {
+		List<AcFuncBehavior> acFuncBehaviorList = new ArrayList<AcFuncBehavior>();
+
+		try {
+			acFuncBehaviorList = acFuncBehaviorService.query(wc);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNCBEHAVIOR,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能操作行为失败！{0}");
+		}
+		return acFuncBehaviorList;
+	}
 }

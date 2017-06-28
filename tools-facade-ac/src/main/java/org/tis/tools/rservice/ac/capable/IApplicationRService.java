@@ -10,8 +10,11 @@ import java.util.List;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcFunc;
+import org.tis.tools.model.po.ac.AcFuncBehavior;
+import org.tis.tools.model.po.ac.AcFuncResource;
 import org.tis.tools.model.po.ac.AcFuncgroup;
 import org.tis.tools.model.po.ac.AcMenu;
+import org.tis.tools.model.po.ac.AcOperator;
 
 /**
  * <pre>
@@ -45,7 +48,7 @@ import org.tis.tools.model.po.ac.AcMenu;
  */
 public interface IApplicationRService {
 
-	/**
+	/** 
 	 * 新增应用系统(AC_APP)
 	 * @param acApp 应用对象
 	 * return  acApp
@@ -74,8 +77,6 @@ public interface IApplicationRService {
 	 */
 	public List<AcApp> queryAcApp(WhereCondition wc);
 	
-	
-	
 	/**
 	 * 新增功能组(AC_FUNCGROUP)
 	 * @param acFuncgroup 功能组对象
@@ -90,14 +91,11 @@ public interface IApplicationRService {
 	 */
 	public void deleteAcFuncGroup(String guid);
 	
-	
-	
 	/**
 	 * 更新功能组(AC_FUNCGROUP)
 	 * @param t 新值
 	 */
 	public void updateAcFuncgroup(AcFuncgroup t);
-	
 	
 	/**
 	 * 根据条件查询功能组(AC_FUNCGROUP)
@@ -105,7 +103,6 @@ public interface IApplicationRService {
 	 * @return 满足条件的记录list
 	 */
 	public List<AcFuncgroup> queryAcFuncgroup(WhereCondition wc);
-	
 	
 	/**
 	 * 新增功能(AC_FUNC)
@@ -159,5 +156,85 @@ public interface IApplicationRService {
 	 * @return 满足条件的记录list
 	 */
 	public List<AcMenu> queryAcMenu(WhereCondition wc);
+	
+	/**
+	 * 新增功能资源对应(AC_FUNC_RESOURCE),新增t对象有值的字段
+	 * @param t 新值
+	 */
+	public void createAcFuncResource(AcFuncResource t);
+
+	/**
+	 * 删除功能资源对应(AC_FUNC_RESOURCE)
+	 * @param guid 记录guid
+	 */
+	public void deleteAcFuncResource(String guid);
+
+	/**
+	 * 更新功能资源对应(AC_FUNC_RESOURCE),只修改t对象有值的字段
+	 * @param t 新值
+	 */
+	public void updateAcFuncResource(AcFuncResource t);
+	
+		/**
+	 * 根据条件查询功能资源对应(AC_FUNC_RESOURCE)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	public List<AcFuncResource> queryAcFuncResource(WhereCondition wc);
+	
+	/**
+	 * 新增操作员(AC_OPERATOR),新增t对象有值的字段
+	 * @param t 新值
+	 */
+	public void createAcOperator(AcOperator t);
+	
+	/**
+	 * 删除操作员(AC_OPERATOR)
+	 * @param guid 记录guid
+	 */
+	public void deleteAcOperator(String guid);
+	
+	/**
+	 * 更新操作员(AC_OPERATOR),只修改t对象有值的字段
+	 * @param t 新值
+	 */
+	public void updateAcOperator(AcOperator t);
+		
+	/**
+	 * 根据条件查询操作员(AC_OPERATOR)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	public List<AcOperator> queryAcOperator(WhereCondition wc);
+	
+	/**
+	 * 增加功能操作行为(AC_FUNC_BEHAVIOR),增加t对象有值的字段
+	 * @param t 新值
+	 */
+	public void createAcFuncBehavior(AcFuncBehavior t);
+	
+	/**
+	 * 删除功能操作行为(AC_FUNC_BEHAVIOR)
+	 * @param guid 记录guid
+	 */
+	public void deleteAcFuncBehavior(String guid);
+	
+	/**
+	 * 更新功能操作行为(AC_FUNC_BEHAVIOR),只修改t对象有值的字段
+	 * @param t 新值
+	 */
+	public void updateAcFuncBehavior(AcFuncBehavior t);
+	
+	/**
+	 * 根据条件查询功能操作行为(AC_FUNC_BEHAVIOR)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	public List<AcFuncBehavior> queryAcFuncBehavior(WhereCondition wc);
+		
+	
+	
+	
+	
 	
 }
