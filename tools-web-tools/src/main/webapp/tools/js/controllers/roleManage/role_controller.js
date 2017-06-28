@@ -8,9 +8,9 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
         i18nService.setCurrentLang("zh-cn");
         //ui-grid
         $scope.myData = [
-            {'ROLE_CODE': "001000", 'ROLE_NAME': '角色名称','ROLE_TYPE':'一类','GUID_APP':"测试"},
-            {'ROLE_CODE': "001001", 'ROLE_NAME': '角色名称','ROLE_TYPE':'一类','GUID_APP':"搜索"},
-            {'ROLE_CODE': "001002", 'ROLE_NAME': '角色名称','ROLE_TYPE':'二类','GUID_APP':"查询"}
+            {'ROLE_CODE': "001000", 'ROLE_NAME': '张三','ROLE_TYPE':'一类','GUID_APP':"测试"},
+            {'ROLE_CODE': "001001", 'ROLE_NAME': '李四','ROLE_TYPE':'一类','GUID_APP':"搜索"},
+            {'ROLE_CODE': "001002", 'ROLE_NAME': '王五','ROLE_TYPE':'二类','GUID_APP':"查询"}
         ];
         //ui-grid 具体配置
 
@@ -304,7 +304,6 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
 
 
 
-    /*tab下机构详情*/
     $scope.orgData = [{ROLE_NAME: "成成", ROLE_CODE: 'TX1001',ROLE_org:'组织机构'},
         {ROLE_NAME: "豪豪", ROLE_CODE: 'TX1002',ROLE_org:'上海分行'},
         {ROLE_NAME: "肖肖", ROLE_CODE: 'TX1003',ROLE_org:'内容分行'},
