@@ -27,19 +27,16 @@ import org.tools.design.SpringJunitSupport;
  */
 public class AppRServiceTest extends SpringJunitSupport{
 	
-	
-	@Autowired
-	IAcAppRService acAppRService;
 	@Autowired
 	IApplicationRService applicationRService;
 	/*
 	 * 测试数据: 生成应用代码所需的数据
 	 */
-	private static String appCode = "APP0003"; //应用代码
+	private static String appCode = "APP0005"; //应用代码
 	private static String appName = "应用框架模型" ; //应用名称
 	private static String appType = "local" ; //应用类型
 	private static String appDesc = "zzc" ; //描述
-	private static String isOpen = "Y" ; //是否开通
+	private static String isopen = "Y" ; //是否开通
 	private static Date openDate = new Date("2017/06/13") ; //开通时间
 	private static String url = "http://www.baidu.com/appserver" ; //地址
 	private static String ipAddr = "127.0.0.1" ; //IP地址
@@ -69,16 +66,24 @@ public class AppRServiceTest extends SpringJunitSupport{
 	 */
 	@Test
 	public void genAppCodeSucc() {
-		
         WhereCondition wc = new WhereCondition();
-		//		WhereCondition wc = new WhereCondition();
-//		List<AcApp> ac = acAppRService.query(wc);
 //		System.out.println("zzc输出"+ac.get(0).getAppName());
-		List<AcApp> acc = acAppRService.query(wc);
-		
-//		AcApp app = applicationRService.createAcApp(appCode, appName, appType, appDesc, isOpen, openDate, url, ipAddr, ipPort);
+		List<AcApp> acc = applicationRService.queryAcAppList(wc);
+		System.out.println(acc);
+//		AcApp ac = new AcApp();
+//		ac.setAppCode(appCode);
+//		ac.setAppName(appName);
+//		ac.setAppType(appType);
+//		ac.setAppDesc(appDesc);
+//		ac.setIsopen(isopen);
+//		ac.setOpenDate(openDate);
+//		ac.setUrl(url);
+//		ac.setIpAddr(ipAddr);
+//		ac.setIpPort(ipPort);
+//		
+//		AcApp app = applicationRService.createAcApp(ac);
 //		Assert.assertNotNull("创建APP成功",app);
-//		Assert.assertEquals("返回的代码应该相等","APP0003", app.getGuid());		
+//		Assert.assertEquals("返回的代码应该相等","APP0005", app.getAppCode());		
 	}
 	
 	/**
