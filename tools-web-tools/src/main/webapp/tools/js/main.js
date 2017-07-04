@@ -678,6 +678,12 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             data: {pageTitle: '操作员个性配置'},
             controller:"operconfig_controller"
         })
+        .state("shortcutMenu",{
+            url:"/shortcutMenu.html",
+            templateUrl:"views/shortcutMenu/shortcutMenu.html",
+            data: {pageTitle: '快捷菜单'},
+            controller:"shortcutMenu_controller"
+        })
         .state("operstatus",{
             url:"/operstatus.html",
             templateUrl:"views/operator/operstatus.html",

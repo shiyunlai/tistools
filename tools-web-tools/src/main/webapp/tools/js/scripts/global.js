@@ -280,13 +280,17 @@ function isNull(d){
     return false
 }
 
-function openwindow($modal, url, size, ctl) {
+function openwindow($modal, url, size, ctl,resolve) {
     var modalInstance = $modal.open({
         templateUrl: url,
         controller: ctl,
         size: size,
-        backdrop: false
-
+        backdrop: false,
+        resolve : {
+            $resolve : function () {
+                return resolve;
+            }
+        }
     });
     return modalInstance;
 }

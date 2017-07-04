@@ -1,7 +1,7 @@
-<!-- 新增功能组页面-->
-
+<!-- 新增应用-->
 <div class="row" ng-form="bigform">
     <div class="col-md-12">
+        {{dictionaryAdd.openDateStr}}
         <div class="portlet light bordered ">
             <div class="portlet-title">
                 <div class="caption">
@@ -64,8 +64,8 @@
                                             <div class="col-md-8">
                                                 <select class="form-control" name="dict_open" ng-model="dictionaryAdd.isOpen">
                                                     <option value=""></option>
-                                                    <option value="s">是</option>
-                                                    <option value="a">否</option>
+                                                    <option value="0">是</option>
+                                                    <option value="1">否</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -74,7 +74,13 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-4"> 开通日期: </label>
                                             <div class="col-md-8">
-                                                <input class="input-appAdd" style="" type="date"ng-model="dictionaryAdd.openDate">
+                                                <input class="input-appAdd" style="" type="date"ng-model="dictionaryAdd.openDateStr">
+                                                <!--<div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
+                                                <span class="input-group-btn">
+                                                    <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                                </span>
+                                                    <input type="text" class="form-control" ng-model="dictionaryAdd.openDate" readonly/>
+                                                </div>-->
                                             </div>
                                         </div>
                                     </div>
