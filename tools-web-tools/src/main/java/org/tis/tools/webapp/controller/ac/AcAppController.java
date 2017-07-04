@@ -24,6 +24,7 @@ import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcFuncgroup;
 import org.tis.tools.model.po.ac.AcFunc;
 import org.tis.tools.model.po.om.OmOrg;
+import org.tis.tools.model.vo.ac.AcAppVo;
 import org.tis.tools.rservice.ac.basic.IAcAppRService;
 import org.tis.tools.rservice.ac.capable.IApplicationRService;
 import org.tis.tools.webapp.controller.BaseController;
@@ -140,9 +141,9 @@ public class AcAppController extends BaseController {
 			acApp.setAppType(jsonObj.getString("appType"));
 			acApp.setAppDesc(jsonObj.getString("appDesc"));
 			acApp.setIsopen(jsonObj.getString("isOpen"));
-			String openDate = jsonObj.getString("openDate");
+			String openDateStr = jsonObj.getString("openDateStr");
 			SimpleDateFormat times = new SimpleDateFormat("yyyy-MM-dd");
-			Date date = times.parse(openDate);
+			Date date = times.parse(openDateStr);
 			acApp.setOpenDate(date);
 			acApp.setUrl(jsonObj.getString("url"));
 			acApp.setIpAddr(jsonObj.getString("ipAddr"));
@@ -180,12 +181,12 @@ public class AcAppController extends BaseController {
 			WhereCondition wc;
 			if("#".equals(id)){
 				Map map=new HashMap();
-				map.put("ROOT_NAME", "应用功能管理");
-				map.put("ROOT_CODE", "AC0000");
+				map.put("rootName", "应用功能管理");
+				map.put("rootCode", "AC0000");
 				result.put("data", map);//返回给前台的数据
 			}else if("AC0000".equals(id)){
 				//调用远程服务,#:根
-				 List<AcApp> ac = applicationRService.queryAcRootList();
+				 List<AcAppVo> ac = applicationRService.queryAcRootList();
 				 result.put("data", ac);//返回给前台的数据
 			}else if(id.length()>3&&"APP".equals(id.substring(0, 3))){	
 				List<AcFuncgroup> group = applicationRService.queryAcRootFuncgroup(id);
@@ -194,7 +195,7 @@ public class AcAppController extends BaseController {
 				Map map=new HashMap();
 				List<AcFuncgroup> groupList = applicationRService.queryAcChildFuncgroup(id);
 				if(groupList.size()>0){
-					map.put("groupList", "groupList");
+					map.put("groupList", groupList);
 				}
 				List<AcFunc> funcList = applicationRService.queryAcGroupFunc(id);
 				if(funcList.size()>0){
@@ -233,18 +234,18 @@ public class AcAppController extends BaseController {
 			}
 			JSONObject jsonObj = JSONObject.fromObject(content);	//传入的参数
 			
-			String FUNCGROUP_NAME = jsonObj.getString("FUNCGROUP_NAME");
-			String GROUP_LEVEL = jsonObj.getString("GROUP_LEVEL");
-			String GUID_APP = jsonObj.getString("GUID_APP");
-			String GUID_PARENTS = jsonObj.getString("GUID_PARENTS");
+			String funcgroupName = jsonObj.getString("funcgroupName");
+			String groupLevel = jsonObj.getString("groupLevel");
+			String guidApp = jsonObj.getString("guidApp");
+			String guidParents = jsonObj.getString("guidParents");
 			//转换成BigDecimal类型
-			BigDecimal groupLevel=new BigDecimal(GROUP_LEVEL);
-			groupLevel=groupLevel.setScale(2, BigDecimal.ROUND_HALF_UP); //小数位2位，四舍五入
+			BigDecimal groupLevelBd=new BigDecimal(groupLevel);
+			groupLevelBd=groupLevelBd.setScale(2, BigDecimal.ROUND_HALF_UP); //小数位2位，四舍五入
 			AcFuncgroup acFuncgroup = new AcFuncgroup();//new 一个新对象
-			acFuncgroup.setFuncgroupName(FUNCGROUP_NAME);
-			acFuncgroup.setGroupLevel(groupLevel);
-			acFuncgroup.setGuidApp(GUID_APP);
-			acFuncgroup.setGuidParents(GUID_PARENTS);
+			acFuncgroup.setFuncgroupName(funcgroupName);
+			acFuncgroup.setGroupLevel(groupLevelBd);
+			acFuncgroup.setGuidApp(guidApp);
+			acFuncgroup.setGuidParents(guidParents);
 			AcFuncgroup acgrop = applicationRService.createAcFuncGroup(acFuncgroup );//把new的并且填入参数的对象，传入，返回
 			result.put("data", acgrop);//返回给前台的数据
 			result.put("status", "0");//返回给前台的数据
@@ -310,12 +311,12 @@ public class AcAppController extends BaseController {
 			String guid = jsonObj.getString("id");
 			AcFuncgroup acFuncgroup = applicationRService.queryFuncgroup(guid);
 			
-			String FUNCGROUP_NAME = jsonObj.getString("FUNCGROUP_NAME");
-			String GROUP_LEVEL = jsonObj.getString("GROUP_LEVEL");
-			String GUID_PARENTS = jsonObj.getString("GUID_PARENTS");
-			acFuncgroup.setFuncgroupName(FUNCGROUP_NAME);
-			acFuncgroup.setGroupLevel(new BigDecimal(GROUP_LEVEL));
-			acFuncgroup.setGuidParents(GUID_PARENTS);
+			String funcgroupName = jsonObj.getString("funcgroupName");
+			String groupLevel = jsonObj.getString("groupLevel");
+			String guidParents = jsonObj.getString("guidParents");
+			acFuncgroup.setFuncgroupName(funcgroupName);
+			acFuncgroup.setGroupLevel(new BigDecimal(groupLevel));
+			acFuncgroup.setGuidParents(guidParents);
 			applicationRService.updateAcFuncgroup(acFuncgroup);//把new的并且填入参数的对象，传入，返回
 			result.put("status", "0");//返回给前台的数据
 			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(result).toString());//返回给前台的结

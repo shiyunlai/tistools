@@ -18,7 +18,7 @@
 		tools-design 单独编译
 		<module>tools-design</module> 
 		-->
-		<module>tools-maven-plugin</module>
+		<!-- <module>tools-maven-plugin</module>	-->
 		<module>tools-facade-biztrace</module>
 		<module>tools-facade-devmgr</module>
 		<module>tools-facade-jnl</module>
