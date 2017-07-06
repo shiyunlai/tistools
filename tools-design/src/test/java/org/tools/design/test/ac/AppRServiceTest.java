@@ -16,6 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tis.tools.base.WhereCondition;
+import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcFuncgroup;
 import org.tis.tools.model.vo.ac.AcAppVo;
@@ -71,23 +72,19 @@ public class AppRServiceTest extends SpringJunitSupport{
 	 * @throws ParseException 
 	 */
 	@Test
-	public void genAppCodeSucc() throws Exception {
-//        WhereCondition wc = new WhereCondition();
-////		System.out.println("zzc输出"+ac.get(0).getAppName());
-//		List<AcApp> acc = applicationRService.queryAcAppList(wc);
-//		System.out.println(acc);
+	public void genAppCodeSucc() throws ToolsRuntimeException{
+		
+		try {
+			String guid = "APP1499074217";
+			AcApp ac = applicationRService.queryAcApp(guid);
+			System.out.println(ac);
+		} catch (ToolsRuntimeException e) {	
+			System.out.println("错误码："+e.getCode());
+			System.out.println("错误信息："+e.getMessage());
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
 
-		String  guid="APP1498646042";
-		  WhereCondition wc =new WhereCondition();
-		  wc.andEquals("GUID",  "FUNCGROUP1498748954");
-		List<AcFuncgroup> ac = applicationRService.queryAcFuncgroup(wc );
-		 System.out.println("zzc");
-//		java.text.SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-//		
-//		System.out.println(sdf.format(app1.getOpenDate()));
-//		System.out.println(app1.getOpenDate().getYear());
-//		System.out.println(app1.getOpenDate().getMonth());
-//		System.out.println(app1.getOpenDate().getDay());
 	}
 	
 	/**
