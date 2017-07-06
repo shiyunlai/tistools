@@ -362,12 +362,12 @@
                                 <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="!tabflag">
                                     <li ng-class="{true:'active',false:''}[appfunflag.gnlist]">
                                         <a data-toggle="tab" href ng-class="{true:'link',false:''}[appfunflag.gnlist]" ng-click="appfunflag.loadgwdata(0)">
-                                            <i class="green ace-icon fa fa-bars bigger-120"></i>功能列表
+                                            <i class="green ace-icon fa fa-bars bigger-120"></i>功能信息
                                         </a>
                                     </li>
                                     <li ng-class="{true:'active',false:''}[appfunflag.zylist]">
                                         <a  data-toggle="tab" href ng-class="{true:'link',false:''}[appfunflag.zylist]" ng-click="appfunflag.loadgwdata(1)">
-                                            <i class="green ace-icon fa fa-bars bigger-120"></i>资源列表
+                                            <i class="green ace-icon fa fa-bars bigger-120"></i>资源信息
                                         </a>
                                     </li>
                                     <li ng-class="{true:'active',false:''}[appfunflag.gnactive]">
@@ -387,7 +387,7 @@
                                                     <label class="control-label col-md-4">功能名称<span ng-class="{required:myform.dict_key.$invalid}"  >* </span></label>
                                                     <div class="col-md-8">
                                                         <input type="text" class="form-control"
-                                                               ng-model="appFrom.appname" required
+                                                               ng-model="dictionaryAdd.funcName" required
                                                                name="dict_key" ng-disabled="!editflag"/>
                                                     </div>
                                                 </div>
@@ -397,7 +397,7 @@
                                                     <label class="control-label col-md-4">功能编码<span ng-class="{required:myform.dict_key1.$invalid}"  >* </span></label>
                                                     <div class="col-md-8">
                                                         <input type="text" class="form-control"
-                                                               ng-model="appFrom.appcode" required
+                                                               ng-model="dictionaryAdd.funcCode" required
                                                                name="dict_key1" ng-disabled="!editflag"/>
                                                     </div>
                                                 </div>
@@ -406,7 +406,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label col-md-4">功能类型</label>
                                                     <div class="col-md-8">
-                                                        <select class="form-control" name="dict_open" ng-model="appFrom.type" ng-disabled="!editflag">
+                                                        <select class="form-control" name="dict_open" ng-model="dictionaryAdd.funcType" ng-disabled="!editflag">
                                                             <option value="s" selected>页面流</option>
                                                             <option value="a">测试功能</option>
                                                         </select>
@@ -417,7 +417,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label col-md-4">是否定义为菜单</label>
                                                     <div class="col-md-8">
-                                                        <select class="form-control" name="dict_open" ng-model="appFrom.menu" ng-disabled="!editflag">
+                                                        <select class="form-control" name="dict_open" ng-model="dictionaryAdd.ismenu" ng-disabled="!editflag">
                                                             <option value="n" selected>否</option>
                                                             <option value="s">是</option>
                                                         </select>
@@ -429,7 +429,7 @@
                                                     <label class="control-label col-md-2">功能调用入口</label>
                                                     <div class="col-md-10">
                                                         <input type="text" class="form-control"
-                                                               ng-model="appFrom.ready"
+                                                               ng-model="dictionaryAdd.funcAction"
                                                                name="id" ng-disabled="!editflag"/>
                                                     </div>
                                                 </div>
@@ -439,7 +439,7 @@
                                                     <label class="control-label col-md-2">输入参数</label>
                                                     <div class="col-md-10">
                                                         <input type="text" class="form-control"
-                                                               ng-model="appFrom.parameter"
+                                                               ng-model="dictionaryAdd.paraInfo"
                                                                name="id" ng-disabled="!editflag"/>
                                                     </div>
                                                 </div>
@@ -449,7 +449,7 @@
                                                     <label class="control-label col-md-2">功能描述</label>
                                                     <div class="col-md-10">
                                                         <input type="text" class="form-control"
-                                                               ng-model="appFrom.desc"
+                                                               ng-model="dictionaryAdd.funcDesc"
                                                                name="id" ng-disabled="!editflag"/>
                                                     </div>
                                                 </div>

@@ -1,3 +1,5 @@
+
+
 function initController($scope, thisobj, thisobjName, thisobj_service, filterFilter) {
     thisobj.checkAll = function (headcheck) {
         if (!headcheck) {
@@ -436,11 +438,33 @@ function initgrid($scope, thisobj, fun, filterFilter,com,bol,selection){
         //paginationTemplate:"<div></div>", //自定义底部分页代码
         totalItems : 0, // 总数量
         useExternalPagination: true,//是否使用分页按钮
+        //导出测试
+        enableSelectAll: true,
+        exporterCsvFilename: 'myFile.csv',
+        exporterPdfDefaultStyle: {fontSize: 9},
+        exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
+        exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
+        exporterPdfHeader: { text: "My Header", style: 'headerStyle' },
+        exporterPdfFooter: function ( currentPage, pageCount ) {
+            return { text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle' };
+        },
+        exporterPdfCustomFormatter: function ( docDefinition ) {
+            docDefinition.styles.headerStyle = { fontSize: 22, bold: true };
+            docDefinition.styles.footerStyle = { fontSize: 10, bold: true };
+            return docDefinition;
+        },
+        exporterPdfOrientation: 'portrait',
+        exporterPdfPageSize: 'LETTER',
+        exporterPdfMaxGridWidth: 500,
+        exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+        //导出测试结束
         //是否多选
         multiSelect:bol,
         columnDefs:com,
         enableGridMenu: true, //是否显示grid 菜单
         enableFiltering:true,//打开标识,用于搜索
+        enableFooterTotalSelected: true, // 是否显示选中的总数，默认为true, 如果显示，showGridFooter 必须为true
+        showGridFooter:true,
         onRegisterApi: function(girdApi) {
             $scope.girdApi = girdApi;
             //分页按钮事件

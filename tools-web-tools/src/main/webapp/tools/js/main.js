@@ -10,8 +10,10 @@ var MetronicApp = angular.module("MetronicApp", [
     "ui.bootstrap",
     "oc.lazyLoad",
     "ngSanitize",
+    'angularFileUpload',
     'ui.grid',
     'ui.grid.selection',
+    'ui.grid.exporter',
     'ui.grid.edit',
     'ui.grid.pagination',
     'ui.grid.resizeColumns'
@@ -689,6 +691,12 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             templateUrl:"views/operator/operstatus.html",
             data: {pageTitle: '操作员身份'},
             controller:"operstatus_controller"
+        })
+        .state("dictionary",{
+            url:"/dictionary.html",
+            templateUrl:"views/dictionary/dictionary.html",
+            data: {pageTitle: '操作员身份'},
+            controller:"dictionary_controller"
         })
 }]);
 
