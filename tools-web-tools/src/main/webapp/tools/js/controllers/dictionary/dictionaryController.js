@@ -42,7 +42,8 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
         return $scope.importadd;//数据方法
     }
     var com = [{ field: 'dictType', displayName: '类型名称'},
-        { field: "dictName", displayName:'类型名称'}
+        { field: "dictName", displayName:'类型名称'},
+        //{ field: "dictName", displayName:'类型名称',visible: false}
     ];
     //自定义点击事件
     var f = function(row){
@@ -55,53 +56,6 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
         }
     }
     $scope.gridOptions0 = initgrid($scope,gridOptions0,initdata(),filterFilter,com,false,f,"jjj");
-
-
-/*    $scope.gridOptions0 = {
-        columnDefs: [
-            { field: 'dictType', displayName: '类型名称'},
-            { field: "dictName", displayName:'类型名称'}
-        ],
-        data:[
-            {'dictType':'ABF_APPTYPE','dictName':"应用类型"},
-            {'dictType':'ABF_AUTHMODE','dictName':"认证模式"},
-            {'dictType':'ABF_BUSIORGTY','dictName':"业务机构类别"},
-            {'dictType':'ABF_CARDTYPE','dictName':"证件类型"},
-            {'dictType':'ABF_GONFIGTYPE','dictName':"配置类型"},
-            {'dictType':'ABF_DUTYTYPE','dictName':"职位套别"}
-        ],
-        enableGridMenu: true,
-        enableSelectAll: true,
-        exporterCsvFilename: 'myFile.csv',
-        enableFiltering:true,//打开标识,用于搜索
-        exporterPdfDefaultStyle: {fontSize: 9},
-        exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
-        exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
-        exporterPdfHeader: { text: "My Header", style: 'headerStyle' },
-        exporterPdfFooter: function ( currentPage, pageCount ) {
-            return { text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle' };
-        },
-        exporterPdfCustomFormatter: function ( docDefinition ) {
-            docDefinition.styles.headerStyle = { fontSize: 22, bold: true };
-            docDefinition.styles.footerStyle = { fontSize: 10, bold: true };
-            return docDefinition;
-        },
-        exporterPdfOrientation: 'portrait',
-        exporterPdfPageSize: 'LETTER',
-        exporterPdfMaxGridWidth: 500,
-        exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
-        onRegisterApi: function(gridApi){
-            $scope.gridApi = gridApi;
-        }
-};*/
-
-    /*服务更改数据
-    $http.get('/data/100.json')
-        .success(function(data) {
-            $scope.gridOptions.data = data;
-        });*/
-
-
 
 
 

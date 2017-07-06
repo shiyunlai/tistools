@@ -90,6 +90,54 @@
                     </div>
                 </div>
                 <div class="col-md-12">
+                    <div class="caption">
+                        <i class="fa fa-cogs font-green-sharp"></i>
+                        <span class="caption-subject font-green-sharp bold uppercase" >资源类型</span>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">资源类型</label>
+                        <div class="col-md-8">
+                            <select class="form-control" name="dict_open" ng-model="appFrom.resType" >
+                                <option value="p" selected>页面流</option>
+                                <option value="l">逻辑流</option>
+                                <option value="j">JSP</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-2">构建包名</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control"
+                                   ng-model="appFrom.compackName"
+                                   name="id" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">资源显示名称</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="appFrom.resshowName"
+                                   name="id" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" >
+                    <div class="form-group">
+                        <label class="control-label col-md-2">资源路径</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control"
+                                   ng-model="appFrom.resPath"
+                                   name="id" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
                     <div class="form-group">
                         <label class="control-label col-md-2"></label>
                         <div class="col-md-10">

@@ -90,65 +90,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                             })
                     }
                 },
-                '导入功能':{
-                    "label":"导入功能",
-                    "action":function(data){
-                        var inst = jQuery.jstree.reference(data.reference),
-                            obj = inst.get_node(data.reference);//从数据库中获取所有的数据
-                        openwindow($uibModal, 'views/Jurisdiction/importAdd.html', 'lg',
-                            function ($scope, $modalInstance) {
-                                $scope.importadd = [
-                                    {'构架包':'com.primeton.workflow.manager.def', '名称':'com.primeton.workflow.manager.def'},
-                                    {'构架包':'com.primeton.workflow.client.process', '名称':'com.primeton.workflow.client.process'},
-                                    {'构架包':'com.primeton.eos.exp', '名称':'com.primeton.workflow.eos.exp'},
-                                    {'构架包':'org.gocom.abframe.ztest', '名称':'org.gocom.abframe.ztest'},
-                                    {'构架包':'org.gocom.abframe.test', '名称':'测试'},
-                                    {'构架包':'org.gocom.abframe.test', '名称':'测试'},
-                                    {'构架包':'org.gocom.abframe.rights', '名称':'权限管理'},
-                                    {'构架包':'org.gocom.abframe.tools', '名称':'其他管理'},
-                                    {'构架包':'com.primeton.workflow.core', '名称':'com.primeton.workflow.core'}
-                                ];
-                                var gridOptions5 = {};
-                                $scope.gridOptions5 = gridOptions5;
-                                var initdata5 = function(){
-                                    return $scope.importadd;//数据方法
-                                }
-                                var com5 = [{ field: '构架包', displayName: '构架包'},
-                                    { field: "名称", displayName:'名称'}
-                                ];
-                                //自定义点击事件
-                                var f5 = function(row){
-                                    if(row.isSelected){
-                                        $scope.selectRow3 = row.entity;
-                                    }else{
-                                        delete $scope.selectRow3;//制空
-                                    }
-                                }
-                                $scope.gridOptions5 = initgrid($scope,gridOptions5,initdata5(),filterFilter,com5,true,f5);
-                                //创建机构实例
-                                var subFrom = {};
-                                $scope.subFrom = subFrom;
-                                //处理新增机构父机构
-                                subFrom.guidParents = obj.original.guid;
-                                //导入方法
-                                $scope.importAdd = function () {
-                                    var dats = $scope.gridOptions5.getSelectedRows();
-                                    if(dats.length >0){
-                                        console.log(dats)//选中的数据
-                                        //TODO.批量导入新增逻辑，加入数据库即可
-                                        toastr['success']("导入成功！");
-                                        $modalInstance.close();
-                                    }else{
-                                        toastr['error']("请至少选中一个！");
-                                    }
-                                }
-                                $scope.cancel = function () {
-                                    $modalInstance.dismiss('cancel');
-                                };
-                            }
-                        )
-                    }
-                },
                 "删除应用":{
                     "label":"删除应用",
                     "action":function(data){
@@ -257,6 +198,65 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                             toastr['error'](data.extraMessage,"新增失败!");
                                         }
                                     })
+                                }
+                                $scope.cancel = function () {
+                                    $modalInstance.dismiss('cancel');
+                                };
+                            }
+                        )
+                    }
+                },
+                '导入功能':{
+                    "label":"导入功能",
+                    "action":function(data){
+                        var inst = jQuery.jstree.reference(data.reference),
+                            obj = inst.get_node(data.reference);//从数据库中获取所有的数据
+                        openwindow($uibModal, 'views/Jurisdiction/importAdd.html', 'lg',
+                            function ($scope, $modalInstance) {
+                                $scope.importadd = [
+                                    {'构架包':'com.primeton.workflow.manager.def', '名称':'com.primeton.workflow.manager.def'},
+                                    {'构架包':'com.primeton.workflow.client.process', '名称':'com.primeton.workflow.client.process'},
+                                    {'构架包':'com.primeton.eos.exp', '名称':'com.primeton.workflow.eos.exp'},
+                                    {'构架包':'org.gocom.abframe.ztest', '名称':'org.gocom.abframe.ztest'},
+                                    {'构架包':'org.gocom.abframe.test', '名称':'测试'},
+                                    {'构架包':'org.gocom.abframe.test', '名称':'测试'},
+                                    {'构架包':'org.gocom.abframe.rights', '名称':'权限管理'},
+                                    {'构架包':'org.gocom.abframe.tools', '名称':'其他管理'},
+                                    {'构架包':'com.primeton.workflow.core', '名称':'com.primeton.workflow.core'}
+                                ];
+                                var gridOptions5 = {};
+                                $scope.gridOptions5 = gridOptions5;
+                                var initdata5 = function(){
+                                    return $scope.importadd;//数据方法
+                                }
+                                var com5 = [{ field: '构架包', displayName: '构架包'},
+                                    { field: "名称", displayName:'名称'}
+                                ];
+                                //自定义点击事件
+                                var f5 = function(row){
+                                    if(row.isSelected){
+                                        $scope.selectRow3 = row.entity;
+                                    }else{
+                                        delete $scope.selectRow3;//制空
+                                    }
+                                }
+                                $scope.gridOptions5 = initgrid($scope,gridOptions5,initdata5(),filterFilter,com5,true,f5);
+                                //创建机构实例
+                                var subFrom = {};
+                                $scope.subFrom = subFrom;
+                                //处理新增机构父机构
+                                subFrom.guidParents = obj.original.guid;
+                                //导入方法
+                                $scope.importAdd = function () {
+                                    var dats = $scope.gridOptions5.getSelectedRows();
+                                    if(dats.length >0){
+                                        console.log(dats)//选中的数据
+                                        //TODO.批量导入新增逻辑，加入数据库即可
+                                        toastr['success']("导入成功！");
+                                        $modalInstance.close();
+                                    }else{
+                                        toastr['error']("请至少选中一个！");
+                                    }
                                 }
                                 $scope.cancel = function () {
                                     $modalInstance.dismiss('cancel');
@@ -1058,13 +1058,14 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         $scope.editflag = !$scope.editflag;//让保存取消方法显现,并且让文本框可以输入
 
     }
-    //保存方法
+
+
+    //应用信息保存方法
     $scope.biz.appsave = function (item) {
         application_service.appEdit(item).then(function(data){
             console.log(data);
             if(data.status == "success"){
                 toastr['success']("保存成功！");
-                $modalInstance.close();
             }else{
                 toastr['error']("修改失败!");
             }

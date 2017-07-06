@@ -461,6 +461,7 @@ function initgrid($scope, thisobj, fun, filterFilter,com,bol,selection){
         //是否多选
         multiSelect:bol,
         columnDefs:com,
+        exporterMenuPdf:false,//把pdf下载禁用
         enableGridMenu: true, //是否显示grid 菜单
         enableFiltering:true,//打开标识,用于搜索
         enableFooterTotalSelected: true, // 是否显示选中的总数，默认为true, 如果显示，showGridFooter 必须为true

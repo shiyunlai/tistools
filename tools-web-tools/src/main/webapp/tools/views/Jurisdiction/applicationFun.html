@@ -135,20 +135,6 @@
                                                         </div>
                                                         <div class="col-lg-6 col-md-12">
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-4"> 开通日期: </label>
-                                                                <div class="col-md-8">
-                                                                    <input class="input-appAdd" style="" type="date" ng-model="dictionaryAdd.openDateStr" ng-disabled="!editflag">
-                                                                    <!--<div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
-                                                                        <span class="input-group-btn">
-                                                                            <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
-                                                                        </span>
-                                                                        <input type="text" class="form-control" ng-model="dictionaryAdd.openDate" readonly/>
-                                                                    </div>-->
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6 col-md-12">
-                                                            <div class="form-group">
                                                                 <label class="control-label col-md-4"> IP: </label>
                                                                 <div class="col-md-8">
                                                                     <input type="text" class="form-control"
@@ -171,6 +157,19 @@
                                                                 <div class="col-md-8">
                                                                     <input type="text" class="form-control"
                                                                            name="column_name" ng-model="dictionaryAdd.ipPort"  ng-disabled="!editflag"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4"> 开通日期: </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-group date form_datetime" ng-init="$root.settings.utils.initpicker()" >
+                                                                            <span class="input-group-btn">
+                                                                                <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                                                            </span>
+                                                                        <input type="text" class="form-control" ng-model="dictionaryAdd.openDateStr" readonly/>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
