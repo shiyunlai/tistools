@@ -439,6 +439,7 @@ function initgrid($scope, thisobj, fun, filterFilter,com,bol,selection){
         columnDefs:com,
         enableGridMenu: true, //是否显示grid 菜单
         enableFiltering:true,//打开标识,用于搜索
+        // headerTemplate:'<div></div>',
         onRegisterApi: function(girdApi) {
             $scope.girdApi = girdApi;
             //分页按钮事件

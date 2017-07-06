@@ -18,21 +18,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="abftree.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/org/abftree.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4515">
-              <caret line="301" column="91" lean-forward="false" selection-start-line="301" selection-start-column="91" selection-end-line="301" selection-end-column="91" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Abftree_Controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/controllers/org/Abftree_Controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="562">
-              <caret line="503" column="40" lean-forward="false" selection-start-line="503" selection-start-column="40" selection-end-line="503" selection-end-column="40" />
+            <state relative-caret-position="452">
+              <caret line="789" column="36" lean-forward="true" selection-start-line="788" selection-start-column="20" selection-end-line="789" selection-end-column="36" />
               <folding>
                 <element signature="e#0#41#0" expanded="false" />
               </folding>
@@ -43,33 +33,81 @@
       <file leaf-file-name="abftree_service.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/service/org/abftree_service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="30" column="4" lean-forward="false" selection-start-line="30" selection-start-column="4" selection-end-line="30" selection-end-column="4" />
+            <state relative-caret-position="570">
+              <caret line="44" column="19" lean-forward="true" selection-start-line="44" selection-start-column="19" selection-end-line="44" selection-end-column="19" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="addorg_window.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/org/addorg_window.html">
+      <file leaf-file-name="Workgroup_service.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/service/Workgroup/Workgroup_service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2445">
-              <caret line="163" column="61" lean-forward="false" selection-start-line="163" selection-start-column="61" selection-end-line="163" selection-end-column="61" />
+            <state relative-caret-position="491">
+              <caret line="33" column="24" lean-forward="false" selection-start-line="33" selection-start-column="12" selection-end-line="33" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Workgroup_controller.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/controllers/Workgroup/Workgroup_controller.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="342">
+              <caret line="276" column="71" lean-forward="false" selection-start-line="276" selection-start-column="71" selection-end-line="276" selection-end-column="71" />
               <folding>
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#form#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#17;n#div#0;n#form#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="e#775#6945#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/main.js">
+      <file leaf-file-name="addworkgroup_window.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/Workgroup/addworkgroup_window.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="36" column="20" lean-forward="false" selection-start-line="36" selection-start-column="20" selection-end-line="36" selection-end-column="20" />
+            <state relative-caret-position="435">
+              <caret line="65" column="67" lean-forward="true" selection-start-line="65" selection-start-column="67" selection-end-line="65" selection-end-column="67" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Workgroup.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/Workgroup/Workgroup.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="480">
+              <caret line="82" column="103" lean-forward="false" selection-start-line="82" selection-start-column="103" selection-end-line="82" selection-end-column="103" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="abftree.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/org/abftree.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="33">
+              <caret line="40" column="16" lean-forward="true" selection-start-line="40" selection-start-column="16" selection-end-line="61" selection-end-column="21" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#13;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#13;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#2;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#11;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#11;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#5;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#6;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#7;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -79,8 +117,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
         <option value="CSS File" />
+        <option value="JavaScript File" />
         <option value="HTML File" />
       </list>
     </option>
@@ -98,10 +136,20 @@
       <find>page-sidebar-menu-fixed</find>
       <find>body</find>
       <find>biz</find>
+      <find>darkblue.min.css</find>
+      <find>style</find>
+      <find>flag.xqxx</find>
+      <find>subFrom</find>
+      <find>name=&quot;id&quot;</find>
+      <find>MSN</find>
+      <find>title</find>
+      <find>uiGridOneBindTitle</find>
     </findStrings>
     <replaceStrings>
       <replace>abftree</replace>
       <replace>ng-readonly=&quot;!editflag&quot;</replace>
+      <replace>item</replace>
+      <replace>ng-readonly=&quot;editflag&quot;</replace>
     </replaceStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -110,16 +158,24 @@
         <option value="$PROJECT_DIR$/main/webapp/tools/tpl/page-head.html" />
         <option value="$PROJECT_DIR$/main/webapp/assets/global/plugins/ui-grid/ui-grid.min.js" />
         <option value="$PROJECT_DIR$/main/webapp/assets/global/plugins/ui-grid/ui-grid.min.css" />
-        <option value="$PROJECT_DIR$/main/webapp/tools/js/scripts/global.js" />
         <option value="$PROJECT_DIR$/main/webapp/tools/tpl/header.html" />
-        <option value="$PROJECT_DIR$/main/webapp/tools/index.html" />
-        <option value="$PROJECT_DIR$/main/webapp/tools/tpl/sidebar.html" />
-        <option value="$PROJECT_DIR$/main/webapp/tools/js/main.js" />
         <option value="$PROJECT_DIR$/main/webapp/tools/js/service/org/abftree.js" />
-        <option value="$PROJECT_DIR$/main/webapp/tools/views/org/addorg_window.html" />
-        <option value="$PROJECT_DIR$/main/webapp/tools/views/org/abftree.html" />
         <option value="$PROJECT_DIR$/main/webapp/tools/js/service/org/abftree_service.js" />
+        <option value="$PROJECT_DIR$/main/webapp/tools/js/controllers/Emp/Emp_controllers.js" />
+        <option value="$PROJECT_DIR$/main/webapp/tools/js/service/Emp/Emp_service.js" />
+        <option value="$PROJECT_DIR$/main/webapp/tools/js/controllers/Emp/Emp_controller.js" />
+        <option value="$PROJECT_DIR$/main/webapp/tools/views/Emp/Emp.html" />
+        <option value="$PROJECT_DIR$/main/webapp/tools/js/main.js" />
+        <option value="$PROJECT_DIR$/main/webapp/tools/tpl/sidebar.html" />
         <option value="$PROJECT_DIR$/main/webapp/tools/js/controllers/org/Abftree_Controller.js" />
+        <option value="$PROJECT_DIR$/main/webapp/tools/views/org/abftree.html" />
+        <option value="$PROJECT_DIR$/main/webapp/tools/js/scripts/global.js" />
+        <option value="$PROJECT_DIR$/main/webapp/tools/views/org/addorg_window.html" />
+        <option value="$PROJECT_DIR$/main/webapp/tools/index.html" />
+        <option value="$PROJECT_DIR$/main/webapp/tools/views/Workgroup/addworkgroup_window.html" />
+        <option value="$PROJECT_DIR$/main/webapp/tools/js/service/Workgroup/Workgroup_service.js" />
+        <option value="$PROJECT_DIR$/main/webapp/tools/views/Workgroup/Workgroup.html" />
+        <option value="$PROJECT_DIR$/main/webapp/tools/js/controllers/Workgroup/Workgroup_controller.js" />
       </list>
     </option>
   </component>
@@ -131,8 +187,8 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
-    <option name="width" value="1280" />
-    <option name="height" value="726" />
+    <option name="width" value="1440" />
+    <option name="height" value="821" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -255,6 +311,36 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="Workgroup" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="org" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -285,7 +371,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="biztrace" />
+              <option name="myItemId" value="Emp" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -341,7 +427,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
+              <option name="myItemId" value="service" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -371,45 +457,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
+              <option name="myItemId" value="service" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="org" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="biztrace" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -435,18 +487,22 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
-    <property name="SearchEverywhereHistoryKey" value="abf&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/js/service/org/abftree_service.js&#10;main&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/js/main.js&#10;PageHeadController&#9;null&#9;null&#10;style&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/assets/global/plugins/mapplic/css/style.css&#10;Volum&#9;null&#9;null&#10;gl&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/js/scripts/global.js&#10;index&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/index.html&#10;page-head&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/tpl/page-head.html&#10;glo&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/js/scripts/global.js&#10;app&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/www/js/app.js&#10;sidebar&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/tpl/sidebar.html&#10;dashboard&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/views/profile/dashboard.html" />
+    <property name="SearchEverywhereHistoryKey" value="index&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/index.html&#10;main&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/js/main.js&#10;gl&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/js/scripts/global.js&#10;sid&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/tpl/sidebar.html&#10;layout.min.css&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/assets/layouts/layout4/css/layout.min.css&#10;applicationFun.html&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/views/Jurisdiction/applicationFun.html&#10;abf&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/js/service/org/abftree_service.js&#10;PageHeadController&#9;null&#9;null&#10;style&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/assets/global/plugins/mapplic/css/style.css&#10;Volum&#9;null&#9;null&#10;page-head&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/tpl/page-head.html&#10;glo&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/js/scripts/global.js&#10;app&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/www/js/app.js&#10;sidebar&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/tpl/sidebar.html&#10;dashboard&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/views/profile/dashboard.html" />
     <property name="js.eslint.eslintPackage" value="" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/main/webapp/assets/pages/media/users" />
+      <recent name="$PROJECT_DIR$/main/webapp/assets/global/plugins/jstree" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/main/webapp/tools/js/service/Workgroup" />
+      <recent name="$PROJECT_DIR$/main/webapp/tools/js/service/Emp" />
+      <recent name="$PROJECT_DIR$/main/webapp/assets/layouts/layout" />
       <recent name="$PROJECT_DIR$/main/webapp/assets/global/plugins/jstree" />
       <recent name="$PROJECT_DIR$/main/webapp/assets/global/css" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/main/webapp/assets/global/plugins/jstree" />
     </key>
   </component>
   <component name="RunManager">
@@ -568,32 +624,44 @@
       <workItem from="1495695765551" duration="1114000" />
       <workItem from="1496369814893" duration="54000" />
       <workItem from="1496373509661" duration="48000" />
+      <workItem from="1498555064744" duration="3829000" />
+      <workItem from="1498614238890" duration="2370000" />
+      <workItem from="1498619608764" duration="6973000" />
+      <workItem from="1498633132506" duration="328000" />
+      <workItem from="1498633483228" duration="9000" />
+      <workItem from="1498633531290" duration="433000" />
+      <workItem from="1498633971001" duration="5357000" />
+      <workItem from="1498699308292" duration="11037000" />
+      <workItem from="1498721547477" duration="746000" />
+      <workItem from="1498786632996" duration="5175000" />
+      <workItem from="1499242598789" duration="2099000" />
+      <workItem from="1499303219726" duration="10120000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="120050000" />
+    <option name="totallyTimeSpent" value="168526000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="726" extended-state="0" />
+    <frame x="0" y="23" width="1440" height="821" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19459888" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1987315" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12937595" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12724759" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -604,110 +672,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <option name="time" value="3" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/service/biztrace/redisClean.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="60" lean-forward="false" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/controllers/biztrace/biztraceSumQueryController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/profile/dashboard.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="151" column="74" lean-forward="false" selection-start-line="151" selection-start-column="74" selection-end-line="151" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/webapp/assets/global/scripts/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-13605">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/webapp/www/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3311">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/controllers/TodoController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/controllers/UISelectController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/controllers/UserProfileController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/controllers/m_loginController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/service/biztrace/biztraceSumQuery.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/controllers/biztrace/biztraceSumQueryController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/controllers/LPC/ListCheckController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3611">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/service/biztrace/redisClean.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="60" lean-forward="false" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/webapp/assets/layouts/layout4/css/custom.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/webapp/assets/global/css/style.min.css" />
     <entry file="file://$PROJECT_DIR$/main/webapp/assets/global/plugins/jstree/jstree.min.js" />
     <entry file="file://$PROJECT_DIR$/main/webapp/assets/global/css/style.css" />
     <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/service/biztrace/biztraceHandle.js">
@@ -776,13 +745,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/scripts/global.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2745">
-          <caret line="183" column="19" lean-forward="false" selection-start-line="183" selection-start-column="12" selection-end-line="183" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main/webapp/assets/global/plugins/mapplic/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-4785">
@@ -811,20 +773,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main/webapp/tools/tpl/sidebar.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="41" lean-forward="true" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/webapp/tools/tpl/page-head.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="885">
-          <caret line="59" column="59" lean-forward="false" selection-start-line="59" selection-start-column="54" selection-end-line="59" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/tpl/page-head.html" />
     <entry file="file://$PROJECT_DIR$/main/webapp/assets/layouts/layout4/css/layout.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-74">
@@ -843,13 +792,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="356">
           <caret line="109" column="53" lean-forward="true" selection-start-line="109" selection-start-column="53" selection-end-line="109" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/webapp/tools/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="59" column="146" lean-forward="false" selection-start-line="59" selection-start-column="146" selection-end-line="59" selection-end-column="146" />
         </state>
       </provider>
     </entry>
@@ -881,49 +823,197 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/Jurisdiction/applicationFun.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="11" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/webapp/assets/layouts/layout4/css/layout.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/webapp/assets/layouts/layout/css/themes/light.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/webapp/assets/layouts/layout/css/themes/blue.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="28" column="34" lean-forward="true" selection-start-line="28" selection-start-column="34" selection-end-line="28" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/service/Emp/Emp_service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="33" lean-forward="false" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/org/addemp_window.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5175">
+          <caret line="345" column="15" lean-forward="false" selection-start-line="11" selection-start-column="8" selection-end-line="345" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/webapp/assets/global/plugins/ui-grid/ui-grid.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="2535" column="51" lean-forward="false" selection-start-line="2535" selection-start-column="33" selection-end-line="2535" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/Emp/Emp.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="213" column="34" lean-forward="false" selection-start-line="213" selection-start-column="34" selection-end-line="213" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/controllers/org/Abftree_qx_Controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-30">
+          <caret line="31" column="13" lean-forward="true" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/tpl/sidebar.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="780">
+          <caret line="52" column="55" lean-forward="false" selection-start-line="52" selection-start-column="55" selection-end-line="52" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/directives.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-355">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/scripts/global.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1805">
+          <caret line="424" column="72" lean-forward="false" selection-start-line="424" selection-start-column="72" selection-end-line="424" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/org/addorg_window.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2445">
-          <caret line="163" column="61" lean-forward="false" selection-start-line="163" selection-start-column="61" selection-end-line="163" selection-end-column="61" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#form#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#17;n#div#0;n#form#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="345">
+          <caret line="155" column="34" lean-forward="false" selection-start-line="155" selection-start-column="34" selection-end-line="155" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="546">
+          <caret line="695" column="36" lean-forward="false" selection-start-line="695" selection-start-column="36" selection-end-line="695" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/controllers/Emp/Emp_controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="507">
+          <caret line="138" column="14" lean-forward="true" selection-start-line="138" selection-start-column="14" selection-end-line="138" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="148" column="48" lean-forward="false" selection-start-line="148" selection-start-column="48" selection-end-line="148" selection-end-column="48" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/org/abftree.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4515">
-          <caret line="301" column="91" lean-forward="false" selection-start-line="301" selection-start-column="91" selection-end-line="301" selection-end-column="91" />
+        <state relative-caret-position="33">
+          <caret line="40" column="16" lean-forward="true" selection-start-line="40" selection-start-column="16" selection-end-line="61" selection-end-column="21" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#13;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#13;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#2;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#11;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#11;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#5;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#6;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#7;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/Workgroup/addworkgroup_window.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="65" column="67" lean-forward="true" selection-start-line="65" selection-start-column="67" selection-end-line="65" selection-end-column="67" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/service/org/abftree_service.js">
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/Workgroup/Workgroup.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="30" column="4" lean-forward="false" selection-start-line="30" selection-start-column="4" selection-end-line="30" selection-end-column="4" />
-          <folding />
+        <state relative-caret-position="480">
+          <caret line="82" column="103" lean-forward="false" selection-start-line="82" selection-start-column="103" selection-end-line="82" selection-end-column="103" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/controllers/org/Abftree_Controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="562">
-          <caret line="503" column="40" lean-forward="false" selection-start-line="503" selection-start-column="40" selection-end-line="503" selection-end-column="40" />
+        <state relative-caret-position="452">
+          <caret line="789" column="36" lean-forward="true" selection-start-line="788" selection-start-column="20" selection-end-line="789" selection-end-column="36" />
           <folding>
             <element signature="e#0#41#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/main.js">
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/service/org/abftree_service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="36" column="20" lean-forward="false" selection-start-line="36" selection-start-column="20" selection-end-line="36" selection-end-column="20" />
+        <state relative-caret-position="570">
+          <caret line="44" column="19" lean-forward="true" selection-start-line="44" selection-start-column="19" selection-end-line="44" selection-end-column="19" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/service/Workgroup/Workgroup_service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="491">
+          <caret line="33" column="24" lean-forward="false" selection-start-line="33" selection-start-column="12" selection-end-line="33" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/controllers/Workgroup/Workgroup_controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="276" column="71" lean-forward="false" selection-start-line="276" selection-start-column="71" selection-end-line="276" selection-end-column="71" />
+          <folding>
+            <element signature="e#775#6945#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

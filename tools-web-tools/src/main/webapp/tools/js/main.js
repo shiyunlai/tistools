@@ -684,6 +684,18 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             data: {pageTitle: '操作员身份'},
             controller:"operstatus_controller"
         })
+        .state("emp",{
+            url:"/Emp.html",
+            templateUrl:"views/Emp/Emp.html",
+            data: {pageTitle: '员工管理'},
+            controller:"Emp_controller"
+        })
+        .state("Workgroup",{
+            url:"/Workgroup.html",
+            templateUrl:"views/Workgroup/Workgroup.html",
+            data: {pageTitle: '工作组管理'},
+            controller:"Workgroup_controller"
+        })
 }]);
 
 /* Init global settings and run the app */

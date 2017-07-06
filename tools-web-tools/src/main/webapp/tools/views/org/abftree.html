@@ -1,30 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" charset="UTF-8">
-    <title>Title</title>
-</head>
-<style>
-
-</style>
-<body>
+<div class="page-bar ng-scope" style="border-bottom: 1px solid #e7ecf1;">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="#">组织管理</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <a href="#">组织机构管理</a>
+        </li>
+    </ul>
+</div>
 <div>
     <!-- 组织机构树 start -->
     <div class="col-md-3">
-        <div class="portlet light" style="width: 100%;overflow-x: hidden;min-height: 848px">
+        <div class="portlet light">
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-cogs font-green-sharp"></i>
                     <span class="caption-subject font-green-sharp bold uppercase">组织机构管理</span>
                 </div>
                 <div class="tools">
-                    <a href="javascript:;" class="collapse">
-                    </a>
-                    <a href="#portlet-config" data-toggle="modal" class="config">
-                    </a>
                     <a href="javascript:;" class="reload">
-                    </a>
-                    <a href="javascript:;" class="remove">
                     </a>
                 </div>
             </div>
@@ -227,7 +222,7 @@
                                     <label class="control-label col-md-2"></label>
                                     <div class="col-md-10">
                                         <div class="actions btn-set" style="float: right;" ng-if="!editflag">
-                                            <button type="button" name="back" class="btn btn-primary" ng-click="abftree.test()"> 启用机构
+                                            <button type="button" name="back" class="btn btn-primary" ng-click="abftree.enable()"> 启用机构
                                             </button>
                                             <button type="button" name="back" class="btn btn-primary" ng-click="abftree.edit()"> 编辑机构
                                             </button>
@@ -534,5 +529,3 @@
     </div>
     <!-- end -->
 </div>
-</body>
-</html>

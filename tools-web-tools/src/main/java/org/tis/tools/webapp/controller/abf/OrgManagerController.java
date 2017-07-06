@@ -22,11 +22,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.tis.tools.base.WhereCondition;
+import org.tis.tools.model.po.om.OmGroup;
 import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.po.om.OmPosition;
 import org.tis.tools.rservice.om.capable.IOrgRService;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.util.AjaxUtils;
+import org.tis.tools.webapp.util.JsonDateProcessor;
 
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
@@ -155,19 +157,25 @@ public class OrgManagerController extends BaseController {
 		return null;
 	}
 	
+	
+	
+	
 	@RequestMapping(value = "/add")
 	public String execute1(ModelMap model,  @RequestBody String content,
 			String age, HttpServletRequest request, HttpServletResponse response) {
 		try {
 			//收到请求
-			JsonConfig jsonConfig = new JsonConfig();  
-		    jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());   
-			JSONObject jsonObj = JSONObject.fromObject(content,jsonConfig);
+			//JsonConfig jsonConfig = new JsonConfig();  
+//			JsonDateProcessor jdp = new JsonDateProcessor("yyyy-MM-dd");
+//		    jsonConfig.registerJsonValueProcessor(Date.class, jdp);   
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			
 			Map map = jsonObj;
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 			Date createTime = sf.parse(map.remove("createTime").toString());
 			Date startDate = sf.parse(map.remove("startDate").toString());
 			Date endDate = sf.parse(map.remove("endDate").toString());
+			
 			OmOrg og = new OmOrg();
 			BeanUtils.populate(og, map);
 			System.out.println(og);

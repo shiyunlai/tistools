@@ -56,10 +56,10 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
     $rootScope.settings.layout.pageBodySolid = false;
     $rootScope.settings.layout.pageSidebarClosed = false;
     //树过滤
-    $("#s").submit(function(e) {
-        e.preventDefault();
-        $("#container").jstree(true).search($("#q").val());
-    });
+    // $("#s").submit(function(e) {
+    //     e.preventDefault();
+    //     $("#container").jstree(true).search($("#q").val());
+    // });
 
     //树自定义右键功能
     var items = function customMenu(node) {
@@ -365,10 +365,6 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
     //控制2个树显示标识,true为默认值,false为筛选状态
     var showtree = true;
     $scope.showtree = showtree;
-    abftree.treesearch = function () {
-
-    }
-    $rootScope.searchListener = setInterval(abftree.treesearch(), 2000);
     $scope.$watch('searchitem', function(newValue, oldValue) {
         console.log(newValue)
         if(isNull(newValue)){
@@ -377,7 +373,6 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
             console.log(9999)
             $scope.showtree = false;
             //筛选重组树
-
             $("#searchtree").data('jstree', false).empty().jstree({
                 "core" : {
                     "themes" : {
@@ -528,6 +523,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
     //启用
     abftree.enable = function () {
         //TODO.启用逻辑
+        console.log($scope.abftree.item)
     }
 
     //修改
@@ -781,7 +777,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 //创建员工实例
                 var subFrom = {};
                 $scope.subFrom = subFrom;
-                //emp
+                //Emp
                 var emp = {};
                 $scope.emp = emp;
                 //处理新增员工-机构关系表
@@ -816,7 +812,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 var subFrom = it;
                 $scope.subFrom = subFrom;
                 //标识以区分新增和编辑
-                //emp
+                //Emp
                 var emp = {};
                 $scope.emp = emp;
                 //修改方法
