@@ -108,7 +108,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		org.setOrgName(orgName);
 		org.setOrgType(orgType);
 		org.setOrgDegree(orgDegree);
-		OmOrg newOrg = org;
+		final OmOrg newOrg = org;
 		// 新增机构
 		try {
 			org = transactionTemplate.execute(new TransactionCallback<OmOrg>() {
@@ -183,14 +183,15 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		int count = parentsOrg.getSubCount().intValue() + 1;
 		parentsOrg.setSubCount(new BigDecimal(count));
 		parentsOrg.setIsleaf(CommonConstants.NO);
-		OmOrg newOrg=org;
+		final OmOrg finalParentsOrg=parentsOrg;
+		final OmOrg newOrg=org;
 		// 新增子节点机构
 		try {
 			org = transactionTemplate.execute(new TransactionCallback<OmOrg>() {
 				@Override
 				public OmOrg doInTransaction(TransactionStatus arg0) {
 					omOrgService.insert(newOrg);//新增子节点
-					omOrgService.update(parentsOrg);//更新父节点
+					omOrgService.update(finalParentsOrg);//更新父节点
 					return newOrg;
 				}
 			});
@@ -246,14 +247,15 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		int count = parentsOrg.getSubCount().intValue() + 1;
 		parentsOrg.setSubCount(new BigDecimal(count));
 		parentsOrg.setIsleaf(CommonConstants.NO);
-		OmOrg newOrg=org;
+		final OmOrg finalparentsOrg=parentsOrg;
+		final OmOrg newOrg=org;
 		// 新增子节点机构
 		try {
 			org = transactionTemplate.execute(new TransactionCallback<OmOrg>() {
 				@Override
 				public OmOrg doInTransaction(TransactionStatus arg0) {
 					omOrgService.insert(newOrg);//新增子节点
-					omOrgService.update(parentsOrg);//更新父节点
+					omOrgService.update(finalparentsOrg);//更新父节点
 					return newOrg;
 				}
 			});

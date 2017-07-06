@@ -38,58 +38,6 @@ public class BizTest extends BaseController {
 	
 	@Autowired
 	IBiztraceRService biztraceRService ;
-	@Autowired
-	IAcAppRService acAppRService;
-	
-	/**
-	 * 示意controller开发的基本程序范式
-	 * @param model
-	 * @param content
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping("/zzctest")
-	public String zzctest(ModelMap model,@RequestBody String dddd,
-			HttpServletRequest request,HttpServletResponse response){
-		
-		/*
-		 * 取：取请求数据
-		 * 调：调用业务逻辑
-		 * 返：返回响应结果
-		 * 转：调整页面视图(一般不用，在前端MVC框架中自己已经完成了页面的跳转路由)
-		 */
-		try {
-			
-			if(logger.isInfoEnabled()){
-				logger.info("testController zzctest request : " + dddd);
-			}
-			
-			WhereCondition wc=new WhereCondition();
-			// 取请求数据
-			List<AcApp> result = acAppRService.query(wc);
-			
-			// 处理数据，调用业务逻辑
-			// TODO 业务逻辑
-			
-			// 返回响应数据
-			returnResponseData("date_time", new Date()); 
-			
-			String jsonData = JSONArray.fromObject(responseMsg).toString() ; 
-			System.out.println("response json data :"+ jsonData);
-			AjaxUtils.ajaxJsonSuccessMessage(response, jsonData);
-			
-		} catch (Exception e) {
-			AjaxUtils.ajaxJsonErrorMessage(response, "异常");
-			logger.error("testController test exception : " ,e);
-		}
-		
-		// 跳转视图
-		return null;
-	}
-	
-	
 	
 	/**
 	 * 示意controller开发的基本程序范式
