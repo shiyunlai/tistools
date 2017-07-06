@@ -35,6 +35,7 @@
 	<!-- 暴露服务 -->
 	<!-- 服务提供者：柜员操作日志(JNL_TELLER_TRACE) 基本远程服务 -->
     <!-- 权限业务服务 -->
+
  <!--    <dubbo:service 
 		interface="org.tis.tools.rservice.ac.capable.IApplicationRService" group="ac" version="${IOrgRService.version}"
 		ref="applicationRServiceImpl" 

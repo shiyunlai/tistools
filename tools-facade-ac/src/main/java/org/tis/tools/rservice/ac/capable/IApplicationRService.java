@@ -15,6 +15,7 @@ import org.tis.tools.model.po.ac.AcFuncResource;
 import org.tis.tools.model.po.ac.AcFuncgroup;
 import org.tis.tools.model.po.ac.AcMenu;
 import org.tis.tools.model.po.ac.AcOperator;
+import org.tis.tools.model.vo.ac.AcAppVo;
 
 /**
  * <pre>
@@ -90,7 +91,7 @@ public interface IApplicationRService {
 	 * @param 
 	 * @return 根目录list
 	 */
-	public List<AcApp> queryAcRootList();
+	public List<AcAppVo> queryAcRootList();
 	
 	
 	/**
