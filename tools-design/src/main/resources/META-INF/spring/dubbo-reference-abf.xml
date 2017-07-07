@@ -25,7 +25,7 @@
 		<dubbo:reference 
 		id="applicationRService"    
 		group="ac" 
-		version="0.8" 
+		version="0.9" 
 		interface="org.tis.tools.rservice.ac.capable.IApplicationRService"     
 		check="false"/>
 		
