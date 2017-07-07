@@ -166,7 +166,7 @@
                                                                 <div class="col-md-8">
                                                                     <div class="input-group date form_datetime" ng-init="$root.settings.utils.initpicker()"  ng-disabled="!editflag" >
                                                                             <span class="input-group-btn">
-                                                                                <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                                                                <button class="btn default date-set"  type="button"><i  class="fa fa-calendar"></i></button>
                                                                             </span>
                                                                         <input type="text" class="form-control" ng-model="dictionaryAdd.openDateStr" readonly/>
                                                                     </div>
@@ -416,7 +416,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label col-md-4">是否定义为菜单</label>
                                                     <div class="col-md-8">
-                                                        <select class="form-control" name="dict_open" ng-model="dictionaryAdd.ismenu" ng-disabled="!editflag">
+                                                        <select class="form-control" name="dict_open" ng-model="dictionaryAdd.isMenu" ng-disabled="!editflag">
                                                             <option value="n" selected>否</option>
                                                             <option value="s">是</option>
                                                         </select>
@@ -462,7 +462,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="actions btn-set" style="float: right;" ng-if="editflag">
-                                                            <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="biz.appsave(appFrom)" > 保存
+                                                            <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="biz.appsave(dictionaryAdd)" > 保存
                                                             </button>
                                                             <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存
                                                             </button>

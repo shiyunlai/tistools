@@ -1,7 +1,7 @@
 /**
  * Created by gaojie on 2017/5/9.
  */
-MetronicApp.factory('abftree_service',['$http', '$q', function ($http,$q) {
+MetronicApp.factory('Emp_service',['$http', '$q', function ($http,$q) {
     var service={};
 
     service.loadmaintree = function (subFrom) {

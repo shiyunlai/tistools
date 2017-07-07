@@ -1,6 +1,8 @@
 package org.tis.tools.webapp.controller;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
@@ -9,6 +11,9 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.beanutils.ConversionException;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.Converter;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,6 +62,33 @@ abstract public class BaseController {
 		jsonConfig.setPropertySetStrategy(new JSONPropertyStrategyWrapper(
 				PropertySetStrategy.DEFAULT));
 		createResponseCache();
+		initBeanutils() ;
+	}
+	
+	private void initBeanutils(){
+		//收到请求
+		ConvertUtils.register(new Converter() {
+			              
+			           public Object convert(Class type, Object value) {
+			                
+		                 //判断是不是String类型的数据，不是则抛出异常
+			                if(!(value instanceof String)){
+			                   throw new ConversionException("不是String数据类型！");
+			                 }
+			               //是String的话，把Object的value强转成String
+			                  String strValue = (String) value;
+			                 //判断是不是一个空字符串
+			                  if(strValue.trim().equals("")){
+			                   return null;
+			                }
+			                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			                 try {
+			                      return sdf.parse(strValue);
+			                 } catch (ParseException e) {
+			                      throw new RuntimeException(e);
+			              }
+			           }
+		        }, Date.class);
 	}
 	
 	/**

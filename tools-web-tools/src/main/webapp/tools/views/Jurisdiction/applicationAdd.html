@@ -74,7 +74,12 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-4"> 开通日期: </label>
                                             <div class="col-md-8">
-                                                <input class="input-appAdd" style="" type="date"ng-model="dictionaryAdd.openDateStr">
+                                                <div class="input-group date form_datetime" ng-init="$root.settings.utils.initpicker()" >
+                                                    <span class="input-group-btn">
+                                                        <button class="btn default date-set"  type="button"><i  class="fa fa-calendar"></i></button>
+                                                    </span>
+                                                    <input type="text" class="form-control" ng-model="dictionaryAdd.openDateStr"/>
+                                                </div>
                                                 <!--<div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
                                                 <span class="input-group-btn">
                                                     <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>

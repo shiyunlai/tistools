@@ -424,8 +424,10 @@ function getYYYYMMDD(){
 }
 
 
+//add by gaojie
+//ui-grid init
+//thisobj--表ID,fun--返回data的方法,com--表列名,筛选配置项,bol--布尔值,是否多选.selection--自定义行选中
 
-//thisobj--表ID,fun--返回data的方法,com--表列名,筛选配置项,bol--布尔值,是否多选.selection--自定义行选中事件，传入函数即可
 function initgrid($scope, thisobj, fun, filterFilter,com,bol,selection){
     thisobj = {
         data: fun,
@@ -464,6 +466,7 @@ function initgrid($scope, thisobj, fun, filterFilter,com,bol,selection){
         exporterMenuPdf:false,//把pdf下载禁用
         enableGridMenu: true, //是否显示grid 菜单
         enableFiltering:true,//打开标识,用于搜索
+        // headerTemplate:'<div></div>',
         enableFooterTotalSelected: true, // 是否显示选中的总数，默认为true, 如果显示，showGridFooter 必须为true
         showGridFooter:true,
         onRegisterApi: function(girdApi) {
@@ -483,12 +486,18 @@ function initgrid($scope, thisobj, fun, filterFilter,com,bol,selection){
         }
     };
 
+
+    //ui-grid getPage方法
+
+
     thisobj.getPage = function(curPage, pageSize) {
         var firstRow = (curPage - 1) * pageSize;
         thisobj.totalItems = thisobj.data.length;
         thisobj.data = thisobj.data.slice(firstRow, firstRow + pageSize);
-
+        //或者像下面这种写法
+        //$scope.myData = mydefalutData.slice(firstRow, firstRow + pageSize);
     };
-
+    //测试
+    // var a = $scope.girdApi.selection.getSelectedRows();
     return thisobj;
 }
