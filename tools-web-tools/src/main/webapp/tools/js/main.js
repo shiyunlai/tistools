@@ -10,8 +10,10 @@ var MetronicApp = angular.module("MetronicApp", [
     "ui.bootstrap",
     "oc.lazyLoad",
     "ngSanitize",
+    'angularFileUpload',
     'ui.grid',
     'ui.grid.selection',
+    'ui.grid.exporter',
     'ui.grid.edit',
     'ui.grid.pagination',
     'ui.grid.resizeColumns'
@@ -678,23 +680,36 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             data: {pageTitle: '操作员个性配置'},
             controller:"operconfig_controller"
         })
+        .state("shortcutMenu",{
+            url:"/shortcutMenu.html",
+            templateUrl:"views/shortcutMenu/shortcutMenu.html",
+            data: {pageTitle: '快捷菜单'},
+            controller:"shortcutMenu_controller"
+        })
         .state("operstatus",{
             url:"/operstatus.html",
             templateUrl:"views/operator/operstatus.html",
             data: {pageTitle: '操作员身份'},
             controller:"operstatus_controller"
         })
+
         .state("emp",{
             url:"/Emp.html",
             templateUrl:"views/Emp/Emp.html",
             data: {pageTitle: '员工管理'},
             controller:"Emp_controller"
         })
-        .state("Workgroup",{
-            url:"/Workgroup.html",
-            templateUrl:"views/Workgroup/Workgroup.html",
+        .state("Workgroup", {
+            url: "/Workgroup.html",
+            templateUrl: "views/Workgroup/Workgroup.html",
             data: {pageTitle: '工作组管理'},
-            controller:"Workgroup_controller"
+            controller: "Workgroup_controller"
+        })
+        .state("dictionary",{
+            url:"/dictionary.html",
+            templateUrl:"views/dictionary/dictionary.html",
+            data: {pageTitle: '操作员身份'},
+            controller:"dictionary_controller"
         })
 }]);
 

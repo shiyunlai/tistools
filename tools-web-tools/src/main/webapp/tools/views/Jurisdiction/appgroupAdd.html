@@ -19,21 +19,24 @@
                         <label class="control-label col-md-4">功能组名称</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="subFrom.funcGroupName"
+                                   ng-model="subFrom.funcgroupName"
                                    name="id" />
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6" >
+                <!--<div class="col-md-6" >
                     <div class="form-group">
                         <label class="control-label col-md-4">所属功能组</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.appfunction"
-                                   name="id" />
+                            <select class="form-control" name="dict_open" ng-model="subFrom.appfunction">
+                                <option value=""></option>
+                                <option value="s">功能组一</option>
+                                <option value="a">功能组二</option>
+                                <option value="d">功能组三</option>
+                            </select>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <div class="col-md-6" >
                     <div class="form-group">
                         <label class="control-label col-md-4">节点层次</label>
@@ -44,38 +47,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6" >
-                    <div class="form-group">
-                        <label class="control-label col-md-4">功能组序号</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.funcgroupseq"
-                                   name="id" />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6" >
-                    <div class="form-group">
-                        <label class="control-label col-md-4">是否叶子节点 </label>
-                        <div class="col-md-8">
-                            <select class="form-control" name="dict_open" ng-model="subFrom.isleaf">
-                                <option value=""></option>
-                                <option value="s">是</option>
-                                <option value="a">否</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6" >
-                    <div class="form-group">
-                        <label class="control-label col-md-4">子节点数</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.subcount"
-                                   name="id" />
-                        </div>
-                    </div>
-                </div>
+
                 <div class="col-md-12">
                     <div class="form-group">
                         <label class="control-label col-md-2"></label>

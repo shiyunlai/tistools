@@ -512,7 +512,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
     abftree.test = function () {
         console.log(1)
     }
-    
+
     //删除
     abftree.delete = function () {
         if(confirm("确认要删除此机构吗?")){
@@ -530,10 +530,10 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
     abftree.edit = function () {
         $scope.editflag = !$scope.editflag;
     }
-    
+
     //覆盖searchN方法
     abftree.searchN = function () {
-        
+
     }
     //保存
     abftree.save = function () {
