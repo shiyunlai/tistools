@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.ac.ApplicationMapper">
+  
+  
+    <select id="query" resultType="org.tis.tools.model.vo.ac.AcAppVo" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from AC_APP <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid as guid
+		,app_code as appCode
+		,app_name as appName
+		,app_type as appType
+		,isopen as isopen
+		,open_date as openDate
+		,url as url
+		,app_desc as appDesc
+		,guid_emp_maintenance as guidEmpMaintenance
+		,guid_role_maintenance as guidRoleMaintenance
+		,remark as remark
+		,iniwp as iniwp
+		,intaskcenter as intaskcenter
+		,ip_addr as ipAddr
+		,ip_port as ipPort
+	</sql>
+</mapper>

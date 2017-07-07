@@ -21,32 +21,32 @@
 	    <set>
 <#list table.fields as field><#if field.physical !="false">
 	<#if field.type =="string">
-		<if test="${field.id} != null" >
+		<if test="#<#nt>{field.id} != null" >
         ${field.id} = #<#nt>{${field.id},jdbcType=VARCHAR},
       </if>
 	</#if>
 	<#if field.type =="long">
-		<if test="${field.id} != null" >
+		<if test="#<#nt>{field.id} != null" >
         ${field.id} = #<#nt>{${field.id},jdbcType=BIGINT},
       </if>
 	</#if>
 	<#if field.type =="decimal">
-		<if test="${field.id} != null" >
+		<if test="#<#nt>{field.id} != null" >
         ${field.id} = #<#nt>{${field.id},jdbcType=DECIMAL},
       </if>
 	</#if>
 	<#if field.type =="bigdecimal">
-		<if test="${field.id} != null" >
+		<if test="#<#nt>{field.id} != null" >
         ${field.id} = #<#nt>{${field.id},jdbcType=DECIMAL},
       </if>
 	</#if>
 	<#if field.type =="datetime">
-		<if test="${field.id} != null" >
+		<if test="#<#nt>{field.id} != null" >
         ${field.id} = #<#nt>{${field.id},jdbcType=TIMESTAMP},
       </if>
 	</#if>
 	<#if field.type =="int">
-		<if test="${field.id} != null" >
+		<if test="#<#nt>{field.id} != null" >
         ${field.id} = #<#nt>{${field.id},jdbcType=INTEGER},
       </if>
 	</#if>

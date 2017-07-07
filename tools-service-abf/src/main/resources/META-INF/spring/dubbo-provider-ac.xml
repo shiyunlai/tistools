@@ -36,46 +36,10 @@
 	<!-- 服务提供者：柜员操作日志(JNL_TELLER_TRACE) 基本远程服务 -->
     <!-- 权限业务服务 -->
     <dubbo:service 
-		interface="org.tis.tools.rservice.ac.capable.IApplicationRService" group="ac" version="${IOrgRService.version}"
+		interface="org.tis.tools.rservice.ac.capable.IApplicationRService" group="ac" version="${IAcRService.version}"
 		ref="applicationRServiceImpl" 
 		protocol="dubbo"  timeout="3000" />
  	
     <bean id="applicationRServiceImpl" class="org.tis.tools.rservice.ac.capable.ApplicationRServiceImpl" />
-  
-  
-       <!-- 应用 基础服务-->
-    <dubbo:service 
-		interface="org.tis.tools.rservice.ac.basic.IAcAppRService" group="ac" version="${IOrgRService.version}"
-		ref="acAppRServiceImpl" 
-		protocol="dubbo"  timeout="3000" />
- 	
-    <bean id="acAppRServiceImpl" class="org.tis.tools.rservice.ac.basic.AcAppRServiceImpl" />
-  
-   <!-- 功能基础服务 -->
-      <dubbo:service 
-		interface="org.tis.tools.rservice.ac.basic.IAcFuncRService" group="ac" version="${IOrgRService.version}"
-		ref="acFuncRServiceImpl" 
-		protocol="dubbo"  timeout="3000" />
- 	
-    <bean id="acFuncRServiceImpl" class="org.tis.tools.rservice.ac.basic.AcFuncRServiceImpl" />
-  
-  <!-- 功能 组基础服务-->
-  <dubbo:service 
-		interface="org.tis.tools.rservice.ac.basic.IAcFuncgroupRService" group="ac" version="${IOrgRService.version}"
-		ref="acFuncgroupRServiceImpl" 
-		protocol="dubbo"  timeout="3000" />
- 	
-    <bean id="acFuncgroupRServiceImpl" class="org.tis.tools.rservice.ac.basic.AcFuncgroupRServiceImpl" />
-  
-  
-   <!-- 菜单基础服务-->
-  <dubbo:service 
-		interface="org.tis.tools.rservice.ac.basic.IAcMenuRService" group="ac" version="${IOrgRService.version}"
-		ref="acMenuRServiceImpl" 
-		protocol="dubbo"  timeout="3000" />
- 	
-    <bean id="acMenuRServiceImpl" class="org.tis.tools.rservice.ac.basic.AcMenuRServiceImpl" />
-  
-  
-  
+    
 </beans>

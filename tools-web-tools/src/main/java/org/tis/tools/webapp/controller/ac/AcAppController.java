@@ -1,5 +1,6 @@
 package org.tis.tools.webapp.controller.ac;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.base.WhereCondition;
+import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.ac.AcApp;
+import org.tis.tools.model.po.ac.AcFuncResource;
 import org.tis.tools.model.po.ac.AcFuncgroup;
 import org.tis.tools.model.po.ac.AcFunc;
 import org.tis.tools.model.po.om.OmOrg;
@@ -44,6 +47,7 @@ public class AcAppController extends BaseController {
 	 * @param request
 	 * @param response
 	 * @return
+	 * @throws ParseException 
 	 */
 	@ResponseBody
 	@RequestMapping(value="/appAdd" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
@@ -61,7 +65,7 @@ public class AcAppController extends BaseController {
 			String appDesc = jsonObj.getString("appDesc");
 			String isOpen = jsonObj.getString("isOpen");
 			String openDateStr = jsonObj.getString("openDateStr");
-			SimpleDateFormat times = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat times = new SimpleDateFormat("yyyy-MM-dd");z
 			Date date = times.parse(openDateStr);
 			String url = jsonObj.getString("url");
 			String ipAddr = jsonObj.getString("ipAddr");
@@ -95,11 +99,9 @@ public class AcAppController extends BaseController {
 	 * @param response
 	 * @return
 	 */
-
 	@RequestMapping(value="/appDel",method=RequestMethod.POST)
 	public String appDel(@RequestBody String content, HttpServletRequest request,
 			HttpServletResponse response) {
-		Map<String, Object> result = new HashMap<String, Object>();
 		try {
 			if (logger.isInfoEnabled()) {
 				logger.info("appAdd request : " + content);
@@ -124,11 +126,11 @@ public class AcAppController extends BaseController {
 	 * @param request
 	 * @param response
 	 * @return
+	 * @throws ParseException 
 	 */
 	@RequestMapping(value="/appEdit",method=RequestMethod.POST)
 	public String appEdit(@RequestBody String content, HttpServletRequest request,
-			HttpServletResponse response) {
-		Map<String, Object> result = new HashMap<String, Object>();
+			HttpServletResponse response) throws ParseException {
 		try {
 			if (logger.isInfoEnabled()) {
 				logger.info("appEdit request : " + content);
@@ -161,7 +163,7 @@ public class AcAppController extends BaseController {
 	}
 	
 	/**
-	 * appSearch查询应用
+	 * appQuery查询应用
 	 * @param content
 	 * @param request
 	 * @param response
@@ -214,7 +216,6 @@ public class AcAppController extends BaseController {
 		return null;
 	}
 	
-	
 	/**
 	 * groupAdd新增功能组
 	 * @param content
@@ -226,8 +227,6 @@ public class AcAppController extends BaseController {
 	@RequestMapping(value="/groupAdd" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
 	public String groupAdd(@RequestBody String content, HttpServletRequest request,
 			HttpServletResponse response) {
-		Map<String, Object> result = new HashMap<String, Object>();
-		
 		try {
 			if (logger.isInfoEnabled()) {
 				logger.info("groupAdd request : " + content);
@@ -301,7 +300,6 @@ public class AcAppController extends BaseController {
 	@RequestMapping(value="/groupEdit" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
 	public String groupEdit(@RequestBody String content, HttpServletRequest request,
 			HttpServletResponse response) {
-		Map<String, Object> result = new HashMap<String, Object>();
 		
 		try {
 			if (logger.isInfoEnabled()) {
@@ -310,6 +308,7 @@ public class AcAppController extends BaseController {
 			JSONObject jsonObj = JSONObject.fromObject(content);	//传入的参数
 			String guid = jsonObj.getString("id");
 			AcFuncgroup acFuncgroup = applicationRService.queryFuncgroup(guid);
+
 			String funcgroupName = jsonObj.getString("funcgroupName");
 			String groupLevel = jsonObj.getString("groupLevel");
 			String guidParents = jsonObj.getString("guidParents");
@@ -340,6 +339,7 @@ public class AcAppController extends BaseController {
 	public String acFuncAdd(@RequestBody String content, HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> result = new HashMap<String, Object>();
+
 		
 		try {
 			if (logger.isInfoEnabled()) {
@@ -371,6 +371,7 @@ public class AcAppController extends BaseController {
 			result.put("error_message", e.getMessage());//返回给前台的数据
 			AjaxUtils.ajaxJsonErrorMessage(response, net.sf.json.JSONArray.fromObject(result).toString());
 			logger.error("acFuncAdd exception : ", e);
+
 		}
 		return null;
 	}

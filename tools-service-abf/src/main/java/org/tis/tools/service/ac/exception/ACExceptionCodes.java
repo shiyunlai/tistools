@@ -20,25 +20,155 @@ public class ACExceptionCodes {
 	private static final String R_EX_PREFIX = "AC";
 
 	/**
+	 * 记录不存在
+	 */
+	public static final String FAILURE_WHRN_QUERY_AC_NULL = R_EX_CODE("0000");
+	
+	/**
 	 * 新增应用失败
 	 */
 	public static final String FAILURE_WHRN_CREATE_AC_APP = R_EX_CODE("0001");
 	
 	/**
-	 * 新增应用失败
+	 * 删除应用系统失败
 	 */
-	public static final String FAILURE_WHRN_CREATE_AC_FUNCGROUP = R_EX_CODE("0002");
+	public static final String FAILURE_WHRN_DELETE_AC_APP = R_EX_CODE("0002");
+	
+
+	/**
+	 * 更新应用系统失败
+	 */
+	public static final String FAILURE_WHRN_UPDATE_AC_APP = R_EX_CODE("0003");
+	
+	/**
+	 * 查询应用系统失败
+	 */
+	public static final String FAILURE_WHRN_QUERY_AC_APP = R_EX_CODE("0004");
+	
+	
+	
+	/**
+	 * 新增功能组失败
+	 */
+	public static final String FAILURE_WHRN_CREATE_AC_FUNCGROUP = R_EX_CODE("0005");
+	
+	/**
+	 * 删除功能组
+	 */
+	public static final String FAILURE_WHRN_DELETE_AC_FUNCGROUP = R_EX_CODE("0006");
+	
+	/**
+	 * 删除功能组
+	 */
+	public static final String FAILURE_WHRN_UPDATE_AC_FUNCGROUP = R_EX_CODE("0007");
+	
+	/**
+	 * 删除功能组
+	 */
+	public static final String FAILURE_WHRN_QUERY_AC_FUNCGROUP = R_EX_CODE("0008");
+	
 	
 	/**
 	 * 新增应用失败
 	 */
-	public static final String FAILURE_WHRN_CREATE_AC_FUNC = R_EX_CODE("0003");
+	public static final String FAILURE_WHRN_CREATE_AC_FUNC = R_EX_CODE("0009");
 	
+	/**
+	 * 删除应用失败
+	 */
+	public static final String FAILURE_WHRN_DELETE_AC_FUNC = R_EX_CODE("0010");
+	
+	/**
+	 * 更新应用失败
+	 */
+	public static final String FAILURE_WHRN_UPDATE_AC_FUNC = R_EX_CODE("0011");
+	
+	/**
+	 * 查询应用失败
+	 */
+	public static final String FAILURE_WHRN_QUERY_AC_FUNC = R_EX_CODE("0012");
 	
 	/**
 	 * 新增菜单失败
 	 */
-	public static final String FAILURE_WHRN_CREATE_AC_MENU = R_EX_CODE("0004");
+	public static final String FAILURE_WHRN_CREATE_AC_MENU = R_EX_CODE("0013");
+	
+	/**
+	 * 删除菜单失败
+	 */
+	public static final String FAILURE_WHRN_DELETE_AC_MENU = R_EX_CODE("0014");
+	
+	/**
+	 * 修改菜单失败
+	 */
+	public static final String FAILURE_WHRN_UPDATE_AC_MENU = R_EX_CODE("0015");
+	
+	/**
+	 * 删除菜单失败
+	 */
+	public static final String FAILURE_WHRN_QUERY_AC_MENU = R_EX_CODE("0016");
+	
+	/**
+	 * 新增功能对应资源失败
+	 */
+	public static final String FAILURE_WHRN_CREATE_AC_FUNCRESOURCE = R_EX_CODE("0017");
+	
+	/**
+	 * 删除功能对应资源失败
+	 */
+	public static final String FAILURE_WHRN_DELETE_AC_FUNCRESOURCE = R_EX_CODE("0018");
+	
+	/**
+	 * 修改功能对应资源失败
+	 */
+	public static final String FAILURE_WHRN_UPDATE_AC_FUNCRESOURCE= R_EX_CODE("0019");
+	
+	/**
+	 * 删除功能对应资源失败
+	 */
+	public static final String FAILURE_WHRN_QUERY_AC_FUNCRESOURCE = R_EX_CODE("0020");
+		
+	/**
+	 * 新增操作员失败
+	 */
+	public static final String FAILURE_WHRN_CREATE_AC_OPERATOR = R_EX_CODE("0021");
+	
+	/**
+	 * 删除操作员失败
+	 */
+	public static final String FAILURE_WHRN_DELETE_AC_OPERATOR = R_EX_CODE("0022");
+	
+	/**
+	 * 修改操作员失败
+	 */
+	public static final String FAILURE_WHRN_UPDATE_AC_OPERATOR= R_EX_CODE("0023");
+	
+	/**
+	 * 查询操作员失败
+	 */
+	public static final String FAILURE_WHRN_QUERY_AC_OPERATOR = R_EX_CODE("0024");
+	
+	/**
+	 * 新增功能操作行为失败
+	 */
+	public static final String FAILURE_WHRN_CREATE_AC_FUNCBEHAVIOR = R_EX_CODE("0025");
+	
+	/**
+	 * 删除功能操作行为失败
+	 */
+	public static final String FAILURE_WHRN_DELETE_AC_FUNCBEHAVIOR = R_EX_CODE("0026");
+	
+	/**
+	 * 修改功能操作行为失败
+	 */
+	public static final String FAILURE_WHRN_UPDATE_AC_FUNCBEHAVIOR= R_EX_CODE("0027");
+	
+	/**
+	 * 查询功能操作行为失败
+	 */
+	public static final String FAILURE_WHRN_QUERY_AC_FUNCBEHAVIOR = R_EX_CODE("0028");
+	
+	
 	
 	
 	/**

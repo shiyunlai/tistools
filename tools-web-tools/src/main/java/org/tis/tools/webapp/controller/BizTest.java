@@ -38,10 +38,6 @@ public class BizTest extends BaseController {
 	
 	@Autowired
 	IBiztraceRService biztraceRService ;
-
-	
-	
-	
 	
 	/**
 	 * 示意controller开发的基本程序范式

@@ -41,6 +41,36 @@ public class AjaxUtils {
      * </p>
      */
     public static final String SUCCESS = "success";
+    
+    /**
+     * <p>
+     * Field SUCCESSCODE: 成功返回码
+     * </p>
+     */
+    public static final String SUCCESSCODE = "0000";
+    
+    /**
+     * <p>
+     * Field 返回码: 
+     * </p>
+     */
+    public static final String RETCODE = "retCode";
+    
+    
+    /**
+     * <p>
+     * Field 返回码: 
+     * </p>
+     */
+    public static final String RETMESSAGE = "retMessage";
+    
+    /**
+     * <p>
+     * Field 返回码: 
+     * </p>
+     */
+    public static final String SUCCCODE = "0000";
+    
     /**
      * <p>
      * Field ERROR: 错误
@@ -182,20 +212,7 @@ public class AjaxUtils {
         return ajax(response, jsonObject.toString(), "text/html");
     }
 
-    /**
-     * <p>Description: 输出JSON成功消息，返回null</p>
-     * @param response HttpServletResponse对象
-     * @param message 信息字符串
-     * @return null
-     */
-    public static String ajaxJsonSuccessMessage(HttpServletResponse response, String message) {
-        Map<String, String> jsonMap = new HashMap<String, String>();
-        jsonMap.put(SUCCESS, "true");
-        jsonMap.put(STATUS, SUCCESS);
-        jsonMap.put(MESSAGE, message);
-        JSONObject jsonObject = JSONObject.fromObject(jsonMap);
-        return ajax(response, jsonObject.toString(), "text/html");
-    }
+ 
 
     /**
      * <p>Description: 输出JSON成功消息，返回null</p>
@@ -267,5 +284,35 @@ public class AjaxUtils {
         response.setHeader("Cache-Control", "no-cache");
         response.setHeader("Cache-Control", "no-store");
         response.setDateHeader("Expires", 0);
+    }
+    
+    /**
+     * <p>Description: 输出JSON成功消息，返回null</p>
+     * @param response HttpServletResponse对象
+     * @param message 信息字符串
+     * @return null
+     */
+    public static String ajaxJsonSuccessMessage(HttpServletResponse response, Object... args) {
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        jsonMap.put(RETCODE, SUCCESSCODE);
+        jsonMap.put(STATUS, SUCCESS);
+        jsonMap.put(RETMESSAGE, args[0]);
+        JSONObject jsonObject = JSONObject.fromObject(jsonMap);
+        return ajax(response, jsonObject.toString(), "text/html");
+    }
+    
+    /**
+     * <p>Description: 输出JSON错误消息，返回null</p>
+     * @param response HttpServletResponse对象
+     * @param extraMessage 信息字符串
+     * @return null
+     */
+    public static String ajaxJsonErrorMessage(HttpServletResponse response, String code,Object... args) {
+    	Map<String, Object> jsonMap = new HashMap<String, Object>();
+    	jsonMap.put(RETCODE, code);
+    	jsonMap.put(STATUS, ERROR);
+    	jsonMap.put(RETMESSAGE, args[0]);
+    	JSONObject jsonObject = JSONObject.fromObject(jsonMap);
+    	return ajax(response, jsonObject.toString(), "text/html");
     }
 }
