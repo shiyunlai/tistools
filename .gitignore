@@ -1,4 +1,4 @@
-﻿
+
 *.log
 
 *.metadata
@@ -49,10 +49,29 @@ tools-web-tools/src/main/webapp/.idea/
 tools-web-tools/cache/.tools-web-tools.cache.swp
 
 ~$Github团队协作.pptx
+
 tools-core/model/~$业务字典.xlsx
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> wangbo
+pom.xml
 tools-web-tools/src/main/webapp/tools/.idea/workspace.xml
-
+tools-web-tools/src/main/webapp/tools/views/Jurisdiction/applicationFun.html
+=======
 
 readme/~$前后分离开发协作.pptx
+>>>>>>> master
+<<<<<<< HEAD
+=======
 
 readme/~$前后分离开发协作.pptx
+>>>>>>> 1a2d47fa32259e4f5b688ddd2fd4ef8aa3c3ea72
+=======
+>>>>>>> wangbo
+tools-web-tools/src/main/webapp/assets/layouts/layout4/css/layout.css
+tools-web-tools/src/main/webapp/assets/layouts/layout4/css/layout.css
+*.css
+tools-web-tools/src/main/webapp/assets/apps/css/inbox.css
+tools-web-tools/src/main/webapp/assets/apps/css/inbox.css

@@ -11,21 +11,21 @@
     <div class="portlet-body portlet light">
         <form action="#" name="myform" class="form-horizontal ">
             <div class="form-body ">
-                <div class="col-md-6" >
-                    <div class="form-group">
-                        <label class="control-label col-md-4">机构状态</label>
+                <!--<div class="col-md-6" >-->
+                    <!--<div class="form-group">-->
+                        <!--<label class="control-label col-md-4">机构状态</label>-->
 
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.orgStatus"
-                                   name="id" />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6" style=" visibility: hidden;">
-                    <div class="form-group form-control col-md-8">
-                    </div>
-                </div>
+                        <!--<div class="col-md-8">-->
+                            <!--<input type="text" class="form-control"-->
+                                   <!--ng-model="subFrom.orgStatus"-->
+                                   <!--name="id" />-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-md-6" style=" visibility: hidden;">-->
+                    <!--<div class="form-group form-control col-md-8">-->
+                    <!--</div>-->
+                <!--</div>-->{{subFrom}}
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">机构代码</label>
@@ -59,7 +59,7 @@
                         <label class="control-label col-md-4">机构等级</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="subFrom.Degree"
+                                   ng-model="subFrom.orgDegree"
                                    name="id" />
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                         <label class="control-label col-md-4">联系人姓名</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="subFrom.link_man"
+                                   ng-model="subFrom.linkMan"
                                    name="id" />
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                         <label class="control-label col-md-4">所属地域</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="subFrom.area"
+                                   ng-model="subFrom.AREA"
                                    name="id" />
                         </div>
                     </div>
@@ -138,7 +138,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">创建时间</label>
                         <div class="col-md-8">
-                            <input type="date" class="form-control input-appAdd"
+                            <input type="date" class="form-control"
                                    ng-model="subFrom.createTime"
                                    name="id" />
                         </div>
@@ -148,9 +148,12 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">生效日期</label>
                         <div class="col-md-8">
-                            <input type="date" class="form-control"
-                                   ng-model="subFrom.start_date"
-                                   name="id" />
+                            <div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
+                                    <span class="input-group-btn">
+                                        <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                <input type="text" class="form-control" ng-model="subFrom.startDate" readonly/>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -159,7 +162,7 @@
                         <label class="control-label col-md-4">失效日期</label>
                         <div class="col-md-8">
                             <input type="date" class="form-control"
-                                   ng-model="subFrom.end_date"
+                                   ng-model="subFrom.endDate"
                                    name="id" />
                         </div>
                     </div>
