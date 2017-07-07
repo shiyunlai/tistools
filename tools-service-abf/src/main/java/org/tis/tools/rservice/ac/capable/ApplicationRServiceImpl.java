@@ -771,6 +771,31 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	}
 
 	/**
+	 * 根据条件查询功能资源对应(AC_FUNC_RESOURCE)
+	 * @param guid 条件
+	 * @return 满足条件的记录
+	 */
+	@Override
+	public AcFuncResource queryFuncResource(String guid) throws AppManagementException {
+		List<AcFuncResource> acFuncResourceList = new ArrayList<AcFuncResource>();
+
+		try {
+			WhereCondition wc = new WhereCondition();
+			wc.andEquals("GUID", guid);
+			acFuncResourceList = acFuncResourceService.query(wc );
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNCRESOURCE,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能对应资源失败！{0}");
+		}
+		if(acFuncResourceList.size()>0){
+			return acFuncResourceList.get(0);
+		}
+		return null;
+	}
+	
+	/**
 	 * 新增操作员(AC_OPERATOR),新增t对象有值的字段
 	 * @param t 新值
 	 */
@@ -947,4 +972,6 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		}
 		return acFuncBehaviorList;
 	}
+	
+
 }

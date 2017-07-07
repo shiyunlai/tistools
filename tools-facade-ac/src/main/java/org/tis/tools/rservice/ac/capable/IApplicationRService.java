@@ -238,6 +238,13 @@ public interface IApplicationRService {
 	public List<AcFuncResource> queryAcFuncResource(WhereCondition wc);
 	
 	/**
+	 * 根据条件查询功能资源对应(AC_FUNC_RESOURCE)
+	 * @param guid 条件
+	 * @return 满足条件的记录
+	 */
+	public AcFuncResource queryFuncResource(String  guid);
+	
+	/**
 	 * 新增操作员(AC_OPERATOR),新增t对象有值的字段
 	 * @param t 新值
 	 */
