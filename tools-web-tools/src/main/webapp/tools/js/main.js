@@ -695,7 +695,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
         .state("dictionary",{
             url:"/dictionary.html",
             templateUrl:"views/dictionary/dictionary.html",
-            data: {pageTitle: '操作员身份'},
+            data: {pageTitle: '业务字典'},
             controller:"dictionary_controller"
         })
 }]);
