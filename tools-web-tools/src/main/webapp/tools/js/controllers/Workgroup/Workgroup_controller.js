@@ -31,7 +31,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
             var it = {
                 "新建菜单":{
                     "id":"create",
-                    "label":"新建机构",
+                    "label":"新建工作组",
                     "action":function(data){
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
@@ -173,6 +173,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
     //工作组树
     $("#container").jstree({
         "core" : {
+            "multiple":true,
             "themes" : {
                 "responsive": false
             },
@@ -243,8 +244,11 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
             // console.log(data.node.original.id.indexOf("@"));
             console.log(data.node.original);
             if(data.node.original.id == "00000"){
-
-            $scope.$apply();
+                for(var a in flag){
+                    flag[a] = false;
+                }
+                flag.index = true;
+                $scope.$apply();
             }
         }
     });
@@ -275,7 +279,6 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
         { field: 'lastupdate', displayName: '最后修改日', enableHiding: false}
     ]
     $scope.workgroupgrid = initgrid($scope,workgroupgrid,initworkdata(),filterFilter,com,false,selework);
-    console.log($scope.workgroupgrid)
     
     //新增根工作组
     workgroup.add = function () {
@@ -290,7 +293,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
                     Workgroup_service.addgroup(subFrom).then(function (data) {
                         console.log(data);
                         if(data.status == "success"){
-                            toastr['success']( "新增成功！");
+                            toastr['success']( data.status.message);
                             $scope.cancel();
                             initworkdata();
                         }else{
@@ -303,5 +306,55 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
                 };
             }
         )
+    }
+    //删除工作组
+    workgroup.delete = function () {
+        var item = $scope.workgroupgrid.getSelectedRows();
+        console.log(item)
+        console.log(item.length)
+        if(item.length != 1 ){
+            toastr['error']("请选择一条数据!");
+            return false;
+        }else if(item[0].groupStatus != "123"){
+            toastr['error']("只能删除停用状态下的工作组!");
+        }else{
+            var subFrom = {};
+            subFrom.id = item[0].groupCode;
+            Workgroup_service.deletegroup(subFrom).then(function (data) {
+                if(data.status == "success"){
+                    console.log(data)
+                    toastr['success']( data.message);
+                    initworkdata();
+                }else{
+                    toastr['error']( data.message);
+                }
+            })
+        }
+    }
+    //详情页绑定的对象
+    var sub = {};
+    $scope.sub = sub;
+
+    //编辑工作组
+    workgroup.edit = function () {
+        var item = $scope.workgroupgrid.getSelectedRows();
+        if(item.length != 1 ){
+            toastr['error']("请选择一条数据!");
+            return false;
+        }else{
+            for(var a in flag){
+                flag[a] = false;
+            }
+            flag.xqxx = true;
+            $scope.sub = item[0];
+            $("#container").jstree().deselect_all(true);
+            for(var i = 0; i < $scope.jsonarray.length ; i ++){
+                console.log(item)
+                if(item[0].guid == $scope.jsonarray[i].guid){
+                    $("#container").jstree().select_node($scope.jsonarray[i],false,true);
+                }
+            }
+            console.log($scope.sub)
+        }
     }
 });

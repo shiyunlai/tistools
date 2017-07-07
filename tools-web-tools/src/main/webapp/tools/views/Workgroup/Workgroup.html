@@ -40,7 +40,7 @@
         <div class="portlet light">
             <div class="portlet-body portlet light">
                 <!-- 首页页签 -->
-                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue">
+                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="flag.index">
                     <li class="active">
                         <a id="tab-list" data-toggle="tab" href class="link">
                             <i class="green ace-icon fa fa-bars bigger-120"></i>工作组查询
@@ -49,20 +49,25 @@
                 </ul>
                 <!-- end -->
                 <!-- 详情页签 -->
-                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="tabflag">
+                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="!flag.index">
                     <li ng-class="{true:'active',false:''}[flag.xqxx]">
                         <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xqxx]" ng-click="abftree.loaddata(999)">
-                            <i class="green ace-icon fa fa-bars bigger-120"></i>机构详情信息
+                            <i class="green ace-icon fa fa-bars bigger-120"></i>工作组详情
                         </a>
                     </li>
                     <li ng-class="{true:'active',false:''}[flag.ygxx]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.ygxx]" ng-click="abftree.loaddata(1)">
-                            <i class="green ace-icon fa fa-bars bigger-120"></i>员工列表
+                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xjgz]" ng-click="abftree.loaddata(1)">
+                            <i class="green ace-icon fa fa-bars bigger-120"></i>下级工作组列表
                         </a>
                     </li>
                     <li ng-class="{true:'active',false:''}[flag.xjjg]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xjjg]" ng-click="abftree.loaddata(0)">
-                            <i class="green ace-icon fa fa-bars bigger-120"></i>下级机构列表
+                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xjgw]" ng-click="abftree.loaddata(0)">
+                            <i class="green ace-icon fa fa-bars bigger-120"></i>岗位列表
+                        </a>
+                    </li>
+                    <li ng-class="{true:'active',false:''}[flag.qxxx]">
+                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.ygxx]" ng-click="abftree.loaddata(3)">
+                            <i class="green ace-icon fa fa-bars bigger-120"></i>人员信息
                         </a>
                     </li>
                     <li ng-class="{true:'active',false:''}[flag.qxxx]">
@@ -80,12 +85,120 @@
                 <div class="actions btn-set" style="float: right;">
                     <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.add()"> 新增
                     </button>
-                    <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.editxjjg()"> 编辑
+                    <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.edit()"> 编辑
                     </button>
-                    <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletexjjg()"> 删除
+                    <button type="button" name="back" class="btn btn-danger" ng-click="workgroup.delete()"> 删除
                     </button>
                 </div>
             </div>
+            <!-- 工作组详情 start -->
+            <div class="tab-content portlet light" ng-if="flag.xqxx">
+                <div class="portlet-body portlet light">
+                    <form action="#" name="myform" class="form-horizontal ">
+                        <div class="form-body ">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">工作组代码</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" ng-model="sub.groupCode" name="id" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">工作组名称</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"
+                                               ng-model="sub.groupName"
+                                               name="id" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">所属机构</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"
+                                               ng-model="sub.guidOrg"
+                                               name="id" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">工作组类型</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"
+                                               ng-model="sub.groupType"
+                                               name="id" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">生效日期</label>
+                                    <div class="col-md-8">
+                                    <div class="input-group date form_datetime" ng-init="$root.settings.utils.initpicker()" >
+                                        <span class="input-group-btn">
+                                            <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                        </span>
+                                        <input type="text" class="form-control" ng-model="sub.startDate" readonly/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">失效日期</label>
+                                    <div class="col-md-8">
+                                        <div class="input-group date form_datetime" ng-init="$root.settings.utils.initpicker()" >
+                                            <span class="input-group-btn">
+                                                <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                            </span>
+                                            <input type="text" class="form-control" ng-model="sub.endDate" readonly/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">工作组描述</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"
+                                               ng-model="sub.groupDesc"
+                                               name="id" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2"></label>
+                                    <div class="col-md-10">
+
+                                        <div class="actions btn-set" style="float: right;">
+                                            <button type="button" name="back" class="btn btn-primary" ng-click="add(sub)"> 保存
+                                            </button>
+
+                                            <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- 工作组详情 end  -->
+            <!-- 下级工作组列表 start -->
+            <!-- 下级工作组列表 end  -->
+            <!-- 岗位列表 start -->
+            <!-- 岗位列表 end -->
+            <!-- 人员信息 start -->
+            <!-- 人员信息 end -->
+            <!-- 权限信息 start -->
+            <!-- 权限信息 end -->
+
         </div>
     </div>
     <!-- 工作组首页end -->

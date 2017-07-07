@@ -18,13 +18,7 @@ MetronicApp.factory('Workgroup_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     }
-    service.loadgwtree = function (subFrom) {
-        //todo
-        var res = $http.post(manurl + "/om/org/tree",subFrom).then(function (response) {
-            return response.data;
-        });
-        return res;
-    }
+
     service.loademp = function (subFrom) {
         //TODO
     }
@@ -44,5 +38,12 @@ MetronicApp.factory('Workgroup_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     }
+    service.deletegroup = function (subFrom) {
+        var res = $http.post(manurl + "/om/workgroup/delete",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+
     return service;
 }]);

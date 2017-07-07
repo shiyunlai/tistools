@@ -15,11 +15,13 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConversionException;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.Converter;
+import org.hibernate.annotations.Where;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.tis.tools.base.WhereCondition;
 import org.tis.tools.model.po.om.OmGroup;
 import org.tis.tools.rservice.om.capable.IGroupRService;
 import org.tis.tools.webapp.controller.BaseController;
@@ -94,6 +96,56 @@ public class WorkGroupController extends BaseController {
 			AjaxUtils.ajaxJsonSuccessMessage(response, "新增根工作组成功!");
 		} catch (Exception e) {// TODO
 			AjaxUtils.ajaxJsonErrorMessage(response, "新增根工作组失败!");
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * 编辑工作组
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/edit")
+	public String edit(ModelMap model,  @RequestBody String content,
+			String age, HttpServletRequest request, HttpServletResponse response) {
+		try {
+			
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			OmGroup og = new OmGroup();
+			BeanUtils.populate(og, jsonObj);
+			groupRService.createRootGroup(og);
+			AjaxUtils.ajaxJsonSuccessMessage(response, "新增根工作组成功!");
+		} catch (Exception e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, "新增根工作组失败!");
+			e.printStackTrace();
+		}
+		return null;
+	}
+	/**
+	 * 删除工作组
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/delete")
+	public String delete(ModelMap model,  @RequestBody String content,
+			String age, HttpServletRequest request, HttpServletResponse response) {
+		try {
+			
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			String id = jsonObj.getString("id");
+			groupRService.deleteGroup(id);
+			AjaxUtils.ajaxJsonSuccessMessage(response, "删除工作组成功!");
+		} catch (Exception e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, "删除工作组失败!");
 			e.printStackTrace();
 		}
 		return null;

@@ -8,6 +8,7 @@ import org.apache.commons.lang.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
+import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.dao.om.OmGroupMapper;
@@ -194,8 +195,9 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 
 	@Override
 	public void deleteGroup(String groupCode) throws ToolsRuntimeException {
-		// TODO Auto-generated method stub
-		
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("group_code", groupCode);
+		omGroupMapper.deleteByCondition(wc);
 	}
 
 	@Override
