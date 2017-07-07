@@ -343,6 +343,8 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
     //编辑工作组
     workgroup.edit = function () {
         var item = $scope.workgroupgrid.getSelectedRows();
+        $("#container").jstree().open_node(true);
+        console.log($("#container").jstree().data)
         if(item.length != 1 ){
             toastr['error']("请选择一条数据!");
             return false;
