@@ -1,0 +1,212 @@
+<!--业务字典管理-->
+<div class="page-bar ng-scope" style="border-bottom: 1px solid #e7ecf1;">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="#">其他管理</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <a href="#">业务字典</a>
+        </li>
+    </ul>
+</div>
+<h3 class="page-title">
+    <small></small>
+</h3>
+<div class="row" ng-form="bigform">
+    <div class="col-md-12" >
+        <div class="portlet light">
+                <div class="portlet-body portlet light">
+                    <!-- tab页签-->
+                    <ul class="nav nav-tabs padding-12 tab-color-blue background-blue">
+                        <li ng-class="{true:'active',false:''}[dictflag.zdgl]">
+                            <a data-toggle="tab" href ng-class="{true:'link',false:''}[dictflag.zdgl]" ng-click="dictflag.loadgwdata(0)">
+                                <i class="green ace-icon fa fa-bars bigger-120"></i>业务字典管理
+                            </a>
+                        </li>
+                        <li ng-class="{true:'active',false:''}[dictflag.zddr]">
+                            <a  data-toggle="tab" href ng-class="{true:'link',false:''}[dictflag.zddr]" ng-click="dictflag.loadgwdata(1)">
+                                <i class="green ace-icon fa fa-bars bigger-120"></i>业务字典导入
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- tab内容开始 -->
+                    <div class="tab-content portlet light clearfix "   ng-show="dictflag.zdgl">
+                           <div class="col-md-6" ng-form="bigform" style="padding-left: 0px;">
+                                <!--<div class="portlet light" >
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <i class=""></i>
+                                            <span class="caption-subject font-green-sharp bold uppercase">角色查询条件</span>
+                                        </div>
+                                    </div>
+                                    <form id="s" class="clearfix">
+                                        <div class="col-md-12 " >
+                                            <div class="form-group ">
+                                                <label class="control-label col-md-2 col-md-offset-2" style="margin-top:8px;">类型代码:</label>
+                                                <div class="col-md-6">
+                                                    <input type="search" class="form-control"
+                                                           ng-model="dictconfig.typeCode"
+                                                           name="id"  id="q"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 " style="margin:15px 0px;" class="">
+                                            <div class="form-group ">
+                                                <label class="control-label col-md-2 col-md-offset-2" style="margin-top:8px;">类型名称:</label>
+                                                <div class="col-md-6">
+                                                    <input type="search" class="form-control"
+                                                           ng-model="dictconfig.typeName"
+                                                           name="id"  id="e"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12" style="text-align: center">
+                                            <button type="button" name="back" class="btn btn-primary" ng-click="dictconfig_refresh()">  刷新缓存
+                                            </button>
+                                            <button type="button" name="back" class="btn btn-primary" ng-click="dictconfig_down()">导出
+                                            </button>
+                                            <button type="submit" name="back" class="btn btn-primary" ng-click="dictconfig_search()"> 检索
+                                            </button>
+                                            <button type="button" name="back" class="btn btn-danger" ng-click="role_Reset()"> 重置
+                                            </button>
+                                         </div>
+                                    </form>
+                                </div>-->
+                                <div class="portlet light"  style="margin-top: 10px;">
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <i class=""></i>
+                                            <span class="caption-subject font-green-sharp bold uppercase">业务字典类型</span>
+                                        </div>
+                                    </div>
+                                    <div ui-grid="gridOptions0"
+                                         ui-grid-pagination ui-grid-exporter
+                                         ui-grid-selection ui-grid-resize-columns>
+                                    </div>
+                                    <div class="actions btn-set" style="float: right; margin-top:12px;">
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="show_win()"> 新增
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="show_edit(4)">  修改
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-danger" ng-click="showDelAll()"> 删除
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="dictconfig_refresh()">  刷新缓存
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="dictconfig_down()">导出
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="padding-left: 0px; margin-top:10px;">
+                                <div class="portlet light">
+                                    <div class="portlet-title" ng-if="dictconfig.show">
+                                        <div class="caption">
+                                            <i class=""></i>
+                                            <span class="caption-subject font-green-sharp bold uppercase">角色查询条件</span>
+                                        </div>
+                                    </div>
+                                    <!-- 树结构-->
+                                          <div class="show" ng-show="dictconfig.show">
+                                              <form id="s">
+                                                  <input type="search" id="q"/>
+                                                  <button type="submit">检索</button>
+                                              </form>
+                                              <div id="container" style="margin-top: 20px;"></div>
+                                          </div>
+                                </div>
+                                <div class="portlet light"  style="margin-top: 10px;" ng-if="dictconfig.show">
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <i class=""></i>
+                                            <span class="caption-subject font-green-sharp bold uppercase">数据字典项</span>
+                                        </div>
+                                    </div>
+                                    <div ui-grid="gridOptions1"
+                                         ui-grid-pagination
+                                         ui-grid-selection ui-grid-resize-columns>
+                                    </div>
+                                    <div class="actions btn-set" style="float: right; margin-top:12px;">
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="dict_win()"> 新增
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="dict_edit(4)">  修改
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-danger" ng-click="dictDelAll()"> 删除
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+                    <div class="table-container" ng-show="dictflag.zddr" >
+                      <div class="div" ng-controller="dictitwos_controller">
+                          <div class="portlet light"  style="margin-top: 10px;">
+                              <div class="portlet-title">
+                                  <div class="caption">
+                                      <i class=""></i>
+                                      <span class="caption-subject font-green-sharp bold uppercase">业务字典类型Excel文件导入</span>
+                                  </div>
+                              </div>
+                              <form action="#" name="myform" class="form-horizontal">
+                                  <div class="col-md-6" >
+                                      <div class="form-group">
+                                          <label class="control-label col-md-4">业务字典类型Excel文件:</label>
+                                          <div class="col-md-8">
+                                              <div class="input-group">
+                                                  <input type="text" class="form-control"
+                                                         ng-model="dictconfig.fileType"
+                                                         name="fileName" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" name="back" class="btn default date-set"  popover-trigger="mouseenter" ng-click="typeFile()" > 上传</button>
+                                                    </span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </form>
+                          </div>
+                          <div class="portlet light"  style="margin-top: 60px;" >
+                              <div class="portlet-title">
+                                  <div class="caption">
+                                      <i class=""></i>
+                                      <span class="caption-subject font-green-sharp bold uppercase">业务字典项Excel文件导入</span>
+                                  </div>
+                              </div>
+                              <form action="#" name="myform" class="form-horizontal">
+                                  <div class="col-md-6" >
+                                      <div class="form-group">
+                                          <label class="control-label col-md-4">业务字典项Excel文件:</label>
+                                          <div class="col-md-8">
+                                              <div class="input-group">
+                                                  <input type="text" class="form-control"
+                                                         ng-model="dictconfig.fileProject"
+                                                         name="fileName" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" name="back" class="btn default date-set"  popover-trigger="mouseenter" ng-click="projectFile()" > 上传</button>
+                                                    </span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </form>
+                          </div>
+                      </div>
+                    </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
