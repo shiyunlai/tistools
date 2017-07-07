@@ -75,3 +75,6 @@ tools-web-tools/src/main/webapp/assets/layouts/layout4/css/layout.css
 *.css
 tools-web-tools/src/main/webapp/assets/apps/css/inbox.css
 tools-web-tools/src/main/webapp/assets/apps/css/inbox.css
+*.iml
+tools.ipr
+*.iws
