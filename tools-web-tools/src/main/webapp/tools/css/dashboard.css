@@ -1,0 +1,129 @@
+.page-title{
+    margin-top:10px;
+}
+
+
+.note{
+    position: relative;
+    margin: 0 0 200px;
+    padding:0;
+}
+
+.note-info{
+    height: 40px;
+    border-bottom: 1px solid #ccc
+}
+
+.note-info h3{
+    font-size: 18px;
+    line-height: 40px;
+    margin-left:10px;
+}
+
+.box{
+    height: 200px;
+    margin-top:-25px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom:30px;
+}
+.box .left{
+    height: 200px;
+    border-right: 1px solid #ccc;
+    text-align: center;
+    line-height: 30px;
+}
+.box .right{
+    height: 200px;
+}
+
+
+.box .left p:first-child{
+    font-size: 24px;
+    color: red;
+    margin-top: 40px;
+}
+
+.box .left p:nth-child(2){
+    margin-top:20px;
+    font-size: 30px;
+    color: black;
+}
+
+.box .left p:nth-child(3){
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+
+#main,#maino,#maint,#mainf,#mainv{
+    margin-top:35px;
+}
+.text{
+    padding:0px 15px;
+}
+.text p{
+    line-height: 30px;
+}
+.text p span{
+    margin-left: 40px;
+}
+.text p span:first-child{
+     margin-left: 0px;
+}
+.text p span:nth-child(3){
+     margin-left: 100px;
+}
+.offset{
+    margin-left: 100px;
+}
+
+.offset h3 a{
+    text-decoration: none;
+    font-size: 12px;
+    color: #ccc;
+    float: right;
+    margin-right: 10px;
+    line-height: 55px;
+}
+.offset h3 a:hover{
+    text-decoration: none;
+}
+
+.ul{
+    list-style: none;
+    margin-top:15px;
+    padding:0px 15px;
+    border-left: 1px solid #ccc;
+
+}
+.ul li{
+    line-height: 24px;
+    position: relative;
+}
+.ul li i{
+    position: relative;
+    left:-264px;
+    top:3px;
+}
+
+
+.ul li span{
+    float: left;
+    color:red;
+    font-weight: bold;
+}
+
+.ul li span:last-child{
+    float: right;
+    color: black;
+    font-weight: normal;
+}
+
+/*子页面样式*/
+.button{
+    position: absolute;
+    top:3px;
+    right:25px;
+}
+
+

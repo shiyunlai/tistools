@@ -156,7 +156,8 @@ var ComponentsDateTimePickers = function () {
         $(".form_datetime").datetimepicker({
             autoclose: true,
             isRTL: App.isRTL(),
-            format: "yyyy-mm-dd hh:ii:ss",
+            minView: "month",//只显示到日期，不显示时分秒
+            format: "yyyy-mm-dd",//定义格式，年月日
             pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left")
         });
 

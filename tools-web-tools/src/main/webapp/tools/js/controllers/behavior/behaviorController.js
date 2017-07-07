@@ -8,14 +8,14 @@ angular.module('MetronicApp').controller('behavior_controller', function($rootSc
 
     /*定义行为类型列表结构*/
     i18nService.setCurrentLang("zh-cn");
-    $scope.myData = [{'BHVTYPE_CODE': 's', 'BHVTYPE_NAME': '测试类型'}, {'BHVTYPE_CODE': 'a', 'BHVTYPE_NAME': '测试类型11'}]
+    $scope.myData = [{'bhvtypeCode': 's', 'bhvtypeName': '测试类型'}, {'bhvtypeCode': 'a', 'bhvtypeName': '测试类型11'}]
     var gridOptions = {};
     $scope.gridOptions = gridOptions;
     var initdata = function(){
         return $scope.myData;//数据方法
     }
-    var com = [{ field: 'BHVTYPE_CODE', displayName: '行为类型代码'},
-        { field: "BHVTYPE_NAME", displayName:'行为类型名称'}
+    var com = [{ field: 'bhvtypeCode', displayName: '行为类型代码'},
+        { field: "bhvtypeName", displayName:'行为类型名称'}
 
     ];
     var f = function(row){
