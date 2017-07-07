@@ -164,7 +164,7 @@
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4"> 开通日期: </label>
                                                                 <div class="col-md-8">
-                                                                    <div class="input-group date form_datetime" ng-init="$root.settings.utils.initpicker()" >
+                                                                    <div class="input-group date form_datetime" ng-init="$root.settings.utils.initpicker()"  ng-disabled="!editflag" >
                                                                             <span class="input-group-btn">
                                                                                 <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
                                                                             </span>
@@ -262,7 +262,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6" >
+                                                <!--<div class="col-md-6" >
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">所属功能组</label>
                                                         <div class="col-md-8">
@@ -273,7 +273,7 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div>-->
                                                 <div class="col-md-6" >
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">节点层次 </label>
