@@ -438,10 +438,13 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	
 	/**
 	 * 新增功能(AC_FUNC) return AcFunc
+	 * 
 	 */
 	@Override
-	public AcFunc createAcFunc(AcFunc acFunc) {
-		acFunc.setGuid(GUID.func());
+	public AcFunc createAcFunc(AcFunc acFunc,AcFuncResource acFuncResource) {
+		String guid=GUID.func();
+		acFuncResource.setGuidFunc(guid);
+		acFunc.setGuid(guid);
 		AcFunc newAcFunc = acFunc;
 		try {
 			acFunc = transactionTemplate
@@ -449,6 +452,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 						@Override
 						public AcFunc doInTransaction(TransactionStatus arg0) {
 							acFuncService.insert(newAcFunc);
+							acFuncResourceService.insert(acFuncResource);
 							return newAcFunc;
 						}
 					});
@@ -485,16 +489,18 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	}
 
 	/**
-	 * 更新功能(AC_FUNC),只修改t对象有值的字段
-	 * @param t 新值
+	 * 更新功能(AC_FUNC)
+	 * @param acFunc 功能
+	 * @param acFuncResource 功能对应资源
 	 */
 	@Override
-	public void updateAcFunc(AcFunc t) throws AppManagementException {
+	public void updateAcFunc(AcFunc acFunc,AcFuncResource acFuncResource) throws AppManagementException {
 		try {
 			transactionTemplate.execute(new TransactionCallback<AcFunc>() {
 				@Override
 				public AcFunc doInTransaction(TransactionStatus arg0) {
-					acFuncService.updateForce(t);
+					acFuncService.updateForce(acFunc);
+					acFuncResourceService.update(acFuncResource);
 					return null;
 				}
 			});

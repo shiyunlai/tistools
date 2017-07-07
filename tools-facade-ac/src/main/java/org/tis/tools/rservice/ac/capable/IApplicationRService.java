@@ -147,9 +147,10 @@ public interface IApplicationRService {
 	/**
 	 * 新增功能(AC_FUNC)
 	 * @param acFunc 功能对象
+	 * @param acFuncResource 功能对应资源
 	 * return  AcFunc
 	 */
-	public AcFunc createAcFunc(AcFunc acFunc);
+	public AcFunc createAcFunc(AcFunc acFunc,AcFuncResource acFuncResource);
 
 	
 	/**
@@ -159,10 +160,11 @@ public interface IApplicationRService {
 	public void deleteAcFunc(String guid);
 	
 	/**
-	 * 更新功能(AC_FUNC),只修改t对象有值的字段
-	 * @param t 新值
+	 * 更新功能(AC_FUNC)
+	 * @param acFunc 功能
+	 * @param acFuncResource 功能对应资源
 	 */
-	public void updateAcFunc(AcFunc t);
+	public void updateAcFunc(AcFunc acFunc,AcFuncResource acFuncResource);
 
 	/**
 	 * 根据条件查询功能(AC_FUNC)

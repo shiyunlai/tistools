@@ -326,6 +326,18 @@ public class AcAppController extends BaseController {
 			String isCheck = jsonObj.getString("isCheck");
 			String isMenu = jsonObj.getString("isMenu");
 			String guidFuncgroup = jsonObj.getString("guidFuncgroup");
+			
+			//设置功能对应资源
+			AcFuncResource acFuncResource = new AcFuncResource();
+			String resType = jsonObj.getString("resType");
+			String compackName = jsonObj.getString("compackName");
+			String resshowName = jsonObj.getString("resshowName");
+			String resPath = jsonObj.getString("resPath");
+			acFuncResource.setResType(resType);
+			acFuncResource.setCompackName(compackName);
+			acFuncResource.setResShowName(resshowName);
+			acFuncResource.setResPath(resPath);
+			
 			AcFunc acFunc = new AcFunc();
 			acFunc.setFuncCode(funcCode);
 			acFunc.setFuncName(funcName);
@@ -335,7 +347,7 @@ public class AcAppController extends BaseController {
 			acFunc.setIscheck(isCheck);
 			acFunc.setIsmenu(isMenu);
 			acFunc.setGuidFuncgroup(guidFuncgroup);
-			applicationRService.createAcFunc(acFunc);//把new的并且填入参数的对象，传入，返回
+			applicationRService.createAcFunc(acFunc,acFuncResource);//把new的并且填入参数的对象，传入，返回
 			AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
 		} catch (ToolsRuntimeException e) {
 			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
@@ -397,6 +409,8 @@ public class AcAppController extends BaseController {
 			String funcType = jsonObj.getString("funcType");
 			String isCheck = jsonObj.getString("isCheck");
 			String isMenu = jsonObj.getString("isMenu");
+		
+						
 			acFunc.setFuncCode(funcCode);
 			acFunc.setFuncName(funcName);
 			acFunc.setFuncAction(funcAction);
@@ -404,7 +418,20 @@ public class AcAppController extends BaseController {
 			acFunc.setFuncType(funcType);
 			acFunc.setIscheck(isCheck);
 			acFunc.setIsmenu(isMenu);
-			applicationRService.updateAcFunc(acFunc);
+			
+			//设置功能对应资源
+			AcFuncResource acFuncResource = new AcFuncResource();
+			String resType = jsonObj.getString("resType");
+			String compackName = jsonObj.getString("compackName");
+			String resshowName = jsonObj.getString("resshowName");
+			String resPath = jsonObj.getString("resPath");
+			acFuncResource.setGuidFunc(guid);
+			acFuncResource.setResType(resType);
+			acFuncResource.setCompackName(compackName);
+			acFuncResource.setResShowName(resshowName);
+			acFuncResource.setResPath(resPath);
+
+			applicationRService.updateAcFunc(acFunc,acFuncResource);
 			AjaxUtils.ajaxJsonSuccessMessage(response,"");//返回给前台的结
 		} catch (ToolsRuntimeException e) {
 			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
