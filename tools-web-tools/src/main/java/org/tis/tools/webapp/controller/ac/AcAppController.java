@@ -63,9 +63,9 @@ public class AcAppController extends BaseController {
 			String appType = jsonObj.getString("appType");
 			String appDesc = jsonObj.getString("appDesc");
 			String isOpen = jsonObj.getString("isOpen");
-			String openDate = jsonObj.getString("openDate");
+			String openDateStr = jsonObj.getString("openDateStr");
 			SimpleDateFormat times = new SimpleDateFormat("yyyy-MM-dd");
-			Date date = times.parse(openDate);
+			Date date = times.parse(openDateStr);
 			String url = jsonObj.getString("url");
 			String ipAddr = jsonObj.getString("ipAddr");
 			String ipPort = jsonObj.getString("ipPort");
