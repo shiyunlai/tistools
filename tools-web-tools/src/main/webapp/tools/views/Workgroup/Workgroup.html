@@ -92,7 +92,7 @@
                 </div>
             </div>
             <!-- 工作组详情 start -->
-            <div class="tab-content portlet light" ng-if="flag.xqxx">
+            <div class="tab-content portlet light" ng-show="flag.xqxx">
                 <div class="portlet-body portlet light">
                     <form action="#" name="myform" class="form-horizontal ">
                         <div class="form-body ">
@@ -138,11 +138,12 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-4">生效日期</label>
                                     <div class="col-md-8">
-                                    <div class="input-group date form_datetime" ng-init="$root.settings.utils.initpicker()" >
-                                        <span class="input-group-btn">
-                                            <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
-                                        </span>
-                                        <input type="text" class="form-control" ng-model="sub.startDate" readonly/>
+                                        <div class="input-group date form_datetime" ng-init="$root.settings.utils.initpicker()" >
+                                            <span class="input-group-btn">
+                                                <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                            </span>
+                                            <input type="text" class="form-control" ng-model="sub.startDate" readonly/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

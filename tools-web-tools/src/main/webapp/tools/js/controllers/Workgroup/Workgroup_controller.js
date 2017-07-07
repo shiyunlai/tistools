@@ -248,8 +248,13 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
                     flag[a] = false;
                 }
                 flag.index = true;
-                $scope.$apply();
+            }else {
+                for(var a in flag){
+                    flag[a] = false;
+                }
+                flag.xqxx = true;
             }
+            $scope.$apply();
         }
     });
 
