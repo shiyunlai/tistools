@@ -349,9 +349,10 @@ angular.module('MetronicApp').controller('dictitwos_controller', function($rootS
                     {title : "zip", extensions : "zip"},
                     {title : "pkg", extensions : "pkg"}
                 ]*/ //定义上传的格式
+
             })
-            uploader.filters.push({
-                name: 'customFilter',
+            uploader.filters.push({ //过滤器，控制上传数量
+                name: 'customFilter',//过滤器的名字
                 fn: function(item /*{File|FileLikeObject}*/ , options) {
                     return this.queue.length < 10;
                 }
@@ -379,6 +380,7 @@ angular.module('MetronicApp').controller('dictitwos_controller', function($rootS
             };
         });
     };
+
     //上传字典项
     $scope.projectFile = function openVersion() {
         openwindow( $modal,'views/dictionary/fillwindow.html','lg',function ($scope, $modalInstance) {

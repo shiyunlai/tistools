@@ -9,7 +9,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     $scope.biz.item = item;
     $scope.biz.datas = [];
     //定义权限
-     $scope.biz.applica = false;
+    $scope.biz.applica = false;
     /*-------------------------------------------------------------------------------分割符--------------------------------------------------------------------------------*/
     //0、树结构逻辑代码
     $("#s").submit(function(e) {    //树过滤,搜索功能
@@ -289,15 +289,14 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 var subFrom = {};
                 subFrom.id = obj.id;
                 //console.log(subFrom.id)
-                if(isNull(obj.guid)){
-                    subFrom.guid = '';
-                }else{
-                    subFrom.guid = obj.guid;
-                }
+                /*if(isNull(obj.guid)){
+                 subFrom.guid = '';
+                 }else{
+                 subFrom.guid = obj.guid;
+                 }*/
                 application_service.appQuery(subFrom).then(function (data) {
-                    //console.log(data);
                     var datas = data.retMessage;
-                    //console.log(datas);
+                    var its = [];
                     if(datas instanceof Array){
                         for(var i = 0; i < datas.length;i++){
                             //console.log(datas[i])
@@ -305,51 +304,59 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                 datas[i].text = datas[i].appName;
                                 datas[i].id = datas[i].guid;
                                 datas[i].children = true;
-                                //console.log(datas[i]);
-                                $scope.jsonarray = angular.copy(datas);
-                                callback.call(this, $scope.jsonarray);
+                                its.push(datas[i])
+                                /* $scope.jsonarray = angular.copy(datas);
+                                 callback.call(this, $scope.jsonarray);*/
                             }else if(isNull(datas[i].appName) && obj.id != 'AC0000'){
                                 datas[i].text = datas[i].funcgroupName;
                                 datas[i].id = datas[i].guid;
                                 datas[i].children = true;
-                                $scope.jsonarray = angular.copy(datas);
-                                callback.call(this, $scope.jsonarray);
+                                its.push(datas[i])
+                                /* $scope.jsonarray = angular.copy(datas);
+                                 callback.call(this, $scope.jsonarray);*/
                             }
                         }
                     }
                     else{
                         var itemss = [];
-                        if(!isNull(datas.funcList)){
-                            var datsea = datas.funcList;
-                            for(var i =0;i< datsea.length;i++){
-                                //console.log(datsea[i])
-                                datsea[i].text = datsea[i].funcName;
-                                datsea[i].id = datsea[i].guid;
-                                datsea[i].children = false;
-                                itemss.push(datsea[i])
-                                $scope.jsonarray = angular.copy(data.funcList);
-                                callback.call(this, itemss);
+                        if(!isNull(datas.funcList)){//如果存在funcList，则显示功能数据
+                            //var datsea = datas.funcList;
+                            for(var i =0;i <datas.funcList.length;i++){
+                                //console.log(datas.funcList[i])
+                                //console.log(datas.funcList[i])
+                                    datas.funcList[i].text = datas.funcList[i].funcName;
+                                    datas.funcList[i].id = datas.funcList[i].guid;
+                                    datas.funcList[i].children = false;
+                                    its.push(datas.funcList[i])
+                                //itemss.push(datas.funcList[i])
+                                /*$scope.jsonarray = angular.copy(data.funcList);
+                                 callback.call(this, itemss);*/
                             }
                         }
-                        if(!isNull(datas.groupList)){
-                            var datsea = datas.groupList;
-                            for(var i =0;i< datsea.length;i++){
-                                datsea[i].text = datsea[i].funcgroupName;
-                                datsea[i].id = datsea[i].guid;
-                                datsea[i].children = true;
-                                itemss.push(datsea[i])
-                                $scope.jsonarray = angular.copy(data.groupList);
-                                callback.call(this, itemss);
+                        if(!isNull(datas.groupList)){//如果存在groupList，则显示功能组数据
+                            //var datsea = datas.groupList;
+                            //调用用问题
+                            for(var i =0;i< datas.groupList.length;i++){
+                                //console.log(datas.groupList[i])
+                                datas.groupList[i].text = datas.groupList[i].funcgroupName;
+                                datas.groupList[i].id = datas.groupList[i].guid;
+                                datas.groupList[i].children = true;
+                                its.push(datas.groupList[i])
+                                //itemss.push(datas.groupList[i])
+                                /*$scope.jsonarray = angular.copy(data.groupList);
+                                 callback.call(this, itemss);*/
                             }
                         }
                         if(!isNull(datas.rootName)){
-                            data.text = datas.rootName;
-                            data.children = true;
-                            data.id = datas.rootCode;
-                            $scope.jsonarray = angular.copy(data);
-                            callback.call(this, $scope.jsonarray);
+                            datas.text = datas.rootName;
+                            datas.children = true;
+                            datas.id = datas.rootCode;
+                            its.push(datas)
                         }
                     }
+                    $scope.jsonarray = angular.copy(its);
+                    console.log($scope.jsonarray)
+                    callback.call(this, $scope.jsonarray);
                 })
             },
         },
@@ -400,7 +407,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                     var datas = data.retMessage;
                     $scope.gridOptions0.data = datas;//把获取到的数据复制给表
                     //console.log($scope.biz.datas);
-              /*      ($scope.$$phase)?null: $scope.$apply();*/
+                    /*      ($scope.$$phase)?null: $scope.$apply();*/
                 })
             }else if(data.node.parent == "AC0000"){
                 ($scope.$$phase)?null: $scope.$apply();
@@ -576,7 +583,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     }
 
 
-/*-----------------------------------------------------------------------------------------分割符----------------------------------------------------------------------------------*/
+    /*-----------------------------------------------------------------------------------------分割符----------------------------------------------------------------------------------*/
     //2、应用模块逻辑
     //应用tab切换列表
     var yyflag = {};
@@ -637,26 +644,26 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     //功能组新增
     $scope.addApp = function(){
         var ids = $scope.biz.item.id;
-            openwindow($modal, 'views/Jurisdiction/appgroupAdd.html', 'lg',//弹出页面
-                function ($scope, $modalInstance) {
-                    $scope.add = function(item){
-                        item.guidApp = ids;
-                        item.guidParents = '';
-                        application_service.groupAdd(item).then(function(data){
-                                if(data.status == "success"){
-                                    toastr['success']("保存成功！");
-                                    $("#container").jstree().refresh();
-                                    biz.initt1(ids);//调用查询服务
-                                    $modalInstance.close();
-                                }else{
-                                    toastr['error'](data.retCode,data.retMessage+"新增失败!");
-                                }
-                        })
-                    }
-                    $scope.cancel = function () {
-                        $modalInstance.dismiss('cancel');
-                    };
-                })
+        openwindow($modal, 'views/Jurisdiction/appgroupAdd.html', 'lg',//弹出页面
+            function ($scope, $modalInstance) {
+                $scope.add = function(item){
+                    item.guidApp = ids;
+                    item.guidParents = '';
+                    application_service.groupAdd(item).then(function(data){
+                        if(data.status == "success"){
+                            toastr['success']("保存成功！");
+                            $("#container").jstree().refresh();
+                            biz.initt1(ids);//调用查询服务
+                            $modalInstance.close();
+                        }else{
+                            toastr['error'](data.retCode,data.retMessage+"新增失败!");
+                        }
+                    })
+                }
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            })
     }
     //功能组修改
     $scope.exidApp = function(id){
@@ -718,7 +725,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             }
         }
     }
-/*------------------------------------------------------------------------------------------分割符-------------------------------------------------------------------------------*/
+    /*------------------------------------------------------------------------------------------分割符-------------------------------------------------------------------------------*/
     //2、子功能组页面逻辑
     //岗位页签跳转控制
     var childflag = {};
