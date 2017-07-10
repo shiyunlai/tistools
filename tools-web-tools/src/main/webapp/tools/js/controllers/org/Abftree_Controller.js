@@ -223,6 +223,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 var subFrom = {};
                 subFrom.id = obj.id;
                 abftree_service.loadmaintree(subFrom).then(function (data) {
+                    console.log(data);
                     if(isNull(data[0].orgName)){
                         for(var i = 0 ;i < data.length ; i++){
                             data[i].text = data[i].positionName;
@@ -923,7 +924,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 }
                 //单击事件
                 var sel = function () {
-                    
+
                 }
                 $scope.commonGrid = initgrid($scope,commonGrid,initd(),filterFilter,null,true,sel);
 
