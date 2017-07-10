@@ -16,6 +16,8 @@ import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.model.def.CommonConstants;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.po.ac.AcApp;
+import org.tis.tools.model.po.ac.AcBhvDef;
+import org.tis.tools.model.po.ac.AcBhvtypeDef;
 import org.tis.tools.model.po.ac.AcFunc;
 import org.tis.tools.model.po.ac.AcFuncBehavior;
 import org.tis.tools.model.po.ac.AcFuncResource;
@@ -23,10 +25,13 @@ import org.tis.tools.model.po.ac.AcFuncgroup;
 import org.tis.tools.model.po.ac.AcMenu;
 import org.tis.tools.model.po.ac.AcOperator;
 import org.tis.tools.model.vo.ac.AcAppVo;
+import org.tis.tools.model.vo.ac.AcFuncVo;
 import org.tis.tools.model.vo.om.OmOrgDetail;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.ac.exception.AppManagementException;
 import org.tis.tools.service.ac.AcAppService;
+import org.tis.tools.service.ac.AcBhvDefService;
+import org.tis.tools.service.ac.AcBhvtypeDefService;
 import org.tis.tools.service.ac.AcFuncBehaviorService;
 import org.tis.tools.service.ac.AcFuncResourceService;
 import org.tis.tools.service.ac.AcFuncService;
@@ -64,7 +69,10 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	AcOperatorService acOperatorService;
 	@Autowired
 	AcFuncBehaviorService acFuncBehaviorService;
-	
+	@Autowired
+	AcBhvtypeDefService acBhvtypeDefService;
+	@Autowired
+	AcBhvDefService acBhvDefService;
 	
 
 	/**
@@ -189,7 +197,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		List<AcAppVo> acAppList = new ArrayList<AcAppVo>();
 		try {
 			WhereCondition wc = new WhereCondition();
-			acAppList = applicationService.query(wc);
+			acAppList = applicationService.queryAcAppVo(wc);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
@@ -494,13 +502,12 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 * @param acFuncResource 功能对应资源
 	 */
 	@Override
-	public void updateAcFunc(AcFunc acFunc,AcFuncResource acFuncResource) throws AppManagementException {
+	public void updateAcFunc(AcFunc acFunc) throws AppManagementException {
 		try {
 			transactionTemplate.execute(new TransactionCallback<AcFunc>() {
 				@Override
 				public AcFunc doInTransaction(TransactionStatus arg0) {
 					acFuncService.updateForce(acFunc);
-					acFuncResourceService.update(acFuncResource);
 					return null;
 				}
 			});
@@ -978,6 +985,266 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		}
 		return acFuncBehaviorList;
 	}
+
+	/**
+	 * 根据条件查询功能(AC_FUNC)
+	 * @param guid 条件
+	 * @return 满足条件的记录
+	 */
+	@Override
+	public List<AcFuncVo> queryAcFuncVo(String guid)throws AppManagementException {
+		List<AcFuncVo> acFuncVoList = new ArrayList<AcFuncVo>();
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("guid_funcgroup", guid);
+		try {
+			acFuncVoList = applicationService.queryAcFuncVo(wc );
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNC,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能失败！{0}");
+		}
+		return acFuncVoList;
+	}
+
+	@Override
+	public List<AcFunc> queryAllFunc() throws AppManagementException {
+		List<AcFunc> acFuncList = new ArrayList<AcFunc>();
+		WhereCondition wc = new WhereCondition();
+		try {
+			acFuncList = acFuncService.query(wc);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNC,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能失败！{0}");
+		}
+		return acFuncList;
+	}
+
+	/**
+	 * 导入功能(AC_FUNC)
+	 * 
+	 * @param guidFuncgroup 功能组guid
+	 * @param list 功能列表
+	 */
+	@Override
+	public void importFunc(String guidFuncgroup, List list)throws AppManagementException {
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcFunc>() {
+				@Override
+				public AcFunc doInTransaction(TransactionStatus arg0) {
+					WhereCondition wc =new WhereCondition();
+					for(int i=0;i<list.size();i++){
+						wc.clear();
+						String guid=(String) list.get(i);
+						wc.andEquals("GUID", guid);
+						AcFunc acfunc = acFuncService.query(wc).get(0);
+						acfunc.setGuidFuncgroup(guidFuncgroup);
+						acFuncService.insert(acfunc);//导入功能
+					}
+					return null;
+				}
+			});
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_IMPORT_AC_FUNC,
+					BasicUtil.wrap(e.getCause().getMessage()), "导入功能失败！{0}");
+		}
+	}
+
+	/**
+	 * 新增行为类型(AC_BHVTYPE_DEF)
+	 * 
+	 * @param acBhvtypeDef 行为类型
+	 */
+	@Override
+	public void functypeAdd(AcBhvtypeDef acBhvtypeDef) throws AppManagementException{
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcBhvtypeDef>() {
+				@Override
+				public AcBhvtypeDef doInTransaction(TransactionStatus arg0) {
+					acBhvtypeDef.setGuid(GUID.bhvtypedef());
+					acBhvtypeDefService.insert(acBhvtypeDef);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_BHVTYPE_DEF,
+					BasicUtil.wrap(e.getCause().getMessage()), "新增行为类型失败！{0}");
+		}
+	}
+
+	/**
+	 * 删除行为类型(AC_BHVTYPE_DEF)
+	 * 
+	 * @param acBhvtypeDef 行为类型
+	 */
+	@Override
+	public void functypeDel(String guid) throws AppManagementException{
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcBhvtypeDef>() {
+				@Override
+				public AcBhvtypeDef doInTransaction(TransactionStatus arg0) {
+					acBhvtypeDefService.delete(guid);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_BHVTYPE_DEF,
+					BasicUtil.wrap(e.getCause().getMessage()), "删除行为类型失败！{0}");
+		}
+	}
+
+	/**
+	 * 修改行为类型(AC_BHVTYPE_DEF)
+	 * 
+	 * @param acBhvtypeDef 行为类型
+	 */
+	@Override
+	public void functypeEdit(AcBhvtypeDef acBhvtypeDef) throws AppManagementException{
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcBhvtypeDef>() {
+				@Override
+				public AcBhvtypeDef doInTransaction(TransactionStatus arg0) {
+					acBhvtypeDefService.update(acBhvtypeDef);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_BHVTYPE_DEF,
+					BasicUtil.wrap(e.getCause().getMessage()), "修改行为类型失败！{0}");
+		}
+	}
+
+	/**
+	 * 查询行为类型(AC_BHVTYPE_DEF)
+	 * 
+	 * @param acBhvtypeDef 行为类型
+	 * 返回list
+	 */
+	@Override
+	public List<AcBhvtypeDef> functypequery() throws AppManagementException{
+		List<AcBhvtypeDef> acBhvtypeDef=new ArrayList<AcBhvtypeDef>();
+		try {
+			WhereCondition wc =new WhereCondition();
+			acBhvtypeDef = acBhvtypeDefService.query(wc);	
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_BHVTYPE_DEF,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询行为类型失败！{0}");
+		}
+		return acBhvtypeDef;
+	}
+
+	
+	/**
+	 * 新增功能操作行为(AC_BHV_DEF)
+	 * 
+	 * @param acBhvDef 功能操作行为
+	 */
+	@Override
+	public void funactAdd(AcBhvDef acBhvDef)  throws AppManagementException{
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcBhvtypeDef>() {
+				@Override
+				public AcBhvtypeDef doInTransaction(TransactionStatus arg0) {
+					acBhvDef.setGuid(GUID.bhvdef());
+					acBhvDefService.insert(acBhvDef);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_BHV_DEF,
+					BasicUtil.wrap(e.getCause().getMessage()), "新增功能操作行为失败！{0}");
+		}
+	}
+
+	/**
+	 * 删除功能操作行为(AC_BHV_DEF)
+	 * 
+	 * @param guid 条件
+	 */
+	@Override
+	public void funactDel(String guid)throws AppManagementException{
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcBhvDef>() {
+				@Override
+				public AcBhvDef doInTransaction(TransactionStatus arg0) {
+					acBhvDefService.delete(guid);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_BHV_DEF,
+					BasicUtil.wrap(e.getCause().getMessage()), "删除功能操作行为失败！{0}");
+		}
+	}
+
+	/**
+	 * 修改功能操作行为(AC_BHV_DEF)
+	 * 
+	 * @param acBhvDef 行为类型
+	 */
+	@Override
+	public void funactEdit(AcBhvDef acBhvDef) throws AppManagementException{
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcBhvDef>() {
+				@Override
+				public AcBhvDef doInTransaction(TransactionStatus arg0) {
+					
+					WhereCondition wc =new WhereCondition();
+					wc.andEquals("GUID", acBhvDef.getGuid());
+					AcBhvDef acBhvDefdata = acBhvDefService.query(wc ).get(0);
+					acBhvDefdata.setBhvCode(acBhvDef.getBhvCode());
+					acBhvDefdata.setBhvName(acBhvDef.getBhvName());
+					acBhvDefService.update(acBhvDefdata);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_BHV_DEF,
+					BasicUtil.wrap(e.getCause().getMessage()), "修改功能操作行为失败！{0}");
+		}
+	}
+
+	/**
+	 * 查询功能操作行为(AC_BHV_DEF)
+	 * 
+	 * @param acBhvDef 功能操作行为
+	 * 返回list
+	 */
+	@Override
+	public List<AcBhvDef> funactQuery(String guid) throws AppManagementException{
+		List<AcBhvDef> acBhvDef=new ArrayList<AcBhvDef>();
+		try {
+			WhereCondition wc =new WhereCondition();
+			wc.andEquals("GUID_BEHTYPE", guid);
+			acBhvDef = acBhvDefService.query(wc);	
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_BHV_DEF,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能操作行为失败！{0}");
+		}
+		return acBhvDef;
+	}
+	
 	
 
 }
