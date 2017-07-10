@@ -1,0 +1,75 @@
+<!--新增业务字典类型-->
+<div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
+    {{numberFrom}}
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs font-green-sharp"></i>
+            <span class="caption-subject font-green-sharp bold uppercase"  ng-if="!id">修改序号数</span>
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="remove" ng-click="cancel()">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body portlet light">
+        <form action="#" name="myform" class="form-horizontal ">
+            <div class="form-body ">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 序号键值:</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="numberFrom.seqKey"  ng-disabled="!editsflag"
+                                   name="dict_key" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 序号数:<span ng-class="{required:myform.dict_key1.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" required ng-disabled="!editsflags"
+                                   ng-model="numberFrom.seqNo"
+                                   name="dict_key1" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 重置方式:</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="numberFrom.resEt" ng-disabled="!editsflag"
+                                   name="dict_key" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 重置处理参数:</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="numberFrom.resetPapams" ng-disabled="!editsflag"
+                                   name="dict_key" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-2"></label>
+                        <div class="col-md-10">
+                            <div class="actions btn-set" style="float: right;">
+                                <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="add(numberFrom)" > 保存
+                                </button>
+                                <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存
+                                </button>
+                                <button type="button" name="back" class="btn btn-danger"  ng-click="cancel()"> 取消
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
