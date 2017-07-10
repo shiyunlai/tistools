@@ -27,19 +27,19 @@
  	<update id="update" parameterType="org.tis.tools.model.po.ac.AcFuncResource">
     	UPDATE AC_FUNC_RESOURCE 
 	    <set>
-		<if test="guid_func != null" >
+		<if test="guidFunc != null" >
 			guid_func = #{guidFunc,jdbcType=VARCHAR},
 		</if>
-		<if test="res_type != null" >
+		<if test="resType != null" >
 			res_type = #{resType,jdbcType=VARCHAR},
 		</if>
-		<if test="res_path != null" >
+		<if test="resPath != null" >
 			res_path = #{resPath,jdbcType=VARCHAR},
 		</if>
-		<if test="compack_name != null" >
+		<if test="compackName != null" >
 			compack_name = #{compackName,jdbcType=VARCHAR},
 		</if>
-		<if test="res_show_name != null" >
+		<if test="resShowName != null" >
 			res_show_name = #{resShowName,jdbcType=VARCHAR}
 		</if>
 	    </set>

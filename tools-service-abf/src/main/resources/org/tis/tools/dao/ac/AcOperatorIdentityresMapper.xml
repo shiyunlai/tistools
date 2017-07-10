@@ -23,13 +23,13 @@
  	<update id="update" parameterType="org.tis.tools.model.po.ac.AcOperatorIdentityres">
     	UPDATE AC_OPERATOR_IDENTITYRES 
 	    <set>
-		<if test="guid_identity != null" >
+		<if test="guidIdentity != null" >
 			guid_identity = #{guidIdentity,jdbcType=VARCHAR},
 		</if>
-		<if test="ac_resourcetype != null" >
+		<if test="acResourcetype != null" >
 			ac_resourcetype = #{acResourcetype,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_ac_resource != null" >
+		<if test="guidAcResource != null" >
 			guid_ac_resource = #{guidAcResource,jdbcType=VARCHAR}
 		</if>
 	    </set>

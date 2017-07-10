@@ -56,46 +56,46 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="group_code != null" >
+		<if test="groupCode != null" >
 			group_code = #{groupCode,jdbcType=VARCHAR},
 		</if>
-		<if test="group_name != null" >
+		<if test="groupName != null" >
 			group_name = #{groupName,jdbcType=VARCHAR},
 		</if>
-		<if test="group_type != null" >
+		<if test="groupType != null" >
 			group_type = #{groupType,jdbcType=VARCHAR},
 		</if>
-		<if test="group_status != null" >
+		<if test="groupStatus != null" >
 			group_status = #{groupStatus,jdbcType=VARCHAR},
 		</if>
-		<if test="group_desc != null" >
+		<if test="groupDesc != null" >
 			group_desc = #{groupDesc,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_emp_manager != null" >
+		<if test="guidEmpManager != null" >
 			guid_emp_manager = #{guidEmpManager,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_org != null" >
+		<if test="guidOrg != null" >
 			guid_org = #{guidOrg,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_parents != null" >
+		<if test="guidParents != null" >
 			guid_parents = #{guidParents,jdbcType=VARCHAR},
 		</if>
 		<if test="isleaf != null" >
 			isleaf = #{isleaf,jdbcType=CHAR},
 		</if>
-		<if test="sub_count != null" >
+		<if test="subCount != null" >
 			sub_count = #{subCount,jdbcType=DECIMAL},
 		</if>
-		<if test="group_level != null" >
+		<if test="groupLevel != null" >
 			group_level = #{groupLevel,jdbcType=DECIMAL},
 		</if>
-		<if test="group_seq != null" >
+		<if test="groupSeq != null" >
 			group_seq = #{groupSeq,jdbcType=VARCHAR},
 		</if>
-		<if test="start_date != null" >
+		<if test="startDate != null" >
 			start_date = #{startDate,jdbcType=DATE},
 		</if>
-		<if test="end_date != null" >
+		<if test="endDate != null" >
 			end_date = #{endDate,jdbcType=DATE},
 		</if>
 		<if test="createtime != null" >

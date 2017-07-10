@@ -54,43 +54,43 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_org != null" >
+		<if test="guidOrg != null" >
 			guid_org = #{guidOrg,jdbcType=VARCHAR},
 		</if>
-		<if test="position_code != null" >
+		<if test="positionCode != null" >
 			position_code = #{positionCode,jdbcType=VARCHAR},
 		</if>
-		<if test="position_name != null" >
+		<if test="positionName != null" >
 			position_name = #{positionName,jdbcType=VARCHAR},
 		</if>
-		<if test="position_type != null" >
+		<if test="positionType != null" >
 			position_type = #{positionType,jdbcType=VARCHAR},
 		</if>
-		<if test="position_status != null" >
+		<if test="positionStatus != null" >
 			position_status = #{positionStatus,jdbcType=VARCHAR},
 		</if>
 		<if test="isleaf != null" >
 			isleaf = #{isleaf,jdbcType=CHAR},
 		</if>
-		<if test="sub_count != null" >
+		<if test="subCount != null" >
 			sub_count = #{subCount,jdbcType=DECIMAL},
 		</if>
-		<if test="position_level != null" >
+		<if test="positionLevel != null" >
 			position_level = #{positionLevel,jdbcType=DECIMAL},
 		</if>
-		<if test="position_seq != null" >
+		<if test="positionSeq != null" >
 			position_seq = #{positionSeq,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_parents != null" >
+		<if test="guidParents != null" >
 			guid_parents = #{guidParents,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_duty != null" >
+		<if test="guidDuty != null" >
 			guid_duty = #{guidDuty,jdbcType=VARCHAR},
 		</if>
-		<if test="start_date != null" >
+		<if test="startDate != null" >
 			start_date = #{startDate,jdbcType=DATE},
 		</if>
-		<if test="end_date != null" >
+		<if test="endDate != null" >
 			end_date = #{endDate,jdbcType=DATE},
 		</if>
 		<if test="createtime != null" >

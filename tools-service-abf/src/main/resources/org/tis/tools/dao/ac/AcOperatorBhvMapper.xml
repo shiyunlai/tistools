@@ -23,13 +23,13 @@
  	<update id="update" parameterType="org.tis.tools.model.po.ac.AcOperatorBhv">
     	UPDATE AC_OPERATOR_BHV 
 	    <set>
-		<if test="guid_operator != null" >
+		<if test="guidOperator != null" >
 			guid_operator = #{guidOperator,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_func_bhv != null" >
+		<if test="guidFuncBhv != null" >
 			guid_func_bhv = #{guidFuncBhv,jdbcType=VARCHAR},
 		</if>
-		<if test="auth_type != null" >
+		<if test="authType != null" >
 			auth_type = #{authType,jdbcType=VARCHAR}
 		</if>
 	    </set>

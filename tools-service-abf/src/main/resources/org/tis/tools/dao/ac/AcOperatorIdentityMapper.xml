@@ -30,16 +30,16 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_operator != null" >
+		<if test="guidOperator != null" >
 			guid_operator = #{guidOperator,jdbcType=VARCHAR},
 		</if>
-		<if test="identity_name != null" >
+		<if test="identityName != null" >
 			identity_name = #{identityName,jdbcType=VARCHAR},
 		</if>
-		<if test="identity_flag != null" >
+		<if test="identityFlag != null" >
 			identity_flag = #{identityFlag,jdbcType=CHAR},
 		</if>
-		<if test="seq_no != null" >
+		<if test="seqNo != null" >
 			seq_no = #{seqNo,jdbcType=DECIMAL}
 		</if>
 	    </set>

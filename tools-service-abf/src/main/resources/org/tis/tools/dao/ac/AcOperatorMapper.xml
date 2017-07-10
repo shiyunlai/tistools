@@ -56,55 +56,55 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="user_id != null" >
+		<if test="userId != null" >
 			user_id = #{userId,jdbcType=VARCHAR},
 		</if>
 		<if test="password != null" >
 			password = #{password,jdbcType=VARCHAR},
 		</if>
-		<if test="operator_name != null" >
+		<if test="operatorName != null" >
 			operator_name = #{operatorName,jdbcType=VARCHAR},
 		</if>
-		<if test="operator_status != null" >
+		<if test="operatorStatus != null" >
 			operator_status = #{operatorStatus,jdbcType=VARCHAR},
 		</if>
-		<if test="inval_date != null" >
+		<if test="invalDate != null" >
 			inval_date = #{invalDate,jdbcType=TIMESTAMP},
 		</if>
-		<if test="auth_mode != null" >
+		<if test="authMode != null" >
 			auth_mode = #{authMode,jdbcType=VARCHAR},
 		</if>
-		<if test="lock_limit != null" >
+		<if test="lockLimit != null" >
 			lock_limit = #{lockLimit,jdbcType=DECIMAL},
 		</if>
-		<if test="err_count != null" >
+		<if test="errCount != null" >
 			err_count = #{errCount,jdbcType=DECIMAL},
 		</if>
-		<if test="lock_time != null" >
+		<if test="lockTime != null" >
 			lock_time = #{lockTime,jdbcType=TIMESTAMP},
 		</if>
-		<if test="unlock_time != null" >
+		<if test="unlockTime != null" >
 			unlock_time = #{unlockTime,jdbcType=TIMESTAMP},
 		</if>
-		<if test="menu_type != null" >
+		<if test="menuType != null" >
 			menu_type = #{menuType,jdbcType=VARCHAR},
 		</if>
-		<if test="last_login != null" >
+		<if test="lastLogin != null" >
 			last_login = #{lastLogin,jdbcType=TIMESTAMP},
 		</if>
-		<if test="start_date != null" >
+		<if test="startDate != null" >
 			start_date = #{startDate,jdbcType=DATE},
 		</if>
-		<if test="end_date != null" >
+		<if test="endDate != null" >
 			end_date = #{endDate,jdbcType=DATE},
 		</if>
-		<if test="valid_time != null" >
+		<if test="validTime != null" >
 			valid_time = #{validTime,jdbcType=VARCHAR},
 		</if>
-		<if test="mac_code != null" >
+		<if test="macCode != null" >
 			mac_code = #{macCode,jdbcType=VARCHAR},
 		</if>
-		<if test="ip_address != null" >
+		<if test="ipAddress != null" >
 			ip_address = #{ipAddress,jdbcType=VARCHAR}
 		</if>
 	    </set>

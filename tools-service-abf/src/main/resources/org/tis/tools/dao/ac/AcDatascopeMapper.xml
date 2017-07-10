@@ -32,19 +32,19 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_entity != null" >
+		<if test="guidEntity != null" >
 			guid_entity = #{guidEntity,jdbcType=VARCHAR},
 		</if>
-		<if test="priv_name != null" >
+		<if test="privName != null" >
 			priv_name = #{privName,jdbcType=VARCHAR},
 		</if>
-		<if test="data_op_type != null" >
+		<if test="dataOpType != null" >
 			data_op_type = #{dataOpType,jdbcType=VARCHAR},
 		</if>
-		<if test="entity_name != null" >
+		<if test="entityName != null" >
 			entity_name = #{entityName,jdbcType=VARCHAR},
 		</if>
-		<if test="filter_sql_string != null" >
+		<if test="filterSqlString != null" >
 			filter_sql_string = #{filterSqlString,jdbcType=VARCHAR}
 		</if>
 	    </set>
