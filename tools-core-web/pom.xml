@@ -12,9 +12,6 @@
 	<name>tools-core-web</name>
 	<version>${tools-core-web-version}</version>
 	<url>http://maven.apache.org</url>
-	<build>
-		<finalName>web-boss</finalName>
-	</build>
 	<description>web工程的基础包，被web类应用模块依赖。</description>
 
 	<dependencies>

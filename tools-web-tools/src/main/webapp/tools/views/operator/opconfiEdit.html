@@ -1,0 +1,120 @@
+<!--修改个性化配置-->
+<div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
+    {{reconfigFrom}}
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs font-green-sharp"></i>
+            <span class="caption-subject font-green-sharp bold uppercase">修改个性化配置</span>
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="remove" ng-click="cancel()">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body portlet light">
+        <form action="#" name="myform" class="form-horizontal ">
+            <div class="form-body ">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 登陆用户名:<span ng-class="{required:myform.dict_key.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" ng-model="reconfigFrom.userid"
+                                   required
+                                   name="dict_key"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 操作员姓名:<span ng-class="{required:myform.dict_key1.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" ng-model="reconfigFrom.username"
+                                   required
+                                   name="dict_key1"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 应用代码:<span ng-class="{required:myform.dict_key2.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" ng-model="reconfigFrom.appcode"
+                                   required
+                                   name="dict_key2"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 应用名称:<span ng-class="{required:myform.dict_key3.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" ng-model="reconfigFrom.appname"
+                                   required
+                                   name="dict_key3"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">配置类型</label>
+                        <div class="col-md-8">
+                            <select class="form-control" name="dict_open" ng-model="reorganFrom.configtype" >
+                                <option value=""></option>
+                                <option value="c">测试</option>
+                                <option value="b">本地</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 配置名:<span ng-class="{required:myform.dict_key4.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" ng-model="reconfigFrom.configname"
+                                   required
+                                   name="dict_key4"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 配置值:<span ng-class="{required:myform.dict_key5.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" ng-model="reconfigFrom.configvalue"
+                                   required
+                                   name="dict_key5"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">是否启用</label>
+                        <div class="col-md-8">
+                            <select class="form-control" name="dict_open" ng-model="reorganFrom.isvalid" >
+                                <option value=""></option>
+                                <option value="s">是</option>
+                                <option value="a">否</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-2"></label>
+                        <div class="col-md-10">
+
+                            <div class="actions btn-set" style="float: right;">
+                                <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="add(reorganFrom)" > 保存
+                                </button>
+                                <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存
+                                </button>
+                                <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

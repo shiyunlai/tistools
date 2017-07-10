@@ -1,0 +1,15 @@
+<div class="panel panel-info" style="border: none;">
+    <div class="panel-heading">
+        <span>未读消息</span>
+        <a href="#" ng-click="goUnReadList()" class="pull-right" style="font-size: small;">查看所有</a>
+    </div>
+    <div class="panel-body">
+        <div ng-if="msgs && msgs.length > 0" class="" ng-repeat="msg in msgs">
+            <a ng-if="$index < 5" href="#" msg-info-data-show msg-info-id = "msg.msg_info_id" msg-info-title = "msg.msg_info_title" is-fade = false is-clean-notify = true>{{$index+1}}、{{msg.msg_info_title}}</a>
+            <a ng-if="$index === 5" href="#" ng-click="goUnReadList()">更多...</a>
+        </div>
+        <div ng-if="!msgs || msgs.length === 0" class="">
+            暂无新消息
+        </div>
+    </div>
+</div>

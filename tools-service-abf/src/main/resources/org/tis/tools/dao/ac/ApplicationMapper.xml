@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.ac.ApplicationMapper">
+  
+  
+    <select id="queryAcAppVo" resultType="org.tis.tools.model.vo.ac.AcAppVo" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from AC_APP <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+  
+  <select id="queryAcFuncVo" resultType="org.tis.tools.model.vo.ac.AcFuncVo"  parameterType="org.tis.tools.base.WhereCondition" >    	
+    	select <include refid="Base_Column_List_1" /> from AC_FUNC as a left join AC_FUNC_RESOURCE as b on a.guid =b.guid_func 
+    	<include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>  	
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid as guid
+		,app_code as appCode
+		,app_name as appName
+		,app_type as appType
+		,isopen as isopen
+		,open_date as openDate
+		,url as url
+		,app_desc as appDesc
+		,guid_emp_maintenance as guidEmpMaintenance
+		,guid_role_maintenance as guidRoleMaintenance
+		,remark as remark
+		,iniwp as iniwp
+		,intaskcenter as intaskcenter
+		,ip_addr as ipAddr
+		,ip_port as ipPort
+	</sql>
+	
+	<sql id="Base_Column_List_1" >
+		 a.guid as guid
+		,a.guid_funcgroup as guidFuncgroup
+		,a.func_code as funcCode
+		,a.func_name as funcName
+		,a.func_desc as funcDesc
+		,a.func_action as funcAction
+		,a.para_info as paraInfo
+		,a.func_type as funcType
+		,a.ischeck as ischeck
+		,a.ismenu as ismenu
+		,b.guid_func as guidFunc
+		,b.res_type as resType
+		,b.res_path as resPath
+		,b.compack_name as compackName
+		,b.res_show_name as resShowName
+	</sql>
+</mapper>

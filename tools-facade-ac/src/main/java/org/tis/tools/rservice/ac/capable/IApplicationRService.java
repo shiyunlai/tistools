@@ -5,11 +5,20 @@ package org.tis.tools.rservice.ac.capable;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
+import org.tis.tools.base.WhereCondition;
 import org.tis.tools.model.po.ac.AcApp;
+import org.tis.tools.model.po.ac.AcBhvDef;
+import org.tis.tools.model.po.ac.AcBhvtypeDef;
 import org.tis.tools.model.po.ac.AcFunc;
+import org.tis.tools.model.po.ac.AcFuncBehavior;
+import org.tis.tools.model.po.ac.AcFuncResource;
 import org.tis.tools.model.po.ac.AcFuncgroup;
 import org.tis.tools.model.po.ac.AcMenu;
+import org.tis.tools.model.po.ac.AcOperator;
+import org.tis.tools.model.vo.ac.AcAppVo;
+import org.tis.tools.model.vo.ac.AcFuncVo;
 
 /**
  * <pre>
@@ -43,13 +52,66 @@ import org.tis.tools.model.po.ac.AcMenu;
  */
 public interface IApplicationRService {
 
-	/**
+	/** 
 	 * 新增应用系统(AC_APP)
 	 * @param acApp 应用对象
 	 * return  acApp
 	 */
 	public AcApp createAcApp(AcApp acApp);
+	
+	
+	/**
+	 * 删除应用系统(AC_APP)
+	 * @param guid 应用系统的guid
+	 * return  acApp
+	 */
+	public void deleteAcApp(String guid);
+	
+	
+	/**
+	 * 更新应用系统(AC_APP)
+	 * @param t 新值
+	 */
+	public void updateAcApp(AcApp t);
 
+	/**
+	 * 根据条件查询应用系统(AC_APP)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	public List<AcApp> queryAcAppList(WhereCondition wc);
+	
+	/**
+	 * 根据条件查询应用系统(AC_APP)
+	 * @param guid 
+	 * @return 满足条件的记录
+	 */
+	public AcApp queryAcApp(String guid);
+	
+	
+	/**
+	 * 根据条件查询应用系统(AC_APP)
+	 * @param 
+	 * @return 根目录list
+	 */
+	public List<AcAppVo> queryAcRootList();
+	
+	
+	/**
+	 * 根据应用id查询功能组(AC_FUNCGROUP)
+	 * @param appGuid
+	 * @return 
+	 */
+	public List<AcFuncgroup> queryAcRootFuncgroup(String appGuid);
+	
+	
+	/**
+	 * 根据功能组ID(AC_FUNCGROUP)
+	 * @param guidParent
+	 * @return 
+	 */
+	public List<AcFuncgroup> queryAcChildFuncgroup(String guidParent);
+	
 	/**
 	 * 新增功能组(AC_FUNCGROUP)
 	 * @param acFuncgroup 功能组对象
@@ -59,17 +121,276 @@ public interface IApplicationRService {
 
 	
 	/**
+	 * 删除功能组(AC_FUNCGROUP)
+	 * @param guid 记录guid
+	 */
+	public void deleteAcFuncGroup(String guid);
+	
+	/**
+	 * 更新功能组(AC_FUNCGROUP)
+	 * @param t 新值
+	 */
+	public void updateAcFuncgroup(AcFuncgroup t);
+	
+	/**
+	 * 根据条件查询功能组(AC_FUNCGROUP)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	public List<AcFuncgroup> queryAcFuncgroup(WhereCondition wc);
+	
+	/**
+	 * 根据条件查询功能组(AC_FUNCGROUP)
+	 * @param guid 条件
+	 * @return 满足条件的记录list
+	 */
+	public AcFuncgroup queryFuncgroup(String guid);
+	
+	
+	/**
 	 * 新增功能(AC_FUNC)
 	 * @param acFunc 功能对象
+	 * @param acFuncResource 功能对应资源
 	 * return  AcFunc
 	 */
-	public AcFunc createAcFunc(AcFunc acFunc);
+	public AcFunc createAcFunc(AcFunc acFunc,AcFuncResource acFuncResource);
 
+	
+	/**
+	 * 删除功能(AC_FUNC)
+	 * @param guid 记录guid
+	 */
+	public void deleteAcFunc(String guid);
+	
+	/**
+	 * 更新功能(AC_FUNC)
+	 * @param acFunc 功能
+	 * @param acFuncResource 功能对应资源
+	 */
+	public void updateAcFunc(AcFunc acFunc);
+
+	/**
+	 * 根据条件查询功能(AC_FUNC)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	public List<AcFunc> queryAcFunc(WhereCondition wc);
+	
+	/**
+	 * 根据条件查询功能(AC_FUNC)
+	 * @param guid 条件
+	 * @return 满足条件的记录list
+	 */
+	public AcFunc queryFunc(String guid);
+	
+	
+	/**
+	 * 根据条件查询功能(AC_FUNC)
+	 * @param guid 条件
+	 * @return 满足条件的记录
+	 */
+	public List<AcFuncVo> queryAcFuncVo(String guid);
+	
+	
+	/**
+	 * 根据条件查询功能(AC_FUNC)
+	 * @param groupGuid 条件
+	 * @return 满足条件的记录list
+	 */
+	public List<AcFunc> queryAcGroupFunc(String groupGuid);
+	
+	
+	
 	/**
 	 * 新增菜单(AC_MENU)
 	 * @param acMenu 菜单对象
 	 * return  AcMenu
 	 */
 	public AcMenu createAcMenu(AcMenu acMenu);
+	
+	/**
+	 * 删除菜单(AC_MENU)
+	 * @param guid 记录guid
+	 */
+	public void deleteAcMenu(String guid);
+	
+	/**
+	 * 更新菜单(AC_MENU),只修改t对象有值的字段
+	 * @param t 新值
+	 */
+	public void updateAcMenu(AcMenu t);
+	
+	/**
+	 * 根据条件查询菜单(AC_MENU)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	public List<AcMenu> queryAcMenu(WhereCondition wc);
+	
+	/**
+	 * 新增功能资源对应(AC_FUNC_RESOURCE),新增t对象有值的字段
+	 * @param t 新值
+	 */
+	public void createAcFuncResource(AcFuncResource t);
+
+	/**
+	 * 删除功能资源对应(AC_FUNC_RESOURCE)
+	 * @param guid 记录guid
+	 */
+	public void deleteAcFuncResource(String guid);
+
+	/**
+	 * 更新功能资源对应(AC_FUNC_RESOURCE),只修改t对象有值的字段
+	 * @param t 新值
+	 */
+	public void updateAcFuncResource(AcFuncResource t);
+	
+		/**
+	 * 根据条件查询功能资源对应(AC_FUNC_RESOURCE)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	public List<AcFuncResource> queryAcFuncResource(WhereCondition wc);
+	
+	/**
+	 * 根据条件查询功能资源对应(AC_FUNC_RESOURCE)
+	 * @param guid 条件
+	 * @return 满足条件的记录
+	 */
+	public AcFuncResource queryFuncResource(String  guid);
+	
+	/**
+	 * 新增操作员(AC_OPERATOR),新增t对象有值的字段
+	 * @param t 新值
+	 */
+	public void createAcOperator(AcOperator t);
+	
+	/**
+	 * 删除操作员(AC_OPERATOR)
+	 * @param guid 记录guid
+	 */
+	public void deleteAcOperator(String guid);
+	
+	/**
+	 * 更新操作员(AC_OPERATOR),只修改t对象有值的字段
+	 * @param t 新值
+	 */
+	public void updateAcOperator(AcOperator t);
+		
+	/**
+	 * 根据条件查询操作员(AC_OPERATOR)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	public List<AcOperator> queryAcOperator(WhereCondition wc);
+	
+	/**
+	 * 增加功能操作行为(AC_FUNC_BEHAVIOR),增加t对象有值的字段
+	 * @param t 新值
+	 */
+	public void createAcFuncBehavior(AcFuncBehavior t);
+	
+	/**
+	 * 删除功能操作行为(AC_FUNC_BEHAVIOR)
+	 * @param guid 记录guid
+	 */
+	public void deleteAcFuncBehavior(String guid);
+	
+	/**
+	 * 更新功能操作行为(AC_FUNC_BEHAVIOR),只修改t对象有值的字段
+	 * @param t 新值
+	 */
+	public void updateAcFuncBehavior(AcFuncBehavior t);
+	
+	/**
+	 * 根据条件查询功能操作行为(AC_FUNC_BEHAVIOR)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	public List<AcFuncBehavior> queryAcFuncBehavior(WhereCondition wc);
+		
+	
+	
+	/**
+	 * 根据条件查询功能操作行为(AC_FUNC_BEHAVIOR)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	public List<AcFunc> queryAllFunc();
+	
+	/**
+	 * 导入功能(AC_FUNC)
+	 * 
+	 * @param guidFuncgroup 功能组guid
+	 * @param list 功能列表
+	 */
+	public void importFunc(String guidFuncgroup,List list);
+	
+	/**
+	 * 新增行为类型(AC_BHVTYPE_DEF)
+	 * 
+	 * @param acBhvtypeDef 行为类型
+	 */
+	public void functypeAdd(AcBhvtypeDef acBhvtypeDef);
+	
+	
+	/**
+	 * 修改行为类型(AC_BHVTYPE_DEF)
+	 * 
+	 * @param acBhvtypeDef 行为类型
+	 */
+	public void functypeEdit(AcBhvtypeDef acBhvtypeDef);
+	
+	
+	
+	/**
+	 * 删除行为类型(AC_BHVTYPE_DEF)
+	 * 
+	 * @param acBhvtypeDef 行为类型
+	 */
+	public void functypeDel(String guid);
+	
+	/**
+	 * 查询行为类型(AC_BHVTYPE_DEF)
+	 * 
+	 * @param acBhvtypeDef 行为类型
+	 * 返回list
+	 */
+	public List<AcBhvtypeDef> functypequery();
+	
+	
+	
+	/**
+	 * 新增功能操作行为(AC_BHV_DEF)
+	 * 
+	 * @param acBhvDef 功能操作行为
+	 */
+	public void funactAdd(AcBhvDef acBhvDef);
+	
+
+	/**
+	 * 删除功能操作行为(AC_BHV_DEF)
+	 * 
+	 * @param guid 条件
+	 */
+	public void funactDel(String guid);
+	
+	
+	/**
+	 * 修改功能操作行为(AC_BHV_DEF)
+	 * 
+	 * @param acBhvDef 功能操作行为
+	 */
+	public void funactEdit(AcBhvDef acBhvDef);
+	
+	
+	/**
+	 * 查询功能操作行为(AC_BHV_DEF)
+	 * 
+	 * @param acBhvDef 功能操作行为
+	 * 返回list
+	 */
+	public List<AcBhvDef> funactQuery(String guid);
+	
 	
 }

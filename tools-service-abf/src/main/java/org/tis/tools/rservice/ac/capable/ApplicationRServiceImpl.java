@@ -1,9 +1,11 @@
+
 /**
  * 
  */
 package org.tis.tools.rservice.ac.capable;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,16 +17,29 @@ import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.model.def.CommonConstants;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.po.ac.AcApp;
+import org.tis.tools.model.po.ac.AcBhvDef;
+import org.tis.tools.model.po.ac.AcBhvtypeDef;
 import org.tis.tools.model.po.ac.AcFunc;
+import org.tis.tools.model.po.ac.AcFuncBehavior;
+import org.tis.tools.model.po.ac.AcFuncResource;
 import org.tis.tools.model.po.ac.AcFuncgroup;
 import org.tis.tools.model.po.ac.AcMenu;
+import org.tis.tools.model.po.ac.AcOperator;
+import org.tis.tools.model.vo.ac.AcAppVo;
+import org.tis.tools.model.vo.ac.AcFuncVo;
 import org.tis.tools.model.vo.om.OmOrgDetail;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.ac.exception.AppManagementException;
 import org.tis.tools.service.ac.AcAppService;
+import org.tis.tools.service.ac.AcBhvDefService;
+import org.tis.tools.service.ac.AcBhvtypeDefService;
+import org.tis.tools.service.ac.AcFuncBehaviorService;
+import org.tis.tools.service.ac.AcFuncResourceService;
 import org.tis.tools.service.ac.AcFuncService;
 import org.tis.tools.service.ac.AcFuncgroupService;
 import org.tis.tools.service.ac.AcMenuService;
+import org.tis.tools.service.ac.AcOperatorService;
+import org.tis.tools.service.ac.ApplicationService;
 import org.tis.tools.service.ac.exception.ACExceptionCodes;
 
 /**
@@ -36,48 +51,200 @@ import org.tis.tools.service.ac.exception.ACExceptionCodes;
  * @author zzc
  *
  */
-public class ApplicationRServiceImpl extends BaseRService implements IApplicationRService {
+public class ApplicationRServiceImpl extends BaseRService implements
+		IApplicationRService {
 
 	@Autowired
 	AcAppService acAppService;
+	@Autowired
+	ApplicationService applicationService;	
 	@Autowired
 	AcFuncgroupService acFuncgroupService;
 	@Autowired
 	AcFuncService acFuncService;
 	@Autowired
 	AcMenuService acMenuService;
+	@Autowired
+	AcFuncResourceService acFuncResourceService;
+	@Autowired
+	AcOperatorService acOperatorService;
+	@Autowired
+	AcFuncBehaviorService acFuncBehaviorService;
+	@Autowired
+	AcBhvtypeDefService acBhvtypeDefService;
+	@Autowired
+	AcBhvDefService acBhvDefService;
 	
+
 	/**
 	 * 新增应用系统(AC_APP)
-	 * @param acApp 应用对象
-	 * return  acApp
+	 * 
+	 * @param acApp
+	 *            应用对象 return acApp
 	 */
 	@Override
-	public AcApp createAcApp(AcApp acApp) throws AppManagementException{
+	public AcApp createAcApp(AcApp acApp) throws AppManagementException {
 		acApp.setGuid(GUID.app());
-		AcApp newAcApp=acApp;
-		// 新增应用系统
+		AcApp newAcApp = acApp;
 		try {
-			//新增事务提交机制
-			acApp = transactionTemplate.execute(new TransactionCallback<AcApp>() {
-				@Override
-				public AcApp doInTransaction(TransactionStatus arg0) {
+			acApp = transactionTemplate
+					.execute(new TransactionCallback<AcApp>() {
+						@Override
+						public AcApp doInTransaction(TransactionStatus arg0) {
 							acAppService.insert(newAcApp);
 							return newAcApp;
-				}
-			});
+						}
+					});
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new AppManagementException(ACExceptionCodes.FAILURE_WHRN_CREATE_AC_APP,
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_APP,
 					BasicUtil.wrap(e.getCause().getMessage()), "新增应用失败！{0}");
 		}
 		return acApp;
 	}
 
 	/**
+	 * 删除应用系统(AC_APP)
+	 * 
+	 * @param guid
+	 *            应用系统guid
+	 */
+	@Override
+	public void deleteAcApp(String guid) throws AppManagementException {
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcApp>() {
+				@Override
+				public AcApp doInTransaction(TransactionStatus arg0) {
+					WhereCondition wc =new WhereCondition();
+					wc.andEquals("GUID_APP", guid);
+					List<AcFuncgroup> funcgroup = acFuncgroupService.query(wc);
+					WhereCondition wc1 =new WhereCondition();
+					for(int i =0 ;i < funcgroup.size();i++){
+						String groupid=funcgroup.get(i).getGuid();
+						wc1.clear();
+						wc1.andEquals("GUID_FUNCGROUP", groupid);
+						acFuncService.deleteByCondition(wc1);//删除下面所有的功能
+						
+					}
+					acFuncgroupService.deleteByCondition(wc );//删除下面所有的功能组
+					acAppService.delete(guid);//删除应用
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_APP,
+					BasicUtil.wrap(e.getCause().getMessage()), "删除应用失败！{0}");
+		}
+	}
+
+	/**
+	 * 更新应用系统(AC_APP)
+	 * 
+	 * @param t
+	 *            新值
+	 */
+	@Override
+	public void updateAcApp(AcApp t) throws AppManagementException {
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcApp>() {
+				@Override
+				public AcApp doInTransaction(TransactionStatus arg0) {
+					acAppService.updateForce(t);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_APP,
+					BasicUtil.wrap(e.getCause().getMessage()), "更新应用失败！{0}");
+		}
+	}
+
+	/**
+	 * 根据条件查询应用系统(AC_APP)
+	 * 
+	 * @param wc
+	 *            条件
+	 * @return 满足条件的记录list
+	 */
+	@Override
+	public List<AcApp> queryAcAppList(WhereCondition wc) throws AppManagementException {
+		List<AcApp> acAppList = new ArrayList<AcApp>();
+		
+		try {
+			acAppList = acAppService.query(wc);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_APP,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询应用失败！{0}");
+		}
+		return acAppList;
+	}
+	
+	/**
+	 * 根据条件查询应用系统(AC_APP)
+	 * 
+	 * @param wc
+	 *            条件
+	 * @return 满足条件的记录list
+	 */
+	@Override
+	public List<AcAppVo> queryAcRootList() throws AppManagementException {
+		List<AcAppVo> acAppList = new ArrayList<AcAppVo>();
+		try {
+			WhereCondition wc = new WhereCondition();
+			acAppList = applicationService.queryAcAppVo(wc);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_APP,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询应用失败！{0}");
+		}
+		return acAppList;
+	}
+	
+
+	/**
+	 * 根据条件查询应用系统(AC_APP)
+	 * 
+	 * @param wc
+	 *            条件
+	 * @return 满足条件的记录
+	 */
+	@Override
+	public AcApp queryAcApp(String guid) throws AppManagementException {
+		List<AcApp> acAppList = new ArrayList<AcApp>();
+		AcApp acApp = new AcApp();
+		try {
+			WhereCondition wc =new WhereCondition();
+			wc.andEquals("GUID", guid);
+			acAppList = acAppService.query(wc);
+			if(acAppList.size()>0){
+				acApp = acAppList.get(0);
+			}else{
+				throw new AppManagementException(
+						ACExceptionCodes.FAILURE_WHRN_QUERY_AC_NULL,
+						null, "记录不存在！{0}");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_APP,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询应用失败！{0}");
+		}
+		return acApp;
+	}
+	
+	/**
 	 * 新增功能组(AC_FUNCGROUP)
-	 * @param acFuncgroup 功能组对象
-	 * return  AcFuncgroup
+	 * 
+	 * @param acFuncgroup
+	 *            功能组对象 return AcFuncgroup
 	 */
 	@Override
 	public AcFuncgroup createAcFuncGroup(AcFuncgroup acFuncgroup) {
@@ -86,108 +253,999 @@ public class ApplicationRServiceImpl extends BaseRService implements IApplicatio
 		String funcgroupSeq = "";
 		String guidParents = acFuncgroup.getGuidParents();
 		acFuncgroup.setGuid(guid);
-		//根据时候有父功能组设置序列
-		if(guidParents.isEmpty()){
+		// 根据时候有父功能组设置序列
+		if (guidParents.isEmpty()) {
+			acFuncgroup.setGuidParents(null);
 			funcgroupSeq = guidApp + "." + guid;
-		}else{
+		} else {
 			acFuncgroup.setGuidParents(guidParents);
 			WhereCondition wc = new WhereCondition();
-			wc.andEquals("GUID", guidApp);
+			wc.andEquals("GUID_APP", guidApp);
 			List<AcFuncgroup> list = acFuncgroupService.query(wc);
 			String parentSeq = list.get(0).getFuncgroupSeq();
 			funcgroupSeq = parentSeq + "." + guid;
 		}
 		acFuncgroup.setFuncgroupSeq(funcgroupSeq);
-		acFuncgroup.setIsleaf(CommonConstants.YES);//默认叶子节点
-		acFuncgroup.setSubCount(new BigDecimal(0));//默认无节点数
-		AcFuncgroup newAcFuncgroup=acFuncgroup;
-	
-		// 新增功能组
+		acFuncgroup.setIsleaf(CommonConstants.YES);// 默认叶子节点
+		acFuncgroup.setSubCount(new BigDecimal(0));// 默认无节点数
+		AcFuncgroup newAcFuncgroup = acFuncgroup;
 		try {
-			//新增事务提交机制
-			acFuncgroup = transactionTemplate.execute(new TransactionCallback<AcFuncgroup>() {
-				@Override
-				public AcFuncgroup doInTransaction(TransactionStatus arg0) {
-					acFuncgroupService.insert(newAcFuncgroup);
+			acFuncgroup = transactionTemplate
+					.execute(new TransactionCallback<AcFuncgroup>() {
+						@Override
+						public AcFuncgroup doInTransaction(
+								TransactionStatus arg0) {
+							acFuncgroupService.insert(newAcFuncgroup);
 							return newAcFuncgroup;
-				}
-			});
+						}
+					});
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new AppManagementException(ACExceptionCodes.FAILURE_WHRN_CREATE_AC_FUNCGROUP,
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_FUNCGROUP,
 					BasicUtil.wrap(e.getCause().getMessage()), "新增功能组失败！{0}");
 		}
-
 		return acFuncgroup;
 	}
 
 	/**
-	 * 新增功能(AC_FUNC)
-	 * return  AcFunc
+	 * 删除功能组(AC_FUNCGROUP)
+	 * 
+	 * @param guid
+	 *            记录guid
 	 */
 	@Override
-	public AcFunc createAcFunc(AcFunc acFunc) {
-		acFunc.setGuid(GUID.func());
-		AcFunc newAcFunc=acFunc;
-		// 新增功能
-		try {	
-			//新增事务提交机制
-			acFunc = transactionTemplate.execute(new TransactionCallback<AcFunc>() {
+	public void deleteAcFuncGroup(String guid) throws AppManagementException {
+		try {
+			// 新增事务提交机制
+			transactionTemplate.execute(new TransactionCallback<AcFuncgroup>() {
 				@Override
-				public AcFunc doInTransaction(TransactionStatus arg0) {
-					acFuncService.insert(newAcFunc);
-							return newAcFunc;
+				public AcFuncgroup doInTransaction(TransactionStatus arg0) {
+					//删除功能组下子功能组及功能
+					WhereCondition wc =new WhereCondition();
+					wc.andEquals("GUID_PARENTS", guid);
+					acFuncgroupService.deleteByCondition(wc);					
+					List<AcFuncgroup> childGroup = acFuncgroupService.query(wc);
+					//删除下面所有的功能
+					for(int i=0;i<childGroup.size();i++){
+						String childGroupGuid=childGroup.get(i).getGuid();
+						acFuncgroupService.delete(childGroupGuid);
+						wc.clear();
+						wc.andEquals("GUID_FUNCGROUP", childGroupGuid);
+						acFuncService.deleteByCondition(wc);
+					}
+					acFuncgroupService.delete(guid);
+					return null;
 				}
 			});
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new AppManagementException(ACExceptionCodes.FAILURE_WHRN_CREATE_AC_FUNC,
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_FUNCGROUP,
+					BasicUtil.wrap(e.getCause().getMessage()), "删除功能组失败！{0}");
+		}
+	}
+
+	/**
+	 * 更新功能组(AC_FUNCGROUP)
+	 * @param t 新值
+	 */
+	@Override
+	public void updateAcFuncgroup(AcFuncgroup t) throws AppManagementException {
+		if(t.getGuidParents()==null||t.getGuidParents().isEmpty()){
+			t.setGuidParents(null);
+		}
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcFuncgroup>() {
+				@Override
+				public AcFuncgroup doInTransaction(TransactionStatus arg0) {
+					acFuncgroupService.updateForce(t);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_FUNCGROUP,
+					BasicUtil.wrap(e.getCause().getMessage()), "更新功能组失败！{0}");
+		}
+	}
+	
+	
+	/**
+	 * 根据条件查询功能组(AC_FUNCGROUP)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	@Override
+	public List<AcFuncgroup> queryAcFuncgroup(WhereCondition wc)throws AppManagementException {
+		List<AcFuncgroup> acFuncgroupList = new ArrayList<AcFuncgroup>();
+		
+		try {
+			acFuncgroupList = acFuncgroupService.query(wc);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNCGROUP,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能组失败！{0}");
+		}
+		return acFuncgroupList;
+	}
+	
+	/**
+	 * 根据条件查询功能组(AC_FUNCGROUP)
+	 * @param guid 条件
+	 * @return 满足条件的记录list
+	 */
+	@Override
+	public AcFuncgroup queryFuncgroup(String guid)throws AppManagementException {
+		List<AcFuncgroup> acFuncgroupList = new ArrayList<AcFuncgroup>();
+		
+		try {
+			WhereCondition wc = new WhereCondition();
+			wc.andEquals("GUID", guid);
+			acFuncgroupList = acFuncgroupService.query(wc );
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNCGROUP,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能组失败！{0}");
+		}
+		if(acFuncgroupList.size()>0){
+			return acFuncgroupList.get(0);
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * 根据应用id查询功能组(AC_FUNCGROUP)
+	 * @param appGuid
+	 * @return 
+	 */
+	@Override
+	public List<AcFuncgroup> queryAcRootFuncgroup(String appGuid)throws AppManagementException {
+		List<AcFuncgroup> acFuncList = new ArrayList<AcFuncgroup>();
+		
+		try {
+			WhereCondition wc =new WhereCondition();
+			wc.andEquals("GUID_APP", appGuid);
+			wc.andIsNull("GUID_PARENTS");
+			acFuncList = acFuncgroupService.query(wc );
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNCGROUP,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能组失败！{0}");
+		}
+		return acFuncList;
+	};
+	
+	
+	/**
+	 * 根据功能组ID(AC_FUNCGROUP)
+	 * @param guidParent
+	 * @return 
+	 */
+	@Override
+	public List<AcFuncgroup> queryAcChildFuncgroup(String guidParent)throws AppManagementException {
+		List<AcFuncgroup> acFuncList = new ArrayList<AcFuncgroup>();
+		
+		try {
+			WhereCondition wc =new WhereCondition();
+			wc.andEquals("GUID_PARENTS", guidParent);
+			acFuncList = acFuncgroupService.query(wc );
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNCGROUP,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能组失败！{0}");
+		}
+		return acFuncList;
+	};
+	
+	
+	/**
+	 * 新增功能(AC_FUNC) return AcFunc
+	 * 
+	 */
+	@Override
+	public AcFunc createAcFunc(AcFunc acFunc,AcFuncResource acFuncResource) {
+		String guid=GUID.func();
+		acFuncResource.setGuidFunc(guid);
+		acFunc.setGuid(guid);
+		AcFunc newAcFunc = acFunc;
+		try {
+			acFunc = transactionTemplate
+					.execute(new TransactionCallback<AcFunc>() {
+						@Override
+						public AcFunc doInTransaction(TransactionStatus arg0) {
+							acFuncService.insert(newAcFunc);
+							acFuncResourceService.insert(acFuncResource);
+							return newAcFunc;
+						}
+					});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_FUNC,
 					BasicUtil.wrap(e.getCause().getMessage()), "新增功能失败！{0}");
 		}
 		return acFunc;
 	}
 	
-	
 	/**
-	 * 新增菜单(AC_MENU)
-	 * @param acMenu 菜单代码
-	 * return  acMenu 
+	 * 删除功能(AC_FUNC)
+	 * @param guid 记录guid
 	 */
 	@Override
-	public AcMenu createAcMenu(AcMenu acMenu) {
-		String guid=GUID.menu();
-		acMenu.setGuid(guid);
-		acMenu.setIsleaf(CommonConstants.YES);//默认叶子菜单
-		acMenu.setSubCount(new BigDecimal(0));
-		String guidParent = acMenu.getGuidParents();
-		String menuSeq=guid;//默认菜单序列为跟guid
-		AcMenu newAcMenu= acMenu;
-		newAcMenu.setMenuSeq(menuSeq);
-		// 新增功能
-		try {	
-			//新增事务提交机制
-			acMenu = transactionTemplate.execute(new TransactionCallback<AcMenu>() {
+	public void deleteAcFunc(String guid)  throws AppManagementException {
+		try {
+			// 新增事务提交机制
+			transactionTemplate.execute(new TransactionCallback<AcFunc>() {
 				@Override
-				public AcMenu doInTransaction(TransactionStatus arg0) {
-					if(!guidParent.isEmpty()){
-						WhereCondition wc = new WhereCondition();
-						List<AcMenu> parentMenulist = acMenuService.query(wc);
-						AcMenu parentMenu = parentMenulist.get(0);
-						String newmenuSeq = parentMenu.getMenuSeq()+"."+ menuSeq;
-						newAcMenu.setMenuSeq(newmenuSeq);
-						parentMenu.setSubCount(new BigDecimal(parentMenu.getSubCount().intValue()+1));//节点数加1
-						acMenuService.update(parentMenu);
-					}
-					acMenuService.insert(newAcMenu);
-					return newAcMenu;
+				public AcFunc doInTransaction(TransactionStatus arg0) {
+					acFuncService.delete(guid);
+					return null;
 				}
 			});
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new AppManagementException(ACExceptionCodes.FAILURE_WHRN_CREATE_AC_MENU,
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_FUNC,
+					BasicUtil.wrap(e.getCause().getMessage()), "删除功能失败！{0}");
+		}
+	}
+
+	/**
+	 * 更新功能(AC_FUNC)
+	 * @param acFunc 功能
+	 * @param acFuncResource 功能对应资源
+	 */
+	@Override
+	public void updateAcFunc(AcFunc acFunc) throws AppManagementException {
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcFunc>() {
+				@Override
+				public AcFunc doInTransaction(TransactionStatus arg0) {
+					acFuncService.updateForce(acFunc);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_FUNC,
+					BasicUtil.wrap(e.getCause().getMessage()), "更新功能失败！{0}");
+		}
+	}
+
+	/**
+	 * 根据条件查询功能(AC_FUNC)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	@Override
+	public List<AcFunc> queryAcFunc(WhereCondition wc) throws AppManagementException {
+		List<AcFunc> acFuncList = new ArrayList<AcFunc>();
+		
+		try {
+			acFuncList = acFuncService.query(wc);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNC,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能失败！{0}");
+		}
+		return acFuncList;
+	}
+	
+	/**
+	 * 根据条件查询功能(AC_FUNC)
+	 * @param guid 条件
+	 * @return 满足条件的记录list
+	 */
+	@Override
+	public AcFunc queryFunc(String guid)throws AppManagementException {
+		List<AcFunc> acFuncList = new ArrayList<AcFunc>();
+		
+		try {
+			WhereCondition wc =new WhereCondition();
+			wc.andEquals("GUID", guid);
+			acFuncList = acFuncService.query(wc );
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNC,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能失败！{0}");
+		}
+		if(acFuncList.size()>0){
+			return acFuncList.get(0);
+		}
+		return null;
+	}
+	
+	/**
+	 * 根据条件查询功能(AC_FUNC)
+	 * @param groupGuid 条件
+	 * @return 满足条件的记录list
+	 */
+	@Override
+	public List<AcFunc> queryAcGroupFunc(String groupGuid)throws AppManagementException {
+		List<AcFunc> acFuncList = new ArrayList<AcFunc>();
+		
+		try {
+			WhereCondition wc = new WhereCondition();
+			wc.andEquals("GUID_FUNCGROUP", groupGuid);
+			acFuncList = acFuncService.query(wc );
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNC,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能失败！{0}");
+		}
+		return acFuncList;
+	};
+	
+	/**
+	 * 新增菜单(AC_MENU)
+	 * 
+	 * @param acMenu
+	 *            菜单代码 return acMenu
+	 */
+	@Override
+	public AcMenu createAcMenu(AcMenu acMenu) throws AppManagementException{
+		String guid = GUID.menu();
+		acMenu.setGuid(guid);
+		acMenu.setIsleaf(CommonConstants.YES);// 默认叶子菜单
+		acMenu.setSubCount(new BigDecimal(0));
+		String guidParent = acMenu.getGuidParents();
+		String menuSeq = guid;// 默认菜单序列为跟guid
+		AcMenu newAcMenu = acMenu;
+		newAcMenu.setMenuSeq(menuSeq);
+		try {
+			acMenu = transactionTemplate
+					.execute(new TransactionCallback<AcMenu>() {
+						@Override
+						public AcMenu doInTransaction(TransactionStatus arg0) {
+							if (!guidParent.isEmpty()) {
+								WhereCondition wc = new WhereCondition();
+								List<AcMenu> parentMenulist = acMenuService
+										.query(wc);
+								AcMenu parentMenu = parentMenulist.get(0);
+								String newmenuSeq = parentMenu.getMenuSeq()
+										+ "." + menuSeq;
+								newAcMenu.setMenuSeq(newmenuSeq);
+								parentMenu
+										.setSubCount(new BigDecimal(parentMenu
+												.getSubCount().intValue() + 1));// 节点数加1
+								acMenuService.update(parentMenu);
+							}
+							acMenuService.insert(newAcMenu);
+							return newAcMenu;
+						}
+					});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_MENU,
 					BasicUtil.wrap(e.getCause().getMessage()), "新增菜单失败！{0}");
 		}
 		return acMenu;
 	}
+
+	/**
+	 * 删除菜单(AC_MENU)
+	 * @param guid 记录guid
+	 */
+	@Override
+	public void deleteAcMenu(String guid) throws AppManagementException {
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcMenu>() {
+				@Override
+				public AcMenu doInTransaction(TransactionStatus arg0) {
+					acMenuService.delete(guid);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_MENU,
+					BasicUtil.wrap(e.getCause().getMessage()), "删除菜单失败！{0}");
+		}
+	}
+
+	/**
+	 * 更新菜单(AC_MENU),只修改t对象有值的字段
+	 * @param t 新值
+	 */
+	@Override
+	public void updateAcMenu(AcMenu t) throws AppManagementException {
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcMenu>() {
+				@Override
+				public AcMenu doInTransaction(TransactionStatus arg0) {
+					acMenuService.updateForce(t);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_MENU,
+					BasicUtil.wrap(e.getCause().getMessage()), "更新菜单失败！{0}");
+		}
+	}
+
+	/**
+	 * 根据条件查询菜单(AC_MENU)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	@Override
+	public List<AcMenu> queryAcMenu(WhereCondition wc) throws AppManagementException {
+		List<AcMenu> acMenuList = new ArrayList<AcMenu>();
+		
+		try {
+			acMenuList = acMenuService.query(wc);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_MENU,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询菜单失败！{0}");
+		}
+		return acMenuList;
+	}
+
+	/**
+	 * 新增功能资源对应(AC_FUNC_RESOURCE),新增t对象有值的字段
+	 * @param t 新值
+	 */
+	@Override
+	public void createAcFuncResource(AcFuncResource t) throws AppManagementException {
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcFuncResource>() {
+				@Override
+				public AcFuncResource doInTransaction(TransactionStatus arg0) {
+					acFuncResourceService.insert(t);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_FUNCRESOURCE,
+					BasicUtil.wrap(e.getCause().getMessage()), "增加功能对应资源失败！{0}");
+		}
+	}
+
+	/**
+	 * 删除功能资源对应(AC_FUNC_RESOURCE)
+	 * @param guid 记录guid
+	 */
+	@Override
+	public void deleteAcFuncResource(String guid) throws AppManagementException {
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcFuncResource>() {
+				@Override
+				public AcFuncResource doInTransaction(TransactionStatus arg0) {
+					acFuncResourceService.delete(guid);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_FUNCRESOURCE,
+					BasicUtil.wrap(e.getCause().getMessage()), "删除功能对应资源失败！{0}");
+		}
+	}
+
+	/**
+	 * 更新功能资源对应(AC_FUNC_RESOURCE),只修改t对象有值的字段
+	 * @param t 新值
+	 */
+	@Override
+	public void updateAcFuncResource(AcFuncResource t) throws AppManagementException {
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcFuncResource>() {
+				@Override
+				public AcFuncResource doInTransaction(TransactionStatus arg0) {
+					acFuncResourceService.updateForce(t);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_FUNCRESOURCE,
+					BasicUtil.wrap(e.getCause().getMessage()), "更新功能对应资源失败！{0}");
+		}
+	}
+
+	/**
+	 * 根据条件查询功能资源对应(AC_FUNC_RESOURCE)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	@Override
+	public List<AcFuncResource> queryAcFuncResource(WhereCondition wc) throws AppManagementException {
+		List<AcFuncResource> acFuncResourceList = new ArrayList<AcFuncResource>();
+
+		try {
+			acFuncResourceList = acFuncResourceService.query(wc);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNCRESOURCE,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能对应资源失败！{0}");
+		}
+		return acFuncResourceList;
+	}
+
+	/**
+	 * 根据条件查询功能资源对应(AC_FUNC_RESOURCE)
+	 * @param guid 条件
+	 * @return 满足条件的记录
+	 */
+	@Override
+	public AcFuncResource queryFuncResource(String guid) throws AppManagementException {
+		List<AcFuncResource> acFuncResourceList = new ArrayList<AcFuncResource>();
+
+		try {
+			WhereCondition wc = new WhereCondition();
+			wc.andEquals("GUID", guid);
+			acFuncResourceList = acFuncResourceService.query(wc );
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNCRESOURCE,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能对应资源失败！{0}");
+		}
+		if(acFuncResourceList.size()>0){
+			return acFuncResourceList.get(0);
+		}
+		return null;
+	}
 	
+	/**
+	 * 新增操作员(AC_OPERATOR),新增t对象有值的字段
+	 * @param t 新值
+	 */
+	@Override
+	public void createAcOperator(AcOperator t) throws AppManagementException {
+		t.setGuid(GUID.operaor());
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcOperator>() {
+				@Override
+				public AcOperator doInTransaction(TransactionStatus arg0) {
+					acOperatorService.insert(t);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_OPERATOR,
+					BasicUtil.wrap(e.getCause().getMessage()), "增加操作员失败！{0}");
+		}
+	}
+		
+
+	/**
+	 * 删除操作员(AC_OPERATOR)
+	 * @param guid 记录guid
+	 */
+	@Override
+	public void deleteAcOperator(String guid) throws AppManagementException {
+		//TODO 删除所有操作员相关资源
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcOperator>() {
+				@Override
+				public AcOperator doInTransaction(TransactionStatus arg0) {
+					acOperatorService.delete(guid);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_OPERATOR,
+					BasicUtil.wrap(e.getCause().getMessage()), "删除操作员失败！{0}");
+		}
+	}
+
+	/**
+	 * 更新操作员(AC_OPERATOR),只修改t对象有值的字段
+	 * @param t 新值
+	 */
+	@Override
+	public void updateAcOperator(AcOperator t) throws AppManagementException {
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcOperator>() {
+				@Override
+				public AcOperator doInTransaction(TransactionStatus arg0) {
+					acOperatorService.updateForce(t);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_OPERATOR,
+					BasicUtil.wrap(e.getCause().getMessage()), "更新操作员失败！{0}");
+		}
+	}
+
+		
+	/**
+	 * 根据条件查询操作员(AC_OPERATOR)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	@Override
+	public List<AcOperator> queryAcOperator(WhereCondition wc) throws AppManagementException {
+		List<AcOperator> acOperatorList = new ArrayList<AcOperator>();
+
+		try {
+			acOperatorList = acOperatorService.query(wc);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNCRESOURCE,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能对应资源失败！{0}");
+		}
+		return acOperatorList;
+	}
+
+	/**
+	 * 增加功能操作行为(AC_FUNC_BEHAVIOR),增加t对象有值的字段
+	 * @param t 新值
+	 */
+	@Override
+	public void createAcFuncBehavior(AcFuncBehavior t) throws AppManagementException {
+		t.setGuid(GUID.funcBehavior());
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcFuncBehavior>() {
+				@Override
+				public AcFuncBehavior doInTransaction(TransactionStatus arg0) {
+					acFuncBehaviorService.insert(t);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_FUNCBEHAVIOR,
+					BasicUtil.wrap(e.getCause().getMessage()), "增加功能操作行为失败！{0}");
+		}
+	}
+
+	/**
+	 * 删除功能操作行为(AC_FUNC_BEHAVIOR)
+	 * @param guid 记录guid
+	 */
+	@Override
+	public void deleteAcFuncBehavior(String guid) throws AppManagementException {
+		//TODO 删除功能操作行为相关资源
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcFuncBehavior>() {
+				@Override
+				public AcFuncBehavior doInTransaction(TransactionStatus arg0) {
+					acFuncBehaviorService.delete(guid);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_FUNCBEHAVIOR,
+					BasicUtil.wrap(e.getCause().getMessage()), "删除功能操作行为失败！{0}");
+		}
+	}
+
+	/**
+	 * 更新功能操作行为(AC_FUNC_BEHAVIOR),只修改t对象有值的字段
+	 * @param t 新值
+	 */
+	@Override
+	public void updateAcFuncBehavior(AcFuncBehavior t) throws AppManagementException {
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcFuncBehavior>() {
+				@Override
+				public AcFuncBehavior doInTransaction(TransactionStatus arg0) {
+					acFuncBehaviorService.updateForce(t);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_FUNCBEHAVIOR,
+					BasicUtil.wrap(e.getCause().getMessage()), "更新功能操作行为失败！{0}");
+		}
+	}
+
+	/**
+	 * 根据条件查询功能操作行为(AC_FUNC_BEHAVIOR)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	@Override
+	public List<AcFuncBehavior> queryAcFuncBehavior(WhereCondition wc) throws AppManagementException {
+		List<AcFuncBehavior> acFuncBehaviorList = new ArrayList<AcFuncBehavior>();
+
+		try {
+			acFuncBehaviorList = acFuncBehaviorService.query(wc);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNCBEHAVIOR,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能操作行为失败！{0}");
+		}
+		return acFuncBehaviorList;
+	}
+
+	/**
+	 * 根据条件查询功能(AC_FUNC)
+	 * @param guid 条件
+	 * @return 满足条件的记录
+	 */
+	@Override
+	public List<AcFuncVo> queryAcFuncVo(String guid)throws AppManagementException {
+		List<AcFuncVo> acFuncVoList = new ArrayList<AcFuncVo>();
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("guid_funcgroup", guid);
+		try {
+			acFuncVoList = applicationService.queryAcFuncVo(wc );
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNC,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能失败！{0}");
+		}
+		return acFuncVoList;
+	}
+
+	@Override
+	public List<AcFunc> queryAllFunc() throws AppManagementException {
+		List<AcFunc> acFuncList = new ArrayList<AcFunc>();
+		WhereCondition wc = new WhereCondition();
+		try {
+			acFuncList = acFuncService.query(wc);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNC,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能失败！{0}");
+		}
+		return acFuncList;
+	}
+
+	/**
+	 * 导入功能(AC_FUNC)
+	 * 
+	 * @param guidFuncgroup 功能组guid
+	 * @param list 功能列表
+	 */
+	@Override
+	public void importFunc(String guidFuncgroup, List list)throws AppManagementException {
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcFunc>() {
+				@Override
+				public AcFunc doInTransaction(TransactionStatus arg0) {
+					WhereCondition wc =new WhereCondition();
+					for(int i=0;i<list.size();i++){
+						wc.clear();
+						String guid=(String) list.get(i);
+						wc.andEquals("GUID", guid);
+						AcFunc acfunc = acFuncService.query(wc).get(0);
+						acfunc.setGuidFuncgroup(guidFuncgroup);
+						acFuncService.insert(acfunc);//导入功能
+					}
+					return null;
+				}
+			});
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_IMPORT_AC_FUNC,
+					BasicUtil.wrap(e.getCause().getMessage()), "导入功能失败！{0}");
+		}
+	}
+
+	/**
+	 * 新增行为类型(AC_BHVTYPE_DEF)
+	 * 
+	 * @param acBhvtypeDef 行为类型
+	 */
+	@Override
+	public void functypeAdd(AcBhvtypeDef acBhvtypeDef) throws AppManagementException{
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcBhvtypeDef>() {
+				@Override
+				public AcBhvtypeDef doInTransaction(TransactionStatus arg0) {
+					acBhvtypeDef.setGuid(GUID.bhvtypedef());
+					acBhvtypeDefService.insert(acBhvtypeDef);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_BHVTYPE_DEF,
+					BasicUtil.wrap(e.getCause().getMessage()), "新增行为类型失败！{0}");
+		}
+	}
+
+	/**
+	 * 删除行为类型(AC_BHVTYPE_DEF)
+	 * 
+	 * @param acBhvtypeDef 行为类型
+	 */
+	@Override
+	public void functypeDel(String guid) throws AppManagementException{
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcBhvtypeDef>() {
+				@Override
+				public AcBhvtypeDef doInTransaction(TransactionStatus arg0) {
+					acBhvtypeDefService.delete(guid);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_BHVTYPE_DEF,
+					BasicUtil.wrap(e.getCause().getMessage()), "删除行为类型失败！{0}");
+		}
+	}
+
+	/**
+	 * 修改行为类型(AC_BHVTYPE_DEF)
+	 * 
+	 * @param acBhvtypeDef 行为类型
+	 */
+	@Override
+	public void functypeEdit(AcBhvtypeDef acBhvtypeDef) throws AppManagementException{
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcBhvtypeDef>() {
+				@Override
+				public AcBhvtypeDef doInTransaction(TransactionStatus arg0) {
+					acBhvtypeDefService.update(acBhvtypeDef);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_BHVTYPE_DEF,
+					BasicUtil.wrap(e.getCause().getMessage()), "修改行为类型失败！{0}");
+		}
+	}
+
+	/**
+	 * 查询行为类型(AC_BHVTYPE_DEF)
+	 * 
+	 * @param acBhvtypeDef 行为类型
+	 * 返回list
+	 */
+	@Override
+	public List<AcBhvtypeDef> functypequery() throws AppManagementException{
+		List<AcBhvtypeDef> acBhvtypeDef=new ArrayList<AcBhvtypeDef>();
+		try {
+			WhereCondition wc =new WhereCondition();
+			acBhvtypeDef = acBhvtypeDefService.query(wc);	
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_BHVTYPE_DEF,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询行为类型失败！{0}");
+		}
+		return acBhvtypeDef;
+	}
+
+	
+	/**
+	 * 新增功能操作行为(AC_BHV_DEF)
+	 * 
+	 * @param acBhvDef 功能操作行为
+	 */
+	@Override
+	public void funactAdd(AcBhvDef acBhvDef)  throws AppManagementException{
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcBhvtypeDef>() {
+				@Override
+				public AcBhvtypeDef doInTransaction(TransactionStatus arg0) {
+					acBhvDef.setGuid(GUID.bhvdef());
+					acBhvDefService.insert(acBhvDef);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_BHV_DEF,
+					BasicUtil.wrap(e.getCause().getMessage()), "新增功能操作行为失败！{0}");
+		}
+	}
+
+	/**
+	 * 删除功能操作行为(AC_BHV_DEF)
+	 * 
+	 * @param guid 条件
+	 */
+	@Override
+	public void funactDel(String guid)throws AppManagementException{
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcBhvDef>() {
+				@Override
+				public AcBhvDef doInTransaction(TransactionStatus arg0) {
+					acBhvDefService.delete(guid);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_BHV_DEF,
+					BasicUtil.wrap(e.getCause().getMessage()), "删除功能操作行为失败！{0}");
+		}
+	}
+
+	/**
+	 * 修改功能操作行为(AC_BHV_DEF)
+	 * 
+	 * @param acBhvDef 行为类型
+	 */
+	@Override
+	public void funactEdit(AcBhvDef acBhvDef) throws AppManagementException{
+		try {
+			transactionTemplate.execute(new TransactionCallback<AcBhvDef>() {
+				@Override
+				public AcBhvDef doInTransaction(TransactionStatus arg0) {
+					
+					WhereCondition wc =new WhereCondition();
+					wc.andEquals("GUID", acBhvDef.getGuid());
+					AcBhvDef acBhvDefdata = acBhvDefService.query(wc ).get(0);
+					acBhvDefdata.setBhvCode(acBhvDef.getBhvCode());
+					acBhvDefdata.setBhvName(acBhvDef.getBhvName());
+					acBhvDefService.update(acBhvDefdata);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_BHV_DEF,
+					BasicUtil.wrap(e.getCause().getMessage()), "修改功能操作行为失败！{0}");
+		}
+	}
+
+	/**
+	 * 查询功能操作行为(AC_BHV_DEF)
+	 * 
+	 * @param acBhvDef 功能操作行为
+	 * 返回list
+	 */
+	@Override
+	public List<AcBhvDef> funactQuery(String guid) throws AppManagementException{
+		List<AcBhvDef> acBhvDef=new ArrayList<AcBhvDef>();
+		try {
+			WhereCondition wc =new WhereCondition();
+			wc.andEquals("GUID_BEHTYPE", guid);
+			acBhvDef = acBhvDefService.query(wc);	
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_BHV_DEF,
+					BasicUtil.wrap(e.getCause().getMessage()), "查询功能操作行为失败！{0}");
+		}
+		return acBhvDef;
+	}
+	
+	
+
 }

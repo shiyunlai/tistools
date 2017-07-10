@@ -32,19 +32,19 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_app != null" >
+		<if test="guidApp != null" >
 			guid_app = #{guidApp,jdbcType=VARCHAR},
 		</if>
-		<if test="role_code != null" >
+		<if test="roleCode != null" >
 			role_code = #{roleCode,jdbcType=VARCHAR},
 		</if>
-		<if test="role_name != null" >
+		<if test="roleName != null" >
 			role_name = #{roleName,jdbcType=VARCHAR},
 		</if>
-		<if test="role_type != null" >
+		<if test="roleType != null" >
 			role_type = #{roleType,jdbcType=VARCHAR},
 		</if>
-		<if test="role_desc != null" >
+		<if test="roleDesc != null" >
 			role_desc = #{roleDesc,jdbcType=VARCHAR}
 		</if>
 	    </set>

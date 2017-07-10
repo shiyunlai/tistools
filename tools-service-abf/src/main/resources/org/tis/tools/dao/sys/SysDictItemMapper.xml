@@ -32,16 +32,16 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_dict != null" >
+		<if test="guidDict != null" >
 			guid_dict = #{guidDict,jdbcType=VARCHAR},
 		</if>
-		<if test="item_name != null" >
+		<if test="itemName != null" >
 			item_name = #{itemName,jdbcType=VARCHAR},
 		</if>
-		<if test="item_value != null" >
+		<if test="itemValue != null" >
 			item_value = #{itemValue,jdbcType=VARCHAR},
 		</if>
-		<if test="send_value != null" >
+		<if test="sendValue != null" >
 			send_value = #{sendValue,jdbcType=VARCHAR},
 		</if>
 		<if test="seqno != null" >

@@ -76,70 +76,70 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_entity != null" >
+		<if test="guidEntity != null" >
 			guid_entity = #{guidEntity,jdbcType=VARCHAR},
 		</if>
-		<if test="field_name != null" >
+		<if test="fieldName != null" >
 			field_name = #{fieldName,jdbcType=VARCHAR},
 		</if>
-		<if test="field_desc != null" >
+		<if test="fieldDesc != null" >
 			field_desc = #{fieldDesc,jdbcType=VARCHAR},
 		</if>
-		<if test="display_format != null" >
+		<if test="displayFormat != null" >
 			display_format = #{displayFormat,jdbcType=VARCHAR},
 		</if>
-		<if test="doclist_code != null" >
+		<if test="doclistCode != null" >
 			doclist_code = #{doclistCode,jdbcType=VARCHAR},
 		</if>
-		<if test="checkbox_value != null" >
+		<if test="checkboxValue != null" >
 			checkbox_value = #{checkboxValue,jdbcType=VARCHAR},
 		</if>
-		<if test="fk_inputurl != null" >
+		<if test="fkInputurl != null" >
 			fk_inputurl = #{fkInputurl,jdbcType=VARCHAR},
 		</if>
-		<if test="fk_fielddesc != null" >
+		<if test="fkFielddesc != null" >
 			fk_fielddesc = #{fkFielddesc,jdbcType=VARCHAR},
 		</if>
-		<if test="fk_columnname != null" >
+		<if test="fkColumnname != null" >
 			fk_columnname = #{fkColumnname,jdbcType=VARCHAR},
 		</if>
-		<if test="fk_tablename != null" >
+		<if test="fkTablename != null" >
 			fk_tablename = #{fkTablename,jdbcType=VARCHAR},
 		</if>
-		<if test="desc_fieldname != null" >
+		<if test="descFieldname != null" >
 			desc_fieldname = #{descFieldname,jdbcType=VARCHAR},
 		</if>
-		<if test="ref_type != null" >
+		<if test="refType != null" >
 			ref_type = #{refType,jdbcType=VARCHAR},
 		</if>
-		<if test="field_type != null" >
+		<if test="fieldType != null" >
 			field_type = #{fieldType,jdbcType=VARCHAR},
 		</if>
-		<if test="display_order != null" >
+		<if test="displayOrder != null" >
 			display_order = #{displayOrder,jdbcType=DECIMAL},
 		</if>
-		<if test="column_name != null" >
+		<if test="columnName != null" >
 			column_name = #{columnName,jdbcType=VARCHAR},
 		</if>
 		<if test="width != null" >
 			width = #{width,jdbcType=DECIMAL},
 		</if>
-		<if test="default_value != null" >
+		<if test="defaultValue != null" >
 			default_value = #{defaultValue,jdbcType=VARCHAR},
 		</if>
-		<if test="min_value != null" >
+		<if test="minValue != null" >
 			min_value = #{minValue,jdbcType=VARCHAR},
 		</if>
-		<if test="max_value != null" >
+		<if test="maxValue != null" >
 			max_value = #{maxValue,jdbcType=VARCHAR},
 		</if>
-		<if test="length_value != null" >
+		<if test="lengthValue != null" >
 			length_value = #{lengthValue,jdbcType=DECIMAL},
 		</if>
-		<if test="precision_value != null" >
+		<if test="precisionValue != null" >
 			precision_value = #{precisionValue,jdbcType=DECIMAL},
 		</if>
-		<if test="validate_type != null" >
+		<if test="validateType != null" >
 			validate_type = #{validateType,jdbcType=VARCHAR},
 		</if>
 		<if test="ismodify != null" >

@@ -42,31 +42,31 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="dict_key != null" >
+		<if test="dictKey != null" >
 			dict_key = #{dictKey,jdbcType=VARCHAR},
 		</if>
-		<if test="dict_type != null" >
+		<if test="dictType != null" >
 			dict_type = #{dictType,jdbcType=CHAR},
 		</if>
-		<if test="dict_name != null" >
+		<if test="dictName != null" >
 			dict_name = #{dictName,jdbcType=VARCHAR},
 		</if>
-		<if test="dict_desc != null" >
+		<if test="dictDesc != null" >
 			dict_desc = #{dictDesc,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_parents != null" >
+		<if test="guidParents != null" >
 			guid_parents = #{guidParents,jdbcType=VARCHAR},
 		</if>
-		<if test="default_value != null" >
+		<if test="defaultValue != null" >
 			default_value = #{defaultValue,jdbcType=VARCHAR},
 		</if>
-		<if test="from_table != null" >
+		<if test="fromTable != null" >
 			from_table = #{fromTable,jdbcType=VARCHAR},
 		</if>
-		<if test="use_for_key != null" >
+		<if test="useForKey != null" >
 			use_for_key = #{useForKey,jdbcType=VARCHAR},
 		</if>
-		<if test="use_for_name != null" >
+		<if test="useForName != null" >
 			use_for_name = #{useForName,jdbcType=VARCHAR},
 		</if>
 		<if test="seqno != null" >

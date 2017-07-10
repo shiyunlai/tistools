@@ -20,18 +20,30 @@
 
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="childFrom.appname"
+                                   ng-model="childFrom.funcgroupName"
                                    name="id" />
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6" >
+                <!--<div class="col-md-6" >
                     <div class="form-group">
                         <label class="control-label col-md-4">所属功能组</label>
-
+                        <div class="col-md-8">
+                            <select class="form-control" name="dict_open" ng-model="childFrom.appfunction">
+                                <option value=""></option>
+                                <option value="s">功能组一</option>
+                                <option value="a">功能组二</option>
+                                <option value="d">功能组三</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>-->
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">节点层次 </label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="childFrom.appfunction"
+                                   ng-model="childFrom.groupLevel"
                                    name="id" />
                         </div>
                     </div>

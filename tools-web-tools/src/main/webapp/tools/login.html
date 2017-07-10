@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="zh" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="zh" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="zh" data-ng-app="LoginApp">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8"/>
+    <title> GOVERNOR | 登录</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <!--<link href="ng/css／useso.css" rel="stylesheet" type="text/css"/>-->
+    <link href="../assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link href="../assets/global/plugins/select2/css/select2.css" rel="stylesheet" type="text/css"/>
+    <link href="../assets/pages/css/login-soft.css" rel="stylesheet" type="text/css"/>
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <!-- BEGIN THEME STYLES -->
+    <link href="../assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+    <link href="../assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="../assets/layouts/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+    <link id="style_color1" href="../assets/layouts/layout/css/themes/default.css" rel="stylesheet" type="text/css"/>
+    <link href="../assets/layouts/layout/css/custom.css" rel="stylesheet" type="text/css"/>
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="favicon.ico"/>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="login">
+<!-- BEGIN LOGO -->
+<div class="logo">
+    <a>
+        <img src="../assets/layouts/layout/img/governor.png" style="height:30px;width:150px" alt=""/>
+    </a>
+</div>
+<!-- END LOGO -->
+<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+<div class="menu-toggler sidebar-toggler">
+</div>
+<!-- END SIDEBAR TOGGLER BUTTON -->
+<!-- BEGIN LOGIN -->
+<div class="content">
+
+    <!--<div class="login-form" ng-controller="loginController">-->
+        <!--<h3 class="form-title"></h3>-->
+        <!--<div class="alert alert-danger display-hide">-->
+            <!--<button class="close" data-close="alert"></button>-->
+            <!--<span>请输入用户名和密码.</span>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="control-label visible-ie8 visible-ie9">用户名</label>-->
+            <!--<div class="input-icon">-->
+                <!--<i class="fa fa-user"></i>-->
+                <!--<input class="form-control placeholder-no-fix" ng-model="user.loginname" type="text" placeholder="用户名"  name="loginname"/>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="control-label visible-ie8 visible-ie9">密码</label>-->
+            <!--<div class="input-icon">-->
+                <!--<i class="fa fa-lock"></i>-->
+                <!--<input class="form-control placeholder-no-fix" ng-model="user.passwd" type="password" placeholder="密码"  name="passwd"/>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-actions">-->
+            <!--<label class="checkbox">-->
+                <!--<input type="checkbox" name="remember" value="1"/> 记住我 </label>-->
+            <!--<button type="submit" class="btn blue pull-right" ng-click="login(user)" >-->
+                <!--登录 <i class="m-icon-swapright m-icon-white"></i>-->
+            <!--</button>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <form>
+        <div class="login-form">
+            <h3 class="form-title"></h3>
+            <div class="alert alert-danger display-hide">
+                <button class="close" data-close="alert"></button>
+                <span>请输入用户名和密码.</span>
+            </div>
+            <div class="form-group">
+                <label class="control-label visible-ie8 visible-ie9">用户名</label>
+                <div class="input-icon">
+                    <i class="fa fa-user"></i>
+                    <input class="form-control placeholder-no-fix" type="text" placeholder="用户名" id="loginname" name="loginname"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label visible-ie8 visible-ie9">密码</label>
+                <div class="input-icon">
+                    <i class="fa fa-lock"></i>
+                    <input class="form-control placeholder-no-fix" type="password" placeholder="密码" id="password" name="password"/>
+                </div>
+            </div>
+            <div class="form-actions">
+                <label class="checkbox">
+                    <input type="checkbox" name="remember" value="1"/> 记住我 </label>
+                <button id="login" type="submit" class="btn blue pull-right" >
+                    登录 <i class="m-icon-swapright m-icon-white"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- END LOGIN -->
+<!-- BEGIN COPYRIGHT -->
+<div class="copyright">
+    2016 &copy; BRONS.
+</div>
+<!-- END COPYRIGHT -->
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<script src="../assets/global/plugins/angularjs/angular.min.js" type="text/javascript"></script>
+<script src="js/controllers/m_loginController.js" type="text/javascript"></script>
+<script src="js/scripts/global.js"></script>
+<!--[if lt IE 9]>
+<script src="../assets/global/plugins/respond.min.js"></script>
+<script src="../assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+<script src="../assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+
+<link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-toastr/toastr.min.css"/>
+<script src="../assets/global/plugins/bootstrap-toastr/toastr.min.js"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="../assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/backstretch/jquery.backstretch.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="../assets/global/plugins/select2/js/select2.min.js"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="../assets/pages/scripts/login-soft.js" type="text/javascript"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+<script>
+    var btn=document.getElementById('login');
+    btn.onclick = function () {
+        var form = new FormData();
+        form.append("loginname",$("#loginname").val());
+        form.append("password",$("#password").val());
+        $.ajax({
+            url:"..//user/login3",
+            type:"post",
+            data:form,
+            processData:false,
+            contentType:false,
+            success:function(data){
+                data = angular.fromJson(data);
+                if(data.retCode == '1'){
+                    sessionStorage.user = JSON.stringify(data.user);
+                    sessionStorage.trans = JSON.stringify(data.trans);
+                    sessionStorage.menus = JSON.stringify(data.menus);
+                    sessionStorage.msgs = JSON.stringify(data.msgs);
+                    window.location = "../m/index.html";
+                }else if(data.retCode == '2'){
+                    toastr['error'](data.retMessage, "登录失败！");
+                } else {
+                    toastr['error']( "登录异常！");
+                }
+            }
+        });
+    };
+
+    $(document).ready(function () {
+//        Metronic.init();
+//        Login.init();
+        $.backstretch([
+                    "../assets/pages/media/bg/2.jpg",
+//                    "../assets/pages/media/bg/3.jpg",
+//                    "../assets/pages/media/bg/4.jpg",
+//                    "../assets/pages/media/bg/1.jpg"
+                ], {
+                    fade: 1000,
+                    duration: 4000
+                }
+        );
+    });
+</script>
+<!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

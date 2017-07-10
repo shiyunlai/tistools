@@ -1,51 +1,95 @@
+<!--菜单管理-->
+<div class="page-bar ng-scope" style="border-bottom: 1px solid #e7ecf1;">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="#">权限</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <a href="#">功能行为类型定义</a>
+        </li>
+    </ul>
+</div>
+<h3 class="page-title">
+    <small></small>
+</h3>
+<div class="row" ng-form="bigform">
+    <div class="col-md-12" >
+        <div class="portlet light bordered ">
+            <div class="portlet-body">
+                <div class="row">
+                    <!-- 左侧列表-->
+                    <div class="col-md-5">
+                        <div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-cogs font-green-sharp"></i>
+                                    <span class="caption-subject font-green-sharp bold uppercase">功能类型</span>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="tab-content portlet light" >
+                                    <div ui-grid="gridOptions"
+                                         ui-grid-edit ui-grid-pagination ui-grid-exporter
+                                         ui-grid-selection ui-grid-resize-columns></div>
+                                    <div class="actions btn-set" style="float: right; margin-top: 20px;">
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="beha.beAdd()"> 新增类型
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="beha.beEdit(4)">  修改类型
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-danger" ng-click="beha.besDelete()"> 删除类型
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--右侧列表-->
+                    <div class="col-md-7 portlet light" style="height:100%;" ng-if="beha.active">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-cogs font-green-sharp"></i>
+                                <span class="caption-subject font-green-sharp bold uppercase">类型操作行为</span>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="tab-content portlet light" >
+                                <div ui-grid="gridOptions1"
+                                     ui-grid-edit ui-grid-pagination
+                                     ui-grid-selection ui-grid-resize-columns></div>
+                                <div class="actions btn-set" style="float: right; margin-top: 20px;">
+                                    <button type="button" name="back" class="btn btn-primary" ng-click="beha.beacAdd()"> 新增行为
+                                    </button>
+                                    <button type="button" name="back" class="btn btn-primary" ng-click="beha.beacEdit(4)">  修改行为
+                                    </button>
+                                    <button type="button" name="back" class="btn btn-danger" ng-click="beha.beDelete()"> 删除行为
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- 组织机构树 start -->
    <div class="col-md-12">
-          <div class="col-md-5">
-        <div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="fa fa-cogs font-green-sharp"></i>
-                    <span class="caption-subject font-green-sharp bold uppercase">功能类型</span>
-                </div>
-            </div>
-            <div class="portlet-body">
-                <div class="tab-content portlet light" >
-                    <div ui-grid="gridOptions"
-                         ui-grid-edit ui-grid-pagination
-                         ui-grid-selection ui-grid-resize-columns></div>
-                    <div class="actions btn-set" style="float: right; margin-top: 20px;">
-                        <button type="button" name="back" class="btn btn-primary" ng-click="beha.beAdd()"> 新增类型
-                        </button>
-                        <button type="button" name="back" class="btn btn-primary" ng-click="beha.beEdit(4)">  修改类型
-                        </button>
-                        <button type="button" name="back" class="btn btn-danger" ng-click="beha.besDelete()"> 删除类型
-                        </button>
-                </div>
-                </div>
-            </div>
-        </div>
-    </div>
-          <div class="col-md-7 portlet light" style="height:100%;" ng-if="beha.active">
-        <div class="portlet-title">
-            <div class="caption">
-                <i class="fa fa-cogs font-green-sharp"></i>
-                <span class="caption-subject font-green-sharp bold uppercase">类型操作行为</span>
-            </div>
-        </div>
-        <div class="portlet-body">
-            <div class="tab-content portlet light" >
-                <div ui-grid="gridOptions1"
-                     ui-grid-edit ui-grid-pagination
-                     ui-grid-selection ui-grid-resize-columns></div>
-                <div class="actions btn-set" style="float: right; margin-top: 20px;">
-                    <button type="button" name="back" class="btn btn-primary" ng-click="beha.beacAdd()"> 新增行为
-                    </button>
-                    <button type="button" name="back" class="btn btn-primary" ng-click="beha.beacEdit(4)">  修改行为
-                    </button>
-                    <button type="button" name="back" class="btn btn-danger" ng-click="beha.beDelete()"> 删除行为
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </div>

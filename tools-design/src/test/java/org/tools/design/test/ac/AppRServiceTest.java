@@ -3,8 +3,11 @@
  */
 package org.tools.design.test.ac;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import junit.framework.Assert;
 
@@ -13,7 +16,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tis.tools.base.WhereCondition;
+import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.ac.AcApp;
+import org.tis.tools.model.po.ac.AcFuncgroup;
+import org.tis.tools.model.vo.ac.AcAppVo;
 import org.tis.tools.rservice.ac.basic.IAcAppRService;
 import org.tis.tools.rservice.ac.capable.IApplicationRService;
 import org.tools.design.SpringJunitSupport;
@@ -27,19 +33,16 @@ import org.tools.design.SpringJunitSupport;
  */
 public class AppRServiceTest extends SpringJunitSupport{
 	
-	
-	@Autowired
-	IAcAppRService acAppRService;
 	@Autowired
 	IApplicationRService applicationRService;
 	/*
 	 * 测试数据: 生成应用代码所需的数据
 	 */
-	private static String appCode = "APP0003"; //应用代码
+	private static String appCode = "APP0007"; //应用代码
 	private static String appName = "应用框架模型" ; //应用名称
 	private static String appType = "local" ; //应用类型
 	private static String appDesc = "zzc" ; //描述
-	private static String isOpen = "Y" ; //是否开通
+	private static String isopen = "Y" ; //是否开通
 	private static Date openDate = new Date("2017/06/13") ; //开通时间
 	private static String url = "http://www.baidu.com/appserver" ; //地址
 	private static String ipAddr = "127.0.0.1" ; //IP地址
@@ -66,19 +69,22 @@ public class AppRServiceTest extends SpringJunitSupport{
 	 * 1.共7位；
 	 * 2.组成结构：  应用类型(三位) + 序号(四位)
 	 * </pre>
+	 * @throws ParseException 
 	 */
 	@Test
-	public void genAppCodeSucc() {
+	public void genAppCodeSucc() throws ToolsRuntimeException{
 		
-        WhereCondition wc = new WhereCondition();
-		//		WhereCondition wc = new WhereCondition();
-//		List<AcApp> ac = acAppRService.query(wc);
-//		System.out.println("zzc输出"+ac.get(0).getAppName());
-		List<AcApp> acc = acAppRService.query(wc);
-		
-//		AcApp app = applicationRService.createAcApp(appCode, appName, appType, appDesc, isOpen, openDate, url, ipAddr, ipPort);
-//		Assert.assertNotNull("创建APP成功",app);
-//		Assert.assertEquals("返回的代码应该相等","APP0003", app.getGuid());		
+		try {
+			String guid = "APP1499074217";
+			AcApp ac = applicationRService.queryAcApp(guid);
+			System.out.println(ac);
+		} catch (ToolsRuntimeException e) {	
+			System.out.println("错误码："+e.getCode());
+			System.out.println("错误信息："+e.getMessage());
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+
 	}
 	
 	/**

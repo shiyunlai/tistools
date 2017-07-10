@@ -33,11 +33,11 @@
 	<!-- 2、可按找功能分多个配置文件，dubbo启动时会自动扫描加载；                -->
 	<!-- ============================================================= -->
 	<!-- 暴露服务 -->
-	<dubbo:service 
+	<!-- <dubbo:service 
 		interface="org.tis.tools.rservice.sys.capable.IDictRService" group="sys" version="${IDictRService.version}"
 		ref="dictRServiceImpl" 
 		protocol="rest,dubbo"  timeout="3000" />
  	
-	<!-- 具体实现 -->
- 	<bean id="dictRServiceImpl" class="org.tis.tools.rservice.sys.capable.DictRServiceImpl" />
+	具体实现
+ 	<bean id="dictRServiceImpl" class="org.tis.tools.rservice.sys.capable.DictRServiceImpl" /> -->
 </beans>

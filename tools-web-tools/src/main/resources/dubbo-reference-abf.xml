@@ -17,8 +17,15 @@
 	<dubbo:reference 
 		id="orgRService"    
 		group="om" 
-		version="0.9" 
+		version="0.1" 
 		interface="org.tis.tools.rservice.om.capable.IOrgRService"     
+		check="false"/>
+		
+		<dubbo:reference 
+		id="omgroupRServicelmpl"    
+		group="om" 
+		version="0.1" 
+		interface="org.tis.tools.rservice.om.capable.IGroupRService"     
 		check="false"/>
 		
 	<dubbo:reference 

@@ -51,7 +51,7 @@ public class impSysDict {
 		 */
 		// TODO @高杰
 		try {
-			String filepath = "/Users/gaojie/work/tistools/tools-core/model/业务字典.xlsx";
+			String filepath = "/Users/gaojie/work/tistools/tools-core-basic/model/业务字典.xlsx";
 			ReadExcelUtils excelReader = new ReadExcelUtils(filepath);
 			// 对读取Excel表格标题测试
 			// String[] title = excelReader.readExcelTitle();
