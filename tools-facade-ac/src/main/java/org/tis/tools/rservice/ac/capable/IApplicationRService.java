@@ -9,6 +9,8 @@ import java.util.List;
 
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.model.po.ac.AcApp;
+import org.tis.tools.model.po.ac.AcBhvDef;
+import org.tis.tools.model.po.ac.AcBhvtypeDef;
 import org.tis.tools.model.po.ac.AcFunc;
 import org.tis.tools.model.po.ac.AcFuncBehavior;
 import org.tis.tools.model.po.ac.AcFuncResource;
@@ -16,6 +18,7 @@ import org.tis.tools.model.po.ac.AcFuncgroup;
 import org.tis.tools.model.po.ac.AcMenu;
 import org.tis.tools.model.po.ac.AcOperator;
 import org.tis.tools.model.vo.ac.AcAppVo;
+import org.tis.tools.model.vo.ac.AcFuncVo;
 
 /**
  * <pre>
@@ -164,7 +167,7 @@ public interface IApplicationRService {
 	 * @param acFunc 功能
 	 * @param acFuncResource 功能对应资源
 	 */
-	public void updateAcFunc(AcFunc acFunc,AcFuncResource acFuncResource);
+	public void updateAcFunc(AcFunc acFunc);
 
 	/**
 	 * 根据条件查询功能(AC_FUNC)
@@ -183,10 +186,20 @@ public interface IApplicationRService {
 	
 	/**
 	 * 根据条件查询功能(AC_FUNC)
+	 * @param guid 条件
+	 * @return 满足条件的记录
+	 */
+	public List<AcFuncVo> queryAcFuncVo(String guid);
+	
+	
+	/**
+	 * 根据条件查询功能(AC_FUNC)
 	 * @param groupGuid 条件
 	 * @return 满足条件的记录list
 	 */
 	public List<AcFunc> queryAcGroupFunc(String groupGuid);
+	
+	
 	
 	/**
 	 * 新增菜单(AC_MENU)
@@ -298,7 +311,86 @@ public interface IApplicationRService {
 		
 	
 	
+	/**
+	 * 根据条件查询功能操作行为(AC_FUNC_BEHAVIOR)
+	 * @param wc 条件
+	 * @return 满足条件的记录list
+	 */
+	public List<AcFunc> queryAllFunc();
 	
+	/**
+	 * 导入功能(AC_FUNC)
+	 * 
+	 * @param guidFuncgroup 功能组guid
+	 * @param list 功能列表
+	 */
+	public void importFunc(String guidFuncgroup,List list);
+	
+	/**
+	 * 新增行为类型(AC_BHVTYPE_DEF)
+	 * 
+	 * @param acBhvtypeDef 行为类型
+	 */
+	public void functypeAdd(AcBhvtypeDef acBhvtypeDef);
+	
+	
+	/**
+	 * 修改行为类型(AC_BHVTYPE_DEF)
+	 * 
+	 * @param acBhvtypeDef 行为类型
+	 */
+	public void functypeEdit(AcBhvtypeDef acBhvtypeDef);
+	
+	
+	
+	/**
+	 * 删除行为类型(AC_BHVTYPE_DEF)
+	 * 
+	 * @param acBhvtypeDef 行为类型
+	 */
+	public void functypeDel(String guid);
+	
+	/**
+	 * 查询行为类型(AC_BHVTYPE_DEF)
+	 * 
+	 * @param acBhvtypeDef 行为类型
+	 * 返回list
+	 */
+	public List<AcBhvtypeDef> functypequery();
+	
+	
+	
+	/**
+	 * 新增功能操作行为(AC_BHV_DEF)
+	 * 
+	 * @param acBhvDef 功能操作行为
+	 */
+	public void funactAdd(AcBhvDef acBhvDef);
+	
+
+	/**
+	 * 删除功能操作行为(AC_BHV_DEF)
+	 * 
+	 * @param guid 条件
+	 */
+	public void funactDel(String guid);
+	
+	
+	/**
+	 * 修改功能操作行为(AC_BHV_DEF)
+	 * 
+	 * @param acBhvDef 功能操作行为
+	 */
+	public void funactEdit(AcBhvDef acBhvDef);
+	
+	
+	/**
+	 * 查询功能操作行为(AC_BHV_DEF)
+	 * 
+	 * @param acBhvDef 功能操作行为
+	 * 返回list
+	 */
+	public List<AcBhvDef> funactQuery(String guid);
 	
 	
 }
