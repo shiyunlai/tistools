@@ -76,82 +76,82 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="org_code != null" >
+		<if test="orgCode != null" >
 			org_code = #{orgCode,jdbcType=VARCHAR},
 		</if>
-		<if test="org_name != null" >
+		<if test="orgName != null" >
 			org_name = #{orgName,jdbcType=VARCHAR},
 		</if>
-		<if test="org_type != null" >
+		<if test="orgType != null" >
 			org_type = #{orgType,jdbcType=VARCHAR},
 		</if>
-		<if test="org_degree != null" >
+		<if test="orgDegree != null" >
 			org_degree = #{orgDegree,jdbcType=VARCHAR},
 		</if>
-		<if test="org_status != null" >
+		<if test="orgStatus != null" >
 			org_status = #{orgStatus,jdbcType=VARCHAR},
 		</if>
-		<if test="org_level != null" >
+		<if test="orgLevel != null" >
 			org_level = #{orgLevel,jdbcType=DECIMAL},
 		</if>
-		<if test="guid_parents != null" >
+		<if test="guidParents != null" >
 			guid_parents = #{guidParents,jdbcType=VARCHAR},
 		</if>
-		<if test="org_seq != null" >
+		<if test="orgSeq != null" >
 			org_seq = #{orgSeq,jdbcType=VARCHAR},
 		</if>
-		<if test="org_addr != null" >
+		<if test="orgAddr != null" >
 			org_addr = #{orgAddr,jdbcType=VARCHAR},
 		</if>
 		<if test="zipcode != null" >
 			zipcode = #{zipcode,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_position != null" >
+		<if test="guidPosition != null" >
 			guid_position = #{guidPosition,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_emp_master != null" >
+		<if test="guidEmpMaster != null" >
 			guid_emp_master = #{guidEmpMaster,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_emp_manager != null" >
+		<if test="guidEmpManager != null" >
 			guid_emp_manager = #{guidEmpManager,jdbcType=VARCHAR},
 		</if>
-		<if test="link_man != null" >
+		<if test="linkMan != null" >
 			link_man = #{linkMan,jdbcType=VARCHAR},
 		</if>
-		<if test="link_tel != null" >
+		<if test="linkTel != null" >
 			link_tel = #{linkTel,jdbcType=VARCHAR},
 		</if>
 		<if test="email != null" >
 			email = #{email,jdbcType=VARCHAR},
 		</if>
-		<if test="web_url != null" >
+		<if test="webUrl != null" >
 			web_url = #{webUrl,jdbcType=VARCHAR},
 		</if>
-		<if test="start_date != null" >
+		<if test="startDate != null" >
 			start_date = #{startDate,jdbcType=DATE},
 		</if>
-		<if test="end_date != null" >
+		<if test="endDate != null" >
 			end_date = #{endDate,jdbcType=DATE},
 		</if>
 		<if test="area != null" >
 			area = #{area,jdbcType=VARCHAR},
 		</if>
-		<if test="create_time != null" >
+		<if test="createTime != null" >
 			create_time = #{createTime,jdbcType=TIMESTAMP},
 		</if>
-		<if test="last_update != null" >
+		<if test="lastUpdate != null" >
 			last_update = #{lastUpdate,jdbcType=TIMESTAMP},
 		</if>
 		<if test="updator != null" >
 			updator = #{updator,jdbcType=VARCHAR},
 		</if>
-		<if test="sort_no != null" >
+		<if test="sortNo != null" >
 			sort_no = #{sortNo,jdbcType=DECIMAL},
 		</if>
 		<if test="isleaf != null" >
 			isleaf = #{isleaf,jdbcType=CHAR},
 		</if>
-		<if test="sub_count != null" >
+		<if test="subCount != null" >
 			sub_count = #{subCount,jdbcType=DECIMAL},
 		</if>
 		<if test="remark != null" >

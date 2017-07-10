@@ -40,25 +40,25 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_funcgroup != null" >
+		<if test="guidFuncgroup != null" >
 			guid_funcgroup = #{guidFuncgroup,jdbcType=VARCHAR},
 		</if>
-		<if test="func_code != null" >
+		<if test="funcCode != null" >
 			func_code = #{funcCode,jdbcType=VARCHAR},
 		</if>
-		<if test="func_name != null" >
+		<if test="funcName != null" >
 			func_name = #{funcName,jdbcType=VARCHAR},
 		</if>
-		<if test="func_desc != null" >
+		<if test="funcDesc != null" >
 			func_desc = #{funcDesc,jdbcType=VARCHAR},
 		</if>
-		<if test="func_action != null" >
+		<if test="funcAction != null" >
 			func_action = #{funcAction,jdbcType=VARCHAR},
 		</if>
-		<if test="para_info != null" >
+		<if test="paraInfo != null" >
 			para_info = #{paraInfo,jdbcType=VARCHAR},
 		</if>
-		<if test="func_type != null" >
+		<if test="funcType != null" >
 			func_type = #{funcType,jdbcType=VARCHAR},
 		</if>
 		<if test="ischeck != null" >

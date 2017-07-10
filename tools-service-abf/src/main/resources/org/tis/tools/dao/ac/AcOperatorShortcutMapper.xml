@@ -31,25 +31,25 @@
  	<update id="update" parameterType="org.tis.tools.model.po.ac.AcOperatorShortcut">
     	UPDATE AC_OPERATOR_SHORTCUT 
 	    <set>
-		<if test="guid_operator != null" >
+		<if test="guidOperator != null" >
 			guid_operator = #{guidOperator,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_func != null" >
+		<if test="guidFunc != null" >
 			guid_func = #{guidFunc,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_funcgroup != null" >
+		<if test="guidFuncgroup != null" >
 			guid_funcgroup = #{guidFuncgroup,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_app != null" >
+		<if test="guidApp != null" >
 			guid_app = #{guidApp,jdbcType=VARCHAR},
 		</if>
-		<if test="order_no != null" >
+		<if test="orderNo != null" >
 			order_no = #{orderNo,jdbcType=DECIMAL},
 		</if>
-		<if test="image_path != null" >
+		<if test="imagePath != null" >
 			image_path = #{imagePath,jdbcType=VARCHAR},
 		</if>
-		<if test="shortcut_key != null" >
+		<if test="shortcutKey != null" >
 			shortcut_key = #{shortcutKey,jdbcType=VARCHAR}
 		</if>
 	    </set>

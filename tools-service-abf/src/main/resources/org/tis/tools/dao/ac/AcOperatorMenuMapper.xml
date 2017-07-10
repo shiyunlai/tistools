@@ -54,52 +54,52 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_operator != null" >
+		<if test="guidOperator != null" >
 			guid_operator = #{guidOperator,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_app != null" >
+		<if test="guidApp != null" >
 			guid_app = #{guidApp,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_func != null" >
+		<if test="guidFunc != null" >
 			guid_func = #{guidFunc,jdbcType=VARCHAR},
 		</if>
-		<if test="menu_name != null" >
+		<if test="menuName != null" >
 			menu_name = #{menuName,jdbcType=VARCHAR},
 		</if>
-		<if test="menu_label != null" >
+		<if test="menuLabel != null" >
 			menu_label = #{menuLabel,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_parents != null" >
+		<if test="guidParents != null" >
 			guid_parents = #{guidParents,jdbcType=VARCHAR},
 		</if>
 		<if test="isleaf != null" >
 			isleaf = #{isleaf,jdbcType=CHAR},
 		</if>
-		<if test="ui_entry != null" >
+		<if test="uiEntry != null" >
 			ui_entry = #{uiEntry,jdbcType=VARCHAR},
 		</if>
-		<if test="menu_level != null" >
+		<if test="menuLevel != null" >
 			menu_level = #{menuLevel,jdbcType=DECIMAL},
 		</if>
-		<if test="guid_root != null" >
+		<if test="guidRoot != null" >
 			guid_root = #{guidRoot,jdbcType=VARCHAR},
 		</if>
-		<if test="display_order != null" >
+		<if test="displayOrder != null" >
 			display_order = #{displayOrder,jdbcType=DECIMAL},
 		</if>
-		<if test="image_path != null" >
+		<if test="imagePath != null" >
 			image_path = #{imagePath,jdbcType=VARCHAR},
 		</if>
-		<if test="expand_path != null" >
+		<if test="expandPath != null" >
 			expand_path = #{expandPath,jdbcType=VARCHAR},
 		</if>
-		<if test="menu_seq != null" >
+		<if test="menuSeq != null" >
 			menu_seq = #{menuSeq,jdbcType=VARCHAR},
 		</if>
-		<if test="open_mode != null" >
+		<if test="openMode != null" >
 			open_mode = #{openMode,jdbcType=VARCHAR},
 		</if>
-		<if test="sub_count != null" >
+		<if test="subCount != null" >
 			sub_count = #{subCount,jdbcType=DECIMAL}
 		</if>
 	    </set>
