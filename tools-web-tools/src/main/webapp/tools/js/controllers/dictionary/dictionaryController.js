@@ -371,7 +371,7 @@ angular.module('MetronicApp').controller('dictitwos_controller', function($rootS
                 }
             }
 
-
+            console.log($scope.uploader);
             $scope.ok = function () {
                 $modalInstance.close();
             };

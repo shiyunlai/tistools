@@ -10,7 +10,6 @@ MetronicApp.controller('opmanage_controller', function ($filter,$rootScope, $sco
         {'OPERATOR_NAME':'波','USER_ID':'bo','AUTH_MODE':'captcha','OPERATOR_STATUS':'暂停','MENU_TYPE':'自主模式','LOCK_LIMIT':'5'},
         {'OPERATOR_NAME':'杰杰','USER_ID':'jie','AUTH_MODE':'pwd','OPERATOR_STATUS':'注销','MENU_TYPE':'自定义模式','LOCK_LIMIT':'5'},
         {'OPERATOR_NAME':'齐','USER_ID':'qi','AUTH_MODE':'本地密码认证','OPERATOR_STATUS':'正常','MENU_TYPE':'Default模式','LOCK_LIMIT':'5'}
-
     ];
 
     var gridOptions = {};
