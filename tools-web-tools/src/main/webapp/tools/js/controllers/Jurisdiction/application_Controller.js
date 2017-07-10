@@ -9,7 +9,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     $scope.biz.item = item;
     $scope.biz.datas = [];
     //定义权限
-     $scope.biz.applica = false;
+    $scope.biz.applica = false;
     /*-------------------------------------------------------------------------------分割符--------------------------------------------------------------------------------*/
     //0、树结构逻辑代码
     $("#s").submit(function(e) {    //树过滤,搜索功能
@@ -39,7 +39,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                             $("#container").jstree().refresh();
                                             $modalInstance.close();
                                         }else{
-                                            toastr['error']("新增失败!");
+                                            toastr['error'](data.retCode,data.retMessage+"新增失败!");
                                         }
                                     })
                                 }
@@ -80,7 +80,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                             biz.initt1(ids);//调用查询服务
                                             $modalInstance.close();
                                         }else{
-                                            toastr['error']("新增失败!");
+                                            toastr['error'](data.retCode,data.retMessage+"新增失败!");
                                         }
                                     })
                                 }
@@ -109,7 +109,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                     //销毁树，然后在重新生成
 
                                 }else{
-                                    toastr['error']("删除失败!");
+                                    toastr['error'](data.retCode,data.retMessage+"删除失败!");
                                 }
                             })
                         }
@@ -144,7 +144,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                             toastr['success']("保存成功！");
                                             $modalInstance.close();
                                         }else{
-                                            toastr['error']("新增失败!");
+                                            toastr['error'](data.retCode,data.retMessage+"新增失败!");
                                         }
                                     })
                                 }
@@ -172,7 +172,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                     $("#container").jstree().refresh();//重新刷新树
                                     biz.initt1(ids);//调用查询服务//调用查询服务,传入点击树的id，查询
                                 }else{
-                                    toastr['error']("删除失败!");
+                                    toastr['error'](data.retCode,data.retMessage+"删除失败!");
                                 }
                             })
                         }
@@ -184,13 +184,13 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
                         var ids = obj.id;//获取到右击节点的id
-                        console.log($scope.biz.item.id);
+                        //console.log($scope.biz.item.id);
                         openwindow($modal, 'views/Jurisdiction/afAdd.html', 'lg',//弹出页面
                             function ($scope, $modalInstance) {
                                 $scope.add = function(item){
                                     item.guidFuncgroup = ids;
                                     application_service.acFuncAdd(item).then(function(data){
-                                        console.log(data);
+                                        //console.log(data);
                                         if(data.status == "success"){
                                             toastr['success']("保存成功！");
                                             $modalInstance.close();
@@ -250,7 +250,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                 $scope.importAdd = function () {
                                     var dats = $scope.gridOptions5.getSelectedRows();
                                     if(dats.length >0){
-                                        console.log(dats)//选中的数据
+                                        //console.log(dats)//选中的数据
                                         //TODO.批量导入新增逻辑，加入数据库即可
                                         toastr['success']("导入成功！");
                                         $modalInstance.close();
@@ -288,69 +288,75 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 $scope.jsonarray = jsonarray;
                 var subFrom = {};
                 subFrom.id = obj.id;
-                console.log(subFrom.id)
-                if(isNull(obj.guid)){
-                    subFrom.guid = '';
-                }else{
-                    subFrom.guid = obj.guid;
-                }
+                //console.log(subFrom.id)
+                /*if(isNull(obj.guid)){
+                 subFrom.guid = '';
+                 }else{
+                 subFrom.guid = obj.guid;
+                 }*/
                 application_service.appQuery(subFrom).then(function (data) {
-                    var datas = data[0].data;
-                    console.log(datas);
+                    var datas = data.retMessage;
+                    var its = [];
                     if(datas instanceof Array){
                         for(var i = 0; i < datas.length;i++){
-                            console.log(datas[i])
+                            //console.log(datas[i])
                             if(obj.id == 'AC0000'){
-                                data[0].data[i].text = datas[i].appName;
-                                data[0].data[i].id = datas[i].guid;
-                                data[0].data[i].children = true;
-                                console.log(datas[i]);
-                                $scope.jsonarray = angular.copy(data[0].data);
-                                callback.call(this, $scope.jsonarray);
+                                datas[i].text = datas[i].appName;
+                                datas[i].id = datas[i].guid;
+                                datas[i].children = true;
+                                its.push(datas[i])
+                                /* $scope.jsonarray = angular.copy(datas);
+                                 callback.call(this, $scope.jsonarray);*/
                             }else if(isNull(datas[i].appName) && obj.id != 'AC0000'){
-                                data[0].data[i].text = datas[i].funcgroupName;
-                                data[0].data[i].id = datas[i].guid;
-                                data[0].data[i].children = true;
-                                $scope.jsonarray = angular.copy(data[0].data);
-                                callback.call(this, $scope.jsonarray);
+                                datas[i].text = datas[i].funcgroupName;
+                                datas[i].id = datas[i].guid;
+                                datas[i].children = true;
+                                its.push(datas[i])
+                                /* $scope.jsonarray = angular.copy(datas);
+                                 callback.call(this, $scope.jsonarray);*/
                             }
                         }
                     }
                     else{
                         var itemss = [];
-                        if(!isNull(datas.funcList)){
-                            console.log('进入')
-                            var datsea = datas.funcList;
-                            for(var i =0;i< datsea.length;i++){
-                                console.log(datsea[i])
-                                datsea[i].text = datsea[i].funcName;
-                                datsea[i].id = datsea[i].guid;
-                                datsea[i].children = false;
-                                itemss.push(datsea[i])
-                                $scope.jsonarray = angular.copy(data[0].data.funcList);
-                                callback.call(this, itemss);
+                        if(!isNull(datas.funcList)){//如果存在funcList，则显示功能数据
+                            //var datsea = datas.funcList;
+                            for(var i =0;i <datas.funcList.length;i++){
+                                //console.log(datas.funcList[i])
+                                //console.log(datas.funcList[i])
+                                    datas.funcList[i].text = datas.funcList[i].funcName;
+                                    datas.funcList[i].id = datas.funcList[i].guid;
+                                    datas.funcList[i].children = false;
+                                    its.push(datas.funcList[i])
+                                //itemss.push(datas.funcList[i])
+                                /*$scope.jsonarray = angular.copy(data.funcList);
+                                 callback.call(this, itemss);*/
                             }
                         }
-                        if(!isNull(datas.groupList)){
-                            var datsea = datas.groupList;
-                            for(var i =0;i< datsea.length;i++){
-                                console.log(2)
-                                datsea[i].text = datsea[i].funcgroupName;
-                                datsea[i].id = datsea[i].guid;
-                                datsea[i].children = true;
-                                itemss.push(datsea[i])
-                                $scope.jsonarray = angular.copy(data[0].data.groupList);
-                                callback.call(this, itemss);
+                        if(!isNull(datas.groupList)){//如果存在groupList，则显示功能组数据
+                            //var datsea = datas.groupList;
+                            //调用用问题
+                            for(var i =0;i< datas.groupList.length;i++){
+                                //console.log(datas.groupList[i])
+                                datas.groupList[i].text = datas.groupList[i].funcgroupName;
+                                datas.groupList[i].id = datas.groupList[i].guid;
+                                datas.groupList[i].children = true;
+                                its.push(datas.groupList[i])
+                                //itemss.push(datas.groupList[i])
+                                /*$scope.jsonarray = angular.copy(data.groupList);
+                                 callback.call(this, itemss);*/
                             }
                         }
                         if(!isNull(datas.rootName)){
-                            data[0].text = datas.rootName;
-                            data[0].children = true;
-                            data[0].id = datas.rootCode;
-                            $scope.jsonarray = angular.copy(data);
-                            callback.call(this, $scope.jsonarray);
+                            datas.text = datas.rootName;
+                            datas.children = true;
+                            datas.id = datas.rootCode;
+                            its.push(datas)
                         }
                     }
+                    $scope.jsonarray = angular.copy(its);
+                    console.log($scope.jsonarray)
+                    callback.call(this, $scope.jsonarray);
                 })
             },
         },
@@ -367,7 +373,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         },
         'dnd': {
             'dnd_start': function () {
-                console.log("start");
+                //console.log("start");
             },
             'is_draggable':function (node) {
                 return true;
@@ -386,7 +392,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         if(typeof data.node !== 'undefined'){//拿到结点详情
             $scope.dictionaryAdd = data.node.original;
             $scope.biz.item = data.node;//全局点击值传递
-            console.log($scope.biz.item);
+            //console.log($scope.biz.item);
             if(data.node.parent == '#'){
                 //创建机构实例
                 $scope.biz.applica = true;
@@ -398,10 +404,10 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 $scope.subFrom = subFrom;
                 $scope.subFrom.id = data.node.id;
                 application_service.appQuery(subFrom).then(function (data) {
-                    var datas = data[0].data;
+                    var datas = data.retMessage;
                     $scope.gridOptions0.data = datas;//把获取到的数据复制给表
-                    console.log($scope.biz.datas);
-              /*      ($scope.$$phase)?null: $scope.$apply();*/
+                    //console.log($scope.biz.datas);
+                    /*      ($scope.$$phase)?null: $scope.$apply();*/
                 })
             }else if(data.node.parent == "AC0000"){
                 ($scope.$$phase)?null: $scope.$apply();
@@ -413,10 +419,10 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 var subFrom = {};
                 $scope.subFrom = subFrom;
                 $scope.subFrom.id = data.node.id;
-                console.log(subFrom);
+                //console.log(subFrom);
                 application_service.appQuery(subFrom).then(function (data) {
-                    console.log(data);
-                    var datas = data[0].data;
+                    //console.log(data);
+                    var datas = data.retMessage;
                     $scope.gridOptions1.data = datas;
                 })
             }else if(data.node.parents[1] == 'AC0000'||!isNull(data.node.original.funcgroupName)){
@@ -428,9 +434,9 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 $scope.subFrom = subFrom;
                 $scope.subFrom.id = data.node.id;
                 application_service.appQuery(subFrom).then(function (data) {
-                    if(!isNull(data[0].data.funcList ||!isNull(data[0].data.groupList))){//查询判断，如果是空，则返回空。
-                        var datas = data[0].data.funcList;//功能列表资源
-                        var dates = data[0].data.groupList;
+                    if(!isNull(data.retMessage.funcList ||!isNull(data.retMessage.groupList))){//查询判断，如果是空，则返回空。
+                        var datas = data.retMessage.funcList;//功能列表资源
+                        var dates = data.retMessage.groupList;
                         $scope.gridOptions3.data = datas;//把获取到的数据复制给功能表
                         $scope.gridOptions2.data = dates;//把获取到的数据复制给表
                     }else{
@@ -475,7 +481,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     var f = function(row){
         if(row.isSelected){
             $scope.selectRow = row.entity;
-            console.log($scope.selectRow)
+            //console.log($scope.selectRow)
         }else{
             delete $scope.selectRow;//制空
         }
@@ -485,10 +491,10 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     biz.initt = function(num){//查询服务公用方法
         var subFrom = {};
         subFrom.id = num;
-        console.log($scope.subFrom.id)
+        //console.log($scope.subFrom.id)
         application_service.appQuery(subFrom).then(function (data) {
-            console.log(data);
-            var datas = data[0].data;
+            //console.log(data);
+            var datas = data.retMessage;
             $scope.gridOptions0.data = datas;//把获取到的数据复制给表
             ($scope.$$phase)?null: $scope.$apply();
         })
@@ -506,7 +512,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                             $("#container").jstree().refresh();
                             $modalInstance.close();
                         }else if(data.status == "error"){
-                            toastr['error']("新增失败!");
+                            toastr['error'](data.retCode,data.retMessage+"新增失败!");
                         }
                     })
                 }
@@ -529,13 +535,13 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 var guids = {};
                 guids.id = guid;//删除传入的必须是json格式
                 application_service.appDel(guids).then(function(data){
-                    console.log(data);
+                    //console.log(data);
                     if(data.status == "success"){
-                        toastr['success']("删除成功!");
+                        toastr['success'](data.retCode,data.retMessage+"删除成功!");
                         biz.initt(ids);//调用查询服务,传入点击树的id，查询
                         $("#container").jstree().refresh();
                     }else{
-                        toastr['error']("删除失败!");
+                        toastr['error'](data.retCode,data.retMessage+"删除失败!");
                     }
                 })
             }
@@ -558,12 +564,13 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                     $scope.saveDict = function(item){//保存新增的函数
                         item.id = item.guid;
                         application_service.appEdit(item).then(function(data){
+                            //console.log(data);
                             if(data.status == "success"){
                                 toastr['success']("修改成功！");
                                 $modalInstance.close();
                                 biz.initt(ids);//调用查询服务,传入点击树的id，查询
                             }else{
-                                toastr['error']("修改失败!");
+                                toastr['error'](data.retCode,data.retMessage+"修改失败!");
                             }
                         })
                     }
@@ -576,7 +583,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     }
 
 
-/*-----------------------------------------------------------------------------------------分割符----------------------------------------------------------------------------------*/
+    /*-----------------------------------------------------------------------------------------分割符----------------------------------------------------------------------------------*/
     //2、应用模块逻辑
     //应用tab切换列表
     var yyflag = {};
@@ -628,8 +635,8 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         var subFrom = {};
         subFrom.id = num;
         application_service.appQuery(subFrom).then(function (data) {
-            console.log(data);
-            var datas = data[0].data;
+            //console.log(data);
+            var datas = data.retMessage;
             $scope.gridOptions1.data = datas;//把获取到的数据复制给表
             ($scope.$$phase)?null: $scope.$apply();
         })
@@ -637,26 +644,26 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     //功能组新增
     $scope.addApp = function(){
         var ids = $scope.biz.item.id;
-            openwindow($modal, 'views/Jurisdiction/appgroupAdd.html', 'lg',//弹出页面
-                function ($scope, $modalInstance) {
-                    $scope.add = function(item){
-                        item.guidApp = ids;
-                        item.guidParents = '';
-                        application_service.groupAdd(item).then(function(data){
-                                if(data.status == "success"){
-                                    toastr['success']("保存成功！");
-                                    $("#container").jstree().refresh();
-                                    biz.initt1(ids);//调用查询服务
-                                    $modalInstance.close();
-                                }else{
-                                    toastr['error']("新增失败!");
-                                }
-                        })
-                    }
-                    $scope.cancel = function () {
-                        $modalInstance.dismiss('cancel');
-                    };
-                })
+        openwindow($modal, 'views/Jurisdiction/appgroupAdd.html', 'lg',//弹出页面
+            function ($scope, $modalInstance) {
+                $scope.add = function(item){
+                    item.guidApp = ids;
+                    item.guidParents = '';
+                    application_service.groupAdd(item).then(function(data){
+                        if(data.status == "success"){
+                            toastr['success']("保存成功！");
+                            $("#container").jstree().refresh();
+                            biz.initt1(ids);//调用查询服务
+                            $modalInstance.close();
+                        }else{
+                            toastr['error'](data.retCode,data.retMessage+"新增失败!");
+                        }
+                    })
+                }
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            })
     }
     //功能组修改
     $scope.exidApp = function(id){
@@ -683,7 +690,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                 $modalInstance.close();
                                 biz.initt1(ids);//调用查询服务
                             }else{
-                                toastr['error']("修改失败!");
+                                toastr['error'](data.retCode,data.retMessage+"修改失败!");
                             }
                         })
                     }
@@ -712,13 +719,13 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                         $("#container").jstree().refresh();//重新刷新树
                         biz.initt1(ids);//调用查询服务//调用查询服务,传入点击树的id，查询
                     }else{
-                        toastr['error']("删除失败!");
+                        toastr['error'](data.retCode,data.retMessage+"删除失败!");
                     }
                 })
             }
         }
     }
-/*------------------------------------------------------------------------------------------分割符-------------------------------------------------------------------------------*/
+    /*------------------------------------------------------------------------------------------分割符-------------------------------------------------------------------------------*/
     //2、子功能组页面逻辑
     //岗位页签跳转控制
     var childflag = {};
@@ -791,10 +798,10 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     biz.initt2 = function(num){//查询服务公用方法
         var subFrom = {};
         subFrom.id = num;
-        console.log($scope.subFrom.id)
+        //console.log($scope.subFrom.id)
         application_service.appQuery(subFrom).then(function (data) {
-            console.log(data);
-            var datas = data[0].data.groupList;
+            //console.log(data);
+            var datas = data.retMessage.groupList;
             if(isNull(datas)){
                 var datas = [];
                 $scope.gridOptions2.data = datas;
@@ -807,21 +814,21 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     //子功能组列表新增功能
     $scope.addchildApp = function(){
         var ids = $scope.biz.item//获取到点击根节点
-        console.log(ids);
+        //console.log(ids);
         openwindow($modal, 'views/Jurisdiction/childfunctionAdd.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
                 $scope.addchild = function(item){
                     item.guidApp = ids.original.guidApp;//归属应用
                     item.guidParents = ids.id;
                     application_service.groupAdd(item).then(function(data){
-                        console.log(data);
+                        //console.log(data);
                         if(data.status == "success"){
                             biz.initt2(ids.id);//调用列表刷新方法
                             toastr['success']("保存成功！");
                             $("#container").jstree().refresh();//重新刷新树
                             $modalInstance.close();
                         }else{
-                            toastr['error']("新增失败!");
+                            toastr['error'](data.retCode,data.retMessage+"新增失败!");
                         }
                     })
                 }
@@ -858,7 +865,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                 $("#container").jstree().refresh();
                                 $modalInstance.close();
                             }else{
-                                toastr['error']("新增失败!");
+                                toastr['error'](data.retCode,data.retMessage+"新增失败!");
                             }
                         })
                     }
@@ -883,13 +890,13 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 var guids = {};
                 guids.id = guid;//删除传入的必须是json格式
                 application_service.groupDel(guids).then(function(data){
-                    console.log(data);
+                    //console.log(data);
                     if(data.status == "success"){
                         toastr['success']("删除成功!");
                         biz.initt2(ids.id);//调用查询服务
                         $("#container").jstree().refresh();//重新刷新树
                     }else{
-                        toastr['error']("删除失败!");
+                        toastr['error'](data.retCode,data.retMessage+"删除失败!");
                     }
                 })
             }
@@ -920,12 +927,12 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         var subFrom = {};
         subFrom.id = num;
         application_service.appQuery(subFrom).then(function (data){
-            console.log(data);
-            if(isNull(data[0].data.funcList)){
+            //console.log(data);
+            if(isNull(data.retMessage.funcList)){
                 $scope.gridOptions3.data = [];
                 ($scope.$$phase)?null: $scope.$apply();
             }else{
-                var datas = data[0].data.funcList;
+                var datas = data.retMessage.funcList;
                 $scope.gridOptions3.data = datas;//把获取到的数据复制给表
                 ($scope.$$phase)?null: $scope.$apply();
             }
@@ -940,14 +947,14 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 $scope.add = function(item){
                     item.guidFuncgroup = ids;
                     application_service.acFuncAdd(item).then(function(data){
-                        console.log(data);
+                        //console.log(data);
                         if(data.status == "success"){
                             toastr['success']("保存成功！");
                             biz.initt3(ids);//刷新列表
                             $modalInstance.close();
                             $("#container").jstree().refresh();//重新刷新树
                         }else if(data.status == "error"){
-                            toastr['error'](data.extraMessage,"新增失败!");
+                            toastr['error'](data.retCode,data.retMessage+"新增失败!");
                         }
                     })
                 }
@@ -984,7 +991,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                 $("#container").jstree().refresh();
                                 $modalInstance.close();
                             }else if(data.status == "error"){
-                                toastr['error'](data.extraMessage,"新增失败!");
+                                toastr['error'](data.retCode,data.retMessage+"新增失败!");
                             }
                         })
                     }
@@ -1012,7 +1019,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                         biz.initt3(ids);//调用查询服务//调用查询服务,传入点击树的id，查询
                         $("#container").jstree().refresh();//重新刷新树
                     }else{
-                        toastr['error']("删除失败!");
+                        toastr['error'](data.retCode,data.retMessage+"删除失败!");
                     }
                 })
             }
@@ -1060,14 +1067,16 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     }
 
 
-    //应用信息保存方法
+    //功能信息保存方法
     $scope.biz.appsave = function (item) {
-        application_service.appEdit(item).then(function(data){
-            console.log(data);
+        //有问题
+        //console.log(item)
+        application_service.acFuncEdit(item).then(function(data){
+            //console.log(data);
             if(data.status == "success"){
                 toastr['success']("保存成功！");
             }else{
-                toastr['error']("修改失败!");
+                toastr['error'](data.retCode,data.retMessage+"保存失败!");
             }
         })
         $scope.editflag = !$scope.editflag;//让保存取消方法显现
@@ -1095,7 +1104,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     var f4 = function(row){
         if(row.isSelected){
             $scope.selectRow4 = row.entity;
-            console.log($scope.selectRow4)
+            //console.log($scope.selectRow4)
             $scope.biz.active = true;
         }else{
             delete $scope.selectRow4;//制空
@@ -1119,7 +1128,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     var f5 = function(row){
         if(row.isSelected){
             $scope.selectRow5 = row.entity;
-            console.log($scope.selectRow5)
+            //console.log($scope.selectRow5)
         }else{
             delete $scope.selectRow5;//制空
         }

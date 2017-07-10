@@ -66,9 +66,9 @@ public class AcAppController extends BaseController {
 			String appType = jsonObj.getString("appType");
 			String appDesc = jsonObj.getString("appDesc");
 			String isOpen = jsonObj.getString("isOpen");
-			String openDate = jsonObj.getString("openDate");
+			String openDateStr = jsonObj.getString("openDateStr");
 			SimpleDateFormat times = new SimpleDateFormat("yyyy-MM-dd");
-			Date date = times.parse(openDate);
+			Date date = times.parse(openDateStr);
 			String url = jsonObj.getString("url");
 			String ipAddr = jsonObj.getString("ipAddr");
 			String ipPort = jsonObj.getString("ipPort");
@@ -86,6 +86,9 @@ public class AcAppController extends BaseController {
 			AjaxUtils.ajaxJsonSuccessMessage(response,"");
 		} catch (ToolsRuntimeException e) {
 			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("appAdd exception : ", e);
+		}catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
 			logger.error("appAdd exception : ", e);
 		}
 		return null;
@@ -111,6 +114,9 @@ public class AcAppController extends BaseController {
 			AjaxUtils.ajaxJsonSuccessMessage(response, "");
 		} catch (ToolsRuntimeException e) {
 			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("appDel exception : ", e);
+		}catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
 			logger.error("appDel exception : ", e);
 		}
 		return null;
@@ -150,6 +156,9 @@ public class AcAppController extends BaseController {
 			AjaxUtils.ajaxJsonSuccessMessage(response, "");
 		} catch (ToolsRuntimeException e) {
 			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("appEdit exception : ", e);
+		}catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
 			logger.error("appEdit exception : ", e);
 		}
 		return null;
@@ -202,6 +211,9 @@ public class AcAppController extends BaseController {
 		} catch (ToolsRuntimeException e) {
 			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
 			logger.error("appQuery exception : ", e);
+		}catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+			logger.error("appQuery exception : ", e);
 		}
 		return null;
 	}
@@ -240,6 +252,9 @@ public class AcAppController extends BaseController {
 		} catch (ToolsRuntimeException e) {
 			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
 			logger.error("groupAdd exception : ", e);
+		}catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+			logger.error("groupAdd exception : ", e);
 		}
 		return null;
 	}
@@ -265,6 +280,9 @@ public class AcAppController extends BaseController {
 			AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
 		} catch (ToolsRuntimeException e) {
 			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("groupDel exception : ", e);
+		}catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
 			logger.error("groupDel exception : ", e);
 		}
 		return null;
@@ -300,6 +318,9 @@ public class AcAppController extends BaseController {
 			AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
 		} catch (ToolsRuntimeException e) {
 			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("groupEdit exception : ", e);
+		}catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
 			logger.error("groupEdit exception : ", e);
 		}
 		return null;
@@ -356,6 +377,9 @@ public class AcAppController extends BaseController {
 		} catch (ToolsRuntimeException e) {
 			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
 			logger.error("acFuncAdd exception : ", e);
+		}catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+			logger.error("acFuncAdd exception : ", e);
 		}
 		return null;
 	}
@@ -382,6 +406,9 @@ public class AcAppController extends BaseController {
 			AjaxUtils.ajaxJsonSuccessMessage(response,"");//返回给前台的结
 		} catch (ToolsRuntimeException e) {
 			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("acFuncDel exception : ", e);
+		}catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
 			logger.error("acFuncDel exception : ", e);
 		}
 		return null;
@@ -411,7 +438,7 @@ public class AcAppController extends BaseController {
 			String funcAction = jsonObj.getString("funcAction");
 			String paraInfo = jsonObj.getString("paraInfo");
 			String funcType = jsonObj.getString("funcType");
-			String isCheck = jsonObj.getString("isCheck");
+			//String isCheck = jsonObj.getString("isCheck");
 			String isMenu = jsonObj.getString("isMenu");
 		
 						
@@ -420,7 +447,7 @@ public class AcAppController extends BaseController {
 			acFunc.setFuncAction(funcAction);
 			acFunc.setParaInfo(paraInfo);
 			acFunc.setFuncType(funcType);
-			acFunc.setIscheck(isCheck);
+			//acFunc.setIscheck(isCheck);
 			acFunc.setIsmenu(isMenu);
 			
 			applicationRService.updateAcFunc(acFunc);
@@ -452,6 +479,7 @@ public class AcAppController extends BaseController {
 	
 			//设置功能对应资源
 			AcFuncResource acFuncResource = new AcFuncResource();
+
 			String guid = jsonObj.getString("id");		
 			String resType = jsonObj.getString("resType");
 			String compackName = jsonObj.getString("compackName");
@@ -467,6 +495,9 @@ public class AcAppController extends BaseController {
 			AjaxUtils.ajaxJsonSuccessMessage(response,"");//返回给前台的结
 		} catch (ToolsRuntimeException e) {
 			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("acFuncEdit exception : ", e);
+		}catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
 			logger.error("acFuncEdit exception : ", e);
 		}
 		return null;
@@ -494,6 +525,9 @@ public class AcAppController extends BaseController {
 			AjaxUtils.ajaxJsonSuccessMessage(response, funcResouce);//返回给前台的结
 		} catch (ToolsRuntimeException e) {
 			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("acFuncResouceQuery exception : ", e);
+		}catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
 			logger.error("acFuncResouceQuery exception : ", e);
 		}
 		return null;

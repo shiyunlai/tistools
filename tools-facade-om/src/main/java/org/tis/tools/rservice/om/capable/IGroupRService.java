@@ -117,6 +117,31 @@ public interface IGroupRService {
 	
 	/**
 	 * <pre>
+	 * 新增根工作组
+	 * 
+	 * 说明：
+	 * 程序检查数据合法性、最少必要数据是否齐备；
+	 * 通过传入最少参数新增根工作组，需要指定各关联信息的guid；
+	 * 新增的工作组状态为‘正常’；
+	 * 
+	 * </pre>
+	 * 
+	 * @param newOmGroup
+	 *            新工作组对象
+	 * @return 新增的工作组对象
+	 * @throws ToolsRuntimeException
+	 */
+	OmGroup createRootGroup(OmGroup og)  throws ToolsRuntimeException ;
+	
+	/**
+	 * 查询所有工作组.
+	 * @return
+	 * @throws ToolsRuntimeException
+	 */
+	List<OmGroup> queryAllGroup() throws ToolsRuntimeException; 
+	
+	/**
+	 * <pre>
 	 * 浅拷贝工作组
 	 * 
 	 * 说明：
@@ -299,6 +324,15 @@ public interface IGroupRService {
 	 */
 	//FIXME 此处返回 OmGroup 数据库DO对象，对于调用者来说并不友好，应该将其中的数据主键guid转化为业务代码 —— 其他＊RService中如是 
 	OmGroup queryGroup(String groupCode) ;
+	
+	/**
+	 * <per>
+	 * 查询根工作组
+	 * </per>
+	 * 
+	 * @return 根工作组列表
+	 */
+	List<OmGroup> queryRootGroup();
 	
 	/**
 	 * <per>
