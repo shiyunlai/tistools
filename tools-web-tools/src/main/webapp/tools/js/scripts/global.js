@@ -428,9 +428,9 @@ function getYYYYMMDD(){
 //ui-grid init
 //thisobj--表ID,fun--返回data的方法,com--表列名,筛选配置项,bol--布尔值,是否多选.selection--自定义行选中
 
-function initgrid($scope, thisobj, fun, filterFilter,com,bol,selection){
+function initgrid($scope, thisobj, filterFilter,com,bol,selection){
     thisobj = {
-        data: fun,
+        data: [],
         //-------- 分页属性 ----------------
         enablePagination: true, //是否分页，默认为true
         enablePaginationControls: true, //使用默认的底部分页
@@ -438,7 +438,6 @@ function initgrid($scope, thisobj, fun, filterFilter,com,bol,selection){
         paginationCurrentPage:1, //当前页码
         paginationPageSize: 10, //每页显示个数
         //paginationTemplate:"<div></div>", //自定义底部分页代码
-        totalItems : 0, // 总数量
         useExternalPagination: true,//是否使用分页按钮
         //导出测试
         enableSelectAll: true,
@@ -488,16 +487,29 @@ function initgrid($scope, thisobj, fun, filterFilter,com,bol,selection){
 
 
     //ui-grid getPage方法
-
+    var da = [];
 
     thisobj.getPage = function(curPage, pageSize) {
+
+        if(isNull(da)){
+            console.log(1)
+            da = angular.copy(thisobj.data);
+        }
+        console.log(curPage+""+pageSize);
         var firstRow = (curPage - 1) * pageSize;
-        thisobj.totalItems = thisobj.data.length;
-        thisobj.data = thisobj.data.slice(firstRow, firstRow + pageSize);
+        thisobj.totalItems = da.length;
+        thisobj.data = da.slice(firstRow, firstRow + pageSize);
+        console.log(thisobj.data)
         //或者像下面这种写法
         //$scope.myData = mydefalutData.slice(firstRow, firstRow + pageSize);
     };
     //测试
     // var a = $scope.girdApi.selection.getSelectedRows();
+
     return thisobj;
+}
+
+function FormatDate (strTime) {
+    var date = new Date(strTime);
+    return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
 }

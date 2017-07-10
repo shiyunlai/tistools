@@ -22,6 +22,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.tis.tools.base.WhereCondition;
+import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.om.OmGroup;
 import org.tis.tools.rservice.om.capable.IGroupRService;
 import org.tis.tools.webapp.controller.BaseController;
@@ -56,17 +57,29 @@ public class WorkGroupController extends BaseController {
 			JSONObject jsonObj = JSONObject.fromObject(content);
 			String id = jsonObj.getString("id");
 			List<OmGroup> list = new ArrayList<OmGroup>();
+			List<Map> l = new ArrayList<Map>();
 			//通过id判断需要加载的节点
 			if("#".equals(id)){
 				//调用远程服务,#:根
 				OmGroup og = new OmGroup();
 				og.setGuid("00000");
 				og.setGroupName("工作组树");
-				list.add(og);
+				Map m1 = BeanUtils.describe(og);
+				l.add(m1);
 			}else if("00000".equals(id)){
 				list = groupRService.queryRootGroup();
+				for(OmGroup og:list){
+					Map m1 = BeanUtils.describe(og);
+					l.add(m1);
+				}
+			}else {
+				list = groupRService.queryChildGroup(id);
+				for(OmGroup og:list){
+					Map m1 = BeanUtils.describe(og);
+					l.add(m1);
+				}
 			}
-			AjaxUtils.ajaxJson(response, net.sf.json.JSONArray.fromObject(list).toString());
+			AjaxUtils.ajaxJson(response, net.sf.json.JSONArray.fromObject(l).toString());
 			
 		} catch (Exception e) {// TODO
 			AjaxUtils.ajaxJsonErrorMessage(response, "查询根机构树失败!");
@@ -90,13 +103,24 @@ public class WorkGroupController extends BaseController {
 		try {
 			
 			JSONObject jsonObj = JSONObject.fromObject(content);
-			OmGroup og = new OmGroup();
-			BeanUtils.populate(og, jsonObj);
-			groupRService.createRootGroup(og);
+			String flag = jsonObj.getString("flag");
+			jsonObj.remove("flag");
+			if(flag.equals("root")){
+				OmGroup og = new OmGroup();
+				BeanUtils.populate(og, jsonObj);
+				groupRService.createRootGroup(og);
+			}else{//新增子节点
+				OmGroup og = new OmGroup();
+				BeanUtils.populate(og, jsonObj);
+				groupRService.createGroup(og);
+			}
+			
 			AjaxUtils.ajaxJsonSuccessMessage(response, "新增根工作组成功!");
-		} catch (Exception e) {// TODO
-			AjaxUtils.ajaxJsonErrorMessage(response, "新增根工作组失败!");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(),e.getParams() );
 			e.printStackTrace();
+		} catch (Exception e){
+			AjaxUtils.ajaxJsonErrorMessage(response,"新增工作组失败");
 		}
 		return null;
 	}
@@ -178,6 +202,35 @@ public class WorkGroupController extends BaseController {
 		return null;
 	}
 	
+	/**
+	 * 条件查询工作组列表
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/queryChild")
+	public String queryby(ModelMap model,  @RequestBody String content,
+			String age, HttpServletRequest request, HttpServletResponse response) {
+		try {
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			String id = jsonObj.getString("id");
+			//查询所有工作组
+			List<OmGroup> list = groupRService.queryChildGroup(id);
+			List<Map> l = new ArrayList<Map>();
+			for(OmGroup o : list ){
+				Map m1 = BeanUtils.describe(o);
+				l.add(m1);
+			}
+			AjaxUtils.ajaxJson(response, net.sf.json.JSONArray.fromObject(l).toString());
+		} catch (Exception e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, "查询失败!");
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	/**
 	 * 每个controller定义自己的返回信息变量

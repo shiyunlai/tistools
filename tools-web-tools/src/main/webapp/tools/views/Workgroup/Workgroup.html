@@ -51,27 +51,27 @@
                 <!-- 详情页签 -->
                 <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="!flag.index">
                     <li ng-class="{true:'active',false:''}[flag.xqxx]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xqxx]" ng-click="abftree.loaddata(999)">
+                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xqxx]" ng-click="workgroup.loaddata(0)">
                             <i class="green ace-icon fa fa-bars bigger-120"></i>工作组详情
                         </a>
                     </li>
-                    <li ng-class="{true:'active',false:''}[flag.ygxx]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xjgz]" ng-click="abftree.loaddata(1)">
+                    <li ng-class="{true:'active',false:''}[flag.xjgz]">
+                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xjgz]" ng-click="workgroup.loaddata(1)">
                             <i class="green ace-icon fa fa-bars bigger-120"></i>下级工作组列表
                         </a>
                     </li>
-                    <li ng-class="{true:'active',false:''}[flag.xjjg]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xjgw]" ng-click="abftree.loaddata(0)">
+                    <li ng-class="{true:'active',false:''}[flag.xjgw]">
+                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xjgw]" ng-click="workgroup.loaddata(2)">
                             <i class="green ace-icon fa fa-bars bigger-120"></i>岗位列表
                         </a>
                     </li>
-                    <li ng-class="{true:'active',false:''}[flag.qxxx]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.ygxx]" ng-click="abftree.loaddata(3)">
+                    <li ng-class="{true:'active',false:''}[flag.ygxx]">
+                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.ygxx]" ng-click="workgroup.loaddata(3)">
                             <i class="green ace-icon fa fa-bars bigger-120"></i>人员信息
                         </a>
                     </li>
                     <li ng-class="{true:'active',false:''}[flag.qxxx]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.qxxx]" ng-click="abftree.loaddata(3)">
+                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.qxxx]" ng-click="workgroup.loaddata(4)">
                             <i class="green ace-icon fa fa-bars bigger-120"></i>权限信息
                         </a>
                     </li>
@@ -192,12 +192,77 @@
             </div>
             <!-- 工作组详情 end  -->
             <!-- 下级工作组列表 start -->
+            <div class="tab-content portlet light" ng-if="flag.xjgz">
+                <div ui-grid="xjworkgroupgrid"
+                     ui-grid-edit ui-grid-pagination
+                     ui-grid-selection ui-grid-resize-columns></div>
+                <div class="actions btn-set" style="float: right;">
+                    <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.add()"> 新增
+                    </button>
+                    <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.edit()"> 编辑
+                    </button>
+                    <button type="button" name="back" class="btn btn-danger" ng-click="workgroup.delete()"> 删除
+                    </button>
+                </div>
+            </div>
             <!-- 下级工作组列表 end  -->
             <!-- 岗位列表 start -->
+            <div class="tab-content portlet light" ng-if="flag.xjgw">
+                <div ui-grid="xjgwgrid"
+                     ui-grid-edit ui-grid-pagination
+                     ui-grid-selection ui-grid-resize-columns></div>
+                <div class="actions btn-set" style="float: right;">
+                    <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.add()"> 新增
+                    </button>
+                    <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.edit()"> 编辑
+                    </button>
+                    <button type="button" name="back" class="btn btn-danger" ng-click="workgroup.delete()"> 删除
+                    </button>
+                </div>
+            </div>
             <!-- 岗位列表 end -->
             <!-- 人员信息 start -->
+            <div class="tab-content portlet light" ng-if="flag.ygxx">
+                <div ui-grid="workgroupgrid"
+                     ui-grid-edit ui-grid-pagination
+                     ui-grid-selection ui-grid-resize-columns></div>
+                <div class="actions btn-set" style="float: right;">
+                    <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.add()"> 新增
+                    </button>
+                    <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.edit()"> 编辑
+                    </button>
+                    <button type="button" name="back" class="btn btn-danger" ng-click="workgroup.delete()"> 删除
+                    </button>
+                </div>
+            </div>
             <!-- 人员信息 end -->
             <!-- 权限信息 start -->
+            <div class="tab-content" ng-if="flag.qxxx">
+                <div  ng-controller="abftree_gwqx_controller">
+                    <div class="portlet-body form col-md-12" >
+                        <!-- BEGIN FORM-->
+                        <div style="" class="col-md-6">
+                            <select  id='gwJurisdiction' multiple='multiple'></select>
+                        </div>
+                        <!-- END FORM-->
+                        <div class="portlet-body col-md-6">
+                            <div ui-grid="Jurisdictiongrid"
+                                 ui-grid-edit ui-grid-pagination
+                                 ui-grid-selection
+                            >
+                            </div>
+                            <div class="actions btn-set" style="float: right;">
+                                <button type="button" name="back" class="btn btn-primary" ng-click=""> 新增
+                                </button>
+                                <button type="button" name="back" class="btn btn-primary" ng-click=""> 编辑
+                                </button>
+                                <button type="button" name="back" class="btn btn-danger" ng-click=""> 删除
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- 权限信息 end -->
 
         </div>
