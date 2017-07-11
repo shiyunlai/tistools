@@ -31,25 +31,25 @@
  	<update id="update" parameterType="org.tis.tools.model.po.ac.AcOperatorFunc">
     	UPDATE AC_OPERATOR_FUNC 
 	    <set>
-		<if test="guid_operator != null" >
+		<if test="guidOperator != null" >
 			guid_operator = #{guidOperator,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_func != null" >
+		<if test="guidFunc != null" >
 			guid_func = #{guidFunc,jdbcType=VARCHAR},
 		</if>
-		<if test="auth_type != null" >
+		<if test="authType != null" >
 			auth_type = #{authType,jdbcType=VARCHAR},
 		</if>
-		<if test="start_date != null" >
+		<if test="startDate != null" >
 			start_date = #{startDate,jdbcType=DATE},
 		</if>
-		<if test="end_date != null" >
+		<if test="endDate != null" >
 			end_date = #{endDate,jdbcType=DATE},
 		</if>
-		<if test="guid_app != null" >
+		<if test="guidApp != null" >
 			guid_app = #{guidApp,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_funcgroup != null" >
+		<if test="guidFuncgroup != null" >
 			guid_funcgroup = #{guidFuncgroup,jdbcType=VARCHAR}
 		</if>
 	    </set>

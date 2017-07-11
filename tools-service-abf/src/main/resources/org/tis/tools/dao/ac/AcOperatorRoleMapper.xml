@@ -23,10 +23,10 @@
  	<update id="update" parameterType="org.tis.tools.model.po.ac.AcOperatorRole">
     	UPDATE AC_OPERATOR_ROLE 
 	    <set>
-		<if test="guid_operator != null" >
+		<if test="guidOperator != null" >
 			guid_operator = #{guidOperator,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_role != null" >
+		<if test="guidRole != null" >
 			guid_role = #{guidRole,jdbcType=VARCHAR},
 		</if>
 		<if test="auth != null" >

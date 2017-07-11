@@ -50,31 +50,31 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="app_code != null" >
+		<if test="appCode != null" >
 			app_code = #{appCode,jdbcType=VARCHAR},
 		</if>
-		<if test="app_name != null" >
+		<if test="appName != null" >
 			app_name = #{appName,jdbcType=VARCHAR},
 		</if>
-		<if test="app_type != null" >
+		<if test="appType != null" >
 			app_type = #{appType,jdbcType=VARCHAR},
 		</if>
 		<if test="isopen != null" >
 			isopen = #{isopen,jdbcType=CHAR},
 		</if>
-		<if test="open_date != null" >
+		<if test="openDate != null" >
 			open_date = #{openDate,jdbcType=TIMESTAMP},
 		</if>
 		<if test="url != null" >
 			url = #{url,jdbcType=VARCHAR},
 		</if>
-		<if test="app_desc != null" >
+		<if test="appDesc != null" >
 			app_desc = #{appDesc,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_emp_maintenance != null" >
+		<if test="guidEmpMaintenance != null" >
 			guid_emp_maintenance = #{guidEmpMaintenance,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_role_maintenance != null" >
+		<if test="guidRoleMaintenance != null" >
 			guid_role_maintenance = #{guidRoleMaintenance,jdbcType=VARCHAR},
 		</if>
 		<if test="remark != null" >
@@ -86,10 +86,10 @@
 		<if test="intaskcenter != null" >
 			intaskcenter = #{intaskcenter,jdbcType=CHAR},
 		</if>
-		<if test="ip_addr != null" >
+		<if test="ipAddr != null" >
 			ip_addr = #{ipAddr,jdbcType=VARCHAR},
 		</if>
-		<if test="ip_port != null" >
+		<if test="ipPort != null" >
 			ip_port = #{ipPort,jdbcType=VARCHAR}
 		</if>
 	    </set>

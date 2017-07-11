@@ -15,6 +15,7 @@ import org.tis.tools.dao.ac.AcAppMapper;
 import org.tis.tools.dao.ac.ApplicationMapper;
 import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.vo.ac.AcAppVo;
+import org.tis.tools.model.vo.ac.AcFuncVo;
 
 
 /**
@@ -30,8 +31,16 @@ public class ApplicationService {
 	
    
 
-    public List<AcAppVo> query(WhereCondition wc){
-    	return applitionMapper.query(wc); 
+    public List<AcAppVo> queryAcAppVo(WhereCondition wc){
+    	return applitionMapper.queryAcAppVo(wc); 
     }
+    /**
+	 * 根据条件查询功能(AC_FUNC)
+	 * @param guid 条件
+	 * @return 满足条件的记录
+	 */
+	public List<AcFuncVo> queryAcFuncVo(WhereCondition wc){
+		return applitionMapper.queryAcFuncVo(wc);
+	};
     
 }

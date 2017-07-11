@@ -21,10 +21,10 @@
  	<update id="update" parameterType="org.tis.tools.model.po.om.OmPositionApp">
     	UPDATE OM_POSITION_APP 
 	    <set>
-		<if test="guid_position != null" >
+		<if test="guidPosition != null" >
 			guid_position = #{guidPosition,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_app != null" >
+		<if test="guidApp != null" >
 			guid_app = #{guidApp,jdbcType=VARCHAR}
 		</if>
 	    </set>

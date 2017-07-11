@@ -711,12 +711,6 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             data: {pageTitle: '业务字典'},
             controller:"dictionary_controller"
         })
-        .state("numberResources",{
-            url:"/numberResources.html",
-            templateUrl:"views/numberResources/numberResources.html",
-            data: {pageTitle: '序号资源表'},
-            controller:"numres_controller"
-        })
 }]);
 
 /* Init global settings and run the app */

@@ -124,7 +124,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             }
             return it;
         }
-        if(node.parents[1] == "AC0000" || !isNull(node.original.funcgroupName)){
+        if(node.parents[1] == "AC0000"){
             var it = {
                 "新建子功能组":{
                     "id":"createb",
@@ -214,22 +214,22 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                         openwindow($uibModal, 'views/Jurisdiction/importAdd.html', 'lg',
                             function ($scope, $modalInstance) {
                                 $scope.importadd = [
-                                    {'名称':'com.primeton.workflow.manager.def'},
-                                    { '名称':'com.primeton.workflow.client.process'},
-                                    {'名称':'com.primeton.workflow.eos.exp'},
-                                    { '名称':'org.gocom.abframe.ztest'},
-                                    { '名称':'测试'},
-                                    { '名称':'测试'},
-                                    { '名称':'权限管理'},
-                                    { '名称':'其他管理'},
-                                    { '名称':'com.primeton.workflow.core'}
+                                    {'构架包':'com.primeton.workflow.manager.def', '名称':'com.primeton.workflow.manager.def'},
+                                    {'构架包':'com.primeton.workflow.client.process', '名称':'com.primeton.workflow.client.process'},
+                                    {'构架包':'com.primeton.eos.exp', '名称':'com.primeton.workflow.eos.exp'},
+                                    {'构架包':'org.gocom.abframe.ztest', '名称':'org.gocom.abframe.ztest'},
+                                    {'构架包':'org.gocom.abframe.test', '名称':'测试'},
+                                    {'构架包':'org.gocom.abframe.test', '名称':'测试'},
+                                    {'构架包':'org.gocom.abframe.rights', '名称':'权限管理'},
+                                    {'构架包':'org.gocom.abframe.tools', '名称':'其他管理'},
+                                    {'构架包':'com.primeton.workflow.core', '名称':'com.primeton.workflow.core'}
                                 ];
                                 var gridOptions5 = {};
                                 $scope.gridOptions5 = gridOptions5;
                                 var initdata5 = function(){
                                     return $scope.importadd;//数据方法
                                 }
-                                var com5 = [
+                                var com5 = [{ field: '构架包', displayName: '构架包'},
                                     { field: "名称", displayName:'名称'}
                                 ];
                                 //自定义点击事件
@@ -304,7 +304,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                 datas[i].text = datas[i].appName;
                                 datas[i].id = datas[i].guid;
                                 datas[i].children = true;
-                                datas[i].icon = "fa fa-home  icon-state-info icon-lg";
                                 its.push(datas[i])
                                 /* $scope.jsonarray = angular.copy(datas);
                                  callback.call(this, $scope.jsonarray);*/
@@ -312,7 +311,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                 datas[i].text = datas[i].funcgroupName;
                                 datas[i].id = datas[i].guid;
                                 datas[i].children = true;
-                                datas[i].icon = "fa  fa-files-o icon-state-info icon-lg";
                                 its.push(datas[i])
                                 /* $scope.jsonarray = angular.copy(datas);
                                  callback.call(this, $scope.jsonarray);*/
@@ -324,10 +322,11 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                         if(!isNull(datas.funcList)){//如果存在funcList，则显示功能数据
                             //var datsea = datas.funcList;
                             for(var i =0;i <datas.funcList.length;i++){
+                                //console.log(datas.funcList[i])
+                                //console.log(datas.funcList[i])
                                     datas.funcList[i].text = datas.funcList[i].funcName;
                                     datas.funcList[i].id = datas.funcList[i].guid;
                                     datas.funcList[i].children = false;
-                                    datas.funcList[i].icon = "fa fa-wrench icon-state-info icon-lg"
                                     its.push(datas.funcList[i])
                                 //itemss.push(datas.funcList[i])
                                 /*$scope.jsonarray = angular.copy(data.funcList);
@@ -342,7 +341,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                 datas.groupList[i].text = datas.groupList[i].funcgroupName;
                                 datas.groupList[i].id = datas.groupList[i].guid;
                                 datas.groupList[i].children = true;
-                                datas.groupList[i].icon = "fa  fa-files-o icon-state-info icon-lg"
                                 its.push(datas.groupList[i])
                                 //itemss.push(datas.groupList[i])
                                 /*$scope.jsonarray = angular.copy(data.groupList);
@@ -353,12 +351,11 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                             datas.text = datas.rootName;
                             datas.children = true;
                             datas.id = datas.rootCode;
-                            datas.iocon = "fa fa-home icon-state-info icon-lg"
                             its.push(datas)
                         }
                     }
                     $scope.jsonarray = angular.copy(its);
-                    //console.log($scope.jsonarray)
+                    console.log($scope.jsonarray)
                     callback.call(this, $scope.jsonarray);
                 })
             },
@@ -1093,58 +1090,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         $scope.editflag = !$scope.editflag;
     }
 
-    $scope.biz.addtype = function () {
-        openwindow($uibModal, 'views/Jurisdiction/activetypeAdd.html', 'lg',
-            function ($scope, $modalInstance) {
-                $scope.importadd = [
-                    {'bhvtypeName':'com.primeton.workflow.manager.def','bhvtypeCode':'Avt001'},
-                    { 'bhvtypeName':'com.primeton.workflow.client.process','bhvtypeCode':'Avt002'},
-                    {'bhvtypeName':'com.primeton.workflow.eos.exp','bhvtypeCode':'Avt003'},
-                    { 'bhvtypeName':'org.gocom.abframe.ztest','bhvtypeCode':'Avt004'},
-                    { 'bhvtypeName':'测试','bhvtypeCode':'Avt005'},
-                    { 'bhvtypeName':'测试','bhvtypeCode':'Avt006'},
-                    { 'bhvtypeName':'权限管理','bhvtypeCode':'Avt007'},
-                    { 'bhvtypeName':'其他管理','bhvtypeCode':'Avt008'},
-                    { 'bhvtypeName':'com.primeton.workflow.core','bhvtypeCode':'Avt009'}
-                ];
-                var gridOptions = {};
-                $scope.gridOptions = gridOptions;
-                var initdata = function(){
-                    return $scope.importadd;//数据方法
-                }
-                var com = [
-                    { field: "bhvtypeName", displayName:'名称'},
-                    { field: "bhvtypeCode", displayName:'类型代码'}
-                ];
-                //自定义点击事件
-                var f1 = function(row){
-                    if(row.isSelected){
-                        $scope.selectRow3 = row.entity;
-                    }else{
-                        delete $scope.selectRow3;//制空
-                    }
-                }
-                $scope.gridOptions = initgrid($scope,gridOptions,initdata(),filterFilter,com,true,f1);
-                //创建机构实例
-                //导入方法
-                $scope.importAdd = function () {
-                    var dats = $scope.gridOptions.getSelectedRows();
-                    if(dats.length >0){
-                        //console.log(dats)//选中的数据
-                        //TODO.批量导入新增逻辑，加入数据库即可
-                        toastr['success']("导入成功！");
-                        $modalInstance.close();
-                    }else{
-                        toastr['error']("请至少选中一个！");
-                    }
-                }
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            }
-        )
-    }
-
     //功能行为 逻辑
     $scope.myDataapp = [{'BHVTYPE_CODE': 's', 'BHVTYPE_NAME': '测试类型'}, {'BHVTYPE_CODE': 'a', 'BHVTYPE_NAME': '测试类型11'}]
     var gridOption4 = {};
@@ -1199,7 +1144,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             toastr['error']("请至少选中一条！");
         }
     }
-
     //新增功能行为
     $scope.biz.functactive = function(){
         $scope.importadd = [

@@ -28,13 +28,13 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="chn_code != null" >
+		<if test="chnCode != null" >
 			chn_code = #{chnCode,jdbcType=VARCHAR},
 		</if>
-		<if test="chn_name != null" >
+		<if test="chnName != null" >
 			chn_name = #{chnName,jdbcType=VARCHAR},
 		</if>
-		<if test="chn_remark != null" >
+		<if test="chnRemark != null" >
 			chn_remark = #{chnRemark,jdbcType=VARCHAR}
 		</if>
 	    </set>
