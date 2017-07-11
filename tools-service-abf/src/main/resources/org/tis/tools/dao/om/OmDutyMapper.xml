@@ -40,28 +40,28 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="duty_code != null" >
+		<if test="dutyCode != null" >
 			duty_code = #{dutyCode,jdbcType=VARCHAR},
 		</if>
-		<if test="duty_name != null" >
+		<if test="dutyName != null" >
 			duty_name = #{dutyName,jdbcType=VARCHAR},
 		</if>
-		<if test="duty_type != null" >
+		<if test="dutyType != null" >
 			duty_type = #{dutyType,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_parents != null" >
+		<if test="guidParents != null" >
 			guid_parents = #{guidParents,jdbcType=VARCHAR},
 		</if>
 		<if test="isleaf != null" >
 			isleaf = #{isleaf,jdbcType=CHAR},
 		</if>
-		<if test="sub_count != null" >
+		<if test="subCount != null" >
 			sub_count = #{subCount,jdbcType=DECIMAL},
 		</if>
-		<if test="duty_level != null" >
+		<if test="dutyLevel != null" >
 			duty_level = #{dutyLevel,jdbcType=DECIMAL},
 		</if>
-		<if test="duty_seq != null" >
+		<if test="dutySeq != null" >
 			duty_seq = #{dutySeq,jdbcType=VARCHAR},
 		</if>
 		<if test="remark != null" >

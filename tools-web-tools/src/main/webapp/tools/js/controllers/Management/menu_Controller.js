@@ -4,6 +4,17 @@
 angular.module('MetronicApp').controller('menu_controller', function($rootScope, $scope, $http, $timeout,i18nService,uiGridConstants,uiGridSelectionService,filterFilter,$uibModal) {
     var menu = {};
     $scope.menu = menu;
+
+    //应用查询
+    $scope.menu.search = function(item){
+        if(item.appselect !== undefined ){
+            $scope.menu.show = true;
+        }else{
+            confirm("请选择一项应用进行查询")
+            $scope.menu.show = false;
+        }
+
+    }
     /*0、菜单管理机构树逻辑*/
     $("#s").submit(function(e) {
         e.preventDefault();

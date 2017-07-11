@@ -36,25 +36,25 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_app != null" >
+		<if test="guidApp != null" >
 			guid_app = #{guidApp,jdbcType=VARCHAR},
 		</if>
-		<if test="funcgroup_name != null" >
+		<if test="funcgroupName != null" >
 			funcgroup_name = #{funcgroupName,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_parents != null" >
+		<if test="guidParents != null" >
 			guid_parents = #{guidParents,jdbcType=VARCHAR},
 		</if>
-		<if test="group_level != null" >
+		<if test="groupLevel != null" >
 			group_level = #{groupLevel,jdbcType=DECIMAL},
 		</if>
-		<if test="funcgroup_seq != null" >
+		<if test="funcgroupSeq != null" >
 			funcgroup_seq = #{funcgroupSeq,jdbcType=VARCHAR},
 		</if>
 		<if test="isleaf != null" >
 			isleaf = #{isleaf,jdbcType=CHAR},
 		</if>
-		<if test="sub_count != null" >
+		<if test="subCount != null" >
 			sub_count = #{subCount,jdbcType=DECIMAL}
 		</if>
 	    </set>

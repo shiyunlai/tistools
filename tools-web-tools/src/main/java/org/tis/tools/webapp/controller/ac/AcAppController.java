@@ -1,5 +1,6 @@
 package org.tis.tools.webapp.controller.ac;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,11 +21,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.base.WhereCondition;
+import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.ac.AcApp;
+import org.tis.tools.model.po.ac.AcBhvDef;
+import org.tis.tools.model.po.ac.AcBhvtypeDef;
+import org.tis.tools.model.po.ac.AcFuncResource;
 import org.tis.tools.model.po.ac.AcFuncgroup;
 import org.tis.tools.model.po.ac.AcFunc;
 import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.vo.ac.AcAppVo;
+import org.tis.tools.model.vo.ac.AcFuncVo;
 import org.tis.tools.rservice.ac.basic.IAcAppRService;
 import org.tis.tools.rservice.ac.capable.IApplicationRService;
 import org.tis.tools.webapp.controller.BaseController;
@@ -44,12 +50,12 @@ public class AcAppController extends BaseController {
 	 * @param request
 	 * @param response
 	 * @return
+	 * @throws ParseException 
 	 */
 	@ResponseBody
 	@RequestMapping(value="/appAdd" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
 	public String testPostController(@RequestBody String content, HttpServletRequest request,
-			HttpServletResponse response) {
-		Map<String, Object> result = new HashMap<String, Object>();
+			HttpServletResponse response) throws ToolsRuntimeException, ParseException{
 		try {
 			if (logger.isInfoEnabled()) {
 				logger.info("appAdd request : " + content);
@@ -76,13 +82,13 @@ public class AcAppController extends BaseController {
 			ac.setUrl(url);
 			ac.setIpPort(ipPort);
 			ac.setIpAddr(ipAddr);
-			applicationRService.createAcApp(ac);//把参数全部填写上
-			result.put("status", "0");//返回给前台的数据
-			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(result).toString());
-		} catch (Exception e) {
-			result.put("status", "1");//返回给前台的数据
-			result.put("error_message", e.getMessage());//返回给前台的数据
-			AjaxUtils.ajaxJsonErrorMessage(response, JSONArray.fromObject(result).toString());
+		    applicationRService.createAcApp(ac);//把参数全部填写上
+			AjaxUtils.ajaxJsonSuccessMessage(response,"");
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("appAdd exception : ", e);
+		}catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
 			logger.error("appAdd exception : ", e);
 		}
 		return null;
@@ -95,11 +101,9 @@ public class AcAppController extends BaseController {
 	 * @param response
 	 * @return
 	 */
-
 	@RequestMapping(value="/appDel",method=RequestMethod.POST)
 	public String appDel(@RequestBody String content, HttpServletRequest request,
 			HttpServletResponse response) {
-		Map<String, Object> result = new HashMap<String, Object>();
 		try {
 			if (logger.isInfoEnabled()) {
 				logger.info("appAdd request : " + content);
@@ -107,12 +111,12 @@ public class AcAppController extends BaseController {
 			JSONObject jsonObj = JSONObject.fromObject(content);	
 			String guid = jsonObj.getString("id");
 			applicationRService.deleteAcApp(guid);
-			result.put("status", "0");//返回给前台的数据
-			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(result).toString());
-		} catch (Exception e) {
-			result.put("status", "1");//返回给前台的数据
-			result.put("error_message", e.getMessage());//返回给前台的数据
-			AjaxUtils.ajaxJsonErrorMessage(response, JSONArray.fromObject(result).toString());
+			AjaxUtils.ajaxJsonSuccessMessage(response, "");
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("appDel exception : ", e);
+		}catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
 			logger.error("appDel exception : ", e);
 		}
 		return null;
@@ -124,11 +128,11 @@ public class AcAppController extends BaseController {
 	 * @param request
 	 * @param response
 	 * @return
+	 * @throws ParseException 
 	 */
 	@RequestMapping(value="/appEdit",method=RequestMethod.POST)
 	public String appEdit(@RequestBody String content, HttpServletRequest request,
-			HttpServletResponse response) {
-		Map<String, Object> result = new HashMap<String, Object>();
+			HttpServletResponse response) throws ParseException {
 		try {
 			if (logger.isInfoEnabled()) {
 				logger.info("appEdit request : " + content);
@@ -149,26 +153,26 @@ public class AcAppController extends BaseController {
 			acApp.setIpAddr(jsonObj.getString("ipAddr"));
 			acApp.setIpPort(jsonObj.getString("ipPort"));
 			applicationRService.updateAcApp(acApp);
-			result.put("status", "0");//返回给前台的数据
-			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(result).toString());
-		} catch (Exception e) {
-			result.put("status", "1");//返回给前台的数据
-			result.put("error_message", e.getMessage());//返回给前台的数据
-			AjaxUtils.ajaxJsonErrorMessage(response, JSONArray.fromObject(result).toString());
+			AjaxUtils.ajaxJsonSuccessMessage(response, "");
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("appEdit exception : ", e);
+		}catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
 			logger.error("appEdit exception : ", e);
 		}
 		return null;
 	}
 	
 	/**
-	 * appSearch查询应用
+	 * appQuery查询应用
 	 * @param content
 	 * @param request
 	 * @param response
 	 * @return
 	 */
 	@RequestMapping(value="/appQuery" ,method=RequestMethod.POST)
-	public String appSearch(@RequestBody String content, HttpServletRequest request,
+	public String appQuery(@RequestBody String content, HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		try {
@@ -197,23 +201,22 @@ public class AcAppController extends BaseController {
 				if(groupList.size()>0){
 					map.put("groupList", groupList);
 				}
-				List<AcFunc> funcList = applicationRService.queryAcGroupFunc(id);
+				List<AcFuncVo> funcList = applicationRService.queryAcFuncVo(id);
 				if(funcList.size()>0){
 					map.put("funcList", funcList);
 				}
 				result.put("data", map);//返回给前台的数据
 			}
-			result.put("status", "0");//返回给前台的数据
-			AjaxUtils.ajaxJson(response, net.sf.json.JSONArray.fromObject(result).toString());
-		} catch (Exception e) {
-			result.put("status", "1");//返回给前台的数据
-			result.put("error_message", e.getMessage());//返回给前台的数据
-			AjaxUtils.ajaxJsonErrorMessage(response, net.sf.json.JSONArray.fromObject(result).toString());
+			AjaxUtils.ajaxJsonSuccessMessage(response, result.get("data"));
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("appQuery exception : ", e);
+		}catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
 			logger.error("appQuery exception : ", e);
 		}
 		return null;
 	}
-	
 	
 	/**
 	 * groupAdd新增功能组
@@ -226,8 +229,6 @@ public class AcAppController extends BaseController {
 	@RequestMapping(value="/groupAdd" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
 	public String groupAdd(@RequestBody String content, HttpServletRequest request,
 			HttpServletResponse response) {
-		Map<String, Object> result = new HashMap<String, Object>();
-		
 		try {
 			if (logger.isInfoEnabled()) {
 				logger.info("groupAdd request : " + content);
@@ -247,19 +248,18 @@ public class AcAppController extends BaseController {
 			acFuncgroup.setGuidApp(guidApp);
 			acFuncgroup.setGuidParents(guidParents);
 			AcFuncgroup acgrop = applicationRService.createAcFuncGroup(acFuncgroup );//把new的并且填入参数的对象，传入，返回
-			result.put("data", acgrop);//返回给前台的数据
-			result.put("status", "0");//返回给前台的数据
-			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(result).toString());//返回给前台的结
-		} catch (Exception e) {
-			result.put("status", "1");//返回给前台的数据
-			result.put("error_message", e.getMessage());//返回给前台的数据
-			AjaxUtils.ajaxJsonErrorMessage(response, net.sf.json.JSONArray.fromObject(result).toString());
+			AjaxUtils.ajaxJsonSuccessMessage(response, acgrop);//返回给前台的结
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("groupAdd exception : ", e);
+		}catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
 			logger.error("groupAdd exception : ", e);
 		}
 		return null;
 	}
 	
-	/*
+	/**
 	 * groupDel删除功能组
 	 * @param content
 	 * @param request
@@ -269,9 +269,7 @@ public class AcAppController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value="/groupDel" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
 	public String groupDel(@RequestBody String content, HttpServletRequest request,
-			HttpServletResponse response) {
-		Map<String, Object> result = new HashMap<String, Object>();
-		
+			HttpServletResponse response) {		
 		try {
 			if (logger.isInfoEnabled()) {
 				logger.info("groupDel request : " + content);
@@ -279,12 +277,12 @@ public class AcAppController extends BaseController {
 			JSONObject jsonObj = JSONObject.fromObject(content);	//传入的参数
 			String guid = jsonObj.getString("id");
 			applicationRService.deleteAcFuncGroup(guid);//把new的并且填入参数的对象，传入，返回
-			result.put("status", "0");//返回给前台的数据
-			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(result).toString());//返回给前台的结
-		} catch (Exception e) {
-			result.put("status", "1");//返回给前台的数据
-			result.put("error_message", e.getMessage());//返回给前台的数据
-			AjaxUtils.ajaxJsonErrorMessage(response, net.sf.json.JSONArray.fromObject(result).toString());
+			AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("groupDel exception : ", e);
+		}catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
 			logger.error("groupDel exception : ", e);
 		}
 		return null;
@@ -301,7 +299,6 @@ public class AcAppController extends BaseController {
 	@RequestMapping(value="/groupEdit" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
 	public String groupEdit(@RequestBody String content, HttpServletRequest request,
 			HttpServletResponse response) {
-		Map<String, Object> result = new HashMap<String, Object>();
 		
 		try {
 			if (logger.isInfoEnabled()) {
@@ -310,6 +307,7 @@ public class AcAppController extends BaseController {
 			JSONObject jsonObj = JSONObject.fromObject(content);	//传入的参数
 			String guid = jsonObj.getString("id");
 			AcFuncgroup acFuncgroup = applicationRService.queryFuncgroup(guid);
+			
 			String funcgroupName = jsonObj.getString("funcgroupName");
 			String groupLevel = jsonObj.getString("groupLevel");
 			String guidParents = jsonObj.getString("guidParents");
@@ -317,12 +315,12 @@ public class AcAppController extends BaseController {
 			acFuncgroup.setGroupLevel(new BigDecimal(groupLevel));
 			acFuncgroup.setGuidParents(guidParents);
 			applicationRService.updateAcFuncgroup(acFuncgroup);//把new的并且填入参数的对象，传入，返回
-			result.put("status", "0");//返回给前台的数据
-			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(result).toString());//返回给前台的结
-		} catch (Exception e) {
-			result.put("status", "1");//返回给前台的数据
-			result.put("error_message", e.getMessage());//返回给前台的数据
-			AjaxUtils.ajaxJsonErrorMessage(response, net.sf.json.JSONArray.fromObject(result).toString());
+			AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("groupEdit exception : ", e);
+		}catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
 			logger.error("groupEdit exception : ", e);
 		}
 		return null;
@@ -339,7 +337,6 @@ public class AcAppController extends BaseController {
 	@RequestMapping(value="/acFuncAdd" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
 	public String acFuncAdd(@RequestBody String content, HttpServletRequest request,
 			HttpServletResponse response) {
-		Map<String, Object> result = new HashMap<String, Object>();
 		
 		try {
 			if (logger.isInfoEnabled()) {
@@ -354,6 +351,18 @@ public class AcAppController extends BaseController {
 			String isCheck = jsonObj.getString("isCheck");
 			String isMenu = jsonObj.getString("isMenu");
 			String guidFuncgroup = jsonObj.getString("guidFuncgroup");
+			
+			//设置功能对应资源
+			AcFuncResource acFuncResource = new AcFuncResource();
+			String resType = jsonObj.getString("resType");
+			String compackName = jsonObj.getString("compackName");
+			String resshowName = jsonObj.getString("resshowName");
+			String resPath = jsonObj.getString("resPath");
+			acFuncResource.setResType(resType);
+			acFuncResource.setCompackName(compackName);
+			acFuncResource.setResShowName(resshowName);
+			acFuncResource.setResPath(resPath);
+			
 			AcFunc acFunc = new AcFunc();
 			acFunc.setFuncCode(funcCode);
 			acFunc.setFuncName(funcName);
@@ -363,13 +372,13 @@ public class AcAppController extends BaseController {
 			acFunc.setIscheck(isCheck);
 			acFunc.setIsmenu(isMenu);
 			acFunc.setGuidFuncgroup(guidFuncgroup);
-			applicationRService.createAcFunc(acFunc);//把new的并且填入参数的对象，传入，返回
-			result.put("status", "0");//返回给前台的数据
-			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(result).toString());//返回给前台的结
-		} catch (Exception e) {
-			result.put("status", "1");//返回给前台的数据
-			result.put("error_message", e.getMessage());//返回给前台的数据
-			AjaxUtils.ajaxJsonErrorMessage(response, net.sf.json.JSONArray.fromObject(result).toString());
+			applicationRService.createAcFunc(acFunc,acFuncResource);//把new的并且填入参数的对象，传入，返回
+			AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("acFuncAdd exception : ", e);
+		}catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
 			logger.error("acFuncAdd exception : ", e);
 		}
 		return null;
@@ -386,7 +395,6 @@ public class AcAppController extends BaseController {
 	@RequestMapping(value="/acFuncDel" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
 	public String acFuncDel(@RequestBody String content, HttpServletRequest request,
 			HttpServletResponse response) {
-		Map<String, Object> result = new HashMap<String, Object>();
 		
 		try {
 			if (logger.isInfoEnabled()) {
@@ -395,12 +403,12 @@ public class AcAppController extends BaseController {
 			JSONObject jsonObj = JSONObject.fromObject(content);	//传入的参数
 			String guid = jsonObj.getString("id");
 			applicationRService.deleteAcFunc(guid);
-			result.put("status", "0");//返回给前台的数据
-			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(result).toString());//返回给前台的结
-		} catch (Exception e) {
-			result.put("status", "1");//返回给前台的数据
-			result.put("error_message", e.getMessage());//返回给前台的数据
-			AjaxUtils.ajaxJsonErrorMessage(response, net.sf.json.JSONArray.fromObject(result).toString());
+			AjaxUtils.ajaxJsonSuccessMessage(response,"");//返回给前台的结
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("acFuncDel exception : ", e);
+		}catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
 			logger.error("acFuncDel exception : ", e);
 		}
 		return null;
@@ -417,7 +425,6 @@ public class AcAppController extends BaseController {
 	@RequestMapping(value="/acFuncEdit" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
 	public String acFuncEdit(@RequestBody String content, HttpServletRequest request,
 			HttpServletResponse response) {
-		Map<String, Object> result = new HashMap<String, Object>();
 		
 		try {
 			if (logger.isInfoEnabled()) {
@@ -426,33 +433,383 @@ public class AcAppController extends BaseController {
 			JSONObject jsonObj = JSONObject.fromObject(content);	//传入的参数
 			String guid = jsonObj.getString("id");
 			AcFunc acFunc = applicationRService.queryFunc(guid);
-//			funcCode,funcName,funcAction,paraInfo,funcType,isCheck,isMenu
 			String funcCode = jsonObj.getString("funcCode");
 			String funcName = jsonObj.getString("funcName");
 			String funcAction = jsonObj.getString("funcAction");
 			String paraInfo = jsonObj.getString("paraInfo");
 			String funcType = jsonObj.getString("funcType");
-			String isCheck = jsonObj.getString("isCheck");
+			//String isCheck = jsonObj.getString("isCheck");
 			String isMenu = jsonObj.getString("isMenu");
+		
+						
 			acFunc.setFuncCode(funcCode);
 			acFunc.setFuncName(funcName);
 			acFunc.setFuncAction(funcAction);
 			acFunc.setParaInfo(paraInfo);
 			acFunc.setFuncType(funcType);
-			acFunc.setIscheck(isCheck);
+			//acFunc.setIscheck(isCheck);
 			acFunc.setIsmenu(isMenu);
+			
 			applicationRService.updateAcFunc(acFunc);
-			result.put("status", "0");//返回给前台的数据
-			AjaxUtils.ajaxJsonSuccessMessage(response, JSONArray.fromObject(result).toString());//返回给前台的结
-		} catch (Exception e) {
-			result.put("status", "1");//返回给前台的数据
-			result.put("error_message", e.getMessage());//返回给前台的数据
-			AjaxUtils.ajaxJsonErrorMessage(response, net.sf.json.JSONArray.fromObject(result).toString());
+			AjaxUtils.ajaxJsonSuccessMessage(response,"");//返回给前台的结
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
 			logger.error("acFuncEdit exception : ", e);
 		}
 		return null;
 	}
 	
+	/**
+	 * acFuncResource更新功能对应资源
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/acFuncResourceEdit" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
+	public String acFuncResourceEdit(@RequestBody String content, HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		try {
+			if (logger.isInfoEnabled()) {
+				logger.info("acFuncEdit request : " + content);
+			}
+			JSONObject jsonObj = JSONObject.fromObject(content);	//传入的参数
+	
+			//设置功能对应资源
+			AcFuncResource acFuncResource = new AcFuncResource();
+
+			String guid = jsonObj.getString("id");		
+			String resType = jsonObj.getString("resType");
+			String compackName = jsonObj.getString("compackName");
+			String resshowName = jsonObj.getString("resshowName");
+			String resPath = jsonObj.getString("resPath");
+			acFuncResource.setGuidFunc(guid);
+			acFuncResource.setResType(resType);
+			acFuncResource.setCompackName(compackName);
+			acFuncResource.setResShowName(resshowName);
+			acFuncResource.setResPath(resPath);
+
+			applicationRService.updateAcFuncResource(acFuncResource);
+			AjaxUtils.ajaxJsonSuccessMessage(response,"");//返回给前台的结
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("acFuncEdit exception : ", e);
+		}catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+			logger.error("acFuncEdit exception : ", e);
+		}
+		return null;
+	}
+	
+	/**
+	 * acFuncResouceQuery功能对应资源查询
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/acFuncResouceQuery" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
+	public String acFuncResouceQuery(@RequestBody String content, HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		try {
+			if (logger.isInfoEnabled()) {
+				logger.info("acFuncResouceQuery request : " + content);
+			}
+			JSONObject jsonObj = JSONObject.fromObject(content);	//传入的参数
+			String guid = jsonObj.getString("id");
+			AcFuncResource funcResouce = applicationRService.queryFuncResource(guid);
+			AjaxUtils.ajaxJsonSuccessMessage(response, funcResouce);//返回给前台的结
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("acFuncResouceQuery exception : ", e);
+		}catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+			logger.error("acFuncResouceQuery exception : ", e);
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * queryAllFunc查询所有应用
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/queryAllFunc" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
+	public String queryAllFunc(@RequestBody String content, HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		try {
+			if (logger.isInfoEnabled()) {
+				logger.info("queryAllFunc request : " + content);
+			}
+			List <AcFunc> acfunc= applicationRService.queryAllFunc();
+			AjaxUtils.ajaxJsonSuccessMessage(response, acfunc);//返回给前台的结
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("queryAllFunc exception : ", e);
+		}
+		return null;
+	}
+	
+	/**
+	 * importFunc导入应用
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/importFunc" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
+	public String importFunc(@RequestBody String content, HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		try {
+			if (logger.isInfoEnabled()) {
+				logger.info("importFunc request : " + content);
+			}
+			
+			JSONObject jsonObj = JSONObject.fromObject(content);	//传入的参数
+			String guid = jsonObj.getString("id");
+			JSONArray jsonArray = jsonObj.getJSONArray("list");
+			List list =JSONArray.toList(jsonArray);
+			applicationRService.importFunc(guid,list);
+			AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("importFunc exception : ", e);
+		}
+		return null;
+	}
+	
+	/**
+	 * functypeAdd新增行为类型
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/functypeAdd" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
+	public String functypeAdd(@RequestBody String content, HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		try {
+			if (logger.isInfoEnabled()) {
+				logger.info("functypeAdd request : " + content);
+			}
+			
+			JSONObject jsonObj = JSONObject.fromObject(content);	//传入的参数
+			String bhvtypeCode = jsonObj.getString("bhvtypeCode");
+			String bhvtypeName = jsonObj.getString("bhvtypeName");
+			AcBhvtypeDef acBhvtypeDef=new AcBhvtypeDef();
+			acBhvtypeDef.setBhvtypeCode(bhvtypeCode);
+			acBhvtypeDef.setBhvtypeName(bhvtypeName);
+			
+			applicationRService.functypeAdd(acBhvtypeDef);
+			AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("functypeAdd exception : ", e);
+		}
+		return null;
+	}
+	
+	/**
+	 * functypeDel删除行为类型
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/functypeDel" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
+	public String functypeDel(@RequestBody String content, HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		try {
+			if (logger.isInfoEnabled()) {
+				logger.info("functypeDel request : " + content);
+			}
+			
+			JSONObject jsonObj = JSONObject.fromObject(content);	//传入的参数
+			String guid = jsonObj.getString("id");			
+			applicationRService.functypeDel(guid);
+			AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("functypeDel exception : ", e);
+		}
+		return null;
+	}
+	
+	/**
+	 * functypeEdit 修改行为类型
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/functypeEdit" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
+	public String functypeEdit(@RequestBody String content, HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		try {
+			if (logger.isInfoEnabled()) {
+				logger.info("functypeEdit request : " + content);
+			}
+			
+			JSONObject jsonObj = JSONObject.fromObject(content);	//传入的参数
+			String guid = jsonObj.getString("id");		
+			String bhvtypeCode = jsonObj.getString("bhvtypeCode");	
+			String bhvtypeName = jsonObj.getString("bhvtypeName");	
+			AcBhvtypeDef acBhvtypeDef=new AcBhvtypeDef();
+			acBhvtypeDef.setGuid(guid);
+			acBhvtypeDef.setBhvtypeCode(bhvtypeCode);
+			acBhvtypeDef.setBhvtypeName(bhvtypeName);
+			applicationRService.functypeEdit(acBhvtypeDef);
+			AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("functypeEdit exception : ", e);
+		}
+		return null;
+	}
+	
+	/**
+	 * functypequery 查询行为类型
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/functypequery" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
+	public String functypequery(@RequestBody String content, HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		try {
+			if (logger.isInfoEnabled()) {
+				logger.info("functypequery request : " + content);
+			}
+			List<AcBhvtypeDef> list = applicationRService.functypequery();
+			AjaxUtils.ajaxJsonSuccessMessage(response, list);//返回给前台的结
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("functypequery exception : ", e);
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * funactAdd 新增功能操作行为
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/funactAdd" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
+	public String funactAdd(@RequestBody String content, HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		try {
+			if (logger.isInfoEnabled()) {
+				logger.info("funactAdd request : " + content);
+			}
+			
+			JSONObject jsonObj = JSONObject.fromObject(content);	//传入的参数
+			String guidBehtype = jsonObj.getString("guid");
+			String bhvCode = jsonObj.getString("bhvCode");
+			String bhvName = jsonObj.getString("bhvName");
+			AcBhvDef acBhvDef=new AcBhvDef();
+			acBhvDef.setBhvCode(bhvCode);
+			acBhvDef.setBhvName(bhvName);
+			acBhvDef.setGuidBehtype(guidBehtype);
+			applicationRService.funactAdd(acBhvDef);
+			
+			AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("funactAdd exception : ", e);
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * funactDel 删除功能操作行为
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/funactDel" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
+	public String funactDel(@RequestBody String content, HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		try {
+			if (logger.isInfoEnabled()) {
+				logger.info("funactDel request : " + content);
+			}
+			
+			JSONObject jsonObj = JSONObject.fromObject(content);	//传入的参数
+			String id = jsonObj.getString("id");
+
+			applicationRService.funactDel(id);
+			
+			AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("funactDel exception : ", e);
+		}
+		return null;
+	}
+	
+	/**
+	 * funactEdit 修改功能操作行为
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/funactEdit" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
+	public String funactEdit(@RequestBody String content, HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		try {
+			if (logger.isInfoEnabled()) {
+				logger.info("funactEdit request : " + content);
+			}
+			
+			JSONObject jsonObj = JSONObject.fromObject(content);	//传入的参数
+			String guid = jsonObj.getString("id");
+			String bhvCode = jsonObj.getString("bhvCode");
+			String bhvName = jsonObj.getString("bhvName");
+			AcBhvDef acBhvDef=new AcBhvDef();
+			acBhvDef.setBhvCode(bhvCode);
+			acBhvDef.setBhvName(bhvName);
+			acBhvDef.setGuid(guid);
+			applicationRService.funactEdit(acBhvDef);
+			
+			AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("funactEdit exception : ", e);
+		}
+		return null;
+	}
 	
 	private Map<String, Object> responseMsg ;
 	@Override

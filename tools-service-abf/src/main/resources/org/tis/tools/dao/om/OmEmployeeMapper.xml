@@ -92,13 +92,13 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="emp_code != null" >
+		<if test="empCode != null" >
 			emp_code = #{empCode,jdbcType=VARCHAR},
 		</if>
-		<if test="emp_name != null" >
+		<if test="empName != null" >
 			emp_name = #{empName,jdbcType=VARCHAR},
 		</if>
-		<if test="emp_realname != null" >
+		<if test="empRealname != null" >
 			emp_realname = #{empRealname,jdbcType=VARCHAR},
 		</if>
 		<if test="gender != null" >
@@ -107,16 +107,16 @@
 		<if test="empstatus != null" >
 			empstatus = #{empstatus,jdbcType=VARCHAR},
 		</if>
-		<if test="emp_degree != null" >
+		<if test="empDegree != null" >
 			emp_degree = #{empDegree,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_org != null" >
+		<if test="guidOrg != null" >
 			guid_org = #{guidOrg,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_position != null" >
+		<if test="guidPosition != null" >
 			guid_position = #{guidPosition,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_emp_major != null" >
+		<if test="guidEmpMajor != null" >
 			guid_emp_major = #{guidEmpMajor,jdbcType=VARCHAR},
 		</if>
 		<if test="indate != null" >
@@ -146,10 +146,10 @@
 		<if test="msn != null" >
 			msn = #{msn,jdbcType=VARCHAR},
 		</if>
-		<if test="paper_type != null" >
+		<if test="paperType != null" >
 			paper_type = #{paperType,jdbcType=VARCHAR},
 		</if>
-		<if test="paper_no != null" >
+		<if test="paperNo != null" >
 			paper_no = #{paperNo,jdbcType=VARCHAR},
 		</if>
 		<if test="birthdate != null" >
@@ -170,16 +170,16 @@
 		<if test="pemail != null" >
 			pemail = #{pemail,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_operator != null" >
+		<if test="guidOperator != null" >
 			guid_operator = #{guidOperator,jdbcType=VARCHAR},
 		</if>
-		<if test="user_id != null" >
+		<if test="userId != null" >
 			user_id = #{userId,jdbcType=VARCHAR},
 		</if>
 		<if test="specialty != null" >
 			specialty = #{specialty,jdbcType=VARCHAR},
 		</if>
-		<if test="org_list != null" >
+		<if test="orgList != null" >
 			org_list = #{orgList,jdbcType=VARCHAR},
 		</if>
 		<if test="workexp != null" >

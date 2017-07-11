@@ -142,6 +142,27 @@ public class GUID {
 		return SequenceSimpleUtil.instance.GUID("FUNC");
 	}
 	
+	
+	/**
+	 * 取一个行为类型（AC_BHVTYPE_DEF）的数据主键值
+	 * 
+	 * @return
+	 */
+	public static String bhvtypedef() {
+		
+		return SequenceSimpleUtil.instance.GUID("BHVTYPEDEF");
+	}
+	
+	/**
+	 * 取一个功能操作行为（AC_BHV_DEF）的数据主键值
+	 * 
+	 * @return
+	 */
+	public static String bhvdef() {
+		
+		return SequenceSimpleUtil.instance.GUID("BHVDEF");
+	}
+	
 	/**
 	 * 取一个功能操作行为表（AC_FUNC_BEHAVIOR）的数据主键值
 	 * 
@@ -216,6 +237,7 @@ public class GUID {
 	}
 
 	
+
 	
 	///////////////////////////////////////////////////////
 	//其他模块...

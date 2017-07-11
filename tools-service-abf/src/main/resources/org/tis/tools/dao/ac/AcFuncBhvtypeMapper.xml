@@ -21,10 +21,10 @@
  	<update id="update" parameterType="org.tis.tools.model.po.ac.AcFuncBhvtype">
     	UPDATE AC_FUNC_BHVTYPE 
 	    <set>
-		<if test="guid_func != null" >
+		<if test="guidFunc != null" >
 			guid_func = #{guidFunc,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_bhvtype != null" >
+		<if test="guidBhvtype != null" >
 			guid_bhvtype = #{guidBhvtype,jdbcType=VARCHAR}
 		</if>
 	    </set>

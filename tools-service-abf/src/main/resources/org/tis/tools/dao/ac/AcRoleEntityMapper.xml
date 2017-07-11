@@ -29,10 +29,10 @@
  	<update id="update" parameterType="org.tis.tools.model.po.ac.AcRoleEntity">
     	UPDATE AC_ROLE_ENTITY 
 	    <set>
-		<if test="guid_role != null" >
+		<if test="guidRole != null" >
 			guid_role = #{guidRole,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_entity != null" >
+		<if test="guidEntity != null" >
 			guid_entity = #{guidEntity,jdbcType=VARCHAR},
 		</if>
 		<if test="isadd != null" >

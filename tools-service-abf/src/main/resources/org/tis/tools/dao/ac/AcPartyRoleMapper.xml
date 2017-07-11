@@ -23,13 +23,13 @@
  	<update id="update" parameterType="org.tis.tools.model.po.ac.AcPartyRole">
     	UPDATE AC_PARTY_ROLE 
 	    <set>
-		<if test="party_type != null" >
+		<if test="partyType != null" >
 			party_type = #{partyType,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_party != null" >
+		<if test="guidParty != null" >
 			guid_party = #{guidParty,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_role != null" >
+		<if test="guidRole != null" >
 			guid_role = #{guidRole,jdbcType=VARCHAR}
 		</if>
 	    </set>

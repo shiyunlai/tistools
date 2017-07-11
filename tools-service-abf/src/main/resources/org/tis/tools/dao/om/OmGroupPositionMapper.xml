@@ -21,10 +21,10 @@
  	<update id="update" parameterType="org.tis.tools.model.po.om.OmGroupPosition">
     	UPDATE OM_GROUP_POSITION 
 	    <set>
-		<if test="guid_group != null" >
+		<if test="guidGroup != null" >
 			guid_group = #{guidGroup,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_position != null" >
+		<if test="guidPosition != null" >
 			guid_position = #{guidPosition,jdbcType=VARCHAR}
 		</if>
 	    </set>
