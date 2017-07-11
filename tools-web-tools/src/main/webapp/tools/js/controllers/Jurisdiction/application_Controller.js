@@ -1202,7 +1202,50 @@ angular.module('MetronicApp').controller('application_controller', function($roo
 
     //新增功能行为
     $scope.biz.functactive = function(){
-
+        $scope.importadd = [
+            {'bhvName':'com.primeton.workflow.manager.def'},
+            { 'bhvName':'com.primeton.workflow.client.process'},
+            {'bhvName':'com.primeton.workflow.eos.exp'},
+            { 'bhvName':'org.gocom.abframe.ztest'},
+            { 'bhvName':'测试'},
+            { 'bhvName':'测试'},
+            { 'bhvName':'权限管理'},
+            { 'bhvName':'其他管理'},
+            { 'bhvName':'com.primeton.workflow.core'}
+        ];
+        var gridOptions = {};
+        $scope.gridOptions = gridOptions;
+        var initdata = function(){
+            return $scope.importadd;//数据方法
+        }
+        var com = [
+            { field: "bhvName", displayName:'操作行为名称'}
+        ];
+        //自定义点击事件
+        var f1 = function(row){
+            if(row.isSelected){
+                $scope.selectRow3 = row.entity;
+            }else{
+                delete $scope.selectRow3;//制空
+            }
+        }
+        $scope.gridOptions = initgrid($scope,gridOptions,initdata(),filterFilter,com,true,f1);
+        //创建机构实例
+        //导入方法
+        $scope.importAdd = function () {
+            var dats = $scope.gridOptions.getSelectedRows();
+            if(dats.length >0){
+                //console.log(dats)//选中的数据
+                //TODO.批量导入新增逻辑，加入数据库即可
+                toastr['success']("导入成功！");
+                $modalInstance.close();
+            }else{
+                toastr['error']("请至少选中一个！");
+            }
+        }
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
     }
 
 });
