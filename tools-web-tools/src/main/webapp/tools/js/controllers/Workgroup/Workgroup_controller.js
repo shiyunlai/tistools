@@ -304,47 +304,40 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
     });
 
 
-    var initworkdata = function () {
-        //生成工作组列表
-        var workgroupgrid = {};
-        $scope.workgroupgrid = workgroupgrid
-        //定义单选事件
-        var selework = function () {
+    //生成工作组列表
+    var workgroupgrid = {};
+    $scope.workgroupgrid = workgroupgrid;
+    //定义单选事件
+    var selework = function () {
 
-        }
-        //过滤器
-        // var fordate = function (searchTerm,cellValue,row,column) {
-        //
-        //     return null;
-        // }
-        //定义表头名
-        var com = [{ field: 'groupCode', displayName: '工作组代码', enableHiding: false},
-            { field: 'groupName', displayName: '工作组名称', enableHiding: false},
-            { field: 'groupStatus', displayName: '工作组状态', enableHiding: false},
-            { field: 'groupType', displayName: '工作组类型', enableHiding: false},
-            { field: 'guidEmpManager', displayName: '工作组管理员', enableHiding: false},
-            { field: 'guidOrg', displayName: '所属机构', enableHiding: false},
-            { field: 'startDate', displayName: '工作组有效起始日', enableHiding: false},
-            { field: 'startDate', displayName: '工作组有效到期日', enableHiding: false},
-            { field: 'lastupdate', displayName: '最后修改日', enableHiding: false}
-        ]
+    }
+    //定义表头名
+    var com = [{ field: 'groupCode', displayName: '工作组代码', enableHiding: false},
+        { field: 'groupName', displayName: '工作组名称', enableHiding: false},
+        { field: 'groupStatus', displayName: '工作组状态', enableHiding: false},
+        { field: 'groupType', displayName: '工作组类型', enableHiding: false},
+        { field: 'guidEmpManager', displayName: '工作组管理员', enableHiding: false},
+        { field: 'guidOrg', displayName: '所属机构', enableHiding: false},
+        { field: 'startDate', displayName: '工作组有效起始日', enableHiding: false},
+        { field: 'startDate', displayName: '工作组有效到期日', enableHiding: false},
+        { field: 'lastupdate', displayName: '最后修改日', enableHiding: false}
+    ]
+    $scope.workgroupgrid = initgrid($scope,workgroupgrid,null,filterFilter,com,false,selework);
+    console.log($scope.workgroupgrid)
         //调取工作组信息OM_GROUP
         Workgroup_service.loadallgroup().then(function (data) {
-            console.log(data);
             for(var i = 0;i<data.length;i++){
                 data[i].startDate = FormatDate(data[i].startDate);
                 data[i].createtime = FormatDate(data[i].createtime);
                 data[i].endDate = FormatDate(data[i].endDate);
                 data[i].lastupdate = FormatDate(data[i].lastupdate);
             }
-            $scope.workgroupgrid = initgrid($scope,workgroupgrid,filterFilter,com,false,selework);
             $scope.workgroupgrid.data = data;
+            $scope.workgroupgrid.mydefalutData = data
+            $scope.workgroupgrid.getPage(1,$scope.workgroupgrid.paginationPageSize);
 
         })
-    }
 
-
-    initworkdata()
 
     
     //新增根工作组
@@ -438,27 +431,12 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
             //生成下级工作组列表
             var xjworkgroupgrid = {};
             $scope.xjworkgroupgrid = xjworkgroupgrid;
-            var initxjworkdata = function () {
-                var subFrom = {};
-                subFrom.id = $scope.sub.guid;
-                //调取工作组信息OM_GROUP
-                Workgroup_service.loadxjgroup(subFrom).then(function (data) {
-                    console.log(data);
-                    for(var i = 0;i<data.length;i++){
-                        data[i].startDate = FormatDate(data[i].startDate);
-                        data[i].createtime = FormatDate(data[i].createtime);
-                        data[i].endDate = FormatDate(data[i].endDate);
-                        data[i].lastupdate = FormatDate(data[i].lastupdate);
-                    }
-                    $scope.xjworkgroupgrid.data = data;
-                })
-            }
             //定义单选事件
             var xjselework = function () {
 
             }
             //定义表头名
-            var com = [{ field: 'groupCode', displayName: '工作组代码', enableHiding: false},
+            var com2 = [{ field: 'groupCode', displayName: '工作组代码', enableHiding: false},
                 { field: 'groupName', displayName: '工作组名称', enableHiding: false},
                 { field: 'groupStatus', displayName: '工作组状态', enableHiding: false},
                 { field: 'groupType', displayName: '工作组类型', enableHiding: false},
@@ -468,8 +446,22 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
                 { field: 'startDate', displayName: '工作组有效到期日', enableHiding: false},
                 { field: 'lastupdate', displayName: '最后修改日', enableHiding: false}
             ]
-            $scope.xjworkgroupgrid = initgrid($scope,xjworkgroupgrid,initxjworkdata(),filterFilter,com,false,xjselework);
-
+            $scope.xjworkgroupgrid = initgrid($scope,xjworkgroupgrid,null,filterFilter,com2,false,xjselework);
+            var subFrom = {};
+            subFrom.id = $scope.sub.guid;
+            //调取工作组信息OM_GROUP
+            Workgroup_service.loadxjgroup(subFrom).then(function (data) {
+                console.log(data);
+                for(var i = 0;i<data.length;i++){
+                    data[i].startDate = FormatDate(data[i].startDate);
+                    data[i].createtime = FormatDate(data[i].createtime);
+                    data[i].endDate = FormatDate(data[i].endDate);
+                    data[i].lastupdate = FormatDate(data[i].lastupdate);
+                }
+                $scope.xjworkgroupgrid.data = data;
+                $scope.xjworkgroupgrid.mydefalutData = data
+                $scope.xjworkgroupgrid.getPage(1,$scope.xjworkgroupgrid.paginationPageSize);
+            })
 
         }else if(num == 2){
             for(var a in flag){

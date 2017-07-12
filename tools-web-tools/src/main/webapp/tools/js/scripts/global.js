@@ -428,7 +428,7 @@ function getYYYYMMDD(){
 //ui-grid init
 //thisobj--表ID,fun--返回data的方法,com--表列名,筛选配置项,bol--布尔值,是否多选.selection--自定义行选中
 
-function initgrid($scope, thisobj, filterFilter,com,bol,selection){
+function initgrid($scope, thisobj,data, filterFilter,com,bol,selection){
     thisobj = {
         data: [],
         //-------- 分页属性 ----------------
@@ -466,8 +466,8 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
         enableGridMenu: true, //是否显示grid 菜单
         enableFiltering:true,//打开标识,用于搜索
         // headerTemplate:'<div></div>',
-        enableFooterTotalSelected: true, // 是否显示选中的总数，默认为true, 如果显示，showGridFooter 必须为true
-        showGridFooter:true,
+        enableFooterTotalSelected: false, // 是否显示选中的总数，默认为true, 如果显示，showGridFooter 必须为true
+        showGridFooter:false,
         onRegisterApi: function(girdApi) {
             $scope.girdApi = girdApi;
             //分页按钮事件
@@ -482,30 +482,23 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
         },
         getSelectedRows:function () {
             return $scope.girdApi.selection.getSelectedRows();
-        }
+        },
+        mydefalutData:[]
     };
 
 
     //ui-grid getPage方法
-    var da = [];
-
     thisobj.getPage = function(curPage, pageSize) {
-
-        if(isNull(da)){
-            console.log(1)
-            da = angular.copy(thisobj.data);
-        }
-        console.log(curPage+""+pageSize);
-        var firstRow = (curPage - 1) * pageSize;
-        thisobj.totalItems = da.length;
-        thisobj.data = da.slice(firstRow, firstRow + pageSize);
-        console.log(thisobj.data)
+        console.log(curPage+""+thisobj.paginationPageSize);
+        var firstRow = (curPage - 1) * thisobj.paginationPageSize;
+        thisobj.totalItems = thisobj.mydefalutData.length;
+        thisobj.data = thisobj.mydefalutData.slice(firstRow, firstRow + thisobj.paginationPageSize);
         //或者像下面这种写法
         //$scope.myData = mydefalutData.slice(firstRow, firstRow + pageSize);
     };
     //测试
     // var a = $scope.girdApi.selection.getSelectedRows();
-
+    console.log(thisobj)
     return thisobj;
 }
 
