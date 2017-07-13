@@ -462,7 +462,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="actions btn-set" style="float: right;" ng-if="editflag">
-                                                            <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="biz.appsave(dictionaryAdd)" > 保存
+                                                            <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="biz.appfunsave(dictionaryAdd)" > 保存
                                                             </button>
                                                             <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存
                                                             </button>
@@ -484,7 +484,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label col-md-4">资源类型</label>
                                                     <div class="col-md-8">
-                                                        <select class="form-control" name="dict_open" ng-model="resourcesFrom.type" ng-disabled="!editflag">
+                                                        <select class="form-control" name="dict_open" ng-model="dictionaryAdd.resType" ng-disabled="!editflag">
                                                             <option value="p" selected>页面流</option>
                                                             <option value="l">逻辑流</option>
                                                             <option value="j">JSP</option>
@@ -497,7 +497,7 @@
                                                     <label class="control-label col-md-4">资源路径</label>
                                                     <div class="col-md-8">
                                                         <!-- 默认设置成只读属性-->
-                                                        <input type="text" class="form-control" ng-model="resourcesFrom.path" name="id" ng-readonly="!editflag"/>
+                                                        <input type="text" class="form-control" ng-model="dictionaryAdd.resPath" name="id" ng-readonly="!editflag"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -506,7 +506,7 @@
                                                     <label class="control-label col-md-4">所属构建包</label>
                                                     <div class="col-md-8">
                                                         <input type="text" class="form-control"
-                                                               ng-model="resourcesFrom.compackname"
+                                                               ng-model="dictionaryAdd.compackName"
                                                                name="id" ng-readonly="!editflag"/>
                                                     </div>
                                                 </div>
@@ -516,7 +516,7 @@
                                                     <label class="control-label col-md-4">显示名称</label>
                                                     <div class="col-md-8">
                                                         <input type="text" class="form-control"
-                                                               ng-model="resourcesFrom.shownae"
+                                                               ng-model="dictionaryAdd.resShowName"
                                                                name="id"  ng-readonly="!editflag"/>
                                                     </div>
                                                 </div>
@@ -526,11 +526,11 @@
                                                     <label class="control-label col-md-2"></label>
                                                     <div class="col-md-10">
                                                         <div class="actions btn-set" style="float: right;" ng-if="!editflag">
-                                                            <button type="button" name="back" class="btn btn-primary" ng-click="biz.edit()"> 编辑机构
+                                                            <button type="button" name="back" class="btn btn-primary" ng-click="biz.edit()"> 编辑资源
                                                             </button>
                                                         </div>
                                                         <div class="actions btn-set" style="float: right;" ng-if="editflag">
-                                                            <button type="button" name="back" class="btn btn-primary" ng-click="biz.save()"> 保存
+                                                            <button type="button" name="back" class="btn btn-primary" ng-click="biz.save(dictionaryAdd)"> 保存
                                                             </button>
 
                                                             <button type="button" name="back" class="btn btn-danger" ng-click="biz.edit()"> 取消

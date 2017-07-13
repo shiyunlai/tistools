@@ -435,15 +435,16 @@ public class AcAppController extends BaseController {
 			AcFunc acFunc = applicationRService.queryFunc(guid);
 			String funcCode = jsonObj.getString("funcCode");
 			String funcName = jsonObj.getString("funcName");
+			String funcDesc = jsonObj.getString("funcDesc");
 			String funcAction = jsonObj.getString("funcAction");
 			String paraInfo = jsonObj.getString("paraInfo");
 			String funcType = jsonObj.getString("funcType");
 			//String isCheck = jsonObj.getString("isCheck");
 			String isMenu = jsonObj.getString("isMenu");
 		
-						
 			acFunc.setFuncCode(funcCode);
 			acFunc.setFuncName(funcName);
+			acFunc.setFuncDesc(funcDesc);
 			acFunc.setFuncAction(funcAction);
 			acFunc.setParaInfo(paraInfo);
 			acFunc.setFuncType(funcType);
@@ -455,6 +456,9 @@ public class AcAppController extends BaseController {
 		} catch (ToolsRuntimeException e) {
 			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
 			logger.error("acFuncEdit exception : ", e);
+		}catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+			logger.error("acFuncDel exception : ", e);
 		}
 		return null;
 	}
@@ -483,14 +487,13 @@ public class AcAppController extends BaseController {
 			String guid = jsonObj.getString("id");		
 			String resType = jsonObj.getString("resType");
 			String compackName = jsonObj.getString("compackName");
-			String resshowName = jsonObj.getString("resshowName");
+			String resshowName = jsonObj.getString("resShowName");
 			String resPath = jsonObj.getString("resPath");
 			acFuncResource.setGuidFunc(guid);
 			acFuncResource.setResType(resType);
 			acFuncResource.setCompackName(compackName);
 			acFuncResource.setResShowName(resshowName);
 			acFuncResource.setResPath(resPath);
-
 			applicationRService.updateAcFuncResource(acFuncResource);
 			AjaxUtils.ajaxJsonSuccessMessage(response,"");//返回给前台的结
 		} catch (ToolsRuntimeException e) {
@@ -535,7 +538,7 @@ public class AcAppController extends BaseController {
 	
 	
 	/**
-	 * queryAllFunc查询所有应用
+	 * queryAllFunc查询所有功能
 	 * @param content
 	 * @param request
 	 * @param response
@@ -560,7 +563,7 @@ public class AcAppController extends BaseController {
 	}
 	
 	/**
-	 * importFunc导入应用
+	 * importFunc导入功能
 	 * @param content
 	 * @param request
 	 * @param response
@@ -584,6 +587,9 @@ public class AcAppController extends BaseController {
 			AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
 		} catch (ToolsRuntimeException e) {
 			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("importFunc exception : ", e);
+		}catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
 			logger.error("importFunc exception : ", e);
 		}
 		return null;
@@ -774,6 +780,62 @@ public class AcAppController extends BaseController {
 			logger.error("funactDel exception : ", e);
 		}
 		return null;
+	}
+	
+	/**
+	 * queryBhvtypeDefByFunc 根据功能的GUID查询行为类型定义
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/queryBhvtypeDefByFunc" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
+	public String queryBhvtypeDefByFunc(@RequestBody String content, HttpServletRequest request,
+	                   HttpServletResponse response) {
+	   try {
+	      if (logger.isInfoEnabled()) {
+	         logger.info("queryBhvtypeDefByFunc request : " + content);
+	      }
+	      JSONObject jsonObj = JSONObject.fromObject(content);   //传入的参数
+	      String funcGuid = jsonObj.getString("id");
+	      List<AcBhvtypeDef> list = applicationRService.queryBhvtypeDefByFunc(funcGuid);
+
+	      AjaxUtils.ajaxJsonSuccessMessage(response, list);//返回给前台的结
+	   } catch (ToolsRuntimeException e) {
+	      AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+	      logger.error("funactEdit exception : ", e);
+	   }
+	   return null;
+
+	}
+
+	/**
+	 * queryBhvDefByBhvType 根据行为类型的GUID查询所有的操作行为
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/queryBhvDefByBhvType" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
+	public String queryBhvDefByBhvType(@RequestBody String content, HttpServletRequest request,
+	                   HttpServletResponse response) {
+	   try {
+	      if (logger.isInfoEnabled()) {
+	         logger.info("queryBhvDefByBhvType request : " + content);
+	      }
+	      JSONObject jsonObj = JSONObject.fromObject(content);   //传入的参数
+	      String bhvtypeGuid = jsonObj.getString("id");
+	      List<AcBhvDef> list = applicationRService.queryBhvDefByBhvType(bhvtypeGuid);
+
+	      AjaxUtils.ajaxJsonSuccessMessage(response, list);//返回给前台的结
+	   } catch (ToolsRuntimeException e) {
+	      AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+	      logger.error("funactEdit exception : ", e);
+	   }
+	   return null;
+
 	}
 	
 	/**

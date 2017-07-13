@@ -26,11 +26,30 @@
     </a>
 
     <div class="top-menu">
+
         <ul class="nav navbar-nav pull-right">
+
+            <li class="dropdown dropdown-extended dropdown-inbox">
+                <a href="#" class="dropdown-toggle" dropdown-menu-hover data-toggle="dropdown" data-close-others="true">
+                    <i class="icon-settings"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <!--<li class="external">
+                        <h3>You have
+                            <span class="bold">7 New</span> Messages</h3>
+                        <a href="#/profile/dashboard">view all</a>
+                    </li>-->
+                    <li>
+                        <div data-ng-include="'tpl/theme-panel.html'" data-ng-controller="ThemePanelController" style="top: -35px;right: -23px;" class="theme-panel hidden-xs hidden-sm"> </div>
+                    </li>
+                </ul>
+
+            </li>
 
             <li class="dropdown dropdown-user">
                 <a href="#" class="dropdown-toggle" dropdown-menu-hover data-toggle="dropdown" data-close-others="true">
-                    <span class="username username-hide-on-mobile"> {{login.userInfo.user_name}} </span>
+                    <!--<span class="username username-hide-on-mobile"> {{login.userInfo.user_name}} </span>-->
+                    <span class="username username-hide-on-mobile"> User </span>
                     <i class="fa fa-angle-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-default">
@@ -51,5 +70,6 @@
     function loginout(){
         sessionStorage.clear();
         window.location.reload();
+        window.location = "../tools/login.html";//如果正确，则进入主页
     }
 </script>
