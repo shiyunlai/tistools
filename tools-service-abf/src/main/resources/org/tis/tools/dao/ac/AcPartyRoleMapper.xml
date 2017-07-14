@@ -57,13 +57,13 @@
 	 <update id="updateByCondition" parameterType="map">
     	UPDATE AC_PARTY_ROLE 
 	   <set>
-		<if test="domain.party_type != null" >
-        	party_type = #{domain.partyType,jdbcType=VARCHAR}
+		<if test="domain.partyType != null" >
+        	party_type = #{domain.partyType,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_party != null" >
-        	guid_party = #{domain.guidParty,jdbcType=VARCHAR}
+		<if test="domain.guidParty != null" >
+        	guid_party = #{domain.guidParty,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_role != null" >
+		<if test="domain.guidRole != null" >
         	guid_role = #{domain.guidRole,jdbcType=VARCHAR}
       	</if>
 	    </set>

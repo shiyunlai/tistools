@@ -19,7 +19,24 @@
         <if test="orderBy != null" >${orderBy}</if>
         <if test="length > 0" >LIMIT ${offset}, ${length}</if>  	
   	</select>
-  
+
+	<select id="queryBhvtypeDefByFunc" resultType="org.tis.tools.model.po.ac.AcBhvtypeDef"  parameterType="java.lang.String" >
+    	select <include refid="BhvtypeDef_Column_List" /> FROM AC_BHVTYPE_DEF  a JOIN AC_FUNC_BHVTYPE  b ON a.guid = b.`GUID_BHVTYPE` WHERE b.GUID_FUNC = #{funcGuid,jdbcType=VARCHAR}
+  	</select>
+
+	<select id="queryBhvDefInTypeForFunc" resultType="map">
+    	select <include refid="FuncBhvDef_Column_List" /> from AC_BHV_DEF a JOIN AC_FUNC_BHV b ON a.GUID = b.GUID_BHV WHERE b.GUID_FUNC = #{funcGuid,jdbcType=VARCHAR} and a.GUID_BEHTYPE = #{bhvtypeGuid,jdbcType=VARCHAR}
+  	</select>
+
+	<select id="queryAllBhvDefForFunc" resultType="map">
+    	select <include refid="FuncBhvDef_Column_List" /> from AC_BHV_DEF a JOIN AC_FUNC_BHV b ON a.GUID = b.GUID_BHV WHERE b.GUID_FUNC = #{funcGuid,jdbcType=VARCHAR}
+  	</select>
+	
+	<select id="queryFuncBhvRelation" resultType="map" parameterType="org.tis.tools.base.WhereCondition" >
+		SELECT b.GUID_FUNC,a.GUID_BEHTYPE AS GUID_BHVTYPE,a.`GUID` AS GUID_BHV FROM AC_BHV_DEF a JOIN AC_FUNC_BHV b ON a.GUID = b.GUID_BHV
+		<include refid="Where_Clause" />
+	</select>
+
 	<sql id="Where_Clause">
 	    <if test="condition != null"><where>${condition}</where></if> 
 	</sql>
@@ -59,4 +76,19 @@
 		,b.compack_name as compackName
 		,b.res_show_name as resShowName
 	</sql>
+
+	<sql id="BhvtypeDef_Column_List" >
+		a.guid as guid
+		,a.bhvtype_code as bhvtypeCode
+		,a.bhvtype_name as bhvtypeName
+	</sql>
+
+	<sql id="FuncBhvDef_Column_List" >
+		a.guid as guid
+		,a.guid_behtype as guidBehtype
+		,a.bhv_code as bhvCode
+		,a.bhv_name as bhvName
+		,b.iseffective as iseffective
+	</sql>
+
 </mapper>

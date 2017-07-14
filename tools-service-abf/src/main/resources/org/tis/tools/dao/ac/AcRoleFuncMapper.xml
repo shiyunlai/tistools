@@ -63,16 +63,16 @@
 	 <update id="updateByCondition" parameterType="map">
     	UPDATE AC_ROLE_FUNC 
 	   <set>
-		<if test="domain.guid_role != null" >
-        	guid_role = #{domain.guidRole,jdbcType=VARCHAR}
+		<if test="domain.guidRole != null" >
+        	guid_role = #{domain.guidRole,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_func != null" >
-        	guid_func = #{domain.guidFunc,jdbcType=VARCHAR}
+		<if test="domain.guidFunc != null" >
+        	guid_func = #{domain.guidFunc,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_app != null" >
-        	guid_app = #{domain.guidApp,jdbcType=VARCHAR}
+		<if test="domain.guidApp != null" >
+        	guid_app = #{domain.guidApp,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_funcgroup != null" >
+		<if test="domain.guidFuncgroup != null" >
         	guid_funcgroup = #{domain.guidFuncgroup,jdbcType=VARCHAR}
       	</if>
 	    </set>

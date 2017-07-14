@@ -70,18 +70,18 @@
     	UPDATE AC_OPERATOR_IDENTITY 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_operator != null" >
-        	guid_operator = #{domain.guidOperator,jdbcType=VARCHAR}
+		<if test="domain.guidOperator != null" >
+        	guid_operator = #{domain.guidOperator,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.identity_name != null" >
-        	identity_name = #{domain.identityName,jdbcType=VARCHAR}
+		<if test="domain.identityName != null" >
+        	identity_name = #{domain.identityName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.identity_flag != null" >
-        	identity_flag = #{domain.identityFlag,jdbcType=CHAR}
+		<if test="domain.identityFlag != null" >
+        	identity_flag = #{domain.identityFlag,jdbcType=CHAR},
       	</if>
-		<if test="domain.seq_no != null" >
+		<if test="domain.seqNo != null" >
         	seq_no = #{domain.seqNo,jdbcType=DECIMAL}
       	</if>
 	    </set>

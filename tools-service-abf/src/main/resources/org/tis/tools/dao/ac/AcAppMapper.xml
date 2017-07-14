@@ -130,48 +130,48 @@
     	UPDATE AC_APP 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.app_code != null" >
-        	app_code = #{domain.appCode,jdbcType=VARCHAR}
+		<if test="domain.appCode != null" >
+        	app_code = #{domain.appCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.app_name != null" >
-        	app_name = #{domain.appName,jdbcType=VARCHAR}
+		<if test="domain.appName != null" >
+        	app_name = #{domain.appName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.app_type != null" >
-        	app_type = #{domain.appType,jdbcType=VARCHAR}
+		<if test="domain.appType != null" >
+        	app_type = #{domain.appType,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.isopen != null" >
-        	isopen = #{domain.isopen,jdbcType=CHAR}
+        	isopen = #{domain.isopen,jdbcType=CHAR},
       	</if>
-		<if test="domain.open_date != null" >
-        	open_date = #{domain.openDate,jdbcType=TIMESTAMP}
+		<if test="domain.openDate != null" >
+        	open_date = #{domain.openDate,jdbcType=TIMESTAMP},
       	</if>
 		<if test="domain.url != null" >
-        	url = #{domain.url,jdbcType=VARCHAR}
+        	url = #{domain.url,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.app_desc != null" >
-        	app_desc = #{domain.appDesc,jdbcType=VARCHAR}
+		<if test="domain.appDesc != null" >
+        	app_desc = #{domain.appDesc,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_emp_maintenance != null" >
-        	guid_emp_maintenance = #{domain.guidEmpMaintenance,jdbcType=VARCHAR}
+		<if test="domain.guidEmpMaintenance != null" >
+        	guid_emp_maintenance = #{domain.guidEmpMaintenance,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_role_maintenance != null" >
-        	guid_role_maintenance = #{domain.guidRoleMaintenance,jdbcType=VARCHAR}
+		<if test="domain.guidRoleMaintenance != null" >
+        	guid_role_maintenance = #{domain.guidRoleMaintenance,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.remark != null" >
-        	remark = #{domain.remark,jdbcType=VARCHAR}
+        	remark = #{domain.remark,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.iniwp != null" >
-        	iniwp = #{domain.iniwp,jdbcType=CHAR}
+        	iniwp = #{domain.iniwp,jdbcType=CHAR},
       	</if>
 		<if test="domain.intaskcenter != null" >
-        	intaskcenter = #{domain.intaskcenter,jdbcType=CHAR}
+        	intaskcenter = #{domain.intaskcenter,jdbcType=CHAR},
       	</if>
-		<if test="domain.ip_addr != null" >
-        	ip_addr = #{domain.ipAddr,jdbcType=VARCHAR}
+		<if test="domain.ipAddr != null" >
+        	ip_addr = #{domain.ipAddr,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.ip_port != null" >
+		<if test="domain.ipPort != null" >
         	ip_port = #{domain.ipPort,jdbcType=VARCHAR}
       	</if>
 	    </set>

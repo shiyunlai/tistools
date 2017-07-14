@@ -148,57 +148,57 @@
     	UPDATE AC_OPERATOR 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.user_id != null" >
-        	user_id = #{domain.userId,jdbcType=VARCHAR}
+		<if test="domain.userId != null" >
+        	user_id = #{domain.userId,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.password != null" >
-        	password = #{domain.password,jdbcType=VARCHAR}
+        	password = #{domain.password,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.operator_name != null" >
-        	operator_name = #{domain.operatorName,jdbcType=VARCHAR}
+		<if test="domain.operatorName != null" >
+        	operator_name = #{domain.operatorName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.operator_status != null" >
-        	operator_status = #{domain.operatorStatus,jdbcType=VARCHAR}
+		<if test="domain.operatorStatus != null" >
+        	operator_status = #{domain.operatorStatus,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.inval_date != null" >
-        	inval_date = #{domain.invalDate,jdbcType=TIMESTAMP}
+		<if test="domain.invalDate != null" >
+        	inval_date = #{domain.invalDate,jdbcType=TIMESTAMP},
       	</if>
-		<if test="domain.auth_mode != null" >
-        	auth_mode = #{domain.authMode,jdbcType=VARCHAR}
+		<if test="domain.authMode != null" >
+        	auth_mode = #{domain.authMode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.lock_limit != null" >
-        	lock_limit = #{domain.lockLimit,jdbcType=DECIMAL}
+		<if test="domain.lockLimit != null" >
+        	lock_limit = #{domain.lockLimit,jdbcType=DECIMAL},
       	</if>
-		<if test="domain.err_count != null" >
-        	err_count = #{domain.errCount,jdbcType=DECIMAL}
+		<if test="domain.errCount != null" >
+        	err_count = #{domain.errCount,jdbcType=DECIMAL},
       	</if>
-		<if test="domain.lock_time != null" >
-        	lock_time = #{domain.lockTime,jdbcType=TIMESTAMP}
+		<if test="domain.lockTime != null" >
+        	lock_time = #{domain.lockTime,jdbcType=TIMESTAMP},
       	</if>
-		<if test="domain.unlock_time != null" >
-        	unlock_time = #{domain.unlockTime,jdbcType=TIMESTAMP}
+		<if test="domain.unlockTime != null" >
+        	unlock_time = #{domain.unlockTime,jdbcType=TIMESTAMP},
       	</if>
-		<if test="domain.menu_type != null" >
-        	menu_type = #{domain.menuType,jdbcType=VARCHAR}
+		<if test="domain.menuType != null" >
+        	menu_type = #{domain.menuType,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.last_login != null" >
-        	last_login = #{domain.lastLogin,jdbcType=TIMESTAMP}
+		<if test="domain.lastLogin != null" >
+        	last_login = #{domain.lastLogin,jdbcType=TIMESTAMP},
       	</if>
-		<if test="domain.start_date != null" >
-        	start_date = #{domain.startDate,jdbcType=DATE}
+		<if test="domain.startDate != null" >
+        	start_date = #{domain.startDate,jdbcType=DATE},
       	</if>
-		<if test="domain.end_date != null" >
-        	end_date = #{domain.endDate,jdbcType=DATE}
+		<if test="domain.endDate != null" >
+        	end_date = #{domain.endDate,jdbcType=DATE},
       	</if>
-		<if test="domain.valid_time != null" >
-        	valid_time = #{domain.validTime,jdbcType=VARCHAR}
+		<if test="domain.validTime != null" >
+        	valid_time = #{domain.validTime,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.mac_code != null" >
-        	mac_code = #{domain.macCode,jdbcType=VARCHAR}
+		<if test="domain.macCode != null" >
+        	mac_code = #{domain.macCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.ip_address != null" >
+		<if test="domain.ipAddress != null" >
         	ip_address = #{domain.ipAddress,jdbcType=VARCHAR}
       	</if>
 	    </set>

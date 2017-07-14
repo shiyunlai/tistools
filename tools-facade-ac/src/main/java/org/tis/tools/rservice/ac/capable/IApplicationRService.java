@@ -6,6 +6,7 @@ package org.tis.tools.rservice.ac.capable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.model.po.ac.AcApp;
@@ -165,7 +166,6 @@ public interface IApplicationRService {
 	/**
 	 * 更新功能(AC_FUNC)
 	 * @param acFunc 功能
-	 * @param acFuncResource 功能对应资源
 	 */
 	public void updateAcFunc(AcFunc acFunc);
 
@@ -313,7 +313,6 @@ public interface IApplicationRService {
 	
 	/**
 	 * 根据条件查询功能操作行为(AC_FUNC_BEHAVIOR)
-	 * @param wc 条件
 	 * @return 满足条件的记录list
 	 */
 	public List<AcFunc> queryAllFunc();
@@ -346,14 +345,13 @@ public interface IApplicationRService {
 	/**
 	 * 删除行为类型(AC_BHVTYPE_DEF)
 	 * 
-	 * @param acBhvtypeDef 行为类型
+	 * @param guid 行为类型
 	 */
 	public void functypeDel(String guid);
 	
 	/**
 	 * 查询行为类型(AC_BHVTYPE_DEF)
-	 * 
-	 * @param acBhvtypeDef 行为类型
+	 *
 	 * 返回list
 	 */
 	public List<AcBhvtypeDef> functypequery();
@@ -371,9 +369,9 @@ public interface IApplicationRService {
 	/**
 	 * 删除功能操作行为(AC_BHV_DEF)
 	 * 
-	 * @param guid 条件
+	 * @param guids 条件
 	 */
-	public void funactDel(String guid);
+	public void funactDel(List guids);
 	
 	
 	/**
@@ -387,10 +385,75 @@ public interface IApplicationRService {
 	/**
 	 * 查询功能操作行为(AC_BHV_DEF)
 	 * 
-	 * @param acBhvDef 功能操作行为
+	 * @param guid 功能操作行为
 	 * 返回list
 	 */
 	public List<AcBhvDef> funactQuery(String guid);
-	
-	
+
+	/**
+	 * 通过功能GUID查询功能操作行为(AC_BHVTYPE_DEF)
+	 *
+	 * @param funcGuid 功能GUID
+	 * 返回list
+	 */
+	public List<AcBhvtypeDef> queryBhvtypeDefByFunc(String funcGuid);
+
+	/**
+	 * queryBhvDefByBhvType 根据行为类型的GUID查询所有的操作行为(AC_BHV_DEF)
+	 *
+	 * @param bhvtypeGuid 行为类型GUID
+	 * 返回list
+	 */
+	public List<AcBhvDef> queryBhvDefByBhvType(String bhvtypeGuid);
+
+
+
+	/**
+	 * addBhctypeForFunc 功能添加行为类型(AC_BHVTYPE_DEF)
+	 *
+	 * @param funcGuid 功能GUID
+	 * @param bhvtypeGuids 功能GUID数组
+	 * 返回list
+	 */
+	public void addBhvtypeForFunc(String funcGuid, List bhvtypeGuids);
+
+	/**
+	 * addBhvDefForFunc 功能添加行为定义(AC_BHV_DEF)
+	 *
+	 * @param funcGuid 功能GUID
+	 * @param bhvDefGuids 功能GUID数组
+	 * 返回list
+	 */
+	public void addBhvDefForFunc(String funcGuid, List bhvDefGuids);
+
+
+	/**
+	 * queryBhvDefInTypeForFunc 查询功能下指定行为类型的行为定义
+	 * @param funcGuid
+	 * @param bhvtypeGuid
+	 */
+	public List<Map> queryBhvDefInTypeForFunc(String funcGuid, String bhvtypeGuid);
+
+
+	/**
+	 * queryAllBhvDefForFunc 查询功能下所有行为定义
+	 * @param funcGuid 功能GUID
+	 * @return list
+	 */
+	public List<Map> queryAllBhvDefForFunc(String funcGuid);
+
+	/**
+	 * 删除功能下的行为类型
+	 * @param funcGuid
+	 * @param bhvtypeGuid
+	 */
+	public void delFuncBhvType(String funcGuid, List<String> bhvtypeGuid);
+
+	/**
+	 * 删除功能下的行为定义
+	 * @param funcGuid
+	 * @param bhvDefGuid
+	 */
+	public void delFuncBhvDef(String funcGuid, List<String> bhvDefGuid);
+
 }
