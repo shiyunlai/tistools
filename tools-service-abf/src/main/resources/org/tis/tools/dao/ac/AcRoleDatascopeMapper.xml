@@ -51,10 +51,10 @@
 	 <update id="updateByCondition" parameterType="map">
     	UPDATE AC_ROLE_DATASCOPE 
 	   <set>
-		<if test="domain.guid_role != null" >
-        	guid_role = #{domain.guidRole,jdbcType=VARCHAR}
+		<if test="domain.guidRole != null" >
+        	guid_role = #{domain.guidRole,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_datascope != null" >
+		<if test="domain.guidDatascope != null" >
         	guid_datascope = #{domain.guidDatascope,jdbcType=VARCHAR}
       	</if>
 	    </set>

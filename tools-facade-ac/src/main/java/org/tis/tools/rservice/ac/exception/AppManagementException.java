@@ -5,6 +5,8 @@ package org.tis.tools.rservice.ac.exception;
 
 import org.tis.tools.base.exception.ToolsRuntimeException;
 
+import java.io.Serializable;
+
 /**
  * 
  * 权限管理服务异常对象
@@ -19,6 +21,8 @@ public class AppManagementException extends ToolsRuntimeException {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+	public AppManagementException() {}
 
 	public AppManagementException(String code) {
 		super(code);
