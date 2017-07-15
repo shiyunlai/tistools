@@ -43,6 +43,7 @@ Version: 4.5.6
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
+
 <body ng-controller="AppController"
       class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-sidebar-closed-hide-logo page-on-load page-sidebar-fixed"
       ng-class="{'page-sidebar-closed': settings.layout.pageSidebarClosed}">
@@ -108,10 +109,9 @@ Version: 4.5.6
 
 <script src="../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
 <script src="../assets/global/plugins/angularjs/plugins/angular-file-upload/angular-file-upload.min.js" type="text/javascript"></script>
-<script src="../assets/global/plugins/highcharts/js/highcharts.js" type="text/javascript"></script>
 
 <!-- END CORE ANGULARJS PLUGINS -->
-
+<script src="../assets/global/plugins/highcharts/js/highcharts.js" type="text/javascript"></script>
 <!-- BEGIN PROJECT  CSS-->
 <link href="css/fenye.css" rel="stylesheet" type="text/css"/>
 <link href="css/ServiceJournal.css" rel="stylesheet" type="text/css"/>
@@ -120,7 +120,9 @@ Version: 4.5.6
 
 <!-- BEGIN PROJECT GLOBAL JS-->
 <script src="js/main.js" type="text/javascript"></script>
+<script src="js/filter.js" type="text/javascript"></script>
 <script src="js/directives.js" type="text/javascript"></script>
+<script src="js/directive/Directive.js" type="text/javascript"></script>
 <script src="js/scripts/global.js"></script>
 
 <!-- END PROJECT GLOBAL JS-->
@@ -164,9 +166,11 @@ Version: 4.5.6
 <!-- 操作员快捷菜单-->
 <!--behavior start-->
 <script src="js/controllers/behavior/behaviorController.js"></script>
+<script src="js/service/behavior/behavior_service.js"></script>
 <!--behavior end-->
 <!--业务字典-->
 <script src="js/controllers/dictionary/dictionaryController.js"></script>
+<!--序列表-->
 <script src="js/controllers/numberResources/numresController.js"></script>
 <!--jstree start-->
 <script src="../assets/global/plugins/jstree/dist/jstree.js" type="text/javascript"></script>
@@ -180,6 +184,7 @@ Version: 4.5.6
 <link rel="stylesheet" href="../assets/global/plugins/angular-ui-grid/ui-grid.min.css"/>
 <script src="../assets/global/plugins/angular-ui-grid/ui-grid.min.js"></script>
 <!--ui-grid end-->
+
 <!--biztrace start-->
 <script src="js/controllers/biztrace/biztraceHandleController.js" type="text/javascript"></script>
 <script src="js/service/biztrace/biztraceHandle.js"></script>
@@ -198,7 +203,9 @@ Version: 4.5.6
 <script src="js/service/pagination_service.js"></script>
 <!--lpc end-->
 
-<!-- BEGIN APP LEVEL JQUERY SCRIPTS -->
+<!--lodash -->
+<script src="../assets/global/plugins/lodash/lodash.min.js"></script>
+
 <!-- BEGIN APP LEVEL JQUERY SCRIPTS -->
 <script src="../assets/global/scripts/app.min.js" type="text/javascript"></script>
 <script src="../assets/layouts/layout4/scripts/layout.min.js" type="text/javascript"></script>

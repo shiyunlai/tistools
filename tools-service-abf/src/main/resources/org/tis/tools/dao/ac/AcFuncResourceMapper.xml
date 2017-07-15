@@ -55,7 +55,7 @@
 		compack_name = #{compackName,jdbcType=VARCHAR},
 		res_show_name = #{resShowName,jdbcType=VARCHAR}
 	    </set>
-	    WHERE guid = #{guid}
+	    WHERE guidFunc = #{guidFunc}
  	</update>
  	 
     <delete id="delete" parameterType="java.lang.String">

@@ -85,7 +85,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	@Override
 	public AcApp createAcApp(AcApp acApp) throws AppManagementException {
 		acApp.setGuid(GUID.app());
-		AcApp newAcApp = acApp;
+		final AcApp newAcApp = acApp;
 		try {
 			acApp = transactionTemplate
 					.execute(new TransactionCallback<AcApp>() {
@@ -113,11 +113,12 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	@Override
 	public void deleteAcApp(String guid) throws AppManagementException {
 		try {
+			final String GUID = guid;
 			transactionTemplate.execute(new TransactionCallback<AcApp>() {
 				@Override
 				public AcApp doInTransaction(TransactionStatus arg0) {
 					WhereCondition wc =new WhereCondition();
-					wc.andEquals("GUID_APP", guid);
+					wc.andEquals("GUID_APP", GUID);
 					List<AcFuncgroup> funcgroup = acFuncgroupService.query(wc);
 					WhereCondition wc1 =new WhereCondition();
 					for(int i =0 ;i < funcgroup.size();i++){
@@ -128,7 +129,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 						
 					}
 					acFuncgroupService.deleteByCondition(wc );//删除下面所有的功能组
-					acAppService.delete(guid);//删除应用
+					acAppService.delete(GUID);//删除应用
 					return null;
 				}
 			});
@@ -148,11 +149,12 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 */
 	@Override
 	public void updateAcApp(AcApp t) throws AppManagementException {
+		final AcApp app = t;
 		try {
 			transactionTemplate.execute(new TransactionCallback<AcApp>() {
 				@Override
 				public AcApp doInTransaction(TransactionStatus arg0) {
-					acAppService.updateForce(t);
+					acAppService.updateForce(app);
 					return null;
 				}
 			});
@@ -268,7 +270,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		acFuncgroup.setFuncgroupSeq(funcgroupSeq);
 		acFuncgroup.setIsleaf(CommonConstants.YES);// 默认叶子节点
 		acFuncgroup.setSubCount(new BigDecimal(0));// 默认无节点数
-		AcFuncgroup newAcFuncgroup = acFuncgroup;
+		final AcFuncgroup newAcFuncgroup = acFuncgroup;
 		try {
 			acFuncgroup = transactionTemplate
 					.execute(new TransactionCallback<AcFuncgroup>() {
@@ -295,8 +297,9 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 *            记录guid
 	 */
 	@Override
-	public void deleteAcFuncGroup(String guid) throws AppManagementException {
+	public void deleteAcFuncGroup(String GUID) throws AppManagementException {
 		try {
+			final String guid = GUID;
 			// 新增事务提交机制
 			transactionTemplate.execute(new TransactionCallback<AcFuncgroup>() {
 				@Override
@@ -335,11 +338,12 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		if(t.getGuidParents()==null||t.getGuidParents().isEmpty()){
 			t.setGuidParents(null);
 		}
+		final AcFuncgroup fg = t;
 		try {
 			transactionTemplate.execute(new TransactionCallback<AcFuncgroup>() {
 				@Override
 				public AcFuncgroup doInTransaction(TransactionStatus arg0) {
-					acFuncgroupService.updateForce(t);
+					acFuncgroupService.updateForce(fg);
 					return null;
 				}
 			});
@@ -378,9 +382,9 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 * @return 满足条件的记录list
 	 */
 	@Override
-	public AcFuncgroup queryFuncgroup(String guid)throws AppManagementException {
+	public AcFuncgroup queryFuncgroup(String GUID)throws AppManagementException {
 		List<AcFuncgroup> acFuncgroupList = new ArrayList<AcFuncgroup>();
-		
+		final String guid = GUID;
 		try {
 			WhereCondition wc = new WhereCondition();
 			wc.andEquals("GUID", guid);
@@ -454,7 +458,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		String guid=GUID.func();
 		acFuncResource.setGuidFunc(guid);
 		acFunc.setGuid(guid);
-		AcFunc newAcFunc = acFunc;
+		final AcFunc newAcFunc = acFunc;
 		try {
 			acFunc = transactionTemplate
 					.execute(new TransactionCallback<AcFunc>() {
@@ -504,11 +508,12 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 */
 	@Override
 	public void updateAcFunc(AcFunc acFunc) throws AppManagementException {
+		final AcFunc newAcFunc = acFunc; 
 		try {
 			transactionTemplate.execute(new TransactionCallback<AcFunc>() {
 				@Override
 				public AcFunc doInTransaction(TransactionStatus arg0) {
-					acFuncService.updateForce(acFunc);
+					acFuncService.updateForce(newAcFunc);
 					return null;
 				}
 			});
@@ -1045,7 +1050,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 						acFuncService.insert(acfunc);//导入功能
 					}
 					return null;
-				}
+				}	
 			});
 			
 		} catch (Exception e) {
