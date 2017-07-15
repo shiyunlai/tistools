@@ -546,7 +546,7 @@
                                 <!-- 功能行为-->
                                 <div class="tab-content portlet light" ng-if="appfunflag.gnactive">
                                     <div class="row">
-                                        <div class="col-md-5">
+                                        <div class="col-md-6">
                                             <div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
                                                 <div class="portlet-title">
                                                     <div class="caption">
@@ -562,13 +562,15 @@
                                                     </div>
                                                     <div class="actions btn-set" style="float: right; margin-top: 20px;">
                                                         <button type="button" name="back" class="btn btn-primary" ng-click="biz.addtype()">新增功能类型
+                                                    </button>
+                                                        <button type="button" name="back" class="btn btn-primary" ng-click="biz.addtypeDel()">删除功能类型
                                                         </button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <!-- 右侧显示-->
-                                        <div class="col-md-7 portlet light" style="height:100%;" ng-if="biz.active">
+                                        <div class="col-md-6 portlet light" style="height:100%;" >
                                             <div class="portlet-title">
                                                 <div class="caption">
                                                     <i class="fa fa-cogs font-green-sharp"></i>
@@ -582,6 +584,8 @@
                                                          ui-grid-selection ui-grid-resize-columns></div>
                                                     <div class="actions btn-set" style="float: right; margin-top: 20px;">
                                                         <button type="button" name="back" class="btn btn-primary" ng-click="biz.functactive()">新增功能行为
+                                                        </button>
+                                                        <button type="button" name="back" class="btn btn-primary" ng-click="biz.functactiveDel()">删除功能类型
                                                         </button>
                                                         <button type="button" name="back" class="btn btn-primary" ng-click="biz.sesave()"> 保存
                                                         </button>
