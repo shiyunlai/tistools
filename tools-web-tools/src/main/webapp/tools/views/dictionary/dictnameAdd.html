@@ -17,21 +17,46 @@
             <div class="form-body ">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4"> 类型代码:<span ng-class="{required:myform.dict_key.$invalid}"  > * </span></label>
+                        <label class="control-label col-md-4"> 业务字典:<span ng-class="{required:myform.dict_key.$invalid}"  > * </span></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="dictFrom.bhvtypeCode"
-                                   required
-                                   name="dict_key"/>
+                            <input type="text" class="form-control" ng-model="dictFrom.dictKey"  required name="dict_key"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-md-4"> 类型:<span ng-class="{required:myform.dict_key1.$invalid}"  > * </span></label>
+                    <div class="col-md-8">
+                        <select class="form-control"  ng-model="dictionaryAdd.dictType" name="dict_key1" required >
+                            <option value=""></option>
+                            <option value="a">应用级</option>
+                            <option value="s">系统级</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 字典名称:<span ng-class="{required:myform.dict_name.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" ng-model="dictFrom.dictName"  required  name = "dict_name"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4"> 类型名称:<span ng-class="{required:myform.dict_key1.$invalid}"  > * </span></label>
+                        <label class="control-label col-md-4"> 业务字典默认值:</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="dictFrom.bhvtypeName’"
-                                   required
-                                   name="dict_key1"/>
+                            <input type="text" class="form-control" ng-model="dictFrom.defaultValue"  required  name = "dict_name"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 解释说明:</label>
+                        <div class="col-md-8">
+                            <textarea class="form-control" ng_model="attr.item.ctl_desc" name="ctl_desc"></textarea>
+                            <!--<p class="help-block">检查项详细描述信息</code></p>-->
                         </div>
                     </div>
                 </div>
@@ -40,7 +65,7 @@
                         <label class="control-label col-md-2"></label>
                         <div class="col-md-10">
                             <div class="actions btn-set" style="float: right;">
-                                <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="add(behaFrom)" > 保存
+                                <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="add(dictFrom)" > 保存
                                 </button>
                                 <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存
                                 </button>

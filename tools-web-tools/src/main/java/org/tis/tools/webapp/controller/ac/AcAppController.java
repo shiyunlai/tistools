@@ -43,7 +43,7 @@ public class AcAppController extends BaseController {
 	IApplicationRService applicationRService;
 	
 	/**
-	 * appAdd新增应用服务员
+	 * appAdd新增应用服务
 	 * @param content
 	 * @param request
 	 * @param response
@@ -68,6 +68,8 @@ public class AcAppController extends BaseController {
 			SimpleDateFormat times = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = times.parse(openDateStr);
 			String url = jsonObj.getString("url");
+			String empMaintenance = jsonObj.getString("empMaintenance");
+			String roleMaintenance = jsonObj.getString("roleMaintenance");
 			String ipAddr = jsonObj.getString("ipAddr");
 			String ipPort = jsonObj.getString("ipPort");
 			AcApp ac = new AcApp();
@@ -76,6 +78,8 @@ public class AcAppController extends BaseController {
 			ac.setAppType(appType);
 			ac.setAppDesc(appDesc);
 			ac.setIsopen(isOpen);
+			ac.setGuidEmpMaintenance(empMaintenance);
+			ac.setGuidRoleMaintenance(roleMaintenance);
 			ac.setOpenDate(date);
 			ac.setUrl(url);
 			ac.setIpPort(ipPort);
@@ -149,6 +153,8 @@ public class AcAppController extends BaseController {
 			acApp.setOpenDate(date);
 			acApp.setUrl(jsonObj.getString("url"));
 			acApp.setIpAddr(jsonObj.getString("ipAddr"));
+			acApp.setGuidEmpMaintenance(jsonObj.getString("empMaintenance"));
+			acApp.setGuidRoleMaintenance(jsonObj.getString("roleMaintenance"));
 			acApp.setIpPort(jsonObj.getString("ipPort"));
 			applicationRService.updateAcApp(acApp);
 			AjaxUtils.ajaxJsonSuccessMessage(response, "");
@@ -360,7 +366,7 @@ public class AcAppController extends BaseController {
 			acFuncResource.setCompackName(compackName);
 			acFuncResource.setResShowName(resshowName);
 			acFuncResource.setResPath(resPath);
-			
+		
 			AcFunc acFunc = new AcFunc();
 			acFunc.setFuncCode(funcCode);
 			acFunc.setFuncName(funcName);

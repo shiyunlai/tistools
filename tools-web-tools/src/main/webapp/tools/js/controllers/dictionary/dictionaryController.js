@@ -28,6 +28,9 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
     $scope.dictconfig = dictconfig;
     //表格渲染
     i18nService.setCurrentLang("zh-cn");
+
+    var gridOptions0 = {};
+    $scope.gridOptions0 = gridOptions0;
     $scope.importadd = [
         {'dictType':'ABF_APPTYPE','dictName':"应用类型"},
         {'dictType':'ABF_AUTHMODE','dictName':"认证模式"},
@@ -36,11 +39,6 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
         {'dictType':'ABF_GONFIGTYPE','dictName':"配置类型"},
         {'dictType':'ABF_DUTYTYPE','dictName':"职位套别"}
     ];
-    var gridOptions0 = {};
-    $scope.gridOptions0 = gridOptions0;
-    var initdata = function(){
-        return $scope.importadd;//数据方法
-    }
     var com = [{ field: 'dictType', displayName: '类型名称'},
         { field: "dictName", displayName:'类型名称'},
         //{ field: "dictName", displayName:'类型名称',visible: false}
@@ -55,8 +53,8 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
             $scope.dictconfig.show =false;
         }
     }
-    $scope.gridOptions0 = initgrid($scope,gridOptions0,initdata(),filterFilter,com,false,f,"jjj");
-
+    $scope.gridOptions0 = initgrid($scope,gridOptions0,filterFilter,com,false,f,"jjj");
+    $scope.gridOptions0.data =  $scope.importadd;
 
 
     dictconfig.initt2 = function(num){//查询服务公用方法
@@ -75,6 +73,8 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
     }
 
     /*按钮逻辑*/
+
+
     //新增
     $scope.show_win=function(){
         openwindow($uibModal, 'views/dictionary/dictnameAdd.html', 'lg',// 弹出页面
@@ -254,9 +254,6 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
     ];
     var gridOptions1 = {};
     $scope.gridOptions1 = gridOptions1;
-    var initdata1 = function(){
-        return $scope.dictAdd;//数据方法
-    }
     var com1 = [{ field: 'itemType', displayName: '类型项代码'},
         { field: "itemName", displayName:'类型项名称'},
         { field: "itemOrder", displayName:'排序'},
@@ -270,8 +267,8 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
             delete $scope.selectRow1;//制空
         }
     }
-    $scope.gridOptions1 = initgrid($scope,gridOptions1,initdata1(),filterFilter,com1,false,f1,"lll");
-
+    $scope.gridOptions1 = initgrid($scope,gridOptions1,filterFilter,com1,false,f1,"lll");
+    $scope.gridOptions1.data = $scope.dictAdd;
     //新增
     $scope.dict_win = function(){
         openwindow($uibModal, 'views/dictionary/dicttypeAdd.html', 'lg',// 弹出页面
