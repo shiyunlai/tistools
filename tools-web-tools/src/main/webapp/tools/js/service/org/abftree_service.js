@@ -44,5 +44,11 @@ MetronicApp.factory('abftree_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     }
+    service.initcode = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/initcode",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
     return service;
 }]);

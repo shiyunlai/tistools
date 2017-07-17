@@ -92,7 +92,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 			throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_GEN_ORGCODE,new Object[]{"orgCode"});
 		}
 		if(StringUtil.isEmpty(orgName)) {
-			throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_GEN_ORGCODE,new Object[]{"orgCode"});
+			throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_GEN_ORGCODE,new Object[]{"orgName"});
 		}
 		if(StringUtil.isEmpty(orgType)) {
 			throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_GEN_ORGCODE,new Object[]{"orgType"});

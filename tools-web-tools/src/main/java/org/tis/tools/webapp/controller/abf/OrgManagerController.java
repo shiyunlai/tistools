@@ -22,6 +22,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.tis.tools.base.WhereCondition;
+import org.tis.tools.base.exception.ToolsRuntimeException;
+import org.tis.tools.common.utils.StringUtil;
 import org.tis.tools.model.po.om.OmGroup;
 import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.po.om.OmPosition;
@@ -169,40 +171,51 @@ public class OrgManagerController extends BaseController {
 //			JsonDateProcessor jdp = new JsonDateProcessor("yyyy-MM-dd");
 //		    jsonConfig.registerJsonValueProcessor(Date.class, jdp);   
 			JSONObject jsonObj = JSONObject.fromObject(content);
-			
 			Map map = jsonObj;
+			Date startDate = null;
+			Date endDate = null;
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-			Date createTime = sf.parse(map.remove("createTime").toString());
-			Date startDate = sf.parse(map.remove("startDate").toString());
-			Date endDate = sf.parse(map.remove("endDate").toString());
-			
+			if(map.get("startDate") != null) {
+				startDate = sf.parse(map.remove("startDate").toString());
+			}
+			if(map.get("endDate") != null) {
+				endDate = sf.parse(map.remove("endDate").toString());
+			}
 			OmOrg og = new OmOrg();
 			BeanUtils.populate(og, map);
 			System.out.println(og);
-			og.setCreateTime(createTime);
 			og.setEndDate(endDate);
 			og.setStartDate(startDate);
 			orgRService.createChildOrg(og);
 			
-			AjaxUtils.ajaxJson(response, "新增成功!");
-		} catch (Exception e) {// TODO
-			AjaxUtils.ajaxJsonErrorMessage(response, "新增异常!");
+			AjaxUtils.ajaxJsonSuccessMessage(response, "新增成功!");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
 			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
 		}
 		return null;
 	}
 	
 	
-	@RequestMapping(value = "/test")
+	@RequestMapping(value = "/initcode")
 	public String test(ModelMap model,  @RequestBody String content,
 			String age, HttpServletRequest request, HttpServletResponse response) {
 		try {
+//			Map<String, Object> result = new HashMap<String, Object>();
 			//收到请求
-			
-			AjaxUtils.ajaxJson(response, "新增成功!");
-		} catch (Exception e) {// TODO
-			AjaxUtils.ajaxJsonErrorMessage(response, "新增异常!");
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			String orgDegree = jsonObj.getString("orgDegree");
+			String AREA = jsonObj.getString("AREA");
+			String orgCode = orgRService.genOrgCode(AREA, orgDegree, null);
+//			result.put("data", orgCode);
+			AjaxUtils.ajaxJsonSuccessMessage(response, orgCode);
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
 			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
 		}
 		return null;
 	}

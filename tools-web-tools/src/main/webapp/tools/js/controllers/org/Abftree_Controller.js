@@ -80,13 +80,42 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                                 //创建机构实例
                                 var subFrom = {};
                                 $scope.subFrom = subFrom;
+                                //生成机构代码
+                                var next = true;
+                                $scope.next = next;
+                                $scope.skip = function () {
+                                    if(isNull(subFrom.orgDegree) || isNull(subFrom.AREA)){
+                                        toastr['error']("请填写相关信息!");
+                                        return false;
+                                    }
+                                    //调用服务生成机构代码
+                                    abftree_service.initcode(subFrom).then(function (data) {
+                                        // if(data.status == "error"){
+                                        //     toastr['error']( "！");
+                                        // }else{
+                                        //     subFrom.orgCode = data.orgCode;
+                                        //     toastr['success'](data.retMessage);
+                                        //     $scope.next = !next;
+                                        // }
+                                        subFrom.orgCode = "00001";
+                                        toastr['success'](data.retMessage);
+                                        $scope.next = !next;
+                                    })
+
+                                }
                                 //处理新增机构父机构
                                 subFrom.guidParents = obj.original.guid;
                                 //增加方法
                                 $scope.add = function (subFrom) {
                                     //TODO.新增逻辑
                                     abftree_service.addorg(subFrom).then(function (data) {
-                                        console.log(data);
+                                        if(data.status == "success"){
+                                            toastr['success'](data.retMessage);
+                                        }else{
+                                            toastr['error'](data.retMessage);
+                                        }
+                                        $("#container").jstree().refresh();
+                                        $scope.cancel();
                                     });
                                 }
                                 $scope.cancel = function () {
