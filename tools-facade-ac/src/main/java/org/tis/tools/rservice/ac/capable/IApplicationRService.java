@@ -166,10 +166,6 @@ public interface IApplicationRService {
 	/**
 	 * 更新功能(AC_FUNC)
 	 * @param acFunc 功能
-<<<<<<< HEAD
-	 * @param acFuncResource 功能对应资源
-=======
->>>>>>> develop_gaojie
 	 */
 	public void updateAcFunc(AcFunc acFunc);
 
@@ -317,10 +313,6 @@ public interface IApplicationRService {
 	
 	/**
 	 * 根据条件查询功能操作行为(AC_FUNC_BEHAVIOR)
-<<<<<<< HEAD
-	 * @param wc 条件
-=======
->>>>>>> develop_gaojie
 	 * @return 满足条件的记录list
 	 */
 	public List<AcFunc> queryAllFunc();
@@ -348,59 +340,7 @@ public interface IApplicationRService {
 	 */
 	public void functypeEdit(AcBhvtypeDef acBhvtypeDef);
 	
-<<<<<<< HEAD
 	
-	
-	/**
-	 * 删除行为类型(AC_BHVTYPE_DEF)
-	 * 
-	 * @param acBhvtypeDef 行为类型
-	 */
-	public void functypeDel(String guid);
-	
-	/**
-	 * 查询行为类型(AC_BHVTYPE_DEF)
-	 * 
-	 * @param acBhvtypeDef 行为类型
-	 * 返回list
-	 */
-	public List<AcBhvtypeDef> functypequery();
-	
-	
-	
-	/**
-	 * 新增功能操作行为(AC_BHV_DEF)
-	 * 
-	 * @param acBhvDef 功能操作行为
-	 */
-	public void funactAdd(AcBhvDef acBhvDef);
-=======
->>>>>>> develop_gaojie
-	
-
-	/**
-	 * 删除功能操作行为(AC_BHV_DEF)
-	 * 
-	 * @param guid 条件
-	 */
-	public void funactDel(String guid);
-	
-	
-	/**
-	 * 修改功能操作行为(AC_BHV_DEF)
-	 * 
-	 * @param acBhvDef 功能操作行为
-	 */
-	public void funactEdit(AcBhvDef acBhvDef);
-	
-	
-	/**
-	 * 查询功能操作行为(AC_BHV_DEF)
-	 * 
-	 * @param acBhvDef 功能操作行为
-	 * 返回list
-	 */
-	public List<AcBhvDef> funactQuery(String guid);
 	
 	/**
 	 * 删除行为类型(AC_BHVTYPE_DEF)
