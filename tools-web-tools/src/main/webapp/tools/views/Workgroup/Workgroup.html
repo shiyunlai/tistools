@@ -83,7 +83,7 @@
                      ui-grid-edit ui-grid-pagination
                      ui-grid-selection ui-grid-resize-columns></div>
                 <div class="actions btn-set" style="float: right;">
-                    <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.add()"> 新增
+                    <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.add('root')"> 新增
                     </button>
                     <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.edit()"> 编辑
                     </button>
@@ -96,6 +96,22 @@
                 <div class="portlet-body portlet light">
                     <form action="#" name="myform" class="form-horizontal ">
                         <div class="form-body ">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">工作组状态</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" ng-model="subFrom.groupStatus" name="id" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" type="hidden">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"></label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" name="id" />
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label col-md-4">工作组代码</label>

@@ -95,6 +95,16 @@ public class OMExceptionCodes {
 	public static final String FAILURE_WHRN_UPDATE_ORG_APP = R_EX_CODE("0014");
 	
 	/**
+	 * 新增子机构异常
+	 */
+	public static final String FAILURE_WHEN_CREATE_CHILD_ORG = R_EX_CODE("0015");
+	
+	/**
+	 * 修改机构信息异常
+	 */
+	public static final String FAILURE_WHEN_UPDATE_ORG_APP = R_EX_CODE("0016");
+	
+	/**
 	 * 以烤串方式拼接异常码
 	 * @param code 业务域范围内的异常编码
 	 * @return

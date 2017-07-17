@@ -54,12 +54,12 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
                                             toastr['success']( data.retMessage);
                                             //刷新树和列表
                                             $("#container").jstree().refresh();
-                                            initworkdata();
+                                            reworkgroupgrid();
                                             $scope.cancel();
                                         }else{
                                             toastr['error']( data.retMessage+" "+data.retCode);
                                             $("#container").jstree().refresh();
-                                            initworkdata();
+                                            reworkgroupgrid();
                                             $scope.cancel();
                                         }
                                     });
@@ -99,12 +99,10 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
                                             toastr['success']( data.retMessage);
                                             //刷新树和列表
                                             $("#container").jstree().refresh();
-                                            initworkdata();
                                             $scope.cancel();
                                         }else{
                                             toastr['error']( data.retMessage+" "+data.retCode);
                                             $("#container").jstree().refresh();
-                                            initworkdata();
                                             $scope.cancel();
                                         }
                                     });
@@ -322,8 +320,9 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
         { field: 'startDate', displayName: '工作组有效到期日', enableHiding: false},
         { field: 'lastupdate', displayName: '最后修改日', enableHiding: false}
     ]
-    $scope.workgroupgrid = initgrid($scope,workgroupgrid,null,filterFilter,com,false,selework);
-    console.log($scope.workgroupgrid)
+    $scope.workgroupgrid = initgrid($scope,workgroupgrid,filterFilter,com,false,selework);
+
+    var reworkgroupgrid = function () {
         //调取工作组信息OM_GROUP
         Workgroup_service.loadallgroup().then(function (data) {
             for(var i = 0;i<data.length;i++){
@@ -333,29 +332,34 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
                 data[i].lastupdate = FormatDate(data[i].lastupdate);
             }
             $scope.workgroupgrid.data = data;
-            $scope.workgroupgrid.mydefalutData = data
+            $scope.workgroupgrid.mydefalutData = data;
             $scope.workgroupgrid.getPage(1,$scope.workgroupgrid.paginationPageSize);
-
         })
+    }
+    reworkgroupgrid();
+
 
 
     
     //新增根工作组
-    workgroup.add = function () {
+    workgroup.add = function (str) {
         openwindow($uibModal, 'views/Workgroup/addworkgroup_window.html', 'lg',
             function ($scope, $modalInstance) {
                 //创建机构实例
                 var subFrom = {};
                 $scope.subFrom = subFrom;
+                //标识,根-子节点
+                subFrom.flag = str;
                 //增加方法
                 $scope.add = function (subFrom) {
                     //TODO.新增逻辑
                     Workgroup_service.addgroup(subFrom).then(function (data) {
                         console.log(data);
                         if(data.status == "success"){
-                            toastr['success']( data.status.message);
+                            toastr['success']( data.retMessage);
+                            reworkgroupgrid();
+                            $("#container").jstree().refresh();
                             $scope.cancel();
-                            initworkdata();
                         }else{
                             toastr['error']( "新增失败！");
                         }
@@ -446,22 +450,25 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
                 { field: 'startDate', displayName: '工作组有效到期日', enableHiding: false},
                 { field: 'lastupdate', displayName: '最后修改日', enableHiding: false}
             ]
-            $scope.xjworkgroupgrid = initgrid($scope,xjworkgroupgrid,null,filterFilter,com2,false,xjselework);
-            var subFrom = {};
-            subFrom.id = $scope.sub.guid;
-            //调取工作组信息OM_GROUP
-            Workgroup_service.loadxjgroup(subFrom).then(function (data) {
-                console.log(data);
-                for(var i = 0;i<data.length;i++){
-                    data[i].startDate = FormatDate(data[i].startDate);
-                    data[i].createtime = FormatDate(data[i].createtime);
-                    data[i].endDate = FormatDate(data[i].endDate);
-                    data[i].lastupdate = FormatDate(data[i].lastupdate);
-                }
-                $scope.xjworkgroupgrid.data = data;
-                $scope.xjworkgroupgrid.mydefalutData = data
-                $scope.xjworkgroupgrid.getPage(1,$scope.xjworkgroupgrid.paginationPageSize);
-            })
+            $scope.xjworkgroupgrid = initgrid($scope,xjworkgroupgrid,filterFilter,com2,false,xjselework);
+            var rexjgroup = function () {
+                var subFrom = {};
+                subFrom.id = $scope.sub.guid;
+                //调取工作组信息OM_GROUP
+                Workgroup_service.loadxjgroup(subFrom).then(function (data) {
+                    console.log(data);
+                    for(var i = 0;i<data.length;i++){
+                        data[i].startDate = FormatDate(data[i].startDate);
+                        data[i].createtime = FormatDate(data[i].createtime);
+                        data[i].endDate = FormatDate(data[i].endDate);
+                        data[i].lastupdate = FormatDate(data[i].lastupdate);
+                    }
+                    $scope.xjworkgroupgrid.data = data;
+                    $scope.xjworkgroupgrid.mydefalutData = data;
+                    $scope.xjworkgroupgrid.getPage(1,$scope.xjworkgroupgrid.paginationPageSize);
+                })
+            }
+            rexjgroup();
 
         }else if(num == 2){
             for(var a in flag){

@@ -428,7 +428,7 @@ function getYYYYMMDD(){
 //ui-grid init
 //thisobj--表ID,fun--返回data的方法,com--表列名,筛选配置项,bol--布尔值,是否多选.selection--自定义行选中
 
-function initgrid($scope, thisobj,data, filterFilter,com,bol,selection){
+function initgrid($scope, thisobj,filterFilter,com,bol,selection){
     thisobj = {
         data: [],
         //-------- 分页属性 ----------------
@@ -489,16 +489,14 @@ function initgrid($scope, thisobj,data, filterFilter,com,bol,selection){
 
     //ui-grid getPage方法
     thisobj.getPage = function(curPage, pageSize) {
-        console.log(curPage+""+thisobj.paginationPageSize);
-        var firstRow = (curPage - 1) * thisobj.paginationPageSize;
+        var firstRow = (curPage - 1) * pageSize;
         thisobj.totalItems = thisobj.mydefalutData.length;
-        thisobj.data = thisobj.mydefalutData.slice(firstRow, firstRow + thisobj.paginationPageSize);
+        thisobj.data = thisobj.mydefalutData.slice(firstRow, firstRow + pageSize);
         //或者像下面这种写法
         //$scope.myData = mydefalutData.slice(firstRow, firstRow + pageSize);
     };
     //测试
     // var a = $scope.girdApi.selection.getSelectedRows();
-    console.log(thisobj)
     return thisobj;
 }
 
