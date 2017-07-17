@@ -28,13 +28,13 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_behtype != null" >
+		<if test="guidBehtype != null" >
 			guid_behtype = #{guidBehtype,jdbcType=VARCHAR},
 		</if>
-		<if test="bhv_code != null" >
+		<if test="bhvCode != null" >
 			bhv_code = #{bhvCode,jdbcType=VARCHAR},
 		</if>
-		<if test="bhv_name != null" >
+		<if test="bhvName != null" >
 			bhv_name = #{bhvName,jdbcType=VARCHAR}
 		</if>
 	    </set>
@@ -64,15 +64,15 @@
     	UPDATE AC_BHV_DEF 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_behtype != null" >
-        	guid_behtype = #{domain.guidBehtype,jdbcType=VARCHAR}
+		<if test="domain.guidBehtype != null" >
+        	guid_behtype = #{domain.guidBehtype,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.bhv_code != null" >
-        	bhv_code = #{domain.bhvCode,jdbcType=VARCHAR}
+		<if test="domain.bhvCode != null" >
+        	bhv_code = #{domain.bhvCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.bhv_name != null" >
+		<if test="domain.bhvName != null" >
         	bhv_name = #{domain.bhvName,jdbcType=VARCHAR}
       	</if>
 	    </set>

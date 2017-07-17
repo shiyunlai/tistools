@@ -29,19 +29,19 @@
  	<update id="update" parameterType="org.tis.tools.model.po.ac.AcOperatorConfig">
     	UPDATE AC_OPERATOR_CONFIG 
 	    <set>
-		<if test="guid_operator != null" >
+		<if test="guidOperator != null" >
 			guid_operator = #{guidOperator,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_app != null" >
+		<if test="guidApp != null" >
 			guid_app = #{guidApp,jdbcType=VARCHAR},
 		</if>
-		<if test="config_type != null" >
+		<if test="configType != null" >
 			config_type = #{configType,jdbcType=VARCHAR},
 		</if>
-		<if test="config_name != null" >
+		<if test="configName != null" >
 			config_name = #{configName,jdbcType=VARCHAR},
 		</if>
-		<if test="config_value != null" >
+		<if test="configValue != null" >
 			config_value = #{configValue,jdbcType=VARCHAR},
 		</if>
 		<if test="isvalid != null" >
@@ -75,20 +75,20 @@
 	 <update id="updateByCondition" parameterType="map">
     	UPDATE AC_OPERATOR_CONFIG 
 	   <set>
-		<if test="domain.guid_operator != null" >
-        	guid_operator = #{domain.guidOperator,jdbcType=VARCHAR}
+		<if test="domain.guidOperator != null" >
+        	guid_operator = #{domain.guidOperator,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_app != null" >
-        	guid_app = #{domain.guidApp,jdbcType=VARCHAR}
+		<if test="domain.guidApp != null" >
+        	guid_app = #{domain.guidApp,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.config_type != null" >
-        	config_type = #{domain.configType,jdbcType=VARCHAR}
+		<if test="domain.configType != null" >
+        	config_type = #{domain.configType,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.config_name != null" >
-        	config_name = #{domain.configName,jdbcType=VARCHAR}
+		<if test="domain.configName != null" >
+        	config_name = #{domain.configName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.config_value != null" >
-        	config_value = #{domain.configValue,jdbcType=VARCHAR}
+		<if test="domain.configValue != null" >
+        	config_value = #{domain.configValue,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.isvalid != null" >
         	isvalid = #{domain.isvalid,jdbcType=CHAR}

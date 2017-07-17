@@ -48,22 +48,22 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_app != null" >
+		<if test="guidApp != null" >
 			guid_app = #{guidApp,jdbcType=VARCHAR},
 		</if>
-		<if test="entity_name != null" >
+		<if test="entityName != null" >
 			entity_name = #{entityName,jdbcType=VARCHAR},
 		</if>
-		<if test="table_name != null" >
+		<if test="tableName != null" >
 			table_name = #{tableName,jdbcType=VARCHAR},
 		</if>
-		<if test="entity_desc != null" >
+		<if test="entityDesc != null" >
 			entity_desc = #{entityDesc,jdbcType=VARCHAR},
 		</if>
-		<if test="display_order != null" >
+		<if test="displayOrder != null" >
 			display_order = #{displayOrder,jdbcType=DECIMAL},
 		</if>
-		<if test="entity_type != null" >
+		<if test="entityType != null" >
 			entity_type = #{entityType,jdbcType=VARCHAR},
 		</if>
 		<if test="isadd != null" >
@@ -81,10 +81,10 @@
 		<if test="ispage != null" >
 			ispage = #{ispage,jdbcType=CHAR},
 		</if>
-		<if test="page_len != null" >
+		<if test="pageLen != null" >
 			page_len = #{pageLen,jdbcType=DECIMAL},
 		</if>
-		<if test="check_ref != null" >
+		<if test="checkRef != null" >
 			check_ref = #{checkRef,jdbcType=VARCHAR}
 		</if>
 	    </set>
@@ -124,45 +124,45 @@
     	UPDATE AC_ENTITY 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_app != null" >
-        	guid_app = #{domain.guidApp,jdbcType=VARCHAR}
+		<if test="domain.guidApp != null" >
+        	guid_app = #{domain.guidApp,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.entity_name != null" >
-        	entity_name = #{domain.entityName,jdbcType=VARCHAR}
+		<if test="domain.entityName != null" >
+        	entity_name = #{domain.entityName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.table_name != null" >
-        	table_name = #{domain.tableName,jdbcType=VARCHAR}
+		<if test="domain.tableName != null" >
+        	table_name = #{domain.tableName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.entity_desc != null" >
-        	entity_desc = #{domain.entityDesc,jdbcType=VARCHAR}
+		<if test="domain.entityDesc != null" >
+        	entity_desc = #{domain.entityDesc,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.display_order != null" >
-        	display_order = #{domain.displayOrder,jdbcType=DECIMAL}
+		<if test="domain.displayOrder != null" >
+        	display_order = #{domain.displayOrder,jdbcType=DECIMAL},
       	</if>
-		<if test="domain.entity_type != null" >
-        	entity_type = #{domain.entityType,jdbcType=VARCHAR}
+		<if test="domain.entityType != null" >
+        	entity_type = #{domain.entityType,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.isadd != null" >
-        	isadd = #{domain.isadd,jdbcType=CHAR}
+        	isadd = #{domain.isadd,jdbcType=CHAR},
       	</if>
 		<if test="domain.isdel != null" >
-        	isdel = #{domain.isdel,jdbcType=CHAR}
+        	isdel = #{domain.isdel,jdbcType=CHAR},
       	</if>
 		<if test="domain.ismodify != null" >
-        	ismodify = #{domain.ismodify,jdbcType=CHAR}
+        	ismodify = #{domain.ismodify,jdbcType=CHAR},
       	</if>
 		<if test="domain.isview != null" >
-        	isview = #{domain.isview,jdbcType=CHAR}
+        	isview = #{domain.isview,jdbcType=CHAR},
       	</if>
 		<if test="domain.ispage != null" >
-        	ispage = #{domain.ispage,jdbcType=CHAR}
+        	ispage = #{domain.ispage,jdbcType=CHAR},
       	</if>
-		<if test="domain.page_len != null" >
-        	page_len = #{domain.pageLen,jdbcType=DECIMAL}
+		<if test="domain.pageLen != null" >
+        	page_len = #{domain.pageLen,jdbcType=DECIMAL},
       	</if>
-		<if test="domain.check_ref != null" >
+		<if test="domain.checkRef != null" >
         	check_ref = #{domain.checkRef,jdbcType=VARCHAR}
       	</if>
 	    </set>

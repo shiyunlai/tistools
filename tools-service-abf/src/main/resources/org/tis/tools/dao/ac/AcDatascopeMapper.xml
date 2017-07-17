@@ -32,19 +32,19 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_entity != null" >
+		<if test="guidEntity != null" >
 			guid_entity = #{guidEntity,jdbcType=VARCHAR},
 		</if>
-		<if test="priv_name != null" >
+		<if test="privName != null" >
 			priv_name = #{privName,jdbcType=VARCHAR},
 		</if>
-		<if test="data_op_type != null" >
+		<if test="dataOpType != null" >
 			data_op_type = #{dataOpType,jdbcType=VARCHAR},
 		</if>
-		<if test="entity_name != null" >
+		<if test="entityName != null" >
 			entity_name = #{entityName,jdbcType=VARCHAR},
 		</if>
-		<if test="filter_sql_string != null" >
+		<if test="filterSqlString != null" >
 			filter_sql_string = #{filterSqlString,jdbcType=VARCHAR}
 		</if>
 	    </set>
@@ -76,21 +76,21 @@
     	UPDATE AC_DATASCOPE 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_entity != null" >
-        	guid_entity = #{domain.guidEntity,jdbcType=VARCHAR}
+		<if test="domain.guidEntity != null" >
+        	guid_entity = #{domain.guidEntity,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.priv_name != null" >
-        	priv_name = #{domain.privName,jdbcType=VARCHAR}
+		<if test="domain.privName != null" >
+        	priv_name = #{domain.privName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.data_op_type != null" >
-        	data_op_type = #{domain.dataOpType,jdbcType=VARCHAR}
+		<if test="domain.dataOpType != null" >
+        	data_op_type = #{domain.dataOpType,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.entity_name != null" >
-        	entity_name = #{domain.entityName,jdbcType=VARCHAR}
+		<if test="domain.entityName != null" >
+        	entity_name = #{domain.entityName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.filter_sql_string != null" >
+		<if test="domain.filterSqlString != null" >
         	filter_sql_string = #{domain.filterSqlString,jdbcType=VARCHAR}
       	</if>
 	    </set>

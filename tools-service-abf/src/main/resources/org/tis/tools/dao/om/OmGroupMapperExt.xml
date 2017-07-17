@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.om.OmGroupMapperExt">
+  
+	
+	<select id="queryAllRoot" parameterType="String" resultType="org.tis.tools.model.po.om.OmGroup">
+		select <include refid="Base_Column_List"/> from OM_GROUP a 
+		where  guid_parents is null ; 
+	</select>
+	
+	<sql id="Base_Column_List" >
+		 guid as guid
+		,group_code as groupCode
+		,group_name as groupName
+		,group_type as groupType
+		,group_status as groupStatus
+		,group_desc as groupDesc
+		,guid_emp_manager as guidEmpManager
+		,guid_org as guidOrg
+		,guid_parents as guidParents
+		,isleaf as isleaf
+		,sub_count as subCount
+		,group_level as groupLevel
+		,group_seq as groupSeq
+		,start_date as startDate
+		,end_date as endDate
+		,createtime as createtime
+		,lastupdate as lastupdate
+		,updator as updator
+	</sql>
+</mapper>

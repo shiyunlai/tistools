@@ -48,31 +48,31 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="node_type != null" >
+		<if test="nodeType != null" >
 			node_type = #{nodeType,jdbcType=VARCHAR},
 		</if>
-		<if test="busiorg_code != null" >
+		<if test="busiorgCode != null" >
 			busiorg_code = #{busiorgCode,jdbcType=VARCHAR},
 		</if>
-		<if test="busi_domain != null" >
+		<if test="busiDomain != null" >
 			busi_domain = #{busiDomain,jdbcType=VARCHAR},
 		</if>
-		<if test="busiorg_name != null" >
+		<if test="busiorgName != null" >
 			busiorg_name = #{busiorgName,jdbcType=VARCHAR},
 		</if>
-		<if test="busiorg_level != null" >
+		<if test="busiorgLevel != null" >
 			busiorg_level = #{busiorgLevel,jdbcType=DECIMAL},
 		</if>
-		<if test="guid_org != null" >
+		<if test="guidOrg != null" >
 			guid_org = #{guidOrg,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_parents != null" >
+		<if test="guidParents != null" >
 			guid_parents = #{guidParents,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_position != null" >
+		<if test="guidPosition != null" >
 			guid_position = #{guidPosition,jdbcType=VARCHAR},
 		</if>
-		<if test="org_code != null" >
+		<if test="orgCode != null" >
 			org_code = #{orgCode,jdbcType=VARCHAR},
 		</if>
 		<if test="seqno != null" >
@@ -84,7 +84,7 @@
 		<if test="isleaf != null" >
 			isleaf = #{isleaf,jdbcType=CHAR},
 		</if>
-		<if test="sub_count != null" >
+		<if test="subCount != null" >
 			sub_count = #{subCount,jdbcType=DECIMAL}
 		</if>
 	    </set>

@@ -7,7 +7,7 @@
 <!-- BEGIN HEAD -->
 <head>
     <meta charset="utf-8"/>
-    <title> GOVERNOR | 登录</title>
+    <title> Tools ABF | 登录</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -49,36 +49,6 @@
 <!-- END SIDEBAR TOGGLER BUTTON -->
 <!-- BEGIN LOGIN -->
 <div class="content">
-
-    <!--<div class="login-form" ng-controller="loginController">-->
-        <!--<h3 class="form-title"></h3>-->
-        <!--<div class="alert alert-danger display-hide">-->
-            <!--<button class="close" data-close="alert"></button>-->
-            <!--<span>请输入用户名和密码.</span>-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-            <!--<label class="control-label visible-ie8 visible-ie9">用户名</label>-->
-            <!--<div class="input-icon">-->
-                <!--<i class="fa fa-user"></i>-->
-                <!--<input class="form-control placeholder-no-fix" ng-model="user.loginname" type="text" placeholder="用户名"  name="loginname"/>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-            <!--<label class="control-label visible-ie8 visible-ie9">密码</label>-->
-            <!--<div class="input-icon">-->
-                <!--<i class="fa fa-lock"></i>-->
-                <!--<input class="form-control placeholder-no-fix" ng-model="user.passwd" type="password" placeholder="密码"  name="passwd"/>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="form-actions">-->
-            <!--<label class="checkbox">-->
-                <!--<input type="checkbox" name="remember" value="1"/> 记住我 </label>-->
-            <!--<button type="submit" class="btn blue pull-right" ng-click="login(user)" >-->
-                <!--登录 <i class="m-icon-swapright m-icon-white"></i>-->
-            <!--</button>-->
-        <!--</div>-->
-    <!--</div>-->
-
     <form>
         <div class="login-form">
             <h3 class="form-title"></h3>
@@ -100,6 +70,17 @@
                     <input class="form-control placeholder-no-fix" type="password" placeholder="密码" id="password" name="password"/>
                 </div>
             </div>
+            <div class="form-group">
+                <label class="control-label visible-ie8 visible-ie9">选择身份</label>
+                <div class="input-icon">
+                    <i class="fa fa-user"></i>
+                    <select class="form-control placeholder-no-fix" placeholder="选择身份"  id="opertor"  name="opertor">
+                        <option value="">请选择身份</option>
+                        <option value="0">身份一</option>
+                        <option value="1">身份二</option>
+                    </select>
+                </div>
+            </div>
             <div class="form-actions">
                 <label class="checkbox">
                     <input type="checkbox" name="remember" value="1"/> 记住我 </label>
@@ -113,7 +94,7 @@
 <!-- END LOGIN -->
 <!-- BEGIN COPYRIGHT -->
 <div class="copyright">
-    2016 &copy; BRONS.
+    2016 &copy; TIS.
 </div>
 <!-- END COPYRIGHT -->
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
@@ -149,7 +130,9 @@
         var form = new FormData();
         form.append("loginname",$("#loginname").val());
         form.append("password",$("#password").val());
-        $.ajax({
+        form.append("opertor",$("#opertor").val());
+        window.location = "../tools/index.html";//如果正确，则进入主页
+        /*$.ajax({
             url:"..//user/login3",
             type:"post",
             data:form,
@@ -162,14 +145,14 @@
                     sessionStorage.trans = JSON.stringify(data.trans);
                     sessionStorage.menus = JSON.stringify(data.menus);
                     sessionStorage.msgs = JSON.stringify(data.msgs);
-                    window.location = "../m/index.html";
+                    window.location = "../index.html";//如果正确，则进入主页
                 }else if(data.retCode == '2'){
                     toastr['error'](data.retMessage, "登录失败！");
                 } else {
                     toastr['error']( "登录异常！");
                 }
             }
-        });
+        });*/
     };
 
     $(document).ready(function () {

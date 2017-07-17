@@ -6,13 +6,37 @@
 <mapper namespace="org.tis.tools.dao.ac.ApplicationMapper">
   
   
-    <select id="query" resultType="org.tis.tools.model.vo.ac.AcAppVo" parameterType="org.tis.tools.base.WhereCondition" >
+    <select id="queryAcAppVo" resultType="org.tis.tools.model.vo.ac.AcAppVo" parameterType="org.tis.tools.base.WhereCondition" >
     	select <include refid="Base_Column_List" /> from AC_APP <include refid="Where_Clause" />
         <if test="orderBy != null" >${orderBy}</if>
         <if test="length > 0" >LIMIT ${offset}, ${length}</if>
   	</select>
   
   
+  <select id="queryAcFuncVo" resultType="org.tis.tools.model.vo.ac.AcFuncVo"  parameterType="org.tis.tools.base.WhereCondition" >    	
+    	select <include refid="Base_Column_List_1" /> from AC_FUNC as a left join AC_FUNC_RESOURCE as b on a.guid =b.guid_func 
+    	<include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>  	
+  	</select>
+
+	<select id="queryBhvtypeDefByFunc" resultType="org.tis.tools.model.po.ac.AcBhvtypeDef"  parameterType="java.lang.String" >
+    	select <include refid="BhvtypeDef_Column_List" /> FROM AC_BHVTYPE_DEF  a JOIN AC_FUNC_BHVTYPE  b ON a.guid = b.`GUID_BHVTYPE` WHERE b.GUID_FUNC = #{funcGuid,jdbcType=VARCHAR}
+  	</select>
+
+	<select id="queryBhvDefInTypeForFunc" resultType="map">
+    	select <include refid="FuncBhvDef_Column_List" /> from AC_BHV_DEF a JOIN AC_FUNC_BHV b ON a.GUID = b.GUID_BHV WHERE b.GUID_FUNC = #{funcGuid,jdbcType=VARCHAR} and a.GUID_BEHTYPE = #{bhvtypeGuid,jdbcType=VARCHAR}
+  	</select>
+
+	<select id="queryAllBhvDefForFunc" resultType="map">
+    	select <include refid="FuncBhvDef_Column_List" /> from AC_BHV_DEF a JOIN AC_FUNC_BHV b ON a.GUID = b.GUID_BHV WHERE b.GUID_FUNC = #{funcGuid,jdbcType=VARCHAR}
+  	</select>
+	
+	<select id="queryFuncBhvRelation" resultType="map" parameterType="org.tis.tools.base.WhereCondition" >
+		SELECT b.GUID_FUNC,a.GUID_BEHTYPE AS GUID_BHVTYPE,a.`GUID` AS GUID_BHV FROM AC_BHV_DEF a JOIN AC_FUNC_BHV b ON a.GUID = b.GUID_BHV
+		<include refid="Where_Clause" />
+	</select>
+
 	<sql id="Where_Clause">
 	    <if test="condition != null"><where>${condition}</where></if> 
 	</sql>
@@ -34,4 +58,37 @@
 		,ip_addr as ipAddr
 		,ip_port as ipPort
 	</sql>
+	
+	<sql id="Base_Column_List_1" >
+		 a.guid as guid
+		,a.guid_funcgroup as guidFuncgroup
+		,a.func_code as funcCode
+		,a.func_name as funcName
+		,a.func_desc as funcDesc
+		,a.func_action as funcAction
+		,a.para_info as paraInfo
+		,a.func_type as funcType
+		,a.ischeck as ischeck
+		,a.ismenu as ismenu
+		,b.guid_func as guidFunc
+		,b.res_type as resType
+		,b.res_path as resPath
+		,b.compack_name as compackName
+		,b.res_show_name as resShowName
+	</sql>
+
+	<sql id="BhvtypeDef_Column_List" >
+		a.guid as guid
+		,a.bhvtype_code as bhvtypeCode
+		,a.bhvtype_name as bhvtypeName
+	</sql>
+
+	<sql id="FuncBhvDef_Column_List" >
+		a.guid as guid
+		,a.guid_behtype as guidBehtype
+		,a.bhv_code as bhvCode
+		,a.bhv_name as bhvName
+		,b.iseffective as iseffective
+	</sql>
+
 </mapper>

@@ -76,70 +76,70 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_entity != null" >
+		<if test="guidEntity != null" >
 			guid_entity = #{guidEntity,jdbcType=VARCHAR},
 		</if>
-		<if test="field_name != null" >
+		<if test="fieldName != null" >
 			field_name = #{fieldName,jdbcType=VARCHAR},
 		</if>
-		<if test="field_desc != null" >
+		<if test="fieldDesc != null" >
 			field_desc = #{fieldDesc,jdbcType=VARCHAR},
 		</if>
-		<if test="display_format != null" >
+		<if test="displayFormat != null" >
 			display_format = #{displayFormat,jdbcType=VARCHAR},
 		</if>
-		<if test="doclist_code != null" >
+		<if test="doclistCode != null" >
 			doclist_code = #{doclistCode,jdbcType=VARCHAR},
 		</if>
-		<if test="checkbox_value != null" >
+		<if test="checkboxValue != null" >
 			checkbox_value = #{checkboxValue,jdbcType=VARCHAR},
 		</if>
-		<if test="fk_inputurl != null" >
+		<if test="fkInputurl != null" >
 			fk_inputurl = #{fkInputurl,jdbcType=VARCHAR},
 		</if>
-		<if test="fk_fielddesc != null" >
+		<if test="fkFielddesc != null" >
 			fk_fielddesc = #{fkFielddesc,jdbcType=VARCHAR},
 		</if>
-		<if test="fk_columnname != null" >
+		<if test="fkColumnname != null" >
 			fk_columnname = #{fkColumnname,jdbcType=VARCHAR},
 		</if>
-		<if test="fk_tablename != null" >
+		<if test="fkTablename != null" >
 			fk_tablename = #{fkTablename,jdbcType=VARCHAR},
 		</if>
-		<if test="desc_fieldname != null" >
+		<if test="descFieldname != null" >
 			desc_fieldname = #{descFieldname,jdbcType=VARCHAR},
 		</if>
-		<if test="ref_type != null" >
+		<if test="refType != null" >
 			ref_type = #{refType,jdbcType=VARCHAR},
 		</if>
-		<if test="field_type != null" >
+		<if test="fieldType != null" >
 			field_type = #{fieldType,jdbcType=VARCHAR},
 		</if>
-		<if test="display_order != null" >
+		<if test="displayOrder != null" >
 			display_order = #{displayOrder,jdbcType=DECIMAL},
 		</if>
-		<if test="column_name != null" >
+		<if test="columnName != null" >
 			column_name = #{columnName,jdbcType=VARCHAR},
 		</if>
 		<if test="width != null" >
 			width = #{width,jdbcType=DECIMAL},
 		</if>
-		<if test="default_value != null" >
+		<if test="defaultValue != null" >
 			default_value = #{defaultValue,jdbcType=VARCHAR},
 		</if>
-		<if test="min_value != null" >
+		<if test="minValue != null" >
 			min_value = #{minValue,jdbcType=VARCHAR},
 		</if>
-		<if test="max_value != null" >
+		<if test="maxValue != null" >
 			max_value = #{maxValue,jdbcType=VARCHAR},
 		</if>
-		<if test="length_value != null" >
+		<if test="lengthValue != null" >
 			length_value = #{lengthValue,jdbcType=DECIMAL},
 		</if>
-		<if test="precision_value != null" >
+		<if test="precisionValue != null" >
 			precision_value = #{precisionValue,jdbcType=DECIMAL},
 		</if>
-		<if test="validate_type != null" >
+		<if test="validateType != null" >
 			validate_type = #{validateType,jdbcType=VARCHAR},
 		</if>
 		<if test="ismodify != null" >
@@ -208,85 +208,85 @@
     	UPDATE AC_ENTITYFIELD 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_entity != null" >
-        	guid_entity = #{domain.guidEntity,jdbcType=VARCHAR}
+		<if test="domain.guidEntity != null" >
+        	guid_entity = #{domain.guidEntity,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.field_name != null" >
-        	field_name = #{domain.fieldName,jdbcType=VARCHAR}
+		<if test="domain.fieldName != null" >
+        	field_name = #{domain.fieldName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.field_desc != null" >
-        	field_desc = #{domain.fieldDesc,jdbcType=VARCHAR}
+		<if test="domain.fieldDesc != null" >
+        	field_desc = #{domain.fieldDesc,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.display_format != null" >
-        	display_format = #{domain.displayFormat,jdbcType=VARCHAR}
+		<if test="domain.displayFormat != null" >
+        	display_format = #{domain.displayFormat,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.doclist_code != null" >
-        	doclist_code = #{domain.doclistCode,jdbcType=VARCHAR}
+		<if test="domain.doclistCode != null" >
+        	doclist_code = #{domain.doclistCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.checkbox_value != null" >
-        	checkbox_value = #{domain.checkboxValue,jdbcType=VARCHAR}
+		<if test="domain.checkboxValue != null" >
+        	checkbox_value = #{domain.checkboxValue,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.fk_inputurl != null" >
-        	fk_inputurl = #{domain.fkInputurl,jdbcType=VARCHAR}
+		<if test="domain.fkInputurl != null" >
+        	fk_inputurl = #{domain.fkInputurl,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.fk_fielddesc != null" >
-        	fk_fielddesc = #{domain.fkFielddesc,jdbcType=VARCHAR}
+		<if test="domain.fkFielddesc != null" >
+        	fk_fielddesc = #{domain.fkFielddesc,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.fk_columnname != null" >
-        	fk_columnname = #{domain.fkColumnname,jdbcType=VARCHAR}
+		<if test="domain.fkColumnname != null" >
+        	fk_columnname = #{domain.fkColumnname,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.fk_tablename != null" >
-        	fk_tablename = #{domain.fkTablename,jdbcType=VARCHAR}
+		<if test="domain.fkTablename != null" >
+        	fk_tablename = #{domain.fkTablename,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.desc_fieldname != null" >
-        	desc_fieldname = #{domain.descFieldname,jdbcType=VARCHAR}
+		<if test="domain.descFieldname != null" >
+        	desc_fieldname = #{domain.descFieldname,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.ref_type != null" >
-        	ref_type = #{domain.refType,jdbcType=VARCHAR}
+		<if test="domain.refType != null" >
+        	ref_type = #{domain.refType,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.field_type != null" >
-        	field_type = #{domain.fieldType,jdbcType=VARCHAR}
+		<if test="domain.fieldType != null" >
+        	field_type = #{domain.fieldType,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.display_order != null" >
-        	display_order = #{domain.displayOrder,jdbcType=DECIMAL}
+		<if test="domain.displayOrder != null" >
+        	display_order = #{domain.displayOrder,jdbcType=DECIMAL},
       	</if>
-		<if test="domain.column_name != null" >
-        	column_name = #{domain.columnName,jdbcType=VARCHAR}
+		<if test="domain.columnName != null" >
+        	column_name = #{domain.columnName,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.width != null" >
-        	width = #{domain.width,jdbcType=DECIMAL}
+        	width = #{domain.width,jdbcType=DECIMAL},
       	</if>
-		<if test="domain.default_value != null" >
-        	default_value = #{domain.defaultValue,jdbcType=VARCHAR}
+		<if test="domain.defaultValue != null" >
+        	default_value = #{domain.defaultValue,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.min_value != null" >
-        	min_value = #{domain.minValue,jdbcType=VARCHAR}
+		<if test="domain.minValue != null" >
+        	min_value = #{domain.minValue,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.max_value != null" >
-        	max_value = #{domain.maxValue,jdbcType=VARCHAR}
+		<if test="domain.maxValue != null" >
+        	max_value = #{domain.maxValue,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.length_value != null" >
-        	length_value = #{domain.lengthValue,jdbcType=DECIMAL}
+		<if test="domain.lengthValue != null" >
+        	length_value = #{domain.lengthValue,jdbcType=DECIMAL},
       	</if>
-		<if test="domain.precision_value != null" >
-        	precision_value = #{domain.precisionValue,jdbcType=DECIMAL}
+		<if test="domain.precisionValue != null" >
+        	precision_value = #{domain.precisionValue,jdbcType=DECIMAL},
       	</if>
-		<if test="domain.validate_type != null" >
-        	validate_type = #{domain.validateType,jdbcType=VARCHAR}
+		<if test="domain.validateType != null" >
+        	validate_type = #{domain.validateType,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.ismodify != null" >
-        	ismodify = #{domain.ismodify,jdbcType=CHAR}
+        	ismodify = #{domain.ismodify,jdbcType=CHAR},
       	</if>
 		<if test="domain.isdisplay != null" >
-        	isdisplay = #{domain.isdisplay,jdbcType=CHAR}
+        	isdisplay = #{domain.isdisplay,jdbcType=CHAR},
       	</if>
 		<if test="domain.isinput != null" >
-        	isinput = #{domain.isinput,jdbcType=CHAR}
+        	isinput = #{domain.isinput,jdbcType=CHAR},
       	</if>
 		<if test="domain.ispk != null" >
-        	ispk = #{domain.ispk,jdbcType=CHAR}
+        	ispk = #{domain.ispk,jdbcType=CHAR},
       	</if>
 		<if test="domain.isautokey != null" >
         	isautokey = #{domain.isautokey,jdbcType=CHAR}

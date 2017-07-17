@@ -14,7 +14,10 @@ import org.tis.tools.base.WhereCondition;
 import org.tis.tools.dao.ac.AcAppMapper;
 import org.tis.tools.dao.ac.ApplicationMapper;
 import org.tis.tools.model.po.ac.AcApp;
+import org.tis.tools.model.po.ac.AcBhvDef;
+import org.tis.tools.model.po.ac.AcBhvtypeDef;
 import org.tis.tools.model.vo.ac.AcAppVo;
+import org.tis.tools.model.vo.ac.AcFuncVo;
 
 
 /**
@@ -30,8 +33,55 @@ public class ApplicationService {
 	
    
 
-    public List<AcAppVo> query(WhereCondition wc){
-    	return applitionMapper.query(wc); 
+    public List<AcAppVo> queryAcAppVo(WhereCondition wc){
+    	return applitionMapper.queryAcAppVo(wc); 
     }
+    /**
+	 * 根据条件查询功能(AC_FUNC)
+	 * @param wc WhereCondition条件
+	 * @return 满足条件的记录
+	 */
+	public List<AcFuncVo> queryAcFuncVo(WhereCondition wc){
+		return applitionMapper.queryAcFuncVo(wc);
+	}
+
+
+	/**
+	 * 根据条件查询功能(AC_FUNC)
+	 * @param funcGuid 条件
+	 * @return 满足条件的记录
+	 */
+	public List<AcBhvtypeDef> queryBhvtypeDefByFunc(String funcGuid){
+		return applitionMapper.queryBhvtypeDefByFunc(funcGuid);
+	}
+
+	/**
+	 * 查询功能下的行为类型的行为定义
+	 * @param funcGuid
+	 * @param bhvtypeGuid
+	 * @return 满足条件的记录
+	 */
+	public List<Map> queryBhvDefInTypeForFunc(String funcGuid, String bhvtypeGuid) {
+		return applitionMapper.queryBhvDefInTypeForFunc(funcGuid, bhvtypeGuid);
+	}
+
+
+	/**
+	 * queryAllDefForFunc 查询功能下所有行为定义
+	 * @param funcGuid 功能GUID
+	 * @return list
+	 */
+	public List<Map> queryAllBhvDefForFunc(String funcGuid) {
+		return applitionMapper.queryAllBhvDefForFunc(funcGuid);
+	}
+
+	/**
+	 * 查询 功能-行为类型-现为定义 关系
+	 * @param wc
+	 * @return
+	 */
+	public List<Map> queryFuncBhvRelation(WhereCondition wc) {
+		return applitionMapper.queryFuncBhvRelation(wc);
+	}
     
 }

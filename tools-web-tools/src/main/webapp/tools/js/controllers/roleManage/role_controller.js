@@ -57,7 +57,7 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
                 })
         }
         //修改逻辑
-        $scope.role_edit = function(id){
+        /*$scope.role_edit = function(id){
            if($scope.selectRow){
                openwindow($modal, 'views/roleManage/rolemanageAdd.html', 'lg',//弹出页面
                    function ($scope, $modalInstance) {
@@ -74,7 +74,7 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
            }else{
                toastr['error']("请至少选择一条数据进行修改！");
            }
-        }
+        }*/
         //删除逻辑
         $scope.role_delete = function(){
             if($scope.selectRow){
@@ -327,39 +327,58 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
         }
     }
     $scope.gridOptions2 = initgrid($scope,gridOptions2,initdata2(),filterFilter,com2,false,f2);
-    //新增操作员方法
+    //新增组织方法
     $scope.role.orgAdd = function(){
         openwindow($modal, 'views/roleManage/roleAddorg.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
-                $scope.add = function(item){
-                    //新增代码
-                    toastr['success']("新增操作员成功！");
-                    $modalInstance.close();
+                $scope.importadd = [
+                    {'orgName':'com.primeton.workflow.manager.def'},
+                    { 'orgName':'com.primeton.workflow.client.process'},
+                    {'orgName':'com.primeton.workflow.eos.exp'},
+                    { 'orgName':'org.gocom.abframe.ztest'},
+                    { 'orgName':'测试'},
+                    { 'orgName':'测试'},
+                    { 'orgName':'权限管理'},
+                    { 'orgName':'其他管理'},
+                    { 'orgName':'com.primeton.workflow.core'}
+                ];
+                var gridOptions = {};
+                $scope.gridOptions = gridOptions;
+                var initdata = function(){
+                    return $scope.importadd;//数据方法
+                }
+                var com = [
+                    { field: "orgName", displayName:'组织名称'}
+                ];
+                //自定义点击事件
+                var f1 = function(row){
+                    if(row.isSelected){
+                        $scope.selectRow3 = row.entity;
+                    }else{
+                        delete $scope.selectRow3;//制空
+                    }
+                }
+                $scope.gridOptions = initgrid($scope,gridOptions,initdata(),filterFilter,com,true,f1);
+                //创建机构实例
+                //导入方法
+                $scope.importAdd = function () {
+                    var dats = $scope.gridOptions.getSelectedRows();
+                    if(dats.length >0){
+                        //console.log(dats)//选中的数据
+                        //TODO.批量导入新增逻辑，加入数据库即可
+                        toastr['success']("导入成功！");
+                        $modalInstance.close();
+                    }else{
+                        toastr['error']("请至少选中一个！");
+                    }
                 }
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                 };
             })
     }
-    //修改tab操作员方法
-    $scope.role_orgEdit = function(id){
-        if($scope.selectRow2){
-            openwindow($modal, 'views/roleManage/roleAddorg.html', 'lg',//弹出页面
-                function ($scope, $modalInstance) {
-                    $scope.add = function(item){
-                        $scope.id = id;
-                        //新增代码
-                        toastr['success']("新增操作员成功！");
-                        $modalInstance.close();
-                    }
-                    $scope.cancel = function () {
-                        $modalInstance.dismiss('cancel');
-                    };
-                })
-        }else{
-            toastr['error']("请最少选中一条进行编辑！");
-        }
-    }
+    //修改tab操作员方法  不需要
+
     //删除tab组织方法
     $scope.role_orgDelete = function(){
         if($scope.selectRow2){
@@ -402,17 +421,54 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
     $scope.role.workAdd = function(){
         openwindow($modal, 'views/roleManage/roleAddwork.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
-                $scope.add = function(item){
-                    //新增代码
-                    toastr['success']("新增操作员成功！");
-                    $modalInstance.close();
+                $scope.importadd = [
+                    {'workName':'com.primeton.workflow.manager.def'},
+                    { 'workName':'com.primeton.workflow.client.process'},
+                    {'workName':'com.primeton.workflow.eos.exp'},
+                    { 'workName':'org.gocom.abframe.ztest'},
+                    { 'workName':'测试'},
+                    { 'workName':'测试'},
+                    { 'workName':'权限管理'},
+                    { 'workName':'其他管理'},
+                    { 'workName':'com.primeton.workflow.core'}
+                    ];
+                var gridOptions = {};
+                $scope.gridOptions = gridOptions;
+                var initdata = function(){
+                        return $scope.importadd;
+                    }//数据方法
+
+                 var com = [
+                    { field: "workName", displayName:'工作组名称'}
+                 ];
+                //自定义点击事件
+                var f1 = function(row){
+                    if(row.isSelected){
+                       $scope.selectRow3 = row.entity;
+                        }
+                    else{
+                        delete $scope.selectRow3;//制空
+                    }
+                }
+                $scope.gridOptions = initgrid($scope,gridOptions,initdata(),filterFilter,com,true,f1);
+                $scope.importAdd = function () {
+                    var dats = $scope.gridOptions.getSelectedRows();
+                    if (dats.length > 0) {
+                        //console.log(dats)//选中的数据
+                        //TODO.批量导入新增逻辑，加入数据库即可
+                        toastr['success']("导入成功！");
+                        $modalInstance.close();
+                    }
+                    else {
+                        toastr['error']("请至少选中一个！");
+                    }
                 }
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                 };
             })
     }
-    //修改tab功能组方法
+   /* //修改tab功能组方法
     $scope.role_workEdit = function(id){
         if($scope.selectRow3){
             openwindow($modal, 'views/roleManage/roleAddwork.html', 'lg',//弹出页面
@@ -430,7 +486,7 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
         }else{
             toastr['error']("请最少选中一条进行编辑！");
         }
-    }
+    }*/
     //删除tab操作员方法
     $scope.role_workDelete = function(){
         if($scope.selectRow3){
@@ -471,10 +527,47 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
     $scope.role.postAdd = function(){
         openwindow($modal, 'views/roleManage/roleAddpost.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
-                $scope.add = function(item){
-                    //新增代码
-                    toastr['success']("新增操作员成功！");
-                    $modalInstance.close();
+                $scope.importadd = [
+                    {'postName':'com.primeton.workflow.manager.def'},
+                    { 'postName':'com.primeton.workflow.client.process'},
+                    {'postName':'com.primeton.workflow.eos.exp'},
+                    { 'postName':'org.gocom.abframe.ztest'},
+                    { 'postName':'测试'},
+                    { 'postName':'测试'},
+                    { 'postName':'权限管理'},
+                    { 'postName':'其他管理'},
+                    { 'postName':'com.primeton.workflow.core'}
+                ];
+                var gridOptions = {};
+                $scope.gridOptions = gridOptions;
+                var initdata = function(){
+                    return $scope.importadd;
+                }//数据方法
+
+                var com = [
+                    { field: "postName", displayName:'岗位名称'}
+                ];
+                //自定义点击事件
+                var f1 = function(row){
+                    if(row.isSelected){
+                        $scope.selectRow3 = row.entity;
+                    }
+                    else{
+                        delete $scope.selectRow3;//制空
+                    }
+                }
+                $scope.gridOptions = initgrid($scope,gridOptions,initdata(),filterFilter,com,true,f1);
+                $scope.importAdd = function () {
+                    var dats = $scope.gridOptions.getSelectedRows();
+                    if (dats.length > 0) {
+                        //console.log(dats)//选中的数据
+                        //TODO.批量导入新增逻辑，加入数据库即可
+                        toastr['success']("导入成功！");
+                        $modalInstance.close();
+                    }
+                    else {
+                        toastr['error']("请至少选中一个！");
+                    }
                 }
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
@@ -482,7 +575,7 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
             })
     }
     //修改tab功能组方法
-    $scope.role_postEdit = function(id){
+    /*$scope.role_postEdit = function(id){
         if($scope.selectRow4){
             openwindow($modal, 'views/roleManage/roleAddpost.html', 'lg',//弹出页面
                 function ($scope, $modalInstance) {
@@ -499,7 +592,7 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
         }else{
             toastr['error']("请最少选中一条进行编辑！");
         }
-    }
+    }*/
     //删除tab操作员方法
     $scope.role_postDelete = function(){
         if($scope.selectRow4){
@@ -540,10 +633,47 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
     $scope.role.zhiwuAdd = function(){
         openwindow($modal, 'views/roleManage/roleAddzw.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
-                $scope.add = function(item){
-                    //新增代码
-                    toastr['success']("新增操作员成功！");
-                    $modalInstance.close();
+                $scope.importadd = [
+                    {'zhiwuName':'com.primeton.workflow.manager.def'},
+                    { 'zhiwuName':'com.primeton.workflow.client.process'},
+                    {'zhiwuName':'com.primeton.workflow.eos.exp'},
+                    { 'zhiwuName':'org.gocom.abframe.ztest'},
+                    { 'zhiwuName':'测试'},
+                    { 'zhiwuName':'测试'},
+                    { 'zhiwuName':'权限管理'},
+                    { 'zhiwuName':'其他管理'},
+                    { 'zhiwuName':'com.primeton.workflow.core'}
+                ];
+                var gridOptions = {};
+                $scope.gridOptions = gridOptions;
+                var initdata = function(){
+                    return $scope.importadd;
+                }//数据方法
+
+                var com = [
+                    { field: "zhiwuName", displayName:'职位名称'}
+                ];
+                //自定义点击事件
+                var f1 = function(row){
+                    if(row.isSelected){
+                        $scope.selectRow3 = row.entity;
+                    }
+                    else{
+                        delete $scope.selectRow3;//制空
+                    }
+                }
+                $scope.gridOptions = initgrid($scope,gridOptions,initdata(),filterFilter,com,true,f1);
+                $scope.importAdd = function () {
+                    var dats = $scope.gridOptions.getSelectedRows();
+                    if (dats.length > 0) {
+                        //console.log(dats)//选中的数据
+                        //TODO.批量导入新增逻辑，加入数据库即可
+                        toastr['success']("导入成功！");
+                        $modalInstance.close();
+                    }
+                    else {
+                        toastr['error']("请至少选中一个！");
+                    }
                 }
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
@@ -551,7 +681,7 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
             })
     }
     //修改tab功能组方法
-    $scope.role.zhiwuEdit = function(id){
+  /*  $scope.role.zhiwuEdit = function(id){
         if($scope.selectRowzw){
             openwindow($modal, 'views/roleManage/roleAddzw.html', 'lg',//弹出页面
                 function ($scope, $modalInstance) {
@@ -568,7 +698,7 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
         }else{
             toastr['error']("请最少选中一条进行编辑！");
         }
-    }
+    }*/
     //删除tab操作员方法
     $scope.role.zhiwuDelete = function(){
         if($scope.selectRowzw){
@@ -615,19 +745,54 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
     $scope.role.operaAdd = function(){
         openwindow($modal, 'views/roleManage/roleoperAdd.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
-                $scope.add = function(item){
-                    //新增代码
-                    toastr['success']("新增成功！");
-                    $modalInstance.close();
+                $scope.importadd = [
+                    {'OPERATOR_NAME':'成1','USER_ID':'cheng','AUTH_MODE':'pwd','OPERATOR_STATUS':'启动'},
+                    {'OPERATOR_NAME':'波','USER_ID':'bo','AUTH_MODE':'captcha','OPERATOR_STATUS':'暂停'},
+                    {'OPERATOR_NAME':'杰杰','USER_ID':'jie','AUTH_MODE':'pwd','OPERATOR_STATUS':'注销'},
+                    {'OPERATOR_NAME':'齐','USER_ID':'qi','AUTH_MODE':'本地密码认证','OPERATOR_STATUS':'正常'}
+                ];
+                var gridOptions = {};
+                $scope.gridOptions = gridOptions;
+                var initdata = function(){
+                    return $scope.importadd;
+                }//数据方法
+
+                var com = [
+                    { field: 'OPERATOR_NAME', displayName: '操作员姓名'},
+                    { field: "OPERATOR_STATUS",displayName:'操作员状态'},
+                    { field: "USER_ID", displayName:'登录用户名'},
+                    { field: "AUTH_MODE", displayName:'认证模式'}
+                ];
+                //自定义点击事件
+                var f1 = function(row){
+                    if(row.isSelected){
+                        $scope.selectRow3 = row.entity;
+                    }
+                    else{
+                        delete $scope.selectRow3;//制空
+                    }
                 }
+                $scope.gridOptions = initgrid($scope,gridOptions,initdata(),filterFilter,com,true,f1);
+                $scope.importAdd = function () {
+                    var dats = $scope.gridOptions.getSelectedRows();
+                    if (dats.length > 0) {
+                        //console.log(dats)//选中的数据
+                        //TODO.批量导入新增逻辑，加入数据库即可
+                        toastr['success']("导入成功！");
+                        $modalInstance.close();
+                    }
+                    else {
+                        toastr['error']("请至少选中一个！");
+                    }
+                }
+
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                 };
-
             })
     }
     //修改操作员逻辑
-    $scope.role.operaEdit = function(id){
+  /*  $scope.role.operaEdit = function(id){
         if($scope.selectRower){
             openwindow($modal, 'views/roleManage/roleoperAdd.html', 'lg',//弹出页面
                 function ($scope, $modalInstance) {
@@ -650,7 +815,7 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
         }else{
             toastr['error']("请选中一条进行修改！");
         }
-    }
+    }*/
     //删除操作员逻辑
     $scope.role.operaDelete = function(){
         if($scope.selectRower){

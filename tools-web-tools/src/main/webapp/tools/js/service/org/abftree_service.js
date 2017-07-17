@@ -11,6 +11,13 @@ MetronicApp.factory('abftree_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     }
+    service.loadsearchtree = function (subFrom) {
+        console.log(subFrom)
+        var res = $http.post(manurl + "/om/org/search",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
     service.loadgwtree = function (subFrom) {
         //todo
         var res = $http.post(manurl + "/om/org/tree",subFrom).then(function (response) {

@@ -692,11 +692,30 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             data: {pageTitle: '操作员身份'},
             controller:"operstatus_controller"
         })
+
+        .state("emp",{
+            url:"/Emp.html",
+            templateUrl:"views/Emp/Emp.html",
+            data: {pageTitle: '员工管理'},
+            controller:"Emp_controller"
+        })
+        .state("Workgroup", {
+            url: "/Workgroup.html",
+            templateUrl: "views/Workgroup/Workgroup.html",
+            data: {pageTitle: '工作组管理'},
+            controller: "Workgroup_controller"
+        })
         .state("dictionary",{
             url:"/dictionary.html",
             templateUrl:"views/dictionary/dictionary.html",
-            data: {pageTitle: '操作员身份'},
+            data: {pageTitle: '业务字典'},
             controller:"dictionary_controller"
+        })
+        .state("numberResources",{
+            url:"/numberResources.html",
+            templateUrl:"views/numberResources/numberResources.html",
+            data: {pageTitle: '序号资源表'},
+            controller:"numres_controller"
         })
 }]);
 

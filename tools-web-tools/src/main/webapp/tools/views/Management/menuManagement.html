@@ -19,7 +19,7 @@
             <div class="portlet-body">
                 <div class="row">
                     <!-- 组织机构树 start -->
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="portlet light">
                             <div class="portlet-title">
                                 <div class="caption">
@@ -31,19 +31,37 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="portlet-body" style="overflow-y:hidden;">
-                                <form id="s">
-                                    <input type="search" id="q"/>
-                                    <button type="submit">检索</button>
-                                </form>
-                                <div id="container"></div>
+                            <label class="control-label col-md-4"> 选择应用: </label>
+                            <div class="col-md-5">
+                                <select class="form-control"  name="dict_type" ng-model="menu.appselect" name="dict_type">
+                                    <option value="0">组织机构</option>
+                                    <option value="1">权限管理</option>
+                                    <option value="2">授权认证</option>
+                                    <option value="3">其他管理</option>
+                                    <option value="4">其他管理</option>
+                                    <option value="5">工作流</option>
+                                    <option value="6">测试图标</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" name="back"  class="btn btn-primary"    popover-trigger="mouseenter" ng-click="menu.search(menu)" > 查询
+                                </button>
+                            </div>
+                            <div class="portlet-body" style="overflow-y:hidden;" ng-show="menu.show">
+                                <div class="shu" style="margin-top: 20px;">
+                                    <form id="s">
+                                        <input type="search" id="q"/>
+                                        <button type="submit">检索</button>
+                                    </form>
+                                    <div id="container"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- 组织机构树 end -->
                     <!--右侧结构-->
-                    <div class="col-md-9">
-                        <div class="portlet light portlet-fit portlet-datatable bordered" style="width: 100%;min-height:848px;height: 100%" ng-if='menu.menushow'>
+                    <div class="col-md-8" ng-if="menu.show">
+                        <div class="portlet light portlet-fit portlet-datatable bordered" style="width: 100%;min-height:848px;height: 100%"  ng-if='menu.menushow'>
                             <div class="portlet-title">
                                 <div class="caption">
                                     <i class="fa fa-shopping-cart"></i> 菜单详情 </div>
@@ -73,16 +91,6 @@
                             <div class="portlet-body" style="min-height:500px; height: 100%" >
                                 <form action="#" name="menuform" class="form-horizontal ">
                                     <div class="form-body ">
-                                        <div class="col-md-6" >
-                                            <div class="form-group">
-                                                <label class="control-label col-md-4">父菜单显示名称</label>
-                                                <div class="col-md-8">
-                                                    <input type="text" class="form-control"
-                                                           ng-model="menuFrom.parshowname"
-                                                           name="id" ng-disabled="!editflag"/>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="col-md-6" >
                                             <div class="form-group">
                                                 <label class="control-label col-md-4">菜单名称:<span ng-class="{required:menuform.dict_key.$invalid}"  > * </span></label>
@@ -119,13 +127,13 @@
                                                 <div class="col-md-8">
                                                     <select class="form-control" name="dict_open" ng-model="menuFrom.childmenu" ng-disabled="!editflag">
                                                         <option value=""></option>
-                                                        <option value="s">是</option>
-                                                        <option value="a">否</option>
+                                                        <option value="Y">是</option>
+                                                        <option value="N">否</option>
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6" >
+                                        <!--<div class="col-md-6" >
                                             <div class="form-group">
                                                 <label class="control-label col-md-4">功能名称</label>
                                                 <div class="col-md-8">
@@ -134,28 +142,7 @@
                                                            name="id" ng-disabled="!editflag"/>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div class="col-md-6" >
-                                            <div class="form-group">
-                                                <label class="control-label col-md-4">页面打开方法</label>
-                                                <div class="col-md-8">
-                                                    <select class="form-control" name="dict_open" ng-model="menuFrom.openfade" ng-disabled="!editflag">
-                                                        <option value="">普通页面</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6" >
-                                            <div class="form-group">
-                                                <label class="control-label col-md-4">显示顺序</label>
-                                                <div class="col-md-8">
-                                                    <input type="text" class="form-control"
-                                                           ng-model="menuFrom.order"
-                                                           name="id" ng-disabled="!editflag"/>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </div>-->
                                         <div class="col-md-6" >
                                             <div class="form-group">
                                                 <label class="control-label col-md-4">菜单闭合路径</label>

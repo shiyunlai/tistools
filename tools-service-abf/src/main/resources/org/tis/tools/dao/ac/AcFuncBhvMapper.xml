@@ -28,10 +28,10 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_func != null" >
+		<if test="guidFunc != null" >
 			guid_func = #{guidFunc,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_bhv != null" >
+		<if test="guidBhv != null" >
 			guid_bhv = #{guidBhv,jdbcType=VARCHAR},
 		</if>
 		<if test="iseffective != null" >
@@ -64,13 +64,13 @@
     	UPDATE AC_FUNC_BHV 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_func != null" >
-        	guid_func = #{domain.guidFunc,jdbcType=VARCHAR}
+		<if test="domain.guidFunc != null" >
+        	guid_func = #{domain.guidFunc,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_bhv != null" >
-        	guid_bhv = #{domain.guidBhv,jdbcType=VARCHAR}
+		<if test="domain.guidBhv != null" >
+        	guid_bhv = #{domain.guidBhv,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.iseffective != null" >
         	iseffective = #{domain.iseffective,jdbcType=CHAR}

@@ -26,7 +26,7 @@ angular.module('MetronicApp').controller('abftree_qx_controller', function($root
         return $scope.Jurisdiction;
     }
     var com = [
-        { field: '角色拥有权限', width: 400}
+        { field: '角色拥有权限'}
     ]
     $scope.mygrid = initgrid($scope,mygrid,initdata(),filterFilter,com);
     //已经授权的角色

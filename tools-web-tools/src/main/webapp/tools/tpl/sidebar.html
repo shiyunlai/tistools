@@ -6,7 +6,7 @@
                     <i class="icon-close"></i>
                 </a>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search...">
+                    <input type="text" class="form-control" placeholder="Search..." ng-model="searchParam" ng-change="search(searchParam)">
                     <span class="input-group-btn">
                         <a href="javascript:;" class="btn submit">
                             <i class="icon-magnifier"></i>
@@ -40,7 +40,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:;">
+                            <a href="#/Emp.html">
                                 <i class="icon-puzzle"></i>员工管理</span>
                             </a>
                         </li>
@@ -50,7 +50,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:;">
+                            <a href="#/Workgroup.html">
                                 <i class="icon-puzzle"></i>工作组</span>
                             </a>
                         </li>
@@ -150,6 +150,11 @@
                             <a href="#/dictionary.html">
                                 <i class="fa fa-fax"></i>业务字典管理</span>
                             </a>
+                        </li>
+                        <li>
+                             <a href="#/numberResources.html">
+                                 <i class="fa fa-fax"></i>序号资源表管理</span>
+                             </a>
                         </li>
                     </ul>
                 </li>

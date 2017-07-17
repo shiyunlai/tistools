@@ -40,25 +40,25 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_funcgroup != null" >
+		<if test="guidFuncgroup != null" >
 			guid_funcgroup = #{guidFuncgroup,jdbcType=VARCHAR},
 		</if>
-		<if test="func_code != null" >
+		<if test="funcCode != null" >
 			func_code = #{funcCode,jdbcType=VARCHAR},
 		</if>
-		<if test="func_name != null" >
+		<if test="funcName != null" >
 			func_name = #{funcName,jdbcType=VARCHAR},
 		</if>
-		<if test="func_desc != null" >
+		<if test="funcDesc != null" >
 			func_desc = #{funcDesc,jdbcType=VARCHAR},
 		</if>
-		<if test="func_action != null" >
+		<if test="funcAction != null" >
 			func_action = #{funcAction,jdbcType=VARCHAR},
 		</if>
-		<if test="para_info != null" >
+		<if test="paraInfo != null" >
 			para_info = #{paraInfo,jdbcType=VARCHAR},
 		</if>
-		<if test="func_type != null" >
+		<if test="funcType != null" >
 			func_type = #{funcType,jdbcType=VARCHAR},
 		</if>
 		<if test="ischeck != null" >
@@ -100,31 +100,31 @@
     	UPDATE AC_FUNC 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_funcgroup != null" >
-        	guid_funcgroup = #{domain.guidFuncgroup,jdbcType=VARCHAR}
+		<if test="domain.guidFuncgroup != null" >
+        	guid_funcgroup = #{domain.guidFuncgroup,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.func_code != null" >
-        	func_code = #{domain.funcCode,jdbcType=VARCHAR}
+		<if test="domain.funcCode != null" >
+        	func_code = #{domain.funcCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.func_name != null" >
-        	func_name = #{domain.funcName,jdbcType=VARCHAR}
+		<if test="domain.funcName != null" >
+        	func_name = #{domain.funcName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.func_desc != null" >
-        	func_desc = #{domain.funcDesc,jdbcType=VARCHAR}
+		<if test="domain.funcDesc != null" >
+        	func_desc = #{domain.funcDesc,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.func_action != null" >
-        	func_action = #{domain.funcAction,jdbcType=VARCHAR}
+		<if test="domain.funcAction != null" >
+        	func_action = #{domain.funcAction,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.para_info != null" >
-        	para_info = #{domain.paraInfo,jdbcType=VARCHAR}
+		<if test="domain.paraInfo != null" >
+        	para_info = #{domain.paraInfo,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.func_type != null" >
-        	func_type = #{domain.funcType,jdbcType=VARCHAR}
+		<if test="domain.funcType != null" >
+        	func_type = #{domain.funcType,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.ischeck != null" >
-        	ischeck = #{domain.ischeck,jdbcType=CHAR}
+        	ischeck = #{domain.ischeck,jdbcType=CHAR},
       	</if>
 		<if test="domain.ismenu != null" >
         	ismenu = #{domain.ismenu,jdbcType=CHAR}

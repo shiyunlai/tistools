@@ -25,10 +25,10 @@
  	<update id="update" parameterType="org.tis.tools.model.po.ac.AcRoleEntityfield">
     	UPDATE AC_ROLE_ENTITYFIELD 
 	    <set>
-		<if test="guid_role != null" >
+		<if test="guidRole != null" >
 			guid_role = #{guidRole,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_entityfield != null" >
+		<if test="guidEntityfield != null" >
 			guid_entityfield = #{guidEntityfield,jdbcType=VARCHAR},
 		</if>
 		<if test="ismodify != null" >
@@ -63,14 +63,14 @@
 	 <update id="updateByCondition" parameterType="map">
     	UPDATE AC_ROLE_ENTITYFIELD 
 	   <set>
-		<if test="domain.guid_role != null" >
-        	guid_role = #{domain.guidRole,jdbcType=VARCHAR}
+		<if test="domain.guidRole != null" >
+        	guid_role = #{domain.guidRole,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_entityfield != null" >
-        	guid_entityfield = #{domain.guidEntityfield,jdbcType=VARCHAR}
+		<if test="domain.guidEntityfield != null" >
+        	guid_entityfield = #{domain.guidEntityfield,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.ismodify != null" >
-        	ismodify = #{domain.ismodify,jdbcType=CHAR}
+        	ismodify = #{domain.ismodify,jdbcType=CHAR},
       	</if>
 		<if test="domain.isview != null" >
         	isview = #{domain.isview,jdbcType=CHAR}

@@ -169,7 +169,92 @@ public class ACExceptionCodes {
 	public static final String FAILURE_WHRN_QUERY_AC_FUNCBEHAVIOR = R_EX_CODE("0028");
 	
 	
+	/**
+	 * 导入功能失败
+	 */
+	public static final String FAILURE_WHRN_IMPORT_AC_FUNC = R_EX_CODE("0029");
 	
+	/**
+	 * 新增行为类型失败
+	 */
+	public static final String FAILURE_WHRN_CREATE_AC_BHVTYPE_DEF = R_EX_CODE("0030");
+	
+	/**
+	 * 删除行为类型失败
+	 */
+	public static final String FAILURE_WHRN_DELETE_AC_BHVTYPE_DEF = R_EX_CODE("0031");
+	
+	/**
+	 * 修改行为类型失败
+	 */
+	public static final String FAILURE_WHRN_UPDATE_AC_BHVTYPE_DEF = R_EX_CODE("0032");
+	
+	/**
+	 * 查询行为类型失败
+	 */
+	public static final String FAILURE_WHRN_QUERY_AC_BHVTYPE_DEF = R_EX_CODE("0033");
+	
+	/**
+	 * 新增功能操作行为失败
+	 */
+	public static final String FAILURE_WHRN_CREATE_AC_BHV_DEF = R_EX_CODE("0034");
+	
+	
+	/**
+	 * 删除功能操作行为失败
+	 */
+	public static final String FAILURE_WHRN_DELETE_AC_BHV_DEF = R_EX_CODE("0035");
+	
+	/**
+	 * 修改功能操作行为失败
+	 */
+	public static final String FAILURE_WHRN_UPDATE_AC_BHV_DEF = R_EX_CODE("0036");
+	
+	/**
+	 * 查询功能操作行为失败
+	 */
+	public static final String FAILURE_WHRN_QUERY_AC_BHV_DEF = R_EX_CODE("0037");
+
+	/**
+	 * 参数不允许为空
+	 */
+	public static final String PARMS_NOT_ALLOW_EMPTY = R_EX_CODE("0038");
+
+	/**
+	 * 新增功能行为类型失败
+	 */
+	public static final String FAILURE_WHEN_CREATE_AC_FUNC_BHVTYPE = R_EX_CODE("0039");
+
+	/**
+	 * 删除功能行为类型失败
+	 */
+	public static final String FAILURE_WHEN_DELETE_AC_FUNC_BHVTYPE = R_EX_CODE("0040");
+
+	/**
+	 * 查询功能行为类型失败
+	 */
+	public static final String FAILURE_WHEN_QUERY_AC_FUNC_BHVTYPE = R_EX_CODE("0041");
+
+	/**
+	 * 行为类型被指配了不能删除
+	 */
+	public static final String AC_BHV_DEF_CAN_NOT_DELETE_WHEN_ASSIGNED = R_EX_CODE("0042");
+
+
+	/**
+	 * 重复添加功能行为类型
+	 */
+	public static final String DUPLICATE_ADD_FUNC_BHVTYPE = R_EX_CODE("0043");
+
+	/**
+	 * 重复添加功能行为定义
+	 */
+	public static final String DUPLICATE_ADD_FUNC_BHV_DEF = R_EX_CODE("0044");
+
+	/**
+	 * 新增功能行为类型失败
+	 */
+	public static final String FAILURE_WHEN_CREATE_AC_FUNC_BHV = R_EX_CODE("0045");
 	
 	/**
 	 * 以烤串方式拼接异常码

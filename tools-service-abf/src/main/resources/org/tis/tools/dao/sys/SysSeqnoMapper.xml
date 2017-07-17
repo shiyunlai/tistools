@@ -25,16 +25,16 @@
  	<update id="update" parameterType="org.tis.tools.model.po.sys.SysSeqno">
     	UPDATE SYS_SEQNO 
 	    <set>
-		<if test="seq_key != null" >
+		<if test="seqKey != null" >
 			seq_key = #{seqKey,jdbcType=VARCHAR},
 		</if>
-		<if test="seq_no != null" >
+		<if test="seqNo != null" >
 			seq_no = #{seqNo,jdbcType=DECIMAL},
 		</if>
 		<if test="reset != null" >
 			reset = #{reset,jdbcType=VARCHAR},
 		</if>
-		<if test="reset_params != null" >
+		<if test="resetParams != null" >
 			reset_params = #{resetParams,jdbcType=VARCHAR}
 		</if>
 	    </set>
