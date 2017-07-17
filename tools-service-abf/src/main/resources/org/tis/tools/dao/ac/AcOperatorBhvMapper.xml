@@ -57,13 +57,13 @@
 	 <update id="updateByCondition" parameterType="map">
     	UPDATE AC_OPERATOR_BHV 
 	   <set>
-		<if test="domain.guid_operator != null" >
-        	guid_operator = #{domain.guidOperator,jdbcType=VARCHAR}
+		<if test="domain.guidOperator != null" >
+        	guid_operator = #{domain.guidOperator,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_func_bhv != null" >
-        	guid_func_bhv = #{domain.guidFuncBhv,jdbcType=VARCHAR}
+		<if test="domain.guidFuncBhv != null" >
+        	guid_func_bhv = #{domain.guidFuncBhv,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.auth_type != null" >
+		<if test="domain.authType != null" >
         	auth_type = #{domain.authType,jdbcType=VARCHAR}
       	</if>
 	    </set>

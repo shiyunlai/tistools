@@ -22,6 +22,7 @@ MetronicApp.factory('Workgroup_service',['$http', '$q', function ($http,$q) {
     service.loademp = function (subFrom) {
         //TODO
     }
+
     service.loadxjgroup = function (subFrom) {
         var res = $http.post(manurl + "/om/workgroup/queryChild",subFrom).then(function (response) {
             return response.data;

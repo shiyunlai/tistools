@@ -142,54 +142,54 @@
     	UPDATE AC_OPERATOR_MENU 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_operator != null" >
-        	guid_operator = #{domain.guidOperator,jdbcType=VARCHAR}
+		<if test="domain.guidOperator != null" >
+        	guid_operator = #{domain.guidOperator,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_app != null" >
-        	guid_app = #{domain.guidApp,jdbcType=VARCHAR}
+		<if test="domain.guidApp != null" >
+        	guid_app = #{domain.guidApp,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_func != null" >
-        	guid_func = #{domain.guidFunc,jdbcType=VARCHAR}
+		<if test="domain.guidFunc != null" >
+        	guid_func = #{domain.guidFunc,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.menu_name != null" >
-        	menu_name = #{domain.menuName,jdbcType=VARCHAR}
+		<if test="domain.menuName != null" >
+        	menu_name = #{domain.menuName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.menu_label != null" >
-        	menu_label = #{domain.menuLabel,jdbcType=VARCHAR}
+		<if test="domain.menuLabel != null" >
+        	menu_label = #{domain.menuLabel,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_parents != null" >
-        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR}
+		<if test="domain.guidParents != null" >
+        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.isleaf != null" >
-        	isleaf = #{domain.isleaf,jdbcType=CHAR}
+        	isleaf = #{domain.isleaf,jdbcType=CHAR},
       	</if>
-		<if test="domain.ui_entry != null" >
-        	ui_entry = #{domain.uiEntry,jdbcType=VARCHAR}
+		<if test="domain.uiEntry != null" >
+        	ui_entry = #{domain.uiEntry,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.menu_level != null" >
-        	menu_level = #{domain.menuLevel,jdbcType=DECIMAL}
+		<if test="domain.menuLevel != null" >
+        	menu_level = #{domain.menuLevel,jdbcType=DECIMAL},
       	</if>
-		<if test="domain.guid_root != null" >
-        	guid_root = #{domain.guidRoot,jdbcType=VARCHAR}
+		<if test="domain.guidRoot != null" >
+        	guid_root = #{domain.guidRoot,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.display_order != null" >
-        	display_order = #{domain.displayOrder,jdbcType=DECIMAL}
+		<if test="domain.displayOrder != null" >
+        	display_order = #{domain.displayOrder,jdbcType=DECIMAL},
       	</if>
-		<if test="domain.image_path != null" >
-        	image_path = #{domain.imagePath,jdbcType=VARCHAR}
+		<if test="domain.imagePath != null" >
+        	image_path = #{domain.imagePath,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.expand_path != null" >
-        	expand_path = #{domain.expandPath,jdbcType=VARCHAR}
+		<if test="domain.expandPath != null" >
+        	expand_path = #{domain.expandPath,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.menu_seq != null" >
-        	menu_seq = #{domain.menuSeq,jdbcType=VARCHAR}
+		<if test="domain.menuSeq != null" >
+        	menu_seq = #{domain.menuSeq,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.open_mode != null" >
-        	open_mode = #{domain.openMode,jdbcType=VARCHAR}
+		<if test="domain.openMode != null" >
+        	open_mode = #{domain.openMode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.sub_count != null" >
+		<if test="domain.subCount != null" >
         	sub_count = #{domain.subCount,jdbcType=DECIMAL}
       	</if>
 	    </set>

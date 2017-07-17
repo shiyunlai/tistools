@@ -77,7 +77,7 @@ public class OMExceptionCodes {
 	/**
 	 * 新增子节点机构失败
 	 */
-	public static final String FAILURE_WHRN_CREATE_CHILD_ORG = R_EX_CODE("0011");
+	public static final String FAILURE_WHEN_CREATE_CHILD_ORG = R_EX_CODE("0011");
 	
 	/**
 	 * 更新父节点机构失败
@@ -92,17 +92,7 @@ public class OMExceptionCodes {
 	/**
 	 * 更新机构信息失败
 	 */
-	public static final String FAILURE_WHRN_UPDATE_ORG_APP = R_EX_CODE("0014");
-	
-	/**
-	 * 新增子机构异常
-	 */
-	public static final String FAILURE_WHEN_CREATE_CHILD_ORG = R_EX_CODE("0015");
-	
-	/**
-	 * 修改机构信息异常
-	 */
-	public static final String FAILURE_WHEN_UPDATE_ORG_APP = R_EX_CODE("0016");
+	public static final String FAILURE_WHEN_UPDATE_ORG_APP = R_EX_CODE("0014");
 	
 	/**
 	 * 以烤串方式拼接异常码

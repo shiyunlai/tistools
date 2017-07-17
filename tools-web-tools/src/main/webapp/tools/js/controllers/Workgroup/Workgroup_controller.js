@@ -4,10 +4,7 @@
 angular.module('MetronicApp').controller('Workgroup_controller', function($rootScope, $scope,Workgroup_service, $http, $timeout,i18nService,filterFilter,uiGridConstants,$uibModal,$state) {
     $scope.$on('$viewContentLoaded', function () {
         // initialize core components
-
         App.initAjax();
-        console.log(111)
-
     });
     //定义主题对象
     var workgroup = {};
@@ -29,17 +26,18 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
     var items = function customMenu(node) {
         // The default set of all items
         var control;
-        console.log(node.id);
         if(node.parent == "#"){
             var it = {
                 "新建菜单":{
                     "id":"create",
                     "label":"新建根工作组",
+
                     "action":function(data){
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
                         console.log(obj)
                         openwindow($uibModal, 'views/Workgroup/addworkgroup_window.html', 'lg',
+
                             function ($scope, $modalInstance) {
                                 //创建机构实例
                                 var subFrom = {};
@@ -82,11 +80,14 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
                         console.log(obj)
+
                         openwindow($uibModal, 'views/Workgroup/addworkgroup_window.html', 'lg',
+
                             function ($scope, $modalInstance) {
                                 //创建机构实例
                                 var subFrom = {};
                                 $scope.subFrom = subFrom;
+
                                 //处理父工作组GUID
                                 subFrom.guidParents = obj.original.guid;
                                 //标识,根-子节点
@@ -116,7 +117,9 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
                 },
 
                 "删除菜单":{
+
                     "label":"删除工作组",
+
                     "action":function(data){
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
@@ -295,12 +298,13 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
                     flag[a] = false;
                 }
                 flag.xqxx = true;
+
                 $scope.sub = data.node.original;
+
             }
             $scope.$apply();
         }
     });
-
 
     //生成工作组列表
     var workgroupgrid = {};
@@ -356,6 +360,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
                     Workgroup_service.addgroup(subFrom).then(function (data) {
                         console.log(data);
                         if(data.status == "success"){
+
                             toastr['success']( data.retMessage);
                             reworkgroupgrid();
                             $("#container").jstree().refresh();
@@ -488,6 +493,4 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
             flag.qxxx = true;
         }
     }
-    
-    
 });

@@ -83,6 +83,15 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     };
+
+    //更新资源
+    service.acFuncResourceEdit = function (item) {
+        var res = $http.post(manurl + "/AcAppController/acFuncResourceEdit",item).then(function (response) {
+            return response.data;
+        });
+        return res;
+    };
+
     //删除功能服务
     service.acFuncDel = function (item) {
         var res = $http.post(manurl + "/AcAppController/acFuncDel",item).then(function (response) {
@@ -99,30 +108,95 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
-
-
-  /*  //资源查询服务
-    service.resoQuery = function (item) {
-        var res = $http.post(manurl + "/AcAppController/resoQuery",item).then(function (response) {
+    //查询所有功能服务
+    service.queryAllFunc = function (item) {
+        var res = $http.post(manurl + "/AcAppController/queryAllFunc",item).then(function (response) {
             return response.data;
         });
         return res;
     };
 
-    //功能类型服务
-    service.funtypeQuery = function (item) {
-        var res = $http.post(manurl + "/AcAppController/funtypeQuery",item).then(function (response) {
+    //导入功能服务
+    service.importFunc = function (item) {
+        var res = $http.post(manurl + "/AcAppController/importFunc",item).then(function (response) {
             return response.data;
         });
         return res;
     };
 
-    //功能行为
-    service.funSearch = function (item) {
-        var res = $http.post(manurl + "/AcAppController/funSearch",item).then(function (response) {
+    //查询功能行为类型
+    service.functypequery = function (subFrom) {
+        var res = $http.post(manurl + "/AcAppController/functypequery",subFrom).then(function (response) {
             return response.data;
         });
         return res;
-    };*/
+    };
+
+
+    //功能添加行为类型
+    service.addBhvtypeForFunc = function (subFrom) {
+        var res = $http.post(manurl + "/AcAppController/addBhvtypeForFunc",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    };
+
+    //功能添加行为定义
+    service.addBhvDefForFunc = function (subFrom) {
+        var res = $http.post(manurl + "/AcAppController/addBhvDefForFunc",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    };
+
+    //查询功能下某个行为类型的操作行为
+    service.queryBhvDefInTypeForFunc = function (subFrom) {
+        var res = $http.post(manurl + "/AcAppController/queryBhvDefInTypeForFunc",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    };
+
+    //根据功能的GUID查询行为类型定义
+    service.queryBhvtypeDefByFunc = function (subFrom) {
+        var res = $http.post(manurl + "/AcAppController/queryBhvtypeDefByFunc",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    };
+
+    //根据类型的GUID查询行为
+    service.queryBhvDefByBhvType = function (subFrom) {
+        var res = $http.post(manurl + "/AcAppController/queryBhvDefByBhvType",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    };
+
+
+    //查询功能下所有行为类型
+    service.queryAllBhvDefForFunc = function (subFrom) {
+        var res = $http.post(manurl + "/AcAppController/queryAllBhvDefForFunc",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    };
+
+    //删除功能对应的行为类型
+    service.delFuncBhvType = function (subFrom) {
+        var res = $http.post(manurl + "/AcAppController/delFuncBhvType",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    };
+
+    //删除功能对应的行为定义
+    service.delFuncBhvDef = function (subFrom) {
+        var res = $http.post(manurl + "/AcAppController/delFuncBhvDef",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    };
+
     return service;
 }]);

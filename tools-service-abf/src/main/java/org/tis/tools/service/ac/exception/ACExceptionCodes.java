@@ -214,6 +214,47 @@ public class ACExceptionCodes {
 	 * 查询功能操作行为失败
 	 */
 	public static final String FAILURE_WHRN_QUERY_AC_BHV_DEF = R_EX_CODE("0037");
+
+	/**
+	 * 参数不允许为空
+	 */
+	public static final String PARMS_NOT_ALLOW_EMPTY = R_EX_CODE("0038");
+
+	/**
+	 * 新增功能行为类型失败
+	 */
+	public static final String FAILURE_WHEN_CREATE_AC_FUNC_BHVTYPE = R_EX_CODE("0039");
+
+	/**
+	 * 删除功能行为类型失败
+	 */
+	public static final String FAILURE_WHEN_DELETE_AC_FUNC_BHVTYPE = R_EX_CODE("0040");
+
+	/**
+	 * 查询功能行为类型失败
+	 */
+	public static final String FAILURE_WHEN_QUERY_AC_FUNC_BHVTYPE = R_EX_CODE("0041");
+
+	/**
+	 * 行为类型被指配了不能删除
+	 */
+	public static final String AC_BHV_DEF_CAN_NOT_DELETE_WHEN_ASSIGNED = R_EX_CODE("0042");
+
+
+	/**
+	 * 重复添加功能行为类型
+	 */
+	public static final String DUPLICATE_ADD_FUNC_BHVTYPE = R_EX_CODE("0043");
+
+	/**
+	 * 重复添加功能行为定义
+	 */
+	public static final String DUPLICATE_ADD_FUNC_BHV_DEF = R_EX_CODE("0044");
+
+	/**
+	 * 新增功能行为类型失败
+	 */
+	public static final String FAILURE_WHEN_CREATE_AC_FUNC_BHV = R_EX_CODE("0045");
 	
 	/**
 	 * 以烤串方式拼接异常码

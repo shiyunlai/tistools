@@ -5,8 +5,12 @@
 package org.tis.tools.dao.ac;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.tis.tools.base.WhereCondition;
+import org.tis.tools.model.po.ac.AcBhvDef;
+import org.tis.tools.model.po.ac.AcBhvtypeDef;
 import org.tis.tools.model.vo.ac.AcAppVo;
 import org.tis.tools.model.vo.ac.AcFuncVo;
 
@@ -27,4 +31,18 @@ public interface ApplicationMapper{
 	 * @return 满足条件的记录
 	 */
 	public List<AcFuncVo> queryAcFuncVo(WhereCondition wc);
+
+
+
+	public List<AcBhvtypeDef> queryBhvtypeDefByFunc(@Param("funcGuid") String funcGuid);
+
+
+	public List<Map> queryBhvDefInTypeForFunc(@Param("funcGuid") String funcGuid,@Param("bhvtypeGuid") String bhvtypeGuid);
+
+
+	public List<Map> queryAllBhvDefForFunc(@Param("funcGuid") String funcGuid);
+
+
+	public List<Map> queryFuncBhvRelation(WhereCondition wc);
+
 }

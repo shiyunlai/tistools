@@ -1,15 +1,34 @@
 /**
  * Created by zhangsu on 2016/5/9.
  */
-MetronicApp.controller('login_controller', function($rootScope, $scope,$state,$stateParams,login_service,filterFilter,$modal, $http, $timeout) {
+angular.module("LoginApp", [])
+    .controller("loginController",function ($rootScope,$scope,login_service) {
+        var user = {};
+        $scope.user = user;
 
-    $scope.$on('$viewContentLoaded', function() {
-        // initialize core components
-        App.initAjax();
-    });
+        $scope.login = function () {
+            if(!isNull(user.loginname)&&!isNull(user.passwd)){
+                login_service.toLogin(user).then(function (data) {
+                    if(data.retCode == '1'){
+                        sessionStorage.user = JSON.stringify(data.user);
+                        window.location = "/governor/m/index.html";
+                    }else if(data.retCode == '2') {
+                        toastr['error'](data.retMessage, "µÇÂ¼Ê§°Ü£¡");
+                    } else {
+                        toastr['error']( "µÇÂ¼Òì³££¡");
+                    }
+                });
+            }
+        }
+    })
+    .factory('login_service',['$http', '$q', function ($http,$q) {
+        var service={};
 
-    $rootScope.settings.layout.pageBodySolid = true;
-    $rootScope.settings.layout.pageSidebarClosed = false;
-    ComponentsDateTimePickers.init()
+        service.toLogin = function(item) {
+            return $http.post(manurl + "/user/login1",{item:item}).then(function (response) {
+                return response.data;
+            });
+        }
 
-});
+        return service;
+    }]);

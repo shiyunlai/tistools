@@ -57,11 +57,11 @@
 	 <update id="updateByCondition" parameterType="map">
     	UPDATE AC_OPERATOR_ROLE 
 	   <set>
-		<if test="domain.guid_operator != null" >
-        	guid_operator = #{domain.guidOperator,jdbcType=VARCHAR}
+		<if test="domain.guidOperator != null" >
+        	guid_operator = #{domain.guidOperator,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_role != null" >
-        	guid_role = #{domain.guidRole,jdbcType=VARCHAR}
+		<if test="domain.guidRole != null" >
+        	guid_role = #{domain.guidRole,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.auth != null" >
         	auth = #{domain.auth,jdbcType=VARCHAR}

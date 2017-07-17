@@ -57,13 +57,13 @@
 	 <update id="updateByCondition" parameterType="map">
     	UPDATE AC_OPERATOR_IDENTITYRES 
 	   <set>
-		<if test="domain.guid_identity != null" >
-        	guid_identity = #{domain.guidIdentity,jdbcType=VARCHAR}
+		<if test="domain.guidIdentity != null" >
+        	guid_identity = #{domain.guidIdentity,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.ac_resourcetype != null" >
-        	ac_resourcetype = #{domain.acResourcetype,jdbcType=VARCHAR}
+		<if test="domain.acResourcetype != null" >
+        	ac_resourcetype = #{domain.acResourcetype,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_ac_resource != null" >
+		<if test="domain.guidAcResource != null" >
         	guid_ac_resource = #{domain.guidAcResource,jdbcType=VARCHAR}
       	</if>
 	    </set>

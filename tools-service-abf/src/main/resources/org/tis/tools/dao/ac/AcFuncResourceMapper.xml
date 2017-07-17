@@ -55,7 +55,7 @@
 		compack_name = #{compackName,jdbcType=VARCHAR},
 		res_show_name = #{resShowName,jdbcType=VARCHAR}
 	    </set>
-	    WHERE guid = #{guid}
+	    WHERE guidFunc = #{guidFunc}
  	</update>
  	 
     <delete id="delete" parameterType="java.lang.String">
@@ -69,19 +69,19 @@
 	 <update id="updateByCondition" parameterType="map">
     	UPDATE AC_FUNC_RESOURCE 
 	   <set>
-		<if test="domain.guid_func != null" >
-        	guid_func = #{domain.guidFunc,jdbcType=VARCHAR}
+		<if test="domain.guidFunc != null" >
+        	guid_func = #{domain.guidFunc,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.res_type != null" >
-        	res_type = #{domain.resType,jdbcType=VARCHAR}
+		<if test="domain.resType != null" >
+        	res_type = #{domain.resType,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.res_path != null" >
-        	res_path = #{domain.resPath,jdbcType=VARCHAR}
+		<if test="domain.resPath != null" >
+        	res_path = #{domain.resPath,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.compack_name != null" >
-        	compack_name = #{domain.compackName,jdbcType=VARCHAR}
+		<if test="domain.compackName != null" >
+        	compack_name = #{domain.compackName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.res_show_name != null" >
+		<if test="domain.resShowName != null" >
         	res_show_name = #{domain.resShowName,jdbcType=VARCHAR}
       	</if>
 	    </set>

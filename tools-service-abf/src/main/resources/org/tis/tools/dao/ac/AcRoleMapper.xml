@@ -76,21 +76,21 @@
     	UPDATE AC_ROLE 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_app != null" >
-        	guid_app = #{domain.guidApp,jdbcType=VARCHAR}
+		<if test="domain.guidApp != null" >
+        	guid_app = #{domain.guidApp,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.role_code != null" >
-        	role_code = #{domain.roleCode,jdbcType=VARCHAR}
+		<if test="domain.roleCode != null" >
+        	role_code = #{domain.roleCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.role_name != null" >
-        	role_name = #{domain.roleName,jdbcType=VARCHAR}
+		<if test="domain.roleName != null" >
+        	role_name = #{domain.roleName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.role_type != null" >
-        	role_type = #{domain.roleType,jdbcType=VARCHAR}
+		<if test="domain.roleType != null" >
+        	role_type = #{domain.roleType,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.role_desc != null" >
+		<if test="domain.roleDesc != null" >
         	role_desc = #{domain.roleDesc,jdbcType=VARCHAR}
       	</if>
 	    </set>
