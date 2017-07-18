@@ -41,7 +41,8 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
     //岗位权限列表;
     var gwqx = false;
     gwflag.gwqx = gwqx;
-
+    //首页清空
+    $scope.flag.index = false;
 
     //机构,岗位页签切换
     var tabflag = true;//true为机构详情
@@ -70,16 +71,18 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
             var it = {
                 "新建菜单":{
                     "id":"create",
-                    "label":"新建机构",
+                    "label":"新建根机构",
                     "action":function(data){
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
                         console.log(obj)
-                        openwindow($uibModal, 'views/org/addorg_window.html', 'lg',
+                        openwindow($uibModal, 'views/org/addrootorg_window.html', 'lg',
                             function ($scope, $modalInstance) {
                                 //创建机构实例
                                 var subFrom = {};
                                 $scope.subFrom = subFrom;
+                                //根机构标识
+                                subFrom.flag = "root";
                                 //生成机构代码
                                 var next = true;
                                 $scope.next = next;
@@ -104,7 +107,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
 
                                 }
                                 //处理新增机构父机构
-                                subFrom.guidParents = obj.original.guid;
+                                subFrom.guidParents = null;
                                 //增加方法
                                 $scope.add = function (subFrom) {
                                     //TODO.新增逻辑
@@ -127,11 +130,11 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 }
             };
             return it;
-        }else if(node.id.indexOf("@") != 0){
+        }else if(node.original.orgCode.indexOf("GW") != 0){
             var it = {
                 "新建菜单":{
                     "id":"create",
-                    "label":"新建机构",
+                    "label":"新建子机构",
                     "action":function(data){
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
@@ -141,13 +144,43 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                                 //创建机构实例
                                 var subFrom = {};
                                 $scope.subFrom = subFrom;
+                                subFrom.flag = "child";
+                                //生成机构代码
+                                var next = true;
+                                $scope.next = next;
+                                $scope.skip = function () {
+                                    if(isNull(subFrom.orgDegree) || isNull(subFrom.AREA)){
+                                        toastr['error']("请填写相关信息!");
+                                        return false;
+                                    }
+                                    //调用服务生成机构代码
+                                    abftree_service.initcode(subFrom).then(function (data) {
+                                        // if(data.status == "error"){
+                                        //     toastr['error']( "！");
+                                        // }else{
+                                        //     subFrom.orgCode = data.orgCode;
+                                        //     toastr['success'](data.retMessage);
+                                        //     $scope.next = !next;
+                                        // }
+                                        subFrom.orgCode = "00002";
+                                        toastr['success'](data.retMessage);
+                                        $scope.next = !next;
+                                    })
+
+                                }
                                 //处理新增机构父机构
                                 subFrom.guidParents = obj.original.guid;
                                 //增加方法
                                 $scope.add = function (subFrom) {
                                     //TODO.新增逻辑
                                     abftree_service.addorg(subFrom).then(function (data) {
-                                        console.log(data);
+                                        if(data.status == "success"){
+                                            toastr['success'](data.retMessage);
+                                        }else{
+                                            toastr['error'](data.retMessage);
+                                        }
+                                        $("#container").jstree().refresh();
+                                        $scope.cancel();
                                     });
                                 }
                                 $scope.cancel = function () {
@@ -204,13 +237,26 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                                 //创建机构实例
                                 var subFrom = {};
                                 $scope.subFrom = subFrom;
-                                //处理新增机构父机构
-                                subFrom.GUID_PARENTS = obj.original.guid;
+                                //判断是根岗位还是子岗位
+                                if(obj.id.indexOf("GW") == 0){
+                                    //处理新增机构父机构
+                                    subFrom.guidParents = "";
+                                    subFrom.guidOrg = obj.original.guid;
+                                }else{
+                                    subFrom.guidParents = obj.original.guid;
+                                    subFrom.guidOrg = obj.original.guidOrg;
+                                }
                                 //增加方法
                                 $scope.add = function (subFrom) {
                                     //TODO.新增逻辑
-                                    abftree_service.addorg(subFrom).then(function (data) {
-                                        console.log(data);
+                                    abftree_service.addposit(subFrom).then(function (data) {
+                                        if(data.status == "success"){
+                                            toastr['success'](data.retMessage);
+                                        }else{
+                                            toastr['error'](data.retMessage);
+                                        }
+                                        $("#container").jstree().refresh();
+                                        $scope.cancel();
                                     });
                                 }
                                 $scope.cancel = function () {
@@ -251,18 +297,35 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 $scope.jsonarray = jsonarray;
                 var subFrom = {};
                 subFrom.id = obj.id;
+                if(!isNull(obj.original)){
+                    subFrom.guidOrg = obj.original.guid;
+
+                }else{
+                    subFrom.guidOrg = "";
+                }
+
                 abftree_service.loadmaintree(subFrom).then(function (data) {
-                    if(isNull(data[0].orgName)){
+                    if(isNull(data)){
+
+                    }else if(isNull(data[0].orgName)){
                         for(var i = 0 ;i < data.length ; i++){
                             data[i].text = data[i].positionName;
                             data[i].children = true;
                             data[i].id = data[i].guid;
+                            data[i].startDate = FormatDate(data[i].startDate);
+                            data[i].createTime = FormatDate(data[i].createTime);
+                            data[i].endDate = FormatDate(data[i].endDate);
+                            data[i].lastUpdate = FormatDate(data[i].lastUpdate);
                         }
                     }else{
                         for(var i = 0 ;i < data.length ; i++){
                             data[i].text = data[i].orgName;
                             data[i].children = true;
                             data[i].id = data[i].orgCode;
+                            data[i].startDate = FormatDate(data[i].startDate);
+                            data[i].createTime = FormatDate(data[i].createTime);
+                            data[i].endDate = FormatDate(data[i].endDate);
+                            data[i].lastUpdate = FormatDate(data[i].lastUpdate);
                         }
                     }
 
@@ -325,17 +388,29 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
     }).bind("changed.jstree", function (e, data) {
         if(typeof data.node !== 'undefined'){//拿到结点详情
             // console.log(data.node.original.id.indexOf("@"));
-            $scope.abftree.item = data.node.original;
+            $scope.abftree.item = {};
             console.log(data.node.original);
-            if(data.node.original.id.indexOf("@") == 0){
+            if(data.node.original.id.indexOf("POSIT") == 0){
                 for(var i in $scope.flag){
                     flag[i] = false;
                 }
                 for(var i in $scope.gwflag){
                     gwflag[i] = false;
                 }
+                $scope.flag.index = true;
                 $scope.gwflag.gwxx = true;
                 $scope.tabflag = false;
+                $scope.abftree.item = data.node.original;
+            }else if(data.node.original.id.indexOf("9999") == 0){
+                for(var i in $scope.flag){
+                    flag[i] = false;
+                }
+                for(var i in $scope.gwflag){
+                    gwflag[i] = false;
+                }
+                $scope.flag.index = false;
+            }else if(data.node.original.id.indexOf("GW") == 0){
+
             }else {
                 for(var i in $scope.gwflag){
                     gwflag[i] = false;
@@ -343,8 +418,10 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 for(var i in $scope.flag){
                     flag[i] = false;
                 }
+                $scope.flag.index = true;
                 $scope.flag.xqxx = true;
                 $scope.tabflag = true;
+                $scope.abftree.item = data.node.original;
             }
 
             $scope.$apply();
@@ -353,36 +430,6 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
 
 
 
-
-    //tree点击事件
-    // $('#container').on("changed.jstree", function (e, data) {
-    //     if(typeof data.node !== 'undefined'){//拿到结点详情
-    //         // console.log(data.node.original.id.indexOf("@"));
-    //         $scope.abftree.item = data.node.original;
-    //         console.log(data.node.original);
-    //         if(data.node.original.id.indexOf("@") == 0){
-    //             for(var i in $scope.flag){
-    //                 flag[i] = false;
-    //             }
-    //             for(var i in $scope.gwflag){
-    //                 gwflag[i] = false;
-    //             }
-    //             $scope.gwflag.gwxx = true;
-    //             $scope.tabflag = false;
-    //         }else {
-    //             for(var i in $scope.gwflag){
-    //                 gwflag[i] = false;
-    //             }
-    //             for(var i in $scope.flag){
-    //                 flag[i] = false;
-    //             }
-    //             $scope.flag.xqxx = true;
-    //             $scope.tabflag = true;
-    //         }
-    //
-    //         $scope.$apply();
-    //     }
-    // });
 
     //jstree 自定义筛选事件
     //筛选字段
@@ -496,46 +543,9 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
             });
         }
     },true);
-
-
-
-
-//     $( "#module_tree" )
-//         .on('move_node.jstree', function(e,data){
-//             console.info(data);
-//             jQuery.post("modulemng/dndmodule",
-//                 {
-//                     id : data.node.id,
-//                     parent : data.parent,
-//                     position:data.position
-//                 },
-//                 function(data,status){
-//                     alert("Data: " + data + "\nStatus: " + status);
-//                 }, 'json');
-//
-//         })
-//         .jstree({
-//             //plugins-各种jstree的插件引入，展示树的多样性
-//             'plugins' : [ "dnd", "types", "wholerow" ],
-//             'core' : {
-//                 "check_callback" : true,//在对树进行改变时，check_callback是必须设置为true；
-//                 'data' :{
-//                     'url' : 'modulemng/list',
-//                     dataType:'json'
-//                 }
-//             },
-//             //types-对树的节点进行设置，包括子节点type、个数
-//             'types' : {
-//                 "#" : {
-//                     "max_children" : 1
-//                 }
-//             }
-//         });
-// });
-
-
-
-
+    //用于修改的实例
+    var position = {};
+    $scope.position = position;
 
 
     abftree.test = function () {
@@ -558,6 +568,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
     //修改
     abftree.edit = function () {
         $scope.editflag = !$scope.editflag;
+        $scope.position = angular.copy($scope.abftree.item);
     }
 
     //覆盖searchN方法
@@ -753,48 +764,6 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
         console.log(b)
     }
     $scope.gridOptions2 = initgrid($scope,$scope.gridOptions2,initdata(),filterFilter,null,true,f);
-    //人员信息列表
-    // $scope.gridOptions2 = {
-    //     data: 'myData',
-    //     //-------- 分页属性 ----------------
-    //     enablePagination: true, //是否分页，默认为true
-    //     enablePaginationControls: true, //使用默认的底部分页
-    //     paginationPageSizes: [10, 15, 20], //每页显示个数可选项
-    //     paginationCurrentPage:1, //当前页码
-    //     paginationPageSize: 10, //每页显示个数
-    //     //paginationTemplate:"<div></div>", //自定义底部分页代码
-    //     totalItems : 0, // 总数量
-    //     useExternalPagination: true,//是否使用分页按钮
-    //     //是否多选
-    //     // multiSelect:false,
-    //     onRegisterApi: function(gridApi) {
-    //         $scope.gridApi = gridApi;
-    //         //分页按钮事件
-    //         gridApi.pagination.on.paginationChanged($scope,function(newPage, pageSize) {
-    //             if(getPage) {
-    //                 getPage(newPage, pageSize);
-    //             }
-    //         });
-    //         //行选中事件
-    //         $scope.gridApi.selection.on.rowSelectionChanged($scope,function(row,event){
-    //             if(row.isSelected){
-    //                 $scope.selectRow = row.entity;
-    //                 console.log($scope.selectRow)
-    //             }else{
-    //                 console.log(999)
-    //                 delete $scope.selectRow;
-    //             }
-    //         });
-    //     }
-    // };
-    //ui-grid getPage方法
-    // var getPage = function(curPage, pageSize) {
-    //     var firstRow = (curPage - 1) * pageSize;
-    //     $scope.gridOptions.totalItems = $scope.myData.length;
-    //     $scope.gridOptions.data = $scope.myData.slice(firstRow, firstRow + pageSize);
-    //     //或者像下面这种写法
-    //     //$scope.myData = mydefalutData.slice(firstRow, firstRow + pageSize);
-    // };
 
 
     //机构下新增人员信息

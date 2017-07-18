@@ -50,5 +50,11 @@ MetronicApp.factory('abftree_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     }
+    service.addposit = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/addposit",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
     return service;
 }]);

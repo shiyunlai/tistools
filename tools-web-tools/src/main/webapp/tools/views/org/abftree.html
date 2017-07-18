@@ -35,7 +35,7 @@
     </div>
     <!-- 组织机构树 end -->
     <!-- 右侧展示页面 start -->
-    <div class="col-md-9 portlet light" style="height:100%;">
+    <div class="col-md-9 portlet light" style="height:100%;" ng-if="flag.index">
         <div class="portlet light">
             <div class="portlet-body portlet light">
                 <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="tabflag">
@@ -92,12 +92,11 @@
                 <div class="tab-content portlet light" ng-if="flag.xqxx">
                     <!-- 列表页 begin-->
                     <!-- 机构详情 -->
-                    <form action="#" name="myform" class="form-horizontal clear">
+                    <form action="#" name="myform" class="form-horizontal clear" ng-if="!editflag">
                         <div class="form-body portlet light">
                             <div class="col-md-6" >
                                 <div class="form-group">
                                     <label class="control-label col-md-4">机构状态</label>
-
                                     <div class="col-md-8">
                                         <input type="text" class="form-control"
                                                ng-model="abftree.item.orgStatus"
@@ -207,6 +206,27 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">生效日期</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"
+                                               ng-model="abftree.item.startDate"
+                                               name="id" ng-readonly="!editflag"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">失效日期</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"
+                                               ng-model="abftree.item.endDate"
+                                               name="id" ng-readonly="!editflag"/>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label col-md-2">备注</label>
@@ -221,7 +241,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-2"></label>
                                     <div class="col-md-10">
-                                        <div class="actions btn-set" style="float: right;" ng-if="!editflag">
+                                        <div class="actions btn-set" style="float: right;">
                                             <button type="button" name="back" class="btn btn-primary" ng-click="abftree.enable()"> 启用机构
                                             </button>
                                             <button type="button" name="back" class="btn btn-primary" ng-click="abftree.edit()"> 编辑机构
@@ -229,15 +249,115 @@
                                             <button type="button" name="back" class="btn btn-danger" ng-click="abftree.delete()"> 删除机构
                                             </button>
                                         </div>
-                                        <div class="actions btn-set" style="float: right;" ng-if="editflag">
-                                            <button type="button" name="back" class="btn btn-primary" ng-click="abftree.save()"> 保存
-                                            </button>
-
-                                            <button type="button" name="back" class="btn btn-danger" ng-click="abftree.edit()"> 取消
-                                            </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form action="#" name="myform" class="form-horizontal clear" ng-if="editflag">
+                        <div class="form-body portlet light">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">机构名称</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"
+                                               ng-model="position.orgName"
+                                               name="id"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">机构地址</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"
+                                               ng-model="position.orgAddr"
+                                               name="id"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">邮编</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"
+                                               ng-model="position.zipcode"
+                                               name="id"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">联系电话</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"
+                                               ng-model="position.linkTel"
+                                               name="id"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">电子邮件</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"
+                                               ng-model="position.email"
+                                               name="id"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">网站地址</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"
+                                               ng-model="position.webUrl"
+                                               name="id"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">生效日期:</label>
+                                    <div class="col-md-8">
+                                        <div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
+                                    <span class="input-group-btn">
+                                        <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                            <input type="text" class="form-control" ng-model="position.startDate" readonly/>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">失效日期:</label>
+                                    <div class="col-md-8">
+                                        <div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
+                                    <span class="input-group-btn">
+                                        <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                            <input type="text" class="form-control" ng-model="position.endDate" readonly/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">备注</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control"
+                                               ng-model="position.remark"
+                                               name="id"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="actions btn-set" style="float: right;">
+                                <button type="button" name="back" class="btn btn-primary" ng-click="abftree.save()"> 保存
+                                </button>
+
+                                <button type="button" name="back" class="btn btn-danger" ng-click="abftree.edit()"> 取消
+                                </button>
                             </div>
                         </div>
                     </form>

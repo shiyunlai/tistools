@@ -1,64 +1,244 @@
 package org.tis.tools.rservice.om.capable;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.tis.tools.base.WhereCondition;
+import org.tis.tools.base.exception.ToolsRuntimeException;
+import org.tis.tools.common.utils.BasicUtil;
+import org.tis.tools.common.utils.StringUtil;
+import org.tis.tools.model.def.CommonConstants;
+import org.tis.tools.model.def.GUID;
+import org.tis.tools.model.def.OMConstants;
+import org.tis.tools.model.po.ac.AcApp;
+import org.tis.tools.model.po.ac.AcRole;
+import org.tis.tools.model.po.om.OmEmployee;
+import org.tis.tools.model.po.om.OmGroup;
+import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.po.om.OmPosition;
 import org.tis.tools.rservice.BaseRService;
-import org.tis.tools.rservice.om.basic.IOmPositionRService;
-public class OmPositionRServiceImpl  extends BaseRService implements IOmPositionRService{
+import org.tis.tools.rservice.om.exception.OrgManagementException;
+import org.tis.tools.service.om.OmOrgService;
+import org.tis.tools.service.om.OmPositionService;
+import org.tis.tools.service.om.exception.OMExceptionCodes;
 
+import jdk.nashorn.internal.objects.annotations.Where;
+public class OmPositionRServiceImpl  extends BaseRService implements IPositionRService{
+	@Autowired
+	OmPositionService omPositionService ; 
+	@Autowired
+	OmOrgService omOrgService ; 
+	
 	@Override
-	public void insert(OmPosition t) {
-		// TODO 自动生成的方法存根
-		
-	}
-
-	@Override
-	public void update(OmPosition t) {
-		// TODO 自动生成的方法存根
-		
-	}
-
-	@Override
-	public void updateForce(OmPosition t) {
-		// TODO 自动生成的方法存根
-		
-	}
-
-	@Override
-	public void delete(String guid) {
-		// TODO 自动生成的方法存根
-		
-	}
-
-	@Override
-	public void deleteByCondition(WhereCondition wc) {
-		// TODO 自动生成的方法存根
-		
-	}
-
-	@Override
-	public void updateByCondition(WhereCondition wc, OmPosition t) {
-		// TODO 自动生成的方法存根
-		
-	}
-
-	@Override
-	public List<OmPosition> query(WhereCondition wc) {
-		// TODO 自动生成的方法存根
+	public String genPositionCode(String positionType) throws ToolsRuntimeException {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int count(WhereCondition wc) {
-		// TODO 自动生成的方法存根
-		return 0;
-	}
-
-	@Override
-	public OmPosition loadByGuid(String guid) {
-		// TODO 自动生成的方法存根
+	public OmPosition createPosition(String orgCode, String dutyCode, String positionCode, String positionName,
+			String positionType, String parentPositionCode) throws ToolsRuntimeException {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
+	public OmPosition createPosition(OmPosition newOmPosition) throws ToolsRuntimeException {
+		//验证 岗位代码,岗位名称,岗位类别,所属机构,所属职务必输字段.
+				String positionCode = newOmPosition.getPositionCode();
+				String positionName = newOmPosition.getPositionName();
+				String positionType = newOmPosition.getPositionType();
+				String GuidOrg = newOmPosition.getGuidOrg();
+				String GuidDuty = newOmPosition.getGuidDuty();
+
+//				if(StringUtil.isEmpty(positionCode)) {
+//					throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_GEN_ORGCODE,new Object[]{"orgCode"});
+//				}
+//				if(StringUtil.isEmpty(orgName)) {
+//					throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_GEN_ORGCODE,new Object[]{"orgCode"});
+//				}
+//				if(StringUtil.isEmpty(orgType)) {
+//					throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_GEN_ORGCODE,new Object[]{"orgType"});
+//				}
+//				if(StringUtil.isEmpty(orgDegree)) {
+//					throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_GEN_ORGCODE,new Object[]{"orgDegree"});
+//				}
+//				if(StringUtil.isEmpty(guidParents)) {
+//					throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_GEN_ORGCODE,new Object[]{"guidParents"});
+//				}
+				String guidParents = newOmPosition.getGuidParents();
+				if("null".equals(guidParents) || "".equals(guidParents)){
+					//根岗位新增
+					// 补充信息
+					newOmPosition.setGuid(GUID.position());// 补充GUID
+					newOmPosition.setPositionStatus(OMConstants.POSITION_STATUS_RUNNING);// 补充机构状态，新增机构初始状态为 停用
+					newOmPosition.setPositionLevel(new BigDecimal("0"));// 补充机构层次，在父节点的层次上增1
+					newOmPosition.setGuidParents("");// 补充父机构，根节点没有父机构
+					newOmPosition.setCreatetime(new Date());// 补充创建时间
+					newOmPosition.setLastupdate(new Date());// 补充最近更新时间
+					newOmPosition.setIsleaf(CommonConstants.YES);// 新增节点都先算叶子节点 Y
+					newOmPosition.setSubCount(new BigDecimal(0));// 新增时子节点数为0
+					newOmPosition.setPositionSeq(newOmPosition.getGuid());// 设置机构序列,根据父机构的序列+"."+机构的GUID
+					transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+						@Override
+						public void doInTransactionWithoutResult(TransactionStatus status) {
+							try {
+								omPositionService.insert(newOmPosition);//新增子节点
+							} catch (Exception e) {
+								e.printStackTrace();
+								status.setRollbackOnly();
+								throw new OrgManagementException(
+										OMExceptionCodes.FAILURE_WHEN_CREATE_CHILD_ORG,
+										BasicUtil.wrap(e.getCause().getMessage()),
+										"新增子节点机构失败！{0}" );
+							}
+						}
+					});
+					
+				}else{
+					//子岗位新增
+					// 查询父机构信息
+					WhereCondition wc = new WhereCondition();
+					wc.andEquals("GUID", guidParents);
+					List<OmPosition> parentsOrgList = omPositionService.query(wc);
+					if(parentsOrgList.size() != 1) {
+						throw new OrgManagementException(
+								OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, "父机构代码对应的机构不存在");
+					}
+					OmPosition parentsOp = parentsOrgList.get(0);
+					String parentsOSeq = parentsOp.getPositionSeq();//父岗位序列
+					// 补充信息
+					newOmPosition.setGuid(GUID.position());// 补充GUID
+					newOmPosition.setPositionStatus(OMConstants.POSITION_STATUS_RUNNING);// 补充机构状态，新增机构初始状态为 停用
+					newOmPosition.setPositionLevel(parentsOp.getPositionLevel().add(new BigDecimal("1")));// 补充机构层次，在父节点的层次上增1
+					newOmPosition.setGuidParents(parentsOp.getGuid());// 补充父机构，根节点没有父机构
+					newOmPosition.setCreatetime(new Date());// 补充创建时间
+					newOmPosition.setLastupdate(new Date());// 补充最近更新时间
+					newOmPosition.setIsleaf(CommonConstants.YES);// 新增节点都先算叶子节点 Y
+					newOmPosition.setSubCount(new BigDecimal(0));// 新增时子节点数为0
+					newOmPosition.setPositionSeq(parentsOSeq + "." + newOmPosition.getGuid());// 设置机构序列,根据父机构的序列+"."+机构的GUID
+					
+					// 更新父节点机构 是否叶子节点 节点数 最新更新时间 和最新更新人员
+					parentsOp.setLastupdate(new Date());// 补充最近更新时间
+					parentsOp.setUpdator("");// TODO 最近更新人员暂时为空
+					parentsOp.setSubCount(new BigDecimal(parentsOp.getSubCount().intValue() + 1));//子节点数增1
+					parentsOp.setIsleaf(CommonConstants.NO);//置为非叶子节点
+
+					final OmPosition finalparentsOp = parentsOp;
+					final OmPosition omPosition = newOmPosition;
+					// 新增子节点机构
+
+					transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+						int index = 1;
+						@Override
+						public void doInTransactionWithoutResult(TransactionStatus status) {
+							try {
+								omPositionService.insert(omPosition);//新增子节点
+								index ++;
+								omPositionService.update(finalparentsOp);//更新父节点
+							} catch (Exception e) {
+								e.printStackTrace();
+								status.setRollbackOnly();
+								throw new OrgManagementException(
+										index == 1 ? OMExceptionCodes.FAILURE_WHEN_CREATE_CHILD_ORG : OMExceptionCodes.FAILURE_WHRN_UPDATE_PARENT_ORG,
+										BasicUtil.wrap(e.getCause().getMessage()),
+										index == 1 ? "新增子节点机构失败！{0}" : "更新父节点机构失败！{0}" );
+							}
+						}
+					});
+				}
+				
+				return newOmPosition;
+			}
+
+	@Override
+	public OmPosition copyPosition(String fromPositionCode, String newPositionCode, String toOrgCode)
+			throws ToolsRuntimeException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OmPosition copyPositionDeep(String fromPositionCode, String newPositionCode, String toOrgCode,
+			boolean copyChild, boolean copyEmployee, boolean copyApp, boolean copyGroup, boolean copyRole)
+			throws ToolsRuntimeException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OmPosition movePosition(String fromOrgCode, String fromParentPositionCode, String toOrgCode,
+			String toParentPositionCode) throws ToolsRuntimeException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OmPosition updatePosition(OmPosition position) throws ToolsRuntimeException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void cancelPosition(String positionCode) throws ToolsRuntimeException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void reenablePosition(String positionCode) throws ToolsRuntimeException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public OmPosition queryPosition(String positionCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OmPosition> queryPositionByOrg(String guidOrg, OmPosition positionCondition) {
+		if(StringUtil.isEmpty(guidOrg)){
+			return null;
+		}
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("GUID_ORG", guidOrg);
+		List<OmPosition> list2 = omPositionService.query(wc);
+		return list2;
+	}
+
+	@Override
+	public List<OmPosition> queryChilds(String positionCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OmEmployee> queryEmployee(String positionCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<AcApp> queryApp(String positionCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OmGroup> queryGroup(String positionCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<AcRole> queryRole(String positionCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }
