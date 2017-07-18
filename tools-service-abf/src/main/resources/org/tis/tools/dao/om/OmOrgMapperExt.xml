@@ -18,7 +18,7 @@
 	<select id="queryAllRoot" parameterType="String" resultType="org.tis.tools.model.po.om.OmOrg">
 		select <include refid="Base_Column_List"/> from OM_ORG a 
 		where <!--exists (select guid from OM_ORG where guid_parents = a.org_seq ) and   -->
-		guid_parents is null ; 
+		guid_parents is null or guid_parents = ''; 
 	</select>
 	
 	<sql id="Base_Column_List" >

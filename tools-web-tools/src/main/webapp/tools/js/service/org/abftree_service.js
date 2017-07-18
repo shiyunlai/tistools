@@ -25,8 +25,11 @@ MetronicApp.factory('abftree_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     }
-    service.loademp = function (subFrom) {
-        //TODO
+    service.loadempbyorg = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/test",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
     }
     service.loadxjjg = function (subFrom) {
         //TODO
@@ -46,6 +49,18 @@ MetronicApp.factory('abftree_service',['$http', '$q', function ($http,$q) {
     }
     service.initcode = function (subFrom) {
         var res = $http.post(manurl + "/om/org/initcode",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.updateOrg = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/updateOrg",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.deleteOrg = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/deleteOrg",subFrom).then(function (response) {
             return response.data;
         });
         return res;

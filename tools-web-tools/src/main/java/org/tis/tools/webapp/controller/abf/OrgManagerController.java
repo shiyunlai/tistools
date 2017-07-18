@@ -4,6 +4,7 @@
  */
 package org.tis.tools.webapp.controller.abf;
 
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -232,6 +233,62 @@ public class OrgManagerController extends BaseController {
 			String orgCode = orgRService.genOrgCode(AREA, orgDegree, null);
 			// result.put("data", orgCode);
 			AjaxUtils.ajaxJsonSuccessMessage(response, orgCode);
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	/**
+	 * 更新机构
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/updateOrg")
+	public String updateOrg(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// Map<String, Object> result = new HashMap<String, Object>();
+			// 收到请求
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			OmOrg og = new OmOrg();
+			BeanUtils.populate(og, jsonObj);
+			orgRService.updateOrg(og);
+			AjaxUtils.ajaxJsonSuccessMessage(response,"更新成功!");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	
+	/**
+	 * 更新机构
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/deleteOrg")
+	public String deleteOrg(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// Map<String, Object> result = new HashMap<String, Object>();
+			// 收到请求
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			String orgCode = jsonObj.getString("orgCode");
+			orgRService.deleteEmptyOrg(orgCode);
+			AjaxUtils.ajaxJsonSuccessMessage(response,"删除成功!");
 		} catch (ToolsRuntimeException e) {// TODO
 			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
 			e.printStackTrace();

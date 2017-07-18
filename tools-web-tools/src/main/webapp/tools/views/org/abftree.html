@@ -93,7 +93,7 @@
                     <!-- 列表页 begin-->
                     <!-- 机构详情 -->
                     <form action="#" name="myform" class="form-horizontal clear" ng-if="!editflag">
-                        <div class="form-body portlet light">
+                        <div class="form-body portlet light">{{abftree.item}}
                             <div class="col-md-6" >
                                 <div class="form-group">
                                     <label class="control-label col-md-4">机构状态</label>
@@ -152,6 +152,36 @@
                                     <div class="col-md-8">
                                         <input type="text" class="form-control"
                                                ng-model="abftree.item.orgAddr"
+                                               name="id" ng-readonly="!editflag"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">机构主管岗位</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"
+                                               ng-model="abftree.item.guidPosition"
+                                               name="id" ng-readonly="!editflag"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">机构主管人员</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"
+                                               ng-model="abftree.item.guidEmpMaster"
+                                               name="id" ng-readonly="!editflag"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">机构管理员</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"
+                                               ng-model="abftree.item.GUID_EMP_MANAGER"
                                                name="id" ng-readonly="!editflag"/>
                                     </div>
                                 </div>
@@ -255,7 +285,7 @@
                         </div>
                     </form>
                     <form action="#" name="myform" class="form-horizontal clear" ng-if="editflag">
-                        <div class="form-body portlet light">
+                        <div class="form-body portlet light">{{position}}
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label col-md-4">机构名称</label>

@@ -43,7 +43,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
     gwflag.gwqx = gwqx;
     //首页清空
     $scope.flag.index = false;
-
+    i18nService.setCurrentLang("zh-cn");
     //机构,岗位页签切换
     var tabflag = true;//true为机构详情
     $scope.tabflag = tabflag;
@@ -100,7 +100,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                                         //     toastr['success'](data.retMessage);
                                         //     $scope.next = !next;
                                         // }
-                                        subFrom.orgCode = "00001";
+                                        subFrom.orgCode = subFrom.orgCode = subFrom.orgDegree+subFrom.AREA;;
                                         toastr['success'](data.retMessage);
                                         $scope.next = !next;
                                     })
@@ -162,7 +162,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                                         //     toastr['success'](data.retMessage);
                                         //     $scope.next = !next;
                                         // }
-                                        subFrom.orgCode = "00002";
+                                        subFrom.orgCode = subFrom.orgDegree+subFrom.AREA;
                                         toastr['success'](data.retMessage);
                                         $scope.next = !next;
                                     })
@@ -556,6 +556,11 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
     abftree.delete = function () {
         if(confirm("确认要删除此机构吗?")){
             //TODO.删除逻辑
+            var subFrom = {};
+            subFrom.orgCode = $scope.abftree.item.orgCode;
+            abftree_service.deleteOrg(subFrom).then(function (data) {
+                console.log(data);
+            })
         }
     }
 
@@ -577,7 +582,17 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
     }
     //保存
     abftree.save = function () {
-        $scope.editflag = !$scope.editflag;
+        abftree_service.updateOrg($scope.position).then(function (data) {
+            if(data.status == "success"){
+                toastr['success'](data.retMessage);
+            }else{
+                toastr['error'](data.retMessage);
+            }
+            $("#container").jstree().refresh();
+            console.log(data)
+            $scope.editflag = !$scope.editflag;
+        })
+
         //TODO
         //保存逻辑
     }
@@ -600,6 +615,41 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
             $scope.flag.qxxx = false;
             //todo
             //通过GUID查询员工列表
+            //生成员工列表
+            var gridOptions1 = {};
+            $scope.gridOptions1 = gridOptions1;
+            //定义单选事件
+            var selework = function () {
+
+            }
+            //定义表头名
+            var com = [{ field: 'empCode', displayName: '员工代码', enableHiding: false},
+                { field: 'empName', displayName: '员工姓名', enableHiding: false},
+                { field: 'gender', displayName: '性别', enableHiding: false},
+                { field: 'empStatus', displayName: '员工状态', enableHiding: false},
+                { field: 'empDegree', displayName: '员工职级', enableHiding: false},
+                { field: 'guidPostition', displayName: '基本岗位', enableHiding: false},
+                { field: 'guidempmajor', displayName: '直接主管', enableHiding: false},
+                { field: 'indate', displayName: '入职日期', enableHiding: false},
+                { field: 'otel', displayName: '办公电话', enableHiding: false}
+            ]
+            $scope.gridOptions1 = initgrid($scope,gridOptions1,filterFilter,com,false,selework);
+
+            var regridOptions1 = function () {
+                //调取工作组信息OM_GROUP
+                Workgroup_service.loadempbyorg().then(function (data) {
+                    for(var i = 0;i<data.length;i++){
+                        data[i].startDate = FormatDate(data[i].startDate);
+                        data[i].createtime = FormatDate(data[i].createtime);
+                        data[i].endDate = FormatDate(data[i].endDate);
+                        data[i].lastupdate = FormatDate(data[i].lastupdate);
+                    }
+                    $scope.gridOptions1.data = data;
+                    $scope.gridOptions1.mydefalutData = data;
+                    $scope.gridOptions1.getPage(1,$scope.gridOptions1.paginationPageSize);
+                })
+            }
+            regridOptions1();
 
         }else if(type == 2){
             $scope.flag.xqxx = false;
@@ -705,53 +755,8 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
 
 
 
-    i18nService.setCurrentLang("zh-cn");
-    //ui-grid
-    $scope.myData = [{name: "Moroni", age: 50},
-        {name: "Tiancum", age: 43},
-        {name: "Jacob", age: 27},
-        {name: "Nephi", age: 29},
-        {name: "Enos", age: 34}];
-    //ui-grid 具体配置
-    //下级机构列表
-    // $scope.gridOptions1 = {
-    //     data: 'myData',
-    //     //-------- 分页属性 ----------------
-    //     enablePagination: true, //是否分页，默认为true
-    //     enablePaginationControls: true, //使用默认的底部分页
-    //     paginationPageSizes: [10, 15, 20], //每页显示个数可选项
-    //     paginationCurrentPage:1, //当前页码
-    //     paginationPageSize: 10, //每页显示个数
-    //     //paginationTemplate:"<div></div>", //自定义底部分页代码
-    //     totalItems : 0, // 总数量
-    //     useExternalPagination: true,//是否使用分页按钮
-    //     //是否多选
-    //     // multiSelect:false,
-    //     onRegisterApi: function(gridApi) {
-    //         $scope.gridApi = gridApi;
-    //         //分页按钮事件
-    //         gridApi.pagination.on.paginationChanged($scope,function(newPage, pageSize) {
-    //             if(getPage) {
-    //                 getPage(newPage, pageSize);
-    //             }
-    //         });
-    //         //行选中事件
-    //         $scope.gridApi.selection.on.rowSelectionChanged($scope,function(row,event){
-    //             if(row){
-    //                 $scope.selectRow1 = row.entity;
-    //                 console.log($scope.selectRow1)
-    //                 console.log(event)
-    //             }
-    //         });
-    //
-    //     }
-    // };
-    var gridOptions1 = {};
-    $scope.gridOptions1 = gridOptions1;
-    var initdata1 = function () {
-        return $scope.myData;
-    }
-    $scope.gridOptions1 = initgrid($scope,$scope.gridOptions1,initdata1(),filterFilter);
+
+
     //测试global方法
     var gridOptions2 = {};
     $scope.gridOptions2 = gridOptions2;
