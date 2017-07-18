@@ -5,7 +5,6 @@ angular.module("LoginApp", [])
     .controller("loginController",function ($rootScope,$scope,login_service) {
         var user = {};
         $scope.user = user;
-
         $scope.login = function () {
             if(!isNull(user.loginname)&&!isNull(user.passwd)){
                 login_service.toLogin(user).then(function (data) {
@@ -13,9 +12,9 @@ angular.module("LoginApp", [])
                         sessionStorage.user = JSON.stringify(data.user);
                         window.location = "/governor/m/index.html";
                     }else if(data.retCode == '2') {
-                        toastr['error'](data.retMessage, "µ«¬º ß∞‹£°");
+                        toastr['error'](data.retMessage, "ÁôªÂΩïÂ§±Ë¥•ÔºÅ");
                     } else {
-                        toastr['error']( "µ«¬º“Ï≥££°");
+                        toastr['error']( "ÁôªÂΩïÂºÇÂ∏∏ÔºÅ");
                     }
                 });
             }

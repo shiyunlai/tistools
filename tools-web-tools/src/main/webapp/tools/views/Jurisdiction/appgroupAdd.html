@@ -1,5 +1,4 @@
 <div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
-    {{subFrom}}
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-cogs font-green-sharp"></i>
@@ -44,21 +43,16 @@
                             <input type="text" class="form-control"
                                    ng-model="subFrom.groupLevel"
                                    name="id" />
+                            <p style="color:red">请输入有效整数，数字越大排序越靠后，数字相同，则按照增加顺序排序；</p>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label class="control-label col-md-2"></label>
-                        <div class="col-md-10">
-                            <div class="actions btn-set" style="float: right;">
-                                <button type="button" name="back" class="btn btn-primary" ng-click="add(subFrom)"> 保存
-                                </button>
-                                <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
-                                </button>
-                            </div>
-                        </div>
+                <div class="col-md-2 col-md-offset-10">
+                    <div class="actions btn-set">
+                        <button type="button" name="back" class="btn btn-primary" ng-click="add(subFrom)"> 保存
+                        </button>
+                        <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
+                        </button>
                     </div>
                 </div>
             </div>

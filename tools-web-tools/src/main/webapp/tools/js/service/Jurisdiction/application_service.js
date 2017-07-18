@@ -198,5 +198,21 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
+    //开启应用
+    service.enableApp = function (subFrom) {
+        var res = $http.post(manurl + "/AcAppController/enableApp",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    };
+
+    //关闭应用
+    service.disableApp = function (subFrom) {
+        var res = $http.post(manurl + "/AcAppController/disableApp",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    };
+
     return service;
 }]);

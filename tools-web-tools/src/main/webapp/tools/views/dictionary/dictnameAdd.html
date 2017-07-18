@@ -15,23 +15,122 @@
     <div class="portlet-body portlet light">
         <form action="#" name="myform" class="form-horizontal ">
             <div class="form-body ">
-                <div class="col-md-6">
+                <div class="col-md-12" style="margin-bottom:10px;">
                     <div class="form-group">
-                        <label class="control-label col-md-4"> 类型代码:<span ng-class="{required:myform.dict_key.$invalid}"  > * </span></label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="dictFrom.bhvtypeCode"
-                                   required
-                                   name="dict_key"/>
+                        <label class="control-label col-md-4"> 字典项来源表</label>
+                        <div class="col-md-8" style="margin-top:7px;">
+                           <div class="col-md-2">
+                               <input type="radio"   ng-checked="true"  name="fromtable"  ng-model="datasouRce" value="0"  ng-click="fromdict()"/>字典项
+                           </div>
+                            <div class="col-md-2">
+                                <input type="radio"  ng-checked="false" name="fromtable" ng-model="datasouRce" value="1"  ng-click="fromtable()"/>来自单表
+                            </div>
+                            <div class="col-md-3">
+                                <input type="radio"  ng-checked="false" name="fromtable" ng-model="datasouRce" value="2" ng-click="fromview()"/>多表或视图
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4"> 类型名称:<span ng-class="{required:myform.dict_key1.$invalid}"  > * </span></label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="dictFrom.bhvtypeName’"
-                                   required
-                                   name="dict_key1"/>
+                <div class="fromdict" ng-if="dicrse">
+                    <div class="col-md-6" >
+                        <div class="form-group">
+                            <label class="control-label col-md-4"> 业务字典:<span ng-class="{required:myform.dict_key.$invalid}"  >*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" ng-model="dictFrom.dictKey"  required name="dict_key"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4"> 业务字典类型:<span ng-class="{required:myform.dict_key1.$invalid}"  > * </span></label>
+                            <div class="col-md-8">
+                                <select class="form-control"  ng-model="dictionaryAdd.dictType" name="dict_key1" required >
+                                    <option value=""></option>
+                                    <option value="a">应用级</option>
+                                    <option value="s">系统级</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4"> 字典名称:<span ng-class="{required:myform.dict_key2.$invalid}"  > * </span></label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" ng-model="dictFrom.dictName"  required  name = "dict_key2"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4"> 业务字典默认值:</label>
+                            <div class="col-md-8">
+                                    <input type="text" class="form-control" ng-model="dictFrom.defaultValue"    name = "dict_name"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4"> 父字典:<span ng-class="{required:myform.dict_key3.$invalid}"  > * </span></label>
+                            <div class="col-md-8">
+                                <select class="form-control"  ng-model="dictFrom.guidparents" name="dict_key3" required >
+                                    <option value=""></option>
+                                    <option value="a">表中其他的字典</option>
+                                    <option value="s">从数据库中取</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-2"> 解释说明:</label>
+                            <div class="col-md-10">
+                                <textarea class="form-control" ng_model="dictFrom.Desc" name="ctl_desc"></textarea>
+                                <!--<p class="help-block">检查项详细描述信息</code></p>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="singleTable" ng-if ='dicrseTable'>
+                    <div class="col-md-6" >
+                        <div class="form-group">
+                            <label class="control-label col-md-4"> 字典项来源表:</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" ng-model="dictFrom.fromTable"  name="dict_key"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6" >
+                        <div class="form-group">
+                            <label class="control-label col-md-4"> 作为字典项名称的列:</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" ng-model="dictFrom.foritemName"  name="dict_key"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6" >
+                        <div class="form-group">
+                            <label class="control-label col-md-4"> 作为实际值的列:</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" ng-model="dictFrom.forsendValue"  name="dict_key"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-2"> 记录过滤条件:</label>
+                            <div class="col-md-10">
+                                <textarea class="form-control" ng_model="dictFrom.filterSql"  placeholder="请输入sql过滤条件" name="ctl_desc"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="viewTable" ng-if ='viewTable'>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-2"> 记录过滤条件:</label>
+                            <div class="col-md-10">
+                                <textarea class="form-control" ng_model="dictFrom.filterSql"  placeholder="请输入sql过滤条件" name="ctl_desc"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -40,7 +139,7 @@
                         <label class="control-label col-md-2"></label>
                         <div class="col-md-10">
                             <div class="actions btn-set" style="float: right;">
-                                <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="add(behaFrom)" > 保存
+                                <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="add(dictFrom)" > 保存
                                 </button>
                                 <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存
                                 </button>

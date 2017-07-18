@@ -1,7 +1,6 @@
 <!-- 新增应用-->
 <div class="row" ng-form="bigform">
-    <div class="col-md-12">
-        {{dictionaryAdd.openDateStr}}
+    <div class="col-md-12 col-xs-12">
         <div class="portlet light bordered ">
             <div class="portlet-title">
                 <div class="caption">
@@ -9,22 +8,22 @@
                     <span class="caption-subject font-green-sharp bold uppercase" ng-if="!id">新增应用</span>
                     <span class="caption-subject font-green-sharp bold uppercase" ng-if="id">编辑应用</span>
                 </div>
-                <div class="actions btn-set">
+                <!--<div class="actions btn-set">
                     <button type="button" name="back" class="btn btn-primary" ng-if="bigform.$invalid == false" ng-disabled="bigform.$invalid" popover-trigger="mouseenter" ng-click="saveDict(dictionaryAdd)" > 保存
                     </button>
                     <button type="button" name="back" class="btn default" ng-if="bigform.$invalid == true" ng-disabled="bigform.$invalid" popover-trigger="mouseenter" > 保存
                     </button>
                     <button type="button" name="back" class="btn default" ng-click="cancel()"> 关闭
                     </button>
-                </div>
+                </div>-->
             </div>
             <div class="portlet-body">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form">
                             <!-- BEGIN FORM-->
-                            <form action="#" name="myform" class="form-horizontal">
-                                <div class="form-body">
+                            <form action="#" name="myform" class="form-horizontal" style="margin-left: -10px;">
+                                <div class="form-body" >
                                     <!--/row-->
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -38,19 +37,21 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label col-md-4"> 应用代码: <span   ng-class="{required:myform.dicts_kesy.$invalid}" >* </span></label>
+                                            <label class="control-label col-md-4"> 应用代码: <span ng-class="{required:myform.dicts_kesy.$invalid}" >* </span></label>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control"
+                                                <input type="text"  placeholder="请输入用户代码,以APP_开头" class="form-control"
                                                        required  ng-model="dictionaryAdd.appCode"
                                                        name="dicts_kesy"/>
+                                                <span style="color: #ccc">请输入用户代码,以APP_开头</span>
                                             </div>
+
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label col-md-4"> 应用类别: </label>
+                                            <label class="control-label col-md-4"> 应用类型:<span ng-class="{required:myform.dict_type.$invalid}" >* </span></label>
                                             <div class="col-md-8">
-                                                <select class="form-control"  name="dict_type" ng-model="dictionaryAdd.appType" name="dict_type">
+                                                <select class="form-control"   ng-model="dictionaryAdd.appType" required name="dict_type">
                                                     <option value=""></option>
                                                     <option value="0">本地</option>
                                                     <option value="1">远程</option>
@@ -60,9 +61,9 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label col-md-4"> 是否开通: </label>
+                                            <label class="control-label col-md-4"> 是否开通:<span ng-class="{required:myform.dict_isopen.$invalid}" >* </span> </label>
                                             <div class="col-md-8">
-                                                <select class="form-control" name="dict_open" ng-model="dictionaryAdd.isOpen">
+                                                <select class="form-control" required  ng-model="dictionaryAdd.isOpen"  name="dict_isopen">
                                                     <option value=""></option>
                                                     <option value="0">是</option>
                                                     <option value="1">否</option>
@@ -80,12 +81,6 @@
                                                     </span>
                                                     <input type="text" class="form-control" ng-model="dictionaryAdd.openDateStr"/>
                                                 </div>
-                                                <!--<div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
-                                                <span class="input-group-btn">
-                                                    <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
-                                                </span>
-                                                    <input type="text" class="form-control" ng-model="dictionaryAdd.openDate" readonly/>
-                                                </div>-->
                                             </div>
                                         </div>
                                     </div>
@@ -116,6 +111,30 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 管理维护人员: </label>
+                                            <div class="col-md-8">
+                                                <select class="form-control" name="dict_open" ng-model="dictionaryAdd.empMaintenance">
+                                                    <option value=""></option>
+                                                    <option value="0">人员一</option>
+                                                    <option value="1">人员二</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 应用管理角色: </label>
+                                            <div class="col-md-8">
+                                                <select class="form-control" name="dict_open" ng-model="dictionaryAdd.roleMaintenance">
+                                                    <option value=""></option>
+                                                    <option value="0">角色一</option>
+                                                    <option value="1">角色二</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="control-label col-md-2"> 应用描述: </label>
@@ -128,6 +147,16 @@
                                     </div>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-md-offset-10">
+                        <div class="actions btn-set">
+                            <button type="button" name="back" class="btn btn-primary" ng-if="bigform.$invalid == false" ng-disabled="bigform.$invalid" popover-trigger="mouseenter" ng-click="saveDict(dictionaryAdd)" > 保存
+                            </button>
+                            <button type="button" name="back" class="btn default" ng-if="bigform.$invalid == true" ng-disabled="bigform.$invalid" popover-trigger="mouseenter" > 保存
+                            </button>
+                            <button type="button" name="back" class="btn default" ng-click="cancel()"> 关闭
+                            </button>
                         </div>
                     </div>
                 </div>

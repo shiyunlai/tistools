@@ -33,46 +33,6 @@
                     <!-- tab内容开始 -->
                     <div class="tab-content portlet light clearfix "   ng-show="dictflag.zdgl">
                            <div class="col-md-6" ng-form="bigform" style="padding-left: 0px;">
-                                <!--<div class="portlet light" >
-                                    <div class="portlet-title">
-                                        <div class="caption">
-                                            <i class=""></i>
-                                            <span class="caption-subject font-green-sharp bold uppercase">角色查询条件</span>
-                                        </div>
-                                    </div>
-                                    <form id="s" class="clearfix">
-                                        <div class="col-md-12 " >
-                                            <div class="form-group ">
-                                                <label class="control-label col-md-2 col-md-offset-2" style="margin-top:8px;">类型代码:</label>
-                                                <div class="col-md-6">
-                                                    <input type="search" class="form-control"
-                                                           ng-model="dictconfig.typeCode"
-                                                           name="id"  id="q"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 " style="margin:15px 0px;" class="">
-                                            <div class="form-group ">
-                                                <label class="control-label col-md-2 col-md-offset-2" style="margin-top:8px;">类型名称:</label>
-                                                <div class="col-md-6">
-                                                    <input type="search" class="form-control"
-                                                           ng-model="dictconfig.typeName"
-                                                           name="id"  id="e"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12" style="text-align: center">
-                                            <button type="button" name="back" class="btn btn-primary" ng-click="dictconfig_refresh()">  刷新缓存
-                                            </button>
-                                            <button type="button" name="back" class="btn btn-primary" ng-click="dictconfig_down()">导出
-                                            </button>
-                                            <button type="submit" name="back" class="btn btn-primary" ng-click="dictconfig_search()"> 检索
-                                            </button>
-                                            <button type="button" name="back" class="btn btn-danger" ng-click="role_Reset()"> 重置
-                                            </button>
-                                         </div>
-                                    </form>
-                                </div>-->
                                 <div class="portlet light"  style="margin-top: 10px;">
                                     <div class="portlet-title">
                                         <div class="caption">
@@ -93,20 +53,17 @@
                                         </button>
                                         <button type="button" name="back" class="btn btn-primary" ng-click="dictconfig_refresh()">  刷新缓存
                                         </button>
-                                        <button type="button" name="back" class="btn btn-primary" ng-click="dictconfig_down()">导出
-                                        </button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6" style="padding-left: 0px; margin-top:10px;">
-                                <div class="portlet light">
+                           <div class="col-md-6" style="padding-left: 0px; margin-top:10px;">
+                                <!--<div class="portlet light">
                                     <div class="portlet-title" ng-if="dictconfig.show">
                                         <div class="caption">
                                             <i class=""></i>
                                             <span class="caption-subject font-green-sharp bold uppercase">角色查询条件</span>
                                         </div>
                                     </div>
-                                    <!-- 树结构-->
                                           <div class="show" ng-show="dictconfig.show">
                                               <form id="s">
                                                   <input type="search" id="q"/>
@@ -114,7 +71,7 @@
                                               </form>
                                               <div id="container" style="margin-top: 20px;"></div>
                                           </div>
-                                </div>
+                                </div>-->
                                 <div class="portlet light"  style="margin-top: 10px;" ng-if="dictconfig.show">
                                     <div class="portlet-title">
                                         <div class="caption">
@@ -136,7 +93,6 @@
                                     </div>
                                 </div>
                             </div>
-
                     </div>
                 </div>
                     <div class="table-container" ng-show="dictflag.zddr" >

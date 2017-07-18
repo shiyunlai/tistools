@@ -12,12 +12,8 @@ MetronicApp.controller('opmanage_controller', function ($filter,$rootScope, $sco
         {'OPERATOR_NAME':'齐','USER_ID':'qi','AUTH_MODE':'本地密码认证','OPERATOR_STATUS':'正常','MENU_TYPE':'Default模式','LOCK_LIMIT':'5'}
 
     ];
-
     var gridOptions = {};
     $scope.gridOptions = gridOptions;
-    var initdata = function(){
-        return $scope.myData;//数据方法
-    }
     var com = [{ field: 'OPERATOR_NAME', displayName: '操作员姓名'},
         { field: "USER_ID", displayName:'登录用户名'},
         { field: "AUTH_MODE", displayName:'认证模式'},
@@ -33,8 +29,8 @@ MetronicApp.controller('opmanage_controller', function ($filter,$rootScope, $sco
             delete $scope.selectRow;//制空
         }
     }
-    $scope.gridOptions = initgrid($scope,gridOptions,initdata(),filterFilter,com,false,f);
-
+    $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,false,f);
+    $scope.gridOptions.data = $scope.myData;
 
     //新增操作员代码
     $scope.operatAdd = function(){

@@ -30,9 +30,10 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">功能编码 <span ng-class="{required:myform.dict_key1.$invalid}"  > * </span></label>
                         <div class="col-md-8">
-                            <input type="text"   class="form-control"
+                            <input type="text"  placeholder="请输入功能编码,建议使用数字和字母组合"  title="请输入功能编码,建议使用数字和字母组合" class="form-control"
                                    ng-model="appFrom.funcCode" required
                                    name="dict_key1" />
+                            <span style="color: #ccc">请输入功能编码,建议使用数字和字母组合</span>
                         </div>
                     </div>
                 </div>
@@ -87,6 +88,16 @@
                                ng-model="appFrom.paraInfo"
                                name="id" />
                          </div>
+                    </div>
+                </div>
+                <div class="col-md-12" >
+                    <div class="form-group">
+                        <label class="control-label col-md-2">功能描述</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control"
+                                   ng-model="appFrom.funcDesc"
+                                   name="id" />
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-12">
