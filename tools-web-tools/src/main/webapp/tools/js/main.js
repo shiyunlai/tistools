@@ -188,11 +188,36 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', function($scope
  ***/
 
 /* Setup Layout Part - Header */
-MetronicApp.controller('HeaderController', ['$scope', function($scope) {
+MetronicApp.controller('HeaderController', ['$scope','filterFilter','$uibModal', function($scope,filterFilter,$uibModal) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
         Demo.init();
     });
+    //个人信息页面
+    $scope.information = function(){
+        openwindow($uibModal, 'views/landinginfor/personalinfor.html','sm',
+            function ($scope, $modalInstance) {
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            }
+        )
+    }
+    //修改密码页面
+    $scope.improved = function(){
+        openwindow($uibModal, 'views/landinginfor/Improved.html','sm',
+            function ($scope, $modalInstance) {
+                $scope.add = function(item){//保存新增的函数
+                    toastr['success']("修改成功！");
+                    $modalInstance.close();
+                }
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            }
+        )
+    }
+
 }]);
 
 /* Setup Layout Part - Sidebar */

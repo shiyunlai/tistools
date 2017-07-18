@@ -72,13 +72,33 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
         })
     }
 
-    /*按钮逻辑*/
 
-
+/*    var dictFrom = {};
+    $scope.dictFrom = dictFrom;
+    $scope.dictFrom.dicrse = true;*/
     //新增
     $scope.show_win=function(){
         openwindow($uibModal, 'views/dictionary/dictnameAdd.html', 'lg',// 弹出页面
             function ($scope, $modalInstance) {
+                $scope.dicrse = true;
+                $scope.dicrseTable = false;
+                $scope.viewTable = false;
+                /*radio按钮逻辑*/
+                $scope.fromdict = function(){
+                    $scope.dicrse = true;
+                    $scope.viewTable = false;
+                    $scope.dicrseTable = false;
+                }
+                $scope.fromtable = function(){
+                    $scope.dicrseTable = true;
+                    $scope.viewTable = false;
+                    $scope.dicrse = false;
+                }
+                $scope.fromview =function(){
+                    $scope.viewTable = true;
+                    $scope.dicrseTable = false;
+                    $scope.dicrse = false;
+                }
                 $scope.add = function(item){//保存新增的函数
                     toastr['success']("保存成功！");
                     $modalInstance.close();
@@ -91,15 +111,31 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
     }
     //修改
     $scope.show_edit=function(id){
-       /* var getSel = $scope.gridOptions1.getSelectedRows();
-        console.log(getSel)
-        console.log($scope.gridOptions0)
-        console.log($scope.gridOptions1)*/
+
         if($scope.selectRow){
             openwindow($uibModal, 'views/dictionary/dictnameAdd.html', 'lg',// 弹出页面
                 function ($scope, $modalInstance) {
                     var idds = id;
                     $scope.id = idds;
+                    $scope.dicrse = true;
+                    $scope.dicrseTable = false;
+                    $scope.viewTable = false;
+                    /*radio按钮逻辑*/
+                    $scope.fromdict = function(){
+                        $scope.dicrse = true;
+                        $scope.viewTable = false;
+                        $scope.dicrseTable = false;
+                    }
+                    $scope.fromtable = function(){
+                        $scope.dicrseTable = true;
+                        $scope.viewTable = false;
+                        $scope.dicrse = false;
+                    }
+                    $scope.fromview =function(){
+                        $scope.viewTable = true;
+                        $scope.dicrseTable = false;
+                        $scope.dicrse = false;
+                    }
                     $scope.add = function(item){//保存新增的函数
                         toastr['success']("保存成功！");
                         $modalInstance.close();
@@ -249,15 +285,15 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
 
     //数据字典项列表渲染
     $scope.dictAdd = [
-        {'itemType':'0','itemName':"本地",'itemOrder':'1','itemSealed':'是'},
-        {'itemType':'1','itemName':"远程",'itemOrder':'2','itemSealed':'否'}
+        {'guidDict':'业务字典一','itemName':"测试名称",'itemValue':'1','sendValue':'是'},
+        {'guidDict':'业务字典二','itemName':"测试名称二",'itemValue':'2','sendValue':'否'}
     ];
     var gridOptions1 = {};
     $scope.gridOptions1 = gridOptions1;
-    var com1 = [{ field: 'itemType', displayName: '类型项代码'},
-        { field: "itemName", displayName:'类型项名称'},
-        { field: "itemOrder", displayName:'排序'},
-        { field: "itemSealed", displayName:'是否封存'}
+    var com1 = [{ field: 'guidDict', displayName: '隶属业务字典'},
+        { field: "itemName", displayName:'字典项名称'},
+        { field: "itemValue", displayName:'字典项'},
+        { field: "sendValue", displayName:'实际值'}
     ];
     //自定义点击事件
     var f1 = function(row){

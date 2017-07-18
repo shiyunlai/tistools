@@ -63,13 +63,13 @@ public class AcAppController extends BaseController {
 			String appName = jsonObj.getString("appName");
 			String appType = jsonObj.getString("appType");
 			String appDesc = jsonObj.getString("appDesc");
-			String isOpen = jsonObj.getString("isOpen");
+			String isOpen = jsonObj.getString("isopen");
 			String openDateStr = jsonObj.getString("openDateStr");
 			SimpleDateFormat times = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = times.parse(openDateStr);
 			String url = jsonObj.getString("url");
-			String empMaintenance = jsonObj.getString("empMaintenance");
-			String roleMaintenance = jsonObj.getString("roleMaintenance");
+			String empMaintenance = jsonObj.getString("guidEmpMaintenance");
+			String roleMaintenance = jsonObj.getString("guidRoleMaintenance");
 			String ipAddr = jsonObj.getString("ipAddr");
 			String ipPort = jsonObj.getString("ipPort");
 			AcApp ac = new AcApp();
@@ -146,15 +146,15 @@ public class AcAppController extends BaseController {
 			acApp.setAppName(jsonObj.getString("appName"));
 			acApp.setAppType(jsonObj.getString("appType"));
 			acApp.setAppDesc(jsonObj.getString("appDesc"));
-			acApp.setIsopen(jsonObj.getString("isOpen"));
+			acApp.setIsopen(jsonObj.getString("isopen"));
 			String openDateStr = jsonObj.getString("openDateStr");
 			SimpleDateFormat times = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = times.parse(openDateStr);
 			acApp.setOpenDate(date);
 			acApp.setUrl(jsonObj.getString("url"));
 			acApp.setIpAddr(jsonObj.getString("ipAddr"));
-			acApp.setGuidEmpMaintenance(jsonObj.getString("empMaintenance"));
-			acApp.setGuidRoleMaintenance(jsonObj.getString("roleMaintenance"));
+			acApp.setGuidEmpMaintenance(jsonObj.getString("guidEmpMaintenance"));
+			acApp.setGuidRoleMaintenance(jsonObj.getString("guidRoleMaintenance"));
 			acApp.setIpPort(jsonObj.getString("ipPort"));
 			applicationRService.updateAcApp(acApp);
 			AjaxUtils.ajaxJsonSuccessMessage(response, "");
@@ -238,7 +238,7 @@ public class AcAppController extends BaseController {
 				logger.info("groupAdd request : " + content);
 			}
 			JSONObject jsonObj = JSONObject.parseObject(content);	//传入的参数
-			
+		
 			String funcgroupName = jsonObj.getString("funcgroupName");
 			String groupLevel = jsonObj.getString("groupLevel");
 			String guidApp = jsonObj.getString("guidApp");
@@ -1081,6 +1081,67 @@ public class AcAppController extends BaseController {
 			logger.error("delFuncBhvDef exception : ", e);
 		}
 		return null;
+	}
+	
+	/**
+	 * 开启应用
+	 * @param content
+	 * @param request
+	 * @param response
+	 */
+	@ResponseBody
+	@RequestMapping(value="/enableApp" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
+	public void enableApp(@RequestBody String content, HttpServletRequest request,
+										HttpServletResponse response) {
+		try {
+			if (logger.isInfoEnabled()) {
+				logger.info("enableApp request : " + content);
+			}
+			JSONObject jsonObj = JSONObject.parseObject(content);	//传入的参数
+
+			String appGuid = jsonObj.getString("appGuid"); // 应用GUID
+			Date openDate = jsonObj.getDate("openStr");//开通时间
+
+			applicationRService.enableApp(appGuid, openDate);
+
+			AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("enableApp exception : ", e);
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+			logger.error("enableApp exception : ", e);
+		}
+	}
+
+	/**
+	 * 关闭应用
+	 * @param content
+	 * @param request
+	 * @param response
+	 */
+	@ResponseBody
+	@RequestMapping(value="/disableApp" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
+	public void disableApp(@RequestBody String content, HttpServletRequest request,
+										HttpServletResponse response) {
+		try {
+			if (logger.isInfoEnabled()) {
+				logger.info("disableApp request : " + content);
+			}
+			JSONObject jsonObj = JSONObject.parseObject(content);	//传入的参数
+
+			String appGuid = jsonObj.getString("appGuid"); // 应用GUID
+
+			applicationRService.disableApp(appGuid);
+
+			AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+			logger.error("disableApp exception : ", e);
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+			logger.error("disableApp exception : ", e);
+		}
 	}
 
 }

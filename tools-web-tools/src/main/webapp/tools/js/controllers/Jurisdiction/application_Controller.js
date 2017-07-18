@@ -141,7 +141,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                         openwindow($modal, 'views/Jurisdiction/childfunctionAdd.html', 'lg',//弹出页面
                             function ($scope, $modalInstance) {
                                 $scope.addchild = function(item){
-                                    item.guidApp = ids.parent;//归属应用
+                                    item.guidApp = ids.original.guidApp;//归属应用
                                     item.guidParents = ids.id;
                                     application_service.groupAdd(item).then(function(data){
                                         if(data.status == "success"){
@@ -169,7 +169,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                         var guid = obj.original.guid;
                         var ids = $scope.biz.item.id;//获取点击的根节点的值
                         //获取选中的guid,传入删除
-                        if(confirm("确定删除改功能组吗？将一同删除所有下级功能组和功能！")){
+                        if(confirm("确定删除该功能组吗？将一同删除所有下级功能组和功能！")){
                             var guids = {};
                             guids.id = guid;//删除传入的必须是json格式
                             application_service.groupDel(guids).then(function(data){
@@ -347,6 +347,8 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 $scope.biz.appfund = false;
                 $scope.biz.applica = false;
                 $scope.biz.appchild = false;
+                yyflag.yyxx = true;
+                yyflag.gnzlb =false;
                 //调用服务.查询右侧内容
                 var subFrom = {};
                 $scope.subFrom = subFrom;
@@ -362,6 +364,9 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 $scope.biz.appchild = true;
                 $scope.biz.applica = false;
                 $scope.biz.apptab = false;
+                childflag.gnzxx = true;
+                childflag.zgnzlb =false;
+                childflag.gnlb = false;
                 var subFrom = {};
                 $scope.subFrom = subFrom;
                 $scope.subFrom.id = data.node.id;
@@ -396,6 +401,9 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 var subFrom = {};
                 $scope.subFrom = subFrom;
                 $scope.subFrom.id = data.node.id;
+                appfunflag.gnlist = true;
+                appfunflag.zylist = false;
+                appfunflag.gnactive =false;
                 //查询类型
                 application_service.queryBhvtypeDefByFunc(subFrom).then(function (data) {
                     if(!isNull(data.retMessage)){//查询判断，如果是空，则返回空。
@@ -1007,6 +1015,59 @@ angular.module('MetronicApp').controller('application_controller', function($roo
 
     //资源列表表格处理
     /* 功能tab页面逻辑*/
+    //应用开通逻辑
+    biz.openApp = function(item){
+        var ids = $scope.biz.item.id;//获取点击的根节点的值
+        var times = new Date();
+        times  = moment().format('YYYY-MM-DD');
+        item.openDateStr=times;
+        var subFrom = {};
+        $scope.subFrom = subFrom;
+        subFrom.appGuid = ids;
+        subFrom.openStr = item.openDateStr;
+        //保存到后台接口
+        application_service.enableApp(subFrom).then(function(data){
+            if(data.status == "success"){
+                toastr['success']("开通成功!");
+                item.isopen = 'Y';
+            }else{
+                toastr['error'](data.retCode,data.retMessage+"开通失败!");
+            }
+        })
+
+    }
+    //关闭应用逻辑
+    biz.clearApp = function(item){
+        var ids = $scope.biz.item.id;//获取点击的根节点的值
+        var subFrom = {};
+        $scope.subFrom = subFrom;
+        subFrom.appGuid=ids;
+        application_service.disableApp(subFrom).then(function(data){
+            if(data.status == "success"){
+                toastr['success']("关闭成功!");
+                item.isopen = 'N';
+            }else{
+                toastr['error'](data.retCode,data.retMessage+"关闭失败!");
+            }
+        })
+    }
+    //是否开通逻辑
+    $scope.isOpen = function(item){
+        if(item == 'Y'){
+            times  = moment().format('YYYY-MM-DD');
+            item.openDateStr=times;
+            $scope.clearapp = true;
+            $scope.openapp = false;
+
+        }else{
+            item.openDateStr='';
+            $scope.clearapp = false;
+            $scope.openapp = true;
+        }
+
+    }
+
+
     $scope.biz.appedit = function(item){
         $scope.editflag = !$scope.editflag;//让保存取消方法显现,并且让文本框可以输入
 
@@ -1014,7 +1075,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
 
     //应用信息修改方法
     $scope.biz.appsave = function(item){
-            //var ids = $scope.biz.item.id;//获取点击的根节点的值
             item.id = item.guid;
         application_service.appEdit(item).then(function(data){
             if(data.status == "success"){

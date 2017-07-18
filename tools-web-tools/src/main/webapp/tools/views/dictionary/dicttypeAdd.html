@@ -17,28 +17,18 @@
             <div class="form-body ">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4"> 上级类型项代码 </span></label>
+                        <label class="control-label col-md-4"> 隶属业务字典:<span ng-class="{required:myform.dict_key.$invalid}"  > * </span> </span></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="dictFrom.typeCode"
+                            <input type="text" class="form-control" required ng-model="dictFrom.guidDict"
                                    name="dict_key"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4"> 字典类型项代码:<span ng-class="{required:myform.dict_key.$invalid}"  > * </span></label>
+                        <label class="control-label col-md-4"> 字典项名称:<span ng-class="{required:myform.dict_key1.$invalid}"  > * </span></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="dictFrom.code"
-                                   required
-                                   name="dict_key"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4"> 字典类型项名称:<span ng-class="{required:myform.dict_key1.$invalid}"  > * </span></label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="dictFrom.typeName"
+                            <input type="text" class="form-control" ng-model="dictFrom.itemName"
                                    required
                                    name="dict_key1"/>
                         </div>
@@ -46,25 +36,25 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4">显示排序:</label>
+                        <label class="control-label col-md-4"> 字典项:<span ng-class="{required:myform.dict_key2.$invalid}"  > * </span></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="dictFrom.redio"
+                            <input type="text" class="form-control" ng-model="dictFrom.itemValue"
                                    required
-                                   name="dict_key"/>
+                                   name="dict_key2"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4">是否封存:</label>
+                        <label class="control-label col-md-4"> 实际值:<span ng-class="{required:myform.dict_key4.$invalid}"  > * </span></label>
                         <div class="col-md-8">
-                            <select class="form-control" name="dict_open" ng-model="dictFrom.type">
-                                <option value="y" selected>是</option>
-                                <option value="n">否</option>
-                            </select>
+                            <input type="text" class="form-control" ng-model="dictFrom.sendValue"
+                                   required
+                                   name="dict_key4"/>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-12">
                     <div class="form-group">
                         <label class="control-label col-md-2"></label>
