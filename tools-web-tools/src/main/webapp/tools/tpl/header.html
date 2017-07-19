@@ -82,6 +82,9 @@
     function loginout(){
         sessionStorage.clear();
         window.location.reload();
-        window.location = "../tools/login.html";//如果正确，则进入主页
+        if(confirm("是否退出系统")){
+            window.location = "../tools/login.html";//如果正确，则进入主页
+        }
+
     }
 </script>
