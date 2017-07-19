@@ -195,7 +195,7 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$uibModal',
     });
     //个人信息页面
     $scope.information = function(){
-        openwindow($uibModal, 'views/landinginfor/personalinfor.html','sm',
+        openwindow($uibModal, 'views/landinginfor/personalinfor.html','lg',
             function ($scope, $modalInstance) {
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
@@ -205,7 +205,7 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$uibModal',
     }
     //修改密码页面
     $scope.improved = function(){
-        openwindow($uibModal, 'views/landinginfor/Improved.html','sm',
+        openwindow($uibModal, 'views/landinginfor/Improved.html','lg',
             function ($scope, $modalInstance) {
                 $scope.add = function(item){//保存新增的函数
                     toastr['success']("修改成功！");
