@@ -636,21 +636,103 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
             $scope.gridOptions1 = initgrid($scope,gridOptions1,filterFilter,com,false,selework);
 
             var regridOptions1 = function () {
+                var subFrom = {};
+                subFrom.guid = $scope.abftree.item.guid;
                 //调取工作组信息OM_GROUP
-                Workgroup_service.loadempbyorg().then(function (data) {
-                    for(var i = 0;i<data.length;i++){
-                        data[i].startDate = FormatDate(data[i].startDate);
-                        data[i].createtime = FormatDate(data[i].createtime);
-                        data[i].endDate = FormatDate(data[i].endDate);
-                        data[i].lastupdate = FormatDate(data[i].lastupdate);
+                abftree_service.loadempbyorg(subFrom).then(function (data) {
+                    if(data.status == "success"){
+                        for(var i = 0;i<data.length;i++){
+                            data[i].startDate = FormatDate(data[i].startDate);
+                            data[i].createtime = FormatDate(data[i].createtime);
+                            data[i].endDate = FormatDate(data[i].endDate);
+                            data[i].lastupdate = FormatDate(data[i].lastupdate);
+                        }
+                        $scope.gridOptions1.data = data;
+                        $scope.gridOptions1.mydefalutData = data;
+                        $scope.gridOptions1.getPage(1,$scope.gridOptions1.paginationPageSize);
+                    }else{
+
                     }
-                    $scope.gridOptions1.data = data;
-                    $scope.gridOptions1.mydefalutData = data;
-                    $scope.gridOptions1.getPage(1,$scope.gridOptions1.paginationPageSize);
+
                 })
             }
+            //拉取列表
             regridOptions1();
 
+            //机构下新增人员信息
+            abftree.addyg = function () {
+                console.log($scope.abftree.item.guid);
+                var id = $scope.abftree.item.guid;
+                openwindow($uibModal, 'views/org/addemp_window.html', 'lg',
+                    function ($scope, $modalInstance) {
+                        //创建员工实例
+                        var subFrom = {};
+                        $scope.subFrom = subFrom;
+                        //Emp
+                        var emp = {};
+                        $scope.emp = emp;
+                        //处理新增员工-机构关系表
+                        subFrom.guidParents = id;
+                        //增加方法
+                        emp.add = function (subFrom) {
+                            console.log(subFrom)
+                            //TODO.新增逻辑
+                            toastr['success']( "新增成功！");
+                            $scope.cancel();
+                        }
+
+                        $scope.cancel = function () {
+                            $modalInstance.dismiss('cancel');
+                        };
+                    }
+                )
+            }
+
+            //机构下编辑人员信息
+            abftree.edityg = function () {
+                var it = $scope.gridOptions2.selectRow1;
+                var a = $scope.gridOptions2.getSelectedRows();
+                console.log(a);
+                if(isNull(a)||a.length>1){
+                    toastr['error']( "请选择一条记录！");
+                    return false;
+                }
+                openwindow($uibModal, 'views/org/addemp_window.html', 'lg',
+                    function ($scope, $modalInstance) {
+                        //创建员工实体
+                        var subFrom = it;
+                        $scope.subFrom = subFrom;
+                        //标识以区分新增和编辑
+                        //Emp
+                        var emp = {};
+                        $scope.emp = emp;
+                        //修改方法
+                        emp.add = function (subFrom) {
+                            console.log(subFrom)
+                            toastr['success']( "修改成功！");
+                            $scope.cancel();
+                        }
+                        $scope.cancel = function () {
+                            $modalInstance.dismiss('cancel');
+                        };
+                    });
+            }
+
+            //机构下删除人员信息
+            abftree.deleteyg = function () {
+                var it = $scope.selectRow;
+                if(isNull($scope.selectRow)){
+                    toastr['error']( "请选择一条记录！");
+                    return false;
+                }else{
+                    //TODO
+                    if(confirm("确认要删除此人员信息吗?")){
+                        //TODO.删除逻辑
+                        toastr['success']( "删除成功！");
+                    }
+
+                }
+            }
         }else if(type == 2){
             $scope.flag.xqxx = false;
             $scope.flag.xjjg = false;
@@ -771,80 +853,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
     $scope.gridOptions2 = initgrid($scope,$scope.gridOptions2,initdata(),filterFilter,null,true,f);
 
 
-    //机构下新增人员信息
-    abftree.addyg = function () {
-        console.log($scope.abftree.item.guid);
-        var id = $scope.abftree.item.guid;
-        openwindow($uibModal, 'views/org/addemp_window.html', 'lg',
-            function ($scope, $modalInstance) {
-                //创建员工实例
-                var subFrom = {};
-                $scope.subFrom = subFrom;
-                //Emp
-                var emp = {};
-                $scope.emp = emp;
-                //处理新增员工-机构关系表
-                subFrom.guidParents = id;
-                //增加方法
-                emp.add = function (subFrom) {
-                    console.log(subFrom)
-                    //TODO.新增逻辑
-                    toastr['success']( "新增成功！");
-                    $scope.cancel();
-                }
 
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            }
-        )
-    }
-
-    //机构下编辑人员信息
-    abftree.edityg = function () {
-        var it = $scope.gridOptions2.selectRow1;
-        var a = $scope.gridOptions2.getSelectedRows();
-        console.log(a);
-        if(isNull(a)||a.length>1){
-            toastr['error']( "请选择一条记录！");
-            return false;
-        }
-        openwindow($uibModal, 'views/org/addemp_window.html', 'lg',
-            function ($scope, $modalInstance) {
-                //创建员工实体
-                var subFrom = it;
-                $scope.subFrom = subFrom;
-                //标识以区分新增和编辑
-                //Emp
-                var emp = {};
-                $scope.emp = emp;
-                //修改方法
-                emp.add = function (subFrom) {
-                    console.log(subFrom)
-                    toastr['success']( "修改成功！");
-                    $scope.cancel();
-                }
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            });
-    }
-
-    //机构下删除人员信息
-    abftree.deleteyg = function () {
-        var it = $scope.selectRow;
-        if(isNull($scope.selectRow)){
-            toastr['error']( "请选择一条记录！");
-            return false;
-        }else{
-            //TODO
-            if(confirm("确认要删除此人员信息吗?")){
-                //TODO.删除逻辑
-                toastr['success']( "删除成功！");
-            }
-
-        }
-    }
 
     //下级机构新增
     abftree.addxjjg = function () {

@@ -4,7 +4,6 @@
  */
 package org.tis.tools.webapp.controller.abf;
 
-import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,12 +22,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
+import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.po.om.OmPosition;
+import org.tis.tools.rservice.om.capable.IEmployeeRService;
 import org.tis.tools.rservice.om.capable.IOrgRService;
 import org.tis.tools.rservice.om.capable.IPositionRService;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.util.AjaxUtils;
+
+import com.alibaba.fastjson.JSON;
 
 import net.sf.json.JSONObject;
 
@@ -45,6 +48,8 @@ public class OrgManagerController extends BaseController {
 	IOrgRService orgRService;
 	@Autowired
 	IPositionRService positionRService;
+	@Autowired
+	IEmployeeRService employeeRService;
 
 	/**
 	 * 展示机构树
@@ -326,7 +331,64 @@ public class OrgManagerController extends BaseController {
 		}
 		return null;
 	}
-
+	
+	/**
+	 * 机构下新增人员信息
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/addemp")
+	public String addemp(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			OmEmployee oe = new OmEmployee();
+			BeanUtils.populate(oe, jsonObj);
+			employeeRService.createEmployee(oe);
+			AjaxUtils.ajaxJsonSuccessMessage(response, "新增成功!");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	
+	/**
+	 * 拉取员工-机构关系表数据
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/loadempbyorg")
+	public String loadempbyorg(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			String guid = jsonObj.getString("guid");
+			List<OmEmployee> list = employeeRService.queryEmployeeByGuid(guid);
+			AjaxUtils.ajaxJsonSuccessMessage(response, JSON.parse(list.toString()));
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	
 	/**
 	 * 每个controller定义自己的返回信息变量
 	 */

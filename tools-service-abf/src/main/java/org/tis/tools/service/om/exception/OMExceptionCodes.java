@@ -93,7 +93,10 @@ public class OMExceptionCodes {
 	 * 更新机构信息失败
 	 */
 	public static final String FAILURE_WHEN_UPDATE_ORG_APP = R_EX_CODE("0014");
-	
+	/**
+	 * 
+	 */
+	 public static final String LAKE_PARMS_FOR_CREATE_EMPLOYEE = R_EX_CODE("0015");
 	/**
 	 * 以烤串方式拼接异常码
 	 * @param code 业务域范围内的异常编码

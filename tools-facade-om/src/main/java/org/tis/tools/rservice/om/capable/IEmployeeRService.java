@@ -339,11 +339,21 @@ public interface IEmployeeRService {
 	 * 查询机构（orgCode）下所有人员信息（只返回直属人员，不包括子机构的人员）
 	 * </pre>
 	 * 
-	 * @param orgCode
+	 * @param orgcode
 	 *            机构代码
 	 * @param empCondition
 	 *            人员过滤条件
 	 * @return 从属于该机构的人员们
 	 */
 	List<OmEmployee> queryEmployeeByOrg(String orgCode, OmEmployee empCondition) ;
+	
+	/**
+	 * 查询机构 (ORGGUID) 下所有人员信息（只返回直属人员，不包括子机构的人员）
+	 */
+	List<OmEmployee> queryEmployeeByGuid(String orgGuid);
+	
+	/**
+	 * 查询所有人员信息
+	 */
+	List<OmEmployee> queryAllEmployyee();
 }

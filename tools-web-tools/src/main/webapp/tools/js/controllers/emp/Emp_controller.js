@@ -1,7 +1,7 @@
 /**
  * Created by gaojie on 2017/6/26.
  */
-angular.module('MetronicApp').controller('Emp_controller', function($rootScope, $scope,abftree_service, $http, $timeout,i18nService,filterFilter,uiGridConstants,$uibModal,$state) {
+angular.module('MetronicApp').controller('Emp_controller', function($rootScope, $scope,Emp_service, $http, $timeout,i18nService,filterFilter,uiGridConstants,$uibModal,$state) {
     $scope.$on('$viewContentLoaded', function () {
         // initialize core components
         App.initAjax();
@@ -53,19 +53,46 @@ angular.module('MetronicApp').controller('Emp_controller', function($rootScope, 
     //生成员工列表信息
     var empgrid = {};
     $scope.empgrid = empgrid;
-    var initdata = function () {
-        //调取员工信息
-        return $scope.myData = [{name: "Moroni", age: 50},
-            {name: "Tiancum", age: 43},
-            {name: "Jacob", age: 27},
-            {name: "Nephi", age: 29},
-            {name: "Enos", age: 34}];
-    }
     //定义单选事件
     var sele = function () {
         
     }
-    $scope.empgrid = initgrid($scope,empgrid,initdata(),filterFilter,null,false,sele);
+    //定义表头名
+    var com = [{ field: 'empCode', displayName: '员工代码', enableHiding: false},
+        { field: 'empName', displayName: '员工姓名', enableHiding: false},
+        { field: 'gender', displayName: '性别', enableHiding: false},
+        { field: 'empstatus', displayName: '员工状态', enableHiding: false},
+        { field: 'empDegree', displayName: '员工职级', enableHiding: false},
+        { field: 'guidPosition', displayName: '基本岗位', enableHiding: false},
+        { field: 'guidempmajor', displayName: '直接主管', enableHiding: false},
+        { field: 'indate', displayName: '入职日期', enableHiding: false},
+        { field: 'otel', displayName: '办公电话', enableHiding: false}
+    ]
+    $scope.empgrid = initgrid($scope,empgrid,filterFilter,com,false,sele);
+
+    var reempgrid = function () {
+        //调取工作组信息OM_GROUP
+        Emp_service.loadempgrid().then(function (data) {
+            console.log(data)
+            if(data.status == "success" && data.retMessage.length > 0){
+                for(var i = 0;i<data.retMessage.length;i++){
+                    data.retMessage[i].birthdate = FormatDate(data.retMessage[i].birthdate);
+                    data.retMessage[i].indate = FormatDate(data.retMessage[i].indate);
+                    data.retMessage[i].outdate = FormatDate(data.retMessage[i].outdate);
+                    data.retMessage[i].regdate = FormatDate(data.retMessage[i].regdate);
+                    data.retMessage[i].lastmodytime = FormatDate(data.retMessage[i].lastmodytime);
+                }
+                $scope.empgrid.data = data.retMessage;
+                $scope.empgrid.mydefalutData = data.retMessage;
+                $scope.empgrid.getPage(1,$scope.empgrid.paginationPageSize);
+            }else{
+
+            }
+
+        })
+    }
+    //拉取列表
+    reempgrid();
     //定义放置一个员工详情的对象
     var item = {};
     $scope.item = {};
@@ -75,6 +102,36 @@ angular.module('MetronicApp').controller('Emp_controller', function($rootScope, 
             $scope.flag[i] = false;
         }
         $scope.flag.yglb = true;
+    }
+    //新增
+    emp.add = function () {
+        openwindow($uibModal, 'views/Emp/addemp_window.html', 'lg',
+            function ($scope, $modalInstance) {
+                //创建员工实例
+                var subFrom = {"empCode":"00001","empName":"第一个员工","gender":"M","empDegree":"P1","guidOrg":"ORG1500343061","guidPosition":"POSITION1500362374","indate":"2017-07-19"};
+                $scope.subFrom = subFrom;
+                //标题
+                $scope.title = "新增员工";
+                //增加方法
+                $scope.add = function (subFrom) {
+                    console.log(subFrom)
+                    Emp_service.addemp(subFrom).then(function (data) {
+                        if(data.status == "success"){
+                            toastr['success'](data.retMessage);
+                        }else{
+                            toastr['error'](data.retMessage);
+                        }
+                        reempgrid();
+                        $scope.cancel();
+
+                    })
+                }
+
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            }
+        )
     }
     //详情按钮事件
     emp.detail = function () {
@@ -94,10 +151,11 @@ angular.module('MetronicApp').controller('Emp_controller', function($rootScope, 
     //编辑按钮事件
     emp.edit = function () {
         var arr = $scope.empgrid.getSelectedRows();
-        $scope.item = arr[0];
-        if(isNull($scope.item)){
+        if(isNull(arr) && arr.length != 1){
             toastr['error']( "请选择一条记录！");
             return false;
+        }else{
+
         }
         for(var i in $scope.flag){
             $scope.flag[i] = false;

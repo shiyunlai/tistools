@@ -26,7 +26,7 @@ MetronicApp.factory('abftree_service',['$http', '$q', function ($http,$q) {
         return res;
     }
     service.loadempbyorg = function (subFrom) {
-        var res = $http.post(manurl + "/om/org/test",subFrom).then(function (response) {
+        var res = $http.post(manurl + "/om/org/loadempbyorg",subFrom).then(function (response) {
             return response.data;
         });
         return res;
