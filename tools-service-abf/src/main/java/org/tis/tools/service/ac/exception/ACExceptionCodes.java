@@ -255,6 +255,16 @@ public class ACExceptionCodes {
 	 * 新增功能行为类型失败
 	 */
 	public static final String FAILURE_WHEN_CREATE_AC_FUNC_BHV = R_EX_CODE("0045");
+
+	/**
+	 * 开通应用失败
+	 */
+	public static final String FAILURE_WHEN_ENABLE_ACAPP = R_EX_CODE("0046");
+
+	/**
+	 * 关闭应用失败
+	 */
+	public static final String FAILURE_WHEN_DISABLE_ACAPP = R_EX_CODE("0047");
 	
 	/**
 	 * 以烤串方式拼接异常码
