@@ -371,7 +371,7 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
 
 angular.module('MetronicApp').controller('dictitwos_controller', function($rootScope, $scope, $http,$modal,filterFilter,FileUploader){
 
-    //上传字典类型
+    //上传业务字典
     $scope.typeFile = function openVersion() {
         openwindow( $modal,'views/dictionary/fillwindow.html','lg',function ($scope, $modalInstance) {
             var uploader = $scope.uploader = new FileUploader({
@@ -404,7 +404,6 @@ angular.module('MetronicApp').controller('dictitwos_controller', function($rootS
                 }
             }
 
-
             $scope.ok = function () {
                 $modalInstance.close();
             };
@@ -414,22 +413,22 @@ angular.module('MetronicApp').controller('dictitwos_controller', function($rootS
         });
     };
 
-    //上传字典项
+   /* //上传字典项
     $scope.projectFile = function openVersion() {
         openwindow( $modal,'views/dictionary/fillwindow.html','lg',function ($scope, $modalInstance) {
             var uploader = $scope.uploader = new FileUploader({
-                /*
+                /!*
                  url: myport+'/GovernorService/UPLOADFILE',//保存的地址，后台的地址
                  mime_types: [
                  {title : "war", extensions : "war"},
                  {title : "zip", extensions : "zip"},
                  {title : "pkg", extensions : "pkg"}
-                 ]*/ //定义上传的格式
+                 ]*!/ //定义上传的格式
             })
 
             uploader.filters.push({
                 name: 'customFilter',
-                fn: function(item /*{File|FileLikeObject}*/ , options) {
+                fn: function(item /!*{File|FileLikeObject}*!/ , options) {
                     return this.queue.length < 10;
                 }
             });
@@ -454,7 +453,7 @@ angular.module('MetronicApp').controller('dictitwos_controller', function($rootS
                 $modalInstance.dismiss('cancel');
             };
         });
-    };
+    };*/
 
 })
 

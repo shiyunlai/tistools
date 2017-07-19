@@ -17,7 +17,6 @@ var MetronicApp = angular.module("MetronicApp", [
     'ui.grid.edit',
     'ui.grid.pagination',
     'ui.grid.resizeColumns'
-
 ]);
 
 function action(bdy){
