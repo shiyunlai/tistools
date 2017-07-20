@@ -16,9 +16,6 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
 
     var gridOptions = {};
     $scope.gridOptions = gridOptions;
-    var initdata = function(){
-        return $scope.myData;//数据方法
-    }
     var com = [{ field: 'ROLE_CODE', displayName: '角色代码'},
         { field: "ROLE_NAME", displayName:'角色名称'},
         { field: "ROLE_TYPE", displayName:'角色类别',
@@ -40,7 +37,8 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
             $scope.role.shows = false;
         }
     }
-    $scope.gridOptions = initgrid($scope,gridOptions,initdata(),filterFilter,com,false,f);
+    $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,false,f);
+    $scope.gridOptions.data =  $scope.myData;
         //新增逻辑
         $scope.role_add = function(){
             openwindow($modal, 'views/roleManage/rolemanageAdd.html', 'lg',//弹出页面
@@ -311,9 +309,6 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
 
     var gridOptions2 = {};
     $scope.gridOptions2 = gridOptions2;
-    var initdata2 = function(){
-        return $scope.orgData;//数据方法
-    }
     var com2 = [{ field: 'ROLE_NAME', displayName: '角色名称'},
         { field: "ROLE_CODE", displayName:'角色代码'},
         { field: "ROLE_org", displayName:'所属机构'}
@@ -326,7 +321,8 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
             delete $scope.selectRow2;//制空
         }
     }
-    $scope.gridOptions2 = initgrid($scope,gridOptions2,initdata2(),filterFilter,com2,false,f2);
+    $scope.gridOptions2 = initgrid($scope,gridOptions2,filterFilter,com2,false,f2);
+    $scope.gridOptions2.data = $scope.orgData;
     //新增组织方法
     $scope.role.orgAdd = function(){
         openwindow($modal, 'views/roleManage/roleAddorg.html', 'lg',//弹出页面
@@ -400,9 +396,7 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
 
     var gridOptions3 = {};
     $scope.gridOptions3 = gridOptions3;
-    var initdata3 = function(){
-        return $scope.workData;//数据方法
-    }
+
     var com3 = [{ field: 'ROLE_NAME', displayName: '角色名称'},
         { field: "ROLE_CODE", displayName:'角色代码'},
         { field: "ROLE_work", displayName:'所属工作组'}
@@ -415,8 +409,8 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
             delete $scope.selectRow3;//制空
         }
     }
-    $scope.gridOptions3 = initgrid($scope,gridOptions3,initdata3(),filterFilter,com3,false,f3);
-
+    $scope.gridOptions3 = initgrid($scope,gridOptions3,filterFilter,com3,false,f3);
+    $scope.gridOptions3.data = $scope.workData;
     //新增tab下功能组方法
     $scope.role.workAdd = function(){
         openwindow($modal, 'views/roleManage/roleAddwork.html', 'lg',//弹出页面
@@ -505,9 +499,6 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
     ]
     var gridOptions4 = {};
     $scope.gridOptions4 = gridOptions4;
-    var initdata4 = function(){
-        return $scope.postData;//数据方法
-    }
     var com4 = [{ field: 'ROLE_NAME', displayName: '角色名称'},
         { field: "ROLE_CODE", displayName:'角色代码'},
         { field: "ROLE_post", displayName:'岗位'}
@@ -520,8 +511,8 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
             delete $scope.selectRow4;//制空
         }
     }
-    $scope.gridOptions4 = initgrid($scope,gridOptions3,initdata4(),filterFilter,com4,false,f4);
-
+    $scope.gridOptions4 = initgrid($scope,gridOptions3,filterFilter,com4,false,f4);
+    $scope.gridOptions4.data = $scope.postData;
 
     //新增tab下功能组方法
     $scope.role.postAdd = function(){
@@ -612,9 +603,6 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
 
     var gridOptionzw = {};
     $scope.gridOptionzw = gridOptionzw;
-    var initdatazw = function(){
-        return $scope.zwDate;//数据方法
-    }
     var comzw = [{ field: 'ROLE_NAME', displayName: '角色名称'},
         { field: "ROLE_CODE", displayName:'角色代码'},
         { field: "ROLE_ZhiWU", displayName:'职务'}
@@ -627,8 +615,8 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
             delete $scope.selectRowzw;//制空
         }
     }
-    $scope.gridOptionzw = initgrid($scope,gridOptionzw,initdatazw(),filterFilter,comzw,false,fzw);
-
+    $scope.gridOptionzw = initgrid($scope,gridOptionzw,filterFilter,comzw,false,fzw);
+    $scope.gridOptionzw.data = $scope.zwDate;
     //新增tab下功能组方法
     $scope.role.zhiwuAdd = function(){
         openwindow($modal, 'views/roleManage/roleAddzw.html', 'lg',//弹出页面
@@ -722,9 +710,7 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
     ];
     var gridOptioner = {};
     $scope.gridOptioner = gridOptioner;
-    var initdataer = function(){
-        return $scope.myDataer;//数据方法
-    }
+
     var comer = [{ field: 'OPERATOR_NAME', displayName: '操作员姓名'},
         { field: "OPERATOR_STATUS", displayName:'操作员状态'},
         { field: "USER_ID", displayName:'登录用户名'},
@@ -738,8 +724,8 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
             delete $scope.selectRower;//制空
         }
     }
-    $scope.gridOptioner = initgrid($scope,gridOptioner,initdataer(),filterFilter,comer,false,fer);
-
+    $scope.gridOptioner = initgrid($scope,gridOptioner,filterFilter,comer,false,fer);
+    $scope.gridOptioner.data =  $scope.myDataer;
 
     //新增操作员逻辑
     $scope.role.operaAdd = function(){
@@ -752,10 +738,7 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
                     {'OPERATOR_NAME':'齐','USER_ID':'qi','AUTH_MODE':'本地密码认证','OPERATOR_STATUS':'正常'}
                 ];
                 var gridOptions = {};
-                $scope.gridOptions = gridOptions;
-                var initdata = function(){
-                    return $scope.importadd;
-                }//数据方法
+                $scope.gridOptions = gridOptions;数据方法
 
                 var com = [
                     { field: 'OPERATOR_NAME', displayName: '操作员姓名'},
@@ -772,7 +755,8 @@ angular.module('MetronicApp').controller('role_controller', function($rootScope,
                         delete $scope.selectRow3;//制空
                     }
                 }
-                $scope.gridOptions = initgrid($scope,gridOptions,initdata(),filterFilter,com,true,f1);
+                $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
+                $scope.gridOptions.data = $scope.importadd;
                 $scope.importAdd = function () {
                     var dats = $scope.gridOptions.getSelectedRows();
                     if (dats.length > 0) {
