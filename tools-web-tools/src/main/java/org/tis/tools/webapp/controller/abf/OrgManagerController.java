@@ -31,9 +31,9 @@ import org.tis.tools.rservice.om.capable.IPositionRService;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.util.AjaxUtils;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
-import net.sf.json.JSONObject;
 
 /**
  * 机构管理功能
@@ -50,7 +50,6 @@ public class OrgManagerController extends BaseController {
 	IPositionRService positionRService;
 	@Autowired
 	IEmployeeRService employeeRService;
-
 	/**
 	 * 展示机构树
 	 * 
@@ -66,7 +65,7 @@ public class OrgManagerController extends BaseController {
 			HttpServletResponse response) {
 		try {
 			// 收到请求
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 			String id = jsonObj.getString("id");
 			String guidOrg = jsonObj.getString("guidOrg");
 			List<OmOrg> rootOrgs = new ArrayList<OmOrg>();
@@ -100,19 +99,9 @@ public class OrgManagerController extends BaseController {
 			}
 
 			if (rootOrgs == null || rootOrgs.isEmpty()) {
-				List list = new ArrayList<>();
-				for(OmPosition op : omp){
-					Map map = BeanUtils.describe(op);
-					list.add(map);
-				}
-				AjaxUtils.ajaxJson(response, net.sf.json.JSONArray.fromObject(list).toString());
+				AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, omp,"yyyy-MM-dd");
 			} else {
-				List list = new ArrayList<>();
-				for(OmOrg og : rootOrgs){
-					Map map = BeanUtils.describe(og);
-					list.add(map);
-				}
-				AjaxUtils.ajaxJson(response, net.sf.json.JSONArray.fromObject(list).toString());
+				AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, rootOrgs,"yyyy-MM-dd");
 			}
 
 		} catch (Exception e) {// TODO
@@ -137,7 +126,7 @@ public class OrgManagerController extends BaseController {
 			HttpServletResponse response) {
 		try {
 			// 收到请求
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 			String id = jsonObj.getString("id");
 			String name = jsonObj.getString("searchitem");
 			List<OmOrg> rootOrgs = new ArrayList<OmOrg>();
@@ -162,9 +151,9 @@ public class OrgManagerController extends BaseController {
 				rootOrgs.add(og);
 			}
 			if (rootOrgs == null || rootOrgs.isEmpty()) {
-				AjaxUtils.ajaxJson(response, net.sf.json.JSONArray.fromObject(omp).toString());
+				AjaxUtils.ajaxJsonSuccessMessage(response, omp);
 			} else {
-				AjaxUtils.ajaxJson(response, net.sf.json.JSONArray.fromObject(rootOrgs).toString());
+				AjaxUtils.ajaxJsonSuccessMessage(response, rootOrgs);
 			}
 
 		} catch (Exception e) {// TODO
@@ -189,7 +178,7 @@ public class OrgManagerController extends BaseController {
 			HttpServletResponse response) {
 		try {
 			// 收到请求
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 			Map map = jsonObj;
 			String flag = map.get("flag").toString();
 			Date startDate = null;
@@ -232,7 +221,7 @@ public class OrgManagerController extends BaseController {
 		try {
 			// Map<String, Object> result = new HashMap<String, Object>();
 			// 收到请求
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 			String orgDegree = jsonObj.getString("orgDegree");
 			String AREA = jsonObj.getString("AREA");
 			String orgCode = orgRService.genOrgCode(AREA, orgDegree, null);
@@ -261,7 +250,7 @@ public class OrgManagerController extends BaseController {
 		try {
 			// Map<String, Object> result = new HashMap<String, Object>();
 			// 收到请求
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 			OmOrg og = new OmOrg();
 			BeanUtils.populate(og, jsonObj);
 			orgRService.updateOrg(og);
@@ -290,7 +279,7 @@ public class OrgManagerController extends BaseController {
 		try {
 			// Map<String, Object> result = new HashMap<String, Object>();
 			// 收到请求
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 			String orgCode = jsonObj.getString("orgCode");
 			orgRService.deleteEmptyOrg(orgCode);
 			AjaxUtils.ajaxJsonSuccessMessage(response,"删除成功!");
@@ -318,7 +307,7 @@ public class OrgManagerController extends BaseController {
 			HttpServletResponse response) {
 		try {
 			// 收到请求
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 			OmPosition op = new OmPosition();
 			BeanUtils.populate(op, jsonObj);
 			positionRService.createPosition(op);
@@ -347,10 +336,10 @@ public class OrgManagerController extends BaseController {
 			HttpServletResponse response) {
 		try {
 			// 收到请求
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 			OmEmployee oe = new OmEmployee();
 			BeanUtils.populate(oe, jsonObj);
-			employeeRService.createEmployee(oe);
+//			employeeRService.createEmployee(oe);
 			AjaxUtils.ajaxJsonSuccessMessage(response, "新增成功!");
 		} catch (ToolsRuntimeException e) {// TODO
 			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
@@ -376,10 +365,141 @@ public class OrgManagerController extends BaseController {
 			HttpServletResponse response) {
 		try {
 			// 收到请求
-			JSONObject jsonObj = JSONObject.fromObject(content);
-			String guid = jsonObj.getString("guid");
-			List<OmEmployee> list = employeeRService.queryEmployeeByGuid(guid);
-			AjaxUtils.ajaxJsonSuccessMessage(response, JSON.parse(list.toString()));
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			String orgGuid = jsonObj.getString("guid");
+			List<OmEmployee> list = employeeRService.queryEmployeeByGuid(orgGuid);
+			List l = new ArrayList<>();
+			for(OmEmployee oe: list){
+				Map map = BeanUtils.describe(oe);
+				l.add(map);
+			}
+			AjaxUtils.ajaxJsonSuccessMessage(response, l);
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	
+	/**
+	 * 拉取不在当前机构下的员工列表,用于为该机构新添人员.
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/loadempNotinorg")
+	public String loadempNotinorg(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			String orgGuid = jsonObj.getString("guid");
+			List<OmEmployee> list = employeeRService.queryEmployeeNotinGuid(orgGuid);
+			List l = new ArrayList<>();
+			for(OmEmployee oe: list){
+				Map map = BeanUtils.describe(oe);
+				l.add(map);
+			}
+			AjaxUtils.ajaxJsonSuccessMessage(response, l);
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	
+	/**
+	 * 添加机构-人员关系表数据
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/addEmpOrg")
+	public String addEmpOrg(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			String orgGuid = jsonObj.getString("orgGuid");
+			JSONArray array = jsonObj.getJSONArray("empGuidlist");
+			for(int i=0;i<array.size();i++){
+				String empGuid = array.get(i).toString();
+				employeeRService.insertEmpOrg(orgGuid, empGuid);
+			}
+			AjaxUtils.ajaxJsonSuccessMessage(response, "新增成功!");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	
+	/**
+	 * 删除机构-人员关系表数据
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/deleteEmpOrg")
+	public String deleteEmpOrg(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			String orgGuid = jsonObj.getString("orgGuid");
+			JSONArray array = jsonObj.getJSONArray("empGuidlist");
+			for(int i=0;i<array.size();i++){
+				String empGuid = array.get(i).toString();
+				employeeRService.deleteEmpOrg(orgGuid, empGuid);
+			}
+			AjaxUtils.ajaxJsonSuccessMessage(response,"删除成功!");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	
+	/**
+	 * 加载下级机构列表数据
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/loadxjjg")
+	public String loadxjjg(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			String orgCode = jsonObj.getString("orgCode");
+			List<OmOrg> list = orgRService.queryChilds(orgCode);
+//			AjaxUtils.ajaxJsonSuccessMessage(response,list);
+			AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list, "yyyy-MM-dd");
 		} catch (ToolsRuntimeException e) {// TODO
 			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
 			e.printStackTrace();

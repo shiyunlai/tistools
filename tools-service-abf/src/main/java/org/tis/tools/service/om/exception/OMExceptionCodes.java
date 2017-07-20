@@ -63,7 +63,7 @@ public class OMExceptionCodes {
 	 * 启用机构时，生效日期和失效日期范围无效
 	 */
 	public static final String INVALID_DATE_SCOPE_WHEN_ENABLED = R_EX_CODE("0008");
-	
+
 	/**
 	 * 机构状态非停用，不能删除
 	 */
@@ -73,33 +73,52 @@ public class OMExceptionCodes {
 	 * 非空机构，不能删除
 	 */
 	public static final String FAILURE_WHEN_DEL_MUST_EMPTY_ORG = R_EX_CODE("0010");
-	
+
 	/**
 	 * 新增子节点机构失败
 	 */
 	public static final String FAILURE_WHEN_CREATE_CHILD_ORG = R_EX_CODE("0011");
-	
+
 	/**
 	 * 更新父节点机构失败
 	 */
 	public static final String FAILURE_WHRN_UPDATE_PARENT_ORG = R_EX_CODE("0012");
-	
+
 	/**
 	 * 机构状态不能直接通过修改而更新
 	 */
 	public static final String FAILURE_WHRN_UPDATE_ORG_STATUS = R_EX_CODE("0013");
-		
+
 	/**
 	 * 更新机构信息失败
 	 */
 	public static final String FAILURE_WHEN_UPDATE_ORG_APP = R_EX_CODE("0014");
 	/**
-	 * 
+	 * 缺少创建员工的必要信息
 	 */
-	 public static final String LAKE_PARMS_FOR_CREATE_EMPLOYEE = R_EX_CODE("0015");
+	public static final String LAKE_PARMS_FOR_CREATE_EMPLOYEE = R_EX_CODE("0015");
+	/**
+	 * 员工代码对应的员工不存在
+	 */
+	public static final String EMPANIZATION_NOT_EXIST_BY_EMP_CODE = R_EX_CODE("0016");
+	/**
+	 * 员工状态不能直接通过修改而更新
+	 */
+	public static final String FAILURE_WHEN_UPDATE_EMP_STATUS = R_EX_CODE("0017");
+	/**
+	 * 不能删除在职员工
+	 */
+	public static final String FAILURE_WHEN_DEL_NOT_ONJOB = R_EX_CODE("0018");
+	/**
+	 * 删除员工失败
+	 */
+	public static final String FAILURE_WHEN_DEL_EMP= R_EX_CODE("0019");
+
 	/**
 	 * 以烤串方式拼接异常码
-	 * @param code 业务域范围内的异常编码
+	 * 
+	 * @param code
+	 *            业务域范围内的异常编码
 	 * @return
 	 */
 	private static String R_EX_CODE(String code) {

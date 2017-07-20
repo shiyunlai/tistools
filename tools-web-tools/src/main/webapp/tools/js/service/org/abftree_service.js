@@ -31,8 +31,17 @@ MetronicApp.factory('abftree_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     }
+    service.loadempNotinorg = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/loadempNotinorg",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
     service.loadxjjg = function (subFrom) {
-        //TODO
+        var res = $http.post(manurl + "/om/org/loadxjjg",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
     }
     service.loadqxxx = function (subFrom) {
         //todo
@@ -67,6 +76,20 @@ MetronicApp.factory('abftree_service',['$http', '$q', function ($http,$q) {
     }
     service.addposit = function (subFrom) {
         var res = $http.post(manurl + "/om/org/addposit",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    //添加机构-员工关系表
+    service.addEmpOrg = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/addEmpOrg",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    //删除机构-员工关系表
+    service.deleteEmpOrg = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/deleteEmpOrg",subFrom).then(function (response) {
             return response.data;
         });
         return res;

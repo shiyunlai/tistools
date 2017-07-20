@@ -20,8 +20,6 @@ import org.tis.tools.rservice.om.capable.IEmployeeRService;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.util.AjaxUtils;
 
-import com.alibaba.fastjson.JSON;
-
 import net.sf.json.JSONObject;
 
 /**
@@ -86,8 +84,41 @@ public class EmployeeController extends BaseController{
 			JSONObject jsonObj = JSONObject.fromObject(content);
 			OmEmployee oe = new OmEmployee();
 			BeanUtils.populate(oe, jsonObj);
-			employeeRService.createEmployee(oe);
-			AjaxUtils.ajaxJsonSuccessMessage(response, "新增成功!");
+			if(oe.getGuid() == null || oe.getGuid() == ""){
+				employeeRService.createEmployee(oe);
+				AjaxUtils.ajaxJsonSuccessMessage(response, "新增成功!");
+			}else{
+				employeeRService.updateEmployee(oe);
+				AjaxUtils.ajaxJsonSuccessMessage(response, "修改成功!");
+			}
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	
+	/**
+	 * 删除人员信息
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/deletemp")
+	public String deletemp(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			String empCode = jsonObj.getString("empCode");
+			employeeRService.deleteEmployee(empCode);
+			AjaxUtils.ajaxJsonSuccessMessage(response, "删除成功!");
 		} catch (ToolsRuntimeException e) {// TODO
 			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
 			e.printStackTrace();

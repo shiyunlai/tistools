@@ -81,6 +81,7 @@ angular.module('MetronicApp').controller('Emp_controller', function($rootScope, 
                     data.retMessage[i].outdate = FormatDate(data.retMessage[i].outdate);
                     data.retMessage[i].regdate = FormatDate(data.retMessage[i].regdate);
                     data.retMessage[i].lastmodytime = FormatDate(data.retMessage[i].lastmodytime);
+                    data.retMessage[i].createtime = FormatDate(data.retMessage[i].createtime);
                 }
                 $scope.empgrid.data = data.retMessage;
                 $scope.empgrid.mydefalutData = data.retMessage;
@@ -155,14 +156,45 @@ angular.module('MetronicApp').controller('Emp_controller', function($rootScope, 
             toastr['error']( "请选择一条记录！");
             return false;
         }else{
+            for(var i in arr[0]){
+                if(arr[0][i] == null){
+                    arr[0][i] = "";
+                }
+            }
+            openwindow($uibModal, 'views/Emp/addemp_window.html', 'lg',
+                function ($scope, $modalInstance) {
+                    //创建员工实例
+                    var subFrom = {};
+                    $scope.subFrom = subFrom;
+                    $scope.subFrom = arr[0];
+                    //标题
+                    $scope.title = "修改员工信息";
+                    //增加方法
+                    $scope.add = function (subFrom) {
+                        console.log(subFrom)
+                        Emp_service.addemp(subFrom).then(function (data) {
+                            if(data.status == "success"){
+                                toastr['success'](data.retMessage);
+                            }else{
+                                toastr['error'](data.retMessage);
+                            }
+                            reempgrid();
+                            $scope.cancel();
 
+                        })
+                    }
+                    $scope.cancel = function () {
+                        $modalInstance.dismiss('cancel');
+                    };
+                }
+            )
         }
-        for(var i in $scope.flag){
-            $scope.flag[i] = false;
-        }
-        $scope.flag.xqxx = true;
-        $scope.editflag = false;
-        $scope.title = "修改员工信息"
+        // for(var i in $scope.flag){
+        //     $scope.flag[i] = false;
+        // }
+        // $scope.flag.xqxx = true;
+        // $scope.editflag = false;
+        // $scope.title = "修改员工信息"
     }
     //员工组织归属按钮事件
     emp.belongorg = function () {
@@ -190,7 +222,25 @@ angular.module('MetronicApp').controller('Emp_controller', function($rootScope, 
         }
         $scope.flag.ryqx = true;
     }
-
+    //删除人员信息
+    emp.deletemp = function () {
+        var arr = $scope.empgrid.getSelectedRows();
+        if(isNull(arr) && arr.length != 1){
+            toastr['error']( "请选择一条记录！");
+            return false;
+        }else{
+            var subFrom = {};
+            subFrom.empCode = arr[0].empCode;
+            Emp_service.deletemp(subFrom).then(function (data) {
+                if(data.status == "success"){
+                    toastr['success'](data.retMessage);
+                }else{
+                    toastr['error'](data.retMessage);
+                }
+                reempgrid();
+            })
+        }
+    }
 
 
 

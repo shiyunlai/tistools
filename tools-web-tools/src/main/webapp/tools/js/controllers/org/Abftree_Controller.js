@@ -130,7 +130,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 }
             };
             return it;
-        }else if(node.original.orgCode.indexOf("GW") != 0){
+        }else if(!isNull(node.original.orgCode) && node.original.orgCode.indexOf("GW") != 0){
             var it = {
                 "新建菜单":{
                     "id":"create",
@@ -304,7 +304,8 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                     subFrom.guidOrg = "";
                 }
 
-                abftree_service.loadmaintree(subFrom).then(function (data) {
+                abftree_service.loadmaintree(subFrom).then(function (datas) {
+                    var data = datas.retMessage;
                     if(isNull(data)){
 
                     }else if(isNull(data[0].orgName)){
@@ -312,10 +313,6 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                             data[i].text = data[i].positionName;
                             data[i].children = true;
                             data[i].id = data[i].guid;
-                            data[i].startDate = FormatDate(data[i].startDate);
-                            data[i].createTime = FormatDate(data[i].createTime);
-                            data[i].endDate = FormatDate(data[i].endDate);
-                            data[i].lastUpdate = FormatDate(data[i].lastUpdate);
                         }
                     }else{
                         for(var i = 0 ;i < data.length ; i++){
@@ -424,7 +421,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 $scope.abftree.item = data.node.original;
             }
 
-            $scope.$apply();
+            ($scope.$$phase)?null: $scope.$apply();
         }
     });
 
@@ -605,8 +602,133 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
             $scope.flag.xjjg = true;
             $scope.flag.ygxx = false;
             $scope.flag.qxxx = false;
-            //todo
-            //通过GUID查询下级机构信息
+            //通过GUID查询下级机构信息,生成下级机构列表
+            var gridOptions2 = {};
+            $scope.gridOptions2 = gridOptions2;
+            //定义单选事件
+            var selework = function () {
+
+            }
+            //定义表头名
+            var com = [{ field: 'orgCode', displayName: '机构代码', enableHiding: false},
+                { field: 'orgName', displayName: '机构名称', enableHiding: false},
+                { field: 'orgType', displayName: '机构类型', enableHiding: false},
+                { field: 'orgDegree', displayName: '机构等级', enableHiding: false},
+                { field: 'orgStatus', displayName: '机构状态', enableHiding: false},
+                { field: 'orgAddr', displayName: '机构地址', enableHiding: false},
+                { field: 'guidEmpMaster', displayName: '机构主管', enableHiding: false},
+                { field: 'linkMan', displayName: '联系人姓名', enableHiding: false},
+                { field: 'linkTel', displayName: '联系电话', enableHiding: false},
+                { field: 'createTime', displayName: '创建时间', enableHiding: false}
+            ]
+            $scope.gridOptions2 = initgrid($scope,gridOptions2,filterFilter,com,true,selework);
+
+            var regridOptions2 = function () {
+                var subFrom = {};
+                subFrom.orgCode = $scope.abftree.item.orgCode;
+                console.log(subFrom.orgCode)
+                //调取工作组信息OM_GROUP
+                abftree_service.loadxjjg(subFrom).then(function (data) {
+                    console.log(data.retMessage)
+                    if(data.status == "success"){
+                        for(var i = 0;i<data.retMessage.length;i++){
+                            // data.retMessage[i].birthdate = FormatDate(data.retMessage[i].birthdate);
+                            // data.retMessage[i].indate = FormatDate(data.retMessage[i].indate);
+                            // data.retMessage[i].outdate = FormatDate(data.retMessage[i].outdate);
+                            // data.retMessage[i].regdate = FormatDate(data.retMessage[i].regdate);
+                            // data.retMessage[i].lastmodytime = FormatDate(data.retMessage[i].lastmodytime);
+                            // data.retMessage[i].createtime = FormatDate(data.retMessage[i].createtime);
+                        }
+                        $scope.gridOptions2.data =  data.retMessage;
+                        $scope.gridOptions2.mydefalutData =  data.retMessage;
+                        $scope.gridOptions2.getPage(1,$scope.gridOptions2.paginationPageSize);
+                    }else{
+
+                    }
+
+                })
+            }
+            //拉取列表
+            regridOptions2();
+            //下级机构新增
+            abftree.addxjjg = function () {
+                var id = $scope.abftree.item.guid;
+                openwindow($uibModal, 'views/org/addorg_window.html', 'lg',
+                    function ($scope, $modalInstance) {
+                        //创建机构实例
+                        var subFrom = {};
+                        $scope.subFrom = subFrom;
+                        subFrom.flag = "child";
+                        //生成机构代码
+                        var next = true;
+                        $scope.next = next;
+                        $scope.skip = function () {
+                            if(isNull(subFrom.orgDegree) || isNull(subFrom.AREA)){
+                                toastr['error']("请填写相关信息!");
+                                return false;
+                            }
+                            //调用服务生成机构代码
+                            abftree_service.initcode(subFrom).then(function (data) {
+                                // if(data.status == "error"){
+                                //     toastr['error']( "！");
+                                // }else{
+                                //     subFrom.orgCode = data.orgCode;
+                                //     toastr['success'](data.retMessage);
+                                //     $scope.next = !next;
+                                // }
+                                subFrom.orgCode = subFrom.orgDegree+subFrom.AREA;
+                                toastr['success'](data.retMessage);
+                                $scope.next = !next;
+                            })
+
+                        }
+                        //处理新增机构父机构
+                        subFrom.guidParents = id;
+                        //增加方法
+                        $scope.add = function (subFrom) {
+                            //TODO.新增逻辑
+                            abftree_service.addorg(subFrom).then(function (data) {
+                                if(data.status == "success"){
+                                    toastr['success'](data.retMessage);
+                                }else{
+                                    toastr['error'](data.retMessage);
+                                }
+                                $("#container").jstree().refresh();
+                                $scope.cancel();
+                            });
+                        }
+                        $scope.cancel = function () {
+                            $modalInstance.dismiss('cancel');
+                        };
+                    }
+                )
+            }
+            //编辑下级机构信息
+            abftree.editxjjg = function () {
+                var arr = $scope.gridOptions2.getSelectedRows();
+                if(arr.length != 1){
+                    toastr['error']( "请选择一条记录！");
+                    return false;
+                }else{
+                    for(var a in $scope.flag){
+                        flag[a] = false;
+                    }
+                    $scope.flag.index = true;
+                    $scope.flag.xqxx = true;
+                    console.log($scope.flag);
+                    var node = {};
+                    node.id = arr[0].orgCode;
+                    var node2 = {};
+                    node2.id = $scope.abftree.item.id;
+                    $("#container").jstree().deselect_all(true);
+                    $("#container").jstree().load_node(node2,function () {
+                        $("#container").jstree().select_node(node,false,false);
+                    });
+                }
+
+            }
+
+
         }else if(type == 1){
 
             $scope.flag.xqxx = false;
@@ -626,29 +748,32 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
             var com = [{ field: 'empCode', displayName: '员工代码', enableHiding: false},
                 { field: 'empName', displayName: '员工姓名', enableHiding: false},
                 { field: 'gender', displayName: '性别', enableHiding: false},
-                { field: 'empStatus', displayName: '员工状态', enableHiding: false},
+                { field: 'empstatus', displayName: '员工状态', enableHiding: false},
                 { field: 'empDegree', displayName: '员工职级', enableHiding: false},
                 { field: 'guidPostition', displayName: '基本岗位', enableHiding: false},
                 { field: 'guidempmajor', displayName: '直接主管', enableHiding: false},
                 { field: 'indate', displayName: '入职日期', enableHiding: false},
                 { field: 'otel', displayName: '办公电话', enableHiding: false}
             ]
-            $scope.gridOptions1 = initgrid($scope,gridOptions1,filterFilter,com,false,selework);
+            $scope.gridOptions1 = initgrid($scope,gridOptions1,filterFilter,com,true,selework);
 
             var regridOptions1 = function () {
                 var subFrom = {};
                 subFrom.guid = $scope.abftree.item.guid;
+                console.log(subFrom.guid)
                 //调取工作组信息OM_GROUP
                 abftree_service.loadempbyorg(subFrom).then(function (data) {
                     if(data.status == "success"){
-                        for(var i = 0;i<data.length;i++){
-                            data[i].startDate = FormatDate(data[i].startDate);
-                            data[i].createtime = FormatDate(data[i].createtime);
-                            data[i].endDate = FormatDate(data[i].endDate);
-                            data[i].lastupdate = FormatDate(data[i].lastupdate);
+                        for(var i = 0;i<data.retMessage.length;i++){
+                            data.retMessage[i].birthdate = FormatDate(data.retMessage[i].birthdate);
+                            data.retMessage[i].indate = FormatDate(data.retMessage[i].indate);
+                            data.retMessage[i].outdate = FormatDate(data.retMessage[i].outdate);
+                            data.retMessage[i].regdate = FormatDate(data.retMessage[i].regdate);
+                            data.retMessage[i].lastmodytime = FormatDate(data.retMessage[i].lastmodytime);
+                            data.retMessage[i].createtime = FormatDate(data.retMessage[i].createtime);
                         }
-                        $scope.gridOptions1.data = data;
-                        $scope.gridOptions1.mydefalutData = data;
+                        $scope.gridOptions1.data =  data.retMessage;
+                        $scope.gridOptions1.mydefalutData =  data.retMessage;
                         $scope.gridOptions1.getPage(1,$scope.gridOptions1.paginationPageSize);
                     }else{
 
@@ -663,22 +788,79 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
             abftree.addyg = function () {
                 console.log($scope.abftree.item.guid);
                 var id = $scope.abftree.item.guid;
-                openwindow($uibModal, 'views/org/addemp_window.html', 'lg',
+                openwindow($uibModal, 'views/org/addsearhgrid_window.html', 'lg',
                     function ($scope, $modalInstance) {
-                        //创建员工实例
-                        var subFrom = {};
-                        $scope.subFrom = subFrom;
-                        //Emp
-                        var emp = {};
-                        $scope.emp = emp;
-                        //处理新增员工-机构关系表
-                        subFrom.guidParents = id;
-                        //增加方法
-                        emp.add = function (subFrom) {
-                            console.log(subFrom)
-                            //TODO.新增逻辑
-                            toastr['success']( "新增成功！");
-                            $scope.cancel();
+                        $scope.title = "添加员工";
+                        //加载不在本机构下的员工信息,生成列表
+                        var commonGrid = {};
+                        $scope.commonGrid = commonGrid;
+                        //定义单选事件
+                        var selework = function () {
+
+                        }
+                        //定义表头名
+                        var com = [{ field: 'empCode', displayName: '员工代码', enableHiding: false},
+                            { field: 'empName', displayName: '员工姓名', enableHiding: false},
+                            { field: 'gender', displayName: '性别', enableHiding: false},
+                            { field: 'empstatus', displayName: '员工状态', enableHiding: false},
+                            { field: 'empDegree', displayName: '员工职级', enableHiding: false},
+                            { field: 'guidPostition', displayName: '基本岗位', enableHiding: false},
+                            { field: 'guidempmajor', displayName: '直接主管', enableHiding: false},
+                            { field: 'indate', displayName: '入职日期', enableHiding: false},
+                            { field: 'otel', displayName: '办公电话', enableHiding: false}
+                        ]
+                        $scope.commonGrid = initgrid($scope,commonGrid,filterFilter,com,true,selework);
+
+                        var recommonGrid = function () {
+                            var subFrom = {};
+                            subFrom.guid = id;
+                            console.log(subFrom.guid)
+                            //调取工作组信息OM_GROUP
+                            abftree_service.loadempNotinorg(subFrom).then(function (data) {
+                                if(data.status == "success"){
+                                    for(var i = 0;i<data.retMessage.length;i++){
+                                        data.retMessage[i].birthdate = FormatDate(data.retMessage[i].birthdate);
+                                        data.retMessage[i].indate = FormatDate(data.retMessage[i].indate);
+                                        data.retMessage[i].outdate = FormatDate(data.retMessage[i].outdate);
+                                        data.retMessage[i].regdate = FormatDate(data.retMessage[i].regdate);
+                                        data.retMessage[i].lastmodytime = FormatDate(data.retMessage[i].lastmodytime);
+                                        data.retMessage[i].createtime = FormatDate(data.retMessage[i].createtime);
+                                    }
+                                    $scope.commonGrid.data =  data.retMessage;
+                                    $scope.commonGrid.mydefalutData =  data.retMessage;
+                                    $scope.commonGrid.getPage(1,$scope.commonGrid.paginationPageSize);
+                                }else{
+
+                                }
+
+                            })
+                        }
+                        //拉取列表
+                        recommonGrid();
+
+                        $scope.add = function () {
+                            var arr = $scope.commonGrid.getSelectedRows();
+                            if(arr.length == 0){
+                                toastr['error']( "请选择需要添加的员工！");
+                                return false;
+                            }else{
+                                var empGuidlist = [];
+                                for(var i=0;i<arr.length;i++){
+                                    empGuidlist.push(arr[i].guid);
+                                }
+                                var subFrom = {};
+                                subFrom.orgGuid = id;
+                                subFrom.empGuidlist = empGuidlist;
+                                abftree_service.addEmpOrg(subFrom).then(function (data) {
+                                    if(data.status == "success"){
+                                        toastr['success'](data.retMessage);
+                                    }else{
+                                        toastr['error'](data.retMessage);
+                                    }
+                                    regridOptions1();
+                                    $scope.cancel();
+                                })
+                            }
                         }
 
                         $scope.cancel = function () {
@@ -720,15 +902,28 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
 
             //机构下删除人员信息
             abftree.deleteyg = function () {
-                var it = $scope.selectRow;
-                if(isNull($scope.selectRow)){
-                    toastr['error']( "请选择一条记录！");
+                var arr = $scope.gridOptions1.getSelectedRows();
+                if(arr.length == 0){
+                    toastr['error']( "请选择需要删除的记录！");
                     return false;
                 }else{
                     //TODO
-                    if(confirm("确认要删除此人员信息吗?")){
-                        //TODO.删除逻辑
-                        toastr['success']( "删除成功！");
+                    if(confirm("确认要从本机构中删除此人员信息吗?")){
+                        var empGuidlist = [];
+                        for(var i=0;i<arr.length;i++){
+                            empGuidlist.push(arr[i].guid);
+                        }
+                        var subFrom = {};
+                        subFrom.orgGuid = $scope.abftree.item.guid;
+                        subFrom.empGuidlist = empGuidlist;
+                        abftree_service.deleteEmpOrg(subFrom).then(function (data) {
+                            if(data.status == "success"){
+                                toastr['success'](data.retMessage);
+                            }else{
+                                toastr['error'](data.retMessage);
+                            }
+                            regridOptions1();
+                       })
                     }
 
                 }
@@ -763,6 +958,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
         for(var i in $scope.flag){
             $scope.flag[i] = false;
         }
+        $scope.flag.index = true;
         if(type == 0){
             for(var i in $scope.gwflag){
                 $scope.gwflag[i] = false;
@@ -839,72 +1035,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
 
 
 
-    //测试global方法
-    var gridOptions2 = {};
-    $scope.gridOptions2 = gridOptions2;
-    var initdata = function () {
-        return $scope.myData;
-    }
-    var com = {};
-    var f = function (a,b) {
-        console.log(a)
-        console.log(b)
-    }
-    $scope.gridOptions2 = initgrid($scope,$scope.gridOptions2,initdata(),filterFilter,null,true,f);
 
-
-
-
-    //下级机构新增
-    abftree.addxjjg = function () {
-        var id = $scope.abftree.item.guid
-        openwindow($uibModal, 'views/org/addorg_window.html', 'lg',
-            function ($scope, $modalInstance) {
-                //创建机构实例
-                var subFrom = {};
-                $scope.subFrom = subFrom;
-                //处理新增机构父机构
-                subFrom.guidParents = id;
-                //增加方法
-                $scope.add = function (subFrom) {
-                    //TODO.新增逻辑
-                    console.log(subFrom)
-                    toastr['success']( "新增成功！");
-                    $scope.cancel();
-                }
-
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            }
-        )
-    }
-
-    //编辑下级机构信息
-    abftree.editxjjg = function () {
-        var it = $scope.selectRow1;
-        if(isNull(it)){
-            toastr['error']( "请选择一条记录！");
-            return false;
-        }
-        openwindow($uibModal, 'views/org/addorg_window.html', 'lg',
-            function ($scope, $modalInstance) {
-                //创建员工实体
-                var subFrom = it;
-                $scope.subFrom = subFrom;
-                //标识以区分新增和编辑
-
-                //修改方法
-                $scope.add = function (subFrom) {
-                    console.log(subFrom)
-                    toastr['success']( "修改成功！");
-                    $scope.cancel();
-                }
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            });
-    }
     //下级机构删除按钮
     abftree.deletexjjg = function () {
         var a = getSelectedCount();

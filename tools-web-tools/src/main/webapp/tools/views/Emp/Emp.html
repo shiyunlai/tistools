@@ -50,7 +50,7 @@
             </button>
             <button type="button" name="back" class="btn btn-primary" ng-click="emp.setqx()"> 个人权限设置
             </button>
-            <button type="button" name="back" class="btn btn-danger" ng-click=""> 删除
+            <button type="button" name="back" class="btn btn-danger" ng-click="emp.deletemp()"> 删除
             </button>
         </div>
     </div>
@@ -62,10 +62,9 @@
                 <div class="col-md-6" >
                     <div class="form-group">
                         <label class="control-label col-md-4">员工代码</label>
-
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.age"
+                                   ng-model="item.empCode"
                                    ng-readonly="editflag"/>
                         </div>
                     </div>
@@ -74,7 +73,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">员工姓名</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="item.name" ng-readonly="editflag" />
+                            <input type="text" class="form-control" ng-model="item.empName" ng-readonly="editflag" />
                         </div>
                     </div>
                 </div>
@@ -82,7 +81,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">员工全名</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="item.orgCode" ng-readonly="editflag" />
+                            <input type="text" class="form-control" ng-model="item.empRealname" ng-readonly="editflag" />
                         </div>
                     </div>
                 </div>
@@ -91,7 +90,7 @@
                         <label class="control-label col-md-4">性别</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.orgName"
+                                   ng-model="item.gender"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -101,7 +100,7 @@
                         <label class="control-label col-md-4">员工状态</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.orgType"
+                                   ng-model="item.empstatus"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -111,7 +110,7 @@
                         <label class="control-label col-md-4">员工职级</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.Degree"
+                                   ng-model="item.empDegree"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -121,7 +120,7 @@
                         <label class="control-label col-md-4">主机构编号</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.orgAddr"
+                                   ng-model="item.guidOrg"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -131,7 +130,7 @@
                         <label class="control-label col-md-4">基本岗位</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.link_man"
+                                   ng-model="item.guidPosition"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -141,7 +140,7 @@
                         <label class="control-label col-md-4">直接主管</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.area"
+                                   ng-model="item.guidEmpMajor"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -151,7 +150,7 @@
                         <label class="control-label col-md-4">入职日期</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.zipcode"
+                                   ng-model="item.indate"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -161,7 +160,7 @@
                         <label class="control-label col-md-4">离职日期</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.linkTel"
+                                   ng-model="item.outdate"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -171,7 +170,7 @@
                         <label class="control-label col-md-4">办公电话</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.email"
+                                   ng-model="item.otel"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -181,7 +180,7 @@
                         <label class="control-label col-md-4">办公地址</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.webUrl"
+                                   ng-model="item.oaddress"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -191,7 +190,7 @@
                         <label class="control-label col-md-4">办公邮编</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.createTime"
+                                   ng-model="item.ozipcode"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -201,7 +200,7 @@
                         <label class="control-label col-md-4">办公邮件</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.start_date"
+                                   ng-model="item.oemail"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -211,7 +210,7 @@
                         <label class="control-label col-md-4">传真号码</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.end_date"
+                                   ng-model="item.faxno"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -221,7 +220,7 @@
                         <label class="control-label col-md-4">手机号码</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.end_date"
+                                   ng-model="item.mobileno"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -230,7 +229,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">MSN号码</label>
                         <div class="col-md-8">
-                            <input class="form-control" style="" type="text" ng-model="item.asd" ng-readonly="editflag">
+                            <input class="form-control" style="" type="text" ng-model="item.msn" ng-readonly="editflag">
                         </div>
                     </div>
                 </div>
@@ -239,7 +238,7 @@
                         <label class="control-label col-md-4">证件类型</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.end_date"
+                                   ng-model="item.paperType"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -249,7 +248,7 @@
                         <label class="control-label col-md-4">证件号码</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.end_date"
+                                   ng-model="item.paperNo"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -258,8 +257,8 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">出生日期</label>
                         <div class="col-md-8">
-                            <input type="date" class="form-control"
-                                   ng-model="item.end_date"
+                            <input type="text" class="form-control"
+                                   ng-model="item.birthdate"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -269,7 +268,7 @@
                         <label class="control-label col-md-4">家庭电话</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.end_date"
+                                   ng-model="item.htel"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -279,7 +278,7 @@
                         <label class="control-label col-md-4">家庭邮编</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.end_date"
+                                   ng-model="item.hzipcode"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -289,7 +288,7 @@
                         <label class="control-label col-md-4">私人邮箱</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.end_date"
+                                   ng-model="item.pemail"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -299,7 +298,7 @@
                         <label class="control-label col-md-2">家庭地址</label>
                         <div class="col-md-10">
                             <input type="text" class="form-control"
-                                   ng-model="item.remark"
+                                   ng-model="item.haddress"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -309,7 +308,7 @@
                         <label class="control-label col-md-4">政治面貌</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.end_date"
+                                   ng-model="item.party"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -320,7 +319,7 @@
                         <label class="control-label col-md-4">操作员编号</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.end_date"
+                                   ng-model="item.guidOperator"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -330,7 +329,7 @@
                         <label class="control-label col-md-4">操作员</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.end_date"
+                                   ng-model="item.userId"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -340,7 +339,7 @@
                         <label class="control-label col-md-4">可授权角色</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.end_date"
+                                   ng-model="item.specialty"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -350,7 +349,7 @@
                         <label class="control-label col-md-4">可管理机构</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.end_date"
+                                   ng-model="item.orgList"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -360,7 +359,7 @@
                         <label class="control-label col-md-4">工作描述</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.end_date"
+                                   ng-model="item.workexp"
                                    ng-readonly="editflag" />
                         </div>
                     </div>
@@ -381,13 +380,6 @@
                         <div class="col-md-10">
                             <div class="actions btn-set" style="float: right;" ng-if="editflag">
                                 <button type="button" name="back" class="btn btn-primary" ng-click="emp.back()"> 返回
-                                </button>
-                            </div>
-                            <div class="actions btn-set" style="float: right;" ng-if="!editflag">
-                                <button type="button" name="back" class="btn btn-primary" ng-click=""> 保存
-                                </button>
-
-                                <button type="button" name="back" class="btn btn-danger" ng-click="emp.back()"> 取消
                                 </button>
                             </div>
                         </div>
