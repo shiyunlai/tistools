@@ -94,5 +94,29 @@ MetronicApp.factory('abftree_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     }
+    service.loadEmpbyPosition = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/loadEmpbyPosition",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.loadempNotinposit = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/loadempNotinposit",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.addEmpPosition = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/addEmpPosition",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.deleteEmpPosition = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/deleteEmpPosition",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
     return service;
 }]);

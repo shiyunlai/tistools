@@ -19,6 +19,7 @@ import org.tis.tools.model.def.ACConstants;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.def.OMConstants;
 import org.tis.tools.model.po.om.OmEmpOrg;
+import org.tis.tools.model.po.om.OmEmpPosition;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.vo.om.OmEmployeeDetail;
@@ -26,6 +27,7 @@ import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.om.exception.EmployeeManagementException;
 import org.tis.tools.rservice.om.exception.OrgManagementException;
 import org.tis.tools.service.om.OmEmpOrgService;
+import org.tis.tools.service.om.OmEmpPositionService;
 import org.tis.tools.service.om.OmEmployeeService;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
 
@@ -34,6 +36,8 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 	OmEmployeeService omEmployeeService;
 	@Autowired
 	OmEmpOrgService omEmpOrgService;
+	@Autowired
+	OmEmpPositionService omEmpPositionService;
 
 	@Override
 	public String genEmpCode(String orgCode, String empDegree) throws ToolsRuntimeException {
@@ -301,6 +305,24 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		wc.andEquals("GUID_ORG", orgGuid);
 		wc.andEquals("GUID_EMP", empGuid);
 		omEmpOrgService.deleteByCondition(wc);
+	}
+	
+
+	@Override
+	public void insertEmpPosition(String positionGuid, String empGuid) {
+		OmEmpPosition oep = new OmEmpPosition();
+		oep.setGuidEmp(empGuid);
+		oep.setGuidPosition(positionGuid);
+		oep.setIsmain("N");
+		omEmpPositionService.insert(oep);
+	}
+
+	@Override
+	public void deleteEmpPosition(String positionGuid, String empGuid) {
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("GUID_POSITION", positionGuid);
+		wc.andEquals("GUID_EMP", empGuid);
+		omEmpPositionService.deleteByCondition(wc);
 	}
 
 	/**

@@ -510,6 +510,127 @@ public class OrgManagerController extends BaseController {
 	}
 	
 	/**
+	 * 加载岗位下员工数据
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/loadEmpbyPosition")
+	public String loadEmpbyPosition(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			String positionCode = jsonObj.getString("positionCode");
+			List<OmEmployee> list = positionRService.queryEmployee(positionCode);
+			AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list, "yyyy-MM-dd");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	
+	/**
+	 * 加载不在岗位下员工数据
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/loadempNotinposit")
+	public String loadempNotinposit(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			String positionCode = jsonObj.getString("positionCode");
+			List<OmEmployee> list = positionRService.queryEmployeeNotin(positionCode);
+			AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list, "yyyy-MM-dd");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	
+	/**
+	 * 添加岗位-人员关系表数据
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/addEmpPosition")
+	public String addEmpPosition(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			String posGuid = jsonObj.getString("posGuid");
+			JSONArray array = jsonObj.getJSONArray("empGuidlist");
+			for(int i=0;i<array.size();i++){
+				String empGuid = array.get(i).toString();
+				employeeRService.insertEmpPosition(posGuid, empGuid);
+			}
+			AjaxUtils.ajaxJsonSuccessMessage(response, "新增成功!");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	
+	/**
+	 * 删除岗位-人员关系表数据
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/deleteEmpPosition")
+	public String deleteEmpPosition(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			String posGuid = jsonObj.getString("posGuid");
+			JSONArray array = jsonObj.getJSONArray("empGuidlist");
+			for(int i=0;i<array.size();i++){
+				String empGuid = array.get(i).toString();
+				employeeRService.deleteEmpPosition(posGuid, empGuid);
+			}
+			AjaxUtils.ajaxJsonSuccessMessage(response,"删除成功!");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	
+	
+	/**
 	 * 每个controller定义自己的返回信息变量
 	 */
 	private Map<String, Object> responseMsg;

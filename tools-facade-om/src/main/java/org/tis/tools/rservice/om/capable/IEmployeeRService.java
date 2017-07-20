@@ -366,6 +366,16 @@ public interface IEmployeeRService {
 	 * 删除人员-机构关系表数据
 	 */
 	void deleteEmpOrg(String orgGuid,String empGuid);
+
+	/**
+	 * 添加人员-机构关系表数据
+	 */
+	void insertEmpPosition(String positionGuid,String empGuid);
+	
+	/**
+	 * 删除人员-机构关系表数据
+	 */
+	void deleteEmpPosition(String positionGuid,String empGuid);
 	
 	/**
 	 * 查询所有人员信息

@@ -113,6 +113,11 @@ public class OMExceptionCodes {
 	 * 删除员工失败
 	 */
 	public static final String FAILURE_WHEN_DEL_EMP= R_EX_CODE("0019");
+	/**
+	 * 不存在此岗位代码
+	 */
+	public static final String POSITANIZATION_NOT_EXIST_BY_POSIT_CODE= R_EX_CODE("0020");
+
 
 	/**
 	 * 以烤串方式拼接异常码

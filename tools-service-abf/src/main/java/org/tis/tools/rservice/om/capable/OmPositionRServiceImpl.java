@@ -1,5 +1,6 @@
 package org.tis.tools.rservice.om.capable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,12 +16,16 @@ import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.def.OMConstants;
 import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcRole;
+import org.tis.tools.model.po.om.OmEmpPosition;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmGroup;
 import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.po.om.OmPosition;
 import org.tis.tools.rservice.BaseRService;
+import org.tis.tools.rservice.om.exception.EmployeeManagementException;
 import org.tis.tools.rservice.om.exception.OrgManagementException;
+import org.tis.tools.service.om.OmEmpPositionService;
+import org.tis.tools.service.om.OmEmployeeService;
 import org.tis.tools.service.om.OmOrgService;
 import org.tis.tools.service.om.OmPositionService;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
@@ -31,6 +36,10 @@ public class OmPositionRServiceImpl  extends BaseRService implements IPositionRS
 	OmPositionService omPositionService ; 
 	@Autowired
 	OmOrgService omOrgService ; 
+	@Autowired
+	OmEmpPositionService omEmpPositionService;
+	@Autowired
+	OmEmployeeService omEmployeeService;
 	
 	@Override
 	public String genPositionCode(String positionType) throws ToolsRuntimeException {
@@ -216,11 +225,57 @@ public class OmPositionRServiceImpl  extends BaseRService implements IPositionRS
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	/**
+	 * 通过岗位代码查询岗位下员工信息
+	 */
 	@Override
 	public List<OmEmployee> queryEmployee(String positionCode) {
-		// TODO Auto-generated method stub
-		return null;
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("POSITION_CODE", positionCode);
+		List<OmPosition> list = omPositionService.query(wc);
+		if(list.size() != 1) {
+			throw new EmployeeManagementException(OMExceptionCodes.EMPANIZATION_NOT_EXIST_BY_EMP_CODE,
+					BasicUtil.wrap(positionCode));
+		}
+		String guid = list.get(0).getGuid();
+		wc.clear();
+		wc.andEquals("GUID_POSITION", guid);
+		List<OmEmpPosition> oeplist = omEmpPositionService.query(wc);
+		if(oeplist.isEmpty()) {
+			return null;
+		}else {
+			List<String> guidlist = new ArrayList<>();
+			for(OmEmpPosition oep:oeplist) {
+				guidlist.add(oep.getGuidEmp().toString());
+			}
+			wc.clear();
+			wc.andIn("GUID",guidlist);
+			List<OmEmployee> emplist = omEmployeeService.query(wc);
+			return emplist;
+		}
+	}
+
+	@Override
+	public List<OmEmployee> queryEmployeeNotin(String positionCode) {
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("POSITION_CODE", positionCode);
+		List<OmPosition> list = omPositionService.query(wc);
+		if(list.size() != 1) {
+			throw new EmployeeManagementException(OMExceptionCodes.EMPANIZATION_NOT_EXIST_BY_EMP_CODE,
+					BasicUtil.wrap(positionCode));
+		}
+		String guid = list.get(0).getGuid();
+		wc.clear();
+		wc.andEquals("GUID_POSITION", guid);
+		List<OmEmpPosition> oeplist = omEmpPositionService.query(wc);
+		List<String> guidlist = new ArrayList<>();
+		for(OmEmpPosition oep:oeplist) {
+			guidlist.add(oep.getGuidEmp().toString());
+		}
+		wc.clear();
+		wc.andNotIn("GUID",guidlist);
+		List<OmEmployee> emplist = omEmployeeService.query(wc);
+		return emplist;
 	}
 
 	@Override

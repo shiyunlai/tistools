@@ -763,20 +763,14 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 console.log(subFrom.guid)
                 //调取工作组信息OM_GROUP
                 abftree_service.loadempbyorg(subFrom).then(function (data) {
-                    if(data.status == "success"){
-                        for(var i = 0;i<data.retMessage.length;i++){
-                            data.retMessage[i].birthdate = FormatDate(data.retMessage[i].birthdate);
-                            data.retMessage[i].indate = FormatDate(data.retMessage[i].indate);
-                            data.retMessage[i].outdate = FormatDate(data.retMessage[i].outdate);
-                            data.retMessage[i].regdate = FormatDate(data.retMessage[i].regdate);
-                            data.retMessage[i].lastmodytime = FormatDate(data.retMessage[i].lastmodytime);
-                            data.retMessage[i].createtime = FormatDate(data.retMessage[i].createtime);
-                        }
+                    if(data.status == "success" && !isNull(data.retMessage)){
                         $scope.gridOptions1.data =  data.retMessage;
                         $scope.gridOptions1.mydefalutData =  data.retMessage;
                         $scope.gridOptions1.getPage(1,$scope.gridOptions1.paginationPageSize);
                     }else{
-
+                        $scope.gridOptions1.data =  [];
+                        $scope.gridOptions1.mydefalutData = [];
+                        $scope.gridOptions1.getPage(1,$scope.gridOptions1.paginationPageSize);
                     }
 
                 })
@@ -964,7 +958,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 $scope.gwflag[i] = false;
             }
             $scope.gwflag.gwxx = true;
-        }else if (type == 1){
+        }else if (type == 1){//岗位员工
             for(var i in $scope.gwflag){
                 $scope.gwflag[i] = false;
             }
@@ -973,17 +967,150 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
             //生成岗位员工列表
             var gwemp = {};
             $scope.gwemp = gwemp;
-            //获取员工数据.//todo
-            $scope.a = [{员工姓名:"张三",员工编号:"233",员工性别:"男"},
-                {员工姓名:"李四",员工编号:"244",员工性别:"男"}];
-            var itd = function () {
-                return  $scope.a;
-            }
-            //自定义点击事件
-            var select = function () {
+            // var selework = function () {
+            //
+            // }
+            //定义表头名
+            var com = [{ field: 'empCode', displayName: '员工代码', enableHiding: false},
+                { field: 'empName', displayName: '员工姓名', enableHiding: false},
+                { field: 'gender', displayName: '性别', enableHiding: false},
+                { field: 'empstatus', displayName: '员工状态', enableHiding: false},
+                { field: 'empDegree', displayName: '员工职级', enableHiding: false},
+                { field: 'guidPostition', displayName: '基本岗位', enableHiding: false},
+                { field: 'guidempmajor', displayName: '直接主管', enableHiding: false},
+                { field: 'indate', displayName: '入职日期', enableHiding: false},
+                { field: 'otel', displayName: '办公电话', enableHiding: false}
+            ]
+            $scope.gwemp = initgrid($scope,gwemp,filterFilter,com,true,function () {});
 
+            var regwemp = function () {
+                var subFrom = {};
+                subFrom.positionCode = $scope.abftree.item.positionCode;
+                //调取岗位员工信息
+                abftree_service.loadEmpbyPosition(subFrom).then(function (data) {
+                    console.log(data)
+                    if(data.status == "success" && !isNull(data.retMessage)){
+                        $scope.gwemp.data =  data.retMessage;
+                        $scope.gwemp.mydefalutData =  data.retMessage;
+                        $scope.gwemp.getPage(1,$scope.gwemp.paginationPageSize);
+                    }else{
+                        $scope.gwemp.data = [];
+                        $scope.gwemp.mydefalutData =  [];
+                        $scope.gwemp.getPage(1,$scope.gwemp.paginationPageSize);
+                    }
+
+                })
             }
-            $scope.gwemp = initgrid($scope, $scope.gwemp,itd(), filterFilter,null,false,select);
+            //拉取列表
+            regwemp();
+
+            //岗位下新增人员信息
+            abftree.addgwry = function () {
+                var id = $scope.abftree.item.positionCode;
+                var guid = $scope.abftree.item.guid;
+                openwindow($uibModal, 'views/org/addsearhgrid_window.html', 'lg',
+                    function ($scope, $modalInstance) {
+                        $scope.title = "添加员工";
+                        //加载不在本机构下的员工信息,生成列表
+                        var commonGrid = {};
+                        $scope.commonGrid = commonGrid;
+                        //定义单选事件
+                        var selework = function () {
+
+                        }
+                        //定义表头名
+                        var com = [{ field: 'empCode', displayName: '员工代码', enableHiding: false},
+                            { field: 'empName', displayName: '员工姓名', enableHiding: false},
+                            { field: 'gender', displayName: '性别', enableHiding: false},
+                            { field: 'empstatus', displayName: '员工状态', enableHiding: false},
+                            { field: 'empDegree', displayName: '员工职级', enableHiding: false},
+                            { field: 'guidPostition', displayName: '基本岗位', enableHiding: false},
+                            { field: 'guidempmajor', displayName: '直接主管', enableHiding: false},
+                            { field: 'indate', displayName: '入职日期', enableHiding: false},
+                            { field: 'otel', displayName: '办公电话', enableHiding: false}
+                        ]
+                        $scope.commonGrid = initgrid($scope,commonGrid,filterFilter,com,true,selework);
+
+                        var recommonGrid = function () {
+                            var subFrom = {};
+                            subFrom.positionCode = id;
+                            console.log(subFrom.positionCode)
+                            //调取工作组信息OM_GROUP
+                            abftree_service.loadempNotinposit(subFrom).then(function (data) {
+                                if(data.status == "success"  && !isNull(data.retMessage)){
+                                    $scope.commonGrid.data =  data.retMessage;
+                                    $scope.commonGrid.mydefalutData =  data.retMessage;
+                                    $scope.commonGrid.getPage(1,$scope.commonGrid.paginationPageSize);
+                                }else{
+
+                                }
+
+                            })
+                        }
+                        //拉取列表
+                        recommonGrid();
+
+                        $scope.add = function () {
+                            var arr = $scope.commonGrid.getSelectedRows();
+                            if(arr.length == 0){
+                                toastr['error']( "请选择需要添加的员工！");
+                                return false;
+                            }else{
+                                var empGuidlist = [];
+                                for(var i=0;i<arr.length;i++){
+                                    empGuidlist.push(arr[i].guid);
+                                }
+                                var subFrom = {};
+                                subFrom.posGuid = guid;
+                                subFrom.empGuidlist = empGuidlist;
+                                abftree_service.addEmpPosition(subFrom).then(function (data) {
+                                    if(data.status == "success"){
+                                        toastr['success'](data.retMessage);
+                                    }else{
+                                        toastr['error'](data.retMessage);
+                                    }
+                                    regwemp();
+                                    $scope.cancel();
+                                })
+                            }
+                        }
+
+                        $scope.cancel = function () {
+                            $modalInstance.dismiss('cancel');
+                        };
+                    }
+                )
+            }
+            //岗位下删除人员信息
+            abftree.deletegwyg = function () {
+                var arr = $scope.gwemp.getSelectedRows();
+                console.log(arr);
+                if(arr.length == 0){
+                    toastr['error']( "请选择需要删除的记录！");
+                    return false;
+                }else{
+                    //TODO
+                    if(confirm("确认要从本机构中删除此人员信息吗?")){
+                        var empGuidlist = [];
+                        for(var i=0;i<arr.length;i++){
+                            empGuidlist.push(arr[i].guid);
+                        }
+                        var subFrom = {};
+                        subFrom.posGuid = $scope.abftree.item.guid;
+                        subFrom.empGuidlist = empGuidlist;
+                        abftree_service.deleteEmpPosition(subFrom).then(function (data) {
+                            if(data.status == "success"){
+                                toastr['success'](data.retMessage);
+                            }else{
+                                toastr['error'](data.retMessage);
+                            }
+                            regwemp();
+                        })
+                    }
+
+                }
+            }
+
         }else if (type == 2){
             for(var i in $scope.gwflag){
                 $scope.gwflag[i] = false;

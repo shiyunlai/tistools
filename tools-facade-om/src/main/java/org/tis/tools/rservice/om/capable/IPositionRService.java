@@ -309,7 +309,14 @@ public interface IPositionRService {
 	 * @return
 	 */
 	List<OmEmployee> queryEmployee(String positionCode) ;
-
+	
+	/**
+	 * 查询不属于此岗位的员工列表 
+	 * @param positionCode
+	 * @return
+	 */
+	List<OmEmployee> queryEmployeeNotin(String positionCode) ;
+	
 	/**
 	 * 查询与岗位相关的应用列表 
 	 * @param positionCode
