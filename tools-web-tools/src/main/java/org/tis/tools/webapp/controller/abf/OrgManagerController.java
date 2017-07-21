@@ -68,6 +68,7 @@ public class OrgManagerController extends BaseController {
 			JSONObject jsonObj = JSONObject.parseObject(content);
 			String id = jsonObj.getString("id");
 			String guidOrg = jsonObj.getString("guidOrg");
+			String positionCode = jsonObj.getString("positionCode");
 			List<OmOrg> rootOrgs = new ArrayList<OmOrg>();
 			List<OmPosition> omp = new ArrayList<OmPosition>();
 			// 通过id判断需要加载的节点
@@ -96,6 +97,8 @@ public class OrgManagerController extends BaseController {
 				og.setGuid(guidOrg);
 				
 				rootOrgs.add(og);
+			}else{
+				omp = positionRService.queryChilds(positionCode);
 			}
 
 			if (rootOrgs == null || rootOrgs.isEmpty()) {
@@ -265,7 +268,7 @@ public class OrgManagerController extends BaseController {
 	}
 	
 	/**
-	 * 更新机构
+	 * 删除机构
 	 * @param model
 	 * @param content
 	 * @param age
@@ -310,8 +313,15 @@ public class OrgManagerController extends BaseController {
 			JSONObject jsonObj = JSONObject.parseObject(content);
 			OmPosition op = new OmPosition();
 			BeanUtils.populate(op, jsonObj);
-			positionRService.createPosition(op);
-			AjaxUtils.ajaxJsonSuccessMessage(response, "新增成功!");
+			String guid = op.getGuid();
+			if("".equals(guid) || guid == null){
+				positionRService.createPosition(op);
+				AjaxUtils.ajaxJsonSuccessMessage(response, "新增成功!");
+			}else{
+				positionRService.updatePosition(op);
+				AjaxUtils.ajaxJsonSuccessMessage(response, "修改成功!");
+			}
+			
 		} catch (ToolsRuntimeException e) {// TODO
 			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
 			e.printStackTrace();
@@ -527,6 +537,7 @@ public class OrgManagerController extends BaseController {
 			JSONObject jsonObj = JSONObject.parseObject(content);
 			String positionCode = jsonObj.getString("positionCode");
 			List<OmEmployee> list = positionRService.queryEmployee(positionCode);
+			list = positionRService.queryEmployee(positionCode);
 			AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list, "yyyy-MM-dd");
 		} catch (ToolsRuntimeException e) {// TODO
 			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
@@ -629,6 +640,33 @@ public class OrgManagerController extends BaseController {
 		return null;
 	}
 	
+	/**
+	 * 加载下级岗位数据
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/loadxjposit")
+	public String loadxjposit(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			String posCode = jsonObj.getString("posCode");
+			List<OmPosition> list = positionRService.queryChilds(posCode);
+			AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response,list,"yyyy-MM-dd");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
 	
 	/**
 	 * 每个controller定义自己的返回信息变量

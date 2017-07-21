@@ -114,10 +114,13 @@ public class OMExceptionCodes {
 	 */
 	public static final String FAILURE_WHEN_DEL_EMP= R_EX_CODE("0019");
 	/**
-	 * 不存在此岗位代码
+	 * 不存在此岗位代码FAILURE_WHEN_UPDATE_POS_STATUS
 	 */
 	public static final String POSITANIZATION_NOT_EXIST_BY_POSIT_CODE= R_EX_CODE("0020");
-
+	/**
+	 * 不能直接修改机构状态
+	 */
+	public static final String FAILURE_WHEN_UPDATE_POS_STATUS= R_EX_CODE("0021");
 
 	/**
 	 * 以烤串方式拼接异常码

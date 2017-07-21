@@ -614,7 +614,7 @@
                                                 <label class="control-label col-md-2"></label>
                                                 <div class="col-md-10">
                                                     <div class="actions btn-set" style="float: right;">
-                                                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.save()"> 保存
+                                                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.savePosition()"> 保存
                                                         </button>
 
                                                         <button type="button" name="back" class="btn btn-danger" ng-click="abftree.edit()"> 取消
@@ -667,15 +667,15 @@
 
                 <!-- 下级岗位列表开始 -->
                 <div class="tab-content" ng-if="gwflag.xjgw">
-                    <div ui-grid="gwJunior"
+                    <div ui-grid="xjPosition"
                          ui-grid-edit ui-grid-pagination
                          ui-grid-selection ui-grid-resize-columns></div>
                     <div class="actions btn-set" style="float: right;">
-                        <button type="button" name="back" class="btn btn-primary" ng-click=""> 新增岗位
+                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addxjPosition()"> 新增岗位
                         </button>
-                        <button type="button" name="back" class="btn btn-primary" ng-click=""> 编辑岗位
+                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.editxjPosition()"> 编辑岗位
                         </button>
-                        <button type="button" name="back" class="btn btn-danger" ng-click=""> 删除岗位
+                        <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletexjPosition()"> 删除岗位
                         </button>
                     </div>
                 </div>

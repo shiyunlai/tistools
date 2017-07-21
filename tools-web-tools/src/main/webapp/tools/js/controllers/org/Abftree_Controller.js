@@ -223,6 +223,8 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
             }
             return it;
 
+        }else if(false){
+
         }else{
             var it = {
                 "新建菜单":{
@@ -297,11 +299,13 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 $scope.jsonarray = jsonarray;
                 var subFrom = {};
                 subFrom.id = obj.id;
+                console.log(obj)
                 if(!isNull(obj.original)){
                     subFrom.guidOrg = obj.original.guid;
-
+                    subFrom.positionCode = obj.original.positionCode;
                 }else{
                     subFrom.guidOrg = "";
+                    subFrom.positionCode = "";
                 }
 
                 abftree_service.loadmaintree(subFrom).then(function (datas) {
@@ -313,6 +317,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                             data[i].text = data[i].positionName;
                             data[i].children = true;
                             data[i].id = data[i].guid;
+                            data[i].icon = 'fa fa-users icon-state-info icon-lg'
                         }
                     }else{
                         for(var i = 0 ;i < data.length ; i++){
@@ -323,6 +328,10 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                             data[i].createTime = FormatDate(data[i].createTime);
                             data[i].endDate = FormatDate(data[i].endDate);
                             data[i].lastUpdate = FormatDate(data[i].lastUpdate);
+                            data[i].icon = 'fa fa-institution  icon-state-info icon-lg';
+                            if(data[i].orgName == "岗位信息"){
+                                data[i].icon = 'fa fa-users  icon-state-info icon-lg';
+                            }
                         }
                     }
 
@@ -382,7 +391,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
         console.log(data);
     }).bind("dnd_stop.vakata",function (e,data) {
         console.log(data);
-    }).bind("changed.jstree", function (e, data) {
+    }).bind("select_node.jstree", function (e, data) {
         if(typeof data.node !== 'undefined'){//拿到结点详情
             // console.log(data.node.original.id.indexOf("@"));
             $scope.abftree.item = {};
@@ -763,6 +772,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 console.log(subFrom.guid)
                 //调取工作组信息OM_GROUP
                 abftree_service.loadempbyorg(subFrom).then(function (data) {
+                    console.log(data)
                     if(data.status == "success" && !isNull(data.retMessage)){
                         $scope.gridOptions1.data =  data.retMessage;
                         $scope.gridOptions1.mydefalutData =  data.retMessage;
@@ -1136,19 +1146,82 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
             }
             $scope.gwflag.xjgw = true
             //生成下级岗位列表
-            var gwJunior = {};
-            $scope.gwJunior = gwJunior;
-            //获取下级岗位数据.//todo
-            $scope.c = [{岗位名称:"开发",岗位信息:"股份供热"},
-                {岗位名称:"其他",岗位信息:"大声道"}];
-            var itd = function () {
-                return  $scope.c;
+            var xjPosition = {};
+            $scope.xjPosition = xjPosition;
+
+            //定义表头名
+            var com = [{ field: 'positionCode', displayName: '岗位代码', enableHiding: false},
+                { field: 'positionName', displayName: '岗位名称', enableHiding: false},
+                { field: 'positionType', displayName: '岗位类型', enableHiding: false},
+                { field: 'positionStatus', displayName: '岗位状态', enableHiding: false},
+                { field: 'guidDuty', displayName: '所属职务', enableHiding: false},
+                { field: 'startDate', displayName: '有效开始日期', enableHiding: false},
+                { field: 'endDate', displayName: '有效截止日期', enableHiding: false}
+            ]
+            $scope.xjPosition = initgrid($scope,xjPosition,filterFilter,com,true,function () {});
+
+            var rexjPosition = function () {
+                var subFrom = {};
+                subFrom.posCode = $scope.abftree.item.positionCode;
+                console.log(subFrom.posCode)
+                //调取工作组信息OM_GROUP
+                abftree_service.loadxjposit(subFrom).then(function (data) {
+                    if(data.status == "success"  && !isNull(data.retMessage)){
+                        $scope.xjPosition.data =  data.retMessage;
+                        $scope.xjPosition.mydefalutData =  data.retMessage;
+                        $scope.xjPosition.getPage(1,$scope.xjPosition.paginationPageSize);
+                    }else{
+
+                    }
+
+                })
             }
-            //自定义点击事件
-            var select = function () {
+            //拉取列表
+            rexjPosition();
+            //下级岗位三个按钮事件
+            abftree.addxjPosition = function () {
+                console.log($scope.abftree.item.guid);
+                var guidParents = $scope.abftree.item.guid;
+                var guidOrg = $scope.abftree.item.guidOrg;
+                var positionCode = $scope.abftree.item.positionCode;
+                openwindow($uibModal, 'views/org/addPosition_window.html', 'lg',
+                    function ($scope, $modalInstance) {
+                        //创建机构实例
+                        var subFrom = {};
+                        $scope.subFrom = subFrom;
+                        //父岗位GUID
+                        subFrom.guidParents = guidParents;
+                        subFrom.guidOrg = guidOrg;
+                        //增加方法
+                        $scope.add = function (subFrom) {
+                            //TODO.新增逻辑
+                            abftree_service.addposit(subFrom).then(function (data) {
+                                if(data.status == "success"){
+                                    toastr['success'](data.retMessage);
+                                }else{
+                                    toastr['error'](data.retMessage);
+                                }
+                                // $("#container").jstree().refresh();
+                                var node = {};
+                                node.id = positionCode;
+                                $("#container").jstree().refresh(node);
+
+                                rexjPosition();
+                                $scope.cancel();
+                            });
+                        }
+                        $scope.cancel = function () {
+                            $modalInstance.dismiss('cancel');
+                        };
+                    }
+                )
+            }
+            abftree.editxjPosition = function () {
 
             }
-            $scope.gwJunior = initgrid($scope, $scope.gwJunior,itd(), filterFilter,null,false,select);
+            abftree.deletexjPosition = function () {
+
+            }
         }else if (type == 4){
             for(var i in $scope.gwflag){
                 $scope.gwflag[i] = false;
@@ -1157,6 +1230,19 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
         }
     }
 
+    //编辑岗位保存事件
+    abftree.savePosition = function () {
+        console.log($scope.position)
+        abftree_service.addposit($scope.position).then(function (data) {
+            if(data.status == "success"){
+                toastr['success'](data.retMessage);
+                $("#container").jstree().refresh();
+                $scope.editflag = !$scope.editflag;
+            }else{
+                toastr['error'](data.retMessage);
+            }
+        })
+    }
 
 
 

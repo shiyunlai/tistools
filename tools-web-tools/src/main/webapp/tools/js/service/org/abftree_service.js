@@ -118,5 +118,11 @@ MetronicApp.factory('abftree_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     }
+    service.loadxjposit = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/loadxjposit",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
     return service;
 }]);

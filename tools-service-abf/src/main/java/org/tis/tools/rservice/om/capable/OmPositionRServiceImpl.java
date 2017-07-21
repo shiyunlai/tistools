@@ -85,7 +85,7 @@ public class OmPositionRServiceImpl  extends BaseRService implements IPositionRS
 					newOmPosition.setGuid(GUID.position());// 补充GUID
 					newOmPosition.setPositionStatus(OMConstants.POSITION_STATUS_RUNNING);// 补充机构状态，新增机构初始状态为 停用
 					newOmPosition.setPositionLevel(new BigDecimal("0"));// 补充机构层次，在父节点的层次上增1
-					newOmPosition.setGuidParents("");// 补充父机构，根节点没有父机构
+					newOmPosition.setGuidParents(null);// 补充父机构，根节点没有父机构
 					newOmPosition.setCreatetime(new Date());// 补充创建时间
 					newOmPosition.setLastupdate(new Date());// 补充最近更新时间
 					newOmPosition.setIsleaf(CommonConstants.YES);// 新增节点都先算叶子节点 Y
@@ -187,8 +187,28 @@ public class OmPositionRServiceImpl  extends BaseRService implements IPositionRS
 
 	@Override
 	public OmPosition updatePosition(OmPosition position) throws ToolsRuntimeException {
-		// TODO Auto-generated method stub
-		return null;
+		WhereCondition wc = new WhereCondition() ;
+		wc.andEquals("POSITION_CODE", position.getPositionCode());
+		List<OmPosition> posList = omPositionService.query(wc);
+		if(posList.size() != 1) {
+			throw new OrgManagementException(
+					OMExceptionCodes.POSITANIZATION_NOT_EXIST_BY_POSIT_CODE, BasicUtil.wrap(position.getPositionCode()));
+		}
+		OmPosition op = posList.get(0);
+		String oldstatus = position.getPositionStatus();
+		String postatus = op.getPositionStatus();
+		if(!oldstatus.equals(postatus)){
+			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHEN_UPDATE_POS_STATUS,null,"机构状态不能直接通过修改而更新！{0}");
+		}
+		try {
+			omPositionService.update(position);
+			return position;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHEN_UPDATE_ORG_APP,
+					BasicUtil.wrap(e.getCause().getMessage()));
+		}
+		
 	}
 
 	@Override
@@ -216,14 +236,28 @@ public class OmPositionRServiceImpl  extends BaseRService implements IPositionRS
 		}
 		WhereCondition wc = new WhereCondition();
 		wc.andEquals("GUID_ORG", guidOrg);
+		wc.andIsNull("GUID_PARENTS");
 		List<OmPosition> list2 = omPositionService.query(wc);
 		return list2;
 	}
 
 	@Override
 	public List<OmPosition> queryChilds(String positionCode) {
-		// TODO Auto-generated method stub
-		return null;
+		// 校验传入参数
+		if(StringUtil.isEmpty(positionCode)) {
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY,BasicUtil.wrap("positionCode","岗位代码"));
+		}
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("POSITION_CODE", positionCode);
+		List<OmPosition> posList = omPositionService.query(wc);
+		if(posList.size() != 1){
+			throw new OrgManagementException(OMExceptionCodes.POSITANIZATION_NOT_EXIST_BY_POSIT_CODE);
+		}
+		String guidparent =posList.get(0).getGuid();
+		wc.clear();
+		wc.andEquals("GUID_PARENTS", guidparent);
+		List<OmPosition> childList = omPositionService.query(wc);
+		return childList;
 	}
 	/**
 	 * 通过岗位代码查询岗位下员工信息
@@ -237,12 +271,13 @@ public class OmPositionRServiceImpl  extends BaseRService implements IPositionRS
 			throw new EmployeeManagementException(OMExceptionCodes.EMPANIZATION_NOT_EXIST_BY_EMP_CODE,
 					BasicUtil.wrap(positionCode));
 		}
+		List<OmEmployee> emplist = new ArrayList<>();
 		String guid = list.get(0).getGuid();
 		wc.clear();
 		wc.andEquals("GUID_POSITION", guid);
 		List<OmEmpPosition> oeplist = omEmpPositionService.query(wc);
 		if(oeplist.isEmpty()) {
-			return null;
+			return emplist;
 		}else {
 			List<String> guidlist = new ArrayList<>();
 			for(OmEmpPosition oep:oeplist) {
@@ -250,7 +285,7 @@ public class OmPositionRServiceImpl  extends BaseRService implements IPositionRS
 			}
 			wc.clear();
 			wc.andIn("GUID",guidlist);
-			List<OmEmployee> emplist = omEmployeeService.query(wc);
+			emplist = omEmployeeService.query(wc);
 			return emplist;
 		}
 	}
