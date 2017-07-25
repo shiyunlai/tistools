@@ -81,25 +81,25 @@
 	 <update id="updateByCondition" parameterType="map">
     	UPDATE AC_OPERATOR_SHORTCUT 
 	   <set>
-		<if test="domain.guid_operator != null" >
-        	guid_operator = #{domain.guidOperator,jdbcType=VARCHAR}
+		<if test="domain.guidOperator != null" >
+        	guid_operator = #{domain.guidOperator,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_func != null" >
-        	guid_func = #{domain.guidFunc,jdbcType=VARCHAR}
+		<if test="domain.guidFunc != null" >
+        	guid_func = #{domain.guidFunc,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_funcgroup != null" >
-        	guid_funcgroup = #{domain.guidFuncgroup,jdbcType=VARCHAR}
+		<if test="domain.guidFuncgroup != null" >
+        	guid_funcgroup = #{domain.guidFuncgroup,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_app != null" >
-        	guid_app = #{domain.guidApp,jdbcType=VARCHAR}
+		<if test="domain.guidApp != null" >
+        	guid_app = #{domain.guidApp,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.order_no != null" >
-        	order_no = #{domain.orderNo,jdbcType=DECIMAL}
+		<if test="domain.orderNo != null" >
+        	order_no = #{domain.orderNo,jdbcType=DECIMAL},
       	</if>
-		<if test="domain.image_path != null" >
-        	image_path = #{domain.imagePath,jdbcType=VARCHAR}
+		<if test="domain.imagePath != null" >
+        	image_path = #{domain.imagePath,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.shortcut_key != null" >
+		<if test="domain.shortcutKey != null" >
         	shortcut_key = #{domain.shortcutKey,jdbcType=VARCHAR}
       	</if>
 	    </set>

@@ -14,9 +14,6 @@ MetronicApp.controller('numres_controller', function ($filter,$rootScope, $scope
 
     var gridOptions = {};
     $scope.gridOptions = gridOptions;
-    var initdata = function(){
-        return $scope.myData;//数据方法
-    }
     var com = [
         { field: 'seqKey', displayName: '序号键值'},
         { field: 'seqNo', displayName: '序号数'},
@@ -30,8 +27,8 @@ MetronicApp.controller('numres_controller', function ($filter,$rootScope, $scope
             delete $scope.selectRow;//制空
         }
     }
-    $scope.gridOptions = initgrid($scope,gridOptions,initdata(),filterFilter,com,false,f);
-
+    $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,false,f);
+    $scope.gridOptions.data =  $scope.myData;
     //重置序号
     $scope.numresReset =function(){
         if($scope.selectRow){

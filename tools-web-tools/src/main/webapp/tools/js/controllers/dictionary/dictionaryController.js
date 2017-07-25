@@ -28,6 +28,9 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
     $scope.dictconfig = dictconfig;
     //表格渲染
     i18nService.setCurrentLang("zh-cn");
+
+    var gridOptions0 = {};
+    $scope.gridOptions0 = gridOptions0;
     $scope.importadd = [
         {'dictType':'ABF_APPTYPE','dictName':"应用类型"},
         {'dictType':'ABF_AUTHMODE','dictName':"认证模式"},
@@ -36,11 +39,6 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
         {'dictType':'ABF_GONFIGTYPE','dictName':"配置类型"},
         {'dictType':'ABF_DUTYTYPE','dictName':"职位套别"}
     ];
-    var gridOptions0 = {};
-    $scope.gridOptions0 = gridOptions0;
-    var initdata = function(){
-        return $scope.importadd;//数据方法
-    }
     var com = [{ field: 'dictType', displayName: '类型名称'},
         { field: "dictName", displayName:'类型名称'},
         //{ field: "dictName", displayName:'类型名称',visible: false}
@@ -55,8 +53,8 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
             $scope.dictconfig.show =false;
         }
     }
-    $scope.gridOptions0 = initgrid($scope,gridOptions0,initdata(),filterFilter,com,false,f,"jjj");
-
+    $scope.gridOptions0 = initgrid($scope,gridOptions0,filterFilter,com,false,f,"jjj");
+    $scope.gridOptions0.data =  $scope.importadd;
 
 
     dictconfig.initt2 = function(num){//查询服务公用方法
@@ -74,11 +72,33 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
         })
     }
 
-    /*按钮逻辑*/
+
+/*    var dictFrom = {};
+    $scope.dictFrom = dictFrom;
+    $scope.dictFrom.dicrse = true;*/
     //新增
     $scope.show_win=function(){
         openwindow($uibModal, 'views/dictionary/dictnameAdd.html', 'lg',// 弹出页面
             function ($scope, $modalInstance) {
+                $scope.dicrse = true;
+                $scope.dicrseTable = false;
+                $scope.viewTable = false;
+                /*radio按钮逻辑*/
+                $scope.fromdict = function(){
+                    $scope.dicrse = true;
+                    $scope.viewTable = false;
+                    $scope.dicrseTable = false;
+                }
+                $scope.fromtable = function(){
+                    $scope.dicrseTable = true;
+                    $scope.viewTable = false;
+                    $scope.dicrse = false;
+                }
+                $scope.fromview =function(){
+                    $scope.viewTable = true;
+                    $scope.dicrseTable = false;
+                    $scope.dicrse = false;
+                }
                 $scope.add = function(item){//保存新增的函数
                     toastr['success']("保存成功！");
                     $modalInstance.close();
@@ -91,15 +111,31 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
     }
     //修改
     $scope.show_edit=function(id){
-       /* var getSel = $scope.gridOptions1.getSelectedRows();
-        console.log(getSel)
-        console.log($scope.gridOptions0)
-        console.log($scope.gridOptions1)*/
+
         if($scope.selectRow){
             openwindow($uibModal, 'views/dictionary/dictnameAdd.html', 'lg',// 弹出页面
                 function ($scope, $modalInstance) {
                     var idds = id;
                     $scope.id = idds;
+                    $scope.dicrse = true;
+                    $scope.dicrseTable = false;
+                    $scope.viewTable = false;
+                    /*radio按钮逻辑*/
+                    $scope.fromdict = function(){
+                        $scope.dicrse = true;
+                        $scope.viewTable = false;
+                        $scope.dicrseTable = false;
+                    }
+                    $scope.fromtable = function(){
+                        $scope.dicrseTable = true;
+                        $scope.viewTable = false;
+                        $scope.dicrse = false;
+                    }
+                    $scope.fromview =function(){
+                        $scope.viewTable = true;
+                        $scope.dicrseTable = false;
+                        $scope.dicrse = false;
+                    }
                     $scope.add = function(item){//保存新增的函数
                         toastr['success']("保存成功！");
                         $modalInstance.close();
@@ -249,18 +285,15 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
 
     //数据字典项列表渲染
     $scope.dictAdd = [
-        {'itemType':'0','itemName':"本地",'itemOrder':'1','itemSealed':'是'},
-        {'itemType':'1','itemName':"远程",'itemOrder':'2','itemSealed':'否'}
+        {'guidDict':'业务字典一','itemName':"测试名称",'itemValue':'1','sendValue':'是'},
+        {'guidDict':'业务字典二','itemName':"测试名称二",'itemValue':'2','sendValue':'否'}
     ];
     var gridOptions1 = {};
     $scope.gridOptions1 = gridOptions1;
-    var initdata1 = function(){
-        return $scope.dictAdd;//数据方法
-    }
-    var com1 = [{ field: 'itemType', displayName: '类型项代码'},
-        { field: "itemName", displayName:'类型项名称'},
-        { field: "itemOrder", displayName:'排序'},
-        { field: "itemSealed", displayName:'是否封存'}
+    var com1 = [{ field: 'guidDict', displayName: '隶属业务字典'},
+        { field: "itemName", displayName:'字典项名称'},
+        { field: "itemValue", displayName:'字典项'},
+        { field: "sendValue", displayName:'实际值'}
     ];
     //自定义点击事件
     var f1 = function(row){
@@ -270,8 +303,8 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
             delete $scope.selectRow1;//制空
         }
     }
-    $scope.gridOptions1 = initgrid($scope,gridOptions1,initdata1(),filterFilter,com1,false,f1,"lll");
-
+    $scope.gridOptions1 = initgrid($scope,gridOptions1,filterFilter,com1,false,f1,"lll");
+    $scope.gridOptions1.data = $scope.dictAdd;
     //新增
     $scope.dict_win = function(){
         openwindow($uibModal, 'views/dictionary/dicttypeAdd.html', 'lg',// 弹出页面
@@ -338,7 +371,7 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
 
 angular.module('MetronicApp').controller('dictitwos_controller', function($rootScope, $scope, $http,$modal,filterFilter,FileUploader){
 
-    //上传字典类型
+    //上传业务字典
     $scope.typeFile = function openVersion() {
         openwindow( $modal,'views/dictionary/fillwindow.html','lg',function ($scope, $modalInstance) {
             var uploader = $scope.uploader = new FileUploader({
@@ -371,7 +404,6 @@ angular.module('MetronicApp').controller('dictitwos_controller', function($rootS
                 }
             }
 
-
             $scope.ok = function () {
                 $modalInstance.close();
             };
@@ -381,22 +413,22 @@ angular.module('MetronicApp').controller('dictitwos_controller', function($rootS
         });
     };
 
-    //上传字典项
+   /* //上传字典项
     $scope.projectFile = function openVersion() {
         openwindow( $modal,'views/dictionary/fillwindow.html','lg',function ($scope, $modalInstance) {
             var uploader = $scope.uploader = new FileUploader({
-                /*
+                /!*
                  url: myport+'/GovernorService/UPLOADFILE',//保存的地址，后台的地址
                  mime_types: [
                  {title : "war", extensions : "war"},
                  {title : "zip", extensions : "zip"},
                  {title : "pkg", extensions : "pkg"}
-                 ]*/ //定义上传的格式
+                 ]*!/ //定义上传的格式
             })
 
             uploader.filters.push({
                 name: 'customFilter',
-                fn: function(item /*{File|FileLikeObject}*/ , options) {
+                fn: function(item /!*{File|FileLikeObject}*!/ , options) {
                     return this.queue.length < 10;
                 }
             });
@@ -421,7 +453,7 @@ angular.module('MetronicApp').controller('dictitwos_controller', function($rootS
                 $modalInstance.dismiss('cancel');
             };
         });
-    };
+    };*/
 
 })
 

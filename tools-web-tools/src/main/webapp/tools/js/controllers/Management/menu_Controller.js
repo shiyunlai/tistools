@@ -1,321 +1,405 @@
 /**
  * Created by wangbo on 2017/6/1.
  */
-angular.module('MetronicApp').controller('menu_controller', function($rootScope, $scope, $http, $timeout,i18nService,uiGridConstants,uiGridSelectionService,filterFilter,$uibModal) {
+angular.module('MetronicApp').controller('menu_controller', function($rootScope, $scope, $http,menu_service, $timeout,filterFilter,$uibModal) {
     var menu = {};
     $scope.menu = menu;
+    var subFrom = {};
+    //查询所有应用
+    menu_service.queryAllAcApp(subFrom).then(function (data) {
+        menu.appselectApp= data.retMessage;
+    })
 
-    //应用查询
-    $scope.menu.search = function(item){
-        if(item.appselect !== undefined ){
-            $scope.menu.show = true;
-        }else{
-            confirm("请选择一项应用进行查询")
-            $scope.menu.show = false;
-        }
-
-    }
     /*0、菜单管理机构树逻辑*/
     $("#s").submit(function(e) {
         e.preventDefault();
         $("#container").jstree(true).search($("#q").val());
     });
-    //树自定义右键功能(根据类型判断)
-    var items = function customMenu(node) {
-        var control;
-        if(node.parent == '#'){
-            var it = {
-                "新增顶级菜单":{
-                    "id":"createa",
-                    "label":"新增顶级菜单",
-                    "action":function(data){
-                        var inst = jQuery.jstree.reference(data.reference),
-                            obj = inst.get_node(data.reference);
-                        console.log(obj)
-                        openwindow($uibModal, 'views/Management/manachildAdd.html', 'lg',
-                            function ($scope, $modalInstance) {
-                                console.log($modalInstance)
-                                //创建机构实例
-                                var menuFrom = {};
-                                $scope.menuFrom = menuFrom;
-                                //处理新增机构父机构
-                                menuFrom.guidParents = obj.original.guid;
-                                //增加方法
-                                $scope.add = function (menuFrom) {
-                                    //TODO.
-                                    console.log(menuFrom)
-                                    toastr['success']("保存成功！");
-                                    $modalInstance.close();
-                                }
 
-                                $scope.cancel = function () {
-                                    $modalInstance.dismiss('cancel');
-                                };
+    //应用查询
+    $scope.menu.search = function(item){
+        if(item.appselect !== undefined ){
+            //查询应用下所有菜单
+            subFrom.guidApp =item.appselect;
+            $scope.menu.show = true;
+            //树自定义右键功能(根据类型判断)
+            var items = function customMenu(node) {
+                var control;
+                if(node.parent == '#'){
+                    var it = {
+                        "新增顶级菜单":{
+                            "id":"createa",
+                            "label":"新增顶级菜单",
+                            "action":function(data){
+                                var inst = jQuery.jstree.reference(data.reference),
+                                    obj = inst.get_node(data.reference);
+                                openwindow($uibModal, 'views/Management/manachildAdd.html', 'lg',
+                                    function ($scope, $modalInstance) {
+                                        $scope.add = function (menuFrom) {
+                                            var guidApp = menu.appselect
+                                            var  subFrom = {};
+                                            subFrom = menuFrom;
+                                            subFrom.guidApp = guidApp;
+                                            menu_service.createRootMenu(subFrom).then(function(data){
+                                                if(data.status == "success"){
+                                                    toastr['success']( "新增成功！");
+                                                    $modalInstance.close();
+                                                    $("#container").jstree().refresh();
+                                                }else{
+                                                    toastr['error']('新增失败'+'<br/>'+data.retMessage);
+                                                }
+                                            })
+                                        }
+                                        $scope.cancel = function () {
+                                            $modalInstance.dismiss('cancel');
+                                        };
+                                    }
+                                )
                             }
-                        )
+                        },
+                        "刷新":{
+                            "label":"刷新",
+                            "action":function(data){
+                                $("#container").jstree().refresh();
+                            }
+                        }
                     }
-                },
-                "刷新":{
-                    "label":"刷新",
-                    "action":function(data){
-                        $("#container").jstree().refresh();
-                    }
+                    return it;
                 }
-            }
-            return it;
-        }
-        if(node.parent == 1){
-            var it = {
-                "增加子菜单":{
-                    "id":"createc",
-                    "label":"增加子菜单",
-                    "action":function(data){
-                        var inst = jQuery.jstree.reference(data.reference),
-                            obj = inst.get_node(data.reference);//从数据库中获取所有的数据
-                        console.log(obj)
-                        openwindow($uibModal, 'views/Management/manachildAdd.html', 'lg',
-                            function ($scope, $modalInstance) {
-                                //创建机构实例
-                                var menchFrom = {};
-                                $scope.menchFrom = menchFrom;
-                                //处理新增机构父机构
-                                menchFrom.guidParents = obj.original.guid;
-                                //增加方法
-                                $scope.add = function (subFrom) {
-                                    //TODO.批量新增逻辑，循环添加即可
+                if(node.parent == "AC0000"){
+                    var it = {
+                        "删除顶级菜单":{
+                            "label":"删除顶级菜单",
+                            "action":function(data){
+                                var inst = jQuery.jstree.reference(data.reference),
+                                    obj = inst.get_node(data.reference);
+                                if(confirm("您确认要删除选中的应用,删除应用将删除该应用下的所有功能组")){
+                                    var subFrom = {};
+                                    subFrom.menuGuid = node.original.guid;
+                                    menu_service.deleteMenu(subFrom).then(function(data){
+                                        if(data.status == "success"){
+                                            toastr['success']( "删除成功！");
+                                            $("#container").jstree().refresh();
+                                        }else{
+                                            toastr['error']('删除失败'+'<br/>'+data.retMessage);
+                                        }
+                                    })
                                 }
-                                $scope.cancel = function () {
-                                    $modalInstance.dismiss('cancel');
-                                };
+                            }
+                        },
+                        "增加子菜单":{
+                            "id":"createc",
+                            "label":"增加子菜单",
+                            "action":function(data){
+                                var inst = jQuery.jstree.reference(data.reference),
+                                    obj = inst.get_node(data.reference);//从数据库中获取所有的数据
+                                openwindow($uibModal, 'views/Management/menuchildAdd.html', 'lg',
+                                    function ($scope, $modalInstance) {
+                                        $scope.add = function (item) {
+                                            var guidApp = menu.appselect
+                                            var subFrom = {};
+                                            subFrom = item;
+                                            subFrom.guidApp = guidApp;
+                                            subFrom.guidParents = node.id;
+                                            menu_service.createChildMenu(subFrom).then(function(data){
+                                                if(data.status == "success"){
+                                                    toastr['success']( "新增成功！");
+                                                    $("#container").jstree().refresh();
+                                                    $modalInstance.close();
+                                                }else{
+                                                    toastr['error']('新增失败'+'<br/>'+data.retMessage);
+                                                }
+                                            })
+                                        }
+                                        $scope.cancel = function () {
+                                            $modalInstance.dismiss('cancel');
+                                        };
+                                    })
+                            }
+                        },
+                        "删除菜单":{
+                            "label":"删除菜单",
+                            "action":function(data){
+                                var inst = jQuery.jstree.reference(data.reference),
+                                    obj = inst.get_node(data.reference);
+                                if(confirm("您确认要删除选中的应用,删除应用将删除该应用下的所有功能组")){
+                                    var subFrom = {};
+                                    subFrom.menuGuid = node.original.guid;
+                                    menu_service.deleteMenu(subFrom).then(function(data){
+                                        if(data.status == "success"){
+                                            toastr['success']( "删除成功！");
+                                            $("#container").jstree().refresh();
+                                        }else{
+                                            toastr['error']('删除失败'+'<br/>'+data.retMessage);
+                                        }
+                                    })
+                                }
+                            }
+                        },
+                        '刷新':{
+                            "label":"刷新",
+                            "action":function(data){
+                                $("#container").jstree().refresh();
+                            }
+                        }
+                    }
+                    return it;
+                }
+                if(node.parents[0] !== "AC0000" && node.original.isleaf !=='Y'){
+                    var it = {
+                        "增加子菜单":{
+                            "id":"createc",
+                            "label":"增加子菜单",
+                            "action":function(data){
+                                var inst = jQuery.jstree.reference(data.reference),
+                                    obj = inst.get_node(data.reference);//从数据库中获取所有的数据
+                                openwindow($uibModal, 'views/Management/menuchildAdd.html', 'lg',
+                                    function ($scope, $modalInstance) {
+                                        $scope.add = function (item) {
+                                            var guidApp = menu.appselect
+                                            var subFrom = {};
+                                            subFrom = item;
+                                            subFrom.guidApp = guidApp;
+                                            subFrom.guidParents = node.id;
+                                            menu_service.createChildMenu(subFrom).then(function(data){
+                                                if(data.status == "success"){
+                                                    toastr['success']( "新增成功！");
+                                                    $("#container").jstree().refresh();
+                                                    $modalInstance.close();
+                                                }else{
+                                                    toastr['error']('新增失败'+'<br/>'+data.retMessage);
+                                                }
+                                            })
+                                        }
+                                        $scope.cancel = function () {
+                                            $modalInstance.dismiss('cancel');
+                                        };
+                                    })
+                            }
+                        },
+                        "删除菜单":{
+                            "label":"删除菜单",
+                            "action":function(data){
+                                var inst = jQuery.jstree.reference(data.reference),
+                                    obj = inst.get_node(data.reference);
+                                if(confirm("您确认要删除选中的应用,删除应用将删除该应用下的所有功能组")){
+                                    var subFrom = {};
+                                    subFrom.menuGuid = node.original.guid;
+                                    menu_service.deleteMenu(subFrom).then(function(data){
+                                        if(data.status == "success"){
+                                            toastr['success']( "删除成功！");
+                                            $("#container").jstree().refresh();
+                                        }else{
+                                            toastr['error']('删除失败'+'<br/>'+data.retMessage);
+                                        }
+                                    })
+                                }
+                            }
+                        },
+                        '刷新':{
+                            "label":"刷新",
+                            "action":function(data){
+                                $("#container").jstree().refresh();
+                            }
+                        }
+                    }
+                    return it;
+                }
+                if(node.original.isleaf == 'Y' ){
+                    var it = {
+                        "删除菜单":{
+                            "label":"删除菜单",
+                            "action":function(data){
+                                var inst = jQuery.jstree.reference(data.reference),
+                                    obj = inst.get_node(data.reference);
+                                if(confirm("您确认要删除选中的应用,删除应用将删除该应用下的所有功能组")){
+                                    var subFrom = {};
+                                    subFrom.menuGuid = node.original.guid;
+                                    menu_service.deleteMenu(subFrom).then(function(data){
+                                        if(data.status == "success"){
+                                            toastr['success']( "删除成功！");
+                                            $("#container").jstree().refresh();
+                                        }else{
+                                            toastr['error']('删除失败'+'<br/>'+data.retMessage);
+                                        }
+                                    })
+                                }
+                            }
+                        },
+                        '刷新':{
+                            "label":"刷新",
+                            "action":function(data){
+                                $("#container").jstree().refresh();
+                            }
+                        }
+                    }
+                    return it;
+                }
+            };
+
+            $('#container').jstree('destroy',false);
+
+            $('#container').jstree({
+                "core" : {
+                    "themes": {
+                        "responsive": false
+                    },
+                    "check_callback": true,
+                    'data':function(obj, callback){
+                        var jsonarray = [];
+                        $scope.jsonarray = jsonarray;
+                        var subFrom = {};
+                        var its = [];
+                        if(obj.id == '#'){
+                            subFrom.guidApp = '#';
+                            menu_service.queryRootMenuTree(subFrom).then(function (data) {
+                                var datas = data.retMessage.data;
+                                    datas.text = datas.rootName;
+                                    datas.children = true;
+                                    datas.id = datas.rootCode;
+                                    datas.iocon = "fa fa-home icon-state-info icon-lg"
+                                    its.push(datas);
+                                    $scope.jsonarray = angular.copy(its);
+                                    callback.call(this, $scope.jsonarray);
                             })
-                    }
-                },
-                "删除菜单":{
-                    "label":"删除菜单",
-                    "action":function(data){
-                        var inst = jQuery.jstree.reference(data.reference),
-                            obj = inst.get_node(data.reference);
-                        if(confirm("您确认要删除选中的应用,删除应用将删除该应用下的所有功能组")){
-                            //TODO.删除逻辑
-                            toastr['success']( "删除成功！");
+                         }else if(obj.id == 'AC0000'){
+                            subFrom.guidApp = menu.appselect;
+                            menu_service.queryRootMenuTree(subFrom).then(function (data) {
+                                var datas = data.retMessage.data;
+                                for(var i =0;i <datas.length;i++){
+                                    datas[i].text = datas[i].menuLabel;
+                                    datas[i].children = true;
+                                    datas[i].id = datas[i].guid;
+                                    datas[i].iocon = "fa fa-home icon-state-info icon-lg"
+                                    its.push(datas[i]);
+                                }
+                                $scope.jsonarray = angular.copy(its);
+                                callback.call(this, $scope.jsonarray);
+                            })
+                        }else{
+                            subFrom.guidMenu = obj.id;
+                            menu_service.queryChildMenu(subFrom).then(function (data) {
+                                var datas = data.retMessage;
+                                for(var i =0;i <datas.length;i++){
+                                    datas[i].text = datas[i].menuLabel;
+                                    datas[i].children = true;
+                                    datas[i].id = datas[i].guid;
+                                    datas[i].iocon = "fa fa-home icon-state-info icon-lg"
+                                    its.push(datas[i]);
+                                }
+                                $scope.jsonarray = angular.copy(its);
+                                callback.call(this, $scope.jsonarray);
+                            })
                         }
                     }
                 },
-                '刷新':{
-                    "label":"刷新",
-                    "action":function(data){
-                        $("#container").jstree().refresh();
+                "types" : {
+                    "default" : {
+                        "icon" : "fa fa-folder icon-state-warning icon-lg"
+                    },
+                    "file" : {
+                        "icon" : "fa fa-file icon-state-warning icon-lg"
                     }
-                }
-            }
-            return it;
-        }
-    };
-    //组织机构树
-    $("#container").jstree({
-        "core" : {
-            "themes" : {
-                "responsive": false
-            },
-            // so that create works
-            "check_callback" : true,
-            'data':
-                [{
-                    "id": "1",
-                    "text": "应用菜单",
-                    icon:'fa fa-hospital-o icon-state-info icon-lg ',
-                    "children":
-                        [
-                            {
-                                "id": "2",
-                                "text": "组织管理",
-                                icon:'fa fa-home icon-state-info icon-lg',
-                            },
-                            {
-                                "id": "3",
-                                "text": "权限管理",
-                                icon:'fa fa-home icon-state-info icon-lg',
-                            },
-                            {
-                                "id": "4",
-                                "text": "授权认证",
-                                icon:'fa fa-home icon-state-info icon-lg',
-                            },
-                            {
-                            "id": "5",
-                            "text": "其他管理",
-                                icon:'fa fa-home icon-state-info icon-lg',
-                            },{
-                            "id": "6",
-                            "text": "工作流",
-                            icon:'fa fa-home icon-state-info icon-lg',
-                            },{
-                            "id": "7",
-                            "text": "测试图标",
-                            icon:'fa fa-home icon-state-info icon-lg',
-                        }
-                        ]
-                }
-                ]
-        },
-        "types" : {
-            "default" : {
-                "icon" : "fa fa-folder icon-state-warning icon-lg"
-            },
-            "file" : {
-                "icon" : "fa fa-file icon-state-warning icon-lg"
-            }
-        },
-        "state" : { "key" : "demo3" },
-        "contextmenu":{'items':items
-        },
-        'dnd': {
-            'dnd_start': function () {
-                console.log("start");
-            },
-            'is_draggable':function (node) {
-                return true;
-            }
-        },
-        'callback' : {
-            move_node:function (node) {
-            }
-        },
-
-        "plugins" : [ "dnd", "state", "types","search","contextmenu" ]
-    }).bind("copy.jstree", function (node,e, data ) {
-    })
-    /* 定义树列表改变事件*/
-    $('#container').on("changed.jstree", function (e, data) {
-        console.log(data);
-        if(typeof data.node !== 'undefined'){//拿到结点详情
-            console.log(data.node.parent)
-            if(data.node.parent == '#'){
-                $scope.menu.menushow = true;
-                $scope.menu.menusearch = false;
-            }else if(data.node.parent == '1'){
-                $scope.menu.menusearch = true;
-                $scope.menu.menushow = false;
-            }else if(data.node.original.type == 'fun'){
-            }else if(data.node.parent == '5'||data.node.parent == '4'){
-            }else{
-                $scope.biz.apptab = false;
-            }
-            $scope.$apply();
-        }
-    });
-
-    /* 右侧菜单详情列表调用*/
-    i18nService.setCurrentLang("zh-cn");
-    /*应用功能模块逻辑*/
-    $scope.myData = [
-        {'MENU_NAME':'组织管理','MENU_CODE':'zuzhi','ISLEAF':'是','MENU_LABEL':'组织管理','IMAGE_PATH':'test1.com','EXPAND_PATH':'test1.com'},
-        {'MENU_NAME':'权限管理','MENU_CODE':'quanxian','ISLEAF':'否','MENU_LABEL':'权限管理','IMAGE_PATH':'test2.com','EXPAND_PATH':'test2.com'},
-        {'MENU_NAME':'授权认证','MENU_CODE':'shouquan','ISLEAF':'否','MENU_LABEL':'授权认证','IMAGE_PATH':'test3.com','EXPAND_PATH':'test3.com'},
-        {'MENU_NAME':'其他管理','MENU_CODE':'info','ISLEAF':'是','MENU_LABEL':'其他管理','IMAGE_PATH':'test4.com','EXPAND_PATH':'test4.com'},
-        {'MENU_NAME':'工作流','MENU_CODE':'work','ISLEAF':'是','MENU_LABEL':'工作流','IMAGE_PATH':'test5.com','EXPAND_PATH':'test5.com'}
-    ];
-
-
-    //测试ui-grid
-    var gridOptions = {};
-    $scope.gridOptions = gridOptions;
-    var initdata = function(){
-        return $scope.myData;//数据方法
-    }
-    com = [{ field: 'MENU_NAME', displayName: '菜单名称'},
-        { field: "MENU_CODE", displayName:'菜单代码'},
-        { field: "ISLEAF", displayName:'是否叶子标签'},
-        { field: "MENU_LABEL",displayName:'菜单显示名称'},
-        { field: "IMAGE_PATH",displayName:'菜单闭合路径'},
-        { field: "EXPAND_PATH",displayName:'菜单展开图片路径'}
-
-    ];
-    var f = function(row){
-        if(row.isSelected){
-            $scope.selectRow = row.entity;
-            console.log($scope.selectRow)
-        }else{
-            delete $scope.selectRow;//制空
-        }
-    }
-    $scope.gridOptions = initgrid($scope,gridOptions,initdata(),filterFilter,com,true,f);
-    //新增代码
-    $scope.menuAdd = function(){
-
-        openwindow($uibModal, 'views/Management/manachildAdd.html', 'lg',// 弹出页面
-            function ($scope, $modalInstance) {
-                $scope.add = function(item){//保存新增的函数
-                    toastr['success']("保存成功！");
-                    $modalInstance.close();
-                }
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            }
-        )
-    }
-
-    //修改菜单逻辑
-    $scope.menuEdit = function(id){
-        var it = $scope.gridOptions.getSelectedRows();//多选事件
-        if(it.length == 1){
-            openwindow($uibModal, 'views/Management/manachildAdd.html', 'lg',// 弹出页面//弹出页面
-                function ($scope, $modalInstance) {
-                    $scope.id = id;
-                    //修改页面代码逻辑
-                    $scope.add = function(item){//保存新增的函数
-                        toastr['success']("保存成功！");
-                        $modalInstance.close();
+                },
+                "state" : { "key" : "demo3" },
+                "contextmenu":{'items':items
+                },
+                'dnd': {
+                    'dnd_start': function () {
+                    },
+                    'is_draggable':function (node) {
+                        return true;
                     }
-
-                    $scope.cancel = function () {
-                        $modalInstance.dismiss('cancel');
-                    };
-                })
+                },
+                'search':{
+                    show_only_matches:true,
+                },
+                'callback' : {
+                    move_node:function (node) {
+                    }
+                },
+                "plugins" : [ "dnd", "state", "types","search","contextmenu" ]
+            }).bind("select_node.jstree", function (e, data) {
+                if(typeof data.node !== 'undefined'){//拿到结点详情
+                    $scope.menuFrom = data.node.original;
+                    $scope.menu.item = data.node.original.guid;
+                    if(data.node.parent == '#'){
+                        $scope.menu.menusearch = false;
+                        $scope.menu.show  = true;
+                    }else if(data.node.parent !== '#'){
+                        $scope.menu.menusearch = true;
+                        $scope.menu.show  = true;
+                    }
+                    $scope.$apply();
+                }
+            });
         }else{
-            toastr['error']("请至少(至多)选中一条！");
+            confirm("请选择一项应用进行查询")
+            $scope.menu.show = false;
         }
     }
-
-    //删除代码逻辑
-    $scope.menuDelete = function () {
-        var it = $scope.gridOptions.getSelectedRows();//多选事件
-        if(it.length>0){
-            confirm("确定删除选中的菜单吗？删除应用将删除该应用下的所有子菜单")
-            toastr['success']("删除成功！");
-        }else {
-            toastr['error']("请至少选择一条记录进行删除！","SORRY！");
-        }
-
-    }
-
 
 
     /*2.菜单详情修改*/
     //编辑
-    $scope.menu.menuEdit = function(){
+    $scope.menu.menuEdit = function(item){
         $scope.editflag = !$scope.editflag;//让保存取消方法显现
+        if(item.isleaf == 'N'){
+            $scope.isleaftrue = true;
+        }else if(item.isleaf == 'Y'){
+            $scope.isleaftrue = false;
+        }
     }
+
     //新增子菜单逻辑
     $scope.menu.childAdd = function(){
+        var menuGuide = $scope.menu.item;
         openwindow($uibModal, 'views/Management/menuchildAdd.html', 'lg',// 弹出页面//弹出页面
             function ($scope, $modalInstance) {
                 //修改页面代码逻辑
                 $scope.add = function(item){//保存新增的函数
-                    toastr['success']("保存成功！");
-                    $modalInstance.close();
+                    var subFrom = {};
+                    var guidApp = menu.appselect;
+                    var menuGuid = menuGuide;
+                    subFrom = item;
+                    subFrom.guidApp = guidApp;
+                    subFrom.guidParents = menuGuid;
+                    menu_service.createChildMenu(subFrom).then(function(data){
+                        if(data.status == "success"){
+                            toastr['success']( "新增成功！");
+                            $("#container").jstree().refresh();
+                            $modalInstance.close();
+                        }else{
+                            toastr['error']('新增失败'+'<br/>'+data.retMessage);
+                        }
+                    })
                 }
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                 };
             })
     }
-    //保存方法
+    //修改保存方法
     $scope.menu.save = function (item) {
-        toastr['success']("保存成功");
-        $scope.editflag = !$scope.editflag;//让保存取消方法显现
-        //调用后台保存逻辑
+        $scope.isleaftrue = false;
+        var subFrom = {};
+        var guidApp = menu.appselect;
+        subFrom = item;
+        subFrom.guidApp = guidApp;
+        if(isNull(item.guidParents)){
+            subFrom.guidParents = null;
+        }else{
+            subFrom.guidParents = item.guidParents;
+        }
+        menu_service.editMenu(subFrom).then(function(data){
+            if(data.status == "success"){
+                toastr['success']("保存成功");
+                $("#container").jstree().refresh();
+                $scope.editflag = !$scope.editflag;//让保存取消方法显现
+            }else{
+                toastr['error']('修改失败'+'<br/>'+data.retMessage);
+            }
+        })
     }
 
     //取消按钮

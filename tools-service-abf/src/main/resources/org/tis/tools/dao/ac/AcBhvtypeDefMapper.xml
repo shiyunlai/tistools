@@ -58,12 +58,12 @@
     	UPDATE AC_BHVTYPE_DEF 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.bhvtype_code != null" >
-        	bhvtype_code = #{domain.bhvtypeCode,jdbcType=VARCHAR}
+		<if test="domain.bhvtypeCode != null" >
+        	bhvtype_code = #{domain.bhvtypeCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.bhvtype_name != null" >
+		<if test="domain.bhvtypeName != null" >
         	bhvtype_name = #{domain.bhvtypeName,jdbcType=VARCHAR}
       	</if>
 	    </set>

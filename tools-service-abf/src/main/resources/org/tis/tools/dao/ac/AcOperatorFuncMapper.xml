@@ -81,25 +81,25 @@
 	 <update id="updateByCondition" parameterType="map">
     	UPDATE AC_OPERATOR_FUNC 
 	   <set>
-		<if test="domain.guid_operator != null" >
-        	guid_operator = #{domain.guidOperator,jdbcType=VARCHAR}
+		<if test="domain.guidOperator != null" >
+        	guid_operator = #{domain.guidOperator,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_func != null" >
-        	guid_func = #{domain.guidFunc,jdbcType=VARCHAR}
+		<if test="domain.guidFunc != null" >
+        	guid_func = #{domain.guidFunc,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.auth_type != null" >
-        	auth_type = #{domain.authType,jdbcType=VARCHAR}
+		<if test="domain.authType != null" >
+        	auth_type = #{domain.authType,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.start_date != null" >
-        	start_date = #{domain.startDate,jdbcType=DATE}
+		<if test="domain.startDate != null" >
+        	start_date = #{domain.startDate,jdbcType=DATE},
       	</if>
-		<if test="domain.end_date != null" >
-        	end_date = #{domain.endDate,jdbcType=DATE}
+		<if test="domain.endDate != null" >
+        	end_date = #{domain.endDate,jdbcType=DATE},
       	</if>
-		<if test="domain.guid_app != null" >
-        	guid_app = #{domain.guidApp,jdbcType=VARCHAR}
+		<if test="domain.guidApp != null" >
+        	guid_app = #{domain.guidApp,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_funcgroup != null" >
+		<if test="domain.guidFuncgroup != null" >
         	guid_funcgroup = #{domain.guidFuncgroup,jdbcType=VARCHAR}
       	</if>
 	    </set>

@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 角色与实体属性关系
- * 模型文件 ： E:\github\soft\tistools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\abf-mysql.erm
  * 业务域：ac
  * 模型：AC_ROLE_ENTITYFIELD 角色与实体属性关系
  *

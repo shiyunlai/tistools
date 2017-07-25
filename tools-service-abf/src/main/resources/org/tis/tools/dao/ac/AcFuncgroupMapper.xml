@@ -88,27 +88,27 @@
     	UPDATE AC_FUNCGROUP 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_app != null" >
-        	guid_app = #{domain.guidApp,jdbcType=VARCHAR}
+		<if test="domain.guidApp != null" >
+        	guid_app = #{domain.guidApp,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.funcgroup_name != null" >
-        	funcgroup_name = #{domain.funcgroupName,jdbcType=VARCHAR}
+		<if test="domain.funcgroupName != null" >
+        	funcgroup_name = #{domain.funcgroupName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_parents != null" >
-        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR}
+		<if test="domain.guidParents != null" >
+        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.group_level != null" >
-        	group_level = #{domain.groupLevel,jdbcType=DECIMAL}
+		<if test="domain.groupLevel != null" >
+        	group_level = #{domain.groupLevel,jdbcType=DECIMAL},
       	</if>
-		<if test="domain.funcgroup_seq != null" >
-        	funcgroup_seq = #{domain.funcgroupSeq,jdbcType=VARCHAR}
+		<if test="domain.funcgroupSeq != null" >
+        	funcgroup_seq = #{domain.funcgroupSeq,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.isleaf != null" >
-        	isleaf = #{domain.isleaf,jdbcType=CHAR}
+        	isleaf = #{domain.isleaf,jdbcType=CHAR},
       	</if>
-		<if test="domain.sub_count != null" >
+		<if test="domain.subCount != null" >
         	sub_count = #{domain.subCount,jdbcType=DECIMAL}
       	</if>
 	    </set>

@@ -15,9 +15,6 @@ angular.module('MetronicApp').controller('operconfig_controller', function($root
 
     var gridOptions = {};
     $scope.gridOptions = gridOptions;
-    var initdata = function(){
-        return $scope.myData;//数据方法
-    }
     //操作员名称，代码  应用系统名称 代码
     var com = [
         { field: "USER_ID", displayName:'登录用户名'},
@@ -43,8 +40,8 @@ angular.module('MetronicApp').controller('operconfig_controller', function($root
             delete $scope.selectRow;//制空
         }
     }
-    $scope.gridOptions = initgrid($scope,gridOptions,initdata(),filterFilter,com,false,f);
-
+    $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,false,f);
+    $scope.gridOptions.data = $scope.myData;
     //修改个性化配置
     $scope.opconfigEdit = function(){
        if($scope.selectRow){
@@ -92,9 +89,6 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
 
     var gridOptions = {};
     $scope.gridOptions = gridOptions;
-    var initdata = function(){
-        return $scope.myData;//数据方法
-    }
     //操作员名称，代码  应用系统名称 代码
     var com = [
         { field: "IDENTITY_NAME", displayName:'身份名称'},
@@ -111,8 +105,8 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
             $scope.opensf.idenright = false;
         }
     }
-    $scope.gridOptions = initgrid($scope,gridOptions,initdata(),filterFilter,com,false,f);
-
+    $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,false,f);
+    $scope.gridOptions.data = $scope.myData
     //新增身份
     $scope.idenAdd = function(){
         openwindow($modal, 'views/operator/identAdd.html', 'lg',//弹出页面
@@ -183,9 +177,6 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
 
     var gridOptions1 = {};
     $scope.gridOptions1 = gridOptions1;
-    var initdata1 = function(){
-        return $scope.myDatas;//数据方法
-    }
     //操作员名称，代码  应用系统名称 代码
     var com1 = [
         { field: "AC_RESOURCETYPE", displayName:'身份类型'},
@@ -200,8 +191,8 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
             delete $scope.selectRow1;//制空
         }
     }
-    $scope.gridOptions1 = initgrid($scope,gridOptions1,initdata1(),filterFilter,com1,false,f1);
-
+    $scope.gridOptions1 = initgrid($scope,gridOptions1,filterFilter,com1,false,f1);
+    $scope.gridOptions1.data = $scope.myDatas;
     //资源身份新增
     $scope.identypeAdd = function(){
         openwindow($modal, 'views/operator/identtypeAdd.html', 'lg',//弹出页面

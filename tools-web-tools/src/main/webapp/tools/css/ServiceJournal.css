@@ -187,3 +187,12 @@
     /*margin-right: 5%*/
 /*}*/
 /*btnthree指令样式(使用类名:btnblock\btncontent\btn-left\goright\done)*/
+
+
+.verify{
+   border-color: red!important;
+}
+
+.ver_size{
+    color:red;
+}

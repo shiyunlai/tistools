@@ -75,20 +75,20 @@
 	 <update id="updateByCondition" parameterType="map">
     	UPDATE AC_ROLE_ENTITY 
 	   <set>
-		<if test="domain.guid_role != null" >
-        	guid_role = #{domain.guidRole,jdbcType=VARCHAR}
+		<if test="domain.guidRole != null" >
+        	guid_role = #{domain.guidRole,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_entity != null" >
-        	guid_entity = #{domain.guidEntity,jdbcType=VARCHAR}
+		<if test="domain.guidEntity != null" >
+        	guid_entity = #{domain.guidEntity,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.isadd != null" >
-        	isadd = #{domain.isadd,jdbcType=CHAR}
+        	isadd = #{domain.isadd,jdbcType=CHAR},
       	</if>
 		<if test="domain.isdel != null" >
-        	isdel = #{domain.isdel,jdbcType=CHAR}
+        	isdel = #{domain.isdel,jdbcType=CHAR},
       	</if>
 		<if test="domain.ismodify != null" >
-        	ismodify = #{domain.ismodify,jdbcType=CHAR}
+        	ismodify = #{domain.ismodify,jdbcType=CHAR},
       	</if>
 		<if test="domain.isview != null" >
         	isview = #{domain.isview,jdbcType=CHAR}
