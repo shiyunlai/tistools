@@ -106,7 +106,6 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                     "action":function(data){
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
-                        console.log(obj)
                         openwindow($uibModal, 'views/org/addorg_window.html', 'lg',
                             function ($scope, $modalInstance) {
                                 //创建机构实例
@@ -215,7 +214,6 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
             "themes" : {
                 "responsive": false
             },
-            // so that create works
             "check_callback" : true,
             'data' : function (obj, callback) {
                 var jsonarray = [];
@@ -265,7 +263,6 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
         },
         'search':{
             show_only_matches:true,
-
         },
         'callback' : {
             move_node:function (node) {
@@ -371,7 +368,6 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
         if(isNull(newValue)){
             $scope.showtree = true;
         }else{
-            console.log(9999)
             $scope.showtree = false;
             //筛选重组树
             $("#searchtree").data('jstree', false).empty().jstree({
@@ -438,7 +434,8 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 },
 
                 "plugins" : [ "dnd", "state", "types","search","contextmenu" ]
-            }).bind("changed.jstree", function (e, data) {
+            })
+                .bind("changed.jstree", function (e, data) {
                 if(typeof data.node !== 'undefined'){//拿到结点详情
                     // console.log(data.node.original.id.indexOf("@"));
                     $scope.abftree.item = data.node.original;

@@ -353,14 +353,14 @@ public class AcAppController extends BaseController {
 			String paraInfo = jsonObj.getString("paraInfo");
 			String funcType = jsonObj.getString("funcType");
 			String isCheck = jsonObj.getString("isCheck");
-			String isMenu = jsonObj.getString("isMenu");
+			String isMenu = jsonObj.getString("ismenu");
 			String funcDesc = jsonObj.getString("funcDesc");
 			String guidFuncgroup = jsonObj.getString("guidFuncgroup");
 			//设置功能对应资源
 			AcFuncResource acFuncResource = new AcFuncResource();
 			String resType = jsonObj.getString("resType");
 			String compackName = jsonObj.getString("compackName");
-			String resshowName = jsonObj.getString("resshowName");
+			String resshowName = jsonObj.getString("resShowName");
 			String resPath = jsonObj.getString("resPath");
 			acFuncResource.setResType(resType);
 			acFuncResource.setCompackName(compackName);
@@ -444,7 +444,7 @@ public class AcAppController extends BaseController {
 			String paraInfo = jsonObj.getString("paraInfo");
 			String funcType = jsonObj.getString("funcType");
 			//String isCheck = jsonObj.getString("isCheck");
-			String isMenu = jsonObj.getString("isMenu");
+			String isMenu = jsonObj.getString("ismenu");
 			String funcDesc = jsonObj.getString("funcDesc");
 						
 			acFunc.setFuncCode(funcCode);
@@ -489,7 +489,7 @@ public class AcAppController extends BaseController {
 			String guid = jsonObj.getString("id");		
 			String resType = jsonObj.getString("resType");
 			String compackName = jsonObj.getString("compackName");
-			String resshowName = jsonObj.getString("resshowName");
+			String resshowName = jsonObj.getString("resShowName");
 			String resPath = jsonObj.getString("resPath");
 			acFuncResource.setGuidFunc(guid);
 			acFuncResource.setResType(resType);

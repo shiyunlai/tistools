@@ -1,6 +1,5 @@
 <!-- 新增功能页面 -->
 <div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
-    {{appFrom}}
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-cogs font-green-sharp"></i>
@@ -21,17 +20,17 @@
 
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="appFrom.funcName" required
+                                   ng-model="appFrom.funcName" required  maxlength="128"
                                    name="dict_key" />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6" >
                     <div class="form-group">
-                        <label class="control-label col-md-4">功能编码 <span ng-class="{required:myform.dict_key1.$invalid}"  > * </span></label>
+                        <label class="control-label col-md-4">功能编号 <span ng-class="{required:myform.dict_key1.$invalid}"  > * </span></label>
                         <div class="col-md-8">
-                            <input type="text"  placeholder="请输入功能编码,建议使用数字和字母组合"  title="请输入功能编码,建议使用数字和字母组合" class="form-control"
-                                   ng-model="appFrom.funcCode" required
+                            <input type="text"  class="form-control"
+                                   ng-model="appFrom.funcCode" required  maxlength="64"
                                    name="dict_key1" />
                             <span style="color: #ccc">请输入功能编码,建议使用数字和字母组合</span>
                         </div>
@@ -41,7 +40,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">功能类型</label>
                             <div class="col-md-8">
-                                <select class="form-control" name="dict_open" ng-model="appFrom.funcType">
+                                <select class="form-control" name="dict_open" ng-model="appFrom.funcType" maxlength="255">
                                     <option value="s" selected>页面流</option>
                                     <option value="a">测试功能</option>
                                 </select>
@@ -52,7 +51,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">是否定义为菜单</label>
                         <div class="col-md-8">
-                            <select class="form-control" name="dict_open" ng-model="appFrom.isMenu">
+                            <select class="form-control" name="dict_open" ng-model="appFrom.ismenu">
                                 <option value="n" selected>否</option>
                                 <option value="s">是</option>
                             </select>
@@ -85,8 +84,9 @@
                         <label class="control-label col-md-2">输入参数</label>
                         <div class="col-md-10">
                         <input type="text" class="form-control"
-                               ng-model="appFrom.paraInfo"
+                               ng-model="appFrom.paraInfo"  maxlength="256"
                                name="id" />
+                            <span style="color:#ccc">定义参数规范</span>
                          </div>
                     </div>
                 </div>
@@ -95,7 +95,7 @@
                         <label class="control-label col-md-2">功能描述</label>
                         <div class="col-md-10">
                             <input type="text" class="form-control"
-                                   ng-model="appFrom.funcDesc"
+                                   ng-model="appFrom.funcDesc" maxlength="512"
                                    name="id" />
                         </div>
                     </div>
@@ -110,7 +110,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">资源类型</label>
                         <div class="col-md-8">
-                            <select class="form-control" name="dict_open" ng-model="appFrom.resType" >
+                            <select class="form-control" name="dict_open" ng-model="appFrom.resType" maxlength="255">
                                 <option value="p" selected>页面流</option>
                                 <option value="l">逻辑流</option>
                                 <option value="j">JSP</option>
@@ -123,7 +123,7 @@
                         <label class="control-label col-md-2">构建包名</label>
                         <div class="col-md-10">
                             <input type="text" class="form-control"
-                                   ng-model="appFrom.compackName"
+                                   ng-model="appFrom.compackName"  maxlength="40"
                                    name="id" />
                         </div>
                     </div>
@@ -133,7 +133,7 @@
                         <label class="control-label col-md-4">资源显示名称</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="appFrom.resshowName"
+                                   ng-model="appFrom.resShowName"  maxlength="128"
                                    name="id" />
                         </div>
                     </div>
@@ -143,7 +143,7 @@
                         <label class="control-label col-md-2">资源路径</label>
                         <div class="col-md-10">
                             <input type="text" class="form-control"
-                                   ng-model="appFrom.resPath"
+                                   ng-model="appFrom.resPath"  maxlength="256"
                                    name="id" />
                         </div>
                     </div>
