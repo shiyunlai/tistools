@@ -27,7 +27,7 @@
                                     <span class="caption-subject font-green-sharp bold uppercase">应用菜单</span>
                                 </div>
                                 <div class="tools">
-                                    <a href="javascript:;" class="reload">
+                                    <a href="javascript:;" class="reload" ng-click="reload()">
                                     </a>
                                 </div>
                             </div>
@@ -174,7 +174,7 @@
                                                         </button>
                                                         <button type="button" name="back" class="btn default" ng-if="menuform.$invalid == true"  ng-disabled="menuform.$invalid" popover-trigger="mouseenter" > 保存
                                                         </button>
-                                                        <button type="button" name="back" class="btn btn-danger" ng-click="menu.cenel()"> 取消
+                                                        <button type="button" name="back" class="btn btn-danger" ng-click="menu.cenel(menuFrom)"> 取消
                                                         </button>
                                                     </div>
                                                 </div>

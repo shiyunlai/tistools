@@ -305,11 +305,11 @@
                                                         <label class="control-label col-md-2"></label>
                                                         <div class="col-md-10">
                                                             <div class="actions btn-set" style="float: right;" ng-if="!editsflag">
-                                                                <button type="button" name="back" class="btn btn-primary" ng-click="biz.addschild(childFrom)"> 编辑机构
+                                                                <button type="button" name="back" class="btn btn-primary" ng-click="biz.addschild(dictionaryAdd)"> 编辑机构
                                                                 </button>
                                                             </div>
                                                             <div class="actions btn-set" style="float: right;" ng-if="editsflag">
-                                                                <button type="button" name="back"  class="btn btn-primary" ng-if="bigform.$invalid == false"  ng-disabled="bigform.$invalid" popover-trigger="mouseenter" ng-click="biz.functionsave()" > 保存
+                                                                <button type="button" name="back"  class="btn btn-primary" ng-if="bigform.$invalid == false"  ng-disabled="bigform.$invalid" popover-trigger="mouseenter" ng-click="biz.functionsave(dictionaryAdd)" > 保存
                                                                 </button>
                                                                 <button type="button" name="back" class="btn default" ng-if="bigform.$invalid == true"  ng-disabled="bigform.$invalid" popover-trigger="mouseenter" > 保存
                                                                 </button>
@@ -463,7 +463,7 @@
                                                     <label class="control-label col-md-2"></label>
                                                     <div class="col-md-10">
                                                         <div class="actions btn-set" style="float: right;" ng-if="!editflag">
-                                                            <button type="button" name="back" class="btn btn-primary" ng-click="biz.appedit(appFrom)"> 编辑机构
+                                                            <button type="button" name="back" class="btn btn-primary" ng-click="biz.appssedit(dictionaryAdd)"> 编辑机构
                                                             </button>
                                                         </div>
                                                         <div class="actions btn-set" style="float: right;" ng-if="editflag">
@@ -471,7 +471,7 @@
                                                             </button>
                                                             <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存
                                                             </button>
-                                                            <button type="button" name="back" class="btn btn-danger" ng-click="biz.appedit()"> 取消
+                                                            <button type="button" name="back" class="btn btn-danger" ng-click="biz.funedit(dictionaryAdd)"> 取消
                                                             </button>
                                                         </div>
                                                     </div>
@@ -532,14 +532,14 @@
                                                     <label class="control-label col-md-2"></label>
                                                     <div class="col-md-10">
                                                         <div class="actions btn-set" style="float: right;" ng-if="!editflag">
-                                                            <button type="button" name="back" class="btn btn-primary" ng-click="biz.edit()"> 编辑资源
+                                                            <button type="button" name="back" class="btn btn-primary" ng-click="biz.resources(dictionaryAdd)"> 编辑资源
                                                             </button>
                                                         </div>
                                                         <div class="actions btn-set" style="float: right;" ng-if="editflag">
                                                             <button type="button" name="back" class="btn btn-primary" ng-click="biz.save(dictionaryAdd)"> 保存
                                                             </button>
 
-                                                            <button type="button" name="back" class="btn btn-danger" ng-click="biz.edit()"> 取消
+                                                            <button type="button" name="back" class="btn btn-danger" ng-click="biz.resourcesedit()"> 取消
                                                             </button>
                                                         </div>
                                                     </div>

@@ -360,6 +360,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
     abftree.clear = function () {
         $scope.searchitem = "";
     }
+
     //控制2个树显示标识,true为默认值,false为筛选状态
     var showtree = true;
     $scope.showtree = showtree;
