@@ -29,7 +29,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-4"> 应用名称:<span ng-class="{required:myform.dict_key.$invalid}"  > * </span></label>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control" ng-model="dictionaryAdd.appName"
+                                                <input type="text" class="form-control" maxlength="128"   ng-model="dictionaryAdd.appName"
                                                        required
                                                        name="dict_key"/>
                                             </div>
@@ -41,7 +41,7 @@
                                             <div class="col-md-8">
                                                 <input type="text"  class="form-control"
                                                        required  ng-model="dictionaryAdd.appCode"
-                                                       name="dicts_kesy"/>
+                                                       name="dicts_kesy"  maxlength="64"/>
                                                 <span style="color: #ccc">请输入应用代码,以APP_开头</span>
                                             </div>
                                         </div>
@@ -50,10 +50,10 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-4"> 应用类型:<span ng-class="{required:myform.dict_type.$invalid}" >* </span></label>
                                             <div class="col-md-8">
-                                                <select class="form-control"   ng-model="dictionaryAdd.appType" required name="dict_type">
+                                                <select class="form-control"  maxlength="255"   ng-model="dictionaryAdd.appType" required name="dict_type">
                                                     <option value=""></option>
-                                                    <option value="0">本地</option>
-                                                    <option value="1">远程</option>
+                                                    <option value="local">本地</option>
+                                                    <option value="remote">远程</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -62,10 +62,10 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-4"> 是否开通:<span ng-class="{required:myform.dict_isopen.$invalid}" >* </span> </label>
                                             <div class="col-md-8">
-                                                <select class="form-control" required  ng-model="dictionaryAdd.isOpen"  name="dict_isopen">
+                                                <select class="form-control" required  ng-model="dictionaryAdd.isopen"  name="dict_isopen">
                                                     <option value=""></option>
-                                                    <option value="0">是</option>
-                                                    <option value="1">否</option>
+                                                    <option value="Y">是</option>
+                                                    <option value="N">否</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -88,7 +88,7 @@
                                             <label class="control-label col-md-4"> IP: </label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control"
-                                                       name="table_name" ng-model="dictionaryAdd.ipAddr"/>
+                                                       name="table_name" ng-model="dictionaryAdd.ipAddr" maxlength="50"/>
                                             </div>
                                         </div>
                                     </div>
@@ -97,7 +97,7 @@
                                             <label class="control-label col-md-4"> 访问地址: </label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control"
-                                                       name="column_name" ng-model="dictionaryAdd.url"/>
+                                                       name="column_name" maxlength="256" ng-model="dictionaryAdd.url"/>
                                             </div>
                                         </div>
                                     </div>
@@ -106,7 +106,7 @@
                                             <label class="control-label col-md-4"> 端口: </label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control"
-                                                       name="column_name" ng-model="dictionaryAdd.ipPort"/>
+                                                       name="column_name" ng-model="dictionaryAdd.ipPort" maxlength="10"/>
                                             </div>
                                         </div>
                                     </div>
@@ -114,7 +114,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-4"> 管理维护人员: </label>
                                             <div class="col-md-8">
-                                                <select class="form-control" name="dict_open" ng-model="dictionaryAdd.empMaintenance">
+                                                <select class="form-control" name="dict_open" ng-model="dictionaryAdd.guidEmpMaintenance"  maxlength="128">
                                                     <option value=""></option>
                                                     <option value="0">人员一</option>
                                                     <option value="1">人员二</option>
@@ -126,7 +126,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-4"> 应用管理角色: </label>
                                             <div class="col-md-8">
-                                                <select class="form-control" name="dict_open" ng-model="dictionaryAdd.roleMaintenance">
+                                                <select class="form-control" name="dict_open" ng-model="dictionaryAdd.guidRoleMaintenance" maxlength="128">
                                                     <option value=""></option>
                                                     <option value="0">角色一</option>
                                                     <option value="1">角色二</option>
@@ -139,7 +139,7 @@
                                             <label class="control-label col-md-2"> 应用描述: </label>
                                             <div class="col-md-10">
                                                 <input type="text" class="form-control"
-                                                       ng-model="dictionaryAdd.appDesc"
+                                                       ng-model="dictionaryAdd.appDesc"  maxlength="516"
                                                        name="dict_name"/>
                                             </div>
                                         </div>

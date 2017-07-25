@@ -1,6 +1,5 @@
 <!-- 新增子集菜单页面 -->
 <div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
-    {{menuFrom}}
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-cogs font-green-sharp"></i>
@@ -15,72 +14,95 @@
     <div class="portlet-body portlet light">
         <form action="#" name="myform" class="form-horizontal ">
             <div class="form-body ">
-                <div class="col-md-6">
+                <div class="col-md-6" >
                     <div class="form-group">
-                        <label class="control-label col-md-4"> 菜单名称:<span ng-class="{required:myform.dict_key.$invalid}"  > * </span></label>
+                        <label class="control-label col-md-4">菜单名称:<span ng-class="{required:myform.dict_key.$invalid}"  > * </span></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="menuFrom.menuname"
-                                   required
-                                   name="dict_key"/>
+                            <input type="text" class="form-control"
+                                   ng-model="menuFrom.menuName"
+                                   name="dict_key"  required/>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" >
                     <div class="form-group">
                         <label class="control-label col-md-4"> 菜单显示名称:<span ng-class="{required:myform.dict_key1.$invalid}"  > * </span></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="menuFrom.menushowname"
-                                   required
-                                   name="dict_key1"/>
+                            <input type="text" class="form-control"
+                                   ng-model="menuFrom.menuLabel"
+                                   name="dict_key1" required/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6" >
                     <div class="form-group">
-                        <label class="control-label col-md-4">菜单代码</label>
+                        <label class="control-label col-md-4">菜单代码:<span ng-class="{required:myform.dict_key2.$invalid}"  > * </span></label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="menuFrom.menucode"
+                                   ng-model="menuFrom.menuCode"
+                                   name="dict_key2" required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">是否叶子菜单:<span ng-class="{required:myform.dict_key3.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <select class="form-control" name="dict_key3" ng-model="menuFrom.isleaf"   required>
+                                <option value=""></option>
+                                <option value="Y">是</option>
+                                <option value="N">否</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">ui入口</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"  placeholder="菜单路由路径"
+                                   ng-model="menuFrom.uiEntry"
+                                   name="id" />
+                            <!--<span style="color: #ccc;">即菜单路由路径</span>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">菜单闭合路径</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="menuFrom.imagePath"
                                    name="id" />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6" >
-                <div class="form-group">
-                    <label class="control-label col-md-4">显示顺序</label>
-                    <div class="col-md-8">
-                        <input type="text" class="form-control"
-                               ng-model="menuFrom.order"
-                               name="id" />
+                    <div class="form-group">
+                        <label class="control-label col-md-4">菜单展开路径</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="menuFrom.expandPath"
+                                   name="id" />
+                        </div>
                     </div>
                 </div>
-            </div>
-             <!--<div class="col-md-6" >
-                    <div class="form-group">
-                        <label class="control-label col-md-4">菜单闭合图片路径</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="menuFrom.closeurl"
-                                   name="id" />
-                        </div>
-                    </div>
-             </div>
                 <div class="col-md-6" >
                     <div class="form-group">
-                        <label class="control-label col-md-4">菜单展开图片路径</label>
+                        <label class="control-label col-md-4">菜单层次:<span ng-class="{required:myform.dict_key4.$invalid}"  > * </span></label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="menuFrom.openurl"
-                                   name="id" />
+                                   ng-model="menuFrom.menuLevel" required
+                                   name="dict_key4" />
+                            <span style="color: #ccc;">请输入0-9999数值,从小到大排列</span>
                         </div>
                     </div>
-                </div>-->
+                </div>
                 <div class="col-md-12">
                     <div class="form-group">
                         <label class="control-label col-md-2"></label>
                         <div class="col-md-10">
-
-                            <div class="actions btn-set" style="float: right;">
+                            <div class="actions btn-set" style="text-align: center" >
                                 <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="add(menuFrom)" > 保存
                                 </button>
                                 <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存

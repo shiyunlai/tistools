@@ -4,8 +4,8 @@
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-cogs font-green-sharp"></i>
-            <span class="caption-subject font-green-sharp bold uppercase"  ng-if="!id">增加字典类型项</span>
-            <span class="caption-subject font-green-sharp bold uppercase"  ng-if="id">修改字典类型项</span>
+            <span class="caption-subject font-green-sharp bold uppercase"  ng-if="!id">增加字典项</span>
+            <span class="caption-subject font-green-sharp bold uppercase"  ng-if="id">修改字典项</span>
         </div>
         <div class="tools">
             <a href="javascript:;" class="remove" ng-click="cancel()">
@@ -64,7 +64,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-4"> 业务字典默认值:</label>
                             <div class="col-md-8">
-                                    <input type="text" class="form-control" ng-model="dictFrom.defaultValue"    name = "dict_name"/>
+                                    <input type="text" class="form-control" ng-model="dictFrom.defaultValue"   name = "dict_name"/>
                             </div>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-2"> 解释说明:</label>
                             <div class="col-md-10">
-                                <textarea class="form-control" ng_model="dictFrom.Desc" name="ctl_desc"></textarea>
+                                <textarea class="form-control"  ng_model="dictFrom.Desc" maxlength="10" length-limit  num-length=10  scope-models="dictFrom.Desc"  name="ctl_desc"></textarea>
                                 <!--<p class="help-block">检查项详细描述信息</code></p>-->
                             </div>
                         </div>

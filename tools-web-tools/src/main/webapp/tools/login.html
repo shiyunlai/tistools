@@ -48,7 +48,7 @@
 </div>
 <!-- END SIDEBAR TOGGLER BUTTON -->
 <!-- BEGIN LOGIN -->
-<div class="content">
+<div class="content" >
     <form>
         <div class="login-form">
             <h3 class="form-title"></h3>
@@ -60,24 +60,22 @@
                 <label class="control-label visible-ie8 visible-ie9">用户名</label>
                 <div class="input-icon">
                     <i class="fa fa-user"></i>
-                    <input class="form-control placeholder-no-fix" type="text" placeholder="请输入6位数用户名"   id="loginname" name="loginname"/>
+                    <input class="form-control placeholder-no-fix" type="text"  placeholder="请输入5位数用户名"   id="loginname" name="loginname"/>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label visible-ie8 visible-ie9">密码</label>
                 <div class="input-icon">
                     <i class="fa fa-lock"></i>
-                    <input class="form-control placeholder-no-fix" type="password" placeholder="请输入6位数密码"   id="password" name="password"/>
+                    <input class="form-control placeholder-no-fix" type="password" placeholder="请输入6位数密码"    id="password" name="password"/>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label visible-ie8 visible-ie9">选择身份</label>
                 <div class="input-icon">
-                    <i class="fa fa-user"></i>
-                    <select class="form-control placeholder-no-fix" placeholder="选择身份"  id="opertor"  name="opertor">
+                    <i class="icon-user-follow" style="color: #ccc;"></i>
+                    <select class="form-control placeholder-no-fix"   id="opertor"   name="opertor">
                         <option value="">请选择身份</option>
-                        <option value="0">身份一</option>
-                        <option value="1">身份二</option>
                     </select>
                 </div>
             </div>
@@ -87,7 +85,6 @@
                 <button id="login" type="submit" class="btn blue pull-right"  disabled>
                     登录 <i class="m-icon-swapright m-icon-white"></i>
                 </button>
-                <!-- 问题，一秒的闪烁问题  问题二、如果判断两者长度都大于6-->
             </div>
         </div>
     </form>
@@ -102,6 +99,7 @@
 <!-- BEGIN CORE PLUGINS -->
 <script src="../assets/global/plugins/angularjs/angular.min.js" type="text/javascript"></script>
 <script src="js/controllers/m_loginController.js" type="text/javascript"></script>
+<script src="js/service/login_service.js" type="text/javascript"></script>
 <script src="js/scripts/global.js"></script>
 <!--[if lt IE 9]>
 <script src="../assets/global/plugins/respond.min.js"></script>
@@ -124,17 +122,66 @@
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
 <script src="../assets/pages/scripts/login-soft.js" type="text/javascript"></script>
+<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
     $("input").on('keyup',function(){
         var namelangth =  $("#loginname").val().length;
         var passlength = $("#password").val().length;
-        if(namelangth>=6&&passlength>=6){
+        if(namelangth>=5&&passlength>=6){
             $('#login').removeAttr("disabled");
         }else{
             $('#login').attr('disabled',"true");
         }
     })
+
+    //不管了  先放弃。
+    $("#loginname").on('input',function(){
+        var form = {};
+        form.userId = $("#loginname").val()
+       if($("#loginname").val().length>=5){
+            $.ajax({
+                url:"..//AcAuthenticationController/checkUserStatus",
+                type:"post",
+                dataType:'json',
+                data:JSON.stringify(form),
+                processData:false,
+                contentType:'application/json',
+                success:function(data){
+                    if(data.status == "success"){
+                        var datas = data.retMessage;
+                        var html = '';
+                        //进行默认验证
+                        for(var i =0;i< datas.length; i++){
+                            if(datas[i].identityFlag == 'Y'){
+                                html+= '<option value= "">'+datas[i].identityName+'</option>';
+                                break;
+                            }
+                        }
+                        for(var j =0;j< datas.length; j++){
+                            if(datas[j].identityFlag == 'Y'){
+                                continue;
+                            }
+                            html+= '<option value= "">'+datas[j].identityName+'</option>';
+                        }
+                        /*for(var i =0;i< datas.length; i++){
+                            html+= '<option>'+datas[i].identityName+'</option>'
+                        }*/
+                        $('select').html(html);
+                    }else{
+                        toastr['error'](data.retMessage+'登录失败');
+                        var html = '<option>请选择身份</option>';
+                        $('select').html(html);
+                    }
+                }
+            })
+        }else{
+           var html = '<option>请选择身份</option>';
+           $('select').html(html);
+       }
+
+    });
+
 
 
     var btn=document.getElementById('login');
@@ -145,10 +192,8 @@
         form.append("opertor",$("#opertor").val());
         console.log("loginname",$("#loginname").val())
         window.location = "../tools/index.html";//如果正确，则进入主页
-
-
-        /*$.ajax({
-            url:"..//user/login3",
+      /*  $.ajax({
+            url:"..//AcAuthenticationController/checkUserStatus",
             type:"post",
             data:form,
             processData:false,
@@ -160,7 +205,7 @@
                     sessionStorage.trans = JSON.stringify(data.trans);
                     sessionStorage.menus = JSON.stringify(data.menus);
                     sessionStorage.msgs = JSON.stringify(data.msgs);
-                    window.location = "../index.html";//如果正确，则进入主页
+                    window.location = "../tools/index.html";//如果正确，则进入主页
                 }else if(data.retCode == '2'){
                     toastr['error'](data.retMessage, "登录失败！");
                 } else {
