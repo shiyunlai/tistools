@@ -16,6 +16,11 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
         $("#container").jstree(true).search($("#q").val());
     });
 
+    //刷新菜单树
+    $scope.reload = function(){
+        $("#container").jstree().refresh();
+    }
+
     //应用查询
     $scope.menu.search = function(item){
         if(item.appselect !== undefined ){
@@ -254,15 +259,15 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                             subFrom.guidApp = '#';
                             menu_service.queryRootMenuTree(subFrom).then(function (data) {
                                 var datas = data.retMessage.data;
-                                    datas.text = datas.rootName;
-                                    datas.children = true;
-                                    datas.id = datas.rootCode;
-                                    datas.iocon = "fa fa-home icon-state-info icon-lg"
-                                    its.push(datas);
-                                    $scope.jsonarray = angular.copy(its);
-                                    callback.call(this, $scope.jsonarray);
+                                datas.text = datas.rootName;
+                                datas.children = true;
+                                datas.id = datas.rootCode;
+                                datas.iocon = "fa fa-home icon-state-info icon-lg"
+                                its.push(datas);
+                                $scope.jsonarray = angular.copy(its);
+                                callback.call(this, $scope.jsonarray);
                             })
-                         }else if(obj.id == 'AC0000'){
+                        }else if(obj.id == 'AC0000'){
                             subFrom.guidApp = menu.appselect;
                             menu_service.queryRootMenuTree(subFrom).then(function (data) {
                                 var datas = data.retMessage.data;
@@ -344,6 +349,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
     //编辑
     $scope.menu.menuEdit = function(item){
         $scope.editflag = !$scope.editflag;//让保存取消方法显现
+        $scope.copyscript = angular.copy(item);
         if(item.isleaf == 'N'){
             $scope.isleaftrue = true;
         }else if(item.isleaf == 'Y'){
@@ -404,8 +410,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
 
     //取消按钮
     $scope.menu.cenel = function(){
+        $scope.menuFrom = $scope.copyscript
         $scope.editflag = !$scope.editflag;
     }
-
-
 });
