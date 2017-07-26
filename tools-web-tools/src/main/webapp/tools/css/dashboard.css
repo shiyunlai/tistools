@@ -126,4 +126,11 @@
     right:25px;
 }
 
+/*限定长度样式*/
+.verify{
+    border-color: red;
+}
 
+.ver_size{
+    color:red;
+}

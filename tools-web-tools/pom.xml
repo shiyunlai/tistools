@@ -554,6 +554,13 @@
 			<!-- <version>10.2.0.4.0</version> -->
 			<version>${oracle.version}</version>
 		</dependency>
+		
+		<dependency>
+   			<groupId>mysql</groupId>
+   			<artifactId>mysql-connector-java</artifactId>
+   			<!-- <version>10.2.0.4.0</version> -->
+   			<!--<version>${mysql.version}</version>-->
+		</dependency>
 
 		<dependency>
 			<groupId>org.mybatis</groupId>

@@ -3,14 +3,14 @@
  */
 MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
     var service={};
-    //ÐÂÔöÓ¦ÓÃ·þÎñ
+    //ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½Ã·ï¿½ï¿½ï¿½
     service.appAdd = function (subFrom) {
         var res = $http.post(manurl + "/AcAppController/appAdd",subFrom).then(function (response) {
             return response.data;
         });
         return res;
     };
-    //É¾³ýÓ¦ÓÃ·þÎñ
+    //É¾ï¿½ï¿½Ó¦ï¿½Ã·ï¿½ï¿½ï¿½
     service.appDel = function(item){
         var res = $http.post(manurl + "/AcAppController/appDel",item).then(function (response) {
             return response.data;
@@ -18,14 +18,14 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
         return res;
     }
 
-    //²éÑ¯Ó¦ÓÃ·þÎñ
+    //ï¿½ï¿½Ñ¯Ó¦ï¿½Ã·ï¿½ï¿½ï¿½
     service.appQuery = function (subFrom) {
         var res = $http.post(manurl + "/AcAppController/appQuery",subFrom).then(function (response) {
             return response.data;
         });
         return res;
     }
-    //ÐÞ¸ÄÓ¦ÓÃ·þÎñ
+    //ï¿½Þ¸ï¿½Ó¦ï¿½Ã·ï¿½ï¿½ï¿½
     service.appEdit = function (subFrom) {
         var res = $http.post(manurl + "/AcAppController/appEdit",subFrom).then(function (response) {
             return response.data;
@@ -33,8 +33,8 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
         return res;
     }
 
-    /*¹¦ÄÜ×é·þÎñ*/
-    //ÐÂÔö¹¦ÄÜ×é¡¢×Ó¹¦ÄÜ×é
+    /*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é¡¢ï¿½Ó¹ï¿½ï¿½ï¿½ï¿½ï¿½
     service.groupAdd = function (item) {
         var res = $http.post(manurl + "/AcAppController/groupAdd",item).then(function (response) {
             return response.data;
@@ -42,7 +42,7 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
-    //É¾³ý¹¦ÄÜ×é¡¢×Ó¹¦ÄÜ×é
+    //É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é¡¢ï¿½Ó¹ï¿½ï¿½ï¿½ï¿½ï¿½
     service.groupDel = function (item) {
         var res = $http.post(manurl + "/AcAppController/groupDel",item).then(function (response) {
             return response.data;
@@ -50,7 +50,7 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
-    //²éÑ¯¹¦ÄÜ×é¡¢×Ó¹¦ÄÜ×é
+    //ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½é¡¢ï¿½Ó¹ï¿½ï¿½ï¿½ï¿½ï¿½
     service.groupQuery = function (item) {
         var res = $http.post(manurl + "/AcAppController/groupQuery",item).then(function (response) {
             return response.data;
@@ -59,7 +59,7 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
     };
 
 
-    //ÐÞ¸Ä¹¦ÄÜ×é¡¢×Ó¹¦ÄÜ×é
+    //ï¿½Þ¸Ä¹ï¿½ï¿½ï¿½ï¿½é¡¢ï¿½Ó¹ï¿½ï¿½ï¿½ï¿½ï¿½
     service.groupEdit = function (item) {
         var res = $http.post(manurl + "/AcAppController/groupEdit",item).then(function (response) {
             return response.data;
@@ -67,8 +67,8 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
-    /* ¹¦ÄÜ·þÎñ*/
-    //ÐÂÔö¹¦ÄÜ·þÎñ
+    /* ï¿½ï¿½ï¿½Ü·ï¿½ï¿½ï¿½*/
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü·ï¿½ï¿½ï¿½
     service.acFuncAdd = function (item) {
         var res = $http.post(manurl + "/AcAppController/acFuncAdd",item).then(function (response) {
             return response.data;
@@ -76,7 +76,7 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
-    //ÐÞ¸Ä¹¦ÄÜ·þÎñ
+    //ï¿½Þ¸Ä¹ï¿½ï¿½Ü·ï¿½ï¿½ï¿½
     service.acFuncEdit = function (item) {
         var res = $http.post(manurl + "/AcAppController/acFuncEdit",item).then(function (response) {
             return response.data;
@@ -84,7 +84,7 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
-    //¸üÐÂ×ÊÔ´
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´
     service.acFuncResourceEdit = function (item) {
         var res = $http.post(manurl + "/AcAppController/acFuncResourceEdit",item).then(function (response) {
             return response.data;
@@ -92,7 +92,7 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
-    //É¾³ý¹¦ÄÜ·þÎñ
+    //É¾ï¿½ï¿½ï¿½ï¿½ï¿½Ü·ï¿½ï¿½ï¿½
     service.acFuncDel = function (item) {
         var res = $http.post(manurl + "/AcAppController/acFuncDel",item).then(function (response) {
             return response.data;
@@ -100,7 +100,7 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
-    //¹¦ÄÜ²éÑ¯·þÎñ
+    //ï¿½ï¿½ï¿½Ü²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½
     service.acFuncQuery = function (item) {
         var res = $http.post(manurl + "/AcAppController/acFuncQuery",item).then(function (response) {
             return response.data;
@@ -108,7 +108,7 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
-    //²éÑ¯ËùÓÐ¹¦ÄÜ·þÎñ
+    //ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½Ð¹ï¿½ï¿½Ü·ï¿½ï¿½ï¿½
     service.queryAllFunc = function (item) {
         var res = $http.post(manurl + "/AcAppController/queryAllFunc",item).then(function (response) {
             return response.data;
@@ -116,7 +116,7 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
-    //µ¼Èë¹¦ÄÜ·þÎñ
+    //ï¿½ï¿½ï¿½ë¹¦ï¿½Ü·ï¿½ï¿½ï¿½
     service.importFunc = function (item) {
         var res = $http.post(manurl + "/AcAppController/importFunc",item).then(function (response) {
             return response.data;
@@ -124,7 +124,7 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
-    //²éÑ¯¹¦ÄÜÐÐÎªÀàÐÍ
+    //ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½
     service.functypequery = function (subFrom) {
         var res = $http.post(manurl + "/AcAppController/functypequery",subFrom).then(function (response) {
             return response.data;
@@ -133,7 +133,7 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
     };
 
 
-    //¹¦ÄÜÌí¼ÓÐÐÎªÀàÐÍ
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½
     service.addBhvtypeForFunc = function (subFrom) {
         var res = $http.post(manurl + "/AcAppController/addBhvtypeForFunc",subFrom).then(function (response) {
             return response.data;
@@ -141,7 +141,7 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
-    //¹¦ÄÜÌí¼ÓÐÐÎª¶¨Òå
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½
     service.addBhvDefForFunc = function (subFrom) {
         var res = $http.post(manurl + "/AcAppController/addBhvDefForFunc",subFrom).then(function (response) {
             return response.data;
@@ -149,7 +149,7 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
-    //²éÑ¯¹¦ÄÜÏÂÄ³¸öÐÐÎªÀàÐÍµÄ²Ù×÷ÐÐÎª
+    //ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ÍµÄ²ï¿½ï¿½ï¿½ï¿½ï¿½Îª
     service.queryBhvDefInTypeForFunc = function (subFrom) {
         var res = $http.post(manurl + "/AcAppController/queryBhvDefInTypeForFunc",subFrom).then(function (response) {
             return response.data;
@@ -157,7 +157,8 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
-    //¸ù¾Ý¹¦ÄÜµÄGUID²éÑ¯ÐÐÎªÀàÐÍ¶¨Òå
+
+    //ï¿½ï¿½ï¿½Ý¹ï¿½ï¿½Üµï¿½GUIDï¿½ï¿½Ñ¯ï¿½ï¿½Îªï¿½ï¿½ï¿½Í¶ï¿½ï¿½ï¿½
     service.queryBhvtypeDefByFunc = function (subFrom) {
         var res = $http.post(manurl + "/AcAppController/queryBhvtypeDefByFunc",subFrom).then(function (response) {
             return response.data;
@@ -165,16 +166,18 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
-    //¸ù¾ÝÀàÐÍµÄGUID²éÑ¯ÐÐÎª
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½GUIDï¿½ï¿½Ñ¯ï¿½ï¿½Îª
     service.queryBhvDefByBhvType = function (subFrom) {
         var res = $http.post(manurl + "/AcAppController/queryBhvDefByBhvType",subFrom).then(function (response) {
+
             return response.data;
         });
         return res;
     };
 
 
-    //²éÑ¯¹¦ÄÜÏÂËùÓÐÐÐÎªÀàÐÍ
+
+    //ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½
     service.queryAllBhvDefForFunc = function (subFrom) {
         var res = $http.post(manurl + "/AcAppController/queryAllBhvDefForFunc",subFrom).then(function (response) {
             return response.data;
@@ -182,7 +185,7 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
-    //É¾³ý¹¦ÄÜ¶ÔÓ¦µÄÐÐÎªÀàÐÍ
+    //É¾ï¿½ï¿½ï¿½ï¿½ï¿½Ü¶ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½
     service.delFuncBhvType = function (subFrom) {
         var res = $http.post(manurl + "/AcAppController/delFuncBhvType",subFrom).then(function (response) {
             return response.data;
@@ -190,9 +193,25 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
-    //É¾³ý¹¦ÄÜ¶ÔÓ¦µÄÐÐÎª¶¨Òå
+    //É¾ï¿½ï¿½ï¿½ï¿½ï¿½Ü¶ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½
     service.delFuncBhvDef = function (subFrom) {
         var res = $http.post(manurl + "/AcAppController/delFuncBhvDef",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    };
+
+    //ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½
+    service.enableApp = function (subFrom) {
+        var res = $http.post(manurl + "/AcAppController/enableApp",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    };
+
+    //ï¿½Ø±ï¿½Ó¦ï¿½ï¿½
+    service.disableApp = function (subFrom) {
+        var res = $http.post(manurl + "/AcAppController/disableApp",subFrom).then(function (response) {
             return response.data;
         });
         return res;

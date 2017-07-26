@@ -93,6 +93,7 @@ public class OMExceptionCodes {
 	 * 更新机构信息失败
 	 */
 	public static final String FAILURE_WHEN_UPDATE_ORG_APP = R_EX_CODE("0014");
+
 	/**
 	 * 缺少创建员工的必要信息
 	 */
@@ -117,7 +118,6 @@ public class OMExceptionCodes {
 	 * 不存在此岗位代码
 	 */
 	public static final String POSITANIZATION_NOT_EXIST_BY_POSIT_CODE= R_EX_CODE("0020");
-
 
 	/**
 	 * 以烤串方式拼接异常码
