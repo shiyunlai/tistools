@@ -124,5 +124,25 @@ MetronicApp.factory('abftree_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     }
+    //启用-注销-重启-停用公用
+    service.enableorg = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/enableorg",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    //启用-注销-重启-停用公用
+    service.enableposition = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/enableposition",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.deletePosition = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/deletePosition",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
     return service;
 }]);

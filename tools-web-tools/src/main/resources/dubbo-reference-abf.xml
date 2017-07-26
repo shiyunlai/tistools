@@ -43,6 +43,13 @@
 		check="false"/>
 		
 	<dubbo:reference 
+		id="DutyRServicelmpl"    
+		group="om" 
+		version="0.1" 
+		interface="org.tis.tools.rservice.om.capable.IDutyRService"     
+		check="false"/>	
+		
+	<dubbo:reference 
 		id="dictRService"    
 		group="sys" 
 		version="0.9" 

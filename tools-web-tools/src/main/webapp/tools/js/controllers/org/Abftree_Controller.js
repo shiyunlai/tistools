@@ -223,13 +223,11 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
             }
             return it;
 
-        }else if(false){
-
-        }else{
+        }else if(node.id.indexOf("POSITION") == 0){
             var it = {
                 "新建菜单":{
                     "id":"create",
-                    "label":"新建岗位",
+                    "label":"新建子岗位",
                     "action":function(data){
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
@@ -275,10 +273,64 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
                         if(confirm("确定要删除此菜单？删除后不可恢复。")){
-                            //TODO.删除逻辑
+                            var subFrom = {};
+                            subFrom.posCode = obj.original.positionCode;
+                            abftree_service.deletePosition(subFrom).then(function (data) {
+                                if(data.status == "success"){
+                                    toastr['success'](data.retMessage);
+                                }else{
+                                    toastr['error'](data.retMessage);
+                                }
+                                $("#container").jstree().refresh();
+                            })
                         }
                     }
-                },
+                }
+            }
+            return it;
+        }else{
+            var it = {
+                "新建菜单":{
+                    "id":"create",
+                    "label":"新建岗位",
+                    "action":function(data){
+                        var inst = jQuery.jstree.reference(data.reference),
+                            obj = inst.get_node(data.reference);
+                        console.log(obj)
+                        openwindow($uibModal, 'views/org/addPosition_window.html', 'lg',
+                            function ($scope, $modalInstance) {
+                                //创建机构实例
+                                var subFrom = {};
+                                $scope.subFrom = subFrom;
+                                //判断是根岗位还是子岗位
+                                if(obj.id.indexOf("GW") == 0){
+                                    //处理新增机构父机构
+                                    subFrom.guidParents = "";
+                                    subFrom.guidOrg = obj.original.guid;
+                                }else{
+                                    subFrom.guidParents = obj.original.guid;
+                                    subFrom.guidOrg = obj.original.guidOrg;
+                                }
+                                //增加方法
+                                $scope.add = function (subFrom) {
+                                    //TODO.新增逻辑
+                                    abftree_service.addposit(subFrom).then(function (data) {
+                                        if(data.status == "success"){
+                                            toastr['success'](data.retMessage);
+                                        }else{
+                                            toastr['error'](data.retMessage);
+                                        }
+                                        $("#container").jstree().refresh();
+                                        $scope.cancel();
+                                    });
+                                }
+                                $scope.cancel = function () {
+                                    $modalInstance.dismiss('cancel');
+                                };
+                            }
+                        )
+                    }
+                }
 
             }
             return it;
@@ -572,8 +624,113 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
 
     //启用
     abftree.enable = function () {
-        //TODO.启用逻辑
-        console.log($scope.abftree.item)
+        var orgCode = $scope.abftree.item.orgCode;
+        openwindow($uibModal, 'views/org/enablecom_window.html', 'lg',
+            function ($scope, $modalInstance) {
+                //创建参数实体
+                var subFrom = {};
+                $scope.subFrom = subFrom;
+                subFrom.orgCode = orgCode;
+                subFrom.flag = "0";
+                $scope.save = function (subFrom) {
+                    abftree_service.enableorg(subFrom).then(function (data) {
+                        console.log(data)
+                        if(data.status == "success"){
+                            toastr['success'](data.retMessage);
+                            $("#container").jstree().refresh();
+                        }else{
+                            toastr['error'](data.retMessage);
+                        }
+                        $scope.cancel();
+                    });
+                }
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            })
+    }
+    //停用
+    abftree.disenable = function () {
+        var orgCode = $scope.abftree.item.orgCode;
+        var subFrom = {};
+        subFrom.orgCode = orgCode;
+        subFrom.flag = "3"
+        abftree_service.enableorg(subFrom).then(function (data) {
+            console.log(data)
+            if(data.status == "success"){
+                toastr['success'](data.retMessage);
+                $("#container").jstree().refresh();
+            }else{
+                toastr['error'](data.retMessage);
+            }
+        })
+    }
+    abftree.cancelorg = function () {
+        var subFrom = {};
+        subFrom.orgCode = $scope.abftree.item.orgCode;
+        subFrom.flag = "1"
+        abftree_service.enableorg(subFrom).then(function (data) {
+            console.log(data)
+            if(data.status == "success"){
+                toastr['success'](data.retCode);
+                $("#container").jstree().refresh();
+            }else{
+                toastr['error'](data.retCode);
+            }
+        })
+    }
+    //重新启用
+    abftree.reenable = function () {
+        var subFrom = {};
+        subFrom.orgCode = $scope.abftree.item.orgCode;
+        subFrom.flag = "2"
+        abftree_service.enableorg(subFrom).then(function (data) {
+            if(data.status == "success"){
+                toastr['success'](data.retMessage);
+                $("#container").jstree().refresh();
+            }else{
+                toastr['error'](data.retMessage);
+            }
+        })
+    }
+
+    abftree.enableposition = function () {
+        var subFrom = {};
+        subFrom.posCode = $scope.abftree.item.positionCode;
+        subFrom.flag = "1";
+        abftree_service.enableposition(subFrom).then(function (data) {
+            if(data.status == "success"){
+                toastr['success'](data.retMessage);
+                $("#container").jstree().refresh();
+            }else{
+                toastr['error'](data.retMessage);
+            }
+        })
+    }
+    abftree.cancelposition = function () {
+        var subFrom = {};
+        subFrom.posCode = $scope.abftree.item.positionCode;
+        subFrom.flag = "2";
+        abftree_service.enableposition(subFrom).then(function (data) {
+            if(data.status == "success"){
+                toastr['success'](data.retMessage);
+                $("#container").jstree().refresh();
+            }else{
+                toastr['error'](data.retMessage);
+            }
+        })
+    }
+    abftree.deletePosition = function () {
+        var subFrom = {};
+        subFrom.posCode = $scope.abftree.item.positionCode;
+        abftree_service.deletePosition(subFrom).then(function (data) {
+            if(data.status == "success"){
+                toastr['success'](data.retMessage);
+                $("#container").jstree().refresh();
+            }else{
+                toastr['error'](data.retMessage);
+            }
+        })
     }
 
     //修改
@@ -640,14 +797,6 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 abftree_service.loadxjjg(subFrom).then(function (data) {
                     console.log(data.retMessage)
                     if(data.status == "success"){
-                        for(var i = 0;i<data.retMessage.length;i++){
-                            // data.retMessage[i].birthdate = FormatDate(data.retMessage[i].birthdate);
-                            // data.retMessage[i].indate = FormatDate(data.retMessage[i].indate);
-                            // data.retMessage[i].outdate = FormatDate(data.retMessage[i].outdate);
-                            // data.retMessage[i].regdate = FormatDate(data.retMessage[i].regdate);
-                            // data.retMessage[i].lastmodytime = FormatDate(data.retMessage[i].lastmodytime);
-                            // data.retMessage[i].createtime = FormatDate(data.retMessage[i].createtime);
-                        }
                         $scope.gridOptions2.data =  data.retMessage;
                         $scope.gridOptions2.mydefalutData =  data.retMessage;
                         $scope.gridOptions2.getPage(1,$scope.gridOptions2.paginationPageSize);
@@ -822,14 +971,14 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                             //调取工作组信息OM_GROUP
                             abftree_service.loadempNotinorg(subFrom).then(function (data) {
                                 if(data.status == "success"){
-                                    for(var i = 0;i<data.retMessage.length;i++){
-                                        data.retMessage[i].birthdate = FormatDate(data.retMessage[i].birthdate);
-                                        data.retMessage[i].indate = FormatDate(data.retMessage[i].indate);
-                                        data.retMessage[i].outdate = FormatDate(data.retMessage[i].outdate);
-                                        data.retMessage[i].regdate = FormatDate(data.retMessage[i].regdate);
-                                        data.retMessage[i].lastmodytime = FormatDate(data.retMessage[i].lastmodytime);
-                                        data.retMessage[i].createtime = FormatDate(data.retMessage[i].createtime);
-                                    }
+                                    // for(var i = 0;i<data.retMessage.length;i++){
+                                    //     data.retMessage[i].birthdate = FormatDate(data.retMessage[i].birthdate);
+                                    //     data.retMessage[i].indate = FormatDate(data.retMessage[i].indate);
+                                    //     data.retMessage[i].outdate = FormatDate(data.retMessage[i].outdate);
+                                    //     data.retMessage[i].regdate = FormatDate(data.retMessage[i].regdate);
+                                    //     data.retMessage[i].lastmodytime = FormatDate(data.retMessage[i].lastmodytime);
+                                    //     data.retMessage[i].createtime = FormatDate(data.retMessage[i].createtime);
+                                    // }
                                     $scope.commonGrid.data =  data.retMessage;
                                     $scope.commonGrid.mydefalutData =  data.retMessage;
                                     $scope.commonGrid.getPage(1,$scope.commonGrid.paginationPageSize);
@@ -968,6 +1117,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 $scope.gwflag[i] = false;
             }
             $scope.gwflag.gwxx = true;
+
         }else if (type == 1){//岗位员工
             for(var i in $scope.gwflag){
                 $scope.gwflag[i] = false;

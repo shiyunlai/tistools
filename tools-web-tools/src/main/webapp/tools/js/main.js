@@ -717,6 +717,12 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             data: {pageTitle: '序号资源表'},
             controller:"numres_controller"
         })
+        .state("duty",{
+            url:"/duty.html",
+            templateUrl:"views/duty/duty.html",
+            data: {pageTitle: '职务定义'},
+            controller:"duty_controller"
+        })
 }]);
 
 /* Init global settings and run the app */

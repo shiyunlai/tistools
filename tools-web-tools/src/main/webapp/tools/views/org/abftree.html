@@ -272,7 +272,13 @@
                                     <label class="control-label col-md-2"></label>
                                     <div class="col-md-10">
                                         <div class="actions btn-set" style="float: right;">
-                                            <button type="button" name="back" class="btn btn-primary" ng-click="abftree.enable()"> 启用机构
+                                            <button ng-show="abftree.item.orgStatus=='stop'" type="button" name="back" class="btn btn-primary" ng-click="abftree.enable()"> 启用机构
+                                            </button>
+                                            <button ng-show="abftree.item.orgStatus=='cancel'" type="button" name="back" class="btn btn-primary" ng-click="abftree.reenable()"> 重新启用机构
+                                            </button>
+                                            <button ng-show="abftree.item.orgStatus=='cancel'" type="button" name="back" class="btn btn-danger" ng-click="abftree.disenable()"> 停用机构
+                                            </button>
+                                            <button ng-show="abftree.item.orgStatus=='running'" type="button" name="back" class="btn btn-danger" ng-click="abftree.cancelorg()"> 注销机构
                                             </button>
                                             <button type="button" name="back" class="btn btn-primary" ng-click="abftree.edit()"> 编辑机构
                                             </button>
@@ -539,11 +545,13 @@
                                                 <label class="control-label col-md-2"></label>
                                                 <div class="col-md-10">
                                                     <div class="actions btn-set" style="float: right;" ng-if="!editflag">
-                                                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.test()"> 启用岗位
+                                                        <button ng-show="abftree.item.positionStatus == 'cancel'" type="button" name="back" class="btn btn-primary" ng-click="abftree.enableposition()"> 启用岗位
+                                                        </button>
+                                                        <button ng-show="abftree.item.positionStatus == 'running'" type="button" name="back" class="btn btn-danger" ng-click="abftree.cancelposition()">注销岗位
                                                         </button>
                                                         <button type="button" name="back" class="btn btn-primary" ng-click="abftree.edit()"> 编辑岗位
                                                         </button>
-                                                        <button type="button" name="back" class="btn btn-danger" ng-click=""> 删除岗位
+                                                        <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletePosition()"> 删除岗位
                                                         </button>
                                                     </div>
                                                 </div>

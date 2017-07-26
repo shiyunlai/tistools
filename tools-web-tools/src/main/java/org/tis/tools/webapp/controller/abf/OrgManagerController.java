@@ -669,6 +669,110 @@ public class OrgManagerController extends BaseController {
 	}
 	
 	/**
+	 * 启用-注销-停用机构
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/enableorg")
+	public String enableorg(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			String orgCode = jsonObj.getString("orgCode");
+			Date startDate = jsonObj.getDate("startDate");
+			Date endDate = jsonObj.getDate("endDate");
+			String flag = jsonObj.getString("flag");
+			if("0".equals(flag)){
+				OmOrg org = orgRService.enabledOrg(orgCode, startDate, endDate);
+				AjaxUtils.ajaxJsonSuccessMessage(response,"启用成功!");
+			}else if("3".equals(flag)){//停用
+				orgRService.disabledOrg(orgCode);
+				AjaxUtils.ajaxJsonSuccessMessage(response, "停用成功!");
+			}else if("1".equals(flag)){//注销
+				orgRService.cancelOrg(orgCode);
+				AjaxUtils.ajaxJsonSuccessMessage(response, "注销成功!");
+			}else if("2".equals(flag)){//重新启用
+				orgRService.reenabledOrg(orgCode);
+				AjaxUtils.ajaxJsonSuccessMessage(response, "启用成功!");
+			}
+			
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	
+	/**
+	 * 启用-注销-岗位
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/enableposition")
+	public String enableposition(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			String posCode = jsonObj.getString("posCode");
+			//0-注销,1-启用
+			String flag = jsonObj.getString("flag");
+			if("1".equals(flag)){
+				positionRService.reenablePosition(posCode);
+				AjaxUtils.ajaxJsonSuccessMessage(response, "启用成功!");
+			}else{
+				positionRService.cancelPosition(posCode);
+				AjaxUtils.ajaxJsonSuccessMessage(response, "注销成功!");
+			}
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	/**
+	 * 删除岗位
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/deletePosition")
+	public String deletePosition(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			String posCode = jsonObj.getString("posCode");
+			positionRService.deletePosition(posCode);
+			AjaxUtils.ajaxJsonSuccessMessage(response, "删除成功!");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	/**
 	 * 每个controller定义自己的返回信息变量
 	 */
 	private Map<String, Object> responseMsg;

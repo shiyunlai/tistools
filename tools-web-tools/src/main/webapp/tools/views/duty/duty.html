@@ -1,0 +1,61 @@
+<div class="page-bar ng-scope" style="border-bottom: 1px solid #e7ecf1;">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="#">组织管理</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <a href="#">职务定义</a>
+        </li>
+    </ul>
+</div>
+<div>
+    <!-- 职务树 start -->
+    <div class="col-md-3">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-cogs font-green-sharp"></i>
+                    <span class="caption-subject font-green-sharp bold uppercase">职务定义</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="reload">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <form id="s">
+                    <input type="search" id="q" ng-model="searchitem"/>
+                    <button type="submit" ng-click="abftree.clear()">清空</button>
+                </form>
+                <div id="dutytree" ></div>
+                <!--<div id="searchtree" ng-show="!showtree"></div>-->
+            </div>
+        </div>
+    </div>
+    <!-- 职务树 end -->
+    <div class="col-md-9 portlet-body portlet light">
+        <ul class="nav nav-tabs padding-12 tab-color-blue background-blue">
+            <li ng-class="{true:'active',false:''}[true]">
+                <a id="tab-list" data-toggle="tab" href ng-class="{true:'link',false:''}[true]" ng-click="">
+                    <i class="green ace-icon fa fa-bars bigger-120"></i>职务列表
+                </a>
+            </li>
+        </ul>
+        <!--下级机构-->
+        <div class="tab-content portlet light">
+            <div ui-grid="dutygrid"
+                 ui-grid-edit ui-grid-pagination
+                 ui-grid-selection ui-grid-resize-columns></div>
+            <div class="actions btn-set" style="float: right;">
+                <button type="button" name="back" class="btn btn-primary" ng-click="duty.addxjjg()"> 新增
+                </button>
+                <button type="button" name="back" class="btn btn-primary" ng-click="abftree.editxjjg()"> 编辑
+                </button>
+                <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletexjjg()"> 删除
+                </button>
+            </div>
+        </div>
+        <!--下级机构end-->
+    </div>
+</div>

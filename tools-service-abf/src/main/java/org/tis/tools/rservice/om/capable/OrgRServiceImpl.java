@@ -743,6 +743,12 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 					OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, BasicUtil.wrap(orgCode), "机构代码{0}对应的机构不存在");
 		}
 		OmOrg org = orgList.get(0);
+		Date enddate = org.getEndDate();
+		Date now = new Date();
+		if(now.after(enddate)){
+			throw new OrgManagementException(
+					OMExceptionCodes.ORG_IS_RUN_OUT, BasicUtil.wrap(orgCode), "机构代码{0}对应的机构已经过期失效");
+		}
 		org.setOrgStatus(OMConstants.ORG_STATUS_RUNNING);// 更改状态
 		omOrgService.update(org);
 		return null;
@@ -770,6 +776,9 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		OmOrg org = orgList.get(0);
 		WhereCondition wc_ext = new WhereCondition(); // 用于查询下属机构
 		// TODO  不完整！！！！！！！！！！！！！！！！！！！
+		//暂时直接停用
+		org.setOrgStatus(OMConstants.ORG_STATUS_STOP);
+		omOrgService.update(org);
 		return null;
 	}
 
@@ -778,8 +787,31 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 */
 	@Override
 	public OmOrg cancelOrg(String orgCode) throws OrgManagementException {
-		// TODO Auto-generated method stub
-		return null;
+		// 校验传入参数
+		if(StringUtil.isEmpty(orgCode)) {
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap(orgCode));
+		}
+		// 查询机构信息
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("ORG_CODE", orgCode);
+		List<OmOrg> orgList = omOrgService.query(wc);
+		// 查询是否存在
+		if(orgList.size() != 1) {
+			throw new OrgManagementException(
+					OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, BasicUtil.wrap(orgCode), "机构代码{0}对应的机构不存在");
+		}
+		OmOrg org = orgList.get(0);
+		//查询子机构状态
+		List<OmOrg> childorgList = queryAllChilds(orgCode);
+		for(OmOrg og:childorgList){
+			if(og.getOrgStatus().equals(OMConstants.ORG_STATUS_RUNNING)){
+				throw new OrgManagementException(OMExceptionCodes.ORG_CHILDS_IS_RUNNING);
+			}
+		}
+		//进行注销操作
+		org.setOrgStatus(OMConstants.ORG_STATUS_CANCEL);
+		omOrgService.update(org);
+		return org;
 	}
 
 	/* (non-Javadoc)
@@ -886,11 +918,26 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 
 	/* (non-Javadoc)
 	 * @see org.tis.tools.rservice.om.capable.IOrgRService#queryAllChilds(java.lang.String)
+	 * 查询所有子机构
 	 */
 	@Override
 	public List<OmOrg> queryAllChilds(String orgCode) {
-		// TODO Auto-generated method stub
-		return null;
+		// 校验传入参数
+		if(StringUtil.isEmpty(orgCode)) {
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, "机构代码为空");
+		}
+		//获取GUID
+		String guid = queryGuidbyorgCode(orgCode);
+		WhereCondition wc = new WhereCondition();
+		wc.andFullLike("ORG_SEQ",guid);
+		List<OmOrg> orgList = omOrgService.query(wc);
+		for(OmOrg org:orgList){
+			if(org.getGuid().equals(guid)){
+				orgList.remove(org);
+				break;
+			}
+		}
+		return orgList;
 	}
 
 	/* (non-Javadoc)
@@ -907,5 +954,19 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		
 		return omOrgServiceExt.queryAllRoot() ;
 	}
-
+	/**
+	 * 通过ORGCODE查询GUID
+	 * @return
+	 */
+	public String queryGuidbyorgCode(String orgCode){
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("ORG_CODE", orgCode);
+		List<OmOrg> list = omOrgService.query(wc);
+		if(list.size() != 1){
+			throw new OrgManagementException(
+					OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, BasicUtil.wrap(orgCode), "机构代码{0}对应的机构不存在");
+		}
+		String guid = list.get(0).getGuid();
+		return guid;
+	}
 }

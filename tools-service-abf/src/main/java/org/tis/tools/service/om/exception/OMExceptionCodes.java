@@ -121,7 +121,35 @@ public class OMExceptionCodes {
 	 * 不能直接修改机构状态
 	 */
 	public static final String FAILURE_WHEN_UPDATE_POS_STATUS= R_EX_CODE("0021");
-
+	/**
+	 * 存在正常状态的子机构
+	 */
+	public static final String ORG_CHILDS_IS_RUNNING= R_EX_CODE("0022");
+	/**
+	 * 机构已经过期无法重启
+	 */
+	public static final String ORG_IS_RUN_OUT= R_EX_CODE("0023");
+	/**
+	 * 存在正常状态的子岗位
+	 */
+	public static final String POSITION_CHILDS_IS_RUNNING= R_EX_CODE("0024");
+	/**
+	 * 机构处于运行状态不可删除
+	 */
+	public static final String POSITION_RUNNING_CANT_DELETE= R_EX_CODE("0025");
+	/**
+	 * 缺少新增职务的必要参数
+	 */
+	public static final String LAKE_PARMS_FOR_CREAT_DUTY = R_EX_CODE("0026");
+	/**
+	 *新增根职务失败
+	 */
+	public static final String FAILURE_WHRN_CREATE_ROOT_DUTY = R_EX_CODE("0027");
+	/**
+	 * 职务代码对应的职务不存在
+	 */
+	public static final String DUTY_NOT_EXIST_BY_DUTY_CODE = R_EX_CODE("0028");
+	
 	/**
 	 * 以烤串方式拼接异常码
 	 * 
