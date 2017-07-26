@@ -641,7 +641,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_MENU,
+					ACExceptionCodes.FAILURE_WHEN_DELETE_AC_MENU,
 					BasicUtil.wrap(e.getCause().getMessage()), "删除菜单失败！{0}");
 		}
 	}
@@ -663,7 +663,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_MENU,
+					ACExceptionCodes.FAILURE_WHEN_UPDATE_AC_MENU,
 					BasicUtil.wrap(e.getCause().getMessage()), "更新菜单失败！{0}");
 		}
 	}
@@ -816,7 +816,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_OPERATOR,
+					ACExceptionCodes.FAILURE_WHEN_CREATE_AC_OPERATOR,
 					BasicUtil.wrap(e.getCause().getMessage()), "增加操作员失败！{0}");
 		}
 	}
@@ -840,7 +840,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_OPERATOR,
+					ACExceptionCodes.FAILURE_WHEN_DELETE_AC_OPERATOR,
 					BasicUtil.wrap(e.getCause().getMessage()), "删除操作员失败！{0}");
 		}
 	}
@@ -862,7 +862,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_OPERATOR,
+					ACExceptionCodes.FAILURE_WHEN_UPDATE_AC_OPERATOR,
 					BasicUtil.wrap(e.getCause().getMessage()), "更新操作员失败！{0}");
 		}
 	}
