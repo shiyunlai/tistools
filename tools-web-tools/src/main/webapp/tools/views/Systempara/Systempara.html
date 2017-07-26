@@ -1,4 +1,3 @@
-<!--序号资源表管理-->
 <div class="page-bar ng-scope" style="border-bottom: 1px solid #e7ecf1;">
     <ul class="page-breadcrumb">
         <li>
@@ -6,14 +5,14 @@
             <i class="fa fa-circle"></i>
         </li>
         <li>
-            <a href="#">序号资源表管理</a>
+            <a href="#">系统运行参数</a>
         </li>
     </ul>
 </div>
 <h3 class="page-title">
     <small></small>
 </h3>
-<div class="row" ng-form="bigform">
+<div class="row" ng-form="sysform">
     <div class="col-md-12" >
         <div class="portlet light">
             <div class="portlet-body">
@@ -22,11 +21,11 @@
                      ui-grid-selection ui-grid-resize-columns>
                 </div>
                 <div class="actions btn-set" style="float: right; margin-top:12px;">
-                    <button type="button" name="back" class="btn btn-primary" ng-click="numresReset()"> 重置序号
+                    <button type="button" name="back" class="btn btn-primary" ng-click="sys.add()"> 新增
                     </button>
-                    <button type="button" name="back" class="btn btn-primary" ng-click="numresEdit()">  修改序号
+                    <button type="button" name="back" class="btn btn-primary" ng-click="sys.edit(4)">  修改
                     </button>
-                    <button type="button" name="back" class="btn btn-danger" ng-click="numreslook()"> 查看参数
+                    <button type="button" name="back" class="btn btn-danger" ng-click="sys.del()"> 删除
                     </button>
                 </div>
             </div>

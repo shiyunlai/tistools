@@ -741,6 +741,12 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             data: {pageTitle: '序号资源表'},
             controller:"numres_controller"
         })
+        .state("Systempara",{
+            url:"/Systempara.html",
+            templateUrl:"views/Systempara/Systempara.html",
+            data: {pageTitle: '序号资源表'},
+            controller:"systempara_controller"
+        })
 }]);
 
 /* Init global settings and run the app */
