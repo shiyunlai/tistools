@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 业务字典
- * 模型文件 ： E:\github\soft\tistools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：sys
  * 模型：SYS_DICT 业务字典
  *
@@ -56,6 +56,10 @@ public class SysDict implements Serializable {
 	public static final String COLUMN_USE_FOR_NAME = "use_for_name" ; 
 	/** SEQNO ：顺序号<br/><br/>顺序号，从0开始排，按小到大排序 */
 	public static final String COLUMN_SEQNO = "seqno" ; 
+	/** SQL_FILTER ：过滤条件<br/><br/> */
+	public static final String COLUMN_SQL_FILTER = "sql_filter" ; 
+	/** FROM_TYPE ：字典项来源类型<br/><br/>来源类型:0:来自字典项 1:来自单表 2:多表或视图 */
+	public static final String COLUMN_FROM_TYPE = "from_type" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
@@ -90,6 +94,12 @@ public class SysDict implements Serializable {
 	
 	/** 字段类型：decimal<br/>字段名：顺序号<br/>描述：顺序号，从0开始排，按小到大排序 */
 	private BigDecimal seqno ;
+	
+	/** 字段类型：varchar<br/>字段名：过滤条件<br/>描述： */
+	private String sqlFilter ;
+	
+	/** 字段类型：char<br/>字段名：字典项来源类型<br/>描述：来源类型:0:来自字典项 1:来自单表 2:多表或视图 */
+	private String fromType ;
 	
 	
 	/**
@@ -302,6 +312,44 @@ public class SysDict implements Serializable {
 			return new BigDecimal(0d);
 		}
 		return seqno;
+    }
+	
+	/**
+	 * Set the 过滤条件.
+	 * 
+	 * @param sqlFilter
+	 *            过滤条件
+	 */
+	public void setSqlFilter(String sqlFilter) {
+ 		this.sqlFilter = sqlFilter == null ? null : sqlFilter.trim() ;
+    }
+    
+    /**
+	 * Get the 过滤条件.
+	 * 
+	 * @return 过滤条件
+	 */
+	public String getSqlFilter(){
+		return this.sqlFilter ;
+    }
+	
+	/**
+	 * Set the 字典项来源类型.
+	 * 
+	 * @param fromType
+	 *            字典项来源类型
+	 */
+	public void setFromType(String fromType) {
+ 		this.fromType = fromType == null ? null : fromType.trim() ;
+    }
+    
+    /**
+	 * Get the 字典项来源类型.
+	 * 
+	 * @return 字典项来源类型
+	 */
+	public String getFromType(){
+		return this.fromType ;
     }
 	
 	public String toString(){
