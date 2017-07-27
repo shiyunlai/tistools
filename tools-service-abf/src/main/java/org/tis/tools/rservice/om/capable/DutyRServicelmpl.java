@@ -1,7 +1,9 @@
 package org.tis.tools.rservice.om.capable;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
@@ -18,17 +20,21 @@ import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmPosition;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.om.exception.DutyManagementException;
+import org.tis.tools.service.om.BOSHGenDutyCode;
 import org.tis.tools.service.om.OmDutyService;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
 
 public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 	@Autowired
 	OmDutyService omDutyService;
+	@Autowired
+	BOSHGenDutyCode boshGenDutyCode;
 
 	@Override
 	public String genDutyCode(String dutyType) throws ToolsRuntimeException {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String,String> parms = new HashMap<String,String>() ;
+		parms.put("dutyType", dutyType) ; 
+		return boshGenDutyCode.genDutyCode(parms);
 	}
 
 	@Override
@@ -176,6 +182,13 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 		return null;
 	}
 	
+	@Override
+	public List<OmDuty> queryAllDuty() {
+		WhereCondition wc = new WhereCondition();
+		List<OmDuty> list = omDutyService.query(wc);
+		return list;
+	}
+
 	@Override
 	public List<OmDuty> queryDutyByDutyType(String dutyType) {
 		// 验证传入参数

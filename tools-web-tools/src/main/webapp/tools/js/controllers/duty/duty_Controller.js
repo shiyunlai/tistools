@@ -1,7 +1,7 @@
 /**
  * Created by gaojie on 2017/7/26.
  */
-angular.module('MetronicApp').controller('duty_controller', function($rootScope, $scope,abftree_service, $http, $timeout,i18nService,filterFilter,uiGridConstants,$uibModal,$state) {
+angular.module('MetronicApp').controller('duty_controller', function($rootScope, $scope,duty_service, $http, $timeout,i18nService,filterFilter,uiGridConstants,$uibModal,$state) {
     $scope.$on('$viewContentLoaded', function () {
         // initialize core components
         App.initAjax();
@@ -22,6 +22,10 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
                         console.log(obj)
+                        openwindow($uibModal, 'views/org/enablecom_window.html', 'lg',
+                            function ($scope, $modalInstance) {
+
+                            })
                     }
                 }
             };
@@ -37,10 +41,24 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                         console.log(obj)
                         openwindow($uibModal, 'views/duty/addDuty_window.html', 'lg',
                             function ($scope, $modalInstance) {
-                                //创建机构实例
+                                //创建职务实例
                                 var subFrom = {};
                                 $scope.subFrom = subFrom;
-                                
+                                //首先生成职务代码,获取职务套别
+                                subFrom.dutyType = $scope.duty.item.dutyType;
+                                duty_service.initdutyCode(subFrom).then(function (data) {
+                                    console.log(data)
+                                    if(data.status == "success"){
+
+                                    }else{
+                                        toastr['error'](data.retMessage);
+                                    }
+                                })
+                                $scope.save = function () {
+                                    duty_service.addduty(subFrom).then(function (data) {
+                                        console.log(data);
+                                    })
+                                }
                                 $scope.cancel = function () {
                                     $modalInstance.dismiss('cancel');
                                 };
@@ -61,7 +79,7 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
         }
     }
 
-    //组织机构树
+    //组织职务树
     $("#dutytree").jstree({
         "core" : {
             "themes" : {
@@ -137,7 +155,7 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
         console.log(c);
         console.log(d);
     }).bind("move_node.jstree",function (e,data) {
-        if(confirm("确认要移动此机构吗?")){
+        if(confirm("确认要移动此职务吗?")){
             //TODO.
         }else{
             // data.inst.refresh(data.inst._get_parent(data.rslt.oc));
@@ -159,4 +177,30 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
         }
     });
 
+    //生成职务列表
+    var dutygrid = {};
+    $scope.dutygrid = dutygrid;
+    var com = [{ field: 'dutyCode', displayName: '职务代码', enableHiding: false},
+        { field: 'dutyName', displayName: '职务名称', enableHiding: false},
+        { field: 'dutyType', displayName: '职务类型', enableHiding: false},
+        { field: 'remark', displayName: '备注', enableHiding: false}
+    ]
+    $scope.dutygrid = initgrid($scope,dutygrid,filterFilter,com,true);
+    //拉取列表方法
+    var redutygrid = function () {
+        //调取所有职务信息
+        abftree_service.loadallduty().then(function (data) {
+            console.log(data.retMessage)
+            if(data.status == "success"){
+                $scope.dutygrid.data =  data.retMessage;
+                $scope.dutygrid.mydefalutData =  data.retMessage;
+                $scope.dutygrid.getPage(1,$scope.dutygrid.paginationPageSize);
+            }else{
+
+            }
+
+        })
+    }
+    //拉取列表
+    redutygrid();
 });

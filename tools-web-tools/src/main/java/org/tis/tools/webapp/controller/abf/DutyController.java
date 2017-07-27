@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.tis.tools.model.po.om.OmDuty;
 import org.tis.tools.rservice.om.capable.IDutyRService;
+import org.tis.tools.rservice.sys.capable.IDictRService;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.util.AjaxUtils;
 
@@ -30,6 +31,8 @@ import com.alibaba.fastjson.JSONObject;
 public class DutyController extends BaseController{
 	@Autowired
 	IDutyRService dutyRService;
+	@Autowired
+	IDictRService dictRService;
 	
 	/**
 	 * 展示职务树
@@ -76,6 +79,84 @@ public class DutyController extends BaseController{
 		}
 		return null;
 	}
+	
+	/**
+	 * 生成职务列表
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/loadallduty")
+	public String loadallduty(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// 收到请求
+			List<OmDuty> list = dutyRService.queryAllDuty();
+			AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list, "yyyy-MM-dd");
+		} catch (Exception e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, "查询树失败!");
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * 新增职务
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/addduty")
+	public String addduty(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			
+			AjaxUtils.ajaxJsonSuccessMessage(response, "新增成功!");
+		} catch (Exception e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, "查询树失败!");
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * 生成职务代码
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/initdutyCode")
+	public String initdutyCode(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			String dutyType = jsonObj.getString("dutyType");
+			String dutyCode = dutyRService.genDutyCode(dutyType);
+			AjaxUtils.ajaxJsonSuccessMessage(response, dutyCode);
+		} catch (Exception e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, "生成职务代码失败!");
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
 	
 	
 	/**

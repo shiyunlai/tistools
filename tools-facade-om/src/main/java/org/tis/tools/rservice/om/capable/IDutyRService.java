@@ -238,6 +238,10 @@ public interface IDutyRService {
 	 */
 	List<OmDuty> queryDutyByDutyType(String dutyType);
 	
+	/**
+	 * 加载所有职务
+	 */
+	List<OmDuty> queryAllDuty();
 	
 	
 	//FIXME 类似查询360全方位信息这种“大而全”的接口尽量避免， 应该结合前端响应式编程能力（RxJS），拆分为多个查询能力

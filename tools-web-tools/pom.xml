@@ -12,7 +12,20 @@
 	<version>${tools-web-tools-version}</version>
 	<packaging>war</packaging>
 	<name>tools-web-tools</name>
-
+	
+	<repositories>
+        <repository>
+            <id>tools_nexus</id>
+            <name>maven-public</name>
+            <url>http://139.196.145.67:8081/repository/maven-public/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
 	<properties>
 		<maven.test.skip>true</maven.test.skip>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
