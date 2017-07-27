@@ -13,7 +13,7 @@ MetronicApp.factory('duty_service',['$http', '$q', function ($http,$q) {
     }
     service.loadallduty = function () {
 
-        var res = $http.post(manurl + "/om/duty/loadallduty",null).then(function (response) {
+        var res = $http.post(manurl + "/om/duty/loadallduty").then(function (response) {
             return response.data;
         });
         return res;

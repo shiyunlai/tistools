@@ -38,7 +38,7 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 	}
 
 	@Override
-	public OmDuty createDuty(String dutyCode, String dutyName, String dutyType, String parentsDutyCode)
+	public OmDuty createDuty(String dutyCode, String dutyName, String dutyType, String parentsDutyCode,String reMark)
 			throws ToolsRuntimeException {
 		// 验证传入参数
 		if (StringUtil.isEmpty(dutyCode)) {
@@ -64,6 +64,9 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 			od.setGuidParents("");// 根职务
 			od.setIsleaf("Y");
 			od.setSubCount(new BigDecimal(0));
+			if (!StringUtil.isEmpty(reMark)) {
+				od.setRemark(reMark);
+			}
 			// 新增机构
 			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 				@Override
@@ -92,6 +95,9 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 			od.setDutySeq(parentod.getDutySeq()+"."+od.getGuid());
 			od.setIsleaf(CommonConstants.YES);
 			od.setSubCount(new BigDecimal("0"));
+			if (!StringUtil.isEmpty(reMark)) {
+				od.setRemark(reMark);
+			}
 			//更新父职务信息
 			parentod.setIsleaf(CommonConstants.NO);
 			parentod.setSubCount(parentod.getSubCount().add(new BigDecimal("1")));

@@ -2,13 +2,16 @@ package org.tis.tools.service.om;
 
 import java.util.Map;
 
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.tis.tools.rservice.om.exception.DutyManagementException;
 import org.tis.tools.service.base.SequenceService;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
 import org.tis.tools.spi.om.IDutyCodeGenerator;
 
+@Service
 public class BOSHGenDutyCode implements IDutyCodeGenerator{
 
 	@Autowired
@@ -33,7 +36,7 @@ public class BOSHGenDutyCode implements IDutyCodeGenerator{
 		// 机构等级
 		sb.append(dutyType) ;
 		sb.append(toSeqNO(sequenceService.getNextSeqNo(BOSHGenDutyCode.class.getName()))) ;//五位机构顺序号
-		return null;
+		return sb.toString();
 	}
 	
 	/**

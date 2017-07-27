@@ -69,7 +69,7 @@ public interface IDutyRService {
 	 * @return 新职务对象
 	 * @throws ToolsRuntimeException
 	 */
-	OmDuty createDuty(String dutyCode, String dutyName, String dutyType, String parentsDutyCode)
+	OmDuty createDuty(String dutyCode, String dutyName, String dutyType, String parentsDutyCode,String reMark)
 			throws ToolsRuntimeException;
 
 	/**

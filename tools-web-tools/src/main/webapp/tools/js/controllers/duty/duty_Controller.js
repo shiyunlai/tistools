@@ -9,7 +9,28 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
     //定义主题信息
     var duty = {};
     $scope.duty = duty;
-
+    var item = {};
+    $scope.duty.item = item;
+    //定义页签标识
+    var flag = {};
+    $scope.flag = flag;
+    //定义右侧页面切换标志
+    var tabflag = true;
+    $scope.tabflag = tabflag;
+    //导航节点信息
+    var title = "";
+    $scope.title = title;
+    //定义标签控制标识
+    var xqxx = false;
+    flag.xqxx = xqxx;
+    var xjzw = false;
+    flag.xjzw = xjzw;
+    var zwry = false;
+    flag.zwry = zwry;
+    var zwqx = false;
+    flag.zwqx = zwqx;
+    //ui-grid
+    i18nService.setCurrentLang("zh-cn");
     //自定义树右键菜单
     var items = function customMenu(node) {
         console.log(node);
@@ -21,7 +42,6 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                     "action": function (data) {
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
-                        console.log(obj)
                         openwindow($uibModal, 'views/org/enablecom_window.html', 'lg',
                             function ($scope, $modalInstance) {
 
@@ -38,31 +58,103 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                     "action": function (data) {
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
-                        console.log(obj)
+                        console.log(obj);
+                        var dutyType = obj.id;
                         openwindow($uibModal, 'views/duty/addDuty_window.html', 'lg',
                             function ($scope, $modalInstance) {
                                 //创建职务实例
                                 var subFrom = {};
                                 $scope.subFrom = subFrom;
                                 //首先生成职务代码,获取职务套别
-                                subFrom.dutyType = $scope.duty.item.dutyType;
+                                subFrom.dutyType = dutyType;
+                                console.log(subFrom)
                                 duty_service.initdutyCode(subFrom).then(function (data) {
                                     console.log(data)
                                     if(data.status == "success"){
-
+                                        subFrom.dutyCode = data.retMessage;
                                     }else{
                                         toastr['error'](data.retMessage);
                                     }
                                 })
                                 $scope.save = function () {
                                     duty_service.addduty(subFrom).then(function (data) {
-                                        console.log(data);
+                                        if(data.status == "success"){
+                                            toastr['success'](data.retMessage);
+                                            $("#dutytree").jstree().refresh();
+                                            redutygrid();
+                                            $scope.cancel();
+                                        }else{
+                                            toastr['error'](data.retMessage);
+                                        }
                                     })
                                 }
                                 $scope.cancel = function () {
                                     $modalInstance.dismiss('cancel');
                                 };
                         });
+                    }
+                },
+                "删除职务":{
+                    "id":"delete",
+                    "label":"删除职务",
+                    "action":function (data) {
+                        var inst = jQuery.jstree.reference(data.reference),
+                            obj = inst.get_node(data.reference);
+                        console.log(obj);
+                    }
+                }
+            };
+            return it;
+        }else {
+            var it = {
+                "新建菜单": {
+                    "id": "create",
+                    "label": "新增子职务",
+                    "action": function (data) {
+                        var inst = jQuery.jstree.reference(data.reference),
+                            obj = inst.get_node(data.reference);
+                        console.log(obj);
+                        if(obj.id.length == 2){
+                            var dutyType = obj.id;
+                            var guidParents = "";
+                        }else{
+                            var dutyType = obj.original.dutyType;
+                            var guidParents = obj.original.guid;
+                        }
+
+                        openwindow($uibModal, 'views/duty/addDuty_window.html', 'lg',
+                            function ($scope, $modalInstance) {
+                                //创建职务实例
+                                var subFrom = {};
+                                $scope.subFrom = subFrom;
+                                //首先生成职务代码,获取职务套别
+                                subFrom.dutyType = dutyType;
+                                subFrom.guidParents = guidParents;
+                                console.log(subFrom)
+                                duty_service.initdutyCode(subFrom).then(function (data) {
+                                    console.log(data)
+                                    if(data.status == "success"){
+                                        subFrom.dutyCode = data.retMessage;
+                                    }else{
+                                        toastr['error'](data.retMessage);
+                                    }
+                                })
+                                $scope.save = function () {
+                                    duty_service.addduty(subFrom).then(function (data) {
+                                        if(data.status == "success"){
+                                            toastr['success'](data.retMessage);
+                                            $("#dutytree").jstree().refresh();
+                                            redutygrid();
+                                            $scope.cancel();
+                                        }else{
+                                            toastr['error'](data.retMessage);
+                                        }
+                                    })
+                                }
+                                $scope.cancel = function () {
+                                    $modalInstance.dismiss('cancel');
+                                };
+                            });
                     }
                 },
                 "删除职务":{
@@ -101,13 +193,30 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                     subFrom.positionCode = "";
                 }
 
-                abftree_service.loadmaintree(subFrom).then(function (datas) {
+                duty_service.loadmaintree(subFrom).then(function (datas) {
                     console.log(datas)
                     var data = datas.retMessage;
-                    for(var i = 0;i<data.length;i++){
-                        data[i].children = true;
-                        data[i].icon = 'fa fa-users icon-state-info icon-lg'
+                    if(!isNull(data[0].itemName)){
+                        for(var i = 0;i<data.length;i++){
+                            data[i].id = data[i].itemValue;
+                            data[i].text = data[i].itemName;
+                            data[i].children = true;
+                            data[i].icon = 'fa fa-users icon-state-info icon-lg'
+                        }
+                    }else if(isNull(data[0].text)){
+                        for(var i = 0;i<data.length;i++){
+                            data[i].id = data[i].dutyCode;
+                            data[i].text = data[i].dutyName;
+                            data[i].children = true;
+                            data[i].icon = 'fa fa-users icon-state-info icon-lg'
+                        }
+                    }else{
+                        for(var i = 0;i<data.length;i++){
+                            data[i].children = true;
+                            data[i].icon = 'fa fa-users icon-state-info icon-lg'
+                        }
                     }
+
 
                     $scope.jsonarray = angular.copy(data);
                     callback.call(this, $scope.jsonarray);
@@ -168,15 +277,36 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
     }).bind("select_node.jstree", function (e, data) {
         if(typeof data.node !== 'undefined'){//拿到结点详情
             // console.log(data.node.original.id.indexOf("@"));
-            $scope.duty.item = {};
+            $scope.duty.item = data.node.original;
             console.log(data.node.original);
-            if(data.node.original.id.indexOf("POSIT") == 0) {
-
+            $scope.title = data.node.text;
+            if(data.node.id.length == 2 || data.node.id == "00000") {
+                $scope.tabflag = true;
+            }else{
+                $scope.tabflag = false;
+                for (var i in $scope.flag){
+                    flag[i] = false;
+                }
+                $scope.flag.xqxx = true;
             }
             ($scope.$$phase)?null: $scope.$apply();
         }
     });
-
+    //页签切换
+    duty.loaddata = function (num) {
+        if(num == 0){
+            //基本信息
+            for (var i in flag){
+                flag[i] = false;
+            }
+            flag.xqxx = true;
+            //TODO
+        }
+    }
+    
+    
+    
+    
     //生成职务列表
     var dutygrid = {};
     $scope.dutygrid = dutygrid;
@@ -189,7 +319,7 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
     //拉取列表方法
     var redutygrid = function () {
         //调取所有职务信息
-        abftree_service.loadallduty().then(function (data) {
+        duty_service.loadallduty().then(function (data) {
             console.log(data.retMessage)
             if(data.status == "success"){
                 $scope.dutygrid.data =  data.retMessage;

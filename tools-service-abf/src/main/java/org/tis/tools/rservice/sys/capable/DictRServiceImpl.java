@@ -179,4 +179,52 @@ public class DictRServiceImpl implements IDictRService {
 		return sysDictServiceExt.getDictItem(dictKey, itemValue) ; 
 	}
 
+	@Override
+	public void deleteDict(String arg0) throws SysManagementException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteDictItem(String arg0) throws SysManagementException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editSysDict(SysDict arg0) throws SysManagementException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editSysDictItem(SysDictItem arg0) throws SysManagementException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public SysDict querySysDictByGuid(String arg0) throws SysManagementException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<SysDictItem> querySysDictItems(String arg0) throws SysManagementException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public SysDictItem querySysDictItemsByGuid(String arg0) throws SysManagementException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<SysDict> querySysDicts() throws SysManagementException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

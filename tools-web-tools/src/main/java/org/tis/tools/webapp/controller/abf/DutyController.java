@@ -14,6 +14,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.tis.tools.model.po.om.OmDuty;
+import org.tis.tools.model.po.sys.SysDict;
+import org.tis.tools.model.po.sys.SysDictItem;
 import org.tis.tools.rservice.om.capable.IDutyRService;
 import org.tis.tools.rservice.sys.capable.IDictRService;
 import org.tis.tools.webapp.controller.BaseController;
@@ -61,14 +63,9 @@ public class DutyController extends BaseController{
 				list.add(map);
 				AjaxUtils.ajaxJsonSuccessMessage(response, list);
 			}else if ("00000".equals(id)) {
-				List<Map> list = new ArrayList<>();
-				for(int i = 1;i<6;i++){
-					Map map = new HashMap<>();
-					map.put("text", "套别"+i);
-					map.put("id", "0"+i);
-					list.add(map);
-				}
-				AjaxUtils.ajaxJsonSuccessMessage(response, list);
+				SysDict queryDict = dictRService.queryDict("DICT_OM_DUTYTYPE");
+				List<SysDictItem> querySysDictItems = dictRService.querySysDictItems(queryDict.getGuid());
+				AjaxUtils.ajaxJsonSuccessMessage(response, querySysDictItems);
 			}else if(id.length() == 2){
 				List<OmDuty> list = dutyRService.queryDutyByDutyType(id);
 				AjaxUtils.ajaxJsonSuccessMessage(response, list);
@@ -91,7 +88,7 @@ public class DutyController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/loadallduty")
-	public String loadallduty(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+	public String loadallduty(ModelMap model, String age, HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
 			// 收到请求
@@ -120,7 +117,12 @@ public class DutyController extends BaseController{
 		try {
 			// 收到请求
 			JSONObject jsonObj = JSONObject.parseObject(content);
-			
+			String dutyCode = jsonObj.getString("dutyCode");
+			String dutyName = jsonObj.getString("dutyName");
+			String dutyType = jsonObj.getString("dutyType");
+			String remark = jsonObj.getString("remark");
+			String guidParents = jsonObj.getString("guidParents");
+			dutyRService.createDuty(dutyCode, dutyName, dutyType, guidParents, remark);
 			AjaxUtils.ajaxJsonSuccessMessage(response, "新增成功!");
 		} catch (Exception e) {// TODO
 			AjaxUtils.ajaxJsonErrorMessage(response, "查询树失败!");
@@ -155,6 +157,7 @@ public class DutyController extends BaseController{
 		}
 		return null;
 	}
+	
 	
 	
 	
