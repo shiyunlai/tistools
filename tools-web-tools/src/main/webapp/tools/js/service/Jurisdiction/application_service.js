@@ -156,6 +156,7 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     };
+<<<<<<< HEAD
 
     //根据功能的GUID查询行为类型定义
     service.queryBhvtypeDefByFunc = function (subFrom) {
@@ -172,24 +173,62 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     };
+=======
+>>>>>>> master
 
+    //根据功能的GUID查询行为类型定义
+    service.queryBhvtypeDefByFunc = function (subFrom) {
+        var res = $http.post(manurl + "/AcAppController/queryBhvtypeDefByFunc",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    };
+
+<<<<<<< HEAD
+    //查询功能下所有行为类型
+    service.queryAllBhvDefForFunc = function (subFrom) {
+        var res = $http.post(manurl + "/AcAppController/queryAllBhvDefForFunc",subFrom).then(function (response) {
+=======
+    //根据类型的GUID查询行为
+    service.queryBhvDefByBhvType = function (subFrom) {
+        var res = $http.post(manurl + "/AcAppController/queryBhvDefByBhvType",subFrom).then(function (response) {
+>>>>>>> master
+            return response.data;
+        });
+        return res;
+    };
+
+<<<<<<< HEAD
+    //删除功能对应的行为类型
+    service.delFuncBhvType = function (subFrom) {
+        var res = $http.post(manurl + "/AcAppController/delFuncBhvType",subFrom).then(function (response) {
+=======
 
     //查询功能下所有行为类型
     service.queryAllBhvDefForFunc = function (subFrom) {
         var res = $http.post(manurl + "/AcAppController/queryAllBhvDefForFunc",subFrom).then(function (response) {
+>>>>>>> master
             return response.data;
         });
         return res;
     };
 
+<<<<<<< HEAD
+    //删除功能对应的行为定义
+    service.delFuncBhvDef = function (subFrom) {
+        var res = $http.post(manurl + "/AcAppController/delFuncBhvDef",subFrom).then(function (response) {
+=======
     //删除功能对应的行为类型
     service.delFuncBhvType = function (subFrom) {
         var res = $http.post(manurl + "/AcAppController/delFuncBhvType",subFrom).then(function (response) {
+>>>>>>> master
             return response.data;
         });
         return res;
     };
 
+<<<<<<< HEAD
+=======
     //删除功能对应的行为定义
     service.delFuncBhvDef = function (subFrom) {
         var res = $http.post(manurl + "/AcAppController/delFuncBhvDef",subFrom).then(function (response) {
@@ -198,5 +237,22 @@ MetronicApp.factory('application_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
+    //开启应用
+    service.enableApp = function (subFrom) {
+        var res = $http.post(manurl + "/AcAppController/enableApp",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    };
+
+    //关闭应用
+    service.disableApp = function (subFrom) {
+        var res = $http.post(manurl + "/AcAppController/disableApp",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    };
+
+>>>>>>> master
     return service;
 }]);

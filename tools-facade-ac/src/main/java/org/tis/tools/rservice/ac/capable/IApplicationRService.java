@@ -3,6 +3,7 @@
  */
 package org.tis.tools.rservice.ac.capable;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -453,5 +454,18 @@ public interface IApplicationRService {
 	 * @param bhvDefGuid
 	 */
 	public void delFuncBhvDef(String funcGuid, List<String> bhvDefGuid);
+
+	/**
+	 * 开通应用
+	 * @param appGuid
+	 * @param openDate
+	 */
+	public void enableApp(String appGuid, Date openDate);
+
+	/**
+	 * 关闭应用
+	 * @param appGuid
+	 */
+	public void disableApp(String appGuid);
 
 }

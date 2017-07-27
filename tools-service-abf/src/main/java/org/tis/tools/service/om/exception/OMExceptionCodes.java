@@ -78,7 +78,6 @@ public class OMExceptionCodes {
 	 * 新增子节点机构失败
 	 */
 	public static final String FAILURE_WHEN_CREATE_CHILD_ORG = R_EX_CODE("0011");
-
 	/**
 	 * 更新父节点机构失败
 	 */

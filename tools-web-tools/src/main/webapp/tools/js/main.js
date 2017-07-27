@@ -17,7 +17,6 @@ var MetronicApp = angular.module("MetronicApp", [
     'ui.grid.edit',
     'ui.grid.pagination',
     'ui.grid.resizeColumns'
-
 ]);
 
 function action(bdy){
@@ -188,11 +187,36 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', function($scope
  ***/
 
 /* Setup Layout Part - Header */
-MetronicApp.controller('HeaderController', ['$scope', function($scope) {
+MetronicApp.controller('HeaderController', ['$scope','filterFilter','$uibModal', function($scope,filterFilter,$uibModal) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
         Demo.init();
     });
+    //个人信息页面
+    $scope.information = function(){
+        openwindow($uibModal, 'views/landinginfor/personalinfor.html','lg',
+            function ($scope, $modalInstance) {
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            }
+        )
+    }
+    //修改密码页面
+    $scope.improved = function(){
+        openwindow($uibModal, 'views/landinginfor/Improved.html','lg',
+            function ($scope, $modalInstance) {
+                $scope.add = function(item){//保存新增的函数
+                    toastr['success']("修改成功！");
+                    $modalInstance.close();
+                }
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            }
+        )
+    }
+
 }]);
 
 /* Setup Layout Part - Sidebar */
@@ -717,11 +741,19 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             data: {pageTitle: '序号资源表'},
             controller:"numres_controller"
         })
+
         .state("duty",{
             url:"/duty.html",
             templateUrl:"views/duty/duty.html",
             data: {pageTitle: '职务定义'},
             controller:"duty_controller"
+        })
+        .state("Systempara",{
+            url:"/Systempara.html",
+            templateUrl:"views/Systempara/Systempara.html",
+            data: {pageTitle: '序号资源表'},
+            controller:"systempara_controller"
+
         })
 }]);
 

@@ -27,7 +27,7 @@ public interface ApplicationMapper{
 	
 	/**
 	 * 查询功能(AC_FUNC)
-	 * @param guid 条件
+	 * @param wc WhereCondition条件
 	 * @return 满足条件的记录
 	 */
 	public List<AcFuncVo> queryAcFuncVo(WhereCondition wc);

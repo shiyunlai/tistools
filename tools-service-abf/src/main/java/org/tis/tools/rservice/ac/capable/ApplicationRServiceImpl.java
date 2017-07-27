@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.util.*;
 
 import org.apache.commons.collections.ListUtils;
+import org.codehaus.jackson.map.Deserializers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
@@ -250,7 +251,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		} else {
 			acFuncgroup.setGuidParents(guidParents);
 			WhereCondition wc = new WhereCondition();
-			wc.andEquals("GUID_APP", guidApp);
+			wc.andEquals("GUID", guidParents);
 			List<AcFuncgroup> list = acFuncgroupService.query(wc);
 			String parentSeq = list.get(0).getFuncgroupSeq();
 			funcgroupSeq = parentSeq + "." + guid;
@@ -426,6 +427,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		try {
 			WhereCondition wc =new WhereCondition();
 			wc.andEquals("GUID_PARENTS", guidParent);
+			wc.setOrderBy("GROUP_LEVEL");
 			acFuncList = acFuncgroupService.query(wc );
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -492,7 +494,6 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	/**
 	 * 更新功能(AC_FUNC)
 	 * @param acFunc 功能
-	 * @param acFuncResource 功能对应资源
 	 */
 	@Override
 	public void updateAcFunc(AcFunc acFunc) throws AppManagementException {
@@ -1075,7 +1076,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	/**
 	 * 删除行为类型(AC_BHVTYPE_DEF)
 	 * 
-	 * @param acBhvtypeDef 行为类型
+	 * @param guid 行为类型
 	 */
 	@Override
 	public void functypeDel(String guid) throws AppManagementException{
@@ -1120,8 +1121,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 
 	/**
 	 * 查询行为类型(AC_BHVTYPE_DEF)
-	 * 
-	 * @param acBhvtypeDef 行为类型
+	 *
 	 * 返回list
 	 */
 	@Override
@@ -1489,6 +1489,60 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHEN_CREATE_AC_FUNC_BHV,
 					BasicUtil.wrap(e.getCause().getMessage()), "删除功能行为定义失败！{0}");
+		}
+	}
+
+	/**
+	 * 开通应用
+	 *
+	 * @param appGuid
+	 * @param openDate
+	 */
+	@Override
+	public void enableApp(String appGuid, Date openDate) {
+		// 校验传入参数
+		if(StringUtil.isEmpty(appGuid)) {
+			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
+		}
+		if(null == openDate) {
+			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("openDate"));
+		}
+		try {
+			AcApp app = new AcApp();
+			app.setIsopen(CommonConstants.YES);//设置开通状态为YES
+			app.setOpenDate(openDate); //设置开通时间
+			acAppService.updateByCondition(
+					new WhereCondition().andEquals("GUID", appGuid), app);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHEN_ENABLE_ACAPP,
+					BasicUtil.wrap(e.getCause().getMessage()));
+		}
+	}
+
+	/**
+	 * 关闭应用
+	 *
+	 * @param appGuid
+	 */
+	@Override
+	public void disableApp(String appGuid) {
+		// 校验传入参数
+		if(StringUtil.isEmpty(appGuid)) {
+			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
+		}
+		try {
+			AcApp app = new AcApp();
+			app.setIsopen(CommonConstants.NO);//设置开通状态为YES
+			app.setOpenDate(null); //设置开通时间为空
+			acAppService.updateByCondition(
+					new WhereCondition().andEquals("GUID", appGuid), app);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHEN_DISABLE_ACAPP,
+					BasicUtil.wrap(e.getCause().getMessage()));
 		}
 	}
 }
