@@ -76,19 +76,19 @@
     	UPDATE SYS_DICT_ITEM 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_dict != null" >
-        	guid_dict = #{domain.guidDict,jdbcType=VARCHAR}
+		<if test="domain.guidDict != null" >
+        	guid_dict = #{domain.guidDict,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.item_name != null" >
-        	item_name = #{domain.itemName,jdbcType=VARCHAR}
+		<if test="domain.itemName != null" >
+        	item_name = #{domain.itemName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.item_value != null" >
-        	item_value = #{domain.itemValue,jdbcType=VARCHAR}
+		<if test="domain.itemValue != null" >
+        	item_value = #{domain.itemValue,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.send_value != null" >
-        	send_value = #{domain.sendValue,jdbcType=VARCHAR}
+		<if test="domain.sendValue != null" >
+        	send_value = #{domain.sendValue,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.seqno != null" >
         	seqno = #{domain.seqno,jdbcType=DECIMAL}

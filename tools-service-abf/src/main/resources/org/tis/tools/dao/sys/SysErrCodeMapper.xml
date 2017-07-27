@@ -64,15 +64,15 @@
     	UPDATE SYS_ERR_CODE 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.errcode_kind != null" >
-        	errcode_kind = #{domain.errcodeKind,jdbcType=CHAR}
+		<if test="domain.errcodeKind != null" >
+        	errcode_kind = #{domain.errcodeKind,jdbcType=CHAR},
       	</if>
-		<if test="domain.err_code != null" >
-        	err_code = #{domain.errCode,jdbcType=VARCHAR}
+		<if test="domain.errCode != null" >
+        	err_code = #{domain.errCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.err_msg != null" >
+		<if test="domain.errMsg != null" >
         	err_msg = #{domain.errMsg,jdbcType=VARCHAR}
       	</if>
 	    </set>
