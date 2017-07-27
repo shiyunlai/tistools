@@ -236,6 +236,16 @@ public class GUID {
 		return SequenceSimpleUtil.instance.GUID("DICTITEM");
 	}
 
+	/**
+	 * 取一个业务字典（SYS_RUN_CONFIG）的数据主键值
+	 *
+	 * @return
+	 */
+	public static String runConfig() {
+
+		return SequenceSimpleUtil.instance.GUID("RUNCONFIG");
+	}
+
 	
 
 	
