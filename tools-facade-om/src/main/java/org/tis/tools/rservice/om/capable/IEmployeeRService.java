@@ -232,7 +232,7 @@ public interface IEmployeeRService {
 	 * @return 修改后的员工信息
 	 * @throws ToolsRuntimeException
 	 */
-	OmEmployee updateEmployee(OmEmployee newEmployee) throws ToolsRuntimeException;
+	void updateEmployee(OmEmployee newEmployee) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -339,11 +339,46 @@ public interface IEmployeeRService {
 	 * 查询机构（orgCode）下所有人员信息（只返回直属人员，不包括子机构的人员）
 	 * </pre>
 	 * 
-	 * @param orgCode
+	 * @param orgcode
 	 *            机构代码
 	 * @param empCondition
 	 *            人员过滤条件
 	 * @return 从属于该机构的人员们
 	 */
 	List<OmEmployee> queryEmployeeByOrg(String orgCode, OmEmployee empCondition) ;
+	
+	/**
+	 * 查询不在指定机构 (ORGGUID) 下所有人员信息
+	 */
+	List<OmEmployee> queryEmployeeNotinGuid(String orgGuid);
+	
+	/**
+	 * 查询机构 (ORGGUID) 下所有人员信息（只返回直属人员，不包括子机构的人员）
+	 */
+	List<OmEmployee> queryEmployeeByGuid(String orgGuid);
+	
+	/**
+	 * 添加人员-机构关系表数据
+	 */
+	void insertEmpOrg(String orgGuid,String empGuid);
+	
+	/**
+	 * 删除人员-机构关系表数据
+	 */
+	void deleteEmpOrg(String orgGuid,String empGuid);
+
+	/**
+	 * 添加人员-机构关系表数据
+	 */
+	void insertEmpPosition(String positionGuid,String empGuid);
+	
+	/**
+	 * 删除人员-机构关系表数据
+	 */
+	void deleteEmpPosition(String positionGuid,String empGuid);
+	
+	/**
+	 * 查询所有人员信息
+	 */
+	List<OmEmployee> queryAllEmployyee();
 }

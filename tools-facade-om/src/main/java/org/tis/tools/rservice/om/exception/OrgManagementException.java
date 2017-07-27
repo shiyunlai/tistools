@@ -19,6 +19,10 @@ public class OrgManagementException extends ToolsRuntimeException {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	public OrgManagementException(){
+		
+	};
 
 	public OrgManagementException(String code) {
 		super(code);

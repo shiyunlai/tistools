@@ -339,11 +339,11 @@ public interface IGroupRService {
 	 * 查询工作组下（第一层）子工作组
 	 * </per>
 	 * 
-	 * @param groupCode
-	 *            工作组代码
+	 * @param parentsguid
+	 *            工作组父guid
 	 * @return 子工作组列表
 	 */
-	List<OmGroup> queryChildGroup(String groupCode);
+	List<OmGroup> queryChildGroup(String parentsguid);
 
 	/**
 	 * <per>

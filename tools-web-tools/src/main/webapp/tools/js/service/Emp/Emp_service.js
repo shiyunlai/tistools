@@ -4,42 +4,20 @@
 MetronicApp.factory('Emp_service',['$http', '$q', function ($http,$q) {
     var service={};
 
-    service.loadmaintree = function (subFrom) {
-
-        var res = $http.post(manurl + "/om/org/tree",subFrom).then(function (response) {
+    service.loadempgrid = function () {
+        var res = $http.post(manurl + "/om/emp/queryemployee",null).then(function (response) {
             return response.data;
         });
         return res;
     }
-    service.loadsearchtree = function (subFrom) {
-        console.log(subFrom)
-        var res = $http.post(manurl + "/om/org/search",subFrom).then(function (response) {
+    service.addemp = function (subFrom) {
+        var res = $http.post(manurl + "/om/emp/addemployee",subFrom).then(function (response) {
             return response.data;
         });
         return res;
     }
-    service.loadgwtree = function (subFrom) {
-        //todo
-        var res = $http.post(manurl + "/om/org/tree",subFrom).then(function (response) {
-            return response.data;
-        });
-        return res;
-    }
-    service.loademp = function (subFrom) {
-        //TODO
-    }
-    service.loadxjjg = function (subFrom) {
-        //TODO
-    }
-    service.loadqxxx = function (subFrom) {
-        //todo
-        var res = $http.post(manurl + "/om/org/test",subFrom).then(function (response) {
-            return response.data;
-        });
-        return res;
-    }
-    service.addorg = function (subFrom) {
-        var res = $http.post(manurl + "/om/org/add",subFrom).then(function (response) {
+    service.deletemp = function (subFrom) {
+        var res = $http.post(manurl + "/om/emp/deletemp",subFrom).then(function (response) {
             return response.data;
         });
         return res;

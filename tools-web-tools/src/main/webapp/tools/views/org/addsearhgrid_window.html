@@ -1,7 +1,7 @@
 <div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
     <div class="portlet-title">
         <div class="caption">
-            <span class="caption-subject font-green-sharp bold uppercase">新增{{title}}</span>
+            <span class="caption-subject font-green-sharp bold uppercase">{{title}}</span>
         </div>
         <div class="tools">
             <a href="javascript:;" class="remove" ng-click="cancel()">
@@ -10,10 +10,10 @@
     </div>
     <div class="portlet-body portlet light">
         <div ui-grid="commonGrid"
-             ui-grid-edit ui-grid-paginationt
+             ui-grid-edit ui-grid-pagination
              ui-grid-selection ui-grid-resize-columns></div>
         <div class="actions btn-set" style="float: right;">
-            <button type="button" name="back" class="btn btn-primary" ng-click=""> 保存
+            <button type="button" name="back" class="btn btn-primary" ng-click="add()"> 保存
             </button>
             <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
             </button>

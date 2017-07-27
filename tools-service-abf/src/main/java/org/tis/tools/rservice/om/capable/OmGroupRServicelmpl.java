@@ -1,6 +1,7 @@
 package org.tis.tools.rservice.om.capable;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -154,15 +155,42 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 	 * @return 新增的工作组对象
 	 */
 	@Override
-	public OmGroup createGroup(OmGroup newOmGroup) throws ToolsRuntimeException {
-		// TODO Auto-generated method stub
+	public OmGroup createGroup(OmGroup group) throws ToolsRuntimeException {
+		//查询父工作组信息
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("guid", group.getGuidParents());
+		List<OmGroup> parentsList = omGroupMapper.query(wc);
+		OmGroup parentsGp = parentsList.get(0);
+		String parentsGroupSeq = parentsGp.getGroupSeq();
 		// 补充信息
-		newOmGroup.setGuid(GUID.group());
+		group.setGuid(GUID.group());
 		//补充工作组状态
-		newOmGroup.setGroupStatus(OMConstants.GROUP_STATUS_RUNNING);
+		group.setGroupStatus(OMConstants.GROUP_STATUS_RUNNING);
 		//补充工作组层次
-		newOmGroup.setGroupLevel(new BigDecimal(1));
-		return null;
+		group.setGroupLevel(new BigDecimal(1));
+		group.setCreatetime(new Date());
+		group.setLastupdate(new Date());// 补充最近更新时间
+		group.setIsleaf(CommonConstants.YES);// 新增节点都先算叶子节点 Y
+		group.setSubCount(new BigDecimal(0));// 新增时子节点数为0
+		String newGroupSeq = parentsGroupSeq + "." + group.getGuid();
+		group.setGroupSeq(newGroupSeq);// 设置工作组序列,根工作组直接用guid
+		final OmGroup newGroup = group;		
+		// 新增机构
+				try {
+					group = transactionTemplate.execute(new TransactionCallback<OmGroup>() {
+						@Override
+						public OmGroup doInTransaction(TransactionStatus arg0) {
+							omGroupMapper.insert(newGroup);
+							return newGroup;
+						}
+					});
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new OrgManagementException(
+							OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
+							BasicUtil.wrap(e.getCause().getMessage()), "新增根节点工作组失败！{0}");
+				}
+				return group;
 	}
 
 	@Override
@@ -219,9 +247,12 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 	}
 
 	@Override
-	public List<OmGroup> queryChildGroup(String groupCode) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<OmGroup> queryChildGroup(String parentsguid) {
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("guid_parents", parentsguid);
+		List<OmGroup> list = omGroupMapper.query(wc);
+		SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
+		return list;
 	}
 
 	@Override
