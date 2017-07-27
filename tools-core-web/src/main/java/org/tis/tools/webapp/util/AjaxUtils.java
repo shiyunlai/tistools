@@ -12,7 +12,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONObject;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 import org.apache.log4j.Logger;
 
@@ -194,8 +195,8 @@ public class AjaxUtils {
      * @return null
      */
     public static String ajaxJson(HttpServletResponse response, Map<String, String> jsonMap) {
-        JSONObject jsonObject = JSONObject.fromObject(jsonMap);
-        return ajax(response, jsonObject.toString(), "text/html");
+        String jsonObject = JSON.toJSONString(jsonMap);
+        return ajax(response, jsonObject, "text/html");
     }
 
     /**
@@ -208,11 +209,11 @@ public class AjaxUtils {
         Map<String, String> jsonMap = new HashMap<String, String>();
         jsonMap.put(STATUS, WARN);
         jsonMap.put(MESSAGE, message);
-        JSONObject jsonObject = JSONObject.fromObject(jsonMap);
-        return ajax(response, jsonObject.toString(), "text/html");
+        String jsonString = JSON.toJSONString(jsonMap);
+        return ajax(response, jsonString, "text/html");
     }
 
- 
+
 
     /**
      * <p>Description: 输出JSON成功消息，返回null</p>
@@ -228,8 +229,8 @@ public class AjaxUtils {
         for(String s:param.keySet()){
             jsonMap.put(s, param.get(s));
         }
-        JSONObject jsonObject = JSONObject.fromObject(jsonMap);
-        return ajax(response, jsonObject.toString(), "text/html");
+        String jsonString = JSON.toJSONString(jsonMap);
+        return ajax(response, jsonString, "text/html");
     }
 
     /**
@@ -243,8 +244,8 @@ public class AjaxUtils {
         jsonMap.put(SUCCESS, "true");
         jsonMap.put(STATUS, KEEP_OPEN);
         jsonMap.put(MESSAGE, message);
-        JSONObject jsonObject = JSONObject.fromObject(jsonMap);
-        return ajax(response, jsonObject.toString(), "text/html");
+        String jsonString = JSON.toJSONString(jsonMap);
+        return ajax(response, jsonString, "text/html");
     }
 
     /**
@@ -256,10 +257,10 @@ public class AjaxUtils {
         Map<String, String> jsonMap = new HashMap<String, String>();
         jsonMap.put(STATUS, ERROR);
         jsonMap.put(MESSAGE, ERROR_MESSAGE);
-        JSONObject jsonObject = JSONObject.fromObject(jsonMap);
-        return ajax(response, jsonObject.toString(), "text/html");
+        String jsonString = JSON.toJSONString(jsonMap);
+        return ajax(response, jsonString, "text/html");
     }
-    
+
     /**
      * <p>Description: 输出JSON错误消息，返回null</p>
      * @param response HttpServletResponse对象
@@ -271,8 +272,8 @@ public class AjaxUtils {
     	jsonMap.put(STATUS, ERROR);
     	jsonMap.put(MESSAGE, extraMessage);
     	jsonMap.put(EXTRA_MESSAGE, extraMessage);
-    	JSONObject jsonObject = JSONObject.fromObject(jsonMap);
-    	return ajax(response, jsonObject.toString(), "text/html");
+        String jsonString = JSON.toJSONString(jsonMap);
+    	return ajax(response, jsonString, "text/html");
     }
 
     /**
@@ -285,11 +286,11 @@ public class AjaxUtils {
         response.setHeader("Cache-Control", "no-store");
         response.setDateHeader("Expires", 0);
     }
-    
+
     /**
      * <p>Description: 输出JSON成功消息，返回null</p>
      * @param response HttpServletResponse对象
-     * @param message 信息字符串
+     * @param args 信息字符串
      * @return null
      */
     public static String ajaxJsonSuccessMessage(HttpServletResponse response, Object... args) {
@@ -297,14 +298,29 @@ public class AjaxUtils {
         jsonMap.put(RETCODE, SUCCESSCODE);
         jsonMap.put(STATUS, SUCCESS);
         jsonMap.put(RETMESSAGE, args[0]);
-        JSONObject jsonObject = JSONObject.fromObject(jsonMap);
-        return ajax(response, jsonObject.toString(), "text/html");
+        String jsonString = JSON.toJSONString(jsonMap);
+        return ajax(response, jsonString, "text/html");
     }
-    
+
+    /**
+     * <p>Description: 输出格式化日期的JSON成功消息，返回null</p>
+     * @param response HttpServletResponse对象
+     * @param retMessage 信息字符串
+     * @return null
+     */
+    public static String ajaxJsonSuccessMessageWithDateFormat(HttpServletResponse response, Object retMessage, String format) {
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        jsonMap.put(RETCODE, SUCCESSCODE);
+        jsonMap.put(STATUS, SUCCESS);
+        jsonMap.put(RETMESSAGE, retMessage);
+        String jsonString = JSON.toJSONStringWithDateFormat(jsonMap, format);
+        return ajax(response, jsonString, "text/html");
+    }
+
     /**
      * <p>Description: 输出JSON错误消息，返回null</p>
      * @param response HttpServletResponse对象
-     * @param extraMessage 信息字符串
+     * @param args 信息字符串
      * @return null
      */
     public static String ajaxJsonErrorMessage(HttpServletResponse response, String code,Object... args) {
@@ -312,7 +328,8 @@ public class AjaxUtils {
     	jsonMap.put(RETCODE, code);
     	jsonMap.put(STATUS, ERROR);
     	jsonMap.put(RETMESSAGE, args[0]);
-    	JSONObject jsonObject = JSONObject.fromObject(jsonMap);
-    	return ajax(response, jsonObject.toString(), "text/html");
+        String jsonString = JSON.toJSONString(jsonMap);
+//        JSON.toJSONStringWithDateFormat(resultMap, "yyyy-MM-dd HH:mm:ss.SSS");
+    	return ajax(response, jsonString, "text/html");
     }
 }
