@@ -15,8 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.alibaba.fastjson.JSON;
+<<<<<<< HEAD
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+=======
+import com.alibaba.fastjson.JSONObject;
+>>>>>>> origin/feature-zzjg
 
 /**
  * <p>ClassName: AjaxUtils</p>
@@ -299,7 +303,7 @@ public class AjaxUtils {
         jsonMap.put(RETCODE, SUCCESSCODE);
         jsonMap.put(STATUS, SUCCESS);
         jsonMap.put(RETMESSAGE, args[0]);
-        String jsonString = JSON.toJSONString(jsonMap,SerializerFeature.WriteNullListAsEmpty);
+        String jsonString = JSON.toJSONString(jsonMap);
         return ajax(response, jsonString, "text/html");
     }
 
