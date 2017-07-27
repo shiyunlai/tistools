@@ -19,6 +19,8 @@
 	    	,use_for_key
 	    	,use_for_name
 	    	,seqno
+	    	,sql_filter
+	    	,from_type
 	    )
 	    VALUES 
 	    (
@@ -32,7 +34,9 @@
 			#{fromTable,jdbcType=VARCHAR},
 			#{useForKey,jdbcType=VARCHAR},
 			#{useForName,jdbcType=VARCHAR},
-			#{seqno,jdbcType=DECIMAL}
+			#{seqno,jdbcType=DECIMAL},
+			#{sqlFilter,jdbcType=VARCHAR},
+			#{fromType,jdbcType=CHAR}
   		)
  	</insert>
  	
@@ -70,7 +74,13 @@
 			use_for_name = #{useForName,jdbcType=VARCHAR},
 		</if>
 		<if test="seqno != null" >
-			seqno = #{seqno,jdbcType=DECIMAL}
+			seqno = #{seqno,jdbcType=DECIMAL},
+		</if>
+		<if test="sqlFilter != null" >
+			sql_filter = #{sqlFilter,jdbcType=VARCHAR},
+		</if>
+		<if test="fromType != null" >
+			from_type = #{fromType,jdbcType=CHAR}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -89,7 +99,9 @@
 		from_table = #{fromTable,jdbcType=VARCHAR},
 		use_for_key = #{useForKey,jdbcType=VARCHAR},
 		use_for_name = #{useForName,jdbcType=VARCHAR},
-		seqno = #{seqno,jdbcType=DECIMAL}
+		seqno = #{seqno,jdbcType=DECIMAL},
+		sql_filter = #{sqlFilter,jdbcType=VARCHAR},
+		from_type = #{fromType,jdbcType=CHAR}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -106,37 +118,43 @@
     	UPDATE SYS_DICT 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.dict_key != null" >
-        	dict_key = #{domain.dictKey,jdbcType=VARCHAR}
+		<if test="domain.dictKey != null" >
+        	dict_key = #{domain.dictKey,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.dict_type != null" >
-        	dict_type = #{domain.dictType,jdbcType=CHAR}
+		<if test="domain.dictType != null" >
+        	dict_type = #{domain.dictType,jdbcType=CHAR},
       	</if>
-		<if test="domain.dict_name != null" >
-        	dict_name = #{domain.dictName,jdbcType=VARCHAR}
+		<if test="domain.dictName != null" >
+        	dict_name = #{domain.dictName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.dict_desc != null" >
-        	dict_desc = #{domain.dictDesc,jdbcType=VARCHAR}
+		<if test="domain.dictDesc != null" >
+        	dict_desc = #{domain.dictDesc,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_parents != null" >
-        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR}
+		<if test="domain.guidParents != null" >
+        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.default_value != null" >
-        	default_value = #{domain.defaultValue,jdbcType=VARCHAR}
+		<if test="domain.defaultValue != null" >
+        	default_value = #{domain.defaultValue,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.from_table != null" >
-        	from_table = #{domain.fromTable,jdbcType=VARCHAR}
+		<if test="domain.fromTable != null" >
+        	from_table = #{domain.fromTable,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.use_for_key != null" >
-        	use_for_key = #{domain.useForKey,jdbcType=VARCHAR}
+		<if test="domain.useForKey != null" >
+        	use_for_key = #{domain.useForKey,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.use_for_name != null" >
-        	use_for_name = #{domain.useForName,jdbcType=VARCHAR}
+		<if test="domain.useForName != null" >
+        	use_for_name = #{domain.useForName,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.seqno != null" >
-        	seqno = #{domain.seqno,jdbcType=DECIMAL}
+        	seqno = #{domain.seqno,jdbcType=DECIMAL},
+      	</if>
+		<if test="domain.sqlFilter != null" >
+        	sql_filter = #{domain.sqlFilter,jdbcType=VARCHAR},
+      	</if>
+		<if test="domain.fromType != null" >
+        	from_type = #{domain.fromType,jdbcType=CHAR}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>
@@ -172,5 +190,7 @@
 		,use_for_key as useForKey
 		,use_for_name as useForName
 		,seqno as seqno
+		,sql_filter as sqlFilter
+		,from_type as fromType
 	</sql>
 </mapper>
