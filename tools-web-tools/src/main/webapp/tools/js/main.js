@@ -741,7 +741,6 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             data: {pageTitle: '序号资源表'},
             controller:"numres_controller"
         })
-
         .state("duty",{
             url:"/duty.html",
             templateUrl:"views/duty/duty.html",
@@ -753,7 +752,6 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             templateUrl:"views/Systempara/Systempara.html",
             data: {pageTitle: '序号资源表'},
             controller:"systempara_controller"
-
         })
 }]);
 

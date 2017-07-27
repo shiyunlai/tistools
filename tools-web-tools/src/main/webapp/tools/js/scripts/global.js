@@ -426,7 +426,6 @@ function getYYYYMMDD(){
 //add by gaojie
 //ui-grid init
 //thisobj--表ID,fun--返回data的方法,com--表列名,筛选配置项,bol--布尔值,是否多选.selection--自定义行选中
-
 function initgrid($scope, thisobj, filterFilter,com,bol,selection){
     thisobj = {
         data: [],
@@ -501,5 +500,6 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
 function FormatDate (strTime) {
     var date = new Date(strTime);
     return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+
 }
 

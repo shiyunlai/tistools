@@ -92,6 +92,7 @@ public class OMExceptionCodes {
 	 * 更新机构信息失败
 	 */
 	public static final String FAILURE_WHEN_UPDATE_ORG_APP = R_EX_CODE("0014");
+
 	/**
 	 * 缺少创建员工的必要信息
 	 */
@@ -148,7 +149,6 @@ public class OMExceptionCodes {
 	 * 职务代码对应的职务不存在
 	 */
 	public static final String DUTY_NOT_EXIST_BY_DUTY_CODE = R_EX_CODE("0028");
-	
 	/**
 	 * 以烤串方式拼接异常码
 	 * 
