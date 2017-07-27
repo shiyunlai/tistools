@@ -1,6 +1,7 @@
 package org.tis.tools.rservice.om.capable;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,12 +17,17 @@ import org.tis.tools.model.def.CommonConstants;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.po.ac.AcRole;
 import org.tis.tools.model.po.om.OmDuty;
+import org.tis.tools.model.po.om.OmEmpPosition;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmPosition;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.om.exception.DutyManagementException;
 import org.tis.tools.service.om.BOSHGenDutyCode;
 import org.tis.tools.service.om.OmDutyService;
+import org.tis.tools.service.om.OmEmpGroupService;
+import org.tis.tools.service.om.OmEmpPositionService;
+import org.tis.tools.service.om.OmEmployeeService;
+import org.tis.tools.service.om.OmPositionService;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
 
 public class DutyRServicelmpl extends BaseRService implements IDutyRService {
@@ -29,7 +35,13 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 	OmDutyService omDutyService;
 	@Autowired
 	BOSHGenDutyCode boshGenDutyCode;
-
+	@Autowired
+	OmPositionService omPositionService;
+	@Autowired
+	OmEmpPositionService omEmpPositionService;
+	@Autowired
+	OmEmployeeService omEmployeeService;
+	
 	@Override
 	public String genDutyCode(String dutyType) throws ToolsRuntimeException {
 		Map<String,String> parms = new HashMap<String,String>() ;
@@ -83,7 +95,7 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 			});
 		}else{//有父职务编号,新增子机构
 			//拉取父职务信息
-			OmDuty parentod = queryOmDutybyDutyCode(parentsDutyCode);
+			OmDuty parentod = queryByDutyCode(parentsDutyCode);
 			//新建子职务对象,补充对象
 			OmDuty od = new OmDuty();
 			od.setGuid(GUID.duty());
@@ -142,7 +154,16 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 
 	@Override
 	public OmDuty updateDuty(OmDuty omDuty) throws ToolsRuntimeException {
-		// TODO Auto-generated method stub
+		if (StringUtil.isEmpty(omDuty.getDutyCode())) {
+			throw new DutyManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("dutyCode"));
+		}
+		if (StringUtil.isEmpty(omDuty.getGuid())) {
+			throw new DutyManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("dutyGuid"));
+		}
+		if (StringUtil.isEmpty(omDuty.getDutyName())) {
+			throw new DutyManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("dutyName"));
+		}
+		omDutyService.update(omDuty);
 		return null;
 	}
 
@@ -152,7 +173,7 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 		if (StringUtil.isEmpty(dutyCode)) {
 			throw new DutyManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("dutyCode"));
 		}
-		OmDuty od = queryOmDutybyDutyCode(dutyCode);
+		OmDuty od = queryByDutyCode(dutyCode);
 		//删除操作,同时删除人员-职务关系表数据
 		//TODO
 		omDutyService.delete(od.getGuid());
@@ -160,27 +181,61 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 
 	@Override
 	public OmDuty queryByDutyCode(String dutyCode) {
-		// TODO Auto-generated method stub
-		return null;
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("DUTY_CODE", dutyCode);
+		List<OmDuty> odList = omDutyService.query(wc);
+		if(odList.size() != 1){
+			throw new DutyManagementException(OMExceptionCodes.DUTY_NOT_EXIST_BY_DUTY_CODE, BasicUtil.wrap(dutyCode));
+		}
+		return odList.get(0);
 	}
 
 	@Override
 	public List<OmDuty> queryChildByDutyCode(String dutyCode) {
-		// TODO Auto-generated method stub
-		return null;
+		if (StringUtil.isEmpty(dutyCode)) {
+			throw new DutyManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("dutyCode"));
+		}
+		OmDuty od = queryByDutyCode(dutyCode);
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("GUID", od.getGuidParents());
+		List<OmDuty> odList = omDutyService.query(wc);
+		return odList;
 	}
 
 	@Override
 	public List<OmPosition> queryPositionByDutyCode(String dutyCode) {
-		// TODO Auto-generated method stub
-		return null;
+		// 验证传入参数
+		if (StringUtil.isEmpty(dutyCode)) {
+			throw new DutyManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("dutyCode"));
+		}
+		OmDuty od = queryByDutyCode(dutyCode);
+		String dutyGuid = od.getGuid();
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("GUID_DUTY",dutyGuid);
+		List<OmPosition> opList = omPositionService.query(wc);
+		return opList;
 	}
 
 	@Override
 	public List<OmEmployee> quereyEmployeeByDutyCode(String dutyCode) {
-		// TODO Auto-generated method stub
-		return null;
+		List<OmPosition> opList = queryPositionByDutyCode(dutyCode);
+		List<String> guidList = new ArrayList<>();
+		for(OmPosition op: opList) {
+			guidList.add(op.getGuid());
+		}
+		WhereCondition wc = new WhereCondition();
+		wc.andIn("GUID_POSITION", guidList);
+		List<OmEmpPosition> oepList = omEmpPositionService.query(wc);
+		guidList.clear();
+		wc.clear();
+		for(OmEmpPosition oep: oepList) {
+			guidList.add(oep.getGuidEmp());
+		}
+		wc.andIn("GUID", guidList);
+		List<OmEmployee> empList = omEmployeeService.query(wc);
+		return empList;
 	}
+
 
 	@Override
 	public List<AcRole> quereyRoleByDutyCode(String dutyCode) {
@@ -207,13 +262,5 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 		return odList;
 	}
 
-	public OmDuty queryOmDutybyDutyCode(String dutyCode){
-		WhereCondition wc = new WhereCondition();
-		wc.andEquals("DUTY_CODE", dutyCode);
-		List<OmDuty> odList = omDutyService.query(wc);
-		if(odList.size() != 1){
-			throw new DutyManagementException(OMExceptionCodes.DUTY_NOT_EXIST_BY_DUTY_CODE, BasicUtil.wrap(dutyCode));
-		}
-		return odList.get(0);
-	}
+	
 }

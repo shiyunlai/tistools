@@ -221,6 +221,7 @@ public interface IDutyRService {
 	 * @return 员工记录
 	 */
 	List<OmEmployee> quereyEmployeeByDutyCode(String dutyCode);
+	
 
 	/**
 	 * <pre>

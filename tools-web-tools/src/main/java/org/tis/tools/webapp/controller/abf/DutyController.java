@@ -158,6 +158,31 @@ public class DutyController extends BaseController{
 		return null;
 	}
 	
+	/**
+	 * 通过职务套别查询职务
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/querydutybyType")
+	public String querydutybyType(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			String dutyType = jsonObj.getString("dutyType");
+			List<OmDuty> list = dutyRService.queryDutyByDutyType(dutyType);
+			AjaxUtils.ajaxJsonSuccessMessage(response,list);
+		} catch (Exception e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, "查询失败!");
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	
 	
