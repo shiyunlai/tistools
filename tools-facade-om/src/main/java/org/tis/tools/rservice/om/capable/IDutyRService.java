@@ -240,6 +240,11 @@ public interface IDutyRService {
 	List<OmDuty> queryDutyByDutyType(String dutyType);
 	
 	/**
+	 * 按业务套别分类职务,只查询根职务.用于树生成
+	 */
+	List<OmDuty> queryDutyByDutyTypeOnlyF(String dutyType);
+	
+	/**
 	 * 加载所有职务
 	 */
 	List<OmDuty> queryAllDuty();

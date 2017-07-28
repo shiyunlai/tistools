@@ -39,5 +39,33 @@ MetronicApp.factory('duty_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     }
+    service.querychild = function (subFrom) {
+
+        var res = $http.post(manurl + "/om/duty/querychild",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.queryempbudutyCode = function (subFrom) {
+
+        var res = $http.post(manurl + "/om/duty/queryempbudutyCode",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.deletedutyByCode = function (subFrom) {
+
+        var res = $http.post(manurl + "/om/duty/deletedutyByCode",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.updateDuty = function (subFrom) {
+
+        var res = $http.post(manurl + "/om/duty/updateDuty",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
     return service;
 }]);

@@ -55,17 +55,17 @@
                     <i class="green ace-icon fa fa-bars bigger-120"></i>职务基本信息
                 </a>
             </li>
-            <li ng-class="{true:'active',false:''}[flag.ygxx]">
+            <li ng-class="{true:'active',false:''}[flag.xjzw]">
                 <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xjzw]" ng-click="duty.loaddata(1)">
                     <i class="green ace-icon fa fa-bars bigger-120"></i>下级职务
                 </a>
             </li>
-            <li ng-class="{true:'active',false:''}[flag.xjjg]">
+            <li ng-class="{true:'active',false:''}[flag.zwry]">
                 <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.zwry]" ng-click="duty.loaddata(2)">
                     <i class="green ace-icon fa fa-bars bigger-120"></i>职务人员
                 </a>
             </li>
-            <li ng-class="{true:'active',false:''}[flag.qxxx]">
+            <li ng-class="{true:'active',false:''}[flag.zwqx]">
                 <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.zwqx]" ng-click="duty.loaddata(3)">
                     <i class="green ace-icon fa fa-bars bigger-120"></i>职务权限
                 </a>
@@ -78,11 +78,13 @@
                  ui-grid-edit ui-grid-pagination
                  ui-grid-selection ui-grid-resize-columns></div>
             <div class="actions btn-set" style="float: right;">
-                <button type="button" name="back" class="btn btn-primary" ng-click="duty.addxjjg()"> 新增
+                <button ng-if="!addflag" type="button" name="back" class="btn btn-primary" ng-click=""> 新增职务套别
                 </button>
-                <button type="button" name="back" class="btn btn-primary" ng-click="abftree.editxjjg()"> 编辑
+                <button ng-if="addflag" type="button" name="back" class="btn btn-primary" ng-click="duty.addzw()"> 新增职务
                 </button>
-                <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletexjjg()"> 删除
+                <button type="button" name="back" class="btn btn-primary" ng-click="duty.editzw()"> 编辑职务
+                </button>
+                <button type="button" name="back" class="btn btn-danger" ng-click="duty.deletezw()"> 删除职务
                 </button>
             </div>
         </div>
@@ -96,7 +98,7 @@
                             <label class="control-label col-md-4">父职务:<span style="color:red">*</span></label>
                             <div class="col-md-8">
                                 <input type="text" class="form-control"
-                                       ng-model="duty.item.guidParents"
+                                       ng-model="duty.item.parentsCode"
                                        name="id" readonly/>
                             </div>
                         </div>
@@ -162,11 +164,11 @@
                 <div class="form-body portlet light">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="control-label col-md-4">职务名称:</label>
+                            <label class="control-label col-md-4">职务名称:<span style="color:red">*</span></label>
                             <div class="col-md-8">
                                 <input type="text" class="form-control"
-                                       ng-model="duty.item.dutyName"
-                                       name="id" readonly/>
+                                       ng-model="subFrom.dutyName"
+                                       name="id" />
                             </div>
                         </div>
                     </div>
@@ -175,8 +177,8 @@
                             <label class="control-label col-md-2">备注:</label>
                             <div class="col-md-10">
                                 <input type="text" class="form-control"
-                                       ng-model="duty.item.remark"
-                                       name="id" readonly/>
+                                       ng-model="subFrom.remark"
+                                       name="id" />
                             </div>
                         </div>
                     </div>
@@ -186,7 +188,7 @@
                             <div class="col-md-10">
 
                                 <div class="actions btn-set" style="float: right;">
-                                    <button type="button" name="back" class="btn btn-primary" ng-disabled="bigform.$invalid" ng-click="save(subFrom)"> 保存
+                                    <button type="button" name="back" class="btn btn-primary" ng-disabled="bigform.$invalid" ng-click="duty.save()"> 保存
                                     </button>
 
                                     <button type="button" name="back" class="btn btn-danger" ng-click="duty.editduty()"> 返回
@@ -200,8 +202,8 @@
         </div>
         <!--详情信息end-->
         <!--下级机构-->
-        <div class="tab-content portlet light" ng-if="tabflag">
-            <div ui-grid="dutygrid"
+        <div class="tab-content portlet light" ng-if="flag.xjzw">
+            <div ui-grid="xjzwgrid"
                  ui-grid-edit ui-grid-pagination
                  ui-grid-selection ui-grid-resize-columns></div>
             <div class="actions btn-set" style="float: right;">
@@ -215,8 +217,8 @@
         </div>
         <!--下级机构end-->
         <!--职务人员-->
-        <div class="tab-content portlet light" ng-if="tabflag">
-            <div ui-grid="dutygrid"
+        <div class="tab-content portlet light" ng-if="flag.zwry">
+            <div ui-grid="zwrygrid"
                  ui-grid-edit ui-grid-pagination
                  ui-grid-selection ui-grid-resize-columns></div>
             <div class="actions btn-set" style="float: right;">

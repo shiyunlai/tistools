@@ -8,12 +8,15 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.om.OmDuty;
+import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.sys.SysDict;
 import org.tis.tools.model.po.sys.SysDictItem;
 import org.tis.tools.rservice.om.capable.IDutyRService;
@@ -67,12 +70,17 @@ public class DutyController extends BaseController{
 				List<SysDictItem> querySysDictItems = dictRService.querySysDictItems(queryDict.getGuid());
 				AjaxUtils.ajaxJsonSuccessMessage(response, querySysDictItems);
 			}else if(id.length() == 2){
-				List<OmDuty> list = dutyRService.queryDutyByDutyType(id);
+				List<OmDuty> list = dutyRService.queryDutyByDutyTypeOnlyF(id);
+				AjaxUtils.ajaxJsonSuccessMessage(response, list);
+			}else{
+				List<OmDuty> list = dutyRService.queryChildByDutyCode(id);
 				AjaxUtils.ajaxJsonSuccessMessage(response, list);
 			}
-		} catch (Exception e) {// TODO
-			AjaxUtils.ajaxJsonErrorMessage(response, "查询树失败!");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
 			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
 		}
 		return null;
 	}
@@ -94,9 +102,11 @@ public class DutyController extends BaseController{
 			// 收到请求
 			List<OmDuty> list = dutyRService.queryAllDuty();
 			AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list, "yyyy-MM-dd");
-		} catch (Exception e) {// TODO
-			AjaxUtils.ajaxJsonErrorMessage(response, "查询树失败!");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
 			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
 		}
 		return null;
 	}
@@ -121,12 +131,14 @@ public class DutyController extends BaseController{
 			String dutyName = jsonObj.getString("dutyName");
 			String dutyType = jsonObj.getString("dutyType");
 			String remark = jsonObj.getString("remark");
-			String guidParents = jsonObj.getString("guidParents");
-			dutyRService.createDuty(dutyCode, dutyName, dutyType, guidParents, remark);
+			String parentsCode = jsonObj.getString("parentsCode");
+			dutyRService.createDuty(dutyCode, dutyName, dutyType, parentsCode, remark);
 			AjaxUtils.ajaxJsonSuccessMessage(response, "新增成功!");
-		} catch (Exception e) {// TODO
-			AjaxUtils.ajaxJsonErrorMessage(response, "查询树失败!");
+		}catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
 			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
 		}
 		return null;
 	}
@@ -151,9 +163,11 @@ public class DutyController extends BaseController{
 			String dutyType = jsonObj.getString("dutyType");
 			String dutyCode = dutyRService.genDutyCode(dutyType);
 			AjaxUtils.ajaxJsonSuccessMessage(response, dutyCode);
-		} catch (Exception e) {// TODO
-			AjaxUtils.ajaxJsonErrorMessage(response, "生成职务代码失败!");
+		}catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
 			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
 		}
 		return null;
 	}
@@ -177,13 +191,125 @@ public class DutyController extends BaseController{
 			String dutyType = jsonObj.getString("dutyType");
 			List<OmDuty> list = dutyRService.queryDutyByDutyType(dutyType);
 			AjaxUtils.ajaxJsonSuccessMessage(response,list);
-		} catch (Exception e) {// TODO
-			AjaxUtils.ajaxJsonErrorMessage(response, "查询失败!");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
 			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
 		}
 		return null;
 	}
 	
+	/**
+	 * 查询下级职务
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/querychild")
+	public String querychild(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			String dutyCode = jsonObj.getString("dutyCode");
+			List<OmDuty> list = dutyRService.queryChildByDutyCode(dutyCode);
+			AjaxUtils.ajaxJsonSuccessMessage(response,list);
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	/**
+	 * 查询职务下人员,用过岗位查询
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/queryempbudutyCode")
+	public String queryempbudutyCode(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			String dutyCode = jsonObj.getString("dutyCode");
+			List<OmEmployee> list = dutyRService.quereyEmployeeByDutyCode(dutyCode);
+			AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response,list,"yyyy-MM-dd");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	
+	/**
+	 * 删除职务
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/deletedutyByCode")
+	public String deletedutyByCode(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			String dutyCode = jsonObj.getString("dutyCode");
+			dutyRService.deleteDuty(dutyCode);
+			AjaxUtils.ajaxJsonSuccessMessage(response,"删除成功!");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	/**
+	 * 更新职务
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/updateDuty")
+	public String updateDuty(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			OmDuty od = new OmDuty();
+			BeanUtils.populate(od, jsonObj);
+			dutyRService.updateDuty(od);
+			AjaxUtils.ajaxJsonSuccessMessage(response,"更新成功!");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
 	
 	
 	

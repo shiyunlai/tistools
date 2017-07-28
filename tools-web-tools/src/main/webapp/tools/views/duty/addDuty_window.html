@@ -11,12 +11,12 @@
     <div class="portlet-body portlet light" ng-form="bigform">
         <form action="#" name="myform" class="form-horizontal">
             <div class="form-body ">
-                <div class="col-md-6">
+                <div class="col-md-6" ng-if="subFrom.parentsCode == ''">
                     <div class="form-group">
                         <label class="control-label col-md-4">父职务:<span style="color:red">*</span></label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="subFrom.guidParents"
+                                   ng-model="subFrom.parentsCode"
                                    name="id" readonly/>
                         </div>
                     </div>

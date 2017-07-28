@@ -105,6 +105,20 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
                         console.log(obj);
+                        if(confirm("确认要删除此职务吗?")){
+                            var subFrom = {};
+                            subFrom.dutyCode = obj.id;
+                            duty_service.deletedutyByCode(subFrom).then(function (data) {
+                                if(data.status == "success"){
+                                    toastr['success'](data.retMessage);
+                                    $("#dutytree").jstree().refresh();
+                                }else{
+                                    toastr['error'](data.retMessage);
+                                }
+                            })
+                        }else{
+                            return false;
+                        }
                     }
                 }
             };
@@ -120,10 +134,10 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                         console.log(obj);
                         if(obj.id.length == 2){
                             var dutyType = obj.id;
-                            var guidParents = "";
+                            var parentsCode = "";
                         }else{
                             var dutyType = obj.original.dutyType;
-                            var guidParents = obj.original.guid;
+                            var parentsCode = obj.original.dutyCode;
                         }
 
                         openwindow($uibModal, 'views/duty/addDuty_window.html', 'lg',
@@ -133,7 +147,7 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                                 $scope.subFrom = subFrom;
                                 //首先生成职务代码,获取职务套别
                                 subFrom.dutyType = dutyType;
-                                subFrom.guidParents = guidParents;
+                                subFrom.parentsCode = parentsCode;
                                 console.log(subFrom)
                                 duty_service.initdutyCode(subFrom).then(function (data) {
                                     console.log(data)
@@ -168,6 +182,20 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
                         console.log(obj);
+                        if(confirm("确认要删除此职务吗?")){
+                            var subFrom = {};
+                            subFrom.dutyCode = obj.id;
+                            duty_service.deletedutyByCode(subFrom).then(function (data) {
+                                if(data.status == "success"){
+                                    toastr['success'](data.retMessage);
+                                    $("#dutytree").jstree().refresh();
+                                }else{
+                                    toastr['error'](data.retMessage);
+                                }
+                            })
+                        }else{
+                            return false;
+                        }
                     }
                 }
             };
@@ -200,28 +228,28 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                 duty_service.loadmaintree(subFrom).then(function (datas) {
                     console.log(datas)
                     var data = datas.retMessage;
-                    if(!isNull(data[0].itemName)){
-                        for(var i = 0;i<data.length;i++){
-                            data[i].id = data[i].itemValue;
-                            data[i].text = data[i].itemName;
-                            data[i].children = true;
-                            data[i].icon = 'fa fa-users icon-state-info icon-lg'
-                        }
-                    }else if(isNull(data[0].text)){
-                        for(var i = 0;i<data.length;i++){
-                            data[i].id = data[i].dutyCode;
-                            data[i].text = data[i].dutyName;
-                            data[i].children = true;
-                            data[i].icon = 'fa fa-users icon-state-info icon-lg'
-                        }
-                    }else{
-                        for(var i = 0;i<data.length;i++){
-                            data[i].children = true;
-                            data[i].icon = 'fa fa-users icon-state-info icon-lg'
+                    if(!isNull(data[0])){
+                        if(!isNull(data[0].itemName)){
+                            for(var i = 0;i<data.length;i++){
+                                data[i].id = data[i].itemValue;
+                                data[i].text = data[i].itemName;
+                                data[i].children = true;
+                                data[i].icon = 'fa fa-users icon-state-info icon-lg'
+                            }
+                        }else if(isNull(data[0].text)){
+                            for(var i = 0;i<data.length;i++){
+                                data[i].id = data[i].dutyCode;
+                                data[i].text = data[i].dutyName;
+                                data[i].children = true;
+                                data[i].icon = 'fa fa-users icon-state-info icon-lg'
+                            }
+                        }else{
+                            for(var i = 0;i<data.length;i++){
+                                data[i].children = true;
+                                data[i].icon = 'fa fa-users icon-state-info icon-lg'
+                            }
                         }
                     }
-
-
                     $scope.jsonarray = angular.copy(data);
                     callback.call(this, $scope.jsonarray);
                 })
@@ -282,20 +310,33 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
         if(typeof data.node !== 'undefined'){//拿到结点详情
             // console.log(data.node.original.id.indexOf("@"));
             $scope.duty.item = data.node.original;
-            console.log(data.node.original);
+            console.log(data.node);
             $scope.title = data.node.text;
-            if(data.node.id.length == 2 || data.node.id == "00000") {
-                $scope.tabflag = true;
-                if(data.node.id != "00000"){
-                    console.log($scope.duty.item.itemValue)
-                    dutygridbyType($scope.duty.item.itemValue);
+            if(data.node.id == "00000") {
+                for (var i in $scope.flag){
+                    flag[i] = false;
                 }
+                $scope.tabflag = true;
+                $scope.addflag = false;
+                console.log(1)
+                redutygrid();
+            }else if(data.node.id.length == 2){
+                for (var i in $scope.flag){
+                    flag[i] = false;
+                }
+                $scope.tabflag = true;
+                $scope.addflag = false;
+                console.log($scope.duty.item.itemValue);
+                console.log(2)
+                dutygridbyType($scope.duty.item.itemValue);
+                $scope.addflag = true;
             }else{
                 $scope.tabflag = false;
                 for (var i in $scope.flag){
                     flag[i] = false;
                 }
                 $scope.flag.xqxx = true;
+                $scope.duty.item.parentsCode = data.node.parent;
             }
             ($scope.$$phase)?null: $scope.$apply();
         }
@@ -304,11 +345,85 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
     duty.loaddata = function (num) {
         if(num == 0){
             //基本信息
-            for (var i in flag){
+            for (var i in $scope.flag){
                 flag[i] = false;
             }
-            flag.xqxx = true;
+            $scope.flag.xqxx = true;
             //TODO
+        }else if(num == 1){
+            //下级职务
+            for (var i in $scope.flag){
+                flag[i] = false;
+            }
+            $scope.flag.xjzw = true;
+            //生成下级职务列表
+            var xjzwgrid = {};
+            $scope.xjzwgrid = xjzwgrid;
+            var com = [{ field: 'dutyCode', displayName: '职务代码', enableHiding: false},
+                { field: 'dutyName', displayName: '职务名称', enableHiding: false},
+                { field: 'dutyType', displayName: '职务类型', enableHiding: false},
+                { field: 'remark', displayName: '备注', enableHiding: false}]
+            $scope.xjzwgrid = initgrid($scope,xjzwgrid,filterFilter,com,true,function () {
+                
+            });
+            var rexjzwgrid = function () {
+                var subFrom = {};
+                subFrom.dutyCode = $scope.duty.item.dutyCode;
+                duty_service.querychild(subFrom).then(function (data) {
+                    if(data.status == "success"){
+                        $scope.xjzwgrid.data =  data.retMessage;
+                        $scope.xjzwgrid.mydefalutData =  data.retMessage;
+                        $scope.xjzwgrid.getPage(1,$scope.xjzwgrid.paginationPageSize);
+                    }else{
+
+                    }
+                })
+            };
+            //拉取下级职务列表
+            rexjzwgrid();
+        }else if(num == 2){
+            //人员信息
+            for (var i in $scope.flag){
+                flag[i] = false;
+            }
+            $scope.flag.zwry = true;
+            //生成人员列表
+            var zwrygrid = {};
+            $scope.zwrygrid = zwrygrid;
+            //定义表头名
+            var com = [{ field: 'empCode', displayName: '员工代码', enableHiding: false},
+                { field: 'empName', displayName: '员工姓名', enableHiding: false},
+                { field: 'gender', displayName: '性别', enableHiding: false},
+                { field: 'empstatus', displayName: '员工状态', enableHiding: false},
+                { field: 'empDegree', displayName: '员工职级', enableHiding: false},
+                { field: 'guidPostition', displayName: '基本岗位', enableHiding: false},
+                { field: 'guidempmajor', displayName: '直接主管', enableHiding: false},
+                { field: 'indate', displayName: '入职日期', enableHiding: false},
+                { field: 'otel', displayName: '办公电话', enableHiding: false}
+            ]
+            $scope.zwrygrid = initgrid($scope,zwrygrid,filterFilter,com,true,function () {
+                
+            });
+            var rezwrygrid = function () {
+                var subFrom = {};
+                subFrom.dutyCode = $scope.duty.item.dutyCode;
+                duty_service.queryempbudutyCode(subFrom).then(function (data) {
+                    if(data.status == "success"){
+                        $scope.zwrygrid.data =  data.retMessage;
+                        $scope.zwrygrid.mydefalutData =  data.retMessage;
+                        $scope.zwrygrid.getPage(1,$scope.zwrygrid.paginationPageSize);
+                    }else{
+
+                    }
+                })
+            };
+            //拉取列表
+            rezwrygrid();
+        }else if(num == 3){
+            for (var i in $scope.flag){
+                flag[i] = false;
+            }
+            $scope.flag.zwqx = true;
         }
     }
     
@@ -323,7 +438,9 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
         { field: 'dutyType', displayName: '职务类型', enableHiding: false},
         { field: 'remark', displayName: '备注', enableHiding: false}
     ]
-    $scope.dutygrid = initgrid($scope,dutygrid,filterFilter,com,true);
+    $scope.dutygrid = initgrid($scope,dutygrid,filterFilter,com,true,function () {
+        
+    });
     //通过type拉取列表
     var dutygridbyType = function (type) {
         var subFrom = {};
@@ -359,14 +476,121 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
     
     //编辑------返回方法
     duty.editduty = function () {
+        var subFrom = {};
+        $scope.subFrom = subFrom;
+        $scope.subFrom = angular.copy($scope.duty.item);
         $scope.editflag = !$scope.editflag;
     }
     //更新
     duty.save = function () {
-        
+        console.log($scope.subFrom);
+        duty_service.updateDuty($scope.subFrom).then(function (data) {
+            if(data.status == "success"){
+                toastr['success'](data.retMessage);
+                $("#dutytree").jstree().refresh();
+                $scope.editflag = !$scope.editflag;
+                // var node = {};
+                // node.id = $scope.duty.item.dutyCode;
+                // $("#dutytree").jstree().select_node(node,false,false);
+            }else{
+                toastr['error'](data.retMessage);
+            }
+        })
     }
     //删除
     duty.deleteduty = function () {
-        
+        console.log($scope.duty.item)
+        if(confirm("确认要删除此职务吗?")){
+            var subFrom = {};
+            subFrom.dutyCode = $scope.duty.item.dutyCode;
+            duty_service.deletedutyByCode(subFrom).then(function (data) {
+                if(data.status == "success"){
+                    toastr['success'](data.retMessage);
+                    $("#dutytree").jstree().refresh();
+                    var node = {};
+                    node.id = $scope.duty.item.parentsCode;
+                    $("#dutytree").jstree().select_node(node,false,false);
+                }else{
+                    toastr['error'](data.retMessage);
+                }
+            })
+        }else{
+            return false;
+        }
+    }
+
+    //职务列表按钮事件
+    duty.addzw = function () {
+        var dutyType = $scope.duty.item.itemValue;
+        openwindow($uibModal, 'views/duty/addDuty_window.html', 'lg',
+            function ($scope, $modalInstance) {
+                //创建职务实例
+                var subFrom = {};
+                $scope.subFrom = subFrom;
+                //首先生成职务代码,获取职务套别
+                subFrom.dutyType = dutyType;
+                console.log(subFrom)
+                duty_service.initdutyCode(subFrom).then(function (data) {
+                    console.log(data)
+                    if(data.status == "success"){
+                        subFrom.dutyCode = data.retMessage;
+                    }else{
+                        toastr['error'](data.retMessage);
+                    }
+                })
+                $scope.save = function () {
+                    duty_service.addduty(subFrom).then(function (data) {
+                        if(data.status == "success"){
+                            toastr['success'](data.retMessage);
+                            $("#dutytree").jstree().refresh();
+                            redutygrid();
+                            $scope.cancel();
+                        }else{
+                            toastr['error'](data.retMessage);
+                        }
+                    })
+                }
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            });
+    }
+    duty.editzw = function () {
+        var arr = $scope.dutygrid.getSelectedRows();
+        if(arr.length != 1){
+            toastr['error']("请选择一条需要修改的数据!");
+            return false;
+        }else{
+            console.log(arr[0].dutyCode)
+            var node = {};
+            node.id = arr[0].dutyType;
+            var node2 = {};
+            node2.id = arr[0].dutyCode;
+            $("#dutytree").jstree().deselect_all(true);
+            $("#dutytree").jstree().load_node(node,function () {
+                $("#dutytree").jstree().select_node(node2,false,false);
+            });
+            $scope.subFrom = arr[0];
+            $scope.editflag = !$scope.editflag;
+        }
+    }
+    duty.deletezw = function () {
+        var arr = $scope.dutygrid.getSelectedRows();
+        if(arr.length != 1){
+            toastr['error']("请选择一条需要删除的数据!");
+            return false;
+        }else{
+            var subFrom = {};
+            subFrom.dutyCode = arr[0].dutyCode;
+            duty_service.deletedutyByCode(subFrom).then(function (data) {
+                if(data.status == "success"){
+                    toastr['success'](data.retMessage);
+                    $("#dutytree").jstree().refresh();
+                    redutygrid();
+                }else{
+                    toastr['error'](data.retMessage);
+                }
+            })
+        }
     }
 });
