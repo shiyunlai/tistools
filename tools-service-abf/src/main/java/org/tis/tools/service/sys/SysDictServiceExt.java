@@ -5,6 +5,7 @@
 package org.tis.tools.service.sys;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -46,7 +47,7 @@ public class SysDictServiceExt {
 		parameters.put("itemValue", itemValue);
 		SysDictItem item = commonsSysMapper.queryDictItem(parameters) ; 
 		if ( null == item ) {
-			throw new SysManagementException(SYSExceptionCodes.NOTFOUND_SYS_DICT_ITEM,
+			throw new SysManagementException(SYSExceptionCodes.NOT_FOUND_SYS_DICT_ITEM,
 					BasicUtil.wrap( dictKey, itemValue ));
 		}
 		return item;
@@ -69,7 +70,7 @@ public class SysDictServiceExt {
 		parameters.put("itemValue", itemValue);
 		String actualValue = commonsSysMapper.querySendValue(parameters);
 		if( StringUtils.isEmpty(actualValue) ){
-			throw new SysManagementException(SYSExceptionCodes.NOTFOUND_SYS_DICT_ITEM,
+			throw new SysManagementException(SYSExceptionCodes.NOT_FOUND_SYS_DICT_ITEM,
 					BasicUtil.wrap(dictKey,itemValue)) ;
 		}
 		return actualValue;
@@ -97,5 +98,16 @@ public class SysDictServiceExt {
 		} else {
 			return actualValue;
 		}
+	}
+
+	/**
+	 *  查询字典项来自表或视图
+	 * @param key
+	 * @param value
+	 * @param fromSql
+	 * @return
+	 */
+	public List<SysDictItem> queryDictItemFromTableOrView(String key, String value, String fromSql) {
+		return commonsSysMapper.queryDictItemFromTableOrView(key, value, fromSql);
 	}
 }
