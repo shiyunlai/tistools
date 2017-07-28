@@ -150,6 +150,11 @@ public class OMExceptionCodes {
 	 */
 	public static final String DUTY_NOT_EXIST_BY_DUTY_CODE = R_EX_CODE("0028");
 	/**
+	 * 缺少生成职务代码所需的参数
+	 */
+	public static final String LAKE_PARMS_FOR_GEN_DUTYCODE = R_EX_CODE("0029");
+	
+	/**
 	 * 以烤串方式拼接异常码
 	 * 
 	 * @param code

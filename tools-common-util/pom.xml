@@ -71,7 +71,6 @@
 			<artifactId>logback-classic</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-
 		<!-- POI解析excel -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -83,6 +82,5 @@
 			<artifactId>poi-ooxml</artifactId>
 			<version>3.14</version>
 		</dependency>
-
 	</dependencies>
 </project>
