@@ -230,7 +230,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             "themes" : {
                 "responsive": false
             },
-            // so that create works
             "check_callback" : true,
             'data' : function (obj, callback) {
                 var jsonarray = [];
