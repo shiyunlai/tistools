@@ -5,8 +5,9 @@ package org.tis.tools.rservice.sys.capable;
 
 import org.tis.tools.model.po.sys.SysDict;
 import org.tis.tools.model.po.sys.SysDictItem;
-import org.tis.tools.model.vo.sys.SysDictDetail;
 import org.tis.tools.rservice.sys.exception.SysManagementException;
+
+import java.util.List;
 
 /**
  * <pre>
@@ -100,5 +101,75 @@ public interface IDictRService {
 	 *             取不到值，或取值发生错误时抛出异常
 	 */
 	String queryActualValue(String dictType, String dictItem) throws SysManagementException;
-	
+
+
+	/**
+	 * 修改业务字典
+	 * @param sysDict
+	 * @throws SysManagementException
+	 */
+	void editSysDict(SysDict sysDict) throws SysManagementException;
+
+	/**
+	 * 修改业务字典项
+	 * @param sysDictItem
+	 * @throws SysManagementException
+	 */
+	void editSysDictItem(SysDictItem sysDictItem) throws SysManagementException;
+
+	/**
+	 * 根据业务字典GUID删除业务字典
+	 *
+	 * @param dictGuid
+	 * 			业务字典GUID
+	 * @throws SysManagementException
+	 */
+	void deleteDict(String dictGuid) throws SysManagementException;
+
+
+	/**
+	 * 根据字典项GUID删除业务字典项
+	 *
+	 * @param dictItemGuid
+	 * 			字典项GUID
+	 * @throws SysManagementException
+	 */
+	void deleteDictItem(String dictItemGuid) throws SysManagementException;
+
+	/**
+	 * 查询所有业务字典
+	 * @return
+	 * @throws SysManagementException
+	 */
+	List<SysDict> querySysDicts() throws SysManagementException;
+
+	/**
+	 * 根据字典GUID查询所有业务字典项
+	 *
+	 * @param dictGuid
+	 * 			业务字典GUID
+	 * @return
+	 * @throws SysManagementException
+	 */
+	List<SysDictItem> querySysDictItems(String dictGuid) throws SysManagementException;
+
+
+	/**
+	 * 根据GUID查询业务字典自身
+	 * @param dictGuid
+	 * 			业务字典GUID
+	 * @return
+	 * @throws SysManagementException
+	 */
+	SysDict querySysDictByGuid(String dictGuid) throws SysManagementException;
+
+	/**
+	 * 根据GUID查询业务字典项自身
+	 * @param dictItemGuid
+	 * 			字典项GUID
+	 * @return
+	 * @throws SysManagementException
+	 */
+	SysDictItem querySysDictItemByGuid(String dictItemGuid) throws SysManagementException;
+
 }
