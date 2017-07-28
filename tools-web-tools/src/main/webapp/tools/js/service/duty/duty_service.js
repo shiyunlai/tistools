@@ -32,5 +32,12 @@ MetronicApp.factory('duty_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     }
+    service.querydutybyType = function (subFrom) {
+
+        var res = $http.post(manurl + "/om/duty/querydutybyType",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
     return service;
 }]);

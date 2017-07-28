@@ -72,8 +72,135 @@
             </li>
         </ul>
         <!-- 职务套别下职务列表结束 -->
+        <!--机构列表-->
+        <div class="tab-content portlet light" ng-if="tabflag">
+            <div ui-grid="dutygrid"
+                 ui-grid-edit ui-grid-pagination
+                 ui-grid-selection ui-grid-resize-columns></div>
+            <div class="actions btn-set" style="float: right;">
+                <button type="button" name="back" class="btn btn-primary" ng-click="duty.addxjjg()"> 新增
+                </button>
+                <button type="button" name="back" class="btn btn-primary" ng-click="abftree.editxjjg()"> 编辑
+                </button>
+                <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletexjjg()"> 删除
+                </button>
+            </div>
+        </div>
+        <!--机构列表end-->
+        <!--详情信息start-->
+        <div class="tab-content portlet light" ng-if="flag.xqxx">
+            <form action="#" name="myform" class="form-horizontal clear" ng-if="!editflag">
+                <div class="form-body portlet light">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">父职务:<span style="color:red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control"
+                                       ng-model="duty.item.guidParents"
+                                       name="id" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">职务套别:<span style="color:red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control"
+                                       ng-model="duty.item.dutyType"
+                                       name="id" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">职务代码:</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control"
+                                       ng-model="duty.item.dutyCode"
+                                       name="id" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">职务名称:</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control"
+                                       ng-model="duty.item.dutyName"
+                                       name="id" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-2">备注:</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control"
+                                       ng-model="duty.item.remark"
+                                       name="id" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-2"></label>
+                            <div class="col-md-10">
+
+                                <div class="actions btn-set" style="float: right;">
+                                    <button type="button" name="back" class="btn btn-primary" ng-disabled="bigform.$invalid" ng-click="duty.editduty()"> 编辑
+                                    </button>
+
+                                    <button type="button" name="back" class="btn btn-danger" ng-click="duty.deleteduty()"> 删除
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <form action="#" name="myform" class="form-horizontal clear" ng-if="editflag">
+                <div class="form-body portlet light">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">职务名称:</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control"
+                                       ng-model="duty.item.dutyName"
+                                       name="id" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-2">备注:</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control"
+                                       ng-model="duty.item.remark"
+                                       name="id" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-2"></label>
+                            <div class="col-md-10">
+
+                                <div class="actions btn-set" style="float: right;">
+                                    <button type="button" name="back" class="btn btn-primary" ng-disabled="bigform.$invalid" ng-click="save(subFrom)"> 保存
+                                    </button>
+
+                                    <button type="button" name="back" class="btn btn-danger" ng-click="duty.editduty()"> 返回
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--详情信息end-->
         <!--下级机构-->
-        <div class="tab-content portlet light">
+        <div class="tab-content portlet light" ng-if="tabflag">
             <div ui-grid="dutygrid"
                  ui-grid-edit ui-grid-pagination
                  ui-grid-selection ui-grid-resize-columns></div>
@@ -87,5 +214,20 @@
             </div>
         </div>
         <!--下级机构end-->
+        <!--职务人员-->
+        <div class="tab-content portlet light" ng-if="tabflag">
+            <div ui-grid="dutygrid"
+                 ui-grid-edit ui-grid-pagination
+                 ui-grid-selection ui-grid-resize-columns></div>
+            <div class="actions btn-set" style="float: right;">
+                <button type="button" name="back" class="btn btn-primary" ng-click="duty.addxjjg()"> 新增
+                </button>
+                <button type="button" name="back" class="btn btn-primary" ng-click="abftree.editxjjg()"> 编辑
+                </button>
+                <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletexjjg()"> 删除
+                </button>
+            </div>
+        </div>
+        <!--职务人员-->
     </div>
 </div>

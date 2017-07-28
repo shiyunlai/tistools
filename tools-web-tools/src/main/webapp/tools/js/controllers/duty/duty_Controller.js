@@ -29,6 +29,10 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
     flag.zwry = zwry;
     var zwqx = false;
     flag.zwqx = zwqx;
+    //编辑标志
+    var editflag = false;
+    $scope.editflag = editflag;
+    
     //ui-grid
     i18nService.setCurrentLang("zh-cn");
     //自定义树右键菜单
@@ -282,6 +286,10 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
             $scope.title = data.node.text;
             if(data.node.id.length == 2 || data.node.id == "00000") {
                 $scope.tabflag = true;
+                if(data.node.id != "00000"){
+                    console.log($scope.duty.item.itemValue)
+                    dutygridbyType($scope.duty.item.itemValue);
+                }
             }else{
                 $scope.tabflag = false;
                 for (var i in $scope.flag){
@@ -316,6 +324,21 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
         { field: 'remark', displayName: '备注', enableHiding: false}
     ]
     $scope.dutygrid = initgrid($scope,dutygrid,filterFilter,com,true);
+    //通过type拉取列表
+    var dutygridbyType = function (type) {
+        var subFrom = {};
+        subFrom.dutyType = type;
+        duty_service.querydutybyType(subFrom).then(function (data) {
+            console.log(data)
+            if(data.status == "success"){
+                $scope.dutygrid.data =  data.retMessage;
+                $scope.dutygrid.mydefalutData =  data.retMessage;
+                $scope.dutygrid.getPage(1,$scope.dutygrid.paginationPageSize);
+            }else{
+
+            }
+        })
+    };
     //拉取列表方法
     var redutygrid = function () {
         //调取所有职务信息
@@ -333,4 +356,17 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
     }
     //拉取列表
     redutygrid();
+    
+    //编辑------返回方法
+    duty.editduty = function () {
+        $scope.editflag = !$scope.editflag;
+    }
+    //更新
+    duty.save = function () {
+        
+    }
+    //删除
+    duty.deleteduty = function () {
+        
+    }
 });
