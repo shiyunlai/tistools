@@ -52,8 +52,8 @@
                         <div class="col-md-8">
                             <select class="form-control" name="sys_key3" ng-model="sysFrom.valueFrom"  ng-change="valuefrom(sysFrom.valueFrom)"  required>
                                 <option value=""></option>
-                                <option value="H">H：手工指定</option>
-                                <option value="S">选择业务字典</option>
+                                <option value="H">H</option>
+                                <option value="S">业务字典记录1</option>
                             </select>
                         </div>
                     </div>
@@ -74,19 +74,17 @@
                         <div class="col-md-8">
                             <select class="form-control" name="sys_key5" ng-model="sysFrom.value"   required>
                                 <option value=""></option>
-                                <option value="0">业务字典表1</option>
-                                <option value="1">业务字典表2</option>
+                                <option value="0">业务字典对应字典项1</option>
+                                <option value="1">业务字典对应字典项2</option>
                             </select>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6" >
+                <div class="col-md-12" >
                     <div class="form-group">
-                        <label class="control-label col-md-4">参数描述</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="sysFrom.description"
-                                   name="id" />
+                        <label class="control-label col-md-2">参数描述</label>
+                        <div class="col-md-10">
+                            <textarea class="form-control"  ng_model="sysFrom.description" maxlength="10" length-limit  num-length=10  scope-models="dictFrom.Desc"  name="ctl_desc"></textarea>
                         </div>
                     </div>
                 </div>

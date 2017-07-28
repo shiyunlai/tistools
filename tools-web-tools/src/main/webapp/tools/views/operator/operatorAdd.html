@@ -1,5 +1,4 @@
 <div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
-    {{operatFrom}}
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-cogs font-green-sharp"></i>
@@ -16,110 +15,71 @@
             <div class="form-body ">
                 <div class="col-md-6" >
                     <div class="form-group">
+                        <label class="control-label col-md-4">操作员姓名</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="operatFrom.operatorName"
+                                   name="oper_ator" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">用户密码:<span ng-class="{required:myform.dict_key.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" required
+                                   ng-model="operatFrom.password"
+                                   name="dict_key" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
                         <label class="control-label col-md-4">登陆用户名<span ng-class="{required:myform.dict_key1.$invalid}"  >* </span></label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="operatFrom.username" required
+                                   ng-model="operatFrom.userId" required
                                    name="dict_key1" />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4"> 菜单风格: </label>
+                        <label class="control-label col-md-4"> 菜单风格 <span ng-class="{required:myform.dict_menu.$invalid}"  >* </span></label>
                         <div class="col-md-8">
-                            <select class="form-control"  name="dict_type" ng-model="operatFrom.mode" name="oper_ator">
-                                <option value="">Default模式</option>
-                                <option value="0">自定义模式</option>
+                            <select class="form-control"   required   ng-model="operatFrom.menuType" name="dict_menu">
+                                <option value=""></option>
+                                <option value="0">Default模式</option>
                                 <option value="1">自主模式</option>
                             </select>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6" >
-                    <div class="form-group">
-                        <label class="control-label col-md-4">用户密码<span ng-class="{required:myform.dict_key.$invalid}"  > * </span></label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" required
-                                   ng-model="operatFrom.userpassword"
-                                   name="dict_key" />
-                        </div>
-                    </div>
-                </div>
+
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4"> 操作员状态: </label>
+                        <label class="control-label col-md-4"> 操作员状态: <span ng-class="{required:myform.oper_ators.$invalid}"  > * </span></label>
                         <div class="col-md-8">
-                            <select class="form-control"  name="dict_type" ng-model="operatFrom.operType" name="oper_ator">
-                                <option value="">正常</option>
-                                <option value="0">注销</option>
-                                <option value="1">暂停</option>
-                                <option value="2">启用</option>
+                            <select class="form-control"    ng-model="operatFrom.operatorStatus" required   name="oper_ators">
+                                <option value=""></option>
+                                <option value="0">正常</option>
+                                <option value="1">注销</option>
+                                <option value="2">暂停</option>
+                                <option value="3">启用</option>
                             </select>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6" >
-                    <div class="form-group">
-                        <label class="control-label col-md-4">操作员名称</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="operatFrom.operstName"
-                                   name="oper_ator" />
-                        </div>
-                    </div>
-                </div>
+
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4"> 认证模式: </label>
+                        <label class="control-label col-md-4"> 认证模式:<span ng-class="{required:myform.oper_certification.$invalid}"  > * </span> </label>
                         <div class="col-md-8">
-                            <select class="form-control"  name="dict_type" ng-model="operatFrom.certification" name="oper_ator">
+                            <select class="form-control"  ng-model="operatFrom.authMode" required  name="oper_certification">
                             <option value="bd">本地密码认证</option>
                             <option value="pw">pwd认证</option>
                             <option value="ca">captcha认证</option>
                         </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6" >
-                    <div class="form-group">
-                        <label class="control-label col-md-4">IP地址:</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="operatFrom.iparea"
-                                   name="oper_ator" />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4"> 员工编号: </label>
-                        <div class="col-md-8">
-                            <select class="form-control"  name="dict_type" ng-model="operatFrom.certification" name="oper_empcode">
-                                <option value="">ST1001</option>
-                                <option value="0">ST1002</option>
-                                <option value="1">ST1003</option>
-                                <option value="2">ST1004</option>
-                                <option value="3">ST1005</option>
-                                <option value="4">ST1006</option>
-                                <option value="5">ST1007</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4"> 员工姓名: </label>
-                        <div class="col-md-8">
-                            <select class="form-control"  name="dict_type" ng-model="operatFrom.certification" name="oper_empname">
-                                <option value="">张三</option>
-                                <option value="0">李四</option>
-                                <option value="1">王二麻子</option>
-                                <option value="2">成哥</option>
-                                <option value="3">杰哥</option>
-                                <option value="4">小波</option>
-                                <option value="5">文琪</option>
-                            </select>
                         </div>
                     </div>
                 </div>
@@ -131,20 +91,7 @@
                                 <span class="input-group-btn">
                                     <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
                                 </span>
-                                <input type="text" class="form-control" ng-model="operatFrom.failureDate" readonly/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4"> 有效截止日期: </label>
-                        <div class="col-md-8">
-                            <div class="input-group date form_datetime" ng-init="$root.settings.utils.initpicker()" >
-                                <span class="input-group-btn">
-                                    <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
-                                </span>
-                                <input type="text" class="form-control" ng-model="operatFrom.cutoffDate" readonly/>
+                                <input type="text" class="form-control" ng-model="operatFrom.invalDate" readonly/>
                             </div>
                         </div>
                     </div>
@@ -158,8 +105,32 @@
                                 <span class="input-group-btn">
                                     <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
                                 </span>
-                                <input type="text" class="form-control" ng-model="operatFrom.effectiveDate" readonly/>
+                                <input type="text" class="form-control" ng-model="operatFrom.startDate" readonly/>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 有效截止日期: </label>
+                        <div class="col-md-8">
+                            <div class="input-group date form_datetime" ng-init="$root.settings.utils.initpicker()" >
+                                <span class="input-group-btn">
+                                    <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                </span>
+                                <input type="text" class="form-control" ng-model="operatFrom.endDate" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">锁定次数限制:<span ng-class="{required:myform.oper_lockLimit.$invalid}"  >* </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="operatFrom.lockLimit" required
+                                   name="oper_lockLimit" />
+                            <span style="color:#ccc">登陆错误超过本数字，系统锁定操作员，默认5次。</span>
                         </div>
                     </div>
                 </div>
@@ -168,7 +139,7 @@
                         <label class="control-label col-md-2"></label>
                         <div class="col-md-10">
                             <div class="actions btn-set" style="float: right;">
-                                <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="add(menuFrom)" > 保存
+                                <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="add(operatFrom)" > 保存
                                 </button>
                                 <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存
                                 </button>
