@@ -153,6 +153,26 @@ public class OMExceptionCodes {
 	 * 缺少生成职务代码所需的参数
 	 */
 	public static final String LAKE_PARMS_FOR_GEN_DUTYCODE = R_EX_CODE("0029");
+	/**
+	 * 缺少生成工作组代码所需的参数
+	 */
+	public static final String LAKE_PARMS_FOR_GEN_GROUPCODE = R_EX_CODE("0030");
+	/**
+	 * 缺少新增工作组所需的参数
+	 */
+	public static final String LAKE_PARMS_FOR_CREATE_GROUP = R_EX_CODE("0031");
+	/**
+	 * 新增根工作组失败
+	 */
+	public static final String FAILURE_WHRN_CREATE_ROOT_GROUP = R_EX_CODE("0032");
+	/**
+	 * 工作组代码对应工作组不存在
+	 */
+	public static final String GROUP_NOT_EXIST_BY_GROUP_CODE = R_EX_CODE("0032");
+	/**
+	 * 不能直接修改工作组状态
+	 */
+	public static final String FAILURE_WHEN_UPDATE_GROUP_STATUS= R_EX_CODE("0033");
 	
 	/**
 	 * 以烤串方式拼接异常码

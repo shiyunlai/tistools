@@ -20,7 +20,7 @@ import org.tis.tools.rservice.om.capable.IGroupRService;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.util.AjaxUtils;
 
-import net.sf.json.JSONObject;
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * 机构管理功能
@@ -48,39 +48,29 @@ public class WorkGroupController extends BaseController {
 			HttpServletResponse response) {
 		try {
 			// 收到请求
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 			String id = jsonObj.getString("id");
-			List<OmGroup> list = new ArrayList<OmGroup>();
-
-			List<Map> l = new ArrayList<Map>();
-
 			// 通过id判断需要加载的节点
 			if ("#".equals(id)) {
 				// 调用远程服务,#:根
-				OmGroup og = new OmGroup();
-				og.setGuid("00000");
-				og.setGroupName("工作组树");
-
-				Map m1 = BeanUtils.describe(og);
-				l.add(m1);
+				Map<String,String> map = new HashMap<>();
+				map.put("GROUP_CODE", "00000");
+				map.put("GROUP_NAME", "工作组树");
+				List<Map> list = new ArrayList<>();
+				list.add(map);
+				AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response,list ,"yyyy-MM-dd");
 			} else if ("00000".equals(id)) {
-				list = groupRService.queryRootGroup();
-				for (OmGroup og : list) {
-					Map m1 = BeanUtils.describe(og);
-					l.add(m1);
-				}
+				List<OmGroup> list = groupRService.queryRootGroup();
+				AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response,list ,"yyyy-MM-dd");
 			} else {
-				list = groupRService.queryChildGroup(id);
-				for (OmGroup og : list) {
-					Map m1 = BeanUtils.describe(og);
-					l.add(m1);
-				}
+				List<OmGroup> list = groupRService.queryChildGroup(id);
+				AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response,list ,"yyyy-MM-dd");
 			}
-			AjaxUtils.ajaxJson(response, net.sf.json.JSONArray.fromObject(l).toString());
-
-		} catch (Exception e) {// TODO
-			AjaxUtils.ajaxJsonErrorMessage(response, "查询根机构树失败!");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
 			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
 		}
 		return null;
 	}
@@ -100,7 +90,7 @@ public class WorkGroupController extends BaseController {
 			HttpServletResponse response) {
 		try {
 
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 
 			String flag = jsonObj.getString("flag");
 			jsonObj.remove("flag");
@@ -139,7 +129,7 @@ public class WorkGroupController extends BaseController {
 			HttpServletResponse response) {
 		try {
 
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 			OmGroup og = new OmGroup();
 			BeanUtils.populate(og, jsonObj);
 			groupRService.createRootGroup(og);
@@ -166,7 +156,7 @@ public class WorkGroupController extends BaseController {
 			HttpServletResponse response) {
 		try {
 
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 			String id = jsonObj.getString("id");
 			groupRService.deleteGroup(id);
 			AjaxUtils.ajaxJsonSuccessMessage(response, "删除工作组成功!");
@@ -219,7 +209,7 @@ public class WorkGroupController extends BaseController {
 	public String queryby(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 			String id = jsonObj.getString("id");
 			// 查询所有工作组
 			List<OmGroup> list = groupRService.queryChildGroup(id);

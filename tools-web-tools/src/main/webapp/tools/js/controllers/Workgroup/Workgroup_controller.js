@@ -219,23 +219,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
                         data[i].text = data[i].groupName;
                         data[i].children = true;
                         data[i].id = data[i].guid;
-                        data[i].startDate = FormatDate(data[i].startDate);
-                        data[i].createtime = FormatDate(data[i].createtime);
-                        data[i].endDate = FormatDate(data[i].endDate);
-                        data[i].lastupdate = FormatDate(data[i].lastupdate);
-                        if(!isNull(data[i].startDate)){
-
-                        }
-                        if(!isNull(data[i].createtime)){
-
-                        }
-                        if(!isNull(data[i].endDate)){
-
-                        }
-                        if(!isNull(data[i].lastupdate)){
-
-                        }
-
+                        data[i].icon = "fa fa-users icon-state-info icon-lg"
                     }
                     $scope.jsonarray = angular.copy(data);
                     callback.call(this, $scope.jsonarray);

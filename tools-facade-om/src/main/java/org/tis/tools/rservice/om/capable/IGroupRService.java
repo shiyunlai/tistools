@@ -339,11 +339,11 @@ public interface IGroupRService {
 	 * 查询工作组下（第一层）子工作组
 	 * </per>
 	 * 
-	 * @param parentsguid
-	 *            工作组父guid
+	 * @param parentsCode
+	 *            工作组父parentsCode
 	 * @return 子工作组列表
 	 */
-	List<OmGroup> queryChildGroup(String parentsguid);
+	List<OmGroup> queryChildGroup(String parentsCode);
 
 	/**
 	 * <per>
@@ -372,6 +372,20 @@ public interface IGroupRService {
 	 */
 	List<OmPositionDetail> queryPosition(String groupCode) ; 
 	
+//	/**
+//	 * <per>
+//	 * 查询属于该工作组的（完整的）岗位列表
+//	 * 
+//	 * 说明：
+//	 * 返回岗位信息为平级列表展示,父子关系由字段展示
+//	 * </per>
+//	 * 
+//	 * @param groupCode
+//	 *            工作组代码
+//	 * @return 岗位列表
+//	 */
+//	List<OmPositionDetail> queryPosition(String groupCode) ; 
+	
 	/**
 	 * <per> 
 	 * 查询在该工作组的员工列表 
@@ -382,6 +396,14 @@ public interface IGroupRService {
 	 * @return 员工列表
 	 */
 	List<OmEmployee> queryEmployee(String groupCode);
+	
+	/**
+	 * 查询不属于此工作组并且在指定机构下的人员信息
+	 * @param orgCode
+	 * @param groupCode
+	 * @return
+	 */
+	List<OmEmployee> queryEmpNotInGroup(String orgCode,String groupCode);
 	
 	/**
 	 * <pre>
