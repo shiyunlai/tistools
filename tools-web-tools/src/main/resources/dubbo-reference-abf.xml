@@ -66,7 +66,7 @@
 		<dubbo:reference 
 		id="applicationRService"    
 		group="ac" 
-		version="1.0" 
+		version="1.0"  
 		interface="org.tis.tools.rservice.ac.capable.IApplicationRService"     
 		check="false"/>
 		
@@ -84,4 +84,11 @@
 		interface="org.tis.tools.rservice.ac.capable.IMenuRService"
 		check="false"/>
 		
+		<dubbo:reference
+		id="operatorRService"
+		group="ac"
+		version="1.0"
+		interface="org.tis.tools.rservice.ac.capable.IOperatorRService"
+		check="false"/>
+
 </beans>

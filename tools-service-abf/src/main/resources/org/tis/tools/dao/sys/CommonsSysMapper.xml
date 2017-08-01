@@ -19,6 +19,16 @@
  		where d.dict_key = #{dictKey} and d.guid = i.guid_dict and i.item_value = #{itemValue} 
  	</select>
 
+	<!-- 当字典项来源为单表时，根据表名查询业务字典项 -->
+ 	<select id="queryDictItemFromTableOrView" resultType="org.tis.tools.model.po.sys.SysDictItem">
+ 		select null as guid ,
+ 				null as guidDict ,
+ 		 		t.${key}  as itemName ,
+ 		 		t.${value}  as itemValue ,
+ 		 		null as sendValue ,
+				0 as seqno from ${fromSql}  t
+ 	</select>
+
 	<sql id="SysDictItem_Column_List" >
 		i.guid as guid
 		,i.guid_dict as guidDict
@@ -27,4 +37,5 @@
 		,i.send_value as sendValue
 		,i.seqno as seqno
 	</sql>
+
 </mapper>
