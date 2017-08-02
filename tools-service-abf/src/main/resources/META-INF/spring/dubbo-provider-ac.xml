@@ -43,4 +43,32 @@
  	
     <bean id="applicationRServiceImpl" class="org.tis.tools.rservice.ac.capable.ApplicationRServiceImpl" />
 
+   <dubbo:service
+		interface="org.tis.tools.rservice.ac.capable.IMenuRService" group="ac" version="${IMenuRService.version}"
+		ref="menuRServiceImpl"
+		protocol="dubbo"  timeout="3000" />
+
+    <bean id="menuRServiceImpl" class="org.tis.tools.rservice.ac.capable.MenuRServiceImpl" />
+
+   <dubbo:service
+		interface="org.tis.tools.rservice.ac.capable.IAuthenticationRService" group="ac" version="${IAuthenticationRService.version}"
+		ref="authenticationRServiceImpl"
+		protocol="dubbo"  timeout="3000" />
+
+    <bean id="authenticationRServiceImpl" class="org.tis.tools.rservice.ac.capable.AuthenticationRServiceImpl" />
+
+   <dubbo:service
+		   interface="org.tis.tools.rservice.ac.capable.IOperatorRService" group="ac" version="${IOperatorRService.version}"
+		   ref="operatorRServiceImpl"
+		   protocol="dubbo" timeout="3000" />
+
+    <bean id="operatorRServiceImpl" class="org.tis.tools.rservice.ac.capable.OperatorRServiceImpl" />
+
+   <dubbo:service
+		   interface="org.tis.tools.rservice.ac.capable.IRoleRService" group="ac" version="${IRoleRService.version}"
+		   ref="roleRServiceImpl"
+		   protocol="dubbo" timeout="3000" />
+    <bean id="roleRServiceImpl" class="org.tis.tools.rservice.ac.capable.RoleRServiceImpl"/>
+
+
 </beans>
