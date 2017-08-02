@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.tis.tools.dao.ac.AcRoleMapperExt">
+
+    <select id="queryAllRoleExt" resultType="map"  >
+        select <include refid="RoleExt_Column_List" /> from AC_ROLE a left join AC_APP b on a.GUID_APP = b.GUID
+    </select>
+
+    <select id="queryAllRolePartyExt" resultType="map" >
+        select <include refid="RolePartyExt_Column_List" />,
+        <if test="partyType == 'organization' " >
+            c.ORG_NAME as partyName
+        </if>
+        <if test="partyType == 'workgroup' " >
+            c.GROUP_NAME as partyName
+        </if>
+        <if test="partyType == 'position'" >
+            c.POSITION_NAME as partyName
+        </if>
+        <if test="partyType == 'duty'" >
+            c.DUTY_NAME as partyName
+        </if>
+            from AC_PARTY_ROLE a left join AC_ROLE b  on a.GUID_ROLE = b.GUID left JOIN
+        <if test="partyType == 'organization' " >
+            OM_ORG
+        </if>
+        <if test="partyType == 'workgroup' " >
+            OM_GROUP
+        </if>
+        <if test="partyType == 'position'" >
+            OM_POSITION
+        </if>
+        <if test="partyType == 'duty'" >
+            OM_DUTY
+        </if>
+        c on a.GUID_PARTY = c.GUID WHERE a.GUID_ROLE = #{roleGuid} and a.PARTY_TYPE = #{partyType}
+    </select>
+
+    <select id="queryAllOperatorRoleExt" resultType="map"  >
+        select <include refid="OperatorRoleExt_Column_List" /> from AC_OPERATOR_ROLE a left JOIN AC_OPERATOR b on a.GUID_OPERATOR = b.GUID
+        where a.GUID_ROLE = #{roleGuid}
+    </select>
+
+    <sql id="Where_Clause">
+        <if test="condition != null"><where>${condition}</where></if>
+    </sql>
+
+    <sql id="RoleExt_Column_List" >
+        a.guid as guid
+		,a.guid_app as guidApp
+		,a.role_code as roleCode
+		,a.role_name as roleName
+		,a.role_type as roleType
+		,a.role_desc as roleDesc
+		,b.app_name as appName
+    </sql>
+
+    <sql id="RolePartyExt_Column_List" >
+        a.party_type as partyType
+		,a.guid_party as guidParty
+		,a.guid_role as guidRole
+		,b.role_name as roleName
+    </sql>
+
+    <sql id="OperatorRoleExt_Column_List" >
+        a.guid_operator as guidOperator
+        ,a.guid_role as guidRole
+        ,a.auth as auth
+        ,b.operator_name as operatorName
+        ,b.user_id as userId
+        ,b.operator_status as operatorStatus
+        ,b.auth_mode as authMode
+    </sql>
+
+</mapper>

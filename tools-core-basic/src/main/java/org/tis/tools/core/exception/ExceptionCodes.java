@@ -38,6 +38,63 @@ public class ExceptionCodes {
 	 * 异常：查找类路径下的META-INF资源错误.<br>
 	 */
 	public static final String FIND_META_INF_RESOURCE_ERROR = R_EX_CODE("0001");
+
+	/**
+	 * 异常：新增数据时，对象不能为空.<br>
+	 */
+	public static final String NOT_ALLOW_NULL_WHEN_INSERT = R_EX_CODE("0003");
+
+	/**
+	 * 异常：修改数据时，对象不能为空.<br>
+	 */
+	public static final String NOT_ALLOW_NULL_WHEN_DELETE = R_EX_CODE("0004");
+
+	/**
+	 * 异常：修改数据时，对象不能为空.<br>
+	 */
+	public static final String NOT_ALLOW_NULL_WHEN_UPDATE = R_EX_CODE("0005");
+	/**
+	 * 异常：查询数据时，对象不能为空.<br>
+	 */
+	public static final String NOT_ALLOW_NULL_WHEN_QUERY = R_EX_CODE("0006");
+
+	/**
+	 * 异常：新增数据时，数据不全.<br>
+	 */
+	public static final String LACK_PARAMETERS_WHEN_INSERT = R_EX_CODE("0007");
+
+	/**
+	 * 异常：删除数据时，数据不全.<br>
+	 */
+	public static final String LACK_PARAMETERS_WHEN_DELETE = R_EX_CODE("0008");
+	/**
+	 * 异常：修改数据时，数据不全.<br>
+	 */
+	public static final String LACK_PARAMETERS_WHEN_UPDATE = R_EX_CODE("0009");
+	/**
+	 * 异常：查找数据时，数据不全.<br>
+	 */
+	public static final String LACK_PARAMETERS_WHEN_QUERY = R_EX_CODE("0010");
+
+	/**
+	 * 异常：新增项.<br>
+	 */
+	public static final String FAILURE_WHEN_INSERT = R_EX_CODE("0011");
+
+	/**
+	 * 异常：删除项.<br>
+	 */
+	public static final String FAILURE_WHEN_DELETE = R_EX_CODE("0012");
+
+	/**
+	 * 异常：修改项.<br>
+	 */
+	public static final String FAILURE_WHEN_UPDATE = R_EX_CODE("0013");
+
+	/**
+	 * 异常：查询项.<br>
+	 */
+	public static final String FAILURE_WHEN_QUERY = R_EX_CODE("0014");
 	
 	/**
 	 * 以烤串方式拼接异常码

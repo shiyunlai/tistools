@@ -172,4 +172,14 @@ public interface IDictRService {
 	 */
 	SysDictItem querySysDictItemByGuid(String dictItemGuid) throws SysManagementException;
 
+
+	/**
+	 * 根据dictKey查询业务字典项列表
+	 * @param dictKey
+	 * 			字典key
+	 * @return
+	 * @throws SysManagementException
+	 */
+	List<SysDictItem> queryDictItemListByDictKey(String dictKey) throws SysManagementException;
+
 }

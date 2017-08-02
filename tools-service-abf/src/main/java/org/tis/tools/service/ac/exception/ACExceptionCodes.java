@@ -358,6 +358,15 @@ public class ACExceptionCodes {
 	 * 用户ID已经存在
 	 */
 	public static final String USER_ID_IS_ALREADY_EXIST  = R_EX_CODE("0066");
+
+	/**
+	 * 查询操作员身份权限失败
+	 */
+	public static final String AC_OPERATOR_IS_NOT_FOUND  = R_EX_CODE("0067");
+	/**
+	 * 查询操作员身份权限失败
+	 */
+	public static final String AC_ROLE_IS_NOT_FOUND  = R_EX_CODE("0068");
 	
 	/**
 	 * 以烤串方式拼接异常码

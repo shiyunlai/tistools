@@ -3,6 +3,11 @@
  */
 package org.tis.tools.rservice.ac.capable;
 
+import org.tis.tools.base.exception.ToolsRuntimeException;
+import org.tis.tools.model.po.ac.AcOperatorIdentity;
+
+import java.util.List;
+
 /**
  * <pre>
  * 
@@ -23,5 +28,22 @@ package org.tis.tools.rservice.ac.capable;
  *
  */
 public interface IAuthenticationRService {
+
+    /**
+     *   用户状态检查
+     * a)	判断用户是否存在；
+     * b)	用户状态只能是“退出、正常、挂起”，否则报错提示；
+     * c)	检查是否在允许的时间范围内；
+     * d)	检查是否在运行MAC范围内；
+     * e)	检查是否在运行的IP地址范围内；
+
+     * @param userId
+     *          用户名
+     * @return 用户检查结果
+     *
+     * @throws ToolsRuntimeException
+     *
+     */
+    List<AcOperatorIdentity> userStatusCheck(String userId) throws ToolsRuntimeException;
 
 }
