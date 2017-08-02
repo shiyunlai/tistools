@@ -9,6 +9,4 @@ angular.module("LoginApp", [])
         $scope.limit = function(item){
             console.log(item);
         }
-
-
     })

@@ -28,59 +28,65 @@
                 <!--</div>-->{{subFrom}}
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4">岗位代码</label>
+                        <label class="control-label col-md-4">岗位代码:</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="subFrom.POSITION_CODE" name="id" />
+                            <input type="text" class="form-control" ng-model="subFrom.positionCode" name="id" />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4">岗位名称</label>
+                        <label class="control-label col-md-4">岗位名称:</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="subFrom.POSITION_NAME"
+                                   ng-model="subFrom.positionName"
                                    name="id" />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4">岗位类型</label>
+                        <label class="control-label col-md-4">岗位类型:</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="subFrom.POSITION_TYPE"
+                                   ng-model="subFrom.positionType"
                                    name="id" />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4">创建时间</label>
+                        <label class="control-label col-md-4">所属职务:</label>
                         <div class="col-md-8">
-                            <input type="date" class="form-control"
-                                   ng-model="subFrom.CREATETIME"
+                            <input type="text" class="form-control"
+                                   ng-model="subFrom.guidDuty"
                                    name="id" />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4">岗位有效开始日期</label>
+                        <label class="control-label col-md-4">岗位有效开始日期:</label>
                         <div class="col-md-8">
-                            <input type="date" class="form-control"
-                                   ng-model="subFrom.START_DATE"
-                                   name="id" />
+                            <div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
+                                    <span class="input-group-btn">
+                                        <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                <input type="text" class="form-control" ng-model="subFrom.startDate" readonly/>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4">岗位有效截止日期</label>
+                        <label class="control-label col-md-4">岗位有效截止日期:</label>
                         <div class="col-md-8">
-                            <input type="date" class="form-control"
-                                   ng-model="subFrom.END_DATE"
-                                   name="id" />
+                            <div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
+                                    <span class="input-group-btn">
+                                        <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                <input type="text" class="form-control" ng-model="subFrom.endDate" readonly/>
+                            </div>
                         </div>
                     </div>
                 </div>

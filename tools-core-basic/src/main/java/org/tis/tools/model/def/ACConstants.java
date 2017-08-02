@@ -21,6 +21,21 @@ public interface ACConstants {
 	public static final String PARTY_TYPE_DUTY = "duty";
 	
 	/////////////////////////////////////////////////
-	
+
+	/**作员状态：正常*/
+	public static final String OPERATE_STATUS_LOGIN = "login";
+	/**操作员状态：挂起*/
+	public static final String OPERATE_STATUS_PAUSE = "pause";
+	/**操作员状态：注销*/
+	public static final String OPERATE_STATUS_CLEAR = "clear";
+	/**操作员状态：锁定*/
+	public static final String OPERATE_STATUS_LOCK = "lock";
+	/**操作员状态：退出*/
+	public static final String OPERATE_STATUS_LOGOUT = "logout";
+	/**操作员状态：停用*/
+	public static final String OPERATE_STATUS_STOP= "stop";
+
+
+
 
 }

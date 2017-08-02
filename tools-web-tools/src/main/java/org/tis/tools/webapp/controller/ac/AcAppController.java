@@ -238,7 +238,6 @@ public class AcAppController extends BaseController {
 				logger.info("groupAdd request : " + content);
 			}
 			JSONObject jsonObj = JSONObject.parseObject(content);	//传入的参数
-		
 			String funcgroupName = jsonObj.getString("funcgroupName");
 			String groupLevel = jsonObj.getString("groupLevel");
 			String guidApp = jsonObj.getString("guidApp");

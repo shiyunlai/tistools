@@ -707,6 +707,7 @@
 				<artifactId>resteasy-jaxb-provider</artifactId>
 				<version>${resteasy-jaxb-provider_version}</version>
 			</dependency>
+			<!-- https://mvnrepository.com/artifact/com.esotericsoftware.kryo/kryo -->
 			<dependency>
 				<groupId>com.esotericsoftware.kryo</groupId>
 				<artifactId>kryo</artifactId>

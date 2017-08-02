@@ -64,15 +64,15 @@
     	UPDATE SYS_CHANNEL_CTL 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.chn_code != null" >
-        	chn_code = #{domain.chnCode,jdbcType=VARCHAR}
+		<if test="domain.chnCode != null" >
+        	chn_code = #{domain.chnCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.chn_name != null" >
-        	chn_name = #{domain.chnName,jdbcType=VARCHAR}
+		<if test="domain.chnName != null" >
+        	chn_name = #{domain.chnName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.chn_remark != null" >
+		<if test="domain.chnRemark != null" >
         	chn_remark = #{domain.chnRemark,jdbcType=VARCHAR}
       	</if>
 	    </set>

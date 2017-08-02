@@ -96,15 +96,15 @@ public class ACExceptionCodes {
 	/**
 	 * 删除菜单失败
 	 */
-	public static final String FAILURE_WHRN_DELETE_AC_MENU = R_EX_CODE("0014");
+	public static final String FAILURE_WHEN_DELETE_AC_MENU = R_EX_CODE("0014");
 	
 	/**
 	 * 修改菜单失败
 	 */
-	public static final String FAILURE_WHRN_UPDATE_AC_MENU = R_EX_CODE("0015");
+	public static final String FAILURE_WHEN_UPDATE_AC_MENU = R_EX_CODE("0015");
 	
 	/**
-	 * 删除菜单失败
+	 * 查询菜单失败
 	 */
 	public static final String FAILURE_WHRN_QUERY_AC_MENU = R_EX_CODE("0016");
 	
@@ -131,22 +131,22 @@ public class ACExceptionCodes {
 	/**
 	 * 新增操作员失败
 	 */
-	public static final String FAILURE_WHRN_CREATE_AC_OPERATOR = R_EX_CODE("0021");
+	public static final String FAILURE_WHEN_CREATE_AC_OPERATOR = R_EX_CODE("0021");
 	
 	/**
 	 * 删除操作员失败
 	 */
-	public static final String FAILURE_WHRN_DELETE_AC_OPERATOR = R_EX_CODE("0022");
+	public static final String FAILURE_WHEN_DELETE_AC_OPERATOR = R_EX_CODE("0022");
 	
 	/**
 	 * 修改操作员失败
 	 */
-	public static final String FAILURE_WHRN_UPDATE_AC_OPERATOR= R_EX_CODE("0023");
+	public static final String FAILURE_WHEN_UPDATE_AC_OPERATOR= R_EX_CODE("0023");
 	
 	/**
 	 * 查询操作员失败
 	 */
-	public static final String FAILURE_WHRN_QUERY_AC_OPERATOR = R_EX_CODE("0024");
+	public static final String FAILURE_WHEN_QUERY_AC_OPERATOR = R_EX_CODE("0024");
 	
 	/**
 	 * 新增功能操作行为失败
@@ -265,6 +265,99 @@ public class ACExceptionCodes {
 	 * 关闭应用失败
 	 */
 	public static final String FAILURE_WHEN_DISABLE_ACAPP = R_EX_CODE("0047");
+
+
+	/**
+	 * 检查用户状态出现错误
+	 */
+	public static final String CHECK_USER_STATUS_ERROR = R_EX_CODE("0048");
+
+	/**
+	 * 用户ID对应用户不存在
+	 */
+	public static final String USER_ID_NOT_EXIST = R_EX_CODE("0049");
+
+	/**
+	 * 用户状态不允许登陆
+	 */
+	public static final String USER_STATUS_NOT_ALLOW_LOGIN = R_EX_CODE("0050");
+
+	/**
+	 * 查询跟菜单失败
+	 */
+	public static final String FAILURE_WHEN_QUERY_ROOT_MENU = R_EX_CODE("0051");
+
+	/**
+	 * 查询子菜单失败
+	 */
+	public static final String FAILURE_WHEN_QUERY_CHILD_MENU = R_EX_CODE("0052");
+
+	/**
+	 * GUID对应的菜单不存在
+	 */
+	public static final String MENU_NOT_EXIST_BY_GUID = R_EX_CODE("0053");
+	/**
+	 * 对象为null
+	 */
+	public static final String OBJECT_IS_NULL = R_EX_CODE("0054");
+	/**
+	 * 当前应用已经有根菜单
+	 */
+	public static final String CURRENT_APP_ALREADY_HAVE_ROOT_MENU = R_EX_CODE("0055");
+
+	/**
+	 * 新增操作员身份失败
+	 */
+	public static final String FAILURE_WHEN_CREATE_AC_OPERATOR_IDENTITY = R_EX_CODE("0056");
+
+	/**
+	 * 删除操作员身份失败
+	 */
+	public static final String FAILURE_WHEN_DELETE_AC_OPERATOR_IDENTITY = R_EX_CODE("0057");
+
+	/**
+	 * 修改操作员身份失败
+	 */
+	public static final String FAILURE_WHEN_UPDATE_AC_OPERATOR_IDENTITY = R_EX_CODE("0058");
+
+	/**
+	 * 查询操作员身份失败
+	 */
+	public static final String FAILURE_WHEN_QUERY_AC_OPERATOR_IDENTITY  = R_EX_CODE("0059");
+
+	/**
+	 * 找不到GUID对应的操作员身份
+	 */
+	public static final String AC_OPERATOR_IDENTITY_IS_NOT_EXIST  = R_EX_CODE("0060");
+	/**
+	 * 设置默认操作员身份失败
+	 */
+	public static final String FAILURE_WHEN_SET_DEFAULT_AC_OPERATOR_IDENTITY  = R_EX_CODE("0061");
+
+	/**
+	 * 新增操作员身份权限失败
+	 */
+	public static final String FAILURE_WHEN_CREATE_AC_OPERATOR_IDENTITYRES = R_EX_CODE("0062");
+
+	/**
+	 * 删除操作员身份权限失败
+	 */
+	public static final String FAILURE_WHEN_DELETE_AC_OPERATOR_IDENTITYRES = R_EX_CODE("0063");
+
+	/**
+	 * 修改操作员身份权限失败
+	 */
+	public static final String FAILURE_WHEN_UPDATE_AC_OPERATOR_IDENTITYRES = R_EX_CODE("0064");
+
+	/**
+	 * 查询操作员身份权限失败
+	 */
+	public static final String FAILURE_WHEN_QUERY_AC_OPERATOR_IDENTITYRES  = R_EX_CODE("0065");
+
+	/**
+	 * 用户ID已经存在
+	 */
+	public static final String USER_ID_IS_ALREADY_EXIST  = R_EX_CODE("0066");
 	
 	/**
 	 * 以烤串方式拼接异常码

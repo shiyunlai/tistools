@@ -63,16 +63,16 @@
 	 <update id="updateByCondition" parameterType="map">
     	UPDATE SYS_SEQNO 
 	   <set>
-		<if test="domain.seq_key != null" >
-        	seq_key = #{domain.seqKey,jdbcType=VARCHAR}
+		<if test="domain.seqKey != null" >
+        	seq_key = #{domain.seqKey,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.seq_no != null" >
-        	seq_no = #{domain.seqNo,jdbcType=DECIMAL}
+		<if test="domain.seqNo != null" >
+        	seq_no = #{domain.seqNo,jdbcType=DECIMAL},
       	</if>
 		<if test="domain.reset != null" >
-        	reset = #{domain.reset,jdbcType=VARCHAR}
+        	reset = #{domain.reset,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.reset_params != null" >
+		<if test="domain.resetParams != null" >
         	reset_params = #{domain.resetParams,jdbcType=VARCHAR}
       	</if>
 	    </set>

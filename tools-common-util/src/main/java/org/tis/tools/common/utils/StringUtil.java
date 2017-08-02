@@ -21,7 +21,7 @@ public class StringUtil {
 	public static boolean isEmpty(String ... strs){
 		if(strs==null) return true;
 		for(String str : strs){
-			if(str==null || str.trim()==""){
+			if(str==null || str.trim().length()==0){
 				return true;
 			}
 		}
@@ -127,5 +127,31 @@ public class StringUtil {
 		}
 		return true;
 	}
-	
+
+	/**
+	 * 判断字符是否在一个数组中
+	 * @param str 需要判断的字符
+	 * @param strs　用于比较的字符
+	 * @return
+	 */
+	public static boolean isEqualsIn(String str, String... strs) {
+		if (str == null || str.length() == 0)
+			return false;
+		for (String s : strs) {
+			if(isEquals(str, s)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static boolean isEquals(String s1, String s2) {
+		if (s1 == null && s2 == null)
+			return true;
+		if (s1 == null || s2 == null)
+			return false;
+		return s1.equals(s2);
+	}
+
+
 }
