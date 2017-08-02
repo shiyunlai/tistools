@@ -12,7 +12,19 @@
 	<version>${tools-web-tools-version}</version>
 	<packaging>war</packaging>
 	<name>tools-web-tools</name>
-
+	    <repositories>
+        <repository>
+            <id>tools_nexus</id>
+            <name>maven-public</name>
+            <url>http://139.196.145.67:8081/repository/maven-public/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
 	<properties>
 		<maven.test.skip>true</maven.test.skip>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
@@ -110,7 +122,7 @@
 			<artifactId>tools-facade-sys</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		
+
 		<!-- disconf start -->
 		<dependency>
 			<groupId>com.baidu.disconf</groupId>
@@ -548,11 +560,18 @@
 			<version>10.2.0.4.0</version> </dependency> -->
 
 		<!-- 引入oracle数据库jdbc驱动包 -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc14</artifactId>
-			<!-- <version>10.2.0.4.0</version> -->
+			<version>10.2.0.4.0</version>
 			<version>${oracle.version}</version>
+		</dependency> -->
+		
+		<dependency>
+   			<groupId>mysql</groupId>
+   			<artifactId>mysql-connector-java</artifactId>
+   			<!-- <version>10.2.0.4.0</version> -->
+   			<!--<version>${mysql.version}</version>-->
 		</dependency>
 
 		<dependency>

@@ -5,6 +5,13 @@
 /* Metronic App */
 var isdebug = false;
 var manurl = 'http://localhost:8089/tis';
+
+/*把接口名称抽出来 有时间再做  主路径 manurl已经有了，把接口路径和名称 单独抽出来，抽出来一个API 对象。方便后期维护*/
+/*var  API= {
+    接口路径:接口名
+}  方便，以后修改接口，只需要修改这个配置*/
+
+
 var MetronicApp = angular.module("MetronicApp", [
     "ui.router",
     "ui.bootstrap",
@@ -17,7 +24,6 @@ var MetronicApp = angular.module("MetronicApp", [
     'ui.grid.edit',
     'ui.grid.pagination',
     'ui.grid.resizeColumns'
-
 ]);
 
 function action(bdy){
@@ -188,11 +194,36 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', function($scope
  ***/
 
 /* Setup Layout Part - Header */
-MetronicApp.controller('HeaderController', ['$scope', function($scope) {
+MetronicApp.controller('HeaderController', ['$scope','filterFilter','$uibModal', function($scope,filterFilter,$uibModal) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
         Demo.init();
     });
+    //个人信息页面
+    $scope.information = function(){
+        openwindow($uibModal, 'views/landinginfor/personalinfor.html','lg',
+            function ($scope, $modalInstance) {
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            }
+        )
+    }
+    //修改密码页面
+    $scope.improved = function(){
+        openwindow($uibModal, 'views/landinginfor/Improved.html','lg',
+            function ($scope, $modalInstance) {
+                $scope.add = function(item){//保存新增的函数
+                    toastr['success']("修改成功！");
+                    $modalInstance.close();
+                }
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            }
+        )
+    }
+
 }]);
 
 /* Setup Layout Part - Sidebar */
@@ -716,6 +747,18 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             templateUrl:"views/numberResources/numberResources.html",
             data: {pageTitle: '序号资源表'},
             controller:"numres_controller"
+        })
+        .state("duty",{
+            url:"/duty.html",
+            templateUrl:"views/duty/duty.html",
+            data: {pageTitle: '职务定义'},
+            controller:"duty_controller"
+        })
+        .state("Systempara",{
+            url:"/Systempara.html",
+            templateUrl:"views/Systempara/Systempara.html",
+            data: {pageTitle: '序号资源表'},
+            controller:"systempara_controller"
         })
 }]);
 

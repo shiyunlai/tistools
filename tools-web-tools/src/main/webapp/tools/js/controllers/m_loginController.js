@@ -1,15 +1,12 @@
 /**
  * Created by zhangsu on 2016/5/9.
  */
-MetronicApp.controller('login_controller', function($rootScope, $scope,$state,$stateParams,login_service,filterFilter,$modal, $http, $timeout) {
+angular.module("LoginApp", [])
+    .controller("loginController",function ($rootScope,$scope,login_service) {
+        var login ={};
+        $scope.login = login;
 
-    $scope.$on('$viewContentLoaded', function() {
-        // initialize core components
-        App.initAjax();
-    });
-
-    $rootScope.settings.layout.pageBodySolid = true;
-    $rootScope.settings.layout.pageSidebarClosed = false;
-    ComponentsDateTimePickers.init()
-
-});
+        $scope.limit = function(item){
+            console.log(item);
+        }
+    })

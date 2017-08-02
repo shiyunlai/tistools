@@ -42,7 +42,7 @@ public class AcMenu implements Serializable {
 	/** 菜单层次. */
 	private Integer menuLevel;
 
-	/** 菜单. */
+	/** 父菜单. */
 	private AcMenu parentsacMenu;
 
 	/** 根菜单GUID. */

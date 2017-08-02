@@ -38,9 +38,12 @@
                     <div class="form-group">
                         <label class="control-label col-md-4"> 重置方式:</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="numberFrom.resEt" ng-disabled="!editsflag"
-                                   name="dict_key" />
+                            <select class="form-control" name="dict_open" ng-model="numberFrom.resEt"  ng-disabled="!editsflag">
+                                <option value="不重置" selected>不重置</option>
+                                <option value="按天重置">按天重置</option>
+                                <option value="按周重置">按周重置</option>
+                                <option value="自定义重置周期">自定义重置周期</option>
+                            </select>
                         </div>
                     </div>
                 </div>

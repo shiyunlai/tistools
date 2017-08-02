@@ -423,14 +423,12 @@ function getYYYYMMDD(){
     return y+m+d;
 }
 
-
 //add by gaojie
 //ui-grid init
 //thisobj--表ID,fun--返回data的方法,com--表列名,筛选配置项,bol--布尔值,是否多选.selection--自定义行选中
-
-function initgrid($scope, thisobj, fun, filterFilter,com,bol,selection){
+function initgrid($scope, thisobj, filterFilter,com,bol,selection){
     thisobj = {
-        data: fun,
+        data: [],
         //-------- 分页属性 ----------------
         enablePagination: true, //是否分页，默认为true
         enablePaginationControls: true, //使用默认的底部分页
@@ -438,7 +436,6 @@ function initgrid($scope, thisobj, fun, filterFilter,com,bol,selection){
         paginationCurrentPage:1, //当前页码
         paginationPageSize: 10, //每页显示个数
         //paginationTemplate:"<div></div>", //自定义底部分页代码
-        totalItems : 0, // 总数量
         useExternalPagination: true,//是否使用分页按钮
         //导出测试
         enableSelectAll: true,
@@ -467,8 +464,8 @@ function initgrid($scope, thisobj, fun, filterFilter,com,bol,selection){
         enableGridMenu: true, //是否显示grid 菜单
         enableFiltering:true,//打开标识,用于搜索
         // headerTemplate:'<div></div>',
-        enableFooterTotalSelected: true, // 是否显示选中的总数，默认为true, 如果显示，showGridFooter 必须为true
-        showGridFooter:true,
+        enableFooterTotalSelected: false, // 是否显示选中的总数，默认为true, 如果显示，showGridFooter 必须为true
+        showGridFooter:false,
         onRegisterApi: function(girdApi) {
             $scope.girdApi = girdApi;
             //分页按钮事件
@@ -483,17 +480,15 @@ function initgrid($scope, thisobj, fun, filterFilter,com,bol,selection){
         },
         getSelectedRows:function () {
             return $scope.girdApi.selection.getSelectedRows();
-        }
+        },
+        mydefalutData:[]
     };
 
-
     //ui-grid getPage方法
-
-
     thisobj.getPage = function(curPage, pageSize) {
         var firstRow = (curPage - 1) * pageSize;
-        thisobj.totalItems = thisobj.data.length;
-        thisobj.data = thisobj.data.slice(firstRow, firstRow + pageSize);
+        thisobj.totalItems = thisobj.mydefalutData.length;
+        thisobj.data = thisobj.mydefalutData.slice(firstRow, firstRow + pageSize);
         //或者像下面这种写法
         //$scope.myData = mydefalutData.slice(firstRow, firstRow + pageSize);
     };
@@ -501,3 +496,10 @@ function initgrid($scope, thisobj, fun, filterFilter,com,bol,selection){
     // var a = $scope.girdApi.selection.getSelectedRows();
     return thisobj;
 }
+
+function FormatDate (strTime) {
+    var date = new Date(strTime);
+    return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+
+}
+

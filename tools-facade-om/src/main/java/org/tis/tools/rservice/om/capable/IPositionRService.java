@@ -304,12 +304,24 @@ public interface IPositionRService {
 	List<OmPosition> queryChilds(String positionCode) ;
 	
 	/**
+	 * 查询所有子岗位,不限级别
+	 */
+	List<OmPosition> queryAllChilds(String positionCode);
+	
+	/**
 	 * 查询属于岗位的员工列表 
 	 * @param positionCode
 	 * @return
 	 */
 	List<OmEmployee> queryEmployee(String positionCode) ;
-
+	
+	/**
+	 * 查询不属于此岗位的员工列表 
+	 * @param positionCode
+	 * @return
+	 */
+	List<OmEmployee> queryEmployeeNotin(String positionCode) ;
+	
 	/**
 	 * 查询与岗位相关的应用列表 
 	 * @param positionCode
@@ -331,4 +343,8 @@ public interface IPositionRService {
 	 */
 	List<AcRole> queryRole(String positionCode) ;
 	
+	/**
+	 * 删除岗位
+	 */
+	void deletePosition(String positionCode);
 }

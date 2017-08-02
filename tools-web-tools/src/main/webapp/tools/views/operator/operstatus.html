@@ -1,5 +1,4 @@
 <!--操作员身份页面-->
-<!--角色管理-->
 <div class="page-bar ng-scope" style="border-bottom: 1px solid #e7ecf1;">
     <ul class="page-breadcrumb">
         <li>
@@ -80,7 +79,7 @@
                                         </button>
                                         <button type="button" name="back" class="btn btn-primary" ng-click="idenEdit(4)">  修改
                                         </button>
-                                        <button type="button" name="back" class="btn btn-primary" ng-click="idenSave()"> 选定此身份
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="idenSave()"> 设置成默认身份
                                         </button>
                                         <button type="button" name="back" class="btn btn-danger" ng-click="idenDel()"> 删除
                                         </button>
@@ -89,7 +88,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6" ng-show="opensf.idenright">
+                    <div class="col-md-6" ng-if="opensf.idenright">
                         <div class="portlet light" >
                             <div class="portlet-title">
                                 <div class="caption">

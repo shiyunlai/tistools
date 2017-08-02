@@ -24,19 +24,50 @@
     <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
         <span></span>
     </a>
-
     <div class="top-menu">
         <ul class="nav navbar-nav pull-right">
+            <li class="dropdown dropdown-extended dropdown-inbox">
+                <a href="#" class="dropdown-toggle" dropdown-menu-hover data-toggle="dropdown" data-close-others="true">
+                    <i class="icon-settings"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <!--<li class="external">
+                        <h3>You have
+                            <span class="bold">7 New</span> Messages</h3>
+                        <a href="#/profile/dashboard">view all</a>
+                    </li>-->
+                    <li>
+                        <div data-ng-include="'tpl/theme-panel.html'" data-ng-controller="ThemePanelController" style="top: -35px;right: -23px;" class="theme-panel hidden-xs hidden-sm"> </div>
+                    </li>
+                </ul>
 
+            </li>
             <li class="dropdown dropdown-user">
                 <a href="#" class="dropdown-toggle" dropdown-menu-hover data-toggle="dropdown" data-close-others="true">
-                    <span class="username username-hide-on-mobile"> {{login.userInfo.user_name}} </span>
+                    <!--<span class="username username-hide-on-mobile"> {{login.userInfo.user_name}} </span>-->
+                    <span class="username username-hide-on-mobile"> <i class="icon-user" style="color:blue;"></i> User </span>
                     <i class="fa fa-angle-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-default">
                     <li>
+                        <a href="javascript:;"  ng-click="information()"  >
+                            <i class="icon-user"></i> 用户信息 </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" ng-click="improved()">
+                            <i class="icon-key"></i>改密</a>
+                    </li>
+                    <li>
                         <a href="#" onclick="loginout()">
-                            <i class="icon-key"></i> 注销 </a>
+                            <i class="icon-power"></i> 注销 </a>
+                    </li>
+                    <li>
+                        <a href="#/opManage.html">
+                            <i class="icon-user-follow"></i> 设置身份 </a>
+                    </li>
+                    <li>
+                        <a href="#/Reorganizemenu.html">
+                            <i class="icon-list"></i> 重组菜单 </a>
                     </li>
                 </ul>
             </li>
@@ -51,5 +82,8 @@
     function loginout(){
         sessionStorage.clear();
         window.location.reload();
+        if(confirm("是否退出系统")){
+            window.location = "../tools/login.html";//如果正确，则进入主页
+        }
     }
 </script>

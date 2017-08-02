@@ -12,10 +12,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-
 import org.apache.log4j.Logger;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+
 
 /**
  * <p>ClassName: AjaxUtils</p>
@@ -298,7 +299,7 @@ public class AjaxUtils {
         jsonMap.put(RETCODE, SUCCESSCODE);
         jsonMap.put(STATUS, SUCCESS);
         jsonMap.put(RETMESSAGE, args[0]);
-        String jsonString = JSON.toJSONString(jsonMap);
+        String jsonString = JSON.toJSONString(jsonMap,SerializerFeature.WriteNullListAsEmpty);
         return ajax(response, jsonString, "text/html");
     }
 

@@ -25,11 +25,23 @@ MetronicApp.factory('abftree_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     }
-    service.loademp = function (subFrom) {
-        //TODO
+    service.loadempbyorg = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/loadempbyorg",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.loadempNotinorg = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/loadempNotinorg",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
     }
     service.loadxjjg = function (subFrom) {
-        //TODO
+        var res = $http.post(manurl + "/om/org/loadxjjg",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
     }
     service.loadqxxx = function (subFrom) {
         //todo
@@ -40,6 +52,94 @@ MetronicApp.factory('abftree_service',['$http', '$q', function ($http,$q) {
     }
     service.addorg = function (subFrom) {
         var res = $http.post(manurl + "/om/org/add",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.initcode = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/initcode",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.updateOrg = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/updateOrg",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.deleteOrg = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/deleteOrg",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.addposit = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/addposit",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    //添加机构-员工关系表
+    service.addEmpOrg = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/addEmpOrg",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    //删除机构-员工关系表
+    service.deleteEmpOrg = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/deleteEmpOrg",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.loadEmpbyPosition = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/loadEmpbyPosition",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.loadempNotinposit = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/loadempNotinposit",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.addEmpPosition = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/addEmpPosition",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.deleteEmpPosition = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/deleteEmpPosition",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.loadxjposit = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/loadxjposit",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    //启用-注销-重启-停用公用
+    service.enableorg = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/enableorg",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    //启用-注销-重启-停用公用
+    service.enableposition = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/enableposition",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.deletePosition = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/deletePosition",subFrom).then(function (response) {
             return response.data;
         });
         return res;

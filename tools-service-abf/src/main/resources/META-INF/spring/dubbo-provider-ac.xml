@@ -43,6 +43,7 @@
  	
     <bean id="applicationRServiceImpl" class="org.tis.tools.rservice.ac.capable.ApplicationRServiceImpl" />
 
+
    <dubbo:service
 		interface="org.tis.tools.rservice.ac.capable.IMenuRService" group="ac" version="${IMenuRService.version}"
 		ref="menuRServiceImpl"
@@ -69,6 +70,5 @@
 		   ref="roleRServiceImpl"
 		   protocol="dubbo" timeout="3000" />
     <bean id="roleRServiceImpl" class="org.tis.tools.rservice.ac.capable.RoleRServiceImpl"/>
-
 
 </beans>
