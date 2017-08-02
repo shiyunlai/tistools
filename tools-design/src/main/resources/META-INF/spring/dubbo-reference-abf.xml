@@ -22,12 +22,21 @@
 		group="ac"  version="0.9"  interface="org.tis.tools.rservice.ac.capable.IAppRService
 		check="false"  />-->
 		
-		<dubbo:reference 
+		<!-- <dubbo:reference 
 		id="applicationRService"    
 		group="ac" 
 		version="0.9" 
 		interface="org.tis.tools.rservice.ac.capable.IApplicationRService"     
+		check="false"/> -->
+		
+		<dubbo:reference 
+		id="beFocusedRService"    
+		group="ac" 
+		version="1.0" 
+		interface="org.tis.tools.rservice.ac.capable.IBeFocusedRService"     
 		check="false"/>
+		
+		
 		
 		
 		
