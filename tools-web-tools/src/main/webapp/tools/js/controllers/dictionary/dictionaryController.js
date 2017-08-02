@@ -104,6 +104,7 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                         if(data.status == "success"){
                             toastr['success']( "新增成功！");
                             $modalInstance.close();
+
                             dictflag.initt();//调用刷新列表
                         }else{
                             toastr['error']('新增失败'+'<br/>'+data.retMessage);

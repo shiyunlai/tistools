@@ -5,6 +5,13 @@
 /* Metronic App */
 var isdebug = false;
 var manurl = 'http://localhost:8089/tis';
+
+/*把接口名称抽出来 有时间再做  主路径 manurl已经有了，把接口路径和名称 单独抽出来，抽出来一个API 对象。方便后期维护*/
+/*var  API= {
+    接口路径:接口名
+}  方便，以后修改接口，只需要修改这个配置*/
+
+
 var MetronicApp = angular.module("MetronicApp", [
     "ui.router",
     "ui.bootstrap",

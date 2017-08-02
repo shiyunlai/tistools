@@ -200,16 +200,16 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
     //删除身份
     $scope.idenDel =function(){
         if($scope.selectRow) {
+            var info = $scope.opensf.info;
             var identityGuid = $scope.selectRow.guid;
-            console.log(identityGuid);
             if (confirm("确定删除选中的身份吗？删除身份将删除该身份下的所有权限")) {
                 var subFrom = {};
                 subFrom.identityGuid = identityGuid;
                 operator_service.deleteOperatorIdentity(subFrom).then(function (data) {
+                    console.log(data)
                     if (data.status == "success") {
                         toastr['success']("修改成功！");
                         opensf.inittx(info.userid, info.username);//测试查询
-                        $modalInstance.close();
                     } else {
                         toastr['error'](data.retCode, data.retMessage + "删除失败!");
                     }
@@ -221,11 +221,23 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
     }
 
 
-    //选定身份
+    //设置默认身份
     $scope.idenSave = function(){
         if($scope.selectRow){
-           if(confirm('确定选用此条身份记录？')){
-               toastr['success']("保存成功！");
+            var info = $scope.opensf.info;
+            var identityGuid = $scope.selectRow.guid;
+           if(confirm('是否把此身份设置成默认身份？')){
+               var subFrom = {};
+               subFrom.identityGuid = identityGuid;
+               operator_service.setDefaultOperatorIdentity(subFrom).then(function (data) {
+                   console.log(data);
+                   if (data.status == "success") {
+                       toastr['success']("修改成功！");
+                       opensf.inittx(info.userid, info.username);//测试查询
+                   } else {
+                       toastr['error'](data.retCode, data.retMessage + "删除失败!");
+                   }
+               })
            }else{
            }
         }else{
