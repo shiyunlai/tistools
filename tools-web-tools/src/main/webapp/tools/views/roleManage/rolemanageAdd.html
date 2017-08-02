@@ -1,6 +1,5 @@
 <!-- 新增子集菜单页面 -->
 <div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
-    {{roleFrom}}
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-cogs font-green-sharp"></i>
@@ -17,28 +16,28 @@
             <div class="form-body ">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4"> 角色编号</span></label>
+                        <label class="control-label col-md-4"> 角色名称:<span ng-class="{required:myform.dict_roleName.$invalid}"  > * </span></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="roleFrom.rolecode"
-                                   name="dict_key"/>
+                            <input type="text" class="form-control" ng-model="roleFrom.roleName"
+                                   required
+                                   name="dict_roleName"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4"> 角色名称:<span ng-class="{required:myform.dict_key.$invalid}"  > * </span></label>
+                        <label class="control-label col-md-4"> 角色编号:<span ng-class="{required:myform.dict_roleCode.$invalid}"  > * </span></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="roleFrom.rolename"
-                                   required
-                                   name="dict_key"/>
+                            <input type="text" class="form-control" ng-model="roleFrom.roleCode"  required
+                                   name="dict_roleCode"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6" >
                     <div class="form-group">
-                        <label class="control-label col-md-4">角色类别</label>
+                        <label class="control-label col-md-4">角色类别:<span ng-class="{required:myform.dict_roleType.$invalid}"  > * </span></label>
                         <div class="col-md-8">
-                            <select class="form-control" name="dict_open" ng-model="roleFrom.roletype" >
+                            <select class="form-control" name="dict_roleType" ng-model="roleFrom.roleType"  required>
                                 <option value=""></option>
                                 <option value="s">一类</option>
                                 <option value="a">二类</option>
@@ -48,10 +47,21 @@
                 </div>
                 <div class="col-md-6" >
                     <div class="form-group">
-                        <label class="control-label col-md-4">所属应用</label>
+                        <label class="control-label col-md-4">隶属应用:<span ng-class="{required:myform.dict_guidApp.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <select class="form-control" name="dict_guidApp" ng-model="roleFrom.guidApp"  required>
+                                <option ng-repeat="d in  roleList" value="{{d.guid}}">{{d.appName}}</option>
+                            </select>
+                            <span style="color:#ccc">一个角色只能归属一个应用</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">角色描述</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="roleFrom.roleapp"
+                                   ng-model="roleFrom.roleDesc"
                                    name="id" />
                         </div>
                     </div>

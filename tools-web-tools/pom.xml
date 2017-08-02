@@ -560,12 +560,12 @@
 			<version>10.2.0.4.0</version> </dependency> -->
 
 		<!-- 引入oracle数据库jdbc驱动包 -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc14</artifactId>
-			<!-- <version>10.2.0.4.0</version> -->
+			<version>10.2.0.4.0</version>
 			<version>${oracle.version}</version>
-		</dependency>
+		</dependency> -->
 		
 		<dependency>
    			<groupId>mysql</groupId>
