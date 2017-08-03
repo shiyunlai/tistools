@@ -294,7 +294,7 @@ public interface IPositionRService {
 	 *            岗位过滤条件
 	 * @return 从属于该机构的岗位记录
 	 */
-	List<OmPosition> queryPositionByOrg(String orgCode, OmPosition positionCondition) ;
+	List<OmPosition> queryPositionByOrg(String orgGuid, OmPosition positionCondition) ;
 	
 	/**
 	 * 查询（一级）子岗位 

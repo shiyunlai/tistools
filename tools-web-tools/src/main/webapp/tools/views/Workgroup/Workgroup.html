@@ -7,9 +7,13 @@
         <li>
             <a href="#">工作组</a>
         </li>
+        <li ng-if="indextitle != ''">
+            <i class="fa fa-circle"></i>
+            <a href="#">当前节点:{{indextitle}}</a>
+        </li>
     </ul>
 </div>
-<div>
+<div class="portlet light bordered row">
     <!-- 组织机构树 start -->
     <div class="col-md-3">
         <div class="portlet light">
@@ -51,27 +55,32 @@
                 <!-- 详情页签 -->
                 <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="!flag.index">
                     <li ng-class="{true:'active',false:''}[flag.xqxx]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xqxx]" ng-click="workgroup.loaddata(0)">
+                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xqxx]"
+                           ng-click="workgroup.loaddata(0)">
                             <i class="green ace-icon fa fa-bars bigger-120"></i>工作组详情
                         </a>
                     </li>
                     <li ng-class="{true:'active',false:''}[flag.xjgz]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xjgz]" ng-click="workgroup.loaddata(1)">
+                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xjgz]"
+                           ng-click="workgroup.loaddata(1)">
                             <i class="green ace-icon fa fa-bars bigger-120"></i>下级工作组列表
                         </a>
                     </li>
                     <li ng-class="{true:'active',false:''}[flag.xjgw]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xjgw]" ng-click="workgroup.loaddata(2)">
+                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xjgw]"
+                           ng-click="workgroup.loaddata(2)">
                             <i class="green ace-icon fa fa-bars bigger-120"></i>岗位列表
                         </a>
                     </li>
                     <li ng-class="{true:'active',false:''}[flag.ygxx]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.ygxx]" ng-click="workgroup.loaddata(3)">
+                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[flag.ygxx]"
+                           ng-click="workgroup.loaddata(3)">
                             <i class="green ace-icon fa fa-bars bigger-120"></i>人员信息
                         </a>
                     </li>
                     <li ng-class="{true:'active',false:''}[flag.qxxx]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.qxxx]" ng-click="workgroup.loaddata(4)">
+                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[flag.qxxx]"
+                           ng-click="workgroup.loaddata(4)">
                             <i class="green ace-icon fa fa-bars bigger-120"></i>权限信息
                         </a>
                     </li>
@@ -96,21 +105,22 @@
             <!-- 工作组详情 start -->
             <div class="tab-content portlet light" ng-show="flag.xqxx">
                 <div class="portlet-body portlet light">
-                    <form action="#" name="myform" class="form-horizontal ">
+                    <form action="#" name="myform" class="form-horizontal " ng-show="!editflag">
                         <div class="form-body ">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label col-md-4">工作组状态</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control" ng-model="subFrom.groupStatus" name="id" />
+                                        <input type="text" class="form-control" ng-model="sub.groupStatus" name="id"
+                                               readonly/>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6" type="hidden">
+                            <div class="col-md-6" style=" visibility: hidden;">
                                 <div class="form-group">
                                     <label class="control-label col-md-4"></label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control" name="id" />
+                                        <input type="text" class="form-control" name="id" readonly/>
                                     </div>
                                 </div>
                             </div>
@@ -118,7 +128,8 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-4">工作组代码</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control" ng-model="sub.groupCode" name="id" />
+                                        <input type="text" class="form-control" ng-model="sub.groupCode" name="id"
+                                               readonly/>
                                     </div>
                                 </div>
                             </div>
@@ -128,7 +139,7 @@
                                     <div class="col-md-8">
                                         <input type="text" class="form-control"
                                                ng-model="sub.groupName"
-                                               name="id" />
+                                               name="id" readonly/>
                                     </div>
                                 </div>
                             </div>
@@ -138,7 +149,7 @@
                                     <div class="col-md-8">
                                         <input type="text" class="form-control"
                                                ng-model="sub.guidOrg"
-                                               name="id" />
+                                               name="id" readonly/>
                                     </div>
                                 </div>
                             </div>
@@ -148,7 +159,7 @@
                                     <div class="col-md-8">
                                         <input type="text" class="form-control"
                                                ng-model="sub.groupType"
-                                               name="id" />
+                                               name="id" readonly/>
                                     </div>
                                 </div>
                             </div>
@@ -156,12 +167,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-4">生效日期</label>
                                     <div class="col-md-8">
-                                        <div class="input-group date form_datetime" ng-init="$root.settings.utils.initpicker()" >
-                                            <span class="input-group-btn">
-                                                <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
-                                            </span>
-                                            <input type="text" class="form-control" ng-model="sub.startDate" readonly/>
-                                        </div>
+                                        <input type="text" class="form-control" ng-model="sub.startDate" readonly/>
                                     </div>
                                 </div>
                             </div>
@@ -169,12 +175,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-4">失效日期</label>
                                     <div class="col-md-8">
-                                        <div class="input-group date form_datetime" ng-init="$root.settings.utils.initpicker()" >
-                                            <span class="input-group-btn">
-                                                <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
-                                            </span>
-                                            <input type="text" class="form-control" ng-model="sub.endDate" readonly/>
-                                        </div>
+                                        <input type="text" class="form-control" ng-model="sub.endDate" readonly/>
                                     </div>
                                 </div>
                             </div>
@@ -184,21 +185,143 @@
                                     <div class="col-md-8">
                                         <input type="text" class="form-control"
                                                ng-model="sub.groupDesc"
-                                               name="id" />
+                                               name="id" readonly/>
                                     </div>
                                 </div>
                             </div>
-
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label col-md-2"></label>
                                     <div class="col-md-10">
 
                                         <div class="actions btn-set" style="float: right;">
-                                            <button type="button" name="back" class="btn btn-primary" ng-click="add(sub)"> 保存
+                                            <button ng-show="sub.groupStatus == 'cancel'" type="button" name="back"
+                                                    class="btn btn-primary" ng-click="workgroup.enableGroup()"> 启用工作组
                                             </button>
-
-                                            <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
+                                            <button ng-show="sub.groupStatus == 'running'" type="button" name="back"
+                                                    class="btn btn-danger" ng-click="workgroup.enableGroup()()"> 注销工作组
+                                            </button>
+                                            <button type="button" name="back" class="btn btn-primary"
+                                                    ng-click="workgroup.editGroup()"> 编辑工作组
+                                            </button>
+                                            <button type="button" name="back" class="btn btn-danger"
+                                                    ng-click="workgroup.deleteGroup()"> 删除工作组
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form action="#" name="myform3" class="form-horizontal " ng-show="editflag">
+                        <div class="form-body ">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">工作组状态</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" ng-model="subFrom.groupStatus" name="id"
+                                               readonly/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" style=" visibility: hidden;">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"></label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" name="id" readonly/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">工作组代码</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" ng-model="subFrom.groupCode" name="id"
+                                               readonly/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">工作组名称</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"
+                                               ng-model="subFrom.groupName"
+                                               name="id"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">所属机构</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"
+                                               ng-model="subFrom.guidOrg"
+                                               name="id"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">工作组类型</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"
+                                               ng-model="subFrom.groupType"
+                                               name="id" readonly/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">生效日期</label>
+                                    <div class="col-md-8">
+                                        <div class="input-group date form_datetime"
+                                             ng-init="$root.settings.utils.initpicker()">
+                                        <span class="input-group-btn">
+                                        <button class="btn default date-set" type="button"><i
+                                                class="fa fa-calendar"></i></button>
+                                        </span>
+                                            <input type="text" class="form-control" ng-model="subFrom.startDate" readonly/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">失效日期</label>
+                                    <div class="col-md-8">
+                                        <div class="input-group date form_datetime"
+                                             ng-init="$root.settings.utils.initpicker()">
+                                        <span class="input-group-btn">
+                                        <button class="btn default date-set" type="button"><i
+                                                class="fa fa-calendar"></i></button>
+                                        </span>
+                                            <input type="text" class="form-control" ng-model="subFrom.endDate" readonly/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">工作组描述</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"
+                                               ng-model="subFrom.groupDesc"
+                                               name="id"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2"></label>
+                                    <div class="col-md-10">
+                                        <div class="actions btn-set" style="float: right;">
+                                            <button type="button" name="back" class="btn btn-primary"
+                                                    ng-click="workgroup.updateGroup(subFrom)">
+                                                保存
+                                            </button>
+                                            <button type="button" name="back" class="btn btn-danger"
+                                                    ng-click="workgroup.back()"> 取消
                                             </button>
                                         </div>
                                     </div>
@@ -215,9 +338,9 @@
                      ui-grid-edit ui-grid-pagination
                      ui-grid-selection ui-grid-resize-columns></div>
                 <div class="actions btn-set" style="float: right;">
-                    <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.add()"> 新增
+                    <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.add('child')"> 新增
                     </button>
-                    <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.edit()"> 编辑
+                    <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.editxj()"> 编辑
                     </button>
                     <button type="button" name="back" class="btn btn-danger" ng-click="workgroup.delete()"> 删除
                     </button>
@@ -226,41 +349,41 @@
             <!-- 下级工作组列表 end  -->
             <!-- 岗位列表 start -->
             <div class="tab-content portlet light" ng-if="flag.xjgw">
-                <div ui-grid="xjgwgrid"
+                <div ui-grid="posgrid"
                      ui-grid-edit ui-grid-pagination
                      ui-grid-selection ui-grid-resize-columns></div>
                 <div class="actions btn-set" style="float: right;">
-                    <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.add()"> 新增
+                    <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.addpos()"> 添加岗位
                     </button>
                     <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.edit()"> 编辑
                     </button>
-                    <button type="button" name="back" class="btn btn-danger" ng-click="workgroup.delete()"> 删除
+                    <button type="button" name="back" class="btn btn-danger" ng-click="workgroup.deletepos()"> 删除岗位
                     </button>
                 </div>
             </div>
             <!-- 岗位列表 end -->
             <!-- 人员信息 start -->
             <div class="tab-content portlet light" ng-if="flag.ygxx">
-                <div ui-grid="workgroupgrid"
+                <div ui-grid="xjempgrid"
                      ui-grid-edit ui-grid-pagination
                      ui-grid-selection ui-grid-resize-columns></div>
                 <div class="actions btn-set" style="float: right;">
-                    <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.add()"> 新增
+                    <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.addemp()"> 添加人员
                     </button>
-                    <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.edit()"> 编辑
-                    </button>
-                    <button type="button" name="back" class="btn btn-danger" ng-click="workgroup.delete()"> 删除
+                    <!--<button type="button" name="back" class="btn btn-primary" ng-click="workgroup.edit()"> 编辑-->
+                    <!--</button>-->
+                    <button type="button" name="back" class="btn btn-danger" ng-click="workgroup.deletemp()"> 删除人员
                     </button>
                 </div>
             </div>
             <!-- 人员信息 end -->
             <!-- 权限信息 start -->
             <div class="tab-content" ng-if="flag.qxxx">
-                <div  ng-controller="abftree_gwqx_controller">
-                    <div class="portlet-body form col-md-12" >
+                <div ng-controller="abftree_gwqx_controller">
+                    <div class="portlet-body form col-md-12">
                         <!-- BEGIN FORM-->
                         <div style="" class="col-md-6">
-                            <select  id='gwJurisdiction' multiple='multiple'></select>
+                            <select id='gwJurisdiction' multiple='multiple'></select>
                         </div>
                         <!-- END FORM-->
                         <div class="portlet-body col-md-6">

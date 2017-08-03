@@ -97,30 +97,8 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                                 };
                         });
                     }
-                },
-                "删除职务":{
-                    "id":"delete",
-                    "label":"删除职务",
-                    "action":function (data) {
-                        var inst = jQuery.jstree.reference(data.reference),
-                            obj = inst.get_node(data.reference);
-                        console.log(obj);
-                        if(confirm("确认要删除此职务吗?")){
-                            var subFrom = {};
-                            subFrom.dutyCode = obj.id;
-                            duty_service.deletedutyByCode(subFrom).then(function (data) {
-                                if(data.status == "success"){
-                                    toastr['success'](data.retMessage);
-                                    $("#dutytree").jstree().refresh();
-                                }else{
-                                    toastr['error'](data.retMessage);
-                                }
-                            })
-                        }else{
-                            return false;
-                        }
-                    }
                 }
+
             };
             return it;
         }else {
@@ -576,6 +554,85 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
     }
     duty.deletezw = function () {
         var arr = $scope.dutygrid.getSelectedRows();
+        if(arr.length != 1){
+            toastr['error']("请选择一条需要删除的数据!");
+            return false;
+        }else{
+            var subFrom = {};
+            subFrom.dutyCode = arr[0].dutyCode;
+            duty_service.deletedutyByCode(subFrom).then(function (data) {
+                if(data.status == "success"){
+                    toastr['success'](data.retMessage);
+                    $("#dutytree").jstree().refresh();
+                    redutygrid();
+                }else{
+                    toastr['error'](data.retMessage);
+                }
+            })
+        }
+    }
+    //下级职务列表-新增按钮
+    duty.addxjzw = function () {
+        var dutyType = $scope.duty.item.dutyType;
+        var parentsCode = $scope.duty.item.dutyCode;
+        console.log(parentsCode+","+dutyType)
+        openwindow($uibModal, 'views/duty/addDuty_window.html', 'lg',
+            function ($scope, $modalInstance) {
+                //创建职务实例
+                var subFrom = {};
+                $scope.subFrom = subFrom;
+                //首先生成职务代码,获取职务套别
+                subFrom.dutyType = dutyType;
+                subFrom.parentsCode = parentsCode;
+                console.log(subFrom)
+                duty_service.initdutyCode(subFrom).then(function (data) {
+                    console.log(data)
+                    if(data.status == "success"){
+                        subFrom.dutyCode = data.retMessage;
+                    }else{
+                        toastr['error'](data.retMessage);
+                    }
+                })
+                $scope.save = function () {
+                    duty_service.addduty(subFrom).then(function (data) {
+                        if(data.status == "success"){
+                            toastr['success'](data.retMessage);
+                            $("#dutytree").jstree().refresh();
+                            redutygrid();
+                            $scope.cancel();
+                        }else{
+                            toastr['error'](data.retMessage);
+                        }
+                    })
+                }
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            });
+        }
+    //下级职务列表-修改按钮
+    duty.editxjzw = function () {
+        var arr = $scope.xjzwgrid.getSelectedRows();
+        if(arr.length != 1){
+            toastr['error']("请选择一条需要修改的数据!");
+            return false;
+        }else{
+            console.log(arr[0])
+            var node2 = {};
+            node2.id = arr[0].dutyCode;
+            var node = {};
+            node.id =  $("#dutytree").jstree().get_parent(node2);
+            $("#dutytree").jstree().deselect_all(true);
+            $("#dutytree").jstree().load_node(node,function () {
+                $("#dutytree").jstree().select_node(node2,false,false);
+            });
+            $scope.subFrom = arr[0];
+            $scope.editflag = !$scope.editflag;
+        }
+    }
+    //下级职务列表-删除按钮
+    duty.deletexjzw = function () {
+        var arr = $scope.xjzwgrid.getSelectedRows();
         if(arr.length != 1){
             toastr['error']("请选择一条需要删除的数据!");
             return false;

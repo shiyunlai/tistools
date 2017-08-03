@@ -9,13 +9,38 @@
         </div>
     </div>
     <div class="portlet-body portlet light">{{subFrom}}
-        <form action="#" name="myform" class="form-horizontal ">
+        <form action="#" name="mf" class="form-horizontal" ng-show="!next">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-md-4">工作组类型:<span style="color: red">*</span></label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control"
+                               ng-model="subFrom.groupType"
+                               name="id" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label col-md-2"></label>
+                    <div class="col-md-10">
+                        <div class="actions btn-set" style="float: right;">
+                            <button type="button" name="back" class="btn btn-primary" ng-click="skip()"> 下一步
+                            </button>
+                            <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <form action="#" name="myform" class="form-horizontal" ng-show="next">
             <div class="form-body ">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">工作组代码</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="subFrom.groupCode" name="id" />
+                            <input type="text" class="form-control" ng-model="subFrom.groupCode" name="id" readonly/>
                         </div>
                     </div>
                 </div>
@@ -35,16 +60,6 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="subFrom.guidOrg"
-                                   name="id" />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">工作组类型</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.groupType"
                                    name="id" />
                         </div>
                     </div>
@@ -90,7 +105,6 @@
                     <div class="form-group">
                         <label class="control-label col-md-2"></label>
                         <div class="col-md-10">
-
                             <div class="actions btn-set" style="float: right;">
                                 <button type="button" name="back" class="btn btn-primary" ng-click="add(subFrom)"> 保存
                                 </button>

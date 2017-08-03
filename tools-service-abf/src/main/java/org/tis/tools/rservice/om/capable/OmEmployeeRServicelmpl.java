@@ -18,6 +18,7 @@ import org.tis.tools.dao.om.OmEmployeeMapper;
 import org.tis.tools.model.def.ACConstants;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.def.OMConstants;
+import org.tis.tools.model.po.om.OmEmpGroup;
 import org.tis.tools.model.po.om.OmEmpOrg;
 import org.tis.tools.model.po.om.OmEmpPosition;
 import org.tis.tools.model.po.om.OmEmployee;
@@ -25,10 +26,13 @@ import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.vo.om.OmEmployeeDetail;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.om.exception.EmployeeManagementException;
+import org.tis.tools.rservice.om.exception.GroupManagementException;
 import org.tis.tools.rservice.om.exception.OrgManagementException;
+import org.tis.tools.service.om.OmEmpGroupService;
 import org.tis.tools.service.om.OmEmpOrgService;
 import org.tis.tools.service.om.OmEmpPositionService;
 import org.tis.tools.service.om.OmEmployeeService;
+import org.tis.tools.service.om.OmOrgService;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
 
 public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRService {
@@ -38,6 +42,10 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 	OmEmpOrgService omEmpOrgService;
 	@Autowired
 	OmEmpPositionService omEmpPositionService;
+	@Autowired
+	OmEmpGroupService omEmpGroupService;
+	@Autowired
+	OmOrgService OmOrgService;
 
 	@Override
 	public String genEmpCode(String orgCode, String empDegree) throws ToolsRuntimeException {
@@ -246,7 +254,20 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 	 */
 	@Override
 	public List<OmEmployee> queryEmployeeByOrg(String orgCode, OmEmployee empCondition) {
-		return null;
+		//校验入参
+		if(StringUtil.isEmpty(orgCode)){
+			throw new EmployeeManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("ORG_CODE", orgCode);
+		List<OmOrg> ogList = OmOrgService.query(wc);
+		if(ogList.size() != 1){
+			throw new EmployeeManagementException(OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE,
+					BasicUtil.wrap(orgCode));
+		}
+		String orgGuid = ogList.get(0).getGuid();
+		List<OmEmployee> empList = queryEmployeeByGuid(orgGuid);
+		return empList;
 	}
 
 	@Override
@@ -323,6 +344,36 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		wc.andEquals("GUID_POSITION", positionGuid);
 		wc.andEquals("GUID_EMP", empGuid);
 		omEmpPositionService.deleteByCondition(wc);
+	}
+
+	@Override
+	public void insertEmpGroup(String groupGuid, String empGuid) {
+		//校验入参
+		if(StringUtil.isEmpty(groupGuid)){
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		if(StringUtil.isEmpty(empGuid)){
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		OmEmpGroup oeg = new OmEmpGroup();
+		oeg.setGuidEmp(empGuid);
+		oeg.setGuidGroup(groupGuid);
+		omEmpGroupService.insert(oeg);
+	}
+
+	@Override
+	public void deleteEmpGroup(String groupGuid, String empGuid) {
+		//校验入参
+		if(StringUtil.isEmpty(groupGuid)){
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		if(StringUtil.isEmpty(empGuid)){
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("GUID_GROUP", groupGuid);
+		wc.andEquals("GUID_EMP", empGuid);
+		omEmpGroupService.deleteByCondition(wc);
 	}
 
 	/**
