@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package ${packageName};
 
@@ -83,11 +83,17 @@ public class ${humpClassName(table.id)} implements Serializable {
 	private Float ${fieldIdVar} ;
 	</#if>
 	</#list>
-	
+
+	/**
+	* Default Constructor
+	*/
+	public ${humpClassName(table.id)}() {
+	}
+
 	<#list table.fields as field>
 	<#assign fieldIdVar2="${humpClassName(field.id)?uncap_first}">
 	<#if field.type="bigint">
-	
+
 	/**
 	 * Set the ${field.name}.
 	 * 

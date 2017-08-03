@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.sys;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 渠道参数控制表
- * 模型文件 ： E:\github\soft\tistools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：sys
  * 模型：SYS_CHANNEL_CTL 渠道参数控制表
  *
@@ -55,7 +55,13 @@ public class SysChannelCtl implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：渠道备注信息<br/>描述： */
 	private String chnRemark ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public SysChannelCtl() {
+	}
+
 	
 	/**
 	 * Set the 数据主键.

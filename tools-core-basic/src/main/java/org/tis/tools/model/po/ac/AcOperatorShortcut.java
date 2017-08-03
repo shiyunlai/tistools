@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.ac;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 操作员快捷菜单
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\abf-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_OPERATOR_SHORTCUT 操作员快捷菜单
  *
@@ -71,7 +71,13 @@ public class AcOperatorShortcut implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：快捷按键<br/>描述：如：CTRL+1 表示启动TX010505，本字段记录 CTRL+1 这个信息 */
 	private String shortcutKey ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public AcOperatorShortcut() {
+	}
+
 	
 	/**
 	 * Set the 操作员GUID.

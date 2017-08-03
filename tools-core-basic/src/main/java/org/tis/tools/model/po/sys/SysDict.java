@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.sys;
 
@@ -100,7 +100,13 @@ public class SysDict implements Serializable {
 	
 	/** 字段类型：char<br/>字段名：字典项来源类型<br/>描述：来源类型:0:来自字典项 1:来自单表 2:多表或视图 */
 	private String fromType ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public SysDict() {
+	}
+
 	
 	/**
 	 * Set the 数据主键.

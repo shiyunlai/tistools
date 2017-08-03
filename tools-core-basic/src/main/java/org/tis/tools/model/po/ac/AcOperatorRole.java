@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.ac;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 操作员与权限集（角色）对应关系
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\abf-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_OPERATOR_ROLE 操作员与权限集（角色）对应关系
  *
@@ -50,7 +50,13 @@ public class AcOperatorRole implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：是否可分级授权<br/>描述：预留字段，暂不使用。意图将操作员所拥有的权限赋予其他操作员。 */
 	private String auth ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public AcOperatorRole() {
+	}
+
 	
 	/**
 	 * Set the 操作员GUID.

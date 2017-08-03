@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.ac;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 功能
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\abf-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_FUNC 功能
  *
@@ -86,7 +86,13 @@ public class AcFunc implements Serializable {
 	
 	/** 字段类型：char<br/>字段名：可否定义为菜单<br/>描述：取值来自业务菜单：DICT_YON。 该功能是否可以作为菜单入口，如果作为菜单入口，则会展示在菜单树（有些接口服务功能无需挂在菜单上） */
 	private String ismenu ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public AcFunc() {
+	}
+
 	
 	/**
 	 * Set the 数据主键.
