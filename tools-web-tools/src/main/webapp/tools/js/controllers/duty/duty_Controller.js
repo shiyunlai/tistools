@@ -643,7 +643,7 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
             var node2 = {};
             node2.id = arr[0].dutyCode;
             var node = {};
-            node.id =  $("#dutytree").jstree().get_parent(node2);;
+            node.id =  $("#dutytree").jstree().get_parent(node2);
             $("#dutytree").jstree().deselect_all(true);
             $("#dutytree").jstree().load_node(node,function () {
                 $("#dutytree").jstree().select_node(node2,false,false);

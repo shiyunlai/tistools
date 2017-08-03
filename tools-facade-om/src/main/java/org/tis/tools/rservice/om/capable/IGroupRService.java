@@ -403,7 +403,7 @@ public interface IGroupRService {
 	 * @param groupCode
 	 * @return
 	 */
-	List<OmEmployee> queryEmpNotInGroup(String orgCode,String groupCode);
+	List<OmEmployee> queryEmpNotInGroup(String guidOrg,String groupCode);
 	
 	/**
 	 * <pre>
@@ -415,4 +415,10 @@ public interface IGroupRService {
 	 * @return 权限（角色）集
 	 */
 	List<AcRole> queryRole(String groupCode);
+	/**
+	 * 查询该工作组下所有子工作组
+	 * @param groupCode
+	 * @return
+	 */
+	List<OmGroup> queryAllchild(String groupCode);
 }

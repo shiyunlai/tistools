@@ -28,7 +28,7 @@ public class BOSHGenGroupCode implements IGroupCodeGenerator{
 		/**
 		 * <pre>
 		 * 工作组代码规则：
-		 * 1.共10位；
+		 * 1.共10位+GROUP前缀；
 		 * 2.组成结构： 工作组类别(两位) + 序号(八位)
 		 * 序号：全行范围内职务数量顺序排号
 		 * </pre>
@@ -48,7 +48,7 @@ public class BOSHGenGroupCode implements IGroupCodeGenerator{
 		// 开始生成
 		sb.append(type) ;
 		sb.append(toSeqNO(sequenceService.getNextSeqNo(BOSHGenGroupCode.class.getName()))) ;//五位机构顺序号
-		return sb.toString();
+		return "GROUP"+sb.toString();
 	}
 	
 	/**

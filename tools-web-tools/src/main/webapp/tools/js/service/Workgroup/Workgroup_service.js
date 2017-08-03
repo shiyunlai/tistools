@@ -19,8 +19,17 @@ MetronicApp.factory('Workgroup_service',['$http', '$q', function ($http,$q) {
         return res;
     }
 
-    service.loademp = function (subFrom) {
-        //TODO
+    service.loadempin = function (subFrom) {
+        var res = $http.post(manurl + "/om/workgroup/loadempin",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.loadempNotin = function (subFrom) {
+        var res = $http.post(manurl + "/om/workgroup/loadempNotin",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
     }
 
     service.loadxjgroup = function (subFrom) {
@@ -44,6 +53,42 @@ MetronicApp.factory('Workgroup_service',['$http', '$q', function ($http,$q) {
     }
     service.deletegroup = function (subFrom) {
         var res = $http.post(manurl + "/om/workgroup/delete",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.enableGroup = function (subFrom) {
+        var res = $http.post(manurl + "/om/workgroup/enableGroup",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.updateGroup = function (subFrom) {
+        var res = $http.post(manurl + "/om/workgroup/updateGroup",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.initGroupCode = function (subFrom) {
+        var res = $http.post(manurl + "/om/workgroup/initGroupCode",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.loadPosition = function (subFrom) {
+        var res = $http.post(manurl + "/om/workgroup/loadPosition",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.addEmpGroup = function (subFrom) {
+        var res = $http.post(manurl + "/om/workgroup/addEmpGroup",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.deleteEmpGroup = function (subFrom) {
+        var res = $http.post(manurl + "/om/workgroup/deleteEmpGroup",subFrom).then(function (response) {
             return response.data;
         });
         return res;

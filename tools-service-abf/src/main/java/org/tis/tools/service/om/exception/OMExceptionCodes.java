@@ -173,6 +173,18 @@ public class OMExceptionCodes {
 	 * 不能直接修改工作组状态
 	 */
 	public static final String FAILURE_WHEN_UPDATE_GROUP_STATUS= R_EX_CODE("0033");
+	/**
+	 * 存在正常状态的子工作组
+	 */
+	public static final String GROUP_CHILDS_IS_RUNNING= R_EX_CODE("0034");
+	/**
+	 * 启用工作组失败
+	 */
+	public static final String FAILURE_RERUNNING_GROUP= R_EX_CODE("0035");
+	/**
+	 * 运行状态下工作组不可删除
+	 */
+	public static final String FAILURE_DELETE_RERUNNING_GROUP= R_EX_CODE("0036");
 	
 	/**
 	 * 以烤串方式拼接异常码

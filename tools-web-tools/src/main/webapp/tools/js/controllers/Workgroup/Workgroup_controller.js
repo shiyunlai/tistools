@@ -9,6 +9,12 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
     //定义主题对象
     var workgroup = {};
     $scope.workgroup = workgroup;
+    //修改控制标志
+    var editflag = false;
+    $scope.editflag = editflag;
+    //放置对象
+    var subFrom = {};
+    $scope.subFrom = subFrom;
     //筛选树标志
     var showtree = true;
     $scope.showtree = showtree;
@@ -37,13 +43,30 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
                             obj = inst.get_node(data.reference);
                         console.log(obj)
                         openwindow($uibModal, 'views/Workgroup/addworkgroup_window.html', 'lg',
-
                             function ($scope, $modalInstance) {
                                 //创建机构实例
                                 var subFrom = {};
                                 $scope.subFrom = subFrom;
                                 //标识,根-子节点
                                 subFrom.flag = "root";
+                                var next = false;
+                                $scope.next = next;
+                                $scope.skip = function () {
+                                    if(isNull(subFrom.groupType)){
+                                        toastr['error']("请填写相关信息!");
+                                        return false;
+                                    }
+                                    //调用服务生成机构代码
+                                    Workgroup_service.initGroupCode(subFrom).then(function (data) {
+                                        if(data.status == "success"){
+                                            toastr['success']("生成成功!");
+                                            $scope.subFrom.groupCode = data.retMessage;
+                                            $scope.next = !next;
+                                        }else{
+                                            toastr['error'](data.retMessage);
+                                        }
+                                    })
+                                }
                                 //增加方法
                                 $scope.add = function (subFrom) {
                                     //TODO.新增逻辑
@@ -87,11 +110,28 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
                                 //创建机构实例
                                 var subFrom = {};
                                 $scope.subFrom = subFrom;
-
                                 //处理父工作组GUID
                                 subFrom.guidParents = obj.original.guid;
                                 //标识,根-子节点
                                 subFrom.flag = "child";
+                                var next = false;
+                                $scope.next = next;
+                                $scope.skip = function () {
+                                    if(isNull(subFrom.groupType)){
+                                        toastr['error']("请填写相关信息!");
+                                        return false;
+                                    }
+                                    //调用服务生成机构代码
+                                    Workgroup_service.initGroupCode(subFrom).then(function (data) {
+                                        if(data.status == "success"){
+                                            toastr['success']("生成成功!");
+                                            $scope.subFrom.groupCode = data.retMessage;
+                                            $scope.next = !next;
+                                        }else{
+                                            toastr['error'](data.retMessage);
+                                        }
+                                    })
+                                }
                                 //增加方法
                                 $scope.add = function (subFrom) {
                                     //TODO.新增逻辑
@@ -215,10 +255,11 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
                 subFrom.id = obj.id;
                 Workgroup_service.loadmaintree(subFrom).then(function (data) {
                     console.log(data)
+                    var data = data.retMessage;
                     for(var i = 0 ;i < data.length ; i++){
                         data[i].text = data[i].groupName;
                         data[i].children = true;
-                        data[i].id = data[i].guid;
+                        data[i].id = data[i].groupCode;
                         data[i].icon = "fa fa-users icon-state-info icon-lg"
                     }
                     $scope.jsonarray = angular.copy(data);
@@ -331,6 +372,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
     
     //新增根工作组
     workgroup.add = function (str) {
+        var parentgroupCode = $scope.sub.groupCode;
         openwindow($uibModal, 'views/Workgroup/addworkgroup_window.html', 'lg',
             function ($scope, $modalInstance) {
                 //创建机构实例
@@ -338,13 +380,31 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
                 $scope.subFrom = subFrom;
                 //标识,根-子节点
                 subFrom.flag = str;
+                subFrom.parentCode = parentgroupCode;
                 //增加方法
+                var next = false;
+                $scope.next = next;
+                $scope.skip = function () {
+                    if(isNull(subFrom.groupType)){
+                        toastr['error']("请填写相关信息!");
+                        return false;
+                    }
+                    //调用服务生成机构代码
+                    Workgroup_service.initGroupCode(subFrom).then(function (data) {
+                        if(data.status == "success"){
+                            toastr['success']("生成成功!");
+                            $scope.subFrom.groupCode = data.retMessage;
+                            $scope.next = !next;
+                        }else{
+                            toastr['error'](data.retMessage);
+                        }
+                    })
+                }
                 $scope.add = function (subFrom) {
                     //TODO.新增逻辑
                     Workgroup_service.addgroup(subFrom).then(function (data) {
                         console.log(data);
                         if(data.status == "success"){
-
                             toastr['success']( data.retMessage);
                             reworkgroupgrid();
                             $("#container").jstree().refresh();
@@ -368,16 +428,14 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
         if(item.length != 1 ){
             toastr['error']("请选择一条数据!");
             return false;
-        }else if(item[0].groupStatus != "123"){
-            toastr['error']("只能删除停用状态下的工作组!");
         }else{
             var subFrom = {};
-            subFrom.id = item[0].groupCode;
+            subFrom.groupCode = item[0].groupCode;
             Workgroup_service.deletegroup(subFrom).then(function (data) {
                 if(data.status == "success"){
                     console.log(data)
                     toastr['success']( data.message);
-                    initworkdata();
+                    rexjgroup();
                 }else{
                     toastr['error']( data.message);
                 }
@@ -387,12 +445,25 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
     //详情页绑定的对象
     var sub = {};
     $scope.sub = sub;
-
-    //编辑工作组
+    //首页编辑工作组
     workgroup.edit = function () {
         var item = $scope.workgroupgrid.getSelectedRows();
-        $("#container").jstree().open_node(true);
-        console.log($("#container").jstree().data)
+        if(item.length != 1 ){
+            toastr['error']("请选择一条数据!");
+            return false;
+        }else{
+            for(var a in $scope.flag){
+                flag[a] = false;
+            }
+            $scope.flag.xqxx = true;
+            $scope.subFrom = item[0];
+            $scope.sub = item[0];
+            $scope.editflag = !$scope.editflag;
+        }
+    }
+    //下级工作组页面编辑工作组
+    workgroup.editxj = function () {
+        var item = $scope.xjworkgroupgrid.getSelectedRows();
         if(item.length != 1 ){
             toastr['error']("请选择一条数据!");
             return false;
@@ -401,26 +472,34 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
                 flag[a] = false;
             }
             flag.xqxx = true;
-            $scope.sub = item[0];
+            $scope.subFrom = item[0];$scope.sub = item[0];
+            var node = {};
+            node.id = item[0].groupCode;
+            var node2 = {};
+            node2.id = $scope.sub.groupCode;
             $("#container").jstree().deselect_all(true);
-            $("#container").jstree().select_node($scope.sub,false,true);
+            $("#container").jstree().load_node(node2,function () {
+                $("#container").jstree().select_node(node,false,false);
+            });
             console.log($scope.sub)
+            $scope.editflag = !$scope.editflag;
         }
     }
     
     //页签切换数据载入方法
     workgroup.loaddata = function (num) {
         if(num == 0){//详情页
-            for(var a in flag){
+            for(var a in $scope.flag){
                 flag[a] = false;
             }
-            flag.xqxx = true;
+            $scope.flag.xqxx = true;
         }else if(num == 1){//下级机构
-            for(var a in flag){
+            for(var a in $scope.flag){
                 flag[a] = false;
             }
-            flag.xjgz = true;
+            $scope.flag.xjgz = true;
             console.log($scope.sub.guid)
+            console.log($scope.flag.xjgz)
             //生成下级工作组列表
             var xjworkgroupgrid = {};
             $scope.xjworkgroupgrid = xjworkgroupgrid;
@@ -442,16 +521,11 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
             $scope.xjworkgroupgrid = initgrid($scope,xjworkgroupgrid,filterFilter,com2,false,xjselework);
             var rexjgroup = function () {
                 var subFrom = {};
-                subFrom.id = $scope.sub.guid;
+                subFrom.groupCode = $scope.sub.groupCode;
                 //调取工作组信息OM_GROUP
                 Workgroup_service.loadxjgroup(subFrom).then(function (data) {
+                    data = data.retMessage;
                     console.log(data);
-                    for(var i = 0;i<data.length;i++){
-                        data[i].startDate = FormatDate(data[i].startDate);
-                        data[i].createtime = FormatDate(data[i].createtime);
-                        data[i].endDate = FormatDate(data[i].endDate);
-                        data[i].lastupdate = FormatDate(data[i].lastupdate);
-                    }
                     $scope.xjworkgroupgrid.data = data;
                     $scope.xjworkgroupgrid.mydefalutData = data;
                     $scope.xjworkgroupgrid.getPage(1,$scope.xjworkgroupgrid.paginationPageSize);
@@ -460,15 +534,51 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
             rexjgroup();
 
         }else if(num == 2){
-            for(var a in flag){
+            for(var a in $scope.flag){
                 flag[a] = false;
             }
-            flag.xjgw = true;
+            $scope.flag.xjgw = true;
+            //生成岗位列表
+            var xjgwgrid = {};
+            $scope.xjgwgrid = xjgwgrid;
+            //定义表头名
+            var com = [{ field: 'positionCode', displayName: '岗位代码', enableHiding: false},
+                { field: 'positionName', displayName: '岗位名称', enableHiding: false},
+                { field: 'positionType', displayName: '岗位类型', enableHiding: false},
+                { field: 'positionStatus', displayName: '岗位状态', enableHiding: false},
+                { field: 'guidDuty', displayName: '所属职务', enableHiding: false},
+                { field: 'startDate', displayName: '有效开始日期', enableHiding: false},
+                { field: 'endDate', displayName: '有效截止日期', enableHiding: false}
+            ]
+            $scope.xjgwgrid = initgrid($scope,xjgwgrid,filterFilter,com,false,function () {});
+            var rexjgw = function () {
+                var subFrom = {};
+                subFrom.groupCode = $scope.sub.groupCode;
+                //调取下级岗位信息
+
+            }
         }else if(num == 3){
-            for(var a in flag){
+            for(var a in $scope.flag){
                 flag[a] = false;
             }
-            flag.ygxx = true;
+            $scope.flag.ygxx = true;
+            //生成人员列表
+            var xjempgrid = {};
+            $scope.xjempgrid = xjempgrid;
+            var com = [{ field: 'empCode', displayName: '员工代码', enableHiding: false},
+                { field: 'empName', displayName: '员工姓名', enableHiding: false},
+                { field: 'gender', displayName: '性别', enableHiding: false},
+                { field: 'empstatus', displayName: '员工状态', enableHiding: false},
+                { field: 'empDegree', displayName: '员工职级', enableHiding: false},
+                { field: 'guidPosition', displayName: '基本岗位', enableHiding: false},
+                { field: 'guidempmajor', displayName: '直接主管', enableHiding: false},
+                { field: 'indate', displayName: '入职日期', enableHiding: false},
+                { field: 'otel', displayName: '办公电话', enableHiding: false}
+            ]
+            $scope.xjempgrid = initgrid($scope,xjempgrid,filterFilter,com,false,function () {});
+
+            //拉取
+            reempgrid();
         }else if(num == 4){
             console.log(num)
             for(var a in flag){
@@ -476,5 +586,150 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
             }
             flag.qxxx = true;
         }
+    }
+    var reempgrid = function () {
+        var subFrom = {};
+        subFrom.groupCode = $scope.sub.groupCode;
+        // subFrom.orgCode = $scope.sub.orgCode;
+        //拉取列表
+        Workgroup_service.loadempin(subFrom).then(function (data) {
+            data = data.retMessage;
+            console.log(data);
+            $scope.xjempgrid.data = data;
+            $scope.xjempgrid.mydefalutData = data;
+            $scope.xjempgrid.getPage(1,$scope.xjempgrid.paginationPageSize);
+        })
+    }
+    //详情页按钮
+    workgroup.enableGroup = function () {
+        console.log($scope.sub)
+        var subFrom = {};
+        subFrom.groupCode = $scope.sub.groupCode;
+        subFrom.flag = $scope.sub.groupStatus;
+        Workgroup_service.enableGroup(subFrom).then(function (data) {
+            if(data.status == "success"){
+                toastr['success'](data.retMessage);
+            }else{
+                toastr['error'](data.retMessage);
+            }
+            $("#container").jstree().refresh();
+        })
+    }
+    workgroup.deleteGroup = function () {
+        var subFrom = {};
+        subFrom.groupCode = $scope.sub.groupCode;
+        Workgroup_service.deletegroup(subFrom).then(function (data) {
+            console.log(data)
+            if(data.status == "success"){
+                toastr['success'](data.retMessage);
+            }else{
+                toastr['error'](data.retMessage);
+            }
+            $("#container").jstree().refresh();
+        })
+    }
+    workgroup.editGroup = function () {
+        $scope.subFrom = angular.copy($scope.sub);
+        $scope.editflag = !$scope.editflag;
+    }
+    workgroup.back = function () {
+        $scope.editflag = !$scope.editflag;
+    }
+    workgroup.updateGroup = function () {
+        console.log($scope.subFrom)
+        Workgroup_service.updateGroup($scope.subFrom).then(function (data) {
+            if(data.status == "success"){
+                toastr['success'](data.retMessage);
+            }else{
+                toastr['error'](data.retMessage);
+            }
+            $scope.editflag = !$scope.editflag;
+            $("#container").jstree().refresh();
+        })
+    }
+    //人员页签下,3个按钮事件
+    //新增人员
+    workgroup.addemp = function () {
+        var subFrom = {};
+        subFrom.groupCode = $scope.sub.groupCode;
+        subFrom.guidOrg = $scope.sub.guidOrg;
+        var guid = $scope.sub.guid;
+        console.log(subFrom);
+        openwindow($uibModal, 'views/org/addsearhgrid_window.html', 'lg',
+            function ($scope, $modalInstance) {
+                $scope.title = "添加员工";
+                //加载不在本机构下的员工信息,生成列表
+                var commonGrid = {};
+                $scope.commonGrid = commonGrid;
+                //定义单选事件
+                var selework = function () {
+
+                }
+                //定义表头名
+                var com = [{ field: 'empCode', displayName: '员工代码', enableHiding: false},
+                    { field: 'empName', displayName: '员工姓名', enableHiding: false},
+                    { field: 'gender', displayName: '性别', enableHiding: false},
+                    { field: 'empstatus', displayName: '员工状态', enableHiding: false},
+                    { field: 'empDegree', displayName: '员工职级', enableHiding: false},
+                    { field: 'guidPostition', displayName: '基本岗位', enableHiding: false},
+                    { field: 'guidempmajor', displayName: '直接主管', enableHiding: false},
+                    { field: 'indate', displayName: '入职日期', enableHiding: false},
+                    { field: 'otel', displayName: '办公电话', enableHiding: false}
+                ]
+                $scope.commonGrid = initgrid($scope,commonGrid,filterFilter,com,true,selework);
+
+                var recommonGrid = function () {
+                    //调取工作组信息OM_GROUP
+                    Workgroup_service.loadempNotin(subFrom).then(function (data) {
+                        console.log(data)
+                        if(data.status == "success"  && !isNull(data.retMessage)){
+                            $scope.commonGrid.data =  data.retMessage;
+                            $scope.commonGrid.mydefalutData =  data.retMessage;
+                            $scope.commonGrid.getPage(1,$scope.commonGrid.paginationPageSize);
+                        }else{
+
+                        }
+
+                    })
+                }
+                //拉取列表
+                recommonGrid();
+
+                $scope.add = function () {
+                    var arr = $scope.commonGrid.getSelectedRows();
+                    if(arr.length == 0){
+                        toastr['error']( "请选择需要添加的员工！");
+                        return false;
+                    }else{
+                        var empGuidlist = [];
+                        for(var i=0;i<arr.length;i++){
+                            empGuidlist.push(arr[i].guid);
+                        }
+                        var subFrom = {};
+                        subFrom.groupGuid = guid;
+                        subFrom.empGuidlist = empGuidlist;
+                        console.log(subFrom)
+                        Workgroup_service.addEmpGroup(subFrom).then(function (data) {
+                            console.log(data)
+                            if(data.status == "success"){
+                                toastr['success'](data.retMessage);
+                            }else{
+                                toastr['error'](data.retMessage);
+                            }
+                            reempgrid();
+                            $scope.cancel();
+                        })
+                    }
+                }
+
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            }
+        )
+    }
+    //删除人员
+    workgroup.deletemp = function () {
+
     }
 });

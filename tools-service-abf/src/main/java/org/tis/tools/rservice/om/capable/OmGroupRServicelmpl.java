@@ -192,20 +192,21 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 					og.setGroupName(groupName);
 					og.setGuidOrg(guidOrg);
 					og.setGroupType(groupType);
-					try {
-						transactionTemplate.execute(new TransactionCallback<OmGroup>() {
+					transactionTemplate.execute(new TransactionCallback<OmGroup>() {
 							@Override
 							public OmGroup doInTransaction(TransactionStatus status) {
-								omGroupService.insert(og);
-								return og;
+								try {
+									omGroupService.insert(og);
+									return og;
+								} catch (Exception e) {
+									status.setRollbackOnly();
+									e.printStackTrace();
+									throw new OrgManagementException(
+											OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_GROUP,
+											BasicUtil.wrap(e.getCause().getMessage()), "新增根节点工作组失败！{0}");
+								}
 							}
 						});
-					} catch (Exception e) {
-						e.printStackTrace();
-						throw new GroupManagementException(
-								OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_GROUP,
-								BasicUtil.wrap(e.getCause().getMessage()), "新增根节点工作组失败！{0}");
-					}
 					return og;
 				}else{//新建子工作组
 					//先获取父工作组信息
@@ -241,21 +242,23 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 					og.setGuidOrg(guidOrg);
 					og.setGroupType(groupType);
 					//新增子工作组
-					try {
+					
 						transactionTemplate.execute(new TransactionCallback<OmGroup>() {
 							@Override
 							public OmGroup doInTransaction(TransactionStatus status) {
-								omGroupService.insert(og);
-								omGroupService.update(parentOg);
-								return og;
+								try {
+									omGroupService.insert(og);
+									omGroupService.update(parentOg);
+									return og;
+								} catch (Exception e) {
+									status.setRollbackOnly();
+									e.printStackTrace();
+									throw new GroupManagementException(
+											OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_GROUP,
+											BasicUtil.wrap(e.getCause().getMessage()), "新增子节点工作组失败！{0}");
+								}
 							}
 						});
-					} catch (Exception e) {
-						e.printStackTrace();
-						throw new GroupManagementException(
-								OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_GROUP,
-								BasicUtil.wrap(e.getCause().getMessage()), "新增子节点工作组失败！{0}");
-					}
 					return og;
 				}
 	}
@@ -296,6 +299,7 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 		group.setGroupStatus(OMConstants.GROUP_STATUS_RUNNING);
 		//补充工作组层次
 		group.setGroupLevel(new BigDecimal(1));
+		group.setGuidParents(parentsGp.getGuid());
 		group.setCreatetime(new Date());
 		group.setLastupdate(new Date());// 补充最近更新时间
 		group.setIsleaf(CommonConstants.YES);// 新增节点都先算叶子节点 Y
@@ -304,21 +308,23 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 		group.setGroupSeq(newGroupSeq);// 设置工作组序列,根工作组直接用guid
 		final OmGroup newGroup = group;		
 		// 新增机构
-				try {
-					group = transactionTemplate.execute(new TransactionCallback<OmGroup>() {
-						@Override
-						public OmGroup doInTransaction(TransactionStatus arg0) {
-							omGroupService.insert(newGroup);
-							return newGroup;
-						}
-					});
-				} catch (Exception e) {
-					e.printStackTrace();
-					throw new OrgManagementException(
-							OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
-							BasicUtil.wrap(e.getCause().getMessage()), "新增根节点工作组失败！{0}");
+				
+			group = transactionTemplate.execute(new TransactionCallback<OmGroup>() {
+				@Override
+				public OmGroup doInTransaction(TransactionStatus arg0) {
+					try {
+						omGroupService.insert(newGroup);
+						return newGroup;
+					} catch (Exception e) {
+						arg0.setRollbackOnly();
+						e.printStackTrace();
+						throw new OrgManagementException(
+								OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
+								BasicUtil.wrap(e.getCause().getMessage()), "新增根节点工作组失败！{0}");
+					}
 				}
-				return group;
+			});
+		return group;
 	}
 
 	@Override
@@ -362,27 +368,93 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 
 	@Override
 	public void deleteGroup(String groupCode) throws ToolsRuntimeException {
+		//校验入参
+		if(StringUtil.isEmpty(groupCode)){
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		//校验状态
+		OmGroup og = queryGroup(groupCode);
+		if(OMConstants.GROUP_STATUS_RUNNING.equals(og.getGroupStatus())){
+			throw new GroupManagementException(OMExceptionCodes.FAILURE_DELETE_RERUNNING_GROUP);
+		}
 		WhereCondition wc = new WhereCondition();
-		wc.andEquals("group_code", groupCode);
+		wc.andEquals("GROUP_CODE", groupCode);
 		omGroupService.deleteByCondition(wc);
 	}
 
 	@Override
 	public void cancelGroup(String groupCode) throws ToolsRuntimeException {
-		// TODO Auto-generated method stub
-		
+		OmGroup og = queryGroup(groupCode);
+		List<OmGroup> ogList = queryAllchild(groupCode);
+		for(OmGroup omGroup : ogList){
+			if(omGroup.getGroupStatus().equals(OMConstants.GROUP_STATUS_RUNNING)){
+				throw new GroupManagementException(OMExceptionCodes.GROUP_CHILDS_IS_RUNNING);
+			}
+		}
+		og.setGroupStatus(OMConstants.GROUP_STATUS_CANCEL);
+		omGroupService.update(og);
 	}
 
 	@Override
 	public void reenableGroup(String groupCode, boolean reenableChile) throws ToolsRuntimeException {
-		// TODO Auto-generated method stub
-		
+		//调用方法中已经有参数检验
+		OmGroup og = queryGroup(groupCode);
+		List<OmGroup> ogList = queryAllchild(groupCode);
+		if(reenableChile){
+			og.setGroupStatus(OMConstants.GROUP_STATUS_RUNNING);
+			transactionTemplate.execute(new TransactionCallback<OmGroup>() {
+				@Override
+				public OmGroup doInTransaction(TransactionStatus status) {
+					try {
+						omGroupService.update(og);
+						for(OmGroup omGroup : ogList){
+							omGroup.setGroupStatus(OMConstants.GROUP_STATUS_RUNNING);
+							omGroupService.update(omGroup);
+						}
+						return og;
+					} catch (Exception e) {
+						status.setRollbackOnly();
+						e.printStackTrace();
+						throw new GroupManagementException(
+								OMExceptionCodes.FAILURE_RERUNNING_GROUP,
+								BasicUtil.wrap(e.getCause().getMessage()), "启用工作组失败！{0}");
+					}
+				}
+			});
+		}else{
+			og.setGroupStatus(OMConstants.GROUP_STATUS_RUNNING);
+			transactionTemplate.execute(new TransactionCallback<OmGroup>() {
+				@Override
+				public OmGroup doInTransaction(TransactionStatus status) {
+					try {
+						omGroupService.update(og);
+						return og;
+					} catch (Exception e) {
+						status.setRollbackOnly();
+						e.printStackTrace();
+						throw new GroupManagementException(
+								OMExceptionCodes.FAILURE_RERUNNING_GROUP,
+								BasicUtil.wrap(e.getCause().getMessage()), "启用工作组失败！{0}");
+					}
+				}
+			});
+		}
 	}
 
 	@Override
 	public OmGroup queryGroup(String groupCode) {
-		// TODO Auto-generated method stub
-		return null;
+		//校验入参
+		if(StringUtil.isEmpty(groupCode)){
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("GROUP_CODE", groupCode);
+		List<OmGroup> ogList = omGroupService.query(wc);
+		if(ogList.size() != 1){
+			throw new GroupManagementException(OMExceptionCodes.GROUP_NOT_EXIST_BY_GROUP_CODE,BasicUtil.wrap(groupCode));
+		}
+		OmGroup og = ogList.get(0);
+		return og;
 	}
 
 	@Override
@@ -409,7 +481,7 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 
 	@Override
 	public List<OmEmployee> queryEmployee(String groupCode) {
-		OmGroup og = queryGroupbyGroupCode(groupCode);
+		OmGroup og = queryGroup(groupCode);
 		String guid = og.getGuid();
 		WhereCondition wc = new WhereCondition();
 		wc.andEquals("GUID_GROUP", guid);
@@ -430,15 +502,15 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 	}
 
 	@Override
-	public List<OmEmployee> queryEmpNotInGroup(String orgCode, String groupCode) {
+	public List<OmEmployee> queryEmpNotInGroup(String guidOrg, String groupCode) {
 		//校验入参
-		if(StringUtil.isEmpty(orgCode)){
+		if(StringUtil.isEmpty(guidOrg)){
 			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
 		}
 		if(StringUtil.isEmpty(groupCode)){
 			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
 		}
-		List<OmEmployee> orgempList = employeeRService.queryEmployeeByOrg(orgCode, null);
+		List<OmEmployee> orgempList = employeeRService.queryEmployeeByGuid(guidOrg);
 		List<OmEmployee> groupEmpList = queryEmployee(groupCode);
 		orgempList.removeAll(groupEmpList);
 		return orgempList;
@@ -449,19 +521,18 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 		// TODO Auto-generated method stub
 		return null;
 	}
-	//通过工作组代码查询工作组
-	public OmGroup queryGroupbyGroupCode(String groupCode){
+
+	@Override
+	public List<OmGroup> queryAllchild(String groupCode) {
 		//校验入参
 		if(StringUtil.isEmpty(groupCode)){
 			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
 		}
+		OmGroup parentog = queryGroup(groupCode);
 		WhereCondition wc = new WhereCondition();
-		wc.andEquals("GROUP_CODE", groupCode);
-		List<OmGroup> ogList = omGroupService.query(wc);
-		if(ogList.size() != 1){
-			throw new GroupManagementException(OMExceptionCodes.GROUP_NOT_EXIST_BY_GROUP_CODE,BasicUtil.wrap(groupCode));
-		}
-		OmGroup og = ogList.get(0);
-		return og;
+		wc.andEquals("GUID_PARENTS", parentog.getGuid());
+		return omGroupService.query(wc);
 	}
+	
+	
 }
