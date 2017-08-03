@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.ac;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 角色数据范围权限对应
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\abf-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_ROLE_DATASCOPE 角色数据范围权限对应
  *
@@ -46,7 +46,13 @@ public class AcRoleDatascope implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：拥有数据范围GUID<br/>描述： */
 	private String guidDatascope ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public AcRoleDatascope() {
+	}
+
 	
 	/**
 	 * Set the 角色GUID.

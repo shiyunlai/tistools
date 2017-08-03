@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.ac;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 操作员特殊权限配置
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\abf-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_OPERATOR_FUNC 操作员特殊权限配置
  *
@@ -70,7 +70,13 @@ public class AcOperatorFunc implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：功能组GUID<br/>描述：冗余字段 */
 	private String guidFuncgroup ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public AcOperatorFunc() {
+	}
+
 	
 	/**
 	 * Set the 操作员GUID.

@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.sys;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 序号资源表
- * 模型文件 ： E:\github\soft\tistools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：sys
  * 模型：SYS_SEQNO 序号资源表
  *
@@ -55,7 +55,13 @@ public class SysSeqno implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：重置处理参数<br/>描述：重置程序执行时的输入参数，通过本参数指定六重置周期，重置执行时间，重置起始数字等 */
 	private String resetParams ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public SysSeqno() {
+	}
+
 	
 	/**
 	 * Set the 序号键值.
