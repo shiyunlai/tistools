@@ -10,6 +10,8 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
         menu.appselectApp= data.retMessage;
     })
 
+
+
     /*0、菜单管理机构树逻辑*/
     $("#s").submit(function(e) {
         e.preventDefault();

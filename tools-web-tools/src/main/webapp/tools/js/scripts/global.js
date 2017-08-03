@@ -282,6 +282,25 @@ function isNull(d){
     return false
 }
 
+
+//查询业务字典
+function dictKey($rootScope,dict,service){
+    var dictQuery = service.querySysDict(dict);
+    dictQuery.then(function(data){
+        if(data.status == "success"){
+            console.log(data);
+            var datas = data.retMessage;
+            var dictitem = {};
+            $rootScope.dictitem = dictitem;
+            dictitem=datas;
+        }else{
+            toastr['error']('字典项查询失败'+'<br/>'+data.retMessage);
+        }
+    })
+}
+
+
+
 function openwindow($modal, url, size, ctl,resolve) {
     var modalInstance = $modal.open({
         templateUrl: url,
@@ -308,6 +327,10 @@ function stringToList(str){
         return value;
     }
 }
+
+
+
+
 
 //日期格式化format（yyyyMMdd）
 function timeFormatOne(time) {

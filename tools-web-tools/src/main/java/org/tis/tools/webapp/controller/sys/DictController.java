@@ -323,7 +323,7 @@ public class DictController extends BaseController {
             }
             JSONObject jsonObject= JSONObject.parseObject(content);
             String dictItemGuid = jsonObject.getString("dictItemGuid");
-            SysDictItem sysDict = dictRService.querySysDictItemByGuid(dictItemGuid);
+            SysDictItem sysDict = dictRService.querySysDictItemByGuid(dictItemGuid );
             AjaxUtils.ajaxJsonSuccessMessage(response,sysDict);
         } catch (ToolsRuntimeException e) {
             AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
@@ -396,6 +396,35 @@ public class DictController extends BaseController {
         }
         return null;
     }
+    
+    
+    /**
+     * 根据key查询业务字典项列表
+     *
+     */
+    @ResponseBody
+    @RequestMapping(value="/queryDictItemListByDictKey" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String queryDictItemListByDictKey(@RequestBody String content, HttpServletRequest request,
+                                       HttpServletResponse response) {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("queryDictItemListByDictKey request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+            String dictKey = jsonObject.getString("dictKey");
+
+            List<SysDictItem> sysDictItems = dictRService.queryDictItemListByDictKey(dictKey);
+            AjaxUtils.ajaxJsonSuccessMessage(response,sysDictItems);
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("queryDictItemListByDictKey exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("queryDictItemListByDictKey exception : ", e);
+        }
+        return null;
+    }
+
 
     /**
      * 要求子类构造自己的响应数据
