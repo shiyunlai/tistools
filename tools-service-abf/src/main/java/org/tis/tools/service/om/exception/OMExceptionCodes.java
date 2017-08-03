@@ -153,6 +153,46 @@ public class OMExceptionCodes {
 	 * 缺少生成职务代码所需的参数
 	 */
 	public static final String LAKE_PARMS_FOR_GEN_DUTYCODE = R_EX_CODE("0029");
+	/**
+	 * 缺少生成工作组代码所需的参数
+	 */
+	public static final String LAKE_PARMS_FOR_GEN_GROUPCODE = R_EX_CODE("0030");
+	/**
+	 * 缺少新增工作组所需的参数
+	 */
+	public static final String LAKE_PARMS_FOR_CREATE_GROUP = R_EX_CODE("0031");
+	/**
+	 * 新增根工作组失败
+	 */
+	public static final String FAILURE_WHRN_CREATE_ROOT_GROUP = R_EX_CODE("0032");
+	/**
+	 * 工作组代码对应工作组不存在
+	 */
+	public static final String GROUP_NOT_EXIST_BY_GROUP_CODE = R_EX_CODE("0032");
+	/**
+	 * 不能直接修改工作组状态
+	 */
+	public static final String FAILURE_WHEN_UPDATE_GROUP_STATUS= R_EX_CODE("0033");
+	/**
+	 * 存在正常状态的子工作组
+	 */
+	public static final String GROUP_CHILDS_IS_RUNNING= R_EX_CODE("0034");
+	/**
+	 * 启用工作组失败
+	 */
+	public static final String FAILURE_RERUNNING_GROUP= R_EX_CODE("0035");
+	/**
+	 * 运行状态下工作组不可删除
+	 */
+	public static final String FAILURE_DELETE_RERUNNING_GROUP= R_EX_CODE("0036");
+	/**
+	 * 工作组添加岗位失败
+	 */
+	public static final String FAILURE_ADD_POSITION_TO_GROUP= R_EX_CODE("0037");
+	 /**
+	 * 工作组删除岗位失败
+	 */
+	public static final String FAILURE_DELETE_POSITION_TO_GROUP= R_EX_CODE("0038");
 	
 	/**
 	 * 以烤串方式拼接异常码

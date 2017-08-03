@@ -451,6 +451,7 @@ function getYYYYMMDD(){
 //thisobj--表ID,fun--返回data的方法,com--表列名,筛选配置项,bol--布尔值,是否多选.selection--自定义行选中
 function initgrid($scope, thisobj, filterFilter,com,bol,selection){
     thisobj = {
+        mydefalutData:[],
         data: [],
         //-------- 分页属性 ----------------
         enablePagination: true, //是否分页，默认为true
@@ -489,22 +490,43 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
         // headerTemplate:'<div></div>',
         enableFooterTotalSelected: false, // 是否显示选中的总数，默认为true, 如果显示，showGridFooter 必须为true
         showGridFooter:false,
-        onRegisterApi: function(girdApi) {
-            $scope.girdApi = girdApi;
+        onRegisterApi: function(gridApi) {
+            $scope.gridApi = gridApi;
             //分页按钮事件
-            $scope.girdApi.pagination.on.paginationChanged($scope,function(newPage, pageSize) {
+            $scope.gridApi.pagination.on.paginationChanged($scope,function(newPage, pageSize) {
                 if(thisobj.getPage) {
                     thisobj.getPage(newPage, pageSize);
                 }
             });
             //行选中事件
-            $scope.girdApi.selection.on.rowSelectionChanged($scope,selection);
+            $scope.gridApi.selection.on.rowSelectionChanged($scope,selection);
+            $scope.gridApi.core.on.filterChanged( $scope, function() {//监听filter过滤条件的改变  
+                filterConditions={};
+                console.log($scope.gridApi);
+                var grid=this.grid;
+                grid.options.data = thisobj.mydefalutData;
+                console.log(grid);
+                grid.columns.forEach(function(column) {
+                    // console.log(column)
+                    var everyFilters=[];
+                    column.filters.forEach(function(filter) {
+                        console.log(column)
+                        if(filter.term!=null&&filter.term!='undefined'){
+                            everyFilters.push(filter);
+                        }
+                    });
+                    if(everyFilters.length>0){
+                        filterConditions[column.field]=everyFilters;//生成一个自己定义的对象,以便传给后台去操作  
+                    }
+                });
+
+                console.log(filterConditions);
+            });
 
         },
         getSelectedRows:function () {
-            return $scope.girdApi.selection.getSelectedRows();
-        },
-        mydefalutData:[]
+            return $scope.gridApi.selection.getSelectedRows();
+        }
     };
 
     //ui-grid getPage方法
@@ -516,7 +538,7 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
         //$scope.myData = mydefalutData.slice(firstRow, firstRow + pageSize);
     };
     //测试
-    // var a = $scope.girdApi.selection.getSelectedRows();
+    // var a = $scope.gridApi.selection.getSelectedRows();
     return thisobj;
 }
 

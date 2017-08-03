@@ -20,8 +20,24 @@ public class GroupManagementException extends ToolsRuntimeException {
 	 */
 	private static final long serialVersionUID = 1L;
 
+public GroupManagementException(){
+		
+	};
+
 	public GroupManagementException(String code) {
 		super(code);
+	}
+	
+	public GroupManagementException(String code, Object[] placeholders) {
+		super(code,placeholders) ;
+	}
+	
+	public GroupManagementException(String code, Object[] params, String message) {
+		super(code,params,message) ;
+	}
+
+	public GroupManagementException(String code, String message) {
+		super(code,message) ;
 	}
 
 }

@@ -107,9 +107,11 @@ public class OrgManagerController extends BaseController {
 				AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, rootOrgs,"yyyy-MM-dd");
 			}
 
-		} catch (Exception e) {// TODO
-			AjaxUtils.ajaxJsonErrorMessage(response, "查询根机构树失败!");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
 			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
 		}
 		return null;
 	}
@@ -159,9 +161,11 @@ public class OrgManagerController extends BaseController {
 				AjaxUtils.ajaxJsonSuccessMessage(response, rootOrgs);
 			}
 
-		} catch (Exception e) {// TODO
-			AjaxUtils.ajaxJsonErrorMessage(response, "查询根机构树失败!");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
 			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
 		}
 		return null;
 	}
