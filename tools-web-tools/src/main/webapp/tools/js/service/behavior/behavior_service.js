@@ -3,7 +3,7 @@
  */
 MetronicApp.factory('behavior_service',['$http', '$q', function ($http,$q) {
     var service={};
-    //新增行为类型
+    //鏂板琛屼负绫诲瀷
     service.functypeAdd = function (subFrom) {
         var res = $http.post(manurl + "/AcAppController/functypeAdd",subFrom).then(function (response) {
             return response.data;
@@ -11,7 +11,7 @@ MetronicApp.factory('behavior_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
-    //查询功能行为类型
+    //鏌ヨ鍔熻兘琛屼负绫诲瀷
     service.functypequery = function (subFrom) {
         var res = $http.post(manurl + "/AcAppController/functypequery",subFrom).then(function (response) {
             return response.data;
@@ -20,7 +20,7 @@ MetronicApp.factory('behavior_service',['$http', '$q', function ($http,$q) {
     };
 
 
-    //修改功能行为类型
+    //淇敼鍔熻兘琛屼负绫诲瀷
     service.functypeEdit = function (subFrom) {
         var res = $http.post(manurl + "/AcAppController/functypeEdit",subFrom).then(function (response) {
             return response.data;
@@ -29,7 +29,7 @@ MetronicApp.factory('behavior_service',['$http', '$q', function ($http,$q) {
     };
 
 
-    //删除功能行为类型
+    //鍒犻櫎鍔熻兘琛屼负绫诲瀷
     service.functypeDel = function (subFrom) {
         var res = $http.post(manurl + "/AcAppController/functypeDel",subFrom).then(function (response) {
             return response.data;
@@ -37,7 +37,7 @@ MetronicApp.factory('behavior_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
-    //新增功能行为
+    //鏂板鍔熻兘琛屼负
     service.funactAdd = function (subFrom) {
         var res = $http.post(manurl + "/AcAppController/funactAdd",subFrom).then(function (response) {
             return response.data;
@@ -45,7 +45,7 @@ MetronicApp.factory('behavior_service',['$http', '$q', function ($http,$q) {
         return res;
     }
 
-    //修改功能行为
+    //淇敼鍔熻兘琛屼负
     service.funactEdit = function (subFrom) {
         var res = $http.post(manurl + "/AcAppController/funactEdit",subFrom).then(function (response) {
             return response.data;
@@ -53,7 +53,7 @@ MetronicApp.factory('behavior_service',['$http', '$q', function ($http,$q) {
         return res;
     }
 
-    //删除功能行为
+    //鍒犻櫎鍔熻兘琛屼负
     service.funactDel = function (subFrom) {
         var res = $http.post(manurl + "/AcAppController/funactDel",subFrom).then(function (response) {
             return response.data;
@@ -62,7 +62,7 @@ MetronicApp.factory('behavior_service',['$http', '$q', function ($http,$q) {
     }
 
 
-    //根据类型的GUID查询行为
+    //鏍规嵁绫诲瀷鐨凣UID鏌ヨ琛屼负
     service.queryBhvDefByBhvType = function (subFrom) {
         var res = $http.post(manurl + "/AcAppController/queryBhvDefByBhvType",subFrom).then(function (response) {
             return response.data;

@@ -1,9 +1,16 @@
 /**
  * Created by wangbo on 2017/6/11.
  */
-angular.module('MetronicApp').controller('role_controller', function($scope ,$modal,$timeout,$http,i18nService,role_service,menu_service,operator_service,filterFilter,$uibModal,uiGridConstants) {
+angular.module('MetronicApp').controller('role_controller', function($scope ,$rootScope,$modal,$timeout,$http,dictonary_service,i18nService,role_service,menu_service,operator_service,filterFilter,$uibModal,uiGridConstants) {
         var role = {};
         $scope.role = role;
+
+
+    var tits = {};
+    tits.dictGuid='DICT1501076673';
+    dictKey($rootScope,tits,dictonary_service);
+
+
         /* 左侧角色查询逻辑 */
         i18nService.setCurrentLang("zh-cn");
         //组织类别
