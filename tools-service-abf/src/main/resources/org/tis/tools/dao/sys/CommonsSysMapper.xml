@@ -26,7 +26,7 @@
  		 		t.${key}  as itemName ,
  		 		t.${value}  as itemValue ,
  		 		null as sendValue ,
-				0 as seqno from ${fromSql}  t
+				0 as seqno from ( ${fromSql} ) t
  	</select>
 
 	<sql id="SysDictItem_Column_List" >

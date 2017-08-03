@@ -90,5 +90,19 @@
 		version="1.0"
 		interface="org.tis.tools.rservice.ac.capable.IOperatorRService"
 		check="false"/>
+		
+		<dubbo:reference
+		id="roleRService"
+		group="ac"
+		version="1.0"
+		interface="org.tis.tools.rservice.ac.capable.IRoleRService"
+		check="false"/>
+		
+		<dubbo:reference
+		id="runconfigRService"
+		group="sys"
+		version="1.0"
+		interface="org.tis.tools.rservice.sys.capable.IRunConfigRService"
+		check="false"/>
 
 </beans>

@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.ac;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 应用系统
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\abf-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_APP 应用系统
  *
@@ -110,7 +110,13 @@ public class AcApp implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：端口<br/>描述： */
 	private String ipPort ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public AcApp() {
+	}
+
 	
 	/**
 	 * Set the 数据主键.

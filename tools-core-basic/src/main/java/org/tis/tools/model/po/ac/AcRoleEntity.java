@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.ac;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 角色实体关系
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\abf-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_ROLE_ENTITY 角色实体关系
  *
@@ -66,7 +66,13 @@ public class AcRoleEntity implements Serializable {
 	
 	/** 字段类型：char<br/>字段名：可查看<br/>描述：取值来自业务菜单： DICT_YON */
 	private String isview ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public AcRoleEntity() {
+	}
+
 	
 	/**
 	 * Set the 角色GUID.

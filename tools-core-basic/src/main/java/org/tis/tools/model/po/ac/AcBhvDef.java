@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.ac;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 功能操作行为定义
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\abf-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_BHV_DEF 功能操作行为定义
  *
@@ -55,7 +55,13 @@ public class AcBhvDef implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：行为名称<br/>描述： */
 	private String bhvName ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public AcBhvDef() {
+	}
+
 	
 	/**
 	 * Set the 数据主键.

@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.ac;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 操作员特殊功能行为配置
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\abf-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_OPERATOR_BHV 操作员特殊功能行为配置
  *
@@ -52,7 +52,13 @@ public class AcOperatorBhv implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：授权标志<br/>描述：取值来自业务菜单：DICT_AC_AUTHTYPE 如：特别禁止、特别允许 */
 	private String authType ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public AcOperatorBhv() {
+	}
+
 	
 	/**
 	 * Set the 操作员GUID.

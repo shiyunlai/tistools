@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.om;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 职务定义表
- * 模型文件 ： E:\github\soft\tistools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：om
  * 模型：OM_DUTY 职务定义表
  *
@@ -85,7 +85,13 @@ public class OmDuty implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：备注<br/>描述： */
 	private String remark ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public OmDuty() {
+	}
+
 	
 	/**
 	 * Set the 数据主键.

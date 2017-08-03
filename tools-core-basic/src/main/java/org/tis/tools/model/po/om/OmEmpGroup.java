@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.om;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 人员工作组对应关系
- * 模型文件 ： E:\github\soft\tistools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：om
  * 模型：OM_EMP_GROUP 人员工作组对应关系
  *
@@ -46,7 +46,13 @@ public class OmEmpGroup implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：隶属工作组GUID<br/>描述： */
 	private String guidGroup ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public OmEmpGroup() {
+	}
+
 	
 	/**
 	 * Set the 员工GUID.

@@ -283,7 +283,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                             datas.text = datas.rootName;
                             datas.children = true;
                             datas.id = datas.rootCode;
-                            datas.iocon = "fa fa-home icon-state-info icon-lg"
+                            datas.icon = "fa fa-home icon-state-info icon-lg"
                             its.push(datas)
                         }
                     }

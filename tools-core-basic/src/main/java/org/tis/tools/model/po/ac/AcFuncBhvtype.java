@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.ac;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 功能行为类型表
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\abf-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_FUNC_BHVTYPE 功能行为类型表
  *
@@ -46,7 +46,13 @@ public class AcFuncBhvtype implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：行为类型GUID<br/>描述： */
 	private String guidBhvtype ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public AcFuncBhvtype() {
+	}
+
 	
 	/**
 	 * Set the 功能GUID.

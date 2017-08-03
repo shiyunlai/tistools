@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.sys;
 
@@ -70,7 +70,13 @@ public class SysRunConfig implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：参数描述<br/>描述：参数功能描述 */
 	private String description ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public SysRunConfig() {
+	}
+
 	
 	/**
 	 * Set the 数据主键.

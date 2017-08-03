@@ -491,7 +491,7 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 	/**
 	 * 根据GUID查询业务字典
 	 *
-	 * @param dictGuid
+	 * @param dictGuid 字典GUID
 	 * @return
 	 * @throws SysManagementException
 	 */
@@ -550,5 +550,30 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 		}
 	}
 
-	
+	/**
+	 * 根据dictKey查询业务字典项列表
+	 *
+	 * @param dictKey 字典key
+	 * @return
+	 * @throws SysManagementException
+	 */
+	@Override
+	public List<SysDictItem> queryDictItemListByDictKey(String dictKey) throws SysManagementException {
+		try {
+			//GUID 为必须字段
+			if (StringUtils.isBlank(dictKey)) {
+				throw new SysManagementException(SYSExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY,
+						BasicUtil.wrap("DICT_KEY", "SYS_DICT_ITEM"));
+			}
+			SysDict sysDict = queryDict(dictKey);
+			return querySysDictItems(sysDict.getGuid());
+		} catch (SysManagementException se) {
+			throw se;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new SysManagementException(
+					SYSExceptionCodes.FAILURE_WHEN_QUERY,
+					BasicUtil.wrap( "SYS_DICT_ITEM", e.getCause().getMessage()));
+		}
+	}
 }
