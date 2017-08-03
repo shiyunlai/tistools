@@ -31,40 +31,52 @@ MetronicApp.controller('numres_controller', function ($filter,$rootScope, $scope
     $scope.gridOptions.data =  $scope.myData;
     //重置序号
     $scope.numresReset =function(){
-        if($scope.selectRow){
-            $scope.selectRow.seqNo = '0'
-        }else{
+        var getSel = $scope.gridOptions.getSelectedRows();
+        if(isNull(getSel) || getSel.length>1){
             toastr['error']("请至少选中一条进行重置！");
+        }else{
+            var str = getSel[0];
+            console.log(str)
+            if(confirm('确定要把序号键为' + str.seqKey+ '的值按照' + str.resE +  '方式重置吗?' )){
+                $scope.selectRow.seqNo = '0'
+            }
         }
+
     }
 
 
     //修改序号
     $scope.numresEdit = function(){
-        if($scope.selectRow){
-            var str =  $scope.selectRow
+        var getSel = $scope.gridOptions.getSelectedRows();
+        if(isNull(getSel) || getSel.length>1){
+            toastr['error']("请选则一条数据进行修改！");
+        }else{
+            var str =  getSel[0]
             openwindow($uibModal, 'views/numberResources/numberEdit.html', 'lg',// 弹出页面
                 function ($scope, $modalInstance) {
                     $scope.numberFrom =str;
                     $scope.editsflags = true;
                     $scope.add = function(item){//保存新增的函数
-                        toastr['success']("保存成功！");
-                        $modalInstance.close();
+                        if(confirm('确定要把'+ str.seqKey+'的序号数修改成'+str.seqNo +'吗？')){
+                            toastr['success']("修改成功！");
+                            $modalInstance.close();
+                        }
                     }
                     $scope.cancel = function () {
                         $modalInstance.dismiss('cancel');
                     };
                 }
             )
-        }else{
-            toastr['error']("请至少选中一条进行重置！");
         }
     }
 
     //查看参数
     $scope.numreslook = function(){
-        if($scope.selectRow){
-            var str =  $scope.selectRow
+        var getSel = $scope.gridOptions.getSelectedRows();
+        if(isNull(getSel) || getSel.length>1){
+            toastr['error']("请选则一条数据进行修改！");
+        }else{
+            var str =  getSel[0];
             openwindow($uibModal, 'views/numberResources/numberEdit.html', 'lg',// 弹出页面
                 function ($scope, $modalInstance) {
                     $scope.numberFrom =str;
@@ -77,9 +89,21 @@ MetronicApp.controller('numres_controller', function ($filter,$rootScope, $scope
                     };
                 }
             )
-        }else{
-            toastr['error']("请至少选中一条进行重置！");
         }
+
+    }
+    //删除序号资源
+    $scope.numresDel = function(){
+        var getSel = $scope.gridOptions.getSelectedRows();
+        if(isNull(getSel) || getSel.length>1){
+            toastr['error']("请选则一条数据进行修改！");
+        }else{
+            var str =  getSel[0];
+            if(confirm('确定删除该运行参数吗')){
+                toastr['success']("删除成功！");
+            }
+        }
+
     }
 
 

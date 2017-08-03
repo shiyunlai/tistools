@@ -7,7 +7,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
 
 
     var tits = {};
-    tits.dictGuid='DICT1501076673';
+    tits.dictKey='DICT_CONTACT_MODE';
     dictKey($rootScope,tits,dictonary_service);
 
 

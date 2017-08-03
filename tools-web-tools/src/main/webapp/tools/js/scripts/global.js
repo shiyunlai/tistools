@@ -285,7 +285,7 @@ function isNull(d){
 
 //查询业务字典
 function dictKey($rootScope,dict,service){
-    var dictQuery = service.querySysDict(dict);
+    var dictQuery = service.queryDictItemListByDictKey(dict);
     dictQuery.then(function(data){
         if(data.status == "success"){
             console.log(data);
