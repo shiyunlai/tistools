@@ -28,10 +28,11 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
     $scope.flag = flag;
     //默认为初始页面列表
     flag.index = true;
+    //节点导航
+    var indextitle = "";
+    $scope.indextitle = indextitle;
     //树自定义右键功能
     var items = function customMenu(node) {
-        // The default set of all items
-        var control;
         if(node.parent == "#"){
             var it = {
                 "新建菜单":{
@@ -164,7 +165,17 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
                         if(confirm("确定要删除此菜单？删除后不可恢复。")){
-                            //TODO.删除逻辑
+                            var subFrom = {};
+                            subFrom.groupCode = obj.original.groupCode;
+                            Workgroup_service.deletegroup(subFrom).then(function (data) {
+                                if(data.status == "success"){
+                                    console.log(data)
+                                    toastr['success']( data.message);
+                                    $("#container").jstree().refresh();
+                                }else{
+                                    toastr['error']( data.message);
+                                }
+                            })
                         }
                     }
                 },
@@ -190,50 +201,6 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
             }
             return it;
 
-        }else{
-            var it = {
-                "新建菜单":{
-                    "id":"create",
-                    "label":"新建岗位",
-                    "action":function(data){
-                        var inst = jQuery.jstree.reference(data.reference),
-                            obj = inst.get_node(data.reference);
-                        console.log(obj)
-                        openwindow($uibModal, 'views/org/addPosition_window.html', 'lg',
-                            function ($scope, $modalInstance) {
-                                //创建机构实例
-                                var subFrom = {};
-                                $scope.subFrom = subFrom;
-                                //处理新增机构父机构
-                                subFrom.GUID_PARENTS = obj.original.guid;
-                                //增加方法
-                                $scope.add = function (subFrom) {
-                                    //TODO.新增逻辑
-                                    abftree_service.addorg(subFrom).then(function (data) {
-                                        console.log(data);
-                                    });
-                                }
-                                $scope.cancel = function () {
-                                    $modalInstance.dismiss('cancel');
-                                };
-                            }
-                        )
-                    }
-                },
-
-                "删除菜单":{
-                    "label":"删除岗位",
-                    "action":function(data){
-                        var inst = jQuery.jstree.reference(data.reference),
-                            obj = inst.get_node(data.reference);
-                        if(confirm("确定要删除此菜单？删除后不可恢复。")){
-                            //TODO.删除逻辑
-                        }
-                    }
-                },
-
-            }
-            return it;
         }
 
     };
@@ -313,6 +280,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
         if(typeof data.node !== 'undefined'){//拿到结点详情
             // console.log(data.node.original.id.indexOf("@"));
             console.log(data.node.original);
+            $scope.indextitle = data.node.text;
             if(data.node.original.id == "00000"){
                 for(var a in flag){
                     flag[a] = false;
@@ -539,8 +507,8 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
             }
             $scope.flag.xjgw = true;
             //生成岗位列表
-            var xjgwgrid = {};
-            $scope.xjgwgrid = xjgwgrid;
+            var posgrid = {};
+            $scope.posgrid = posgrid;
             //定义表头名
             var com = [{ field: 'positionCode', displayName: '岗位代码', enableHiding: false},
                 { field: 'positionName', displayName: '岗位名称', enableHiding: false},
@@ -550,13 +518,8 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
                 { field: 'startDate', displayName: '有效开始日期', enableHiding: false},
                 { field: 'endDate', displayName: '有效截止日期', enableHiding: false}
             ]
-            $scope.xjgwgrid = initgrid($scope,xjgwgrid,filterFilter,com,false,function () {});
-            var rexjgw = function () {
-                var subFrom = {};
-                subFrom.groupCode = $scope.sub.groupCode;
-                //调取下级岗位信息
-
-            }
+            $scope.posgrid = initgrid($scope,posgrid,filterFilter,com,false,function () {});
+            reposgrid();
         }else if(num == 3){
             for(var a in $scope.flag){
                 flag[a] = false;
@@ -587,6 +550,8 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
             flag.qxxx = true;
         }
     }
+
+    //生成emp列表方法
     var reempgrid = function () {
         var subFrom = {};
         subFrom.groupCode = $scope.sub.groupCode;
@@ -600,6 +565,21 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
             $scope.xjempgrid.getPage(1,$scope.xjempgrid.paginationPageSize);
         })
     }
+    //生成岗位列表方法
+    var reposgrid = function () {
+        var subFrom = {};
+        subFrom.groupCode = $scope.sub.groupCode;
+        Workgroup_service.loadposin(subFrom).then(function (data) {
+            data = data.retMessage;
+            console.log(data);
+            $scope.posgrid.data = data;
+            $scope.posgrid.mydefalutData = data;
+            $scope.posgrid.getPage(1,$scope.posgrid.paginationPageSize);
+        })
+    }
+
+
+
     //详情页按钮
     workgroup.enableGroup = function () {
         console.log($scope.sub)
@@ -680,7 +660,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
 
                 var recommonGrid = function () {
                     //调取工作组信息OM_GROUP
-                    Workgroup_service.loadempNotin(subFrom).then(function (data) {
+                    Workgroup_service.loadposNotin(subFrom).then(function (data) {
                         console.log(data)
                         if(data.status == "success"  && !isNull(data.retMessage)){
                             $scope.commonGrid.data =  data.retMessage;
@@ -730,6 +710,132 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
     }
     //删除人员
     workgroup.deletemp = function () {
+        var guid = $scope.sub.guid;
+        console.log(subFrom);
+        var arr = $scope.xjempgrid.getSelectedRows();
+        if(arr.length == 0){
+            toastr['error']( "请选择需要删除的员工！");
+            return false;
+        }else{
+            var empGuidlist = [];
+            for(var i=0;i<arr.length;i++){
+                empGuidlist.push(arr[i].guid);
+            }
+            var subFrom = {};
+            subFrom.groupGuid = guid;
+            subFrom.empGuidlist = empGuidlist;
+            console.log(subFrom)
+            Workgroup_service.deleteEmpGroup(subFrom).then(function (data) {
+                console.log(data)
+                if(data.status == "success"){
+                    toastr['success'](data.retMessage);
+                }else{
+                    toastr['error'](data.retMessage);
+                }
+                reempgrid();
+            })
+        }
+    }
+    //岗位下两个按钮
+    workgroup.addpos = function () {
+        var subFrom = {};
+        subFrom.groupCode = $scope.sub.groupCode;
+        var guid = $scope.sub.guid;
+        console.log(subFrom);
+        openwindow($uibModal, 'views/org/addsearhgrid_window.html', 'lg',
+            function ($scope, $modalInstance) {
+                $scope.title = "添加岗位";
+                var commonGrid = {};
+                $scope.commonGrid = commonGrid;
+                //定义单选事件
+                var selework = function () {
 
+                }
+                //定义表头名
+                var com = [{ field: 'positionCode', displayName: '岗位代码', enableHiding: false},
+                    { field: 'positionName', displayName: '岗位名称', enableHiding: false},
+                    { field: 'positionType', displayName: '岗位类型', enableHiding: false},
+                    { field: 'positionStatus', displayName: '岗位状态', enableHiding: false},
+                    { field: 'guidDuty', displayName: '所属职务', enableHiding: false},
+                    { field: 'startDate', displayName: '有效开始日期', enableHiding: false},
+                    { field: 'endDate', displayName: '有效截止日期', enableHiding: false}
+                ]
+                $scope.commonGrid = initgrid($scope,commonGrid,filterFilter,com,true,selework);
+
+                var recommonGrid = function () {
+                    //调取工作组信息OM_GROUP
+                    Workgroup_service.loadposNotin(subFrom).then(function (data) {
+                        console.log(data)
+                        if(data.status == "success"  && !isNull(data.retMessage)){
+                            $scope.commonGrid.data =  data.retMessage;
+                            $scope.commonGrid.mydefalutData =  data.retMessage;
+                            $scope.commonGrid.getPage(1,$scope.commonGrid.paginationPageSize);
+                        }else{
+
+                        }
+
+                    })
+                }
+                //拉取列表
+                recommonGrid();
+
+                $scope.add = function () {
+                    var arr = $scope.commonGrid.getSelectedRows();
+                    if(arr.length == 0){
+                        toastr['error']( "请选择需要添加的岗位！");
+                        return false;
+                    }else{
+                        var posGuidlist = [];
+                        for(var i=0;i<arr.length;i++){
+                            posGuidlist.push(arr[i].guid);
+                        }
+                        var subFrom = {};
+                        subFrom.groupGuid = guid;
+                        subFrom.posGuidlist = posGuidlist;
+                        console.log(subFrom)
+                        Workgroup_service.addGroupPosition(subFrom).then(function (data) {
+                            console.log(data)
+                            if(data.status == "success"){
+                                toastr['success'](data.retMessage);
+                            }else{
+                                toastr['error'](data.retMessage);
+                            }
+                            reposgrid();
+                            $scope.cancel();
+                        })
+                    }
+                }
+
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            }
+        )
+    }
+    workgroup.deletepos = function () {
+        var guid = $scope.sub.guid;
+        var arr = $scope.posgrid.getSelectedRows();
+        if(arr.length == 0){
+            toastr['error']( "请选择需要删除的员工！");
+            return false;
+        }else{
+            var posGuidlist = [];
+            for(var i=0;i<arr.length;i++){
+                posGuidlist.push(arr[i].guid);
+            }
+            var subFrom = {};
+            subFrom.groupGuid = guid;
+            subFrom.posGuidlist = posGuidlist;
+            console.log(subFrom)
+            Workgroup_service.deleteGroupPosition(subFrom).then(function (data) {
+                console.log(data)
+                if(data.status == "success"){
+                    toastr['success'](data.retMessage);
+                }else{
+                    toastr['error'](data.retMessage);
+                }
+                reposgrid();
+            })
+        }
     }
 });

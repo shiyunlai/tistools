@@ -20,7 +20,6 @@ import org.tis.tools.model.po.ac.AcRole;
 import org.tis.tools.model.po.om.OmEmpPosition;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmGroup;
-import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.po.om.OmPosition;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.om.exception.EmployeeManagementException;

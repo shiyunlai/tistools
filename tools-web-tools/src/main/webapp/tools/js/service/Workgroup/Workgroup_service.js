@@ -32,6 +32,19 @@ MetronicApp.factory('Workgroup_service',['$http', '$q', function ($http,$q) {
         return res;
     }
 
+    service.loadposin = function (subFrom) {
+        var res = $http.post(manurl + "/om/workgroup/loadpositionin",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.loadposNotin = function (subFrom) {
+        var res = $http.post(manurl + "/om/workgroup/loadpositionNotin",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+
     service.loadxjgroup = function (subFrom) {
         var res = $http.post(manurl + "/om/workgroup/queryChild",subFrom).then(function (response) {
             return response.data;
@@ -87,8 +100,20 @@ MetronicApp.factory('Workgroup_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     }
+    service.addGroupPosition = function (subFrom) {
+        var res = $http.post(manurl + "/om/workgroup/addGroupPosition",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
     service.deleteEmpGroup = function (subFrom) {
         var res = $http.post(manurl + "/om/workgroup/deleteEmpGroup",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.deleteGroupPosition = function (subFrom) {
+        var res = $http.post(manurl + "/om/workgroup/deleteGroupPosition",subFrom).then(function (response) {
             return response.data;
         });
         return res;

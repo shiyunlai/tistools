@@ -97,30 +97,8 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                                 };
                         });
                     }
-                },
-                "删除职务":{
-                    "id":"delete",
-                    "label":"删除职务",
-                    "action":function (data) {
-                        var inst = jQuery.jstree.reference(data.reference),
-                            obj = inst.get_node(data.reference);
-                        console.log(obj);
-                        if(confirm("确认要删除此职务吗?")){
-                            var subFrom = {};
-                            subFrom.dutyCode = obj.id;
-                            duty_service.deletedutyByCode(subFrom).then(function (data) {
-                                if(data.status == "success"){
-                                    toastr['success'](data.retMessage);
-                                    $("#dutytree").jstree().refresh();
-                                }else{
-                                    toastr['error'](data.retMessage);
-                                }
-                            })
-                        }else{
-                            return false;
-                        }
-                    }
                 }
+
             };
             return it;
         }else {

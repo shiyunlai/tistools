@@ -10,6 +10,7 @@ import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcRole;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmGroup;
+import org.tis.tools.model.po.om.OmPosition;
 import org.tis.tools.model.vo.om.OmPositionDetail;
 
 /**
@@ -406,6 +407,20 @@ public interface IGroupRService {
 	List<OmEmployee> queryEmpNotInGroup(String guidOrg,String groupCode);
 	
 	/**
+	 * 查询当前工作组下的岗位
+	 * @param groupCode
+	 * @return
+	 */
+	List<OmPosition> queryPositionInGroup(String groupCode);
+	
+	/**
+	 * 查询当前不在此工作组下的岗位,同时保证在同一机构下
+	 * @param groupCode
+	 * @return
+	 */
+	List<OmPosition> queryPositionNotInGroup(String groupCode);
+	
+	/**
 	 * <pre>
 	 * 查询工作组权限（角色）集
 	 * </pre>
@@ -421,4 +436,14 @@ public interface IGroupRService {
 	 * @return
 	 */
 	List<OmGroup> queryAllchild(String groupCode);
+	
+	/**
+	 * 添加岗位-工作组关系表数据
+	 */
+	void insertGroupPosition(String groupGuid,List<String> posGuidList);
+	
+	/**
+	 * 删除岗位-工作组关系表数据
+	 */
+	void deleteGroupPosition(String groupGuid,List<String> posGuidList);
 }

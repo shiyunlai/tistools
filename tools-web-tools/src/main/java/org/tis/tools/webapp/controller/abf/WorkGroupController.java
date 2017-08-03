@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmGroup;
+import org.tis.tools.model.po.om.OmPosition;
 import org.tis.tools.rservice.om.capable.IEmployeeRService;
 import org.tis.tools.rservice.om.capable.IGroupRService;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.util.AjaxUtils;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 /**
@@ -425,6 +427,7 @@ public class WorkGroupController extends BaseController {
 					}
 				}
 			});
+			AjaxUtils.ajaxJsonSuccessMessage(response, "新增成功!");
 		} catch (ToolsRuntimeException e) {// TODO
 			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
 			e.printStackTrace();
@@ -449,7 +452,7 @@ public class WorkGroupController extends BaseController {
 			HttpServletResponse response) {
 		try {
 			JSONObject jsonObj = JSONObject.parseObject(content);
-			String groupGuid = jsonObj.getString("guid");
+			String groupGuid = jsonObj.getString("groupGuid");
 			List<Object> empguidList = jsonObj.getJSONArray("empGuidlist");
 			transactionTemplate.execute(new TransactionCallback<String>() {
 				@Override
@@ -466,6 +469,7 @@ public class WorkGroupController extends BaseController {
 					}
 				}
 			});
+			AjaxUtils.ajaxJsonSuccessMessage(response, "删除成功!");
 		} catch (ToolsRuntimeException e) {// TODO
 			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
 			e.printStackTrace();
@@ -475,6 +479,116 @@ public class WorkGroupController extends BaseController {
 		return null;
 	}
 
+	/**
+	 * 生成下级岗位列表
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/loadpositionin")
+	public String loadpositionin(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			String groupCode = jsonObj.getString("groupCode");
+			List<OmPosition> list = groupRService.queryPositionInGroup(groupCode);
+			AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list, "yyyy-MM-dd");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	
+	/**
+	 * 加载不在此工作组的岗位列表(同属同一机构)
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/loadpositionNotin")
+	public String loadpositionNotin(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			String groupCode = jsonObj.getString("groupCode");
+			List<OmPosition> list = groupRService.queryPositionNotInGroup(groupCode);
+			AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list, "yyyy-MM-dd");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	
+	/**
+	 *新添岗位
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/addGroupPosition")
+	public String addGroupPosition(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			String groupGuid = jsonObj.getString("groupGuid"); 
+			List<String> posGuidlist = JSON.parseArray(jsonObj.getJSONArray("posGuidlist").toJSONString(), String.class);
+			groupRService.insertGroupPosition(groupGuid, posGuidlist);
+			AjaxUtils.ajaxJsonSuccessMessage(response, "新增成功!");
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	/**
+	 *删除岗位
+	 * 
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/deleteGroupPosition")
+	public String deleteGroupPosition(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			String groupGuid = jsonObj.getString("groupGuid"); 
+			List<String> posGuidlist = JSON.parseArray(jsonObj.getJSONArray("posGuidlist").toJSONString(), String.class);
+			groupRService.deleteGroupPosition(groupGuid, posGuidlist);
+			AjaxUtils.ajaxJsonSuccessMessage(response, "删除成功!");
+		} catch (ToolsRuntimeException e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	
+	
 	/**
 	 * 每个controller定义自己的返回信息变量
 	 */

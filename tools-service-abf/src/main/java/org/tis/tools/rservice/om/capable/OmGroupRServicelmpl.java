@@ -10,6 +10,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.common.utils.BasicUtil;
@@ -22,7 +23,9 @@ import org.tis.tools.model.po.ac.AcRole;
 import org.tis.tools.model.po.om.OmEmpGroup;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmGroup;
+import org.tis.tools.model.po.om.OmGroupPosition;
 import org.tis.tools.model.po.om.OmOrg;
+import org.tis.tools.model.po.om.OmPosition;
 import org.tis.tools.model.vo.om.OmPositionDetail;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.om.exception.GroupManagementException;
@@ -30,10 +33,14 @@ import org.tis.tools.rservice.om.exception.OrgManagementException;
 import org.tis.tools.service.om.BOSHGenGroupCode;
 import org.tis.tools.service.om.OmEmpGroupService;
 import org.tis.tools.service.om.OmEmployeeService;
+import org.tis.tools.service.om.OmGroupPositionService;
 import org.tis.tools.service.om.OmGroupService;
 import org.tis.tools.service.om.OmGroupServiceExt;
 import org.tis.tools.service.om.OmOrgService;
+import org.tis.tools.service.om.OmPositionService;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
+
+import jdk.nashorn.internal.objects.annotations.Where;
 
 public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService{
 	@Autowired
@@ -50,6 +57,11 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 	OmEmployeeService omEmployeeService;
 	@Autowired
 	IEmployeeRService employeeRService;
+	@Autowired
+	OmGroupPositionService omGroupPositionService;
+	@Autowired
+	OmPositionService omPositionService; 
+
 	/**
 	 * <pre>
 	 * 生成工作组代码
@@ -514,6 +526,108 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 		List<OmEmployee> groupEmpList = queryEmployee(groupCode);
 		orgempList.removeAll(groupEmpList);
 		return orgempList;
+	}
+	
+	
+	/**
+	 * 查询当前工作组下的岗位.由从属机构下岗位添加
+	 */
+	@Override
+	public List<OmPosition> queryPositionInGroup(String groupCode) {
+		//查询方法中自带参数校验
+		OmGroup og = queryGroup(groupCode);
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("GUID_GROUP", og.getGuid());
+		List<OmPosition> opList = new ArrayList<>();
+		List<OmGroupPosition> ogpList = omGroupPositionService.query(wc);
+		if(ogpList.isEmpty()){
+			return opList;
+		}
+		List<String> posGuidList = new ArrayList<>();
+		for(OmGroupPosition ogp: ogpList){
+			posGuidList.add(ogp.getGuidPosition());
+		}
+		wc.clear();
+		wc.andIn("GUID", posGuidList);
+		return omPositionService.query(wc);
+	}
+
+	@Override
+	public List<OmPosition> queryPositionNotInGroup(String groupCode) {
+		//查询方法中自带参数校验
+		OmGroup og = queryGroup(groupCode);
+		String orgGuid = og.getGuidOrg();
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("GUID_ORG", orgGuid);
+		List<OmPosition> opList = omPositionService.query(wc);
+		List<OmPosition> inGroupList = queryPositionInGroup(groupCode);
+		opList.removeAll(inGroupList);
+		return opList;
+	}
+	
+
+	@Override
+	public void insertGroupPosition(String groupGuid, List<String> posGuidList) {
+		if(StringUtil.isEmpty(groupGuid)){
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		if(posGuidList.isEmpty()){
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+
+			@Override
+			protected void doInTransactionWithoutResult(TransactionStatus status) {
+				try {
+					for(String posGuid : posGuidList){
+						OmGroupPosition ogp = new OmGroupPosition();
+						ogp.setGuidGroup(groupGuid);
+						ogp.setGuidPosition(posGuid);
+						omGroupPositionService.insert(ogp);
+					}
+				} catch (Exception e) {
+					status.setRollbackOnly();
+					e.printStackTrace();
+					throw new GroupManagementException(
+							OMExceptionCodes.FAILURE_ADD_POSITION_TO_GROUP,
+							BasicUtil.wrap(e.getCause().getMessage()), "新增岗位失败！{0}");
+				}
+			}
+		});
+		
+	}
+
+	@Override
+	public void deleteGroupPosition(String groupGuid, List<String> posGuidList) {
+		if(StringUtil.isEmpty(groupGuid)){
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		if(posGuidList.isEmpty()){
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		WhereCondition wc = new WhereCondition();
+		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+
+			@Override
+			protected void doInTransactionWithoutResult(TransactionStatus status) {
+				try {
+					for(String posGuid : posGuidList){
+						wc.clear();
+						wc.andEquals("GUID_GROUP", groupGuid);
+						wc.andEquals("GUID_POSITION", posGuid);
+						omGroupPositionService.deleteByCondition(wc);
+					}
+				} catch (Exception e) {
+					status.setRollbackOnly();
+					e.printStackTrace();
+					throw new GroupManagementException(
+							OMExceptionCodes.FAILURE_DELETE_POSITION_TO_GROUP,
+							BasicUtil.wrap(e.getCause().getMessage()), "删除岗位失败！{0}");
+				}
+			}
+		});
+		
+		
 	}
 
 	@Override

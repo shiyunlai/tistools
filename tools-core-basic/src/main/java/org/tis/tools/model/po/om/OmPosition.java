@@ -463,4 +463,21 @@ public class OmPosition implements Serializable {
 	public String toString(){
 		return StringUtil.toString(this) ; 
 	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (this == obj) {
+			return true;
+		}
+		if (obj instanceof OmPosition) {
+			OmPosition other = (OmPosition) obj;
+			return (other.getGuid()).equals(this.getGuid());
+		}
+		return false;
+	}
+	
+	
 }

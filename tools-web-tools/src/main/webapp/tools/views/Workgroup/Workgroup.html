@@ -7,9 +7,13 @@
         <li>
             <a href="#">工作组</a>
         </li>
+        <li ng-if="indextitle != ''">
+            <i class="fa fa-circle"></i>
+            <a href="#">当前节点:{{indextitle}}</a>
+        </li>
     </ul>
 </div>
-<div>
+<div class="portlet light bordered row">
     <!-- 组织机构树 start -->
     <div class="col-md-3">
         <div class="portlet light">
@@ -345,15 +349,15 @@
             <!-- 下级工作组列表 end  -->
             <!-- 岗位列表 start -->
             <div class="tab-content portlet light" ng-if="flag.xjgw">
-                <div ui-grid="xjgwgrid"
+                <div ui-grid="posgrid"
                      ui-grid-edit ui-grid-pagination
                      ui-grid-selection ui-grid-resize-columns></div>
                 <div class="actions btn-set" style="float: right;">
-                    <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.add()"> 新增
+                    <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.addpos()"> 添加岗位
                     </button>
                     <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.edit()"> 编辑
                     </button>
-                    <button type="button" name="back" class="btn btn-danger" ng-click="workgroup.delete()"> 删除
+                    <button type="button" name="back" class="btn btn-danger" ng-click="workgroup.deletepos()"> 删除岗位
                     </button>
                 </div>
             </div>
@@ -366,8 +370,8 @@
                 <div class="actions btn-set" style="float: right;">
                     <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.addemp()"> 添加人员
                     </button>
-                    <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.edit()"> 编辑
-                    </button>
+                    <!--<button type="button" name="back" class="btn btn-primary" ng-click="workgroup.edit()"> 编辑-->
+                    <!--</button>-->
                     <button type="button" name="back" class="btn btn-danger" ng-click="workgroup.deletemp()"> 删除人员
                     </button>
                 </div>

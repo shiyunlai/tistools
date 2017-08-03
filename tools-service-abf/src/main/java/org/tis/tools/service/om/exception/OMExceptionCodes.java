@@ -185,6 +185,14 @@ public class OMExceptionCodes {
 	 * 运行状态下工作组不可删除
 	 */
 	public static final String FAILURE_DELETE_RERUNNING_GROUP= R_EX_CODE("0036");
+	/**
+	 * 工作组添加岗位失败
+	 */
+	public static final String FAILURE_ADD_POSITION_TO_GROUP= R_EX_CODE("0037");
+	 /**
+	 * 工作组删除岗位失败
+	 */
+	public static final String FAILURE_DELETE_POSITION_TO_GROUP= R_EX_CODE("0038");
 	
 	/**
 	 * 以烤串方式拼接异常码
