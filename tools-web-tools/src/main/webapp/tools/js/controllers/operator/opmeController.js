@@ -6,9 +6,7 @@ MetronicApp.controller('opmanage_controller', function ($filter,$rootScope, $sco
     //grid表格
     i18nService.setCurrentLang("zh-cn");
 
-
     //查询操作员列表
-
     var operman ={};
     $scope.operman = operman;
     operman.queryAll = function(){
@@ -53,7 +51,6 @@ MetronicApp.controller('opmanage_controller', function ($filter,$rootScope, $sco
                 var operatFrom = {};
                 $scope.operatFrom = operatFrom;
                 $scope.operatFrom.lockLimit = 5;
-
                 $scope.add = function(item){//保存新增的函数
                     var subFrom = {};
                     $scope.subFrom = subFrom;
@@ -110,15 +107,6 @@ MetronicApp.controller('opmanage_controller', function ($filter,$rootScope, $sco
         }
     }
 
-    //删除操作员列表
-    /*$scope.operatDefault = function(){
-     if($scope.selectRow){
-     confirm('确认要删除此操作员吗？')
-     toastr['success']("删除成功！");
-     }else{
-     toastr['error']("请至少选中一个操作员进行删除！");
-     }
-     }*/
 });
 
 /* 重组菜单控制器*/

@@ -104,5 +104,14 @@
 		version="1.0"
 		interface="org.tis.tools.rservice.sys.capable.IRunConfigRService"
 		check="false"/>
+		
+		<dubbo:reference
+		id="seqnoRService"
+		group="sys"
+		version="1.0"
+		interface="org.tis.tools.rservice.sys.capable.ISeqnoRService"
+		check="false"/>
+		
+		
 
 </beans>

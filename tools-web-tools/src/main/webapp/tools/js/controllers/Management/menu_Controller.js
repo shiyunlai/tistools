@@ -11,7 +11,6 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
     })
 
 
-
     /*0、菜单管理机构树逻辑*/
     $("#s").submit(function(e) {
         e.preventDefault();
