@@ -1,0 +1,41 @@
+<div class="page-bar ng-scope" style="border-bottom: 1px solid #e7ecf1;">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="#">组织管理</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <a href="#">业务机构</a>
+        </li>
+        <li ng-if="currNode != ''">
+            <i class="fa fa-circle"></i>
+            <a href="#">当前节点:{{currNode}}</a>
+        </li>
+    </ul>
+</div>
+<div class="row">
+    <!-- 业务机构树 start -->
+    <div class="col-md-3">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-cogs font-green-sharp"></i>
+                    <span class="caption-subject font-green-sharp bold uppercase">业务机构树</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="reload">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <form id="s">
+                    <input type="search" id="q" ng-model="searchitem"/>
+                    <button type="submit" ng-click="abftree.clear()">清空</button>
+                </form>
+                <div id="busiorgtree" ></div>
+                <!--<div id="searchtree" ng-show="!showtree"></div>-->
+            </div>
+        </div>
+    </div>
+    <!-- 业务机构树 end -->
+</div>

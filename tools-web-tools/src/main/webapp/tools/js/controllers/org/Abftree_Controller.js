@@ -47,6 +47,10 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
     //机构,岗位页签切换
     var tabflag = true;//true为机构详情
     $scope.tabflag = tabflag;
+    //节点导航栏
+    var currNode = "";
+    $scope.currNode = currNode;
+
     //生成公共方法
     initController($scope,abftree,"abftree",abftree,filterFilter);
     var item = {};
@@ -196,7 +200,16 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
                         if(confirm("确定要删除此菜单？删除后不可恢复。")){
-                            //TODO.删除逻辑
+                            var subFrom = {};
+                            subFrom.orgCode =  obj.original.orgCode;
+                            abftree_service.deleteOrg(subFrom).then(function (data) {
+                                if(data.status == "success"){
+                                    toastr['success'](data.retMessage);
+                                    $("#container").jstree().refresh();
+                                }else{
+                                    toastr['error'](data.retMessage);
+                                }
+                            })
                         }
                     }
                 },
@@ -280,7 +293,18 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                                 }else{
                                     toastr['error'](data.retMessage);
                                 }
-                                $("#container").jstree().refresh();
+                                var sele = function sele() {
+                                    var node = {};
+                                    node.id = "99999"
+                                    $("#container").jstree().select_node(node);
+                                }
+                                var retree = function retree(sele) {
+                                    $("#container").jstree().refresh();
+                                    sele();
+                                }
+                                retree();
+
+
                             })
                         }
                     }
@@ -374,10 +398,6 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                             data[i].text = data[i].orgName;
                             data[i].children = true;
                             data[i].id = data[i].orgCode;
-                            data[i].startDate = FormatDate(data[i].startDate);
-                            data[i].createTime = FormatDate(data[i].createTime);
-                            data[i].endDate = FormatDate(data[i].endDate);
-                            data[i].lastUpdate = FormatDate(data[i].lastUpdate);
                             data[i].icon = 'fa fa-institution  icon-state-info icon-lg';
                             if(data[i].orgName == "岗位信息"){
                                 data[i].icon = 'fa fa-users  icon-state-info icon-lg';
@@ -445,6 +465,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
             // console.log(data.node.original.id.indexOf("@"));
             $scope.abftree.item = {};
             console.log(data.node.original);
+            $scope.currNode = data.node.text;
             if(data.node.original.id.indexOf("POSIT") == 0){
                 for(var i in $scope.flag){
                     flag[i] = false;
@@ -615,7 +636,12 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
             var subFrom = {};
             subFrom.orgCode = $scope.abftree.item.orgCode;
             abftree_service.deleteOrg(subFrom).then(function (data) {
-                console.log(data);
+                if(data.status == "success"){
+                    toastr['success'](data.retMessage);
+                    $("#container").jstree().refresh();
+                }else{
+                    toastr['error'](data.retMessage);
+                }
             })
         }
     }
@@ -786,7 +812,6 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 { field: 'createTime', displayName: '创建时间', enableHiding: false}
             ]
             $scope.gridOptions2 = initgrid($scope,gridOptions2,filterFilter,com,true,selework);
-
             var regridOptions2 = function () {
                 var subFrom = {};
                 subFrom.orgCode = $scope.abftree.item.orgCode;

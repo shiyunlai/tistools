@@ -760,6 +760,12 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             data: {pageTitle: '序号资源表'},
             controller:"systempara_controller"
         })
+        .state("busiorg",{
+            url:"/busiorg.html",
+            templateUrl:"views/busiorg/busiorg.html",
+            data: {pageTitle: '业务机构'},
+            controller:"busiorg_controller"
+        })
 }]);
 
 /* Init global settings and run the app */

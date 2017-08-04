@@ -7,9 +7,13 @@
         <li>
             <a href="#">组织机构管理</a>
         </li>
+        <li ng-if="currNode != ''">
+            <i class="fa fa-circle"></i>
+            <a href="#">当前节点:{{currNode}}</a>
+        </li>
     </ul>
 </div>
-<div>
+<div class="row">
     <!-- 组织机构树 start -->
     <div class="col-md-3">
         <div class="portlet light">
