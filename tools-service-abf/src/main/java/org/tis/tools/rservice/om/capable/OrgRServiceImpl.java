@@ -819,7 +819,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 */
 	@Override
 	public void deleteEmptyOrg(String orgCode) throws OrgManagementException {
-		
+
 		OmOrg delOrg = omOrgServiceExt.loadByOrgCode(orgCode) ; 
 		
 		if (!StringUtils.equals(OMConstants.ORG_STATUS_STOP, delOrg.getOrgStatus())) {
@@ -827,10 +827,10 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 					BasicUtil.wrap(orgCode, delOrg.getOrgStatus()), "不能删除非停用状态机构{0}！当前状态{1}");
 		}
 		
-		if (!omOrgServiceExt.isEmptyOrg(delOrg.getGuid())) {
-			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHEN_DEL_MUST_EMPTY_ORG,
-					BasicUtil.wrap(orgCode, delOrg.getOrgStatus()), "不能删除非空机构{0}！");
-		}
+//		if (!omOrgServiceExt.isEmptyOrg(delOrg.getGuid())) {
+//			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHEN_DEL_MUST_EMPTY_ORG,
+//					BasicUtil.wrap(orgCode, delOrg.getOrgStatus()), "不能删除非空机构{0}！");
+//		}
 		
 		final String guid = delOrg.getGuid(); 
 		try {
