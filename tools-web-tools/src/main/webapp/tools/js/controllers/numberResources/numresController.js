@@ -2,23 +2,48 @@
  * Created by wangbo on 2017/7/10.
  */
 
-MetronicApp.controller('numres_controller', function ($filter,$rootScope, $scope, $state, $stateParams, filterFilter, $modal,$uibModal, $http, $timeout,$interval,i18nService) {
+MetronicApp.controller('numres_controller', function ($filter, $scope, $state,numres_service, $stateParams, filterFilter, $modal,$uibModal, $http, $timeout,$interval,i18nService) {
+
+    var numres = {};
+    $scope.numres = numres;
+    //查询所有系统资源
+    var subFrom= {} ;
+    numres_service.querySeqnoList(subFrom).then(function (data) {
+        if(data.status == "success"){
+            var datas = data.retMessage;
+            $scope.gridOptions.data =  datas;
+            $scope.gridOptions.mydefalutData = datas;
+            $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
+        }else{
+            toastr['error']('初始化查询失败'+'<br/>'+data.retMessage);
+        }
+    })
+
+    //封装
+    numres.initt = function(){//查询服务公用方法
+        var subFrom= {} ;
+        numres_service.querySeqnoList(subFrom).then(function (data) {
+            if(data.status == "success"){
+                var datas = data.retMessage;
+                $scope.gridOptions.data =  datas;
+                $scope.gridOptions.mydefalutData = datas;
+                $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
+            }else{
+                toastr['error']('初始化查询失败'+'<br/>'+data.retMessage);
+            }
+        })
+    }
+
+
     //grid表格
     i18nService.setCurrentLang("zh-cn");
-    $scope.myData = [
-        {'seqKey':'0','seqNo':'0','resEt':'不重置','resetPapams':'隐藏'},
-        {'seqKey':'1','seqNo':'1','resEt':'按天重置','resetPapams':'隐藏'},
-        {'seqKey':'2','seqNo':'2','resEt':'按周重置','resetPapams':'隐藏'},
-        {'seqKey':'3','seqNo':'3','resEt':'自定义重置周期','resetPapams':'隐藏'}
-    ];
-
     var gridOptions = {};
     $scope.gridOptions = gridOptions;
     var com = [
         { field: 'seqKey', displayName: '序号键值'},
         { field: 'seqNo', displayName: '序号数'},
-        { field: "resEt", displayName:'重置方式'},
-        { field: "resetPapams", displayName:'重置处理参数',visible: false}
+        { field: "reset", displayName:'重置方式'},
+        { field: "resetParams", displayName:'重置处理参数',visible: false}
     ];
     var f = function(row){
         if(row.isSelected){
@@ -28,7 +53,8 @@ MetronicApp.controller('numres_controller', function ($filter,$rootScope, $scope
         }
     }
     $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,false,f);
-    $scope.gridOptions.data =  $scope.myData;
+
+
     //重置序号
     $scope.numresReset =function(){
         var getSel = $scope.gridOptions.getSelectedRows();
@@ -37,13 +63,11 @@ MetronicApp.controller('numres_controller', function ($filter,$rootScope, $scope
         }else{
             var str = getSel[0];
             console.log(str)
-            if(confirm('确定要把序号键为' + str.seqKey+ '的值按照' + str.resE +  '方式重置吗?' )){
-                $scope.selectRow.seqNo = '0'
+            if(confirm('确定要把序号键为' + str.seqKey+ '的值按照' + str.reset +  '方式重置吗?' )){
+                //$scope.selectRow.seqNo = '0'
             }
         }
-
     }
-
 
     //修改序号
     $scope.numresEdit = function(){
@@ -54,12 +78,25 @@ MetronicApp.controller('numres_controller', function ($filter,$rootScope, $scope
             var str =  getSel[0]
             openwindow($uibModal, 'views/numberResources/numberEdit.html', 'lg',// 弹出页面
                 function ($scope, $modalInstance) {
-                    $scope.numberFrom =str;
-                    $scope.editsflags = true;
+                    if(!isNull(str)){//如果参数不为空，则就回显
+                        console.log(str);
+                        $scope.numberFrom = angular.copy(str);
+                    }
+
+                    $scope.editsflag = true;
                     $scope.add = function(item){//保存新增的函数
                         if(confirm('确定要把'+ str.seqKey+'的序号数修改成'+str.seqNo +'吗？')){
-                            toastr['success']("修改成功！");
-                            $modalInstance.close();
+                            var subFrom = {};
+                            subFrom = item;
+                            numres_service.editSeqno(subFrom).then(function (data) {
+                                if(data.status == "success"){
+                                    toastr['success']("修改成功！");
+                                    numres.initt();//重新查询
+                                    $modalInstance.close();
+                                }else{
+                                    toastr['error']('修改失败'+'<br/>'+data.retMessage);
+                                }
+                            })
                         }
                     }
                     $scope.cancel = function () {
@@ -100,7 +137,18 @@ MetronicApp.controller('numres_controller', function ($filter,$rootScope, $scope
         }else{
             var str =  getSel[0];
             if(confirm('确定删除该运行参数吗')){
-                toastr['success']("删除成功！");
+                var subFrom = {};
+                subFrom.seqKey = str.seqKey;
+                numres_service.deleteSeqno(subFrom).then(function (data) {
+                    if(data.status == "success"){
+                        toastr['success']("删除成功！");
+                        numres.initt();//重新查询列表
+                    }else{
+                        toastr['error']('删除失败'+'<br/>'+data.retMessage);
+                    }
+
+                })
+
             }
         }
 

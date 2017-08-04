@@ -1,5 +1,3 @@
-
-
 function initController($scope, thisobj, thisobjName, thisobj_service, filterFilter) {
     thisobj.checkAll = function (headcheck) {
         if (!headcheck) {
@@ -283,16 +281,14 @@ function isNull(d){
 }
 
 
+
 //查询业务字典
 function dictKey($rootScope,dict,service){
     var dictQuery = service.queryDictItemListByDictKey(dict);
     dictQuery.then(function(data){
         if(data.status == "success"){
-            console.log(data);
             var datas = data.retMessage;
-            var dictitem = {};
-            $rootScope.dictitem = dictitem;
-            dictitem=datas;
+            $rootScope.dictitem=datas;
         }else{
             toastr['error']('字典项查询失败'+'<br/>'+data.retMessage);
         }

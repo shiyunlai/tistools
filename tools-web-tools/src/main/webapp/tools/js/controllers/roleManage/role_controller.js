@@ -1,14 +1,15 @@
 /**
  * Created by wangbo on 2017/6/11.
  */
-angular.module('MetronicApp').controller('role_controller', function($scope ,$rootScope,$modal,$timeout,$http,dictonary_service,i18nService,role_service,menu_service,operator_service,filterFilter,$uibModal,uiGridConstants) {
+angular.module('MetronicApp').controller('role_controller', function($scope ,$rootScope,$modal,$timeout,$http,abftree_service,dictonary_service,i18nService,role_service,menu_service,operator_service,filterFilter,$uibModal,uiGridConstants) {
         var role = {};
         $scope.role = role;
 
 
-    var tits = {};
+  /* 测试业务字典
+   var tits = {};
     tits.dictKey='DICT_CONTACT_MODE';
-    dictKey($rootScope,tits,dictonary_service);
+    dictKey($rootScope,tits,dictonary_service);*/
 
 
         /* 左侧角色查询逻辑 */
@@ -49,6 +50,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                 }
             },
         ];
+
         var f = function(row){
             if(row.isSelected){
                 $scope.selectRow = row.entity;
@@ -361,6 +363,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
         role_service.queryRoleInParty(subFrom).then(function(data){
             if(data.status == "success"){
                 var datas = data.retMessage;
+                console.log(datas);
                 tabshow(datas,ars)
             }else{
                 toastr['error']('初始化查询失败'+'<br/>'+data.retMessage);
@@ -600,21 +603,16 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
         openwindow($modal, 'views/roleManage/roleAddwork.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
                 $scope.importadd = [
-                    {'guid':'GROUP1499306294','groupName':'测试'},
-                    { 'guid':'GROUP1499322555','groupName':'测试2号'},
-                    {'guid':'GROUP1499327061','groupName':'测试3'},
-                    { 'guid':'GROUP1499420342','groupName':'123'},
-                    { 'guid':'GROUP1499654455','groupName':'1111'},
-                    { 'guid':'GROUP1499654456','groupName':'99999'},
-                    { 'guid':'GROUP1499654457','groupName':'8888'},
-                    { 'guid':'GROUP1499926586','groupName':'321221'},
-                    { 'guid':'GROUP1499926587','groupName':'67676'},
+                    {'guid':'GROUP1501643718','groupName':'测试'},
+                    { 'guid':'GROUP1501656120','groupName':'测试2号'},
+                    {'guid':'GROUP1501751448','groupName':'测试3'}
                 ];
                 var gridOptions = {};
                 $scope.gridOptions = gridOptions;
                  var com = [
                     { field: "groupName", displayName:'工作组名称'}
                  ];
+
                 //自定义点击事件
                 var f1 = function(row){
                     if(row.isSelected){
@@ -639,6 +637,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                         }
                         role_service.addPartyRole(tis).then(function(data){
                             var  datas = data.retMessage;
+                            console.log(datas)
                             if(data.status == "success"){
                                 toastr['success']("导入成功！");
                                 $modalInstance.close();
@@ -921,6 +920,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
     }
     $scope.gridOptioner = initgrid($scope,gridOptioner,filterFilter,comer,true,fer);
 
+
     //新增操作员逻辑
     $scope.role.operaAdd = function(){
         openwindow($modal, 'views/roleManage/roleoperAdd.html', 'lg',//弹出页面
@@ -934,7 +934,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                         toastr['error']('查询失败'+'<br/>'+data.retMessage);
                     }
                 })
-
                 var gridOptions = {};
                 $scope.gridOptions = gridOptions;//数据方法
                 var com = [
@@ -963,6 +962,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                             subFrom.guidOperator = dats[i].guid;
                             tis.push(subFrom)
                         }
+
                         role_service.addOperatorRole(tis).then(function(data){
                             var datas = data.retMessage;
                             if(data.status == "success"){

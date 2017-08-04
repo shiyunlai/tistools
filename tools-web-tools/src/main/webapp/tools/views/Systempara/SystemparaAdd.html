@@ -19,7 +19,7 @@
                         <label class="control-label col-md-4">应用系统:<span ng-class="{required:myform.sys_key.$invalid}"  > * </span></label>
                         <div class="col-md-8">
                             <select class="form-control" name="sys_key" ng-model="sysFrom.guidApp"   required>
-                                <option ng-repeat="d in  sysList" value="{{d.appName}}">{{d.appName+','+ d.appCode}}</option>
+                                <option ng-repeat="d in  sysList" value="{{d.guid}}">{{d.appName+','+ d.appCode}}</option>
                             </select>
                         </div>
                     </div>
@@ -71,7 +71,7 @@
                         <label class="control-label col-md-4">参数值:<span ng-class="{required:myform.sys_key5.$invalid}"  > * </span></label>
                         <div class="col-md-8">
                             <select class="form-control" name="sys_key5" ng-model="sysFrom.value"   required>
-                                <option ng-repeat="d in dictinfoAll"  value="{{d.itemName}}">{{d.itemName}}</option>
+                                <option ng-repeat="d in dictinfoAll"  value="{{d.guid}}">{{d.itemName}}</option>
                             </select>
                         </div>
                     </div>
