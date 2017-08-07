@@ -1,7 +1,7 @@
 /**
  * Created by wangbo on 2017/6/10.
  */
-angular.module('MetronicApp').controller('behavior_controller', function($rootScope, $scope, $http,i18nService,$modal,filterFilter,behavior_service) {
+angular.module('MetronicApp').controller('behavior_controller', function($rootScope, $scope, $http,i18nService,$modal,filterFilter,behavior_service,common_service) {
     /* 行为定义配置*/
     var beha = {};
     $scope.beha = beha;
@@ -39,6 +39,21 @@ angular.module('MetronicApp').controller('behavior_controller', function($rootSc
             toastr['error'](data.retCode,data.retMessage+"初始化失败!");
         }
     })
+
+    /*console.log($rootScope.res);//取出写的服务数据
+    var  ret = $rootScope.res.behavior_service;//绑定，调用json中的对应服务
+    common_service.post(ret.functypequery,subFrom).then(function(data){//调用即可
+        var datas = data.retMessage;
+        $scope.gridOptions.data = datas;//把获取到的数据复制给表
+        $scope.gridOptions.mydefalutData = datas;
+        $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
+        if(data.status == "success"){
+        }else{
+            toastr['error'](data.retCode,data.retMessage+"初始化失败!");
+        }
+    })*/
+
+
     beha.initt = function(){//查询服务公用方法
         var subFrom = {};
         //console.log($scope.subFrom.id)
