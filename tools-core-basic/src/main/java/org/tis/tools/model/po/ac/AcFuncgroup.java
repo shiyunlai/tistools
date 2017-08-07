@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.ac;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 功能组
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\abf-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_FUNCGROUP 功能组
  *
@@ -78,7 +78,13 @@ public class AcFuncgroup implements Serializable {
 	
 	/** 字段类型：decimal<br/>字段名：子节点数<br/>描述：对功能组进行子节点的增加、删除时需要同步维护 */
 	private BigDecimal subCount ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public AcFuncgroup() {
+	}
+
 	
 	/**
 	 * Set the 数据主键.

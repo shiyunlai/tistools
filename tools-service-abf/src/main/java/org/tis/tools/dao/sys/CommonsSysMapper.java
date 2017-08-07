@@ -3,8 +3,10 @@
  */
 package org.tis.tools.dao.sys;
 
+import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.tis.tools.model.po.sys.SysDictItem;
 
 /**
@@ -33,4 +35,18 @@ public interface CommonsSysMapper {
 	 * @return 字典项
 	 */
 	public SysDictItem queryDictItem(Map<String, String> parameters);
+
+
+	/**
+	 * 当字典项来源为表或视图时，根据表名或sql查询业务字典项
+	 *
+	 * @param key
+	 *  		字典项名称
+	 * @param value
+	 *  		字典项值
+	 * @param fromSql
+	 *  		表名
+	 * @return
+	 */
+	List<SysDictItem> queryDictItemFromTableOrView(@Param("key") String key, @Param("value") String value, @Param("fromSql") String fromSql);
 }

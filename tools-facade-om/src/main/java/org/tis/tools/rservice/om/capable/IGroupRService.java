@@ -10,6 +10,7 @@ import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcRole;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmGroup;
+import org.tis.tools.model.po.om.OmPosition;
 import org.tis.tools.model.vo.om.OmPositionDetail;
 
 /**
@@ -339,11 +340,11 @@ public interface IGroupRService {
 	 * 查询工作组下（第一层）子工作组
 	 * </per>
 	 * 
-	 * @param groupCode
-	 *            工作组代码
+	 * @param parentsCode
+	 *            工作组父parentsCode
 	 * @return 子工作组列表
 	 */
-	List<OmGroup> queryChildGroup(String groupCode);
+	List<OmGroup> queryChildGroup(String parentsCode);
 
 	/**
 	 * <per>
@@ -372,6 +373,20 @@ public interface IGroupRService {
 	 */
 	List<OmPositionDetail> queryPosition(String groupCode) ; 
 	
+//	/**
+//	 * <per>
+//	 * 查询属于该工作组的（完整的）岗位列表
+//	 * 
+//	 * 说明：
+//	 * 返回岗位信息为平级列表展示,父子关系由字段展示
+//	 * </per>
+//	 * 
+//	 * @param groupCode
+//	 *            工作组代码
+//	 * @return 岗位列表
+//	 */
+//	List<OmPositionDetail> queryPosition(String groupCode) ; 
+	
 	/**
 	 * <per> 
 	 * 查询在该工作组的员工列表 
@@ -384,6 +399,28 @@ public interface IGroupRService {
 	List<OmEmployee> queryEmployee(String groupCode);
 	
 	/**
+	 * 查询不属于此工作组并且在指定机构下的人员信息
+	 * @param orgCode
+	 * @param groupCode
+	 * @return
+	 */
+	List<OmEmployee> queryEmpNotInGroup(String guidOrg,String groupCode);
+	
+	/**
+	 * 查询当前工作组下的岗位
+	 * @param groupCode
+	 * @return
+	 */
+	List<OmPosition> queryPositionInGroup(String groupCode);
+	
+	/**
+	 * 查询当前不在此工作组下的岗位,同时保证在同一机构下
+	 * @param groupCode
+	 * @return
+	 */
+	List<OmPosition> queryPositionNotInGroup(String groupCode);
+	
+	/**
 	 * <pre>
 	 * 查询工作组权限（角色）集
 	 * </pre>
@@ -393,4 +430,20 @@ public interface IGroupRService {
 	 * @return 权限（角色）集
 	 */
 	List<AcRole> queryRole(String groupCode);
+	/**
+	 * 查询该工作组下所有子工作组
+	 * @param groupCode
+	 * @return
+	 */
+	List<OmGroup> queryAllchild(String groupCode);
+	
+	/**
+	 * 添加岗位-工作组关系表数据
+	 */
+	void insertGroupPosition(String groupGuid,List<String> posGuidList);
+	
+	/**
+	 * 删除岗位-工作组关系表数据
+	 */
+	void deleteGroupPosition(String groupGuid,List<String> posGuidList);
 }

@@ -21,7 +21,7 @@
                 <span class="title">首页</span>
             </a>
         </li>
-        <li class="start nav-item">
+     <!--   <li class="start nav-item">
             <a href="javascript:;">
                 <i class="fa fa-cubes"></i>
                 <span class="title">应用管理</span>
@@ -45,7 +45,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:;">
+                            <a href="#/busiorg.html">
                                 <i class="icon-puzzle"></i>业务机构</span>
                             </a>
                         </li>
@@ -55,7 +55,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:;">
+                            <a href="#/duty.html">
                                 <i class="icon-puzzle"></i>职务定义</span>
                             </a>
                         </li>
@@ -112,21 +112,21 @@
                                 <i class="icon-puzzle"></i>操作员管理</span>
                             </a>
                         </li>
-                        <!--<li>
+                        &lt;!&ndash;<li>
                             <a href="#/roleConfig.html">
                                 <i class="icon-puzzle"></i>个性化配置</span>
                             </a>
-                        </li>-->
+                        </li>&ndash;&gt;
                         <li>
                             <a href="#/Reorganizemenu.html">
                                 <i class="icon-puzzle"></i>重组菜单</span>
                             </a>
                         </li>
-                        <!--<li>
+                        &lt;!&ndash;<li>
                             <a href="#/shortcutMenu.html">
                                 <i class="icon-puzzle"></i>快捷菜单</span>
                             </a>
-                        </li>-->
+                        </li>&ndash;&gt;
                         <li>
                             <a href="javascript:;">
                                 <i class="icon-puzzle"></i>特殊权限</span>
@@ -155,6 +155,40 @@
                              <a href="#/numberResources.html">
                                  <i class="fa fa-fax"></i>序号资源表管理</span>
                              </a>
+                        </li>
+                        <li>
+                            <a href="#/Systempara.html">
+                                <i class="fa fa-fax"></i>系统运行参数</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>-->
+
+
+        <li class="nav-item" ng-repeat="d in menusAndTrans track by $index" ng-if="!d.menu_guid || (d.sons && d.sons.length > 0)">
+            <a href="#/{{d.uientry}}" ng-if="!d.menu_guid">
+                <i ng-class="{true : '{{d.expand_path}}',false:'icon-settings' }[d.expand_path!=null && d.expand_path !='']"></i><span ng-bind-html="d.menu_label | highlightTrust2Html : searchParam: '#F0F0F0'"></span>
+            </a>
+            <a href="javascript:;" class="nav-link nav-toggle" ng-if="d.menu_guid">
+                <i ng-class="{true : '{{d.expand_path}}',false:'icon-settings' }[d.expand_path!=null && d.icon !='']"></i><span ng-bind-html="d.menu_label | highlightTrust2Html : searchParam: '#F0F0F0'"></span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu" ng-if="d.menu_guid && d.sons && d.sons.length > 0">
+                <li class="nav-item" ng-repeat="p in d.sons track by $index" ng-if="(p.parents_guid && p.parents_guid == d.menu_guid) || (p.menu_label && p.parents_guid == d.menu_guid)">
+                    <a href="#/{{p.uientry}}" ng-if="!p.menu_guid">
+                        <i ng-class="{true : '{{p.expand_path}}',false:'icon-settings' }[p.expand_path!=null && p.expand_path !='']"></i><span ng-bind-html="p.menu_label | highlightTrust2Html : searchParam: '#F0F0F0'"></span>
+                    </a>
+                    <a href="javascript:;"  class="nav-link nav-toggle" ng-if="p.menu_guid">
+                        <i ng-class="{true : '{{p.expand_path}}',false:'icon-settings' }[p.expand_path!=null && p.expand_path !='']"></i><span ng-bind-html="p.menu_label | highlightTrust2Html : searchParam: '#F0F0F0'"></span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub-menu" ng-if="p.menu_guid && p.sons && p.sons.length > 0">
+                        <li ng-repeat="p1 in p.sons track by $index" ng-if="p1.parents_guid == p.menu_guid">
+                            <a href="#/{{p1.uientry}}">
+                                <i ng-class="{true : '{{p1.expand_path}}',false:'icon-settings' }[p1.expand_path!=null && p1.expand_path !='']"></i><span ng-bind-html="p1.menu_label | highlightTrust2Html : searchParam: '#F0F0F0'"></span>
+                            </a>
                         </li>
                     </ul>
                 </li>

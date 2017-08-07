@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.ac;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 实体
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\abf-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_ENTITY 实体
  *
@@ -105,7 +105,13 @@ public class AcEntity implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：删除记录检查引用关系<br/>描述：根据引用关系定义，检查关联记录是否需要同步删除； 引用关系定义格式： table.column/[Y/N];table.column/[Y/N];... 举例： 假如，存在实体acct，且引用关系定义如下 guid:tws_abc.acct_guid/Y;tws_nnn.acctid/N; 当前删除acct实体guid＝9988的记录，系统自动执行引用关系删除，逻辑如下： 查找tws_abc 表，acct_guid = 9988 的记录，并删除； 查找tws_nnn 表，acctid=9988的记录，但不删除； 如果采用系统默认的命名方式，规则可以简化为： guid:tws_abc/Y;tws_nnn/N; 则 查找tws_abc 表，acct_guid = 9988 的记录，并删除； 查找tws_nnn 表，acct_guid = 9988 的记录，但不删除； 前提，必须基于实体的GUID进行引用。 */
 	private String checkRef ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public AcEntity() {
+	}
+
 	
 	/**
 	 * Set the 数据主键.

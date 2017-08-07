@@ -1,4 +1,3 @@
-<!-- 新增身份 -->
 <div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
     {{identFrom}}
     <div class="portlet-title">
@@ -20,29 +19,29 @@
                         <label class="control-label col-md-4">身份名称<span ng-class="{required:myform.dict_key.$invalid}"  >* </span></label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="identFrom.identname" required
+                                   ng-model="identFrom.identityName" required
                                    name="dict_key" />
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6" >
+                <!--<div class="col-md-6" >
                     <div class="form-group">
                         <label class="control-label col-md-4">默认身份标志</label>
                         <div class="col-md-8">
-                            <select class="form-control"  name="dict_type"   ng-model="identFrom.idenflag" >
+                            <select class="form-control"  name="dict_type"   ng-model="identFrom.identityFlag" >
                                 <option value=""></option>
-                                <option value="n">N</option>
-                                <option value="y">Y</option>
+                                <option value="N">N</option>
+                                <option value="Y">Y</option>
                             </select>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <div class="col-md-6" >
                     <div class="form-group">
                         <label class="control-label col-md-4">显示顺序<span ng-class="{required:myform.dict_key1.$invalid}"  >* </span></label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="identFrom.idennum" required
+                                   ng-model="identFrom.seqNo" required
                                    name="dict_key1" />
                         </div>
                     </div>
@@ -52,7 +51,7 @@
                         <label class="control-label col-md-2"></label>
                         <div class="col-md-10">
                             <div class="actions btn-set" style="float: right;">
-                                <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="add(menuFrom)" > 保存
+                                <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="add(identFrom)" > 保存
                                 </button>
                                 <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存
                                 </button>

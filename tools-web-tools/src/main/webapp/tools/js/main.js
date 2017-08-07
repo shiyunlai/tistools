@@ -5,6 +5,8 @@
 /* Metronic App */
 var isdebug = false;
 var manurl = 'http://localhost:8089/tis';
+
+
 var MetronicApp = angular.module("MetronicApp", [
     "ui.router",
     "ui.bootstrap",
@@ -173,12 +175,18 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
 }]);
 
 /* Setup App Main Controller */
-MetronicApp.controller('AppController', ['$scope', '$rootScope', function($scope, $rootScope) {
-    $scope.$on('$viewContentLoaded', function() {
+MetronicApp.controller('AppController', ['$scope','$rootScope','$http','$q', function($scope, $rootScope,$http,$q) {
+   /* $scope.$on('$viewContentLoaded', function() {
         App.initComponents(); // init core components
         //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive
-    });
+    });*/
+    var res = $http.get(manurl + '/tools/json/service.json').then(function (response) {
+        $rootScope.res = response.data;//绑定到rootscope中，在其他页面可以直接调用
+        return response;
+    })
+
 }]);
+
 
 /***
  Layout Partials.
@@ -187,7 +195,7 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', function($scope
  ***/
 
 /* Setup Layout Part - Header */
-MetronicApp.controller('HeaderController', ['$scope','filterFilter','$uibModal', function($scope,filterFilter,$uibModal) {
+MetronicApp.controller('HeaderController', ['$scope','filterFilter', '$http','$uibModal', function($scope,filterFilter,$http,$uibModal) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
         Demo.init();
@@ -220,10 +228,429 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$uibModal',
 }]);
 
 /* Setup Layout Part - Sidebar */
-MetronicApp.controller('SidebarController', ['$scope', function($scope) {
+MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scope,$timeout) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initSidebar(); // init sidebar
+        var item = [{"expand_path":"fa fa-cubes",
+            "menu_guid":"MENU1500805951",
+            "menu_name":"应用管理",
+            "menu_level":0,
+            "parents_guid":"MENU_ROOT_GOVERNOR",
+            "menu_label":"应用管理",
+            "sons":[
+                {
+                    "expand_path":"fa fa-university",
+                    "menu_guid":"MENU1500805952",
+                    "menu_name":"组织机构管理",
+                    "menu_level":1,
+                    "parents_guid":"MENU1500805951",
+                    "menu_label":"组织机构管理",
+                    "sons":[
+                        {   "menu_guid":"MENU1500805956",
+                            "menu_label":"组织机构",
+                            "menu_level":2,
+                            "menu_name":"组织机构",
+                            "expand_path":"icon-puzzle",
+                            "parents_guid":"MENU1500805952",
+                            "uientry":"abftree.html",
+                        },
+                        { "menu_guid":"MENU1500805957",
+                            "menu_label":"员工管理",
+                            "menu_level":2,
+                            "menu_name":"员工管理",
+                            "expand_path":"icon-puzzle",
+                            "parents_guid":"MENU1500805952",
+                            "uientry":"Emp.html",
+                        },
+                        {"menu_guid":"MENU1500805958",
+                            "menu_label":"业务机构",
+                            "menu_level":2,
+                            "menu_name":"业务机构",
+                            "expand_path":"icon-puzzle",
+                            "parents_guid":"MENU1500805952",
+                            "uientry":"busiorg.html",
+                        },
+                        {   "menu_guid":"MENU1500805959",
+                            "menu_label":"工作组",
+                            "menu_level":2,
+                            "menu_name":"工作组",
+                            "expand_path":"icon-puzzle",
+                            "parents_guid":"MENU1500805952",
+                            "uientry":"Workgroup.html",
+                        },
+                        {   "menu_guid":"MENU1500805960",
+                            "menu_label":"职务定义",
+                            "menu_level":2,
+                            "menu_name":"职务定义",
+                            "expand_path":"icon-puzzle",
+                            "parents_guid":"MENU1500805952",
+                            "uientry":"duty.html",
+                        }]
+                },
+                {
+                    "expand_path":"fa fa-lock",
+                    "menu_guid":"MENU1500805953",
+                    "menu_name":"权限管理",
+                    "menu_level":1,
+                    "parents_guid":"MENU1500805951",
+                    "menu_label":"权限管理",
+                    "sons":[
+                        {   "menu_guid":"MENU1500805961",
+                            "menu_label":"应用功能管理",
+                            "menu_level":2,
+                            "menu_name":"应用功能管理",
+                            "expand_path":"icon-puzzle",
+                            "parents_guid":"MENU1500805953",
+                            "uientry":"applicationFun.html",
+                        },
+                        {   "menu_guid":"MENU1500805962",
+                            "menu_label":"菜单管理",
+                            "menu_level":2,
+                            "menu_name":"菜单管理",
+                            "expand_path":"icon-puzzle",
+                            "parents_guid":"MENU1500805953",
+                            "uientry":"menuManagement.html",
+                        },
+                        {"menu_guid":"MENU1500805963",
+                            "menu_label":"数据形体管理",
+                            "menu_level":2,
+                            "menu_name":"数据形体管理",
+                            "expand_path":"icon-puzzle",
+                            "parents_guid":"MENU1500805953",
+                            "uientry":"javascript:;",
+                        },
+                        {   "menu_guid":"MENU1500805964",
+                            "menu_label":"数据范围管理",
+                            "menu_level":2,
+                            "menu_name":"数据范围管理",
+                            "expand_path":"icon-puzzle",
+                            "parents_guid":"MENU1500805953",
+                            "uientry":"javascript:;",
+                        },
+                        {   "menu_guid":"MENU1500805965",
+                            "menu_label":"功能行为类型定义",
+                            "menu_level":2,
+                            "menu_name":"功能行为类型定义",
+                            "expand_path":"icon-puzzle",
+                            "parents_guid":"MENU1500805953",
+                            "uientry":"behavior.html",
+                        },
+                        {   "menu_guid":"MENU1500805966",
+                            "menu_label":"角色管理",
+                            "menu_level":2,
+                            "menu_name":"角色管理",
+                            "expand_path":"icon-puzzle",
+                            "parents_guid":"MENU1500805953",
+                            "uientry":"roleManagement.html",
+                        }]
+                },
+                {
+                    "expand_path":"icon-user",
+                    "menu_guid":"MENU1500805954",
+                    "menu_name":"操作员管理",
+                    "menu_level":1,
+                    "parents_guid":"MENU1500805951",
+                    "menu_label":"操作员管理",
+                    "sons":[
+                        {   "menu_guid":"MENU1500805967",
+                            "menu_label":"操作员管理",
+                            "menu_level":2,
+                            "menu_name":"操作员管理",
+                            "expand_path":"icon-puzzle",
+                            "parents_guid":"MENU1500805954",
+                            "uientry":"opManage.html",
+                        },
+                        {"menu_guid":"MENU1500805968",
+                            "menu_label":"重组菜单",
+                            "menu_level":2,
+                            "menu_name":"重组菜单",
+                            "expand_path":"icon-puzzle",
+                            "parents_guid":"MENU1500805954",
+                            "uientry":"Reorganizemenu.html",
+                        },
+                        {"menu_guid":"MENU1500805969",
+                            "menu_label":"特殊权限",
+                            "menu_level":2,
+                            "menu_name":"特殊权限",
+                            "expand_path":"icon-puzzle",
+                            "parents_guid":"MENU1500805954",
+                            "uientry":"javascript:;",
+                        },
+                        {   "menu_guid":"MENU1500805970",
+                            "menu_label":"操作员身份",
+                            "menu_level":2,
+                            "menu_name":"操作员身份",
+                            "expand_path":"icon-puzzle",
+                            "parents_guid":"MENU1500805954",
+                            "uientry":"operstatus.html",
+                        }]
+                },
+                {
+                    "expand_path":"fa fa-asterisk",
+                    "menu_guid":"MENU1500805955",
+                    "menu_name":"其他管理",
+                    "menu_level":1,
+                    "parents_guid":"MENU1500805951",
+                    "menu_label":"其他管理",
+                    "sons":[
+                        {   "menu_guid":"MENU1500805971",
+                            "menu_label":"业务字典",
+                            "menu_level":2,
+                            "menu_name":"业务字典",
+                            "expand_path":"icon-puzzle",
+                            "parents_guid":"MENU1500805955",
+                            "uientry":"dictionary.html",
+                        },
+                        {   "menu_guid":"MENU1500805972",
+                            "menu_label":"序号资源表管理",
+                            "menu_level":2,
+                            "menu_name":"序号资源表管理",
+                            "expand_path":"icon-puzzle",
+                            "parents_guid":"MENU1500805955",
+                            "uientry":"numberResources.html",
+                        },
+                        {   "menu_guid":"MENU1501217607",
+                            "menu_label":"系统运行参数",
+                            "menu_level":2,
+                            "menu_name":"系统运行参数",
+                            "expand_path":"icon-puzzle",
+                            "parents_guid":"MENU1500805955",
+                            "uientry":"Systempara.html",
+                        }]
+                }
+            ]
+        }]
+        $scope.menusAndTrans = angular.copy(item);//拿到登录页那边传来的目录
     });
+
+    var item = [{"expand_path":"fa fa-cubes",
+        "menu_guid":"MENU1500805951",
+        "menu_name":"应用管理",
+        "menu_level":0,
+        "parents_guid":"MENU_ROOT_GOVERNOR",
+        "menu_label":"应用管理",
+        "sons":[
+            {
+                "expand_path":"fa fa-university",
+                "menu_guid":"MENU1500805952",
+                "menu_name":"组织机构管理",
+                "menu_level":1,
+                "parents_guid":"MENU1500805951",
+                "menu_label":"组织机构管理",
+                "sons":[
+                    {   "menu_guid":"MENU1500805956",
+                        "menu_label":"组织机构",
+                        "menu_level":2,
+                        "menu_name":"组织机构",
+                        "expand_path":"icon-puzzle",
+                        "parents_guid":"MENU1500805952",
+                        "uientry":"abftree.html",
+                    },
+                    { "menu_guid":"MENU1500805957",
+                        "menu_label":"员工管理",
+                        "menu_level":2,
+                        "menu_name":"员工管理",
+                        "expand_path":"icon-puzzle",
+                        "parents_guid":"MENU1500805952",
+                        "uientry":"Emp.html",
+                    },
+                    {"menu_guid":"MENU1500805958",
+                        "menu_label":"业务机构",
+                        "menu_level":2,
+                        "menu_name":"业务机构",
+                        "expand_path":"icon-puzzle",
+                        "parents_guid":"MENU1500805952",
+                        "uientry":"busiorg.html",
+                    },
+                    {   "menu_guid":"MENU1500805959",
+                        "menu_label":"工作组",
+                        "menu_level":2,
+                        "menu_name":"工作组",
+                        "expand_path":"icon-puzzle",
+                        "parents_guid":"MENU1500805952",
+                        "uientry":"Workgroup.html",
+                    },
+                    {   "menu_guid":"MENU1500805960",
+                        "menu_label":"职务定义",
+                        "menu_level":2,
+                        "menu_name":"职务定义",
+                        "expand_path":"icon-puzzle",
+                        "parents_guid":"MENU1500805952",
+                        "uientry":"duty.html",
+                    }]
+            },
+            {
+                "expand_path":"fa fa-lock",
+                "menu_guid":"MENU1500805953",
+                "menu_name":"权限管理",
+                "menu_level":1,
+                "parents_guid":"MENU1500805951",
+                "menu_label":"权限管理",
+                "sons":[
+                    {   "menu_guid":"MENU1500805961",
+                        "menu_label":"应用功能管理",
+                        "menu_level":2,
+                        "menu_name":"应用功能管理",
+                        "expand_path":"icon-puzzle",
+                        "parents_guid":"MENU1500805953",
+                        "uientry":"applicationFun.html",
+                    },
+                    {   "menu_guid":"MENU1500805962",
+                        "menu_label":"菜单管理",
+                        "menu_level":2,
+                        "menu_name":"菜单管理",
+                        "expand_path":"icon-puzzle",
+                        "parents_guid":"MENU1500805953",
+                        "uientry":"menuManagement.html",
+                    },
+                    {"menu_guid":"MENU1500805963",
+                        "menu_label":"数据形体管理",
+                        "menu_level":2,
+                        "menu_name":"数据形体管理",
+                        "expand_path":"icon-puzzle",
+                        "parents_guid":"MENU1500805953",
+                        "uientry":"javascript:;",
+                    },
+                    {   "menu_guid":"MENU1500805964",
+                        "menu_label":"数据范围管理",
+                        "menu_level":2,
+                        "menu_name":"数据范围管理",
+                        "expand_path":"icon-puzzle",
+                        "parents_guid":"MENU1500805953",
+                        "uientry":"javascript:;",
+                    },
+                    {   "menu_guid":"MENU1500805965",
+                        "menu_label":"功能行为类型定义",
+                        "menu_level":2,
+                        "menu_name":"功能行为类型定义",
+                        "expand_path":"icon-puzzle",
+                        "parents_guid":"MENU1500805953",
+                        "uientry":"behavior.html",
+                    },
+                    {   "menu_guid":"MENU1500805966",
+                        "menu_label":"角色管理",
+                        "menu_level":2,
+                        "menu_name":"角色管理",
+                        "expand_path":"icon-puzzle",
+                        "parents_guid":"MENU1500805953",
+                        "uientry":"roleManagement.html",
+                    }]
+            },
+            {
+                "expand_path":"icon-user",
+                "menu_guid":"MENU1500805954",
+                "menu_name":"操作员管理",
+                "menu_level":1,
+                "parents_guid":"MENU1500805951",
+                "menu_label":"操作员管理",
+                "sons":[
+                    {   "menu_guid":"MENU1500805967",
+                        "menu_label":"操作员管理",
+                        "menu_level":2,
+                        "menu_name":"操作员管理",
+                        "expand_path":"icon-puzzle",
+                        "parents_guid":"MENU1500805954",
+                        "uientry":"opManage.html",
+                    },
+                    {"menu_guid":"MENU1500805968",
+                        "menu_label":"重组菜单",
+                        "menu_level":2,
+                        "menu_name":"重组菜单",
+                        "expand_path":"icon-puzzle",
+                        "parents_guid":"MENU1500805954",
+                        "uientry":"Reorganizemenu.html",
+                    },
+                    {"menu_guid":"MENU1500805969",
+                        "menu_label":"特殊权限",
+                        "menu_level":2,
+                        "menu_name":"特殊权限",
+                        "expand_path":"icon-puzzle",
+                        "parents_guid":"MENU1500805954",
+                        "uientry":"javascript:;",
+                    },
+                    {   "menu_guid":"MENU1500805970",
+                        "menu_label":"操作员身份",
+                        "menu_level":2,
+                        "menu_name":"操作员身份",
+                        "expand_path":"icon-puzzle",
+                        "parents_guid":"MENU1500805954",
+                        "uientry":"operstatus.html",
+                    }]
+            },
+            {
+                "expand_path":"fa fa-asterisk",
+                "menu_guid":"MENU1500805955",
+                "menu_name":"其他管理",
+                "menu_level":1,
+                "parents_guid":"MENU1500805951",
+                "menu_label":"其他管理",
+                "sons":[
+                    {   "menu_guid":"MENU1500805971",
+                        "menu_label":"业务字典",
+                        "menu_level":2,
+                        "menu_name":"业务字典",
+                        "expand_path":"icon-puzzle",
+                        "parents_guid":"MENU1500805955",
+                        "uientry":"dictionary.html",
+                    },
+                    {   "menu_guid":"MENU1500805972",
+                        "menu_label":"序号资源表管理",
+                        "menu_level":2,
+                        "menu_name":"序号资源表管理",
+                        "expand_path":"icon-puzzle",
+                        "parents_guid":"MENU1500805955",
+                        "uientry":"numberResources.html",
+                    },
+                    {   "menu_guid":"MENU1501217607",
+                        "menu_label":"系统运行参数",
+                        "menu_level":2,
+                        "menu_name":"系统运行参数",
+                        "expand_path":"icon-puzzle",
+                        "parents_guid":"MENU1500805955",
+                        "uientry":"Systempara.html",
+                    }]
+            }
+        ]
+    }]
+
+
+    $scope.search = function(searchParam){
+        if(_.isEmpty(searchParam)){ //如果是数组
+            $scope.menusAndTrans = angular.copy(item);//复制数据
+
+            $timeout(function(){
+                $('.sub-menu').slideUp();//显示
+            })
+        }else{ //如果不是数组
+            $scope.menusAndTrans = search(angular.copy(item),searchParam);//调用搜索方法，传入搜索的值
+            $timeout(function(){
+                $('.sub-menu').slideDown();//动画隐藏
+            })
+        }
+    };
+    function search(all,key){ //包装了一个搜索方法，只要数据结构做成类似的，这个直接拿来用。
+        var hitLevel1 = [];//定义空数组
+        _.each(all,function(item1){//循环
+            var hitLevel2 = [];//定义空数组
+            _.each(item1.sons,function(item2){//循环
+                var hitLevel3 = [];//定义空数组
+                _.each(item2.sons,function(item3){
+                    if((item3.menu_label && item3.menu_label.indexOf(key) != -1) || (item3.menu_label && item3.menu_label.indexOf(key) != -1)){//如果能找到
+                        hitLevel3.push(item3);//追加给新数组
+                    }
+                });
+                item2.sons = hitLevel3;//让item2.sons 就等同于hitLevel3；
+                if(item2.sons.length > 0 || (item2.menu_label && item2.menu_label.indexOf(key) != -1) || (item2.menu_label && item2.menu_label.indexOf(key) != -1)){
+                    hitLevel2.push(item2);
+                }
+            });
+            item1.sons = hitLevel2;
+            if(item1.sons.length > 0 || (item1.menu_label && item1.menu_label.indexOf(key) != -1) || (item1.menu_label && item1.menu_label.indexOf(key) != -1)){
+                hitLevel1.push(item1);
+            }
+        });
+        return hitLevel1;
+    }
 }]);
 
 MetronicApp.controller('QuickSidebarController', ['$scope', function($scope) {
@@ -740,6 +1167,24 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             templateUrl:"views/numberResources/numberResources.html",
             data: {pageTitle: '序号资源表'},
             controller:"numres_controller"
+        })
+        .state("duty",{
+            url:"/duty.html",
+            templateUrl:"views/duty/duty.html",
+            data: {pageTitle: '职务定义'},
+            controller:"duty_controller"
+        })
+        .state("Systempara",{
+            url:"/Systempara.html",
+            templateUrl:"views/Systempara/Systempara.html",
+            data: {pageTitle: '序号资源表'},
+            controller:"systempara_controller"
+        })
+        .state("busiorg",{
+            url:"/busiorg.html",
+            templateUrl:"views/busiorg/busiorg.html",
+            data: {pageTitle: '业务机构'},
+            controller:"busiorg_controller"
         })
 }]);
 

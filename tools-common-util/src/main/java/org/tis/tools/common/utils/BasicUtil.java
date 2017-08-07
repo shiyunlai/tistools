@@ -3,10 +3,9 @@
  */
 package org.tis.tools.common.utils;
 
-import java.util.Iterator;
-import java.util.Map;
+import java.lang.reflect.Field;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -148,5 +147,38 @@ public class BasicUtil {
 	 */
 	public static Object[] wrap(Object... args) {
 		return args;
+	}
+
+
+	/**
+	 *  获取
+	 * @param list
+	 * @param clazz
+	 * @param keyName
+	 * @param <T>
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 */
+	public static <T> List<String> getValueListByKey(List<T> list, Class clazz, String keyName) {
+
+		Field[] fields = clazz.getDeclaredFields();//取得所有类成员变量
+		List retList = new ArrayList();
+		//打印传入的每个对象的所有类成员属性值
+		for (int j = 0; j < list.size(); j++) {
+			for (int i = 0; i < fields.length; i++) {
+				try {
+					if (StringUtil.isEquals(fields[i].getName(), keyName)) {
+						fields[i].setAccessible(true);
+						retList.add(fields[i].get(list.get(j)).toString());
+//						System.out.println(fields[i].getName() + ":" + fields[i].get(list.get(j)));
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return retList;
 	}
 }

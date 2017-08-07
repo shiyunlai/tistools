@@ -1,11 +1,10 @@
 <!--新增类型-->
 <div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
-    {{dictFrom}}
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-cogs font-green-sharp"></i>
-            <span class="caption-subject font-green-sharp bold uppercase"  ng-if="!id">增加业务字典</span>
-            <span class="caption-subject font-green-sharp bold uppercase"  ng-if="id">修改业务字典</span>
+            <span class="caption-subject font-green-sharp bold uppercase"  ng-if="!id">增加字典项</span>
+            <span class="caption-subject font-green-sharp bold uppercase"  ng-if="id">修改字典项</span>
         </div>
         <div class="tools">
             <a href="javascript:;" class="remove" ng-click="cancel()">
@@ -15,15 +14,15 @@
     <div class="portlet-body portlet light">
         <form action="#" name="myform" class="form-horizontal ">
             <div class="form-body ">
-                <div class="col-md-6">
+               <!-- <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4"> 隶属业务字典:<span ng-class="{required:myform.dict_key.$invalid}"  > * </span> </span></label>
+                        <label class="control-label col-md-4"> 隶属业务字典:<span ng-class="{required:myform.dict_key.$invalid}"> * </span> </span></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" required ng-model="dictFrom.guidDict"
+                            <input type="text" class="form-control" required ng-model="dictFrom.guidDict"   ng-readonly=true;
                                    name="dict_key"/>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4"> 字典项名称:<span ng-class="{required:myform.dict_key1.$invalid}"  > * </span></label>
@@ -41,6 +40,7 @@
                             <input type="text" class="form-control" ng-model="dictFrom.itemValue"
                                    required
                                    name="dict_key2"/>
+                            <span style="color: #ccc">本应用字典对应字典项</span>
                         </div>
                     </div>
                 </div>
@@ -51,6 +51,16 @@
                             <input type="text" class="form-control" ng-model="dictFrom.sendValue"
                                    required
                                    name="dict_key4"/>
+                            <span style="color: #ccc">实际转换的值</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 顺序号:<span ng-class="{required:myform.dict_seq1.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" ng-model="dictFrom.seqno"   name = "dict_seq1"  required/>
+                            <span style="color:#ccc">顺序号，从0开始排，按小到大排序,默认为0</span>
                         </div>
                     </div>
                 </div>

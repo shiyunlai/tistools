@@ -5,16 +5,25 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
     var menu = {};
     $scope.menu = menu;
     var subFrom = {};
+    //定义当前节点:
+    var thisNode = '';
+    $scope.thisNode =thisNode;
     //查询所有应用
     menu_service.queryAllAcApp(subFrom).then(function (data) {
         menu.appselectApp= data.retMessage;
     })
+
 
     /*0、菜单管理机构树逻辑*/
     $("#s").submit(function(e) {
         e.preventDefault();
         $("#container").jstree(true).search($("#q").val());
     });
+
+    //刷新菜单树
+    $scope.reload = function(){
+        $("#container").jstree().refresh();
+    }
 
     //应用查询
     $scope.menu.search = function(item){
@@ -254,15 +263,15 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                             subFrom.guidApp = '#';
                             menu_service.queryRootMenuTree(subFrom).then(function (data) {
                                 var datas = data.retMessage.data;
-                                    datas.text = datas.rootName;
-                                    datas.children = true;
-                                    datas.id = datas.rootCode;
-                                    datas.iocon = "fa fa-home icon-state-info icon-lg"
-                                    its.push(datas);
-                                    $scope.jsonarray = angular.copy(its);
-                                    callback.call(this, $scope.jsonarray);
+                                datas.text = datas.rootName;
+                                datas.children = true;
+                                datas.id = datas.rootCode;
+                                datas.iocon = "fa fa-home icon-state-info icon-lg"
+                                its.push(datas);
+                                $scope.jsonarray = angular.copy(its);
+                                callback.call(this, $scope.jsonarray);
                             })
-                         }else if(obj.id == 'AC0000'){
+                        }else if(obj.id == 'AC0000'){
                             subFrom.guidApp = menu.appselect;
                             menu_service.queryRootMenuTree(subFrom).then(function (data) {
                                 var datas = data.retMessage.data;
@@ -320,6 +329,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                 },
                 "plugins" : [ "dnd", "state", "types","search","contextmenu" ]
             }).bind("select_node.jstree", function (e, data) {
+                $scope.thisNode = data.node.text;
                 if(typeof data.node !== 'undefined'){//拿到结点详情
                     $scope.menuFrom = data.node.original;
                     $scope.menu.item = data.node.original.guid;
@@ -344,6 +354,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
     //编辑
     $scope.menu.menuEdit = function(item){
         $scope.editflag = !$scope.editflag;//让保存取消方法显现
+        $scope.copyscript = angular.copy(item);
         if(item.isleaf == 'N'){
             $scope.isleaftrue = true;
         }else if(item.isleaf == 'Y'){
@@ -404,8 +415,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
 
     //取消按钮
     $scope.menu.cenel = function(){
+        $scope.menuFrom = $scope.copyscript
         $scope.editflag = !$scope.editflag;
     }
-
-
 });

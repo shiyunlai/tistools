@@ -2,7 +2,7 @@ package org.tis.tools.webapp.controller.ac;
 
 /**
  * Created by Administrator on 2017/7/20.
- */
+ **/
 
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +58,7 @@ public class AcAuthenticationController extends BaseController {
         }
     }
 
-
+    
     /**
      * 要求子类构造自己的响应数据
      *

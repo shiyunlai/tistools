@@ -2,43 +2,69 @@
  * Created by wangbo on 2017/6/20.
  */
 
-MetronicApp.controller('opmanage_controller', function ($filter,$rootScope, $scope, $state, $stateParams, filterFilter, $modal,$uibModal, $http, $timeout,$interval,i18nService) {
+MetronicApp.controller('opmanage_controller', function ($filter,$rootScope, $scope, $state, $stateParams, filterFilter,operator_service, $modal,$uibModal, $http, $timeout,$interval,i18nService) {
     //grid表格
     i18nService.setCurrentLang("zh-cn");
-    $scope.myData = [
-        {'OPERATOR_NAME':'成1','USER_ID':'cheng','AUTH_MODE':'pwd','OPERATOR_STATUS':'启动','MENU_TYPE':'Default模式','LOCK_LIMIT':'5'},
-        {'OPERATOR_NAME':'波','USER_ID':'bo','AUTH_MODE':'captcha','OPERATOR_STATUS':'暂停','MENU_TYPE':'自主模式','LOCK_LIMIT':'5'},
-        {'OPERATOR_NAME':'杰杰','USER_ID':'jie','AUTH_MODE':'pwd','OPERATOR_STATUS':'注销','MENU_TYPE':'自定义模式','LOCK_LIMIT':'5'},
-        {'OPERATOR_NAME':'齐','USER_ID':'qi','AUTH_MODE':'本地密码认证','OPERATOR_STATUS':'正常','MENU_TYPE':'Default模式','LOCK_LIMIT':'5'}
 
-    ];
+    //查询操作员列表
+    var operman ={};
+    $scope.operman = operman;
+    operman.queryAll = function(){
+        //查询所有业务字典
+        var subFrom = {};
+        operator_service.queryAllOperator(subFrom).then(function(data){
+            var datas = data.retMessage;
+            console.log(datas);
+            if(data.status == "success"){
+                $scope.gridOptions.data =  datas;
+                $scope.gridOptions.mydefalutData = datas;
+                $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
+            }else{
+                toastr['error']('查询失败'+'<br/>'+data.retMessage);
+            }
+        })
+    }
+    operman.queryAll();
     var gridOptions = {};
     $scope.gridOptions = gridOptions;
-    var com = [{ field: 'OPERATOR_NAME', displayName: '操作员姓名'},
-        { field: "USER_ID", displayName:'登录用户名'},
-        { field: "AUTH_MODE", displayName:'认证模式'},
-        { field: "OPERATOR_STATUS",displayName:'操作员状态'},
-        { field: "MENU_TYPE",displayName:'菜单风格'},
-        { field: "LOCK_LIMIT",displayName:'锁定次数限制'}
+    var com = [{ field: 'operatorName', displayName: '操作员姓名'},
+        { field: "userId", displayName:'登录用户名'},
+        { field: "authMode", displayName:'认证模式'},
+        { field: "operatorStatus",displayName:'操作员状态'},
+        { field: "menuType",displayName:'菜单风格'},
+        { field: "lockLimit",displayName:'锁定次数限制'}
     ];
     var f = function(row){
         if(row.isSelected){
             $scope.selectRow = row.entity;
-            console.log($scope.selectRow)
         }else{
             delete $scope.selectRow;//制空
         }
     }
     $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,false,f);
-    $scope.gridOptions.data = $scope.myData;
+
 
     //新增操作员代码
-    $scope.operatAdd = function(){
+    $scope.operatAdd = function(item){
         openwindow($uibModal, 'views/operator/operatorAdd.html', 'lg',// 弹出页面
             function ($scope, $modalInstance) {
+                var operatFrom = {};
+                $scope.operatFrom = operatFrom;
+                $scope.operatFrom.lockLimit = 5;
                 $scope.add = function(item){//保存新增的函数
-                    toastr['success']("保存成功！");
-                    $modalInstance.close();
+                    var subFrom = {};
+                    $scope.subFrom = subFrom;
+                    subFrom = item;
+                    operator_service.createOperator(subFrom).then(function(data){
+                        console.log(data)
+                        if(data.status == "success"){
+                            toastr['success']( "新增成功！");
+                            operman.queryAll();
+                            $modalInstance.close();
+                        }else{
+                            toastr['error']('新增失败'+'<br/>'+data.retMessage);
+                        }
+                    })
                 }
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
@@ -49,12 +75,27 @@ MetronicApp.controller('opmanage_controller', function ($filter,$rootScope, $sco
     //修改操作员代码
     $scope.operatEdit = function(id){
         if($scope.selectRow){
+            var items = $scope.selectRow;
             openwindow($uibModal, 'views/operator/operatorAdd.html', 'lg',// 弹出页面
                 function ($scope, $modalInstance) {
+                    if(!isNull(items)){//如果参数不为空，则就回显
+                        $scope.operatFrom = angular.copy(items);
+                    }
                     $scope.id = id;//获取到id，用来判断是否编辑，因为scope作用域不同，所以不同
                     $scope.add = function(item){//保存新增的函数
-                        toastr['success']("保存成功！");
-                        $modalInstance.close();
+                        var subFrom = {};
+                        $scope.subFrom = subFrom;
+                        subFrom = item;
+                        operator_service.editOperator(subFrom).then(function(data){
+                            console.log(data)
+                            if(data.status == "success"){
+                                toastr['success']( "新增成功！");
+                                operman.queryAll();
+                                $modalInstance.close();
+                            }else{
+                                toastr['error']('新增失败'+'<br/>'+data.retMessage);
+                            }
+                        })
                     }
                     $scope.cancel = function () {
                         $modalInstance.dismiss('cancel');
@@ -66,20 +107,10 @@ MetronicApp.controller('opmanage_controller', function ($filter,$rootScope, $sco
         }
     }
 
-    //删除操作员列表
-    $scope.operatDel = function(){
-        if($scope.selectRow){
-            confirm('确认要删除此操作员吗？')
-            toastr['success']("删除成功！");
-        }else{
-            toastr['error']("请至少选中一个操作员进行删除！");
-        }
-    }
 });
 
 /* 重组菜单控制器*/
 MetronicApp.controller('reomenu_controller', function ($filter,$rootScope, $scope, $state, $stateParams, filterFilter, $modal,$uibModal, $http, $timeout,$interval,i18nService) {
-
     var opmer ={};
     $scope.opmer = opmer;
 

@@ -1,13 +1,14 @@
-
 /**
  * 
  */
 package org.tis.tools.rservice.ac.capable;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
-import org.apache.commons.collections.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
@@ -18,13 +19,33 @@ import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.common.utils.StringUtil;
 import org.tis.tools.model.def.CommonConstants;
 import org.tis.tools.model.def.GUID;
-import org.tis.tools.model.po.ac.*;
+import org.tis.tools.model.po.ac.AcApp;
+import org.tis.tools.model.po.ac.AcBhvDef;
+import org.tis.tools.model.po.ac.AcBhvtypeDef;
+import org.tis.tools.model.po.ac.AcFunc;
+import org.tis.tools.model.po.ac.AcFuncBehavior;
+import org.tis.tools.model.po.ac.AcFuncBhv;
+import org.tis.tools.model.po.ac.AcFuncBhvtype;
+import org.tis.tools.model.po.ac.AcFuncResource;
+import org.tis.tools.model.po.ac.AcFuncgroup;
+import org.tis.tools.model.po.ac.AcMenu;
+import org.tis.tools.model.po.ac.AcOperator;
 import org.tis.tools.model.vo.ac.AcAppVo;
 import org.tis.tools.model.vo.ac.AcFuncVo;
-import org.tis.tools.model.vo.om.OmOrgDetail;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.ac.exception.AppManagementException;
-import org.tis.tools.service.ac.*;
+import org.tis.tools.service.ac.AcAppService;
+import org.tis.tools.service.ac.AcBhvDefService;
+import org.tis.tools.service.ac.AcBhvtypeDefService;
+import org.tis.tools.service.ac.AcFuncBehaviorService;
+import org.tis.tools.service.ac.AcFuncBhvService;
+import org.tis.tools.service.ac.AcFuncBhvtypeService;
+import org.tis.tools.service.ac.AcFuncResourceService;
+import org.tis.tools.service.ac.AcFuncService;
+import org.tis.tools.service.ac.AcFuncgroupService;
+import org.tis.tools.service.ac.AcMenuService;
+import org.tis.tools.service.ac.AcOperatorService;
+import org.tis.tools.service.ac.ApplicationService;
 import org.tis.tools.service.ac.exception.ACExceptionCodes;
 
 /**
@@ -251,7 +272,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		} else {
 			acFuncgroup.setGuidParents(guidParents);
 			WhereCondition wc = new WhereCondition();
-			wc.andEquals("GUID_APP", guidApp);
+			wc.andEquals("GUID", guidParents);
 			List<AcFuncgroup> list = acFuncgroupService.query(wc);
 			String parentSeq = list.get(0).getFuncgroupSeq();
 			funcgroupSeq = parentSeq + "." + guid;
@@ -427,6 +448,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		try {
 			WhereCondition wc =new WhereCondition();
 			wc.andEquals("GUID_PARENTS", guidParent);
+			wc.setOrderBy("GROUP_LEVEL");
 			acFuncList = acFuncgroupService.query(wc );
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -493,7 +515,6 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	/**
 	 * 更新功能(AC_FUNC)
 	 * @param acFunc 功能
-	 * @param acFuncResource 功能对应资源
 	 */
 	@Override
 	public void updateAcFunc(AcFunc acFunc) throws AppManagementException {
@@ -645,7 +666,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_MENU,
+					ACExceptionCodes.FAILURE_WHEN_DELETE_AC_MENU,
 					BasicUtil.wrap(e.getCause().getMessage()), "删除菜单失败！{0}");
 		}
 	}
@@ -667,7 +688,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_MENU,
+					ACExceptionCodes.FAILURE_WHEN_UPDATE_AC_MENU,
 					BasicUtil.wrap(e.getCause().getMessage()), "更新菜单失败！{0}");
 		}
 	}
@@ -820,7 +841,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_OPERATOR,
+					ACExceptionCodes.FAILURE_WHEN_CREATE_AC_OPERATOR,
 					BasicUtil.wrap(e.getCause().getMessage()), "增加操作员失败！{0}");
 		}
 	}
@@ -844,7 +865,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_OPERATOR,
+					ACExceptionCodes.FAILURE_WHEN_DELETE_AC_OPERATOR,
 					BasicUtil.wrap(e.getCause().getMessage()), "删除操作员失败！{0}");
 		}
 	}
@@ -866,7 +887,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_OPERATOR,
+					ACExceptionCodes.FAILURE_WHEN_UPDATE_AC_OPERATOR,
 					BasicUtil.wrap(e.getCause().getMessage()), "更新操作员失败！{0}");
 		}
 	}
@@ -1076,7 +1097,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	/**
 	 * 删除行为类型(AC_BHVTYPE_DEF)
 	 * 
-	 * @param acBhvtypeDef 行为类型
+	 * @param guid 行为类型
 	 */
 	@Override
 	public void functypeDel(String guid) throws AppManagementException{
@@ -1121,8 +1142,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 
 	/**
 	 * 查询行为类型(AC_BHVTYPE_DEF)
-	 * 
-	 * @param acBhvtypeDef 行为类型
+	 *
 	 * 返回list
 	 */
 	@Override
@@ -1490,6 +1510,60 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHEN_CREATE_AC_FUNC_BHV,
 					BasicUtil.wrap(e.getCause().getMessage()), "删除功能行为定义失败！{0}");
+		}
+	}
+
+	/**
+	 * 开通应用
+	 *
+	 * @param appGuid
+	 * @param openDate
+	 */
+	@Override
+	public void enableApp(String appGuid, Date openDate) {
+		// 校验传入参数
+		if(StringUtil.isEmpty(appGuid)) {
+			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
+		}
+		if(null == openDate) {
+			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("openDate"));
+		}
+		try {
+			AcApp app = new AcApp();
+			app.setIsopen(CommonConstants.YES);//设置开通状态为YES
+			app.setOpenDate(openDate); //设置开通时间
+			acAppService.updateByCondition(
+					new WhereCondition().andEquals("GUID", appGuid), app);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHEN_ENABLE_ACAPP,
+					BasicUtil.wrap(e.getCause().getMessage()));
+		}
+	}
+
+	/**
+	 * 关闭应用
+	 *
+	 * @param appGuid
+	 */
+	@Override
+	public void disableApp(String appGuid) {
+		// 校验传入参数
+		if(StringUtil.isEmpty(appGuid)) {
+			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
+		}
+		try {
+			AcApp app = new AcApp();
+			app.setIsopen(CommonConstants.NO);//设置开通状态为YES
+			app.setOpenDate(null); //设置开通时间为空
+			acAppService.updateByCondition(
+					new WhereCondition().andEquals("GUID", appGuid), app);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHEN_DISABLE_ACAPP,
+					BasicUtil.wrap(e.getCause().getMessage()));
 		}
 	}
 }

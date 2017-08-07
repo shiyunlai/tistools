@@ -1,7 +1,8 @@
 /**
  * Created by wangbo on 2017/7/4.
  */
-angular.module('MetronicApp').controller('dictionary_controller', function($rootScope, $scope, $http,i18nService,$modal,filterFilter,$uibModal){
+angular.module('MetronicApp').controller('dictionary_controller', function($rootScope, $scope, $http,i18nService,$modal,filterFilter,$uibModal,dictonary_service){
+
     //tab页切换
     var dictflag = {};
     $scope.dictflag = dictflag;
@@ -31,77 +32,84 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
 
     var gridOptions0 = {};
     $scope.gridOptions0 = gridOptions0;
-    $scope.importadd = [
-        {'dictType':'ABF_APPTYPE','dictName':"应用类型"},
-        {'dictType':'ABF_AUTHMODE','dictName':"认证模式"},
-        {'dictType':'ABF_BUSIORGTY','dictName':"业务机构类别"},
-        {'dictType':'ABF_CARDTYPE','dictName':"证件类型"},
-        {'dictType':'ABF_GONFIGTYPE','dictName':"配置类型"},
-        {'dictType':'ABF_DUTYTYPE','dictName':"职位套别"}
-    ];
-    var com = [{ field: 'dictType', displayName: '类型名称'},
-        { field: "dictName", displayName:'类型名称'},
-        //{ field: "dictName", displayName:'类型名称',visible: false}
+    var com = [{ field: 'dictKey', displayName: '业务字典'},
+        { field: "dictName", displayName:'字典名称'}
     ];
     //自定义点击事件
     var f = function(row){
         if(row.isSelected){
             $scope.selectRow = row.entity;
-            $scope.dictconfig.show =true;
+            if($scope.selectRow.fromType == 0){
+                $scope.dictconfig.show =true;
+                $scope.dictconfig.toshow = false;
+            }else{
+                $scope.dictconfig.show =false;
+                $scope.dictconfig.toshow = true;
+            }
+            dictflag.inittx($scope.selectRow.guid)
         }else{
             delete $scope.selectRow;//制空
             $scope.dictconfig.show =false;
+            $scope.dictconfig.toshow =false;
         }
     }
-    $scope.gridOptions0 = initgrid($scope,gridOptions0,filterFilter,com,false,f,"jjj");
-    $scope.gridOptions0.data =  $scope.importadd;
+    $scope.gridOptions0 = initgrid($scope,gridOptions0,filterFilter,com,false,f);
 
 
-    dictconfig.initt2 = function(num){//查询服务公用方法
+    //查询所有业务字典
+    var subFrom = {};
+    dictonary_service.querySysDictList(subFrom).then(function(data){
+        var datas = data.retMessage;
+        dictflag.dictnameL = datas;
+        if(data.status == "success"){
+            $scope.gridOptions0.data =  datas;
+            $scope.gridOptions0.mydefalutData = datas;
+            $scope.gridOptions0.getPage(1,$scope.gridOptions0.paginationPageSize);
+        }else{
+            toastr['error']('查询失败'+'<br/>'+data.retMessage);
+        }
+    })
+    //查询公共方法
+    dictflag.initt = function(){//查询服务公用方法
         var subFrom = {};
-        subFrom.id = num;
-        console.log($scope.subFrom.id)
-        application_service.appQuery(subFrom).then(function (data) {
-            var datas = data[0].data.groupList;
-            if(isNull(datas)){
-                var datas = [];
-                $scope.gridOptions0.data = datas;
+        dictonary_service.querySysDictList(subFrom).then(function(data){
+            var datas = data.retMessage;
+            if(data.status == "success"){
+                $scope.gridOptions0.data =  datas;
+                $scope.gridOptions0.mydefalutData = datas;
+                $scope.gridOptions0.getPage(1,$scope.gridOptions0.paginationPageSize);
+            }else{
+                toastr['error'](data.retCode,data.retMessage+"初始化失败!");
             }
-            $scope.gridOptions0.data = datas;//把获取到的数据复制给表
-            ($scope.$$phase)?null: $scope.$apply();
         })
     }
 
-
-/*    var dictFrom = {};
-    $scope.dictFrom = dictFrom;
-    $scope.dictFrom.dicrse = true;*/
-    //新增
+    //新增业务字典
     $scope.show_win=function(){
         openwindow($uibModal, 'views/dictionary/dictnameAdd.html', 'lg',// 弹出页面
             function ($scope, $modalInstance) {
-                $scope.dicrse = true;
-                $scope.dicrseTable = false;
-                $scope.viewTable = false;
-                /*radio按钮逻辑*/
-                $scope.fromdict = function(){
-                    $scope.dicrse = true;
-                    $scope.viewTable = false;
-                    $scope.dicrseTable = false;
-                }
-                $scope.fromtable = function(){
-                    $scope.dicrseTable = true;
-                    $scope.viewTable = false;
-                    $scope.dicrse = false;
-                }
-                $scope.fromview =function(){
-                    $scope.viewTable = true;
-                    $scope.dicrseTable = false;
-                    $scope.dicrse = false;
-                }
+                /*控制按钮显示*/
+                $scope.one = true;
+                $scope.two = true;
+                $scope.three = true;
+                var dictFrom = {};
+                $scope.dictFrom =dictFrom;
+                dictFrom.seqno =0;//默认
+                dictFrom.fromType =0;//首先给个默认
+                $scope.dictlist = dictflag.dictnameL;
                 $scope.add = function(item){//保存新增的函数
-                    toastr['success']("保存成功！");
-                    $modalInstance.close();
+                    var subFrom = {};
+                    subFrom = item;
+                    dictonary_service.createSysDict(subFrom).then(function(data){
+                        if(data.status == "success"){
+                            toastr['success']( "新增成功！");
+                            $modalInstance.close();
+
+                            dictflag.initt();//调用刷新列表
+                        }else{
+                            toastr['error']('新增失败'+'<br/>'+data.retMessage);
+                        }
+                    })
                 }
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
@@ -109,36 +117,42 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
             }
         )
     }
-    //修改
+    //修改业务字典
     $scope.show_edit=function(id){
-
         if($scope.selectRow){
+            var datasRow = $scope.selectRow;
             openwindow($uibModal, 'views/dictionary/dictnameAdd.html', 'lg',// 弹出页面
                 function ($scope, $modalInstance) {
+                    $scope.dictlist = dictflag.dictnameL;
                     var idds = id;
-                    $scope.id = idds;
-                    $scope.dicrse = true;
-                    $scope.dicrseTable = false;
-                    $scope.viewTable = false;
-                    /*radio按钮逻辑*/
-                    $scope.fromdict = function(){
-                        $scope.dicrse = true;
-                        $scope.viewTable = false;
-                        $scope.dicrseTable = false;
-                    }
-                    $scope.fromtable = function(){
-                        $scope.dicrseTable = true;
-                        $scope.viewTable = false;
-                        $scope.dicrse = false;
-                    }
-                    $scope.fromview =function(){
-                        $scope.viewTable = true;
-                        $scope.dicrseTable = false;
-                        $scope.dicrse = false;
+                    $scope.id = idds;//编辑id
+                    $scope.dictFrom = datasRow;//渲染数据
+                    if(datasRow.fromType=='0'){
+                        $scope.one = true;
+                        $scope.two = false;
+                        $scope.three = false;
+                    }else if(datasRow.fromType=='1'){
+                        $scope.one = false;
+                        $scope.two = true;
+                        $scope.three = false;
+                    }else{
+                        $scope.one = false;
+                        $scope.two = false;
+                        $scope.three = true;
                     }
                     $scope.add = function(item){//保存新增的函数
-                        toastr['success']("保存成功！");
-                        $modalInstance.close();
+                        var subFrom = {};
+                        subFrom.guid = datasRow.guid;
+                        subFrom = item;
+                        dictonary_service.editSysDict(subFrom).then(function(data){
+                            if(data.status == "success"){
+                                toastr['success']( "修改成功！");
+                                //dictflag.initt();//调用刷新列表
+                                $modalInstance.close();
+                            }else{
+                                toastr['error']('修改失败'+'<br/>'+data.retMessage);
+                            }
+                        })
                     }
                     $scope.cancel = function () {
                         $modalInstance.dismiss('cancel');
@@ -150,11 +164,24 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
         }
     }
 
-    //删除
+    //删除业务字典
     $scope.showDelAll=function(){
         if($scope.selectRow){
-            if(confirm("确定删除选中的功能组？删除功能组将删除该功能下的所有子功能组和资源")){
-                toastr['success']("删除成功！");
+            var guid = $scope.selectRow.guid;
+            if(confirm("确定删除选中的业务字典？删除业务字典将删除该业务字典下的所有的子字典和字典项")){
+                var subFrom = {};
+                $scope.subFrom=subFrom;
+                subFrom.dictGuid = guid;
+                dictonary_service.deleteSysDict(subFrom).then(function(data){
+                    if(data.status == "success"){
+                        toastr['success']( "删除成功！");
+                        dictflag.initt();//调用刷新列表
+                        $scope.dictconfig.show =false;
+                        $scope.dictconfig.toshow =false;
+                    }else{
+                        toastr['error']('删除失败'+'<br/>'+data.retMessage);
+                    }
+                })
             }
         }else{
             toastr['error']("请至少选中一条进行修改！");
@@ -176,121 +203,13 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
         }
     }
 
-    //树结构类型逻辑
-    $("#s").submit(function(e) {
-        e.preventDefault();
-        $("#container").jstree(true).search($("#q").val());
-    });
-    //树自定义右键功能(根据类型判断)
-    var items = function customMenu(node) {
-        var control;
-        if(node.parent == '#'){
-            var it = {
-                "增加字典类型项":{
-                    "id":"createa",
-                    "label":"增加字典类型项",
-                    "action":function(data){
-                        var inst = jQuery.jstree.reference(data.reference),
-                            obj = inst.get_node(data.reference);
-                        console.log(obj)
-                        openwindow($uibModal, 'views/dictionary/dicttypeAdd.html', 'lg',
-                            function ($scope, $modalInstance) {
-                                console.log($modalInstance)
-                                //创建机构实例
-                                var dictFrom = {};
-                                $scope.dictFrom = dictFrom;
-                                //处理新增机构父机构
-                                dictFrom.guidParents = obj.original.guid;
-                                //增加方法
-                                $scope.add = function (menuFrom) {
-                                    //TODO.
-                                    console.log(menuFrom)
-                                    toastr['success']("保存成功！");
-                                    $modalInstance.close();
-                                }
-
-                                $scope.cancel = function () {
-                                    $modalInstance.dismiss('cancel');
-                                };
-                            }
-                        )
-                    }
-                },
-                "刷新":{
-                    "label":"刷新",
-                    "action":function(data){
-                        $("#container").jstree().refresh();
-                    }
-                }
-            }
-            return it;
-        }
-    };
-    //组织机构树
-    $("#container").jstree({
-        "core" : {
-            "themes" : {
-                "responsive": false
-            },
-            // so that create works
-            "check_callback" : true,
-            'data':
-                [{
-                    "id": "1",
-                    "text": "应用类型",
-                    icon:'fa fa-hospital-o icon-state-info icon-lg ',
-                    "children":
-                        [
-                            {
-                                "id": "2",
-                                "text": "本地",
-                                icon:'fa fa-home icon-state-info icon-lg',
-                            },
-                            {
-                                "id": "3",
-                                "text": "远程",
-                                icon:'fa fa-home icon-state-info icon-lg',
-                            }
-                        ]
-                }]
-        },
-        "types" : {
-            "default" : {
-                "icon" : "fa fa-folder icon-state-warning icon-lg"
-            },
-            "file" : {
-                "icon" : "fa fa-file icon-state-warning icon-lg"
-            }
-        },
-        "state" : { "key" : "demo3" },
-        "contextmenu":{'items':items
-        },
-        'dnd': {
-            'dnd_start': function () {
-                console.log("start");
-            },
-            'is_draggable':function (node) {
-                return true;
-            }
-        },
-        'callback' : {
-            move_node:function (node) {
-            }
-        },
-
-        "plugins" : [ "dnd", "state", "types","search","contextmenu" ]
-    }).bind("copy.jstree", function (node,e, data ) {
-    })
 
 
     //数据字典项列表渲染
-    $scope.dictAdd = [
-        {'guidDict':'业务字典一','itemName':"测试名称",'itemValue':'1','sendValue':'是'},
-        {'guidDict':'业务字典二','itemName':"测试名称二",'itemValue':'2','sendValue':'否'}
-    ];
     var gridOptions1 = {};
     $scope.gridOptions1 = gridOptions1;
-    var com1 = [{ field: 'guidDict', displayName: '隶属业务字典'},
+    var com1 = [
+        //{ field: 'guidDict', displayName: '隶属业务字典'},
         { field: "itemName", displayName:'字典项名称'},
         { field: "itemValue", displayName:'字典项'},
         { field: "sendValue", displayName:'实际值'}
@@ -303,15 +222,69 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
             delete $scope.selectRow1;//制空
         }
     }
-    $scope.gridOptions1 = initgrid($scope,gridOptions1,filterFilter,com1,false,f1,"lll");
-    $scope.gridOptions1.data = $scope.dictAdd;
-    //新增
+    $scope.gridOptions1 = initgrid($scope,gridOptions1,filterFilter,com1,true,f1);
+
+
+    //多表或单表数据
+    var gridOptions2 = {};
+    $scope.gridOptions2 = gridOptions2;
+    var com2 = [
+        { field: "itemName", displayName:'字典项名称'},
+        { field: "itemValue", displayName:'字典项'},
+    ];
+    //自定义点击事件
+    var f2 = function(row){
+        if(row.isSelected){
+            $scope.selectRow1 = row.entity;
+        }else{
+            delete $scope.selectRow1;//制空
+        }
+    }
+    $scope.gridOptions2 = initgrid($scope,gridOptions2,filterFilter,com2,false,f2);
+
+
+    //查询字典对应字典项
+    dictflag.inittx = function(id){//查询服务公用方法
+        var subFrom = {};
+        subFrom.dictGuid = id;
+        dictonary_service.querySysDictItemList(subFrom).then(function(data){
+            var datas = data.retMessage;
+            if(data.status == "success"){
+                $scope.gridOptions1.data =  datas;
+                $scope.gridOptions1.mydefalutData = datas;
+                $scope.gridOptions1.getPage(1,$scope.gridOptions1.paginationPageSize);
+                $scope.gridOptions2.data =  datas;
+                $scope.gridOptions2.mydefalutData = datas;
+                $scope.gridOptions2.getPage(1,$scope.gridOptions2.paginationPageSize);
+            }else{
+                toastr['error'](data.retCode,data.retMessage+"初始化失败!");
+            }
+        })
+    }
+
+    //新增字典项
     $scope.dict_win = function(){
+        var guidParents = $scope.selectRow;
         openwindow($uibModal, 'views/dictionary/dicttypeAdd.html', 'lg',// 弹出页面
             function ($scope, $modalInstance) {
+                var dictFrom = {};
+                $scope.dictFrom = dictFrom;
+                dictFrom.guidDict = guidParents.dictName;
+                dictFrom.seqno =0;//默认
                 $scope.add = function(item){//保存新增的函数
-                    toastr['success']("保存成功！");
-                    $modalInstance.close();
+                    var subFrom={};
+                    $scope.subFrom =subFrom;
+                    subFrom =item;
+                    subFrom.guidDict = guidParents.guid;
+                    dictonary_service.createSysDictItem(subFrom).then(function(data){
+                        if(data.status == "success"){
+                            toastr['success']( "修改成功！");
+                            $modalInstance.close();
+                            dictflag.inittx(guidParents.guid);
+                        }else{
+                            toastr['error']('新增失败'+'<br/>'+data.retMessage);
+                        }
+                    })
                 }
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
@@ -320,19 +293,34 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
         )
     }
 
-    //修改
+    //修改字典项
     $scope.dict_edit = function(id){
         var getSel = $scope.gridOptions1.getSelectedRows();
         if(isNull(getSel) || getSel.length>1){
             toastr['error']("请至少选中一条进行修改！");
         }else{
+            var items = getSel[0]
             openwindow($uibModal, 'views/dictionary/dicttypeAdd.html', 'lg',// 弹出页面
                 function ($scope, $modalInstance) {
+                    if(!isNull(items)){//如果参数不为空，则就回显
+                        $scope.dictFrom = angular.copy(items);
+                    }
                     var ids = id;
                     $scope.id = ids;
-                    $scope.add = function(item){//保存新增的函数
-                        toastr['success']("保存成功！");
-                        $modalInstance.close();
+                    $scope.add = function(item){//保存修改的函数
+                        var subFrom={};
+                        $scope.subFrom =subFrom;
+                        subFrom =item;
+                        subFrom.guid = items.guid;
+                        dictonary_service.editSysDictItem(subFrom).then(function(data){
+                            if(data.status == "success"){
+                                toastr['success']( "修改成功！");
+                                dictflag.inittx(items.guidDict);
+                                $modalInstance.close();
+                            }else{
+                                toastr['error']('新增失败'+'<br/>'+data.retMessage);
+                            }
+                        })
                     }
                     $scope.cancel = function () {
                         $modalInstance.dismiss('cancel');
@@ -342,26 +330,29 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
         }
     }
 
-    //删除
+    //删除字典项
     $scope.dictDelAll = function(){
         var getSel = $scope.gridOptions1.getSelectedRows();
-        if(isNull(getSel) || getSel.length>1){
+        var fun = [];
+        if(isNull(getSel) || getSel.length==0){
             toastr['error']("请至少选中一条数据进行删除！");
         }else{
-            if(confirm("确定删除选中的功能组？删除功能组将删除该功能下的所有子功能组和资源")){
-                openwindow($uibModal, 'views/dictionary/dicttypeAdd.html', 'lg',// 弹出页面
-                    function ($scope, $modalInstance) {
-                        var ids = id;
-                        $scope.id = ids;
-                        $scope.add = function(item){//保存新增的函数
-                            toastr['success']("保存成功！");
-                            $modalInstance.close();
-                        }
-                        $scope.cancel = function () {
-                            $modalInstance.dismiss('cancel');
-                        };
+            if(confirm("确定删除改字典项吗？")){
+                /*for(var i =0 ; i<getSel.length;i++){
+                    fun.push(getSel[i].guid);
+                }*/
+                var subFrom = {};
+                $scope.subFrom=subFrom;
+                subFrom.dictItemGuid = getSel[0].guid;
+                //subFrom.dictItemGuid = fun; //批量删除
+                dictonary_service.deleteSysDictItem(subFrom).then(function(data){
+                    if(data.status == "success"){
+                        dictflag.inittx(getSel[0].guidDict);
+                        dictflag.initt();//调用刷新列表
+                    }else{
+                        toastr['error']('删除失败'+'<br/>'+data.retMessage);
                     }
-                )
+                })
             }
         }
     }
@@ -375,13 +366,12 @@ angular.module('MetronicApp').controller('dictitwos_controller', function($rootS
     $scope.typeFile = function openVersion() {
         openwindow( $modal,'views/dictionary/fillwindow.html','lg',function ($scope, $modalInstance) {
             var uploader = $scope.uploader = new FileUploader({
-                /*
-                url: myport+'/GovernorService/UPLOADFILE',//保存的地址，后台的地址
+                url: manurl+'/DictController/importDict',//保存的地址，后台的地址
                 mime_types: [
                     {title : "war", extensions : "war"},
                     {title : "zip", extensions : "zip"},
                     {title : "pkg", extensions : "pkg"}
-                ]*/ //定义上传的格式
+                ] //定义上传的格式
 
             })
             uploader.filters.push({ //过滤器，控制上传数量

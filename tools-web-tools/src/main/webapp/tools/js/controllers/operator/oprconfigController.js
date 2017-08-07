@@ -2,6 +2,7 @@
  * Created by wangbo on 2017/6/23.
  */
 
+//操作员个性化配置
 angular.module('MetronicApp').controller('operconfig_controller', function($rootScope, $scope ,$modal,$http,i18nService, $timeout,filterFilter,$uibModal,uiGridConstants) {
     var operconfig = {};
     $scope.operconfig = operconfig;
@@ -12,6 +13,7 @@ angular.module('MetronicApp').controller('operconfig_controller', function($root
         {'USER_ID':'001002','OPERATOR_NAME':'张三','APP_CODE':'ABFRAME2','APP_NAME':'应用框架模型3','CONFIG_TYPE': "保护类型", 'CONFIG_NAME': '配置','CONFIG_VALUE':'三','ISVALID':"是"}
     ];
     //ui-grid 具体配置
+
 
     var gridOptions = {};
     $scope.gridOptions = gridOptions;
@@ -42,6 +44,7 @@ angular.module('MetronicApp').controller('operconfig_controller', function($root
     }
     $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,false,f);
     $scope.gridOptions.data = $scope.myData;
+
     //修改个性化配置
     $scope.opconfigEdit = function(){
        if($scope.selectRow){
@@ -63,37 +66,65 @@ angular.module('MetronicApp').controller('operconfig_controller', function($root
     }
 });
 
-angular.module('MetronicApp').controller('operstatus_controller', function($rootScope, $scope ,$modal,$http,i18nService, $timeout,filterFilter,$uibModal,uiGridConstants) {
+
+
+//操作员身份
+angular.module('MetronicApp').controller('operstatus_controller', function($rootScope, $scope ,$modal,$http,operator_service,dictonary_service,i18nService, role_service,$timeout,filterFilter,$uibModal,uiGridConstants) {
     //操作员身份控制器
+
     var opensf = {};
     $scope.opensf = opensf;
     i18nService.setCurrentLang("zh-cn");
 
+    //查询业务字典
+    var tits = {};
+    tits.dictKey='DICT_AC_RESOURCETYPE';
+    dictKey($rootScope,tits,dictonary_service);
+
     //查询事件
     $scope.opensf.search = function(item){
-       if(item.userid == '123' || item.username == '张三'){
-           $scope.opensf.identity = true
-       }else{
-           $scope.searchFrom = '';
-           $scope.opensf.identity = false
-           toastr['error']("未找到对应信息，请重新输入!");
+        var subFrom = {};
+        opensf.info = item;//绑定信息
+        subFrom.userId = item.userid;
+        subFrom.operatorName = item.username;
+        operator_service.queryAllOperatorIdentity(subFrom).then(function(data){
+            var datas = data.retMessage;
+            if(data.status == "success"){
+                opensf.guidperator = datas[0].guidOperator;
+                $scope.opensf.identity = true;
+                opensf.inittx(subFrom.userId,subFrom.operatorName);
+            }else{
+                toastr['error'](data.retCode,data.retMessage+"初始化失败!");
+            }
+        })
 
-       }
     }
 
-    $scope.myData = [
-        {'IDENTITY_NAME':'身份一','IDENTITY_FLAG':'N','SEQ_NO':'1'},
-        {'IDENTITY_NAME':'身份二','IDENTITY_FLAG':'Y','SEQ_NO':'2'},
-        {'IDENTITY_NAME':'身份三','IDENTITY_FLAG':'Y','SEQ_NO':'3'},
-    ];
+    opensf.inittx = function(userId,operatorName){//查询操作员下所有身份
+        var subFrom = {};
+        subFrom.userId = userId;
+        subFrom.operatorName = operatorName;
+        operator_service.queryAllOperatorIdentity(subFrom).then(function(data){
+            var datas = data.retMessage;
+            if(data.status == "success"){
+                $scope.gridOptions.data =  datas;
+                $scope.gridOptions.mydefalutData = datas;
+                $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
+            }else{
+                toastr['error'](data.retCode,data.retMessage+"初始化失败!");
+            }
+        })
+    }
+
+
 
     var gridOptions = {};
     $scope.gridOptions = gridOptions;
     //操作员名称，代码  应用系统名称 代码
     var com = [
-        { field: "IDENTITY_NAME", displayName:'身份名称'},
-        { field: "IDENTITY_FLAG", displayName:'默认身份标志'},
-        { field: "SEQ_NO", displayName:'显示顺序'}
+        { field: "identityName", displayName:'身份名称'},
+        { field: "identityFlag", displayName:'默认身份标志'},
+        { field: "seqNo", displayName:'显示顺序'}
     ];
     var f = function(row){
         if(row.isSelected){
@@ -106,15 +137,29 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
         }
     }
     $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,false,f);
-    $scope.gridOptions.data = $scope.myData
+
     //新增身份
     $scope.idenAdd = function(){
+        var info = $scope.opensf.info;//用户身份
+        var guidoperator = opensf.guidperator;
         openwindow($modal, 'views/operator/identAdd.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
                 $scope.add = function(item){
-                    //新增代码
-                    toastr['success']("保存成功！");
-                    $modalInstance.close();
+                    var subFrom = {};
+                    $scope.subFrom = subFrom;
+                    subFrom = item;
+                    subFrom.guidOperator = guidoperator;
+                    subFrom.identityFlag = 'N';//默认不是默认身份
+                    console.log(subFrom)
+                    operator_service.createOperatorIdentity(subFrom).then(function(data){
+                        if(data.status == "success"){
+                            toastr['success']("新增成功！");
+                            opensf.inittx(info.userid,info.username);//测试查询
+                            $modalInstance.close();
+                        }else{
+                            toastr['error']('新增失败'+'<br/>'+data.retMessage);
+                        }
+                    })
                 }
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
@@ -125,14 +170,28 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
 
     //编辑身份
     $scope.idenEdit = function(id){
+        var info = $scope.opensf.info;
         if($scope.selectRow){
+            var datas = $scope.selectRow;
             openwindow($modal, 'views/operator/identAdd.html', 'lg',//弹出页面
                 function ($scope, $modalInstance) {
+                    if(!isNull(datas)){
+                        $scope.identFrom = angular.copy(datas);
+                    }
                     $scope.id = id;
                     $scope.add = function(item){
-                        //新增代码
-                        toastr['success']("保存成功！");
-                        $modalInstance.close();
+                        var subFrom = {};
+                        subFrom = item;
+                        operator_service.editOperatorIdentity(subFrom).then(function(data){
+                            var datas = data.retMessage;
+                            if(data.status == "success"){
+                                toastr['success']("修改成功！");
+                                opensf.inittx(info.userid,info.username);//测试查询
+                                $modalInstance.close();
+                            }else{
+                                toastr['error'](data.retCode,data.retMessage+"初始化失败!");
+                            }
+                        })
                     }
                     $scope.cancel = function () {
                         $modalInstance.dismiss('cancel');
@@ -146,19 +205,45 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
 
     //删除身份
     $scope.idenDel =function(){
-        if($scope.selectRow){
-            toastr['success']("删除此条身份成功！");
-        }else{
-            toastr['error']("请至少选中一条身份信息进行删除！");
+        if($scope.selectRow) {
+            var info = $scope.opensf.info;
+            var identityGuid = $scope.selectRow.guid;
+            if (confirm("确定删除选中的身份吗？删除身份将删除该身份下的所有权限")) {
+                var subFrom = {};
+                subFrom.identityGuid = identityGuid;
+                operator_service.deleteOperatorIdentity(subFrom).then(function (data) {
+                    console.log(data)
+                    if (data.status == "success") {
+                        toastr['success']("修改成功！");
+                        opensf.inittx(info.userid, info.username);//测试查询
+                    } else {
+                        toastr['error'](data.retCode, data.retMessage + "删除失败!");
+                    }
+                })
+            } else {
+                toastr['error']("请至少选中一条身份信息进行删除！");
+            }
         }
     }
 
 
-    //选定身份
+    //设置默认身份
     $scope.idenSave = function(){
         if($scope.selectRow){
-           if(confirm('确定选用此条身份记录？')){
-               toastr['success']("保存成功！");
+            var info = $scope.opensf.info;
+            var identityGuid = $scope.selectRow.guid;
+           if(confirm('是否把此身份设置成默认身份？')){
+               var subFrom = {};
+               subFrom.identityGuid = identityGuid;
+               operator_service.setDefaultOperatorIdentity(subFrom).then(function (data) {
+                   console.log(data);
+                   if (data.status == "success") {
+                       toastr['success']("修改成功！");
+                       opensf.inittx(info.userid, info.username);//测试查询
+                   } else {
+                       toastr['error'](data.retCode, data.retMessage + "删除失败!");
+                   }
+               })
            }else{
            }
         }else{
@@ -168,7 +253,6 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
 
 
     /* 右侧身份对应权限*/
-
     $scope.myDatas= [
         {'AC_RESOURCETYPE':'组织类型','IDENTITY_NAME':'身份一','GUID_AC_RESOURCE':'测试'},
         {'AC_RESOURCETYPE':'职务类型','IDENTITY_NAME':'身份二','GUID_AC_RESOURCE':'经理'},
@@ -191,13 +275,105 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
             delete $scope.selectRow1;//制空
         }
     }
+
     $scope.gridOptions1 = initgrid($scope,gridOptions1,filterFilter,com1,false,f1);
     $scope.gridOptions1.data = $scope.myDatas;
     //资源身份新增
     $scope.identypeAdd = function(){
         openwindow($modal, 'views/operator/identtypeAdd.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
-                $scope.add = function(item){
+                $scope.importadd = [
+                    {'guid':'POSITION1500362374','positionName':'测试'},
+                    { 'guid':'POSITION1500617953','positionName':'下级岗位测试1'},
+                    {'guid':'POSITION1500623964','positionName':'下级机构测试2号'},
+                    { 'guid':'POSITION1500623965','positionName':'下级岗位测试3号'},
+                    { 'guid':'POSITION1500623966','positionName':'下级岗位测试4号'},
+                    { 'guid':'POSITION1500623970','positionName':'c7'},
+                    { 'guid':'POSITION1500623971','positionName':'c8'},
+                    { 'guid':'POSITION1500623972','positionName':'c9'},
+                    { 'guid':'POSITION1500623973','positionName':'c10'},
+                    { 'guid':'POSITION1501218402','positionName':'124'}
+                ];
+                var gridOptions = {};
+                $scope.gridOptions = gridOptions;
+                var com = [
+                    { field: "positionName", displayName:'功能名称'}
+                ];
+                //自定义点击事件
+                var f1 = function(row){
+                    if(row.isSelected){
+                        $scope.selectRow3 = row.entity;
+                    }
+                    else{
+                        delete $scope.selectRow3;//制空
+                    }
+                }
+                $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
+                $scope.gridOptions.data = $scope.importadd;
+
+                $scope.$watch('identypeFrom.idtnyype',function(newValue,oldValue){
+
+                    if(newValue==undefined){
+                        $scope.operflage = false;
+                    }else{
+                        $scope.operflage = true;
+                    }
+
+                    var subFrom  = {};
+                    //根据不同的类型去请求不同的数据，然后赋值给表格
+                    if(newValue =='role'){
+                        console.log('触发')
+                        role_service.queryRoleList(subFrom).then(function(data){
+                            var  datas = data.retMessage;
+                            if(data.status == "success"){
+                                var com = [
+                                    { field: "roleName", displayName:'角色1111名称'}
+                                ];
+                                $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
+                                $scope.gridOptions.data =  datas;
+                                $scope.gridOptions.mydefalutData = datas;
+                                $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
+                            }else{
+                                toastr['error']('初始化查询失败'+'<br/>'+data.retMessage);
+                            }
+                        })
+                    }else if(newValue=='function'){
+                        var com = [
+                            { field: "positionName", displayName:'功能名称'}
+                        ];
+                        $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
+                        $scope.gridOptions.data = $scope.importadd;
+                    }else if(newValue=='position'){
+                        var com = [
+                            { field: "positionName", displayName:'岗位名称'}
+                        ];
+                        $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
+                        $scope.gridOptions.data = $scope.importadd;
+                    }else if(newValue=='duty'){
+                        var com = [
+                            { field: "positionName", displayName:'职务名称'}
+                        ];
+                        $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
+                        $scope.gridOptions.data = $scope.importadd;
+                    }else if(newValue=='workgroup'){
+                        var com = [
+                            { field: "positionName", displayName:'工作组名称'}
+                        ];
+                        $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
+                        $scope.gridOptions.data = $scope.importadd;
+                    }else if(newValue=='organization'){
+                        var com = [
+                            { field: "positionName", displayName:'机构名称'}
+                        ];
+                        $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
+                        $scope.gridOptions.data = $scope.importadd;
+                    }
+
+
+
+                });
+
+                $scope.importAdd = function(item){//导入资源代码
                     //新增代码
                     toastr['success']("保存成功！");
                     $modalInstance.close();
@@ -208,6 +384,7 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
 
             })
     }
+
 
     //资源身份修改
     $scope.identypeDel = function(){

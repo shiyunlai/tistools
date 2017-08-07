@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.ac;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 身份权限集
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\abf-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_OPERATOR_IDENTITYRES 身份权限集
  *
@@ -53,7 +53,13 @@ public class AcOperatorIdentityres implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：资源GUID<br/>描述：根据资源类型对应到不同权限资源的GUID */
 	private String guidAcResource ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public AcOperatorIdentityres() {
+	}
+
 	
 	/**
 	 * Set the 身份GUID.

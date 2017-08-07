@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.sys;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 业务字典项
- * 模型文件 ： E:\github\soft\tistools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：sys
  * 模型：SYS_DICT_ITEM 业务字典项
  *
@@ -65,7 +65,13 @@ public class SysDictItem implements Serializable {
 	
 	/** 字段类型：decimal<br/>字段名：顺序号<br/>描述：顺序号，从0开始排，按小到大排序 */
 	private BigDecimal seqno ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public SysDictItem() {
+	}
+
 	
 	/**
 	 * Set the 数据主键.

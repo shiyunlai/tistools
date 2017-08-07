@@ -11,6 +11,9 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     //定义权限
     $scope.biz.applica = false;
 
+    //当前节点定义
+    var thisNode = '';
+    $scope.thisNode = thisNode;
     //点击刷新树
     $scope.biz.reload = function(){
         $("#container").jstree().refresh();
@@ -230,7 +233,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             "themes" : {
                 "responsive": false
             },
-            // so that create works
             "check_callback" : true,
             'data' : function (obj, callback) {
                 var jsonarray = [];
@@ -284,7 +286,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                             datas.text = datas.rootName;
                             datas.children = true;
                             datas.id = datas.rootCode;
-                            datas.iocon = "fa fa-home icon-state-info icon-lg"
+                            datas.icon = "fa fa-home icon-state-info icon-lg"
                             its.push(datas)
                         }
                     }
@@ -323,6 +325,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     $('#container').on("changed.jstree", function (e, data){
         if(typeof data.node !== 'undefined'){//拿到结点详情
             $scope.dictionaryAdd = data.node.original;
+            $scope.thisNode = data.node.text;
             $scope.biz.item = data.node;//全局点击值传递
             if(data.node.parent == '#'){
                 //创建机构实例
@@ -736,15 +739,25 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     }
     /* 功能组编辑逻辑*/
     $scope.biz.addschild = function(item){
+        $scope.copyssEdit = angular.copy(item)
         $scope.editsflag = !$scope.editsflag;//让保存取消方法显现,并且让文本框可以输入
     }
-    //保存方法
-    $scope.biz.functionsave = function () {
-        $scope.editsflag = !$scope.editsflag;//让保存取消方法显现
+    //功能组保存方法
+    $scope.biz.functionsave = function (item) {
         //调用后台保存逻辑
-        toastr['success']("保存成功！");
+        item.id = item.guid;
+        item.GUID_PARENTS = '';
+        application_service.groupEdit(item).then(function(data){
+            if(data.status == "success"){
+                toastr['success']("修改成功！");
+                $scope.editsflag = !$scope.editsflag;//让保存取消方法显现
+            }else{
+                toastr['error']('修改失败'+'<br/>'+data.retMessage);
+            }
+        })
     }
     $scope.biz.childsEdit = function(){
+        $scope.dictionaryAdd = $scope.copyssEdit;
         $scope.editsflag = !$scope.editsflag;//让保存取消方法显现
     }
 
@@ -913,7 +926,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             function ($scope, $modalInstance) {
                 $scope.add = function(item){
                     item.guidFuncgroup = ids;
-                    console.log(item);
                     application_service.acFuncAdd(item).then(function(data){
                         if(data.status == "success"){
                             toastr['success']("新增成功！");
@@ -1080,10 +1092,39 @@ angular.module('MetronicApp').controller('application_controller', function($roo
 
     }
 
-
+    //应用编辑方法
     $scope.biz.appedit = function(item){
+        $scope.copyEdit = angular.copy(item)
         $scope.editflag = !$scope.editflag;//让保存取消方法显现,并且让文本框可以输入
 
+    }
+    //应用编辑取消方法
+    $scope.biz.edit = function(item){
+        $scope.dictionaryAdd = $scope.copyEdit;
+        $scope.editflag = !$scope.editflag;//让保存取消方法显现
+    }
+
+
+    //功能信息编辑方法
+    $scope.biz.appssedit = function(item){
+        $scope.copyfunEdit = angular.copy(item)
+        $scope.editflag = !$scope.editflag;//让保存取消方法显现,并且让文本框可以输入
+    }
+    //应用编辑取消方法
+    $scope.biz.funedit = function(item){
+        $scope.dictionaryAdd = $scope.copyfunEdit;
+        $scope.editflag = !$scope.editflag;//让保存取消方法显现
+    }
+
+    //资源信息编辑方法
+    $scope.biz.resources = function(item){
+        $scope.copyresEdit = angular.copy(item)
+        $scope.editflag = !$scope.editflag;//让保存取消方法显现,并且让文本框可以输入
+    }
+    //资源信息取消方法
+    $scope.biz.resourcesedit = function(item){
+        $scope.dictionaryAdd = $scope.copyresEdit;
+        $scope.editflag = !$scope.editflag;//让保存取消方法显现
     }
 
     //应用信息修改方法
@@ -1118,9 +1159,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     }
 
 
-    $scope.biz.edit = function(item){
-        $scope.editflag = !$scope.editflag;//让保存取消方法显现
-    }
+
     //资源修改保存方法
     $scope.biz.save = function(item){
         item.id = item.guid;

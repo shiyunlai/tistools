@@ -1,0 +1,105 @@
+<!-- 新增运行参数页面 -->
+<div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs font-green-sharp"></i>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="!id">新增运行参数</span>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="id">编辑运行参数</span>
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="remove" ng-click="cancel()">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body portlet light">
+        <form action="#" name="myform" class="form-horizontal ">
+            <div class="form-body ">
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">应用系统:<span ng-class="{required:myform.sys_key.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <select class="form-control" name="sys_key" ng-model="sysFrom.guidApp"   required>
+                                <option ng-repeat="d in  sysList" value="{{d.guid}}">{{d.appName+','+ d.appCode}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 参数组别:<span ng-class="{required:myform.sys_key1.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="sysFrom.groupName"
+                                   name="sys_key1" required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">参数键:<span ng-class="{required:myform.sys_key2.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="sysFrom.keyName"
+                                   name="sys_key2" required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">值来源类型:<span ng-class="{required:myform.sys_key3.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <select class="form-control" name="sys_key3" ng-model="sysFrom.valueFrom"  ng-change="valuefrom(sysFrom.valueFrom)"  required>
+                                <option value=""></option>
+                                <option value="H-手动输入">手动输入</option>
+                                <option ng-repeat="d in sysdict"  value="{{d.guid}}">{{d.dictName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" ng-show="manual">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">参数值:<span ng-class="{required:myform.sys_key4.$.invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="sysFrom.value"
+                                   name="sys_key4" required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" ng-show="selectes">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">参数值:<span ng-class="{required:myform.sys_key5.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <select class="form-control" name="sys_key5" ng-model="sysFrom.value"   required>
+                                <option ng-repeat="d in dictinfoAll"  value="{{d.guid}}">{{d.itemName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" >
+                    <div class="form-group">
+                        <label class="control-label col-md-2">参数描述</label>
+                        <div class="col-md-10">
+                            <textarea class="form-control"  ng_model="sysFrom.description" maxlength="10"   name="ctl_desc"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-2"></label>
+                        <div class="col-md-10">
+                            <div class="actions btn-set" style="text-align: center" >
+                                <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="add(sysFrom)" > 保存
+                                </button>
+                                <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存
+                                </button>
+                                <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

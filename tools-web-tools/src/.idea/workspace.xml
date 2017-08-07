@@ -21,37 +21,131 @@
     <favorites_list name="src" />
   </component>
   <component name="FileEditorManager">
+<<<<<<< HEAD
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="abftree_service.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/service/org/abftree_service.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="3" lean-forward="true" selection-start-line="0" selection-start-column="3" selection-end-line="0" selection-end-column="3" />
+=======
     <leaf>
       <file leaf-file-name="Workgroup_controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/controllers/Workgroup/Workgroup_controller.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="287" column="12" selection-start-line="287" selection-start-column="12" selection-end-line="287" selection-end-column="12" />
+>>>>>>> master
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+      <file leaf-file-name="abftree.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/org/abftree.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-9">
+              <caret line="73" column="25" lean-forward="false" selection-start-line="73" selection-start-column="25" selection-end-line="73" selection-end-column="25" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#13;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#13;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#2;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#11;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#11;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#5;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#6;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#7;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+              </folding>
+=======
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main/webapp/tools/index.html">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.03504673">
               <caret line="148" column="25" selection-start-line="148" selection-start-column="25" selection-end-line="148" selection-end-column="25" />
               <folding />
+>>>>>>> master
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="application_service.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/service/Jurisdiction/application_service.js">
+<<<<<<< HEAD
+      <file leaf-file-name="roleManagement.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/roleManage/roleManagement.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="134" column="0" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
+            <state relative-caret-position="-2241">
+              <caret line="0" column="2" lean-forward="false" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="applicationAdd.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/Jurisdiction/applicationAdd.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="192">
+              <caret line="12" column="142" lean-forward="false" selection-start-line="12" selection-start-column="112" selection-end-line="12" selection-end-column="142" />
+=======
+      <file leaf-file-name="application_service.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/service/Jurisdiction/application_service.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="134" column="0" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
+>>>>>>> master
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+<<<<<<< HEAD
+      <file leaf-file-name="addorg_window.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/org/addorg_window.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="480">
+              <caret line="129" column="67" lean-forward="true" selection-start-line="129" selection-start-column="67" selection-end-line="129" selection-end-column="67" />
+              <folding>
+                <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#0;n#div#0;n#form#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#1;n#div#0;n#form#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#form#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#1;n#div#1;n#form#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#2;n#div#1;n#form#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Abftree_Controller.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/controllers/org/Abftree_Controller.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="418">
+              <caret line="101" column="60" lean-forward="true" selection-start-line="101" selection-start-column="60" selection-end-line="101" selection-end-column="60" />
+              <folding>
+                <element signature="e#0#41#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Workgroup_controller.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/controllers/Workgroup/Workgroup_controller.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="534">
+              <caret line="365" column="27" lean-forward="true" selection-start-line="365" selection-start-column="27" selection-end-line="365" selection-end-column="63" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+=======
+>>>>>>> master
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -100,24 +194,28 @@
         <option value="$PROJECT_DIR$/main/webapp/assets/global/plugins/ui-grid/ui-grid.min.css" />
         <option value="$PROJECT_DIR$/main/webapp/tools/tpl/header.html" />
         <option value="$PROJECT_DIR$/main/webapp/tools/js/service/org/abftree.js" />
-        <option value="$PROJECT_DIR$/main/webapp/tools/js/service/org/abftree_service.js" />
         <option value="$PROJECT_DIR$/main/webapp/tools/js/controllers/Emp/Emp_controllers.js" />
         <option value="$PROJECT_DIR$/main/webapp/tools/js/service/Emp/Emp_service.js" />
         <option value="$PROJECT_DIR$/main/webapp/tools/js/controllers/Emp/Emp_controller.js" />
         <option value="$PROJECT_DIR$/main/webapp/tools/views/Emp/Emp.html" />
         <option value="$PROJECT_DIR$/main/webapp/tools/js/main.js" />
         <option value="$PROJECT_DIR$/main/webapp/tools/tpl/sidebar.html" />
-        <option value="$PROJECT_DIR$/main/webapp/tools/js/controllers/org/Abftree_Controller.js" />
         <option value="$PROJECT_DIR$/main/webapp/tools/views/org/abftree.html" />
         <option value="$PROJECT_DIR$/main/webapp/tools/js/scripts/global.js" />
-        <option value="$PROJECT_DIR$/main/webapp/tools/views/org/addorg_window.html" />
         <option value="$PROJECT_DIR$/main/webapp/tools/index.html" />
         <option value="$PROJECT_DIR$/main/webapp/tools/views/Workgroup/addworkgroup_window.html" />
         <option value="$PROJECT_DIR$/main/webapp/tools/js/service/Workgroup/Workgroup_service.js" />
         <option value="$PROJECT_DIR$/main/webapp/tools/views/Workgroup/Workgroup.html" />
         <option value="$PROJECT_DIR$/main/webapp/tools/js/controllers/Workgroup/Workgroup_controller.js" />
+<<<<<<< HEAD
+        <option value="$PROJECT_DIR$/main/webapp/tools/js/service/org/abftree_service.js" />
+        <option value="$PROJECT_DIR$/main/webapp/tools/views/roleManage/roleManagement.html" />
+        <option value="$PROJECT_DIR$/main/webapp/tools/views/org/addorg_window.html" />
+        <option value="$PROJECT_DIR$/main/webapp/tools/js/controllers/org/Abftree_Controller.js" />
+=======
         <option value="$PROJECT_DIR$/main/webapp/tools/js/service/Jurisdiction/application_service.js" />
         <option value="$PROJECT_DIR$/main/webapp/tools/js/controllers/Jurisdiction/application_Controller.js" />
+>>>>>>> master
       </list>
     </option>
   </component>
@@ -129,11 +227,16 @@
   <component name="NamedScopeManager">
     <order />
   </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/main/webapp/assets/global/plugins/angular-ui-grid/node_modules" />
+  </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
+<<<<<<< HEAD
+=======
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="添加" />
@@ -144,6 +247,7 @@
     <OptionsSetting value="true" id="编辑" />
     <ConfirmationsSetting value="0" id="添加" />
     <ConfirmationsSetting value="0" id="移除" />
+>>>>>>> master
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -216,6 +320,283 @@
               <option name="myItemId" value="tools" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+<<<<<<< HEAD
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Workgroup" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="roleManage" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="profile" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Jurisdiction" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Emp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="service" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="service" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+=======
+>>>>>>> master
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -240,10 +621,11 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
-    <property name="SearchEverywhereHistoryKey" value="index&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/index.html&#10;main&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/js/main.js&#10;gl&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/js/scripts/global.js&#10;sid&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/tpl/sidebar.html&#10;layout.min.css&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/assets/layouts/layout4/css/layout.min.css&#10;applicationFun.html&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/views/Jurisdiction/applicationFun.html&#10;abf&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/js/service/org/abftree_service.js&#10;PageHeadController&#9;null&#9;null&#10;style&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/assets/global/plugins/mapplic/css/style.css&#10;Volum&#9;null&#9;null&#10;page-head&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/tpl/page-head.html&#10;glo&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/js/scripts/global.js&#10;app&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/www/js/app.js&#10;sidebar&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/tpl/sidebar.html&#10;dashboard&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/views/profile/dashboard.html" />
+    <property name="SearchEverywhereHistoryKey" value="wo&#9;FILE&#9;file://F:/tistools/tools-web-tools/src/main/webapp/tools/js/controllers/Workgroup/Workgroup_controller.js&#10;index&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/index.html&#10;main&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/js/main.js&#10;gl&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/js/scripts/global.js&#10;sid&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/tpl/sidebar.html&#10;layout.min.css&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/assets/layouts/layout4/css/layout.min.css&#10;applicationFun.html&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/views/Jurisdiction/applicationFun.html&#10;abf&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/js/service/org/abftree_service.js&#10;PageHeadController&#9;null&#9;null&#10;style&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/assets/global/plugins/mapplic/css/style.css&#10;Volum&#9;null&#9;null&#10;page-head&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/tpl/page-head.html&#10;glo&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/js/scripts/global.js&#10;app&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/www/js/app.js&#10;sidebar&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/tpl/sidebar.html&#10;dashboard&#9;FILE&#9;file:///Users/gaojie/work/tistools/tools-web-tools/src/main/webapp/tools/views/profile/dashboard.html" />
     <property name="js.eslint.eslintPackage" value="" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Font" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -257,6 +639,18 @@
       <recent name="$PROJECT_DIR$/main/webapp/assets/global/plugins/jstree" />
       <recent name="$PROJECT_DIR$/main/webapp/assets/global/css" />
     </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
   </component>
   <component name="RunManager">
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
@@ -311,7 +705,11 @@
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SvnConfiguration" cleanupOnStartRun="true">
+<<<<<<< HEAD
+    <configuration>C:\Users\Administrator\AppData\Roaming\Subversion</configuration>
+=======
     <configuration>C:\Users\hasee\AppData\Roaming\Subversion</configuration>
+>>>>>>> master
     <supportedVersion>125</supportedVersion>
   </component>
   <component name="TaskManager">
@@ -376,16 +774,35 @@
       <workItem from="1498786632996" duration="5175000" />
       <workItem from="1499242598789" duration="2099000" />
       <workItem from="1499303219726" duration="10120000" />
+      <workItem from="1500295594004" duration="6753000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="168526000" />
+    <option name="totallyTimeSpent" value="175279000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
+<<<<<<< HEAD
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1984375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12724759" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+=======
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14646997" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="版本控制" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -406,6 +823,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12724759" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+>>>>>>> master
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -421,6 +839,8 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
+=======
     <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/controllers/org/Abftree_Controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -499,6 +919,7 @@
         </state>
       </provider>
     </entry>
+>>>>>>> master
     <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/service/biztrace/biztraceHandle.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -532,6 +953,11 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+    <entry file="file://F:/tis/workgrouphandle.html" />
+    <entry file="file:///Volumes/UNTITLED 1/rx-rmip-business/rx-rmip-business/rx-rmip-business-front/src/main/webapp/WEB-INF/ftl/bakview/rsbtOrg.html" />
+=======
+>>>>>>> master
     <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/controllers/DashboardController.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -714,6 +1140,8 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+=======
     <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/org/addorg_window.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -721,6 +1149,7 @@
         </state>
       </provider>
     </entry>
+>>>>>>> master
     <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -730,15 +1159,134 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/controllers/emp/Emp_controller.js">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="507">
+          <caret line="138" column="14" lean-forward="true" selection-start-line="138" selection-start-column="14" selection-end-line="138" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="148" column="48" lean-forward="false" selection-start-line="148" selection-start-column="48" selection-end-line="148" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/Workgroup/addworkgroup_window.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1235">
+          <caret line="65" column="44" lean-forward="false" selection-start-line="65" selection-start-column="44" selection-end-line="65" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/Workgroup/Workgroup.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1558">
+          <caret line="82" column="52" lean-forward="false" selection-start-line="82" selection-start-column="52" selection-end-line="82" selection-end-column="52" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
+            <marker date="1500296071039" expanded="true" signature="5796:11387" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="5796:11415" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="5796:11438" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="5796:11457" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="5847:6286" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="5904:6251" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="6051:6212" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="6337:6870" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="6394:6835" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="6541:6796" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="6622:6753" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="6921:7451" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="6978:7416" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="7124:7377" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="7205:7334" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="7502:8035" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="7559:8000" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="7706:7961" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="7787:7918" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="8086:8969" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="8143:8934" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="8289:8895" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="8418:8852" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="8494:8685" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="9020:9901" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="9077:9866" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="9223:9827" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="9352:9784" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="9428:9619" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="9953:10486" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="10010:10451" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="10157:10412" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="10238:10369" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="10539:11356" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="10596:11321" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="10739:11282" ph="..." />
+            <marker date="1500296071039" expanded="false" signature="10818:10831" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="10832:11239" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="10955:11012" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="11135:11192" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="11594:12293" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="11642:11763" ph="..." />
+            <marker date="1500296071039" expanded="false" signature="11817:11830" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="11831:12274" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="11937:11970" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="12077:12110" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="12218:12251" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="12429:13121" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="12470:12591" ph="..." />
+            <marker date="1500296071039" expanded="false" signature="12645:12658" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="12659:13102" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="12765:12798" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="12905:12938" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="13046:13079" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="13253:13950" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="13299:13420" ph="..." />
+            <marker date="1500296071039" expanded="false" signature="13474:13487" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="13488:13931" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="13594:13627" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="13734:13767" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="13875:13908" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="14068:15411" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="14131:15392" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="14193:15369" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="14293:14411" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="14512:15342" ph="..." />
+            <marker date="1500296071039" expanded="true" signature="14573:14753" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/service/Workgroup/Workgroup_service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="491">
+          <caret line="34" column="24" lean-forward="false" selection-start-line="34" selection-start-column="12" selection-end-line="34" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/service/org/abftree_service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="3" lean-forward="true" selection-start-line="0" selection-start-column="3" selection-end-line="0" selection-end-column="3" />
+          <folding />
+=======
         <state vertical-scroll-proportion="0.0">
           <caret line="138" column="14" selection-start-line="138" selection-start-column="14" selection-end-line="138" selection-end-column="14" />
+>>>>>>> master
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/org/abftree.html">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="-9">
+          <caret line="73" column="25" lean-forward="false" selection-start-line="73" selection-start-column="25" selection-end-line="73" selection-end-column="25" />
+=======
         <state vertical-scroll-proportion="0.0">
           <caret line="40" column="16" selection-start-line="40" selection-start-column="16" selection-end-line="61" selection-end-column="21" />
+>>>>>>> master
           <folding>
             <element signature="n#style#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#1;n#div#1;n#!!top" expanded="false" />
@@ -760,35 +1308,61 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/Workgroup/addworkgroup_window.html">
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/roleManage/roleManagement.html">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="-2241">
+          <caret line="0" column="2" lean-forward="false" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
+=======
         <state vertical-scroll-proportion="0.0">
           <caret line="65" column="67" selection-start-line="65" selection-start-column="67" selection-end-line="65" selection-end-column="67" />
+>>>>>>> master
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/Workgroup/Workgroup.html">
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/Jurisdiction/applicationAdd.html">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="192">
+          <caret line="12" column="142" lean-forward="false" selection-start-line="12" selection-start-column="112" selection-end-line="12" selection-end-column="142" />
+          <folding />
+=======
         <state vertical-scroll-proportion="0.0">
           <caret line="82" column="52" selection-start-line="82" selection-start-column="52" selection-end-line="82" selection-end-column="52" />
           <folding>
             <element signature="n#style#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
           </folding>
+>>>>>>> master
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/controllers/org/Abftree_Controller.js">
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/views/org/addorg_window.html">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="480">
+          <caret line="129" column="67" lean-forward="true" selection-start-line="129" selection-start-column="67" selection-end-line="129" selection-end-column="67" />
+=======
         <state vertical-scroll-proportion="0.0">
           <caret line="789" column="36" selection-start-line="788" selection-start-column="20" selection-end-line="789" selection-end-column="36" />
+>>>>>>> master
           <folding>
-            <element signature="e#0#41#0" expanded="false" />
+            <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#0;n#div#0;n#form#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#1;n#div#0;n#form#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#form#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#1;n#div#1;n#form#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#2;n#div#1;n#form#0;n#div#1;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/controllers/Workgroup/Workgroup_controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="534">
+          <caret line="365" column="27" lean-forward="true" selection-start-line="365" selection-start-column="27" selection-end-line="365" selection-end-column="63" />
+=======
     <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/service/org/abftree_service.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -817,12 +1391,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.698324">
           <caret line="448" column="26" selection-start-line="448" selection-start-column="26" selection-end-line="448" selection-end-column="26" />
+>>>>>>> master
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/controllers/Workgroup/Workgroup_controller.js">
+    <entry file="file://$PROJECT_DIR$/main/webapp/tools/js/controllers/org/Abftree_Controller.js">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="418">
+          <caret line="101" column="60" lean-forward="true" selection-start-line="101" selection-start-column="60" selection-end-line="101" selection-end-column="60" />
+          <folding>
+            <element signature="e#0#41#0" expanded="false" />
+          </folding>
+=======
         <state vertical-scroll-proportion="0.0">
           <caret line="287" column="12" selection-start-line="287" selection-start-column="12" selection-end-line="287" selection-end-column="12" />
           <folding />
@@ -834,6 +1416,7 @@
         <state vertical-scroll-proportion="0.03504673">
           <caret line="148" column="25" selection-start-line="148" selection-start-column="25" selection-end-line="148" selection-end-column="25" />
           <folding />
+>>>>>>> master
         </state>
       </provider>
     </entry>

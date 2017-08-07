@@ -51,8 +51,6 @@
                                         </button>
                                         <button type="button" name="back" class="btn btn-danger" ng-click="showDelAll()"> 删除
                                         </button>
-                                        <button type="button" name="back" class="btn btn-primary" ng-click="dictconfig_refresh()">  刷新缓存
-                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -92,6 +90,18 @@
                                         </button>
                                     </div>
                                 </div>
+                               <div class="portlet light"  style="margin-top: 10px;" ng-if="dictconfig.toshow">
+                                   <div class="portlet-title">
+                                       <div class="caption">
+                                           <i class=""></i>
+                                           <span class="caption-subject font-green-sharp bold uppercase">字典项</span>
+                                       </div>
+                                   </div>
+                                   <div ui-grid="gridOptions2"
+                                        ui-grid-pagination
+                                        ui-grid-selection ui-grid-resize-columns>
+                                   </div>
+                               </div>
                             </div>
                     </div>
                 </div>

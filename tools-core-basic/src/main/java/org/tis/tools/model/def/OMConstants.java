@@ -37,5 +37,13 @@ public interface OMConstants {
 	/** 工作组状态：注销 */
 	public static final String GROUP_STATUS_CANCEL = "cancel";
 	
+	/////////////////////////////////////////////////
+	
+	/** 人员状态 :  在招*/
+	public static final String EMPLOYEE_STATUS_OFFER = "offer";
+	/** 人员状态 :  在职*/
+	public static final String EMPLOYEE_STATUS_ONJOB = "onjob";
+	/** 人员状态 :  离职*/
+	public static final String EMPLOYEE_STATUS_OFFJOB = "offjob";
 	
 }
