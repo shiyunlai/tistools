@@ -5,6 +5,9 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
     var menu = {};
     $scope.menu = menu;
     var subFrom = {};
+    //定义当前节点:
+    var thisNode = '';
+    $scope.thisNode =thisNode;
     //查询所有应用
     menu_service.queryAllAcApp(subFrom).then(function (data) {
         menu.appselectApp= data.retMessage;
@@ -326,6 +329,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                 },
                 "plugins" : [ "dnd", "state", "types","search","contextmenu" ]
             }).bind("select_node.jstree", function (e, data) {
+                $scope.thisNode = data.node.text;
                 if(typeof data.node !== 'undefined'){//拿到结点详情
                     $scope.menuFrom = data.node.original;
                     $scope.menu.item = data.node.original.guid;

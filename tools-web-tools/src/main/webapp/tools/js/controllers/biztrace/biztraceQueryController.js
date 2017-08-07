@@ -7,11 +7,12 @@ MetronicApp.controller('biztraceQuery_controller', function ($filter,$rootScope,
         ComponentsDateTimePickers.init()
     });
 
+
+
     var biz = {};
     $scope.biz = biz;
 
     biz.isDisable = true;
-
     var page = {};
     page.itemsperpage = 10;
     biz.page = page;

@@ -297,7 +297,7 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                 var gridOptions = {};
                 $scope.gridOptions = gridOptions;
                 var com = [
-                    { field: "appName", displayName:'角色名称'}
+                    { field: "positionName", displayName:'功能名称'}
                 ];
                 //自定义点击事件
                 var f1 = function(row){
@@ -322,9 +322,14 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                     var subFrom  = {};
                     //根据不同的类型去请求不同的数据，然后赋值给表格
                     if(newValue =='role'){
+                        console.log('触发')
                         role_service.queryRoleList(subFrom).then(function(data){
                             var  datas = data.retMessage;
                             if(data.status == "success"){
+                                var com = [
+                                    { field: "roleName", displayName:'角色1111名称'}
+                                ];
+                                $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
                                 $scope.gridOptions.data =  datas;
                                 $scope.gridOptions.mydefalutData = datas;
                                 $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
@@ -333,15 +338,35 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                             }
                         })
                     }else if(newValue=='function'){
-                        console.log('功能')
+                        var com = [
+                            { field: "positionName", displayName:'功能名称'}
+                        ];
+                        $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
+                        $scope.gridOptions.data = $scope.importadd;
                     }else if(newValue=='position'){
-                        console.log('岗位')
+                        var com = [
+                            { field: "positionName", displayName:'岗位名称'}
+                        ];
+                        $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
+                        $scope.gridOptions.data = $scope.importadd;
                     }else if(newValue=='duty'){
-                        console.log('职务')
+                        var com = [
+                            { field: "positionName", displayName:'职务名称'}
+                        ];
+                        $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
+                        $scope.gridOptions.data = $scope.importadd;
                     }else if(newValue=='workgroup'){
-                        console.log('工作组')
+                        var com = [
+                            { field: "positionName", displayName:'工作组名称'}
+                        ];
+                        $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
+                        $scope.gridOptions.data = $scope.importadd;
                     }else if(newValue=='organization'){
-                        console.log('机构')
+                        var com = [
+                            { field: "positionName", displayName:'机构名称'}
+                        ];
+                        $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
+                        $scope.gridOptions.data = $scope.importadd;
                     }
 
 
