@@ -45,5 +45,10 @@ public interface OMConstants {
 	public static final String EMPLOYEE_STATUS_ONJOB = "onjob";
 	/** 人员状态 :  离职*/
 	public static final String EMPLOYEE_STATUS_OFFJOB = "offjob";
-	
+
+	/** 节点类型 : 虚拟节点*/
+	public static final String BUSIORG_NODE_TYPE_DUMMY = "dummy";
+	/** 节点类型 : 实体节点*/
+	public static final String BUSIORG_NODE_TYPE_REALITY = "reality";
+
 }

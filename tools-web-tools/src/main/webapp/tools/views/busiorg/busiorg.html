@@ -32,10 +32,104 @@
                     <input type="search" id="q" ng-model="searchitem"/>
                     <button type="submit" ng-click="abftree.clear()">清空</button>
                 </form>
-                <div id="busiorgtree" ></div>
+                <div id="busiorgtree"></div>
                 <!--<div id="searchtree" ng-show="!showtree"></div>-->
             </div>
         </div>
     </div>
     <!-- 业务机构树 end -->
+    <!-- 右侧展示栏 -->
+    <div class="col-md-9 portlet light">
+        <div class="portlet-body portlet light">{{flag}}
+            <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="flag.jgtb">
+                <li ng-class="{true:'active',false:''}[flag.jgtb]">
+                    <a id="tab-list" data-toggle="tab" href ng-class="{true:'link',false:''}[flag.jgtb]">
+                        <i class="green ace-icon fa fa-bars bigger-120"></i>业务机构套别
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="flag.page">
+                <li ng-class="{true:'active',false:''}[flag.xqxx]">
+                    <a data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xqxx]"
+                       ng-click="abftree.loaddata(999)">
+                        <i class="green ace-icon fa fa-bars bigger-120"></i>本业务套别详情
+                    </a>
+                </li>
+                <li ng-class="{true:'active',false:''}[flag.xjjg]" ng-click="busiorg.loaddata(0)">
+                    <a data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xjjg]"
+                       ng-click="abftree.loaddata(999)">
+                        <i class="green ace-icon fa fa-bars bigger-120"></i>下级业务机构
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content portlet light" ng-if="flag.jgtb">
+                <!-- 业务套别列表页 begin-->
+                <div ui-grid="busiorgGrid"
+                     ui-grid-edit ui-grid-pagination
+                     ui-grid-selection ui-grid-resize-columns></div>
+                <div class="actions btn-set" style="float: right;">
+                    <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addxjjg()"> 新增
+                    </button>
+                    <button type="button" name="back" class="btn btn-primary" ng-click="abftree.editxjjg()"> 编辑
+                    </button>
+                    <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletexjjg()"> 删除
+                    </button>
+                </div>
+                <!-- 业务套别列表页 end-->
+            </div>
+            <div class="tab-content portlet light" ng-if="flag.xqxx">
+                <!-- 业务套别详情页 begin-->
+                <form action="#" name="myform" class="form-horizontal clear">
+                    <div class="form-body portlet light">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">字典项:</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control"
+                                           ng-model="busiorg.item.itemValue"
+                                            readonly/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">实际值:</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control"
+                                           ng-model="busiorg.item.sendValue"
+                                            readonly/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">名称:</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control"
+                                           ng-model="busiorg.item.itemName"
+                                            readonly/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- 业务套别详情页 end-->
+            </div>
+            <div class="tab-content portlet light" ng-if="flag.xjjg">
+                <!-- 下级业务机构列表页 begin-->
+                <div ui-grid="loworgGrid"
+                     ui-grid-edit ui-grid-pagination
+                     ui-grid-selection ui-grid-resize-columns></div>
+                <div class="actions btn-set" style="float: right;">
+                    <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addxjjg()"> 新增
+                    </button>
+                    <button type="button" name="back" class="btn btn-primary" ng-click="abftree.editxjjg()"> 编辑
+                    </button>
+                    <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletexjjg()"> 删除
+                    </button>
+                </div>
+                <!-- 下级业务机构列表页 end-->
+            </div>
+        </div>
+    </div>
 </div>

@@ -50,6 +50,9 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
     //节点导航栏
     var currNode = "";
     $scope.currNode = currNode;
+    //拖拽方法控制标志
+    var dndflag = false;
+    $scope.dndflag = dndflag;
 
     //生成公共方法
     initController($scope,abftree,"abftree",abftree,filterFilter);
@@ -218,8 +221,10 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                     "action":function (node) {
                         var inst = jQuery.jstree.reference(node.reference),
                             obj = inst.get_node(node.reference);
-                        var og  = $('#container').jstree(true).copy_node(obj,obj);
-                        // console.log(obj)
+                        var node = {};
+                        node.id = "99999";
+                        var og  = inst.copy(obj);
+                        console.log(og)
                     }
                 },
 
@@ -373,7 +378,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 $scope.jsonarray = jsonarray;
                 var subFrom = {};
                 subFrom.id = obj.id;
-                console.log(obj)
+                // console.log(obj)
                 if(!isNull(obj.original)){
                     subFrom.guidOrg = obj.original.guid;
                     subFrom.positionCode = obj.original.positionCode;
@@ -421,13 +426,18 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
         "state" : { "key" : "demo3" },
         "contextmenu":{'items':items},
         'dnd': {
-            'dnd_start': function () {
-                console.log("start");
-            },
             'is_draggable':function (node) {
                 //用于控制节点是否可以拖拽.
                 console.log(node)
-                return true;
+                var node = node[0];
+                if(node.id == "99999" || node.id.indexOf("GW") == 0){
+                    return false;
+                }else{
+                    return true;
+                }
+            },
+            dnd_start:  vakata = function () {
+                console.log(123)
             }
         },
         'search':{
@@ -451,15 +461,11 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
         console.log(d);
     }).bind("move_node.jstree",function (e,data) {
         if(confirm("确认要移动此机构吗?")){
-            //TODO.
+            console.log(data);
         }else{
-            // data.inst.refresh(data.inst._get_parent(data.rslt.oc));
-            return false;
+
+            $("#container").jstree().refresh();
         }
-        console.log(e);
-        console.log(data);
-    }).bind("dnd_stop.vakata",function (e,data) {
-        console.log(data);
     }).bind("select_node.jstree", function (e, data) {
         if(typeof data.node !== 'undefined'){//拿到结点详情
             // console.log(data.node.original.id.indexOf("@"));

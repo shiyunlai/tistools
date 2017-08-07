@@ -6,7 +6,23 @@ MetronicApp.factory('busiorg_service',['$http', '$q', function ($http,$q) {
 
     service.loadmaintree = function (subFrom) {
 
-        var res = $http.post(manurl + "/om/duty/dutytree",subFrom).then(function (response) {
+        var res = $http.post(manurl + "/om/busiorg/busitree",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+
+    service.loadywtb = function () {
+
+        var res = $http.post(manurl + "/om/busiorg/busidomain").then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+
+    service.loadloworg = function (subFrom) {
+
+        var res = $http.post(manurl + "/om/busiorg/busidomain",subFrom).then(function (response) {
             return response.data;
         });
         return res;
