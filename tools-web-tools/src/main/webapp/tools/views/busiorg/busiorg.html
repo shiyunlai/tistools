@@ -49,16 +49,21 @@
                 </li>
             </ul>
             <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="flag.page">
-                <li ng-class="{true:'active',false:''}[flag.xqxx]">
-                    <a data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xqxx]"
-                       ng-click="abftree.loaddata(999)">
+                <li ng-class="{true:'active',false:''}[flag.xqxx]" ng-click="busiorg.loaddata(1)">
+                    <a data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xqxx]">
                         <i class="green ace-icon fa fa-bars bigger-120"></i>本业务套别详情
                     </a>
                 </li>
                 <li ng-class="{true:'active',false:''}[flag.xjjg]" ng-click="busiorg.loaddata(0)">
-                    <a data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xjjg]"
-                       ng-click="abftree.loaddata(999)">
+                    <a data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xjjg]">
                         <i class="green ace-icon fa fa-bars bigger-120"></i>下级业务机构
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="flag.ywjgxq">
+                <li ng-class="{true:'active',false:''}[flag.ywjgxq]">
+                    <a data-toggle="tab" href ng-class="{true:'link',false:''}[flag.ywjgxq]">
+                        <i class="green ace-icon fa fa-bars bigger-120"></i>业务机构详情
                     </a>
                 </li>
             </ul>
@@ -129,6 +134,189 @@
                     </button>
                 </div>
                 <!-- 下级业务机构列表页 end-->
+            </div>
+            <div class="tab-content portlet light" ng-if="flag.ywjgxq">
+                <!-- 业务套别详情页 begin-->
+                <form action="#" name="myform" class="form-horizontal clear" ng-if="!editflag">
+                    <div class="form-body portlet light">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">节点类型:</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control"
+                                           ng-model="busiorg.item.nodeType"
+                                           readonly/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">业务机构代码:</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control"
+                                           ng-model="busiorg.item.busiorgCode"
+                                           readonly/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">业务条线:</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control"
+                                           ng-model="busiorg.item.busiDomain"
+                                           readonly/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">父业务机构:</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control"
+                                           ng-model="busiorg.item.guidParents"
+                                           readonly/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">业务机构名称:</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control"
+                                           ng-model="busiorg.item.busiorgName"
+                                           readonly/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">对应实体名称:</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control"
+                                           ng-model="busiorg.item.guidOrg"
+                                           readonly/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">对应实体代码:</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control"
+                                           ng-model="busiorg.item.orgCode"
+                                           readonly/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">主管岗位:</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control"
+                                           ng-model="subFrom.guidPosition"
+                                           name="id" readonly/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="actions btn-set" style="float: right;">
+                                    <button type="button" name="back" class="btn btn-primary" ng-click="busiorg.editjg()"> 编辑
+                                    </button>
+                                    <button type="button" name="back" class="btn btn-danger" ng-click="busiorg.deletejg()"> 删除
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <form action="#" name="myform" class="form-horizontal clear" ng-if="editflag">
+                    <div class="form-body portlet light">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">节点类型:</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control"
+                                           ng-model="subFrom.nodeType"
+                                           readonly/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">业务机构代码:</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control"
+                                           ng-model="subFrom.busiorgCode"
+                                           readonly/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">业务条线:</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control"
+                                           ng-model="subFrom.busiDomain"
+                                           readonly/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">业务机构名称:</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control"
+                                           ng-model="subFrom.busiorgName"
+                                           />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">对应实体名称:</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control"
+                                           ng-model="subFrom.guidOrg"
+                                           readonly/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">对应实体代码:</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control"
+                                           ng-model="subFrom.orgCode"
+                                           readonly/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">主管岗位:</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control"
+                                           ng-model="subFrom.guidPosition"
+                                           name="id" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="actions btn-set" style="float: right;">
+                                    <button type="button" name="back" class="btn btn-primary" ng-click="busiorg.save()"> 保存
+                                    </button>
+                                    <button type="button" name="back" class="btn btn-danger" ng-click="busiorg.back()"> 返回
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+                <!-- 业务套别详情页 end-->
             </div>
         </div>
     </div>

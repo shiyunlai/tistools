@@ -286,4 +286,25 @@ public interface IBusiOrgRService {
 	 * @return 某条线下业务机构列表
 	 */
 	List<OmBusiorgDetail> queryBusiorgByDomain(String busiDomainCode);
+
+	/**
+	 * 查询指定业务条线下的根业务机构
+	 * @param busiDomainCode
+	 * @return
+	 */
+	List<OmBusiorg> queryRootBusiorgByDomain(String busiDomainCode);
+
+	/**
+	 * 查询此业务条线下所有的业务机构
+	 * @param busiDomainCode
+	 * @return
+	 */
+	List<OmBusiorg> queryAllBusiorgByDomain(String busiDomainCode);
+
+	/**
+	 *  查询子业务机构
+	 * @param busiorgCode
+	 * @return
+	 */
+	List<OmBusiorg> queryChildBusiorgByCode(String busiorgCode);
 }

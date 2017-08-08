@@ -41,6 +41,12 @@
 		version="0.1" 
 		interface="org.tis.tools.rservice.om.capable.IEmployeeRService"     
 		check="false"/>
+	<dubbo:reference
+		id="OmBusiOrgRServiceImpl"
+		group="om"
+		version="0.1"
+		interface="org.tis.tools.rservice.om.capable.IBusiOrgRService"
+		check="false"/>
 		
 	<dubbo:reference 
 		id="DutyRServicelmpl"    

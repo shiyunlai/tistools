@@ -201,6 +201,10 @@ public class OMExceptionCodes {
 	 * 工作组删除岗位失败
 	 */
 	public static final String NOT_EXIST_BY_BUSIORG_CODE= R_EX_CODE("0040");
+	/**
+	 * 缺少生成业务机构代码参数
+	 */
+	public static final String LAKE_PARMS_FOR_GEN_BUSIORGCODE= R_EX_CODE("0041");
 
 
 	/**

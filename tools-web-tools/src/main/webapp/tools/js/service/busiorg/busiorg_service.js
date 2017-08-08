@@ -28,5 +28,37 @@ MetronicApp.factory('busiorg_service',['$http', '$q', function ($http,$q) {
         return res;
     }
 
+    service.initcode = function (subFrom) {
+
+        var res = $http.post(manurl + "/om/busiorg/initCode",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+
+    service.addbusiorg = function (subFrom) {
+
+        var res = $http.post(manurl + "/om/busiorg/addbusiorg",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+
+    service.deletebusiorg = function (subFrom) {
+
+        var res = $http.post(manurl + "/om/busiorg/deletebusiorg",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+
+    service.loadbusiorgbyType = function (subFrom) {
+
+        var res = $http.post(manurl + "/om/busiorg/loadbusiorgbyType",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+
     return service;
 }]);
