@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
+import org.tis.tools.model.po.ac.AcFunc;
+import org.tis.tools.model.po.ac.AcRole;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.po.om.OmPosition;
@@ -417,4 +419,23 @@ public interface IOrgRService {
 	 * @return
 	 */
 	List<OmOrg> queryAllRoot() ;
+
+	/**
+	 * 通过机构GUID查询所拥有的角色
+	 * @param guid
+	 * @return
+	 */
+	List<AcRole> queryRolebyOrgGuid(String guid);
+
+	/**
+	 * 通过机构GUID查询未授予角色
+	 */
+	List<AcRole> queryRoleNotInOrg(String guid);
+
+	/**
+	 * 批量翻译功能名称
+	 * @param guidList
+	 * @return
+	 */
+	List<AcFunc> queryFunCByGuidList(List<String> guidList);
 }

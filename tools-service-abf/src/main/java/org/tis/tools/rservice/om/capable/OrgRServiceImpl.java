@@ -3,16 +3,12 @@
  */
 package org.tis.tools.rservice.om.capable;
 
-import java.math.BigDecimal;
-import java.util.*;
-
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.tis.tools.base.WhereCondition;
-import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.common.utils.ObjectUtil;
 import org.tis.tools.common.utils.StringUtil;
@@ -21,21 +17,24 @@ import org.tis.tools.model.def.ACConstants;
 import org.tis.tools.model.def.CommonConstants;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.def.OMConstants;
+import org.tis.tools.model.po.ac.AcFunc;
 import org.tis.tools.model.po.ac.AcPartyRole;
-import org.tis.tools.model.po.om.OmEmployee;
+import org.tis.tools.model.po.ac.AcRole;
 import org.tis.tools.model.po.om.OmGroup;
 import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.po.om.OmPosition;
 import org.tis.tools.model.vo.om.OmOrgDetail;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.om.exception.OrgManagementException;
+import org.tis.tools.service.ac.AcFuncService;
+import org.tis.tools.service.ac.AcPartyRoleService;
+import org.tis.tools.service.ac.AcRoleService;
 import org.tis.tools.service.ac.AcRoleServiceExt;
-import org.tis.tools.service.om.BOSHGenOrgCode;
-import org.tis.tools.service.om.OmGroupService;
-import org.tis.tools.service.om.OmOrgService;
-import org.tis.tools.service.om.OmOrgServiceExt;
-import org.tis.tools.service.om.OmPositionService;
+import org.tis.tools.service.om.*;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
+
+import java.math.BigDecimal;
+import java.util.*;
 
 /**
  * <pre>
@@ -68,7 +67,13 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 
 	@Autowired
 	AcRoleServiceExt acRoleServiceExt;
-	
+
+	@Autowired
+	AcPartyRoleService acPartyRoleService;
+	@Autowired
+	AcRoleService acRoleService;
+	@Autowired
+	AcFuncService acFuncService;
 	
 	/* (non-Javadoc)
 	 * @see org.tis.tools.rservice.om.capable.IOrgRService#genOrgCode(java.lang.String, java.lang.String)
@@ -954,6 +959,54 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		
 		return omOrgServiceExt.queryAllRoot() ;
 	}
+
+	@Override
+	public List<AcRole> queryRolebyOrgGuid(String guid) {
+		// 校验传入参数
+		if(StringUtil.isEmpty(guid)) {
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("GUID_PARTY",guid);
+		List<AcPartyRole> aprList = acPartyRoleService.query(wc);
+		List<AcRole> arList = new ArrayList<>();
+		if(aprList.size() == 0){
+			return arList;
+		}
+		List<String> guidList = new ArrayList<>();
+		for(AcPartyRole apr:aprList){
+			guidList.add(apr.getGuidRole());
+		}
+		wc.clear();
+		wc.andIn("GUID",guidList);
+		arList = acRoleService.query(wc);
+		return arList;
+	}
+
+	@Override
+	public List<AcRole> queryRoleNotInOrg(String guid) {
+		// 校验传入参数
+		if(StringUtil.isEmpty(guid)) {
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		WhereCondition wc = new WhereCondition();
+		List<AcRole> inList = queryRolebyOrgGuid(guid);
+		List<AcRole> allRole = acRoleService.query(wc);
+		allRole.removeAll(inList);
+		return allRole;
+	}
+
+
+	@Override
+	public List<AcFunc> queryFunCByGuidList(List<String> guidList) {
+		if(guidList.size() == 0){
+			return new ArrayList<>();
+		}
+		WhereCondition wc = new WhereCondition();
+		wc.andIn("GUID", guidList);
+		return acFuncService.query(wc);
+	}
+
 	/**
 	 * 通过ORGCODE查询GUID
 	 * @return

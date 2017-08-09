@@ -4,13 +4,9 @@
  */
 package org.tis.tools.model.po.ac;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.sql.Blob;
-import java.sql.Time;
-import java.util.Date;
-
 import org.tis.tools.common.utils.StringUtil;
+
+import java.io.Serializable;
 
 /**
  * 
@@ -189,5 +185,19 @@ public class AcRole implements Serializable {
 	
 	public String toString(){
 		return StringUtil.toString(this) ; 
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (this == obj) {
+			return true;
+		}
+		if (obj instanceof AcRole) {
+			AcRole other = (AcRole) obj;
+			return (other.getGuid()).equals(this.getGuid());
+		}
+		return false;
 	}
 }

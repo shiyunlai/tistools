@@ -144,5 +144,47 @@ MetronicApp.factory('abftree_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     }
+    //查询机构拥有权限
+    service.queryRole = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/queryRole",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+
+    //查询机构拥有权限
+    service.addRoleParty = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/addRoleParty",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+
+    //查询机构拥有权限
+    service.deleteRoleParty = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/deleteRoleParty",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    //查询机构拥有权限
+    service.queryRoleNot = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/queryRoleNot",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.queryRoleFun = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/queryRoleFun",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.queryAllorg = function () {
+        var res = $http.post(manurl + "/om/org/queryAllorg",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
     return service;
 }]);

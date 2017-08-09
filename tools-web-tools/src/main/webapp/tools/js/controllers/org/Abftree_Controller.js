@@ -1123,8 +1123,13 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
             $scope.flag.qxxx = true;
             //todo
             //传递参数
-            var abc = $scope.abftree.item.guid
-            $scope.$broadcast('to-child', abc);
+            var guid = $scope.abftree.item.guid;
+            // $scope.$broadcast('to-child', abc);
+            var mygrid = {}
+            var alrolegird = {}
+            var notrolegird = {}
+            commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftree_service,toastr)
+
         }else if(type == 999){
             $scope.flag.xqxx = true;
             $scope.flag.xjjg = false;

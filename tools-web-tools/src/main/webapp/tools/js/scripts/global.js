@@ -548,3 +548,146 @@ function FormatDate (strTime) {
 
 }
 
+
+function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftree_service,toastr){
+    //生成各个列表
+    // var mygrid = {};
+    $scope.mygrid = mygrid;
+    var com = [
+        { field: 'funcName',displayName:'角色拥有功能'},
+    ]
+    $scope.mygrid = initgrid($scope,mygrid,filterFilter,com,false,function () {
+
+    });
+    //拉取权限列表
+    var remygrid = function (roleGuid) {
+        var subFrom = {};
+        subFrom.roleGuid = roleGuid;
+        abftree_service.queryRoleFun(subFrom).then(function (data) {
+            console.log(data.retMessage)
+            if(data.status == "success" && !isNull(data.retMessage)){
+                $scope.mygrid.data =  data.retMessage;
+                $scope.mygrid.mydefalutData =  data.retMessage;
+                $scope.mygrid.getPage(1,$scope.mygrid.paginationPageSize);
+            }else{
+                $scope.mygrid.data =  [];
+                $scope.mygrid.mydefalutData = [];
+                $scope.mygrid.getPage(1,$scope.mygrid.paginationPageSize);
+            }
+        })
+    }
+    //定义放置ROLEGUID对象
+    var addroleGuid = "";
+    var deleteGUid = ""
+    $scope.addroleGuid = addroleGuid;
+    $scope.deleteGUid = deleteGUid;
+    //已经授予
+    // var alrolegird = {};
+    $scope.alrolegird = alrolegird;
+    var com1 = [{field:'roleName',displayName: '已授予角色'}]
+    $scope.alrolegird = initgrid($scope,alrolegird,filterFilter,com1,false,function (a,b) {
+        //roleGuid
+        if(a.isSelected){
+            $scope.deleteGUid = a.entity.guid;
+        }else{
+            $scope.deleteGUid = "";
+        }
+
+        remygrid(a.entity.guid);
+    });
+    $scope.alrolegird.enableFiltering = false;
+    $scope.alrolegird.enableGridMenu = false;
+    $scope.alrolegird.enablePaginationControls = false;
+    //未授予
+    // var notrolegird = {};
+    $scope.notrolegird = notrolegird;
+    var com2 = [{field:'roleName',displayName: '未授予角色'}]
+    $scope.notrolegird = initgrid($scope,notrolegird,filterFilter,com2,false,function (a,b) {
+        if(a.isSelected){
+            $scope.addroleGuid = a.entity.guid;
+        }else{
+            $scope.addroleGuid = "";
+        }
+        remygrid(a.entity.guid);
+    });
+    $scope.notrolegird.enableFiltering = false;
+    $scope.notrolegird.enableGridMenu = false;
+    $scope.notrolegird.enablePaginationControls = false;
+    //拉取已授予列表
+    var realrolegird = function () {
+        var subFrom = {};
+        subFrom.guid =guid;
+        abftree_service.queryRole(subFrom).then(function (data) {
+            console.log(1)
+            if(data.status == "success" && !isNull(data.retMessage)){
+                $scope.alrolegird.data =  data.retMessage;
+                $scope.alrolegird.mydefalutData =  data.retMessage;
+                $scope.alrolegird.getPage(1,$scope.alrolegird.paginationPageSize);
+            }else{
+                $scope.alrolegird.data =  [];
+                $scope.alrolegird.mydefalutData = [];
+                $scope.alrolegird.getPage(1,$scope.alrolegird.paginationPageSize);
+            }
+        })
+    }
+    //拉取未授予
+    var renotrolegird = function () {
+        var subFrom = {};
+        subFrom.guid = guid;
+        abftree_service.queryRoleNot(subFrom).then(function (data) {
+            if(data.status == "success" && !isNull(data.retMessage)){
+                $scope.notrolegird.data =  data.retMessage;
+                $scope.notrolegird.mydefalutData =  data.retMessage;
+                $scope.notrolegird.getPage(1,$scope.notrolegird.paginationPageSize);
+            }else{
+                $scope.notrolegird.data =  [];
+                $scope.notrolegird.mydefalutData = [];
+                $scope.notrolegird.getPage(1,$scope.notrolegird.paginationPageSize);
+            }
+        })
+    }
+    realrolegird();
+    renotrolegird();
+    
+    $scope.addRole = function (partyType) {
+        if($scope.addroleGuid == ""){
+            toastr['error']("请选择一个角色");
+            return false;
+        }else{
+            var subFrom = {};
+            subFrom.partyGuid = guid;
+            subFrom.roleGuid = $scope.addroleGuid;
+            subFrom.partyType = partyType;
+            console.log(subFrom)
+            abftree_service.addRoleParty(subFrom).then(function (data) {
+                if(data.status == "success"){
+                    toastr['success'](data.retMessage);
+                    realrolegird();
+                    renotrolegird();
+                }else{
+                    toastr['error'](data.retMessage);
+                }
+            })
+        }
+    }
+    $scope.deleteRole = function () {
+        if($scope.deleteGUid == ""){
+            toastr['error']("请选择一个角色");
+            return false;
+        }else{
+            var subFrom = {};
+            subFrom.partyGuid = guid;
+            subFrom.roleGuid = $scope.deleteGUid;
+            abftree_service.deleteRoleParty(subFrom).then(function (data) {
+                if(data.status == "success"){
+                    toastr['success'](data.retMessage);
+                    realrolegird();
+                    renotrolegird();
+                }else{
+                    toastr['error'](data.retMessage);
+                }
+            })
+        }
+    }
+}
+
