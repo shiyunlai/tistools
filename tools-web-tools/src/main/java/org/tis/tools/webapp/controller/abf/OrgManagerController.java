@@ -20,8 +20,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
+import org.tis.tools.model.po.om.OmDuty;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.po.om.OmPosition;
@@ -31,6 +34,7 @@ import org.tis.tools.rservice.om.capable.IPositionRService;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.util.AjaxUtils;
 
+import com.alibaba.dubbo.common.json.ParseException;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
@@ -776,6 +780,59 @@ public class OrgManagerController extends BaseController {
 		}
 		return null;
 	}
+	
+	
+    /**
+     * 查询所有组织 
+     *
+     */
+    @ResponseBody
+    @RequestMapping(value="/queryorgList" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String queryorgList(@RequestBody String content, HttpServletRequest request,
+                           HttpServletResponse response) throws ToolsRuntimeException, ParseException {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("queryorgList request : " + content);
+            }
+            List<OmOrg> acDucys = orgRService.queryAllOrg();
+            AjaxUtils.ajaxJsonSuccessMessage(response,acDucys);
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("queryorgList exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("queryorgList exception : ", e);
+        }
+        return null;
+    }
+	
+    
+    /**
+     * 查询所有岗位 
+     *
+     */
+    @ResponseBody
+    @RequestMapping(value="/queryAllPosition" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String queryAllPosition(@RequestBody String content, HttpServletRequest request,
+                           HttpServletResponse response) throws ToolsRuntimeException, ParseException {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("queryAllPosition request : " + content);
+            }
+            List<OmPosition> acDucys = positionRService.queryAllPosition();
+            AjaxUtils.ajaxJsonSuccessMessage(response,acDucys);
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("queryAllPosition exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("queryAllPosition exception : ", e);
+        }
+        return null;
+    }
+    
+
+
 	/**
 	 * 每个controller定义自己的返回信息变量
 	 */

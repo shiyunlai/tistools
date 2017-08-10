@@ -51,10 +51,10 @@
 	 <update id="updateByCondition" parameterType="map">
     	UPDATE OM_EMP_GROUP 
 	   <set>
-		<if test="domain.guid_emp != null" >
-        	guid_emp = #{domain.guidEmp,jdbcType=VARCHAR}
+		<if test="domain.guidEmp != null" >
+        	guid_emp = #{domain.guidEmp,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_group != null" >
+		<if test="domain.guidGroup != null" >
         	guid_group = #{domain.guidGroup,jdbcType=VARCHAR}
       	</if>
 	    </set>

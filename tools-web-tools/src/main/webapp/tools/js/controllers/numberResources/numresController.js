@@ -62,7 +62,6 @@ MetronicApp.controller('numres_controller', function ($filter, $scope, $state,nu
             toastr['error']("请至少选中一条进行重置！");
         }else{
             var str = getSel[0];
-            console.log(str)
             if(confirm('确定要把序号键为' + str.seqKey+ '的值按照' + str.reset +  '方式重置吗?' )){
                 //$scope.selectRow.seqNo = '0'
             }
@@ -85,7 +84,8 @@ MetronicApp.controller('numres_controller', function ($filter, $scope, $state,nu
 
                     $scope.editsflag = true;
                     $scope.add = function(item){//保存新增的函数
-                        if(confirm('确定要把'+ str.seqKey+'的序号数修改成'+str.seqNo +'吗？')){
+                        //if(confirm('确定要把'+ str.seqKey+'的序号数修改成'+str.seqNo +'吗？')){
+                        if(confirm('确定要修改该数据吗？')){
                             var subFrom = {};
                             subFrom = item;
                             numres_service.editSeqno(subFrom).then(function (data) {

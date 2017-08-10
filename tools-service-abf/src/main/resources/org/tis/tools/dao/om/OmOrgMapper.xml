@@ -208,85 +208,85 @@
     	UPDATE OM_ORG 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.org_code != null" >
-        	org_code = #{domain.orgCode,jdbcType=VARCHAR}
+		<if test="domain.orgCode != null" >
+        	org_code = #{domain.orgCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.org_name != null" >
-        	org_name = #{domain.orgName,jdbcType=VARCHAR}
+		<if test="domain.orgName != null" >
+        	org_name = #{domain.orgName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.org_type != null" >
-        	org_type = #{domain.orgType,jdbcType=VARCHAR}
+		<if test="domain.orgType != null" >
+        	org_type = #{domain.orgType,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.org_degree != null" >
-        	org_degree = #{domain.orgDegree,jdbcType=VARCHAR}
+		<if test="domain.orgDegree != null" >
+        	org_degree = #{domain.orgDegree,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.org_status != null" >
-        	org_status = #{domain.orgStatus,jdbcType=VARCHAR}
+		<if test="domain.orgStatus != null" >
+        	org_status = #{domain.orgStatus,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.org_level != null" >
-        	org_level = #{domain.orgLevel,jdbcType=DECIMAL}
+		<if test="domain.orgLevel != null" >
+        	org_level = #{domain.orgLevel,jdbcType=DECIMAL},
       	</if>
-		<if test="domain.guid_parents != null" >
-        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR}
+		<if test="domain.guidParents != null" >
+        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.org_seq != null" >
-        	org_seq = #{domain.orgSeq,jdbcType=VARCHAR}
+		<if test="domain.orgSeq != null" >
+        	org_seq = #{domain.orgSeq,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.org_addr != null" >
-        	org_addr = #{domain.orgAddr,jdbcType=VARCHAR}
+		<if test="domain.orgAddr != null" >
+        	org_addr = #{domain.orgAddr,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.zipcode != null" >
-        	zipcode = #{domain.zipcode,jdbcType=VARCHAR}
+        	zipcode = #{domain.zipcode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_position != null" >
-        	guid_position = #{domain.guidPosition,jdbcType=VARCHAR}
+		<if test="domain.guidPosition != null" >
+        	guid_position = #{domain.guidPosition,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_emp_master != null" >
-        	guid_emp_master = #{domain.guidEmpMaster,jdbcType=VARCHAR}
+		<if test="domain.guidEmpMaster != null" >
+        	guid_emp_master = #{domain.guidEmpMaster,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_emp_manager != null" >
-        	guid_emp_manager = #{domain.guidEmpManager,jdbcType=VARCHAR}
+		<if test="domain.guidEmpManager != null" >
+        	guid_emp_manager = #{domain.guidEmpManager,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.link_man != null" >
-        	link_man = #{domain.linkMan,jdbcType=VARCHAR}
+		<if test="domain.linkMan != null" >
+        	link_man = #{domain.linkMan,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.link_tel != null" >
-        	link_tel = #{domain.linkTel,jdbcType=VARCHAR}
+		<if test="domain.linkTel != null" >
+        	link_tel = #{domain.linkTel,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.email != null" >
-        	email = #{domain.email,jdbcType=VARCHAR}
+        	email = #{domain.email,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.web_url != null" >
-        	web_url = #{domain.webUrl,jdbcType=VARCHAR}
+		<if test="domain.webUrl != null" >
+        	web_url = #{domain.webUrl,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.start_date != null" >
-        	start_date = #{domain.startDate,jdbcType=DATE}
+		<if test="domain.startDate != null" >
+        	start_date = #{domain.startDate,jdbcType=DATE},
       	</if>
-		<if test="domain.end_date != null" >
-        	end_date = #{domain.endDate,jdbcType=DATE}
+		<if test="domain.endDate != null" >
+        	end_date = #{domain.endDate,jdbcType=DATE},
       	</if>
 		<if test="domain.area != null" >
-        	area = #{domain.area,jdbcType=VARCHAR}
+        	area = #{domain.area,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.create_time != null" >
-        	create_time = #{domain.createTime,jdbcType=TIMESTAMP}
+		<if test="domain.createTime != null" >
+        	create_time = #{domain.createTime,jdbcType=TIMESTAMP},
       	</if>
-		<if test="domain.last_update != null" >
-        	last_update = #{domain.lastUpdate,jdbcType=TIMESTAMP}
+		<if test="domain.lastUpdate != null" >
+        	last_update = #{domain.lastUpdate,jdbcType=TIMESTAMP},
       	</if>
 		<if test="domain.updator != null" >
-        	updator = #{domain.updator,jdbcType=VARCHAR}
+        	updator = #{domain.updator,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.sort_no != null" >
-        	sort_no = #{domain.sortNo,jdbcType=DECIMAL}
+		<if test="domain.sortNo != null" >
+        	sort_no = #{domain.sortNo,jdbcType=DECIMAL},
       	</if>
 		<if test="domain.isleaf != null" >
-        	isleaf = #{domain.isleaf,jdbcType=CHAR}
+        	isleaf = #{domain.isleaf,jdbcType=CHAR},
       	</if>
-		<if test="domain.sub_count != null" >
-        	sub_count = #{domain.subCount,jdbcType=DECIMAL}
+		<if test="domain.subCount != null" >
+        	sub_count = #{domain.subCount,jdbcType=DECIMAL},
       	</if>
 		<if test="domain.remark != null" >
         	remark = #{domain.remark,jdbcType=VARCHAR}

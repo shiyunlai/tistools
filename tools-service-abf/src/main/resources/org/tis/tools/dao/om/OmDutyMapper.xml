@@ -100,31 +100,31 @@
     	UPDATE OM_DUTY 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.duty_code != null" >
-        	duty_code = #{domain.dutyCode,jdbcType=VARCHAR}
+		<if test="domain.dutyCode != null" >
+        	duty_code = #{domain.dutyCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.duty_name != null" >
-        	duty_name = #{domain.dutyName,jdbcType=VARCHAR}
+		<if test="domain.dutyName != null" >
+        	duty_name = #{domain.dutyName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.duty_type != null" >
-        	duty_type = #{domain.dutyType,jdbcType=VARCHAR}
+		<if test="domain.dutyType != null" >
+        	duty_type = #{domain.dutyType,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_parents != null" >
-        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR}
+		<if test="domain.guidParents != null" >
+        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.isleaf != null" >
-        	isleaf = #{domain.isleaf,jdbcType=CHAR}
+        	isleaf = #{domain.isleaf,jdbcType=CHAR},
       	</if>
-		<if test="domain.sub_count != null" >
-        	sub_count = #{domain.subCount,jdbcType=DECIMAL}
+		<if test="domain.subCount != null" >
+        	sub_count = #{domain.subCount,jdbcType=DECIMAL},
       	</if>
-		<if test="domain.duty_level != null" >
-        	duty_level = #{domain.dutyLevel,jdbcType=DECIMAL}
+		<if test="domain.dutyLevel != null" >
+        	duty_level = #{domain.dutyLevel,jdbcType=DECIMAL},
       	</if>
-		<if test="domain.duty_seq != null" >
-        	duty_seq = #{domain.dutySeq,jdbcType=VARCHAR}
+		<if test="domain.dutySeq != null" >
+        	duty_seq = #{domain.dutySeq,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.remark != null" >
         	remark = #{domain.remark,jdbcType=VARCHAR}
