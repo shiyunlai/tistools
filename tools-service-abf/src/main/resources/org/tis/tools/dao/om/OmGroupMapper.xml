@@ -148,55 +148,55 @@
     	UPDATE OM_GROUP 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.group_code != null" >
-        	group_code = #{domain.groupCode,jdbcType=VARCHAR}
+		<if test="domain.groupCode != null" >
+        	group_code = #{domain.groupCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.group_name != null" >
-        	group_name = #{domain.groupName,jdbcType=VARCHAR}
+		<if test="domain.groupName != null" >
+        	group_name = #{domain.groupName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.group_type != null" >
-        	group_type = #{domain.groupType,jdbcType=VARCHAR}
+		<if test="domain.groupType != null" >
+        	group_type = #{domain.groupType,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.group_status != null" >
-        	group_status = #{domain.groupStatus,jdbcType=VARCHAR}
+		<if test="domain.groupStatus != null" >
+        	group_status = #{domain.groupStatus,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.group_desc != null" >
-        	group_desc = #{domain.groupDesc,jdbcType=VARCHAR}
+		<if test="domain.groupDesc != null" >
+        	group_desc = #{domain.groupDesc,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_emp_manager != null" >
-        	guid_emp_manager = #{domain.guidEmpManager,jdbcType=VARCHAR}
+		<if test="domain.guidEmpManager != null" >
+        	guid_emp_manager = #{domain.guidEmpManager,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_org != null" >
-        	guid_org = #{domain.guidOrg,jdbcType=VARCHAR}
+		<if test="domain.guidOrg != null" >
+        	guid_org = #{domain.guidOrg,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_parents != null" >
-        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR}
+		<if test="domain.guidParents != null" >
+        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.isleaf != null" >
-        	isleaf = #{domain.isleaf,jdbcType=CHAR}
+        	isleaf = #{domain.isleaf,jdbcType=CHAR},
       	</if>
-		<if test="domain.sub_count != null" >
-        	sub_count = #{domain.subCount,jdbcType=DECIMAL}
+		<if test="domain.subCount != null" >
+        	sub_count = #{domain.subCount,jdbcType=DECIMAL},
       	</if>
-		<if test="domain.group_level != null" >
-        	group_level = #{domain.groupLevel,jdbcType=DECIMAL}
+		<if test="domain.groupLevel != null" >
+        	group_level = #{domain.groupLevel,jdbcType=DECIMAL},
       	</if>
-		<if test="domain.group_seq != null" >
-        	group_seq = #{domain.groupSeq,jdbcType=VARCHAR}
+		<if test="domain.groupSeq != null" >
+        	group_seq = #{domain.groupSeq,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.start_date != null" >
-        	start_date = #{domain.startDate,jdbcType=DATE}
+		<if test="domain.startDate != null" >
+        	start_date = #{domain.startDate,jdbcType=DATE},
       	</if>
-		<if test="domain.end_date != null" >
-        	end_date = #{domain.endDate,jdbcType=DATE}
+		<if test="domain.endDate != null" >
+        	end_date = #{domain.endDate,jdbcType=DATE},
       	</if>
 		<if test="domain.createtime != null" >
-        	createtime = #{domain.createtime,jdbcType=TIMESTAMP}
+        	createtime = #{domain.createtime,jdbcType=TIMESTAMP},
       	</if>
 		<if test="domain.lastupdate != null" >
-        	lastupdate = #{domain.lastupdate,jdbcType=TIMESTAMP}
+        	lastupdate = #{domain.lastupdate,jdbcType=TIMESTAMP},
       	</if>
 		<if test="domain.updator != null" >
         	updator = #{domain.updator,jdbcType=VARCHAR}

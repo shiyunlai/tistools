@@ -142,52 +142,52 @@
     	UPDATE OM_POSITION 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_org != null" >
-        	guid_org = #{domain.guidOrg,jdbcType=VARCHAR}
+		<if test="domain.guidOrg != null" >
+        	guid_org = #{domain.guidOrg,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.position_code != null" >
-        	position_code = #{domain.positionCode,jdbcType=VARCHAR}
+		<if test="domain.positionCode != null" >
+        	position_code = #{domain.positionCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.position_name != null" >
-        	position_name = #{domain.positionName,jdbcType=VARCHAR}
+		<if test="domain.positionName != null" >
+        	position_name = #{domain.positionName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.position_type != null" >
-        	position_type = #{domain.positionType,jdbcType=VARCHAR}
+		<if test="domain.positionType != null" >
+        	position_type = #{domain.positionType,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.position_status != null" >
-        	position_status = #{domain.positionStatus,jdbcType=VARCHAR}
+		<if test="domain.positionStatus != null" >
+        	position_status = #{domain.positionStatus,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.isleaf != null" >
-        	isleaf = #{domain.isleaf,jdbcType=CHAR}
+        	isleaf = #{domain.isleaf,jdbcType=CHAR},
       	</if>
-		<if test="domain.sub_count != null" >
-        	sub_count = #{domain.subCount,jdbcType=DECIMAL}
+		<if test="domain.subCount != null" >
+        	sub_count = #{domain.subCount,jdbcType=DECIMAL},
       	</if>
-		<if test="domain.position_level != null" >
-        	position_level = #{domain.positionLevel,jdbcType=DECIMAL}
+		<if test="domain.positionLevel != null" >
+        	position_level = #{domain.positionLevel,jdbcType=DECIMAL},
       	</if>
-		<if test="domain.position_seq != null" >
-        	position_seq = #{domain.positionSeq,jdbcType=VARCHAR}
+		<if test="domain.positionSeq != null" >
+        	position_seq = #{domain.positionSeq,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_parents != null" >
-        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR}
+		<if test="domain.guidParents != null" >
+        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_duty != null" >
-        	guid_duty = #{domain.guidDuty,jdbcType=VARCHAR}
+		<if test="domain.guidDuty != null" >
+        	guid_duty = #{domain.guidDuty,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.start_date != null" >
-        	start_date = #{domain.startDate,jdbcType=DATE}
+		<if test="domain.startDate != null" >
+        	start_date = #{domain.startDate,jdbcType=DATE},
       	</if>
-		<if test="domain.end_date != null" >
-        	end_date = #{domain.endDate,jdbcType=DATE}
+		<if test="domain.endDate != null" >
+        	end_date = #{domain.endDate,jdbcType=DATE},
       	</if>
 		<if test="domain.createtime != null" >
-        	createtime = #{domain.createtime,jdbcType=TIMESTAMP}
+        	createtime = #{domain.createtime,jdbcType=TIMESTAMP},
       	</if>
 		<if test="domain.lastupdate != null" >
-        	lastupdate = #{domain.lastupdate,jdbcType=TIMESTAMP}
+        	lastupdate = #{domain.lastupdate,jdbcType=TIMESTAMP},
       	</if>
 		<if test="domain.updator != null" >
         	updator = #{domain.updator,jdbcType=VARCHAR}

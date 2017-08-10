@@ -51,10 +51,10 @@
 	 <update id="updateByCondition" parameterType="map">
     	UPDATE OM_POSITION_APP 
 	   <set>
-		<if test="domain.guid_position != null" >
-        	guid_position = #{domain.guidPosition,jdbcType=VARCHAR}
+		<if test="domain.guidPosition != null" >
+        	guid_position = #{domain.guidPosition,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_app != null" >
+		<if test="domain.guidApp != null" >
         	guid_app = #{domain.guidApp,jdbcType=VARCHAR}
       	</if>
 	    </set>
