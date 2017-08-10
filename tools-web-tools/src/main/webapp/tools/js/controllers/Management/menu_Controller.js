@@ -388,12 +388,19 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                         }else{
                             subFrom.guidMenu = obj.id;
                             menu_service.queryChildMenu(subFrom).then(function (data) {
+                                console.log(data);
                                 var datas = data.retMessage;
                                 for(var i =0;i <datas.length;i++){
+                                    console.log(datas[i].isleaf)
+                                    if(datas[i].isleaf == 'Y'){//如果是子节点，那么就是功能，不会有子集了
+                                        datas[i].children = false;
+                                        datas[i].icon = "fa fa-wrench icon-state-info icon-lg"
+                                    }else{
+                                        datas[i].children = true;
+                                        datas[i].icon = "fa  fa-files-o icon-state-info icon-lg"
+                                    }
                                     datas[i].text = datas[i].menuLabel;
-                                    datas[i].children = true;
                                     datas[i].id = datas[i].guid;
-                                    datas[i].icon = "fa  fa-files-o icon-state-info icon-lg"
                                     its.push(datas[i]);
                                 }
                                 $scope.jsonarray = angular.copy(its);
