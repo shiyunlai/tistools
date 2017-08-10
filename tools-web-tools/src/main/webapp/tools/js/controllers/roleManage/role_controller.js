@@ -1,7 +1,7 @@
 /**
  * Created by wangbo on 2017/6/11.
  */
-angular.module('MetronicApp').controller('role_controller', function($scope ,$rootScope,$modal,$timeout,$http,abftree_service,dictonary_service,i18nService,role_service,menu_service,operator_service,filterFilter,$uibModal,uiGridConstants) {
+angular.module('MetronicApp').controller('role_controller', function($scope ,$rootScope,$modal,$timeout,$http,abftree_service,dictonary_service,common_service,i18nService,role_service,menu_service,operator_service,filterFilter,$uibModal,uiGridConstants) {
         var role = {};
         $scope.role = role;
 
@@ -11,6 +11,8 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
     tits.dictKey='DICT_CONTACT_MODE';
     dictKey($rootScope,tits,dictonary_service);*/
 
+
+    var res = $rootScope.res.abftree_service;//页面所需调用的服务
 
         /* 左侧角色查询逻辑 */
         i18nService.setCurrentLang("zh-cn");
@@ -363,7 +365,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
         role_service.queryRoleInParty(subFrom).then(function(data){
             if(data.status == "success"){
                 var datas = data.retMessage;
-                console.log(datas);
                 tabshow(datas,ars)
             }else{
                 toastr['error']('初始化查询失败'+'<br/>'+data.retMessage);
@@ -499,16 +500,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
     $scope.role.orgAdd = function(){
         openwindow($modal, 'views/roleManage/roleAddorg.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
-                $scope.importadd = [
-                    {'guid':'ORG1500343061','orgName':'上海银行'},
-                    { 'guid':'ORG1500343867','orgName':'张江2号'},
-                    {'guid':'ORG1500388478','orgName':'张江支行'},
-                    { 'guid':'ORG1500424875','orgName':'测试001'},
-                    { 'guid':'ORG1500529828','orgName':'测试02'},
-                    { 'guid':'ORG1500624024','orgName':'123'},
-                    { 'guid':'ORG1500860520','orgName':'测试2'}
-                ];
-
                 var gridOptions = {};
                 $scope.gridOptions = gridOptions;
                 var com = [
@@ -523,12 +514,17 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                     }
                 }
                 $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
-                $scope.gridOptions.data =  $scope.importadd;
+                var subFrom = {};
+                common_service.post(res.queryorgList,subFrom).then(function(data){
+                    if(data.status == "success"){
+                        var datas  = data.retMessage;
+                        $scope.gridOptions.data = datas;
+                    }
+                })
                 //导入方法
                 $scope.importAdd = function () {
                     var dats = $scope.gridOptions.getSelectedRows();
                     if(dats.length >0){
-
                         var tis = [];
                         for(var i =0; i<dats.length; i++){
                             var subFrom = {};
@@ -602,11 +598,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
     $scope.role.workAdd = function(){
         openwindow($modal, 'views/roleManage/roleAddwork.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
-                $scope.importadd = [
-                    {'guid':'GROUP1501643718','groupName':'测试'},
-                    { 'guid':'GROUP1501656120','groupName':'测试2号'},
-                    {'guid':'GROUP1501751448','groupName':'测试3'}
-                ];
                 var gridOptions = {};
                 $scope.gridOptions = gridOptions;
                  var com = [
@@ -623,7 +614,15 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                     }
                 }
                 $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
-                $scope.gridOptions.data = $scope.importadd;
+                //查询所有工作组
+                var res = $rootScope.res.Workgroup_service;//查询工作组所需服务
+                var subFrom = {};
+                common_service.post(res.queryAllGroup,subFrom).then(function(data){
+                    if(data.status == "success"){
+                        var datas  = data.retMessage;
+                        $scope.gridOptions.data = datas;
+                    }
+                })
                 $scope.importAdd = function () {
                     var dats = $scope.gridOptions.getSelectedRows();
                     if (dats.length > 0) {
@@ -637,7 +636,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                         }
                         role_service.addPartyRole(tis).then(function(data){
                             var  datas = data.retMessage;
-                            console.log(datas)
                             if(data.status == "success"){
                                 toastr['success']("导入成功！");
                                 $modalInstance.close();
@@ -699,23 +697,9 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
     }
     $scope.gridOptions4 = initgrid($scope,gridOptions3,filterFilter,com4,true,f4);
     $scope.gridOptions4.data = $scope.postData;
-
-    //新增tab下岗位方法
     $scope.role.postAdd = function(){
         openwindow($modal, 'views/roleManage/roleAddpost.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
-                $scope.importadd = [
-                    {'guid':'POSITION1500362374','positionName':'测试'},
-                    { 'guid':'POSITION1500617953','positionName':'下级岗位测试1'},
-                    {'guid':'POSITION1500623964','positionName':'下级机构测试2号'},
-                    { 'guid':'POSITION1500623965','positionName':'下级岗位测试3号'},
-                    { 'guid':'POSITION1500623966','positionName':'下级岗位测试4号'},
-                    { 'guid':'POSITION1500623970','positionName':'c7'},
-                    { 'guid':'POSITION1500623971','positionName':'c8'},
-                    { 'guid':'POSITION1500623972','positionName':'c9'},
-                    { 'guid':'POSITION1500623973','positionName':'c10'},
-                    { 'guid':'POSITION1501218402','positionName':'124'}
-                ];
                 var gridOptions = {};
                 $scope.gridOptions = gridOptions;
                 var com = [
@@ -731,7 +715,14 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                     }
                 }
                 $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
-                $scope.gridOptions.data = $scope.importadd;
+                //查询所有岗位
+                var subFrom = {};
+                common_service.post(res.queryAllPosition,subFrom).then(function(data){
+                    if(data.status == "success"){
+                        var datas  = data.retMessage;
+                        $scope.gridOptions.data = datas;
+                    }
+                })
                 $scope.importAdd = function () {
                     var dats = $scope.gridOptions.getSelectedRows();
                     if (dats.length > 0) {
@@ -808,13 +799,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
     $scope.role.zhiwuAdd = function(){
         openwindow($modal, 'views/roleManage/roleAddzw.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
-                $scope.importadd = [
-                    {'guid':'DUTY1501142443','dutyName':'测试1'},
-                    { 'guid':'DUTY1501142445','dutyName':'测试2'},
-                    {'guid':'DUTY1501206758','dutyName':'经理'},
-                    { 'guid':'DUTY1501219411','dutyName':'老总'},
-                    { 'guid':'DUTY1501462861','dutyName':'22'}
-                ];
                 var gridOptions = {};
                 $scope.gridOptions = gridOptions;
                 var com = [
@@ -830,7 +814,16 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                     }
                 }
                 $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
-                $scope.gridOptions.data = $scope.importadd;
+                /*查询所有职务*/
+                var subFrom = {};
+                var res = $rootScope.res.duty_service;//职务所需调用服务
+                common_service.post(res.queryDucyList,subFrom).then(function(data){
+                    if(data.status == "success"){
+                        var datas  = data.retMessage;
+                        $scope.gridOptions.data = datas;
+
+                    }
+                })
                 $scope.importAdd = function () {
                     var dats = $scope.gridOptions.getSelectedRows();
                     if (dats.length > 0) {

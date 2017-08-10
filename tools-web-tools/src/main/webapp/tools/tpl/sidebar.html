@@ -171,7 +171,7 @@
             <a href="#/{{d.uientry}}" ng-if="!d.menu_guid">
                 <i ng-class="{true : '{{d.expand_path}}',false:'icon-settings' }[d.expand_path!=null && d.expand_path !='']"></i><span ng-bind-html="d.menu_label | highlightTrust2Html : searchParam: '#F0F0F0'"></span>
             </a>
-            <a href="javascript:;" class="nav-link nav-toggle" ng-if="d.menu_guid">
+            <a href="javascript:;"   class="nav-link nav-toggle" ng-if="d.menu_guid">
                 <i ng-class="{true : '{{d.expand_path}}',false:'icon-settings' }[d.expand_path!=null && d.icon !='']"></i><span ng-bind-html="d.menu_label | highlightTrust2Html : searchParam: '#F0F0F0'"></span>
                 <span class="arrow"></span>
             </a>
@@ -180,7 +180,7 @@
                     <a href="#/{{p.uientry}}" ng-if="!p.menu_guid">
                         <i ng-class="{true : '{{p.expand_path}}',false:'icon-settings' }[p.expand_path!=null && p.expand_path !='']"></i><span ng-bind-html="p.menu_label | highlightTrust2Html : searchParam: '#F0F0F0'"></span>
                     </a>
-                    <a href="javascript:;"  class="nav-link nav-toggle" ng-if="p.menu_guid">
+                    <a href="javascript:;" style="height: 41px;line-height: 31px;"  class="nav-link nav-toggle" ng-if="p.menu_guid">
                         <i ng-class="{true : '{{p.expand_path}}',false:'icon-settings' }[p.expand_path!=null && p.expand_path !='']"></i><span ng-bind-html="p.menu_label | highlightTrust2Html : searchParam: '#F0F0F0'"></span>
                         <span class="arrow"></span>
                     </a>

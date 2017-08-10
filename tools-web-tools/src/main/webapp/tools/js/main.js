@@ -234,7 +234,6 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
         var item = [{"expand_path":"fa fa-cubes",
             "menu_guid":"MENU1500805951",
             "menu_name":"应用管理",
-            "menu_level":0,
             "parents_guid":"MENU_ROOT_GOVERNOR",
             "menu_label":"应用管理",
             "sons":[
@@ -242,13 +241,11 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
                     "expand_path":"fa fa-university",
                     "menu_guid":"MENU1500805952",
                     "menu_name":"组织机构管理",
-                    "menu_level":1,
                     "parents_guid":"MENU1500805951",
                     "menu_label":"组织机构管理",
                     "sons":[
                         {   "menu_guid":"MENU1500805956",
                             "menu_label":"组织机构",
-                            "menu_level":2,
                             "menu_name":"组织机构",
                             "expand_path":"icon-puzzle",
                             "parents_guid":"MENU1500805952",
@@ -256,7 +253,6 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
                         },
                         { "menu_guid":"MENU1500805957",
                             "menu_label":"员工管理",
-                            "menu_level":2,
                             "menu_name":"员工管理",
                             "expand_path":"icon-puzzle",
                             "parents_guid":"MENU1500805952",
@@ -264,7 +260,6 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
                         },
                         {"menu_guid":"MENU1500805958",
                             "menu_label":"业务机构",
-                            "menu_level":2,
                             "menu_name":"业务机构",
                             "expand_path":"icon-puzzle",
                             "parents_guid":"MENU1500805952",
@@ -272,7 +267,6 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
                         },
                         {   "menu_guid":"MENU1500805959",
                             "menu_label":"工作组",
-                            "menu_level":2,
                             "menu_name":"工作组",
                             "expand_path":"icon-puzzle",
                             "parents_guid":"MENU1500805952",
@@ -280,7 +274,6 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
                         },
                         {   "menu_guid":"MENU1500805960",
                             "menu_label":"职务定义",
-                            "menu_level":2,
                             "menu_name":"职务定义",
                             "expand_path":"icon-puzzle",
                             "parents_guid":"MENU1500805952",
@@ -291,13 +284,11 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
                     "expand_path":"fa fa-lock",
                     "menu_guid":"MENU1500805953",
                     "menu_name":"权限管理",
-                    "menu_level":1,
                     "parents_guid":"MENU1500805951",
                     "menu_label":"权限管理",
                     "sons":[
                         {   "menu_guid":"MENU1500805961",
                             "menu_label":"应用功能管理",
-                            "menu_level":2,
                             "menu_name":"应用功能管理",
                             "expand_path":"icon-puzzle",
                             "parents_guid":"MENU1500805953",
@@ -617,7 +608,6 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
     $scope.search = function(searchParam){
         if(_.isEmpty(searchParam)){ //如果是数组
             $scope.menusAndTrans = angular.copy(item);//复制数据
-
             $timeout(function(){
                 $('.sub-menu').slideUp();//显示
             })
@@ -628,6 +618,8 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
             })
         }
     };
+
+
     function search(all,key){ //包装了一个搜索方法，只要数据结构做成类似的，这个直接拿来用。
         var hitLevel1 = [];//定义空数组
         _.each(all,function(item1){//循环

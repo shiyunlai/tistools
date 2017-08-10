@@ -70,5 +70,6 @@ MetronicApp.factory('menu_service',['$http', '$q', function ($http,$q) {
     };
 
 
+
     return service;
 }]);

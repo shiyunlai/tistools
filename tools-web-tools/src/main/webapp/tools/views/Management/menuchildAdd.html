@@ -47,11 +47,24 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">是否叶子菜单:<span ng-class="{required:myform.dict_key3.$invalid}"  > * </span></label>
                         <div class="col-md-8">
-                            <select class="form-control" name="dict_key3" ng-model="menuFrom.isleaf"   required>
+                            <select class="form-control" name="dict_key3" ng-model="menuFrom.isleaf"  ng-change="ceshi(menuFrom.isleaf)"   required>
                                 <option value=""></option>
                                 <option value="Y">是</option>
                                 <option value="N">否</option>
                             </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6"  ng-if="selectfunc">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">选择功能:<span ng-class="{required:myform.dict_func.$invalid}"  > * </span></label>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" placeholder=""
+                                   ng-model="menuFrom.guidFunc"  required    ng-disabled="true"
+                                   name="dict_func" />
+                        </div>
+                        <div class="col-md-1">
+                            <span style="margin-top:10px; margin-left:-5px;cursor: pointer" class="icon-magnifier-add"  ng-click="selectfuncs()"></span>
                         </div>
                     </div>
                 </div>
@@ -101,7 +114,6 @@
                     <div class="form-group">
                         <label class="control-label col-md-2"></label>
                         <div class="col-md-10">
-
                             <div class="actions btn-set" style="float: right;">
                                 <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="add(menuFrom)" > 保存
                                 </button>
