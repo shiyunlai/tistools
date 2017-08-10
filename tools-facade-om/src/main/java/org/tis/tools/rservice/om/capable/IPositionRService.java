@@ -330,6 +330,11 @@ public interface IPositionRService {
 	List<AcApp> queryApp(String positionCode) ;
 
 	/**
+	 * 查询可为指定岗位添加的所有应用
+	 */
+	List<AcApp> queryAppNotInPosition(String positionCode);
+
+	/**
 	 * 查询与岗位相关的工作组列表 
 	 * @param positionCode
 	 * @return
@@ -342,9 +347,25 @@ public interface IPositionRService {
 	 * @return
 	 */
 	List<AcRole> queryRole(String positionCode) ;
-	
+
+	/**
+	 * 添加岗位应用
+	 */
+	void addAppPosition(String appGuid, String positionGuid);
+
+	/**
+	 * 删除岗位应用
+	 */
+	void deleteAppPosition(String appGuid, String positionGuid);
+
 	/**
 	 * 删除岗位
 	 */
 	void deletePosition(String positionCode);
+
+	/**
+	 * 拉取所有岗位信息
+	 * @return
+	 */
+	List<OmPosition> queryAllPosition();
 }

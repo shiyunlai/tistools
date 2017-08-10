@@ -1022,4 +1022,9 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		String guid = list.get(0).getGuid();
 		return guid;
 	}
+
+	@Override
+	public List<OmOrg> queryAllOrg() {
+		return omOrgService.query(null);
+	}
 }

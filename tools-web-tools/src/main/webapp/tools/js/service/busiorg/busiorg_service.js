@@ -51,6 +51,13 @@ MetronicApp.factory('busiorg_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     }
+    service.updatebusiorg = function (subFrom) {
+
+        var res = $http.post(manurl + "/om/busiorg/updatebusiorg",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
 
     service.loadbusiorgbyType = function (subFrom) {
 

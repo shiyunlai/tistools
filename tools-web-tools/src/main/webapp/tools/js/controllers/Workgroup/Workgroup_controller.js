@@ -1,7 +1,7 @@
 /**
  * Created by gaojie on 2017/6/29.
  */
-angular.module('MetronicApp').controller('Workgroup_controller', function($rootScope, $scope,Workgroup_service, $http, $timeout,i18nService,filterFilter,uiGridConstants,$uibModal,$state) {
+angular.module('MetronicApp').controller('Workgroup_controller', function($rootScope, $scope,Workgroup_service,abftree_service, $http, $timeout,i18nService,filterFilter,uiGridConstants,$uibModal,$state) {
     $scope.$on('$viewContentLoaded', function () {
         // initialize core components
         App.initAjax();
@@ -548,6 +548,13 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
                 flag[a] = false;
             }
             flag.qxxx = true;
+            //传递参数
+            var guid = $scope.sub.guid;
+            //生成权限3表
+            var mygrid = {}
+            var alrolegird = {}
+            var notrolegird = {}
+            commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftree_service,toastr)
         }
     }
 

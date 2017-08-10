@@ -406,4 +406,18 @@ public class AcApp implements Serializable {
 	public String toString(){
 		return StringUtil.toString(this) ; 
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (this == obj) {
+			return true;
+		}
+		if (obj instanceof AcApp) {
+			AcApp other = (AcApp) obj;
+			return (other.getGuid()).equals(this.getGuid());
+		}
+		return false;
+	}
 }

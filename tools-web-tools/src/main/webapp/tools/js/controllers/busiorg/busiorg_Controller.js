@@ -1,7 +1,7 @@
 /**
  * Created by gaojie on 2017/8/2.
  */
-angular.module('MetronicApp').controller('busiorg_controller', function ($rootScope, $scope, busiorg_service, $http, $timeout, i18nService, filterFilter, uiGridConstants, $uibModal, $state) {
+angular.module('MetronicApp').controller('busiorg_controller', function ($rootScope, $scope, busiorg_service, $http, $timeout, i18nService, filterFilter, uiGridConstants, $uibModal, $state,$location) {
     $scope.$on('$viewContentLoaded', function () {
         // initialize core components
         App.initAjax();
@@ -57,40 +57,7 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
                             var subFrom = {};
                             subFrom.nodeType = "reality";
                             subFrom.busiDomain = obj.id;
-                            var busiorgCode = "";
-                            busiorg_service.initcode(subFrom).then(function (data) {
-                                console.log(data)
-                                if(data.status == "success"){
-                                    busiorgCode = data.retMessage;
-                                    openwindow($uibModal, 'views/busiorg/addBusiorg_window.html', 'lg',
-                                        function ($scope, $modalInstance) {
-                                            $scope.subFrom = subFrom;
-                                            subFrom.busiorgCode = busiorgCode;
-                                            //增加方法
-                                            $scope.add = function (subFrom) {
-                                                //TODO.新增逻辑
-                                                busiorg_service.addbusiorg(subFrom).then(function (data) {
-                                                    if(data.status == "success"){
-                                                        toastr['success'](data.retMessage);
-                                                    }else{
-                                                        toastr['error'](data.retMessage);
-                                                    }
-                                                    $("#busiorgtree").jstree().refresh();
-                                                    $scope.cancel();
-                                                });
-                                            }
-                                            $scope.cancel = function () {
-                                                $modalInstance.dismiss('cancel');
-                                            };
-                                        }
-                                    )
-                                }else{
-                                    toastr['error'](data.retMessage);
-                                    return false;
-                                }
-
-                            })
-
+                            creatReatOrg(subFrom);
                         }
                     },
                     "新增子虚拟机构": {
@@ -104,39 +71,7 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
                             var subFrom = {};
                             subFrom.nodeType = "dummy";
                             subFrom.busiDomain = obj.id;
-                            var busiorgCode = "";
-                            busiorg_service.initcode(subFrom).then(function (data) {
-                                console.log(data)
-                                if(data.status == "success"){
-                                    busiorgCode = data.retMessage;
-                                    openwindow($uibModal, 'views/busiorg/addBusiorg_window.html', 'lg',
-                                        function ($scope, $modalInstance) {
-                                            $scope.subFrom = subFrom;
-                                            subFrom.busiorgCode = busiorgCode;
-                                            //增加方法
-                                            $scope.add = function (subFrom) {
-                                                busiorg_service.addbusiorg(subFrom).then(function (data) {
-                                                    console.log(data)
-                                                    if(data.status == "success"){
-                                                        toastr['success'](data.retMessage);
-                                                    }else{
-                                                        toastr['error'](data.retMessage);
-                                                    }
-                                                    $("#busiorgtree").jstree().refresh();
-                                                    $scope.cancel();
-                                                });
-                                            }
-                                            $scope.cancel = function () {
-                                                $modalInstance.dismiss('cancel');
-                                            };
-                                        }
-                                    )
-                                }else{
-                                    toastr['error'](data.retMessage);
-                                    return false;
-                                }
-
-                            })
+                            creatReatOrg(subFrom);
                         }
                     },
                     "刷新菜单": {
@@ -164,40 +99,7 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
                             subFrom.nodeType = "reality";
                             subFrom.busiDomain = obj.original.busiDomain;
                             subFrom.parentsBusiorgCode = obj.original.busiorgCode;
-                            var busiorgCode = "";
-                            busiorg_service.initcode(subFrom).then(function (data) {
-                                console.log(data)
-                                if (data.status == "success") {
-                                    busiorgCode = data.retMessage;
-                                    openwindow($uibModal, 'views/busiorg/addBusiorg_window.html', 'lg',
-                                        function ($scope, $modalInstance) {
-                                            $scope.subFrom = subFrom;
-                                            subFrom.busiorgCode = busiorgCode;
-                                            //增加方法
-                                            $scope.add = function (subFrom) {
-                                                //TODO.新增逻辑
-                                                busiorg_service.addbusiorg(subFrom).then(function (data) {
-                                                    if (data.status == "success") {
-                                                        toastr['success'](data.retMessage);
-                                                    } else {
-                                                        toastr['error'](data.retMessage);
-                                                    }
-                                                    $("#busiorgtree").jstree().refresh();
-                                                    $scope.cancel();
-                                                });
-                                            }
-                                            $scope.cancel = function () {
-                                                $modalInstance.dismiss('cancel');
-                                            };
-                                        }
-                                    )
-                                } else {
-                                    toastr['error'](data.retMessage);
-                                    return false;
-                                }
-
-                            })
-
+                            creatReatOrg(subFrom);
                         }
                     },
                     "新增子虚拟机构": {
@@ -211,39 +113,8 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
                             var subFrom = {};
                             subFrom.nodeType = "dummy";
                             subFrom.busiDomain = obj.id;
-                            var busiorgCode = "";
-                            busiorg_service.initcode(subFrom).then(function (data) {
-                                console.log(data)
-                                if (data.status == "success") {
-                                    busiorgCode = data.retMessage;
-                                    openwindow($uibModal, 'views/busiorg/addBusiorg_window.html', 'lg',
-                                        function ($scope, $modalInstance) {
-                                            $scope.subFrom = subFrom;
-                                            subFrom.busiorgCode = busiorgCode;
-                                            //增加方法
-                                            $scope.add = function (subFrom) {
-                                                busiorg_service.addbusiorg(subFrom).then(function (data) {
-                                                    console.log(data)
-                                                    if (data.status == "success") {
-                                                        toastr['success'](data.retMessage);
-                                                    } else {
-                                                        toastr['error'](data.retMessage);
-                                                    }
-                                                    $("#busiorgtree").jstree().refresh();
-                                                    $scope.cancel();
-                                                });
-                                            }
-                                            $scope.cancel = function () {
-                                                $modalInstance.dismiss('cancel');
-                                            };
-                                        }
-                                    )
-                                } else {
-                                    toastr['error'](data.retMessage);
-                                    return false;
-                                }
-
-                            })
+                            subFrom.parentsBusiorgCode = obj.original.busiorgCode;
+                            creatReatOrg(subFrom)
                         }
                     },
                     "删除业务机构": {
@@ -453,17 +324,120 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
     }
     //删除
     busiorg.deletejg = function () {
-        
+        var subFrom = {};
+        subFrom.busiorgCode = $scope.busiorg.item.busiorgCode;
+        busiorg_service.deletebusiorg(subFrom).then(function (data) {
+            if (data.status == "success") {
+                toastr['success'](data.retMessage);
+                $("#busiorgtree").jstree().refresh();
+            } else {
+                toastr['error'](data.retMessage);
+            }
+        })
     }
     //保存
     busiorg.save = function () {
-        
+        console.log($scope.subFrom)
+        busiorg_service.updatebusiorg($scope.subFrom).then(function (data) {
+            if (data.status == "success") {
+                toastr['success'](data.retMessage);
+                $("#busiorgtree").jstree().refresh();
+                $scope.editflag = !$scope.editflag;
+            } else {
+                toastr['error'](data.retMessage);
+            }
+        })
+    }
+    //新增下级业务机构
+    busiorg.addxj = function () {
+        //生成代码
+        var subFrom = {};
+        subFrom.nodeType = "reality";
+        subFrom.busiDomain = $scope.busiorg.item.busiDomain;
+        subFrom.parentsBusiorgCode = $scope.busiorg.item.busiorgCode;
+        creatReatOrg(subFrom);
+    }
+    //新增下级虚拟业务机构
+    busiorg.addxn = function () {
+//生成代码
+        var subFrom = {};
+        subFrom.nodeType = "dummy";
+        subFrom.busiDomain = $scope.busiorg.item.busiDomain;
+        subFrom.parentsBusiorgCode = $scope.busiorg.item.busiorgCode;
+        creatReatOrg(subFrom);
     }
     //返回
     busiorg.back = function () {
         $scope.editflag = !$scope.editflag
     }
+    
+    //超链接跳转按钮
+    busiorg.toDict = function () {
+        $state.go('dictionary')
+    }
 
+    //业务机构套别.下级业务机构列表按钮
+    //新增实体业务机构
+    busiorg.addlowOrg = function () {
+        var subFrom = {};
+        subFrom.nodeType = "reality"
+        subFrom.busiDomain = $scope.busiorg.item.sendValue;
+        creatReatOrg(subFrom);
+    }
+    //新增虚拟业务机构
+    busiorg.addlowxnOrg = function () {
+        var subFrom = {};
+        subFrom.nodeType = "dummy"
+        subFrom.busiDomain = $scope.busiorg.item.sendValue;
+        creatReatOrg(subFrom);
+    }
+    //删除列表选中机构
+    busiorg.deletexjjg = function () {
+        console.log($scope.loworgGrid.getSelectedRows());
+        var arr = $scope.loworgGrid.getSelectedRows();
+        if(arr.length != 1){
+            toastr['error']("请选择一条需要删除的业务机构!");
+            return false;
+        }
+        var busiorgCode = arr[0].busiorgCode;
+        var subFrom = {};
+        subFrom.busiorgCode = busiorgCode;
+        busiorg_service.deletebusiorg(subFrom).then(function (data) {
+            if (data.status == "success") {
+                toastr['success'](data.retMessage);
+                $("#busiorgtree").jstree().refresh();
+            } else {
+                toastr['error'](data.retMessage);
+            }
+        })
+    }
+
+    //编辑
+    busiorg.editxjjg = function () {
+        var arr = $scope.loworgGrid.getSelectedRows();
+        if(arr.length != 1){
+            toastr['error']("请选择一条需要编辑的业务机构!");
+            return false;
+        }
+        var subFrom = arr[0];
+        openwindow($uibModal,'views/busiorg/editBusiorg_window.html','lg',function ($scope, $modalInstance){
+            $scope.subFrom = angular.copy(subFrom);
+            $scope.add = function () {
+                busiorg_service.updatebusiorg($scope.subFrom).then(function (data) {
+                    if (data.status == "success") {
+                        toastr['success'](data.retMessage);
+                        $("#busiorgtree").jstree().refresh();
+                        $scope.cancel();
+                    } else {
+                        toastr['error'](data.retMessage);
+                    }
+                })
+            }
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+        })
+    }
     /**-----------------------------------页签控制-------------------------------- */
     busiorg.loaddata = function (num) {
         if(num == 0){
@@ -482,5 +456,41 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
             $scope.flag.page = true;
             $scope.flag.xqxx = true;
         }
+    }
+
+    /**-------------------------------封装方法----------------------------------*/
+    var creatReatOrg = function (subFrom) {
+        busiorg_service.initcode(subFrom).then(function (data) {
+            console.log(data)
+            if (data.status == "success") {
+                var busiorgCode = data.retMessage;
+                openwindow($uibModal, 'views/busiorg/addBusiorg_window.html', 'lg',
+                    function ($scope, $modalInstance) {
+                        $scope.subFrom = subFrom;
+                        subFrom.busiorgCode = busiorgCode;
+                        //增加方法
+                        $scope.add = function (subFrom) {
+                            //TODO.新增逻辑
+                            busiorg_service.addbusiorg(subFrom).then(function (data) {
+                                if (data.status == "success") {
+                                    toastr['success'](data.retMessage);
+                                } else {
+                                    toastr['error'](data.retMessage);
+                                }
+                                $("#busiorgtree").jstree().refresh();
+                                $scope.cancel();
+                            });
+                        }
+                        $scope.cancel = function () {
+                            $modalInstance.dismiss('cancel');
+                        };
+                    }
+                )
+            } else {
+                toastr['error'](data.retMessage);
+                return false;
+            }
+
+        })
     }
 });

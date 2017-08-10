@@ -647,6 +647,8 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 		wc.andEquals("GUID_PARENTS", parentog.getGuid());
 		return omGroupService.query(wc);
 	}
+
+
 	
 	
 }

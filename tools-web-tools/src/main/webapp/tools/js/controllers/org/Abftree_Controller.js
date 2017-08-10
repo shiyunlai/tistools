@@ -1125,6 +1125,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
             //传递参数
             var guid = $scope.abftree.item.guid;
             // $scope.$broadcast('to-child', abc);
+            // 生成权限三表
             var mygrid = {}
             var alrolegird = {}
             var notrolegird = {}
@@ -1313,17 +1314,29 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
             //生成岗位应用列表
             var gwApplication = {};
             $scope.gwApplication = gwApplication;
-            //获取岗位应用数据.//todo
-            $scope.b = [{应用名称:"开发",应用功能:"啊实打实大师的"},
-                {应用名称:"其他",应用功能:"啊实打实大师的"}];
-            var itd = function () {
-                return  $scope.b;
-            }
-            //自定义点击事件
-            var select = function () {
+            var com = [
+                { field: 'appName', displayName: '应用名称', enableHiding: false},
+                { field: 'appType', displayName: '应用类别', enableHiding: false},
+                { field: 'openDate', displayName: '开通时间', enableHiding: false},
+                { field: 'appDesc', displayName: '功能描述', enableHiding: false}
+                ];
+            $scope.gwApplication = initgrid($scope,gwApplication,filterFilter,com,false,function () {
 
+            });
+            var regwApplication = function () {
+                var subFrom = {};
+                subFrom.posCode = $scope.abftree.item.positionCode;
+                abftree_service.queryAppinPos(subFrom).then(function (data) {
+                    if(data.status == "success"  && !isNull(data.retMessage)){
+                        $scope.gwApplication.data =  data.retMessage;
+                        $scope.gwApplication.mydefalutData =  data.retMessage;
+                        $scope.gwApplication.getPage(1,$scope.gwApplication.paginationPageSize);
+                    }else{
+
+                    }
+                })
             }
-            $scope.gwApplication = initgrid($scope, $scope.gwApplication,itd(), filterFilter,null,false,select);
+            regwApplication();
         }else if (type == 3){
             for(var i in $scope.gwflag){
                 $scope.gwflag[i] = false;
@@ -1411,6 +1424,15 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 $scope.gwflag[i] = false;
             }
             $scope.gwflag.gwqx = true;
+
+            //传递参数
+            var guid = $scope.abftree.item.guid;
+            // $scope.$broadcast('to-child', abc);
+            // 生成权限三表
+            var mygrid = {}
+            var alrolegird = {}
+            var notrolegird = {}
+            commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftree_service,toastr)
         }
     }
 
@@ -1478,6 +1500,61 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 };
             });
     }
+    /**--------------------------------各类按钮事件--------------------------*/
+    //岗位应用下按钮事件
+    //新增应用
+    abftree.addApp = function () {
+        console.log($scope.abftree.item)
+        var subFrom = {};
+        subFrom.posGuid = $scope.abftree.item.guid;
+        subFrom.posCode = $scope.abftree.item.positionCode;
+        //打开通用列表窗口
+        openwindow($uibModal, 'views/org/addsearhgrid_window.html', 'lg',
+            function ($scope, $modalInstance) {
+                //设置标题栏
+                $scope.title = "新增应用";
+                //实例化列表
+                var commonGrid = {};
+                $scope.commonGrid = commonGrid;
+                var com = [
+                    { field: 'appName', displayName: '应用名称', enableHiding: false},
+                    { field: 'appType', displayName: '应用类别', enableHiding: false},
+                    { field: 'openDate', displayName: '开通时间', enableHiding: false},
+                    { field: 'appDesc', displayName: '功能描述', enableHiding: false}
+                ];
+                $scope.commonGrid = initgrid($scope,commonGrid,filterFilter,com,true,function () {});
+                (function (subFrom) {
+                    abftree_service.queryAppNotinPos(subFrom).then(function (data) {
+                        console.log(subFrom)
+                        console.log(data)
+                        if(data.status == "success"  && !isNull(data.retMessage)){
+                            $scope.commonGrid.data =  data.retMessage;
+                            $scope.commonGrid.mydefalutData =  data.retMessage;
+                            $scope.commonGrid.getPage(1,$scope.commonGrid.paginationPageSize);
+                        }else{
 
+                        }
+                    })
+                })(subFrom)
+                $scope.add = function () {
+                    var arr = $scope.commonGrid.getSelectedRows();
+                    if(arr.length != 1){
+                        toastr['error']( "请选择一条需要添加的应用！");
+                    }
+                    subFrom.appGuid = arr[0].guid;
+                    abftree_service.addAppPosition(subFrom).then(function (data) {
+                        if(data.status == "success"){
+                            toastr['success'](data.retMessage);
+                            $scope.cancel();
+                        }else{
+                            toastr['error'](data.retMessage);
+                        }
+                    })
+                }
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            });
+    }
 });
 

@@ -40,7 +40,7 @@
     <!-- 业务机构树 end -->
     <!-- 右侧展示栏 -->
     <div class="col-md-9 portlet light">
-        <div class="portlet-body portlet light">{{flag}}
+        <div class="portlet-body portlet light">
             <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="flag.jgtb">
                 <li ng-class="{true:'active',false:''}[flag.jgtb]">
                     <a id="tab-list" data-toggle="tab" href ng-class="{true:'link',false:''}[flag.jgtb]">
@@ -73,11 +73,8 @@
                      ui-grid-edit ui-grid-pagination
                      ui-grid-selection ui-grid-resize-columns></div>
                 <div class="actions btn-set" style="float: right;">
-                    <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addxjjg()"> 新增
-                    </button>
-                    <button type="button" name="back" class="btn btn-primary" ng-click="abftree.editxjjg()"> 编辑
-                    </button>
-                    <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletexjjg()"> 删除
+                    编辑业务套别,请至其他管理-业务字典处
+                    <button type="button" name="back" class="btn btn-primary" ng-click="busiorg.toDict()"> 点击前往
                     </button>
                 </div>
                 <!-- 业务套别列表页 end-->
@@ -126,11 +123,13 @@
                      ui-grid-edit ui-grid-pagination
                      ui-grid-selection ui-grid-resize-columns></div>
                 <div class="actions btn-set" style="float: right;">
-                    <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addxjjg()"> 新增
+                    <button type="button" name="back" class="btn btn-primary" ng-click="busiorg.addlowOrg()"> 新增实体业务机构
                     </button>
-                    <button type="button" name="back" class="btn btn-primary" ng-click="abftree.editxjjg()"> 编辑
+                    <button type="button" name="back" class="btn btn-primary" ng-click="busiorg.addlowxnOrg()"> 新增虚拟业务机构
                     </button>
-                    <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletexjjg()"> 删除
+                    <button type="button" name="back" class="btn btn-primary" ng-click="busiorg.editxjjg()"> 编辑
+                    </button>
+                    <button type="button" name="back" class="btn btn-danger" ng-click="busiorg.deletexjjg()"> 删除
                     </button>
                 </div>
                 <!-- 下级业务机构列表页 end-->
@@ -214,7 +213,7 @@
                                 <label class="control-label col-md-4">主管岗位:</label>
                                 <div class="col-md-8">
                                     <input type="text" class="form-control"
-                                           ng-model="subFrom.guidPosition"
+                                           ng-model="busiorg.item.guidPosition"
                                            name="id" readonly/>
                                 </div>
                             </div>
@@ -222,6 +221,10 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <div class="actions btn-set" style="float: right;">
+                                    <button type="button" name="back" class="btn btn-primary" ng-click="busiorg.addxj()"> 新增下级实体业务机构
+                                    </button>
+                                    <button type="button" name="back" class="btn btn-primary" ng-click="busiorg.addxn()"> 新增下级虚拟业务机构
+                                    </button>
                                     <button type="button" name="back" class="btn btn-primary" ng-click="busiorg.editjg()"> 编辑
                                     </button>
                                     <button type="button" name="back" class="btn btn-danger" ng-click="busiorg.deletejg()"> 删除

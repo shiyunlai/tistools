@@ -446,4 +446,5 @@ public interface IGroupRService {
 	 * 删除岗位-工作组关系表数据
 	 */
 	void deleteGroupPosition(String groupGuid,List<String> posGuidList);
+
 }

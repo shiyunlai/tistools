@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
-import org.tis.tools.model.po.ac.AcFunc;
-import org.tis.tools.model.po.ac.AcPartyRole;
-import org.tis.tools.model.po.ac.AcRole;
-import org.tis.tools.model.po.ac.AcRoleFunc;
+import org.tis.tools.model.po.ac.*;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.po.om.OmPosition;
@@ -934,6 +931,85 @@ public class OrgManagerController extends BaseController {
             WhereCondition wc = new WhereCondition();
             List<OmOrg> list = orgRService.queryOrgsByCondition(wc);
             AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list,"yyyy-MM-dd");
+        } catch (ToolsRuntimeException e) {// TODO
+            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * 查询岗位拥有的应用列表
+     *
+     * @param model
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/queryAppinPos")
+    public String queryAppinPos(ModelMap model,@RequestBody String content ,HttpServletRequest request,
+                              HttpServletResponse response) {
+        try {
+            JSONObject jsonObj = JSONObject.parseObject(content);
+            String posCode = jsonObj.getString("posCode");
+            List<AcApp> list = positionRService.queryApp(posCode);
+            AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list,"yyyy-MM-dd");
+        } catch (ToolsRuntimeException e) {// TODO
+            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+        }
+        return null;
+    }
+
+
+    @RequestMapping(value = "/queryAppNotinPos")
+    public String queryAppNotinPos(ModelMap model,@RequestBody String content ,HttpServletRequest request,
+                                HttpServletResponse response) {
+        try {
+            JSONObject jsonObj = JSONObject.parseObject(content);
+            String posCode = jsonObj.getString("posCode");
+            List<AcApp> list = positionRService.queryAppNotInPosition(posCode);
+            AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list,"yyyy-MM-dd");
+        } catch (ToolsRuntimeException e) {// TODO
+            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/addAppPosition")
+    public String addAppPosition(ModelMap model,@RequestBody String content ,HttpServletRequest request,
+                                   HttpServletResponse response) {
+        try {
+            JSONObject jsonObj = JSONObject.parseObject(content);
+            String posGuid = jsonObj.getString("posGuid");
+            String appGuid = jsonObj.getString("appGuid");
+            positionRService.addAppPosition(appGuid, posGuid);
+            AjaxUtils.ajaxJsonSuccessMessage(response, "新增成功!");
+        } catch (ToolsRuntimeException e) {// TODO
+            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/deleteAppPosition")
+    public String deleteAppPosition(ModelMap model,@RequestBody String content ,HttpServletRequest request,
+                                 HttpServletResponse response) {
+        try {
+            JSONObject jsonObj = JSONObject.parseObject(content);
+            String posGuid = jsonObj.getString("posGuid");
+            String appGuid = jsonObj.getString("appGuid");
+            positionRService.deleteAppPosition(appGuid, posGuid);
+            AjaxUtils.ajaxJsonSuccessMessage(response, "删除成功!");
         } catch (ToolsRuntimeException e) {// TODO
             AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
             e.printStackTrace();

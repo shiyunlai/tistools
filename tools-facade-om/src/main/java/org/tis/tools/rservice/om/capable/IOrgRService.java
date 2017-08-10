@@ -438,4 +438,9 @@ public interface IOrgRService {
 	 * @return
 	 */
 	List<AcFunc> queryFunCByGuidList(List<String> guidList);
+
+	/**
+	 * 查询所有机构信息
+	 */
+	List<OmOrg> queryAllOrg();
 }

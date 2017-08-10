@@ -559,6 +559,9 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
     $scope.mygrid = initgrid($scope,mygrid,filterFilter,com,false,function () {
 
     });
+    $scope.mygrid.enableFiltering = false;
+    $scope.mygrid.enableGridMenu = false;
+    $scope.mygrid.enablePaginationControls = false;
     //拉取权限列表
     var remygrid = function (roleGuid) {
         var subFrom = {};

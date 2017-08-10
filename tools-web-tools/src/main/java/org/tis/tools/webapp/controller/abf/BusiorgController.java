@@ -191,4 +191,28 @@ public class BusiorgController {
         }
         return null;
     }
+
+    /**
+     * 删除业务机构,删除当前节点和所有子节点
+     * @param model
+     * @param content
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/updatebusiorg")
+    public String updatebusiorg(ModelMap model,@RequestBody String content,HttpServletRequest request,
+                                HttpServletResponse response) {
+        try{
+            OmBusiorg obg = JSONObject.parseObject(content, OmBusiorg.class);
+            busiOrgRService.updateBusiorg(obg);
+            AjaxUtils.ajaxJsonSuccessMessage(response,"更新成功!");
+        }catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+        }
+        return null;
+    }
 }
