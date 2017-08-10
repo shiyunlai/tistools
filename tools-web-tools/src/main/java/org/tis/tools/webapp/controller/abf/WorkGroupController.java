@@ -16,6 +16,8 @@ import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmGroup;
@@ -25,6 +27,7 @@ import org.tis.tools.rservice.om.capable.IGroupRService;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.util.AjaxUtils;
 
+import com.alibaba.dubbo.common.json.ParseException;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
@@ -588,6 +591,32 @@ public class WorkGroupController extends BaseController {
 		return null;
 	}
 	
+	
+	
+    
+    /**
+     * 查询所有工作组 
+     *
+     */
+    @ResponseBody
+    @RequestMapping(value="/queryAllGroup" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String queryAllGroup(@RequestBody String content, HttpServletRequest request,
+                           HttpServletResponse response) throws ToolsRuntimeException, ParseException {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("queryAllPosition request : " + content);
+            }
+            List<OmGroup> acDucys = groupRService.queryAllGroup();
+            AjaxUtils.ajaxJsonSuccessMessage(response,acDucys);
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("queryAllGroup exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("queryAllGroup exception : ", e);
+        }
+        return null;
+    }
 	
 	/**
 	 * 每个controller定义自己的返回信息变量

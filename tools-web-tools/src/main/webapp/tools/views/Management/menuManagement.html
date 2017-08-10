@@ -122,6 +122,19 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-md-6"  ng-if="selectfunc">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">选择功能:<span ng-class="{required:myform.dict_func.$invalid}"  > * </span></label>
+                                                <div class="col-md-7">
+                                                    <input type="text" class="form-control" placeholder=""
+                                                           ng-model="menuFrom.guidFunc"  required    ng-disabled="true"
+                                                           name="dict_func" />
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <span style="margin-top:10px; margin-left:-5px;cursor: pointer" class="icon-magnifier-add"  ng-click="selectfuncs()"></span>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-md-6" >
                                             <div class="form-group">
                                                 <label class="control-label col-md-4">ui入口</label>
@@ -170,7 +183,7 @@
                                                     <div class="actions btn-set" style="text-align: center;" ng-if="!editflag">
                                                         <button type="button" name="back" class="btn btn-primary" ng-click="menu.menuEdit(menuFrom)"> 编辑信息
                                                         </button>
-                                                        <button type="button" name="back" class="btn btn-primary" ng-click="menu.childAdd(menuFrom)">增加子菜单
+                                                        <button type="button" name="back" class="btn btn-primary" ng-disabled="testussef" ng-click="menu.childAdd(menuFrom)">增加子菜单
                                                         </button>
                                                     </div>
                                                     <div class="actions btn-set" style="text-align: center" ng-if="editflag">
