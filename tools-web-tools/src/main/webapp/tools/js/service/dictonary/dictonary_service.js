@@ -84,6 +84,13 @@ MetronicApp.factory('dictonary_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
+    //根据key查询业务字典项列表
+    service.queryDictItemListByDictKey = function (subFrom) {
+        var res = $http.post(manurl + "/DictController/queryDictItemListByDictKey",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    };
 
     return service;
 }]);

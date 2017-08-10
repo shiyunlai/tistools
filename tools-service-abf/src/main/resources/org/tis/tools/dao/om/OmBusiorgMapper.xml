@@ -124,45 +124,45 @@
     	UPDATE OM_BUSIORG 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.node_type != null" >
-        	node_type = #{domain.nodeType,jdbcType=VARCHAR}
+		<if test="domain.nodeType != null" >
+        	node_type = #{domain.nodeType,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.busiorg_code != null" >
-        	busiorg_code = #{domain.busiorgCode,jdbcType=VARCHAR}
+		<if test="domain.busiorgCode != null" >
+        	busiorg_code = #{domain.busiorgCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.busi_domain != null" >
-        	busi_domain = #{domain.busiDomain,jdbcType=VARCHAR}
+		<if test="domain.busiDomain != null" >
+        	busi_domain = #{domain.busiDomain,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.busiorg_name != null" >
-        	busiorg_name = #{domain.busiorgName,jdbcType=VARCHAR}
+		<if test="domain.busiorgName != null" >
+        	busiorg_name = #{domain.busiorgName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.busiorg_level != null" >
-        	busiorg_level = #{domain.busiorgLevel,jdbcType=DECIMAL}
+		<if test="domain.busiorgLevel != null" >
+        	busiorg_level = #{domain.busiorgLevel,jdbcType=DECIMAL},
       	</if>
-		<if test="domain.guid_org != null" >
-        	guid_org = #{domain.guidOrg,jdbcType=VARCHAR}
+		<if test="domain.guidOrg != null" >
+        	guid_org = #{domain.guidOrg,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_parents != null" >
-        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR}
+		<if test="domain.guidParents != null" >
+        	guid_parents = #{domain.guidParents,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_position != null" >
-        	guid_position = #{domain.guidPosition,jdbcType=VARCHAR}
+		<if test="domain.guidPosition != null" >
+        	guid_position = #{domain.guidPosition,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.org_code != null" >
-        	org_code = #{domain.orgCode,jdbcType=VARCHAR}
+		<if test="domain.orgCode != null" >
+        	org_code = #{domain.orgCode,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.seqno != null" >
-        	seqno = #{domain.seqno,jdbcType=VARCHAR}
+        	seqno = #{domain.seqno,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.sortno != null" >
-        	sortno = #{domain.sortno,jdbcType=DECIMAL}
+        	sortno = #{domain.sortno,jdbcType=DECIMAL},
       	</if>
 		<if test="domain.isleaf != null" >
-        	isleaf = #{domain.isleaf,jdbcType=CHAR}
+        	isleaf = #{domain.isleaf,jdbcType=CHAR},
       	</if>
-		<if test="domain.sub_count != null" >
+		<if test="domain.subCount != null" >
         	sub_count = #{domain.subCount,jdbcType=DECIMAL}
       	</if>
 	    </set>

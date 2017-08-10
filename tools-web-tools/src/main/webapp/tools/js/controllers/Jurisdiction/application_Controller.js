@@ -11,6 +11,9 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     //定义权限
     $scope.biz.applica = false;
 
+    //当前节点定义
+    var thisNode = '';
+    $scope.thisNode = thisNode;
     //点击刷新树
     $scope.biz.reload = function(){
         $("#container").jstree().refresh();
@@ -322,6 +325,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     $('#container').on("changed.jstree", function (e, data){
         if(typeof data.node !== 'undefined'){//拿到结点详情
             $scope.dictionaryAdd = data.node.original;
+            $scope.thisNode = data.node.text;
             $scope.biz.item = data.node;//全局点击值传递
             if(data.node.parent == '#'){
                 //创建机构实例

@@ -14,6 +14,7 @@ angular.module('MetronicApp').controller('operconfig_controller', function($root
     ];
     //ui-grid 具体配置
 
+
     var gridOptions = {};
     $scope.gridOptions = gridOptions;
     //操作员名称，代码  应用系统名称 代码
@@ -43,6 +44,7 @@ angular.module('MetronicApp').controller('operconfig_controller', function($root
     }
     $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,false,f);
     $scope.gridOptions.data = $scope.myData;
+
     //修改个性化配置
     $scope.opconfigEdit = function(){
        if($scope.selectRow){
@@ -67,13 +69,17 @@ angular.module('MetronicApp').controller('operconfig_controller', function($root
 
 
 //操作员身份
-angular.module('MetronicApp').controller('operstatus_controller', function($rootScope, $scope ,$modal,$http,operator_service,i18nService, $timeout,filterFilter,$uibModal,uiGridConstants) {
+angular.module('MetronicApp').controller('operstatus_controller', function($rootScope, $scope ,$modal,$http,operator_service,dictonary_service,i18nService, role_service,$timeout,filterFilter,$uibModal,uiGridConstants) {
     //操作员身份控制器
 
     var opensf = {};
     $scope.opensf = opensf;
     i18nService.setCurrentLang("zh-cn");
 
+    //查询业务字典
+    var tits = {};
+    tits.dictKey='DICT_AC_RESOURCETYPE';
+    dictKey($rootScope,tits,dictonary_service);
 
     //查询事件
     $scope.opensf.search = function(item){
@@ -247,7 +253,6 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
 
 
     /* 右侧身份对应权限*/
-
     $scope.myDatas= [
         {'AC_RESOURCETYPE':'组织类型','IDENTITY_NAME':'身份一','GUID_AC_RESOURCE':'测试'},
         {'AC_RESOURCETYPE':'职务类型','IDENTITY_NAME':'身份二','GUID_AC_RESOURCE':'经理'},
@@ -270,13 +275,105 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
             delete $scope.selectRow1;//制空
         }
     }
+
     $scope.gridOptions1 = initgrid($scope,gridOptions1,filterFilter,com1,false,f1);
     $scope.gridOptions1.data = $scope.myDatas;
     //资源身份新增
     $scope.identypeAdd = function(){
         openwindow($modal, 'views/operator/identtypeAdd.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
-                $scope.add = function(item){
+                $scope.importadd = [
+                    {'guid':'POSITION1500362374','positionName':'测试'},
+                    { 'guid':'POSITION1500617953','positionName':'下级岗位测试1'},
+                    {'guid':'POSITION1500623964','positionName':'下级机构测试2号'},
+                    { 'guid':'POSITION1500623965','positionName':'下级岗位测试3号'},
+                    { 'guid':'POSITION1500623966','positionName':'下级岗位测试4号'},
+                    { 'guid':'POSITION1500623970','positionName':'c7'},
+                    { 'guid':'POSITION1500623971','positionName':'c8'},
+                    { 'guid':'POSITION1500623972','positionName':'c9'},
+                    { 'guid':'POSITION1500623973','positionName':'c10'},
+                    { 'guid':'POSITION1501218402','positionName':'124'}
+                ];
+                var gridOptions = {};
+                $scope.gridOptions = gridOptions;
+                var com = [
+                    { field: "positionName", displayName:'功能名称'}
+                ];
+                //自定义点击事件
+                var f1 = function(row){
+                    if(row.isSelected){
+                        $scope.selectRow3 = row.entity;
+                    }
+                    else{
+                        delete $scope.selectRow3;//制空
+                    }
+                }
+                $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
+                $scope.gridOptions.data = $scope.importadd;
+
+                $scope.$watch('identypeFrom.idtnyype',function(newValue,oldValue){
+
+                    if(newValue==undefined){
+                        $scope.operflage = false;
+                    }else{
+                        $scope.operflage = true;
+                    }
+
+                    var subFrom  = {};
+                    //根据不同的类型去请求不同的数据，然后赋值给表格
+                    if(newValue =='role'){
+                        console.log('触发')
+                        role_service.queryRoleList(subFrom).then(function(data){
+                            var  datas = data.retMessage;
+                            if(data.status == "success"){
+                                var com = [
+                                    { field: "roleName", displayName:'角色1111名称'}
+                                ];
+                                $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
+                                $scope.gridOptions.data =  datas;
+                                $scope.gridOptions.mydefalutData = datas;
+                                $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
+                            }else{
+                                toastr['error']('初始化查询失败'+'<br/>'+data.retMessage);
+                            }
+                        })
+                    }else if(newValue=='function'){
+                        var com = [
+                            { field: "positionName", displayName:'功能名称'}
+                        ];
+                        $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
+                        $scope.gridOptions.data = $scope.importadd;
+                    }else if(newValue=='position'){
+                        var com = [
+                            { field: "positionName", displayName:'岗位名称'}
+                        ];
+                        $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
+                        $scope.gridOptions.data = $scope.importadd;
+                    }else if(newValue=='duty'){
+                        var com = [
+                            { field: "positionName", displayName:'职务名称'}
+                        ];
+                        $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
+                        $scope.gridOptions.data = $scope.importadd;
+                    }else if(newValue=='workgroup'){
+                        var com = [
+                            { field: "positionName", displayName:'工作组名称'}
+                        ];
+                        $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
+                        $scope.gridOptions.data = $scope.importadd;
+                    }else if(newValue=='organization'){
+                        var com = [
+                            { field: "positionName", displayName:'机构名称'}
+                        ];
+                        $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
+                        $scope.gridOptions.data = $scope.importadd;
+                    }
+
+
+
+                });
+
+                $scope.importAdd = function(item){//导入资源代码
                     //新增代码
                     toastr['success']("保存成功！");
                     $modalInstance.close();
@@ -287,6 +384,7 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
 
             })
     }
+
 
     //资源身份修改
     $scope.identypeDel = function(){
