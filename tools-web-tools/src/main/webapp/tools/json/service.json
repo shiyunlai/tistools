@@ -34,7 +34,8 @@
     "querychild": {"ctrl": "om/duty", "func": "querychild"},
     "queryempbudutyCode": {"ctrl": "om/duty", "func": "queryempbudutyCode"},
     "deletedutyByCode": {"ctrl": "om/duty", "func": "deletedutyByCode"},
-    "updateDuty": {"ctrl": "om/duty", "func": "updateDuty"}
+    "updateDuty": {"ctrl": "om/duty", "func": "updateDuty"},
+    "queryDucyList": {"ctrl": "om/duty", "func": "queryDucyList","em":"查询所有职务"}
   },
   "Emp_service" : {
     "queryemployee": {"ctrl": "om/emp", "func": "queryemployee"},
@@ -77,12 +78,15 @@
     "createRootMenu": {"ctrl": "AcMenuController", "func": "createRootMenu","emo":"新增根菜单"},
     "createChildMenu": {"ctrl": "AcMenuController", "func": "createChildMenu","emo":"新增子菜单"},
     "deleteMenu": {"ctrl": "AcMenuController", "func": "deleteMenu","emo":"删除菜单"},
-    "editMenu": {"ctrl": "AcMenuController", "func": "editMenu","emo":"修改菜单方法"}
+    "editMenu": {"ctrl": "AcMenuController", "func": "editMenu","emo":"修改菜单方法"},
+    "queryAllFuncInApp": {"ctrl": "AcMenuController", "func": "queryAllFuncInApp","emo":"获取应用下的功能列表"},
+    "getMenuByUserId": {"ctrl": "AcMenuController", "func": "getMenuByUserId","emo":"获取操作员拥有的菜单"},
+    "getOperatorMenuByUserId": {"ctrl": "AcMenuController", "func": "getOperatorMenuByUserId","emo":"获取操作员的重组菜单"}
   },
   "numres_service" : {
-    "querySeqnoList": {"ctrl": "AcMenuController", "func": "querySeqnoList","emo":"查询系统运行参数列表"},
-    "editSeqno": {"ctrl": "AcMenuController", "func": "editSeqno","emo":"修改系统运行参数列表"},
-    "deleteSeqno": {"ctrl": "AcMenuController", "func": "deleteSeqno","emo":"删除系统运行参数列表"}
+    "querySeqnoList": {"ctrl": "SeqnoController", "func": "querySeqnoList","emo":"查询系统运行参数列表"},
+    "editSeqno": {"ctrl": "SeqnoController", "func": "editSeqno","emo":"修改系统运行参数列表"},
+    "deleteSeqno": {"ctrl": "SeqnoController", "func": "deleteSeqno","emo":"删除系统运行参数列表"}
   },
   "operator_service" : {
     "queryAllOperator": {"ctrl": "AcOperatorController", "func": "queryAllOperator","emo":"查询操作员列表"},
@@ -95,8 +99,9 @@
     "editOperatorIdentity": {"ctrl": "AcOperatorController", "func": "editOperatorIdentity","emo":"修改操作员身份"},
     "queryAllOperatorIdentityRes": {"ctrl": "AcOperatorController", "func": "queryAllOperatorIdentityRes","emo":"查询操作员身份权限集列表"},
     "createOperatorIdentityres": {"ctrl": "AcOperatorController", "func": "createOperatorIdentityres","emo":"新增操作员身份权限"},
-    "deleteOperatorIdentityres": {"ctrl": "AcOperatorController", "func": "deleteOperatorIdentityres","emo":"删除操作员身份"},
-    "editOperatorIdentityres": {"ctrl": "AcOperatorController", "func": "editOperatorIdentityres","emo":"修改操作员身份权限"}
+    "deleteOperatorIdentityres": {"ctrl": "AcOperatorController", "func": "deleteOperatorIdentityres","emo":"删除操作员身份权限"},
+    "editOperatorIdentityres": {"ctrl": "AcOperatorController", "func": "editOperatorIdentityres","emo":"修改操作员身份权限"},
+    "queryRoleInOperatorByResType": {"ctrl": "AcOperatorController", "func": "queryRoleInOperatorByResType","emo":"根据资源类型查询操作员对应角色"}
   },
   "abftree_service" : {
     "loadmaintree": {"ctrl": "om/org", "func": "tree"},
@@ -120,7 +125,9 @@
     "loadxjposit": {"ctrl": "om/org", "func": "loadxjposit"},
     "enableorg": {"ctrl": "om/org", "func": "enableorg"},
     "enableposition": {"ctrl": "om/org", "func": "enableposition"},
-    "deletePosition": {"ctrl": "om/org", "func": "deletePosition"}
+    "deletePosition": {"ctrl": "om/org", "func": "deletePosition"},
+    "queryorgList": {"ctrl": "om/org", "func": "queryorgList","em":"查询所有机构"},
+    "queryAllPosition": {"ctrl": "om/org", "func": "queryAllPosition","em":"查询所有岗位"}
   },
   "role_service" : {
     "queryRoleList": {"ctrl": "AcRoleController", "func": "queryRoleList","emo":"查询角色列表"},
@@ -161,6 +168,10 @@
     "addEmpGroup": {"ctrl": "om/workgroup", "func": "addEmpGroup"},
     "addGroupPosition": {"ctrl": "om/workgroup", "func": "addGroupPosition"},
     "deleteEmpGroup": {"ctrl": "om/workgroup", "func": "deleteEmpGroup"},
-    "deleteGroupPosition": {"ctrl": "om/workgroup", "func": "deleteGroupPosition"}
+    "deleteGroupPosition": {"ctrl": "om/workgroup", "func": "deleteGroupPosition"},
+    "queryAllGroup": {"ctrl": "om/workgroup", "func": "queryAllGroup","em":"查询所有工作组"}
+  },
+  "login_service" : {
+    "updatePassword": {"ctrl": "AcAuthenticationController", "func": "updatePassword","emo":"修改密码"}
   }
 }

@@ -14,6 +14,7 @@ import org.tis.tools.model.po.ac.AcOperatorIdentity;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.ac.AcOperator;
 import org.tis.tools.model.po.ac.AcOperatorIdentityres;
+import org.tis.tools.model.po.ac.AcRole;
 import org.tis.tools.rservice.ac.capable.IOperatorRService;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.util.AjaxUtils;
@@ -156,6 +157,32 @@ public class AcOperatorController extends BaseController {
         return null;
     }
 
+    
+    /**
+     * 修改用户状态
+     */
+    @ResponseBody
+    @RequestMapping(value="/updateOperatorStatus" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public void updateOperatorStatus(@RequestBody String content, HttpServletRequest request,
+                                     HttpServletResponse response) {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("updateOperatorStatus request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+            String userId = jsonObject.getString("userId");
+            String OperatorStatus = jsonObject.getString("OperatorStatus");
+            operatorRService.updateUserStatus(userId, OperatorStatus);
+            AjaxUtils.ajaxJsonSuccessMessage(response,"");
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("updateOperatorStatus exception : ", e);
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("updateOperatorStatus exception : ", e);
+        }
+    }
+    
     /**
      * 查询操作员身份列表
      *     传入操作员GUID
@@ -286,24 +313,18 @@ public class AcOperatorController extends BaseController {
 
     /**
      * 查询操作员身份权限集列表
-     * @param content
-     * @param request
-     * @param response
-     * @return
-     * @throws ToolsRuntimeException
-     * @throws ParseException
      */
     @ResponseBody
     @RequestMapping(value="/queryAllOperatorIdentityRes" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
     public String queryAllOperatorIdentityRes(@RequestBody String content, HttpServletRequest request,
-                                   HttpServletResponse response) throws ToolsRuntimeException, ParseException {
+                                   HttpServletResponse response) {
         try {
             if (logger.isInfoEnabled()) {
                 logger.info("queryAllOperatorIdentityRes request : " + content);
             }
             JSONObject jsonObject= JSONObject.parseObject(content);
             String identityGuid = jsonObject.getString("identityGuid");
-            List<AcOperatorIdentityres> acOperatorIdentityreses = operatorRService.queryOperatorIdentityreses(identityGuid);
+            List<Map> acOperatorIdentityreses = operatorRService.queryOperatorIdentityreses(identityGuid);
             AjaxUtils.ajaxJsonSuccessMessage(response,acOperatorIdentityreses);
         } catch (ToolsRuntimeException e) {
             AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
@@ -348,13 +369,7 @@ public class AcOperatorController extends BaseController {
     }
 
     /**
-     * 删除操作员身份
-     * @param content
-     * @param request
-     * @param response
-     * @return
-     * @throws ToolsRuntimeException
-     * @throws ParseException
+     * 删除操作员身份权限
      */
     @ResponseBody
     @RequestMapping(value="/deleteOperatorIdentityres" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
@@ -365,8 +380,10 @@ public class AcOperatorController extends BaseController {
                 logger.info("deleteOperatorIdentityres request : " + content);
             }
             JSONObject jsonObject= JSONObject.parseObject(content);
-            String identityresGuid = jsonObject.getString("identityresGuid");//所属应用GUID
-            operatorRService.deleteOperatorIdentityres(identityresGuid);
+            String identityresGuid = jsonObject.getString("identityresGuid");//身份GUID
+            String resGuid = jsonObject.getString("resGuid");//资源GUID
+            
+            operatorRService.deleteOperatorIdentityres(identityresGuid, resGuid);
             AjaxUtils.ajaxJsonSuccessMessage(response,"");
         } catch (ToolsRuntimeException e) {
             AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
@@ -409,10 +426,36 @@ public class AcOperatorController extends BaseController {
         }
         return null;
     }
+    
+    
+    /**
+     * 根据资源类型查询操作员对应角色
+     */
+    @ResponseBody
+    @RequestMapping(value="/queryRoleInOperatorByResType" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String queryRoleInOperatorByResType(@RequestBody String content, HttpServletRequest request,
+                               HttpServletResponse response)  {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("queryRoleInOperatorByResType request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+            String operatorGuid = jsonObject.getString("operatorGuid");//操作员GUID
+            String resType = jsonObject.getString("resType");//资源类型
+            List<AcRole> roleList = operatorRService.queryOperatorRoleByResType(operatorGuid, resType);
+            AjaxUtils.ajaxJsonSuccessMessage(response, roleList);
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("queryRoleInOperatorByResType exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("queryRoleInOperatorByResType exception : ", e);
+        }
+        return null;
+    }
 
 
-
-
+    	
 
     /**
      * 要求子类构造自己的响应数据

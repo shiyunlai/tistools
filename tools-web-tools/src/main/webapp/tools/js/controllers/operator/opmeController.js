@@ -110,10 +110,13 @@ MetronicApp.controller('opmanage_controller', function ($filter,$rootScope, $sco
 });
 
 /* 重组菜单控制器*/
-MetronicApp.controller('reomenu_controller', function ($filter,$rootScope, $scope, $state, $stateParams, filterFilter, $modal,$uibModal, $http, $timeout,$interval,i18nService) {
+MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common_service,$scope, $state, $stateParams, filterFilter, $modal,$uibModal, $http, $timeout,$interval,i18nService) {
     var opmer ={};
     $scope.opmer = opmer;
 
+    //查询所有应用
+
+    var res = $rootScope.res.menu_service;//页面所需调用的服务
     //查询
     $scope.opmer.search = function(data){
         console.log(data)

@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.ac.AcApp;
+import org.tis.tools.model.po.ac.AcFunc;
 import org.tis.tools.model.po.ac.AcFuncgroup;
 import org.tis.tools.model.po.ac.AcMenu;
+import org.tis.tools.model.vo.ac.AcMenuDetail;
+import org.tis.tools.rservice.ac.capable.IApplicationRService;
 import org.tis.tools.rservice.ac.capable.IMenuRService;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.util.AjaxUtils;
@@ -33,8 +36,11 @@ import java.util.Map;
 @Controller
 @RequestMapping("/AcMenuController")
 public class AcMenuController extends BaseController {
+	
     @Autowired
-    IMenuRService menuRService;
+    IMenuRService menuRService;   
+    @Autowired
+	IApplicationRService applicationRService;
     private Map<String, Object> responseMsg ;
 
 
@@ -334,6 +340,88 @@ public class AcMenuController extends BaseController {
         }catch (Exception e) {
             AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
             logger.error("deleteMenu exception : ", e);
+        }
+        return null;
+    }
+    
+    /**
+     * 获取应用下的功能列表
+     */
+    @ResponseBody
+    @RequestMapping(value="/queryAllFuncInApp" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String queryAllFuncInApp(@RequestBody String content, HttpServletRequest request,
+                             HttpServletResponse response) {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("queryAllFuncInApp request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+            String appGuid = jsonObject.getString("appGuid");//所属应用GUID
+            List<AcFunc> funcList = applicationRService.queryFuncListInApp(appGuid);
+            AjaxUtils.ajaxJsonSuccessMessage(response, funcList);
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("queryAllFuncInApp exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("queryAllFuncInApp exception : ", e);
+        }
+        return null;
+    }
+    
+    
+    /**
+     * 获取操作员拥有的菜单
+     */
+    @ResponseBody
+    @RequestMapping(value="/getMenuByUserId" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String getMenuByUserId(@RequestBody String content, HttpServletRequest request,
+                             HttpServletResponse response) {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("getMenuByUserId request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+
+            String appGuid = jsonObject.getString("appGuid");//所属应用GUID
+            String userId = jsonObject.getString("userId");//登陆GUID
+            AcMenuDetail menu = menuRService.getMenuByUserId(userId, appGuid);
+            AjaxUtils.ajaxJsonSuccessMessage(response,menu.toJson());
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("getMenuByUserId exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("getMenuByUserId exception : ", e);
+        }
+        return null;
+    }
+
+
+    /**
+     * 获取操作员的重组菜单
+     */
+    @ResponseBody
+    @RequestMapping(value="/getOperatorMenuByUserId" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String getOperatorMenuByUserId(@RequestBody String content, HttpServletRequest request,
+                             HttpServletResponse response) {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("getOperatorMenuByUserId request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+
+            String appGuid = jsonObject.getString("appGuid");//所属应用GUID
+            String userId = jsonObject.getString("userId");//所属应用GUID
+
+            AcMenuDetail menu = menuRService.getOperatorMenuByUserId(userId, appGuid);
+            AjaxUtils.ajaxJsonSuccessMessage(response,menu.toJson());
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("getOperatorMenuByUserId exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("getOperatorMenuByUserId exception : ", e);
         }
         return null;
     }

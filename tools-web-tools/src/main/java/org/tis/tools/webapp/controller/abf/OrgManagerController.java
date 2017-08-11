@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.ac.*;
@@ -25,7 +27,6 @@ import org.tis.tools.rservice.om.capable.IOrgRService;
 import org.tis.tools.rservice.om.capable.IPositionRService;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.util.AjaxUtils;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
@@ -516,7 +517,6 @@ public class OrgManagerController extends BaseController {
             JSONObject jsonObj = JSONObject.parseObject(content);
             String orgCode = jsonObj.getString("orgCode");
             List<OmOrg> list = orgRService.queryChilds(orgCode);
-//			AjaxUtils.ajaxJsonSuccessMessage(response,list);
             AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list, "yyyy-MM-dd");
         } catch (ToolsRuntimeException e) {// TODO
             AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
