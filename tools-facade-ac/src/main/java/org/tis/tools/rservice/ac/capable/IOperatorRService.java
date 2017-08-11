@@ -7,9 +7,12 @@ package org.tis.tools.rservice.ac.capable;
 import org.tis.tools.model.po.ac.AcOperator;
 import org.tis.tools.model.po.ac.AcOperatorIdentity;
 import org.tis.tools.model.po.ac.AcOperatorIdentityres;
+import org.tis.tools.model.po.ac.AcRole;
+import org.tis.tools.rservice.ac.exception.AuthManagementException;
 import org.tis.tools.rservice.ac.exception.OperatorManagementException;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -116,10 +119,11 @@ public interface IOperatorRService {
 
     /**
      * 删除操作员身份权限
-     * @param operatorIdentityresGuid
+     * @param IdentityGuid
+     * @param resGuid
      * @throws OperatorManagementException
      */
-    void deleteOperatorIdentityres(String operatorIdentityresGuid) throws OperatorManagementException;
+    void deleteOperatorIdentityres(String IdentityGuid, String resGuid) throws OperatorManagementException;
 
     /**
      * 查询操作员身份对应的权限集合
@@ -127,7 +131,7 @@ public interface IOperatorRService {
      * @return
      * @throws OperatorManagementException
      */
-    List<AcOperatorIdentityres> queryOperatorIdentityreses(String operatorIdentityGuid) throws OperatorManagementException;
+    List<Map> queryOperatorIdentityreses(String operatorIdentityGuid) throws OperatorManagementException;
 
 
     /**
@@ -140,4 +144,22 @@ public interface IOperatorRService {
      * @throws OperatorManagementException
      */
     List<AcOperatorIdentity> queryOperatorIdentitiesByUserIdAndName(String userId, String operatorName) throws OperatorManagementException;
+
+    /**
+     * 查询操作员资源类型下的所有角色
+     * @param operatorGuid
+     * @param resType
+     * @return
+     * @throws OperatorManagementException
+     */
+    List<AcRole> queryOperatorRoleByResType(String operatorGuid, String resType) throws OperatorManagementException;
+
+    /**
+     * 用户状态修改
+     *
+     * @param userId
+     * @param status
+     * @throws AuthManagementException
+     */
+    void updateUserStatus(String userId, String status) throws OperatorManagementException;
 }

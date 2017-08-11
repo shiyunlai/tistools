@@ -15,11 +15,11 @@ import org.tis.tools.base.exception.ToolsRuntimeException;
  *
  */
 public interface IAuthorizationRService {
-	
-	/**
+
+	 /**
 	 * <pre>
 	 * 获取用户（userId）指定身份（identityName）对应的角色信息
-	 * 
+	 *
 	 * </pre>
 	 * @param userId
 	 *            操作员登录用户（对应AC_OPERATOR.USER_ID）
@@ -29,8 +29,8 @@ public interface IAuthorizationRService {
 	 * @throws ToolsRuntimeException
 	 */
 	public Set<String> getRoles(String userId, String identityName) throws ToolsRuntimeException;
-	
-	
+
+
 	/**
 	 * <pre>
 	 * 获取用户（userId）指定身份（identityName）的操作权限

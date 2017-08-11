@@ -22,7 +22,7 @@ public interface ACConstants {
 	
 	/////////////////////////////////////////////////
 
-	/**作员状态：正常*/
+	/**操作员状态：正常*/
 	public static final String OPERATE_STATUS_LOGIN = "login";
 	/**操作员状态：挂起*/
 	public static final String OPERATE_STATUS_PAUSE = "pause";
@@ -34,6 +34,17 @@ public interface ACConstants {
 	public static final String OPERATE_STATUS_LOGOUT = "logout";
 	/**操作员状态：停用*/
 	public static final String OPERATE_STATUS_STOP= "stop";
+
+
+	///////////////////////////////////////////////////
+	/** 资源类型：功能*/
+	public static final String RESOURCE_TYPE_FUNCTION = "function";
+	/** 资源类型：角色*/
+	public static final String RESOURCE_TYPE_ROLE = "role";
+	public static final String RESOURCE_TYPE_POSITION = "position";
+	public static final String RESOURCE_TYPE_DUTY = "duty";
+	public static final String RESOURCE_TYPE_WORKGROUP = "workgroup";
+	public static final String RESOURCE_TYPE_ORGANIZATION = "organization";
 
 
 
