@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.tis.tools.dao.ac.AcFuncMapperExt">
+
+
+    <select id="queryFuncListInApp" resultType="org.tis.tools.model.po.ac.AcFunc">
+        SELECT <include refid="Base_Column_List" />
+        FROM
+          AC_FUNC a,
+          AC_FUNCGROUP b
+        WHERE
+          a.GUID_FUNCGROUP = b.GUID
+        AND b.GUID_APP = #{appGuid}
+    </select>
+
+    <sql id="Base_Column_List" >
+        a.guid as guid
+        ,a.guid_funcgroup as guidFuncgroup
+        ,a.func_code as funcCode
+        ,a.func_name as funcName
+        ,a.func_desc as funcDesc
+        ,a.func_action as funcAction
+        ,a.para_info as paraInfo
+        ,a.func_type as funcType
+        ,a.ischeck as ischeck
+        ,a.ismenu as ismenu
+    </sql>
+</mapper>

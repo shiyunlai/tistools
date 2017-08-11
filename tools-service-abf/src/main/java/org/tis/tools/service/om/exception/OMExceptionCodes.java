@@ -189,14 +189,31 @@ public class OMExceptionCodes {
 	 * 工作组添加岗位失败
 	 */
 	public static final String FAILURE_ADD_POSITION_TO_GROUP= R_EX_CODE("0037");
-	 /**
+	/**
 	 * 工作组删除岗位失败
 	 */
 	public static final String FAILURE_DELETE_POSITION_TO_GROUP= R_EX_CODE("0038");
-	
+	/**
+	 * 工作组删除岗位失败
+	 */
+	public static final String FAILURE_WHRN_CREAT_BUSIORG= R_EX_CODE("0039");
+	/**
+	 * 工作组删除岗位失败
+	 */
+	public static final String NOT_EXIST_BY_BUSIORG_CODE= R_EX_CODE("0040");
+	/**
+	 * 缺少生成业务机构代码参数
+	 */
+	public static final String LAKE_PARMS_FOR_GEN_BUSIORGCODE= R_EX_CODE("0041");
+	 /**
+	 * 缺少生成岗位代码参数
+	 */
+	public static final String LAKE_PARMS_FOR_GEN_POSITION= R_EX_CODE("0042");
+
+
 	/**
 	 * 以烤串方式拼接异常码
-	 * 
+	 *
 	 * @param code
 	 *            业务域范围内的异常编码
 	 * @return

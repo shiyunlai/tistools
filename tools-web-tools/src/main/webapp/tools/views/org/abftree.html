@@ -42,53 +42,70 @@
     <div class="col-md-9 portlet light" style="height:100%;" ng-if="flag.index">
         <div class="portlet light">
             <div class="portlet-body portlet light">
-                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="tabflag">
+                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="tabflag && !gwflag.gwlb">
                     <li ng-class="{true:'active',false:''}[flag.xqxx]">
-                        <a id="tab-list" data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xqxx]" ng-click="abftree.loaddata(999)">
+                        <a id="tab-list" data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xqxx]"
+                           ng-click="abftree.loaddata(999)">
                             <i class="green ace-icon fa fa-bars bigger-120"></i>机构详情信息
                         </a>
                     </li>
                     <li ng-class="{true:'active',false:''}[flag.ygxx]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.ygxx]" ng-click="abftree.loaddata(1)">
+                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[flag.ygxx]"
+                           ng-click="abftree.loaddata(1)">
                             <i class="green ace-icon fa fa-bars bigger-120"></i>员工列表
                         </a>
                     </li>
                     <li ng-class="{true:'active',false:''}[flag.xjjg]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xjjg]" ng-click="abftree.loaddata(0)">
+                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xjjg]"
+                           ng-click="abftree.loaddata(0)">
                             <i class="green ace-icon fa fa-bars bigger-120"></i>下级机构列表
                         </a>
                     </li>
                     <li ng-class="{true:'active',false:''}[flag.qxxx]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.qxxx]" ng-click="abftree.loaddata(3)">
+                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[flag.qxxx]"
+                           ng-click="abftree.loaddata(3)">
                             <i class="green ace-icon fa fa-bars bigger-120"></i>权限信息
                         </a>
                     </li>
                 </ul>
                 <!--岗位页签-->
-                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="!tabflag">
+                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="!tabflag && !gwflag.gwlb">
                     <li ng-class="{true:'active',false:''}[gwflag.gwxx]">
-                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.gwxx]" ng-click="abftree.loadgwdata(0)">
+                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.gwxx]"
+                           ng-click="abftree.loadgwdata(0)">
                             <i class="green ace-icon fa fa-bars bigger-120"></i>岗位详情信息
                         </a>
                     </li>
                     <li ng-class="{true:'active',false:''}[gwflag.gwyg]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.gwyg]" ng-click="abftree.loadgwdata(1)">
+                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.gwyg]"
+                           ng-click="abftree.loadgwdata(1)">
                             <i class="green ace-icon fa fa-bars bigger-120"></i>岗位员工列表
                         </a>
                     </li>
                     <li ng-class="{true:'active',false:''}[gwflag.gwyy]">
-                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.gwyy]" ng-click="abftree.loadgwdata(2)">
+                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.gwyy]"
+                           ng-click="abftree.loadgwdata(2)">
                             <i class="green ace-icon fa fa-bars bigger-120"></i>岗位应用列表
                         </a>
                     </li>
                     <li ng-class="{true:'active',false:''}[gwflag.xjgw]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.xjgw]" ng-click="abftree.loadgwdata(3)">
+                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.xjgw]"
+                           ng-click="abftree.loadgwdata(3)">
                             <i class="green ace-icon fa fa-bars bigger-120"></i>下级岗位列表
                         </a>
                     </li>
                     <li ng-class="{true:'active',false:''}[gwflag.gwqx]">
-                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.gwqx]" ng-click="abftree.loadgwdata(4)">
+                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.gwqx]"
+                           ng-click="abftree.loadgwdata(4)">
                             <i class="green ace-icon fa fa-bars bigger-120"></i>岗位权限列表
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="gwflag.gwlb">
+                    <li ng-class="{true:'active',false:''}[gwflag.gwlb]">
+                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.gwlb]"
+                           ng-click="abftree.loadgwdata(4)">
+                            <i class="green ace-icon fa fa-bars bigger-120"></i>下属岗位列表
                         </a>
                     </li>
                 </ul>
@@ -98,7 +115,7 @@
                     <!-- 机构详情 -->
                     <form action="#" name="myform" class="form-horizontal clear" ng-if="!editflag">
                         <div class="form-body portlet light">
-                            <div class="col-md-6" >
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label col-md-4">机构状态</label>
                                     <div class="col-md-8">
@@ -116,7 +133,8 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-4">机构代码</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control" ng-model="abftree.item.orgCode" name="id" ng-readonly="!editflag"/>
+                                        <input type="text" class="form-control" ng-model="abftree.item.orgCode"
+                                               name="id" ng-readonly="!editflag"/>
                                     </div>
                                 </div>
                             </div>
@@ -276,17 +294,24 @@
                                     <label class="control-label col-md-2"></label>
                                     <div class="col-md-10">
                                         <div class="actions btn-set" style="float: right;">
-                                            <button ng-show="abftree.item.orgStatus=='stop'" type="button" name="back" class="btn btn-primary" ng-click="abftree.enable()"> 启用机构
+                                            <button ng-show="abftree.item.orgStatus=='stop'" type="button" name="back"
+                                                    class="btn btn-primary" ng-click="abftree.enable()"> 启用机构
                                             </button>
-                                            <button ng-show="abftree.item.orgStatus=='cancel'" type="button" name="back" class="btn btn-primary" ng-click="abftree.reenable()"> 重新启用机构
+                                            <button ng-show="abftree.item.orgStatus=='cancel'" type="button" name="back"
+                                                    class="btn btn-primary" ng-click="abftree.reenable()"> 重新启用机构
                                             </button>
-                                            <button ng-show="abftree.item.orgStatus=='cancel'" type="button" name="back" class="btn btn-danger" ng-click="abftree.disenable()"> 停用机构
+                                            <button ng-show="abftree.item.orgStatus=='cancel'" type="button" name="back"
+                                                    class="btn btn-danger" ng-click="abftree.disenable()"> 停用机构
                                             </button>
-                                            <button ng-show="abftree.item.orgStatus=='running'" type="button" name="back" class="btn btn-danger" ng-click="abftree.cancelorg()"> 注销机构
+                                            <button ng-show="abftree.item.orgStatus=='running'" type="button"
+                                                    name="back" class="btn btn-danger" ng-click="abftree.cancelorg()">
+                                                注销机构
                                             </button>
-                                            <button type="button" name="back" class="btn btn-primary" ng-click="abftree.edit()"> 编辑机构
+                                            <button type="button" name="back" class="btn btn-primary"
+                                                    ng-click="abftree.edit()"> 编辑机构
                                             </button>
-                                            <button type="button" name="back" class="btn btn-danger" ng-click="abftree.delete()"> 删除机构
+                                            <button type="button" name="back" class="btn btn-danger"
+                                                    ng-click="abftree.delete()"> 删除机构
                                             </button>
                                         </div>
                                     </div>
@@ -360,11 +385,14 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-4">生效日期:</label>
                                     <div class="col-md-8">
-                                        <div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
+                                        <div class="input-group date form_datetime"
+                                             ng-init="$root.settings.utils.initpicker()">
                                     <span class="input-group-btn">
-                                        <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                        <button class="btn default date-set" type="button"><i
+                                                class="fa fa-calendar"></i></button>
                                     </span>
-                                            <input type="text" class="form-control" ng-model="position.startDate" readonly/>
+                                            <input type="text" class="form-control" ng-model="position.startDate"
+                                                   readonly/>
                                         </div>
                                     </div>
                                 </div>
@@ -373,11 +401,14 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-4">失效日期:</label>
                                     <div class="col-md-8">
-                                        <div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
+                                        <div class="input-group date form_datetime"
+                                             ng-init="$root.settings.utils.initpicker()">
                                     <span class="input-group-btn">
-                                        <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                        <button class="btn default date-set" type="button"><i
+                                                class="fa fa-calendar"></i></button>
                                     </span>
-                                            <input type="text" class="form-control" ng-model="position.endDate" readonly/>
+                                            <input type="text" class="form-control" ng-model="position.endDate"
+                                                   readonly/>
                                         </div>
                                     </div>
                                 </div>
@@ -405,65 +436,82 @@
                     <!-- 列表页 end-->
                 </div>
                 <!--下级机构-->
-                    <div class="tab-content portlet light" ng-if="flag.xjjg">
-                        <div ui-grid="gridOptions2"
-                             ui-grid-edit ui-grid-pagination
-                             ui-grid-selection ui-grid-resize-columns></div>
-                        <div class="actions btn-set" style="float: right;">
-                            <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addxjjg()"> 新增
-                            </button>
-                            <button type="button" name="back" class="btn btn-primary" ng-click="abftree.editxjjg()"> 编辑
-                            </button>
-                            <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletexjjg()"> 删除
-                            </button>
-                        </div>
+                <div class="tab-content portlet light" ng-if="flag.xjjg">
+                    <div ui-grid="gridOptions2"
+                         ui-grid-edit ui-grid-pagination
+                         ui-grid-selection ui-grid-resize-columns></div>
+                    <div class="actions btn-set" style="float: right;">
+                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addxjjg()"> 新增
+                        </button>
+                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.editxjjg()"> 编辑
+                        </button>
+                        <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletexjjg()"> 删除
+                        </button>
                     </div>
+                </div>
                 <!--下级机构end-->
                 <!--员工信息-->
-                    <div class="tab-content portlet light" ng-if="flag.ygxx">
-                        <div ui-grid="gridOptions1"
-                             ui-grid-edit ui-grid-pagination
-                             ui-grid-selection ui-grid-resize-columns></div>
-                        <div class="actions btn-set" style="float: right;">
-                            <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addyg()"> 添加
-                            </button>
-                            <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deleteyg()"> 删除
-                            </button>
-                        </div>
+                <div class="tab-content portlet light" ng-if="flag.ygxx">
+                    <div ui-grid="gridOptions1"
+                         ui-grid-edit ui-grid-pagination
+                         ui-grid-selection ui-grid-resize-columns></div>
+                    <div class="actions btn-set" style="float: right;">
+                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addyg()"> 添加
+                        </button>
+                        <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deleteyg()"> 删除
+                        </button>
                     </div>
+                </div>
                 <!--员工信息end-->
                 <!--权限信息start-->
-                    <div class="tab-content portlet light" ng-if="flag.qxxx">
-                        <div  ng-controller="abftree_qx_controller">
-                            <div class="portlet-body form col-md-12" >
-                                <!-- BEGIN FORM-->
-                                <div style="" class="col-md-6">
-                                <select  id='myselect' multiple='multiple'></select>
+                <div class="tab-content portlet light" ng-if="flag.qxxx">
+                    <div>
+                        <div class="portlet-body form col-md-12">
+                            <!-- BEGIN FORM-->
+                            <div style="" class="col-md-6">
+                                <!--<select  id='myselect' multiple='multiple'>-->
+                                <!--<option ng-repeat="d in allrole track by $index" value="{{d.guid}}">{{d.roleName}}</option>-->
+                                <!--</select>-->
+                                <div class="actions btn-set col-md-12">
+                                    <button type="button" name="back" class="btn btn-danger" style="float: right;"
+                                            ng-click="deleteRole()"> 删除
+                                    </button>
                                 </div>
-                                <!-- END FORM-->
-                                <div class="portlet-body col-md-6">
-                                    <div ui-grid="mygrid"
+                                <div class="actions btn-set col-md-12">
+                                    <div ui-grid="alrolegird"
                                          ui-grid-edit ui-grid-pagination
-                                         ui-grid-selection
-                                    >
+                                         ui-grid-selection style="height:200px;">
                                     </div>
-                                    <div class="actions btn-set" style="float: right;">
-                                        <button type="button" name="back" class="btn btn-primary" ng-click="qx.test()"> 新增
-                                        </button>
-                                        <button type="button" name="back" class="btn btn-primary" ng-click=""> 编辑
-                                        </button>
-                                        <button type="button" name="back" class="btn btn-danger" ng-click=""> 删除
-                                        </button>
+                                </div>
+                            </div>
+                            <div style="" class="col-md-6">
+                                <div class="actions btn-set col-md-12">
+                                    <button style="float: right;" type="button" name="back" class="btn btn-primary"
+                                            ng-click="addRole('organization')"> 新增
+                                    </button>
+                                </div>
+                                <div class="actions btn-set col-md-12">
+                                    <div ui-grid="notrolegird"
+                                         ui-grid-edit ui-grid-pagination
+                                         ui-grid-selection style="height:200px;">
                                     </div>
+                                </div>
+                            </div>
+                            <!-- END FORM-->
+                            <div class="portlet-body col-md-12">
+                                <div ui-grid="mygrid"
+                                     ui-grid-edit ui-grid-pagination
+                                     ui-grid-selection>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
                 <!--权限信息end-->
 
 
                 <!-- 岗位详情 -->
-                <div class="tab-content" ng-show="gwflag.gwxx" >
+                <div class="tab-content" ng-show="gwflag.gwxx">
                     <div class="col-md-12" style="height:100%;">
                         <div class="portlet-body portlet light">
                             <div class="tab-content portlet light">
@@ -471,7 +519,7 @@
                                 <!-- 机构详情 -->
                                 <form action="#" name="myform2" class="form-horizontal clear" ng-if="!editflag">
                                     <div class="form-body portlet light">
-                                        <div class="col-md-6" >
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="control-label col-md-4">岗位状态</label>
 
@@ -490,7 +538,9 @@
                                             <div class="form-group">
                                                 <label class="control-label col-md-4">岗位代码</label>
                                                 <div class="col-md-8">
-                                                    <input type="text" class="form-control" ng-model="abftree.item.positionCode" name="id" ng-readonly="!editflag"/>
+                                                    <input type="text" class="form-control"
+                                                           ng-model="abftree.item.positionCode" name="id"
+                                                           ng-readonly="!editflag"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -548,14 +598,21 @@
                                             <div class="form-group">
                                                 <label class="control-label col-md-2"></label>
                                                 <div class="col-md-10">
-                                                    <div class="actions btn-set" style="float: right;" ng-if="!editflag">
-                                                        <button ng-show="abftree.item.positionStatus == 'cancel'" type="button" name="back" class="btn btn-primary" ng-click="abftree.enableposition()"> 启用岗位
+                                                    <div class="actions btn-set" style="float: right;"
+                                                         ng-if="!editflag">
+                                                        <button ng-show="abftree.item.positionStatus == 'cancel'"
+                                                                type="button" name="back" class="btn btn-primary"
+                                                                ng-click="abftree.enableposition()"> 启用岗位
                                                         </button>
-                                                        <button ng-show="abftree.item.positionStatus == 'running'" type="button" name="back" class="btn btn-danger" ng-click="abftree.cancelposition()">注销岗位
+                                                        <button ng-show="abftree.item.positionStatus == 'running'"
+                                                                type="button" name="back" class="btn btn-danger"
+                                                                ng-click="abftree.cancelposition()">注销岗位
                                                         </button>
-                                                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.edit()"> 编辑岗位
+                                                        <button type="button" name="back" class="btn btn-primary"
+                                                                ng-click="abftree.edit()"> 编辑岗位
                                                         </button>
-                                                        <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletePosition()"> 删除岗位
+                                                        <button type="button" name="back" class="btn btn-danger"
+                                                                ng-click="abftree.deletePosition()"> 删除岗位
                                                         </button>
                                                     </div>
                                                 </div>
@@ -581,7 +638,7 @@
                                                 <div class="col-md-8">
                                                     <input type="text" class="form-control"
                                                            ng-model="position.positionType"
-                                                           name="id" />
+                                                           name="id"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -599,11 +656,14 @@
                                             <div class="form-group">
                                                 <label class="control-label col-md-4">岗位有效开始日期</label>
                                                 <div class="col-md-8">
-                                                    <div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
+                                                    <div class="input-group date form_datetime"
+                                                         ng-init="$root.settings.utils.initpicker()">
                                     <span class="input-group-btn">
-                                        <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                        <button class="btn default date-set" type="button"><i
+                                                class="fa fa-calendar"></i></button>
                                     </span>
-                                                        <input type="text" class="form-control" ng-model="position.startDate" readonly/>
+                                                        <input type="text" class="form-control"
+                                                               ng-model="position.startDate" readonly/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -612,11 +672,14 @@
                                             <div class="form-group">
                                                 <label class="control-label col-md-4">岗位有效截止日期</label>
                                                 <div class="col-md-8">
-                                                    <div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
+                                                    <div class="input-group date form_datetime"
+                                                         ng-init="$root.settings.utils.initpicker()">
                                     <span class="input-group-btn">
-                                        <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                        <button class="btn default date-set" type="button"><i
+                                                class="fa fa-calendar"></i></button>
                                     </span>
-                                                        <input type="text" class="form-control" ng-model="position.endDate" readonly/>
+                                                        <input type="text" class="form-control"
+                                                               ng-model="position.endDate" readonly/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -626,10 +689,12 @@
                                                 <label class="control-label col-md-2"></label>
                                                 <div class="col-md-10">
                                                     <div class="actions btn-set" style="float: right;">
-                                                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.savePosition()"> 保存
+                                                        <button type="button" name="back" class="btn btn-primary"
+                                                                ng-click="abftree.savePosition()"> 保存
                                                         </button>
 
-                                                        <button type="button" name="back" class="btn btn-danger" ng-click="abftree.edit()"> 取消
+                                                        <button type="button" name="back" class="btn btn-danger"
+                                                                ng-click="abftree.edit()"> 取消
                                                         </button>
                                                     </div>
                                                 </div>
@@ -644,8 +709,19 @@
                     </div>
                 </div>
                 <!-- 岗位详情 end -->
-
-                <!-- 岗位员工列表开始 -->
+                <!-- 岗位列表开始 -->
+                <div class="tab-content portlet light" ng-if="gwflag.gwlb">
+                    <div ui-grid="gwlbgird"
+                         ui-grid-edit ui-grid-pagination
+                         ui-grid-selection ui-grid-resize-columns></div>
+                    <div class="actions btn-set" style="float: right;">
+                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addpos()"> 添加岗位
+                        </button>
+                        <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletepos()"> 删除岗位
+                        </button>
+                    </div>
+                </div>
+                <!-- 岗位列表开始 -->
                 <div class="tab-content portlet light" ng-if="gwflag.gwyg">
                     <div ui-grid="gwemp"
                          ui-grid-edit ui-grid-pagination
@@ -667,11 +743,10 @@
                          ui-grid-edit ui-grid-pagination
                          ui-grid-selection ui-grid-resize-columns></div>
                     <div class="actions btn-set" style="float: right;">
-                        <button type="button" name="back" class="btn btn-primary" ng-click=""> 新增应用
+                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addApp()"> 新增应用
                         </button>
-                        <button type="button" name="back" class="btn btn-primary" ng-click=""> 编辑应用
-                        </button>
-                        <button type="button" name="back" class="btn btn-danger" ng-click=""> 删除应用
+
+                        <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deleteApp()"> 删除应用
                         </button>
                     </div>
                 </div>
@@ -683,11 +758,14 @@
                          ui-grid-edit ui-grid-pagination
                          ui-grid-selection ui-grid-resize-columns></div>
                     <div class="actions btn-set" style="float: right;">
-                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addxjPosition()"> 新增岗位
+                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addxjPosition()">
+                            新增岗位
                         </button>
-                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.editxjPosition()"> 编辑岗位
+                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.editxjPosition()">
+                            编辑岗位
                         </button>
-                        <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletexjPosition()"> 删除岗位
+                        <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletexjPosition()">
+                            删除岗位
                         </button>
                     </div>
                 </div>
@@ -695,26 +773,43 @@
 
                 <!-- 岗位权限列表开始 -->
                 <div class="tab-content" ng-if="gwflag.gwqx">
-                    <div  ng-controller="abftree_gwqx_controller">
-                        <div class="portlet-body form col-md-12" >
+                    <div>
+                        <div class="portlet-body form col-md-12">
                             <!-- BEGIN FORM-->
                             <div style="" class="col-md-6">
-                                <select  id='gwJurisdiction' multiple='multiple'></select>
+                                <!--<select  id='myselect' multiple='multiple'>-->
+                                <!--<option ng-repeat="d in allrole track by $index" value="{{d.guid}}">{{d.roleName}}</option>-->
+                                <!--</select>-->
+                                <div class="actions btn-set col-md-12">
+                                    <button type="button" name="back" class="btn btn-danger" style="float: right;"
+                                            ng-click="deleteRole()"> 删除
+                                    </button>
+                                </div>
+                                <div class="actions btn-set col-md-12">
+                                    <div ui-grid="alrolegird"
+                                         ui-grid-edit ui-grid-pagination
+                                         ui-grid-selection style="height:200px;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="" class="col-md-6">
+                                <div class="actions btn-set col-md-12">
+                                    <button style="float: right;" type="button" name="back" class="btn btn-primary"
+                                            ng-click="addRole('position')"> 新增
+                                    </button>
+                                </div>
+                                <div class="actions btn-set col-md-12">
+                                    <div ui-grid="notrolegird"
+                                         ui-grid-edit ui-grid-pagination
+                                         ui-grid-selection style="height:200px;">
+                                    </div>
+                                </div>
                             </div>
                             <!-- END FORM-->
-                            <div class="portlet-body col-md-6">
-                                <div ui-grid="Jurisdictiongrid"
+                            <div class="portlet-body col-md-12">
+                                <div ui-grid="mygrid"
                                      ui-grid-edit ui-grid-pagination
-                                     ui-grid-selection
-                                >
-                                </div>
-                                <div class="actions btn-set" style="float: right;">
-                                    <button type="button" name="back" class="btn btn-primary" ng-click=""> 新增
-                                    </button>
-                                    <button type="button" name="back" class="btn btn-primary" ng-click=""> 编辑
-                                    </button>
-                                    <button type="button" name="back" class="btn btn-danger" ng-click=""> 删除
-                                    </button>
+                                     ui-grid-selection>
                                 </div>
                             </div>
                         </div>

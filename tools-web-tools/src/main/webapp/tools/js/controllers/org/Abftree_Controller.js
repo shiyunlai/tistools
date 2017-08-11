@@ -41,6 +41,9 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
     //岗位权限列表;
     var gwqx = false;
     gwflag.gwqx = gwqx;
+    //岗位列表
+    var gwlb = false;
+    gwflag.gwlb = gwlb;
     //首页清空
     $scope.flag.index = false;
     i18nService.setCurrentLang("zh-cn");
@@ -50,6 +53,9 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
     //节点导航栏
     var currNode = "";
     $scope.currNode = currNode;
+    //拖拽方法控制标志
+    var dndflag = false;
+    $scope.dndflag = dndflag;
 
     //生成公共方法
     initController($scope,abftree,"abftree",abftree,filterFilter);
@@ -218,8 +224,10 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                     "action":function (node) {
                         var inst = jQuery.jstree.reference(node.reference),
                             obj = inst.get_node(node.reference);
-                        var og  = $('#container').jstree(true).copy_node(obj,obj);
-                        // console.log(obj)
+                        var node = {};
+                        node.id = "99999";
+                        var og  = inst.copy(obj);
+                        console.log(og)
                     }
                 },
 
@@ -249,6 +257,9 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                                 //创建机构实例
                                 var subFrom = {};
                                 $scope.subFrom = subFrom;
+                                //控制表单
+                                var next = true;
+                                $scope.next = next;
                                 //判断是根岗位还是子岗位
                                 if(obj.id.indexOf("GW") == 0){
                                     //处理新增机构父机构
@@ -257,6 +268,18 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                                 }else{
                                     subFrom.guidParents = obj.original.guid;
                                     subFrom.guidOrg = obj.original.guidOrg;
+                                }
+                                //下一步
+                                $scope.skip = function () {
+                                    abftree_service.initPosCode($scope.subFrom).then(function (data) {
+                                        console.log(data)
+                                        if(data.status == "success"){
+                                            $scope.subFrom.positionCode = data.retMessage;
+                                        }else{
+                                            toastr['error'](data.retMessage);
+                                        }
+                                    })
+                                    $scope.next = !$scope.next;
                                 }
                                 //增加方法
                                 $scope.add = function (subFrom) {
@@ -373,7 +396,7 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 $scope.jsonarray = jsonarray;
                 var subFrom = {};
                 subFrom.id = obj.id;
-                console.log(obj)
+                // console.log(obj)
                 if(!isNull(obj.original)){
                     subFrom.guidOrg = obj.original.guid;
                     subFrom.positionCode = obj.original.positionCode;
@@ -421,13 +444,18 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
         "state" : { "key" : "demo3" },
         "contextmenu":{'items':items},
         'dnd': {
-            'dnd_start': function () {
-                console.log("start");
-            },
             'is_draggable':function (node) {
                 //用于控制节点是否可以拖拽.
                 console.log(node)
-                return true;
+                var node = node[0];
+                if(node.id == "99999" || node.id.indexOf("GW") == 0){
+                    return false;
+                }else{
+                    return true;
+                }
+            },
+            dnd_start:  vakata = function () {
+                console.log(123)
             }
         },
         'search':{
@@ -451,15 +479,11 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
         console.log(d);
     }).bind("move_node.jstree",function (e,data) {
         if(confirm("确认要移动此机构吗?")){
-            //TODO.
+            console.log(data);
         }else{
-            // data.inst.refresh(data.inst._get_parent(data.rslt.oc));
-            return false;
+
+            $("#container").jstree().refresh();
         }
-        console.log(e);
-        console.log(data);
-    }).bind("dnd_stop.vakata",function (e,data) {
-        console.log(data);
     }).bind("select_node.jstree", function (e, data) {
         if(typeof data.node !== 'undefined'){//拿到结点详情
             // console.log(data.node.original.id.indexOf("@"));
@@ -486,7 +510,17 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 }
                 $scope.flag.index = false;
             }else if(data.node.original.id.indexOf("GW") == 0){
-
+                for(var i in $scope.gwflag){
+                    gwflag[i] = false;
+                }
+                for(var i in $scope.flag){
+                    flag[i] = false;
+                }
+                $scope.gwflag.gwlb = true;
+                $scope.flag.index = true;
+                var subFrom = {};
+                subFrom.orgGuid = data.node.original.guid;
+                regwlbgird(subFrom)
             }else {
                 for(var i in $scope.gwflag){
                     gwflag[i] = false;
@@ -1117,8 +1151,14 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
             $scope.flag.qxxx = true;
             //todo
             //传递参数
-            var abc = $scope.abftree.item.guid
-            $scope.$broadcast('to-child', abc);
+            var guid = $scope.abftree.item.guid;
+            // $scope.$broadcast('to-child', abc);
+            // 生成权限三表
+            var mygrid = {}
+            var alrolegird = {}
+            var notrolegird = {}
+            commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftree_service,toastr)
+
         }else if(type == 999){
             $scope.flag.xqxx = true;
             $scope.flag.xjjg = false;
@@ -1302,17 +1342,17 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
             //生成岗位应用列表
             var gwApplication = {};
             $scope.gwApplication = gwApplication;
-            //获取岗位应用数据.//todo
-            $scope.b = [{应用名称:"开发",应用功能:"啊实打实大师的"},
-                {应用名称:"其他",应用功能:"啊实打实大师的"}];
-            var itd = function () {
-                return  $scope.b;
-            }
-            //自定义点击事件
-            var select = function () {
+            var com = [
+                { field: 'appName', displayName: '应用名称', enableHiding: false},
+                { field: 'appType', displayName: '应用类别', enableHiding: false},
+                { field: 'openDate', displayName: '开通时间', enableHiding: false},
+                { field: 'appDesc', displayName: '功能描述', enableHiding: false}
+                ];
+            $scope.gwApplication = initgrid($scope,gwApplication,filterFilter,com,false,function () {
 
-            }
-            $scope.gwApplication = initgrid($scope, $scope.gwApplication,itd(), filterFilter,null,false,select);
+            });
+
+            regwApplication();
         }else if (type == 3){
             for(var i in $scope.gwflag){
                 $scope.gwflag[i] = false;
@@ -1400,9 +1440,32 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
                 $scope.gwflag[i] = false;
             }
             $scope.gwflag.gwqx = true;
+
+            //传递参数
+            var guid = $scope.abftree.item.guid;
+            // $scope.$broadcast('to-child', abc);
+            // 生成权限三表
+            var mygrid = {}
+            var alrolegird = {}
+            var notrolegird = {}
+            commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftree_service,toastr)
         }
     }
 
+
+    var regwApplication = function () {
+        var subFrom = {};
+        subFrom.posCode = $scope.abftree.item.positionCode;
+        abftree_service.queryAppinPos(subFrom).then(function (data) {
+            if(data.status == "success"  && !isNull(data.retMessage)){
+                $scope.gwApplication.data =  data.retMessage;
+                $scope.gwApplication.mydefalutData =  data.retMessage;
+                $scope.gwApplication.getPage(1,$scope.gwApplication.paginationPageSize);
+            }else{
+
+            }
+        })
+    }
     //编辑岗位保存事件
     abftree.savePosition = function () {
         console.log($scope.position)
@@ -1432,41 +1495,167 @@ angular.module('MetronicApp').controller('abftree_controller', function($rootSco
     var gw = {};
     $scope.gw = gw;
 
-    //为岗位新增人员.传入当前机构GUID
-    gw.addemp = function (guid) {
+
+    /**--------------------------------各类按钮事件--------------------------*/
+    //岗位应用下按钮事件
+    //新增应用
+    abftree.addApp = function () {
+        console.log($scope.abftree.item)
+        var subFrom = {};
+        subFrom.posGuid = $scope.abftree.item.guid;
+        subFrom.posCode = $scope.abftree.item.positionCode;
         //打开通用列表窗口
         openwindow($uibModal, 'views/org/addsearhgrid_window.html', 'lg',
             function ($scope, $modalInstance) {
                 //设置标题栏
-                $scope.title = "人员";
+                $scope.title = "新增应用";
                 //实例化列表
                 var commonGrid = {};
                 $scope.commonGrid = commonGrid;
-                //加载数据方法
-                var initd = function () {
-                    //todo
-                    return a = [{人员名称:"卡卡",人员性别:"男",工号:"007"},
-                        {人员名称:"强强",人员性别:"男",工号:"001"},
-                        {人员名称:"稳稳",人员性别:"男",工号:"002"},
-                        {人员名称:"恩恩",人员性别:"男",工号:"003"}];
-                }
-                //单击事件
-                var sel = function () {
+                var com = [
+                    { field: 'appName', displayName: '应用名称', enableHiding: false},
+                    { field: 'appType', displayName: '应用类别', enableHiding: false},
+                    { field: 'openDate', displayName: '开通时间', enableHiding: false},
+                    { field: 'appDesc', displayName: '功能描述', enableHiding: false}
+                ];
+                $scope.commonGrid = initgrid($scope,commonGrid,filterFilter,com,true,function () {});
+                (function (subFrom) {
+                    abftree_service.queryAppNotinPos(subFrom).then(function (data) {
+                        console.log(subFrom)
+                        console.log(data)
+                        if(data.status == "success"  && !isNull(data.retMessage)){
+                            $scope.commonGrid.data =  data.retMessage;
+                            $scope.commonGrid.mydefalutData =  data.retMessage;
+                            $scope.commonGrid.getPage(1,$scope.commonGrid.paginationPageSize);
+                        }else{
 
-                }
-                $scope.commonGrid = initgrid($scope,commonGrid,initd(),filterFilter,null,true,sel);
-
-                //保存方法
-                $scope.add = function (subFrom) {
-                    console.log(subFrom)
-                    toastr['success']( "修改成功！");
-                    $scope.cancel();
+                        }
+                    })
+                })(subFrom)
+                $scope.add = function () {
+                    var arr = $scope.commonGrid.getSelectedRows();
+                    if(arr.length != 1){
+                        toastr['error']( "请选择一条需要添加的应用！");
+                    }
+                    subFrom.appGuid = arr[0].guid;
+                    abftree_service.addAppPosition(subFrom).then(function (data) {
+                        if(data.status == "success"){
+                            toastr['success'](data.retMessage);
+                            regwApplication();
+                            $scope.cancel();
+                        }else{
+                            toastr['error'](data.retMessage);
+                        }
+                    })
                 }
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                 };
             });
     }
+    //删除应用
+    abftree.deleteApp = function () {
+        var subFrom = {};
+        subFrom.posGuid = $scope.abftree.item.guid;
+        subFrom.posCode = $scope.abftree.item.positionCode;
+        var arr = $scope.gwApplication.getSelectedRows();
+        if(arr.length != 1){
+            toastr['error']("请选择一条需要删除的应用!");
+        }
+        subFrom.appGuid = arr[0].guid;
+        abftree_service.deleteAppPosition(subFrom).then(function (data) {
+            if(data.status == "success"){
+                toastr['success'](data.retMessage);
+                regwApplication();
+            }else{
+                toastr['error'](data.retMessage);
+            }
+        });
+    }
+    //岗位信息下两个按钮事件
+    //新增
+    abftree.addpos = function () {
+        var guidOrg = $scope.abftree.item.guid;
+        openwindow($uibModal, 'views/org/addPosition_window.html', 'lg',
+            function ($scope, $modalInstance) {
+                //创建机构实例
+                var subFrom = {};
+                $scope.subFrom = subFrom;
+                //处理新增机构父机构
+                subFrom.guidParents = "";
+                subFrom.guidOrg = guidOrg
+                //增加方法
+                $scope.add = function (subFrom) {
+                    abftree_service.addposit(subFrom).then(function (data) {
+                        if(data.status == "success"){
+                            toastr['success'](data.retMessage);
+                        }else{
+                            toastr['error'](data.retMessage);
+                        }
+                        var subFrom = {};
+                        subFrom.orgGuid = guidOrg;
+                        regwlbgird(subFrom)
+                        $("#container").jstree().refresh();
+                        $scope.cancel();
+                    });
+                }
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            }
+        )
+    }
+    //删除
+    abftree.deletepos = function () {
+        if(confirm("确定要删除此菜单？删除后不可恢复。")){
+            var arr = $scope.gwlbgird.getSelectedRows();
+            if(arr.length != 1){
+                toastr['error']("请选择一条需要删除的岗位信息!");
+            }
+            var subFrom = {};
+            subFrom.posCode = arr[0].positionCode;
+            subFrom.orgGuid = $scope.abftree.item.guid;
+            abftree_service.deletePosition(subFrom).then(function (data) {
+                if(data.status == "success"){
+                    toastr['success'](data.retMessage);
+                    regwlbgird(subFrom)
+                    $("#container").jstree().refresh();
+                }else{
+                    toastr['error'](data.retMessage);
+                }
 
+
+            })
+        }
+    }
+
+    /**--------------------------------各类列表生成--------------------------*/
+    //机构下所有岗位列表生成
+    var gwlbgird = {};
+    $scope.gwlbgird = gwlbgird;
+    var com = [{ field: 'positionCode', displayName: '岗位代码', enableHiding: false},
+        { field: 'positionName', displayName: '岗位名称', enableHiding: false},
+        { field: 'positionType', displayName: '岗位类型', enableHiding: false},
+        { field: 'positionStatus', displayName: '岗位状态', enableHiding: false},
+        { field: 'guidDuty', displayName: '所属职务', enableHiding: false},
+        { field: 'startDate', displayName: '有效开始日期', enableHiding: false},
+        { field: 'endDate', displayName: '有效截止日期', enableHiding: false}
+    ]
+    $scope.gwlbgird = initgrid($scope,gwlbgird,filterFilter,com,true,function () {});
+    //拉取数据
+    var regwlbgird = function (subFrom) {
+        abftree_service.queryAllposbyOrg(subFrom).then(function (data) {
+            if(data.status == "success"  && !isNull(data.retMessage)){
+                $scope.gwlbgird.data =  data.retMessage;
+                $scope.gwlbgird.mydefalutData =  data.retMessage;
+                $scope.gwlbgird.getPage(1,$scope.gwlbgird.paginationPageSize);
+            }else{
+
+            }
+        })
+    }
+
+    /**--------------------------------封装方法--------------------------*/
+    
 });
 

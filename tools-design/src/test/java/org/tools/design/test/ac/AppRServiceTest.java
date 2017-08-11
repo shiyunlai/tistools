@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.ac.AcApp;
+import org.tis.tools.model.po.ac.AcFunc;
 import org.tis.tools.model.po.ac.AcFuncgroup;
 import org.tis.tools.model.vo.ac.AcAppVo;
 import org.tis.tools.rservice.ac.basic.IAcAppRService;
@@ -72,13 +73,28 @@ public class AppRServiceTest extends SpringJunitSupport{
 	 * @throws ParseException 
 	 */
 	@Test
-	public void genAppCodeSucc() throws ToolsRuntimeException{
-		
+	public void genAppCodeSucc() throws ToolsRuntimeException {
+
 		try {
 			String guid = "APP1499074217";
 			AcApp ac = applicationRService.queryAcApp(guid);
 			System.out.println(ac);
-		} catch (ToolsRuntimeException e) {	
+		} catch (ToolsRuntimeException e) {
+			System.out.println("错误码：" + e.getCode());
+			System.out.println("错误信息：" + e.getMessage());
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void queryFuncListInAppTest() throws ToolsRuntimeException{
+
+		try {
+			String appGuid = "APP1499956132";
+			List<AcFunc> acFuncs = applicationRService.queryFuncListInApp(appGuid);
+			System.out.println(acFuncs);
+		} catch (ToolsRuntimeException e) {
 			System.out.println("错误码："+e.getCode());
 			System.out.println("错误信息："+e.getMessage());
 			// TODO 自动生成的 catch 块

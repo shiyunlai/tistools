@@ -50,4 +50,13 @@
 
 	<!--具体实现-->
  	<bean id="runConfigRServiceImpl" class="org.tis.tools.rservice.sys.capable.RunConfigRServiceImpl" />
+
+	<!-- 暴露服务 -->
+	<dubbo:service
+		interface="org.tis.tools.rservice.sys.capable.ISeqnoRService" group="sys" version="${ISeqnoRService.version}"
+		ref="seqnoRServiceImpl"
+		protocol="dubbo"  timeout="3000" />
+
+	<!--具体实现-->
+ 	<bean id="seqnoRServiceImpl" class="org.tis.tools.rservice.sys.capable.SeqnoRServiceImpl" />
 </beans>

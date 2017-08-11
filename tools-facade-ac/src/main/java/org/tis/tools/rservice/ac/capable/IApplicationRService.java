@@ -468,4 +468,11 @@ public interface IApplicationRService {
 	 */
 	public void disableApp(String appGuid);
 
+	/**
+	 * 查询应用下所有功能
+	 *
+	 * @param  appGuid 应用GUID
+	 */
+	List<AcFunc> queryFuncListInApp(String appGuid);
+
 }

@@ -40,5 +40,13 @@
  	
 	<!-- 具体实现 -->
     <bean id="orgRServiceImpl" class="org.tis.tools.rservice.om.capable.OrgRServiceImpl" />
+	<!-- 暴露服务 -->
+	<dubbo:service
+			interface="org.tis.tools.rservice.om.capable.IBusiOrgRService" group="om" version="${IBusiOrgRService.version}"
+			ref="OmBusiOrgRServiceImpl"
+			protocol="dubbo"  timeout="3000" />
+
+	<!-- 具体实现 -->
+	<bean id="OmBusiOrgRServiceImpl" class="org.tis.tools.rservice.om.capable.OmBusiOrgRServiceImpl" />
     
 </beans>

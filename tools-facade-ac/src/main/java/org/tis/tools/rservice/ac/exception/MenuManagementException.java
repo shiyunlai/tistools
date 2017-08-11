@@ -8,7 +8,7 @@ import org.tis.tools.base.exception.ToolsRuntimeException;
 public class MenuManagementException extends ToolsRuntimeException {
     private static final long serialVersionUID = 1L;
 
-    public MenuManagementException() {}
+    public MenuManagementException() {super();}
 
     public MenuManagementException(String code) {
         super(code);

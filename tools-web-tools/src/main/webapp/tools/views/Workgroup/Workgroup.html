@@ -379,26 +379,43 @@
             <!-- 人员信息 end -->
             <!-- 权限信息 start -->
             <div class="tab-content" ng-if="flag.qxxx">
-                <div ng-controller="abftree_gwqx_controller">
+                <div>
                     <div class="portlet-body form col-md-12">
                         <!-- BEGIN FORM-->
                         <div style="" class="col-md-6">
-                            <select id='gwJurisdiction' multiple='multiple'></select>
+                            <!--<select  id='myselect' multiple='multiple'>-->
+                            <!--<option ng-repeat="d in allrole track by $index" value="{{d.guid}}">{{d.roleName}}</option>-->
+                            <!--</select>-->
+                            <div class="actions btn-set col-md-12">
+                                <button type="button" name="back" class="btn btn-danger" style="float: right;"
+                                        ng-click="deleteRole()"> 删除
+                                </button>
+                            </div>
+                            <div class="actions btn-set col-md-12">
+                                <div ui-grid="alrolegird"
+                                     ui-grid-edit ui-grid-pagination
+                                     ui-grid-selection style="height:200px;">
+                                </div>
+                            </div>
+                        </div>
+                        <div style="" class="col-md-6">
+                            <div class="actions btn-set col-md-12">
+                                <button style="float: right;" type="button" name="back" class="btn btn-primary"
+                                        ng-click="addRole('workgroup')"> 新增
+                                </button>
+                            </div>
+                            <div class="actions btn-set col-md-12">
+                                <div ui-grid="notrolegird"
+                                     ui-grid-edit ui-grid-pagination
+                                     ui-grid-selection style="height:200px;">
+                                </div>
+                            </div>
                         </div>
                         <!-- END FORM-->
-                        <div class="portlet-body col-md-6">
-                            <div ui-grid="Jurisdictiongrid"
+                        <div class="portlet-body col-md-12">
+                            <div ui-grid="mygrid"
                                  ui-grid-edit ui-grid-pagination
-                                 ui-grid-selection
-                            >
-                            </div>
-                            <div class="actions btn-set" style="float: right;">
-                                <button type="button" name="back" class="btn btn-primary" ng-click=""> 新增
-                                </button>
-                                <button type="button" name="back" class="btn btn-primary" ng-click=""> 编辑
-                                </button>
-                                <button type="button" name="back" class="btn btn-danger" ng-click=""> 删除
-                                </button>
+                                 ui-grid-selection>
                             </div>
                         </div>
                     </div>
