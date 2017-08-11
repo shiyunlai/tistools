@@ -18,6 +18,8 @@ import org.tis.tools.rservice.ac.capable.IAuthenticationRService;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.util.AjaxUtils;
 
+import org.tis.tools.model.po.ac.AcOperator;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
@@ -58,6 +60,65 @@ public class AcAuthenticationController extends BaseController {
         }
     }
 
+    
+   
+    
+    /**
+     * 登录
+     */
+    @ResponseBody
+    @RequestMapping(value="/login" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public void login(@RequestBody String content, HttpServletRequest request,
+                                HttpServletResponse response) {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("login request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+            String userId = jsonObject.getString("userId");
+            String password = jsonObject.getString("password");
+            String identityGuid = jsonObject.getString("identityGuid");
+            String appGuid = jsonObject.getString("appGuid");
+            AcOperator acOperator = authenticationRService.loginCheck(userId, password, identityGuid, appGuid);
+            Map<String, Object> loginInfo = authenticationRService.getInitInfoByUserIdAndIden(userId, identityGuid, appGuid);
+            AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response,loginInfo,"YYYY-MM-dd hh:mm:ss");
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("login exception : ", e);
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("login exception : ", e);
+        }
+    }
+
+
+    /**
+     * 修改密码
+     */
+    @ResponseBody
+    @RequestMapping(value="/updatePassword" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public void updatePassword(@RequestBody String content, HttpServletRequest request,
+                                HttpServletResponse response) {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("updatePassword request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+            String userId = jsonObject.getString("userId");
+            String newPwd = jsonObject.getString("newPwd");
+            String oldPwd = jsonObject.getString("oldPwd");;
+             authenticationRService.updatePassword(userId, oldPwd, newPwd);
+            AjaxUtils.ajaxJsonSuccessMessage(response,"");
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("updatePassword exception : ", e);
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("updatePassword exception : ", e);
+        }
+    }
+    
+    
     
     /**
      * 要求子类构造自己的响应数据

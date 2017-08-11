@@ -12,19 +12,23 @@
     <div class="portlet-body portlet light">
         <div class="col-md-12" style="margin-top:10px;">
                 <div class="col-md-3 caption-subject font-green-sharp bold uppercase">用户ID:</div>
-                <div class="col-md-9">User</div>
+                <div class="col-md-9">{{userid}}</div>
         </div>
         <div class="col-md-12"style="margin-top:10px;">
-            <div class="col-md-3 caption-subject font-green-sharp bold uppercase">用户名称:</div>
-            <div class="col-md-9">User</div>
+            <div class="col-md-3 caption-subject font-green-sharp bold uppercase">登陆名称:</div>
+            <div class="col-md-9">{{operatorName}}</div>
+        </div>
+        <div class="col-md-12"  style="margin-top:10px;">
+            <div class="col-md-3 caption-subject font-green-sharp bold uppercase">菜单模式:</div>
+            <div class="col-md-9">{{menuType}}</div>
         </div>
         <div class="col-md-12"  style="margin-top:10px;">
             <div class="col-md-3 caption-subject font-green-sharp bold uppercase">当前登陆身份:</div>
-            <div class="col-md-9">测试</div>
+            <div class="col-md-9">{{opertor}}</div>
         </div>
         <div class="col-md-12" style="margin-top:10px;" >
-            <div class="col-md-3 caption-subject font-green-sharp bold uppercase">登陆时间:</div>
-            <div class="col-md-9">18</div>
+            <div class="col-md-3 caption-subject font-green-sharp bold uppercase">最后登陆时间:</div>
+            <div class="col-md-9">{{lastLogin}}</div>
         </div>
         <div class="col-md-12">
             <div class="form-group">

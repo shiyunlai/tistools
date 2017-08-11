@@ -46,6 +46,9 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                                     obj = inst.get_node(data.reference);
                                 openwindow($uibModal, 'views/Management/manachildAdd.html', 'lg',
                                     function ($scope, $modalInstance) {
+                                        var menuFrom = {};
+                                        $scope.menuFrom = menuFrom;
+                                        $scope.menuFrom.displayOrder = 0;//默认为0
                                         $scope.add = function (menuFrom) {
                                             var guidApp = menu.appselect
                                             var  subFrom = {};
@@ -108,6 +111,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                                     function ($scope, $modalInstance) {
                                         var menuFrom = {};
                                         $scope.menuFrom = menuFrom;
+                                        $scope.menuFrom.displayOrder = 0;//默认为0
                                         $scope.ceshi = function(item){
                                             if(item == 'Y'){
                                                 //逻辑
@@ -218,6 +222,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                                     function ($scope, $modalInstance) {
                                         var menuFrom = {};
                                         $scope.menuFrom = menuFrom;
+                                        $scope.menuFrom.displayOrder = 0;//默认为0
                                         $scope.ceshi = function(item){
                                             if(item == 'Y'){
                                                 //逻辑
@@ -513,12 +518,9 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
             }
         }
     }
-
-
-
-
-
-
+    var menuFrom = {};
+    $scope.menuFrom = menuFrom;
+    $scope.menuFrom.displayOrder = 0;//默认为0
     //新增子菜单逻辑
     $scope.menu.childAdd = function(){
         var menuGuide = $scope.menu.item;
@@ -526,6 +528,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
             function ($scope, $modalInstance) {
                 var menuFrom = {};
                 $scope.menuFrom = menuFrom;
+                $scope.menuFrom.displayOrder = 0;//默认为0
                 $scope.ceshi = function(item){
                     if(item == 'Y'){
                         //逻辑
@@ -580,7 +583,6 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                     if(!isNull(menuFrom.infosava)){
                         subFrom.guidFunc = menuFrom.infosava.guid;
                     }
-                    console.log(subFrom);
                     menu_service.createChildMenu(subFrom).then(function(data){
                         if(data.status == "success"){
                             toastr['success']( "新增成功！");
