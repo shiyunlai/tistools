@@ -114,13 +114,143 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
     var opmer ={};
     $scope.opmer = opmer;
 
-    //查询所有应用
 
     var res = $rootScope.res.menu_service;//页面所需调用的服务
+    //查询所有应用
+    var subFrom = {};
+    common_service.post(res.queryAllAcApp,subFrom).then(function(data){
+        if(data.status == "success"){
+            opmer.appselectApp= data.retMessage;
+        }
+    })
     //查询
     $scope.opmer.search = function(data){
-        console.log(data)
-        if (data.operuser == '张三'){
+        var subFrom = {};
+        subFrom.appGuid = data.appselect;
+        subFrom.userId = data.operuser;
+        //查询菜单
+        common_service.post(res.getMenuByUserId,subFrom).then(function(data){
+            if(data.status == "success"){
+                var datas = data.retMessage;
+                console.log(datas);
+                var result= datas.replace("guid","id").replace('label','text');//把'is'替换为空字符串
+                console.log(result)
+                var menuAll = angular.fromJson(result);
+                console.log(menuAll)
+                var menucles = menuAll.children;
+                opmer.menuAll = menucles;
+                console.log(opmer.menuAll)
+                opmer.menuconfig = true;//有菜单
+            }
+        })
+        //查询重组菜单
+        common_service.post(res.getOperatorMenuByUserId,subFrom).then(function(data){
+            if(data.status == "success"){
+                if(data.retMessage == ''){
+                    opmer.ismenuconfig = false //无重组菜单
+                }
+            }
+        })
+
+        if(opmer.menuconfig&&!opmer.ismenuconfig){//有菜单权限无重组菜单权限
+            $scope.opmer.searchok = true;
+            console.log(opmer.menuAll)
+            if(confirm('该用户未自定义重组菜单，是否配置')){
+                $scope.opmer.config = true;
+                //  左侧原有应用管理树结构
+                $("#container").jstree({
+                    "core" : {
+                        "themes" : {
+                            "responsive": false
+                        },
+                        "check_callback" : true,//在对树结构进行改变时，必须为true
+                        'data':opmer.menuAll
+                        /*  [{
+                         "id": "1",
+                         "text": "应用菜单",
+                         icon:'fa fa-hospital-o icon-state-info icon-lg ',
+                         "children":
+                         [
+                         {
+                         "id": "2",
+                         "text": "组织管理",
+                         icon:'fa fa-home icon-state-info icon-lg',
+                         },
+                         {
+                         "id": "3",
+                         "text": "权限管理",
+                         icon:'fa fa-home icon-state-info icon-lg',
+                         },
+                         {
+                         "id": "4",
+                         "text": "授权认证",
+                         icon:'fa fa-home icon-state-info icon-lg',
+                         },
+                         {
+                         "id": "5",
+                         "text": "其他管理",
+                         icon:'fa fa-home icon-state-info icon-lg',
+                         },{
+                         "id": "6",
+                         "text": "工作流",
+                         icon:'fa fa-home icon-state-info icon-lg',
+                         },{
+                         "id": "7",
+                         "text": "测试图标",
+                         icon:'fa fa-home icon-state-info icon-lg',
+                         }
+                         ]
+                         }
+                         ]*/
+                    },
+                    "force_text": true,
+                    plugins: ["sort", "types", "checkbox", "themes", "html_data"],
+                    "checkbox": {
+                        "keep_selected_style": false,//是否默认选中
+                    },
+                    "types" : {
+                        "default" : {
+                            "icon" : "fa fa-folder icon-state-warning icon-lg"
+                        },
+                        "file" : {
+                            "icon" : "fa fa-file icon-state-warning icon-lg"
+                        }
+                    },
+                    "state" : { "key" : "demo3" },
+                    'dnd': {
+                        'is_draggable':function (node) {
+                            //用于控制节点是否可以拖拽.
+                            if(node.id == 3){
+                                return false;//根节点禁止拖拽
+                            }
+                            return true;
+                        }
+                    },
+                    'callback' : {
+                        move_node:function (node) {
+                            console.log(node)
+                        }
+                    },
+                    "plugins" : [ "state", "types","search" ,"checkbox","wholerow"]// 插件引入 dnd拖拽插件 state缓存插件(刷新保存) types多种数据结构插件  checkbox复选框插件
+                }).bind("move_node.jstree",function (e,data) {
+                    if(confirm("确认要移动此机构吗?")){
+                        //TODO.
+                    }else{
+                        data.position = data.old_position;
+                        return false;
+                    }
+                })
+            }
+        }else if(!opmer.menuconfig&&!opmer.ismenuconfig){
+            $scope.opmer.searchok = true;
+            $scope.opmer.config = true;
+        }else if(opmer.menuconfig){
+            toastr['error']('暂无该应用操作权限');
+        }else{
+            $scope.opmer.searchok = false;
+            $scope.opmer.config = false;
+        }
+        /*if (data.operuser == '张三'){
             $scope.opmer.searchok = true;
             $scope.opmer.config = true;
         }else if(data.appCode == '123'){
@@ -135,97 +265,13 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
             $scope.opmer.config = false;
             $scope.searchFrom.appCode = '';
             $scope.searchFrom.operuser = '';
-        }
+        }*/
 
     }
 
 
     //左侧树结构
-    //  应用管理树结构
-    $("#container").jstree({
-        "core" : {
-            "themes" : {
-                "responsive": false
-            },
-            "check_callback" : true,//在对树结构进行改变时，必须为true
-            'data':
-                [{
-                    "id": "1",
-                    "text": "应用菜单",
-                    icon:'fa fa-hospital-o icon-state-info icon-lg ',
-                    "children":
-                        [
-                            {
-                                "id": "2",
-                                "text": "组织管理",
-                                icon:'fa fa-home icon-state-info icon-lg',
-                            },
-                            {
-                                "id": "3",
-                                "text": "权限管理",
-                                icon:'fa fa-home icon-state-info icon-lg',
-                            },
-                            {
-                                "id": "4",
-                                "text": "授权认证",
-                                icon:'fa fa-home icon-state-info icon-lg',
-                            },
-                            {
-                                "id": "5",
-                                "text": "其他管理",
-                                icon:'fa fa-home icon-state-info icon-lg',
-                            },{
-                            "id": "6",
-                            "text": "工作流",
-                            icon:'fa fa-home icon-state-info icon-lg',
-                        },{
-                            "id": "7",
-                            "text": "测试图标",
-                            icon:'fa fa-home icon-state-info icon-lg',
-                        }
-                        ]
-                }
-                ]
-        },
-        "force_text": true,
-        plugins: ["sort", "types", "checkbox", "themes", "html_data"],
-        "checkbox": {
-            "keep_selected_style": false,//是否默认选中
-        },
-        "types" : {
-            "default" : {
-                "icon" : "fa fa-folder icon-state-warning icon-lg"
-            },
-            "file" : {
-                "icon" : "fa fa-file icon-state-warning icon-lg"
-            }
-        },
-        "state" : { "key" : "demo3" },
-        'dnd': {
-            'is_draggable':function (node) {
-                //用于控制节点是否可以拖拽.
-                if(node.id == 3){
-                    return false;//根节点禁止拖拽
-                }
-                return true;
-            }
-        },
-        'callback' : {
-            move_node:function (node) {
-                console.log(node)
-            }
-        },
-        "plugins" : [ "state", "types","search" ,"checkbox","wholerow"]// 插件引入 dnd拖拽插件 state缓存插件(刷新保存) types多种数据结构插件  checkbox复选框插件
-    }).bind("move_node.jstree",function (e,data) {
-        if(confirm("确认要移动此机构吗?")){
-            //TODO.
-        }else{
-            data.position = data.old_position;
-            return false;
-        }
 
-        console.log(data);
-    })
 
 
     /* 菜单二 */

@@ -258,7 +258,7 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
             data = data.sort(sortFn);
             data.forEach(v => {
                 if (v.children && v.children.length !== 0) {
-                v.children = getSortData(v.children, sortFn);
+                    v.children = getSortData(v.children, sortFn);
             }
         })
         return data;
@@ -267,6 +267,7 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
             return b.order - a.order;//倒序排序
         });
         $scope.menusAndTrans = angular.copy(sts);//拿到登录页那边传来的目录
+        //$scope.menusAndTrans = angular.copy(item);//拿到登录页那边传来的目录
     });
 
 

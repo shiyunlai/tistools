@@ -33,11 +33,12 @@
                                     </div>
                                     <div class="col-md-6" >
                                         <div class="form-group">
-                                            <label class="control-label col-md-4">应用代码<span ng-class="{required:myform.dict_key1.$invalid}"  >* </span></label>
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control"
-                                                       ng-model="searchFrom.appCode" required
-                                                       name="dict_key1" />
+                                            <label class="control-label col-md-4"> 选择应用: </label>
+                                            <div class="col-md-5">
+                                                <select class="form-control"  name="select_app"  ng-model="searchFrom.appselect">
+                                                    <!-- 渲染，不能绑定同一个，不然每次点击，都会改变，重新渲染，所以ng-model绑定和渲染必须不同-->
+                                                    <option ng-repeat="d in opmer.appselectApp" value="{{d.guid}}">{{d.appName}}</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
