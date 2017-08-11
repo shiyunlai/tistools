@@ -79,12 +79,14 @@
     "createChildMenu": {"ctrl": "AcMenuController", "func": "createChildMenu","emo":"新增子菜单"},
     "deleteMenu": {"ctrl": "AcMenuController", "func": "deleteMenu","emo":"删除菜单"},
     "editMenu": {"ctrl": "AcMenuController", "func": "editMenu","emo":"修改菜单方法"},
-    "queryAllFuncInApp": {"ctrl": "AcMenuController", "func": "queryAllFuncInApp","emo":"获取应用下的功能列表"}
+    "queryAllFuncInApp": {"ctrl": "AcMenuController", "func": "queryAllFuncInApp","emo":"获取应用下的功能列表"},
+    "getMenuByUserId": {"ctrl": "AcMenuController", "func": "getMenuByUserId","emo":"获取操作员拥有的菜单"},
+    "getOperatorMenuByUserId": {"ctrl": "AcMenuController", "func": "getOperatorMenuByUserId","emo":"获取操作员的重组菜单"}
   },
   "numres_service" : {
-    "querySeqnoList": {"ctrl": "AcMenuController", "func": "querySeqnoList","emo":"查询系统运行参数列表"},
-    "editSeqno": {"ctrl": "AcMenuController", "func": "editSeqno","emo":"修改系统运行参数列表"},
-    "deleteSeqno": {"ctrl": "AcMenuController", "func": "deleteSeqno","emo":"删除系统运行参数列表"}
+    "querySeqnoList": {"ctrl": "SeqnoController", "func": "querySeqnoList","emo":"查询系统运行参数列表"},
+    "editSeqno": {"ctrl": "SeqnoController", "func": "editSeqno","emo":"修改系统运行参数列表"},
+    "deleteSeqno": {"ctrl": "SeqnoController", "func": "deleteSeqno","emo":"删除系统运行参数列表"}
   },
   "operator_service" : {
     "queryAllOperator": {"ctrl": "AcOperatorController", "func": "queryAllOperator","emo":"查询操作员列表"},
@@ -168,5 +170,8 @@
     "deleteEmpGroup": {"ctrl": "om/workgroup", "func": "deleteEmpGroup"},
     "deleteGroupPosition": {"ctrl": "om/workgroup", "func": "deleteGroupPosition"},
     "queryAllGroup": {"ctrl": "om/workgroup", "func": "queryAllGroup","em":"查询所有工作组"}
+  },
+  "login_service" : {
+    "updatePassword": {"ctrl": "AcAuthenticationController", "func": "updatePassword","emo":"修改密码"}
   }
 }

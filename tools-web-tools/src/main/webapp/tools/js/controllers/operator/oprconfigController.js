@@ -138,7 +138,8 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
             subFrom.identityGuid = $scope.selectRow.guid
             common_service.post(res.queryAllOperatorIdentityRes,subFrom).then(function(data){
                 if(data.status == "success"){
-
+                    var datas = data.retMessage;
+                    $scope.gridOptions1.data = datas
                 }
 
             })
@@ -269,26 +270,25 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
         common_service.post(res.queryAllOperatorIdentityRes,subFrom).then(function(data){
             var datas = data.retMessage;
             if(data.status == "success"){
-
+                $scope.gridOptions1.data = datas
             }else{
-                toastr['error'](data.retCode,data.retMessage+"初始化失败!");
             }
         })
     }
 
 
     /* 右侧身份对应权限*/
-    $scope.myDatas= [
-        {'guid':'组织类型','cesname':'身份一'},
-        {'guid':'职务类型','cesname':'身份二'}
-    ];
+/*    $scope.myDatas= [
+        {'acResourcetype':'组织类型','roleName':'身份一'},
+        {'acResourcetype':'职务类型','roleName':'身份二'}
+    ];*/
 
     var gridOptions1 = {};
     $scope.gridOptions1 = gridOptions1;
     //操作员名称，代码  应用系统名称 代码
     var com1 = [
-        { field: "guid", displayName:'资源类型'},
-        { field: "cesname", displayName:'角色名称'},
+        { field: "acResourcetype", displayName:'资源类型'},
+        { field: "roleName", displayName:'角色名称'},
     ];
     var f1 = function(row){
         if(row.isSelected){
@@ -299,7 +299,7 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
     }
 
     $scope.gridOptions1 = initgrid($scope,gridOptions1,filterFilter,com1,false,f1);
-    $scope.gridOptions1.data = $scope.myDatas;
+
     //资源身份新增
     $scope.identypeAdd = function(){
         var opersguid = $scope.selectRow.guid;//身份对应guid
@@ -454,30 +454,28 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
             })
     }
 
-
     //资源身份删除
     $scope.identypeDel = function(){
         var  opersguid = $scope.selectRow.guid;//身份对应guid
         var getSel = $scope.gridOptions1.getSelectedRows();
+        console.log(getSel)
         if(isNull(getSel) || getSel.length>1){
             toastr['error']("请选则一条数据进行删除！");
         }else{
             //调用删除接口
-            console.log(getSel[0]);
-            var subFrom = {};
-            subFrom.identityresGuid = getSel[0].guid;
-            console.log(subFrom)
-            console.log(opersguid)
-            common_service.post(res.deleteOperatorIdentityres,subFrom).then(function(data){
-                if(data.status == "success"){
-                    var datas  = data.retMessage;
-                    $scope.gridOptions.data = datas;
-                    //新增代码
-                    toastr['success']("保存成功！");
-                    opensf.inittx1(opersguid);//重新查询列表
-                }
+            if(confirm("您确认删除选中的资源吗？")){
+                var subFrom = {};
+                subFrom.identityresGuid = opersguid;
+                subFrom.resGuid = getSel[0].guidAcResource;//资源guid
+                common_service.post(res.deleteOperatorIdentityres,subFrom).then(function(data){
+                    if(data.status == "success"){
+                        var datas  = data.retMessage;
+                        toastr['success']("删除成功！");
+                        opensf.inittx1(opersguid);//重新查询列表
+                    }
+                })
+            }
 
-            })
         }
     }
 });

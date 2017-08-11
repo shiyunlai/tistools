@@ -157,6 +157,32 @@ public class AcOperatorController extends BaseController {
         return null;
     }
 
+    
+    /**
+     * 修改用户状态
+     */
+    @ResponseBody
+    @RequestMapping(value="/updateOperatorStatus" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public void updateOperatorStatus(@RequestBody String content, HttpServletRequest request,
+                                     HttpServletResponse response) {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("updateOperatorStatus request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+            String userId = jsonObject.getString("userId");
+            String OperatorStatus = jsonObject.getString("OperatorStatus");
+            operatorRService.updateUserStatus(userId, OperatorStatus);
+            AjaxUtils.ajaxJsonSuccessMessage(response,"");
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("updateOperatorStatus exception : ", e);
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("updateOperatorStatus exception : ", e);
+        }
+    }
+    
     /**
      * 查询操作员身份列表
      *     传入操作员GUID
@@ -287,24 +313,18 @@ public class AcOperatorController extends BaseController {
 
     /**
      * 查询操作员身份权限集列表
-     * @param content
-     * @param request
-     * @param response
-     * @return
-     * @throws ToolsRuntimeException
-     * @throws ParseException
      */
     @ResponseBody
     @RequestMapping(value="/queryAllOperatorIdentityRes" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
     public String queryAllOperatorIdentityRes(@RequestBody String content, HttpServletRequest request,
-                                   HttpServletResponse response) throws ToolsRuntimeException, ParseException {
+                                   HttpServletResponse response) {
         try {
             if (logger.isInfoEnabled()) {
                 logger.info("queryAllOperatorIdentityRes request : " + content);
             }
             JSONObject jsonObject= JSONObject.parseObject(content);
             String identityGuid = jsonObject.getString("identityGuid");
-            List<AcOperatorIdentityres> acOperatorIdentityreses = operatorRService.queryOperatorIdentityreses(identityGuid);
+            List<Map> acOperatorIdentityreses = operatorRService.queryOperatorIdentityreses(identityGuid);
             AjaxUtils.ajaxJsonSuccessMessage(response,acOperatorIdentityreses);
         } catch (ToolsRuntimeException e) {
             AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
@@ -350,12 +370,6 @@ public class AcOperatorController extends BaseController {
 
     /**
      * 删除操作员身份权限
-     * @param content
-     * @param request
-     * @param response
-     * @return
-     * @throws ToolsRuntimeException
-     * @throws ParseException
      */
     @ResponseBody
     @RequestMapping(value="/deleteOperatorIdentityres" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
@@ -366,8 +380,10 @@ public class AcOperatorController extends BaseController {
                 logger.info("deleteOperatorIdentityres request : " + content);
             }
             JSONObject jsonObject= JSONObject.parseObject(content);
-            String identityresGuid = jsonObject.getString("identityresGuid");//资源guid
-            operatorRService.deleteOperatorIdentityres(identityresGuid);
+            String identityresGuid = jsonObject.getString("identityresGuid");//身份GUID
+            String resGuid = jsonObject.getString("resGuid");//资源GUID
+            
+            operatorRService.deleteOperatorIdentityres(identityresGuid, resGuid);
             AjaxUtils.ajaxJsonSuccessMessage(response,"");
         } catch (ToolsRuntimeException e) {
             AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
@@ -439,7 +455,7 @@ public class AcOperatorController extends BaseController {
     }
 
 
-
+    	
 
     /**
      * 要求子类构造自己的响应数据
