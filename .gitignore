@@ -78,3 +78,7 @@ tools-web-tools/src/main/webapp/assets/apps/css/inbox.css
 *.iml
 tools.ipr
 *.iws
+
+tools-service-abf/src/main/resources/META-INF/spring/dubbo-provider-sys.xml
+
+tools-service-abf/src/main/resources/META-INF/spring/dubbo-provider-ac.xml
