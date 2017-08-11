@@ -147,13 +147,15 @@
                 processData:false,
                 contentType:'application/json',
                 success:function(data){
+                    console.log(data);
                     if(data.status == "success"){
                         var datas = data.retMessage;
+                        console.log(datas)
                         var html = '';
                         //进行默认验证
                         for(var i =0;i< datas.length; i++){
                             if(datas[i].identityFlag == 'Y'){
-                                html+= '<option value= "">'+datas[i].identityName+'</option>';
+                                html+= '<option value= " '+ datas[i].guid  +'">'+datas[i].identityName+'</option>';
                                 break;
                             }
                         }
@@ -161,11 +163,9 @@
                             if(datas[j].identityFlag == 'Y'){
                                 continue;
                             }
-                            html+= '<option value= "">'+datas[j].identityName+'</option>';
+                            html+= '<option value= "'+ datas[j].guid +' ">'+datas[j].identityName+'</option>';
                         }
-                        /*for(var i =0;i< datas.length; i++){
-                            html+= '<option>'+datas[i].identityName+'</option>'
-                        }*/
+
                         $('select').html(html);
                     }else{
                         toastr['error'](data.retMessage+'登录失败');
@@ -180,26 +180,27 @@
        }
     });
     var btn=document.getElementById('login');
+    //登陆调用服务,传入所需参数
     btn.onclick = function () {
-        var form = new FormData();
-        form.append("loginname",$("#loginname").val());
-        form.append("password",$("#password").val());
-        form.append("opertor",$("#opertor").val());
-        console.log("loginname",$("#loginname").val())
-        window.location = "../tools/index.html";//如果正确，则进入主页
-      /*  $.ajax({
-            url:"..//AcAuthenticationController/checkUserStatus",
+        var form = {};
+        form.userId = $("#loginname").val();
+        form.password = $("#password").val();
+        form.identityGuid = $("#opertor").val();
+        form.appGuid = 'APP1499956132';
+        $.ajax({
+            url:"..//AcAuthenticationController/login",
             type:"post",
-            data:form,
+            dataType:'json',
+            data:JSON.stringify(form),
             processData:false,
-            contentType:false,
+            contentType:'application/json',
             success:function(data){
+                console.log(data.retMessage)
                 data = angular.fromJson(data);
-                if(data.retCode == '1'){
-                    sessionStorage.user = JSON.stringify(data.user);
-                    sessionStorage.trans = JSON.stringify(data.trans);
-                    sessionStorage.menus = JSON.stringify(data.menus);
-                    sessionStorage.msgs = JSON.stringify(data.msgs);
+                if(data.status == "success"){
+                    sessionStorage.user = JSON.stringify(data.retMessage.user);
+                    sessionStorage.menus = data.retMessage.menu;
+                    sessionStorage.opertor = $("#opertor").find("option:selected").text();
                     window.location = "../tools/index.html";//如果正确，则进入主页
                 }else if(data.retCode == '2'){
                     toastr['error'](data.retMessage, "登录失败！");
@@ -207,7 +208,7 @@
                     toastr['error']( "登录异常！");
                 }
             }
-        });*/
+        });
     };
     $(document).ready(function () {
 //        Metronic.init();

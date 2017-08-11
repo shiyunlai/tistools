@@ -165,14 +165,25 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6" >
+                                        <!--<div class="col-md-6" >
                                             <div class="form-group">
                                                 <label class="control-label col-md-4">菜单层次:<span ng-class="{required:menuform.dict_key4.$invalid}"  > * </span></label>
                                                 <div class="col-md-8">
                                                     <input type="text" class="form-control"
                                                            ng-model="menuFrom.menuLevel"  required
                                                            name="dict_key4"  ng-disabled="!editflag"/>
-                                                    <!--<span style="color: #ccc;">请输入0-9999数值,从小到大排列</span>-->
+                                                    &lt;!&ndash;<span style="color: #ccc;">请输入0-9999数值,从小到大排列</span>&ndash;&gt;
+                                                </div>
+                                            </div>
+                                        </div>-->
+                                        <div class="col-md-6" >
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">菜单显示顺序:</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control"
+                                                           ng-model="menuFrom.displayOrder"  required
+                                                           name="dict_key4" ng-disabled="!editflag"/>
+                                                    <span style="color: #ccc;">请输入0-99数值,从大到小排列,默认为0</span>
                                                 </div>
                                             </div>
                                         </div>
