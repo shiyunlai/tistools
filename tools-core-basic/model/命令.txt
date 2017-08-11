@@ -13,7 +13,7 @@
 
 -- 展示abf.erm中ac模块 的模型结构
 
-	mvn tools:gen-dao -Dmodel.file.type=erm -Dmodel.file=abf -Dfixed.bizmodels=ac -Djust.show=true 
+	mvn tools:gen-dao -Dmodel.file.type=erm -Dmodel.file=ABF-mysq -Dfixed.bizmodels=ac -Djust.show=true -Dmodel.file.path= E:/tools/tistools/tools-core-basic/model
 
 -- 生成abf.erm中ac模块 的模型结构（但不生成controller）
 
@@ -25,6 +25,9 @@
 	
 	mvn tools:gen-dao -Dmodel.file.type=erm -Dmodel.file=ABF-mysql -Dgen.type=model,dao,biz,service
 	mvn tools:gen-dao -Dmodel.file.type=erm -Dmodel.file=JNL-mysql -Dgen.type=model,dao,biz,service
+
+	mvn tools:gen-dao -Dmodel.file.type=erm -Dmodel.file=ABF-mysql -Dfixed.bizmodels=sys -Dgen.type=model,dao,biz,service -Dtemplates.path=E:/tools/tistools/tools-maven-plugin/src/main/resources/META-INF/templates4erm/biz
+
 
 -- 更多参数使用
 -- 使用指定的模型定义文件 -Dmodel.file=abf
