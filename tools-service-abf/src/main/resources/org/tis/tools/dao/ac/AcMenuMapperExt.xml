@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.tis.tools.dao.ac.AcMenuMapperExt">
+
+    <select id="getMenuByUserId" resultType="org.tis.tools.model.po.ac.AcMenu">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        AC_FUNC d,
+        AC_MENU e
+        WHERE
+        e.GUID_FUNC = d.GUID
+        AND e.GUID_APP = #{appGuid}
+        AND d.GUID IN (
+        SELECT DISTINCT
+        (c.GUID_FUNC)
+        FROM
+        AC_ROLE_FUNC c,
+        AC_OPERATOR_ROLE b,
+        AC_OPERATOR a
+        WHERE
+        a.USER_ID = #{userId}
+        AND b.GUID_OPERATOR = a.GUID
+        AND c.GUID_ROLE = b.GUID_ROLE
+        )
+    </select>
+
+    <select id="getMenuByUserIdentity" resultType="org.tis.tools.model.po.ac.AcMenu">
+        SELECT
+          <include refid="Base_Column_List" />
+        FROM
+            AC_OPERATOR_IDENTITYRES a,
+            AC_ROLE_FUNC b,
+            AC_MENU e
+        WHERE
+            a.GUID_IDENTITY = #{identityGuid}
+        AND
+            a.GUID_AC_RESOURCE = b.GUID_ROLE
+        AND
+            e.GUID_APP = #{appGuid}
+        and
+            e.GUID_FUNC = b.GUID_FUNC
+    </select>
+
+    <select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+        select count(*) from AC_MENU <include refid="Where_Clause"/>
+    </select>
+
+    <sql id="Where_Clause">
+        <if test="condition != null"><where>${condition}</where></if>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        e.guid as guid
+        ,e.guid_app as guidApp
+        ,e.guid_func as guidFunc
+        ,e.menu_name as menuName
+        ,e.menu_label as menuLabel
+        ,e.menu_code as menuCode
+        ,e.isleaf as isleaf
+        ,e.ui_entry as uiEntry
+        ,e.menu_level as menuLevel
+        ,e.guid_parents as guidParents
+        ,e.guid_root as guidRoot
+        ,e.display_order as displayOrder
+        ,e.image_path as imagePath
+        ,e.expand_path as expandPath
+        ,e.menu_seq as menuSeq
+        ,e.open_mode as openMode
+        ,e.sub_count as subCount
+    </sql>
+</mapper>
