@@ -9,9 +9,12 @@ import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcFunc;
 import org.tis.tools.model.po.ac.AcFuncgroup;
 import org.tis.tools.model.po.ac.AcMenu;
+import org.tis.tools.model.vo.ac.AcMenuDetail;
+import org.tis.tools.rservice.ac.exception.MenuManagementException;
 import org.tis.tools.rservice.ac.exception.MenuManagementException;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <pre>
@@ -75,5 +78,55 @@ public interface IMenuRService {
      * @throws MenuManagementException
      */
     void deleteMenu(String menuGuid) throws MenuManagementException;
+
+    /**
+     *  根据用户id和身份查询菜单信息
+     *
+     * @param userId
+     * @param identity
+     * @return
+     * @throws MenuManagementException
+     */
+    Map<String, Object> getMenuByUserIdAndIden(String userId, String identity) throws MenuManagementException;
+
+    /**
+     *  根据用户id查询该用户拥有的该应用的菜单信息
+     *
+     * @param userId
+     *
+     * @return
+     * @throws MenuManagementException
+     */
+    AcMenuDetail getMenuByUserId(String userId, String appGuid) throws MenuManagementException;
+
+    /**
+     * 根据用户id和身份查询该用户拥有的该身份下的应用菜单信息
+     *
+     * @param userId
+     * @param appGuid
+     * @param identityGuid
+     * @return
+     * @throws MenuManagementException
+     */
+    AcMenuDetail getMenuByUserId(String userId, String appGuid, String identityGuid) throws MenuManagementException;
+
+    /**
+     *  根据用户id查询应用重组菜单信息
+     *
+     * @param userId
+     * @param appGuid
+     * @return
+     * @throws MenuManagementException
+     */
+    AcMenuDetail getOperatorMenuByUserId(String userId, String appGuid) throws MenuManagementException;
+    /**
+     *  根据用户id和身份查询应用重组菜单信息
+     *
+     * @param userId
+     * @param appGuid
+     * @return
+     * @throws MenuManagementException
+     */
+    AcMenuDetail getOperatorMenuByUserId(String userId, String appGuid, String identityGuid) throws MenuManagementException;
 
 }
