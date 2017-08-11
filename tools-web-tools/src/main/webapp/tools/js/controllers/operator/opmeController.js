@@ -132,32 +132,12 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
         common_service.post(res.getMenuByUserId,subFrom).then(function(data){
             if(data.status == "success"){
                 var datas = data.retMessage;
-                console.log(datas);
-                var result= datas.replace("guid","id").replace('label','text');//把'is'替换为空字符串
-                console.log(result)
+                var result= datas.replace(/guid/g,"id").replace(/label/g,'text');//把guid和label替换成自己需要的
                 var menuAll = angular.fromJson(result);
-                console.log(menuAll)
                 var menucles = menuAll.children;
                 opmer.menuAll = menucles;
-                console.log(opmer.menuAll)
-                opmer.menuconfig = true;//有菜单
-            }
-        })
-        //查询重组菜单
-        common_service.post(res.getOperatorMenuByUserId,subFrom).then(function(data){
-            if(data.status == "success"){
-                if(data.retMessage == ''){
-                    opmer.ismenuconfig = false //无重组菜单
-                }
-            }
-        })
-
-        if(opmer.menuconfig&&!opmer.ismenuconfig){//有菜单权限无重组菜单权限
-            $scope.opmer.searchok = true;
-            console.log(opmer.menuAll)
-            if(confirm('该用户未自定义重组菜单，是否配置')){
-                $scope.opmer.config = true;
-                //  左侧原有应用管理树结构
+                $scope.opmer.searchok = true;
+                //菜单一权限
                 $("#container").jstree({
                     "core" : {
                         "themes" : {
@@ -165,43 +145,6 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
                         },
                         "check_callback" : true,//在对树结构进行改变时，必须为true
                         'data':opmer.menuAll
-                        /*  [{
-                         "id": "1",
-                         "text": "应用菜单",
-                         icon:'fa fa-hospital-o icon-state-info icon-lg ',
-                         "children":
-                         [
-                         {
-                         "id": "2",
-                         "text": "组织管理",
-                         icon:'fa fa-home icon-state-info icon-lg',
-                         },
-                         {
-                         "id": "3",
-                         "text": "权限管理",
-                         icon:'fa fa-home icon-state-info icon-lg',
-                         },
-                         {
-                         "id": "4",
-                         "text": "授权认证",
-                         icon:'fa fa-home icon-state-info icon-lg',
-                         },
-                         {
-                         "id": "5",
-                         "text": "其他管理",
-                         icon:'fa fa-home icon-state-info icon-lg',
-                         },{
-                         "id": "6",
-                         "text": "工作流",
-                         icon:'fa fa-home icon-state-info icon-lg',
-                         },{
-                         "id": "7",
-                         "text": "测试图标",
-                         icon:'fa fa-home icon-state-info icon-lg',
-                         }
-                         ]
-                         }
-                         ]*/
                     },
                     "force_text": true,
                     plugins: ["sort", "types", "checkbox", "themes", "html_data"],
@@ -240,32 +183,78 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
                         return false;
                     }
                 })
+
+
+                //查询重组菜单
+                common_service.post(res.getOperatorMenuByUserId,subFrom).then(function(data){
+                    if(data.status == "success"){
+                        console.log(opmer.menuAll)
+                        if(data.retMessage == ''){
+                            //opmer.ismenuconfig = false //无重组菜单
+                            if(confirm('该用户未自定义重组菜单，请进行配置')){
+                                //$scope.opmer.searchok = true;
+                                $scope.opmer.config = true;
+                                /* 菜单二 */
+                                $("#container2").jstree({
+                                    "core" : {
+                                        "themes" : {
+                                            "responsive": false
+                                        },
+                                        "check_callback" : true,
+                                        'data':opmer.menuAll
+                                    },
+                                    "force_text": true,
+                                    plugins: ["sort", "types", "checkbox", "themes", "html_data"],
+                                    "checkbox": {
+                                        "keep_selected_style": false,//是否默认选中
+                                    },
+                                    "types" : {
+                                        "default" : {
+                                            "icon" : "fa fa-folder icon-state-warning icon-lg"
+                                        },
+                                        "file" : {
+                                            "icon" : "fa fa-file icon-state-warning icon-lg"
+                                        }
+                                    },
+                                    "state" : { "key" : "demo3" },
+                                    'dnd': {
+                                        'dnd_start': function () {
+                                            console.log("start");//拖拽开始
+                                        },
+                                        'is_draggable':function (node) {
+                                            //用于控制节点是否可以拖拽.
+                                            if(node.id == 3){
+                                                return false;//根节点禁止拖拽
+                                            }
+                                            return true;
+                                        }
+                                    },
+                                    'callback' : {
+                                        move_node:function (node) {
+                                        }
+                                    },
+                                    "plugins" : [ "dnd", "state", "types","search" ,"checkbox","wholerow"]// 插件引入 dnd拖拽插件 state缓存插件(刷新保存) types多种数据结构插件  checkbox复选框插件
+                                }).bind("move_node.jstree",function (e,data) {
+                                    if(confirm("确认要移动此机构吗?")){
+                                        //TODO.
+                                    }else{
+                                        // 直接重新刷新树结构
+                                    }
+
+                                })
+                            }
+                        }else{
+                            $scope.opmer.config = true;console.log(opmer.menuAll)
+
+                        }
+                    }
+                })
+            }else{
+                toastr['error']('暂无该应用操作权限');
             }
-        }else if(!opmer.menuconfig&&!opmer.ismenuconfig){
-            $scope.opmer.searchok = true;
-            $scope.opmer.config = true;
-        }else if(opmer.menuconfig){
-            toastr['error']('暂无该应用操作权限');
-        }else{
-            $scope.opmer.searchok = false;
-            $scope.opmer.config = false;
-        }
-        /*if (data.operuser == '张三'){
-            $scope.opmer.searchok = true;
-            $scope.opmer.config = true;
-        }else if(data.appCode == '123'){
-            if(confirm('该用户未自定义重组菜单，是否配置')){
-                $scope.opmer.searchok = true;
-                $scope.opmer.config = true;
-            }
-        }
-        else{
-            confirm('找不到目标用户，请重新输入')
-            $scope.opmer.searchok = false;
-            $scope.opmer.config = false;
-            $scope.searchFrom.appCode = '';
-            $scope.searchFrom.operuser = '';
-        }*/
+
+        })
+
 
     }
 
@@ -274,93 +263,6 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
 
 
 
-    /* 菜单二 */
-    $("#container2").jstree({
-        "core" : {
-            "themes" : {
-                "responsive": false
-            },
-            "check_callback" : true,
-            'data':
-                [{
-                    "id": "1",
-                    "text": "应用菜单",
-                    icon:'fa fa-hospital-o icon-state-info icon-lg ',
-                    "children":
-                        [
-                            {
-                                "id": "2",
-                                "text": "组织管理",
-                                icon:'fa fa-home icon-state-info icon-lg',
-                            },
-                            {
-                                "id": "3",
-                                "text": "权限管理",
-                                icon:'fa fa-home icon-state-info icon-lg',
-                            },
-                            {
-                                "id": "4",
-                                "text": "授权认证",
-                                icon:'fa fa-home icon-state-info icon-lg',
-                            },
-                            {
-                                "id": "5",
-                                "text": "其他管理",
-                                icon:'fa fa-home icon-state-info icon-lg',
-                            },{
-                            "id": "6",
-                            "text": "工作流",
-                            icon:'fa fa-home icon-state-info icon-lg',
-                        },{
-                            "id": "7",
-                            "text": "测试图标",
-                            icon:'fa fa-home icon-state-info icon-lg',
-                        }
-                        ]
-                }
-                ]
-        },
-        "force_text": true,
-        plugins: ["sort", "types", "checkbox", "themes", "html_data"],
-        "checkbox": {
-            "keep_selected_style": false,//是否默认选中
-        },
-        "types" : {
-            "default" : {
-                "icon" : "fa fa-folder icon-state-warning icon-lg"
-            },
-            "file" : {
-                "icon" : "fa fa-file icon-state-warning icon-lg"
-            }
-        },
-        "state" : { "key" : "demo3" },
-        'dnd': {
-            'dnd_start': function () {
-                console.log("start");//拖拽开始
-            },
-            'is_draggable':function (node) {
-                //用于控制节点是否可以拖拽.
-                if(node.id == 3){
-                    return false;//根节点禁止拖拽
-                }
-                return true;
-            }
-        },
-        'callback' : {
-            move_node:function (node) {
-            }
-        },
-        "plugins" : [ "dnd", "state", "types","search" ,"checkbox","wholerow"]// 插件引入 dnd拖拽插件 state缓存插件(刷新保存) types多种数据结构插件  checkbox复选框插件
-    }).bind("move_node.jstree",function (e,data) {
-        if(confirm("确认要移动此机构吗?")){
-            //TODO.
-        }else{
-            // data.inst.refresh(data.inst._get_parent(data.rslt.oc));
-            return false;
-        }
-        console.log(e);
-        console.log(data);
-    })
 
 
     $scope.opmer.saveconfig = function(){
