@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.tis.tools.dao.ac.AcOperatorMapperExt">
+
+
+    <select id="queryOperatorIdentityreses" resultType="map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        AC_OPERATOR_IDENTITYRES a LEFT JOIN AC_ROLE b ON a.GUID_AC_RESOURCE = b.GUID
+        WHERE
+        a.GUID_IDENTITY = #{identityGuid}
+    </select>
+
+    <select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+        select count(*) from AC_OPERATOR <include refid="Where_Clause"/>
+    </select>
+
+    <sql id="Where_Clause">
+        <if test="condition != null"><where>${condition}</where></if>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        a.guid_identity as guidIdentity
+		,a.ac_resourcetype as acResourcetype
+		,a.guid_ac_resource as guidAcResource
+		,b.role_name as roleName
+    </sql>
+</mapper>

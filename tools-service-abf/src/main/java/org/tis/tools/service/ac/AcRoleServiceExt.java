@@ -102,4 +102,9 @@ public class AcRoleServiceExt {
 	public List<Map> queryAllOperatorRoleExt(String roleGuid) {
 		return acRoleMapperExt.queryAllOperatorRoleExt(roleGuid);
 	}
+
+
+
+
+
 }

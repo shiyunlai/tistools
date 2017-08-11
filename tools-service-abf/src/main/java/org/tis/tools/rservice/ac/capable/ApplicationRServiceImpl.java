@@ -303,7 +303,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	/**
 	 * 删除功能组(AC_FUNCGROUP)
 	 * 
-	 * @param guid
+	 * @param GUID
 	 *            记录guid
 	 */
 	@Override
@@ -388,7 +388,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	
 	/**
 	 * 根据条件查询功能组(AC_FUNCGROUP)
-	 * @param guid 条件
+	 * @param GUID 条件
 	 * @return 满足条件的记录list
 	 */
 	@Override
@@ -1563,6 +1563,27 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHEN_DISABLE_ACAPP,
+					BasicUtil.wrap(e.getCause().getMessage()));
+		}
+	}
+
+	/**
+	 * 查询应用下所有功能
+	 *
+	 * @param appGuid 应用GUID
+	 */
+	@Override
+	public List<AcFunc> queryFuncListInApp(String appGuid) {
+		// 校验传入参数
+		if(StringUtil.isEmpty(appGuid)) {
+			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
+		}
+		try {
+			return applicationService.queryFuncListInApp(appGuid);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNC,
 					BasicUtil.wrap(e.getCause().getMessage()));
 		}
 	}
