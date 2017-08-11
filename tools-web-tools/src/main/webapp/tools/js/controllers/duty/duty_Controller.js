@@ -1,7 +1,7 @@
 /**
  * Created by gaojie on 2017/7/26.
  */
-angular.module('MetronicApp').controller('duty_controller', function($rootScope, $scope,duty_service, $http, $timeout,i18nService,filterFilter,uiGridConstants,$uibModal,$state) {
+angular.module('MetronicApp').controller('duty_controller', function($rootScope, $scope,duty_service,abftree_service, $http, $timeout,i18nService,filterFilter,uiGridConstants,$uibModal,$state) {
     $scope.$on('$viewContentLoaded', function () {
         // initialize core components
         App.initAjax();
@@ -402,6 +402,13 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                 flag[i] = false;
             }
             $scope.flag.zwqx = true;
+            //传递参数
+            var guid = $scope.duty.item.guid;
+            // 生成权限三表
+            var mygrid = {}
+            var alrolegird = {}
+            var notrolegird = {}
+            commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftree_service,toastr)
         }
     }
     
@@ -570,6 +577,10 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                 }
             })
         }
+    }
+    //跳转字典
+    duty.toDict = function () {
+        $state.go('dictionary')
     }
     //下级职务列表-新增按钮
     duty.addxjzw = function () {

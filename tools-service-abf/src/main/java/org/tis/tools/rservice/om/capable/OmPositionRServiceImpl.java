@@ -1,10 +1,5 @@
 package org.tis.tools.rservice.om.capable;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
@@ -17,19 +12,17 @@ import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.def.OMConstants;
 import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcRole;
-import org.tis.tools.model.po.om.OmEmpPosition;
-import org.tis.tools.model.po.om.OmEmployee;
-import org.tis.tools.model.po.om.OmGroup;
-import org.tis.tools.model.po.om.OmPosition;
+import org.tis.tools.model.po.om.*;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.om.exception.EmployeeManagementException;
 import org.tis.tools.rservice.om.exception.OrgManagementException;
 import org.tis.tools.rservice.om.exception.PositionManagementException;
-import org.tis.tools.service.om.OmEmpPositionService;
-import org.tis.tools.service.om.OmEmployeeService;
-import org.tis.tools.service.om.OmOrgService;
-import org.tis.tools.service.om.OmPositionService;
+import org.tis.tools.service.ac.AcAppService;
+import org.tis.tools.service.om.*;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
+
+import java.math.BigDecimal;
+import java.util.*;
 
 public class OmPositionRServiceImpl extends BaseRService implements IPositionRService {
 	@Autowired
@@ -40,11 +33,18 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 	OmEmpPositionService omEmpPositionService;
 	@Autowired
 	OmEmployeeService omEmployeeService;
+	@Autowired
+	AcAppService acAppService;
+	@Autowired
+	OmPositionAppService positionAppService;
+	@Autowired
+	BOSHGenPositionCode boshGenPositionCode;
 
 	@Override
 	public String genPositionCode(String positionType) throws ToolsRuntimeException {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String,String> parms = new HashMap<String,String>() ;
+		parms.put("positionType", positionType) ;
+		return boshGenPositionCode.genPositionCode(parms);
 	}
 
 	@Override
@@ -309,8 +309,19 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 
 	@Override
 	public OmPosition queryPosition(String positionCode) {
-		// TODO Auto-generated method stub
-		return null;
+		// 校验传入参数
+		if (StringUtil.isEmpty(positionCode)) {
+			throw new PositionManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY,
+					BasicUtil.wrap("positionCode", "岗位代码"));
+		}
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("POSITION_CODE",positionCode);
+		List<OmPosition> opList = omPositionService.query(wc);
+		if(opList.size() != 1){
+			throw new PositionManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY,
+					BasicUtil.wrap("positionCode", "岗位代码"));
+		}
+		return opList.get(0);
 	}
 
 	@Override
@@ -421,8 +432,26 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 
 	@Override
 	public List<AcApp> queryApp(String positionCode) {
-		// TODO Auto-generated method stub
-		return null;
+		// 校验传入参数
+		if (StringUtil.isEmpty(positionCode)) {
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("positionCode"));
+		}
+		WhereCondition wc = new WhereCondition();
+		OmPosition op = queryPosition(positionCode);
+		wc.andEquals("GUID_POSITION", op.getGuid());
+		List<OmPositionApp> oapList = positionAppService.query(wc);
+		List<AcApp> appList = new ArrayList<>();
+		if(oapList.size() == 0){
+			return appList;
+		}
+		List<String> guidList = new ArrayList<>();
+		for(OmPositionApp oap: oapList){
+			guidList.add(oap.getGuidApp());
+		}
+		wc.clear();
+		wc.andIn("GUID",guidList);
+		appList = acAppService.query(wc);
+		return appList;
 	}
 
 	@Override
@@ -450,5 +479,58 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 		}
 		String guid = poList.get(0).getGuid();
 		return guid;
+	}
+
+	@Override
+	public List<OmPosition> queryAllPosition() {
+		return omPositionService.query(null);
+	}
+
+	@Override
+	public List<AcApp> queryAppNotInPosition(String positionCode) {
+		List<AcApp> inList = queryApp(positionCode);
+		List<AcApp> allList = acAppService.query(null);
+		allList.removeAll(inList);
+		return allList;
+	}
+
+	@Override
+	public void addAppPosition(String appGuid, String positionGuid) {
+		// 校验传入参数
+		if (StringUtil.isEmpty(appGuid)) {
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
+		}
+		if (StringUtil.isEmpty(positionGuid)) {
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
+		}
+		OmPositionApp oap = new OmPositionApp();
+		oap.setGuidApp(appGuid);
+		oap.setGuidPosition(positionGuid);
+		positionAppService.insert(oap);
+	}
+
+	@Override
+	public void deleteAppPosition(String appGuid, String positionGuid) {
+		if (StringUtil.isEmpty(appGuid)) {
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
+		}
+		if (StringUtil.isEmpty(positionGuid)) {
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
+		}
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("GUID_POSITION", positionGuid);
+		wc.andEquals("GUID_APP", appGuid);
+		positionAppService.deleteByCondition(wc);
+	}
+
+	@Override
+	public List<OmPosition> queryAllPositionByOrg(String orgGuid) {
+		if (StringUtil.isEmpty(orgGuid)) {
+			return null;
+		}
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("GUID_ORG", orgGuid);
+		List<OmPosition> list2 = omPositionService.query(wc);
+		return list2;
 	}
 }
