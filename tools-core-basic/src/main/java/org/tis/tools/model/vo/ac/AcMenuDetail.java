@@ -129,4 +129,20 @@ public class AcMenuDetail implements Serializable {
         }
         return result ;
     }
+
+    public String toTree() {
+        String result = "";
+        if (children != null && children.size() != 0) {
+            result= "{"
+                    + "\"id\" : \"" + this.guid + "\""
+                    + ", \"text\" : \"" + this.label + "\""
+                    + ", \"icon\" : \"" + this.icon + "\""
+                    + ", \"isLeaf\" : \"" + this.isLeaf + "\""
+                    + ", \"href\" : \"" + this.href + "\""
+                    + ", \"order\" : \"" + this.order + "\""
+                    + ", \"children\" : " + children.toString()
+                    + "}";
+        }
+        return result ;
+    }
 }
