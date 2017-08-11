@@ -368,4 +368,11 @@ public interface IPositionRService {
 	 * @return
 	 */
 	List<OmPosition> queryAllPosition();
+
+	/**
+	 * 用于生成岗位列表
+	 * @param orgGuid
+	 * @return
+	 */
+	List<OmPosition> queryAllPositionByOrg(String orgGuid) ;
 }

@@ -205,6 +205,10 @@ public class OMExceptionCodes {
 	 * 缺少生成业务机构代码参数
 	 */
 	public static final String LAKE_PARMS_FOR_GEN_BUSIORGCODE= R_EX_CODE("0041");
+	 /**
+	 * 缺少生成岗位代码参数
+	 */
+	public static final String LAKE_PARMS_FOR_GEN_POSITION= R_EX_CODE("0042");
 
 
 	/**

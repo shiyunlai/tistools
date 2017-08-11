@@ -144,6 +144,13 @@ MetronicApp.factory('abftree_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     }
+    service.initPosCode = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/initPosCode",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+
     /**------------------------权限系列方法--------------------*/
     service.queryRole = function (subFrom) {
         var res = $http.post(manurl + "/om/org/queryRole",subFrom).then(function (response) {
@@ -177,6 +184,12 @@ MetronicApp.factory('abftree_service',['$http', '$q', function ($http,$q) {
     }
     service.queryAllorg = function () {
         var res = $http.post(manurl + "/om/org/queryAllorg",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.queryAllposbyOrg = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/queryAllposbyOrg",subFrom).then(function (response) {
             return response.data;
         });
         return res;

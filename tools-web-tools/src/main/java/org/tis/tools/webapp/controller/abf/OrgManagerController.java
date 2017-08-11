@@ -1019,6 +1019,41 @@ public class OrgManagerController extends BaseController {
         return null;
     }
 
+
+    @RequestMapping(value = "/queryAllposbyOrg")
+    public String queryAllposbyOrg(ModelMap model,@RequestBody String content ,HttpServletRequest request,
+                                    HttpServletResponse response) {
+        try {
+            JSONObject jsonObj = JSONObject.parseObject(content);
+            String orgGuid = jsonObj.getString("orgGuid");
+            List<OmPosition> list = positionRService.queryAllPositionByOrg(orgGuid);
+            AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list, "yyyy-MM-dd");
+        } catch (ToolsRuntimeException e) {// TODO
+            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/initPosCode")
+    public String initPosCode(ModelMap model,@RequestBody String content ,HttpServletRequest request,
+                                   HttpServletResponse response) {
+        try {
+            JSONObject jsonObj = JSONObject.parseObject(content);
+            String positionType = jsonObj.getString("positionType");
+            String positionCode = positionRService.genPositionCode(positionType);
+            AjaxUtils.ajaxJsonSuccessMessage(response, positionCode);
+        } catch (ToolsRuntimeException e) {// TODO
+            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+        }
+        return null;
+    }
+
     /**
      * 每个controller定义自己的返回信息变量
      */

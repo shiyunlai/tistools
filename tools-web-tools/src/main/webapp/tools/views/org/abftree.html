@@ -42,7 +42,7 @@
     <div class="col-md-9 portlet light" style="height:100%;" ng-if="flag.index">
         <div class="portlet light">
             <div class="portlet-body portlet light">
-                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="tabflag">
+                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="tabflag && !gwflag.gwlb">
                     <li ng-class="{true:'active',false:''}[flag.xqxx]">
                         <a id="tab-list" data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xqxx]"
                            ng-click="abftree.loaddata(999)">
@@ -69,7 +69,7 @@
                     </li>
                 </ul>
                 <!--岗位页签-->
-                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="!tabflag">
+                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="!tabflag && !gwflag.gwlb">
                     <li ng-class="{true:'active',false:''}[gwflag.gwxx]">
                         <a data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.gwxx]"
                            ng-click="abftree.loadgwdata(0)">
@@ -98,6 +98,14 @@
                         <a data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.gwqx]"
                            ng-click="abftree.loadgwdata(4)">
                             <i class="green ace-icon fa fa-bars bigger-120"></i>岗位权限列表
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="gwflag.gwlb">
+                    <li ng-class="{true:'active',false:''}[gwflag.gwlb]">
+                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[gwflag.gwlb]"
+                           ng-click="abftree.loadgwdata(4)">
+                            <i class="green ace-icon fa fa-bars bigger-120"></i>下属岗位列表
                         </a>
                     </li>
                 </ul>
@@ -701,8 +709,19 @@
                     </div>
                 </div>
                 <!-- 岗位详情 end -->
-
-                <!-- 岗位员工列表开始 -->
+                <!-- 岗位列表开始 -->
+                <div class="tab-content portlet light" ng-if="gwflag.gwlb">
+                    <div ui-grid="gwlbgird"
+                         ui-grid-edit ui-grid-pagination
+                         ui-grid-selection ui-grid-resize-columns></div>
+                    <div class="actions btn-set" style="float: right;">
+                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addpos()"> 添加岗位
+                        </button>
+                        <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletepos()"> 删除岗位
+                        </button>
+                    </div>
+                </div>
+                <!-- 岗位列表开始 -->
                 <div class="tab-content portlet light" ng-if="gwflag.gwyg">
                     <div ui-grid="gwemp"
                          ui-grid-edit ui-grid-pagination
@@ -726,9 +745,8 @@
                     <div class="actions btn-set" style="float: right;">
                         <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addApp()"> 新增应用
                         </button>
-                        <button type="button" name="back" class="btn btn-primary" ng-click=""> 编辑应用
-                        </button>
-                        <button type="button" name="back" class="btn btn-danger" ng-click=""> 删除应用
+
+                        <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deleteApp()"> 删除应用
                         </button>
                     </div>
                 </div>

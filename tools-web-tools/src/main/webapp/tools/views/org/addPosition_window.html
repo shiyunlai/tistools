@@ -9,28 +9,53 @@
         </div>
     </div>
     <div class="portlet-body portlet light">
-        <form action="#" name="myform" class="form-horizontal ">
+        <form action="#" name="myform1" class="form-horizontal" ng-if="next">
             <div class="form-body ">
-                <!--<div class="col-md-6" >-->
-                <!--<div class="form-group">-->
-                <!--<label class="control-label col-md-4">岗位状态</label>-->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">岗位类型:</label>
+                        <div class="col-md-8">
+                            <select ng-model="subFrom.positionType" class="form-control" required>
+                                <option value="01">机构岗位</option>
+                                <option value="02">工作组岗位</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-2"></label>
+                        <div class="col-md-10">
 
-                <!--<div class="col-md-8">-->
-                <!--<input type="text" class="form-control"-->
-                <!--ng-model="subFrom.orgStatus"-->
-                <!--name="id" />-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div class="col-md-6" style=" visibility: hidden;">-->
-                <!--<div class="form-group form-control col-md-8">-->
-                <!--</div>-->
-                <!--</div>-->{{subFrom}}
+                            <div class="actions btn-set" style="float: right;">
+                                <button type="button" name="back" class="btn btn-primary" ng-disabled="myform1.$invalid" ng-click="skip()"> 下一步
+                                </button>
+                                <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <form action="#" name="myform" class="form-horizontal " ng-if="!next">
+            <div class="form-body ">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">岗位代码:</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="subFrom.positionCode" name="id" />
+                            <input type="text" class="form-control" ng-model="subFrom.positionCode" name="id" readonly/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">岗位类型:</label>
+                        <div class="col-md-8">
+                            <select ng-model="subFrom.positionType" class="form-control" readonly="">
+                                <option value="01">机构岗位</option>
+                                <option value="02">工作组岗位</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -40,16 +65,6 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="subFrom.positionName"
-                                   name="id" />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">岗位类型:</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.positionType"
                                    name="id" />
                         </div>
                     </div>

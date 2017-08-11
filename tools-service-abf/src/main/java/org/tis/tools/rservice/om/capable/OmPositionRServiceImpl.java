@@ -7,7 +7,6 @@ import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.common.utils.StringUtil;
-import org.tis.tools.dao.om.OmPositionAppMapper;
 import org.tis.tools.model.def.CommonConstants;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.def.OMConstants;
@@ -23,9 +22,7 @@ import org.tis.tools.service.om.*;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class OmPositionRServiceImpl extends BaseRService implements IPositionRService {
 	@Autowired
@@ -39,12 +36,15 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 	@Autowired
 	AcAppService acAppService;
 	@Autowired
-	OmAppPositionService appPositionService;
+	OmPositionAppService positionAppService;
+	@Autowired
+	BOSHGenPositionCode boshGenPositionCode;
 
 	@Override
 	public String genPositionCode(String positionType) throws ToolsRuntimeException {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String,String> parms = new HashMap<String,String>() ;
+		parms.put("positionType", positionType) ;
+		return boshGenPositionCode.genPositionCode(parms);
 	}
 
 	@Override
@@ -439,13 +439,13 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 		WhereCondition wc = new WhereCondition();
 		OmPosition op = queryPosition(positionCode);
 		wc.andEquals("GUID_POSITION", op.getGuid());
-		List<OmAppPosition> oapList = appPositionService.query(wc);
+		List<OmPositionApp> oapList = positionAppService.query(wc);
 		List<AcApp> appList = new ArrayList<>();
 		if(oapList.size() == 0){
 			return appList;
 		}
 		List<String> guidList = new ArrayList<>();
-		for(OmAppPosition oap: oapList){
+		for(OmPositionApp oap: oapList){
 			guidList.add(oap.getGuidApp());
 		}
 		wc.clear();
@@ -503,10 +503,10 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 		if (StringUtil.isEmpty(positionGuid)) {
 			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
 		}
-		OmAppPosition oap = new OmAppPosition();
+		OmPositionApp oap = new OmPositionApp();
 		oap.setGuidApp(appGuid);
 		oap.setGuidPosition(positionGuid);
-		appPositionService.insert(oap);
+		positionAppService.insert(oap);
 	}
 
 	@Override
@@ -520,6 +520,17 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 		WhereCondition wc = new WhereCondition();
 		wc.andEquals("GUID_POSITION", positionGuid);
 		wc.andEquals("GUID_APP", appGuid);
-		appPositionService.deleteByCondition(wc);
+		positionAppService.deleteByCondition(wc);
+	}
+
+	@Override
+	public List<OmPosition> queryAllPositionByOrg(String orgGuid) {
+		if (StringUtil.isEmpty(orgGuid)) {
+			return null;
+		}
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("GUID_ORG", orgGuid);
+		List<OmPosition> list2 = omPositionService.query(wc);
+		return list2;
 	}
 }
