@@ -1,7 +1,7 @@
 /**
  * Created by gaojie on 2017/6/26.
  */
-angular.module('MetronicApp').controller('Emp_controller', function($rootScope, $scope,Emp_service, $http, $timeout,i18nService,filterFilter,uiGridConstants,$uibModal,$state) {
+angular.module('MetronicApp').controller('Emp_controller', function($rootScope,uiGridConstants, $scope,Emp_service,gridUtil,$window, $http, $timeout,i18nService,filterFilter,uiGridConstants,$uibModal,$state) {
     $scope.$on('$viewContentLoaded', function () {
         // initialize core components
         App.initAjax();
@@ -65,15 +65,14 @@ angular.module('MetronicApp').controller('Emp_controller', function($rootScope, 
         { field: 'empDegree', displayName: '员工职级', enableHiding: false},
         { field: 'guidPosition', displayName: '基本岗位', enableHiding: false},
         { field: 'guidempmajor', displayName: '直接主管', enableHiding: false},
-        { field: 'indate', displayName: '入职日期', enableHiding: false},
-        { field: 'otel', displayName: '办公电话', enableHiding: false}
+        { field: 'indate', displayName: '入职日期', enableHiding: true},
+        { field: 'otel', displayName: '办公电话', enableHiding: true}
     ]
     $scope.empgrid = initgrid($scope,empgrid,filterFilter,com,false,sele);
 
     var reempgrid = function () {
         //调取工作组信息OM_GROUP
         Emp_service.loadempgrid().then(function (data) {
-            console.log(data)
             if(data.status == "success" && data.retMessage.length > 0){
                 for(var i = 0;i<data.retMessage.length;i++){
                     data.retMessage[i].birthdate = FormatDate(data.retMessage[i].birthdate);
@@ -86,6 +85,8 @@ angular.module('MetronicApp').controller('Emp_controller', function($rootScope, 
                 $scope.empgrid.data = data.retMessage;
                 $scope.empgrid.mydefalutData = data.retMessage;
                 $scope.empgrid.getPage(1,$scope.empgrid.paginationPageSize);
+                var c = $('#test').width();
+                console.log(c)
             }else{
 
             }
@@ -272,4 +273,57 @@ angular.module('MetronicApp').controller('Emp_controller', function($rootScope, 
 
     }
     $scope.postgrid = initgrid($scope,postgrid,initpostdata(),filterFilter,null,false,selepost)
+
+    /**-------------------------------测试table自适应---------------------------*/
+
+    var w = angular.element($window);
+    $scope.getWindowDimensions = function () {
+        return { 'w': w.width() };
+    };
+    console.log($scope.getWindowDimensions())
+    $scope.$watch($scope.getWindowDimensions, function (newValue, oldValue) {
+        var c = $('#test').width();
+        console.log(c)
+        $scope.windowWidth = newValue.w;
+        console.log($scope.windowWidth)
+        if(!isNull(c)){
+            if(c>1200){
+                console.log($scope.empgrid.columnDefs)
+                var a = $scope.empgrid.columnDefs
+                for(var i=0;i<a.length;i++){
+                    a[i].visible = true;
+                }
+
+                $scope.empgrid.ref()
+            }else if(c<1200){
+                var a = $scope.empgrid.columnDefs;
+                for(var i=4;i<a.length;i++){
+                    a[i].visible = false;
+                }
+                // console.log($scope.empgrid.api().core.queueGridRefresh());
+                // console.log($scope.empgrid.api())
+                // $scope.empgrid.ref()
+                // $scope.empgrid.api().core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
+                // $scope.empgrid.getPage(1,$scope.empgrid.paginationPageSize);
+
+                // var com = [{ field: 'empCode', displayName: '员工代码', enableHiding: false},
+                //     { field: 'empName', displayName: '员工姓名', enableHiding: false},
+                //     { field: 'gender', displayName: '性别', enableHiding: false},
+                //     { field: 'empstatus', displayName: '员工状态', enableHiding: false}
+                // ]
+                // $scope.empgrid = initgrid($scope,empgrid,filterFilter,com,false,sele);
+                // reempgrid()
+            }
+        }
+
+    }, true);
+    w.bind('resize', function () {
+        $scope.$apply();
+    });
+    emp.reTest = function () {
+        $scope.empgrid.api().core.refresh();
+        console.log(123)
+    }
+
+
 });

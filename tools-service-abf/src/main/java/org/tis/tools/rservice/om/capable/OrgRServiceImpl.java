@@ -904,7 +904,9 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 * @see org.tis.tools.rservice.om.capable.IOrgRService#queryOrgsByCondition(org.tis.tools.base.WhereCondition)
 	 */
 	@Override
-	public List<OmOrg> queryOrgsByCondition(WhereCondition wc) {
+	public List<OmOrg> queryOrgsByName(String name) {
+		WhereCondition wc = new WhereCondition();
+		wc.andFullLike("ORG_NAME", name);
 		List<OmOrg> orgs = omOrgService.query(wc) ; 
 		return orgs;
 	}
