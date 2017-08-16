@@ -288,7 +288,8 @@ function dictKey($rootScope,dict,service){
     dictQuery.then(function(data){
         if(data.status == "success"){
             var datas = data.retMessage;
-            $rootScope.dictitem=datas;
+            $rootScope.dict.dictKey = datas;
+            console.log(item)
         }else{
             toastr['error']('字典项查询失败'+'<br/>'+data.retMessage);
         }
@@ -518,10 +519,21 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
 
                 console.log(filterConditions);
             });
+            $scope.gridApi.colResizable.on.columnSizeChanged($scope,function(colDef, deltaChange){
+                console.log(deltaChange)
+            });
 
+
+        },
+        ref:function () {
+            console.log(112)
+            $scope.gridApi.core.refresh();
         },
         getSelectedRows:function () {
             return $scope.gridApi.selection.getSelectedRows();
+        },
+        api:function () {
+            return $scope.gridApi;
         }
     };
 

@@ -374,7 +374,7 @@ public interface IOrgRService {
 	 *            查询条件
 	 * @return 匹配条件的机构记录们，无记录返回null
 	 */
-	List<OmOrg> queryOrgsByCondition(WhereCondition wc);
+	List<OmOrg> queryOrgsByName(String name);
 	
 	/**
 	 * <pre>
