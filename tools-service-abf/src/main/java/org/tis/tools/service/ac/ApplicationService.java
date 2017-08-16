@@ -12,10 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.dao.ac.AcAppMapper;
+import org.tis.tools.dao.ac.AcFuncMapperExt;
 import org.tis.tools.dao.ac.ApplicationMapper;
 import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcBhvDef;
 import org.tis.tools.model.po.ac.AcBhvtypeDef;
+import org.tis.tools.model.po.ac.AcFunc;
 import org.tis.tools.model.vo.ac.AcAppVo;
 import org.tis.tools.model.vo.ac.AcFuncVo;
 
@@ -30,7 +32,9 @@ public class ApplicationService {
 
 	@Autowired
 	ApplicationMapper applitionMapper;
-	
+
+	@Autowired
+	AcFuncMapperExt acFuncMapperExt;
    
 
     public List<AcAppVo> queryAcAppVo(WhereCondition wc){
@@ -83,5 +87,9 @@ public class ApplicationService {
 	public List<Map> queryFuncBhvRelation(WhereCondition wc) {
 		return applitionMapper.queryFuncBhvRelation(wc);
 	}
+
+
+
+	public List<AcFunc> queryFuncListInApp(String appGuid) { return acFuncMapperExt.queryFuncListInApp(appGuid);}
     
 }

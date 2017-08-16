@@ -367,7 +367,22 @@ public class ACExceptionCodes {
 	 * 查询操作员身份权限失败
 	 */
 	public static final String AC_ROLE_IS_NOT_FOUND  = R_EX_CODE("0068");
-	
+
+	/**
+	 * 密码错误
+	 */
+	public static final String PASSWORD_IS_WRONG  = R_EX_CODE("0069");
+	/**
+	 * 登录异常
+	 */
+	public static final String FAILURE_WHEN_LOGIN  = R_EX_CODE("0070");
+	/**
+	 * 登录异常
+	 */
+//	public static final String NO_EMPLOYEE_CORRESPONDING_OPERATOR  = R_EX_CODE("0071");
+
+
+
 	/**
 	 * 以烤串方式拼接异常码
 	 * @param code 业务域范围内的异常编码

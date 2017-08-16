@@ -23,26 +23,46 @@ public class ReadExcelUtils {
     private Sheet sheet;  
     private Row row;  
   
-    public ReadExcelUtils(String filepath) {  
-        if(filepath==null){  
-            return;  
-        }  
-        String ext = filepath.substring(filepath.lastIndexOf("."));  
-        try {  
-            InputStream is = new FileInputStream(filepath);  
-            if(".xls".equals(ext)){  
-                wb = new HSSFWorkbook(is);  
-            }else if(".xlsx".equals(ext)){  
-                wb = new XSSFWorkbook(is);  
-            }else{  
-                wb=null;  
-            }  
-        } catch (FileNotFoundException e) {  
-            logger.error("FileNotFoundException", e);  
-        } catch (IOException e) {  
-            logger.error("IOException", e);  
-        }  
-    }  
+    public ReadExcelUtils(String filepath) {
+        if(filepath==null){
+            return;
+        }
+        String ext = filepath.substring(filepath.lastIndexOf("."));
+        try {
+            InputStream is = new FileInputStream(filepath);
+            if(".xls".equals(ext)){
+                wb = new HSSFWorkbook(is);
+            }else if(".xlsx".equals(ext)){
+                wb = new XSSFWorkbook(is);
+            }else{
+                wb=null;
+            }
+        } catch (FileNotFoundException e) {
+            logger.error("FileNotFoundException", e);
+        } catch (IOException e) {
+            logger.error("IOException", e);
+        }
+    }
+
+    public ReadExcelUtils(String fileName, InputStream is) {
+        if(fileName==null){
+            return;
+        }
+        String ext = fileName.substring(fileName.lastIndexOf("."));
+        try {
+            if(".xls".equals(ext)){
+                wb = new HSSFWorkbook(is);
+            }else if(".xlsx".equals(ext)){
+                wb = new XSSFWorkbook(is);
+            }else{
+                wb=null;
+            }
+        } catch (FileNotFoundException e) {
+            logger.error("FileNotFoundException", e);
+        } catch (IOException e) {
+            logger.error("IOException", e);
+        }
+    }
       
     /** 
      * 读取Excel表格表头的内容 

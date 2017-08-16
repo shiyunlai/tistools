@@ -95,6 +95,26 @@ public class ExceptionCodes {
 	 * 异常：查询项.<br>
 	 */
 	public static final String FAILURE_WHEN_QUERY = R_EX_CODE("0014");
+
+	/**
+	 * 异常：.<br>
+	 */
+	public static final String DUPLICATE_WHEN_INSERT = R_EX_CODE("0015");
+
+	/**
+	 * 异常：查询项.<br>
+	 */
+	public static final String NOT_FOUND_WHEN_UPDATE= R_EX_CODE("0016");
+	/**
+	 * 异常：查询项.<br>
+	 */
+
+	public static final String NOT_FOUND_WHEN_QUERY = R_EX_CODE("0017");
+
+	/**
+	 * 用户ID已经存在
+	 */
+	public static final String OBJECT_IS_ALREADY_EXIST  = R_EX_CODE("0018");
 	
 	/**
 	 * 以烤串方式拼接异常码

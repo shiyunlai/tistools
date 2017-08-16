@@ -7,19 +7,20 @@ import org.springframework.util.CollectionUtils;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.core.exception.ExceptionCodes;
+import org.tis.tools.model.def.ACConstants;
 import org.tis.tools.model.def.GUID;
-import org.tis.tools.model.po.ac.AcOperatorRole;
-import org.tis.tools.model.po.ac.AcPartyRole;
-import org.tis.tools.model.po.ac.AcRole;
-import org.tis.tools.model.po.ac.AcRoleFunc;
+import org.tis.tools.model.po.ac.*;
+import org.tis.tools.model.po.om.*;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.service.ac.*;
 import org.tis.tools.rservice.ac.exception.RoleManagementException;
 import org.tis.tools.service.ac.exception.ACExceptionCodes;
 import org.apache.commons.lang.StringUtils;
+import org.tis.tools.service.om.*;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static org.tis.tools.model.def.ACConstants.PARTY_TYPE_ORGANIZATION;
 
 public class RoleRServiceImpl extends BaseRService implements IRoleRService{
 
@@ -43,6 +44,33 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService{
 
     @Autowired
     AcRoleService acRoleService;
+
+    @Autowired
+    OmEmpOrgService omEmpOrgService;
+
+    @Autowired
+    OmEmpPositionService omEmpPositionService;
+
+    @Autowired
+    OmEmpGroupService omEmpGroupService;
+
+    @Autowired
+    OmDutyService omDutyService;
+
+    @Autowired
+    OmOrgService omOrgService;
+
+    @Autowired
+    AcOperatorService acOperatorService;
+
+    @Autowired
+    OmPositionService omPositionService;
+
+    @Autowired
+    OmGroupService omGroupService;
+
+    @Autowired
+    OmEmployeeService omEmployeeService;
 
     @Autowired
     AcRoleServiceExt acRoleServiceExt;
@@ -430,6 +458,12 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService{
             if(StringUtils.isBlank(acPartyRole.getPartyType())) {
                 throw new RoleManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, BasicUtil.wrap("PARTY_TYPE", "AC_PARTY_ROLE"));
             }
+            if(acPartyRoleService.count(new WhereCondition()
+                    .andEquals("GUID_PARTY", acPartyRole.getGuidParty())
+                    .andEquals("GUID_ROLE", acPartyRole.getGuidRole())
+                    .andEquals("PARTY_TYPE", acPartyRole.getPartyType())) > 0 ) {
+                throw new RoleManagementException(ExceptionCodes.DUPLICATE_WHEN_INSERT, BasicUtil.wrap("GUID_PARTY", "AC_PARTY_ROLE"));
+            }
             acPartyRoleService.insert(acPartyRole);
         } catch (RoleManagementException ae) {
             throw ae;
@@ -583,6 +617,11 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService{
             if(StringUtils.isBlank(acOperatorRole.getGuidRole())) {
                 throw new RoleManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, BasicUtil.wrap("GUID_ROLE", "AC_OPERATOR_ROLE"));
             }
+            if(acOperatorRoleService.count(new WhereCondition()
+                    .andEquals("GUID_OPERATOR", acOperatorRole.getGuidOperator())
+                    .andEquals("GUID_ROLE", acOperatorRole.getGuidRole())) > 0 ) {
+                throw new RoleManagementException(ExceptionCodes.DUPLICATE_WHEN_INSERT, BasicUtil.wrap("GUID_OPERATOR", "AC_OPERATOR_ROLE"));
+            }
             acOperatorRoleService.insert(acOperatorRole);
         } catch (RoleManagementException ae) {
             throw ae;
@@ -590,7 +629,7 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService{
             e.printStackTrace();
             throw new RoleManagementException(
                     ExceptionCodes.FAILURE_WHEN_INSERT,
-                    BasicUtil.wrap("AC_ROLE", e.getCause().getMessage()));
+                    BasicUtil.wrap("AC_OPERATOR_ROLE", e.getCause().getMessage()));
         }
     }
 
@@ -667,4 +706,171 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService{
                     ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap("AC_OPERATOR_ROLE", e.getCause().getMessage()));
         }
     }
+
+    /**
+     * 查询操作员所有的权限集合
+     *
+     * @param userId
+     * @return
+     * @throws RoleManagementException
+     */
+    @Override
+    public List<AcRole> queryAllRoleByUserId(String userId) throws RoleManagementException {
+        try {
+            if(StringUtils.isBlank(userId)) {
+                throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("USER_ID", "AC_ROLE"));
+            }
+            // 查询用户对应的操作员信息
+            List<AcOperator> operatorList = acOperatorService.query(new WhereCondition().andEquals("USER_ID", userId));
+            if (CollectionUtils.isEmpty(operatorList)) {
+                throw new RoleManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap("USER_ID " + userId, "AC_OPERATOR"));
+            }
+            AcOperator acOperator = operatorList.get(0);
+            // 用于保存返回的角色集合
+            List<AcRole> acRoleList = new ArrayList<>();
+            // 用于存放所有角色的GUID
+            Set<String> roleGuids = new HashSet<>();
+
+            //查询用户对应的员工的组织对象角色
+            List<OmEmployee> employees = omEmployeeService.query(new WhereCondition().andEquals("USER_ID", userId));
+            // 如果该操作员有对应的员工
+            if (!CollectionUtils.isEmpty(employees)) {
+                String empGuid = employees.get(0).getGuid();
+                // 用于存放所有组织GUID的集合
+                Set<String> partyGuids = new HashSet<>();
+                // 机构
+                List<OmEmpOrg> omEmpOrgList = omEmpOrgService.query(new WhereCondition().andEquals("GUID_EMP", empGuid));
+                for (OmEmpOrg empOrg : omEmpOrgList) {
+                    partyGuids.add(empOrg.getGuidOrg());
+                }
+                // 岗位
+                List<OmEmpPosition> omEmpPositionList = omEmpPositionService.query(new WhereCondition().andEquals("GUID_EMP", empGuid));
+                // 用于存放岗位guid
+                List<String> posiGuids = new ArrayList<>();
+                for (OmEmpPosition empPosition : omEmpPositionList) {
+                    partyGuids.add(empPosition.getGuidPosition());
+                    posiGuids.add(empPosition.getGuidPosition());
+                }
+                // 职务
+                if (posiGuids.size() > 0) {
+                    List<OmPosition> omPositions = omPositionService.query(new WhereCondition().andIn("GUID", empGuid));
+                    for (OmPosition omPosition : omPositions) {
+                        partyGuids.add(omPosition.getGuidDuty());
+                    }
+                }
+                // 工作组
+                List<OmEmpGroup> omEmpGroupList = omEmpGroupService.query(new WhereCondition().andEquals("GUID_EMP", empGuid));
+                for (OmEmpGroup omEmpGroup : omEmpGroupList) {
+                    partyGuids.add(omEmpGroup.getGuidGroup());
+                }
+                // 查询所有组织机构角色
+                if (partyGuids.size() > 0) {
+                    List<AcPartyRole> acPartyRoles = acPartyRoleService.query(new WhereCondition()
+                            .andIn("GUID_PARTY", new ArrayList<String>(partyGuids)));
+                    for (AcPartyRole acPartyRole : acPartyRoles) {
+                        roleGuids.add(acPartyRole.getGuidRole());
+                    }
+                }
+            }
+            // 查询操作员直接相关的角色
+            List<AcOperatorRole> acOperatorRoles = acOperatorRoleService.query(new WhereCondition().andEquals("GUID_OPERATOR", acOperator.getGuid()));
+            for (AcOperatorRole acOperatorRole: acOperatorRoles) {
+                roleGuids.add(acOperatorRole.getGuidRole());
+            }
+            if (roleGuids.size() > 0) {
+                acRoleList = acRoleService.query(new WhereCondition().andIn("GUID", new ArrayList<String>(roleGuids)));
+            }
+            return acRoleList;
+        } catch (RoleManagementException ae) {
+            throw ae;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RoleManagementException(
+                    ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("AC_ROLE", e.getCause().getMessage()));
+        }
+    }
+
+
+    /**
+     * 查询员工拥有的所有组织对象权限集合
+     *
+     * @param empGuid
+     * @return
+     * @throws RoleManagementException
+     */
+    @Override
+    public List<AcRole> queryEmpPartyRole(String partyType, String empGuid) throws RoleManagementException {
+        try {
+            if(StringUtils.isBlank(partyType)) {
+                throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("PARTY_TYPE", "AC_PARTY_ROLE"));
+            }
+            if(StringUtils.isBlank(empGuid)) {
+                throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("GUID_EMP", "AC_PARTY_ROLE"));
+            }
+            // 用于存放所有组织GUID的集合
+            Set<String> partyGuids = new HashSet<>();
+            // 查询员工隶属的组织对象
+            switch (partyType) {
+                case ACConstants.PARTY_TYPE_ORGANIZATION : //机构
+                    List<OmEmpOrg> omEmpOrgList = omEmpOrgService.query(new WhereCondition().andEquals("GUID_EMP", empGuid));
+                    for(OmEmpOrg empOrg : omEmpOrgList) {
+                        partyGuids.add(empOrg.getGuidOrg());
+                    }
+                    break;
+                case ACConstants.PARTY_TYPE_POSITION : // 岗位
+                    List<OmEmpPosition> omEmpPositionList = omEmpPositionService.query(new WhereCondition().andEquals("GUID_EMP", empGuid));
+                    for(OmEmpPosition empPosition : omEmpPositionList) {
+                        partyGuids.add(empPosition.getGuidPosition());
+                    }
+                    break;
+                case ACConstants.PARTY_TYPE_WORKGROUP : // 工作组
+                    List<OmEmpGroup> omEmpGroupList = omEmpGroupService.query(new WhereCondition().andEquals("GUID_EMP", empGuid));
+                    for (OmEmpGroup omEmpGroup : omEmpGroupList) {
+                        partyGuids.add(omEmpGroup.getGuidGroup());
+                    }
+                    break;
+                case ACConstants.PARTY_TYPE_DUTY: // 职务
+                    // 首先查询员工对应的岗位
+                    List<OmEmpPosition> omEmpPositions = omEmpPositionService.query(new WhereCondition().andEquals("GUID_EMP", empGuid));
+                    List<String> posiGuids = new ArrayList<>();
+                    // 查询岗位信息
+                    for (OmEmpPosition empPosition : omEmpPositions) {
+                        posiGuids.add(empPosition.getGuidPosition());
+                    }
+                    if (posiGuids.size() > 0) {
+                        List<OmPosition> omPositions = omPositionService.query(new WhereCondition().andIn("GUID", posiGuids));
+                        for (OmPosition omPosition : omPositions) {
+                            partyGuids.add(omPosition.getGuidDuty());
+                        }
+                    }
+                    break;
+                default:
+                    throw new RoleManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap("PARTY_TYPE", "AC_PARTY_ROLE"));
+            }
+            // 用于保存返回的角色集合
+            List<AcRole> acRoleList = new ArrayList<>();
+            //查询所有权限
+            if (partyGuids.size() > 0) {
+                List<AcPartyRole> acPartyRoles = acPartyRoleService.query(new WhereCondition()
+                        .andEquals("PARTY_TYPE", partyType)
+                        .andIn("GUID_PARTY", new ArrayList<String>(partyGuids)));
+                // 用于存放所有角色的GUID
+                Set<String> roleGuids = new HashSet<>();
+                for (AcPartyRole acPartyRole : acPartyRoles) {
+                    roleGuids.add(acPartyRole.getGuidRole());
+                }
+                if (roleGuids.size() > 0) {
+                    acRoleList = acRoleService.query(new WhereCondition().andIn("GUID", new ArrayList<String>(roleGuids)));
+                }
+            }
+            return acRoleList;
+        } catch (RoleManagementException ae) {
+            throw ae;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RoleManagementException(
+                    ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("AC_ROLE", e.getCause().getMessage()));
+        }
+    }
+
 }

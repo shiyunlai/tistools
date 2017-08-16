@@ -961,7 +961,7 @@ public class OrgManagerController extends BaseController {
     }
 
 
-    @RequestMapping(value = "/queryAppNotinPos")
+   @RequestMapping(value = "/queryAppNotinPos")
     public String queryAppNotinPos(ModelMap model,@RequestBody String content ,HttpServletRequest request,
                                 HttpServletResponse response) {
         try {
@@ -999,8 +999,8 @@ public class OrgManagerController extends BaseController {
     @RequestMapping(value = "/deleteAppPosition")
     public String deleteAppPosition(ModelMap model,@RequestBody String content ,HttpServletRequest request,
                                  HttpServletResponse response) {
-        try {
-            JSONObject jsonObj = JSONObject.parseObject(content);
+        try {	
+            JSONObject jsonObj = JSONObject.parseObject(content); 
             String posGuid = jsonObj.getString("posGuid");
             String appGuid = jsonObj.getString("appGuid");
             positionRService.deleteAppPosition(appGuid, posGuid);

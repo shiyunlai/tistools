@@ -9,6 +9,7 @@ import org.tis.tools.model.po.ac.AcRole;
 import org.tis.tools.model.po.ac.AcRoleFunc;
 import org.tis.tools.rservice.ac.exception.RoleManagementException;
 
+import javax.management.relation.Role;
 import java.util.List;
 import java.util.Map;
 
@@ -296,5 +297,23 @@ public interface IRoleRService {
      * @throws RoleManagementException
      */
     void removeOperatorRole(String roleGuid,  String operatorGuid) throws  RoleManagementException;
+
+
+    /**
+     * 查询员工所有的权限集合
+     * @param userId
+     * @return
+     * @throws RoleManagementException
+     */
+    List<AcRole> queryAllRoleByUserId(String userId)  throws  RoleManagementException;
+
+    /**
+     * 查询员工拥有的所有机构权限集合
+     * @param empGuid
+     * @return
+     *          包含角色GUID的集合
+     * @throws RoleManagementException
+     */
+    List<AcRole> queryEmpPartyRole(String partyType, String empGuid)  throws  RoleManagementException;
 
 }

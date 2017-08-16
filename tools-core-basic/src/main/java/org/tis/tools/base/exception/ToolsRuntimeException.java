@@ -95,7 +95,7 @@ public class ToolsRuntimeException extends RuntimeException {
 	 * initialized by a call to {@link #initCause}.
 	 */
 	public ToolsRuntimeException() {
-		super();
+		i18nException = new I18NException();
 	}
 
 	/**

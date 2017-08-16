@@ -275,7 +275,10 @@ angular.module('MetronicApp').controller('Emp_controller', function($rootScope,u
     $scope.postgrid = initgrid($scope,postgrid,initpostdata(),filterFilter,null,false,selepost)
 
     /**-------------------------------测试table自适应---------------------------*/
-
+    //测试封装
+    var list = [];
+    list.push($scope.empgrid.columnDefs);
+    list.push($scope.empgrid.columnDefs)
     var w = angular.element($window);
     $scope.getWindowDimensions = function () {
         return { 'w': w.width() };
@@ -300,19 +303,6 @@ angular.module('MetronicApp').controller('Emp_controller', function($rootScope,u
                 for(var i=4;i<a.length;i++){
                     a[i].visible = false;
                 }
-                // console.log($scope.empgrid.api().core.queueGridRefresh());
-                // console.log($scope.empgrid.api())
-                // $scope.empgrid.ref()
-                // $scope.empgrid.api().core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
-                // $scope.empgrid.getPage(1,$scope.empgrid.paginationPageSize);
-
-                // var com = [{ field: 'empCode', displayName: '员工代码', enableHiding: false},
-                //     { field: 'empName', displayName: '员工姓名', enableHiding: false},
-                //     { field: 'gender', displayName: '性别', enableHiding: false},
-                //     { field: 'empstatus', displayName: '员工状态', enableHiding: false}
-                // ]
-                // $scope.empgrid = initgrid($scope,empgrid,filterFilter,com,false,sele);
-                // reempgrid()
             }
         }
 
