@@ -966,7 +966,7 @@ public class OrgManagerController extends BaseController {
     }
 
 
-   @RequestMapping(value = "/queryAppNotinPos")
+/*   @RequestMapping(value = "/queryAppNotinPos")
     public String queryAppNotinPos(ModelMap model,@RequestBody String content ,HttpServletRequest request,
                                 HttpServletResponse response) {
         try {
@@ -1035,7 +1035,7 @@ public class OrgManagerController extends BaseController {
             AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
         }
         return null;
-    }
+    }*/
 
     @RequestMapping(value = "/initPosCode")
     public String initPosCode(ModelMap model,@RequestBody String content ,HttpServletRequest request,

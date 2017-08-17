@@ -16,6 +16,7 @@ import org.tis.tools.model.po.ac.AcOperator;
 import org.tis.tools.model.po.ac.AcOperatorIdentityres;
 import org.tis.tools.model.po.ac.AcRole;
 import org.tis.tools.rservice.ac.capable.IOperatorRService;
+import org.tis.tools.rservice.ac.capable.IRoleRService;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.util.AjaxUtils;
 
@@ -34,7 +35,9 @@ public class AcOperatorController extends BaseController {
 
     @Autowired
     IOperatorRService operatorRService;
-
+    @Autowired
+    IRoleRService roleRService;
+    
     /**
      * 查询操作员列表
      * @param content
@@ -455,7 +458,33 @@ public class AcOperatorController extends BaseController {
     }
 
 
-    	
+
+
+    /**
+     * 根据USERID查询操作员GUID
+     */
+    @ResponseBody
+    @RequestMapping(value="/queryOperatorByUserId" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String queryOperatorByUserId(@RequestBody String content, HttpServletRequest request,
+                               HttpServletResponse response)  {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("queryOperatorByUserId request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+            String userId = jsonObject.getString("userId");//操作员USER_ID
+            AcOperator acOperator = operatorRService.queryOperatorByUserId(userId);
+            AjaxUtils.ajaxJsonSuccessMessage(response, acOperator);
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("queryOperatorByUserId exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("queryOperatorByUserId exception : ", e);
+        }
+        return null;
+    }
+
 
     /**
      * 要求子类构造自己的响应数据

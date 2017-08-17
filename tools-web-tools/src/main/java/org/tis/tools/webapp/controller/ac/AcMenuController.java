@@ -16,6 +16,7 @@ import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcFunc;
 import org.tis.tools.model.po.ac.AcFuncgroup;
 import org.tis.tools.model.po.ac.AcMenu;
+import org.tis.tools.model.po.ac.AcOperatorMenu;
 import org.tis.tools.model.vo.ac.AcMenuDetail;
 import org.tis.tools.rservice.ac.capable.IApplicationRService;
 import org.tis.tools.rservice.ac.capable.IMenuRService;
@@ -25,6 +26,7 @@ import org.tis.tools.webapp.util.AjaxUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
@@ -282,6 +284,8 @@ public class AcMenuController extends BaseController {
         }
         return null;
     }
+    
+    
     /**
      * 修改子菜单
      * @param content
@@ -340,6 +344,36 @@ public class AcMenuController extends BaseController {
         }catch (Exception e) {
             AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
             logger.error("deleteMenu exception : ", e);
+        }
+        return null;
+    }
+    
+    
+    
+    /**
+     * 移动菜单到菜单 (String , String , BigDecimal )
+     */
+    @ResponseBody
+    @RequestMapping(value="/moveMenu" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String moveMenu(@RequestBody String content, HttpServletRequest request,
+                             HttpServletResponse response) {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("moveMenu request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+
+            String targetGuid = jsonObject.getString("targetGuid");
+            String moveGuid = jsonObject.getString("moveGuid");
+            BigDecimal order = jsonObject.getBigDecimal("order");
+            menuRService.moveMenu(targetGuid, moveGuid, order);
+            AjaxUtils.ajaxJsonSuccessMessage(response,"");
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("moveMenu exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("moveMenu exception : ", e);
         }
         return null;
     }
@@ -425,7 +459,181 @@ public class AcMenuController extends BaseController {
         }
         return null;
     }
+    
+    /**
+     * 复制菜单到个人重组菜单
+     */
+    @ResponseBody
+    @RequestMapping(value="/copyMenuToOperatorMenu" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String copyMenuToOperatorMenu(@RequestBody String content, HttpServletRequest request,
+                             HttpServletResponse response) {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("copyMenuToOperatorMenu request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
 
+            String operatorGuid = jsonObject.getString("operatorGuid");
+            String copyGuid = jsonObject.getString("copyGuid");
+            String goalGuid = jsonObject.getString("goalGuid");
+            BigDecimal order = jsonObject.getBigDecimal("order");
+            menuRService.copyMenuToOperatorMenu(operatorGuid, copyGuid, goalGuid, order);
+            AjaxUtils.ajaxJsonSuccessMessage(response,"");
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("copyMenuToOperatorMenu exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("copyMenuToOperatorMenu exception : ", e);
+        }
+        return null;
+    }
+
+    
+    /**
+     * 移动菜单到个人重组菜单 (String , String , BigDecimal )
+     */
+    @ResponseBody
+    @RequestMapping(value="/moveOperatorMenu" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String moveOperatorMenu(@RequestBody String content, HttpServletRequest request,
+                             HttpServletResponse response) {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("moveOperatorMenu request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+
+            String targetGuid = jsonObject.getString("targetGuid");
+            String moveGuid = jsonObject.getString("moveGuid");
+            BigDecimal order = jsonObject.getBigDecimal("order");
+            menuRService.moveOperatorMenu(targetGuid, moveGuid, order);
+            AjaxUtils.ajaxJsonSuccessMessage(response,"");
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("moveOperatorMenu exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("moveOperatorMenu exception : ", e);
+        }
+        return null;
+    }
+
+    
+
+    
+    /**
+     * 新增重组跟菜单
+     * @param content
+     * @param request
+     * @param response
+     * @return
+     * @throws ToolsRuntimeException
+     * @throws ParseException
+     */
+    //修改 删除 一样的 复制过来，每个都加上Operator就可以了，照着这个改，自己写
+    @ResponseBody
+    @RequestMapping(value="/createRootOperatorMenu" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String createRootOperatorMenu(@RequestBody String content, HttpServletRequest request,
+                             HttpServletResponse response) throws ToolsRuntimeException, ParseException {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("createRootMenu request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+            AcOperatorMenu acMenu = new AcOperatorMenu();
+            BeanUtils.populate(acMenu, jsonObject);
+//            String guidApp = jsonObject.getString("guidMenu");//所属应用GUID
+            menuRService.createRootOperatorMenu(acMenu);
+            AjaxUtils.ajaxJsonSuccessMessage(response,"");
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("createRootOperatorMenu exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("queryChildMenu exception : ", e);
+        }
+        return null;
+    }
+    
+    
+   
+    
+    /**
+     * 新增子重组菜单
+     */
+    @ResponseBody
+    @RequestMapping(value="/createChildOperatorMenu" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String createChildOperatorMenu(@RequestBody String content, HttpServletRequest request,
+                             HttpServletResponse response){
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("createChildOperatorMenu request : " + content);
+            }
+            AcOperatorMenu acOperatorMenu = JSON.parseObject(content, AcOperatorMenu.class);
+            menuRService.createChildOperatorMenu(acOperatorMenu);
+            AjaxUtils.ajaxJsonSuccessMessage(response,"");
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("createChildOperatorMenu exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("createChildOperatorMenu exception : ", e);
+        }
+        return null;
+    }
+    
+    
+    /**
+     * 修改重组菜单
+     */
+    @ResponseBody
+    @RequestMapping(value="/editOperatorMenu" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String editOperatorMenu(@RequestBody String content, HttpServletRequest request,
+                             HttpServletResponse response) throws ToolsRuntimeException, ParseException {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("editOperatorMenu request : " + content);
+            }
+            AcOperatorMenu acOperatorMenu = JSON.parseObject(content, AcOperatorMenu.class);
+            menuRService.editOperatorMenu(acOperatorMenu);
+            AjaxUtils.ajaxJsonSuccessMessage(response,"");
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("editOperatorMenu exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("editOperatorMenu exception : ", e);
+        }
+        return null;
+    }
+
+    
+    /**
+     * 删除重组菜单
+     */
+    @ResponseBody
+    @RequestMapping(value="/deleteOperatorMenu" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String deleteOperatorMenu(@RequestBody String content, HttpServletRequest request,
+                             HttpServletResponse response) {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("deleteOperatorMenu request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+            String operatorMenuGuid = jsonObject.getString("operatorMenuGuid");//菜单GUID
+            menuRService.deleteOperatorMenu(operatorMenuGuid);
+            AjaxUtils.ajaxJsonSuccessMessage(response,"");
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("deleteOperatorMenu exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("deleteOperatorMenu exception : ", e);
+        }
+        return null;
+    }
+
+    
     /**
      * 要求子类构造自己的响应数据
      *
