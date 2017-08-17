@@ -141,8 +141,10 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
                 var datas = data.retMessage;
                 var result= datas.replace(/guid/g,"id").replace(/label/g,'text');//把guid和label替换成自己需要的
                 var menuAll = angular.fromJson(result);
-                var menucless = menuAll.children;
-                opmer.mensuAll = menucless;
+                //var menucless = menuAll.children;
+                var tisMenu = [];;//绑定数组
+                tisMenu.push(menuAll)
+                opmer.mensuAll = tisMenu;
                 $scope.opmer.searchok = true;
                 //菜单一权限
                 $('#container').jstree('destroy',false);
@@ -188,7 +190,7 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
                 toastr['error']('暂无该应用操作权限');
             }
         })
-        //新增子菜单封装
+        //新增子菜单提取
         var creatchildmenu = function(node){
             openwindow($uibModal, 'views/Management/configMana.html', 'lg',// 弹出页面
                 function ($scope, $modalInstance) {
@@ -219,7 +221,7 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
                 }
             )
         }
-        //修改子菜单封装
+        //修改子菜单提取
         var editchildmenu = function(node){
             openwindow($uibModal, 'views/Management/configMana.html', 'lg',// 弹出页面
                 function ($scope, $modalInstance) {
@@ -418,9 +420,7 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
         $scope.opmer.saveconfig = function () {
             creattopmenu()
             }
-
-
-        //树结构生成
+        //树结构生成提取
         var jstreecre = function(datas){
             $("#container2").jstree({
                 "core" : {

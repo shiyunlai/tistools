@@ -273,7 +273,6 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
         var srw = [];
         srw.push(sessionjson)
         $scope.menusAndTrans = angular.copy(srw);//拿到登录页那边传来的目录
-        console.log($scope.menusAndTrans)
     });
 
 
