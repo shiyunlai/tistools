@@ -777,16 +777,12 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                             }
                             //调用服务生成机构代码
                             abftree_service.initcode(subFrom).then(function (data) {
-                                // if(data.status == "error"){
-                                //     toastr['error']( "！");
-                                // }else{
-                                //     subFrom.orgCode = data.orgCode;
-                                //     toastr['success'](data.retMessage);
-                                //     $scope.next = !next;
-                                // }
-                                subFrom.orgCode = subFrom.orgDegree + subFrom.AREA;
-                                toastr['success'](data.retMessage);
-                                $scope.next = !next;
+                                if(data.status == "error"){
+                                    toastr['error']( data.retMessage);
+                                }else{
+                                    subFrom.orgCode = data.retMessage;
+                                    $scope.next = !next;
+                                }
                             })
 
                         }
