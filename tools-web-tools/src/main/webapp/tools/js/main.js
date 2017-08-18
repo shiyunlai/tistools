@@ -200,6 +200,8 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
         Layout.initHeader(); // init header
         Demo.init();
 
+        var session = angular.fromJson(sessionStorage.user)
+        $scope.userId = session.userId;
 
     });
     //个人信息页面
@@ -207,7 +209,6 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
         openwindow($uibModal, 'views/landinginfor/personalinfor.html','lg',
             function ($scope, $modalInstance) {
                 var session = angular.fromJson(sessionStorage.user)
-                console.log(sessionStorage)
                 $scope.userid = session.userId;
                 $scope.operatorName = session.operatorName;
                 $scope.menuType = session.menuType;
@@ -253,6 +254,12 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
     $scope.$on('$includeContentLoaded', function () {
         Layout.initSidebar(); // init sidebar
         var sessionjson = angular.fromJson(sessionStorage.menus)
+
+
+       if(sessionStorage.length == 0 ){
+            window.location = "../tools/login.html";//如果正确，则进入主页
+        }
+
         /*var item = sessionjson.children;
          $scope.menusAndTrans = angular.copy(item);//拿到登录页那边传来的目录*/
 /*        //根据order进行排序

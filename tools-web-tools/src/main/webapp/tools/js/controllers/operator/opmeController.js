@@ -2,15 +2,15 @@
  * Created by wangbo on 2017/6/20.
  */
 
-MetronicApp.controller('opmanage_controller', function ($filter,$rootScope, $scope, $state, $stateParams, filterFilter,operator_service, $modal,$uibModal, $http, $timeout,$interval,i18nService) {
+MetronicApp.controller('opmanage_controller', function ($filter,$rootScope, $scope, $state, $stateParams, filterFilter,operator_service,dictonary_service, $modal,$uibModal, $http, $timeout,$interval,i18nService) {
     //grid表格
     i18nService.setCurrentLang("zh-cn");
-
     //查询操作员列表
     var operman ={};
     $scope.operman = operman;
+
     operman.queryAll = function(){
-        //查询所有业务字典
+        //查询所有
         var subFrom = {};
         operator_service.queryAllOperator(subFrom).then(function(data){
             var datas = data.retMessage;
@@ -23,6 +23,7 @@ MetronicApp.controller('opmanage_controller', function ($filter,$rootScope, $sco
             }
         })
     }
+
     operman.queryAll();
     var gridOptions = {};
     $scope.gridOptions = gridOptions;
@@ -42,6 +43,10 @@ MetronicApp.controller('opmanage_controller', function ($filter,$rootScope, $sco
     }
     $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,false,f);
 
+    //查询业务字典
+    var tits = {};
+    tits.dictKey='DICT_AC_OPERATOR_STATUS';
+    dictKey($rootScope,tits,dictonary_service);
 
     //新增操作员代码
     $scope.operatAdd = function(item){
@@ -85,8 +90,8 @@ MetronicApp.controller('opmanage_controller', function ($filter,$rootScope, $sco
                         var subFrom = {};
                         $scope.subFrom = subFrom;
                         subFrom = item;
+                        console.log(subFrom)
                         operator_service.editOperator(subFrom).then(function(data){
-                            console.log(data)
                             if(data.status == "success"){
                                 toastr['success']( "新增成功！");
                                 operman.queryAll();
@@ -135,6 +140,11 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
             var datas = data.retMessage;
             opmer.operatorGuid = datas.guid;
         })
+
+        //菜单刷新功能
+        $scope.refers = function(){
+            $("#container").jstree().refresh();
+        }
         //查询菜单
         common_service.post(res.getMenuByUserId,subFrom).then(function(data){
             if(data.status == "success"){
@@ -153,7 +163,7 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
                         "themes" : {
                             "responsive": false
                         },
-                        "check_callback" : true,//在对树结构进行改变时，必须为true
+                        "check_callback" : false,//在对树结构进行改变时，必须为true
                         'data':opmer.mensuAll
                     },
                     "force_text": true,
@@ -203,12 +213,10 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
                         subFrom.guidParents = node.id;
                         subFrom.isLeaf = 'N';
                         subFrom.guidOperator = opmer.operatorGuid;//操作员guid 先写死
-                        console.log(subFrom)
                         common_service.post(res.createChildOperatorMenu,subFrom).then(function(data){
-                            console.log(data);
                             if(data.status == "success"){
                                 toastr['success']( "新增成功！");
-                                searchMenu();//刷新重新加载
+                                searchMenu(node);//刷新重新加载
                                 $modalInstance.close();
                             }else{
                                 toastr['error']('新增失败'+'<br/>'+data.retMessage);
@@ -257,6 +265,7 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
             var subFrom = {};
             subFrom.operatorMenuGuid = node.id;
             common_service.post(res.deleteOperatorMenu,subFrom).then(function(data){
+                console.log(data);
                 if(data.status == "success"){
                     toastr['success']( "删除成功！");
                     searchMenu();
@@ -362,7 +371,7 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
                     '刷新':{
                         "label":"刷新",
                         "action":function(data){
-                            searchMenu();
+                            searchMenu(node);
                         }
                     }
                 }
@@ -374,7 +383,8 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
             searchMenu()
         }
         //查询重组菜单逻辑
-        var searchMenu =  function(){
+        var searchMenu =  function(node){
+            //修改，在调用的时候把节点传入，要打开此节点，完成刷新加载
             common_service.post(res.getOperatorMenuByUserId,subFrom).then(function(data){
                 //重新组装数据
                 var dates = data.retMessage;
@@ -384,10 +394,16 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
                 $('#container2').jstree('destroy',false);
                 if(dates =='{}'){
                     $scope.iscreat = true;
+
                 }else{
                     $scope.iscreat = false;
                     jstreecre(opmer.mensussAll)
                 }
+                var timer=$timeout(function(){
+                    //自动打开对应的节点，模拟按需加载功能
+                    $("#container2").jstree().open_node(node)
+                },500);
+
             })
         }
         //提取新增顶级菜单
@@ -481,8 +497,9 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
                 common_service.post(res.copyMenuToOperatorMenu,subFrom).then(function(data){
                     if(data.status == "success"){
                         toastr['success']( "复制成功！");
+                        searchMenu(data.parent);//刷新之后自动打开父节点，传入移动的父节点
                     }else{
-                        searchMenu();//刷新重新加载
+                        searchMenu(data.parent);//刷新重新加载
                         toastr['error']('复制失败'+'<br/>'+data.retMessage);
                     }
                 })
