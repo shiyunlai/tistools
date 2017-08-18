@@ -33,25 +33,21 @@
 	<!-- 2、可按找功能分多个配置文件，dubbo启动时会自动扫描加载；                -->
 	<!-- ============================================================= -->
 	<!-- 暴露服务 -->
-	<!--<dubbo:service-->
-		<!--interface="org.tis.tools.rservice.sys.capable.IDictRService" group="sys" version="${IDictRService.version}"-->
-		<!--ref="dictRServiceImpl"-->
-		<!--protocol="dubbo"  timeout="3000" />-->
+	<dubbo:service
+		interface="org.tis.tools.rservice.sys.capable.IDictRService" group="sys" version="${IDictRService.version}"
+		ref="dictRServiceImpl"
+		protocol="dubbo"  timeout="3000" />
 
-	<!--&lt;!&ndash;具体实现&ndash;&gt;-->
- 	<!--<bean id="dictRServiceImpl" class="org.tis.tools.rservice.sys.capable.DictRServiceImpl" />-->
+	<!--具体实现-->
+ 	<bean id="dictRServiceImpl" class="org.tis.tools.rservice.sys.capable.DictRServiceImpl" />
 
 
-	<!--&lt;!&ndash; 暴露服务 &ndash;&gt;-->
-	<!--<dubbo:service-->
-		<!--interface="org.tis.tools.rservice.sys.capable.IRunConfigRService" group="sys" version="${IRunConfigRService.version}"-->
-		<!--ref="runConfigRServiceImpl"-->
-		<!--protocol="dubbo"  timeout="3000" />-->
+	<!-- 暴露服务 -->
+	<dubbo:service
+		interface="org.tis.tools.rservice.sys.capable.IRunConfigRService" group="sys" version="${IRunConfigRService.version}"
+		ref="runConfigRServiceImpl"
+		protocol="dubbo"  timeout="3000" />
 
-<<<<<<< HEAD
-	<!--&lt;!&ndash;具体实现&ndash;&gt;-->
- 	<!--<bean id="runConfigRServiceImpl" class="org.tis.tools.rservice.sys.capable.RunConfigRServiceImpl" />-->
-=======
 	<!--具体实现-->
  	<bean id="runConfigRServiceImpl" class="org.tis.tools.rservice.sys.capable.RunConfigRServiceImpl" />
 
@@ -63,5 +59,4 @@
 
 	<!--具体实现-->
  	<bean id="seqnoRServiceImpl" class="org.tis.tools.rservice.sys.capable.SeqnoRServiceImpl" />
->>>>>>> master
 </beans>
