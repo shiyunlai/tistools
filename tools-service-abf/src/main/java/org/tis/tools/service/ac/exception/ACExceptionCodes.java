@@ -379,7 +379,7 @@ public class ACExceptionCodes {
 	/**
 	 * 登录异常
 	 */
-//	public static final String NO_EMPLOYEE_CORRESPONDING_OPERATOR  = R_EX_CODE("0071");
+	public static final String IDENTITY_NOT_CORRESPONDING_TO_USER  = R_EX_CODE("0071");
 
 
 
