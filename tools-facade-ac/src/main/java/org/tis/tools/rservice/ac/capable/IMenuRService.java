@@ -5,14 +5,13 @@ package org.tis.tools.rservice.ac.capable;
 
 
 
-import org.tis.tools.model.po.ac.AcApp;
-import org.tis.tools.model.po.ac.AcFunc;
-import org.tis.tools.model.po.ac.AcFuncgroup;
-import org.tis.tools.model.po.ac.AcMenu;
+import org.tis.tools.model.po.ac.*;
 import org.tis.tools.model.vo.ac.AcMenuDetail;
 import org.tis.tools.rservice.ac.exception.MenuManagementException;
 import org.tis.tools.rservice.ac.exception.MenuManagementException;
 
+import java.awt.*;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -58,6 +57,12 @@ public interface IMenuRService {
      * @throws MenuManagementException
      */
     void createRootMenu(AcMenu acMenu) throws MenuManagementException;
+    /**
+     * 创建重组根菜单
+     * @param acOperatorMenu
+     * @throws MenuManagementException
+     */
+    void createRootOperatorMenu(AcOperatorMenu acOperatorMenu) throws MenuManagementException;
 
     /**
      * 创建子菜单
@@ -65,6 +70,12 @@ public interface IMenuRService {
      * @throws MenuManagementException
      */
     void createChildMenu(AcMenu acMenu) throws MenuManagementException;
+    /**
+     * 创建子重组菜单
+     * @param acOperatorMenu
+     * @throws MenuManagementException
+     */
+    void createChildOperatorMenu(AcOperatorMenu acOperatorMenu) throws MenuManagementException;
 
     /**
      * 修改菜单
@@ -73,11 +84,24 @@ public interface IMenuRService {
      */
     void editMenu(AcMenu acMenu) throws MenuManagementException;
     /**
+     * 修改菜单
+     * @param acOperatorMenu
+     * @throws MenuManagementException
+     */
+    void editOperatorMenu(AcOperatorMenu acOperatorMenu) throws MenuManagementException;
+
+    /**
      * 删除菜单
      * @param menuGuid
      * @throws MenuManagementException
      */
     void deleteMenu(String menuGuid) throws MenuManagementException;
+    /**
+     * 删除重组菜单
+     * @param menuGuid
+     * @throws MenuManagementException
+     */
+    void deleteOperatorMenu(String menuGuid) throws MenuManagementException;
 
     /**
      *  根据用户id和身份查询菜单信息
@@ -128,5 +152,37 @@ public interface IMenuRService {
      * @throws MenuManagementException
      */
     AcMenuDetail getOperatorMenuByUserId(String userId, String appGuid, String identityGuid) throws MenuManagementException;
+
+    /**
+     * 复制菜单到重组菜单
+     *
+     * @param operatorGuid 操作员GUID
+     * @param copyGuid 复制的菜单GUID
+     * @param goalGuid 目标的菜单GUID
+     * @param order 排序
+     *
+     * @throws MenuManagementException
+     */
+    void copyMenuToOperatorMenu(String operatorGuid, String copyGuid, String goalGuid, BigDecimal order) throws MenuManagementException;
+
+    /**
+     * 重组菜单移动
+     *
+     * @param targetGuid       目标菜单GUID
+     * @param moveGuid     移动的菜单GUID
+     * @param order 排序
+     * @throws MenuManagementException
+     */
+    void moveOperatorMenu(String targetGuid, String moveGuid, BigDecimal order) throws MenuManagementException;
+
+    /**
+     * 菜单移动
+     *
+     * @param targetGuid       目标菜单GUID
+     * @param moveGuid     移动的菜单GUID
+     * @param order 排序
+     * @throws MenuManagementException
+     */
+    void moveMenu(String targetGuid, String moveGuid, BigDecimal order) throws MenuManagementException;
 
 }

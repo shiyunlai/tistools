@@ -162,4 +162,14 @@ public interface IOperatorRService {
      * @throws AuthManagementException
      */
     void updateUserStatus(String userId, String status) throws OperatorManagementException;
+
+
+    /**
+     * 根据用户名查询操作员信息
+     * @param userId
+     * @return
+     * @throws OperatorManagementException
+     */
+
+    AcOperator queryOperatorByUserId(String userId) throws OperatorManagementException;
 }
