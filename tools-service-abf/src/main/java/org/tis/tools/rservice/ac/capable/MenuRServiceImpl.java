@@ -60,6 +60,9 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
     IRoleRService roleRService;
 
     @Autowired
+    AcOperatorIdentityService acOperatorIdentityService;
+
+    @Autowired
     AcOperatorIdentityresService acOperatorIdentityresService;
 
     @Autowired
@@ -787,6 +790,12 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                     .andEquals("GUID_OPERATOR", operator.getGuid())) > 0) {
 
                 // 获取当前身份的功能菜单
+                // 判断当前操作员是否有该身份
+                if (acOperatorIdentityService.count(new WhereCondition()
+                        .andEquals(AcOperatorIdentity.COLUMN_GUID_OPERATOR, operator.getGuid())
+                        .andEquals(AcOperatorIdentity.COLUMN_GUID, identityGuid)) < 1) {
+                    throw new MenuManagementException(ACExceptionCodes.IDENTITY_NOT_CORRESPONDING_TO_USER, BasicUtil.wrap(identityGuid, userId));
+                }
                 // 查询当前身份拥有的角色菜单
                 List<AcOperatorIdentityres> acOperatorIdentityres = acOperatorIdentityresService
                         .query(new WhereCondition().andEquals(AcOperatorIdentityres.COLUMN_GUID_IDENTITY, identityGuid));
@@ -805,7 +814,10 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                 Set<String> menuGuids = new HashSet<>();
                 if (funcGuidList.size() > 0) {
                     // 获取功能下的菜单列表
-                    List<AcOperatorMenu> menus = acOperatorMenuService.query(new WhereCondition().andIn("GUID_FUNC", new ArrayList<>(funcGuidList)));
+                    List<AcOperatorMenu> menus = acOperatorMenuService.query(new WhereCondition()
+                            .andEquals("GUID_APP", appGuid)
+                            .andEquals("GUID_OPERATOR", operator.getGuid())
+                            .andIn("GUID_FUNC", new ArrayList<>(funcGuidList)));
                     for (AcOperatorMenu menu : menus) {
                         menuGuids.add(menu.getGuid());
                     }
