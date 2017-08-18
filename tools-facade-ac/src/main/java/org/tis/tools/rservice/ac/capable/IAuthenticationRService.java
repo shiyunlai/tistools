@@ -79,8 +79,10 @@ public interface IAuthenticationRService {
      	用户在该应用系统中的个性化配置（AC_OPERATOR_CONFIG）；
 
      * @param userId
+     *            用户ID
      * @param identity
-     *
+     *             身份GUID
+     * @
      *
      * @throws AuthManagementException
      */
@@ -92,8 +94,11 @@ public interface IAuthenticationRService {
     /**
      * 修改密码
      * @param userId
+     *          用户ID
      * @param oldPwd
+     *          原密码
      * @param newPwd
+     *          新密码
      * @throws AuthManagementException
      */
     void updatePassword(String userId, String oldPwd, String newPwd) throws AuthManagementException;

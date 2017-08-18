@@ -1186,7 +1186,7 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             AcMenu moveMenu = acMenuService.loadByGuid(moveGuid);
             if(moveMenu == null) {
                 throw new MenuManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY,
-                        BasicUtil.wrap("GUID '" + moveGuid + "' ", "AC__MENU"));
+                        BasicUtil.wrap("GUID '" + moveGuid + "' ", "AC_MENU"));
             }
 
             List<AcMenu> childMenus = acMenuService.query(new WhereCondition().andFullLike(AcMenu.COLUMN_MENU_SEQ, moveGuid));
@@ -1194,7 +1194,7 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             AcMenu goalMenu = acMenuService.loadByGuid(targetGuid);
             if(goalMenu == null) {
                 throw new MenuManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY,
-                        BasicUtil.wrap("GUID '" + targetGuid + "' ", "AC__MENU"));
+                        BasicUtil.wrap("GUID '" + targetGuid + "' ", "AC_MENU"));
             }
             // 源菜单节点
             String sourceGuid = moveMenu.getGuidParents(); // 源菜单GUID

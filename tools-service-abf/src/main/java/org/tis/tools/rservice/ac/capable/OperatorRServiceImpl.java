@@ -142,8 +142,13 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
             if(StringUtil.isEmpty(acOperator.getUserId())) {
                 throw new OperatorManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("USER_ID"));
             }
+            if(StringUtil.isEmpty(acOperator.getGuid())) {
+                throw new OperatorManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID"));
+            }
             //判断userId的唯一性
-            if(acOperatorService.count(new WhereCondition().andEquals("USER_ID", acOperator.getUserId())) > 0) {
+            if(acOperatorService.count(new WhereCondition()
+                    .andNotEquals(AcOperator.COLUMN_GUID, acOperator.getGuid())
+                    .andEquals("USER_ID", acOperator.getUserId())) > 0) {
                 throw new OperatorManagementException(ACExceptionCodes.USER_ID_IS_ALREADY_EXIST, BasicUtil.wrap("USER_ID"));
             }
             //PASSWORD 必填
