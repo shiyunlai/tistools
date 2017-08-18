@@ -40,16 +40,13 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
         console.log(node);
         if(node.parent == "#") {
             var it = {
-                "新建菜单": {
+                "刷新菜单": {
                     "id": "create",
-                    "label": "新建职务套别",
+                    "label": "刷新",
                     "action": function (data) {
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
-                        openwindow($uibModal, 'views/org/enablecom_window.html', 'lg',
-                            function ($scope, $modalInstance) {
-
-                            })
+                        $("#dutytree").jstree().refresh();
                     }
                 }
             };

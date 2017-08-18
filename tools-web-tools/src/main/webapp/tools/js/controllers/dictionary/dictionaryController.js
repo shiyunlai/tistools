@@ -360,7 +360,22 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
 });
 
 
-angular.module('MetronicApp').controller('dictitwos_controller', function($rootScope, $scope, $http,$modal,filterFilter,FileUploader){
+angular.module('MetronicApp').controller('dictitwos_controller', function($rootScope, $scope,common_service, $http,$modal,filterFilter,FileUploader){
+
+    var res = $rootScope.res.dictonary_service;//页面所需调用的服务
+    //下载全量业务字典
+    $scope.downdict = function () {
+        window.location.href = manurl+ '/'+res.exportDictExcel.ctrl + "/" + res.exportDictExcel.func;
+        //console.log(manurl + '/'+res.ctrl.)
+        /*common_service.get(res.exportDictExcel).then(function(data){
+            if(data.status == "success"){
+
+            }
+        })*/
+    }
+    
+    
+    
     //上传业务字典
     $scope.typeFile = function openVersion() {
         openwindow( $modal,'views/dictionary/fillwindow.html','lg',function ($scope, $modalInstance) {

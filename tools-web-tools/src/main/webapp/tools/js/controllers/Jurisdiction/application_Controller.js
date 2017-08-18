@@ -179,7 +179,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                 if(data.status == "success"){
                                     toastr['success']("删除成功!");
                                     $("#container").jstree().refresh();//重新刷新树
-                                    biz.initt1(ids);//调用查询服务//调用查询服务,传入点击树的id，查询
+                                    //biz.initt1(ids);//调用查询服务//调用查询服务,传入点击树的id，查询
                                 }else{
                                     toastr['error']('删除失败'+'<br/>'+data.retMessage);
                                 }
@@ -233,14 +233,13 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             "themes" : {
                 "responsive": false
             },
-            "check_callback" : true,
+            "check_callback" : false,
             'data' : function (obj, callback) {
                 var jsonarray = [];
                 $scope.jsonarray = jsonarray;
                 var subFrom = {};
                 subFrom.id = obj.id;
                 application_service.appQuery(subFrom).then(function (data) {
-                    console.log(data);
                     var datas = data.retMessage;
                     var its = [];
                     if(datas instanceof Array){
@@ -295,14 +294,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 })
             },
         },
-        "types" : {
-            "default" : {
-                "icon" : "fa fa-folder icon-state-warning icon-lg"
-            },
-            "file" : {
-                "icon" : "fa fa-file icon-state-warning icon-lg"
-            }
-        },
         "state" : { "key" : "demo3" },
         "contextmenu":{'items':items
         },
@@ -318,7 +309,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             }
         },
 
-        "plugins" : [ "dnd", "state", "types","search","contextmenu" ]
+        "plugins" : [ "state", "types","search","contextmenu" ]
     }).bind("copy.jstree", function (node,e, data ) {
     })
     /* 定义树列表改变事件*/
