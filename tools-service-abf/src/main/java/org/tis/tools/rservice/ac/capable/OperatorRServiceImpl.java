@@ -578,11 +578,16 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
             if (null == operator) {
                 return acRoleList;
             }
+            // 来自角色的权限资源和员工不相关
             List<OmEmployee> omEmployees = omEmployeeService.query(new WhereCondition().andEquals("USER_ID", operator.getUserId()));
-            if (CollectionUtils.isEmpty(omEmployees)) {
-                return acRoleList;
+            OmEmployee employee = new OmEmployee();
+            if(!StringUtils.isEquals(resType, ACConstants.RESOURCE_TYPE_ROLE)) {
+                if (CollectionUtils.isEmpty(omEmployees)) {
+                    return acRoleList;
+                }
+                employee = omEmployees.get(0);
             }
-            OmEmployee employee = omEmployees.get(0);
+
             switch (resType) {
                 case ACConstants.RESOURCE_TYPE_ROLE :
                     List<AcOperatorRole> acOperatorRoles = acOperatorRoleService.query(new WhereCondition().andEquals("GUID_OPERATOR", operatorGuid));
@@ -665,6 +670,39 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
             throw new OperatorManagementException(
                     ExceptionCodes.FAILURE_WHEN_UPDATE,
                     BasicUtil.wrap("AC_OPERATOR", e.getCause().getMessage()));
+        }
+    }
+
+
+    /**
+     * 根据用户名查询操作员信息
+     *
+     * @param userId
+     * @return
+     * @throws OperatorManagementException
+     */
+    @Override
+    public AcOperator queryOperatorByUserId(String userId) throws OperatorManagementException {
+        try {
+            if (StringUtils.isBlank(userId)) {
+                throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("USER_ID", "AC_ROLE"));
+            }
+            List<AcOperator> operatorList = acOperatorService.query(new WhereCondition().andEquals(AcOperator.COLUMN_USER_ID, userId));// 查询用户对应的操作员信息
+            if (CollectionUtils.isEmpty(operatorList)) {
+                throw new OperatorManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap("USER_ID " + userId, "AC_OPERATOR"));
+            }
+
+            AcOperator acOperator =  new AcOperator();
+            acOperator.setUserId(userId);
+            acOperator.setGuid(operatorList.get(0).getGuid());
+            return acOperator;
+
+        } catch (OperatorManagementException ae) {
+            throw ae;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new OperatorManagementException(
+                    ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap("AC_OPERATOR", e.getCause().getMessage()));
         }
     }
 }

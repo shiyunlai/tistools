@@ -21,8 +21,8 @@ public class AuthRServiceTest extends SpringJunitSupport {
         try {
             String appGuid = "APP1499956132";
             String userId = "admin";
-            AcMenuDetail menuByUserId = authenticationRService.getMenuByUserId(userId, appGuid);
-            System.out.println(menuByUserId.toJson());
+//            AcMenuDetail menuByUserId = authenticationRService.getMenuByUserId(userId, appGuid);
+//            System.out.println(menuByUserId.toJson());
         } catch (ToolsRuntimeException e) {
             System.out.println("错误码："+e.getCode());
             System.out.println("错误信息："+e.getMessage());
@@ -37,7 +37,7 @@ public class AuthRServiceTest extends SpringJunitSupport {
 
         try {
             // {"userId":"admin","password":"312312312312","identityGuid":"2 ","appGuid":"APP1499956132"}
-            String password = "123456";
+            String password = "111111";
             String userId = "admin";
             String identityGuid = "2";
             String appGuid = "APP1499956132";

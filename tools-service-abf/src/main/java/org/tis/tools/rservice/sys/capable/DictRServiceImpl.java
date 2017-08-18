@@ -576,4 +576,23 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 					BasicUtil.wrap( "SYS_DICT_ITEM", e.getCause().getMessage()));
 		}
 	}
+	/**
+	 * 查询所有业务字典项
+	 *
+	 * @return
+	 * @throws SysManagementException
+	 */
+	@Override
+	public List<SysDictItem> querySysDictItemList() throws SysManagementException {
+		try {
+			return sysDictItemService.query(new WhereCondition());
+		} catch (SysManagementException se) {
+			throw se;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new SysManagementException(
+					SYSExceptionCodes.FAILURE_WHEN_QUERY,
+					BasicUtil.wrap( "SYS_DICT_ITEM", e.getCause().getMessage()));
+		}
+	}
 }
