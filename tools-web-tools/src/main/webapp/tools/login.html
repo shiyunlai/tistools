@@ -129,7 +129,8 @@
     $("input").on('keyup',function(){
         var namelangth =  $("#loginname").val().length;
         var passlength = $("#password").val().length;
-        if(namelangth>=5&&passlength>=6){
+//        if(namelangth>=5&&passlength>=6){
+        if(passlength>=6){
             $('#login').removeAttr("disabled");
         }else{
             $('#login').attr('disabled',"true");

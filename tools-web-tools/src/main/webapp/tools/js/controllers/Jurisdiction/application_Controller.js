@@ -742,6 +742,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             if(data.status == "success"){
                 toastr['success']("修改成功！");
                 $scope.editsflag = !$scope.editsflag;//让保存取消方法显现
+                $("#container").jstree().refresh();//刷新树结构
             }else{
                 toastr['error']('修改失败'+'<br/>'+data.retMessage);
             }
