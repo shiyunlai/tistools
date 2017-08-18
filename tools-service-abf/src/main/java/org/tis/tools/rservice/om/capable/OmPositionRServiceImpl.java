@@ -332,7 +332,8 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 		WhereCondition wc = new WhereCondition();
 		wc.andEquals("GUID_ORG", guidOrg);
 		wc.andIsNull("GUID_PARENTS");
-		List<OmPosition> list2 = omPositionService.query(wc);
+		List<OmPosition> list2 = new ArrayList<>();
+		list2 = omPositionService.query(wc);
 		return list2;
 	}
 

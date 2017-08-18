@@ -12,21 +12,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.ac.*;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.po.om.OmPosition;
-import org.tis.tools.rservice.ac.basic.IAcFuncRService;
 import org.tis.tools.rservice.ac.capable.IRoleRService;
 import org.tis.tools.rservice.om.capable.IEmployeeRService;
 import org.tis.tools.rservice.om.capable.IOrgRService;
 import org.tis.tools.rservice.om.capable.IPositionRService;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.util.AjaxUtils;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
@@ -72,7 +70,7 @@ public class OrgManagerController extends BaseController {
             String guidOrg = jsonObj.getString("guidOrg");
             String positionCode = jsonObj.getString("positionCode");
             List<OmOrg> rootOrgs = new ArrayList<OmOrg>();
-            List<OmPosition> omp = new ArrayList<OmPosition>();
+            List<OmPosition> omp= new ArrayList<OmPosition>();
             // 通过id判断需要加载的节点
             if ("#".equals(id)) {
                 // #:根
@@ -136,18 +134,14 @@ public class OrgManagerController extends BaseController {
             JSONObject jsonObj = JSONObject.parseObject(content);
             String id = jsonObj.getString("id");
             String name = jsonObj.getString("searchitem");
+            String guidOrg = jsonObj.getString("guidOrg");
             List<OmOrg> rootOrgs = new ArrayList<OmOrg>();
             List<OmPosition> omp = new ArrayList<OmPosition>();
             // 通过id判断需要加载的节点
             if ("#".equals(id)) {
-                // 调用远程服务,#:根,筛选
-                WhereCondition wc = new WhereCondition();
-                wc.andEquals("GUID", name);
-                rootOrgs = orgRService.queryOrgsByCondition(wc);
+                rootOrgs = orgRService.queryOrgsByName(name);
             } else if (id.startsWith("GW")) {
-                // TODO
-                // 返回机构下岗位信息.根据id查询岗位信息并返回生成树节点.
-                omp = new ArrayList<OmPosition>();
+                omp = positionRService.queryPositionByOrg(guidOrg, null);
 
             } else {
                 rootOrgs = orgRService.queryChilds(id);
@@ -155,15 +149,16 @@ public class OrgManagerController extends BaseController {
                 // 为每一个节点增加岗位信息节点
                 og.setOrgName("岗位信息");
                 og.setOrgCode("GW" + id);
+                og.setGuid(guidOrg);
                 rootOrgs.add(og);
             }
             if (rootOrgs == null || rootOrgs.isEmpty()) {
-                AjaxUtils.ajaxJsonSuccessMessage(response, omp);
+                AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, omp,"yyyy-MM-dd");
             } else {
-                AjaxUtils.ajaxJsonSuccessMessage(response, rootOrgs);
+                AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, rootOrgs,"yyyy-MM-dd");
             }
 
-        } catch (ToolsRuntimeException e) {// TODO
+        } catch (ToolsRuntimeException e) {
             AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
             e.printStackTrace();
         } catch (Exception e) {
@@ -331,7 +326,7 @@ public class OrgManagerController extends BaseController {
                 AjaxUtils.ajaxJsonSuccessMessage(response, "修改成功!");
             }
 
-        } catch (ToolsRuntimeException e) {// TODO
+        } catch (ToolsRuntimeException e) {
             AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
             e.printStackTrace();
         } catch (Exception e) {
@@ -929,7 +924,7 @@ public class OrgManagerController extends BaseController {
                                HttpServletResponse response) {
         try {
             WhereCondition wc = new WhereCondition();
-            List<OmOrg> list = orgRService.queryOrgsByCondition(wc);
+            List<OmOrg> list = orgRService.queryAllOrg();
             AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list,"yyyy-MM-dd");
         } catch (ToolsRuntimeException e) {// TODO
             AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());

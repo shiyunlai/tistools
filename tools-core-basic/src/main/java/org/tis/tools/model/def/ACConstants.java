@@ -37,14 +37,26 @@ public interface ACConstants {
 
 
 	///////////////////////////////////////////////////
+
 	/** 资源类型：功能*/
 	public static final String RESOURCE_TYPE_FUNCTION = "function";
 	/** 资源类型：角色*/
 	public static final String RESOURCE_TYPE_ROLE = "role";
+	/** 资源类型：岗位*/
 	public static final String RESOURCE_TYPE_POSITION = "position";
+	/** 资源类型：职务*/
 	public static final String RESOURCE_TYPE_DUTY = "duty";
+	/** 资源类型：工作组*/
 	public static final String RESOURCE_TYPE_WORKGROUP = "workgroup";
+	/** 资源类型：机构*/
 	public static final String RESOURCE_TYPE_ORGANIZATION = "organization";
+
+	///////////////////////////////////////////////////
+
+	/** 重新排序： 自增*/
+	public static final String RECORD_AUTO_PLUS = "plus";
+	/** 重新排序： 自增*/
+	public static final String RECORD_AUTO_MINUS = "minus";
 
 
 
