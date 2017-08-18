@@ -458,8 +458,11 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
         paginationPageSize: 10, //每页显示个数
         //paginationTemplate:"<div></div>", //自定义底部分页代码
         useExternalPagination: true,//是否使用分页按钮
-        //导出测试
+        //选择优化
+        // enableFullRowSelection:false,
+        // enableRowHeaderSelection:true,
         enableSelectAll: true,
+        //导出测试
         exporterCsvFilename: 'myFile.csv',
         exporterPdfDefaultStyle: {fontSize: 9},
         exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
@@ -519,14 +522,10 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
 
                 console.log(filterConditions);
             });
-            $scope.gridApi.colResizable.on.columnSizeChanged($scope,function(colDef, deltaChange){
-                console.log(deltaChange)
-            });
 
 
         },
         ref:function () {
-            console.log(112)
             $scope.gridApi.core.refresh();
         },
         getSelectedRows:function () {
@@ -702,3 +701,50 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
     }
 }
 
+//table响应
+function table($scope,$window,list) {
+    var w = angular.element($window);
+    $scope.getWindowDimensions = function () {
+        return { 'w': w.width() };
+    };
+    // console.log($scope.getWindowDimensions())
+    $scope.$watch($scope.getWindowDimensions, function (newValue, oldValue) {
+        $scope.windowWidth = newValue.w;
+        // console.log($scope.windowWidth)
+        if(!isNull(list)){
+            for(var i=0;i<list.length;i++){
+                if($scope.windowWidth>=1500){
+                    var a = list[i].columnDefs
+                    for(var k=0;k<a.length;k++){
+                        a[k].visible = true;
+                    }
+                    if(!isNull(list[i].ref())){
+                        list[i].ref()
+                    }
+
+                }else if($scope.windowWidth<1500 && $scope.windowWidth>=1200){
+                    var a = list[i].columnDefs;
+                    for(var k=a.length-1;k>5;k--){
+                        a[k].visible = false;
+                    }
+                    if(!isNull(list[i].ref())){
+                        list[i].ref()
+                    }
+                }else if($scope.windowWidth<1200){
+                    var a = list[i].columnDefs;
+                    for(var k=a.length-1;k>3;k--){
+                        a[k].visible = false;
+                    }
+                    if(!isNull(list[i].ref())){
+                        list[i].ref()
+                    }
+                }
+            }
+
+        }
+
+    }, true);
+    w.bind('resize', function () {
+        $scope.$apply();
+    });
+}

@@ -361,7 +361,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                 $scope.jsonarray = jsonarray;
                 var subFrom = {};
                 subFrom.id = obj.id;
-                // console.log(obj)
+                console.log(obj)
                 if (!isNull(obj.original)) {
                     subFrom.guidOrg = obj.original.guid;
                     subFrom.positionCode = obj.original.positionCode;
@@ -380,6 +380,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                             data[i].children = true;
                             data[i].id = data[i].guid;
                             data[i].icon = 'fa fa-users icon-state-info icon-lg'
+
                         }
                     } else {
                         for (var i = 0; i < data.length; i++) {
@@ -387,6 +388,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                             data[i].children = true;
                             data[i].id = data[i].orgCode;
                             data[i].icon = 'fa fa-institution  icon-state-info icon-lg';
+                            data[i].position = parseInt(data[i].sortNo);
                             if (data[i].orgName == "岗位信息") {
                                 data[i].icon = 'fa fa-users  icon-state-info icon-lg';
                             }
@@ -619,10 +621,10 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
         abftree_service.enableorg(subFrom).then(function (data) {
             console.log(data)
             if (data.status == "success") {
-                toastr['success'](data.retCode);
+                toastr['success'](data.retMessage);
                 $("#container").jstree().refresh();
             } else {
-                toastr['error'](data.retCode);
+                toastr['error'](data.retMessage);
             }
         })
     }
@@ -735,6 +737,8 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                 {field: 'createTime', displayName: '创建时间', enableHiding: false}
             ]
             $scope.gridOptions2 = initgrid($scope, gridOptions2, filterFilter, com, true, selework);
+            //塞入测试数组
+            list.push($scope.gridOptions2);
             var regridOptions2 = function () {
                 var subFrom = {};
                 subFrom.orgCode = $scope.abftree.item.orgCode;
@@ -860,7 +864,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                 {field: 'otel', displayName: '办公电话', enableHiding: false}
             ]
             $scope.gridOptions1 = initgrid($scope, gridOptions1, filterFilter, com, true, selework);
-
+            list.push($scope.gridOptions1)
             var regridOptions1 = function () {
                 var subFrom = {};
                 subFrom.guid = $scope.abftree.item.guid;
@@ -1565,14 +1569,15 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                     abftree_service.addposit(subFrom).then(function (data) {
                         if (data.status == "success") {
                             toastr['success'](data.retMessage);
+                            $("#container").jstree().refresh();
+                            $scope.cancel();
                         } else {
                             toastr['error'](data.retMessage);
                         }
                         if (!isNull(fun)) {
                             fun();
                         }
-                        $("#container").jstree().refresh();
-                        $scope.cancel();
+
                     });
                 }
                 $scope.cancel = function () {
@@ -1596,11 +1601,16 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
         console.log(subFrom)
         if(isNull(subFrom.searchitem)){
             $scope.showtree = true;
+            if( $("#searchtree").jstree()){
+                $("#searchtree").jstree().destroy();
+            }
             ($scope.$$phase) ? null : $scope.$apply();
-            console.log(123123)
         }else{
+            if( $("#searchtree").jstree()){
+                $("#searchtree").jstree().destroy();
+            }
             $scope.showtree = false;
-            $("#searchtree").data('jstree', false).empty().jstree({
+            $("#searchtree").jstree({
                 "core": {
                     "themes": {
                         "responsive": false
@@ -1612,15 +1622,17 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                         $scope.jsonarray = jsonarray;
                         console.log(obj)
                         subFrom.id = obj.id;
-                        // console.log(obj)
-                        if (!isNull(obj.original)) {
-                            subFrom.guidOrg = obj.original.guid;
-                            subFrom.positionCode = obj.original.positionCode;
-                        } else {
-                            subFrom.guidOrg = "";
-                            subFrom.positionCode = "";
+                        if(obj.id != "#"){
+                            if (!isNull(obj.original)) {
+                                subFrom.guidOrg = obj.original.guid;
+                                subFrom.positionCode = obj.original.positionCode;
+                            } else {
+                                subFrom.guidOrg = "";
+                                subFrom.positionCode = "";
+                            }
                         }
                         abftree_service.loadsearchtree(subFrom).then(function (datas) {
+                            console.log(datas)
                             var data = datas.retMessage;
                             if (isNull(data)) {
 
@@ -1639,6 +1651,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                                     data[i].icon = 'fa fa-institution  icon-state-info icon-lg';
                                     if (data[i].orgName == "岗位信息") {
                                         data[i].icon = 'fa fa-users  icon-state-info icon-lg';
+                                        data[i].children = true;
                                     }
                                 }
                             }
@@ -1664,13 +1677,8 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                     },
                     'is_draggable': function (node) {
                         //用于控制节点是否可以拖拽.
-                        console.log(node)
                         return true;
                     }
-                },
-                'search': {
-                    show_only_matches: true,
-
                 },
                 'callback': {
                     move_node: function (node) {
@@ -1678,22 +1686,45 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                     }
                 },
 
-                "plugins": ["dnd", "state", "types", "search", "contextmenu"]
-            })
-                .bind("changed.jstree", function (e, data) {
+                "plugins": ["dnd", "types", "contextmenu"]
+            }).bind("select_node.jstree", function (e, data) {
                     if (typeof data.node !== 'undefined') {//拿到结点详情
                         // console.log(data.node.original.id.indexOf("@"));
-                        $scope.abftree.item = data.node.original;
+                        $scope.abftree.item = {};
                         console.log(data.node.original);
-                        if (data.node.original.id.indexOf("@") == 0) {
+                        $scope.currNode = data.node.text;
+                        if (data.node.original.id.indexOf("POSIT") == 0) {
                             for (var i in $scope.flag) {
                                 flag[i] = false;
                             }
                             for (var i in $scope.gwflag) {
                                 gwflag[i] = false;
                             }
+                            $scope.flag.index = true;
                             $scope.gwflag.gwxx = true;
                             $scope.tabflag = false;
+                            $scope.abftree.item = data.node.original;
+                        } else if (data.node.original.id.indexOf("9999") == 0) {
+                            for (var i in $scope.flag) {
+                                flag[i] = false;
+                            }
+                            for (var i in $scope.gwflag) {
+                                gwflag[i] = false;
+                            }
+                            $scope.flag.index = false;
+                        } else if (data.node.original.id.indexOf("GW") == 0) {
+                            for (var i in $scope.gwflag) {
+                                gwflag[i] = false;
+                            }
+                            for (var i in $scope.flag) {
+                                flag[i] = false;
+                            }
+                            $scope.gwflag.gwlb = true;
+                            $scope.flag.index = true;
+                            var subFrom = {};
+                            subFrom.orgGuid = data.node.original.guid;
+                            $scope.abftree.item = data.node.original;
+                            regwlbgird(subFrom)
                         } else {
                             for (var i in $scope.gwflag) {
                                 gwflag[i] = false;
@@ -1701,17 +1732,21 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                             for (var i in $scope.flag) {
                                 flag[i] = false;
                             }
+                            $scope.flag.index = true;
                             $scope.flag.xqxx = true;
                             $scope.tabflag = true;
+                            $scope.abftree.item = data.node.original;
                         }
 
-                        $scope.$apply();
+                        ($scope.$$phase) ? null : $scope.$apply();
                     }
                 });
-            return 123;
         }
     }
 
-
+    /**-------------------------------测试table自适应---------------------------*/
+        //测试封装
+    var list = [];
+    table($scope,$window,list)
 });
 

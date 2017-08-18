@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.om.OmEmployee;
+import org.tis.tools.model.po.om.OmOrg;
+import org.tis.tools.model.po.om.OmPosition;
 import org.tis.tools.rservice.om.capable.IEmployeeRService;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.util.AjaxUtils;
@@ -38,7 +40,6 @@ public class EmployeeController extends BaseController{
 	 * 查询所有人员信息
 	 * 
 	 * @param model
-	 * @param content
 	 * @param age
 	 * @param request
 	 * @param response
@@ -55,7 +56,7 @@ public class EmployeeController extends BaseController{
 				Map map = BeanUtils.describe(oe);
 				list2.add(map);
 			}
-			AjaxUtils.ajaxJsonSuccessMessage(response,list2);
+			AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list2, "yyyy-MM-dd");
 		} catch (ToolsRuntimeException e) {// TODO
 			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
 			e.printStackTrace();
@@ -127,7 +128,316 @@ public class EmployeeController extends BaseController{
 		}
 		return null;
 	}
-	
+
+	/**
+	 * 拉取人员-机构表
+	 *
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/loadEmpOrg")
+	public String loadEmpOrg(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+						   HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			String empCode = jsonObj.getString("empCode");
+			List<OmOrg> list = employeeRService.queryOrgbyEmpCode(empCode);
+			AjaxUtils.ajaxJsonSuccessMessage(response,list);
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	/**
+	 * 拉取人员-岗位表
+	 *
+	 * @param model
+	 * @param content
+	 * @param age
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/loadEmpPos")
+	public String loadEmpPos(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+							 HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			String empCode = jsonObj.getString("empCode");
+			List<OmPosition> list = employeeRService.queryPosbyEmpCode(empCode);
+			AjaxUtils.ajaxJsonSuccessMessage(response,list);
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	/**
+	 * 拉取可指派机构列表
+	 *
+	 * @param model
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/loadOrgNotInbyEmp")
+	public String loadOrgNotInbyEmp(ModelMap model, @RequestBody String content, HttpServletRequest request,
+							 HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			String empCode = jsonObj.getString("empCode");
+			List<OmOrg> list = employeeRService.queryCanAddOrgbyEmpCode(empCode);
+			AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list, "yyyy-MM-dd");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	/**
+	 * 拉取可指派岗位列表
+	 *
+	 * @param model
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/loadPosNotInbyEmp")
+	public String loadPosNotInbyEmp(ModelMap model, @RequestBody String content, HttpServletRequest request,
+							 HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			String empCode = jsonObj.getString("empCode");
+			List<OmPosition> list = employeeRService.queryCanAddPosbyEmpCode(empCode);
+			AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list, "yyyy-MM-dd");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	/**
+	 * 指派机构
+	 *
+	 * @param model
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/assignOrg")
+	public String assignOrg(ModelMap model, @RequestBody String content, HttpServletRequest request,
+							 HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			String empCode = jsonObj.getString("empCode");
+			String orgCode = jsonObj.getString("orgCode");
+			String isMain = jsonObj.getString("isMain");
+			if("true".equals(isMain)){
+				employeeRService.assignOrg(empCode, orgCode,true);
+			}else {
+				employeeRService.assignOrg(empCode, orgCode,false);
+			}
+
+			AjaxUtils.ajaxJsonSuccessMessage(response, "指派成功!");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	/**
+	 * 取消指派机构
+	 *
+	 * @param model
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/disassignOrg")
+	public String disassignOrg(ModelMap model, @RequestBody String content, HttpServletRequest request,
+							 HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			String empGuid = jsonObj.getString("empGuid");
+			String orgGuid = jsonObj.getString("orgGuid");
+			employeeRService.deleteEmpOrg(orgGuid, empGuid);
+			AjaxUtils.ajaxJsonSuccessMessage(response, "取消指派成功!");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	/**
+	 * 指派
+	 *
+	 * @param model
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/assignPos")
+	public String assignPos(ModelMap model, @RequestBody String content, HttpServletRequest request,
+							 HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			String empCode = jsonObj.getString("empCode");
+			String posCode = jsonObj.getString("posCode");
+			String isMain = jsonObj.getString("isMain");
+			if("true".equals(isMain)){
+				employeeRService.assignPosition(empCode, posCode,true);
+			}else {
+				employeeRService.assignPosition(empCode, posCode,false);
+			}
+			AjaxUtils.ajaxJsonSuccessMessage(response, "指派成功!");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	/**
+	 * 取消指派机构
+	 *
+	 * @param model
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/disassignPos")
+	public String disassignPos(ModelMap model, @RequestBody String content, HttpServletRequest request,
+							 HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			String empGuid = jsonObj.getString("empGuid");
+			String posGuid = jsonObj.getString("posGuid");
+			employeeRService.deleteEmpPosition(posGuid, empGuid);
+			AjaxUtils.ajaxJsonSuccessMessage(response, "取消指派成功!");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	/**
+	 * 生成员工代码
+	 *
+	 * @param model
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/initEmpCode")
+	public String initEmpCode(ModelMap model, @RequestBody String content, HttpServletRequest request,
+							 HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			//toDO
+			String empCode = employeeRService.genEmpCode(null, null);
+			AjaxUtils.ajaxJsonSuccessMessage(response, empCode);
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+
+	/**
+	 * 指定新的主机构
+	 * @param model
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/fixmainOrg")
+	public String fixmainOrg(ModelMap model, @RequestBody String content, HttpServletRequest request,
+							 HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			String empCode = jsonObj.getString("empCode");
+			String orgCode = jsonObj.getString("orgCode");
+			employeeRService.fixMainOrg(empCode, orgCode);
+			AjaxUtils.ajaxJsonSuccessMessage(response, "指定成功!");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+	/**
+	 * 指定新的主岗位
+	 * @param model
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/fixmainPos")
+	public String fixmainPos(ModelMap model, @RequestBody String content, HttpServletRequest request,
+							 HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.fromObject(content);
+			String empCode = jsonObj.getString("empCode");
+			String posCode = jsonObj.getString("posCode");
+			employeeRService.fixMainPosition(empCode, posCode);
+			AjaxUtils.ajaxJsonSuccessMessage(response, "指定成功!");
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+
+
+
+
+
 	/**
 	 * 每个controller定义自己的返回信息变量
 	 */

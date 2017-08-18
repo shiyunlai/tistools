@@ -667,7 +667,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function($rootS
 
                 var recommonGrid = function () {
                     //调取工作组信息OM_GROUP
-                    Workgroup_service.loadposNotin(subFrom).then(function (data) {
+                    Workgroup_service.loadempNotin(subFrom).then(function (data) {
                         console.log(data)
                         if(data.status == "success"  && !isNull(data.retMessage)){
                             $scope.commonGrid.data =  data.retMessage;

@@ -12,8 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.ac.*;
@@ -26,6 +24,7 @@ import org.tis.tools.rservice.om.capable.IOrgRService;
 import org.tis.tools.rservice.om.capable.IPositionRService;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.util.AjaxUtils;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
@@ -71,7 +70,7 @@ public class OrgManagerController extends BaseController {
             String guidOrg = jsonObj.getString("guidOrg");
             String positionCode = jsonObj.getString("positionCode");
             List<OmOrg> rootOrgs = new ArrayList<OmOrg>();
-            List<OmPosition> omp = new ArrayList<OmPosition>();
+            List<OmPosition> omp= new ArrayList<OmPosition>();
             // 通过id判断需要加载的节点
             if ("#".equals(id)) {
                 // #:根
@@ -150,12 +149,13 @@ public class OrgManagerController extends BaseController {
                 // 为每一个节点增加岗位信息节点
                 og.setOrgName("岗位信息");
                 og.setOrgCode("GW" + id);
+                og.setGuid(guidOrg);
                 rootOrgs.add(og);
             }
             if (rootOrgs == null || rootOrgs.isEmpty()) {
-                AjaxUtils.ajaxJsonSuccessMessage(response, omp);
+                AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, omp,"yyyy-MM-dd");
             } else {
-                AjaxUtils.ajaxJsonSuccessMessage(response, rootOrgs);
+                AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, rootOrgs,"yyyy-MM-dd");
             }
 
         } catch (ToolsRuntimeException e) {

@@ -370,8 +370,8 @@ public interface IOrgRService {
 	 * 根据查询意图拼接WhereCondition；
 	 * </pre>
 	 * 
-	 * @param wc
-	 *            查询条件
+	 * @param name
+	 *            查询条件 机构名称
 	 * @return 匹配条件的机构记录们，无记录返回null
 	 */
 	List<OmOrg> queryOrgsByName(String name);
@@ -429,6 +429,8 @@ public interface IOrgRService {
 
 	/**
 	 * 通过机构GUID查询未授予角色
+	 * @param guid
+	 * @return
 	 */
 	List<AcRole> queryRoleNotInOrg(String guid);
 

@@ -4,13 +4,11 @@
  */
 package org.tis.tools.model.po.om;
 
+import org.tis.tools.common.utils.StringUtil;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Blob;
-import java.sql.Time;
 import java.util.Date;
-
-import org.tis.tools.common.utils.StringUtil;
 
 /**
  * 
@@ -727,5 +725,19 @@ public class OmOrg implements Serializable {
 	
 	public String toString(){
 		return StringUtil.toString(this) ; 
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (this == obj) {
+			return true;
+		}
+		if (obj instanceof OmOrg) {
+			OmOrg other = (OmOrg) obj;
+			return (other.getGuid()).equals(this.getGuid());
+		}
+		return false;
 	}
 }
