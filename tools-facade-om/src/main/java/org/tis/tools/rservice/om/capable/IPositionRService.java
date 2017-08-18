@@ -236,7 +236,7 @@ public interface IPositionRService {
 	 * 只注销岗位自己，子岗位保持原有状态；
 	 * </pre>
 	 * 
-	 * @param position
+	 * @param positionCode
 	 *            岗位代码
 	 * @throws ToolsRuntimeException
 	 */
@@ -288,8 +288,8 @@ public interface IPositionRService {
 	 * 查询机构（orgCode）的岗位信息（只返回直属岗位，不包括子机构的岗位）
 	 * </pre>
 	 * 
-	 * @param orgCode
-	 *            机构代码
+	 * @param orgGuid
+	 *            机构GUID
 	 * @param positionCondition
 	 *            岗位过滤条件
 	 * @return 从属于该机构的岗位记录
@@ -302,9 +302,11 @@ public interface IPositionRService {
 	 * @return
 	 */
 	List<OmPosition> queryChilds(String positionCode) ;
-	
+
 	/**
 	 * 查询所有子岗位,不限级别
+	 * @param positionCode
+	 * @return
 	 */
 	List<OmPosition> queryAllChilds(String positionCode);
 	
@@ -331,6 +333,8 @@ public interface IPositionRService {
 
 	/**
 	 * 查询可为指定岗位添加的所有应用
+	 * @param positionCode
+	 * @return
 	 */
 	List<AcApp> queryAppNotInPosition(String positionCode);
 
@@ -350,16 +354,21 @@ public interface IPositionRService {
 
 	/**
 	 * 添加岗位应用
+	 * @param appGuid
+	 * @param positionGuid
 	 */
 	void addAppPosition(String appGuid, String positionGuid);
 
 	/**
 	 * 删除岗位应用
+	 * @param appGuid
+	 * @param positionGuid
 	 */
 	void deleteAppPosition(String appGuid, String positionGuid);
 
 	/**
 	 * 删除岗位
+	 * @param positionCode
 	 */
 	void deletePosition(String positionCode);
 

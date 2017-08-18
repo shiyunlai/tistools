@@ -210,7 +210,7 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 		OmDuty od = queryByDutyCode(dutyCode);
 		String dutyGuid = od.getGuid();
 		WhereCondition wc = new WhereCondition();
-		wc.andEquals("GUID_DUTY",dutyGuid);
+		wc.andEquals(OmPosition.COLUMN_GUID_DUTY,dutyGuid);
 		List<OmPosition> opList = omPositionService.query(wc);
 		return opList;
 	}

@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.om.OmEmployee;
+import org.tis.tools.model.po.om.OmOrg;
+import org.tis.tools.model.po.om.OmPosition;
 import org.tis.tools.model.vo.om.OmEmployeeDetail;
 
 /**
@@ -202,6 +204,14 @@ public interface IEmployeeRService {
 	void assignOrg(String empCode, String orgCode, boolean isMain) throws ToolsRuntimeException;
 
 	/**
+	 * 分配员工(empCode)基本岗位(positionCode)
+	 * @param empCode
+	 * @param positionCode
+	 * @param isMain
+	 * @throws ToolsRuntimeException
+	 */
+	void assignPosition(String empCode,String positionCode,boolean isMain) throws ToolsRuntimeException;
+	/**
 	 * <pre>
 	 * 指定员工（empCode）的主机构（mainOrgCode）
 	 * 
@@ -218,6 +228,13 @@ public interface IEmployeeRService {
 	 */
 	void fixMainOrg(String empCode, String mainOrgCode) throws ToolsRuntimeException;
 
+	/**
+	 * 设置员工主岗位
+	 * @param empCode 员工编号
+	 * @param positionCode 指定主岗位编号
+	 * @throws ToolsRuntimeException
+	 */
+	void fixMainPosition(String empCode,String positionCode) throws ToolsRuntimeException;
 	/**
 	 * <pre>
 	 * 修改员工信息
@@ -339,16 +356,18 @@ public interface IEmployeeRService {
 	 * 查询机构（orgCode）下所有人员信息（只返回直属人员，不包括子机构的人员）
 	 * </pre>
 	 * 
-	 * @param orgcode
+	 * @param orgCode
 	 *            机构代码
 	 * @param empCondition
 	 *            人员过滤条件
 	 * @return 从属于该机构的人员们
 	 */
 	List<OmEmployee> queryEmployeeByOrg(String orgCode, OmEmployee empCondition) ;
-	
+
 	/**
 	 * 查询不在指定机构 (ORGGUID) 下所有人员信息
+	 * @param orgGuid
+	 * @return
 	 */
 	List<OmEmployee> queryEmployeeNotinGuid(String orgGuid);
 	
@@ -385,7 +404,28 @@ public interface IEmployeeRService {
 	 * 删除人员-工作组关系表数据
 	 */
 	void deleteEmpGroup(String groupGuid,String empGuid);
-	
+
+	/**
+	 * 查询指定人员所在所有机构.
+	 */
+	List<OmOrg> queryOrgbyEmpCode(String empCode);
+
+	/**
+	 *查询指定人员所在所有岗位
+	 */
+	List<OmPosition> queryPosbyEmpCode(String empCode);
+
+	/**
+	 * 查询可以为人员添加的机构
+	 */
+	List<OmOrg> queryCanAddOrgbyEmpCode(String empCode);
+
+	/**
+	 * 查询可以为人员添加的岗位
+	 */
+	List<OmPosition> queryCanAddPosbyEmpCode(String empCode);
+
+
 	/**
 	 * 查询所有人员信息
 	 */

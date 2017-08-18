@@ -29,7 +29,7 @@
             </div>
             <div class="portlet-body">
                 <form id="s">
-                    <input type="search" id="q" ng-model="searchitem"/>
+                    <input id="search" type="search" id="q" ng-model="searchitem"/>
                     <button type="submit" ng-click="abftree.clear()">清空</button>
                 </form>
                 <div id="container" ng-show="showtree"></div>
@@ -437,7 +437,7 @@
                 </div>
                 <!--下级机构-->
                 <div class="tab-content portlet light" ng-if="flag.xjjg">
-                    <div ui-grid="gridOptions2"
+                    <div ui-grid="gridOptions2" id="test"
                          ui-grid-edit ui-grid-pagination
                          ui-grid-selection ui-grid-resize-columns></div>
                     <div class="actions btn-set" style="float: right;">
@@ -759,10 +759,10 @@
                          ui-grid-selection ui-grid-resize-columns></div>
                     <div class="actions btn-set" style="float: right;">
                         <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addxjPosition()">
-                            新增岗位
+                            新增子岗位
                         </button>
                         <button type="button" name="back" class="btn btn-primary" ng-click="abftree.editxjPosition()">
-                            编辑岗位
+                            查询岗位详情
                         </button>
                         <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletexjPosition()">
                             删除岗位

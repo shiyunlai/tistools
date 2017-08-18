@@ -1,9 +1,6 @@
 package org.tis.tools.rservice.om.capable;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
+import jdk.nashorn.internal.objects.annotations.Where;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
@@ -13,27 +10,21 @@ import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.common.utils.StringUtil;
-import org.tis.tools.dao.om.OmEmpOrgMapper;
-import org.tis.tools.dao.om.OmEmployeeMapper;
-import org.tis.tools.model.def.ACConstants;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.def.OMConstants;
-import org.tis.tools.model.po.om.OmEmpGroup;
-import org.tis.tools.model.po.om.OmEmpOrg;
-import org.tis.tools.model.po.om.OmEmpPosition;
-import org.tis.tools.model.po.om.OmEmployee;
-import org.tis.tools.model.po.om.OmOrg;
+import org.tis.tools.model.po.om.*;
 import org.tis.tools.model.vo.om.OmEmployeeDetail;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.om.exception.EmployeeManagementException;
 import org.tis.tools.rservice.om.exception.GroupManagementException;
 import org.tis.tools.rservice.om.exception.OrgManagementException;
-import org.tis.tools.service.om.OmEmpGroupService;
-import org.tis.tools.service.om.OmEmpOrgService;
-import org.tis.tools.service.om.OmEmpPositionService;
-import org.tis.tools.service.om.OmEmployeeService;
-import org.tis.tools.service.om.OmOrgService;
+import org.tis.tools.service.om.*;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
+import org.tis.tools.spi.om.IEmpCodeGenerator;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRService {
 	@Autowired
@@ -46,11 +37,20 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 	OmEmpGroupService omEmpGroupService;
 	@Autowired
 	OmOrgService OmOrgService;
+	@Autowired
+	IOrgRService orgRService;
+	@Autowired
+	OmPositionService omPositionService;
+	@Autowired
+	IPositionRService positionRService;
+	@Autowired
+	BOSHGenEmpCode boshGenEmpCode;
 
 	@Override
 	public String genEmpCode(String orgCode, String empDegree) throws ToolsRuntimeException {
-		// TODO Auto-generated method stub
-		return null;
+		//todo
+		String empCode = boshGenEmpCode.genEmpCode(null);
+		return empCode;
 	}
 
 	@Override
@@ -102,7 +102,11 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		OmEmpOrg eoe = new OmEmpOrg();
 		eoe.setGuidEmp(newEmployee.getGuid());
 		eoe.setGuidOrg(newEmployee.getGuidOrg());
-		eoe.setIsmain("0");
+		eoe.setIsmain("Y");
+		OmEmpPosition oep = new OmEmpPosition();
+		oep.setGuidPosition(newEmployee.getGuidPosition());
+		oep.setGuidEmp(newEmployee.getGuid());
+		oep.setIsmain("Y");
 		// 新增人员
 		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 			@Override
@@ -110,6 +114,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 				try {
 					omEmployeeService.insert(newEmployee);
 					omEmpOrgService.insert(eoe);
+					omEmpPositionService.insert(oep);
 				} catch (Exception e) {
 					status.setRollbackOnly();
 					e.printStackTrace();
@@ -141,16 +146,275 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		return null;
 	}
 
+	/**
+	 * 指派
+	 * @param empCode
+	 *            员工代码
+	 * @param orgCode
+	 *            所属机构代码
+	 * @param isMain
+	 *            是否为主机构 </br>
+	 *            true - 指定为主机构</br>
+	 * @throws ToolsRuntimeException
+	 */
 	@Override
 	public void assignOrg(String empCode, String orgCode, boolean isMain) throws ToolsRuntimeException {
-		// TODO Auto-generated method stub
+		//校验入参
+		if(StringUtil.isEmpty(empCode)){
+			throw new EmployeeManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		if(StringUtil.isEmpty(orgCode)){
+			throw new EmployeeManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		//isMain,是主机构先更新员工信息
+		OmEmployee emp = queryEmployeeBrief(empCode);
+		OmOrg org = orgRService.queryOrg(orgCode);
+		if(isMain){
+			//指定新的主机构
+			fixMainOrg(empCode, orgCode);
+		}else{//不是主机构,仅操作emporg
+			OmEmpOrg newOeo = new OmEmpOrg();
+			newOeo.setGuidEmp(emp.getGuid());
+			newOeo.setGuidOrg(org.getGuid());
+			newOeo.setIsmain("N");
+			omEmpOrgService.insert(newOeo);
+		}
+
 
 	}
 
+	/**
+	 *
+	 * @param empCode
+	 *            员工代码
+	 * @param mainOrgCode
+	 *            机构代码，作为员工的最新主机构
+	 * @throws ToolsRuntimeException
+	 */
 	@Override
 	public void fixMainOrg(String empCode, String mainOrgCode) throws ToolsRuntimeException {
-		// TODO Auto-generated method stub
+		//校验入参
+		if(StringUtil.isEmpty(empCode)){
+			throw new EmployeeManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		if(StringUtil.isEmpty(mainOrgCode)){
+			throw new EmployeeManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		OmEmployee emp = queryEmployeeBrief(empCode);
+		OmOrg org = orgRService.queryOrg(mainOrgCode);
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals(OmEmpOrg.COLUMN_ISMAIN, "Y");
+		wc.andEquals(OmEmpOrg.COLUMN_GUID_EMP, emp.getGuid());
+		List<OmEmpOrg> oeoList = omEmpOrgService.query(wc);
 
+		//判断是新增信息,还是已经存在
+		wc.clear();
+		wc.andEquals(OmEmpOrg.COLUMN_GUID_EMP, emp.getGuid());
+		wc.andEquals(OmEmpOrg.COLUMN_GUID_ORG, org.getGuid());
+		List<OmEmpOrg> list = omEmpOrgService.query(wc);
+		if(list.size() != 1){
+			//新增
+			//插入新信息
+			OmEmpOrg newOeo = new OmEmpOrg();
+			newOeo.setGuidEmp(emp.getGuid());
+			newOeo.setGuidOrg(org.getGuid());
+			newOeo.setIsmain("Y");
+			// 启动事务
+			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+				@Override
+				public void doInTransactionWithoutResult(TransactionStatus status) {
+					try {
+						//判断是否有主机构
+						if(!oeoList.isEmpty()){
+							OmEmpOrg oeo = oeoList.get(0);
+							oeo.setIsmain("N");
+							wc.clear();
+							wc.andEquals(OmEmpOrg.COLUMN_GUID_EMP, oeo.getGuidEmp());
+							wc.andEquals(OmEmpOrg.COLUMN_GUID_ORG, oeo.getGuidOrg());
+							omEmpOrgService.updateByCondition(wc,oeo);
+						}
+						//插入一条新信息
+						omEmpOrgService.insert(newOeo);
+						//更新员工信息
+						emp.setGuidOrg(newOeo.getGuidOrg());
+						omEmployeeService.update(emp);
+					} catch (Exception e) {
+						status.setRollbackOnly();
+						e.printStackTrace();
+						throw new EmployeeManagementException(
+								OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
+								BasicUtil.wrap(e.getCause().getMessage()), "指派失败{0}");
+					}
+				}
+			});
+		}else{
+			//修改
+			if(list.get(0).getIsmain().equals("Y")){
+				//本身数据为主机构,抛出异常,不做任何处理
+				throw new EmployeeManagementException(
+						OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
+						BasicUtil.wrap("已经为主机构"));
+			}else{
+				//更新数据
+				OmEmpOrg newOeo = list.get(0);
+				newOeo.setIsmain("Y");
+				// 启动事务
+				transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+					@Override
+					public void doInTransactionWithoutResult(TransactionStatus status) {
+						try {
+							//判断是否有主机构
+							if(!oeoList.isEmpty()){
+								OmEmpOrg oeo = oeoList.get(0);
+								oeo.setIsmain("N");
+								wc.clear();
+								wc.andEquals(OmEmpOrg.COLUMN_GUID_EMP, oeo.getGuidEmp());
+								wc.andEquals(OmEmpOrg.COLUMN_GUID_ORG, oeo.getGuidOrg());
+								omEmpOrgService.updateByCondition(wc,oeo);
+							}
+							wc.clear();
+							wc.andEquals(OmEmpOrg.COLUMN_GUID_EMP, newOeo.getGuidEmp());
+							wc.andEquals(OmEmpOrg.COLUMN_GUID_ORG, newOeo.getGuidOrg());
+							omEmpOrgService.updateByCondition(wc,newOeo);
+							//更新员工信息
+							emp.setGuidOrg(newOeo.getGuidOrg());
+							omEmployeeService.update(emp);
+						} catch (Exception e) {
+							status.setRollbackOnly();
+							e.printStackTrace();
+							throw new EmployeeManagementException(
+									OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
+									BasicUtil.wrap(e.getCause().getMessage()), "指派失败{0}");
+						}
+					}
+				});
+			}
+		}
+	}
+
+	@Override
+	public void assignPosition(String empCode, String positionCode, boolean isMain) throws ToolsRuntimeException {
+		//校验入参
+		if(StringUtil.isEmpty(empCode)){
+			throw new EmployeeManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		if(StringUtil.isEmpty(positionCode)){
+			throw new EmployeeManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		//isMain,是主机构先更新员工信息
+		OmEmployee emp = queryEmployeeBrief(empCode);
+		OmPosition op = positionRService.queryPosition(positionCode);
+		if(isMain){
+			//指定新的主机构
+			fixMainPosition(empCode, positionCode);
+		}else{//不是主机构,仅操作emporg
+			OmEmpPosition newOep = new OmEmpPosition();
+			newOep.setGuidEmp(emp.getGuid());
+			newOep.setGuidPosition(op.getGuid());
+			newOep.setIsmain("N");
+			omEmpPositionService.insert(newOep);
+		}
+	}
+
+	@Override
+	public void fixMainPosition(String empCode, String positionCode) throws ToolsRuntimeException {
+		//校验入参
+		if(StringUtil.isEmpty(empCode)){
+			throw new EmployeeManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		if(StringUtil.isEmpty(positionCode)){
+			throw new EmployeeManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		OmEmployee emp = queryEmployeeBrief(empCode);
+		OmPosition op = positionRService.queryPosition(positionCode);
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals(OmEmpPosition.COLUMN_ISMAIN, "Y");
+		wc.andEquals(OmEmpPosition.COLUMN_GUID_EMP, emp.getGuid());
+		List<OmEmpPosition> oepList = omEmpPositionService.query(wc);
+
+
+		//判断是新增信息,还是已经存在
+		wc.clear();
+		wc.andEquals(OmEmpPosition.COLUMN_GUID_EMP, emp.getGuid());
+		wc.andEquals(OmEmpPosition.COLUMN_GUID_POSITION, op.getGuid());
+		List<OmEmpPosition> list = omEmpPositionService.query(wc);
+		if(list.size() != 1){
+			//新增
+			//插入新信息
+			OmEmpPosition newOep = new OmEmpPosition();
+			newOep.setGuidEmp(emp.getGuid());
+			newOep.setGuidPosition(op.getGuid());
+			newOep.setIsmain("Y");
+			// 启动事务
+			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+				@Override
+				public void doInTransactionWithoutResult(TransactionStatus status) {
+					try {
+						if(!oepList.isEmpty()){
+							OmEmpPosition oep = oepList.get(0);
+							oep.setIsmain("N");
+							wc.clear();
+							wc.andEquals(OmEmpPosition.COLUMN_GUID_EMP, oep.getGuidEmp());
+							wc.andEquals(OmEmpPosition.COLUMN_GUID_POSITION, oep.getGuidPosition());
+							omEmpPositionService.updateByCondition(wc,oep);
+						}
+
+						//插入一条新信息
+						omEmpPositionService.insert(newOep);
+						//更新员工信息
+						emp.setGuidPosition(newOep.getGuidPosition());
+						omEmployeeService.update(emp);
+					} catch (Exception e) {
+						status.setRollbackOnly();
+						e.printStackTrace();
+						throw new EmployeeManagementException(
+								OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
+								BasicUtil.wrap(e.getCause().getMessage()), "指派失败{0}");
+					}
+				}
+			});
+		}else{
+			//修改
+			if(list.get(0).getIsmain().equals("Y")){
+				//本身数据为主机构,抛出异常,不做任何处理
+				throw new EmployeeManagementException(
+						OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
+						BasicUtil.wrap("已经为主机构"));
+			}else{
+				//更新数据
+				OmEmpPosition newOep = list.get(0);
+				newOep.setIsmain("Y");
+				// 启动事务
+				transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+					@Override
+					public void doInTransactionWithoutResult(TransactionStatus status) {
+						try {
+							if(!oepList.isEmpty()){
+								OmEmpPosition oep = oepList.get(0);
+								oep.setIsmain("N");
+								wc.clear();
+								wc.andEquals(OmEmpPosition.COLUMN_GUID_EMP, oep.getGuidEmp());
+								wc.andEquals(OmEmpPosition.COLUMN_GUID_POSITION, oep.getGuidPosition());
+								omEmpPositionService.updateByCondition(wc,oep);
+							}
+							wc.clear();
+							wc.andEquals(OmEmpPosition.COLUMN_GUID_EMP, newOep.getGuidEmp());
+							wc.andEquals(OmEmpPosition.COLUMN_GUID_POSITION, newOep.getGuidPosition());
+							omEmpPositionService.updateByCondition(wc,newOep);
+							//更新员工信息
+							emp.setGuidPosition(newOep.getGuidPosition());
+							omEmployeeService.update(emp);
+						} catch (Exception e) {
+							status.setRollbackOnly();
+							e.printStackTrace();
+							throw new EmployeeManagementException(
+									OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
+									BasicUtil.wrap(e.getCause().getMessage()), "指派失败{0}");
+						}
+					}
+				});
+			}
+		}
 	}
 
 	@Override
@@ -219,11 +483,13 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 					// 删除员工信息
 					omEmployeeService.delete(guid);
 					//删除员工-岗位信息
-					//TODO
-					//删除员工-机构信息
 					wc.clear();
 					wc.andEquals("GUID_EMP", guid);
+					omEmpPositionService.deleteByCondition(wc);
+					//删除员工-机构信息
 					omEmpOrgService.deleteByCondition(wc);
+					//删除员工-工作组
+					omEmpGroupService.deleteByCondition(wc);
 					return null;
 				}
 			});
@@ -239,8 +505,18 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 
 	@Override
 	public OmEmployee queryEmployeeBrief(String empCode) {
-		// TODO Auto-generated method stub
-		return null;
+		//校验入参
+		if(StringUtil.isEmpty(empCode)){
+			throw new EmployeeManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals(OmEmployee.COLUMN_EMP_CODE,empCode);
+		List<OmEmployee> empList = omEmployeeService.query(wc);
+		if(empList.size() != 1){
+			throw new EmployeeManagementException(OMExceptionCodes.EMPANIZATION_NOT_EXIST_BY_EMP_CODE,
+					BasicUtil.wrap(empCode));
+		}
+		return empList.get(0);
 	}
 
 	@Override
@@ -311,10 +587,17 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 	 */
 	@Override
 	public void insertEmpOrg(String orgGuid, String empGuid) {
+		//校验入参
+		if(StringUtil.isEmpty(orgGuid)){
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		if(StringUtil.isEmpty(empGuid)){
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
 		OmEmpOrg oeo = new OmEmpOrg();
 		oeo.setGuidEmp(empGuid);
 		oeo.setGuidOrg(orgGuid);
-		oeo.setIsmain("0");//默认为否
+		oeo.setIsmain("N");//默认为否
 		omEmpOrgService.insert(oeo);
 	}
 	/**
@@ -322,7 +605,23 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 	 */
 	@Override
 	public void deleteEmpOrg(String orgGuid, String empGuid) {
+		//校验入参
+		if(StringUtil.isEmpty(orgGuid)){
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		if(StringUtil.isEmpty(empGuid)){
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
 		WhereCondition wc = new WhereCondition();
+		wc.andEquals(OmEmployee.COLUMN_GUID, empGuid);
+		List<OmEmployee> list = omEmployeeService.query(wc);
+		String guidOrg = list.get(0).getGuidOrg();
+		if (orgGuid.equals(guidOrg)) {
+			//TODO
+			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG);
+			//不可直接取消主机构指派
+		}
+		wc.clear();
 		wc.andEquals("GUID_ORG", orgGuid);
 		wc.andEquals("GUID_EMP", empGuid);
 		omEmpOrgService.deleteByCondition(wc);
@@ -331,6 +630,13 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 
 	@Override
 	public void insertEmpPosition(String positionGuid, String empGuid) {
+		//校验入参
+		if(StringUtil.isEmpty(positionGuid)){
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		if(StringUtil.isEmpty(empGuid)){
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
 		OmEmpPosition oep = new OmEmpPosition();
 		oep.setGuidEmp(empGuid);
 		oep.setGuidPosition(positionGuid);
@@ -340,7 +646,23 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 
 	@Override
 	public void deleteEmpPosition(String positionGuid, String empGuid) {
+		//校验入参
+		if(StringUtil.isEmpty(positionGuid)){
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		if(StringUtil.isEmpty(empGuid)){
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
 		WhereCondition wc = new WhereCondition();
+		wc.andEquals(OmEmployee.COLUMN_GUID, empGuid);
+		List<OmEmployee> list = omEmployeeService.query(wc);
+		String posGuid = list.get(0).getGuidPosition();
+		if (positionGuid.equals(posGuid)) {
+			//TODO
+			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG);
+			//不可直接取消主机构指派
+		}
+		wc.clear();
 		wc.andEquals("GUID_POSITION", positionGuid);
 		wc.andEquals("GUID_EMP", empGuid);
 		omEmpPositionService.deleteByCondition(wc);
@@ -386,4 +708,95 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		return list;
 	}
 
+	@Override
+	public List<OmOrg> queryOrgbyEmpCode(String empCode) {
+		//校验入参
+		if(StringUtil.isEmpty(empCode)){
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		List<OmOrg> orgList = new ArrayList<>();
+		OmEmployee emp = queryEmployeeBrief(empCode);
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals(OmEmpOrg.COLUMN_GUID_EMP, emp.getGuid());
+		List<OmEmpOrg> oeoList = omEmpOrgService.query(wc);
+		//找出主机构GUID
+		String mainguid = "";
+		if(oeoList == null){
+			return orgList;
+		}
+		List<String> guidList = new ArrayList<>();
+		for (OmEmpOrg oeo : oeoList) {
+			guidList.add(oeo.getGuidOrg());
+			if(oeo.getIsmain().equals("Y")){
+				mainguid = oeo.getGuidOrg();
+			}
+		}
+		wc.clear();
+		wc.andIn(OmOrg.COLUMN_GUID, guidList);
+		orgList = OmOrgService.query(wc);
+		for(OmOrg org:orgList){
+			if (org.getGuid().equals(mainguid)) {
+				org.setOrgName(org.getOrgName()+"(主)");
+			}
+		}
+		return orgList;
+	}
+
+	@Override
+	public List<OmPosition> queryPosbyEmpCode(String empCode) {
+		//校验入参
+		if(StringUtil.isEmpty(empCode)){
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		List<OmPosition> opList = new ArrayList<>();
+		OmEmployee emp = queryEmployeeBrief(empCode);
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals(OmEmpOrg.COLUMN_GUID_EMP, emp.getGuid());
+		List<OmEmpPosition> oepList = omEmpPositionService.query(wc);
+		//找出主岗位GUID
+		String mainguid = "";
+		if(oepList == null){
+			return opList;
+		}
+		List<String> guidList = new ArrayList<>();
+		for (OmEmpPosition oep : oepList) {
+			guidList.add(oep.getGuidPosition());
+			if(oep.getIsmain().equals("Y")){
+				mainguid = oep.getGuidPosition();
+			}
+		}
+		wc.clear();
+		wc.andIn(OmOrg.COLUMN_GUID, guidList);
+		opList = omPositionService.query(wc);
+		for(OmPosition op:opList){
+			if (op.getGuid().equals(mainguid)) {
+				op.setPositionName(op.getPositionName()+"(主)");
+			}
+		}
+		return opList;
+	}
+
+	@Override
+	public List<OmOrg> queryCanAddOrgbyEmpCode(String empCode) {
+		//校验入参
+		if(StringUtil.isEmpty(empCode)){
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		List<OmOrg> orgList = orgRService.queryAllOrg();
+		List<OmOrg> inorgList = queryOrgbyEmpCode(empCode);
+		orgList.removeAll(inorgList);
+		return orgList;
+	}
+
+	@Override
+	public List<OmPosition> queryCanAddPosbyEmpCode(String empCode) {
+		//校验入参
+		if(StringUtil.isEmpty(empCode)){
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		List<OmPosition> opList = positionRService.queryAllPosition();
+		List<OmPosition> inopList = queryPosbyEmpCode(empCode);
+		opList.removeAll(inopList);
+		return opList;
+	}
 }

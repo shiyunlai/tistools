@@ -11,31 +11,31 @@
 </div>
 <div class="portlet-body portlet light">
     <!-- 页签开始 -->
-    <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" >
+    <ul class="nav nav-tabs padding-12 tab-color-blue background-blue">
         <li ng-class="{true:'active',false:''}[flag.yglb]">
             <a data-toggle="tab" href ng-class="{true:'link',false:''}[flag.yglb]" ng-click="emp.loaddata('0')">
                 <i class="green ace-icon fa fa-bars bigger-120"></i>员工列表
             </a>
         </li>
         <li ng-class="{true:'active',false:''}[flag.xqxx]" ng-if="flag.xqxx">
-            <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xqxx]" ng-click="emp.loaddata('1')">
+            <a data-toggle="tab" href ng-class="{true:'link',false:''}[flag.xqxx]" ng-click="emp.loaddata('1')">
                 <i class="green ace-icon fa fa-bars bigger-120"></i>{{title}}
             </a>
         </li>
         <li ng-class="{true:'active',false:''}[flag.zzgs]" ng-if="flag.zzgs">
-            <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.zzgs]" ng-click="emp.loaddata('2')">
+            <a data-toggle="tab" href ng-class="{true:'link',false:''}[flag.zzgs]" ng-click="emp.loaddata('2')">
                 <i class="green ace-icon fa fa-bars bigger-120"></i>员工组织归属
             </a>
         </li>
         <li ng-class="{true:'active',false:''}[flag.ryqx]" ng-if="flag.ryqx">
-            <a  data-toggle="tab" href ng-class="{true:'link',false:''}[flag.ryqx]" ng-click="emp.loaddata('3')">
+            <a data-toggle="tab" href ng-class="{true:'link',false:''}[flag.ryqx]" ng-click="emp.loaddata('3')">
                 <i class="green ace-icon fa fa-bars bigger-120"></i>人员权限
             </a>
         </li>
     </ul>
     <!-- 页签结束 -->
     <!-- 员工列表开始 -->
-    <div class="tab-content portlet light" ng-if="flag.yglb">
+    <div class="tab-content portlet light" ng-if="flag.yglb" id="test">
         <div ui-grid="empgrid"
              ui-grid-pagination
              ui-grid-selection ui-grid-resize-columns></div>
@@ -56,10 +56,10 @@
     </div>
     <!-- 员工列表结束 -->
     <!-- 员工详情信息开始 -->
-    <div class="tab-content portlet light" ng-if="flag.xqxx" >
+    <div class="tab-content portlet light" ng-if="flag.xqxx">
         <form action="#" name="myform" class="form-horizontal clearfix">
-            <div class="form-body  clearfix" >
-                <div class="col-md-6" >
+            <div class="form-body  clearfix">
+                <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">员工代码</label>
                         <div class="col-md-8">
@@ -73,7 +73,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">员工姓名</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="item.empName" ng-readonly="editflag" />
+                            <input type="text" class="form-control" ng-model="item.empName" ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">员工全名</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="item.empRealname" ng-readonly="editflag" />
+                            <input type="text" class="form-control" ng-model="item.empRealname" ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -91,7 +91,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.gender"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -101,7 +101,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.empstatus"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -111,7 +111,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.empDegree"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -121,7 +121,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.guidOrg"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -131,7 +131,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.guidPosition"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -141,7 +141,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.guidEmpMajor"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -151,7 +151,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.indate"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -161,7 +161,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.outdate"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -171,7 +171,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.otel"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -181,7 +181,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.oaddress"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -191,7 +191,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.ozipcode"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -201,7 +201,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.oemail"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -211,7 +211,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.faxno"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -221,7 +221,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.mobileno"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -239,7 +239,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.paperType"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -249,7 +249,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.paperNo"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -259,7 +259,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.birthdate"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -269,7 +269,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.htel"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -279,7 +279,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.hzipcode"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -289,7 +289,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.pemail"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -299,7 +299,7 @@
                         <div class="col-md-10">
                             <input type="text" class="form-control"
                                    ng-model="item.haddress"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -309,7 +309,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.party"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -320,7 +320,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.guidOperator"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -330,7 +330,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.userId"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -340,7 +340,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.specialty"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -350,7 +350,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.orgList"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -360,7 +360,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.workexp"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -370,7 +370,7 @@
                         <div class="col-md-10">
                             <input type="text" class="form-control"
                                    ng-model="item.remark"
-                                   ng-readonly="editflag" />
+                                   ng-readonly="editflag"/>
                         </div>
                     </div>
                 </div>
@@ -391,45 +391,53 @@
     <!-- 员工详情信息结束 -->
     <!-- 员工组织归属开始 -->
     <div class="tab-content portlet light clearfix" ng-if="flag.zzgs">
-        <div class="portlet-title">
-            <div class="caption">
-                <span class="caption-subject font-blue-sharp bold uppercase">员工-机构列表</span>
+        <div class="portlet-title col-md-12">
+            <div class="portlet-title col-md-6">
+                <div class="portlet-title col-md-12">
+                    <div class="caption">
+                        <span class="caption-subject font-blue-sharp bold uppercase">员工-机构列表</span>
+                    </div>
+                    <div class="actions btn-set" style="float: right;">
+                        <button type="button" name="back" class="btn btn-primary" ng-click="emp.assignOrg()"> 新增指派
+                        </button>
+                        <button type="button" name="back" class="btn btn-danger" ng-click="emp.disassignOrg()"> 取消指配
+                        </button>
+                        <button type="button" name="back" class="btn btn-primary" ng-click="emp.fixmainOrg()"> 设为新主机构
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div ui-grid="orggrid"
+                         ui-grid-pagination
+                         ui-grid-selection ui-grid-resize-columns></div>
+                </div>
             </div>
-            <div class="actions btn-set" style="float: right;">
-                <button type="button" name="back" class="btn btn-primary" ng-click=""> 新增
-                </button>
-
-                <button type="button" name="back" class="btn btn-danger" ng-click="emp.back()"> 删除
-                </button>
+            <div class="portlet-title col-md-6">
+                <div class="portlet-title col-md-12">
+                    <div class="caption">
+                        <span class="caption-subject font-blue-sharp bold uppercase">员工-岗位列表</span>
+                    </div>
+                    <div class="actions btn-set" style="float: right;">
+                        <button type="button" name="back" class="btn btn-primary" ng-click="emp.assignPos()"> 新增指派
+                        </button>
+                        <button type="button" name="back" class="btn btn-danger" ng-click="emp.disassignPos()"> 取消指配
+                        </button>
+                        <button type="button" name="back" class="btn btn-primary" ng-click="emp.fixmainPos()"> 设为新主岗位
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div ui-grid="postgrid"
+                         ui-grid-pagination ui-grid-empty-base-layer
+                         ui-grid-selection ui-grid-resize-columns></div>
+                </div>
             </div>
-        </div>
-        <div>
-            <div ui-grid="orggrid"
-                 ui-grid-pagination
-                 ui-grid-selection ui-grid-resize-columns></div>
-        </div>
-        <div class="portlet-title">
-            <div class="caption">
-                <span class="caption-subject font-blue-sharp bold uppercase">员工-岗位列表</span>
-            </div>
-            <div class="actions btn-set" style="float: right;">
-                <button type="button" name="back" class="btn btn-primary" ng-click=""> 新增
-                </button>
-
-                <button type="button" name="back" class="btn btn-danger" ng-click="emp.back()"> 删除
-                </button>
-            </div>
-        </div>
-        <div>
-            <div ui-grid="postgrid"
-                 ui-grid-pagination
-                 ui-grid-selection ui-grid-resize-columns></div>
         </div>
     </div>
     <!-- 员工组织归属结束 -->
     <!-- 人员权限开始 -->
     <div class="tab-content portlet light clearfix" ng-if="flag.ryqx">
-        <div class="col-md-6" >
+        <div class="col-md-6">
             <div class="portlet-title col-md-12">
                 <div class="caption col-md-10">
                     <span class="caption-subject font-blue-sharp bold uppercase">已授予角色列表</span>
@@ -439,8 +447,8 @@
                     </button>
                 </div>
             </div>
-            <div class="col-md-12" >
-                <div ui-grid="alrolegird"  style="height:200px;"
+            <div class="col-md-12">
+                <div ui-grid="alrolegird" style="height:200px;"
                      ui-grid-pagination
                      ui-grid-selection ui-grid-resize-columns></div>
             </div>
@@ -456,8 +464,8 @@
 
                 </div>
             </div>
-            <div class="col-md-12" >
-                <div ui-grid="notrolegird"  style="height:200px;"
+            <div class="col-md-12">
+                <div ui-grid="notrolegird" style="height:200px;"
                      ui-grid-pagination
                      ui-grid-selection ui-grid-resize-columns></div>
             </div>
@@ -474,8 +482,8 @@
                     </button>
                 </div>
             </div>
-            <div class="col-md-12" >
-                <div ui-grid="postgrid"  style="height:200px;"
+            <div class="col-md-12">
+                <div ui-grid="postgrid" style="height:200px;"
                      ui-grid-pagination
                      ui-grid-selection ui-grid-resize-columns></div>
             </div>
@@ -492,8 +500,8 @@
                     </button>
                 </div>
             </div>
-            <div class="col-md-12" >
-                <div ui-grid="postgrid"  style="height:200px;"
+            <div class="col-md-12">
+                <div ui-grid="postgrid" style="height:200px;"
                      ui-grid-pagination
                      ui-grid-selection ui-grid-resize-columns></div>
             </div>

@@ -36,7 +36,7 @@ public class BOSHGenDutyCode implements IDutyCodeGenerator{
 		// 机构等级
 		sb.append(dutyType) ;
 		sb.append(toSeqNO(sequenceService.getNextSeqNo(BOSHGenDutyCode.class.getName()))) ;//五位机构顺序号
-		return sb.toString();
+		return "DUTY"+sb.toString();
 	}
 	
 	/**
