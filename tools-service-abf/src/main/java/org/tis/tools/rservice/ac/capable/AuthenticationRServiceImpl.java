@@ -208,7 +208,7 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
             if (StringUtil.isEmpty(appGuid)) {
                 throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
             }
-            //判断是否有重组菜单
+            // 获取操作员详情
             List<AcOperator> acOperators = acOperatorService.query(new WhereCondition().andEquals("USER_ID", userId));
             if(CollectionUtils.isEmpty(acOperators)) {
                 throw new AuthManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap("USER_ID "+ userId, "AC_OPERATOR"));
@@ -217,7 +217,9 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
             operator.setPassword(null);
             resultInfo.put("user", operator);
             // 查询重组菜单
-            if (acOperatorMenuService.count(new WhereCondition().andEquals("GUID_OPERATOR", operator.getGuid())) > 0) {
+            if (acOperatorMenuService.count(new WhereCondition()
+                    .andEquals(AcOperatorMenu.COLUMN_GUID_APP, appGuid)
+                    .andEquals("GUID_OPERATOR", operator.getGuid())) > 0) {
                 resultInfo.put("menu", menuRService.getOperatorMenuByUserId(userId, appGuid, identityGuid).toJson());
             } else {
                 resultInfo.put("menu", menuRService.getMenuByUserId(userId, appGuid, identityGuid).toJson());

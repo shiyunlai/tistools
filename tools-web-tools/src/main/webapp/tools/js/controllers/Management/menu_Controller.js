@@ -12,20 +12,20 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
     menu_service.queryAllAcApp(subFrom).then(function (data) {
         menu.appselectApp= data.retMessage;
     })
-
     var res = $rootScope.res.menu_service;//页面所需调用的服务
-
     /*0、菜单管理机构树逻辑*/
+/*
+    搜索逻辑目前不用
     $("#s").submit(function(e) {
         e.preventDefault();
         $("#container").jstree(true).search($("#q").val());
     });
+*/
 
     //刷新菜单树
     $scope.reload = function(){
         $("#container").jstree().refresh();
     }
-
     //应用查询
     $scope.menu.search = function(item){
         var guidApp = item.appselect;
@@ -42,8 +42,6 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                             "id":"createa",
                             "label":"新增顶级菜单",
                             "action":function(data){
-                                var inst = jQuery.jstree.reference(data.reference),
-                                    obj = inst.get_node(data.reference);
                                 openwindow($uibModal, 'views/Management/manachildAdd.html', 'lg',
                                     function ($scope, $modalInstance) {
                                         var menuFrom = {};
@@ -85,8 +83,6 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                         "删除顶级菜单":{
                             "label":"删除顶级菜单",
                             "action":function(data){
-                                var inst = jQuery.jstree.reference(data.reference),
-                                    obj = inst.get_node(data.reference);
                                 if(confirm("您确认要删除选中的应用,删除应用将删除该应用下的所有功能组")){
                                     var subFrom = {};
                                     subFrom.menuGuid = node.original.guid;
@@ -105,8 +101,6 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                             "id":"createc",
                             "label":"增加子菜单",
                             "action":function(data){
-                                var inst = jQuery.jstree.reference(data.reference),
-                                    obj = inst.get_node(data.reference);//从数据库中获取所有的数据
                                 openwindow($uibModal, 'views/Management/menuchildAdd.html', 'lg',
                                     function ($scope, $modalInstance) {
                                         var menuFrom = {};
@@ -185,8 +179,6 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                         "删除菜单":{
                             "label":"删除菜单",
                             "action":function(data){
-                                var inst = jQuery.jstree.reference(data.reference),
-                                    obj = inst.get_node(data.reference);
                                 if(confirm("您确认要删除选中的应用,删除应用将删除该应用下的所有功能组")){
                                     var subFrom = {};
                                     subFrom.menuGuid = node.original.guid;
@@ -216,8 +208,6 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                             "id":"createc",
                             "label":"增加子菜单",
                             "action":function(data){
-                                var inst = jQuery.jstree.reference(data.reference),
-                                    obj = inst.get_node(data.reference);//从数据库中获取所有的数据
                                 openwindow($uibModal, 'views/Management/menuchildAdd.html', 'lg',
                                     function ($scope, $modalInstance) {
                                         var menuFrom = {};
@@ -296,8 +286,6 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                         "删除菜单":{
                             "label":"删除菜单",
                             "action":function(data){
-                                var inst = jQuery.jstree.reference(data.reference),
-                                    obj = inst.get_node(data.reference);
                                 if(confirm("您确认要删除选中的应用,删除应用将删除该应用下的所有功能组")){
                                     var subFrom = {};
                                     subFrom.menuGuid = node.original.guid;
@@ -326,8 +314,6 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                         "删除菜单":{
                             "label":"删除菜单",
                             "action":function(data){
-                                var inst = jQuery.jstree.reference(data.reference),
-                                    obj = inst.get_node(data.reference);
                                 if(confirm("您确认要删除选中的应用,删除应用将删除该应用下的所有功能组")){
                                     var subFrom = {};
                                     subFrom.menuGuid = node.original.guid;
@@ -393,10 +379,8 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                         }else{
                             subFrom.guidMenu = obj.id;
                             menu_service.queryChildMenu(subFrom).then(function (data) {
-                                console.log(data);
                                 var datas = data.retMessage;
                                 for(var i =0;i <datas.length;i++){
-                                    console.log(datas[i].isleaf)
                                     if(datas[i].isleaf == 'Y'){//如果是子节点，那么就是功能，不会有子集了
                                         datas[i].children = false;
                                         datas[i].icon = "fa fa-wrench icon-state-info icon-lg"
@@ -435,12 +419,35 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                 'search':{
                     show_only_matches:true,
                 },
+                'sort': function (a, b) {
+                    //排序插件，会两者比较，获取到节点的order属性，插件会自动两两比较。
+                    return this.get_node(a).original.displayOrder > this.get_node(b).original.displayOrder ? 1 : -1;
+                },
                 'callback' : {
                     move_node:function (node) {
                     }
                 },
-                "plugins" : [ "dnd", "state", "types","search","contextmenu" ]
+                "plugins" : [ "dnd", "state", "types","search","sort","contextmenu" ]
+            }).bind("move_node.jstree",function (e,data) {
+                if(confirm("确认要移动此机构吗?")){
+                    var subFrom = {};
+                    subFrom.targetGuid =  data.parent;//新的父节点guid;
+                    subFrom.moveGuid =  data.node.id;//当前guid。
+                    subFrom.order =  data.position;//新的位置
+                    var res = $rootScope.res.menu_service;//页面所需调用的服务
+                    common_service.post(res.moveMenu,subFrom).then(function(data){
+                        if(data.status == "success"){
+                            toastr['success']( "移动成功！");
+                        }else{
+                            $("#container").jstree().redraw();
+                            toastr['error']('移动失败'+'<br/>'+data.retMessage);
+                        }
+                    })
+                }else{
+                    $("#container").jstree().redraw();
+                }
             }).bind("select_node.jstree", function (e, data) {
+                console.log(data.node)
                 if(data.node.original.isleaf == 'Y'){
                     $scope.testussef = true;
                     $scope.selectfunc = true;
@@ -467,11 +474,18 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
             $scope.menu.show = false;
         }
     }
-
     /*2.菜单详情修改*/
     //编辑
     $scope.menu.menuEdit = function(item){
         $scope.editflag = !$scope.editflag;//让保存取消方法显现
+        //取消方法
+        $scope.watcher =function(item){
+            if(item == 'N'){
+                $scope.selectfunc = false;
+            }else{
+                $scope.selectfunc = true;
+            }
+        }
         $scope.copyscript = angular.copy(item);
         if(item.isleaf == 'N'){
             $scope.isleaftrue = true;
@@ -479,6 +493,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
         }else if(item.isleaf == 'Y'){
             $scope.isleaftrue = false;
             $scope.selectfunc = true;
+
             $scope.selectfuncs = function(){
                 openwindow($uibModal, 'views/Management/selectfunc.html', 'lg',
                     function ($scope, $modalInstance) {
@@ -524,7 +539,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
     //新增子菜单逻辑
     $scope.menu.childAdd = function(){
         var menuGuide = $scope.menu.item;
-        openwindow($uibModal, 'views/Management/menuchildAdd.html', 'lg',// 弹出页面//弹出页面
+        openwindow($uibModal, 'views/Management/menuchildAdd.html', 'lg',// 弹出页面
             function ($scope, $modalInstance) {
                 var menuFrom = {};
                 $scope.menuFrom = menuFrom;

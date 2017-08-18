@@ -6,10 +6,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
         $scope.role = role;
 
 
-  /* 测试业务字典
-   var tits = {};
-    tits.dictKey='DICT_CONTACT_MODE';
-    dictKey($rootScope,tits,dictonary_service);*/
 
 
     var res = $rootScope.res.abftree_service;//页面所需调用的服务
@@ -218,6 +214,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
     //点击保存权限分配
     $scope.role.checkAll = function(){
         var nodes=$("#container").jstree("get_checked");//获取所有选中的节点
+
         if(nodes.length>=0 ) {
             var subFrom = {};
             subFrom.roleGuid = role.roleinfo.guid;

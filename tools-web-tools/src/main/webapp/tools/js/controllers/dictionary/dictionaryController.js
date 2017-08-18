@@ -361,7 +361,6 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
 
 
 angular.module('MetronicApp').controller('dictitwos_controller', function($rootScope, $scope, $http,$modal,filterFilter,FileUploader){
-
     //上传业务字典
     $scope.typeFile = function openVersion() {
         openwindow( $modal,'views/dictionary/fillwindow.html','lg',function ($scope, $modalInstance) {

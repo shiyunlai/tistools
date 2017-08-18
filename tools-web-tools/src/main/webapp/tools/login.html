@@ -123,6 +123,7 @@
 <script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
 <script src="../assets/pages/scripts/login-soft.js" type="text/javascript"></script>
 <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+<script src="https://cdn.bootcss.com/rxjs/5.4.2/Rx.min.js"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
     $("input").on('keyup',function(){
@@ -134,8 +135,42 @@
             $('#login').attr('disabled',"true");
         }
     })
-    //不管了  先放弃。
-    $("#loginname").on('input',function(){
+
+    var render = function (data) {
+        console.log(data);
+        if(data.status == "success"){
+            var datas = data.retMessage;
+            var html = '';
+            //进行默认验证
+            for(var i =0;i< datas.length; i++){
+                if(datas[i].identityFlag == 'Y'){
+                    html+= '<option value= " '+ datas[i].guid  +'">'+datas[i].identityName+'</option>';
+                    break;
+                }
+            }
+            for(var j =0;j< datas.length; j++){
+                if(datas[j].identityFlag == 'Y'){
+                    continue;
+                }
+                html+= '<option value= "'+ datas[j].guid +' ">'+datas[j].identityName+'</option>';
+            }
+
+            $('select').html(html);
+        }else{
+            toastr['error'](data.retMessage+'登录失败');
+            var html = '<option>请选择身份</option>';
+            $('select').html(html);
+        }
+    }
+    var text = document.querySelector('#loginname');
+    Rx.Observable.fromEvent(text, 'keyup')
+            .debounceTime(1000)
+            .pluck('target', 'value')
+            .switchMap(url => $.ajax({url:"..//AcAuthenticationController/checkUserStatus",type:"post",contentType:'application/json',data:JSON.stringify({userId:url}), processData:false,dataType:'json'}))
+        .subscribe(
+            data => render(data))
+
+  /*  $("#loginname").on('blur',function(){
         var form = {};
         form.userId = $("#loginname").val()
        if($("#loginname").val().length>=5){
@@ -178,7 +213,7 @@
            var html = '<option>请选择身份</option>';
            $('select').html(html);
        }
-    });
+    });*/
     var btn=document.getElementById('login');
     //登陆调用服务,传入所需参数
     btn.onclick = function () {

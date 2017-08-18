@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.tis.tools.dao.ac.AcMenuMapperExt;
 import org.tis.tools.model.po.ac.AcMenu;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -30,6 +31,28 @@ public class AcMenuServiceExt {
      */
     public List<AcMenu> getMenuByUserIdentity(String identityGuid, String appGuid) {
         return  acMenuMapperExt.getMenuByUserIdentity(identityGuid, appGuid);
+    }
+
+    /**
+     * 重新排序菜单下的子菜单
+     *
+     * @param targetGuid 目标菜单GUID
+     * @param index 起始位置
+     * @param flag 自增或自减
+     */
+    public void reorderMenu(String targetGuid, BigDecimal index, String flag) {
+        acMenuMapperExt.reorderMenu(targetGuid, index, flag);
+    }
+
+    /**
+     * 重新排序重组菜单下的子菜单
+     *
+     * @param targetGuid 目标菜单GUID
+     * @param index 起始位置
+     * @param flag 自增或自减
+     */
+    public void reorderOperatorMenu(String targetGuid, BigDecimal index, String flag) {
+        acMenuMapperExt.reorderOperatorMenu(targetGuid, index, flag);
     }
 
 }

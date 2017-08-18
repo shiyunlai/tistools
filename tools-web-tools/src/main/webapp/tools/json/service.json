@@ -79,9 +79,16 @@
     "createChildMenu": {"ctrl": "AcMenuController", "func": "createChildMenu","emo":"新增子菜单"},
     "deleteMenu": {"ctrl": "AcMenuController", "func": "deleteMenu","emo":"删除菜单"},
     "editMenu": {"ctrl": "AcMenuController", "func": "editMenu","emo":"修改菜单方法"},
+    "moveMenu": {"ctrl": "AcMenuController", "func": "moveMenu","emo":"移动菜单方法"},
     "queryAllFuncInApp": {"ctrl": "AcMenuController", "func": "queryAllFuncInApp","emo":"获取应用下的功能列表"},
     "getMenuByUserId": {"ctrl": "AcMenuController", "func": "getMenuByUserId","emo":"获取操作员拥有的菜单"},
-    "getOperatorMenuByUserId": {"ctrl": "AcMenuController", "func": "getOperatorMenuByUserId","emo":"获取操作员的重组菜单"}
+    "getOperatorMenuByUserId": {"ctrl": "AcMenuController", "func": "getOperatorMenuByUserId","emo":"获取操作员的重组菜单"},
+    "moveOperatorMenu": {"ctrl": "AcMenuController", "func": "moveOperatorMenu","emo":"移动菜单到个人重组菜单"},
+    "copyMenuToOperatorMenu": {"ctrl": "AcMenuController", "func": "copyMenuToOperatorMenu","emo":"复制菜单到个人重组菜单"},
+    "createRootOperatorMenu": {"ctrl": "AcMenuController", "func": "createRootOperatorMenu","emo":"新增重组跟菜单"},
+    "createChildOperatorMenu": {"ctrl": "AcMenuController", "func": "createChildOperatorMenu","emo":"新增重组子菜单"},
+    "editOperatorMenu": {"ctrl": "AcMenuController", "func": "editOperatorMenu","emo":"修改重组子菜单"},
+    "deleteOperatorMenu": {"ctrl": "AcMenuController", "func": "deleteOperatorMenu","emo":"删除重组子菜单"}
   },
   "numres_service" : {
     "querySeqnoList": {"ctrl": "SeqnoController", "func": "querySeqnoList","emo":"查询系统运行参数列表"},
@@ -101,7 +108,8 @@
     "createOperatorIdentityres": {"ctrl": "AcOperatorController", "func": "createOperatorIdentityres","emo":"新增操作员身份权限"},
     "deleteOperatorIdentityres": {"ctrl": "AcOperatorController", "func": "deleteOperatorIdentityres","emo":"删除操作员身份权限"},
     "editOperatorIdentityres": {"ctrl": "AcOperatorController", "func": "editOperatorIdentityres","emo":"修改操作员身份权限"},
-    "queryRoleInOperatorByResType": {"ctrl": "AcOperatorController", "func": "queryRoleInOperatorByResType","emo":"根据资源类型查询操作员对应角色"}
+    "queryRoleInOperatorByResType": {"ctrl": "AcOperatorController", "func": "queryRoleInOperatorByResType","emo":"根据资源类型查询操作员对应角色"},
+    "queryOperatorByUserId": {"ctrl": "AcOperatorController", "func": "queryOperatorByUserId","emo":"根据USERID查询操作员GUID"}
   },
   "abftree_service" : {
     "loadmaintree": {"ctrl": "om/org", "func": "tree"},

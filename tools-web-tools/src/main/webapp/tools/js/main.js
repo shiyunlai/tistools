@@ -246,6 +246,7 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
         openwindow($uibModal, 'views/landinginfor/personalinfor.html','lg',
             function ($scope, $modalInstance) {
                 var session = angular.fromJson(sessionStorage.user)
+                console.log(sessionStorage)
                 $scope.userid = session.userId;
                 $scope.operatorName = session.operatorName;
                 $scope.menuType = session.menuType;
@@ -290,43 +291,50 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
 MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scope,$timeout) {
     $scope.$on('$includeContentLoaded', function () {
         Layout.initSidebar(); // init sidebar
-    //     var sessionjson = angular.fromJson(sessionStorage.menus)
-    //     var item = sessionjson.children;
-    //     //根据order进行排序
-    //     let getSortData = (data, sortFn) => {
-    //         data = data.sort(sortFn);
-    //         data.forEach(v => {
-    //             if (v.children && v.children.length !== 0) {
-    //                 v.children = getSortData(v.children, sortFn);
-    //         }
-    //     })
-    //     return data;
-    // }
-    // var sts= getSortData(item,(a, b) => {
-    //         return b.order - a.order;//倒序排序
-    //     });
-    //     $scope.menusAndTrans = angular.copy(sts);//拿到登录页那边传来的目录
-    //     //$scope.menusAndTrans = angular.copy(item);//拿到登录页那边传来的目录
-    // });
-    //
-    //
-    // var sessionjson = angular.fromJson(sessionStorage.menus)
-    // var item = sessionjson.children;
-    // $scope.menusAndTrans = angular.copy(item);//拿到登录页那边传来的目录
-    // $scope.search = function(searchParam){
-    //     if(_.isEmpty(searchParam)){ //如果是数组
-    //         $scope.menusAndTrans = angular.copy(item);//复制数据
-    //         $timeout(function(){
-    //             $('.sub-menu').slideUp();//显示
-    //         })
-    //     }else{ //如果不是数组
-    //         $scope.menusAndTrans = search(angular.copy(item),searchParam);//调用搜索方法，传入搜索的值
-    //         $timeout(function(){
-    //             $('.sub-menu').slideDown();//动画隐藏
-    //         })
-    //     }
-    })
+        var sessionjson = angular.fromJson(sessionStorage.menus)
+        /*var item = sessionjson.children;
+         $scope.menusAndTrans = angular.copy(item);//拿到登录页那边传来的目录*/
+/*        //根据order进行排序
+        let getSortData = (data, sortFn) => {
+            data = data.sort(sortFn);
+            data.forEach(v => {
+                if (v.children && v.children.length !== 0) {
+                    v.children = getSortData(v.children, sortFn);
+            }
+        })
+        return data;
+    }
+    var sts= getSortData(item,(a, b) => {
+            return b.order - a.order;//倒序排序
+        });
+        $scope.menusAndTrans = angular.copy(sts);//拿到登录页那边传来的目录*/
+        //第一层也要，直接用数组包起来
+        var srw = [];
+        srw.push(sessionjson)
+        $scope.menusAndTrans = angular.copy(srw);//拿到登录页那边传来的目录
+    });
 
+
+    var sessionjson = angular.fromJson(sessionStorage.menus)
+    /*var item = sessionjson.children;
+    $scope.menusAndTrans = angular.copy(item);//拿到登录页那边传来的目录*/
+    //第一层也要，直接用数组包起来
+    var srw = [];
+    srw.push(sessionjson)
+    $scope.menusAndTrans = angular.copy(srw);//拿到登录页那边传来的目录
+    $scope.search = function(searchParam){
+        if(_.isEmpty(searchParam)){ //如果是数组
+            $scope.menusAndTrans = angular.copy(srw);//复制数据
+            $timeout(function(){
+                $('.sub-menu').slideUp();//显示
+            })
+        }else{ //如果不是数组
+            $scope.menusAndTrans = search(angular.copy(srw),searchParam);//调用搜索方法，传入搜索的值
+            $timeout(function(){
+                $('.sub-menu').slideDown();//动画隐藏
+            })
+        }
+    };
 
     function search(all,key){ //包装了一个搜索方法，只要数据结构做成类似的，这个直接拿来用。
         var hitLevel1 = [];//定义空数组
