@@ -18,7 +18,8 @@ var MetronicApp = angular.module("MetronicApp", [
     'ui.grid.exporter',
     'ui.grid.edit',
     'ui.grid.pagination',
-    'ui.grid.resizeColumns'
+    'ui.grid.resizeColumns',
+    'ui.grid.emptyBaseLayer'
 ]);
 
 function action(bdy){
@@ -126,7 +127,7 @@ MetronicApp.config(['$controllerProvider', function($controllerProvider) {
  *********************************************/
 
 /* Setup global settings */
-MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
+MetronicApp.factory('settings', ['$rootScope', function($rootScope,service) {
     // supported languages
     var settings = {
         utils:{},
@@ -169,6 +170,44 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
             return mm;
         }
         return mm;
+    }
+
+
+    settings.diclist = {};
+    /**
+     * 获取代码数据库表数据
+     * @param codetype 代码数据表类型
+     */
+    settings.getBpmsDicCodeData = function (dictKey) {
+        console.debug(settings.diclist[dictKey]);
+        if(_.isNil(settings.diclist[dictname])) {
+            var subForm = {};
+            subForm.dictKey = dictKey;
+            service.post("DictController", "queryDictItemListByDictKey", subForm, null, function (data) {
+                if (data.status == 'success') {
+                    settings.diclist[codetype] = data.data;
+                }
+            })
+        }
+    }
+    settings.getDicCodeData = function (codetype, table) {
+        if (isNull(settings.diclist[codetype])) {
+            var subForm = {};
+            subForm.code_data_type = codetype;
+            if (isNull(table)) {
+                service.post("common", "getConstant", subForm, null, function (data) {
+                    if (data.status == '1') {
+                        settings.diclist[codetype] = data.data;
+                    }
+                })
+            } else if (table == 'F') {
+                service.post("common", "getConstantFreq", subForm, null, function (data) {
+                    if (data.status == '1') {
+                        settings.diclist[codetype + table] = data.data;
+                    }
+                })
+            }
+        }
     }
 
     return settings;

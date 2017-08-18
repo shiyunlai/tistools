@@ -127,7 +127,7 @@ public interface IGroupRService {
 	 * 
 	 * </pre>
 	 * 
-	 * @param newOmGroup
+	 * @param og
 	 *            新工作组对象
 	 * @return 新增的工作组对象
 	 * @throws ToolsRuntimeException
@@ -400,7 +400,7 @@ public interface IGroupRService {
 	
 	/**
 	 * 查询不属于此工作组并且在指定机构下的人员信息
-	 * @param orgCode
+	 * @param guidOrg
 	 * @param groupCode
 	 * @return
 	 */

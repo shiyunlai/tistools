@@ -8,9 +8,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.tis.tools.AcRole;
+import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.ac.AcOperator;
-
 import com.alibaba.dubbo.common.serialize.support.SerializationOptimizer;
 
 /**
@@ -40,6 +40,7 @@ public class SerializationOptimizerImpl implements SerializationOptimizer {
 		List<Class> classes = new LinkedList<Class>();
 		classes.add(AcOperator.class);
 		classes.add(AcRole.class);
+		classes.add(WhereCondition.class);
 		classes.add(ToolsRuntimeException.class);
 		return classes;
 	}
