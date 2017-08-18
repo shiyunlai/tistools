@@ -288,8 +288,8 @@ function dictKey($rootScope,dict,service){
     dictQuery.then(function(data){
         if(data.status == "success"){
             var datas = data.retMessage;
-            $rootScope.dict.dictKey = datas;
-            console.log(item)
+            console.log(datas);
+            $rootScope.dictitem=datas;
         }else{
             toastr['error']('字典项查询失败'+'<br/>'+data.retMessage);
         }
@@ -442,6 +442,8 @@ function getYYYYMMDD(){
     var d = dd.getDate()<10?"0"+dd.getDate():dd.getDate(); //获取当前几号，不足10补0
     return y+m+d;
 }
+
+
 
 //add by gaojie
 //ui-grid init
