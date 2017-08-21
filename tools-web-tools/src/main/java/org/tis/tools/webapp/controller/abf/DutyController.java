@@ -49,13 +49,12 @@ public class DutyController extends BaseController{
 	 * 
 	 * @param model
 	 * @param content
-	 * @param age
 	 * @param request
 	 * @param response
 	 * @return
 	 */
 	@RequestMapping(value = "/dutytree")
-	public String execute(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+	public String execute(ModelMap model, @RequestBody String content, HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
 			// 收到请求
@@ -89,12 +88,45 @@ public class DutyController extends BaseController{
 		}
 		return null;
 	}
-	
+
+	/**
+	 * 展示筛选树
+	 * @param model
+	 * @param content
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/searchtree")
+	public String searchtree(ModelMap model, @RequestBody String content, HttpServletRequest request,
+						  HttpServletResponse response) {
+		try {
+			// 收到请求
+			JSONObject jsonObj = JSONObject.parseObject(content);
+			String dutyName = jsonObj.getString("searchitem");
+			String id = jsonObj.getString("id");
+			if ("#".equals(id)) {
+				List<OmDuty> dutyList = dutyRService.queryBydutyName(dutyName);
+				AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, dutyList, "yyyy-MM-dd");
+			}else{
+				List<OmDuty> list = dutyRService.queryChildByDutyCode(id);
+				AjaxUtils.ajaxJsonSuccessMessage(response, list);
+			}
+
+		} catch (ToolsRuntimeException e) {// TODO
+			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+		}
+		return null;
+	}
+
+
 	/**
 	 * 生成职务列表
 	 * 
 	 * @param model
-	 * @param content
 	 * @param age
 	 * @param request
 	 * @param response

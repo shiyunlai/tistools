@@ -284,6 +284,19 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 				List<OmDuty> odList = omDutyService.query(wc);
 				return odList;
 	}
-	
-	
+
+	@Override
+	public List<OmDuty> queryBydutyName(String dutyName) {
+		if (StringUtil.isEmpty(dutyName)) {
+			throw new DutyManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("dutyName"));
+		}
+		WhereCondition wc = new WhereCondition();
+		wc.andFullLike(OmDuty.COLUMN_DUTY_NAME, dutyName);
+		List<OmDuty> list = omDutyService.query(wc);
+		if (list.isEmpty()) {
+			return new ArrayList<>();
+		}else{
+			return list;
+		}
+	}
 }

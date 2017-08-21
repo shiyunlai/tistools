@@ -11,6 +11,13 @@ MetronicApp.factory('busiorg_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     }
+    service.loadsearchtree = function (subFrom) {
+
+        var res = $http.post(manurl + "/om/busiorg/searchtree",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
 
     service.loadywtb = function () {
 

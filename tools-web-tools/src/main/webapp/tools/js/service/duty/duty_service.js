@@ -11,6 +11,13 @@ MetronicApp.factory('duty_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     }
+    service.loaddutysearchtree = function (subFrom) {
+
+        var res = $http.post(manurl + "/om/duty/searchtree",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
     service.loadallduty = function () {
 
         var res = $http.post(manurl + "/om/duty/loadallduty").then(function (response) {

@@ -29,7 +29,7 @@
             </div>
             <div class="portlet-body">
                 <form id="s">
-                    <input type="search" id="q" ng-model="searchitem"/>
+                    <input type="search"  id="search" ng-model="searchitem"/>
                     <button type="submit" ng-click="workgroup.clear()">清空</button>
                 </form>
                 <div id="container" ng-show="showtree"></div>
@@ -354,8 +354,6 @@
                      ui-grid-selection ui-grid-resize-columns></div>
                 <div class="actions btn-set" style="float: right;">
                     <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.addpos()"> 添加岗位
-                    </button>
-                    <button type="button" name="back" class="btn btn-primary" ng-click="workgroup.edit()"> 编辑
                     </button>
                     <button type="button" name="back" class="btn btn-danger" ng-click="workgroup.deletepos()"> 删除岗位
                     </button>

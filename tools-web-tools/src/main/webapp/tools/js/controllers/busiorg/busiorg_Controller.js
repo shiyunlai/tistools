@@ -1,7 +1,7 @@
 /**
  * Created by gaojie on 2017/8/2.
  */
-angular.module('MetronicApp').controller('busiorg_controller', function ($rootScope, $scope, busiorg_service, $http, $timeout, i18nService, filterFilter, uiGridConstants, $uibModal, $state,$location) {
+angular.module('MetronicApp').controller('busiorg_controller', function ($rootScope, $scope, busiorg_service, $http, $timeout, i18nService, filterFilter, uiGridConstants, $uibModal, $state, $location) {
     $scope.$on('$viewContentLoaded', function () {
         // initialize core components
         App.initAjax();
@@ -85,7 +85,7 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
                         }
                     }
                 };
-            }else {
+            } else {
                 var it = {
                     "新增子机构": {
                         "id": "creat",
@@ -124,7 +124,7 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
                             var inst = jQuery.jstree.reference(data.reference),
                                 obj = inst.get_node(data.reference);
                             console.log(obj)
-                            if(confirm("确定要删除此机构嘛？删除后不可恢复。")){
+                            if (confirm("确定要删除此机构嘛？删除后不可恢复。")) {
                                 var subFrom = {};
                                 subFrom.busiorgCode = obj.original.busiorgCode;
                                 console.log(obj.original.busiorgCode);
@@ -165,16 +165,16 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
                     console.log(datas)
                     var data = datas.retMessage;
                     console.log(data);
-                    if(!isNull(data)){
-                        if(isNull(data[0].id)){
-                            if(!isNull(data[0].itemName)){
+                    if (!isNull(data)) {
+                        if (isNull(data[0].id)) {
+                            if (!isNull(data[0].itemName)) {
                                 for (var i = 0; i < data.length; i++) {
                                     data[i].id = data[i].sendValue;
                                     data[i].text = data[i].itemName;
                                     data[i].children = true;
                                     data[i].icon = 'fa fa-users icon-state-info icon-lg'
                                 }
-                            }else if(!isNull(data[0].busiorgCode)){
+                            } else if (!isNull(data[0].busiorgCode)) {
                                 for (var i = 0; i < data.length; i++) {
                                     data[i].id = data[i].busiorgCode;
                                     data[i].text = data[i].busiorgName;
@@ -182,7 +182,7 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
                                     data[i].icon = 'fa fa-users icon-state-info icon-lg'
                                 }
                             }
-                        } else{
+                        } else {
                             for (var i = 0; i < data.length; i++) {
                                 data[i].children = true;
                                 data[i].icon = 'fa fa-users icon-state-info icon-lg'
@@ -244,7 +244,7 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
                 $scope.flag.page = true;
                 $scope.flag.xqxx = true;
                 $scope.busiorg.item = data.node.original;
-            }else{
+            } else {
                 for (var i in $scope.flag) {
                     flag[i] = false;
                 }
@@ -254,6 +254,101 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
             ($scope.$$phase) ? null : $scope.$apply();
         }
     });
+
+    /**-----------------------------------树筛选-------------------------------- */
+    //筛选字段
+    $scope.searchitem = "";
+    //清空
+    busiorg.clear = function () {
+        $scope.searchitem = "";
+        $scope.showtree = true;
+        if ($("#searchtree").jstree()) {
+            $("#searchtree").jstree().destroy();
+        }
+    }
+
+    //控制2个树显示标识,true为默认值,false为筛选状态
+    var showtree = true;
+    $scope.showtree = showtree;
+
+    var text = document.querySelector('#search');
+    Rx.Observable.fromEvent(text, 'keyup')
+        .debounceTime(1500) // <- throttling behaviour
+        .pluck('target', 'value')
+        .map(url => loadsearchtree({"id": '#', "searchitem": url})).subscribe(data => console.log(data));
+
+    var loadsearchtree = function (subFrom) {
+        console.log(subFrom)
+        if (isNull(subFrom.searchitem)) {
+            $scope.showtree = true;
+            if ($("#searchtree").jstree()) {
+                $("#searchtree").jstree().destroy();
+            }
+            ($scope.$$phase) ? null : $scope.$apply();
+        } else {
+            if ($("#searchtree").jstree()) {
+                $("#searchtree").jstree().destroy();
+            }
+            $scope.showtree = false;
+            $("#searchtree").jstree({
+                "core": {
+                    "themes": {
+                        "responsive": false
+                    },
+                    // so that create works
+                    "check_callback": true,
+                    'data': function (obj, callback) {
+                        var jsonarray = [];
+                        $scope.jsonarray = jsonarray;
+                        subFrom.id = obj.id;
+                        console.log(obj)
+                        busiorg_service.loadsearchtree(subFrom).then(function (datas) {
+                            console.log(datas)
+                            var data = datas.retMessage;
+                            if (!isNull(data[0])) {
+                                for (var i = 0; i < data.length; i++) {
+                                    data[i].id = data[i].busiorgCode;
+                                    data[i].text = data[i].busiorgName;
+                                    data[i].children = false;
+                                    data[i].icon = 'fa fa-users icon-state-info icon-lg'
+                                }
+                            }
+                            $scope.jsonarray = angular.copy(data);
+                            callback.call(this, $scope.jsonarray);
+                        })
+                    }
+                },
+                "types": {
+                    "default": {
+                        "icon": "fa fa-folder icon-state-warning icon-lg"
+                    },
+                    "file": {
+                        "icon": "fa fa-file icon-state-warning icon-lg"
+                    }
+                },
+                "state": {"key": "demo3"},
+                "contextmenu": {'items': items},
+                "plugins": ["state", "types", "contextmenu"]
+            }).bind("select_node.jstree", function (e, data) {
+                if (typeof data.node !== 'undefined') {//拿到结点详情
+                    // console.log(data.node.original.id.indexOf("@"));
+                    $scope.busiorg.item = {};
+                    console.log(data.node);
+                    $scope.currNode = data.node.text;
+
+                    for (var i in $scope.flag) {
+                        flag[i] = false;
+                    }
+                    $scope.flag.ywjgxq = true;
+                    $scope.busiorg.item = data.node.original;
+
+                    ($scope.$$phase) ? null : $scope.$apply();
+                }
+            });
+        }
+    }
+
+
     /**-----------------------------------生成各类列表-------------------------------- */
     //设置列表语言
     i18nService.setCurrentLang("zh-cn");
@@ -268,13 +363,13 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
     //下级业务机构列表
     var loworgGrid = {};
     $scope.loworgGrid = loworgGrid;
-    com = [{ field: 'nodeType', displayName: '节点类型', enableHiding: false},
-        { field: 'busiorgode', displayName: '业务机构代码', enableHiding: false},
-        { field: 'busiDomain', displayName: '业务线条', enableHiding: false},
-        { field: 'busiorgName', displayName: '业务机构名称', enableHiding: false},
-        { field: 'guidOrg', displayName: '对应实体机构', enableHiding: false},
-        { field: 'guidPosition', displayName: '主管岗位', enableHiding: false},
-        { field: 'orgCode', displayName: '机构代号', enableHiding: false}
+    com = [{field: 'nodeType', displayName: '节点类型', enableHiding: false},
+        {field: 'busiorgode', displayName: '业务机构代码', enableHiding: false},
+        {field: 'busiDomain', displayName: '业务线条', enableHiding: false},
+        {field: 'busiorgName', displayName: '业务机构名称', enableHiding: false},
+        {field: 'guidOrg', displayName: '对应实体机构', enableHiding: false},
+        {field: 'guidPosition', displayName: '主管岗位', enableHiding: false},
+        {field: 'orgCode', displayName: '机构代号', enableHiding: false}
     ]
     $scope.loworgGrid = initgrid($scope, loworgGrid, filterFilter, com, false, function () {
     });
@@ -311,8 +406,8 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
     }
 
     /**-----------------------------------各类按钮事件定义-------------------------------- */
-    //业务机构详情下按钮
-    //修改控制标识
+        //业务机构详情下按钮
+        //修改控制标识
     var editflag = false;
     $scope.editflag = editflag;
     //修改业务机构
@@ -370,7 +465,7 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
     busiorg.back = function () {
         $scope.editflag = !$scope.editflag
     }
-    
+
     //超链接跳转按钮
     busiorg.toDict = function () {
         $state.go('dictionary')
@@ -395,7 +490,7 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
     busiorg.deletexjjg = function () {
         console.log($scope.loworgGrid.getSelectedRows());
         var arr = $scope.loworgGrid.getSelectedRows();
-        if(arr.length != 1){
+        if (arr.length != 1) {
             toastr['error']("请选择一条需要删除的业务机构!");
             return false;
         }
@@ -415,12 +510,12 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
     //编辑
     busiorg.editxjjg = function () {
         var arr = $scope.loworgGrid.getSelectedRows();
-        if(arr.length != 1){
+        if (arr.length != 1) {
             toastr['error']("请选择一条需要编辑的业务机构!");
             return false;
         }
         var subFrom = arr[0];
-        openwindow($uibModal,'views/busiorg/editBusiorg_window.html','lg',function ($scope, $modalInstance){
+        openwindow($uibModal, 'views/busiorg/editBusiorg_window.html', 'lg', function ($scope, $modalInstance) {
             $scope.subFrom = angular.copy(subFrom);
             $scope.add = function () {
                 busiorg_service.updatebusiorg($scope.subFrom).then(function (data) {
@@ -440,7 +535,7 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
     }
     /**-----------------------------------页签控制-------------------------------- */
     busiorg.loaddata = function (num) {
-        if(num == 0){
+        if (num == 0) {
             //控制页签
             for (var i in $scope.flag) {
                 flag[i] = false;
@@ -449,7 +544,7 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
             $scope.flag.xjjg = true;
             //拉取下级业务机构列表
             reloworgGrid();
-        }else if(num == 1) {
+        } else if (num == 1) {
             for (var i in $scope.flag) {
                 flag[i] = false;
             }

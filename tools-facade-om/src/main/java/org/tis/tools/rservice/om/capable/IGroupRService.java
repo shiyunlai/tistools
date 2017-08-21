@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.tis.tools.rservice.om.capable;
 
@@ -441,10 +441,19 @@ public interface IGroupRService {
 	 * 添加岗位-工作组关系表数据
 	 */
 	void insertGroupPosition(String groupGuid,List<String> posGuidList);
-	
+
 	/**
 	 * 删除岗位-工作组关系表数据
+	 * @param groupGuid
+	 * @param posGuidList
 	 */
 	void deleteGroupPosition(String groupGuid,List<String> posGuidList);
+
+	/**
+	 * 通过工作组名称检索工作组
+	 * @param groupName
+	 * @return 符合条件的工作组
+	 */
+	List<OmGroup> queryBygroupName(String groupName);
 
 }

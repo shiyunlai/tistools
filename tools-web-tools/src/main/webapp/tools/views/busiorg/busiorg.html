@@ -29,11 +29,11 @@
             </div>
             <div class="portlet-body">
                 <form id="s">
-                    <input type="search" id="q" ng-model="searchitem"/>
-                    <button type="submit" ng-click="abftree.clear()">清空</button>
+                    <input type="search" id="search" ng-model="searchitem"/>
+                    <button type="submit" ng-click="busiorg.clear()">清空</button>
                 </form>
-                <div id="busiorgtree"></div>
-                <!--<div id="searchtree" ng-show="!showtree"></div>-->
+                <div id="busiorgtree" ng-show="showtree"></div>
+                <div id="searchtree" ng-show="!showtree"></div>
             </div>
         </div>
     </div>
