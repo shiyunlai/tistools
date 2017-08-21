@@ -307,4 +307,11 @@ public interface IBusiOrgRService {
 	 * @return
 	 */
 	List<OmBusiorg> queryChildBusiorgByCode(String busiorgCode);
+
+	/**
+	 * 通过业务机构名称检索业务机构
+	 * @param busiorgName
+	 * @return
+	 */
+	List<OmBusiorg> queryBusiorgByName(String busiorgName);
 }

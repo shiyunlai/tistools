@@ -658,4 +658,139 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
             })
         }
     }
+
+
+    /**--------------------------------------筛选树------------------------------------*/
+    //jstree 自定义筛选事件
+    //筛选字段
+    $scope.searchitem = "";
+    //清空
+    duty.clear = function () {
+        $scope.searchitem = "";
+        $scope.showtree = true;
+        if( $("#searchtree").jstree()){
+            $("#searchtree").jstree().destroy();
+        }
+        console.log($("#dutytree").jstree().get_json())
+    }
+
+    //控制2个树显示标识,true为默认值,false为筛选状态
+    var showtree = true;
+    $scope.showtree = showtree;
+
+    var text = document.querySelector('#search');
+    Rx.Observable.fromEvent(text, 'keyup')
+        .debounceTime(1500) // <- throttling behaviour
+        .pluck('target', 'value')
+        .map(url => loadsearchtree({"id":'#',"searchitem":url})).subscribe(data => console.log(data));
+
+    var loadsearchtree = function (subFrom) {
+        console.log(subFrom)
+        if(isNull(subFrom.searchitem)){
+            $scope.showtree = true;
+            if( $("#searchtree").jstree()){
+                $("#searchtree").jstree().destroy();
+            }
+            ($scope.$$phase) ? null : $scope.$apply();
+        }else {
+            if ($("#searchtree").jstree()) {
+                $("#searchtree").jstree().destroy();
+            }
+            $scope.showtree = false;
+            $("#searchtree").jstree({
+                "core" : {
+                    "themes" : {
+                        "responsive": false
+                    },
+                    // so that create works
+                    "check_callback" : true,
+                    'data' : function (obj, callback) {
+                        var jsonarray = [];
+                        $scope.jsonarray = jsonarray;
+                        subFrom.id = obj.id;
+                        console.log(obj)
+                        duty_service.loaddutysearchtree(subFrom).then(function (datas) {
+                            console.log(datas)
+                            var data = datas.retMessage;
+                            if(!isNull(data[0])){
+                                    for(var i = 0;i<data.length;i++){
+                                        data[i].id = data[i].dutyCode;
+                                        data[i].text = data[i].dutyName;
+                                        data[i].children = false;
+                                        data[i].icon = 'fa fa-users icon-state-info icon-lg'
+                                    }
+                            }
+                            $scope.jsonarray = angular.copy(data);
+                            callback.call(this, $scope.jsonarray);
+                        })
+                    }
+                },
+                "types" : {
+                    "default" : {
+                        "icon" : "fa fa-folder icon-state-warning icon-lg"
+                    },
+                    "file" : {
+                        "icon" : "fa fa-file icon-state-warning icon-lg"
+                    }
+                },
+                "state" : { "key" : "demo3" },
+                "contextmenu":{'items':items},
+                'dnd': {
+                    'dnd_start': function () {
+                        console.log("start");
+                    },
+                    'is_draggable':function (node) {
+                        //用于控制节点是否可以拖拽.
+                        console.log(node)
+                        return true;
+                    }
+                },
+                'search':{
+                    show_only_matches:true,
+
+                },
+                'callback' : {
+                    move_node:function (node) {
+                        console.log(node)
+                    }
+                },
+
+                "plugins" : [ "dnd", "state", "types","search","contextmenu" ]
+            }).bind("select_node.jstree", function (e, data) {
+                if(typeof data.node !== 'undefined'){//拿到结点详情
+                    // console.log(data.node.original.id.indexOf("@"));
+                    $scope.duty.item = data.node.original;
+                    console.log(data.node);
+                    $scope.title = data.node.text;
+                    if(data.node.id == "00000") {
+                        for (var i in $scope.flag){
+                            flag[i] = false;
+                        }
+                        $scope.tabflag = true;
+                        $scope.addflag = false;
+                        console.log(1)
+                        redutygrid();
+                    }else if(data.node.id.length == 2){
+                        for (var i in $scope.flag){
+                            flag[i] = false;
+                        }
+                        $scope.tabflag = true;
+                        $scope.addflag = false;
+                        console.log($scope.duty.item.itemValue);
+                        console.log(2)
+                        dutygridbyType($scope.duty.item.itemValue);
+                        $scope.addflag = true;
+                    }else{
+                        $scope.tabflag = false;
+                        for (var i in $scope.flag){
+                            flag[i] = false;
+                        }
+                        $scope.flag.xqxx = true;
+                        $scope.duty.item.parentsCode = data.node.parent;
+                    }
+                    ($scope.$$phase)?null: $scope.$apply();
+                }
+            });
+        }
+    }
 });
