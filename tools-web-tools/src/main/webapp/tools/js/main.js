@@ -19,7 +19,8 @@ var MetronicApp = angular.module("MetronicApp", [
     'ui.grid.edit',
     'ui.grid.pagination',
     'ui.grid.resizeColumns',
-    'ui.grid.emptyBaseLayer'
+    'ui.grid.emptyBaseLayer',
+    'ui-iconpicker'
 ]);
 
 function action(bdy){
@@ -293,8 +294,6 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
     $scope.$on('$includeContentLoaded', function () {
         Layout.initSidebar(); // init sidebar
         var sessionjson = angular.fromJson(sessionStorage.menus)
-
-
        if(sessionStorage.length == 0 ){
             window.location = "../tools/login.html";//如果正确，则进入主页
         }
@@ -328,6 +327,7 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
     //第一层也要，直接用数组包起来
     var srw = [];
     srw.push(sessionjson)
+    console.log(srw)
     $scope.menusAndTrans = angular.copy(srw);//拿到登录页那边传来的目录
     $scope.search = function(searchParam){
         if(_.isEmpty(searchParam)){ //如果是数组

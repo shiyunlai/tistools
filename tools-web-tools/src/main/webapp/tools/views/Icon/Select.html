@@ -1,0 +1,55 @@
+<!--选择图标页面内容-->
+<style>
+    #selectIcon .icon{
+        width: 16.66666666666667%;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 1em;
+        margin: 0 -0.21em 3em 0;
+        padding: 1.5em 0 0 1.5em;
+        text-align: center;
+    }
+</style>
+<div id="selectIcon">
+    <div class="modal-header">
+        选择图标
+    </div>
+    <div class="modal-body">
+        <div class="icon"  ng-repeat="d in icon.dataList">
+            <span class="{{d.id}} fa-2x" ng-click="select(d);ok()"></span>
+        </div>
+        <div class="row" style="margin-top: 40px;">
+            <div class="col-md-12 col-sm-12" >
+                <div class="dataTables_paginate">
+                    <div class="pagination-panel">
+                        第 <a ng-click="icon.prePage()"
+                             class="btn btn-sm default prev" title="Prev"><i
+                            class="fa fa-angle-left"></i></a><input type="text"
+                                                                    ng-model="icon.searchForm.page.currentPage"
+                                                                    class="pagination-panel-input form-control input-mini input-inline input-sm"
+                                                                    maxlenght="5" style="text-align: center; margin: 0 5px;"><a
+                            ng-click="icon.nextPage()"
+                            class="btn btn-sm default next" title="Next"><i
+                            class="fa fa-angle-right"></i></a> 页,&nbsp;&nbsp;&nbsp;总<span
+                            class="pagination-panel-total">{{icon.searchForm.page.totalPages}}</span>页
+                    </div>
+                </div>
+                <div class="dataTables_length">
+                    <label><span class="seperator">|</span>每页 <select
+                            ng-model="icon.searchForm.page.itemsperpage"
+                            class="form-control input-xsmall input-sm input-inline" ng-options="i for i in [10,20,50,100,150]">
+                    </select> 条</label>
+                </div>
+                <div class="dataTables_info" role="status" aria-live="polite">
+                    <span class="seperator">|</span>总计{{icon.searchForm.page.totalItems}}
+                    条
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <span class="btn btn-default" ng-click="cancel()">关闭</span>
+    </div>
+</div>
