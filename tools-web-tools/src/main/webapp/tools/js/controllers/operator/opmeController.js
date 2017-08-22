@@ -229,14 +229,16 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
                 }
             )
         }
-        //修改子菜单提取
+        //修改菜单提取
         var editchildmenu = function(node){
             openwindow($uibModal, 'views/Management/configMana.html', 'lg',// 弹出页面
                 function ($scope, $modalInstance) {
                     $scope.id = 2;
                     var menuFrom = {};
                     $scope.menuFrom = menuFrom;
+                    console.log(node.original.icon)
                     menuFrom.expandPath = node.original.icon;
+                    console.log(menuFrom.expandPath)
                     menuFrom.menuName = node.original.text;
                     $scope.add = function (item) {
                         var subFrom = {};
@@ -410,6 +412,7 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
         var creattopmenu = function(){
             openwindow($uibModal, 'views/Management/configMana.html', 'lg',
                 function ($scope, $modalInstance) {
+
                     $scope.add= function(item){
                         var subFrom = {};
                         subFrom = item;
@@ -515,7 +518,11 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
                 if(dates == '{}'){
                     if(confirm("该用户无重组菜单，是否创建")){
                         $('#container2').jstree('destroy',false);
-                        creattopmenu();//调用新增顶级菜单接口
+                        creattopmenu();
+                        $scope.opmer.config = true;//显示新增的顶级菜单
+                    }else{
+                        $scope.iscreat = true;
+                        $scope.opmer.config = true;
                     }
                 }else{
                     //有重组菜单，自己配置即可

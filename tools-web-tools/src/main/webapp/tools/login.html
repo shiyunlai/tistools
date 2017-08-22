@@ -145,7 +145,7 @@
             //进行默认验证
             for(var i =0;i< datas.length; i++){
                 if(datas[i].identityFlag == 'Y'){
-                    html+= '<option value= " '+ datas[i].guid  +'">'+datas[i].identityName+'</option>';
+                    html+= '<option value="'+datas[i].guid+'">'+datas[i].identityName+'</option>';
                     break;
                 }
             }
@@ -153,7 +153,7 @@
                 if(datas[j].identityFlag == 'Y'){
                     continue;
                 }
-                html+= '<option value= "'+ datas[j].guid +' ">'+datas[j].identityName+'</option>';
+                html+= '<option value="'+ datas[j].guid +'">'+datas[j].identityName+'</option>';
             }
 
             $('select').html(html);
@@ -221,7 +221,7 @@
         var form = {};
         form.userId = $("#loginname").val();
         form.password = $("#password").val();
-        form.identityGuid = $("#opertor").val();
+        form.identityGuid =$("#opertor").val();
         form.appGuid = 'APP1499956132';
         $.ajax({
             url:"..//AcAuthenticationController/login",

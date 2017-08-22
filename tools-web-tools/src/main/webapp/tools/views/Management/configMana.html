@@ -79,14 +79,20 @@
                 </div>-->
                 <div class="col-md-6" >
                     <div class="form-group">
-                        <label class="control-label col-md-4">菜单展开路径</label>
+                        <label class="control-label col-md-4">选择菜单图标</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="menuFrom.expandPath"
-                                   name="id" />
+                            <span class="col-md-3">
+                                <span class="input-group-btn">
+                                 <ui-iconpicker groups="font-awesome" style="position: relative" ng-model="menuFrom.expandPath" value="{{menuFrom.expandPath}}"></ui-iconpicker>
+                            </span>
+                            </span>
+                            <span class="col-md-9">
+                                <input class="form-control" type="text" ng-model="menuFrom.expandPath" />
+                            </span>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-12">
                     <div class="form-group">
                         <label class="control-label col-md-2"></label>
