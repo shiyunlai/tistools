@@ -1,0 +1,109 @@
+<!--操作员权限开始-->
+<div class="page-bar ng-scope" style="border-bottom: 1px solid #e7ecf1;">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="#">操作员</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <a href="#">操作员个人配置</a>
+        </li>
+        <li ng-if="currRole!=''">
+            <i class="fa fa-circle"></i>
+            <a href="#">当前操作员:{{currRole}}</a>
+        </li>
+    </ul>
+    <div class="actions btn-set">
+        <button type="button" name="back" class="btn default"  style="float: right;margin-top:3px;" ng-click="myback()"><i
+                class="fa fa-angle-left"></i> 返回
+        </button>
+    </div>
+</div>
+<h3 class="page-title">
+    <small></small>
+</h3>
+<div class="tab-content portlet light clearfix">
+    <div class="col-md-6">
+        <div class="portlet-title col-md-12">
+            <div class="caption col-md-10">
+                <span class="caption-subject font-blue-sharp bold uppercase">未授予角色列表</span>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div ui-grid="notrolegird" style="height:200px;"
+                 ui-grid-pagination
+                 ui-grid-selection ui-grid-resize-columns></div>
+        </div>
+        <div class="actions btn-set col-md-2" style="float: right;margin-top: 10px;">
+            <button type="button" name="back" class="btn btn-primary" ng-click="operatqx.add()"> 添加
+            </button>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="portlet-title col-md-12">
+            <div class="caption col-md-10">
+                <span class="caption-subject font-blue-sharp bold uppercase">已授予角色列表</span>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div ui-grid="alrolegird" style="height:200px;"
+                 ui-grid-pagination
+                 ui-grid-selection ui-grid-resize-columns></div>
+        </div>
+        <div class="actions btn-set col-md-2" style="float: right;margin-top:10px;">
+            <button type="button" name="back" class="btn btn-danger" ng-click="operatqx.del()"> 删除
+            </button>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="portlet-title col-md-12">
+            <div class="caption col-md-10">
+                <span class="caption-subject font-blue-sharp bold uppercase">特别权限设置</span>
+            </div>
+
+        </div>
+        <div class="col-md-12">
+            <div ui-grid="postgrid" style="height:200px;"
+                 ui-grid-pagination
+                 ui-grid-selection ui-grid-resize-columns></div>
+        </div>
+        <div class="actions btn-set col-md-2" style="float: right;margin-top: 10px;">
+            <button type="button" name="back" class="btn btn-primary" ng-click="operatqx.authority()"> 添加
+            </button>
+            <button type="button" name="back" class="btn btn-danger" ng-click="emp.back()"> 删除
+            </button>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="portlet-title col-md-12">
+            <div class="caption col-md-10">
+                <span class="caption-subject font-blue-sharp bold uppercase">继承的角色</span>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div ui-grid="postgrid" style="height:200px;"
+                 ui-grid-pagination
+                 ui-grid-selection ui-grid-resize-columns></div>
+        </div>
+        <div class="actions btn-set col-md-2" style="float: right;margin-top:10px;">
+            <button type="button" name="back" class="btn btn-primary" ng-click=""> 添加
+            </button>
+            <button type="button" name="back" class="btn btn-danger" ng-click="emp.back()"> 删除
+            </button>
+        </div>
+    </div>
+</div>
+<!-- 操作员权限结束 -->
+
+
+
+
+
+
+
+
+
+
+
+
+

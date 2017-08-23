@@ -834,6 +834,12 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             data: {pageTitle: '操作员管理'},
             controller:"opmanage_controller"
         })
+        .state("operatsetqx",{
+            url:"/operatsetqx.html/{id:.*}",
+            templateUrl:"views/operator/operatsetqx.html",
+            data: {pageTitle: '操作员个人配置'},
+            controller:"operat_controller"
+        })
         .state("Reorganizemenu",{
             url:"/Reorganizemenu.html",
             templateUrl:"views/operator/Reorganizemenu.html",
