@@ -206,8 +206,7 @@ public class AcOperatorController extends BaseController {
             }
             JSONObject jsonObject= JSONObject.parseObject(content);
             String userId = jsonObject.getString("userId");
-            String operatorName = jsonObject.getString("operatorName");
-            List<AcOperatorIdentity> acOperatorIdentities = operatorRService.queryOperatorIdentitiesByUserIdAndName(userId, operatorName);
+            List<AcOperatorIdentity> acOperatorIdentities = operatorRService.queryOperatorIdentitiesByUserId(userId);
             AjaxUtils.ajaxJsonSuccessMessage(response,acOperatorIdentities);
         } catch (ToolsRuntimeException e) {
             AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
