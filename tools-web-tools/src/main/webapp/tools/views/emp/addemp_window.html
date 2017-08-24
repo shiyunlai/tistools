@@ -39,50 +39,50 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">性别</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.gender"
-                                    />
+                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_OM_GENDER')">
+                            <select class="form-control" ng-model="subFrom.gender">
+                                <option ng-repeat="d in $settings.diclist['DICT_OM_GENDER'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                            </select>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">员工职级</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.empDegree"
-                                    />
+                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_OM_EMPDEGREE')">
+                            <select class="form-control" ng-model="subFrom.empDegree">
+                                <option ng-repeat="d in $settings.diclist['DICT_OM_EMPDEGREE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                            </select>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">主机构编号</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.guidOrg"
-                                    />
+                        <div class="col-md-8" ng-init="$settings.getCommData('ORG')">
+                            <select class="form-control" ng-model="subFrom.guidOrg">
+                                <option ng-repeat="d in $settings.commlist['ORG'] track by $index" value="{{d.guid}}">{{d.orgName}}</option>
+                            </select>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
+                    <div class="form-group" ng-init="$settings.getCommData('POS')">
                         <label class="control-label col-md-4">基本岗位</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.guidPosition"
-                                    />
+                            <select class="form-control" ng-model="subFrom.guidPosition">
+                                <option ng-repeat="d in $settings.commlist['POS'] track by $index" value="{{d.guid}}">{{d.positionName}}</option>
+                            </select>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">直接主管</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.guidEmpMajor"
-                                    />
+                        <div class="col-md-8"  ng-init="$settings.getCommData('EMP')">
+                            <select class="form-control" ng-model="subFrom.guidEmpMajor">
+                                <option ng-repeat="d in $settings.commlist['EMP'] track by $index" value="{{d.guid}}">{{d.empName}}</option>
+                            </select>
                         </div>
                     </div>
                 </div>

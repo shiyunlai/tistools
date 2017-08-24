@@ -127,7 +127,7 @@ MetronicApp.config(['$controllerProvider', function($controllerProvider) {
  *********************************************/
 
 /* Setup global settings */
-MetronicApp.factory('settings', ['$rootScope', function($rootScope,service) {
+MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http) {
     // supported languages
     var settings = {
         utils:{},
@@ -162,7 +162,8 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope,service) {
     }
 
     $rootScope.settings = settings;
-
+    var constant = {};
+    $rootScope.constant = constant;
     $rootScope.formatT = function(val){
         var mm="";
         if(val!=null&&val!=''){
@@ -176,39 +177,49 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope,service) {
     settings.diclist = {};
     /**
      * 获取代码数据库表数据
-     * @param codetype 代码数据表类型
+     * @param dictKey 代码数据表表名
      */
-    settings.getBpmsDicCodeData = function (dictKey) {
+    settings.getDictData = function (dictKey) {
         console.debug(settings.diclist[dictKey]);
-        if(_.isNil(settings.diclist[dictname])) {
+        if(_.isNil(settings.diclist[dictKey])) {
             var subForm = {};
             subForm.dictKey = dictKey;
-            service.post("DictController", "queryDictItemListByDictKey", subForm, null, function (data) {
-                if (data.status == 'success') {
-                    settings.diclist[codetype] = data.data;
-                }
-            })
+            $http.post(manurl + "/DictController/queryDictItemListByDictKey",subForm).then(function (response) {
+                settings.diclist[dictKey] = response.data.retMessage;
+            });
         }
     }
-    settings.getDicCodeData = function (codetype, table) {
-        if (isNull(settings.diclist[codetype])) {
-            var subForm = {};
-            subForm.code_data_type = codetype;
-            if (isNull(table)) {
-                service.post("common", "getConstant", subForm, null, function (data) {
-                    if (data.status == '1') {
-                        settings.diclist[codetype] = data.data;
-                    }
-                })
-            } else if (table == 'F') {
-                service.post("common", "getConstantFreq", subForm, null, function (data) {
-                    if (data.status == '1') {
-                        settings.diclist[codetype + table] = data.data;
-                    }
-                })
+
+
+    settings.commlist = {};
+    /**
+     * 获取机构-人员-工作组-职务-岗位
+     * 翻译guid-objName
+     * @param type
+     */
+    settings.getCommData = function (type) {
+        if(type == "ORG"){
+            if(_.isNil(settings.commlist[type])) {
+                $http.post(manurl + "/om/org/queryAllorg").then(function (response) {
+                    settings.commlist[type] = response.data.retMessage;
+                });
+            }
+        }else if(type == "POS"){
+            if(_.isNil(settings.commlist[type])) {
+                $http.post(manurl + "/om/org/queryAllposition").then(function (response) {
+                    settings.commlist[type] = response.data.retMessage;
+                });
+            }
+        }else if(type == "EMP"){
+            if(_.isNil(settings.commlist[type])) {
+                $http.post(manurl + "/om/emp/queryemployee").then(function (response) {
+                    settings.commlist[type] = response.data.retMessage;
+                });
             }
         }
     }
+
+
 
     return settings;
 }]);
@@ -861,7 +872,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
 
         .state("emp",{
             url:"/Emp.html",
-            templateUrl:"views/Emp/Emp.html",
+            templateUrl:"views/emp/emp.html",
             data: {pageTitle: '员工管理'},
             controller:"Emp_controller"
         })
