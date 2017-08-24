@@ -74,7 +74,7 @@
         <!-- 职务套别下职务列表结束 -->
         <!--机构列表-->
         <div class="tab-content portlet light" ng-if="tabflag">
-            <div ui-grid="dutygrid"
+            <div ui-grid="dutygrid"  class="grid"
                  ui-grid-edit ui-grid-pagination
                  ui-grid-selection ui-grid-resize-columns></div>
             <div class="actions btn-set" style="float: right;">
@@ -204,7 +204,7 @@
         <!--详情信息end-->
         <!--下级机构-->
         <div class="tab-content portlet light" ng-if="flag.xjzw">
-            <div ui-grid="xjzwgrid"
+            <div ui-grid="xjzwgrid"   class="grid"
                  ui-grid-edit ui-grid-pagination
                  ui-grid-selection ui-grid-resize-columns></div>
             <div class="actions btn-set" style="float: right;">
@@ -219,7 +219,7 @@
         <!--下级机构end-->
         <!--职务人员-->
         <div class="tab-content portlet light" ng-if="flag.zwry">
-            <div ui-grid="zwrygrid"
+            <div ui-grid="zwrygrid"   class="grid"
                  ui-grid-edit ui-grid-pagination
                  ui-grid-selection ui-grid-resize-columns></div>
             <div class="actions btn-set" style="float: right;">
@@ -242,7 +242,7 @@
                             </button>
                         </div>
                         <div class="actions btn-set col-md-12">
-                            <div ui-grid="alrolegird"
+                            <div ui-grid="alrolegird"  class="grid"
                                  ui-grid-edit ui-grid-pagination
                                  ui-grid-selection style="height:200px;">
                             </div>
@@ -255,7 +255,7 @@
                             </button>
                         </div>
                         <div class="actions btn-set col-md-12">
-                            <div ui-grid="notrolegird"
+                            <div ui-grid="notrolegird"   class="grid"
                                  ui-grid-edit ui-grid-pagination
                                  ui-grid-selection style="height:200px;">
                             </div>
@@ -263,7 +263,7 @@
                     </div>
                     <!-- END FORM-->
                     <div class="portlet-body col-md-12">
-                        <div ui-grid="mygrid"
+                        <div ui-grid="mygrid"   class="grid"
                              ui-grid-edit ui-grid-pagination
                              ui-grid-selection>
                         </div>

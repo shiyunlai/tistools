@@ -28,7 +28,7 @@
                                 </div>
                             </div>
                             <div class="portlet-body">
-                                <div ui-grid="gridOptions"
+                                <div ui-grid="gridOptions" class="grid"
                                       ui-grid-pagination
                                      ui-grid-selection ui-grid-resize-columns>
                                 </div>
@@ -102,7 +102,7 @@
                                         </li>
                                     </ul>
                                     <div class="tab-content portlet light" ng-if="rolesflag.org">
-                                        <div ui-grid="gridOptions2"
+                                        <div ui-grid="gridOptions2" class="grid"
                                               ui-grid-pagination
                                              ui-grid-selection ui-grid-resize-columns>
                                         </div>
@@ -116,7 +116,7 @@
                                         </div>
                                     </div>
                                     <div class="tab-content portlet light" ng-if="rolesflag.worklist">
-                                        <div ui-grid="gridOptions3"
+                                        <div ui-grid="gridOptions3"   class="grid"
                                             ui-grid-pagination
                                              ui-grid-selection ui-grid-resize-columns>
                                         </div>
@@ -130,7 +130,7 @@
                                         </div>
                                     </div>
                                     <div class="tab-content portlet light" ng-if="rolesflag.post">
-                                        <div ui-grid="gridOptions4"
+                                        <div ui-grid="gridOptions4"   class="grid"
                                              ui-grid-pagination
                                              ui-grid-selection ui-grid-resize-columns>
                                         </div>
@@ -142,12 +142,9 @@
                                             <button type="button" name="back" class="btn btn-danger" ng-click="role_postDelete()"> 删除
                                             </button>
                                         </div>
-                                        <div class="tab-content portlet light" ng-if="rolesflag.zhiwei">
-                                            <p>测试第五个页面12323313213</p>
-                                        </div>
                                     </div>
                                     <div class="tab-content portlet light" ng-if="rolesflag.zhiwei">
-                                        <div ui-grid="gridOptionzw"
+                                        <div ui-grid="gridOptionzw"   class="grid"
                                               ui-grid-pagination
                                              ui-grid-selection ui-grid-resize-columns>
                                         </div>
@@ -163,7 +160,7 @@
                                 </div>
                                 <!-- 操作员tab-->
                                 <div class="tab-content portlet light" ng-if="roleflag.operatorer">
-                                    <div ui-grid="gridOptioner"
+                                    <div ui-grid="gridOptioner"  class="grid"
                                          ui-grid-pagination
                                          ui-grid-selection ui-grid-resize-columns>
                                     </div>

@@ -1,6 +1,7 @@
 package org.tis.tools.webapp.controller.ac;
 
 import com.alibaba.dubbo.common.json.ParseException;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -356,9 +357,8 @@ public class AcOperatorController extends BaseController {
                 logger.info("createOperatorIdentityres request : " + content);
             }
             JSONObject jsonObject= JSONObject.parseObject(content);
-            AcOperatorIdentityres acOperatorIdentityres = new AcOperatorIdentityres();
-            BeanUtils.populate(acOperatorIdentityres, jsonObject);
-            operatorRService.createOperatorIdentityres(acOperatorIdentityres);
+            List<AcOperatorIdentityres> acOperatorIdentityreses = JSON.parseArray(content, AcOperatorIdentityres.class);
+            operatorRService.createOperatorIdentityres(acOperatorIdentityreses);
             AjaxUtils.ajaxJsonSuccessMessage(response,"");
         } catch (ToolsRuntimeException e) {
             AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
@@ -484,6 +484,80 @@ public class AcOperatorController extends BaseController {
         return null;
     }
 
+    
+    /**
+     * 根据USERID查询操作员未授权角色
+     */
+    @ResponseBody
+    @RequestMapping(value="/queryOperatorUnauthorizedRoleList" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String queryOperatorUnauthorizedRoleList(@RequestBody String content, HttpServletRequest request,
+                               HttpServletResponse response)  {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("queryOperatorUnauthorizedRoleList request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+            String userId = jsonObject.getString("userId");//操作员USER_ID
+            List<AcRole> acRoleList = roleRService.queryOperatorUnauthorizedRoleList(userId);
+            AjaxUtils.ajaxJsonSuccessMessage(response, acRoleList);
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("queryOperatorUnauthorizedRoleList exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("queryOperatorUnauthorizedRoleList exception : ", e);
+        }
+        return null;
+    }
+    
+    /**
+     * 根据USERID查询操作员已授权角色
+     */
+    @ResponseBody
+    @RequestMapping(value="/queryOperatorAuthorizedRoleList" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String queryOperatorAuthorizedRoleList(@RequestBody String content, HttpServletRequest request,
+                               HttpServletResponse response)  {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("queryOperatorAuthorizedRoleList request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+            String userId = jsonObject.getString("userId");//操作员USER_ID
+            List<AcRole> acRoleList = roleRService.queryOperatorAuthorizedRoleList(userId);
+            AjaxUtils.ajaxJsonSuccessMessage(response, acRoleList);
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("queryOperatorAuthorizedRoleList exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("queryOperatorAuthorizedRoleList exception : ", e);
+        }
+        return null;
+    }    
+    /**
+     * 根据USERID查询操作员继承角色
+     */
+    @ResponseBody
+    @RequestMapping(value="/queryOperatorInheritRoleList" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String queryOperatorInheritRoleList(@RequestBody String content, HttpServletRequest request,
+                               HttpServletResponse response)  {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("queryOperatorInheritRoleList request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+            String userId = jsonObject.getString("userId");//操作员USER_ID
+            List<AcRole> acRoleList = roleRService.queryOperatorInheritRoleList(userId);
+            AjaxUtils.ajaxJsonSuccessMessage(response, acRoleList);
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("queryOperatorInheritRoleList exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("queryOperatorInheritRoleList exception : ", e);
+        }
+        return null;
+    }
 
     /**
      * 要求子类构造自己的响应数据

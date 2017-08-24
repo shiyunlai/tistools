@@ -6,7 +6,6 @@
 var isdebug = false;
 var manurl = 'http://localhost:8089/tis';
 
-
 var MetronicApp = angular.module("MetronicApp", [
     "ui.router",
     "ui.bootstrap",
@@ -161,7 +160,16 @@ MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http
     settings.utils.initdropdown=function(){
         ComponentsDropdowns.init();
     }
-
+    settings.utils.initSelect2=function(){
+        if ($().select2) {
+            $.fn.select2.defaults.set("theme", "bootstrap");
+            $('.select2me').select2({
+                placeholder: "Select",
+                width: 'auto',
+                allowClear: false
+            });
+        }
+    }
     $rootScope.settings = settings;
     var constant = {};
     $rootScope.constant = constant;
