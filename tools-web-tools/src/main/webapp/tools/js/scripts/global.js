@@ -463,6 +463,7 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
         //选择优化
         // enableFullRowSelection:false,
         // enableRowHeaderSelection:true,
+        filterCellFiltered:true,
         enableSelectAll: true,
         //导出测试
         exporterCsvFilename: 'myFile.csv',
@@ -535,7 +536,8 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
         },
         api:function () {
             return $scope.gridApi;
-        }
+        },
+
     };
 
     //ui-grid getPage方法
@@ -711,6 +713,7 @@ function table($scope,$window,list) {
         $scope.windowWidth = newValue.w;
         // console.log($scope.windowWidth)
         if(!isNull(list)){
+            console.log(123)
             for(var i=0;i<list.length;i++){
                 if($scope.windowWidth>=1500){
                     var a = list[i].columnDefs

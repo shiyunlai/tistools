@@ -361,7 +361,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                 $scope.jsonarray = jsonarray;
                 var subFrom = {};
                 subFrom.id = obj.id;
-                console.log(obj)
                 if (!isNull(obj.original)) {
                     subFrom.guidOrg = obj.original.guid;
                     subFrom.positionCode = obj.original.positionCode;
@@ -984,7 +983,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                         var subFrom = it;
                         $scope.subFrom = subFrom;
                         //标识以区分新增和编辑
-                        //Emp
+                        //emp
                         var emp = {};
                         $scope.emp = emp;
                         //修改方法
@@ -1140,7 +1139,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                             {field: 'guidPostition', displayName: '基本岗位', enableHiding: false},
                             {field: 'guidempmajor', displayName: '直接主管', enableHiding: false},
                             {field: 'indate', displayName: '入职日期', enableHiding: false},
-                            {field: 'otel', displayName: '办公电话', enableHiding: false}
+                            {field: 'otel', displayName: '办公电话', enableHiding: false},
                         ]
                         $scope.commonGrid = initgrid($scope, commonGrid, filterFilter, com, true, selework);
 
@@ -1744,5 +1743,9 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
         //测试封装
     var list = [];
     table($scope,$window,list)
+
+    /**-------------------------------测试常量翻译---------------------------*/
+
+    console.log($rootScope)
 });
 

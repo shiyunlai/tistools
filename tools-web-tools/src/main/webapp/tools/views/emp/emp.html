@@ -100,7 +100,7 @@
                         <label class="control-label col-md-4">员工状态</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.empstatus"
+                                   ng-model="item.empstatus" translate-constants comtable="DICT_OM_EMPSTATUS"
                                    ng-readonly="editflag"/>
                         </div>
                     </div>
@@ -110,7 +110,7 @@
                         <label class="control-label col-md-4">员工职级</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.empDegree"
+                                   ng-model="item.empDegree " translate-constants comtable="DICT_OM_EMPDEGREE"
                                    ng-readonly="editflag"/>
                         </div>
                     </div>
@@ -119,8 +119,11 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">主机构编号</label>
                         <div class="col-md-8">
+                            <!--<select class="form-control" ng-model="item.guidOrg" ng-disabled="true">-->
+                                <!--<option ng-repeat="d in $settings.commlist['ORG'] track by $index" value="{{d.guid}}">{{d.orgName}}</option>-->
+                            <!--</select>-->
                             <input type="text" class="form-control"
-                                   ng-model="item.guidOrg"
+                                   ng-model="item.guidOrg" translate-constants comtable="ORG"
                                    ng-readonly="editflag"/>
                         </div>
                     </div>
@@ -129,8 +132,11 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">基本岗位</label>
                         <div class="col-md-8">
+                            <!--<select class="form-control" ng-model="item.guidPosition" ng-disabled="true">-->
+                                <!--<option ng-repeat="d in $settings.commlist['POS'] track by $index" value="{{d.guid}}">{{d.positionName}}</option>-->
+                            <!--</select>-->
                             <input type="text" class="form-control"
-                                   ng-model="item.guidPosition"
+                                   ng-model="item.guidPosition" translate-constants comtable="POS"
                                    ng-readonly="editflag"/>
                         </div>
                     </div>
@@ -139,8 +145,11 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">直接主管</label>
                         <div class="col-md-8">
+                            <!--<select class="form-control" ng-model="item.guidEmpMajor" ng-disabled="true">-->
+                                <!--<option ng-repeat="d in $settings.commlist['EMP'] track by $index" value="{{d.guid}}">{{d.empName}}</option>-->
+                            <!--</select>-->
                             <input type="text" class="form-control"
-                                   ng-model="item.guidEmpMajor"
+                                   ng-model="item.guidEmpMajor" translate-constants comtable="EMP"
                                    ng-readonly="editflag"/>
                         </div>
                     </div>
