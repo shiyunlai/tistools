@@ -1,0 +1,78 @@
+{
+  "_from": "angular-select2",
+  "_id": "angular-select2@1.5.2",
+  "_inBundle": false,
+  "_integrity": "sha1-331Iqw0IECTXZNcWxHYEuwkosc0=",
+  "_location": "/angular-select2",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "angular-select2",
+    "name": "angular-select2",
+    "escapedName": "angular-select2",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/angular-select2/-/angular-select2-1.5.2.tgz",
+  "_shasum": "df7d48ab0d081024d764d716c47604bb0928b1cd",
+  "_spec": "angular-select2",
+  "_where": "C:\\Users\\hasee\\Desktop",
+  "author": {
+    "name": "Ruben Vermeersch",
+    "email": "ruben@rocketeer.be",
+    "url": "http://rocketeer.be/"
+  },
+  "bugs": {
+    "url": "https://github.com/rubenv/angular-select2/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Select2 directive for Angular.js",
+  "devDependencies": {
+    "grunt": "~1.0.1",
+    "grunt-bump": "0.8.0",
+    "grunt-contrib-clean": "~1.0.0",
+    "grunt-contrib-concat": "~1.0.0",
+    "grunt-contrib-connect": "~1.0.0",
+    "grunt-contrib-jshint": "~1.0.0",
+    "grunt-contrib-uglify": "~1.0.0",
+    "grunt-contrib-watch": "~1.0.0",
+    "grunt-jscs": "^3.0.0",
+    "grunt-ng-annotate": "^2.0.2",
+    "grunt-protractor-runner": "3.2.0",
+    "grunt-sauce-tunnel": "^0.2.0",
+    "grunt-shell": "^1.3.0",
+    "open-sauce-browsers": "git://github.com/rubenv/open-sauce-browsers.git",
+    "protractor": "~3.3.0",
+    "serve-static": "^1.11.1"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "homepage": "https://github.com/rubenv/angular-select2#readme",
+  "jspm": {
+    "main": "dist/angular-select2"
+  },
+  "keywords": [
+    "angular",
+    "select2"
+  ],
+  "license": "MIT",
+  "main": "dist/angular-select2.js",
+  "name": "angular-select2",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rubenv/angular-select2.git"
+  },
+  "scripts": {
+    "prepublish": "grunt build",
+    "test": "grunt ci"
+  },
+  "version": "1.5.2"
+}

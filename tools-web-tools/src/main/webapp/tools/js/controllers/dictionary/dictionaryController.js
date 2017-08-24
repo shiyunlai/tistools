@@ -1,7 +1,7 @@
 /**
  * Created by wangbo on 2017/7/4.
  */
-angular.module('MetronicApp').controller('dictionary_controller', function($rootScope, $scope, $http,i18nService,$modal,filterFilter,$uibModal,dictonary_service){
+angular.module('MetronicApp').controller('dictionary_controller', function($rootScope, $scope, $http,i18nService,$modal,filterFilter,$timeout,$uibModal,dictonary_service){
 
     //tab页切换
     var dictflag = {};
@@ -84,6 +84,7 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
         })
     }
 
+
     //新增业务字典
     $scope.show_win=function(){
         openwindow($uibModal, 'views/dictionary/dictnameAdd.html', 'lg',// 弹出页面
@@ -96,7 +97,7 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                 $scope.dictFrom =dictFrom;
                 dictFrom.seqno =0;//默认
                 dictFrom.fromType =0;//首先给个默认
-                $scope.dictlist = dictflag.dictnameL;
+                $scope.dictlist = dictflag.dictnameL;//渲染业务字典数据
                 $scope.add = function(item){//保存新增的函数
                     var subFrom = {};
                     subFrom = item;
@@ -127,6 +128,12 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                     var idds = id;
                     $scope.id = idds;//编辑id
                     $scope.dictFrom = datasRow;//渲染数据
+                    var tsxtcom = datasRow.guidParents;//业务字典
+                    var tsxttable = datasRow.fromTable;//来自于表回选
+                    $timeout(function () {
+                        $(".test123").select2("val",tsxtcom);//渲染表格数据
+                        $(".dictfrom").select2("val",tsxttable);//渲染表格数据
+                    },50);
                     if(datasRow.fromType=='0'){
                         $scope.one = true;
                         $scope.two = false;
@@ -175,9 +182,9 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                 dictonary_service.deleteSysDict(subFrom).then(function(data){
                     if(data.status == "success"){
                         toastr['success']( "删除成功！");
-                        dictflag.initt();//调用刷新列表
                         $scope.dictconfig.show =false;
                         $scope.dictconfig.toshow =false;
+                        dictflag.initt();//调用刷新列表
                     }else{
                         toastr['error']('删除失败'+'<br/>'+data.retMessage);
                     }
@@ -249,6 +256,7 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
         subFrom.dictGuid = id;
         dictonary_service.querySysDictItemList(subFrom).then(function(data){
             var datas = data.retMessage;
+            $scope.dictflag.inlength = datas.length;
             if(data.status == "success"){
                 $scope.gridOptions1.data =  datas;
                 $scope.gridOptions1.mydefalutData = datas;
@@ -338,9 +346,6 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
             toastr['error']("请至少选中一条数据进行删除！");
         }else{
             if(confirm("确定删除改字典项吗？")){
-                /*for(var i =0 ; i<getSel.length;i++){
-                    fun.push(getSel[i].guid);
-                }*/
                 var subFrom = {};
                 $scope.subFrom=subFrom;
                 subFrom.dictItemGuid = getSel[0].guid;
@@ -348,7 +353,10 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                 dictonary_service.deleteSysDictItem(subFrom).then(function(data){
                     if(data.status == "success"){
                         dictflag.inittx(getSel[0].guidDict);
-                        dictflag.initt();//调用刷新列表
+                        if(dictflag.inlength==1){
+                            $scope.dictconfig.show =false;
+                        }
+                        //dictflag.initt();//调用刷新列表
                     }else{
                         toastr['error']('删除失败'+'<br/>'+data.retMessage);
                     }

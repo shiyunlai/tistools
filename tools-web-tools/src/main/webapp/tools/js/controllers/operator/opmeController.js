@@ -59,7 +59,6 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
                     $scope.subFrom = subFrom;
                     subFrom = item;
                     operator_service.createOperator(subFrom).then(function(data){
-                        console.log(data)
                         if(data.status == "success"){
                             toastr['success']( "新增成功！");
                             operman.queryAll();
@@ -89,7 +88,6 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
                         var subFrom = {};
                         $scope.subFrom = subFrom;
                         subFrom = item;
-                        console.log(subFrom)
                         operator_service.editOperator(subFrom).then(function(data){
                             if(data.status == "success"){
                                 toastr['success']( "新增成功！");
@@ -117,100 +115,94 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
 });
 
 /*操作员个人配置控制器*/
-
-MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state, $stateParams,filterFilter,i18nService,abftree_service,$interval) {
-    var id = $stateParams.id;//接受传入的值
+MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state, $stateParams,common_service,filterFilter,i18nService,$modal,$interval) {
+    var res = $rootScope.res.operator_service;//页面所需调用的服务
+    var role = $rootScope.res.role_service;//添加操作员服务
     //grid表格中文
     i18nService.setCurrentLang("zh-cn");
-    $scope.id = id;//绑定
-    $scope.currRole = id;//显示当前操作员
     //返回方法
     $scope.myback = function(){
         window.history.back(-1);
     }
     var operatqx = {};
     $scope.operatqx = operatqx;
+    var userid = $stateParams.id;//接受传入的值
+    operatqx.userid= userid;
+    $scope.currRole = userid;//显示当前操作员
+    //查询userid对应的guid
+    var  serFrom = {}
+    serFrom.userId = operatqx.userid;
+    common_service.post(res.queryOperatorByUserId,serFrom).then(function(data){
+        var datas = data.retMessage;
+        operatqx.operatorGuid = datas.guid;
+    })
 
     //未授予角色表格生成
     var notrolegird = {};
     $scope.notrolegird = notrolegird;
-    //操作员名称，代码  应用系统名称 代码
-    $scope.myData = [
-        {'roleName':'王五','guidFunc':'左右功能'},
-        {'roleName':'张三','guidFunc':'123功能'},
-        {'roleName':'李四','guidFunc':'测试功能'},
-    ];
-    //操作员名称，代码  应用系统名称 代码
     var com = [
         { field: "roleName", displayName:'角色名'},
-        { field: "guidFunc", displayName:'拥有功能'}
     ];
     var f = function(row){
         if(row.isSelected){
-            $scope.selectRow = row.entity.guid;
+            $scope.selectRow = row.entity;
         }else{
             $scope.selectRow = '';//制空
         }
     }
     $scope.notrolegird = initgrid($scope,notrolegird,filterFilter,com,false,f);
-    $scope.notrolegird.data = $scope.myData;//表格数据
     $scope.notrolegird.enablePaginationControls = false;//禁止有分页
     $scope.notrolegird.enableFiltering = false;//禁止有搜索
     $scope.notrolegird.enableGridMenu = false;//禁止有菜单
     //查询未授予表格逻辑
     operatqx.querynotrole = function(){
         //查询所有未授予的
-        //var subFrom = {};
-        /*operator_service.queryAllOperator(subFrom).then(function(data){
-            var datas = data.retMessage;
+        var subFrom = {};
+        subFrom.userId = operatqx.userid;
+            common_service.post(res.queryOperatorUnauthorizedRoleList,subFrom).then(function(data){
+                var datas = data.retMessage;
             if(data.status == "success"){
                 $scope.notrolegird.data =  datas;
                 $scope.notrolegird.mydefalutData = datas;
                 $scope.notrolegird.getPage(1,$scope.notrolegird.paginationPageSize);
             }else{
-                 $scope.notrolegird.data =  [];
-                 $scope.notrolegird.mydefalutData = [];
-                 $scope.notrolegird.getPage(1,$scope.alrolegird.paginationPageSize);
+                $scope.notrolegird.data =  [];
+                $scope.notrolegird.mydefalutData = [];
+                $scope.notrolegird.getPage(1,$scope.notrolegird.paginationPageSize);
             }
-        })*/
+        })
     }
+    operatqx.querynotrole();
 
-    //添加逻辑
+    //添加未授予角色逻辑
     $scope.operatqx.add = function(){
+        console.log(operatqx.operatorGuid)
+        var dats = $scope.notrolegird.getSelectedRows();
         if($scope.selectRow == ""){
             toastr['error']("请至少选择一个角色");
             return false;
         }else{
-            //调用逻辑
-           /* var subFrom = {};
-            subFrom.partyGuid = guid;
-            subFrom.roleGuid = $scope.addroleGuid;
-            subFrom.partyType = partyType;
-            abftree_service.addRoleParty(subFrom).then(function (data) {
-                if(data.status == "success"){
-                    toastr['success'](data.retMessage);
-                    realrolegird();
-                    renotrolegird();
-                }else{
-                    toastr['error'](data.retMessage);
-                }
-            })*/
+                var subFrom = {};
+                subFrom.guidRole = $scope.selectRow.guid;//角色guid
+                subFrom.guidOperator = operatqx.operatorGuid;//操作员guid
+                var tis = [];
+                tis.push(subFrom)
+                common_service.post(role.addOperatorRole,tis).then(function(data){
+                    if(data.status == "success"){
+                        toastr['success']("授予成功！");
+                        operatqx.querynotrole();//查询未授予
+                        operatqx.queryalrole();//查询已授予
+                    }else{
+                        toastr['error']('查询失败'+'<br/>'+data.retMessage);
+                    }
+                })
         }
     }
-
-
     //已授予角色表格生成
     var alrolegird = {};
     $scope.alrolegird = notrolegird;
-    //操作员名称，代码  应用系统名称 代码
-    $scope.myDatas = [
-        {'roleName':'李四','guidFunc':'测试个表'},
-        {'roleName':'二麻子','guidFunc':'个'}
-    ];
-    //操作员名称，代码  应用系统名称 代码
     var com1 = [
-        { field: "roleName", displayName:'角色名'},
-        { field: "guidFunc", displayName:'拥有功能'}
+        { field: "roleName", displayName:'角色名'}
     ];
     var f1 = function(row){
         if(row.isSelected){
@@ -220,57 +212,306 @@ MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state
         }
     }
     $scope.alrolegird = initgrid($scope,alrolegird,filterFilter,com1,false,f1);
-    $scope.alrolegird.data = $scope.myDatas;//表格数据
     $scope.alrolegird.enablePaginationControls = false;//禁止有分页
     $scope.alrolegird.enableFiltering = false;//禁止有搜索
     $scope.alrolegird.enableGridMenu = false;//禁止有菜单
 
     //查询已授予角色
     operatqx.queryalrole = function(){
-        //查询所有未授予的
-        //var subFrom = {};
-        /*operator_service.queryAllOperator(subFrom).then(function(data){
-         var datas = data.retMessage;
-         if(data.status == "success"){
-         $scope.notrolegird.data =  datas;
-         $scope.notrolegird.mydefalutData = datas;
-         $scope.notrolegird.getPage(1,$scope.notrolegird.paginationPageSize);
-         }else{
-         $scope.notrolegird.data =  [];
-         $scope.notrolegird.mydefalutData = [];
-         $scope.notrolegird.getPage(1,$scope.alrolegird.paginationPageSize);
-         }
-         })*/
+        //查询已授予的角色
+        var subFrom = {};
+        subFrom.userId = operatqx.userid;
+        common_service.post(res.queryOperatorAuthorizedRoleList,subFrom).then(function(data){
+            var datas = data.retMessage;
+            if(data.status == "success"){
+                $scope.alrolegird.data =  datas;
+                $scope.alrolegird.mydefalutData = datas;
+                $scope.alrolegird.getPage(1,$scope.alrolegird.paginationPageSize);
+            }else{
+                $scope.alrolegird.data =  [];
+                $scope.alrolegird.mydefalutData = [];
+                $scope.alrolegird.getPage(1,$scope.alrolegird.paginationPageSize);
+            }
+        })
     }
+    operatqx.queryalrole()
     //已授予角色删除
     $scope.operatqx.del = function(){
+        console.log(operatqx.operatorGuid)
         if($scope.deleteGUid == ""){
             toastr['error']("请至少选择一个角色");
             return false;
         }else{
-           /* var subFrom = {};
-            subFrom.partyGuid = guid;
-            subFrom.roleGuid = $scope.deleteGUid;
-            abftree_service.deleteRoleParty(subFrom).then(function (data) {
+            var subFrom = {};
+            subFrom.roleGuid = $scope.deleteGUid.guid;//角色guid
+            subFrom.operatorGuid = operatqx.operatorGuid;//操作员guid
+            var tis = [];
+            tis.push(subFrom)
+            common_service.post(role.removeOperatorRole,tis).then(function(data){
                 if(data.status == "success"){
-                    toastr['success'](data.retMessage);
-                    realrolegird();
-                    renotrolegird();
+                    toastr['success']("删除成功！");
+                    operatqx.querynotrole();//查询未授予
+                    operatqx.queryalrole();//查询已授予
                 }else{
-                    toastr['error'](data.retMessage);
+                    toastr['error']('查询失败'+'<br/>'+data.retMessage);
                 }
-            })*/
+            })
         }
     }
 
-
-    //特别权限设置
+    //特别权限表格添加
     operatqx.authority = function(){
-        
+        openwindow($modal, 'views/operator/speciallimit.html', 'lg',//弹出页面
+            function ($scope, $modalInstance) {
+                var subFrom={};
+                //查询对应的
+               /* operator_service.queryAllOperator(subFrom).then(function(data){
+                    var datas = data.retMessage;
+                    if(data.status == "success"){
+                        $scope.gridOptions.data = datas;
+                    }else{
+                        toastr['error']('查询失败'+'<br/>'+data.retMessage);
+                    }
+                })*/
+
+                var gridOptions = {};
+                $scope.gridOptions = gridOptions;//数据方法
+                var com = [
+                    { field: 'funcName', displayName: '功能名称'},
+                    { field: 'authType', displayName: '授权标志'}
+                ];
+                //自定义点击事件
+                var f1 = function(row){
+                    if(row.isSelected){
+                        $scope.selectRow3 = row.entity;
+                    }
+                    else{
+                        $scope.selectRow3 = '';//制空
+                    }
+                }
+                $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
+                $scope.gridOptions.enableFiltering = false;//禁止有搜索
+                $scope.gridOptions.enableGridMenu = false;//禁止有菜单
+                //导入
+                $scope.importAdd = function () {
+                    var dats = $scope.gridOptions.getSelectedRows();
+                    //允许批量导入
+                    if (dats.length > 0) {
+                        var tis = [];
+                        for(var i =0;i<dats.length;i++){
+                            var subFrom = {};
+                            subFrom.guidRole = role.roleinfo.guid;
+                            subFrom.guidOperator = dats[i].guid;
+                            tis.push(subFrom)
+                        }
+                        //导入接口
+                        role_service.addOperatorRole(tis).then(function(data){
+                            var datas = data.retMessage;
+                            if(data.status == "success"){
+                                toastr['success']("导入成功！");
+                                $modalInstance.close();
+                                queryOeper(role.roleinfo.guid)
+                            }else{
+                                toastr['error']('查询失败'+'<br/>'+data.retMessage);
+                            }
+                        })
+                    }
+                    else {
+                        toastr['error']("请至少选中一个！");
+                    }
+                }
+
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            })
+    }
+
+    //特别权限表格生成
+    var postgrid = {};
+    $scope.postgrid = postgrid;
+    //操作员名称，代码  应用系统名称 代码
+    $scope.postgrids = [
+        {'funcName':'测试功能','authType':'特别允许'},
+        {'funcName':'菜单功能','authType':'特别禁止'}
+    ];
+    //操作员名称，代码  应用系统名称 代码
+    var com2 = [
+        { field: 'funcName', displayName: '功能名称'},
+        { field: 'authType', displayName: '授权标志'}
+    ];
+    var f2 = function(row){
+        if(row.isSelected){
+            $scope.speciallimit = row.entity;
+        }else{
+            $scope.speciallimit = '';//制空
+        }
+    }
+    $scope.postgrid = initgrid($scope,postgrid,filterFilter,com2,false,f2);
+    $scope.postgrid.data = $scope.postgrids;//表格数据
+    $scope.postgrid.enablePaginationControls = false;//禁止有分页
+    $scope.postgrid.enableFiltering = false;//禁止有搜索
+    $scope.postgrid.enableGridMenu = false;//禁止有菜单
+    //查询特殊权限列表
+    operatqx.queryspeciallimit = function(){
+        //查询所有未授予的
+        //var subFrom = {};
+        /*operator_service.queryAllOperator(subFrom).then(function(data){
+             var datas = data.retMessage;
+             if(data.status == "success"){
+             $scope.postgrid.data =  datas;
+             $scope.postgrid.mydefalutData = datas;
+             $scope.postgrid.getPage(1,$scope.postgrid.paginationPageSize);
+         }else{
+             $scope.postgrid.data =  [];
+             $scope.postgrid.mydefalutData = [];
+             $scope.postgrid.getPage(1,$scope.postgrid.paginationPageSize);
+         }
+        })*/
+    }
+    //删除特殊权限列表逻辑
+    $scope.operatqx.deleat = function(){
+        if($scope.speciallimit == ""){
+            toastr['error']("请至少选择一个角色进行删除");
+            return false;
+        }else{
+            /* var subFrom = {};
+             subFrom.partyGuid = guid;
+             subFrom.roleGuid = $scope.deleteGUid;
+             abftree_service.deleteRoleParty(subFrom).then(function (data) {
+                    if(data.status == "success"){
+                         toastr['success'](data.retMessage);
+                         operatqx.queryspeciallimit（)//重新查询列表
+                    }else{
+                        toastr['error'](data.retMessage);
+                    }
+             })*/
+        }
+    }
+
+    //查询继承角色列表
+    operatqx.queryinheritgrid = function(){
+        var subFrom = {};
+        subFrom.userId = operatqx.userid;
+        common_service.post(res.queryOperatorInheritRoleList,subFrom).then(function(data){
+            var datas = data.retMessage;
+            if(data.status == "success"){
+                $scope.inheritgrid.data =  datas;
+                $scope.inheritgrid.mydefalutData = datas;
+                $scope.inheritgrid.getPage(1,$scope.inheritgrid.paginationPageSize);
+            }else{
+                $scope.inheritgrid.data =  [];
+                $scope.inheritgrid.mydefalutData = [];
+                $scope.inheritgrid.getPage(1,$scope.inheritgrid.paginationPageSize);
+            }
+        })
+    }
+    operatqx.queryinheritgrid();
+    //继承角色添加逻辑
+    operatqx.inheritRole = function(){
+        openwindow($modal, 'views/operator/Inheritrole.html', 'lg',//弹出页面
+            function ($scope, $modalInstance) {
+                var subFrom={};
+                //查询对应的
+                /* operator_service.queryAllOperator(subFrom).then(function(data){
+                         var datas = data.retMessage;
+                         if(data.status == "success"){
+                         $scope.gridOptions.data = datas;
+                         }else{
+                         toastr['error']('查询失败'+'<br/>'+data.retMessage);
+                   }
+                 })*/
+
+                var gridOptions = {};
+                $scope.gridOptions = gridOptions;//数据方法
+                var com = [
+                    { field: 'roleName', displayName: '角色名称'}
+                ];
+                //自定义点击事件
+                var f1 = function(row){
+                    if(row.isSelected){
+                        $scope.selectRow = row.entity;
+                    }
+                    else{
+                        $scope.selectRow = '';//制空
+                    }
+                }
+                $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
+                $scope.gridOptions.enableFiltering = false;//禁止有搜索
+                $scope.gridOptions.enableGridMenu = false;//禁止有菜单
+                //导入
+                $scope.importAdd = function () {
+                    var dats = $scope.gridOptions.getSelectedRows();
+                    //允许批量导入
+                    if (dats.length > 0) {
+                        var tis = [];
+                        for(var i =0;i<dats.length;i++){
+                            var subFrom = {};
+                            subFrom.guidRole = role.roleinfo.guid;
+                            subFrom.guidOperator = dats[i].guid;
+                            tis.push(subFrom)
+                        }
+                        //导入接口
+                        role_service.addOperatorRole(tis).then(function(data){
+                            var datas = data.retMessage;
+                            if(data.status == "success"){
+                                toastr['success']("导入成功！");
+                                $modalInstance.close();
+                               //重新查询
+                            }else{
+                                toastr['error']('查询失败'+'<br/>'+data.retMessage);
+                            }
+                        })
+                    }
+                    else {
+                        toastr['error']("请至少选中一个！");
+                    }
+                }
+
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            })
+    }
+
+    //继承角色表格生成
+    var inheritgrid = {};
+    $scope.inheritgrid = inheritgrid;
+    //操作员名称，代码  应用系统名称 代码
+    //操作员名称，代码  应用系统名称 代码
+    var com3 = [
+        { field: 'roleName', displayName: '角色'}
+    ];
+    var f3 = function(row){
+        if(row.isSelected){
+            $scope.inherit = row.entity;
+        }else{
+            $scope.inherit = '';//制空
+        }
+    }
+    $scope.inheritgrid = initgrid($scope,inheritgrid,filterFilter,com3,false,f3);
+    $scope.inheritgrid.enablePaginationControls = false;//禁止有分页
+    $scope.inheritgrid.enableFiltering = false;//禁止有搜索
+    $scope.inheritgrid.enableGridMenu = false;//禁止有菜单
+
+    //继承角色删除
+    $scope.operatqx.delInherit = function(){
+        if($scope.inherit == ""){
+            toastr['error']("请至少选择一个角色进行删除");
+            return false;
+        }else{
+            /* var subFrom = {};
+                 abftree_service.deleteRoleParty(subFrom).then(function (data) {
+                         if(data.status == "success"){
+                         toastr['success'](data.retMessage);
+                         operatqx.queryinheritgrid()//重新查询列表
+                 }else{
+                    toastr['error'](data.retMessage);
+                 }
+             })*/
+        }
     }
 });
-
-
 
 /* 重组菜单控制器*/
 MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common_service,$scope, $state, $stateParams, filterFilter, $modal,$uibModal, $http, $timeout) {
@@ -395,9 +636,7 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
                     $scope.id = 2;
                     var menuFrom = {};
                     $scope.menuFrom = menuFrom;
-                    console.log(node.original.icon)
                     menuFrom.expandPath = node.original.icon;
-                    console.log(menuFrom.expandPath)
                     menuFrom.menuName = node.original.text;
                     $scope.add = function (item) {
                         var subFrom = {};
@@ -405,7 +644,6 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
                         subFrom.guid = node.id;
                         subFrom.isLeaf = 'N';
                         common_service.post(res.editOperatorMenu,subFrom).then(function(data){
-                            console.log(data);
                             if(data.status == "success"){
                                 toastr['success']( "新增成功！");
                                 searchMenu();//刷新重新加载
@@ -426,7 +664,6 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
             var subFrom = {};
             subFrom.operatorMenuGuid = node.id;
             common_service.post(res.deleteOperatorMenu,subFrom).then(function(data){
-                console.log(data);
                 if(data.status == "success"){
                     toastr['success']( "删除成功！");
                     searchMenu();
