@@ -556,7 +556,6 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
 function FormatDate (strTime) {
     var date = new Date(strTime);
     return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
-
 }
 
 
@@ -632,7 +631,6 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
         var subFrom = {};
         subFrom.guid =guid;
         abftree_service.queryRole(subFrom).then(function (data) {
-            console.log(1)
             if(data.status == "success" && !isNull(data.retMessage)){
                 $scope.alrolegird.data =  data.retMessage;
                 $scope.alrolegird.mydefalutData =  data.retMessage;
@@ -672,7 +670,6 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
             subFrom.partyGuid = guid;
             subFrom.roleGuid = $scope.addroleGuid;
             subFrom.partyType = partyType;
-            console.log(subFrom)
             abftree_service.addRoleParty(subFrom).then(function (data) {
                 if(data.status == "success"){
                     toastr['success'](data.retMessage);
