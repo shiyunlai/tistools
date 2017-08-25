@@ -648,7 +648,18 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 		return omGroupService.query(wc);
 	}
 
-
-	
-	
+	@Override
+	public List<OmGroup> queryBygroupName(String groupName) {
+		if (StringUtil.isEmpty(groupName)) {
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("groupName"));
+		}
+		WhereCondition wc = new WhereCondition();
+		wc.andFullLike(OmGroup.COLUMN_GROUP_NAME, groupName);
+		List<OmGroup> list = omGroupService.query(wc);
+		if (list.isEmpty()) {
+			return new ArrayList<>();
+		}else{
+			return list;
+		}
+	}
 }

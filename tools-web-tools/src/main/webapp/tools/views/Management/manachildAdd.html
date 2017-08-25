@@ -44,7 +44,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6" >
+                <!--<div class="col-md-6" >
                     <div class="form-group">
                         <label class="control-label col-md-4">是否叶子菜单:<span ng-class="{required:myform.dict_key3.$invalid}"  > * </span></label>
                         <div class="col-md-8">
@@ -53,6 +53,16 @@
                                 <option value="Y">是</option>
                                 <option value="N">否</option>
                             </select>
+                        </div>
+                    </div>
+                </div>-->
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">是否叶子菜单:<span ng-class="{required:myform.dict_key3.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="menuFrom.isleaf"  ng-init="menuFrom.isleaf = '否'"  required
+                                   name="dict_key3" />
                         </div>
                     </div>
                 </div>
@@ -98,7 +108,7 @@
                         </div>
                     </div>
                 </div>-->
-                <div class="col-md-6" >
+                <!--<div class="col-md-6" >
                     <div class="form-group">
                         <label class="control-label col-md-4">菜单显示顺序:</label>
                         <div class="col-md-8">
@@ -108,7 +118,7 @@
                             <span style="color: #ccc;">请输入0-99数值,从大到小排列,默认为0</span>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <div class="col-md-12">
                     <div class="form-group">
                         <label class="control-label col-md-2"></label>

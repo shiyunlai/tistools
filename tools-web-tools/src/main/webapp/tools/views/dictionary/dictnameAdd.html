@@ -19,13 +19,13 @@
                         <label class="control-label col-md-4"> 字典项来源类型:</label>
                         <div class="col-md-8" style="margin-top:7px;">
                            <div class="col-md-2" ng-show="one">
-                               <input type="radio"   name="fromtable"  ng-model="dictFrom.fromType" ng-checked='dictFrom.fromType==0'  value="0"  ng-click="fromdict()"/>字典项
+                               <input type="radio"   name="fromtable"  ng-model="dictFrom.fromType" ng-checked='dictFrom.fromType==0'  value="0" />字典项
                            </div>
                             <div class="col-md-2" ng-show="two">
-                                <input type="radio"   name="fromtable" ng-model="dictFrom.fromType"   ng-checked='dictFrom.fromType==1'  value="1"  ng-click="fromtable()"/>来自单表
+                                <input type="radio"   name="fromtable" ng-model="dictFrom.fromType"   ng-checked='dictFrom.fromType==1'  value="1" />来自单表
                             </div>
                             <div class="col-md-3"  ng-show="three">
-                                <input type="radio"   name="fromtable" ng-model="dictFrom.fromType"  ng-checked='dictFrom.fromType==2'  value="2" ng-click="fromview()"/>多表或视图
+                                <input type="radio"   name="fromtable" ng-model="dictFrom.fromType"  ng-checked='dictFrom.fromType==2'  value="2"/>多表或视图
                             </div>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-4"> 业务字典类型:<span ng-class="{required:myform.dict_key1.$invalid}"  > * </span></label>
                             <div class="col-md-8">
-                                <select class="form-control"  ng-model="dictFrom.dictType" name="dict_key1" required >
+                                <select class="form-control"  ng-model="dictFrom.dictType" name="dict_key1" required  style="width: 100%">
                                     <option value=""></option>
                                     <option value="a">应用级</option>
                                     <option value="s">系统级</option>
@@ -71,12 +71,16 @@
                         <div class="form-group">
                             <label class="control-label col-md-4"> 父字典:</label>
                             <div class="col-md-8">
-                                <select class="form-control"  ng-model="dictFrom.guidParents">
+                                <!--<select class="form-control"  ng-model="dictFrom.guidParents">-->
+                                <select class="form-control test123"   ng-model="dictFrom.guidParents" style="width: 100%">
                                     <option ng-repeat="x in dictlist" value="{{x.guid}}">{{x.dictKey+'---'+x.dictName}}</option>
                                 </select>
                             </div>
                         </div>
                     </div>
+                    <script type="text/javascript">
+                        $('.test123').select2();
+                    </script>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label col-md-4"> 顺序号:<span ng-class="{required:myform.dict_seq.$invalid}"  > * </span></label>
@@ -90,7 +94,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-2"> 解释说明:</label>
                             <div class="col-md-10">
-                                <textarea class="form-control"  ng_model="dictFrom.dictDesc" maxlength="10" length-limit  num-length=10  scope-models="dictFrom.dictDesc"  name="ctl_desc"></textarea>
+                                <textarea class="form-control"  ng_model="dictFrom.dictDesc" maxlength="128" length-limit  num-length=128  scope-models="dictFrom.dictDesc"  name="ctl_desc"></textarea>
                                 <!--<p class="help-block">检查项详细描述信息</code></p>-->
                             </div>
                         </div>
@@ -153,23 +157,29 @@
                         <div class="form-group">
                             <label class="control-label col-md-4"> 父字典:</label>
                             <div class="col-md-8">
-                                <select class="form-control"  ng-model="dictFrom.guidParents">
+                                <select class="form-control test123"   ng-model="dictFrom.guidParents" style="width: 100%">
                                     <option ng-repeat="x in dictlist" value="{{x.guid}}">{{x.dictKey+'---'+x.dictName}}</option>
                                 </select>
                             </div>
                         </div>
                     </div>
+                    <script type="text/javascript">
+                        $('.test123').select2();
+                    </script>
                     <div class="col-md-6" >
                         <div class="form-group">
                             <label class="control-label col-md-4"> 字典项来源表:<span ng-class="{required:myform.dict_fromTable.$invalid}"  > * </span></label>
                             <div class="col-md-8">
                                 <!--<input type="text" class="form-control" ng-model="dictFrom.fromTable" required  name="dict_fromTable"/>-->
-                                <select class="form-control"  ng-model="dictFrom.fromTable"  required  name="dict_fromTable">
+                                <select class="form-control  dictfrom"  ng-model="dictFrom.fromTable"  required  name="dict_fromTable" style="width: 100%">
                                     <option  ng-repeat="x in dictlist" value="{{x.guid}}">{{x.dictKey+'---'+x.dictName}}</option>
                                 </select>
                             </div>
                         </div>
                     </div>
+                    <script type="text/javascript">
+                        $('.dictfrom').select2();
+                    </script>
                     <div class="col-md-6" >
                         <div class="form-group">
                             <label class="control-label col-md-4"> 作为字典项名称的列:<span ng-class="{required:myform.useForKey.$invalid}"  > * </span></label>
@@ -199,7 +209,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-2"> 解释说明:</label>
                             <div class="col-md-10">
-                                <textarea class="form-control"  ng_model="dictFrom.dictDesc" maxlength="10" length-limit  num-length=10  scope-models="dictFrom.dictDesc"  name="ctl_desc"></textarea>
+                                <textarea class="form-control"  ng_model="dictFrom.dictDesc" maxlength="128" length-limit  num-length=128  scope-models="dictFrom.dictDesc"  name="ctl_desc"></textarea>
                                 <!--<p class="help-block">检查项详细描述信息</code></p>-->
                             </div>
                         </div>
@@ -287,9 +297,12 @@
                         <div class="form-group">
                             <label class="control-label col-md-4"> 父字典:</label>
                             <div class="col-md-8">
-                                <select class="form-control"  ng-model="dictFrom.guidParents">
+                                <select class="form-control test123"   ng-model="dictFrom.guidParents" style="width: 100%">
                                     <option ng-repeat="x in dictlist" value="{{x.guid}}">{{x.dictKey+'---'+x.dictName}}</option>
                                 </select>
+                                <script type="text/javascript">
+                                    $('.test123').select2();
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -306,7 +319,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-2"> 解释说明:</label>
                             <div class="col-md-10">
-                                <textarea class="form-control"  ng_model="dictFrom.dictDesc" maxlength="10" length-limit  num-length=10  scope-models="dictFrom.dictDesc"  name="ctl_desc"></textarea>
+                                <textarea class="form-control"  ng_model="dictFrom.dictDesc" maxlength="128" length-limit  num-length=128 scope-models="dictFrom.dictDesc"  name="ctl_desc"></textarea>
                                 <!--<p class="help-block">检查项详细描述信息</code></p>-->
                             </div>
                         </div>
@@ -331,3 +344,4 @@
         </form>
     </div>
 </div>
+

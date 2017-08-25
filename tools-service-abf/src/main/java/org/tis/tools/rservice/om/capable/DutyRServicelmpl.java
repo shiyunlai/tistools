@@ -210,7 +210,7 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 		OmDuty od = queryByDutyCode(dutyCode);
 		String dutyGuid = od.getGuid();
 		WhereCondition wc = new WhereCondition();
-		wc.andEquals("GUID_DUTY",dutyGuid);
+		wc.andEquals(OmPosition.COLUMN_GUID_DUTY,dutyGuid);
 		List<OmPosition> opList = omPositionService.query(wc);
 		return opList;
 	}
@@ -284,6 +284,19 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 				List<OmDuty> odList = omDutyService.query(wc);
 				return odList;
 	}
-	
-	
+
+	@Override
+	public List<OmDuty> queryBydutyName(String dutyName) {
+		if (StringUtil.isEmpty(dutyName)) {
+			throw new DutyManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("dutyName"));
+		}
+		WhereCondition wc = new WhereCondition();
+		wc.andFullLike(OmDuty.COLUMN_DUTY_NAME, dutyName);
+		List<OmDuty> list = omDutyService.query(wc);
+		if (list.isEmpty()) {
+			return new ArrayList<>();
+		}else{
+			return list;
+		}
+	}
 }

@@ -3,10 +3,7 @@
  */
 package org.tis.tools.rservice.ac.capable;
 
-import org.tis.tools.model.po.ac.AcOperatorRole;
-import org.tis.tools.model.po.ac.AcPartyRole;
-import org.tis.tools.model.po.ac.AcRole;
-import org.tis.tools.model.po.ac.AcRoleFunc;
+import org.tis.tools.model.po.ac.*;
 import org.tis.tools.rservice.ac.exception.RoleManagementException;
 
 import javax.management.relation.Role;
@@ -314,6 +311,7 @@ public interface IRoleRService {
      *          包含角色GUID的集合
      * @throws RoleManagementException
      */
-    List<AcRole> queryEmpPartyRole(String partyType, String empGuid)  throws  RoleManagementException;
+    List<AcRole> queryEmpPartyRole(String partyType, String empGuid) throws RoleManagementException;
+
 
 }

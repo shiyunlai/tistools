@@ -23,7 +23,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6" >
+                <div class="col-md-6" ng-if="!id">
                     <div class="form-group">
                         <label class="control-label col-md-4">用户密码:<span ng-class="{required:myform.dict_key.$invalid}"  > * </span></label>
                         <div class="col-md-8">
@@ -61,11 +61,12 @@
                         <label class="control-label col-md-4"> 操作员状态: <span ng-class="{required:myform.oper_ators.$invalid}"  > * </span></label>
                         <div class="col-md-8">
                             <select class="form-control"    ng-model="operatFrom.operatorStatus" required   name="oper_ators">
-                                <option value=""></option>
+                                <option ng-repeat="d in dictitem" value="{{d.itemValue}}">{{d.itemName}}</option>
+                               <!-- <option value=""></option>
                                 <option value="0">正常</option>
                                 <option value="1">注销</option>
                                 <option value="2">暂停</option>
-                                <option value="3">启用</option>
+                                <option value="3">启用</option>-->
                             </select>
                         </div>
                     </div>

@@ -769,6 +769,21 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
         return list;
     }
 
+    @Override
+    public List<OmBusiorg> queryBusiorgByName(String busiorgName) {
+        if (StringUtil.isEmpty(busiorgName)) {
+            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("busiorgName"));
+        }
+        WhereCondition wc = new WhereCondition();
+        wc.andFullLike(OmBusiorg.COLUMN_BUSIORG_NAME, busiorgName);
+        List<OmBusiorg> list = omBusiorgService.query(wc);
+        if (list.isEmpty()) {
+            return new ArrayList<>();
+        }else{
+            return list;
+        }
+    }
+
     /**
      * @param busiorgCode
      * @return 根据机构码查询 机构是否存在

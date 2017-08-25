@@ -50,10 +50,10 @@
                             </div>
                             <div class="portlet-body" style="overflow-y:hidden;" ng-show="menu.show">
                                 <div class="shu" style="margin-top: 20px;">
-                                    <form id="s">
+                                    <!--<form id="s">
                                         <input type="search" id="q"/>
                                         <button type="submit">检索</button>
-                                    </form>
+                                    </form>-->
                                     <div id="container"></div>
                                 </div>
                             </div>
@@ -114,7 +114,7 @@
                                             <div class="form-group">
                                                 <label class="control-label col-md-4">是否叶子菜单:<span ng-class="{required:menuform.dict_key3.$invalid}"  > * </span></label>
                                                 <div class="col-md-8">
-                                                    <select class="form-control" name="dict_key3" ng-model="menuFrom.isleaf" ng-readonly="readonly"  ng-disabled="!editflag" required>
+                                                    <select class="form-control" name="dict_key3" ng-model="menuFrom.isleaf"  ng-change="watcher(menuFrom.isleaf)" ng-readonly="readonly"  ng-disabled="!editflag" required>
                                                         <option value=""></option>
                                                         <option value="Y">是</option>
                                                         <option value="N">否</option>
@@ -176,7 +176,7 @@
                                                 </div>
                                             </div>
                                         </div>-->
-                                        <div class="col-md-6" >
+                                        <!--<div class="col-md-6" >
                                             <div class="form-group">
                                                 <label class="control-label col-md-4">菜单显示顺序:</label>
                                                 <div class="col-md-8">
@@ -186,7 +186,7 @@
                                                     <span style="color: #ccc;">请输入0-99数值,从大到小排列,默认为0</span>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>-->
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="control-label col-md-2"></label>

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.tis.tools.rservice.om.capable;
 
@@ -127,7 +127,7 @@ public interface IGroupRService {
 	 * 
 	 * </pre>
 	 * 
-	 * @param newOmGroup
+	 * @param og
 	 *            新工作组对象
 	 * @return 新增的工作组对象
 	 * @throws ToolsRuntimeException
@@ -400,7 +400,7 @@ public interface IGroupRService {
 	
 	/**
 	 * 查询不属于此工作组并且在指定机构下的人员信息
-	 * @param orgCode
+	 * @param guidOrg
 	 * @param groupCode
 	 * @return
 	 */
@@ -441,10 +441,19 @@ public interface IGroupRService {
 	 * 添加岗位-工作组关系表数据
 	 */
 	void insertGroupPosition(String groupGuid,List<String> posGuidList);
-	
+
 	/**
 	 * 删除岗位-工作组关系表数据
+	 * @param groupGuid
+	 * @param posGuidList
 	 */
 	void deleteGroupPosition(String groupGuid,List<String> posGuidList);
+
+	/**
+	 * 通过工作组名称检索工作组
+	 * @param groupName
+	 * @return 符合条件的工作组
+	 */
+	List<OmGroup> queryBygroupName(String groupName);
 
 }

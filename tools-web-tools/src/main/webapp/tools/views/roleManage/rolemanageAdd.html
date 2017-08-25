@@ -56,13 +56,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6" >
+                <div class="col-md-12" >
                     <div class="form-group">
-                        <label class="control-label col-md-4">角色描述</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="roleFrom.roleDesc"
-                                   name="id" />
+                        <label class="control-label col-md-2">角色描述</label>
+                        <div class="col-md-10">
+                            <textarea class="form-control"  ng_model="roleFrom.roleDesc" maxlength="512" length-limit  num-length=512 scope-models="roleFrom.roleDesc"  name="id"></textarea>
                         </div>
                     </div>
                 </div>

@@ -18,17 +18,17 @@ import java.util.List;
  */
 public interface IDictRService {
 
+
 	/**
 	 * <pre>
 	 * 新增业务字典
 	 * 系统自动补充guid
-	 * 
+	 *
 	 * </pre>
 	 * @param dict 业务字典
 	 * @return 新增的业务字典记录
 	 * @throws SysManagementException
 	 */
-
 	SysDict addDict( SysDict dict ) throws SysManagementException;
 	
 	/**
@@ -66,8 +66,8 @@ public interface IDictRService {
 	 * 2. 字典项
 	 * 
 	 * </pre>
-	 * @param dictKey
-	 * @return
+	 * @param dictKey 字典KEY
+	 * @return 对应字典（SysDict）
 	 * @throws SysManagementException
 	 */
 	SysDict queryDict( String dictKey ) throws SysManagementException;
@@ -81,7 +81,7 @@ public interface IDictRService {
 	 *            业务字典
 	 * @param dictItem
 	 *            字典项
-	 * @return 实际值
+	 * @return 实际值（SysDictItem）
 	 * @throws SysManagementException
 	 */
 	SysDictItem queryDictItem( String dictType, String dictItem ) throws SysManagementException;
@@ -181,5 +181,14 @@ public interface IDictRService {
 	 * @throws SysManagementException
 	 */
 	List<SysDictItem> queryDictItemListByDictKey(String dictKey) throws SysManagementException;
+
+
+	/**
+	 * 查询所有业务字典项
+	 *
+	 * @return
+	 * @throws SysManagementException
+	 */
+	List<SysDictItem> querySysDictItemList() throws SysManagementException;
 
 }

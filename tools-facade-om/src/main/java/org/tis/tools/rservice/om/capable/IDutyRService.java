@@ -233,14 +233,18 @@ public interface IDutyRService {
 	 * @return 权限（角色）列表
 	 */
 	List<AcRole> quereyRoleByDutyCode(String dutyCode);
-	
+
 	/**
 	 * 按业务套别分类职务
+	 * @param dutyType
+	 * @return
 	 */
 	List<OmDuty> queryDutyByDutyType(String dutyType);
-	
+
 	/**
 	 * 按业务套别分类职务,只查询根职务.用于树生成
+	 * @param dutyType
+	 * @return
 	 */
 	List<OmDuty> queryDutyByDutyTypeOnlyF(String dutyType);
 	
@@ -248,7 +252,13 @@ public interface IDutyRService {
 	 * 加载所有职务
 	 */
 	List<OmDuty> queryAllDuty();
-	
+
+	/**
+	 * 通过职务名称检索职务
+	 * @param dutyName
+	 * @return
+	 */
+	List<OmDuty> queryBydutyName(String dutyName);
 	
 	//FIXME 类似查询360全方位信息这种“大而全”的接口尽量避免， 应该结合前端响应式编程能力（RxJS），拆分为多个查询能力
 	//OmDutyDetail queryDetailByDutyCode( String dutyCode ) ;

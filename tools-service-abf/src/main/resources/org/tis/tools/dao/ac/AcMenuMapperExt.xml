@@ -45,6 +45,45 @@
             e.GUID_FUNC = b.GUID_FUNC
     </select>
 
+
+    <update id="reorderMenu">
+        UPDATE
+          AC_MENU
+        <set>
+          DISPLAY_ORDER = DISPLAY_ORDER
+            <if test="flag == 'plus'">
+                + 1
+            </if>
+            <if test="flag == 'minus'">
+                - 1
+            </if>
+        </set>
+        <where>
+              GUID_PARENTS = #{targetGuid}
+            AND
+              DISPLAY_ORDER >= #{index}
+        </where>
+    </update>
+
+    <update id="reorderOperatorMenu">
+        UPDATE
+          AC_OPERATOR_MENU
+        <set>
+          DISPLAY_ORDER = DISPLAY_ORDER
+            <if test="flag == 'plus'">
+                + 1
+            </if>
+            <if test="flag == 'minus'">
+                - 1
+            </if>
+        </set>
+        <where>
+              GUID_PARENTS = #{targetGuid}
+            AND
+              DISPLAY_ORDER >= #{index}
+        </where>
+    </update>
+
     <select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
         select count(*) from AC_MENU <include refid="Where_Clause"/>
     </select>

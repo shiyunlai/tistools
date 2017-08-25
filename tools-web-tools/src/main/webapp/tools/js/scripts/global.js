@@ -288,6 +288,7 @@ function dictKey($rootScope,dict,service){
     dictQuery.then(function(data){
         if(data.status == "success"){
             var datas = data.retMessage;
+            console.log(datas);
             $rootScope.dictitem=datas;
         }else{
             toastr['error']('字典项查询失败'+'<br/>'+data.retMessage);
@@ -442,6 +443,8 @@ function getYYYYMMDD(){
     return y+m+d;
 }
 
+
+
 //add by gaojie
 //ui-grid init
 //thisobj--表ID,fun--返回data的方法,com--表列名,筛选配置项,bol--布尔值,是否多选.selection--自定义行选中
@@ -457,8 +460,12 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
         paginationPageSize: 10, //每页显示个数
         //paginationTemplate:"<div></div>", //自定义底部分页代码
         useExternalPagination: true,//是否使用分页按钮
-        //导出测试
+        //选择优化
+        // enableFullRowSelection:false,
+        // enableRowHeaderSelection:true,
+        filterCellFiltered:true,
         enableSelectAll: true,
+        //导出测试
         exporterCsvFilename: 'myFile.csv',
         exporterPdfDefaultStyle: {fontSize: 9},
         exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
@@ -519,10 +526,18 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
                 console.log(filterConditions);
             });
 
+
+        },
+        ref:function () {
+            $scope.gridApi.core.refresh();
         },
         getSelectedRows:function () {
             return $scope.gridApi.selection.getSelectedRows();
-        }
+        },
+        api:function () {
+            return $scope.gridApi;
+        },
+
     };
 
     //ui-grid getPage方法
@@ -541,7 +556,6 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
 function FormatDate (strTime) {
     var date = new Date(strTime);
     return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
-
 }
 
 
@@ -617,7 +631,6 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
         var subFrom = {};
         subFrom.guid =guid;
         abftree_service.queryRole(subFrom).then(function (data) {
-            console.log(1)
             if(data.status == "success" && !isNull(data.retMessage)){
                 $scope.alrolegird.data =  data.retMessage;
                 $scope.alrolegird.mydefalutData =  data.retMessage;
@@ -657,7 +670,6 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
             subFrom.partyGuid = guid;
             subFrom.roleGuid = $scope.addroleGuid;
             subFrom.partyType = partyType;
-            console.log(subFrom)
             abftree_service.addRoleParty(subFrom).then(function (data) {
                 if(data.status == "success"){
                     toastr['success'](data.retMessage);
@@ -690,3 +702,51 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
     }
 }
 
+//table响应
+function table($scope,$window,list) {
+    var w = angular.element($window);
+    $scope.getWindowDimensions = function () {
+        return { 'w': w.width() };
+    };
+    // console.log($scope.getWindowDimensions())
+    $scope.$watch($scope.getWindowDimensions, function (newValue, oldValue) {
+        $scope.windowWidth = newValue.w;
+        // console.log($scope.windowWidth)
+        if(!isNull(list)){
+            console.log(123)
+            for(var i=0;i<list.length;i++){
+                if($scope.windowWidth>=1500){
+                    var a = list[i].columnDefs
+                    for(var k=0;k<a.length;k++){
+                        a[k].visible = true;
+                    }
+                    if(!isNull(list[i].ref())){
+                        list[i].ref()
+                    }
+
+                }else if($scope.windowWidth<1500 && $scope.windowWidth>=1200){
+                    var a = list[i].columnDefs;
+                    for(var k=a.length-1;k>5;k--){
+                        a[k].visible = false;
+                    }
+                    if(!isNull(list[i].ref())){
+                        list[i].ref()
+                    }
+                }else if($scope.windowWidth<1200){
+                    var a = list[i].columnDefs;
+                    for(var k=a.length-1;k>3;k--){
+                        a[k].visible = false;
+                    }
+                    if(!isNull(list[i].ref())){
+                        list[i].ref()
+                    }
+                }
+            }
+
+        }
+
+    }, true);
+    w.bind('resize', function () {
+        $scope.$apply();
+    });
+}

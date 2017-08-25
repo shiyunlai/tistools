@@ -21,7 +21,7 @@
                 <span class="title">首页</span>
             </a>
         </li>
-     <!--   <li class="start nav-item">
+      <!--  <li class="start nav-item">
             <a href="javascript:;">
                 <i class="fa fa-cubes"></i>
                 <span class="title">应用管理</span>
@@ -164,9 +164,9 @@
                     </ul>
                 </li>
             </ul>
-        </li>-->
-
-        <li class="nav-item" ng-repeat="d in menusAndTrans track by $index |orderBy:'order'" ng-if=" !d.guid || (d.children && d.children.length > 0)">
+        </li>
+-->
+        <li class="nav-item" ng-repeat="d in menusAndTrans track by $index"    ng-if=" !d.guid || (d.children && d.children.length > 0)">
             <a href="#/{{d.href}}" ng-if="!d.guid">
                 <i ng-class="{true : '{{d.icon}}',false:'icon-settings' }[d.icon!=null && d.icon !='']"></i><span ng-bind-html="d.label | highlightTrust2Html : searchParam: '#F0F0F0'"></span>
             </a>
@@ -174,8 +174,8 @@
                 <i ng-class="{true : '{{d.icon}}',false:'icon-settings' }[d.icon!=null && d.icon !='']"></i><span ng-bind-html="d.label | highlightTrust2Html : searchParam: '#F0F0F0'"></span>
                 <span class="arrow"></span>
             </a>
-            <ul class="sub-menu" ng-if="d.guid && d.children && d.children.length > 0">
-                <li class="nav-item" ng-repeat="p in d.children track by $index | orderBy:'order'" ng-if="p.label && p.isLeaf =='N'&&p.children.length>0 ">
+            <ul class="sub-menu" >
+                <li class="nav-item" ng-repeat="p in d.children track by $index" ng-if="p.label && p.isLeaf =='N'&&p.children.length>0 ">
                     <a href="#/{{p.href}}" ng-if="!p.guid">
                         <i ng-class="{true : '{{p.icon}}',false:'icon-settings' }[p.icon!=null && p.icon !='']"></i><span ng-bind-html="p.label | highlightTrust2Html : searchParam: '#F0F0F0'"></span>
                     </a>
@@ -184,7 +184,7 @@
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub-menu" ng-if="p.guid && p.children && p.children.length > 0">
-                        <li ng-repeat="p1 in p.children  track by $index | orderBy:'order' " >
+                        <li ng-repeat="p1 in p.children  track by $index" >
                             <a href="#/{{p1.href}}">
                                 <i ng-class="{true : '{{p1.icon}}',false:'icon-settings' }[p1.icon!=null && p1.icon !='']"></i><span ng-bind-html="p1.label | highlightTrust2Html : searchParam: '#F0F0F0'"></span>
                             </a>

@@ -63,3 +63,81 @@ MetronicApp.directive('dropdownMenuHover', function () {
     }
   };  
 });
+//常量翻译
+MetronicApp.directive('translateConstants', ['$http', function($http) {
+    return {
+        require: 'ngModel',
+        link: function (scope, elm, attrs, ctrl) {
+            var subFrom = {}
+            subFrom.dictKey = $(elm).attr("comtable");
+            if(subFrom.dictKey == "ORG"){
+                $http.post("http://localhost:8089/tis/om/org/queryAllorg").then(function (data) {
+                    var retval = "";
+                    if (data.data.status == "success") {
+                        for (var i = 0; i < data.data.retMessage.length; i++) {
+                            if (ctrl.$viewValue == data.data.retMessage[i].guid) {
+                                retval = data.data.retMessage[i].orgName;
+                                console.log(retval)
+                            }
+                        }
+                    }
+                    if(isNull(retval)){
+                        retval = "NULL";
+                    }
+                    $(elm).hide().after('<input class="form-control" type="text" id="test" value=' + retval + ' readonly/>');
+                })
+            }else if(subFrom.dictKey == "POS"){
+                $http.post("http://localhost:8089/tis/om/org/queryAllposition").then(function (data) {
+                    var retval = "";
+                    if (data.data.status == "success") {
+                        for (var i = 0; i < data.data.retMessage.length; i++) {
+                            if (ctrl.$viewValue == data.data.retMessage[i].guid) {
+                                retval = data.data.retMessage[i].positionName;
+                                console.log(retval)
+                            }
+                        }
+                    }
+                    if(isNull(retval)){
+                        retval = "NULL";
+                    }
+                    $(elm).hide().after('<input class="form-control" type="text" id="test" value=' + retval + ' readonly/>');
+                })
+            }else if(subFrom.dictKey == "EMP"){
+                $http.post("http://localhost:8089/tis/om/emp/queryemployee").then(function (data) {
+                    var retval = "";
+                    if (data.data.status == "success") {
+                        for (var i = 0; i < data.data.retMessage.length; i++) {
+                            if (ctrl.$viewValue == data.data.retMessage[i].guid) {
+                                retval = data.data.retMessage[i].empName;
+
+                            }
+                        }
+                    }
+                    if(isNull(retval)){
+                        retval = "NULL";
+                    }
+                    $(elm).hide().after('<input class="form-control" type="text" id="test" value=' + retval + ' readonly/>');
+                })
+            }else if(subFrom.dictKey == "GROUP"){
+
+            }else{
+                $http.post("http://localhost:8089/tis/DictController/queryDictItemListByDictKey", subFrom).then(function (data) {
+                    var retval = "";
+                    if (data.data.status == "success") {
+                        for (var i = 0; i < data.data.retMessage.length; i++) {
+                            if ( ctrl.$viewValue == data.data.retMessage[i].sendValue) {
+                                retval = data.data.retMessage[i].itemName;
+                                console.log(retval)
+                            }
+                        }
+                    }
+                    if(isNull(retval)){
+                        retval = "NULL";
+                    }
+                    $(elm).hide().after('<input class="form-control" type="text" id="test" value='+retval+' readonly/>');
+                })
+            }
+
+        }
+    };
+}]);

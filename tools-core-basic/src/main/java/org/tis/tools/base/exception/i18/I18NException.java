@@ -85,8 +85,8 @@ public class I18NException implements Serializable {
 
 	public String getLocalizedMessage(Locale locale) {
 		StringBuffer localizedMessage = new StringBuffer();
-		localizedMessage.append(ERROR_CODE).append(code).append(lineSeparator);
-		localizedMessage.append(ERROR_MESSAGE);
+//		localizedMessage.append(ERROR_CODE).append(code).append(lineSeparator);
+//		localizedMessage.append(ERROR_MESSAGE);
 		String codeMessage = ExceptionMessageHelper.getMessage(code, locale);
 		if (codeMessage != null) {
 			localizedMessage.append(codeMessage);

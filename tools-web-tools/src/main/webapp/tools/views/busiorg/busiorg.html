@@ -29,11 +29,11 @@
             </div>
             <div class="portlet-body">
                 <form id="s">
-                    <input type="search" id="q" ng-model="searchitem"/>
-                    <button type="submit" ng-click="abftree.clear()">清空</button>
+                    <input type="search" id="search" ng-model="searchitem"/>
+                    <button type="submit" ng-click="busiorg.clear()">清空</button>
                 </form>
-                <div id="busiorgtree"></div>
-                <!--<div id="searchtree" ng-show="!showtree"></div>-->
+                <div id="busiorgtree" ng-show="showtree"></div>
+                <div id="searchtree" ng-show="!showtree"></div>
             </div>
         </div>
     </div>
@@ -69,7 +69,7 @@
             </ul>
             <div class="tab-content portlet light" ng-if="flag.jgtb">
                 <!-- 业务套别列表页 begin-->
-                <div ui-grid="busiorgGrid"
+                <div ui-grid="busiorgGrid"   class="grid"
                      ui-grid-edit ui-grid-pagination
                      ui-grid-selection ui-grid-resize-columns></div>
                 <div class="actions btn-set" style="float: right;">
@@ -119,7 +119,7 @@
             </div>
             <div class="tab-content portlet light" ng-if="flag.xjjg">
                 <!-- 下级业务机构列表页 begin-->
-                <div ui-grid="loworgGrid"
+                <div ui-grid="loworgGrid"   class="grid"
                      ui-grid-edit ui-grid-pagination
                      ui-grid-selection ui-grid-resize-columns></div>
                 <div class="actions btn-set" style="float: right;">

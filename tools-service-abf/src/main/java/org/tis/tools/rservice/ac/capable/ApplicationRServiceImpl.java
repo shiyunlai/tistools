@@ -17,6 +17,7 @@ import org.springframework.util.CollectionUtils;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.common.utils.StringUtil;
+import org.tis.tools.core.exception.ExceptionCodes;
 import org.tis.tools.model.def.CommonConstants;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.po.ac.AcApp;
@@ -92,28 +93,25 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 * 新增应用系统(AC_APP)
 	 * 
 	 * @param acApp
-	 *            应用对象 return acApp
+	 *            应用对象
+	 * @return acApp
 	 */
 	@Override
 	public AcApp createAcApp(AcApp acApp) throws AppManagementException {
-		acApp.setGuid(GUID.app());
-		final AcApp newAcApp = acApp;
+
 		try {
-			acApp = transactionTemplate
-					.execute(new TransactionCallback<AcApp>() {
-						@Override
-						public AcApp doInTransaction(TransactionStatus arg0) {
-							acAppService.insert(newAcApp);
-							return newAcApp;
-						}
-					});
+			if (null == acApp) {
+				throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("AC_APP"));
+			}
+			acApp.setGuid(GUID.app());
+			acAppService.insert(acApp);
+			return acApp;
+		} catch (AppManagementException ae) {
+			throw ae;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_APP,
-					BasicUtil.wrap(e.getCause().getMessage()), "新增应用失败！{0}");
+			throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap("AC_APP", e.getCause().getMessage()));
 		}
-		return acApp;
 	}
 
 	/**

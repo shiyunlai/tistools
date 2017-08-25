@@ -81,6 +81,35 @@ public class BusiorgController {
         return null;
     }
 
+    /**
+     * 展示业务机构筛选树
+     *
+     * @param model
+     * @param content
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/searchtree")
+    public String searchtree(ModelMap model, @RequestBody String content, HttpServletRequest request,
+                           HttpServletResponse response) {
+        try {
+            // 收到请求
+            JSONObject jsonObj = JSONObject.parseObject(content);
+            String id = jsonObj.getString("id");
+            String busiorgName = jsonObj.getString("searchitem");
+            List<OmBusiorg> list = busiOrgRService.queryBusiorgByName(busiorgName);
+            AjaxUtils.ajaxJsonSuccessMessage(response, list);
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/busidomain")
     public String busidomain(ModelMap model,HttpServletRequest request,
                           HttpServletResponse response) {
