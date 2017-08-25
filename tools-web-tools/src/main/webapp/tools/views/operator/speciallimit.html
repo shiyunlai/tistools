@@ -1,0 +1,136 @@
+<!-- 新增操作员菜单页面 -->
+<!--
+<div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs font-green-sharp"></i>
+            <span class="caption-subject font-green-sharp bold uppercase">选择功能权限</span>
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="remove" ng-click="cancel()">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body portlet light">
+        <div ui-grid="gridOptions"
+             ui-grid-edit ui-grid-pagination
+             ui-grid-selection ui-grid-resize-columns>
+        </div>
+        <div class="actions btn-set" style="float: right; margin-top:12px;">
+            <button type="button" name="back" class="btn btn-primary" ng-click="importAdd()"> 导入
+            </button>
+            <button type="button" name="back" class="btn btn-primary" ng-click="cancel()"> 取消
+            </button>
+        </div>
+    </div>
+</div>-->
+
+
+<!-- 新增操作员菜单页面 -->
+<div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs font-green-sharp"></i>
+            <span class="caption-subject font-green-sharp bold uppercase">选择功能权限</span>
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="remove" ng-click="cancel()">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body portlet light">
+        <!--<div class="col-md-4" style="margin-left:400px;">
+                    <label class="control-label col-md-4" > 选择应用: </label>
+                    <div class="col-md-6">
+                        <select class="form-control" style="margin-top: -5px; margin-left: -40px;"  name="select_app"  ng-model="menu.appselect">
+                            &lt;!&ndash; 渲染，不能绑定同一个，不然每次点击，都会改变，重新渲染，所以ng-model绑定和渲染必须不同&ndash;&gt;
+                            <option ng-repeat="d in menu.appselectApp" value="{{d.guid}}">{{d.appName}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" name="back" style="margin-top: -6px; margin-left: -50px;"  class="btn btn-primary"    popover-trigger="mouseenter" ng-click="menu.search(menu)" > 查询
+                        </button>
+                    </div>
+                </div>-->
+        <div class="portlet-body">
+            <div class="col-md-4">
+                <div id="container"></div>
+            </div>
+            <div class="col-md-8">
+                <form action="#" name="menuform" class="form-horizontal ">
+                    <div class="form-body ">
+                        <div class="col-md-12" >
+                            <div class="form-group">
+                                <label class="control-label col-md-4"> 授权标志:<span ng-class="{required:menuform.dict_key1.$invalid}"  > * </span></label>
+                                <div class="col-md-8">
+                                    <select class="form-control" name="dict_key3" ng-model="opearqxFrom.authType"     required>
+                                        <option value=""></option>
+                                        <option value="Y">特别允许</option>
+                                        <option value="N">特别禁止</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">有效开始日期</label>
+                                <div class="col-md-8">
+                                    <div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
+                                    <span class="input-group-btn">
+                                        <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                        <input type="text" class="form-control" ng-model="opearqxFrom.startDate" readonly/>
+                                    </div>、
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">离职日期</label>
+                                <div class="col-md-8">
+                                    <div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
+                                    <span class="input-group-btn">
+                                        <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                        <input type="text" class="form-control" ng-model="subFrom.outdate" readonly/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label col-md-4"> 有效截止日期: </label>
+                                <div class="col-md-8">
+                                    <div class="input-group date form_datetime" ng-init="$root.settings.utils.initpicker()">
+                                        <span class="input-group-btn">
+                                            <button class="btn default date-set"  type="button"><i  class="fa fa-calendar"></i></button>
+                                        </span>
+                                        <input type="text" class="form-control" ng-model="opearqxFrom.endDate"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label col-md-2"></label>
+                                <div class="col-md-10">
+                                    <div class="actions btn-set" style="text-align: center">
+                                        <button type="button" name="back"  class="btn btn-primary" ng-if="menuform.$invalid == false"  ng-disabled="menuform.$invalid" popover-trigger="mouseenter" ng-click="menu.save(menuFrom)" > 保存
+                                        </button>
+                                        <button type="button" name="back" class="btn default" ng-if="menuform.$invalid == true"  ng-disabled="menuform.$invalid" popover-trigger="mouseenter" > 保存
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-danger" ng-click="menu.cenel(menuFrom)"> 取消
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <button type="button" name="back" class="btn btn-primary" style="margin-top:15px; margin-left: 20px;float: right" ng-click="role.checkAll()"> 保存
+        </button>
+    </div>
+</div>
+

@@ -6,7 +6,6 @@
 var isdebug = false;
 var manurl = 'http://localhost:8089/tis';
 
-
 var MetronicApp = angular.module("MetronicApp", [
     "ui.router",
     "ui.bootstrap",
@@ -19,7 +18,8 @@ var MetronicApp = angular.module("MetronicApp", [
     'ui.grid.edit',
     'ui.grid.pagination',
     'ui.grid.resizeColumns',
-    'ui.grid.emptyBaseLayer'
+    'ui.grid.emptyBaseLayer',
+    'ui-iconpicker'
 ]);
 
 function action(bdy){
@@ -127,7 +127,7 @@ MetronicApp.config(['$controllerProvider', function($controllerProvider) {
  *********************************************/
 
 /* Setup global settings */
-MetronicApp.factory('settings', ['$rootScope', function($rootScope,service) {
+MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http) {
     // supported languages
     var settings = {
         utils:{},
@@ -160,9 +160,19 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope,service) {
     settings.utils.initdropdown=function(){
         ComponentsDropdowns.init();
     }
-
+    settings.utils.initSelect2=function(){
+        if ($().select2) {
+            $.fn.select2.defaults.set("theme", "bootstrap");
+            $('.select2me').select2({
+                placeholder: "Select",
+                width: 'auto',
+                allowClear: false
+            });
+        }
+    }
     $rootScope.settings = settings;
-
+    var constant = {};
+    $rootScope.constant = constant;
     $rootScope.formatT = function(val){
         var mm="";
         if(val!=null&&val!=''){
@@ -176,39 +186,49 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope,service) {
     settings.diclist = {};
     /**
      * 获取代码数据库表数据
-     * @param codetype 代码数据表类型
+     * @param dictKey 代码数据表表名
      */
-    settings.getBpmsDicCodeData = function (dictKey) {
+    settings.getDictData = function (dictKey) {
         console.debug(settings.diclist[dictKey]);
-        if(_.isNil(settings.diclist[dictname])) {
+        if(_.isNil(settings.diclist[dictKey])) {
             var subForm = {};
             subForm.dictKey = dictKey;
-            service.post("DictController", "queryDictItemListByDictKey", subForm, null, function (data) {
-                if (data.status == 'success') {
-                    settings.diclist[codetype] = data.data;
-                }
-            })
+            $http.post(manurl + "/DictController/queryDictItemListByDictKey",subForm).then(function (response) {
+                settings.diclist[dictKey] = response.data.retMessage;
+            });
         }
     }
-    settings.getDicCodeData = function (codetype, table) {
-        if (isNull(settings.diclist[codetype])) {
-            var subForm = {};
-            subForm.code_data_type = codetype;
-            if (isNull(table)) {
-                service.post("common", "getConstant", subForm, null, function (data) {
-                    if (data.status == '1') {
-                        settings.diclist[codetype] = data.data;
-                    }
-                })
-            } else if (table == 'F') {
-                service.post("common", "getConstantFreq", subForm, null, function (data) {
-                    if (data.status == '1') {
-                        settings.diclist[codetype + table] = data.data;
-                    }
-                })
+
+
+    settings.commlist = {};
+    /**
+     * 获取机构-人员-工作组-职务-岗位
+     * 翻译guid-objName
+     * @param type
+     */
+    settings.getCommData = function (type) {
+        if(type == "ORG"){
+            if(_.isNil(settings.commlist[type])) {
+                $http.post(manurl + "/om/org/queryAllorg").then(function (response) {
+                    settings.commlist[type] = response.data.retMessage;
+                });
+            }
+        }else if(type == "POS"){
+            if(_.isNil(settings.commlist[type])) {
+                $http.post(manurl + "/om/org/queryAllposition").then(function (response) {
+                    settings.commlist[type] = response.data.retMessage;
+                });
+            }
+        }else if(type == "EMP"){
+            if(_.isNil(settings.commlist[type])) {
+                $http.post(manurl + "/om/emp/queryemployee").then(function (response) {
+                    settings.commlist[type] = response.data.retMessage;
+                });
             }
         }
     }
+
+
 
     return settings;
 }]);
@@ -293,8 +313,6 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
     $scope.$on('$includeContentLoaded', function () {
         Layout.initSidebar(); // init sidebar
         var sessionjson = angular.fromJson(sessionStorage.menus)
-
-
        if(sessionStorage.length == 0 ){
             window.location = "../tools/login.html";//如果正确，则进入主页
         }
@@ -328,6 +346,7 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
     //第一层也要，直接用数组包起来
     var srw = [];
     srw.push(sessionjson)
+    console.log(srw)
     $scope.menusAndTrans = angular.copy(srw);//拿到登录页那边传来的目录
     $scope.search = function(searchParam){
         if(_.isEmpty(searchParam)){ //如果是数组
@@ -834,6 +853,12 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             data: {pageTitle: '操作员管理'},
             controller:"opmanage_controller"
         })
+        .state("operatsetqx",{
+            url:"/operatsetqx.html/{id:.*}",
+            templateUrl:"views/operator/operatsetqx.html",
+            data: {pageTitle: '操作员个人配置'},
+            controller:"operat_controller"
+        })
         .state("Reorganizemenu",{
             url:"/Reorganizemenu.html",
             templateUrl:"views/operator/Reorganizemenu.html",
@@ -861,7 +886,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
 
         .state("emp",{
             url:"/Emp.html",
-            templateUrl:"views/Emp/Emp.html",
+            templateUrl:"views/emp/emp.html",
             data: {pageTitle: '员工管理'},
             controller:"Emp_controller"
         })

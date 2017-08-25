@@ -61,7 +61,7 @@ public class OrgManagerController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/tree")
-    public String execute(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+    public String tree(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
                           HttpServletResponse response) {
         try {
             // 收到请求
@@ -178,7 +178,7 @@ public class OrgManagerController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/add")
-    public String execute1(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+    public String add(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
                            HttpServletResponse response) {
         try {
             // 收到请求
@@ -220,7 +220,7 @@ public class OrgManagerController extends BaseController {
     }
 
     @RequestMapping(value = "/initcode")
-    public String test(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+    public String initcode(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
                        HttpServletResponse response) {
         try {
             // Map<String, Object> result = new HashMap<String, Object>();
@@ -1040,6 +1040,28 @@ public class OrgManagerController extends BaseController {
             String positionType = jsonObj.getString("positionType");
             String positionCode = positionRService.genPositionCode(positionType);
             AjaxUtils.ajaxJsonSuccessMessage(response, positionCode);
+        } catch (ToolsRuntimeException e) {// TODO
+            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * 查询所有机构
+     * @param model
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/queryAllposition")
+    public String queryAllposition(ModelMap model,HttpServletRequest request,
+                              HttpServletResponse response) {
+        try {
+            List<OmPosition> list = positionRService.queryAllPosition();
+            AjaxUtils.ajaxJsonSuccessMessage(response, list);
         } catch (ToolsRuntimeException e) {// TODO
             AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
             e.printStackTrace();

@@ -429,6 +429,29 @@ public class DictController extends BaseController {
             logger.error("queryDictItemListByDictKey exception : ", e);
         }
         return null;
+    }/**
+     * 查询所有字典项
+     *
+     */
+    @ResponseBody
+    @RequestMapping(value="/queryAllDictItem" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String queryAllDictItem(@RequestBody String content, HttpServletRequest request,
+                                       HttpServletResponse response) {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("queryDictItemListByDictKey request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+            List<SysDictItem> sysDictItems = dictRService.querySysDictItemList();
+            AjaxUtils.ajaxJsonSuccessMessage(response,sysDictItems);
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("queryDictItemListByDictKey exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("queryDictItemListByDictKey exception : ", e);
+        }
+        return null;
     }
 
 
@@ -562,6 +585,8 @@ public class DictController extends BaseController {
             } catch (IOException e) {}
         }
     }
+
+
     
     /**
      * 要求子类构造自己的响应数据

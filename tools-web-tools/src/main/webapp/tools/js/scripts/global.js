@@ -463,6 +463,7 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
         //选择优化
         // enableFullRowSelection:false,
         // enableRowHeaderSelection:true,
+        filterCellFiltered:true,
         enableSelectAll: true,
         //导出测试
         exporterCsvFilename: 'myFile.csv',
@@ -535,7 +536,8 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
         },
         api:function () {
             return $scope.gridApi;
-        }
+        },
+
     };
 
     //ui-grid getPage方法
@@ -554,7 +556,6 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
 function FormatDate (strTime) {
     var date = new Date(strTime);
     return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
-
 }
 
 
@@ -630,7 +631,6 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
         var subFrom = {};
         subFrom.guid =guid;
         abftree_service.queryRole(subFrom).then(function (data) {
-            console.log(1)
             if(data.status == "success" && !isNull(data.retMessage)){
                 $scope.alrolegird.data =  data.retMessage;
                 $scope.alrolegird.mydefalutData =  data.retMessage;
@@ -670,7 +670,6 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
             subFrom.partyGuid = guid;
             subFrom.roleGuid = $scope.addroleGuid;
             subFrom.partyType = partyType;
-            console.log(subFrom)
             abftree_service.addRoleParty(subFrom).then(function (data) {
                 if(data.status == "success"){
                     toastr['success'](data.retMessage);
@@ -714,6 +713,7 @@ function table($scope,$window,list) {
         $scope.windowWidth = newValue.w;
         // console.log($scope.windowWidth)
         if(!isNull(list)){
+            console.log(123)
             for(var i=0;i<list.length;i++){
                 if($scope.windowWidth>=1500){
                     var a = list[i].columnDefs

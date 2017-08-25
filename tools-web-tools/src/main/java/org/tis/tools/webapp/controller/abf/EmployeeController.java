@@ -7,7 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,6 @@ import org.tis.tools.rservice.om.capable.IEmployeeRService;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.util.AjaxUtils;
 
-import net.sf.json.JSONObject;
 
 /**
  * 员工管理功能
@@ -56,7 +56,7 @@ public class EmployeeController extends BaseController{
 				Map map = BeanUtils.describe(oe);
 				list2.add(map);
 			}
-			AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list2, "yyyy-MM-dd");
+			AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list, "yyyy-MM-dd");
 		} catch (ToolsRuntimeException e) {// TODO
 			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
 			e.printStackTrace();
@@ -82,9 +82,7 @@ public class EmployeeController extends BaseController{
 			HttpServletResponse response) {
 		try {
 			// 收到请求
-			JSONObject jsonObj = JSONObject.fromObject(content);
-			OmEmployee oe = new OmEmployee();
-			BeanUtils.populate(oe, jsonObj);
+			OmEmployee oe  = JSONObject.parseObject(content,OmEmployee.class);
 			if(oe.getGuid() == null || oe.getGuid() == ""){
 				employeeRService.createEmployee(oe);
 				AjaxUtils.ajaxJsonSuccessMessage(response, "新增成功!");
@@ -116,7 +114,7 @@ public class EmployeeController extends BaseController{
 			HttpServletResponse response) {
 		try {
 			// 收到请求
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 			String empCode = jsonObj.getString("empCode");
 			employeeRService.deleteEmployee(empCode);
 			AjaxUtils.ajaxJsonSuccessMessage(response, "删除成功!");
@@ -144,7 +142,7 @@ public class EmployeeController extends BaseController{
 						   HttpServletResponse response) {
 		try {
 			// 收到请求
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 			String empCode = jsonObj.getString("empCode");
 			List<OmOrg> list = employeeRService.queryOrgbyEmpCode(empCode);
 			AjaxUtils.ajaxJsonSuccessMessage(response,list);
@@ -171,7 +169,7 @@ public class EmployeeController extends BaseController{
 							 HttpServletResponse response) {
 		try {
 			// 收到请求
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 			String empCode = jsonObj.getString("empCode");
 			List<OmPosition> list = employeeRService.queryPosbyEmpCode(empCode);
 			AjaxUtils.ajaxJsonSuccessMessage(response,list);
@@ -197,7 +195,7 @@ public class EmployeeController extends BaseController{
 							 HttpServletResponse response) {
 		try {
 			// 收到请求
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 			String empCode = jsonObj.getString("empCode");
 			List<OmOrg> list = employeeRService.queryCanAddOrgbyEmpCode(empCode);
 			AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list, "yyyy-MM-dd");
@@ -223,7 +221,7 @@ public class EmployeeController extends BaseController{
 							 HttpServletResponse response) {
 		try {
 			// 收到请求
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 			String empCode = jsonObj.getString("empCode");
 			List<OmPosition> list = employeeRService.queryCanAddPosbyEmpCode(empCode);
 			AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list, "yyyy-MM-dd");
@@ -249,7 +247,7 @@ public class EmployeeController extends BaseController{
 							 HttpServletResponse response) {
 		try {
 			// 收到请求
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 			String empCode = jsonObj.getString("empCode");
 			String orgCode = jsonObj.getString("orgCode");
 			String isMain = jsonObj.getString("isMain");
@@ -282,7 +280,7 @@ public class EmployeeController extends BaseController{
 							 HttpServletResponse response) {
 		try {
 			// 收到请求
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 			String empGuid = jsonObj.getString("empGuid");
 			String orgGuid = jsonObj.getString("orgGuid");
 			employeeRService.deleteEmpOrg(orgGuid, empGuid);
@@ -309,7 +307,7 @@ public class EmployeeController extends BaseController{
 							 HttpServletResponse response) {
 		try {
 			// 收到请求
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 			String empCode = jsonObj.getString("empCode");
 			String posCode = jsonObj.getString("posCode");
 			String isMain = jsonObj.getString("isMain");
@@ -341,7 +339,7 @@ public class EmployeeController extends BaseController{
 							 HttpServletResponse response) {
 		try {
 			// 收到请求
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 			String empGuid = jsonObj.getString("empGuid");
 			String posGuid = jsonObj.getString("posGuid");
 			employeeRService.deleteEmpPosition(posGuid, empGuid);
@@ -368,7 +366,7 @@ public class EmployeeController extends BaseController{
 							 HttpServletResponse response) {
 		try {
 			// 收到请求
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 			//toDO
 			String empCode = employeeRService.genEmpCode(null, null);
 			AjaxUtils.ajaxJsonSuccessMessage(response, empCode);
@@ -394,7 +392,7 @@ public class EmployeeController extends BaseController{
 							 HttpServletResponse response) {
 		try {
 			// 收到请求
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 			String empCode = jsonObj.getString("empCode");
 			String orgCode = jsonObj.getString("orgCode");
 			employeeRService.fixMainOrg(empCode, orgCode);
@@ -420,7 +418,7 @@ public class EmployeeController extends BaseController{
 							 HttpServletResponse response) {
 		try {
 			// 收到请求
-			JSONObject jsonObj = JSONObject.fromObject(content);
+			JSONObject jsonObj = JSONObject.parseObject(content);
 			String empCode = jsonObj.getString("empCode");
 			String posCode = jsonObj.getString("posCode");
 			employeeRService.fixMainPosition(empCode, posCode);

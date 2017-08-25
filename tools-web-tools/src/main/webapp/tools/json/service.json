@@ -110,7 +110,10 @@
     "deleteOperatorIdentityres": {"ctrl": "AcOperatorController", "func": "deleteOperatorIdentityres","emo":"删除操作员身份权限"},
     "editOperatorIdentityres": {"ctrl": "AcOperatorController", "func": "editOperatorIdentityres","emo":"修改操作员身份权限"},
     "queryRoleInOperatorByResType": {"ctrl": "AcOperatorController", "func": "queryRoleInOperatorByResType","emo":"根据资源类型查询操作员对应角色"},
-    "queryOperatorByUserId": {"ctrl": "AcOperatorController", "func": "queryOperatorByUserId","emo":"根据USERID查询操作员GUID"}
+    "queryOperatorByUserId": {"ctrl": "AcOperatorController", "func": "queryOperatorByUserId","emo":"根据USERID查询操作员GUID"},
+    "queryOperatorUnauthorizedRoleList": {"ctrl": "AcOperatorController", "func": "queryOperatorUnauthorizedRoleList","emo":"根据USERID查询操作员未授权角色"},
+    "queryOperatorAuthorizedRoleList": {"ctrl": "AcOperatorController", "func": "queryOperatorAuthorizedRoleList","emo":"根据USERID查询操作员已授权角色"},
+    "queryOperatorInheritRoleList": {"ctrl": "AcOperatorController", "func": "queryOperatorInheritRoleList","emo":"根据USERID查询操作员继承角色"}
   },
   "abftree_service" : {
     "loadmaintree": {"ctrl": "om/org", "func": "tree"},
@@ -135,7 +138,7 @@
     "enableorg": {"ctrl": "om/org", "func": "enableorg"},
     "enableposition": {"ctrl": "om/org", "func": "enableposition"},
     "deletePosition": {"ctrl": "om/org", "func": "deletePosition"},
-    "queryorgList": {"ctrl": "om/org", "func": "queryorgList","em":"查询所有机构"},
+    "queryAllorg": {"ctrl": "om/org", "func": "queryAllorg","em":"查询所有机构"},
     "queryAllPosition": {"ctrl": "om/org", "func": "queryAllPosition","em":"查询所有岗位"}
   },
   "role_service" : {

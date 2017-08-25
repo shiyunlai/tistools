@@ -33,7 +33,7 @@
                             <div class="portlet-body">
                                 <form action="#" name="myform" class="form-horizontal clearfix">
                                     <div class="form-body ">
-                                        <div class="col-md-6" >
+                                        <div class="col-md-6 col-md-offset-3" >
                                             <div class="form-group">
                                                 <label class="control-label col-md-4">登陆用户名<span ng-class="{required:myform.dict_key.$invalid}"  >* </span> </label>
                                                 <div class="col-md-8">
@@ -43,7 +43,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6" >
+                                        <!--<div class="col-md-6" >
                                             <div class="form-group">
                                                 <label class="control-label col-md-4">操作员姓名<span ng-class="{required:myform.dict_key1.$invalid}"  >* </span></label>
                                                 <div class="col-md-8">
@@ -52,7 +52,7 @@
                                                            name="dict_key1" />
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>-->
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="control-label col-md-2"></label>
@@ -70,7 +70,7 @@
                                 </form>
                                 <!-- 表格部分-->
                                 <div id="container" ng-if="opensf.identity"  style="height: 500px;">
-                                    <div ui-grid="gridOptions"
+                                    <div ui-grid="gridOptions"  class="grid"
                                           ui-grid-pagination
                                          ui-grid-selection ui-grid-resize-columns>
                                     </div>
@@ -95,22 +95,12 @@
                                     <i class="fa fa-cogs font-green-sharp"></i>
                                     <span class="caption-subject font-green-sharp bold uppercase">身份对应权限</span>
                                 </div>
-                                <div class="tools">
-                                    <a href="javascript:;" class="collapse">
-                                    </a>
-                                    <a href="#portlet-config" data-toggle="modal" class="config">
-                                    </a>
-                                    <a href="javascript:;" class="reload">
-                                    </a>
-                                    <a href="javascript:;" class="remove">
-                                    </a>
-                                </div>
                             </div>
                             <div class="portlet-body">
                                 <div id="container1" ng-if="opensf.identity"  style="height: 500px;">
-                                    <div ui-grid="gridOptions1"
-                                         ui-grid-pagination
-                                         ui-grid-selection ui-grid-resize-columns>
+                                           <div ui-grid="gridOptions1"  class="grid"
+                                                ui-grid-pagination
+                                                ui-grid-selection ui-grid-resize-columns>
                                     </div>
                                     <div class="actions btn-set" style="float: right; margin-top:12px;">
                                         <button type="button" name="back" class="btn btn-primary" ng-click="identypeAdd()"> 新增

@@ -72,16 +72,17 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
     //定义表头名
     var com = [{field: 'empCode', displayName: '员工代码', enableHiding: false},
         {field: 'empName', displayName: '员工姓名', enableHiding: false},
-        {field: 'gender', displayName: '性别', enableHiding: false},
-        {field: 'empstatus', displayName: '员工状态', enableHiding: false},
-        {field: 'empDegree', displayName: '员工职级', enableHiding: false},
-        {field: 'guidPosition', displayName: '基本岗位', enableHiding: false},
+        {field: 'gender', displayName: '性别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'},
+        {field: 'empstatus', displayName: '员工状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
+        {field: 'empDegree', displayName: '员工职级', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
+        {field: 'guidPosition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
         {field: 'guidempmajor', displayName: '直接主管', enableHiding: false},
         {field: 'indate', displayName: '入职日期', enableHiding: true},
         {field: 'otel', displayName: '办公电话', enableHiding: true}
     ]
-    $scope.empgrid = initgrid($scope, empgrid, filterFilter, com, false, sele);
 
+    $scope.empgrid = initgrid($scope, empgrid, filterFilter, com, false, sele);
+    // $scope.empgrid.columnDefs[3].cellFilter = 'translateConstants:"DICT_OM_EMPSTATUS":$scope'
     var reempgrid = function () {
         //调取工作组信息OM_GROUP
         Emp_service.loadempgrid().then(function (data) {
@@ -97,6 +98,19 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
 
         })
     }
+    // var subFrom = {};
+    // subFrom.dictKey = dictKey;
+    // $http.post("http://localhost:8089/tis/DictController/queryAllDictItem",subFrom).then(function (data) {
+    //     console.log(data)
+    //     $scope.dataList = data.data.retMessage
+    // })
+    $scope.formatLocation = function (a,b) {
+        var list = $rootScope.$settings.diclist[b];
+        console.log(list)
+        return 123;
+    }
+
+
     //拉取列表
     reempgrid();
     //定义放置一个员工详情的对象
@@ -111,7 +125,7 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
     }
     //新增
     emp.add = function () {
-        openwindow($uibModal, 'views/Emp/addemp_window.html', 'lg',
+        openwindow($uibModal, 'views/emp/addemp_window.html', 'lg',
             function ($scope, $modalInstance) {
                 //创建员工实例
                 var subFrom = {
@@ -182,7 +196,7 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                     arr[0][i] = "";
                 }
             }
-            openwindow($uibModal, 'views/Emp/addemp_window.html', 'lg',
+            openwindow($uibModal, 'views/emp/addemp_window.html', 'lg',
                 function ($scope, $modalInstance) {
                     //创建员工实例
                     var subFrom = {};
@@ -589,9 +603,8 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
 
     /**-------------------------------测试table自适应---------------------------*/
         //测试封装
-    var list = [];
-    list.push($scope.empgrid.columnDefs);
-    list.push($scope.empgrid.columnDefs)
-
+    // var list = [];
+    // list.push($scope.empgrid);
+    // table($scope,$window,list);
 
 });
