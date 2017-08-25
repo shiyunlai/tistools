@@ -263,6 +263,69 @@ MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state
     operatqx.authority = function(){
         openwindow($modal, 'views/operator/speciallimit.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
+                var opearqxFrom = {};
+                $scope.opearqxFrom = opearqxFrom;//表单信息
+                var res = $rootScope.res.menu_service;//页面所需调用的服务
+                //查询所有应用
+                var subFrom = {};
+                subFrom.appGuid = 'APP1499956132';
+                subFrom.userId = 'admin';
+                //生成树结构
+                common_service.post(res.getMenuByUserId,subFrom).then(function(data){
+                    if(data.status == "success"){
+                        var datas = data.retMessage;
+                        var result= datas.replace(/guid/g,"id").replace(/label/g,'text');//把guid和label替换成自己需要的
+                        var menuAll = angular.fromJson(result);
+                        //var menucless = menuAll.children;
+                        var tisMenu = [];;//绑定数组
+                        tisMenu.push(menuAll)
+                        operatqx.mensuAll = tisMenu;
+                        //菜单一权限
+                        $("#container").jstree({
+                            "core" : {
+                                "themes" : {
+                                    "responsive": false
+                                },
+                                "check_callback" : false,//在对树结构进行改变时，必须为true
+                                'data':operatqx.mensuAll
+                            },
+                            "force_text": true,
+                            plugins: ["sort", "types", "themes", "html_data"],
+                            "checkbox": {
+                                "keep_selected_style": false,//是否默认选中
+                            },
+                            "types" : {
+                                "default" : {
+                                    "icon" : "fa fa-folder icon-state-warning icon-lg"
+                                },
+                                "file" : {
+                                    "icon" : "fa fa-file icon-state-warning icon-lg"
+                                }
+                            },
+                            "state" : { "key" : "demo3" },
+                            'dnd': {
+                                'is_draggable':function (node) {
+                                    //用于控制节点是否可以拖拽.
+                                    if(node.id == 3){
+                                        return false;//根节点禁止拖拽
+                                    }
+                                    return true;
+                                },
+                                'always_copy':true//拖拽拷贝，非移除
+                            },
+                            'callback' : {
+                                move_node:function (node) {
+                                }
+                            },
+                            "checkbox": {
+                                "keep_selected_style": false,//是否默认选中
+                            },
+                            plugins: ["sort", "types", "checkbox", "wholerow", "themes", "html_data"],
+                        })
+                    }else{
+                        toastr['error']('暂无该应用操作权限');
+                    }
+                })
                 var subFrom={};
                 //查询对应的
                /* operator_service.queryAllOperator(subFrom).then(function(data){
@@ -407,73 +470,6 @@ MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state
         })
     }
     operatqx.queryinheritgrid();
-    //继承角色添加逻辑
-    operatqx.inheritRole = function(){
-        openwindow($modal, 'views/operator/Inheritrole.html', 'lg',//弹出页面
-            function ($scope, $modalInstance) {
-                var subFrom={};
-                //查询对应的
-                /* operator_service.queryAllOperator(subFrom).then(function(data){
-                         var datas = data.retMessage;
-                         if(data.status == "success"){
-                         $scope.gridOptions.data = datas;
-                         }else{
-                         toastr['error']('查询失败'+'<br/>'+data.retMessage);
-                   }
-                 })*/
-
-                var gridOptions = {};
-                $scope.gridOptions = gridOptions;//数据方法
-                var com = [
-                    { field: 'roleName', displayName: '角色名称'}
-                ];
-                //自定义点击事件
-                var f1 = function(row){
-                    if(row.isSelected){
-                        $scope.selectRow = row.entity;
-                    }
-                    else{
-                        $scope.selectRow = '';//制空
-                    }
-                }
-                $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
-                $scope.gridOptions.enableFiltering = false;//禁止有搜索
-                $scope.gridOptions.enableGridMenu = false;//禁止有菜单
-                //导入
-                $scope.importAdd = function () {
-                    var dats = $scope.gridOptions.getSelectedRows();
-                    //允许批量导入
-                    if (dats.length > 0) {
-                        var tis = [];
-                        for(var i =0;i<dats.length;i++){
-                            var subFrom = {};
-                            subFrom.guidRole = role.roleinfo.guid;
-                            subFrom.guidOperator = dats[i].guid;
-                            tis.push(subFrom)
-                        }
-                        //导入接口
-                        role_service.addOperatorRole(tis).then(function(data){
-                            var datas = data.retMessage;
-                            if(data.status == "success"){
-                                toastr['success']("导入成功！");
-                                $modalInstance.close();
-                               //重新查询
-                            }else{
-                                toastr['error']('查询失败'+'<br/>'+data.retMessage);
-                            }
-                        })
-                    }
-                    else {
-                        toastr['error']("请至少选中一个！");
-                    }
-                }
-
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            })
-    }
-
     //继承角色表格生成
     var inheritgrid = {};
     $scope.inheritgrid = inheritgrid;
@@ -494,23 +490,6 @@ MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state
     $scope.inheritgrid.enableFiltering = false;//禁止有搜索
     $scope.inheritgrid.enableGridMenu = false;//禁止有菜单
 
-    //继承角色删除
-    $scope.operatqx.delInherit = function(){
-        if($scope.inherit == ""){
-            toastr['error']("请至少选择一个角色进行删除");
-            return false;
-        }else{
-            /* var subFrom = {};
-                 abftree_service.deleteRoleParty(subFrom).then(function (data) {
-                         if(data.status == "success"){
-                         toastr['success'](data.retMessage);
-                         operatqx.queryinheritgrid()//重新查询列表
-                 }else{
-                    toastr['error'](data.retMessage);
-                 }
-             })*/
-        }
-    }
 });
 
 /* 重组菜单控制器*/
