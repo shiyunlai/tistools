@@ -559,6 +559,106 @@ public class AcOperatorController extends BaseController {
         return null;
     }
 
+/*    
+    *//**
+     * 根据USERID查询特殊权限树
+     *//*
+    @ResponseBody
+    @RequestMapping(value="/queryOperatorFuncInfoInApp" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String queryOperatorFuncInfoInApp(@RequestBody String content, HttpServletRequest request,
+                               HttpServletResponse response)  {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("queryOperatorFuncInfoInApp request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+            String userId = jsonObject.getString("userId");//操作员USER_ID
+            AcOperatorFuncDetail info = operatorRService.queryOperatorFuncInfoInApp(userId);
+            AjaxUtils.ajaxJsonSuccessMessage(response, info);
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("queryOperatorInheritRoleList exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("queryOperatorInheritRoleList exception : ", e);
+        }
+        return null;
+    } */
+    
+/*    *//**
+     * 查询用户的特殊权限列表
+     *//*
+    @ResponseBody
+    @RequestMapping(value="/queryAcOperatorFunListByUserId" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String queryAcOperatorFunListByUserId(@RequestBody String content, HttpServletRequest request,
+                               HttpServletResponse response)  {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("queryAcOperatorFunListByUserId request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+            String userId = jsonObject.getString("userId");//操作员USER_ID
+            List<Map> info = operatorRService.queryAcOperatorFunListByUserId(userId);
+            AjaxUtils.ajaxJsonSuccessMessage(response, info);
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("queryAcOperatorFunListByUserId exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("queryAcOperatorFunListByUserId exception : ", e);
+        }
+        return null;
+    } 
+    
+    *//**
+     * 新增用户特殊功能权限
+     *//*
+    @ResponseBody
+    @RequestMapping(value="/addAcOperatorFun" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String addAcOperatorFun(@RequestBody String content, HttpServletRequest request,
+                               HttpServletResponse response)  {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("addAcOperatorFun request : " + content);
+            }
+            AcOperatorFunc acOperatorFunc = JSON.parseObject(content, AcOperatorFunc.class);
+            operatorRService.addAcOperatorFun(acOperatorFunc);
+            AjaxUtils.ajaxJsonSuccessMessage(response, "");
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("addAcOperatorFun exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("addAcOperatorFun exception : ", e);
+        }
+        return null;
+    }
+    
+    *//**
+     * 移除用户特殊功能权限
+     *//*
+    @ResponseBody
+    @RequestMapping(value="/removeAcOperatorFun" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String removeAcOperatorFun(@RequestBody String content, HttpServletRequest request,
+                               HttpServletResponse response)  {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("removeAcOperatorFun request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+            String operatorGuid = jsonObject.getString("operatorGuid");//操作员GUID
+            String funcGuid = jsonObject.getString("funcGuid");// 功能GUID
+            operatorRService.removeAcOperatorFun(operatorGuid, funcGuid);
+            AjaxUtils.ajaxJsonSuccessMessage(response, "");
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("removeAcOperatorFun exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("removeAcOperatorFun exception : ", e);
+        }
+        return null;
+    }*/
     /**
      * 要求子类构造自己的响应数据
      *

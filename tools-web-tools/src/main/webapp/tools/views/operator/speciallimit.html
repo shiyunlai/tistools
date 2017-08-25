@@ -79,21 +79,8 @@
                                     <span class="input-group-btn">
                                         <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
                                     </span>
-                                        <input type="text" class="form-control" ng-model="opearqxFrom.startDate" readonly/>
+                                        <input type="text" class="form-control" ng-model="opearqxFrom.startDate"/>
                                     </div>、
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label col-md-4">离职日期</label>
-                                <div class="col-md-8">
-                                    <div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
-                                    <span class="input-group-btn">
-                                        <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
-                                    </span>
-                                        <input type="text" class="form-control" ng-model="subFrom.outdate" readonly/>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -114,12 +101,12 @@
                             <div class="form-group">
                                 <label class="control-label col-md-2"></label>
                                 <div class="col-md-10">
-                                    <div class="actions btn-set" style="text-align: center">
+                                    <div class="actions btn-set" style="text-align: right">
                                         <button type="button" name="back"  class="btn btn-primary" ng-if="menuform.$invalid == false"  ng-disabled="menuform.$invalid" popover-trigger="mouseenter" ng-click="menu.save(menuFrom)" > 保存
                                         </button>
                                         <button type="button" name="back" class="btn default" ng-if="menuform.$invalid == true"  ng-disabled="menuform.$invalid" popover-trigger="mouseenter" > 保存
                                         </button>
-                                        <button type="button" name="back" class="btn btn-danger" ng-click="menu.cenel(menuFrom)"> 取消
+                                        <button type="button" name="back" class="btn btn-danger" ng-click="menu.cenel(menuFrom)"> 关闭
                                         </button>
                                     </div>
                                 </div>
@@ -129,8 +116,8 @@
                 </form>
             </div>
         </div>
-        <button type="button" name="back" class="btn btn-primary" style="margin-top:15px; margin-left: 20px;float: right" ng-click="role.checkAll()"> 保存
-        </button>
+     <!--   <button type="button" name="back" class="btn btn-primary" style="margin-top:15px; margin-left: 20px;float: right" ng-click="role.checkAll()"> 保存
+        </button>-->
     </div>
 </div>
 
