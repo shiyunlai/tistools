@@ -5,9 +5,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
         var role = {};
         $scope.role = role;
 
-
-
-
     var res = $rootScope.res.abftree_service;//页面所需调用的服务
 
         /* 左侧角色查询逻辑 */
