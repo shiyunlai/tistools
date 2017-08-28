@@ -346,7 +346,6 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
     //第一层也要，直接用数组包起来
     var srw = [];
     srw.push(sessionjson)
-    console.log(srw)
     $scope.menusAndTrans = angular.copy(srw);//拿到登录页那边传来的目录
     $scope.search = function(searchParam){
         if(_.isEmpty(searchParam)){ //如果是数组

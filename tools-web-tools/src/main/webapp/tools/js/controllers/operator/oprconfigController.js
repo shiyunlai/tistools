@@ -353,16 +353,17 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                         //导入
                     }else if(newValue=='function'){
                         var com = [
-                            { field: "funcName", displayName:'功能名称'}
+                            { field: "FUNC_NAME", displayName:'功能名称'}
                         ];
                         //查询操作员对应功能
                         var  subFrom = {};
-                        subFrom.operatorGuid =opensf.operguid;
-                        subFrom.resType = newValue;
-                        common_service.post(res.queryRoleInOperatorByResType,subFrom).then(function(data){
-                            var datas  = data.retMessage;
+                        subFrom.userId =opensf.info.userid;
+                        common_service.post(res.queryAcOperatorFunListByUserId,subFrom).then(function(data){
+                            var datas = data.retMessage;
                             if(data.status == "success"){
-                                $scope.gridOptions.data = datas;
+                                $scope.gridOptions.data =  datas;
+                                $scope.gridOptions.mydefalutData = datas;
+                                $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
                             }
                         })
                         $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);

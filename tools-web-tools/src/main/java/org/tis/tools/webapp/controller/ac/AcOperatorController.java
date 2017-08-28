@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.model.po.ac.AcOperatorIdentity;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.ac.AcOperator;
+import org.tis.tools.model.po.ac.AcOperatorFunc;
 import org.tis.tools.model.po.ac.AcOperatorIdentityres;
 import org.tis.tools.model.po.ac.AcRole;
+import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
 import org.tis.tools.rservice.ac.capable.IOperatorRService;
 import org.tis.tools.rservice.ac.capable.IRoleRService;
 import org.tis.tools.webapp.controller.BaseController;
@@ -559,10 +561,10 @@ public class AcOperatorController extends BaseController {
         return null;
     }
 
-/*    
-    *//**
+    
+    /**
      * 根据USERID查询特殊权限树
-     *//*
+     */
     @ResponseBody
     @RequestMapping(value="/queryOperatorFuncInfoInApp" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
     public String queryOperatorFuncInfoInApp(@RequestBody String content, HttpServletRequest request,
@@ -574,7 +576,7 @@ public class AcOperatorController extends BaseController {
             JSONObject jsonObject= JSONObject.parseObject(content);
             String userId = jsonObject.getString("userId");//操作员USER_ID
             AcOperatorFuncDetail info = operatorRService.queryOperatorFuncInfoInApp(userId);
-            AjaxUtils.ajaxJsonSuccessMessage(response, info);
+            AjaxUtils.ajaxJsonSuccessMessage(response, info.toString());
         } catch (ToolsRuntimeException e) {
             AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
             logger.error("queryOperatorInheritRoleList exception : ", e);
@@ -583,11 +585,11 @@ public class AcOperatorController extends BaseController {
             logger.error("queryOperatorInheritRoleList exception : ", e);
         }
         return null;
-    } */
+    } 
     
-/*    *//**
+    /**
      * 查询用户的特殊权限列表
-     *//*
+     */
     @ResponseBody
     @RequestMapping(value="/queryAcOperatorFunListByUserId" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
     public String queryAcOperatorFunListByUserId(@RequestBody String content, HttpServletRequest request,
@@ -610,9 +612,9 @@ public class AcOperatorController extends BaseController {
         return null;
     } 
     
-    *//**
+    /**
      * 新增用户特殊功能权限
-     *//*
+     */
     @ResponseBody
     @RequestMapping(value="/addAcOperatorFun" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
     public String addAcOperatorFun(@RequestBody String content, HttpServletRequest request,
@@ -634,9 +636,9 @@ public class AcOperatorController extends BaseController {
         return null;
     }
     
-    *//**
+    /**
      * 移除用户特殊功能权限
-     *//*
+     */
     @ResponseBody
     @RequestMapping(value="/removeAcOperatorFun" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
     public String removeAcOperatorFun(@RequestBody String content, HttpServletRequest request,
@@ -658,7 +660,7 @@ public class AcOperatorController extends BaseController {
             logger.error("removeAcOperatorFun exception : ", e);
         }
         return null;
-    }*/
+    }
     /**
      * 要求子类构造自己的响应数据
      *

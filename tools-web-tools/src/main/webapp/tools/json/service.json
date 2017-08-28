@@ -113,7 +113,11 @@
     "queryOperatorByUserId": {"ctrl": "AcOperatorController", "func": "queryOperatorByUserId","emo":"根据USERID查询操作员GUID"},
     "queryOperatorUnauthorizedRoleList": {"ctrl": "AcOperatorController", "func": "queryOperatorUnauthorizedRoleList","emo":"根据USERID查询操作员未授权角色"},
     "queryOperatorAuthorizedRoleList": {"ctrl": "AcOperatorController", "func": "queryOperatorAuthorizedRoleList","emo":"根据USERID查询操作员已授权角色"},
-    "queryOperatorInheritRoleList": {"ctrl": "AcOperatorController", "func": "queryOperatorInheritRoleList","emo":"根据USERID查询操作员继承角色"}
+    "queryOperatorInheritRoleList": {"ctrl": "AcOperatorController", "func": "queryOperatorInheritRoleList","emo":"根据USERID查询操作员继承角色"},
+    "queryOperatorFuncInfoInApp": {"ctrl": "AcOperatorController", "func": "queryOperatorFuncInfoInApp","emo":"根据USERID查询特殊权限树"},
+    "queryAcOperatorFunListByUserId": {"ctrl": "AcOperatorController", "func": "queryAcOperatorFunListByUserId","emo":"查询用户的特殊权限列表"},
+    "addAcOperatorFun": {"ctrl": "AcOperatorController", "func": "addAcOperatorFun","emo":"新增用户特殊功能权限"},
+    "removeAcOperatorFun": {"ctrl": "AcOperatorController", "func": "removeAcOperatorFun","emo":"移除用户特殊功能权限"}
   },
   "abftree_service" : {
     "loadmaintree": {"ctrl": "om/org", "func": "tree"},
