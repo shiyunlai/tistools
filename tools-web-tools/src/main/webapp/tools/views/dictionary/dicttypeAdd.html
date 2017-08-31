@@ -12,17 +12,9 @@
         </div>
     </div>
     <div class="portlet-body portlet light">
+
         <form action="#" name="myform" class="form-horizontal ">
             <div class="form-body ">
-               <!-- <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4"> 隶属业务字典:<span ng-class="{required:myform.dict_key.$invalid}"> * </span> </span></label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" required ng-model="dictFrom.guidDict"   ng-readonly=true;
-                                   name="dict_key"/>
-                        </div>
-                    </div>
-                </div>-->
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4"> 字典项名称:<span ng-class="{required:myform.dict_key1.$invalid}"  > * </span></label>
@@ -30,17 +22,6 @@
                             <input type="text" class="form-control" ng-model="dictFrom.itemName"
                                    required
                                    name="dict_key1"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4"> 字典项:<span ng-class="{required:myform.dict_key2.$invalid}"  > * </span></label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="dictFrom.itemValue"
-                                   required
-                                   name="dict_key2"/>
-                            <span style="color: #ccc">本应用字典对应字典项</span>
                         </div>
                     </div>
                 </div>
@@ -55,12 +36,52 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-6" style="margin-top:7px;">
+                    <label class="control-label col-md-4"> 字典项来源类型:<span ng-class="{required:myform.fromtable.$invalid}"  > * </span></label>
+                    <div class=""  style="margin-top: 5px;">
+                        <div class="col-md-4" ng-show="one" >
+                            <input type="radio"   name="fromtable"  ng-model="dictFrom.itemType"  required ng-checked="dictFrom.itemType== 'dict'"  value="dict" />来自dict字典
+                        </div>
+                        <div class="col-md-4" ng-show="two">
+                            <input type="radio"   name="fromtable" ng-model="dictFrom.itemType"  required  ng-checked="dictFrom.itemType== 'value'"  value="value" />value实际值
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" ng-show="dictFrom.itemType=='dict'">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 字典项:<span ng-class="{required:myform.dict_key2.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                                <select class="form-control test456"   ng-model="dictFrom.itemValue"  required name="dict_key2" style="width: 100%">
+                                    <option ng-repeat="x in dictlist" value="{{x.dictKey}}">{{x.dictKey+'---'+x.dictName}}</option>
+                                </select>
+                        </div>
+                        <div class="col-md-12  col-md-offset-3" >
+                            <span ng-show="showspan" style="color: #ccc">字典对应字典项来源,如没有<span ng-click="dictcreat(dictFrom)" style="color:red;cursor: pointer">点击新增</span></span>
+                            <span ng-show="!showspan" style="color: #ccc">字典对应字典项来源</span>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $('.test456').select2();
+                </script>
+                <div class="col-md-6" ng-show="dictFrom.itemType=='value'">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 字典项:<span ng-class="{required:myform.dict_key2.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" ng-model="dictFrom.itemValue"
+                                   required
+                                   name="dict_key2"/>
+                            <span style="color: #ccc">本应用字典对应字典项</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4"> 顺序号:<span ng-class="{required:myform.dict_seq1.$invalid}"  > * </span></label>
                         <div class="col-md-8">
                             <input type="text" class="form-control" ng-model="dictFrom.seqno"   name = "dict_seq1"  required/>
-                            <span style="color:#ccc">顺序号，从0开始排，按小到大排序,默认为0</span>
+                            <span style="color:#ccc" >顺序号，从0开始排，按小到大排序,默认为0</span>
                         </div>
                     </div>
                 </div>
