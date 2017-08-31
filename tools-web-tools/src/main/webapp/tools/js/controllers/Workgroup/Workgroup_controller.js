@@ -303,10 +303,10 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
     //定义表头名
     var com = [{field: 'groupCode', displayName: '工作组代码', enableHiding: false},
         {field: 'groupName', displayName: '工作组名称', enableHiding: false},
-        {field: 'groupStatus', displayName: '工作组状态', enableHiding: false},
-        {field: 'groupType', displayName: '工作组类型', enableHiding: false},
-        {field: 'guidEmpManager', displayName: '工作组管理员', enableHiding: false},
-        {field: 'guidOrg', displayName: '所属机构', enableHiding: false},
+        {field: 'groupStatus', displayName: '工作组状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.groupStatus | translateConstants :\'DICT_OM_GROUPSTATUS\') + $root.constant[\'DICT_OM_GROUPSTATUS-\'+row.entity.groupStatus]}}</div>'},
+        {field: 'groupType', displayName: '工作组类型', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.groupType | translateConstants :\'DICT_OM_GROUPTYPE\') + $root.constant[\'DICT_OM_GROUPTYPE-\'+row.entity.groupType]}}</div>'},
+        {field: 'guidEmpManager', displayName: '工作组管理员', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpManager | translateEmp) + $root.constant[row.entity.guidEmpManager]}}</div>'},
+        {field: 'guidOrg', displayName: '所属机构', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidOrg | translateOrg) + $root.constant[row.entity.guidOrg]}}</div>'},
         {field: 'startDate', displayName: '工作组有效起始日', enableHiding: false},
         {field: 'startDate', displayName: '工作组有效到期日', enableHiding: false},
         {field: 'lastupdate', displayName: '最后修改日', enableHiding: false}
@@ -471,10 +471,10 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
             //定义表头名
             var com2 = [{field: 'groupCode', displayName: '工作组代码', enableHiding: false},
                 {field: 'groupName', displayName: '工作组名称', enableHiding: false},
-                {field: 'groupStatus', displayName: '工作组状态', enableHiding: false},
-                {field: 'groupType', displayName: '工作组类型', enableHiding: false},
-                {field: 'guidEmpManager', displayName: '工作组管理员', enableHiding: false},
-                {field: 'guidOrg', displayName: '所属机构', enableHiding: false},
+                {field: 'groupStatus', displayName: '工作组状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.groupStatus | translateConstants :\'DICT_OM_GROUPSTATUS\') + $root.constant[\'DICT_OM_GROUPSTATUS-\'+row.entity.groupStatus]}}</div>'},
+                {field: 'groupType', displayName: '工作组类型', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.groupType | translateConstants :\'DICT_OM_GROUPTYPE\') + $root.constant[\'DICT_OM_GROUPTYPE-\'+row.entity.groupType]}}</div>'},
+                {field: 'guidEmpManager', displayName: '工作组管理员', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpManager | translateEmp) + $root.constant[row.entity.guidEmpManager]}}</div>'},
+                {field: 'guidOrg', displayName: '所属机构', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidOrg | translatePosition) + $root.constant[row.entity.guidOrg]}}</div>'},
                 {field: 'startDate', displayName: '工作组有效起始日', enableHiding: false},
                 {field: 'startDate', displayName: '工作组有效到期日', enableHiding: false},
                 {field: 'lastupdate', displayName: '最后修改日', enableHiding: false}
@@ -505,9 +505,9 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
             //定义表头名
             var com = [{field: 'positionCode', displayName: '岗位代码', enableHiding: false},
                 {field: 'positionName', displayName: '岗位名称', enableHiding: false},
-                {field: 'positionType', displayName: '岗位类型', enableHiding: false},
-                {field: 'positionStatus', displayName: '岗位状态', enableHiding: false},
-                {field: 'guidDuty', displayName: '所属职务', enableHiding: false},
+                {field: 'positionType', displayName: '岗位类型', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.positionType | translateConstants :\'DICT_OM_POSITYPE\') + $root.constant[\'DICT_OM_POSITYPE-\'+row.entity.positionType]}}</div>'},
+                {field: 'positionStatus', displayName: '岗位状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.positionStatus | translateConstants :\'DICT_OM_GROUPSTATUS\') + $root.constant[\'DICT_OM_GROUPSTATUS-\'+row.entity.positionStatus]}}</div>'},
+                {field: 'guidDuty', displayName: '所属职务', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidDuty | translateDuty) + $root.constant[row.entity.guidDuty]}}</div>'},
                 {field: 'startDate', displayName: '有效开始日期', enableHiding: false},
                 {field: 'endDate', displayName: '有效截止日期', enableHiding: false}
             ]
@@ -524,11 +524,11 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
             $scope.xjempgrid = xjempgrid;
             var com = [{field: 'empCode', displayName: '员工代码', enableHiding: false},
                 {field: 'empName', displayName: '员工姓名', enableHiding: false},
-                {field: 'gender', displayName: '性别', enableHiding: false},
-                {field: 'empstatus', displayName: '员工状态', enableHiding: false},
-                {field: 'empDegree', displayName: '员工职级', enableHiding: false},
-                {field: 'guidPosition', displayName: '基本岗位', enableHiding: false},
-                {field: 'guidempmajor', displayName: '直接主管', enableHiding: false},
+                {field: 'gender', displayName: '性别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'},
+                {field: 'empstatus', displayName: '员工状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
+                {field: 'empDegree', displayName: '员工职级', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
+                {field: 'guidPosition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
+                {field: 'guidempmajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidempmajor | translateEmp) + $root.constant[row.entity.guidempmajor]}}</div>'},
                 {field: 'indate', displayName: '入职日期', enableHiding: false},
                 {field: 'otel', displayName: '办公电话', enableHiding: false}
             ]

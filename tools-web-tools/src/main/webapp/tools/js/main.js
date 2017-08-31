@@ -225,6 +225,12 @@ MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http
                     settings.commlist[type] = response.data.retMessage;
                 });
             }
+        }else if(type == "ROLE"){
+            if(_.isNil(settings.commlist[type])) {
+                $http.post(manurl + "/AcRoleController/queryRoleList",{}).then(function (response) {
+                    settings.commlist[type] = response.data.retMessage;
+                });
+            }
         }
     }
 
