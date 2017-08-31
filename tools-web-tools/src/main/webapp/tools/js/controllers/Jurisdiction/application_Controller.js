@@ -248,13 +248,13 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                 datas[i].text = datas[i].appName;
                                 datas[i].id = datas[i].guid;
                                 datas[i].children = true;
-                                datas[i].icon = "fa fa-home  icon-state-info icon-lg";
+                                datas[i].icon = "fa fa-th-large icon-state-info icon-lg";
                                 its.push(datas[i])
                             }else if(isNull(datas[i].appName) && obj.id != 'AC0000'){
                                 datas[i].text = datas[i].funcgroupName;
                                 datas[i].id = datas[i].guid;
                                 datas[i].children = true;
-                                datas[i].icon = "fa  fa-files-o icon-state-info icon-lg";
+                                datas[i].icon = "fa  fa-th-list  icon-state-info icon-lg";
                                 its.push(datas[i])
                             }
                         }
@@ -277,7 +277,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                 datas.groupList[i].text = datas.groupList[i].funcgroupName;
                                 datas.groupList[i].id = datas.groupList[i].guid;
                                 datas.groupList[i].children = true;
-                                datas.groupList[i].icon = "fa  fa-files-o icon-state-info icon-lg"
+                                datas.groupList[i].icon = "fa  fa-th-list  icon-state-info icon-lg"
                                 its.push(datas.groupList[i])
                             }
                         }
@@ -310,7 +310,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         },
 
         "plugins" : [ "state", "types","search","contextmenu" ]
-    }).bind("copy.jstree", function (node,e, data ) {
     })
     /* 定义树列表改变事件*/
     $('#container').on("changed.jstree", function (e, data){

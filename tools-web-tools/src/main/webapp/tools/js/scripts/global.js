@@ -505,10 +505,8 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
             $scope.gridApi.selection.on.rowSelectionChanged($scope,selection);
             $scope.gridApi.core.on.filterChanged( $scope, function() {//监听filter过滤条件的改变  
                 filterConditions={};
-                console.log($scope.gridApi);
                 var grid=this.grid;
                 grid.options.data = thisobj.mydefalutData;
-                console.log(grid);
                 grid.columns.forEach(function(column) {
                     // console.log(column)
                     var everyFilters=[];
@@ -523,7 +521,6 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
                     }
                 });
 
-                console.log(filterConditions);
             });
 
 
@@ -537,7 +534,12 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
         api:function () {
             return $scope.gridApi;
         },
-
+        refresh:function ($timeout) {
+            $timeout(function() {
+                //选中之前的节点
+                thisobj.getPage($scope.gridApi.pagination.getPage(),thisobj.paginationPageSize);
+            });
+        }
     };
 
     //ui-grid getPage方法
@@ -558,7 +560,13 @@ function FormatDate (strTime) {
     return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
 }
 
+/*封装grid刷新页*/
+function initpage($scope,thisobj,$timeout){
+    $timeout(function() {
+        $scope.thisobj.getPage($scope.gridApi.pagination.getPage(),$scope.thisobj.paginationPageSize);
+    });
 
+}
 function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftree_service,toastr){
     //生成各个列表
     // var mygrid = {};

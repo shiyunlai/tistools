@@ -601,7 +601,7 @@ public class AcOperatorController extends BaseController {
             JSONObject jsonObject= JSONObject.parseObject(content);
             String userId = jsonObject.getString("userId");//操作员USER_ID
             List<Map> info = operatorRService.queryAcOperatorFunListByUserId(userId);
-            AjaxUtils.ajaxJsonSuccessMessage(response, info);
+            AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response,info, "YYYY-MM-dd");//转换时间类型
         } catch (ToolsRuntimeException e) {
             AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
             logger.error("queryAcOperatorFunListByUserId exception : ", e);
@@ -612,6 +612,7 @@ public class AcOperatorController extends BaseController {
         return null;
     } 
     
+
     /**
      * 新增用户特殊功能权限
      */

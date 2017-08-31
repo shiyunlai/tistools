@@ -24,7 +24,9 @@
     "querySysDictList": {"ctrl": "DictController", "func": "querySysDictList","emo":"查询所有业务字典"},
     "querySysDictItemList": {"ctrl": "DictController", "func": "querySysDictItemList","emo":"查询业务字典项列表"},
     "queryDictItemListByDictKey": {"ctrl": "DictController", "func": "queryDictItemListByDictKey","emo":"根据key查询业务字典项列表"},
-    "exportDictExcel": {"ctrl": "DictController", "func": "exportDictExcel","emo":" 导出所有业务字典为excel"}
+    "exportDictExcel": {"ctrl": "DictController", "func": "exportDictExcel","emo":" 导出所有业务字典为excel"},
+    "queryDictTree": {"ctrl": "DictController", "func": "queryDictTree","emo":" 查询业务字典对应树结构"},
+    "queryDict": {"ctrl": "DictController", "func": "queryDict","emo":" 根据key查询业务字典信息"}
   },
   "duty_service" : {
     "dutytree": {"ctrl": "om/duty", "func": "dutytree"},
