@@ -726,11 +726,11 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
             //定义表头名
             var com = [{field: 'orgCode', displayName: '机构代码', enableHiding: false},
                 {field: 'orgName', displayName: '机构名称', enableHiding: false},
-                {field: 'orgType', displayName: '机构类型', enableHiding: false},
-                {field: 'orgDegree', displayName: '机构等级', enableHiding: false},
-                {field: 'orgStatus', displayName: '机构状态', enableHiding: false},
+                {field: 'orgType', displayName: '机构类型', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.orgType | translateConstants :\'DICT_OM_ORGTYPE\') + $root.constant[\'DICT_OM_ORGTYPE-\'+row.entity.orgType]}}</div>'},
+                {field: 'orgDegree', displayName: '机构等级', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.orgDegree | translateConstants :\'DICT_OM_ORGDEGREE\') + $root.constant[\'DICT_OM_ORGDEGREE-\'+row.entity.orgDegree]}}</div>'},
+                {field: 'orgStatus', displayName: '机构状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.orgStatus | translateConstants :\'DICT_OM_ORGSTATUS\') + $root.constant[\'DICT_OM_ORGSTATUS-\'+row.entity.orgStatus]}}</div>'},
                 {field: 'orgAddr', displayName: '机构地址', enableHiding: false},
-                {field: 'guidEmpMaster', displayName: '机构主管', enableHiding: false},
+                {field: 'guidEmpMaster', displayName: '机构主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpMaster | translateEmp) + $root.constant[row.entity.guidEmpMaster]}}</div>'},
                 {field: 'linkMan', displayName: '联系人姓名', enableHiding: false},
                 {field: 'linkTel', displayName: '联系电话', enableHiding: false},
                 {field: 'createTime', displayName: '创建时间', enableHiding: false}
@@ -850,11 +850,11 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
             //定义表头名
             var com = [{field: 'empCode', displayName: '员工代码', enableHiding: false},
                 {field: 'empName', displayName: '员工姓名', enableHiding: false},
-                {field: 'gender', displayName: '性别', enableHiding: false},
-                {field: 'empstatus', displayName: '员工状态', enableHiding: false},
-                {field: 'empDegree', displayName: '员工职级', enableHiding: false},
-                {field: 'guidPostition', displayName: '基本岗位', enableHiding: false},
-                {field: 'guidempmajor', displayName: '直接主管', enableHiding: false},
+                {field: 'gender', displayName: '性别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'},
+                {field: 'empstatus', displayName: '员工状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
+                {field: 'empDegree', displayName: '员工职级', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
+                {field: 'guidPostition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPostition | translatePosition) + $root.constant[row.entity.guidPostition]}}</div>'},
+                {field: 'guidempmajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidempmajor | translateEmp) + $root.constant[row.entity.guidempmajor]}}</div>'},
                 {field: 'indate', displayName: '入职日期', enableHiding: false},
                 {field: 'otel', displayName: '办公电话', enableHiding: false}
             ]
@@ -899,11 +899,11 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                         //定义表头名
                         var com = [{field: 'empCode', displayName: '员工代码', enableHiding: false},
                             {field: 'empName', displayName: '员工姓名', enableHiding: false},
-                            {field: 'gender', displayName: '性别', enableHiding: false},
-                            {field: 'empstatus', displayName: '员工状态', enableHiding: false},
-                            {field: 'empDegree', displayName: '员工职级', enableHiding: false},
-                            {field: 'guidPostition', displayName: '基本岗位', enableHiding: false},
-                            {field: 'guidempmajor', displayName: '直接主管', enableHiding: false},
+                            {field: 'gender', displayName: '性别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'},
+                            {field: 'empstatus', displayName: '员工状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
+                            {field: 'empDegree', displayName: '员工职级', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
+                            {field: 'guidPostition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPostition | translatePosition) + $root.constant[row.entity.guidPostition]}}</div>'},
+                            {field: 'guidempmajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidempmajor | translateEmp) + $root.constant[row.entity.guidempmajor]}}</div>'},
                             {field: 'indate', displayName: '入职日期', enableHiding: false},
                             {field: 'otel', displayName: '办公电话', enableHiding: false}
                         ]
@@ -1084,11 +1084,11 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
             //定义表头名
             var com = [{field: 'empCode', displayName: '员工代码', enableHiding: false},
                 {field: 'empName', displayName: '员工姓名', enableHiding: false},
-                {field: 'gender', displayName: '性别', enableHiding: false},
-                {field: 'empstatus', displayName: '员工状态', enableHiding: false},
-                {field: 'empDegree', displayName: '员工职级', enableHiding: false},
-                {field: 'guidPostition', displayName: '基本岗位', enableHiding: false},
-                {field: 'guidempmajor', displayName: '直接主管', enableHiding: false},
+                {field: 'gender', displayName: '性别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'},
+                {field: 'empstatus', displayName: '员工状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
+                {field: 'empDegree', displayName: '员工职级', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
+                {field: 'guidPostition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPostition | translatePosition) + $root.constant[row.entity.guidPostition]}}</div>'},
+                {field: 'guidempmajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidempmajor | translateEmp) + $root.constant[row.entity.guidempmajor]}}</div>'},
                 {field: 'indate', displayName: '入职日期', enableHiding: false},
                 {field: 'otel', displayName: '办公电话', enableHiding: false}
             ]
@@ -1133,11 +1133,11 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                         //定义表头名
                         var com = [{field: 'empCode', displayName: '员工代码', enableHiding: false},
                             {field: 'empName', displayName: '员工姓名', enableHiding: false},
-                            {field: 'gender', displayName: '性别', enableHiding: false},
-                            {field: 'empstatus', displayName: '员工状态', enableHiding: false},
-                            {field: 'empDegree', displayName: '员工职级', enableHiding: false},
-                            {field: 'guidPostition', displayName: '基本岗位', enableHiding: false},
-                            {field: 'guidempmajor', displayName: '直接主管', enableHiding: false},
+                            {field: 'gender', displayName: '性别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'},
+                            {field: 'empstatus', displayName: '员工状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
+                            {field: 'empDegree', displayName: '员工职级', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
+                            {field: 'guidPostition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPostition | translatePosition) + $root.constant[row.entity.guidPostition]}}</div>'},
+                            {field: 'guidempmajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidempmajor | translateEmp) + $root.constant[row.entity.guidempmajor]}}</div>'},
                             {field: 'indate', displayName: '入职日期', enableHiding: false},
                             {field: 'otel', displayName: '办公电话', enableHiding: false},
                         ]
@@ -1233,7 +1233,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
             $scope.gwApplication = gwApplication;
             var com = [
                 {field: 'appName', displayName: '应用名称', enableHiding: false},
-                {field: 'appType', displayName: '应用类别', enableHiding: false},
+                {field: 'appType', displayName: '应用类别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.appType | translateConstants :\'DICT_AC_APPTYPE\') + $root.constant[\'DICT_AC_APPTYPE-\'+row.entity.appType]}}</div>'},
                 {field: 'openDate', displayName: '开通时间', enableHiding: false},
                 {field: 'appDesc', displayName: '功能描述', enableHiding: false}
             ];
@@ -1254,9 +1254,9 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
             //定义表头名
             var com = [{field: 'positionCode', displayName: '岗位代码', enableHiding: false},
                 {field: 'positionName', displayName: '岗位名称', enableHiding: false},
-                {field: 'positionType', displayName: '岗位类型', enableHiding: false},
-                {field: 'positionStatus', displayName: '岗位状态', enableHiding: false},
-                {field: 'guidDuty', displayName: '所属职务', enableHiding: false},
+                {field: 'positionType', displayName: '岗位类型', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.positionType | translateConstants :\'DICT_OM_POSITYPE\') + $root.constant[\'DICT_OM_POSITYPE-\'+row.entity.positionType]}}</div>'},
+                {field: 'positionStatus', displayName: '岗位状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.positionStatus | translateConstants :\'DICT_OM_POSISTATUS\') + $root.constant[\'DICT_OM_POSISTATUS-\'+row.entity.positionStatus]}}</div>'},
+                {field: 'guidDuty', displayName: '所属职务', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidDuty | translateDuty) + $root.constant[row.entity.guidDuty]}}</div>'},
                 {field: 'startDate', displayName: '有效开始日期', enableHiding: false},
                 {field: 'endDate', displayName: '有效截止日期', enableHiding: false}
             ]
@@ -1388,7 +1388,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                 $scope.commonGrid = commonGrid;
                 var com = [
                     {field: 'appName', displayName: '应用名称', enableHiding: false},
-                    {field: 'appType', displayName: '应用类别', enableHiding: false},
+                    {field: 'appType', displayName: '应用类别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.appType | translateConstants :\'DICT_AC_APPTYPE\') + $root.constant[\'DICT_AC_APPTYPE-\'+row.entity.appType]}}</div>'},
                     {field: 'openDate', displayName: '开通时间', enableHiding: false},
                     {field: 'appDesc', displayName: '功能描述', enableHiding: false}
                 ];
@@ -1492,9 +1492,9 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
     $scope.gwlbgird = gwlbgird;
     var com = [{field: 'positionCode', displayName: '岗位代码', enableHiding: false},
         {field: 'positionName', displayName: '岗位名称', enableHiding: false},
-        {field: 'positionType', displayName: '岗位类型', enableHiding: false},
-        {field: 'positionStatus', displayName: '岗位状态', enableHiding: false},
-        {field: 'guidDuty', displayName: '所属职务', enableHiding: false},
+        {field: 'positionType', displayName: '岗位类型', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.positionType | translateConstants :\'DICT_OM_POSITYPE\') + $root.constant[\'DICT_OM_POSITYPE-\'+row.entity.positionType]}}</div>'},
+        {field: 'positionStatus', displayName: '岗位状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.positionStatus | translateConstants :\'DICT_OM_POSISTATUS\') + $root.constant[\'DICT_OM_POSISTATUS-\'+row.entity.positionStatus]}}</div>'},
+        {field: 'guidDuty', displayName: '所属职务', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidDuty | translateDuty) + $root.constant[row.entity.guidDuty]}}</div>'},
         {field: 'startDate', displayName: '有效开始日期', enableHiding: false},
         {field: 'endDate', displayName: '有效截止日期', enableHiding: false}
     ]

@@ -88,4 +88,56 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
             return '';
         };
     }])
+    .filter('translateOrg', ['$http', '$rootScope', function ($http, $rootScope) {
+        return function (val, name) {
+            var subFrom = {};
+            subFrom.dictKey = name;
+            console.info(name + "-" + val)
+            // console.info($rootScope.constant)
+            if (isNull($rootScope.constant[val])) {
+                $http.post("http://localhost:8089/tis/om/org/queryAllorg").then(function (data) {
+                    var retval = "";
+                    // console.log(data)
+                    if (data.data.status == "success") {
+                        for (var i = 0; i < data.data.retMessage.length; i++) {
+                            if (val == data.data.retMessage[i].guid) {
+                                // console.log(data.data.retMessage)
+                                retval = data.data.retMessage[i].orgName;
+                                // console.log(retval)
+                                $rootScope.constant[val] = retval;
+                            }
+                        }
+                    }
+
+                })
+            }
+            return '';
+        };
+    }])
+    .filter('translateDuty', ['$http', '$rootScope', function ($http, $rootScope) {
+        return function (val, name) {
+            var subFrom = {};
+            subFrom.dictKey = name;
+            console.info(name + "-" + val)
+            // console.info($rootScope.constant)
+            if (isNull($rootScope.constant[val])) {
+                $http.post("http://localhost:8089/tis/om/duty/loadallduty").then(function (data) {
+                    var retval = "";
+                    // console.log(data)
+                    if (data.data.status == "success") {
+                        for (var i = 0; i < data.data.retMessage.length; i++) {
+                            if (val == data.data.retMessage[i].guid) {
+                                // console.log(data.data.retMessage)
+                                retval = data.data.retMessage[i].dutyName;
+                                // console.log(retval)
+                                $rootScope.constant[val] = retval;
+                            }
+                        }
+                    }
+
+                })
+            }
+            return '';
+        };
+    }])
 ;
