@@ -23,7 +23,7 @@
     <small></small>
 </h3>
 <div class="tab-content portlet light clearfix">
-    <div class="col-md-6">
+    <div class="col-md-5">
         <div class="portlet-title col-md-12">
             <div class="caption col-md-10">
                 <span class="caption-subject font-blue-sharp bold uppercase">未授予角色列表</span>
@@ -34,28 +34,32 @@
                  ui-grid-pagination
                  ui-grid-selection ui-grid-resize-columns></div>
         </div>
-        <div class="actions btn-set col-md-2" style="float: right;margin-top: 10px;">
-            <button type="button" name="back" class="btn btn-primary" ng-click="operatqx.add()"> 授予
+    </div>
+    <div class="col-md-2" style="margin-top:5%;">
+        <div class="col-md-12" style="margin-left: 35%;">
+            <button   type="button" name="back" class="btn btn-primary" ng-click="operatqx.add()"> 授予 >
+            </button>
+        </div>
+        <div class="col-md-12" style="margin-top: 10px;margin-left: 35%;">
+            <button  type="button" name="back" class="btn btn-danger" ng-click="operatqx.del()"> < 移除
             </button>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-5">
         <div class="portlet-title col-md-12">
             <div class="caption col-md-10">
                 <span class="caption-subject font-blue-sharp bold uppercase">已授予角色列表</span>
             </div>
+
         </div>
         <div class="col-md-12">
             <div ui-grid="alrolegird" style="height:200px;"
                  ui-grid-pagination
                  ui-grid-selection ui-grid-resize-columns></div>
         </div>
-        <div class="actions btn-set col-md-2" style="float: right;margin-top:10px;">
-            <button type="button" name="back" class="btn btn-danger" ng-click="operatqx.del()"> 移除
-            </button>
-        </div>
     </div>
-    <div class="col-md-12">
+
+    <div class="col-md-12" style="margin-top: 30px;">
         <div class="portlet-title col-md-12">
             <div class="caption col-md-10">
                 <span class="caption-subject font-blue-sharp bold uppercase">特别权限设置</span>

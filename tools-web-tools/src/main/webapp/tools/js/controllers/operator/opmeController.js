@@ -279,8 +279,8 @@ MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state
                 common_service.post(res.queryOperatorFuncInfoInApp,subFrom).then(function(data){
                     if(data.status == "success"){
                         var datas = data.retMessage;
-                        var result= datas.replace(/guid/g,"id").replace(/label/g,'text');//把guid和label替换成自己需要的
-                        var menuAll = angular.fromJson(result);
+                     /*   var result= datas.replace(/guid/g,"id").replace(/label/g,'text');//把guid和label替换成自己需要的*/
+                        var menuAll = angular.fromJson(datas);
                         var tisMenu = [];;//绑定数组
                         tisMenu.push(menuAll)
                         //菜单一权限
@@ -323,13 +323,14 @@ MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state
                             plugins: ["sort", "types", "wholerow", "themes", "html_data"],
                         }).bind("select_node.jstree", function (e, data) {
                             operqxinpfo.funinfo = data.node.original;
+
                             if(data.node.original.isLeaf == 'Y'){
                                     $scope.operisleaf = true;
                             }else{
                                 $scope.operisleaf = false;
                             }
                             $scope.$apply();
-                        });
+                        })
                     }else{
                         toastr['error']('暂无该应用操作权限');
                     }
@@ -343,7 +344,6 @@ MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state
                     subFrom.guidFuncgroup = operqxinpfo.funinfo.parentGuid;//功能组guid
                     subFrom.guidApp = operqxinpfo.funinfo.appGuid//功能组guid
                     common_service.post(res.addAcOperatorFun,subFrom).then(function(data){
-                        console.log(data);
                         var datas = data.retMessage;
                         if(data.status == "success"){
                             toastr['success']( "保存成功！");
@@ -365,14 +365,12 @@ MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state
     var postgrid = {};
     $scope.postgrid = postgrid;
     //操作员名称，代码  应用系统名称 代码
-    $scope.postgrids = [
-        {'funcName':'测试功能','authType':'特别允许'},
-        {'funcName':'菜单功能','authType':'特别禁止'}
-    ];
     //操作员名称，代码  应用系统名称 代码
     var com2 = [
         { field: 'FUNC_NAME', displayName: '功能名称'},
-        { field: 'authType', displayName: '授权标志'}
+        { field: 'authType', displayName: '授权标志'},
+        { field: 'startDate', displayName: '有效开始日期'},
+        { field: 'endDate', displayName: '有效截止日期'}
     ];
     var f2 = function(row){
         if(row.isSelected){
