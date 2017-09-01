@@ -130,7 +130,7 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
     //操作员名称，代码  应用系统名称 代码
     var com = [
         { field: "identityName", displayName:'身份名称'},
-        { field: "identityFlag", displayName:'默认身份标志'},
+        { field: "identityFlag", displayName:'默认身份标志',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.identityFlag | translateConstants :\'DICT_YON\') + $root.constant[\'DICT_YON-\'+row.entity.identityFlag]}}</div>'},
         { field: "seqNo", displayName:'显示顺序'}
     ];
     var f = function(row){
@@ -343,7 +343,6 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                         subFrom.operatorGuid =opensf.operguid;
                         subFrom.resType = newValue;
                         common_service.post(res.queryRoleInOperatorByResType,subFrom).then(function(data){
-                            console.log(data);
                             var datas  = data.retMessage;
                             if(data.status == "success"){
                                 $scope.gridOptions.data = datas;
@@ -432,7 +431,6 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
 
                     $scope.importAdd = function(item){//导入资源代码
                         var getSel = $scope.gridOptions.getSelectedRows();
-                        console.log(getSel)
                         if(getSel.length>0){
                             /*subFrom.guidIdentity = opersguid; //身份guid
                             subFrom.acResourcetype =newValue;//资源类型
@@ -447,7 +445,6 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                                 tis.push(subFrom)
                             }
                             common_service.post(res.createOperatorIdentityres,tis).then(function(data){
-                                console.log(data);
                                 if(data.status == "success"){
                                     var datas  = data.retMessage;
                                     $scope.gridOptions.data = datas;

@@ -36,12 +36,9 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4"> 重置方式:</label>
-                        <div class="col-md-8">
+                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_SYS_RESET')">
                             <select class="form-control" name="dict_open" ng-model="numberFrom.reset"  ng-disabled="!editsflag">
-                                <option value="不重置" selected>不重置</option>
-                                <option value="按天重置">按天重置</option>
-                                <option value="按周重置">按周重置</option>
-                                <option value="自定义重置周期">自定义重置周期</option>
+                                <option ng-repeat="d in $settings.diclist['DICT_SYS_RESET'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>
                     </div>

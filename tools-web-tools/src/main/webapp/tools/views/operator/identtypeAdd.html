@@ -13,9 +13,9 @@
         <div class="col-md-6" style="margin-left:25%;margin-top:20px;margin-bottom: 20px;">
             <div class="form-group">
                 <label class="control-label col-md-4">选择资源类型:</label>
-                <div class="col-md-8">
+                <div class="col-md-8" ng-init="$settings.getDictData('DICT_AC_RESOURCETYPE')">
                     <select class="form-control" name="dict_key" ng-model="identypeFrom.idtnyype" >
-                        <option ng-repeat="d in dictitem" value="{{d.itemValue}}">{{d.itemName}}</option>
+                        <option ng-repeat="d in $settings.diclist['DICT_AC_RESOURCETYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                     </select>
                 </div>
             </div>

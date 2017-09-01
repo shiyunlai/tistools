@@ -118,12 +118,10 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
         return function (val, name) {
             var subFrom = {};
             subFrom.dictKey = name;
-            console.info(name + "-" + val)
             // console.info($rootScope.constant)
             if (isNull($rootScope.constant[val])) {
                 $http.post("http://localhost:8089/tis/om/duty/loadallduty").then(function (data) {
                     var retval = "";
-                    // console.log(data)
                     if (data.data.status == "success") {
                         for (var i = 0; i < data.data.retMessage.length; i++) {
                             if (val == data.data.retMessage[i].guid) {
@@ -131,6 +129,83 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
                                 retval = data.data.retMessage[i].dutyName;
                                 // console.log(retval)
                                 $rootScope.constant[val] = retval;
+                            }
+                        }
+                    }
+
+                })
+            }
+            return '';
+        };
+    }])
+    .filter('translateApp', ['$http', '$rootScope', function ($http, $rootScope) {
+        return function (val, name) {
+            var subFrom = {};
+            subFrom.dictKey = name;
+            // console.info($rootScope.constant)
+            if (isNull($rootScope.constant[val])) {
+                $http.post("http://localhost:8089/tis/AcMenuController  /queryAllAcApp",{}).then(function (data) {
+                    var retval = "";
+                    if (data.data.status == "success") {
+                        for (var i = 0; i < data.data.retMessage.length; i++) {
+                            if (val == data.data.retMessage[i].guid) {
+                                // console.log(data.data.retMessage)
+                                retval = data.data.retMessage[i].appName;
+                                // console.log(retval)
+                                $rootScope.constant[val] = retval;
+                            }
+                        }
+                    }
+
+                })
+            }
+            return '';
+        };
+    }])
+    .filter('translateDict', ['$http', '$rootScope', function ($http, $rootScope) {
+        return function (val, name) {
+            var subFrom = {};
+            subFrom.dictKey = name;
+            if (isNull($rootScope.constant[val])) {
+                $http.post("http://localhost:8089/tis/DictController/querySysDictList",{}).then(function (data) {
+                    var retval = "";
+                    if (data.data.status == "success") {
+                        for (var i = 0; i < data.data.retMessage.length; i++) {
+                            if (val == data.data.retMessage[i].guid) {
+                                // console.log(data.data.retMessage)
+                                retval = data.data.retMessage[i].dictName;
+                                 console.log(retval)
+                                $rootScope.constant[val] = retval;
+                                return;
+                            }else{
+                                $rootScope.constant[val] = val;
+                            }
+                        }
+                    }
+
+                })
+            }
+            return '';
+        };
+    }])
+    .filter('translateDictitem', ['$http', '$rootScope', function ($http, $rootScope) {
+        return function (val, name) {
+            var subFrom = {};
+            subFrom.dictKey = name;
+            console.info(name + "-" + val)
+            // console.info($rootScope.constant)
+            if (isNull($rootScope.constant[val])) {
+                $http.post("http://localhost:8089/tis/DictController/queryAllDictItem",{}).then(function (data) {
+                    var retval = "";
+                    if (data.data.status == "success") {
+                        for (var i = 0; i < data.data.retMessage.length; i++) {
+                            if (val == data.data.retMessage[i].guid) {
+                                retval = data.data.retMessage[i].itemName;
+                                console.log(retval)
+                                $rootScope.constant[val] = retval;
+                                return;
+                            }else{
+                                $rootScope.constant[val] = val;
                             }
                         }
                     }

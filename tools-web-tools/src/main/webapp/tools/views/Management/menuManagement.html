@@ -104,7 +104,7 @@
                                             <div class="form-group">
                                                 <label class="control-label col-md-4">是否叶子菜单:<span ng-class="{required:menuform.dict_key3.$invalid}"  > * </span></label>
                                                 <div class="col-md-8">
-                                                    <input type="text" class="form-control"
+                                                    <input type="text" class="form-control"  translate-constants comtable="DICT_YON"
                                                            ng-model="menuFrom.isleaf"
                                                            name="dict_key2" ng-disabled="!editflag"  ng-readonly="!isleaf" required/>
                                                 </div>
@@ -113,11 +113,9 @@
                                         <div class="col-md-6" ng-show="!isleaftrue">
                                             <div class="form-group">
                                                 <label class="control-label col-md-4">是否叶子菜单:<span ng-class="{required:menuform.dict_key3.$invalid}"  > * </span></label>
-                                                <div class="col-md-8">
+                                                <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
                                                     <select class="form-control" name="dict_key3" ng-model="menuFrom.isleaf"  ng-change="watcher(menuFrom.isleaf)" ng-readonly="readonly"  ng-disabled="!editflag" required>
-                                                        <option value=""></option>
-                                                        <option value="Y">是</option>
-                                                        <option value="N">否</option>
+                                                        <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -160,7 +158,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
 
                                         <!--<div class="col-md-6" >
                                             <div class="form-group">

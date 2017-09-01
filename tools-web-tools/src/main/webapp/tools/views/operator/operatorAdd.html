@@ -46,11 +46,9 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4"> 菜单风格 <span ng-class="{required:myform.dict_menu.$invalid}"  >* </span></label>
-                        <div class="col-md-8">
+                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_AC_MENUTYPE')">
                             <select class="form-control"   required   ng-model="operatFrom.menuType" name="dict_menu">
-                                <option value=""></option>
-                                <option value="0">Default模式</option>
-                                <option value="1">自主模式</option>
+                                <option ng-repeat="d in $settings.diclist['DICT_AC_MENUTYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>
                     </div>
@@ -58,9 +56,9 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4"> 操作员状态: <span ng-class="{required:myform.oper_ators.$invalid}"  > * </span></label>
-                        <div class="col-md-8">
+                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_AC_OPERATOR_STATUS')">
                             <select class="form-control"    ng-model="operatFrom.operatorStatus" required   name="oper_ators">
-                                <option ng-repeat="d in dictitem" value="{{d.itemValue}}">{{d.itemName}}</option>
+                                <option ng-repeat="d in $settings.diclist['DICT_AC_OPERATOR_STATUS'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>
                     </div>
@@ -69,11 +67,9 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4"> 认证模式:<span ng-class="{required:myform.oper_certification.$invalid}"  > * </span> </label>
-                        <div class="col-md-8">
+                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_AC_AUTHMODE')">
                             <select class="form-control"  ng-model="operatFrom.authMode" required  name="oper_certification">
-                            <option value="bd">本地密码认证</option>
-                            <option value="pw">pwd认证</option>
-                            <option value="ca">captcha认证</option>
+                                <option ng-repeat="d in $settings.diclist['DICT_AC_AUTHMODE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                         </select>
                         </div>
                     </div>

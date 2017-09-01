@@ -330,20 +330,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 application_service.appQuery(subFrom).then(function (data) {
                     var datas = data.retMessage;
                     //判断是否开通
-                    for(var i =0;i<datas.length; i ++){
-                        if(datas[i].isopen == 'Y'){
-                            datas[i].isopen = '是';
-                        }else{
-                            datas[i].isopen = '否';
-                        }
-                        //判断远程和本地
-                       if(datas[i].appType == "local"){
-                            datas[i].appType = '本地';
-                        }else{
-                            datas[i].appType = '远程';
-                        }
-
-                    }
                     $scope.gridOptions0.data = datas;
                     $scope.gridOptions0.mydefalutData = datas;
                     $scope.gridOptions0.getPage(1,$scope.gridOptions0.paginationPageSize);
@@ -445,8 +431,8 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     $scope.gridOptions0 = gridOptions0;
     var com = [{ field: 'appName', displayName: '应用名称'},
         { field: "appCode", displayName:'应用代码'},
-        { field: "appType", displayName:'应用类型'},
-        { field: "isopen", displayName:'是否开通'},
+        { field: "appType", displayName:'应用类型',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.appType | translateConstants :\'DICT_AC_APPTYPE\') + $root.constant[\'DICT_AC_APPTYPE-\'+row.entity.appType]}}</div>'},
+        { field: "isopen", displayName:'是否开通',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.isopen | translateConstants :\'DICT_YON\') + $root.constant[\'DICT_YON-\'+row.entity.isopen]}}</div>'},
         { field: "openDateStr", displayName:'开通日期'},
         { field: "url", displayName:'访问地址'},
         { field: "ipAddr", displayName:'IP'},
@@ -589,8 +575,8 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     $scope.gridOptions1 = gridOptions1;
     var com1 = [{ field: 'funcgroupName', displayName: '功能组名称'},
         { field: "groupLevel", displayName:'节点层次'},
-        { field: "funcgroupSeq", displayName:'功能组序号'},
-        { field: "isleaf", displayName:'是否叶子节点'}
+        { field: "funcgroupSeq", displayName:'功能组序号'}
+ /*       { field: "isleaf", displayName:'是否叶子节点'}*/
     ];
     //自定义点击事件
     var f1 = function(row){
@@ -759,8 +745,8 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     $scope.gridOptions2 = gridOptions2;
     var com2 = [{ field: 'funcgroupName', displayName: '功能组名称'},
         { field: "groupLevel", displayName:'节点层次'},
-        { field: "funcgroupSeq", displayName:'功能组序号'},
-        { field: "isleaf", displayName:'是否叶子节点'}
+        { field: "funcgroupSeq", displayName:'功能组序号'}
+        /*{ field: "isleaf", displayName:'是否叶子节点'}*/
     ];
 
     //自定义点击事件
@@ -882,7 +868,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     $scope.gridOptions3 = gridOptions3;
     var com3 = [{ field: 'funcName', displayName: '功能名称'},
         { field: "funcType", displayName:'功能类型'},
-        { field: "ismenu", displayName:'是否定义为菜单'},
+        { field: "ismenu", displayName:'是否定义为菜单',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.ismenu | translateConstants :\'DICT_YON\') + $root.constant[\'DICT_YON-\'+row.entity.ismenu]}}</div>'},
         { field: "guidFuncgroup", displayName:'所属功能组'}
     ];
     //自定义点击事件
