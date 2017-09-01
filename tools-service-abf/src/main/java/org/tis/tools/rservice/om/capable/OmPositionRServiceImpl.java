@@ -192,7 +192,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 		OmPosition position = opList.get(0);
 		//检查当前状态,只能删除注销的岗位
 		if(position.getPositionStatus().equals(OMConstants.POSITION_STATUS_RUNNING)){
-			throw new PositionManagementException(OMExceptionCodes.POSITION_RUNNING_CANT_DELETE);
+			throw new PositionManagementException(OMExceptionCodes.POSITION_RUNNING_CANT_DELETE,BasicUtil.wrap(positionCode), "只能删除注销的岗位");
 		}
 		// 检查下级岗位状态
 		List<OmPosition> childList = queryAllChilds(positionCode);
