@@ -98,7 +98,7 @@ angular.module('MetronicApp').controller('systempara_controller', function($root
                 $scope.sysList = sys.Appall;//循环渲染，在弹窗中
                 $scope.sysdict = sys.dictAll;
                 $scope.valuefrom = function(item){
-                    if(item =='手动输入'){
+                    if(item =='H'){
                         $scope.manual = true;
                         $scope.selectes =false;
                         $scope.sysFrom.value='';
@@ -144,7 +144,7 @@ angular.module('MetronicApp').controller('systempara_controller', function($root
                     $scope.sysList = sys.Appall;//循环渲染，在弹窗中
                     $scope.sysdict = sys.dictAll;
                     //根据来源选择值内容
-                    if(getSel[0].valueFrom =='手动输入'){
+                    if(getSel[0].valueFrom =='H'){
                         $scope.manual = true;
                         $scope.selectes =false;
                     }else{
@@ -155,7 +155,7 @@ angular.module('MetronicApp').controller('systempara_controller', function($root
                     //修改展现方法
                     $scope.valuefrom = function(item){
                         var dictid = item;
-                        if(item =='手动输入'){
+                        if(item =='H'){
                             $scope.manual = true;
                             $scope.selectes =false;
                             $scope.sysFrom.value='';

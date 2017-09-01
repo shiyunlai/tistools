@@ -29,12 +29,12 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
         $scope.gridOptions = gridOptions;
         var com = [{ field: 'roleCode', displayName: '角色代码'},
             { field: "roleName", displayName:'角色名称'},
-            { field: "roleType", displayName:'角色类别',
+            { field: "roleType", displayName:'角色类别',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.roleType | translateConstants :\'DICT_AC_ROLETYPE\') + $root.constant[\'DICT_AC_ROLETYPE-\'+row.entity.roleType]}}</div>',
                 //配置搜索下拉框
                 filter:{
                     //term: '0',//默认搜索那项
                     type: uiGridConstants.filter.SELECT,
-                    selectOptions: [{ value: 'sys', label: 'sys' }, { value: 'app', label: 'app' }]
+                    selectOptions: [{ value: 'sys', label: 'sys'}, { value: 'app', label: 'app' }]
                 }},
             { field: "appName", displayName:'隶属应用',
                 filter:{

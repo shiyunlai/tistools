@@ -178,7 +178,7 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
                                 $rootScope.constant[val] = retval;
                                 return;
                             }else{
-                                $rootScope.constant[val] = val;
+                                $rootScope.constant[val] = '手动输入';
                             }
                         }
                     }
