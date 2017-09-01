@@ -20,24 +20,13 @@ import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.def.OMConstants;
 import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcRole;
-import org.tis.tools.model.po.om.OmEmpGroup;
-import org.tis.tools.model.po.om.OmEmployee;
-import org.tis.tools.model.po.om.OmGroup;
-import org.tis.tools.model.po.om.OmGroupPosition;
-import org.tis.tools.model.po.om.OmOrg;
-import org.tis.tools.model.po.om.OmPosition;
+import org.tis.tools.model.po.om.*;
 import org.tis.tools.model.vo.om.OmPositionDetail;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.om.exception.GroupManagementException;
 import org.tis.tools.rservice.om.exception.OrgManagementException;
-import org.tis.tools.service.om.BOSHGenGroupCode;
-import org.tis.tools.service.om.OmEmpGroupService;
-import org.tis.tools.service.om.OmEmployeeService;
-import org.tis.tools.service.om.OmGroupPositionService;
-import org.tis.tools.service.om.OmGroupService;
-import org.tis.tools.service.om.OmGroupServiceExt;
-import org.tis.tools.service.om.OmOrgService;
-import org.tis.tools.service.om.OmPositionService;
+import org.tis.tools.service.ac.AcAppService;
+import org.tis.tools.service.om.*;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
 
 import jdk.nashorn.internal.objects.annotations.Where;
@@ -60,7 +49,11 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 	@Autowired
 	OmGroupPositionService omGroupPositionService;
 	@Autowired
-	OmPositionService omPositionService; 
+	OmPositionService omPositionService;
+	@Autowired
+	OmGroupAppService omGroupAppService;
+	@Autowired
+	AcAppService acAppService;
 
 	/**
 	 * <pre>
@@ -479,11 +472,7 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 		return list;
 	}
 
-	@Override
-	public List<AcApp> queryApp(String groupCode) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	@Override
 	public List<OmPositionDetail> queryPosition(String groupCode) {
@@ -661,5 +650,66 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 		}else{
 			return list;
 		}
+	}
+
+	@Override
+	public List<AcApp> queryAppnotInGroup(String groupCode) {
+		List<AcApp> inList = queryApp(groupCode);
+		List<AcApp> allList = acAppService.query(null);
+		allList.removeAll(inList);
+		return allList;
+	}
+
+	@Override
+	public void addGroupApp(String appGuid, String groupGuid) {
+		// 校验传入参数
+		if (StringUtil.isEmpty(appGuid)) {
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
+		}
+		if (StringUtil.isEmpty(groupGuid)) {
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("groupGuid"));
+		}
+		OmGroupApp ogp = new OmGroupApp();
+		ogp.setGuidApp(appGuid);
+		ogp.setGuidGroup(groupGuid);
+		omGroupAppService.insert(ogp);
+	}
+
+	@Override
+	public void deleteGroupApp(String appGuid, String groupGuid) {
+		if (StringUtil.isEmpty(appGuid)) {
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
+		}
+		if (StringUtil.isEmpty(groupGuid)) {
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("groupGuid"));
+		}
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals(OmGroupApp.COLUMN_GUID_GROUP, groupGuid);
+		wc.andEquals(OmGroupApp.COLUMN_GUID_APP, appGuid);
+		omGroupAppService.deleteByCondition(wc);
+	}
+
+	@Override
+	public List<AcApp> queryApp(String groupCode) {
+		// 校验传入参数
+		if (StringUtil.isEmpty(groupCode)) {
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("groupCode"));
+		}
+		WhereCondition wc = new WhereCondition();
+		OmGroup og = queryGroup(groupCode);
+		wc.andEquals(OmGroupApp.COLUMN_GUID_GROUP, og.getGuid());
+		List<OmGroupApp> ogpList = omGroupAppService.query(wc);
+		List<AcApp> appList = new ArrayList<>();
+		if(ogpList.size() == 0){
+			return appList;
+		}
+		List<String> guidList = new ArrayList<>();
+		for(OmGroupApp ogp: ogpList){
+			guidList.add(ogp.getGuidApp());
+		}
+		wc.clear();
+		wc.andIn(AcApp.COLUMN_GUID,guidList);
+		appList = acAppService.query(wc);
+		return appList;
 	}
 }

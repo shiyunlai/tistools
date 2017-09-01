@@ -217,22 +217,32 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                     "action": function (node) {
                         var inst = jQuery.jstree.reference(node.reference),
                             obj = inst.get_node(node.reference);
-                        var node = {};
-                        node.id = "99999";
-                        var og = inst.copy(obj);
-                        console.log(og)
+                        console.log(obj)
+                        var subFrom = {};
+                        subFrom.orgDegree = obj.original.orgDegree;
+                        subFrom.AREA = obj.original.id.substr(5,3);
+                        console.log(subFrom)
+                        var copyCode = obj.original.orgCode;
+                        abftree_service.initcode(subFrom).then(function (data) {
+                            if (data.status == "success") {
+                                //生成机构代码,成功继续执行复制.
+                                subFrom = {};
+                                subFrom.neworgCode = data.retMessage;
+                                subFrom.copyCode = copyCode;
+                                abftree_service.copyOrg(subFrom).then(function (data) {
+                                    if (data.status == "success") {
+                                        toastr['success'](data.retMessage);
+                                        $("#container").jstree().refresh();
+                                    } else {
+                                        toastr['error'](data.retMessage);
+                                    }
+                                })
+                            } else {
+                                toastr['error'](data.retMessage);
+                            }
+                        })
                     }
-                },
-
-                "粘贴菜单": {
-                    "label": "粘贴机构",
-                    "action": function (node) {
-                        var inst = jQuery.jstree.reference(node.reference),
-                            obj = inst.get_node(node.reference);
-                        var og = $('#container').jstree(true).paste(node);
-                        console.log(og)
-                    }
-                },
+                }
             }
             return it;
 
@@ -250,53 +260,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                         subFrom.guidOrg = obj.original.guidOrg;
                         //调用封装方法
                         creatNewPosition(subFrom, null);
-                        // openwindow($uibModal, 'views/org/addPosition_window.html', 'lg',
-                        //     function ($scope, $modalInstance) {
-                        //         //创建机构实例
-                        //         var subFrom = {};
-                        //         $scope.subFrom = subFrom;
-                        //         //控制表单
-                        //         var next = true;
-                        //         $scope.next = next;
-                        //         //判断是根岗位还是子岗位
-                        //         if(obj.id.indexOf("GW") == 0){
-                        //             //处理新增机构父机构
-                        //             subFrom.guidParents = "";
-                        //             subFrom.guidOrg = obj.original.guid;
-                        //         }else{
-                        //             subFrom.guidParents = obj.original.guid;
-                        //             subFrom.guidOrg = obj.original.guidOrg;
-                        //         }
-                        //         //下一步
-                        //         $scope.skip = function () {
-                        //             abftree_service.initPosCode($scope.subFrom).then(function (data) {
-                        //                 console.log(data)
-                        //                 if(data.status == "success"){
-                        //                     $scope.subFrom.positionCode = data.retMessage;
-                        //                 }else{
-                        //                     toastr['error'](data.retMessage);
-                        //                 }
-                        //             })
-                        //             $scope.next = !$scope.next;
-                        //         }
-                        //         //增加方法
-                        //         $scope.add = function (subFrom) {
-                        //             //TODO.新增逻辑
-                        //             abftree_service.addposit(subFrom).then(function (data) {
-                        //                 if(data.status == "success"){
-                        //                     toastr['success'](data.retMessage);
-                        //                 }else{
-                        //                     toastr['error'](data.retMessage);
-                        //                 }
-                        //                 $("#container").jstree().refresh();
-                        //                 $scope.cancel();
-                        //             });
-                        //         }
-                        //         $scope.cancel = function () {
-                        //             $modalInstance.dismiss('cancel');
-                        //         };
-                        //     }
-                        // )
                     }
                 },
 
@@ -412,7 +375,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
         'dnd': {
             'is_draggable': function (node) {
                 //用于控制节点是否可以拖拽.
-                console.log(node)
                 var node = node[0];
                 if (node.id == "99999" || node.id.indexOf("GW") == 0) {
                     return false;
@@ -432,8 +394,12 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                 console.log(node)
             }
         },
+        'sort': function (a, b) {
+            //排序插件，会两者比较，获取到节点的order属性，插件会自动两两比较。
+            return this.get_node(a).original.sortNo > this.get_node(b).original.sortNo ? 1 : -1;
+        },
 
-        "plugins": ["dnd", "state", "types", "search", "contextmenu"]
+        "plugins": ["dnd", "state", "types", "contextmenu","sort"]
     }).bind("copy.jstree", function (node, e, data) {
         console.log(e);
         console.log(data);
@@ -444,8 +410,23 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
         console.log(c);
         console.log(d);
     }).bind("move_node.jstree", function (e, data) {
+        var subFrom = {};
+        subFrom.mvOrgCode = data.node.id;
+        subFrom.toOrgCode = data.parent;
+        subFrom.fromOrgCode = data.old_parent;
+        subFrom.position = data.position;
         if (confirm("确认要移动此机构吗?")) {
             console.log(data);
+            abftree_service.moveOrg(subFrom).then(function (data) {
+                if (data.status == "success") {
+                    toastr['success'](data.retMessage);
+                    console.log(data);
+                    $("#container").jstree().refresh();
+                } else {
+                    toastr['error'](data.retMessage);
+                    $("#container").jstree().refresh();
+                }
+            });
         } else {
 
             $("#container").jstree().refresh();
@@ -454,8 +435,8 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
         if (typeof data.node !== 'undefined') {//拿到结点详情
             // console.log(data.node.original.id.indexOf("@"));
             $scope.abftree.item = {};
-            console.log(data.node.original);
             $scope.currNode = data.node.text;
+            console.log(data.node)
             if (data.node.original.id.indexOf("POSIT") == 0) {
                 for (var i in $scope.flag) {
                     flag[i] = false;
@@ -467,7 +448,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                 $scope.gwflag.gwxx = true;
                 $scope.tabflag = false;
                 $scope.abftree.item = data.node.original;
-            } else if (data.node.original.id.indexOf("9999") == 0) {
+            } else if (data.node.original.id.indexOf("99999") == 0) {
                 for (var i in $scope.flag) {
                     flag[i] = false;
                 }
@@ -506,7 +487,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
     });
     //dnd插件事件监听
     $(document).on('dnd_start.vakata',function(e,data){
-        console.log(e)
+
     });
     //jstree 自定义筛选事件
     //筛选字段
@@ -524,33 +505,13 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
     //控制2个树显示标识,true为默认值,false为筛选状态
     var showtree = true;
     $scope.showtree = showtree;
-    // $scope.$watch('searchitem', function (newValue, oldValue) {
-    //     console.log(newValue)
-    //     var timeid;
-    //     if (isNull(newValue)) {
-    //         $scope.showtree = true;
-    //     } else {
-    //         $scope.showtree = false;
-    //         if(timeid){
-    //             console.log(timeid)
-    //             clearInterval(timeid)
-    //         }else {
-    //             timeid = setInterval(function () {
-    //                 console.log(123)
-    //
-    //                 clearInterval(timeid)
-    //
-    //             }, 500);
-    //         }
-    //     }
-    // }, true);
     //用于修改的实例
     var position = {};
     $scope.position = position;
 
-
-    abftree.test = function () {
-        console.log(1)
+    //刷新
+    abftree.refresh = function () {
+        $("#container").jstree().refresh();
     }
 
     //删除
@@ -1746,6 +1707,5 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
 
     /**-------------------------------测试常量翻译---------------------------*/
 
-    console.log($rootScope)
 });
 

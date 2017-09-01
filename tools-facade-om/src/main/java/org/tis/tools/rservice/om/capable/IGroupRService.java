@@ -346,16 +346,7 @@ public interface IGroupRService {
 	 */
 	List<OmGroup> queryChildGroup(String parentsCode);
 
-	/**
-	 * <per>
-	 * 查询与工作组关联的应用列表
-	 * </per>
-	 * 
-	 * @param groupCode
-	 *            工作组代码
-	 * @return 应用列表
-	 */
-	List<AcApp> queryApp(String groupCode);
+
 	
 	/**
 	 * <per>
@@ -456,4 +447,35 @@ public interface IGroupRService {
 	 */
 	List<OmGroup> queryBygroupName(String groupName);
 
+	/**
+	 * <per>
+	 * 查询与工作组关联的应用列表
+	 * </per>
+	 *
+	 * @param groupCode
+	 *            工作组代码
+	 * @return 应用列表
+	 */
+	List<AcApp> queryApp(String groupCode);
+
+	/**
+	 * 查询可为工作组添加的应用列表
+	 * @param groupCode
+	 * @return
+	 */
+	List<AcApp> queryAppnotInGroup(String groupCode);
+
+	/**
+	 * 新增一条工作组-应用关联信息
+	 * @param appGuid
+	 * @param groupGuid
+	 */
+	void addGroupApp(String appGuid, String groupGuid);
+
+	/**
+	 * 删除一条工作组-应用关联信息
+	 * @param appGuid
+	 * @param groupGuid
+	 */
+	void deleteGroupApp(String appGuid, String groupGuid);
 }

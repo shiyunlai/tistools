@@ -550,6 +550,12 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
             var alrolegird = {}
             var notrolegird = {}
             commRole(filterFilter, $scope, mygrid, alrolegird, notrolegird, guid, abftree_service, toastr)
+        } else if (num == 5) {
+            for(var a in flag) {
+                flag[a] = false;
+            }
+            flag.yylb = true;
+            reappgrid();
         }
     }
 
@@ -580,6 +586,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
         })
     }
 
+    /**--------------------------------------各类按钮事件------------------------------------*/
 
     //详情页按钮
     workgroup.enableGroup = function () {
@@ -840,6 +847,86 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
         }
     }
 
+    //应用列表事件
+    workgroup.addGpApp = function () {
+        console.log($scope.sub)
+        var subFrom = {};
+        subFrom.groupGuid = $scope.sub.guid;
+        subFrom.groupCode = $scope.sub.groupCode;
+        //打开通用列表窗口
+        openwindow($uibModal, 'views/org/addsearhgrid_window.html', 'lg',
+            function ($scope, $modalInstance) {
+                //设置标题栏
+                $scope.title = "新增应用";
+                //实例化列表
+                var commonGrid = {};
+                $scope.commonGrid = commonGrid;
+                var com = [
+                    {field: 'appName', displayName: '应用名称', enableHiding: false},
+                    {field: 'appType', displayName: '应用类别', enableHiding: false},
+                    {field: 'openDate', displayName: '开通时间', enableHiding: false},
+                    {field: 'appDesc', displayName: '功能描述', enableHiding: false}
+                ];
+                $scope.commonGrid = initgrid($scope, commonGrid, filterFilter, com, false, function () {
+                });
+                (function (subFrom) {
+                    Workgroup_service.queryNotInApp(subFrom).then(function (data) {
+                        console.log(data)
+                        console.log(subFrom)
+                        if (data.status == "success" && !isNull(data.retMessage)) {
+                            $scope.commonGrid.data = data.retMessage;
+                            $scope.commonGrid.mydefalutData = data.retMessage;
+                            $scope.commonGrid.getPage(1, $scope.commonGrid.paginationPageSize);
+                        } else {
+                            $scope.commonGrid.data = [];
+                            $scope.commonGrid.mydefalutData = [];
+                            $scope.commonGrid.getPage(1, $scope.commonGrid.paginationPageSize);
+                        }
+                    })
+                })(subFrom)
+                $scope.add = function () {
+                    var arr = $scope.commonGrid.getSelectedRows();
+                    if (arr.length != 1) {
+                        toastr['error']("请选择一条需要添加的应用！");
+                    }
+                    subFrom.appGuid = arr[0].guid;
+                    Workgroup_service.addGroupApp(subFrom).then(function (data) {
+                        if (data.status == "success") {
+                            toastr['success'](data.retMessage);
+                            reappgrid();
+                            $scope.cancel();
+                        } else {
+                            toastr['error'](data.retMessage);
+                        }
+                    })
+                }
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            });
+    }
+
+    workgroup.deleteGpApp = function () {
+        var subFrom = {};
+        subFrom.groupGuid = $scope.sub.guid;
+        subFrom.groupCode = $scope.sub.groupCode;
+        var arr = $scope.appgrid.getSelectedRows();
+        if (arr.length != 1) {
+            toastr['error']("请选择一条需要删除的应用!");
+            return false;
+        }
+        subFrom.appGuid = arr[0].guid;
+        Workgroup_service.deleteGroupApp(subFrom).then(function (data) {
+            if (data.status == "success") {
+                toastr['success'](data.retMessage);
+                reappgrid();
+            } else {
+                toastr['error'](data.retMessage);
+            }
+        });
+    }
+
+
 
     /**--------------------------------------筛选树------------------------------------*/
     //jstree 自定义筛选事件
@@ -923,5 +1010,41 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                 }
             });
         }
+    }
+
+
+
+
+    /**--------------------------------------生成各类grid------------------------------------*/
+    var appgrid = {};
+    $scope.appgrid = appgrid;
+    //定义单选事件
+    var selework = function () {
+
+    }
+    //定义表头名
+    var com = [
+        {field: 'appName', displayName: '应用名称', enableHiding: false},
+        {field: 'appType', displayName: '应用类别', enableHiding: false},
+        {field: 'openDate', displayName: '开通时间', enableHiding: false},
+        {field: 'appDesc', displayName: '功能描述', enableHiding: false}
+    ];
+    $scope.appgrid = initgrid($scope, appgrid, filterFilter, com, true, selework);
+
+    var reappgrid = function () {
+        var subFrom = {};
+        subFrom.groupCode = $scope.sub.groupCode
+        Workgroup_service.queryApp(subFrom).then(function (data) {
+            console.log(data)
+            if (data.status == "success" && !isNull(data.retMessage)) {
+                $scope.appgrid.data = data.retMessage;
+                $scope.appgrid.mydefalutData = data.retMessage;
+                $scope.appgrid.getPage(1, $scope.appgrid.paginationPageSize);
+            } else {
+                $scope.appgrid.data = [];
+                $scope.appgrid.mydefalutData = [];
+                $scope.appgrid.getPage(1, $scope.appgrid.paginationPageSize);
+            }
+        })
     }
 });

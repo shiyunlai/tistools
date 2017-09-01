@@ -20,7 +20,32 @@
 		where <!--exists (select guid from OM_ORG where guid_parents = a.org_seq ) and   -->
 		guid_parents is null or guid_parents = ''; 
 	</select>
-	
+
+	<update id="reorderOrg">
+		UPDATE
+		OM_ORG
+		<set>
+			SORT_NO = SORT_NO
+			<if test="flag == 'plus'">
+				+ 1
+			</if>
+			<if test="flag == 'minus'">
+				- 1
+			</if>
+		</set>
+		<where>
+			GUID_PARENTS =
+			<if test="targetGuid == 'root'">
+				''
+			</if>
+			<if test="targetGuid != 'root'">
+				#{targetGuid}
+			</if>
+			AND
+			SORT_NO >= #{index}
+		</where>
+	</update>
+
 	<sql id="Base_Column_List" >
 		 guid as guid 
 		,org_code as orgCode

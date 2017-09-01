@@ -502,7 +502,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
 		}
 		if (StringUtil.isEmpty(positionGuid)) {
-			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("positionGuid"));
 		}
 		OmPositionApp oap = new OmPositionApp();
 		oap.setGuidApp(appGuid);
@@ -516,7 +516,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
 		}
 		if (StringUtil.isEmpty(positionGuid)) {
-			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("positionGuid"));
 		}
 		WhereCondition wc = new WhereCondition();
 		wc.andEquals("GUID_POSITION", positionGuid);

@@ -4,6 +4,7 @@
  */
 package org.tis.tools.service.om;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,5 +93,10 @@ public class OmOrgServiceExt {
 			orgs = new ArrayList<OmOrg>() ; 
 		}
 		return orgs ; 
+	}
+
+
+	public void reorderOrg(String targetGuid, BigDecimal index, String flag){
+		omOrgMapperExt.reorderOrg(targetGuid, index, flag);
 	}
 }

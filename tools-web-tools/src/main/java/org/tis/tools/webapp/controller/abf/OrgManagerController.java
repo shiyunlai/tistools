@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.ac.*;
@@ -1070,6 +1071,63 @@ public class OrgManagerController extends BaseController {
         }
         return null;
     }
+
+    /**
+     * 拷贝机构
+     * @param model
+     * @param request
+     * @param content
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/copyOrg")
+    public String copyOrg(ModelMap model,HttpServletRequest request,@RequestBody String content,
+                                   HttpServletResponse response) {
+        try {
+            JSONObject jsonObj = JSONObject.parseObject(content);
+            String neworgCode = jsonObj.getString("neworgCode");
+            String copyCode = jsonObj.getString("copyCode");
+            orgRService.copyOrg(copyCode, neworgCode);
+            AjaxUtils.ajaxJsonSuccessMessage(response, "拷贝成功!");
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * 拖动机构
+     * @param model
+     * @param request
+     * @param content
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/moveOrg",method= RequestMethod.POST)
+    public String moveOrg(ModelMap model,HttpServletRequest request,@RequestBody String content,
+                          HttpServletResponse response) {
+        try {
+            JSONObject jsonObj = JSONObject.parseObject(content);
+            String mvOrgCode = jsonObj.getString("mvOrgCode");
+            String toOrgCode = jsonObj.getString("toOrgCode");
+            String fromOrgCode = jsonObj.getString("fromOrgCode");
+            int position = jsonObj.getInteger("position");
+            orgRService.moveOrg(mvOrgCode, fromOrgCode, toOrgCode, position);
+            AjaxUtils.ajaxJsonSuccessMessage(response, "移动成功!");
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+        }
+        return null;
+    }
+
+
+
 
     /**
      * 每个controller定义自己的返回信息变量
