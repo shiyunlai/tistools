@@ -115,6 +115,39 @@ MetronicApp.config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
 }]);
  **/
 
+
+MetronicApp.factory('httpInterceptor', ['$log', function($log) {
+    return {
+        //请求的方法
+        request: function (config){
+            //console.log(config);//打印所有的请求
+            return config;
+        },
+        //响应的方法
+        response: function (response){
+            //console.log(response);//打印所有的响应
+            if(response.status == '200'){//首先要请求成功
+                if(response.config.url.indexOf(manurl) ==0 ){//判断post请求，post请求的url都是marurl开头。
+                    //console.log(response);//打印所有post请求
+                    if(response.data.status =="success"){
+                        //console.log('成功的请求')
+                    }else if(response.data.status =="error"){
+                        //console.log('失败的请求,进行处理 ')
+                    }
+                }
+            }
+            return response;
+        }
+    };
+
+
+}]);
+//引入http拦截器
+MetronicApp.config(['$httpProvider', function($httpProvider) {
+    $httpProvider.interceptors.push('httpInterceptor');
+}]);
+
+
 //AngularJS v1.3.x workaround for old style controller declarition in HTML
 MetronicApp.config(['$controllerProvider', function($controllerProvider) {
     // this option might be handy for migrating old apps, but please don't use it
