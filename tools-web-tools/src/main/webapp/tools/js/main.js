@@ -6,7 +6,6 @@
 var isdebug = false;
 var manurl = 'http://localhost:8089/tis';
 
-
 var MetronicApp = angular.module("MetronicApp", [
     "ui.router",
     "ui.bootstrap",
@@ -19,7 +18,8 @@ var MetronicApp = angular.module("MetronicApp", [
     'ui.grid.edit',
     'ui.grid.pagination',
     'ui.grid.resizeColumns',
-    'ui.grid.emptyBaseLayer'
+    'ui.grid.emptyBaseLayer',
+    'ui-iconpicker'
 ]);
 
 function action(bdy){
@@ -160,7 +160,16 @@ MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http
     settings.utils.initdropdown=function(){
         ComponentsDropdowns.init();
     }
-
+    settings.utils.initSelect2=function(){
+        if ($().select2) {
+            $.fn.select2.defaults.set("theme", "bootstrap");
+            $('.select2me').select2({
+                placeholder: "Select",
+                width: 'auto',
+                allowClear: false
+            });
+        }
+    }
     $rootScope.settings = settings;
     var constant = {};
     $rootScope.constant = constant;
@@ -213,6 +222,12 @@ MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http
         }else if(type == "EMP"){
             if(_.isNil(settings.commlist[type])) {
                 $http.post(manurl + "/om/emp/queryemployee").then(function (response) {
+                    settings.commlist[type] = response.data.retMessage;
+                });
+            }
+        }else if(type == "ROLE"){
+            if(_.isNil(settings.commlist[type])) {
+                $http.post(manurl + "/AcRoleController/queryRoleList",{}).then(function (response) {
                     settings.commlist[type] = response.data.retMessage;
                 });
             }
@@ -304,8 +319,6 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
     $scope.$on('$includeContentLoaded', function () {
         Layout.initSidebar(); // init sidebar
         var sessionjson = angular.fromJson(sessionStorage.menus)
-
-
        if(sessionStorage.length == 0 ){
             window.location = "../tools/login.html";//如果正确，则进入主页
         }
@@ -844,6 +857,12 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             templateUrl:"views/operator/opManage.html",
             data: {pageTitle: '操作员管理'},
             controller:"opmanage_controller"
+        })
+        .state("operatsetqx",{
+            url:"/operatsetqx.html/{id:.*}",
+            templateUrl:"views/operator/operatsetqx.html",
+            data: {pageTitle: '操作员个人配置'},
+            controller:"operat_controller"
         })
         .state("Reorganizemenu",{
             url:"/Reorganizemenu.html",

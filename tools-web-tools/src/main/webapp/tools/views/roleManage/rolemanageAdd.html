@@ -36,11 +36,9 @@
                 <div class="col-md-6" >
                     <div class="form-group">
                         <label class="control-label col-md-4">角色类别:<span ng-class="{required:myform.dict_roleType.$invalid}"  > * </span></label>
-                        <div class="col-md-8">
+                        <div class="col-md-8"  ng-init="$settings.getDictData('DICT_AC_ROLETYPE')">
                             <select class="form-control" name="dict_roleType" ng-model="roleFrom.roleType"  required>
-                                <option value=""></option>
-                                <option value="s">一类</option>
-                                <option value="a">二类</option>
+                                <option ng-repeat="d in $settings.diclist['DICT_AC_ROLETYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>
                     </div>
@@ -56,13 +54,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6" >
+                <div class="col-md-12" >
                     <div class="form-group">
-                        <label class="control-label col-md-4">角色描述</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="roleFrom.roleDesc"
-                                   name="id" />
+                        <label class="control-label col-md-2">角色描述</label>
+                        <div class="col-md-10">
+                            <textarea class="form-control"  ng_model="roleFrom.roleDesc" maxlength="512" length-limit  num-length=512 scope-models="roleFrom.roleDesc"  name="id"></textarea>
                         </div>
                     </div>
                 </div>

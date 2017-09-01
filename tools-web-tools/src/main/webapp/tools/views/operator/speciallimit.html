@@ -1,0 +1,80 @@
+<!-- 新增操作员特殊权限页面 -->
+<div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs font-green-sharp"></i>
+            <span class="caption-subject font-green-sharp bold uppercase">选择特殊功能权限</span>
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="remove" ng-click="cancel()">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body portlet light">
+        <div class="portlet-body">
+            <div class="col-md-4">
+                <div id="opercontainer"></div>
+            </div>
+            <div class="col-md-8" ng-if="operisleaf">
+                <form action="#" name="myfrom" class="form-horizontal ">
+                    <div class="form-body " >
+                        <div class="col-md-12" >
+                            <div class="form-group">
+                                <label class="control-label col-md-4"> 授权标志:<span ng-class="{required:menuform.dict_key1.$invalid}"  > * </span></label>
+                                <div class="col-md-8">
+                                    <select class="form-control" name="dict_key3" ng-model="opearqxFrom.authType"     required>
+                                        <option value=""></option>
+                                        <option value="Y">特别允许</option>
+                                        <option value="N">特别禁止</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">有效开始日期</label>
+                                <div class="col-md-8">
+                                    <div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
+                                    <span class="input-group-btn">
+                                        <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                        <input type="text" class="form-control" ng-model="opearqxFrom.startDate"/>
+                                    </div>、
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label col-md-4"> 有效截止日期: </label>
+                                <div class="col-md-8">
+                                    <div class="input-group date form_datetime" ng-init="$root.settings.utils.initpicker()">
+                                        <span class="input-group-btn">
+                                            <button class="btn default date-set"  type="button"><i  class="fa fa-calendar"></i></button>
+                                        </span>
+                                        <input type="text" class="form-control" ng-model="opearqxFrom.endDate"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label col-md-2"></label>
+                                <div class="col-md-10">
+                                    <div class="actions btn-set" style="text-align: right">
+                                        <button type="button" name="back"  class="btn btn-primary" ng-if="myfrom.$invalid == false"  ng-disabled="myfrom.$invalid" popover-trigger="mouseenter" ng-click="add(opearqxFrom)" > 保存
+                                        </button>
+                                        <button type="button" name="back" class="btn default" ng-if="myfrom.$invalid == true"  ng-disabled="myfrom.$invalid" popover-trigger="mouseenter" > 保存
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 关闭
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

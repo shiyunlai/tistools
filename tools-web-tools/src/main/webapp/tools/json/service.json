@@ -23,8 +23,11 @@
     "querySysDictItem": {"ctrl": "DictController", "func": "querySysDictItem","emo":"查询单个业务字典项"},
     "querySysDictList": {"ctrl": "DictController", "func": "querySysDictList","emo":"查询所有业务字典"},
     "querySysDictItemList": {"ctrl": "DictController", "func": "querySysDictItemList","emo":"查询业务字典项列表"},
+    "queryAllDictItem": {"ctrl": "DictController", "func": "queryAllDictItem","emo":"查询所有字典项"},
     "queryDictItemListByDictKey": {"ctrl": "DictController", "func": "queryDictItemListByDictKey","emo":"根据key查询业务字典项列表"},
-    "exportDictExcel": {"ctrl": "DictController", "func": "exportDictExcel","emo":" 导出所有业务字典为excel"}
+    "exportDictExcel": {"ctrl": "DictController", "func": "exportDictExcel","emo":" 导出所有业务字典为excel"},
+    "queryDictTree": {"ctrl": "DictController", "func": "queryDictTree","emo":" 查询业务字典对应树结构"},
+    "queryDict": {"ctrl": "DictController", "func": "queryDict","emo":" 根据key查询业务字典信息"}
   },
   "duty_service" : {
     "dutytree": {"ctrl": "om/duty", "func": "dutytree"},
@@ -110,7 +113,14 @@
     "deleteOperatorIdentityres": {"ctrl": "AcOperatorController", "func": "deleteOperatorIdentityres","emo":"删除操作员身份权限"},
     "editOperatorIdentityres": {"ctrl": "AcOperatorController", "func": "editOperatorIdentityres","emo":"修改操作员身份权限"},
     "queryRoleInOperatorByResType": {"ctrl": "AcOperatorController", "func": "queryRoleInOperatorByResType","emo":"根据资源类型查询操作员对应角色"},
-    "queryOperatorByUserId": {"ctrl": "AcOperatorController", "func": "queryOperatorByUserId","emo":"根据USERID查询操作员GUID"}
+    "queryOperatorByUserId": {"ctrl": "AcOperatorController", "func": "queryOperatorByUserId","emo":"根据USERID查询操作员GUID"},
+    "queryOperatorUnauthorizedRoleList": {"ctrl": "AcOperatorController", "func": "queryOperatorUnauthorizedRoleList","emo":"根据USERID查询操作员未授权角色"},
+    "queryOperatorAuthorizedRoleList": {"ctrl": "AcOperatorController", "func": "queryOperatorAuthorizedRoleList","emo":"根据USERID查询操作员已授权角色"},
+    "queryOperatorInheritRoleList": {"ctrl": "AcOperatorController", "func": "queryOperatorInheritRoleList","emo":"根据USERID查询操作员继承角色"},
+    "queryOperatorFuncInfoInApp": {"ctrl": "AcOperatorController", "func": "queryOperatorFuncInfoInApp","emo":"根据USERID查询特殊权限树"},
+    "queryAcOperatorFunListByUserId": {"ctrl": "AcOperatorController", "func": "queryAcOperatorFunListByUserId","emo":"查询用户的特殊权限列表"},
+    "addAcOperatorFun": {"ctrl": "AcOperatorController", "func": "addAcOperatorFun","emo":"新增用户特殊功能权限"},
+    "removeAcOperatorFun": {"ctrl": "AcOperatorController", "func": "removeAcOperatorFun","emo":"移除用户特殊功能权限"}
   },
   "abftree_service" : {
     "loadmaintree": {"ctrl": "om/org", "func": "tree"},
@@ -135,8 +145,8 @@
     "enableorg": {"ctrl": "om/org", "func": "enableorg"},
     "enableposition": {"ctrl": "om/org", "func": "enableposition"},
     "deletePosition": {"ctrl": "om/org", "func": "deletePosition"},
-    "queryorgList": {"ctrl": "om/org", "func": "queryorgList","em":"查询所有机构"},
-    "queryAllPosition": {"ctrl": "om/org", "func": "queryAllPosition","em":"查询所有岗位"}
+    "queryAllorg": {"ctrl": "om/org", "func": "queryAllorg","em":"查询所有机构"},
+    "queryAllposition": {"ctrl": "om/org", "func": "queryAllposition","em":"查询所有岗位"}
   },
   "role_service" : {
     "queryRoleList": {"ctrl": "AcRoleController", "func": "queryRoleList","emo":"查询角色列表"},

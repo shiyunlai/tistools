@@ -81,7 +81,7 @@ public class AcAuthenticationController extends BaseController {
             String appGuid = jsonObject.getString("appGuid");
             AcOperator acOperator = authenticationRService.loginCheck(userId, password, identityGuid, appGuid);
             Map<String, Object> loginInfo = authenticationRService.getInitInfoByUserIdAndIden(userId, identityGuid, appGuid);
-            AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response,loginInfo,"YYYY-MM-dd hh:mm:ss");
+            AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response,loginInfo,"YYYY-MM-dd HH:mm:ss");
         } catch (ToolsRuntimeException e) {
             AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
             logger.error("login exception : ", e);

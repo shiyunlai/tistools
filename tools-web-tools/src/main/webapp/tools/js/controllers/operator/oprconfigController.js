@@ -130,7 +130,7 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
     //操作员名称，代码  应用系统名称 代码
     var com = [
         { field: "identityName", displayName:'身份名称'},
-        { field: "identityFlag", displayName:'默认身份标志'},
+        { field: "identityFlag", displayName:'默认身份标志',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.identityFlag | translateConstants :\'DICT_YON\') + $root.constant[\'DICT_YON-\'+row.entity.identityFlag]}}</div>'},
         { field: "seqNo", displayName:'显示顺序'}
     ];
     var f = function(row){
@@ -342,9 +342,7 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                         var  subFrom = {};
                         subFrom.operatorGuid =opensf.operguid;
                         subFrom.resType = newValue;
-                        console.log(subFrom)
                         common_service.post(res.queryRoleInOperatorByResType,subFrom).then(function(data){
-                            console.log(data);
                             var datas  = data.retMessage;
                             if(data.status == "success"){
                                 $scope.gridOptions.data = datas;
@@ -354,16 +352,17 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                         //导入
                     }else if(newValue=='function'){
                         var com = [
-                            { field: "funcName", displayName:'功能名称'}
+                            { field: "FUNC_NAME", displayName:'功能名称'}
                         ];
                         //查询操作员对应功能
                         var  subFrom = {};
-                        subFrom.operatorGuid =opensf.operguid;
-                        subFrom.resType = newValue;
-                        common_service.post(res.queryRoleInOperatorByResType,subFrom).then(function(data){
-                            var datas  = data.retMessage;
+                        subFrom.userId =opensf.info.userid;
+                        common_service.post(res.queryAcOperatorFunListByUserId,subFrom).then(function(data){
+                            var datas = data.retMessage;
                             if(data.status == "success"){
-                                $scope.gridOptions.data = datas;
+                                $scope.gridOptions.data =  datas;
+                                $scope.gridOptions.mydefalutData = datas;
+                                $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
                             }
                         })
                         $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
@@ -422,7 +421,6 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                         subFrom.operatorGuid =opensf.operguid;
                         subFrom.resType = newValue;
                         common_service.post(res.queryRoleInOperatorByResType,subFrom).then(function(data){
-                            console.log(data);
                             var datas  = data.retMessage;
                             if(data.status == "success"){
                                 $scope.gridOptions.data = datas;
@@ -433,14 +431,20 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
 
                     $scope.importAdd = function(item){//导入资源代码
                         var getSel = $scope.gridOptions.getSelectedRows();
-                        if(isNull(getSel) || getSel.length>1){
-                            toastr['error']("请选则一条数据进行添加！");
-                        }else{
-                            var  subFrom = {};
-                            subFrom.guidIdentity = opersguid; //身份guid
+                        if(getSel.length>0){
+                            /*subFrom.guidIdentity = opersguid; //身份guid
                             subFrom.acResourcetype =newValue;//资源类型
-                            subFrom.guidAcResource =getSel[0].guid;//资源guid
-                            common_service.post(res.createOperatorIdentityres,subFrom).then(function(data){
+                            subFrom.guidAcResource =getSel[0].guid;//资源guid*/
+                            //多选
+                            var tis = [];
+                            for(var i=0;i< getSel.length;i++){
+                                var  subFrom = {};
+                                subFrom.guidIdentity = opersguid; //身份guid
+                                subFrom.acResourcetype = newValue;//资源类型
+                                subFrom.guidAcResource = getSel[i].guid;//每一个guid
+                                tis.push(subFrom)
+                            }
+                            common_service.post(res.createOperatorIdentityres,tis).then(function(data){
                                 if(data.status == "success"){
                                     var datas  = data.retMessage;
                                     $scope.gridOptions.data = datas;
@@ -450,6 +454,8 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                                     $modalInstance.close();
                                 }
                             })
+                        }else{
+                            toastr['error']("请选则一条数据进行添加！");
                         }
 
                     }

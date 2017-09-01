@@ -1,6 +1,7 @@
 package org.tis.tools.webapp.controller.ac;
 
 import com.alibaba.dubbo.common.json.ParseException;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.model.po.ac.AcOperatorIdentity;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.ac.AcOperator;
+import org.tis.tools.model.po.ac.AcOperatorFunc;
 import org.tis.tools.model.po.ac.AcOperatorIdentityres;
 import org.tis.tools.model.po.ac.AcRole;
+import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
 import org.tis.tools.rservice.ac.capable.IOperatorRService;
 import org.tis.tools.rservice.ac.capable.IRoleRService;
 import org.tis.tools.webapp.controller.BaseController;
@@ -206,8 +209,7 @@ public class AcOperatorController extends BaseController {
             }
             JSONObject jsonObject= JSONObject.parseObject(content);
             String userId = jsonObject.getString("userId");
-            String operatorName = jsonObject.getString("operatorName");
-            List<AcOperatorIdentity> acOperatorIdentities = operatorRService.queryOperatorIdentitiesByUserIdAndName(userId, operatorName);
+            List<AcOperatorIdentity> acOperatorIdentities = operatorRService.queryOperatorIdentitiesByUserId(userId);
             AjaxUtils.ajaxJsonSuccessMessage(response,acOperatorIdentities);
         } catch (ToolsRuntimeException e) {
             AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
@@ -357,9 +359,8 @@ public class AcOperatorController extends BaseController {
                 logger.info("createOperatorIdentityres request : " + content);
             }
             JSONObject jsonObject= JSONObject.parseObject(content);
-            AcOperatorIdentityres acOperatorIdentityres = new AcOperatorIdentityres();
-            BeanUtils.populate(acOperatorIdentityres, jsonObject);
-            operatorRService.createOperatorIdentityres(acOperatorIdentityres);
+            List<AcOperatorIdentityres> acOperatorIdentityreses = JSON.parseArray(content, AcOperatorIdentityres.class);
+            operatorRService.createOperatorIdentityres(acOperatorIdentityreses);
             AjaxUtils.ajaxJsonSuccessMessage(response,"");
         } catch (ToolsRuntimeException e) {
             AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
@@ -485,7 +486,182 @@ public class AcOperatorController extends BaseController {
         return null;
     }
 
+    
+    /**
+     * 根据USERID查询操作员未授权角色
+     */
+    @ResponseBody
+    @RequestMapping(value="/queryOperatorUnauthorizedRoleList" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String queryOperatorUnauthorizedRoleList(@RequestBody String content, HttpServletRequest request,
+                               HttpServletResponse response)  {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("queryOperatorUnauthorizedRoleList request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+            String userId = jsonObject.getString("userId");//操作员USER_ID
+            List<AcRole> acRoleList = roleRService.queryOperatorUnauthorizedRoleList(userId);
+            AjaxUtils.ajaxJsonSuccessMessage(response, acRoleList);
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("queryOperatorUnauthorizedRoleList exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("queryOperatorUnauthorizedRoleList exception : ", e);
+        }
+        return null;
+    }
+    
+    /**
+     * 根据USERID查询操作员已授权角色
+     */
+    @ResponseBody
+    @RequestMapping(value="/queryOperatorAuthorizedRoleList" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String queryOperatorAuthorizedRoleList(@RequestBody String content, HttpServletRequest request,
+                               HttpServletResponse response)  {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("queryOperatorAuthorizedRoleList request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+            String userId = jsonObject.getString("userId");//操作员USER_ID
+            List<AcRole> acRoleList = roleRService.queryOperatorAuthorizedRoleList(userId);
+            AjaxUtils.ajaxJsonSuccessMessage(response, acRoleList);
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("queryOperatorAuthorizedRoleList exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("queryOperatorAuthorizedRoleList exception : ", e);
+        }
+        return null;
+    }    
+    /**
+     * 根据USERID查询操作员继承角色
+     */
+    @ResponseBody
+    @RequestMapping(value="/queryOperatorInheritRoleList" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String queryOperatorInheritRoleList(@RequestBody String content, HttpServletRequest request,
+                               HttpServletResponse response)  {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("queryOperatorInheritRoleList request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+            String userId = jsonObject.getString("userId");//操作员USER_ID
+            List<AcRole> acRoleList = roleRService.queryOperatorInheritRoleList(userId);
+            AjaxUtils.ajaxJsonSuccessMessage(response, acRoleList);
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("queryOperatorInheritRoleList exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("queryOperatorInheritRoleList exception : ", e);
+        }
+        return null;
+    }
 
+    
+    /**
+     * 根据USERID查询特殊权限树
+     */
+    @ResponseBody
+    @RequestMapping(value="/queryOperatorFuncInfoInApp" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String queryOperatorFuncInfoInApp(@RequestBody String content, HttpServletRequest request,
+                               HttpServletResponse response)  {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("queryOperatorFuncInfoInApp request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+            String userId = jsonObject.getString("userId");//操作员USER_ID
+            AcOperatorFuncDetail info = operatorRService.queryOperatorFuncInfoInApp(userId);
+            AjaxUtils.ajaxJsonSuccessMessage(response, info.toString());
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("queryOperatorInheritRoleList exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("queryOperatorInheritRoleList exception : ", e);
+        }
+        return null;
+    } 
+    
+    /**
+     * 查询用户的特殊权限列表
+     */
+    @ResponseBody
+    @RequestMapping(value="/queryAcOperatorFunListByUserId" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String queryAcOperatorFunListByUserId(@RequestBody String content, HttpServletRequest request,
+                               HttpServletResponse response)  {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("queryAcOperatorFunListByUserId request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+            String userId = jsonObject.getString("userId");//操作员USER_ID
+            List<Map> info = operatorRService.queryAcOperatorFunListByUserId(userId);
+            AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response,info, "YYYY-MM-dd");//转换时间类型
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("queryAcOperatorFunListByUserId exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("queryAcOperatorFunListByUserId exception : ", e);
+        }
+        return null;
+    } 
+    
+
+    /**
+     * 新增用户特殊功能权限
+     */
+    @ResponseBody
+    @RequestMapping(value="/addAcOperatorFun" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String addAcOperatorFun(@RequestBody String content, HttpServletRequest request,
+                               HttpServletResponse response)  {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("addAcOperatorFun request : " + content);
+            }
+            AcOperatorFunc acOperatorFunc = JSON.parseObject(content, AcOperatorFunc.class);
+            operatorRService.addAcOperatorFun(acOperatorFunc);
+            AjaxUtils.ajaxJsonSuccessMessage(response, "");
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("addAcOperatorFun exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("addAcOperatorFun exception : ", e);
+        }
+        return null;
+    }
+    
+    /**
+     * 移除用户特殊功能权限
+     */
+    @ResponseBody
+    @RequestMapping(value="/removeAcOperatorFun" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String removeAcOperatorFun(@RequestBody String content, HttpServletRequest request,
+                               HttpServletResponse response)  {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("removeAcOperatorFun request : " + content);
+            }
+            JSONObject jsonObject= JSONObject.parseObject(content);
+            String operatorGuid = jsonObject.getString("operatorGuid");//操作员GUID
+            String funcGuid = jsonObject.getString("funcGuid");// 功能GUID
+            operatorRService.removeAcOperatorFun(operatorGuid, funcGuid);
+            AjaxUtils.ajaxJsonSuccessMessage(response, "");
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("removeAcOperatorFun exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("removeAcOperatorFun exception : ", e);
+        }
+        return null;
+    }
     /**
      * 要求子类构造自己的响应数据
      *

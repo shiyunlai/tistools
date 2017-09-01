@@ -27,6 +27,25 @@ angular.module('MetronicApp').controller('systempara_controller', function($root
     })
 
 
+    //查询所有业务字典项
+    dictonary_service.queryAllDictItem(subFrom).then(function(data){
+        if(data.status == "success"){
+            var datas = data.retMessage;
+            sys.dictitemAll = datas;//所有应用数据，最终要在弹窗中渲染
+        }else{
+        }
+    })
+
+
+    dictonary_service.querySysDictList(subFrom).then(function(data){
+        if(data.status == "success"){
+            var datas = data.retMessage;
+            sys.dictAll = datas;//所有应用数据，最终要在弹窗中渲染
+        }else{
+        }
+    })
+
+
     //查询业务字典对应字典项
     var dictinfo = function(id,$scope){
         var subFrom={};
@@ -45,11 +64,11 @@ angular.module('MetronicApp').controller('systempara_controller', function($root
     var gridOptions = {};
     $scope.gridOptions = gridOptions;
     var com = [
-        { field: 'guidApp', displayName: '应用系统'},
+        { field: 'guidApp', displayName: '应用系统',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidApp | translateApp) + $root.constant[row.entity.guidApp]}}</div>'},
         { field: 'groupName', displayName: '参数组别'},
         { field: "keyName", displayName:'参数值'},
-        { field: "valueFrom", displayName:'值来源'},
-        { field: "value", displayName:'参数值'},
+        { field: "valueFrom", displayName:'值来源',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.valueFrom | translateDict) + $root.constant[row.entity.valueFrom]}}</div>'},
+        { field: "value", displayName:'参数值',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.value | translateDictitem) + $root.constant[row.entity.value]}}</div>'},
         { field: "description", displayName:'参数描述'}
     ];
     var f = function(row){
@@ -66,16 +85,6 @@ angular.module('MetronicApp').controller('systempara_controller', function($root
         var subFrom = {};
         systempara_service.queryRunConfigList(subFrom).then(function (data) {
             var datas = data.retMessage;
-            var dictall = sys.dictAll;
-            for(var i = 0;i<datas.length;i++){
-                for(var j=0;j<dictall.length;j++){
-                    if(datas[i].valueFrom ==  dictall[j].guid){
-                        datas[i].valueFrom = dictall[j].dictName;
-                        continue;
-                    }
-                }
-            }
-            var etsa = sys.Appall;
             $scope.gridOptions.data = datas;//把获取到的数据复制给表
             $scope.gridOptions.mydefalutData = datas;
             $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
@@ -89,7 +98,7 @@ angular.module('MetronicApp').controller('systempara_controller', function($root
                 $scope.sysList = sys.Appall;//循环渲染，在弹窗中
                 $scope.sysdict = sys.dictAll;
                 $scope.valuefrom = function(item){
-                    if(item =='H-手动输入'){
+                    if(item =='手动输入'){
                         $scope.manual = true;
                         $scope.selectes =false;
                         $scope.sysFrom.value='';
@@ -127,13 +136,15 @@ angular.module('MetronicApp').controller('systempara_controller', function($root
         }else{
             openwindow($uibModal, 'views/Systempara/SystemparaAdd.html', 'lg',
                 function ($scope, $modalInstance) {
+
+                    console.log(getSel[0])
                     var ids = id;
                     $scope.id = ids;
                     $scope.sysFrom = getSel[0];
                     $scope.sysList = sys.Appall;//循环渲染，在弹窗中
                     $scope.sysdict = sys.dictAll;
                     //根据来源选择值内容
-                    if(getSel[0].valueFrom =='H-手动输入'){
+                    if(getSel[0].valueFrom =='手动输入'){
                         $scope.manual = true;
                         $scope.selectes =false;
                     }else{
@@ -144,7 +155,7 @@ angular.module('MetronicApp').controller('systempara_controller', function($root
                     //修改展现方法
                     $scope.valuefrom = function(item){
                         var dictid = item;
-                        if(item =='H-手动输入'){
+                        if(item =='手动输入'){
                             $scope.manual = true;
                             $scope.selectes =false;
                             $scope.sysFrom.value='';

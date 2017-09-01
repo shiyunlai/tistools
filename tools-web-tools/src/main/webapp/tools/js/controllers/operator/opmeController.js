@@ -1,14 +1,13 @@
 /**
  * Created by wangbo on 2017/6/20.
  */
-
-MetronicApp.controller('opmanage_controller', function ($filter,$rootScope, $scope, $state, $stateParams, filterFilter,operator_service,dictonary_service, $modal,$uibModal, $http, $timeout,$interval,i18nService) {
+/*操作员管理控制器*/
+MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $state, $stateParams, filterFilter,operator_service,dictonary_service, $modal,$uibModal, $http, $timeout,$interval,i18nService) {
     //grid表格
     i18nService.setCurrentLang("zh-cn");
     //查询操作员列表
     var operman ={};
     $scope.operman = operman;
-
     operman.queryAll = function(){
         //查询所有
         var subFrom = {};
@@ -23,20 +22,20 @@ MetronicApp.controller('opmanage_controller', function ($filter,$rootScope, $sco
             }
         })
     }
-
     operman.queryAll();
     var gridOptions = {};
     $scope.gridOptions = gridOptions;
     var com = [{ field: 'operatorName', displayName: '操作员姓名'},
         { field: "userId", displayName:'登录用户名'},
-        { field: "authMode", displayName:'认证模式'},
-        { field: "operatorStatus",displayName:'操作员状态'},
-        { field: "menuType",displayName:'菜单风格'},
+        { field: "authMode", displayName:'认证模式',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.authMode | translateConstants :\'DICT_AC_AUTHMODE\') + $root.constant[\'DICT_AC_AUTHMODE-\'+row.entity.authMode]}}</div>'},
+        { field: "operatorStatus",displayName:'操作员状态',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.operatorStatus | translateConstants :\'DICT_AC_OPERATOR_STATUS\') + $root.constant[\'DICT_AC_OPERATOR_STATUS-\'+row.entity.operatorStatus]}}</div>'},
+        { field: "menuType",displayName:'菜单风格',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.menuType | translateConstants :\'DICT_AC_MENUTYPE\') + $root.constant[\'DICT_AC_MENUTYPE-\'+row.entity.menuType]}}</div>'},
         { field: "lockLimit",displayName:'锁定次数限制'}
     ];
     var f = function(row){
         if(row.isSelected){
             $scope.selectRow = row.entity;
+            operman.info = $scope.selectRow.userId;//传入userid.进行权限的分配
         }else{
             delete $scope.selectRow;//制空
         }
@@ -60,7 +59,6 @@ MetronicApp.controller('opmanage_controller', function ($filter,$rootScope, $sco
                     $scope.subFrom = subFrom;
                     subFrom = item;
                     operator_service.createOperator(subFrom).then(function(data){
-                        console.log(data)
                         if(data.status == "success"){
                             toastr['success']( "新增成功！");
                             operman.queryAll();
@@ -90,7 +88,6 @@ MetronicApp.controller('opmanage_controller', function ($filter,$rootScope, $sco
                         var subFrom = {};
                         $scope.subFrom = subFrom;
                         subFrom = item;
-                        console.log(subFrom)
                         operator_service.editOperator(subFrom).then(function(data){
                             if(data.status == "success"){
                                 toastr['success']( "新增成功！");
@@ -111,10 +108,368 @@ MetronicApp.controller('opmanage_controller', function ($filter,$rootScope, $sco
         }
     }
 
+    //操作员个性化配置
+    $scope.operatsetqx = function (id) {
+        if($scope.selectRow){
+            $state.go("operatsetqx",{id:id})
+        }else{
+            toastr['error']("请至少选中一个操作员进行权限的分配！");
+        }
+    }
+});
+
+/*操作员个人配置控制器*/
+MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state, $stateParams,common_service,filterFilter,i18nService,$modal,$interval) {
+    var res = $rootScope.res.operator_service;//页面所需调用的服务
+    var role = $rootScope.res.role_service;//添加操作员服务
+    //grid表格中文
+    i18nService.setCurrentLang("zh-cn");
+    //返回方法
+    $scope.myback = function(){
+        window.history.back(-1);
+    }
+    var operatqx = {};
+    $scope.operatqx = operatqx;
+    var userid = $stateParams.id;//接受传入的值
+    operatqx.userid= userid;
+    $scope.currRole = userid;//显示当前操作员
+    //查询userid对应的guid
+    var  serFrom = {}
+    serFrom.userId = operatqx.userid;
+    common_service.post(res.queryOperatorByUserId,serFrom).then(function(data){
+        var datas = data.retMessage;
+        operatqx.operatorGuid = datas.guid;
+    })
+
+    //未授予角色表格生成
+    var notrolegird = {};
+    $scope.notrolegird = notrolegird;
+    var com = [
+        { field: "roleName", displayName:'角色名'},
+    ];
+    var f = function(row){
+        if(row.isSelected){
+            $scope.selectRow = row.entity;
+        }else{
+            $scope.selectRow = '';//制空
+        }
+    }
+    $scope.notrolegird = initgrid($scope,notrolegird,filterFilter,com,false,f);
+    $scope.notrolegird.enablePaginationControls = false;//禁止有分页
+    $scope.notrolegird.enableFiltering = false;//禁止有搜索
+    $scope.notrolegird.enableGridMenu = false;//禁止有菜单
+    //查询未授予表格逻辑
+    operatqx.querynotrole = function(){
+        //查询所有未授予的
+        var subFrom = {};
+        subFrom.userId = operatqx.userid;
+            common_service.post(res.queryOperatorUnauthorizedRoleList,subFrom).then(function(data){
+                var datas = data.retMessage;
+            if(data.status == "success"){
+                $scope.notrolegird.data =  datas;
+                $scope.notrolegird.mydefalutData = datas;
+                $scope.notrolegird.getPage(1,$scope.notrolegird.paginationPageSize);
+            }else{
+                $scope.notrolegird.data =  [];
+                $scope.notrolegird.mydefalutData = [];
+                $scope.notrolegird.getPage(1,$scope.notrolegird.paginationPageSize);
+            }
+        })
+    }
+    operatqx.querynotrole();
+
+    //添加未授予角色逻辑
+    $scope.operatqx.add = function(){
+        var dats = $scope.notrolegird.getSelectedRows();
+        if($scope.selectRow == ""){
+            toastr['error']("请至少选择一个角色");
+            return false;
+        }else{
+                var subFrom = {};
+                subFrom.guidRole = $scope.selectRow.guid;//角色guid
+                subFrom.guidOperator = operatqx.operatorGuid;//操作员guid
+                var tis = [];
+                tis.push(subFrom)
+                common_service.post(role.addOperatorRole,tis).then(function(data){
+                    if(data.status == "success"){
+                        toastr['success']("授予成功！");
+                        operatqx.querynotrole();//查询未授予
+                        operatqx.queryalrole();//查询已授予
+                    }else{
+                        toastr['error']('查询失败'+'<br/>'+data.retMessage);
+                    }
+                })
+        }
+    }
+    //已授予角色表格生成
+    var alrolegird = {};
+    $scope.alrolegird = notrolegird;
+    var com1 = [
+        { field: "roleName", displayName:'角色名'}
+    ];
+    var f1 = function(row){
+        if(row.isSelected){
+            $scope.deleteGUid = row.entity;
+        }else{
+            $scope.deleteGUid = '';//制空
+        }
+    }
+    $scope.alrolegird = initgrid($scope,alrolegird,filterFilter,com1,false,f1);
+    $scope.alrolegird.enablePaginationControls = false;//禁止有分页
+    $scope.alrolegird.enableFiltering = false;//禁止有搜索
+    $scope.alrolegird.enableGridMenu = false;//禁止有菜单
+
+    //查询已授予角色
+    operatqx.queryalrole = function(){
+        //查询已授予的角色
+        var subFrom = {};
+        subFrom.userId = operatqx.userid;
+        common_service.post(res.queryOperatorAuthorizedRoleList,subFrom).then(function(data){
+            var datas = data.retMessage;
+            if(data.status == "success"){
+                $scope.alrolegird.data =  datas;
+                $scope.alrolegird.mydefalutData = datas;
+                $scope.alrolegird.getPage(1,$scope.alrolegird.paginationPageSize);
+            }else{
+                $scope.alrolegird.data =  [];
+                $scope.alrolegird.mydefalutData = [];
+                $scope.alrolegird.getPage(1,$scope.alrolegird.paginationPageSize);
+            }
+        })
+    }
+    operatqx.queryalrole()
+    //已授予角色删除
+    $scope.operatqx.del = function(){
+        if($scope.deleteGUid == ""){
+            toastr['error']("请至少选择一个角色");
+            return false;
+        }else{
+            var subFrom = {};
+            subFrom.roleGuid = $scope.deleteGUid.guid;//角色guid
+            subFrom.operatorGuid = operatqx.operatorGuid;//操作员guid
+            var tis = [];
+            tis.push(subFrom)
+            common_service.post(role.removeOperatorRole,tis).then(function(data){
+                if(data.status == "success"){
+                    toastr['success']("删除成功！");
+                    operatqx.querynotrole();//查询未授予
+                    operatqx.queryalrole();//查询已授予
+                }else{
+                    toastr['error']('查询失败'+'<br/>'+data.retMessage);
+                }
+            })
+        }
+    }
+
+    //特别权限表格添加
+    operatqx.authority = function(){
+        $scope.operisleaf = false;
+        var queryuserid= operatqx.userid;
+        var queryguid = operatqx.operatorGuid;//操作员guid
+        openwindow($modal, 'views/operator/speciallimit.html', 'lg',//弹出页面
+            function ($scope, $modalInstance) {
+                var opearqxFrom = {};
+                $scope.opearqxFrom = opearqxFrom;//表单信息
+                var  operqxinpfo = {};
+                $scope.operqxinpfo = operqxinpfo;//表单信息
+                //查询所有应用
+                var subFrom = {};
+                subFrom.userId = queryuserid;
+                //根据usid查询功能权限
+                common_service.post(res.queryOperatorFuncInfoInApp,subFrom).then(function(data){
+                    if(data.status == "success"){
+                        var datas = data.retMessage;
+                     /*   var result= datas.replace(/guid/g,"id").replace(/label/g,'text');//把guid和label替换成自己需要的*/
+                        var menuAll = angular.fromJson(datas);
+                        var tisMenu = [];;//绑定数组
+                        tisMenu.push(menuAll)
+                        //菜单一权限
+                        $("#opercontainer").jstree({
+                            "core" : {
+                                "themes" : {
+                                    "responsive": false
+                                },
+                                "check_callback" : false,//在对树结构进行改变时，必须为true
+                                'data':tisMenu
+                            },
+                            "force_text": true,
+                            plugins: ["sort", "types", "themes", "html_data"],
+                            "checkbox": {
+                                "keep_selected_style": false,//是否默认选中
+                            },
+                            "types" : {
+                                "default" : {
+                                    "icon" : "fa fa-folder icon-state-warning icon-lg"
+                                },
+                                "file" : {
+                                    "icon" : "fa fa-file icon-state-warning icon-lg"
+                                }
+                            },
+                            "state" : { "key" : "demo3" },
+                            'dnd': {
+                                'is_draggable':function (node) {
+                                    //用于控制节点是否可以拖拽.
+                                    if(node.id == 3){
+                                        return false;//根节点禁止拖拽
+                                    }
+                                    return true;
+                                },
+                                'always_copy':true//拖拽拷贝，非移除
+                            },
+                            'callback' : {
+                                move_node:function (node) {
+                                }
+                            },
+                            plugins: ["sort", "types", "wholerow", "themes", "html_data"],
+                        }).bind("select_node.jstree", function (e, data) {
+                            operqxinpfo.funinfo = data.node.original;
+
+                            if(data.node.original.isLeaf == 'Y'){
+                                    $scope.operisleaf = true;
+                            }else{
+                                $scope.operisleaf = false;
+                            }
+                            $scope.$apply();
+                        })
+                    }else{
+                        toastr['error']('暂无该应用操作权限');
+                    }
+                })
+                //导入
+                $scope.add = function (item) {
+                    var subFrom  = {};
+                    subFrom=item;
+                    subFrom.guidOperator = queryguid;//操作员guid
+                    subFrom.guidFunc = operqxinpfo.funinfo.id;//功能guid
+                    subFrom.guidFuncgroup = operqxinpfo.funinfo.parentGuid;//功能组guid
+                    subFrom.guidApp = operqxinpfo.funinfo.appGuid//功能组guid
+                    common_service.post(res.addAcOperatorFun,subFrom).then(function(data){
+                        var datas = data.retMessage;
+                        if(data.status == "success"){
+                            toastr['success']( "保存成功！");
+                            operatqx.queryspeciallimit()
+                            $modalInstance.close();
+                        }else{
+
+                        }
+                    })
+                }
+
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            })
+    }
+
+    //特别权限表格生成
+    var postgrid = {};
+    $scope.postgrid = postgrid;
+    //操作员名称，代码  应用系统名称 代码
+    //操作员名称，代码  应用系统名称 代码
+    var com2 = [
+        { field: 'FUNC_NAME', displayName: '功能名称'},
+        { field: 'authType', displayName: '授权标志'},
+        { field: 'startDate', displayName: '有效开始日期'},
+        { field: 'endDate', displayName: '有效截止日期'}
+    ];
+    var f2 = function(row){
+        if(row.isSelected){
+            $scope.speciallimit = row.entity;
+        }else{
+            $scope.speciallimit = '';//制空
+        }
+    }
+    $scope.postgrid = initgrid($scope,postgrid,filterFilter,com2,false,f2);
+    $scope.postgrid.data = $scope.postgrids;//表格数据
+    $scope.postgrid.enablePaginationControls = false;//禁止有分页
+    $scope.postgrid.enableFiltering = false;//禁止有搜索
+    $scope.postgrid.enableGridMenu = false;//禁止有菜单
+    //查询特殊权限列表
+    operatqx.queryspeciallimit = function(){
+        var subFrom = {};
+        subFrom.userId = operatqx.userid;
+        common_service.post(res.queryAcOperatorFunListByUserId,subFrom).then(function(data){
+            var datas = data.retMessage;
+            if(data.status == "success"){
+                $scope.postgrid.data =  datas;
+                $scope.postgrid.mydefalutData = datas;
+                $scope.postgrid.getPage(1,$scope.postgrid.paginationPageSize);
+            }else{
+                $scope.postgrid.data =  [];
+                $scope.postgrid.mydefalutData = [];
+                $scope.postgrid.getPage(1,$scope.postgrid.paginationPageSize);
+            }
+        })
+    }
+
+    operatqx.queryspeciallimit()//调用查询特殊权限
+    //删除特殊权限列表逻辑
+    $scope.operatqx.deleat = function(){
+        if($scope.speciallimit == ""){
+            toastr['error']("请至少选择一个角色进行删除");
+            return false;
+        }else{
+            var subFrom = {};
+            subFrom.operatorGuid = operatqx.operatorGuid;//操作员guid
+            subFrom.funcGuid = $scope.speciallimit.guidFunc;//功能guid
+            /*var tis = [];
+            tis.push(subFrom)*/
+            common_service.post(res.removeAcOperatorFun,subFrom).then(function(data){
+                if(data.status == "success"){
+                    if(confirm("您确认要删除选中的特殊功能吗")){
+                        toastr['success']("删除成功！");
+                        operatqx.queryspeciallimit()//调用查询特殊权限
+                    }
+
+                }else{
+                    toastr['error']('查询失败'+'<br/>'+data.retMessage);
+                }
+            })
+        }
+    }
+
+    //查询继承角色列表
+    operatqx.queryinheritgrid = function(){
+        var subFrom = {};
+        subFrom.userId = operatqx.userid;
+        common_service.post(res.queryOperatorInheritRoleList,subFrom).then(function(data){
+            var datas = data.retMessage;
+            if(data.status == "success"){
+                $scope.inheritgrid.data =  datas;
+                $scope.inheritgrid.mydefalutData = datas;
+                $scope.inheritgrid.getPage(1,$scope.inheritgrid.paginationPageSize);
+            }else{
+                $scope.inheritgrid.data =  [];
+                $scope.inheritgrid.mydefalutData = [];
+                $scope.inheritgrid.getPage(1,$scope.inheritgrid.paginationPageSize);
+            }
+        })
+    }
+    operatqx.queryinheritgrid();
+    //继承角色表格生成
+    var inheritgrid = {};
+    $scope.inheritgrid = inheritgrid;
+    //操作员名称，代码  应用系统名称 代码
+    //操作员名称，代码  应用系统名称 代码
+    var com3 = [
+        { field: 'roleName', displayName: '角色'}
+    ];
+    var f3 = function(row){
+        if(row.isSelected){
+            $scope.inherit = row.entity;
+        }else{
+            $scope.inherit = '';//制空
+        }
+    }
+    $scope.inheritgrid = initgrid($scope,inheritgrid,filterFilter,com3,false,f3);
+    $scope.inheritgrid.enablePaginationControls = false;//禁止有分页
+    $scope.inheritgrid.enableFiltering = false;//禁止有搜索
+    $scope.inheritgrid.enableGridMenu = false;//禁止有菜单
+
 });
 
 /* 重组菜单控制器*/
-MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common_service,$scope, $state, $stateParams, filterFilter, $modal,$uibModal, $http, $timeout,$interval,i18nService) {
+MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common_service,$scope, $state, $stateParams, filterFilter, $modal,$uibModal, $http, $timeout) {
     var opmer ={};
     $scope.opmer = opmer;
     var res = $rootScope.res.menu_service;//页面所需调用的服务
@@ -229,7 +584,7 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
                 }
             )
         }
-        //修改子菜单提取
+        //修改菜单提取
         var editchildmenu = function(node){
             openwindow($uibModal, 'views/Management/configMana.html', 'lg',// 弹出页面
                 function ($scope, $modalInstance) {
@@ -244,7 +599,6 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
                         subFrom.guid = node.id;
                         subFrom.isLeaf = 'N';
                         common_service.post(res.editOperatorMenu,subFrom).then(function(data){
-                            console.log(data);
                             if(data.status == "success"){
                                 toastr['success']( "新增成功！");
                                 searchMenu();//刷新重新加载
@@ -265,7 +619,6 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
             var subFrom = {};
             subFrom.operatorMenuGuid = node.id;
             common_service.post(res.deleteOperatorMenu,subFrom).then(function(data){
-                console.log(data);
                 if(data.status == "success"){
                     toastr['success']( "删除成功！");
                     searchMenu();
@@ -410,6 +763,7 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
         var creattopmenu = function(){
             openwindow($uibModal, 'views/Management/configMana.html', 'lg',
                 function ($scope, $modalInstance) {
+
                     $scope.add= function(item){
                         var subFrom = {};
                         subFrom = item;
@@ -515,7 +869,11 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
                 if(dates == '{}'){
                     if(confirm("该用户无重组菜单，是否创建")){
                         $('#container2').jstree('destroy',false);
-                        creattopmenu();//调用新增顶级菜单接口
+                        creattopmenu();
+                        $scope.opmer.config = true;//显示新增的顶级菜单
+                    }else{
+                        $scope.iscreat = true;
+                        $scope.opmer.config = true;
                     }
                 }else{
                     //有重组菜单，自己配置即可

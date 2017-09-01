@@ -5,9 +5,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
         var role = {};
         $scope.role = role;
 
-
-
-
     var res = $rootScope.res.abftree_service;//页面所需调用的服务
 
         /* 左侧角色查询逻辑 */
@@ -37,7 +34,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                 filter:{
                     //term: '0',//默认搜索那项
                     type: uiGridConstants.filter.SELECT,
-                    selectOptions: [{ value: 's', label: 's' }, { value: 'a', label: 'a' }]
+                    selectOptions: [{ value: 'sys', label: 'sys' }, { value: 'app', label: 'app' }]
                 }},
             { field: "appName", displayName:'隶属应用',
                 filter:{
@@ -327,7 +324,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                             toastr['success']("删除成功！");
                             role.inint();//刷新列表
                             $scope.role.shows = false;
-                            $modalInstance.close();
                         }else{
                             toastr['error']('初始化查询失败'+'<br/>'+data.retMessage);
                         }
@@ -512,7 +508,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                 }
                 $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
                 var subFrom = {};
-                common_service.post(res.queryorgList,subFrom).then(function(data){
+                common_service.post(res.queryAllorg,subFrom).then(function(data){
                     if(data.status == "success"){
                         var datas  = data.retMessage;
                         $scope.gridOptions.data = datas;
@@ -549,7 +545,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                 };
             })
     }
-
     //删除tab组织方法
     $scope.role_orgDelete = function(){
         var dats = $scope.gridOptions.getSelectedRows();
@@ -575,7 +570,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
             toastr['error']("请最少选中一条进行删除！");
         }
     }
-
     /* tab 下对应工作组管理详情*/
     var gridOptions3 = {};
     $scope.gridOptions3 = gridOptions3;
@@ -714,7 +708,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                 $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
                 //查询所有岗位
                 var subFrom = {};
-                common_service.post(res.queryAllPosition,subFrom).then(function(data){
+                common_service.post(res.queryAllposition,subFrom).then(function(data){
                     if(data.status == "success"){
                         var datas  = data.retMessage;
                         $scope.gridOptions.data = datas;
@@ -898,8 +892,8 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
     $scope.gridOptioner = gridOptioner;
     var comer = [{ field: 'operatorName', displayName: '操作员姓名'},
         { field: "userId", displayName:'登录用户名'},
-        { field: "operatorStatus",displayName:'操作员状态'},
-        { field: "authMode", displayName:'认证模式'}
+        { field: "operatorStatus",displayName:'操作员状态',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.operatorStatus | translateConstants :\'DICT_AC_OPERATOR_STATUS\') + $root.constant[\'DICT_AC_OPERATOR_STATUS-\'+row.entity.operatorStatus]}}</div>'},
+        { field: "authMode", displayName:'认证模式',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.authMode | translateConstants :\'DICT_AC_AUTHMODE\') + $root.constant[\'DICT_AC_AUTHMODE-\'+row.entity.authMode]}}</div>'}
     ];
     var fer = function(row){
         if(row.isSelected){
@@ -929,8 +923,8 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                 var com = [
                     { field: 'operatorName', displayName: '操作员姓名'},
                     { field: "userId", displayName:'登录用户名'},
-                    { field: "operatorStatus",displayName:'操作员状态'},
-                    { field: "authMode", displayName:'认证模式'}
+                    { field: "operatorStatus",displayName:'操作员状态',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.operatorStatus | translateConstants :\'DICT_AC_OPERATOR_STATUS\') + $root.constant[\'DICT_AC_OPERATOR_STATUS-\'+row.entity.operatorStatus]}}</div>'},
+                    { field: "authMode", displayName:'认证模式',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.authMode | translateConstants :\'DICT_AC_AUTHMODE\') + $root.constant[\'DICT_AC_AUTHMODE-\'+row.entity.authMode]}}</div>'}
                 ];
                 //自定义点击事件
                 var f1 = function(row){
@@ -952,7 +946,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                             subFrom.guidOperator = dats[i].guid;
                             tis.push(subFrom)
                         }
-
                         role_service.addOperatorRole(tis).then(function(data){
                             var datas = data.retMessage;
                             if(data.status == "success"){

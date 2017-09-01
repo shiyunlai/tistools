@@ -14,13 +14,9 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">机构等级:<span style="color:red">*</span></label>
-                        <div class="col-md-8">
-                            <select  ng-model="subFrom.orgDegree" class="form-control">
-                                <option value="BS">总行</option>
-                                <option value="YF">分行</option>
-                                <option value="HW">海外</option>
-                                <option value="QY">区域分行</option>
-                                <option value="CN">网点</option>
+                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_OM_ORGDEGREE')">
+                            <select class="form-control" ng-model="subFrom.orgDegree">
+                                <option ng-repeat="d in $settings.diclist['DICT_OM_ORGDEGREE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>
                     </div>
@@ -28,10 +24,9 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">所属地域:<span style="color:red">*</span></label>
-                        <div class="col-md-8">
-                            <select  ng-model="subFrom.AREA" class="form-control">
-                                <option value="010">北京地区</option>
-                                <option value="021">上海地区</option>
+                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_SD_AREA')">
+                            <select class="form-control" ng-model="subFrom.AREA">
+                                <option ng-repeat="d in $settings.diclist['DICT_SD_AREA'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>
                     </div>
@@ -79,13 +74,9 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">机构类型:<span style="color:red">*</span></label>
-                        <div class="col-md-8">
-                            <select class="form-control" ng-model="subFrom.orgType" required="">
-                                <option value="10">总公司</option>
-                                <option value="11">总部部门</option>
-                                <option value="20">分公司</option>
-                                <option value="21">分公司部门</option>
-                                <option value="90">营业网点</option>
+                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_OM_ORGTYPE')">
+                            <select class="form-control" ng-model="subFrom.orgType">
+                                <option ng-repeat="d in $settings.diclist['DICT_OM_ORGTYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>
                     </div>

@@ -429,7 +429,9 @@ public class DictController extends BaseController {
             logger.error("queryDictItemListByDictKey exception : ", e);
         }
         return null;
-    }/**
+    }
+    
+    /**
      * 查询所有字典项
      *
      */
@@ -586,7 +588,74 @@ public class DictController extends BaseController {
         }
     }
 
+    
+    
+    /**
+     * 查询业务字典对应树结构
+     */
+    @RequestMapping(value="/queryDictTree" ,method=RequestMethod.POST)
+    public String queryDictTree(@RequestBody String content, HttpServletRequest request,
+                           HttpServletResponse response) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("queryDictTree request : " + content);
+            }
+            JSONObject jsonObj = JSONObject.parseObject(content);
+            String id = jsonObj.getString("id");
+            String dictKey = jsonObj.getString("dictKey");
+            //通过id判断需要加载的节点
 
+            if("#".equals(id)){
+            	SysDict dict = dictRService.queryDict(dictKey);
+                Map map=new HashMap();
+                map.put("rootName", dict.getDictName());
+                map.put("itemType", "dict");
+                map.put("itemValue", dictKey);
+                map.put("dictguid", dict.getGuid());
+                result.put("data", map);//返回给前台的数据
+            } else {
+                List<SysDictItem> sysDictItems = dictRService.queryDictItemListByDictKey(dictKey);
+                result.put("data", sysDictItems);//返回给前台的数据
+            }
+            AjaxUtils.ajaxJsonSuccessMessage(response, result.get("data"));
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("queryDictTree exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("queryDictTree exception : ", e);
+        }
+        return null;
+    }
+
+    
+    /**
+     * 根据key查询业务字典信息
+     *
+     */
+    @ResponseBody
+    @RequestMapping(value="/queryDict" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String queryDict(@RequestBody String content, HttpServletRequest request,
+                                       HttpServletResponse response) {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("queryDict request : " + content);
+            }
+            
+            JSONObject jsonObject= JSONObject.parseObject(content);
+            String dictKey = jsonObject.getString("dictKey");
+            SysDict dict = dictRService.queryDict(dictKey);
+            AjaxUtils.ajaxJsonSuccessMessage(response,dict);
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            logger.error("queryDict exception : ", e);
+        }catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+            logger.error("queryDict exception : ", e);
+        }
+        return null;
+    }
     
     /**
      * 要求子类构造自己的响应数据

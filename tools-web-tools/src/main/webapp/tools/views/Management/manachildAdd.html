@@ -60,9 +60,24 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">是否叶子菜单:<span ng-class="{required:myform.dict_key3.$invalid}"  > * </span></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control"
+                            <input type="text" class="form-control"   translate-constants comtable="DICT_YON"
                                    ng-model="menuFrom.isleaf"  ng-init="menuFrom.isleaf = '否'"  required
                                    name="dict_key3" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">菜单显示图标</label>
+                        <div class="col-md-8">
+                            <span class="col-md-3">
+                                <span class="input-group-btn">
+                                    <ui-iconpicker groups="font-awesome" style="position: relative" ng-model="menuFrom.imagePath" value="{{menuFrom.imagePath}}"></ui-iconpicker>
+                                </span>
+                            </span>
+                            <span class="col-md-9">
+                                <input class="form-control" type="text" disabled ng-model="menuFrom.expandPath" />
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -77,17 +92,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6" >
-                    <div class="form-group">
-                        <label class="control-label col-md-4">菜单闭合路径</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="menuFrom.imagePath"
-                                   name="id" />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6" >
+
+                <!--<div class="col-md-6" >
                     <div class="form-group">
                         <label class="control-label col-md-4">菜单展开路径</label>
                         <div class="col-md-8">
@@ -96,7 +102,7 @@
                                    name="id" />
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <!--<div class="col-md-6" >
                     <div class="form-group">
                         <label class="control-label col-md-4">菜单层次:<span ng-class="{required:myform.dict_key4.$invalid}"  > * </span></label>
