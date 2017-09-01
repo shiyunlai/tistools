@@ -34,7 +34,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                 filter:{
                     //term: '0',//默认搜索那项
                     type: uiGridConstants.filter.SELECT,
-                    selectOptions: [{ value: 's', label: 's' }, { value: 'a', label: 'a' }]
+                    selectOptions: [{ value: 'sys', label: 'sys' }, { value: 'app', label: 'app' }]
                 }},
             { field: "appName", displayName:'隶属应用',
                 filter:{
@@ -708,7 +708,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                 $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
                 //查询所有岗位
                 var subFrom = {};
-                common_service.post(res.queryAllPosition,subFrom).then(function(data){
+                common_service.post(res.queryAllposition,subFrom).then(function(data){
                     if(data.status == "success"){
                         var datas  = data.retMessage;
                         $scope.gridOptions.data = datas;
@@ -892,8 +892,8 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
     $scope.gridOptioner = gridOptioner;
     var comer = [{ field: 'operatorName', displayName: '操作员姓名'},
         { field: "userId", displayName:'登录用户名'},
-        { field: "operatorStatus",displayName:'操作员状态'},
-        { field: "authMode", displayName:'认证模式'}
+        { field: "operatorStatus",displayName:'操作员状态',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.operatorStatus | translateConstants :\'DICT_AC_OPERATOR_STATUS\') + $root.constant[\'DICT_AC_OPERATOR_STATUS-\'+row.entity.operatorStatus]}}</div>'},
+        { field: "authMode", displayName:'认证模式',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.authMode | translateConstants :\'DICT_AC_AUTHMODE\') + $root.constant[\'DICT_AC_AUTHMODE-\'+row.entity.authMode]}}</div>'}
     ];
     var fer = function(row){
         if(row.isSelected){
@@ -923,8 +923,8 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                 var com = [
                     { field: 'operatorName', displayName: '操作员姓名'},
                     { field: "userId", displayName:'登录用户名'},
-                    { field: "operatorStatus",displayName:'操作员状态'},
-                    { field: "authMode", displayName:'认证模式'}
+                    { field: "operatorStatus",displayName:'操作员状态',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.operatorStatus | translateConstants :\'DICT_AC_OPERATOR_STATUS\') + $root.constant[\'DICT_AC_OPERATOR_STATUS-\'+row.entity.operatorStatus]}}</div>'},
+                    { field: "authMode", displayName:'认证模式',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.authMode | translateConstants :\'DICT_AC_AUTHMODE\') + $root.constant[\'DICT_AC_AUTHMODE-\'+row.entity.authMode]}}</div>'}
                 ];
                 //自定义点击事件
                 var f1 = function(row){

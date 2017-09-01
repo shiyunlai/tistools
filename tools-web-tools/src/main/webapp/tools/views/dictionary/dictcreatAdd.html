@@ -41,11 +41,9 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label col-md-4"> 业务字典类型:<span ng-class="{required:myform.dict_key1.$invalid}"  > * </span></label>
-                            <div class="col-md-8">
+                            <div class="col-md-8" ng-init="$settings.getDictData('DICT_TYPE')">
                                 <select class="form-control"  ng-model="dictFrom.dictType" name="dict_key1" required  style="width: 100%">
-                                    <option value=""></option>
-                                    <option value="a">应用级</option>
-                                    <option value="s">系统级</option>
+                                    <option ng-repeat="d in $settings.diclist['DICT_TYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                                 </select>
                             </div>
                         </div>
@@ -126,11 +124,9 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label col-md-4"> 业务字典类型:<span ng-class="{required:myform.dict_key1.$invalid}"  > * </span></label>
-                            <div class="col-md-8">
-                                <select class="form-control"  ng-model="dictFrom.dictType" name="dict_key1" required >
-                                    <option value=""></option>
-                                    <option value="a">应用级</option>
-                                    <option value="s">系统级</option>
+                            <div class="col-md-8" ng-init="$settings.getDictData('DICT_TYPE')">
+                                <select class="form-control"  ng-model="dictFrom.dictType" name="dict_key1" required  style="width: 100%">
+                                    <option ng-repeat="d in $settings.diclist['DICT_TYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                                 </select>
                             </div>
                         </div>
@@ -267,11 +263,9 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label col-md-4"> 业务字典类型:<span ng-class="{required:myform.dict_key1.$invalid}"  > * </span></label>
-                            <div class="col-md-8">
-                                <select class="form-control"  ng-model="dictFrom.dictType" name="dict_key1" required >
-                                    <option value=""></option>
-                                    <option value="a">应用级</option>
-                                    <option value="s">系统级</option>
+                            <div class="col-md-8" ng-init="$settings.getDictData('DICT_TYPE')">
+                                <select class="form-control"  ng-model="dictFrom.dictType" name="dict_key1" required  style="width: 100%">
+                                    <option ng-repeat="d in $settings.diclist['DICT_TYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                                 </select>
                             </div>
                         </div>

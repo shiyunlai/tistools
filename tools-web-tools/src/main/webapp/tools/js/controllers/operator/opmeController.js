@@ -27,9 +27,9 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
     $scope.gridOptions = gridOptions;
     var com = [{ field: 'operatorName', displayName: '操作员姓名'},
         { field: "userId", displayName:'登录用户名'},
-        { field: "authMode", displayName:'认证模式'},
-        { field: "operatorStatus",displayName:'操作员状态'},
-        { field: "menuType",displayName:'菜单风格'},
+        { field: "authMode", displayName:'认证模式',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.authMode | translateConstants :\'DICT_AC_AUTHMODE\') + $root.constant[\'DICT_AC_AUTHMODE-\'+row.entity.authMode]}}</div>'},
+        { field: "operatorStatus",displayName:'操作员状态',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.operatorStatus | translateConstants :\'DICT_AC_OPERATOR_STATUS\') + $root.constant[\'DICT_AC_OPERATOR_STATUS-\'+row.entity.operatorStatus]}}</div>'},
+        { field: "menuType",displayName:'菜单风格',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.menuType | translateConstants :\'DICT_AC_MENUTYPE\') + $root.constant[\'DICT_AC_MENUTYPE-\'+row.entity.menuType]}}</div>'},
         { field: "lockLimit",displayName:'锁定次数限制'}
     ];
     var f = function(row){

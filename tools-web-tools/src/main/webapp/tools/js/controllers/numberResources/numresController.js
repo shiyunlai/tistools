@@ -42,7 +42,7 @@ MetronicApp.controller('numres_controller', function ($filter, $scope, $state,nu
     var com = [
         { field: 'seqKey', displayName: '序号键值'},
         { field: 'seqNo', displayName: '序号数'},
-        { field: "reset", displayName:'重置方式'},
+        { field: "reset", displayName:'重置方式',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.reset | translateConstants :\'DICT_SYS_RESET\') + $root.constant[\'DICT_SYS_RESET-\'+row.entity.reset]}}</div>'},
         { field: "resetParams", displayName:'重置处理参数',visible: false}
     ];
     var f = function(row){

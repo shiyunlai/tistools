@@ -23,6 +23,7 @@
     "querySysDictItem": {"ctrl": "DictController", "func": "querySysDictItem","emo":"查询单个业务字典项"},
     "querySysDictList": {"ctrl": "DictController", "func": "querySysDictList","emo":"查询所有业务字典"},
     "querySysDictItemList": {"ctrl": "DictController", "func": "querySysDictItemList","emo":"查询业务字典项列表"},
+    "queryAllDictItem": {"ctrl": "DictController", "func": "queryAllDictItem","emo":"查询所有字典项"},
     "queryDictItemListByDictKey": {"ctrl": "DictController", "func": "queryDictItemListByDictKey","emo":"根据key查询业务字典项列表"},
     "exportDictExcel": {"ctrl": "DictController", "func": "exportDictExcel","emo":" 导出所有业务字典为excel"},
     "queryDictTree": {"ctrl": "DictController", "func": "queryDictTree","emo":" 查询业务字典对应树结构"},
@@ -145,7 +146,7 @@
     "enableposition": {"ctrl": "om/org", "func": "enableposition"},
     "deletePosition": {"ctrl": "om/org", "func": "deletePosition"},
     "queryAllorg": {"ctrl": "om/org", "func": "queryAllorg","em":"查询所有机构"},
-    "queryAllPosition": {"ctrl": "om/org", "func": "queryAllPosition","em":"查询所有岗位"}
+    "queryAllposition": {"ctrl": "om/org", "func": "queryAllposition","em":"查询所有岗位"}
   },
   "role_service" : {
     "queryRoleList": {"ctrl": "AcRoleController", "func": "queryRoleList","emo":"查询角色列表"},
