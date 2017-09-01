@@ -9,6 +9,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
     var thisNode = '';
     $scope.thisNode =thisNode;
 
+    console.log($rootScope.res)
     i18nService.setCurrentLang("zh-cn");
     //查询所有应用
     menu_service.queryAllAcApp(subFrom).then(function (data) {

@@ -144,7 +144,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                         toastr['error'](data.retMessage);
                     }
                 })
-
                 $scope.subFrom = subFrom;
                 //标题
                 $scope.title = "新增员工";

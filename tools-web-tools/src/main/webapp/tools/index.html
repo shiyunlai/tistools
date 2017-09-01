@@ -40,6 +40,10 @@ Version: 4.5.6
     <link  href="../assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
     <!-- END THEME STYLES -->
     <link rel="shortcut icon" href="favicon.ico" />
+
+    <!-- BEGIN PROJECT  CSS-->
+    <link href="css/fenye.css" rel="stylesheet" type="text/css"/>
+    <link href="css/ServiceJournal.css" rel="stylesheet" type="text/css"/>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -73,7 +77,11 @@ Version: 4.5.6
 </div>
 <div  data-ng-include="'tpl/footer.html'" data-ng-controller="FooterController" class="page-footer" ></div>
 
-
+<!--应用程序所用，写在依赖之前，解决引用不到压缩包问题-->
+<!-- Insert this line above script imports  -->
+<!--<script>
+    if (typeof module === 'object') {window.module = module; module = undefined;}
+</script>-->
 
 <!-- END FOOTER -->
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
@@ -112,9 +120,6 @@ Version: 4.5.6
 
 <!-- END CORE ANGULARJS PLUGINS -->
 <script src="../assets/global/plugins/highcharts/js/highcharts.js" type="text/javascript"></script>
-<!-- BEGIN PROJECT  CSS-->
-<link href="css/fenye.css" rel="stylesheet" type="text/css"/>
-<link href="css/ServiceJournal.css" rel="stylesheet" type="text/css"/>
 
 <!-- END PROJECT CSS -->
 
@@ -124,7 +129,6 @@ Version: 4.5.6
 <script src="js/directives.js" type="text/javascript"></script>
 <script src="js/directive/Directive.js" type="text/javascript"></script>
 <script src="js/scripts/global.js"></script>
-
 <!-- END PROJECT GLOBAL JS-->
 <!--<script src="https://cdn.bootcss.com/rxjs/5.4.2/Rx.min.js"></script>-->
 <script src="../assets/global/plugins/RXjs/Rx.min.js"></script>
@@ -242,13 +246,10 @@ Version: 4.5.6
 <!-- END APP LEVEL JQUERY SCRIPTS -->
 <!-- END JAVASCRIPTS -->
 
-
 <!--select2-->
-
 <link href="../assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css">
 <link href="../assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css">
 <script src="../assets/global/plugins/select2/js/select2.js" type="text/javascript"></script>
-
 
 <!-- END APP LEVEL JQUERY SCRIPTS -->
 <!-- END JAVASCRIPTS -->
@@ -292,7 +293,6 @@ Version: 4.5.6
 <link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-toastr/toastr.min.css"/>
 <script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
 
-
 <script src="../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
 <script src="../assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js" type="text/javascript"></script>
 <script src="../assets/global/plugins/clockface/js/clockface.js" type="text/javascript"></script>
@@ -305,10 +305,13 @@ Version: 4.5.6
 <script src="../assets/pages/scripts/components-date-time-pickers.js" type="text/javascript"></script>
 <script src="../assets/global/plugins/bootstrap-toastr/toastr.min.js"></script>
 
+<!--应用程序所用写在依赖之后，防止找不到对应的依赖-->
+<!-- Insert this line after script imports -->
+<!--<script>if (window.module) module = window.module;</script>-->
+
 <script type="text/javascript">
 
     $(function () { $("[data-toggle='tooltip']").tooltip(); });
-
 
     /* Init Metronic's core jquery plugins and layout scripts */
     $(document).ready(function() {

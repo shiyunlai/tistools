@@ -166,7 +166,6 @@
                         <div class="form-group">
                             <label class="control-label col-md-4"> 字典项来源表:<span ng-class="{required:myform.dict_fromTable.$invalid}"  > * </span></label>
                             <div class="col-md-8">
-                                <!--<input type="text" class="form-control" ng-model="dictFrom.fromTable" required  name="dict_fromTable"/>-->
                                 <select class="form-control  dictfrom"  ng-model="dictFrom.fromTable"  required  name="dict_fromTable" style="width: 100%">
                                     <option  ng-repeat="x in dictlist" value="{{x.guid}}">{{x.dictKey+'---'+x.dictName}}</option>
                                 </select>
