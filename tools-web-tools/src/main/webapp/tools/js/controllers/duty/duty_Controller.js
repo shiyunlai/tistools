@@ -32,7 +32,8 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
     //编辑标志
     var editflag = false;
     $scope.editflag = editflag;
-    
+    var showdoc = false;
+    $scope.showdoc = showdoc;
     //ui-grid
     i18nService.setCurrentLang("zh-cn");
     //自定义树右键菜单
@@ -657,6 +658,10 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                 }
             })
         }
+    }
+    //提示帮助控制
+    duty.showdoc = function () {
+        $scope.showdoc = !$scope.showdoc;
     }
 
 

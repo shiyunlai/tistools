@@ -24,6 +24,15 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
     //放置选择的岗位CODE
     var selectPosCode = "";
     $scope.selectPosCode = selectPosCode;
+    //控制按钮
+    var posQx = true;
+    $scope.posQx = posQx;
+    var posZp = true;
+    $scope.posZp = posZp;
+    var orgQx = true;
+    $scope.orgQx = orgQx;
+    var orgZp = true;
+    $scope.orgZp = orgZp;
     //默认为员工列表
     flag.yglb = true;
     flag.xqxx = false;
@@ -70,14 +79,14 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
 
     }
     //定义表头名
-    var com = [{field: 'empCode', displayName: '员工代码', enableHiding: false},
-        {field: 'empName', displayName: '员工姓名', enableHiding: false},
-        {field: 'gender', displayName: '性别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'},
-        {field: 'empstatus', displayName: '员工状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
-        {field: 'empDegree', displayName: '员工职级', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
-        {field: 'guidPosition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
-        {field: 'guidempmajor', displayName: '直接主管', enableHiding: false},
-        {field: 'indate', displayName: '入职日期', enableHiding: true},
+    var com = [{field: 'empCode', displayName: '员工代码'},
+        {field: 'empName', displayName: '员工姓名'},
+        {field: 'gender', displayName: '性别',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'},
+        {field: 'empstatus', displayName: '员工状态',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
+        {field: 'empDegree', displayName: '员工职级',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
+        {field: 'guidPosition', displayName: '基本岗位',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
+        {field: 'guidempmajor', displayName: '直接主管'},
+        {field: 'guidOrg', displayName: '主机构', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidOrg | translateOrg) + $root.constant[row.entity.guidOrg]}}</div>'},
         {field: 'otel', displayName: '办公电话', enableHiding: true}
     ]
 
@@ -127,6 +136,8 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
     emp.add = function () {
         openwindow($uibModal, 'views/emp/addemp_window.html', 'lg',
             function ($scope, $modalInstance) {
+                var next = true;
+                $scope.next = next;
                 //创建员工实例
                 var subFrom = {
                     "empName": "第一个员工",
@@ -161,6 +172,10 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                         $scope.cancel();
 
                     })
+                }
+
+                $scope.shownext = function () {
+                    $scope.next = !$scope.next;
                 }
 
                 $scope.cancel = function () {
@@ -286,7 +301,7 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
     $scope.orggrid = orggrid;
     //定义表头名
     var com = [
-        {field: 'orgName', displayName: '所属机构', enableHiding: false}
+        {field: 'orgName', displayName: '所属机构'}
     ]
     $scope.orggrid = initgrid($scope, orggrid, filterFilter, com, false, function (a) {
         console.log(a)
@@ -294,9 +309,17 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
         if(a.isSelected){
             $scope.selectOrgGuid = a.entity.guid;
             $scope.selectOrgCode = a.entity.orgCode;
+            $scope.orgQx = false;
+            if(a.entity.orgName.substr(a.entity.orgName.length-3,this.length) != "(主)"){
+                $scope.orgZp = false;
+            }else{
+                $scope.orgZp = true;
+            }
         }else{
             $scope.selectOrgGuid = "";
             $scope.selectOrgCode = "";
+            $scope.orgQx = true;
+            $scope.orgZp = true;
         }
     });
     $scope.orggrid.enableFiltering = false;
@@ -308,16 +331,24 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
     var postgrid = {};
     $scope.postgrid = postgrid;
     var com1 = [
-        {field: 'positionName', displayName: '所属岗位', enableHiding: false}
+        {field: 'positionName', displayName: '所属岗位'}
     ];
     $scope.postgrid = initgrid($scope, postgrid, filterFilter, com1, false, function (a) {
         //roleGuid
         if(a.isSelected){
             $scope.selectPosGuid = a.entity.guid;
             $scope.selectPosCode = a.entity.positionCode;
+            $scope.posQx = false;
+            if(a.entity.positionName.substr(a.entity.positionName.length-3,this.length) != "(主)"){
+                $scope.posZp = false;
+            }else{
+                $scope.posZp = true;
+            }
         }else{
             $scope.selectPosGuid = "";
             $scope.selectPosCode = "";
+            $scope.posQx = true;
+            $scope.posZp = true;
         }
     });
     $scope.postgrid.enableFiltering = false;
@@ -371,16 +402,13 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
 
                 }
                 //定义表头名
-                var com = [{field: 'orgCode', displayName: '机构代码', enableHiding: false},
-                    {field: 'orgName', displayName: '机构名称', enableHiding: false},
-                    {field: 'orgType', displayName: '机构类型', enableHiding: false},
-                    {field: 'orgDegree', displayName: '机构等级', enableHiding: false},
-                    {field: 'orgStatus', displayName: '机构状态', enableHiding: false},
-                    {field: 'orgAddr', displayName: '机构地址', enableHiding: false},
-                    {field: 'guidEmpMaster', displayName: '机构主管', enableHiding: false},
-                    {field: 'linkMan', displayName: '联系人姓名', enableHiding: false},
-                    {field: 'linkTel', displayName: '联系电话', enableHiding: false},
-                    {field: 'createTime', displayName: '创建时间', enableHiding: false}
+                var com = [{field: 'orgCode', displayName: '机构代码'},
+                    {field: 'orgName', displayName: '机构名称'},
+                    {field: 'orgType', displayName: '机构类型'},
+                    {field: 'orgDegree', displayName: '机构等级'},
+                    {field: 'orgStatus', displayName: '机构状态'},
+                    {field: 'orgAddr', displayName: '机构地址'},
+                    {field: 'createTime', displayName: '创建时间'}
                 ]
                 $scope.commonGrid = initgrid($scope, commonGrid, filterFilter, com, false, selework);
 
@@ -471,13 +499,13 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
 
                 }
                 //定义表头名
-                var com = [{field: 'positionCode', displayName: '岗位代码', enableHiding: false},
-                    {field: 'positionName', displayName: '岗位名称', enableHiding: false},
-                    {field: 'positionType', displayName: '岗位类型', enableHiding: false},
-                    {field: 'positionStatus', displayName: '岗位状态', enableHiding: false},
-                    {field: 'guidDuty', displayName: '所属职务', enableHiding: false},
-                    {field: 'startDate', displayName: '有效开始日期', enableHiding: false},
-                    {field: 'endDate', displayName: '有效截止日期', enableHiding: false}
+                var com = [{field: 'positionCode', displayName: '岗位代码'},
+                    {field: 'positionName', displayName: '岗位名称'},
+                    {field: 'positionType', displayName: '岗位类型'},
+                    {field: 'positionStatus', displayName: '岗位状态'},
+                    {field: 'guidDuty', displayName: '所属职务'},
+                    {field: 'startDate', displayName: '有效开始日期'},
+                    {field: 'endDate', displayName: '有效截止日期'}
                 ]
                 $scope.commonGrid = initgrid($scope, commonGrid, filterFilter, com, false, selework);
 

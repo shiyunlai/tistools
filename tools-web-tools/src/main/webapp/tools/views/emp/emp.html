@@ -24,7 +24,7 @@
         </li>
         <li ng-class="{true:'active',false:''}[flag.zzgs]" ng-if="flag.zzgs">
             <a data-toggle="tab" href ng-class="{true:'link',false:''}[flag.zzgs]" ng-click="emp.loaddata('2')">
-                <i class="green ace-icon fa fa-bars bigger-120"></i>员工组织归属
+                <i class="green ace-icon fa fa-bars bigger-120"></i>员工:{{item.empName}}组织归属
             </a>
         </li>
         <li ng-class="{true:'active',false:''}[flag.ryqx]" ng-if="flag.ryqx">
@@ -46,7 +46,7 @@
             </button>
             <button type="button" name="back" class="btn btn-primary" ng-click="emp.detail()"> 查看详情
             </button>
-            <button type="button" name="back" class="btn btn-primary" ng-click="emp.belongorg()"> 机构岗位设置
+            <button type="button" name="back" class="btn btn-primary" ng-click="emp.belongorg()"> 个人所属组织设置
             </button>
             <button type="button" name="back" class="btn btn-primary" ng-click="emp.setqx()"> 个人权限设置
             </button>
@@ -409,9 +409,9 @@
                     <div class="actions btn-set" style="float: right;">
                         <button type="button" name="back" class="btn btn-primary" ng-click="emp.assignOrg()"> 新增指派
                         </button>
-                        <button type="button" name="back" class="btn btn-danger" ng-click="emp.disassignOrg()"> 取消指配
+                        <button type="button" name="back" class="btn btn-danger" ng-click="emp.disassignOrg()" ng-disabled="orgQx"> 取消指配
                         </button>
-                        <button type="button" name="back" class="btn btn-primary" ng-click="emp.fixmainOrg()"> 设为新主机构
+                        <button type="button" name="back" class="btn btn-primary" ng-click="emp.fixmainOrg()" ng-disabled="orgZp"> 设为新主机构
                         </button>
                     </div>
                 </div>
@@ -429,9 +429,9 @@
                     <div class="actions btn-set" style="float: right;">
                         <button type="button" name="back" class="btn btn-primary" ng-click="emp.assignPos()"> 新增指派
                         </button>
-                        <button type="button" name="back" class="btn btn-danger" ng-click="emp.disassignPos()"> 取消指配
+                        <button type="button" name="back" class="btn btn-danger" ng-click="emp.disassignPos()" ng-disabled="posQx"> 取消指配
                         </button>
-                        <button type="button" name="back" class="btn btn-primary" ng-click="emp.fixmainPos()"> 设为新主岗位
+                        <button type="button" name="back" class="btn btn-primary" ng-click="emp.fixmainPos()" ng-disabled="posZp"> 设为新主岗位
                         </button>
                     </div>
                 </div>

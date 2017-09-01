@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="portlet-body portlet light">
-        <form action="#" name="myform" class="form-horizontal ">
+        <form action="#" name="myform" class="form-horizontal " ng-if="next">
             <div class="form-body ">
                 <div class="col-md-6" >
                     <div class="form-group">
@@ -86,32 +86,32 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">入职日期</label>
-                        <div class="col-md-8">
-                            <div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
-                                    <span class="input-group-btn">
-                                        <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
-                                    </span>
-                                <input type="text" class="form-control" ng-model="subFrom.indate" readonly/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">离职日期</label>
-                        <div class="col-md-8">
-                            <div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
-                                    <span class="input-group-btn">
-                                        <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
-                                    </span>
-                                <input type="text" class="form-control" ng-model="subFrom.outdate" readonly/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!--<div class="col-md-6">-->
+                    <!--<div class="form-group">-->
+                        <!--<label class="control-label col-md-4">入职日期</label>-->
+                        <!--<div class="col-md-8">-->
+                            <!--<div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">-->
+                                    <!--<span class="input-group-btn">-->
+                                        <!--<button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>-->
+                                    <!--</span>-->
+                                <!--<input type="text" class="form-control" ng-model="subFrom.indate" readonly/>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-md-6">-->
+                    <!--<div class="form-group">-->
+                        <!--<label class="control-label col-md-4">离职日期</label>-->
+                        <!--<div class="col-md-8">-->
+                            <!--<div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">-->
+                                    <!--<span class="input-group-btn">-->
+                                        <!--<button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>-->
+                                    <!--</span>-->
+                                <!--<input type="text" class="form-control" ng-model="subFrom.outdate" readonly/>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">办公电话</label>
@@ -180,19 +180,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">出生日期</label>
-                        <div class="col-md-8">
-                            <div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
-                                    <span class="input-group-btn">
-                                        <button class="btn default date-set" type="button"><i style="line-height: 14px" class="fa fa-calendar"></i></button>
-                                    </span>
-                                <input type="text" class="form-control" ng-model="subFrom.birthdate" readonly/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!--<div class="col-md-6">-->
+                    <!--<div class="form-group">-->
+                        <!--<label class="control-label col-md-4">出生日期</label>-->
+                        <!--<div class="col-md-8">-->
+                            <!--<div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">-->
+                                    <!--<span class="input-group-btn">-->
+                                        <!--<button class="btn default date-set" type="button"><i style="line-height: 14px" class="fa fa-calendar"></i></button>-->
+                                    <!--</span>-->
+                                <!--<input type="text" class="form-control" ng-model="subFrom.birthdate" readonly/>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">证件类型</label>
@@ -242,6 +242,16 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">政治面貌</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="subFrom.party"
+                            />
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-12">
                     <div class="form-group">
                         <label class="control-label col-md-2">家庭地址</label>
@@ -252,17 +262,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+
+                <div class="col-md-12">
                     <div class="form-group">
-                        <label class="control-label col-md-4">政治面貌</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.party"
-                                    />
+                        <label class="control-label col-md-2"></label>
+                        <div class="col-md-10">
+
+                            <div class="actions btn-set" style="float: right;">
+                                <button type="button" name="back1" class="btn btn-primary" ng-click="shownext()"> 下一步
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-
+            </div>
+        </form>
+        <form action="#" name="myform1" class="form-horizontal" ng-if="!next">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">操作员编号</label>
@@ -286,10 +301,16 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">可授权角色</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.specialty"
-                                    />
+                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_OM_GENDER')">
+                            <!--<input type="text" class="form-control"-->
+                                   <!--ng-model="subFrom.specialty"-->
+                                    <!--/>-->
+                                <select class="form-control test789" ng-model="subFrom.gender" multiple>
+                                    <option ng-repeat="d in $settings.diclist['DICT_OM_GENDER'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                </select>
+                                <script type="text/javascript">
+                                $('.test789').select2();
+                                </script>
                         </div>
                     </div>
                 </div>
@@ -338,7 +359,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
         </form>
     </div>
 </div>

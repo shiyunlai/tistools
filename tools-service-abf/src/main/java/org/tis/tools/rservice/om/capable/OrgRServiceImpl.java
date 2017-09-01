@@ -3,6 +3,7 @@
  */
 package org.tis.tools.rservice.om.capable;
 
+import jdk.nashorn.internal.objects.annotations.Where;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
@@ -118,7 +119,9 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		org.setIsleaf(CommonConstants.YES);// 新增节点都先算叶子节点 Y
 		org.setSubCount(new BigDecimal(0));// 新增时子节点数为0
 		org.setOrgSeq(org.getGuid());// 设置机构序列,根机构直接用guid
-
+		//设置排序字段
+		List<OmOrg> rootorgList = omOrgServiceExt.queryAllRoot();
+		org.setSortNo(new BigDecimal(rootorgList.size()));
 		// 收集入参
 		org.setOrgCode(orgCode);
 		org.setOrgName(orgName);
@@ -399,28 +402,90 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	@Override
 	public boolean moveOrg(String orgCode, String fromParentsOrgCode, String toParentsOrgCode, int toSortNo)
 			throws OrgManagementException {
-		// TODO Auto-generated method stub
 		//校验传入参数
-		if (StringUtil.isEmpty(orgCode, fromParentsOrgCode)) {
+		if (StringUtil.isEmpty(orgCode, fromParentsOrgCode,toParentsOrgCode)) {
 			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
 		}
 		WhereCondition wc = new WhereCondition();
-		List<OmOrg> orgList = new ArrayList<OmOrg>();
-		String[] codes = {orgCode, fromParentsOrgCode, toParentsOrgCode};
-		for (String code : codes) {
-			wc.andEquals("ORG_CODE", orgCode);
-			List<OmOrg> queryList = omOrgService.query(wc);
+		wc.andEquals(OmOrg.COLUMN_ORG_CODE, orgCode);
+		List<OmOrg> queryList = omOrgService.query(wc);
+		if(queryList.size() != 1) {
+			throw new OrgManagementException(
+					OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, BasicUtil.wrap(orgCode), "机构代码{0}对应的机构不存在");
+		}
+		OmOrg mvOrg = queryList.get(0);
+		OmOrg fromParentsOrg = new OmOrg();
+		OmOrg toParentsOrg = new OmOrg();
+		wc.clear();
+		if(!fromParentsOrgCode.equals("99999")){
+			wc.andEquals(OmOrg.COLUMN_ORG_CODE, fromParentsOrgCode);
+			queryList = omOrgService.query(wc);
 			if(queryList.size() != 1) {
 				throw new OrgManagementException(
-						OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, BasicUtil.wrap(code), "机构代码{0}对应的机构不存在");
+						OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, BasicUtil.wrap(orgCode), "机构代码{0}对应的机构不存在");
 			}
-			orgList.add(queryList.get(0));
+			fromParentsOrg = queryList.get(0);
 		}
-		//待调整机构处理
-		OmOrg org = orgList.get(0);//待调整机构
-		OmOrg fromParentsOrg = orgList.get(1);//原父机构
-		OmOrg toParentsOrg = orgList.get(2);//新父机构
-		org.setGuidParents(orgList.get(2).getGuid()); //修改父机构GUID
+		if (!toParentsOrgCode.equals("99999")) {
+			wc.andEquals(OmOrg.COLUMN_ORG_CODE, toParentsOrgCode);
+			queryList = omOrgService.query(wc);
+			if(queryList.size() != 1) {
+				throw new OrgManagementException(
+						OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, BasicUtil.wrap(orgCode), "机构代码{0}对应的机构不存在");
+			}
+			toParentsOrg = queryList.get(0);
+		}
+		//调整移动的机构
+		//获取原排序字段
+		BigDecimal sortNo = mvOrg.getSortNo();
+		if(toParentsOrg.getGuid() == null){
+			mvOrg.setGuidParents("");
+			mvOrg.setOrgSeq(mvOrg.getGuid());
+			mvOrg.setSortNo(new BigDecimal(toSortNo));
+		}else{
+			mvOrg.setGuidParents(toParentsOrg.getGuid());
+			mvOrg.setOrgSeq(toParentsOrg.getOrgSeq() + "." + mvOrg.getGuid());
+			mvOrg.setSortNo(new BigDecimal(toSortNo));
+		}
+
+
+		//调整移动机构的序列
+		wc.clear();
+		wc.andFullLike(OmOrg.COLUMN_ORG_SEQ, mvOrg.getGuid());
+		queryList = omOrgService.query(wc);
+		queryList.remove(mvOrg);
+		for (OmOrg org : queryList) {
+			org.setOrgSeq(org.getOrgSeq().replace(fromParentsOrg.getOrgSeq(),mvOrg.getOrgSeq()));
+		}
+		final OmOrg fParentsOrg = fromParentsOrg;
+		final OmOrg tParentsOrg = toParentsOrg;
+		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+			@Override
+			public void doInTransactionWithoutResult(TransactionStatus status) {
+				try {
+					omOrgService.update(mvOrg);
+					//调整原父机构
+					if (fParentsOrg.getGuid() == null) {
+						omOrgServiceExt.reorderOrg(OMConstants.ROOT_FLAG,sortNo,OMConstants.RECORD_AUTO_MINUS);
+					}else{
+						omOrgServiceExt.reorderOrg(fParentsOrg.getGuid(),sortNo,OMConstants.RECORD_AUTO_MINUS);
+					}
+					//调整新父机构
+					if(tParentsOrg.getGuid() == null){
+						omOrgServiceExt.reorderOrg(OMConstants.ROOT_FLAG, mvOrg.getSortNo(), OMConstants.RECORD_AUTO_PLUS);
+					}else{
+						omOrgServiceExt.reorderOrg(tParentsOrg.getGuid(), mvOrg.getSortNo(), OMConstants.RECORD_AUTO_PLUS);
+					}
+					omOrgService.update(fParentsOrg);
+					omOrgService.update(tParentsOrg);
+				} catch (Exception e) {
+					status.setRollbackOnly();
+					e.printStackTrace();
+					throw new OrgManagementException(
+							OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG, BasicUtil.wrap("AC_MENU", e.getCause().getMessage()));
+				}
+			}
+		});
 		return true;
 	}
 

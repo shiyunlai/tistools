@@ -618,7 +618,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		String guidOrg = list.get(0).getGuidOrg();
 		if (orgGuid.equals(guidOrg)) {
 			//TODO
-			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG);
+			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG,null,"不可直接取消主岗位指派");
 			//不可直接取消主机构指派
 		}
 		wc.clear();
@@ -659,7 +659,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		String posGuid = list.get(0).getGuidPosition();
 		if (positionGuid.equals(posGuid)) {
 			//TODO
-			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG);
+			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG,null,"不可直接取消主岗位指派");
 			//不可直接取消主机构指派
 		}
 		wc.clear();

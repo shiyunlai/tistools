@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.base.exception.ToolsRuntimeException;
+import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmGroup;
 import org.tis.tools.model.po.om.OmPosition;
@@ -238,8 +239,6 @@ public class WorkGroupController extends BaseController {
      * 查询所有工作组列表
      *
      * @param model
-     * @param content
-     * @param age
      * @param request
      * @param response
      * @return
@@ -647,6 +646,116 @@ public class WorkGroupController extends BaseController {
         }
         return null;
     }
+
+
+    /**
+     * 查询所有工作组
+     */
+    @RequestMapping(value = "/queryApp")
+    public String queryApp(@RequestBody String content, HttpServletRequest request,
+                                HttpServletResponse response) throws ToolsRuntimeException, ParseException {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("queryApp request : " + content);
+            }
+            JSONObject jsonObj = JSONObject.parseObject(content);
+            String groupCode = jsonObj.getString("groupCode");
+            List<AcApp> list = groupRService.queryApp(groupCode);
+            AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list,"yyyy-MM-dd");
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+            logger.error("queryApp exception : ", e);
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+            logger.error("queryApp exception : ", e);
+        }
+        return null;
+    }
+
+    /**
+     * 查询可以为工作组添加的应用
+     */
+    @RequestMapping(value = "/queryNotInApp")
+    public String queryNotInApp(@RequestBody String content, HttpServletRequest request,
+                                HttpServletResponse response) throws ToolsRuntimeException, ParseException {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("queryApp request : " + content);
+            }
+            JSONObject jsonObj = JSONObject.parseObject(content);
+            String groupCode = jsonObj.getString("groupCode");
+            List<AcApp> list = groupRService.queryAppnotInGroup(groupCode);
+            AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list,"yyyy-MM-dd");
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+            logger.error("queryApp exception : ", e);
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+            logger.error("queryApp exception : ", e);
+        }
+        return null;
+    }
+    /**
+     * 新增工作组-应用记录
+     */
+    @RequestMapping(value = "/addGroupApp", produces = "text/plain;charset=UTF-8", method = RequestMethod.POST)
+    public String addGroupApp(@RequestBody String content, HttpServletRequest request,
+                                HttpServletResponse response) throws ToolsRuntimeException, ParseException {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("queryApp request : " + content);
+            }
+            JSONObject jsonObj = JSONObject.parseObject(content);
+            String groupGuid = jsonObj.getString("groupGuid");
+            String appGuid = jsonObj.getString("appGuid");
+            groupRService.addGroupApp(appGuid, groupGuid);
+            AjaxUtils.ajaxJsonSuccessMessage(response, "添加成功!");
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+            logger.error("queryApp exception : ", e);
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+            logger.error("queryApp exception : ", e);
+        }
+        return null;
+    }
+    /**
+     * 删除工作组-应用记录
+     */
+    @RequestMapping(value = "/deleteGroupApp", produces = "text/plain;charset=UTF-8", method = RequestMethod.POST)
+    public String deleteGroupApp(@RequestBody String content, HttpServletRequest request,
+                              HttpServletResponse response) throws ToolsRuntimeException, ParseException {
+        try {
+            if (logger.isInfoEnabled()) {
+                logger.info("queryApp request : " + content);
+            }
+            JSONObject jsonObj = JSONObject.parseObject(content);
+            String groupGuid = jsonObj.getString("groupGuid");
+            String appGuid = jsonObj.getString("appGuid");
+            groupRService.deleteGroupApp(appGuid, groupGuid);
+            AjaxUtils.ajaxJsonSuccessMessage(response, "删除成功!");
+        } catch (ToolsRuntimeException e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+            logger.error("queryApp exception : ", e);
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+            logger.error("queryApp exception : ", e);
+        }
+        return null;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * 每个controller定义自己的返回信息变量

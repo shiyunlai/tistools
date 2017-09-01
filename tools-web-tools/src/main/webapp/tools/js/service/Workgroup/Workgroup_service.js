@@ -118,6 +118,31 @@ MetronicApp.factory('Workgroup_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     }
+    /**----------------------------------工作组应用服务---------------------------------*/
+    service.addGroupApp = function (subFrom) {
+        var res = $http.post(manurl + "/om/workgroup/addGroupApp",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.deleteGroupApp = function (subFrom) {
+        var res = $http.post(manurl + "/om/workgroup/deleteGroupApp",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.queryApp = function (subFrom) {
+        var res = $http.post(manurl + "/om/workgroup/queryApp",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    service.queryNotInApp = function (subFrom) {
+        var res = $http.post(manurl + "/om/workgroup/queryNotInApp",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
 
     return service;
 }]);

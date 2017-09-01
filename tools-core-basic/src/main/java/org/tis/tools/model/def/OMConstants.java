@@ -51,4 +51,11 @@ public interface OMConstants {
 	/** 节点类型 : 实体节点*/
 	public static final String BUSIORG_NODE_TYPE_REALITY = "reality";
 
+	/** 重新排序： 自增*/
+	public static final String RECORD_AUTO_PLUS = "plus";
+	/** 重新排序： 自减*/
+	public static final String RECORD_AUTO_MINUS = "minus";
+	/** 重新排序： 根节点标识*/
+	public static final String ROOT_FLAG = "root";
+
 }

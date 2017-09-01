@@ -192,7 +192,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 		OmPosition position = opList.get(0);
 		//检查当前状态,只能删除注销的岗位
 		if(position.getPositionStatus().equals(OMConstants.POSITION_STATUS_RUNNING)){
-			throw new PositionManagementException(OMExceptionCodes.POSITION_RUNNING_CANT_DELETE);
+			throw new PositionManagementException(OMExceptionCodes.POSITION_RUNNING_CANT_DELETE,BasicUtil.wrap(positionCode), "只能删除注销的岗位");
 		}
 		// 检查下级岗位状态
 		List<OmPosition> childList = queryAllChilds(positionCode);
@@ -502,7 +502,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
 		}
 		if (StringUtil.isEmpty(positionGuid)) {
-			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("positionGuid"));
 		}
 		OmPositionApp oap = new OmPositionApp();
 		oap.setGuidApp(appGuid);
@@ -516,7 +516,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
 		}
 		if (StringUtil.isEmpty(positionGuid)) {
-			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("positionGuid"));
 		}
 		WhereCondition wc = new WhereCondition();
 		wc.andEquals("GUID_POSITION", positionGuid);
