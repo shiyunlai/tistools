@@ -358,7 +358,7 @@ public class AcOperatorController extends BaseController {
             if (logger.isInfoEnabled()) {
                 logger.info("createOperatorIdentityres request : " + content);
             }
-            JSONObject jsonObject= JSONObject.parseObject(content);
+           /* JSONObject jsonObject= JSONObject.parseObject(content);*/
             List<AcOperatorIdentityres> acOperatorIdentityreses = JSON.parseArray(content, AcOperatorIdentityres.class);
             operatorRService.createOperatorIdentityres(acOperatorIdentityreses);
             AjaxUtils.ajaxJsonSuccessMessage(response,"");

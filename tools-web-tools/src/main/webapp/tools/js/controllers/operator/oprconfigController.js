@@ -343,6 +343,7 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                         subFrom.operatorGuid =opensf.operguid;
                         subFrom.resType = newValue;
                         common_service.post(res.queryRoleInOperatorByResType,subFrom).then(function(data){
+                            console.log(data);
                             var datas  = data.retMessage;
                             if(data.status == "success"){
                                 $scope.gridOptions.data = datas;
@@ -352,15 +353,16 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                         //导入
                     }else if(newValue=='function'){
                         var com = [
-                            { field: "FUNC_NAME", displayName:'功能名称'}
+                            { field: "roleName", displayName:'角色名称'}
                         ];
                         //查询操作员对应功能
                         var  subFrom = {};
-                        subFrom.userId =opensf.info.userid;
-                        common_service.post(res.queryAcOperatorFunListByUserId,subFrom).then(function(data){
+                        subFrom.operatorGuid =opensf.operguid;
+                        subFrom.resType = newValue;
+                        common_service.post(res.queryRoleInOperatorByResType,subFrom).then(function(data){
                             var datas = data.retMessage;
                             if(data.status == "success"){
-                                $scope.gridOptions.data =  datas;
+                                $scope.gridOptions.data = datas;
                                 $scope.gridOptions.mydefalutData = datas;
                                 $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
                             }
@@ -368,12 +370,13 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                         $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
                     }else if(newValue=='position'){
                         var com = [
-                            { field: "roleName", displayName:'岗位名称'}
+                            { field: "roleName", displayName:'角色名称'}
                         ];
                         //查询操作员对应岗位
                         var  subFrom = {};
                         subFrom.operatorGuid =opensf.operguid;
                         subFrom.resType = newValue;
+                        console.log(subFrom)
                         common_service.post(res.queryRoleInOperatorByResType,subFrom).then(function(data){
                             var datas  = data.retMessage;
                             if(data.status == "success"){
@@ -383,7 +386,7 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                         $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
                     }else if(newValue=='duty'){
                         var com = [
-                            { field: "roleName", displayName:'职务名称'}
+                            { field: "roleName", displayName:'角色名称'}
                         ];
                         //查询操作员对应职务
                         var  subFrom = {};
@@ -399,7 +402,7 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
 
                     }else if(newValue=='workgroup'){
                         var com = [
-                            { field: "roleName", displayName:'工作组名称'}
+                            { field: "roleName", displayName:'角色名称'}
                         ];
                         //查询操作员对应工作组
                         var  subFrom = {};
@@ -414,7 +417,7 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                         $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
                     }else if(newValue=='organization'){
                         var com = [
-                            { field: "roleName", displayName:'机构名称'}
+                            { field: "roleName", displayName:'角色名称'}
                         ];
                         //查询操作员对应机构
                         var  subFrom = {};
@@ -432,18 +435,20 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                     $scope.importAdd = function(item){//导入资源代码
                         var getSel = $scope.gridOptions.getSelectedRows();
                         if(getSel.length>0){
-                            /*subFrom.guidIdentity = opersguid; //身份guid
+                           /* subFrom.guidIdentity = opersguid; //身份guid
                             subFrom.acResourcetype =newValue;//资源类型
-                            subFrom.guidAcResource =getSel[0].guid;//资源guid*/
-                            //多选
+                            subFrom.guidAcResource =getSel[0].guid;//资源guid
+                            //多选*/
                             var tis = [];
                             for(var i=0;i< getSel.length;i++){
                                 var  subFrom = {};
                                 subFrom.guidIdentity = opersguid; //身份guid
                                 subFrom.acResourcetype = newValue;//资源类型
                                 subFrom.guidAcResource = getSel[i].guid;//每一个guid
+                                console.log(getSel[i])
                                 tis.push(subFrom)
                             }
+                            console.log(tis)
                             common_service.post(res.createOperatorIdentityres,tis).then(function(data){
                                 if(data.status == "success"){
                                     var datas  = data.retMessage;
