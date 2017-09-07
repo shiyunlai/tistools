@@ -42,14 +42,16 @@
         <div class="actions btn-set" style="float: right;">
             <button type="button" name="back" class="btn btn-primary" ng-click="emp.add()"> 新增
             </button>
-            <button type="button" name="back" class="btn btn-primary" ng-click="emp.edit()"> 编辑
+            <button type="button" name="back" class="btn btn-primary" ng-click="emp.edit()"> 编辑基础信息
+            </button>
+            <button type="button" name="back" class="btn btn-primary" ng-click="emp.edit()"> 编辑相关操作员信息
             </button>
             <button type="button" name="back" class="btn btn-primary" ng-click="emp.detail()"> 查看详情
             </button>
             <button type="button" name="back" class="btn btn-primary" ng-click="emp.belongorg()"> 个人所属组织设置
             </button>
-            <button type="button" name="back" class="btn btn-primary" ng-click="emp.setqx()"> 个人权限设置
-            </button>
+            <!--<button type="button" name="back" class="btn btn-primary" ng-click="emp.setqx()"> 个人权限设置-->
+            <!--</button>-->
             <button type="button" name="back" class="btn btn-danger" ng-click="emp.deletemp()"> 删除
             </button>
         </div>
@@ -343,26 +345,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">可授权角色</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="item.specialty"
-                                   ng-readonly="editflag"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">可管理机构</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="item.orgList"
-                                   ng-readonly="editflag"/>
-                        </div>
-                    </div>
-                </div>
+
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">工作描述</label>
@@ -379,6 +362,26 @@
                         <div class="col-md-10">
                             <input type="text" class="form-control"
                                    ng-model="item.remark"
+                                   ng-readonly="editflag"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">可授权角色</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="item.specialty"
+                                   ng-readonly="editflag"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">可管理机构</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="item.orgList"
                                    ng-readonly="editflag"/>
                         </div>
                     </div>
@@ -445,76 +448,76 @@
     </div>
     <!-- 员工组织归属结束 -->
     <!-- 人员权限开始 -->
-    <div class="tab-content portlet light clearfix" ng-if="flag.ryqx">
-        <div class="col-md-6">
-            <div class="portlet-title col-md-12">
-                <div class="caption col-md-10">
-                    <span class="caption-subject font-blue-sharp bold uppercase">已授予角色列表</span>
-                </div>
-                <div class="actions btn-set col-md-2" style="float: right;">
-                    <button type="button" name="back" class="btn btn-danger" ng-click="emp.back()"> 删除
-                    </button>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div ui-grid="alrolegird" style="height:200px;"
-                     ui-grid-pagination
-                     ui-grid-selection ui-grid-resize-columns></div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="portlet-title col-md-12">
-                <div class="caption col-md-10">
-                    <span class="caption-subject font-blue-sharp bold uppercase">未授予角色列表</span>
-                </div>
-                <div class="actions btn-set col-md-2" style="float: right;">
-                    <button type="button" name="back" class="btn btn-primary" ng-click=""> 添加
-                    </button>
+    <!--<div class="tab-content portlet light clearfix" ng-if="flag.ryqx">-->
+        <!--<div class="col-md-6">-->
+            <!--<div class="portlet-title col-md-12">-->
+                <!--<div class="caption col-md-10">-->
+                    <!--<span class="caption-subject font-blue-sharp bold uppercase">已授予角色列表</span>-->
+                <!--</div>-->
+                <!--<div class="actions btn-set col-md-2" style="float: right;">-->
+                    <!--<button type="button" name="back" class="btn btn-danger" ng-click="emp.back()"> 删除-->
+                    <!--</button>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-md-12">-->
+                <!--<div ui-grid="alrolegird" style="height:200px;"-->
+                     <!--ui-grid-pagination-->
+                     <!--ui-grid-selection ui-grid-resize-columns></div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-md-6">-->
+            <!--<div class="portlet-title col-md-12">-->
+                <!--<div class="caption col-md-10">-->
+                    <!--<span class="caption-subject font-blue-sharp bold uppercase">未授予角色列表</span>-->
+                <!--</div>-->
+                <!--<div class="actions btn-set col-md-2" style="float: right;">-->
+                    <!--<button type="button" name="back" class="btn btn-primary" ng-click=""> 添加-->
+                    <!--</button>-->
 
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div ui-grid="notrolegird" style="height:200px;"
-                     ui-grid-pagination
-                     ui-grid-selection ui-grid-resize-columns></div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="portlet-title col-md-12">
-                <div class="caption col-md-10">
-                    <span class="caption-subject font-blue-sharp bold uppercase">特别权限设置</span>
-                </div>
-                <div class="actions btn-set col-md-2" style="float: right;">
-                    <button type="button" name="back" class="btn btn-primary" ng-click=""> 添加
-                    </button>
-                    <button type="button" name="back" class="btn btn-danger" ng-click="emp.back()"> 删除
-                    </button>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div ui-grid="postgrid" style="height:200px;"
-                     ui-grid-pagination
-                     ui-grid-selection ui-grid-resize-columns></div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="portlet-title col-md-12">
-                <div class="caption col-md-10">
-                    <span class="caption-subject font-blue-sharp bold uppercase">继承的角色</span>
-                </div>
-                <div class="actions btn-set col-md-2" style="float: right;">
-                    <button type="button" name="back" class="btn btn-primary" ng-click=""> 添加
-                    </button>
-                    <button type="button" name="back" class="btn btn-danger" ng-click="emp.back()"> 删除
-                    </button>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div ui-grid="postgrid" style="height:200px;"
-                     ui-grid-pagination
-                     ui-grid-selection ui-grid-resize-columns></div>
-            </div>
-        </div>
-    </div>
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-md-12">-->
+                <!--<div ui-grid="notrolegird" style="height:200px;"-->
+                     <!--ui-grid-pagination-->
+                     <!--ui-grid-selection ui-grid-resize-columns></div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-md-12">-->
+            <!--<div class="portlet-title col-md-12">-->
+                <!--<div class="caption col-md-10">-->
+                    <!--<span class="caption-subject font-blue-sharp bold uppercase">特别权限设置</span>-->
+                <!--</div>-->
+                <!--<div class="actions btn-set col-md-2" style="float: right;">-->
+                    <!--<button type="button" name="back" class="btn btn-primary" ng-click=""> 添加-->
+                    <!--</button>-->
+                    <!--<button type="button" name="back" class="btn btn-danger" ng-click="emp.back()"> 删除-->
+                    <!--</button>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-md-12">-->
+                <!--<div ui-grid="postgrid" style="height:200px;"-->
+                     <!--ui-grid-pagination-->
+                     <!--ui-grid-selection ui-grid-resize-columns></div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-md-12">-->
+            <!--<div class="portlet-title col-md-12">-->
+                <!--<div class="caption col-md-10">-->
+                    <!--<span class="caption-subject font-blue-sharp bold uppercase">继承的角色</span>-->
+                <!--</div>-->
+                <!--<div class="actions btn-set col-md-2" style="float: right;">-->
+                    <!--<button type="button" name="back" class="btn btn-primary" ng-click=""> 添加-->
+                    <!--</button>-->
+                    <!--<button type="button" name="back" class="btn btn-danger" ng-click="emp.back()"> 删除-->
+                    <!--</button>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-md-12">-->
+                <!--<div ui-grid="postgrid" style="height:200px;"-->
+                     <!--ui-grid-pagination-->
+                     <!--ui-grid-selection ui-grid-resize-columns></div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
     <!-- 人员权限结束 -->
 </div>

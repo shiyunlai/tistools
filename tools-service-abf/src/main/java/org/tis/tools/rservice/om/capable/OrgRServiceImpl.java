@@ -18,12 +18,11 @@ import org.tis.tools.model.def.ACConstants;
 import org.tis.tools.model.def.CommonConstants;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.def.OMConstants;
+import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcFunc;
 import org.tis.tools.model.po.ac.AcPartyRole;
 import org.tis.tools.model.po.ac.AcRole;
-import org.tis.tools.model.po.om.OmGroup;
-import org.tis.tools.model.po.om.OmOrg;
-import org.tis.tools.model.po.om.OmPosition;
+import org.tis.tools.model.po.om.*;
 import org.tis.tools.model.vo.om.OmOrgDetail;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.om.exception.OrgManagementException;
@@ -75,6 +74,11 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	AcRoleService acRoleService;
 	@Autowired
 	AcFuncService acFuncService;
+
+	@Autowired
+	OmPositionAppService omPositionAppService;
+	@Autowired
+	OmGroupAppService omGroupAppService;
 	
 	/* (non-Javadoc)
 	 * @see org.tis.tools.rservice.om.capable.IOrgRService#genOrgCode(java.lang.String, java.lang.String)
@@ -1056,11 +1060,41 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		if(StringUtil.isEmpty(guid)) {
 			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
 		}
-		WhereCondition wc = new WhereCondition();
-		List<AcRole> inList = queryRolebyOrgGuid(guid);
-		List<AcRole> allRole = acRoleService.query(wc);
-		allRole.removeAll(inList);
-		return allRole;
+		//拥有应用下的角色,才可以添加
+		if(guid.startsWith("POS") || guid.startsWith("GROUP")){
+			WhereCondition wc = new WhereCondition();
+			List<AcRole> inList = queryRolebyOrgGuid(guid);
+			List<String> guidList = new ArrayList<>();
+			List<AcRole> allRole = new ArrayList<>();
+			if(guid.startsWith("POS")){
+				wc.andEquals(OmPositionApp.COLUMN_GUID_POSITION, guid);
+				List<OmPositionApp> oaList = omPositionAppService.query(wc);
+				for (OmPositionApp opa : oaList) {
+					guidList.add(opa.getGuidApp());
+				}
+			}else{
+				wc.andEquals(OmGroupApp.COLUMN_GUID_GROUP, guid);
+				List<OmGroupApp> oaList = omGroupAppService.query(wc);
+				for (OmGroupApp oga : oaList) {
+					guidList.add(oga.getGuidApp());
+				}
+			}
+			//通过应用GUID查询所有可用角色
+			for (String appGuid : guidList) {
+				wc.clear();
+				wc.andEquals(AcRole.COLUMN_GUID_APP, appGuid);
+				List<AcRole> arList = acRoleService.query(wc);
+				allRole.addAll(arList);
+			}
+			allRole.removeAll(inList);
+			return allRole;
+		}else{
+			WhereCondition wc = new WhereCondition();
+			List<AcRole> inList = queryRolebyOrgGuid(guid);
+			List<AcRole> allRole = acRoleService.query(wc);
+			allRole.removeAll(inList);
+			return allRole;
+		}
 	}
 
 

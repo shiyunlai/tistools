@@ -264,6 +264,12 @@ MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http
                     settings.commlist[type] = response.data.retMessage;
                 });
             }
+        }else if(type == "DUTY"){
+            if(_.isNil(settings.commlist[type])) {
+                $http.post(manurl + "/om/duty/loadallduty").then(function (response) {
+                    settings.commlist[type] = response.data.retMessage;
+                });
+            }
         }
     }
 

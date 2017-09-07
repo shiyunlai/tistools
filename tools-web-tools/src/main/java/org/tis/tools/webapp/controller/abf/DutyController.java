@@ -139,7 +139,7 @@ public class DutyController extends BaseController{
 			// 收到请求
 			List<OmDuty> list = dutyRService.queryAllDuty();
 			AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list, "yyyy-MM-dd");
-		} catch (ToolsRuntimeException e) {// TODO
+		} catch (ToolsRuntimeException e) {
 			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -353,21 +353,21 @@ public class DutyController extends BaseController{
      *
      */
     @ResponseBody
-    @RequestMapping(value="/queryDucyList" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String queryDucyList(@RequestBody String content, HttpServletRequest request,
+    @RequestMapping(value="/queryDutyList" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public String queryDutyList(@RequestBody String content, HttpServletRequest request,
                            HttpServletResponse response) throws ToolsRuntimeException, ParseException {
         try {
             if (logger.isInfoEnabled()) {
-                logger.info("queryDucyList request : " + content);
+                logger.info("queryDutyList request : " + content);
             }
-            List<OmDuty> acDucys = dutyRService.queryAllDuty();
-            AjaxUtils.ajaxJsonSuccessMessage(response,acDucys);
+            List<OmDuty> dutyList = dutyRService.queryAllDuty();
+            AjaxUtils.ajaxJsonSuccessMessage(response,dutyList);
         } catch (ToolsRuntimeException e) {
             AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("queryDucyList exception : ", e);
+            logger.error("queryDutyList exception : ", e);
         }catch (Exception e) {
             AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("queryDucyList exception : ", e);
+            logger.error("queryDutyList exception : ", e);
         }
         return null;
     }

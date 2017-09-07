@@ -51,12 +51,12 @@
                     <!--</div>-->
                 <!--</div>-->
                 <div class="col-md-6"  ng-if="subFrom.nodeType == 'reality'">
-                    <div class="form-group">
+                    <div class="form-group" >
                         <label class="control-label col-md-4" >对应机构:</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.orgCode"
-                                   name="id" />
+                        <div class="col-md-8" ng-init="$settings.getCommData('ORG')">
+                            <select class="form-control" ng-model="subFrom.guidOrg">
+                                <option ng-repeat="d in $settings.commlist['ORG'] track by $index" value="{{d.guid}}">{{d.orgName}}</option>
+                            </select>
                         </div>
                     </div>
                 </div>
