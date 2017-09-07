@@ -78,7 +78,7 @@ public class WorkGroupController extends BaseController {
                 List<OmGroup> list = groupRService.queryChildGroup(id);
                 AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, list, "yyyy-MM-dd");
             }
-        } catch (ToolsRuntimeException e) {// TODO
+        } catch (ToolsRuntimeException e) {
             AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
             e.printStackTrace();
         } catch (Exception e) {
@@ -145,7 +145,7 @@ public class WorkGroupController extends BaseController {
                 groupRService.createGroup(og);
             }
             AjaxUtils.ajaxJsonSuccessMessage(response, "新增工作组成功!");
-        } catch (ToolsRuntimeException e) {// TODO
+        } catch (ToolsRuntimeException e) {
             AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getParams());
             e.printStackTrace();
         } catch (Exception e) {

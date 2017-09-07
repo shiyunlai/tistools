@@ -44,7 +44,6 @@ MetronicApp.factory('abftree_service',['$http', '$q', function ($http,$q) {
         return res;
     }
     service.loadqxxx = function (subFrom) {
-        //todo
         var res = $http.post(manurl + "/om/org/test",subFrom).then(function (response) {
             return response.data;
         });
@@ -195,7 +194,7 @@ MetronicApp.factory('abftree_service',['$http', '$q', function ($http,$q) {
         return res;
     }
     service.queryAllorg = function () {
-        var res = $http.post(manurl + "/om/org/queryAllorg",subFrom).then(function (response) {
+        var res = $http.post(manurl + "/om/org/queryAllorg").then(function (response) {
             return response.data;
         });
         return res;

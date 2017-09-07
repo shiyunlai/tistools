@@ -25,6 +25,7 @@ import org.tis.tools.model.vo.om.OmPositionDetail;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.om.exception.GroupManagementException;
 import org.tis.tools.rservice.om.exception.OrgManagementException;
+import org.tis.tools.rservice.sys.capable.IDictRService;
 import org.tis.tools.service.ac.AcAppService;
 import org.tis.tools.service.om.*;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
@@ -54,7 +55,8 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 	OmGroupAppService omGroupAppService;
 	@Autowired
 	AcAppService acAppService;
-
+	@Autowired
+	IDictRService iDictRService;
 	/**
 	 * <pre>
 	 * 生成工作组代码
@@ -548,6 +550,7 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 		String orgGuid = og.getGuidOrg();
 		WhereCondition wc = new WhereCondition();
 		wc.andEquals("GUID_ORG", orgGuid);
+		wc.andEquals(OmPosition.COLUMN_POSITION_TYPE,"02");
 		List<OmPosition> opList = omPositionService.query(wc);
 		List<OmPosition> inGroupList = queryPositionInGroup(groupCode);
 		opList.removeAll(inGroupList);

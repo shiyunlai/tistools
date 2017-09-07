@@ -1029,7 +1029,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
         {field: 'openDate', displayName: '开通时间', enableHiding: false},
         {field: 'appDesc', displayName: '功能描述', enableHiding: false}
     ];
-    $scope.appgrid = initgrid($scope, appgrid, filterFilter, com, true, selework);
+    $scope.appgrid = initgrid($scope, appgrid, filterFilter, com, false, selework);
 
     var reappgrid = function () {
         var subFrom = {};

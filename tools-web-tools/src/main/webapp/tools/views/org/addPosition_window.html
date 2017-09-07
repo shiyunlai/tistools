@@ -12,12 +12,11 @@
         <form action="#" name="myform1" class="form-horizontal" ng-if="next">
             <div class="form-body ">
                 <div class="col-md-6">
-                    <div class="form-group">
+                    <div class="form-group" ng-init="$settings.getDictData('DICT_OM_POSITYPE')">
                         <label class="control-label col-md-4">岗位类型:</label>
                         <div class="col-md-8">
-                            <select ng-model="subFrom.positionType" class="form-control" required>
-                                <option value="01">机构岗位</option>
-                                <option value="02">工作组岗位</option>
+                            <select class="form-control" ng-model="subFrom.positionType">
+                                <option ng-repeat="d in $settings.diclist['DICT_OM_POSITYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>
                     </div>
@@ -49,12 +48,11 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
+                    <div class="form-group" ng-init="$settings.getDictData('DICT_OM_POSITYPE')">
                         <label class="control-label col-md-4">岗位类型:</label>
                         <div class="col-md-8">
-                            <select ng-model="subFrom.positionType" class="form-control" disabled="true">
-                                <option value="01">机构岗位</option>
-                                <option value="02">工作组岗位</option>
+                            <select class="form-control" ng-model="subFrom.positionType" disabled="true">
+                                <option ng-repeat="d in $settings.diclist['DICT_OM_POSITYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>
                     </div>
@@ -70,12 +68,12 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
+                    <div class="form-group" ng-init="$settings.getCommData('DUTY')">
                         <label class="control-label col-md-4">所属职务:<span style="color:red">*</span></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.guidDuty"
-                                   name="id" required=""/>
+                            <select class="form-control" ng-model="subFrom.guidDuty">
+                                <option ng-repeat="d in $settings.commlist['DUTY'] track by $index" value="{{d.guid}}">{{d.dutyName}}</option>
+                            </select>
                         </div>
                     </div>
                 </div>
