@@ -412,6 +412,18 @@ function comparTime(startTime, endTime){
     return false;
 }
 
+
+function comparisonTimeDateNSY(startTime, endTime){
+    //先比较年月日大小
+    var dateTime1=new Date(startTime.substring(0, 10));
+    var dateTime2=new Date(endTime.substring(0, 10));
+    if(dateTime1.getTime()>dateTime2.getTime()+1){
+        return false;
+    }else{
+        return true;
+    }
+
+}
 //制作报文参数
 //返回当前时间的hhmmss
 function getHHMMSS(){

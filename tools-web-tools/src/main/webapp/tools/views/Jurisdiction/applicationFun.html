@@ -123,13 +123,23 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6 col-md-12">
+                                                       <!-- <div class="col-lg-6 col-md-12">
                                                                 <div class="form-group">
                                                                 <label class="control-label col-md-4"> 是否开通:<span ng-class="{required:myform.dict_isopen.$invalid}" >* </span></label>
                                                                 <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
                                                                     <select class="form-control" required  name="dict_isopen"   ng-model="dictionaryAdd.isopen" ng-change="isOpen(dictionaryAdd.isopen)" ng-disabled="!editflag">
                                                                         <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                                                                     </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>-->
+                                                        <div class="col-lg-6 col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4"> 是否开通:<span ng-class="{required:myform.dict_isopen.$invalid}" >* </span></label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control"
+                                                                           required  ng-model="dictionaryAdd.isopen"  translate-constants comtable="DICT_YON"
+                                                                           name="dicts_kesy" maxlength="64" ng-disabled="!edsssitflag"/>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -160,7 +170,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6 col-md-12">
+                                                        <!--<div class="col-lg-6 col-md-12">
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4"> 开通日期: </label>
                                                                 <div class="col-md-8">
@@ -170,6 +180,14 @@
                                                                             </span>
                                                                         <input type="text" class="form-control" ng-model="dictionaryAdd.openDateStr" readonly/>
                                                                     </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>-->
+                                                        <div class="col-lg-6 col-md-12"  ng-if="isOpenY">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4"> 开通日期: </label>
+                                                                <div class="col-md-8">
+                                                                        <input type="text" class="form-control" ng-model="dictionaryAdd.openDateStr" readonly/>
                                                                 </div>
                                                             </div>
                                                         </div>

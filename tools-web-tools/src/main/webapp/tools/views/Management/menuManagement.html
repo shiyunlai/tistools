@@ -48,7 +48,7 @@
                                 <button type="button" name="back"  class="btn btn-primary"    popover-trigger="mouseenter" ng-click="menu.search(menu)" > 查询
                                 </button>
                             </div>
-                            <div class="portlet-body" style="overflow-y:hidden;" ng-show="menu.show">
+                            <div class="portlet-body" style="overflow-y:hidden;" ng-show="menushow">
                                 <div class="shu" style="margin-top: 20px;">
                                     <!--<form id="s">
                                         <input type="search" id="q"/>
@@ -87,6 +87,21 @@
                                                     <input type="text" class="form-control"
                                                            ng-model="menuFrom.menuLabel"
                                                            name="dict_key1" ng-disabled="!editflag" required/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">菜单显示图标</label>
+                                                <div class="col-md-8">
+                                                    <span class="col-md-3">
+                                                        <span class="input-group-btn">
+                                                         <ui-iconpicker groups="font-awesome" style="position: relative" ng-model="menuFrom.expandPath" value="{{menuFrom.imagePath}}"></ui-iconpicker>
+                                                        </span>
+                                                    </span>
+                                                    <span class="col-md-9">
+                                                        <input class="form-control" type="text" disabled ng-model="menuFrom.expandPath" />
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -143,21 +158,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label col-md-4">菜单显示图标</label>
-                                                <div class="col-md-8">
-                                                    <span class="col-md-3">
-                                                        <span class="input-group-btn">
-                                                         <ui-iconpicker groups="font-awesome" style="position: relative" ng-model="menuFrom.imagePath" value="{{menuFrom.imagePath}}"></ui-iconpicker>
-                                                        </span>
-                                                    </span>
-                                                    <span class="col-md-9">
-                                                        <input class="form-control" type="text" disabled ng-model="menuFrom.expandPath" />
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
+
 
                                         <!--<div class="col-md-6" >
                                             <div class="form-group">

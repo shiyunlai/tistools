@@ -964,6 +964,12 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             data: {pageTitle: '业务机构'},
             controller:"busiorg_controller"
         })
+        .state("transtime",{
+            url:"/transtimeer.html",
+            templateUrl:"views/transtimes/transtimeer.html",
+            data: {pageTitle: '业务机构'},
+            controller:"transtime_controller"
+        })
 }]);
 
 /* Init global settings and run the app */

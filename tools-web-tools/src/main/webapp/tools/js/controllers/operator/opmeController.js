@@ -564,6 +564,7 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
                     $scope.add = function (item) {
                         var subFrom = {};
                         subFrom = item;
+                        subFrom.menuLabel = subFrom.menuName
                         subFrom.guidApp = opmer.guidApp;
                         subFrom.guidParents = node.id;
                         subFrom.isLeaf = 'N';
@@ -592,6 +593,7 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
                     var menuFrom = {};
                     $scope.menuFrom = menuFrom;
                     menuFrom.expandPath = node.original.icon;
+                    subFrom.menuLabel = subFrom.menuName
                     menuFrom.menuName = node.original.text;
                     $scope.add = function (item) {
                         var subFrom = {};
@@ -763,10 +765,10 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
         var creattopmenu = function(){
             openwindow($uibModal, 'views/Management/configMana.html', 'lg',
                 function ($scope, $modalInstance) {
-
                     $scope.add= function(item){
                         var subFrom = {};
                         subFrom = item;
+                        subFrom.menuLabel = subFrom.menuName
                         subFrom.guidApp = opmer.guidApp;
                         subFrom.guidParents = '#';
                         subFrom.guidOperator = opmer.operatorGuid;//操作员guid 先写死

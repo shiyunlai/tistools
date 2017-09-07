@@ -9,7 +9,6 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
     var thisNode = '';
     $scope.thisNode =thisNode;
 
-    console.log($rootScope.res)
     i18nService.setCurrentLang("zh-cn");
     //查询所有应用
     menu_service.queryAllAcApp(subFrom).then(function (data) {
@@ -34,7 +33,8 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
         $scope.menu.guidApp = guidApp;//绑定给全局，全局可拿
         if(item.appselect !== undefined ){
             subFrom.guidApp =item.appselect;
-            $scope.menu.show = true;
+            $scope.menushow = true;
+            $scope.menu.show  = false;
             //新增顶级菜单提取
             var  creatopMenu = function(){
                 openwindow($uibModal, 'views/Management/manachildAdd.html', 'lg',
@@ -148,6 +148,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                 menu_service.deleteMenu(subFrom).then(function(data){
                     if(data.status == "success"){
                         toastr['success']( "删除成功！");
+                        $scope.menu.show  = false;
                         $("#container").jstree().refresh();
                     }else{
                         toastr['error']('删除失败'+'<br/>'+data.retMessage);

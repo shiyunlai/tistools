@@ -58,32 +58,7 @@ public class AcAppController extends BaseController {
 			if (logger.isInfoEnabled()) {
 				logger.info("appAdd request : " + content);
 			}
-			JSONObject jsonObj = JSONObject.parseObject(content);	
-			String appCode = jsonObj.getString("appCode");
-			String appName = jsonObj.getString("appName");
-			String appType = jsonObj.getString("appType");
-			String appDesc = jsonObj.getString("appDesc");
-			String isOpen = jsonObj.getString("isopen");
-			String openDateStr = jsonObj.getString("openDateStr");
-			SimpleDateFormat times = new SimpleDateFormat("yyyy-MM-dd");
-			Date date = times.parse(openDateStr);
-			String url = jsonObj.getString("url");
-			String empMaintenance = jsonObj.getString("guidEmpMaintenance");
-			String roleMaintenance = jsonObj.getString("guidRoleMaintenance");
-			String ipAddr = jsonObj.getString("ipAddr");
-			String ipPort = jsonObj.getString("ipPort");
-			AcApp ac = new AcApp();
-			ac.setAppCode(appCode);
-			ac.setAppName(appName);
-			ac.setAppType(appType);
-			ac.setAppDesc(appDesc);
-			ac.setIsopen(isOpen);
-			ac.setGuidEmpMaintenance(empMaintenance);
-			ac.setGuidRoleMaintenance(roleMaintenance);
-			ac.setOpenDate(date);
-			ac.setUrl(url);
-			ac.setIpPort(ipPort);
-			ac.setIpAddr(ipAddr);
+			AcApp ac = JSONObject.parseObject(content, AcApp.class);
 		    applicationRService.createAcApp(ac);//把参数全部填写上
 			AjaxUtils.ajaxJsonSuccessMessage(response,"");
 		} catch (ToolsRuntimeException e) {
@@ -139,24 +114,8 @@ public class AcAppController extends BaseController {
 			if (logger.isInfoEnabled()) {
 				logger.info("appEdit request : " + content);
 			} 
-			JSONObject jsonObj = JSONObject.parseObject(content);
-			String id = jsonObj.getString("id");
-			AcApp acApp = applicationRService.queryAcApp(id);
-			acApp.setAppCode(jsonObj.getString("appCode"));
-			acApp.setAppName(jsonObj.getString("appName"));
-			acApp.setAppType(jsonObj.getString("appType"));
-			acApp.setAppDesc(jsonObj.getString("appDesc"));
-			acApp.setIsopen(jsonObj.getString("isopen"));
-			String openDateStr = jsonObj.getString("openDateStr");
-			SimpleDateFormat times = new SimpleDateFormat("yyyy-MM-dd");
-			Date date = times.parse(openDateStr);
-			acApp.setOpenDate(date);
-			acApp.setUrl(jsonObj.getString("url"));
-			acApp.setIpAddr(jsonObj.getString("ipAddr"));
-			acApp.setGuidEmpMaintenance(jsonObj.getString("guidEmpMaintenance"));
-			acApp.setGuidRoleMaintenance(jsonObj.getString("guidRoleMaintenance"));
-			acApp.setIpPort(jsonObj.getString("ipPort"));
-			applicationRService.updateAcApp(acApp);
+			AcApp ac = JSONObject.parseObject(content, AcApp.class);
+			applicationRService.updateAcApp(ac);
 			AjaxUtils.ajaxJsonSuccessMessage(response, "");
 		} catch (ToolsRuntimeException e) {
 			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
@@ -194,7 +153,7 @@ public class AcAppController extends BaseController {
 				result.put("data", map);//返回给前台的数据
 			}else if("AC0000".equals(id)){
 				//调用远程服务,#:根
-				 List<AcAppVo> ac = applicationRService.queryAcRootList();
+				 List<AcApp> ac = applicationRService.queryAcRootList();
 				 result.put("data", ac);//返回给前台的数据
 			}else if(id.length()>3&&"APP".equals(id.substring(0, 3))){	
 				List<AcFuncgroup> group = applicationRService.queryAcRootFuncgroup(id);
@@ -211,7 +170,7 @@ public class AcAppController extends BaseController {
 				}
 				result.put("data", map);//返回给前台的数据
 			}
-			AjaxUtils.ajaxJsonSuccessMessage(response, result.get("data"));
+			AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response, result.get("data"), "yyyy-MM-DD hh:mm:ss");
 		} catch (ToolsRuntimeException e) {
 			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
 			logger.error("appQuery exception : ", e);

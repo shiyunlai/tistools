@@ -40,6 +40,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                 var ids = obj.id;
                                 //增加方法
                                 $scope.saveDict = function(item){//保存新增的函数
+                                    item.isopen = 'N';//新增应用，默认为不开通
                                     application_service.appAdd(item).then(function(data){
                                         if(data.status == "success"){
                                             toastr['success']("新增成功！");
@@ -113,9 +114,8 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                                     toastr['success']("删除成功!");
                                     $scope.dictionaryAdd = {};
                                     $("#container").jstree().refresh();
+                                    $scope.biz.apptab = false;
                                     biz.initt(ids);//调用查询服务,传入点击树的id，查询
-                                    //销毁树，然后在重新生成
-
                                 }else{
                                     toastr['error']('删除失败'+'<br/>'+data.retMessage);
                                 }
@@ -433,7 +433,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         { field: "appCode", displayName:'应用代码'},
         { field: "appType", displayName:'应用类型',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.appType | translateConstants :\'DICT_AC_APPTYPE\') + $root.constant[\'DICT_AC_APPTYPE-\'+row.entity.appType]}}</div>'},
         { field: "isopen", displayName:'是否开通',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.isopen | translateConstants :\'DICT_YON\') + $root.constant[\'DICT_YON-\'+row.entity.isopen]}}</div>'},
-        { field: "openDateStr", displayName:'开通日期'},
         { field: "url", displayName:'访问地址'},
         { field: "ipAddr", displayName:'IP'},
         { field: "ipPort", displayName:'端口'},
@@ -465,8 +464,8 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         openwindow($modal, 'views/Jurisdiction/applicationAdd.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
                 $scope.saveDict = function(item){//保存新增的函数
+                    item.isopen = 'N';
                     application_service.appAdd(item).then(function(data){
-                        console.log(data);
                         if(data.status == "success"){
                             toastr['success']("保存成功！");
                             biz.initt(ids);//调用查询服务
@@ -1019,6 +1018,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     /* 功能tab页面逻辑*/
     //应用开通逻辑
     biz.openApp = function(item){
+        console.log(item);
         var ids = $scope.biz.item.id;//获取点击的根节点的值
         var times = new Date();
         times  = moment().format('YYYY-MM-DD');
@@ -1036,8 +1036,17 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 toastr['error']('开通失败'+'<br/>'+data.retMessage);
             }
         })
-
     }
+
+
+    $scope.$watch('dictionaryAdd.isopen',function(newValue,oldValue, scope){
+        if(newValue =='Y'){
+            $scope.isOpenY = true;
+        }else{
+            $scope.isOpenY = false;
+        }
+
+    });
     //关闭应用逻辑
     biz.clearApp = function(item){
         var ids = $scope.biz.item.id;//获取点击的根节点的值

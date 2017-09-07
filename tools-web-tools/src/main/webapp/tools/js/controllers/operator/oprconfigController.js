@@ -292,7 +292,7 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
     $scope.gridOptions1 = gridOptions1;
     //操作员名称，代码  应用系统名称 代码
     var com1 = [
-        { field: "acResourcetype", displayName:'资源类型'},
+        { field: "acResourcetype", displayName:'资源类型',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.acResourcetype | translateConstants :\'DICT_AC_RESOURCETYPE\') + $root.constant[\'DICT_AC_RESOURCETYPE-\'+row.entity.acResourcetype]}}</div>'},
         { field: "roleName", displayName:'角色名称'},
     ];
     var f1 = function(row){
@@ -303,7 +303,7 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
         }
     }
 
-    $scope.gridOptions1 = initgrid($scope,gridOptions1,filterFilter,com1,false,f1);
+    $scope.gridOptions1 = initgrid($scope,gridOptions1,filterFilter,com1,true,f1);
 
     //资源身份新增
     $scope.identypeAdd = function(){
@@ -343,7 +343,6 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                         subFrom.operatorGuid =opensf.operguid;
                         subFrom.resType = newValue;
                         common_service.post(res.queryRoleInOperatorByResType,subFrom).then(function(data){
-                            console.log(data);
                             var datas  = data.retMessage;
                             if(data.status == "success"){
                                 $scope.gridOptions.data = datas;
@@ -399,7 +398,6 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                             }
                         })
                         $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
-
                     }else if(newValue=='workgroup'){
                         var com = [
                             { field: "roleName", displayName:'角色名称'}
@@ -435,20 +433,14 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                     $scope.importAdd = function(item){//导入资源代码
                         var getSel = $scope.gridOptions.getSelectedRows();
                         if(getSel.length>0){
-                           /* subFrom.guidIdentity = opersguid; //身份guid
-                            subFrom.acResourcetype =newValue;//资源类型
-                            subFrom.guidAcResource =getSel[0].guid;//资源guid
-                            //多选*/
                             var tis = [];
                             for(var i=0;i< getSel.length;i++){
                                 var  subFrom = {};
                                 subFrom.guidIdentity = opersguid; //身份guid
                                 subFrom.acResourcetype = newValue;//资源类型
                                 subFrom.guidAcResource = getSel[i].guid;//每一个guid
-                                console.log(getSel[i])
                                 tis.push(subFrom)
                             }
-                            console.log(tis)
                             common_service.post(res.createOperatorIdentityres,tis).then(function(data){
                                 if(data.status == "success"){
                                     var datas  = data.retMessage;
@@ -476,17 +468,22 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
     $scope.identypeDel = function(){
         var  opersguid = $scope.selectRow.guid;//身份对应guid
         var getSel = $scope.gridOptions1.getSelectedRows();
-        console.log(getSel)
-        if(isNull(getSel) || getSel.length>1){
+        if(getSel.length == 0){
             toastr['error']("请选则一条数据进行删除！");
         }else{
             //调用删除接口
             if(confirm("您确认删除选中的资源吗？")){
-                var subFrom = {};
-                subFrom.identityresGuid = opersguid;
-                subFrom.resGuid = getSel[0].guidAcResource;//资源guid
-                common_service.post(res.deleteOperatorIdentityres,subFrom).then(function(data){
+                /*多选*/
+                var tis = [];
+                for(var i=0;i< getSel.length;i++){
+                    var  subFrom = {};
+                    subFrom.guidIdentity = opersguid;
+                    subFrom.guidAcResource = getSel[i].guidAcResource;//资源guid
+                    tis.push(subFrom)
+                }
+                common_service.post(res.deleteOperatorIdentityres,tis).then(function(data){
                     if(data.status == "success"){
+                        console.log(data);
                         var datas  = data.retMessage;
                         toastr['success']("删除成功！");
                         opensf.inittx1(opersguid);//重新查询列表
