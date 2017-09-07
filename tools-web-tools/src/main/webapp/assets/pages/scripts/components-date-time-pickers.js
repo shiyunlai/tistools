@@ -40,6 +40,7 @@ var ComponentsDateTimePickers = function () {
                 showMeridian: false
             });
 
+
             // handle input group button click
             $('.timepicker').parent('.input-group').on('click', '.input-group-btn', function(e){
                 e.preventDefault();
@@ -158,6 +159,7 @@ var ComponentsDateTimePickers = function () {
             isRTL: App.isRTL(),
             minView: "month",//只显示到日期，不显示时分秒
             format: "yyyy-mm-dd",//定义格式，年月日
+            //format: "yyyy-mm-dd hh:ii:ss",//显示到时分秒
             pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left")
         });
 
@@ -179,6 +181,8 @@ var ComponentsDateTimePickers = function () {
             pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left"),
             todayBtn: true
         });
+
+
 
         $('body').removeClass("modal-open"); // fix bug when inline picker is used in modal
 

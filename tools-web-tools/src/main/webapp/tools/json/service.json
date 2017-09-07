@@ -39,7 +39,7 @@
     "queryempbudutyCode": {"ctrl": "om/duty", "func": "queryempbudutyCode"},
     "deletedutyByCode": {"ctrl": "om/duty", "func": "deletedutyByCode"},
     "updateDuty": {"ctrl": "om/duty", "func": "updateDuty"},
-    "queryDucyList": {"ctrl": "om/duty", "func": "queryDucyList","em":"查询所有职务"}
+    "queryDucyList": {"ctrl": "om/duty", "func": "queryDutyList","em":"查询所有职务"}
   },
   "Emp_service" : {
     "queryemployee": {"ctrl": "om/emp", "func": "queryemployee"},

@@ -1,0 +1,319 @@
+<style>
+    .nopadding{
+        padding: 0;
+    }
+    .text-left{
+        text-align: left!important;
+    }
+    .selectBorder{
+        border-top-color: rgb(194, 202, 216);
+        border-top-style: solid;border-top-width: 1px;
+        border-right-color: rgb(194, 202, 216);
+        border-right-style: solid;
+        border-right-width: 1px;
+        border-bottom-color: rgb(194, 202, 216);
+        border-bottom-style: solid;
+        border-bottom-width: 1px;
+        border-left-color: rgb(194, 202, 216);
+        border-left-style: solid;
+        border-left-width: 1px;
+    }
+    .noSelectBorder{
+        border-top-color: rgb(194, 202, 216);
+        border-top-style: solid;border-top-width: 1px;
+        border-right-color: rgb(194, 202, 216);
+        border-right-style: solid;
+        border-right-width: 1px;
+        border-bottom-color: rgb(194, 202, 216);
+        border-bottom-style: solid;
+        border-bottom-width: 1px;
+        border-left-color: rgb(194, 202, 216);
+        border-left-style: solid;
+        border-left-width: 1px;
+        background-color: #eef1f5;
+        disabled:true;
+    }
+</style>
+
+
+<!--新增定时器-->
+<div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs font-green-sharp"></i>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="!id">新增定时器</span>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="id">编辑定时器</span>
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="remove" ng-click="cancel()">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body portlet light">
+        <form action="#" name="myform" class="form-horizontal ">
+            <div class="form-body ">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">任务名称<span  ng-class="{required:myform.taskName.$invalid}"  >* </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="taskName" ng-model="transtime.taskName" ng-disabled = "isUpdate" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">任务类型</label>
+                        <div class="col-md-8">
+                            <select class="form-control" ng-model="transtime.taskType" name="taskType" ng-disabled = "isUpdate">
+                                <option value="0">SCA业务构建服务任务</option>
+                                <option value="1">逻辑流任务</option>
+                                <option value="2">任意java方法任务</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-2">类名<span  ng-class="{required:myform.className.$invalid}"  >* </span></label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="className" ng-model="transtime.className" ng-disabled = "isUpdate" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">方法名<span  ng-class="{required:myform.methodName.$invalid}"  >* </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="methodName" ng-model="transtime.methodName" ng-disabled = "isUpdate" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">参数个数</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control ng-pristine ng-untouched ng-valid" ng-model="transtime.paramsNum" ng-disabled = "isUpdate">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-2">输入参数</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control ng-pristine ng-untouched ng-valid" ng-model="transtime.params" ng-disabled = "isUpdate">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">开始时间<span  ng-class="{required:myform.beginTime.$invalid}"  >* </span></label>
+                        <div class="col-md-8">
+                            <div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
+                                            <span class="input-group-btn">
+                                                <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                            </span>
+                                <input type="text" class="form-control" ng-model="transtime.beginTime" name="beginTime" ng-change="chackStartDate(transtime.beginTime)" readonly required style="background-color: white;"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">结束时间</label>
+                        <div class="col-md-8">
+                            <div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
+                                            <span class="input-group-btn">
+                                                <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                            </span>
+                                <input type="text" class="form-control" ng-model="transtime.endTime" name="endTime" ng-change="chackEndDate(transtime.endTime)" style="background-color: white;" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">定时器状态</label>
+                        <div class="col-md-8">
+                            <select class="form-control" ng-model="transtime.isStateful" name="taskType" ng-disabled = "isUpdate">
+                                <option value="0">有状态</option>
+                                <option value="1">无状态</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-2">触发模式</label>
+                        <div class="col-md-10">
+                            <select class="form-control" ng-model="transtime.triggerType" name="triggerType">
+                                <option value="0">固定模式触发</option>
+                                <option value="1">固定周期触发</option>
+                            </select>
+                            <label  style="margin-top:5px" class="mt-checkbox mt-checkbox-outline mt-checkbox-single">
+                                <input type="checkbox" class ="checkboxes" ng-model="transtime.misfireInstruction"/><span></span>应用或调度器启动后自动触发上次应用或调度器停止期间该触发而未出发的定时任务
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="transtime.triggerType == '0'">
+                    <div class="col-md-6" >
+                        <div class="form-group">
+                            <label class="control-label col-md-4">间隔时间</label>
+                            <div class="col-md-8">
+                                <input type="number" placeholder="单位:秒" class="form-control ng-pristine ng-untouched ng-valid" ng-model="transtime.incrementSeconds">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">执行次数</label>
+                            <div class="col-md-8">
+                                <input placeholder="-1表示不限次数,直到时间结为止" type="number" class="form-control ng-pristine ng-untouched ng-valid" ng-model="transtime.loopTimes">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10 col-md-offset-1" ng-show="transtime.triggerType == '1'">
+                    <table class="table table-bordered  table-responsive ">
+                        <tr>
+                            <td style="text-align: center;vertical-align: middle;">触发时间</td>
+                            <td colspan="2">
+                              <!--  <div class="input-group timepicker-24">
+                                                <span class="input-group-btn">
+                                                    <button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+                                                </span>
+                                    <input type="text" class="form-control " ng-model="timeTask.hsmScope" name="hsmScope" required readonly style="background-color: white;"/>
+                                </div>-->
+                                <div class="test">
+                                    <!--hour-step="vm.date.hstep" 使用按钮增加或减少 小时 数-->
+                                    <!--minute-step="vm.date.mstep" 使用按钮增加或减少 分钟 数-->
+                                    <!--show-meridian="false" 是否使用12h（为真则是12小时制），默认为真-->
+                                    <uib-timepicker ng-model="transtime.hsmScope" ng-change="changed()"
+                                                    hour-step="vm.hstep"
+                                                    minute-step="vm.mstep"
+                                                    show-meridian="false">
+
+                                    </uib-timepicker>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="20%" rowspan="4" style="text-align: center;vertical-align: middle;">循环模式</td>
+                            <td width="10%">
+                                <label>
+                                    <input type="radio" name="dataFrom" id="radioGroup1" ng-model="transtime.circleType" value="day">每日
+                                </label>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td width="10%">
+                                <label>
+                                    <input type="radio" name="dataFrom" id="radioGroup2" ng-model="transtime.circleType" value="week">每周
+                                </label>
+                            </td>
+                            <td>
+                                <label><input type="checkbox" ng-disabled="transtime.circleType !== 'week'" ng-model="transtime.overweek[0]" ><span></span>星期日 </label>
+                                <label><input type="checkbox" ng-disabled="transtime.circleType !== 'week'" ng-model="transtime.overweek[1]"><span></span>星期一 </label>
+                                <label><input type="checkbox"  ng-disabled="transtime.circleType !== 'week'" ng-model="transtime.overweek[2]"><span></span>星期二 </label>
+                                <label><input type="checkbox" ng-disabled="transtime.circleType !== 'week'"  ng-model="transtime.overweek[3]"><span></span>星期三 </label>
+                                <label><input type="checkbox"  ng-disabled="transtime.circleType !== 'week'" ng-model="transtime.overweek[4]"><span></span>星期四 </label>
+                                <label><input type="checkbox" ng-disabled="transtime.circleType !== 'week'" ng-model="transtime.overweek[5]"><span></span>星期五 </label>
+                                <label><input type="checkbox" ng-disabled="transtime.circleType !== 'week'" ng-model="transtime.overweek[6]" ><span></span>星期六 </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="10%">
+                                <label>
+                                    <input type="radio" name="dataFrom" id="radioGroup3" ng-model="transtime.circleType" value="month">每月
+                                </label>
+                            </td>
+                            <td>
+                                <div>
+                                    <label>
+                                        <input type="radio"  name ='overMonth'  ng-model="transtime.monthone"  value="monthone">
+                                        <select ng-class="{true: 'noSelectBorder', false: 'selectBorder'}[transtime.circleType !== 'month' || transtime.monthone !== 'monthone']"  ng-model="transtime.monthers" ng-disabled="transtime.circleType !== 'month' ||transtime.monthone !== 'monthone'">
+                                            <option ng-repeat="d in selectDay" value="{{d.value}}">{{d.name}}</option>
+                                        </select>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label>
+                                        <input type="radio" name ='overMonth'  ng-model="transtime.monthone"  value="monthtwo">
+                                        <select ng-class="{true: 'noSelectBorder', false: 'selectBorder'}[transtime.circleType !== 'month' || transtime.monthone !== 'monthtwo']"  ng-model="transtime.weekers"  ng-disabled="transtime.circleType !== 'month' ||transtime.monthone !== 'monthtwo'">
+                                            <option ng-repeat="d in selectweekth" value="{{d.value}}">{{d.name}}</option>
+                                        </select>
+                                        <select ng-class="{true: 'noSelectBorder', false: 'selectBorder'}[transtime.circleType !== 'month' || transtime.monthone !== 'monthtwo']"  ng-model="transtime.daters"   ng-disabled="transtime.circleType !== 'month' ||transtime.monthone !== 'monthtwo'">
+                                            <option ng-repeat="d in selectweek" value="{{d.value}}">{{d.name}}</option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="10%">
+                                <label>
+                                    <input type="radio" name="dataFrom" id="radioGroup4" ng-model="transtime.circleType" value="year">每年
+                                </label>
+                            </td>
+                            <td>
+                                <div>
+                                    <label>
+                                        <input type="radio" name ='overYear'  ng-model="transtime.Yearone"  value="Yearone">
+                                        <select ng-class="{true: 'noSelectBorder', false: 'selectBorder'}[transtime.circleType !== 'year' || transtime.Yearone !== 'Yearone']" ng-disabled="transtime.circleType !== 'year'||transtime.Yearone !== 'Yearone'"  ng-model="transtime.Yearmonth" >
+                                            <option ng-repeat="d in selectmonth" value="{{d.value}}">{{d.name}}</option>
+                                        </select>
+                                        <select ng-class="{true: 'noSelectBorder', false: 'selectBorder'}[transtime.circleType !== 'year' || transtime.Yearone !== 'Yearone']"  ng-disabled="transtime.circleType !== 'year'||transtime.Yearone !== 'Yearone'"  ng-model="transtime.Yearweek" >
+                                            <option ng-repeat="d in selectDay" value="{{d.value}}">{{d.name}}</option>
+                                        </select>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label>
+                                        <input type="radio" name="overYear"  ng-model="transtime.Yearone" value="Yeartwo">
+                                        <select ng-class="{true: 'noSelectBorder', false: 'selectBorder'}[transtime.circleType !== 'year' || transtime.Yearone !== 'Yeartwo']" ng-disabled="transtime.circleType !== 'year'||transtime.Yearone !== 'Yeartwo'"  ng-model="transtime.Yearmontht" >
+                                            <option ng-repeat="d in selectmonth" value="{{d.value}}">{{d.name}}</option>
+                                        </select>
+                                        <select ng-class="{true: 'noSelectBorder', false: 'selectBorder'}[transtime.circleType !== 'year' || transtime.Yearone !== 'Yeartwo']" ng-disabled="transtime.circleType !== 'year'||transtime.Yearone !== 'Yeartwo'"  ng-model="transtime.Yearweekt">
+                                            <option ng-repeat="d in selectweekth" value="{{d.value}}">{{d.name}}</option>
+                                        </select>
+                                        <select ng-class="{true: 'noSelectBorder', false: 'selectBorder'}[transtime.circleType !== 'year' || transtime.Yearone !== 'Yeartwo']" ng-disabled="transtime.circleType !== 'year'||transtime.Yearone !== 'Yeartwo'"  ng-model="transtime.Yeardayt">
+                                            <option ng-repeat="d in selectweek" value="{{d.value}}">{{d.name}}</option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-2"></label>
+                        <div class="col-md-10">
+                            <div class="actions btn-set" style="text-align: center" >
+                                <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="add(transtime)" > 保存
+                                </button>
+                                <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存
+                                </button>
+                                <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    $(".form_datetime").datetimepicker({
+                        autoclose: true,
+                        isRTL: App.isRTL(),
+                        format: "yyyy-mm-dd hh:ii:ss",//显示到时分秒
+                        pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left")
+                    });
+                </script>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+

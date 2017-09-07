@@ -383,11 +383,9 @@ public class AcOperatorController extends BaseController {
             if (logger.isInfoEnabled()) {
                 logger.info("deleteOperatorIdentityres request : " + content);
             }
-            JSONObject jsonObject= JSONObject.parseObject(content);
-            String identityresGuid = jsonObject.getString("identityresGuid");//身份GUID
-            String resGuid = jsonObject.getString("resGuid");//资源GUID
-            
-            operatorRService.deleteOperatorIdentityres(identityresGuid, resGuid);
+//            JSONObject jsonObject= JSONObject.parseObject(content);
+            List<AcOperatorIdentityres> acOperatorIdentityreses = JSON.parseArray(content, AcOperatorIdentityres.class);
+            operatorRService.deleteOperatorIdentityres(acOperatorIdentityreses);
             AjaxUtils.ajaxJsonSuccessMessage(response,"");
         } catch (ToolsRuntimeException e) {
             AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());

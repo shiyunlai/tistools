@@ -33,6 +33,21 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">菜单显示图标</label>
+                        <div class="col-md-8">
+                            <span class="col-md-3">
+                                <span class="input-group-btn">
+                                    <ui-iconpicker groups="font-awesome" style="position: relative" ng-model="menuFrom.expandPath" value="{{menuFrom.imagePath}}"></ui-iconpicker>
+                                </span>
+                            </span>
+                            <span class="col-md-9">
+                                <input class="form-control" type="text" disabled ng-model="menuFrom.expandPath" />
+                            </span>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-6" >
                     <div class="form-group">
                         <label class="control-label col-md-4">菜单代码:<span ng-class="{required:myform.dict_key2.$invalid}"  > * </span></label>
@@ -63,21 +78,6 @@
                         </div>
                         <div class="col-md-1">
                             <span style="margin-top:10px; margin-left:-5px;cursor: pointer" class="icon-magnifier-add"  ng-click="selectfuncs()"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">菜单显示图标</label>
-                        <div class="col-md-8">
-                            <span class="col-md-3">
-                                <span class="input-group-btn">
-                                    <ui-iconpicker groups="font-awesome" style="position: relative" ng-model="menuFrom.imagePath" value="{{menuFrom.imagePath}}"></ui-iconpicker>
-                                </span>
-                            </span>
-                            <span class="col-md-9">
-                                <input class="form-control" type="text" disabled ng-model="menuFrom.expandPath" />
-                            </span>
                         </div>
                     </div>
                 </div>
