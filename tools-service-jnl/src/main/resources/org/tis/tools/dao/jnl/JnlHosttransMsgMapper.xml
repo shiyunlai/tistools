@@ -20,7 +20,7 @@
 			#{guidHosttrans,jdbcType=VARCHAR},
 			#{msgType,jdbcType=CHAR},
 			#{execTime,jdbcType=VARCHAR},
-			#{msgInfo,jdbcType=TEXT}
+			#{msgInfo,jdbcType=VARCHAR}
   		)
  	</insert>
  	
@@ -30,17 +30,17 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_hosttrans != null" >
+		<if test="guidHosttrans != null" >
 			guid_hosttrans = #{guidHosttrans,jdbcType=VARCHAR},
 		</if>
-		<if test="msg_type != null" >
+		<if test="msgType != null" >
 			msg_type = #{msgType,jdbcType=CHAR},
 		</if>
-		<if test="exec_time != null" >
+		<if test="execTime != null" >
 			exec_time = #{execTime,jdbcType=VARCHAR},
 		</if>
-		<if test="msg_info != null" >
-			msg_info = #{msgInfo,jdbcType=TEXT}
+		<if test="msgInfo != null" >
+			msg_info = #{msgInfo,jdbcType=VARCHAR}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -53,7 +53,7 @@
 		guid_hosttrans = #{guidHosttrans,jdbcType=VARCHAR},
 		msg_type = #{msgType,jdbcType=CHAR},
 		exec_time = #{execTime,jdbcType=VARCHAR},
-		msg_info = #{msgInfo,jdbcType=TEXT}
+		msg_info = #{msgInfo,jdbcType=VARCHAR}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -70,19 +70,19 @@
     	UPDATE JNL_HOSTTRANS_MSG 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_hosttrans != null" >
-        	guid_hosttrans = #{domain.guidHosttrans,jdbcType=VARCHAR}
+		<if test="domain.guidHosttrans != null" >
+        	guid_hosttrans = #{domain.guidHosttrans,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.msg_type != null" >
-        	msg_type = #{domain.msgType,jdbcType=CHAR}
+		<if test="domain.msgType != null" >
+        	msg_type = #{domain.msgType,jdbcType=CHAR},
       	</if>
-		<if test="domain.exec_time != null" >
-        	exec_time = #{domain.execTime,jdbcType=VARCHAR}
+		<if test="domain.execTime != null" >
+        	exec_time = #{domain.execTime,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.msg_info != null" >
-        	msg_info = #{domain.msgInfo,jdbcType=TEXT}
+		<if test="domain.msgInfo != null" >
+        	msg_info = #{domain.msgInfo,jdbcType=VARCHAR}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>
@@ -107,10 +107,10 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid
-		,guid_hosttrans
-		,msg_type
-		,exec_time
-		,msg_info
+		 guid as guid
+		,guid_hosttrans as guidHosttrans
+		,msg_type as msgType
+		,exec_time as execTime
+		,msg_info as msgInfo
 	</sql>
 </mapper>

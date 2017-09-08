@@ -26,11 +26,11 @@
 			#{transSno,jdbcType=VARCHAR},
 			#{transCode,jdbcType=VARCHAR},
 			#{voucherCode,jdbcType=VARCHAR},
-			#{printedData,jdbcType=TEXT},
+			#{printedData,jdbcType=VARCHAR},
 			#{voucherImgId,jdbcType=VARCHAR},
 			#{printedDate,jdbcType=CHAR},
 			#{lastPrintedTime,jdbcType=CHAR},
-			#{printedNum,jdbcType=INT}
+			#{printedNum,jdbcType=INTEGER}
   		)
  	</insert>
  	
@@ -40,32 +40,32 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_trans != null" >
+		<if test="guidTrans != null" >
 			guid_trans = #{guidTrans,jdbcType=VARCHAR},
 		</if>
-		<if test="trans_sno != null" >
+		<if test="transSno != null" >
 			trans_sno = #{transSno,jdbcType=VARCHAR},
 		</if>
-		<if test="trans_code != null" >
+		<if test="transCode != null" >
 			trans_code = #{transCode,jdbcType=VARCHAR},
 		</if>
-		<if test="voucher_code != null" >
+		<if test="voucherCode != null" >
 			voucher_code = #{voucherCode,jdbcType=VARCHAR},
 		</if>
-		<if test="printed_data != null" >
-			printed_data = #{printedData,jdbcType=TEXT},
+		<if test="printedData != null" >
+			printed_data = #{printedData,jdbcType=VARCHAR},
 		</if>
-		<if test="voucher_img_id != null" >
+		<if test="voucherImgId != null" >
 			voucher_img_id = #{voucherImgId,jdbcType=VARCHAR},
 		</if>
-		<if test="printed_date != null" >
+		<if test="printedDate != null" >
 			printed_date = #{printedDate,jdbcType=CHAR},
 		</if>
-		<if test="last_printed_time != null" >
+		<if test="lastPrintedTime != null" >
 			last_printed_time = #{lastPrintedTime,jdbcType=CHAR},
 		</if>
-		<if test="printed_num != null" >
-			printed_num = #{printedNum,jdbcType=INT}
+		<if test="printedNum != null" >
+			printed_num = #{printedNum,jdbcType=INTEGER}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -79,11 +79,11 @@
 		trans_sno = #{transSno,jdbcType=VARCHAR},
 		trans_code = #{transCode,jdbcType=VARCHAR},
 		voucher_code = #{voucherCode,jdbcType=VARCHAR},
-		printed_data = #{printedData,jdbcType=TEXT},
+		printed_data = #{printedData,jdbcType=VARCHAR},
 		voucher_img_id = #{voucherImgId,jdbcType=VARCHAR},
 		printed_date = #{printedDate,jdbcType=CHAR},
 		last_printed_time = #{lastPrintedTime,jdbcType=CHAR},
-		printed_num = #{printedNum,jdbcType=INT}
+		printed_num = #{printedNum,jdbcType=INTEGER}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -100,34 +100,34 @@
     	UPDATE JNL_TRANS_PRINTED 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_trans != null" >
-        	guid_trans = #{domain.guidTrans,jdbcType=VARCHAR}
+		<if test="domain.guidTrans != null" >
+        	guid_trans = #{domain.guidTrans,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.trans_sno != null" >
-        	trans_sno = #{domain.transSno,jdbcType=VARCHAR}
+		<if test="domain.transSno != null" >
+        	trans_sno = #{domain.transSno,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.trans_code != null" >
-        	trans_code = #{domain.transCode,jdbcType=VARCHAR}
+		<if test="domain.transCode != null" >
+        	trans_code = #{domain.transCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.voucher_code != null" >
-        	voucher_code = #{domain.voucherCode,jdbcType=VARCHAR}
+		<if test="domain.voucherCode != null" >
+        	voucher_code = #{domain.voucherCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.printed_data != null" >
-        	printed_data = #{domain.printedData,jdbcType=TEXT}
+		<if test="domain.printedData != null" >
+        	printed_data = #{domain.printedData,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.voucher_img_id != null" >
-        	voucher_img_id = #{domain.voucherImgId,jdbcType=VARCHAR}
+		<if test="domain.voucherImgId != null" >
+        	voucher_img_id = #{domain.voucherImgId,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.printed_date != null" >
-        	printed_date = #{domain.printedDate,jdbcType=CHAR}
+		<if test="domain.printedDate != null" >
+        	printed_date = #{domain.printedDate,jdbcType=CHAR},
       	</if>
-		<if test="domain.last_printed_time != null" >
-        	last_printed_time = #{domain.lastPrintedTime,jdbcType=CHAR}
+		<if test="domain.lastPrintedTime != null" >
+        	last_printed_time = #{domain.lastPrintedTime,jdbcType=CHAR},
       	</if>
-		<if test="domain.printed_num != null" >
-        	printed_num = #{domain.printedNum,jdbcType=INT}
+		<if test="domain.printedNum != null" >
+        	printed_num = #{domain.printedNum,jdbcType=INTEGER}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>
@@ -152,15 +152,15 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid
-		,guid_trans
-		,trans_sno
-		,trans_code
-		,voucher_code
-		,printed_data
-		,voucher_img_id
-		,printed_date
-		,last_printed_time
-		,printed_num
+		 guid as guid
+		,guid_trans as guidTrans
+		,trans_sno as transSno
+		,trans_code as transCode
+		,voucher_code as voucherCode
+		,printed_data as printedData
+		,voucher_img_id as voucherImgId
+		,printed_date as printedDate
+		,last_printed_time as lastPrintedTime
+		,printed_num as printedNum
 	</sql>
 </mapper>

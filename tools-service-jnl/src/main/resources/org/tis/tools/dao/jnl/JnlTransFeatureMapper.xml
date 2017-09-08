@@ -30,16 +30,16 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_trans != null" >
+		<if test="guidTrans != null" >
 			guid_trans = #{guidTrans,jdbcType=VARCHAR},
 		</if>
-		<if test="trans_sno != null" >
+		<if test="transSno != null" >
 			trans_sno = #{transSno,jdbcType=VARCHAR},
 		</if>
-		<if test="trans_field != null" >
+		<if test="transField != null" >
 			trans_field = #{transField,jdbcType=VARCHAR},
 		</if>
-		<if test="trans_data != null" >
+		<if test="transData != null" >
 			trans_data = #{transData,jdbcType=VARCHAR}
 		</if>
 	    </set>
@@ -70,18 +70,18 @@
     	UPDATE JNL_TRANS_FEATURE 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_trans != null" >
-        	guid_trans = #{domain.guidTrans,jdbcType=VARCHAR}
+		<if test="domain.guidTrans != null" >
+        	guid_trans = #{domain.guidTrans,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.trans_sno != null" >
-        	trans_sno = #{domain.transSno,jdbcType=VARCHAR}
+		<if test="domain.transSno != null" >
+        	trans_sno = #{domain.transSno,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.trans_field != null" >
-        	trans_field = #{domain.transField,jdbcType=VARCHAR}
+		<if test="domain.transField != null" >
+        	trans_field = #{domain.transField,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.trans_data != null" >
+		<if test="domain.transData != null" >
         	trans_data = #{domain.transData,jdbcType=VARCHAR}
       	</if>
 	    </set>
@@ -107,10 +107,10 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid
-		,guid_trans
-		,trans_sno
-		,trans_field
-		,trans_data
+		 guid as guid
+		,guid_trans as guidTrans
+		,trans_sno as transSno
+		,trans_field as transField
+		,trans_data as transData
 	</sql>
 </mapper>

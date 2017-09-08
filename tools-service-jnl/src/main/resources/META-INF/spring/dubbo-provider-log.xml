@@ -34,13 +34,20 @@
 	<!-- ============================================================= -->
 	<!-- 暴露服务 -->
 	<!-- 服务提供者：柜员操作日志(JNL_TELLER_TRACE) 基本远程服务 -->
-	<dubbo:service 
+	<!--<dubbo:service
 		interface="org.tis.tools.rservice.log.basic.ILogTxTraceRService" group="log" version="1.0"
 		ref="logTxTraceRServiceImpl" 
 		protocol="dubbo"  timeout="3000" provider="service-jnl"/>
  	
-	<!-- 具体实现 -->
-    <bean id="logTxTraceRServiceImpl" class="org.tis.tools.rservice.log.basic.LogTxTraceRServiceImpl" />
-    
+	&lt;!&ndash; 具体实现 &ndash;&gt;
+    <bean id="logTxTraceRServiceImpl" class="org.tis.tools.rservice.log.basic.LogTxTraceRServiceImpl" />-->
+
+	<dubbo:service
+			interface="org.tis.tools.rservice.log.capable.IOperateLogRService" group="log" version="0.4"
+			ref="operateLogRService"
+			protocol="dubbo" timeout="3000" />
+
+	<bean id="operateLogRService" class="org.tis.tools.rservice.log.capable.OperateLogRServiceImpl" />
+
     
 </beans>

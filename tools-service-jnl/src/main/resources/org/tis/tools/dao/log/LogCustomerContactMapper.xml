@@ -13,7 +13,7 @@
 	    	,chn_code
 	    	,teller_no
 	    	,instno
-	    	,contact_mode
+	    	,obj_value
 	    	,cust_no
 	    	,cust_name
 	    	,biz_type
@@ -25,7 +25,7 @@
 			#{chnCode,jdbcType=VARCHAR},
 			#{tellerNo,jdbcType=VARCHAR},
 			#{instno,jdbcType=VARCHAR},
-			#{contactMode,jdbcType=VARCHAR},
+			#{objValue,jdbcType=VARCHAR},
 			#{custNo,jdbcType=VARCHAR},
 			#{custName,jdbcType=VARCHAR},
 			#{bizType,jdbcType=VARCHAR}
@@ -38,28 +38,28 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="contact_time != null" >
+		<if test="contactTime != null" >
 			contact_time = #{contactTime,jdbcType=VARCHAR},
 		</if>
-		<if test="chn_code != null" >
+		<if test="chnCode != null" >
 			chn_code = #{chnCode,jdbcType=VARCHAR},
 		</if>
-		<if test="teller_no != null" >
+		<if test="tellerNo != null" >
 			teller_no = #{tellerNo,jdbcType=VARCHAR},
 		</if>
 		<if test="instno != null" >
 			instno = #{instno,jdbcType=VARCHAR},
 		</if>
-		<if test="contact_mode != null" >
-			contact_mode = #{contactMode,jdbcType=VARCHAR},
+		<if test="objValue != null" >
+			obj_value = #{objValue,jdbcType=VARCHAR},
 		</if>
-		<if test="cust_no != null" >
+		<if test="custNo != null" >
 			cust_no = #{custNo,jdbcType=VARCHAR},
 		</if>
-		<if test="cust_name != null" >
+		<if test="custName != null" >
 			cust_name = #{custName,jdbcType=VARCHAR},
 		</if>
-		<if test="biz_type != null" >
+		<if test="bizType != null" >
 			biz_type = #{bizType,jdbcType=VARCHAR}
 		</if>
 	    </set>
@@ -74,7 +74,7 @@
 		chn_code = #{chnCode,jdbcType=VARCHAR},
 		teller_no = #{tellerNo,jdbcType=VARCHAR},
 		instno = #{instno,jdbcType=VARCHAR},
-		contact_mode = #{contactMode,jdbcType=VARCHAR},
+		obj_value = #{objValue,jdbcType=VARCHAR},
 		cust_no = #{custNo,jdbcType=VARCHAR},
 		cust_name = #{custName,jdbcType=VARCHAR},
 		biz_type = #{bizType,jdbcType=VARCHAR}
@@ -94,30 +94,30 @@
     	UPDATE LOG_CUSTOMER_CONTACT 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.contact_time != null" >
-        	contact_time = #{domain.contactTime,jdbcType=VARCHAR}
+		<if test="domain.contactTime != null" >
+        	contact_time = #{domain.contactTime,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.chn_code != null" >
-        	chn_code = #{domain.chnCode,jdbcType=VARCHAR}
+		<if test="domain.chnCode != null" >
+        	chn_code = #{domain.chnCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.teller_no != null" >
-        	teller_no = #{domain.tellerNo,jdbcType=VARCHAR}
+		<if test="domain.tellerNo != null" >
+        	teller_no = #{domain.tellerNo,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.instno != null" >
-        	instno = #{domain.instno,jdbcType=VARCHAR}
+        	instno = #{domain.instno,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.contact_mode != null" >
-        	contact_mode = #{domain.contactMode,jdbcType=VARCHAR}
+		<if test="domain.objValue != null" >
+        	obj_value = #{domain.objValue,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.cust_no != null" >
-        	cust_no = #{domain.custNo,jdbcType=VARCHAR}
+		<if test="domain.custNo != null" >
+        	cust_no = #{domain.custNo,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.cust_name != null" >
-        	cust_name = #{domain.custName,jdbcType=VARCHAR}
+		<if test="domain.custName != null" >
+        	cust_name = #{domain.custName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.biz_type != null" >
+		<if test="domain.bizType != null" >
         	biz_type = #{domain.bizType,jdbcType=VARCHAR}
       	</if>
 	    </set>
@@ -143,14 +143,14 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid
-		,contact_time
-		,chn_code
-		,teller_no
-		,instno
-		,contact_mode
-		,cust_no
-		,cust_name
-		,biz_type
+		 guid as guid
+		,contact_time as contactTime
+		,chn_code as chnCode
+		,teller_no as tellerNo
+		,instno as instno
+		,obj_value as objValue
+		,cust_no as custNo
+		,cust_name as custName
+		,biz_type as bizType
 	</sql>
 </mapper>
