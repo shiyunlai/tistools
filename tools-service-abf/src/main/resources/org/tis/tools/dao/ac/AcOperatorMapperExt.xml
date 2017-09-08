@@ -15,6 +15,18 @@
         a.GUID_IDENTITY = #{identityGuid}
     </select>
 
+    <select id="queryOperatorFuncDetail" resultType="map">
+        SELECT
+            <include refid="OperatorFuncDetail_Column_List"/>
+        FROM
+            AC_OPERATOR_FUNC a
+
+            LEFT JOIN AC_FUNC b ON a.GUID_FUNC = b.GUID
+            LEFT JOIN AC_APP c ON a.GUID_APP = c.GUID
+        WHERE a.GUID_OPERATOR = #{operatorGuid}
+
+    </select>
+
     <select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
         select count(*) from AC_OPERATOR <include refid="Where_Clause"/>
     </select>
@@ -28,5 +40,16 @@
 		,a.ac_resourcetype as acResourcetype
 		,a.guid_ac_resource as guidAcResource
 		,b.role_name as roleName
+    </sql>
+    <sql id="OperatorFuncDetail_Column_List" >
+        a.guid_operator as guidOperator
+		,a.guid_func as guidFunc
+		,a.auth_type as authType
+		,a.start_date as startDate
+		,a.end_date as endDate
+		,a.guid_app as guidApp
+		,a.guid_funcgroup as guidFuncgroup
+        ,b.FUNC_NAME
+        ,c.APP_NAME
     </sql>
 </mapper>

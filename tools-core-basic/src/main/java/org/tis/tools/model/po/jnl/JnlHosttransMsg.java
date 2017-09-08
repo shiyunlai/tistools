@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.jnl;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 主机交易报文
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\JNL-mysql.erm
  * 业务域：jnl
  * 模型：JNL_HOSTTRANS_MSG 主机交易报文
  *
@@ -59,9 +59,15 @@ public class JnlHosttransMsg implements Serializable {
 	/** 字段类型：varchar<br/>字段名：执行时间<br/>描述：存储到毫秒级别的时间 yyyyMMddHHmmssSSS */
 	private String execTime ;
 	
-	/** 字段类型：text<br/>字段名：报文信息<br/>描述：报文内容 */
+	/** 字段类型：varchar<br/>字段名：报文信息<br/>描述：报文内容 */
 	private String msgInfo ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public JnlHosttransMsg() {
+	}
+
 	
 	/**
 	 * Set the 数据主键.

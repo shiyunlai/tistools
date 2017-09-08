@@ -8,4 +8,13 @@ public interface SysConstants {
     public static final String DICT_TYPE_FROM_SINGLE_TABLE = "1";
     /** 业务字典来源 - 多表或视图*/
     public static final String DICT_TYPE_FROM_TABLES_OR_VIEW = "2";
+
+
+    /** 业务字典项来源 - 字典*/
+    public static final String DICT_ITEM_TYPE_DICT = "dict";
+    /** 业务字典项来源 - 实际值*/
+    public static final String DICT_ITEM_TYPE_VLAUE = "value";
+
+
+
 }

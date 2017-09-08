@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 		http://www.springframework.org/schema/aop 
 		http://www.springframework.org/schema/aop/spring-aop.xsd 
@@ -14,7 +14,9 @@
     <!-- disconf begin -->
 	
 	<!-- 支持 cglib的aop -->
-	<aop:aspectj-autoproxy proxy-target-class="true"/>
+
+
+
 	<!-- disconf自动扫描的package范围，支持扫描多包，逗号分隔 -->
 	<bean id="disconfMgrBean" class="com.baidu.disconf.client.DisconfMgrBean"
 	      destroy-method="destroy">
@@ -160,5 +162,10 @@
         <property name="basePackage" value="org.tis.tools.dao.mapper" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory1" />
     </bean>
+
+	<import resource="applicationContext-service.xml"/>
+	<import resource="dubbo-consumer.xml" />
+
+
   
 </beans>

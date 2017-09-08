@@ -4,10 +4,9 @@
 package org.tis.tools.rservice.ac.capable;
 
 
-import org.tis.tools.model.po.ac.AcOperator;
-import org.tis.tools.model.po.ac.AcOperatorIdentity;
-import org.tis.tools.model.po.ac.AcOperatorIdentityres;
-import org.tis.tools.model.po.ac.AcRole;
+import org.springframework.expression.spel.ast.Operator;
+import org.tis.tools.model.po.ac.*;
+import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
 import org.tis.tools.rservice.ac.exception.AuthManagementException;
 import org.tis.tools.rservice.ac.exception.OperatorManagementException;
 
@@ -105,10 +104,10 @@ public interface IOperatorRService {
 
     /**
      * 新增操作员身份权限
-     * @param operatorIdentityres
+     * @param operatorIdentityresList
      * @throws OperatorManagementException
      */
-    void createOperatorIdentityres(AcOperatorIdentityres operatorIdentityres) throws OperatorManagementException;
+    void createOperatorIdentityres(List<AcOperatorIdentityres> operatorIdentityresList) throws OperatorManagementException;
 
     /**
      * 修改操作员身份权限
@@ -119,11 +118,10 @@ public interface IOperatorRService {
 
     /**
      * 删除操作员身份权限
-     * @param IdentityGuid
-     * @param resGuid
+     * @param identityresList 身份权限资源集合，每个资源包含资源类型GUID和资源GUID
      * @throws OperatorManagementException
      */
-    void deleteOperatorIdentityres(String IdentityGuid, String resGuid) throws OperatorManagementException;
+    void deleteOperatorIdentityres(List<AcOperatorIdentityres> identityresList) throws OperatorManagementException;
 
     /**
      * 查询操作员身份对应的权限集合
@@ -138,12 +136,11 @@ public interface IOperatorRService {
      * 通过USER_ID 和 OPERATOR_NAME 查询 操作员身份列表
      * @param userId 操作员登录名
      *
-     * @param operatorName 操作员姓名
      *
      * @return
      * @throws OperatorManagementException
      */
-    List<AcOperatorIdentity> queryOperatorIdentitiesByUserIdAndName(String userId, String operatorName) throws OperatorManagementException;
+    List<AcOperatorIdentity> queryOperatorIdentitiesByUserId(String userId) throws OperatorManagementException;
 
     /**
      * 查询操作员资源类型下的所有角色
@@ -172,4 +169,48 @@ public interface IOperatorRService {
      */
 
     AcOperator queryOperatorByUserId(String userId) throws OperatorManagementException;
+
+    /**
+     * 查询操作员特殊功能权限集
+     *     来源  操作员对应员工的工作组和岗位相关应用下未授权给该操作员的功能
+     *
+     *     业务逻辑  查询操作员已拥有应用的所有功能集合  操作员已授权和继承的所有角色拥有功能的并集 的差集
+     *
+     *     场景  1.用于操作员分配特殊功能权限时展示功能列表
+     * @param userId
+     *          用户ID
+     * @return
+     *
+     * @throws OperatorManagementException
+     */
+    AcOperatorFuncDetail queryOperatorFuncInfoInApp(String userId) throws OperatorManagementException;
+
+    /**
+     * 查询用户的特殊权限列表
+     *
+     * @param userId
+     *          用户名
+     * @return
+     * @throws OperatorManagementException
+     */
+    List<Map> queryAcOperatorFunListByUserId(String userId) throws OperatorManagementException;
+
+    /**
+     * 添加特殊权限
+     * @param acOperatorFunc
+     * @throws OperatorManagementException
+     */
+    void addAcOperatorFun(AcOperatorFunc acOperatorFunc) throws OperatorManagementException;
+
+    /**
+     * 移除特殊权限
+     *
+     * @param operatorGuid
+     *          操作员GUID
+     *
+     * @param funcGuid
+     *          功能GUID
+     * @throws OperatorManagementException
+     */
+    void removeAcOperatorFun(String operatorGuid, String funcGuid) throws OperatorManagementException;
 }

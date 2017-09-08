@@ -30,7 +30,7 @@
 			#{promotingOrigin,jdbcType=VARCHAR},
 			#{promotingBizType,jdbcType=VARCHAR},
 			#{promotingTitle,jdbcType=VARCHAR},
-			#{promotingInfo,jdbcType=TEXT},
+			#{promotingInfo,jdbcType=VARCHAR},
 			#{promotingAction,jdbcType=VARCHAR},
 			#{tellerNo,jdbcType=VARCHAR},
 			#{instno,jdbcType=VARCHAR},
@@ -46,40 +46,40 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_cust_service != null" >
+		<if test="guidCustService != null" >
 			guid_cust_service = #{guidCustService,jdbcType=VARCHAR},
 		</if>
-		<if test="service_sno != null" >
+		<if test="serviceSno != null" >
 			service_sno = #{serviceSno,jdbcType=VARCHAR},
 		</if>
-		<if test="promoting_origin != null" >
+		<if test="promotingOrigin != null" >
 			promoting_origin = #{promotingOrigin,jdbcType=VARCHAR},
 		</if>
-		<if test="promoting_biz_type != null" >
+		<if test="promotingBizType != null" >
 			promoting_biz_type = #{promotingBizType,jdbcType=VARCHAR},
 		</if>
-		<if test="promoting_title != null" >
+		<if test="promotingTitle != null" >
 			promoting_title = #{promotingTitle,jdbcType=VARCHAR},
 		</if>
-		<if test="promoting_info != null" >
-			promoting_info = #{promotingInfo,jdbcType=TEXT},
+		<if test="promotingInfo != null" >
+			promoting_info = #{promotingInfo,jdbcType=VARCHAR},
 		</if>
-		<if test="promoting_action != null" >
+		<if test="promotingAction != null" >
 			promoting_action = #{promotingAction,jdbcType=VARCHAR},
 		</if>
-		<if test="teller_no != null" >
+		<if test="tellerNo != null" >
 			teller_no = #{tellerNo,jdbcType=VARCHAR},
 		</if>
 		<if test="instno != null" >
 			instno = #{instno,jdbcType=VARCHAR},
 		</if>
-		<if test="promoting_date != null" >
+		<if test="promotingDate != null" >
 			promoting_date = #{promotingDate,jdbcType=CHAR},
 		</if>
-		<if test="promoting_time != null" >
+		<if test="promotingTime != null" >
 			promoting_time = #{promotingTime,jdbcType=VARCHAR},
 		</if>
-		<if test="promoting_feedback != null" >
+		<if test="promotingFeedback != null" >
 			promoting_feedback = #{promotingFeedback,jdbcType=VARCHAR}
 		</if>
 	    </set>
@@ -95,7 +95,7 @@
 		promoting_origin = #{promotingOrigin,jdbcType=VARCHAR},
 		promoting_biz_type = #{promotingBizType,jdbcType=VARCHAR},
 		promoting_title = #{promotingTitle,jdbcType=VARCHAR},
-		promoting_info = #{promotingInfo,jdbcType=TEXT},
+		promoting_info = #{promotingInfo,jdbcType=VARCHAR},
 		promoting_action = #{promotingAction,jdbcType=VARCHAR},
 		teller_no = #{tellerNo,jdbcType=VARCHAR},
 		instno = #{instno,jdbcType=VARCHAR},
@@ -118,42 +118,42 @@
     	UPDATE JNL_PROMOTING 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_cust_service != null" >
-        	guid_cust_service = #{domain.guidCustService,jdbcType=VARCHAR}
+		<if test="domain.guidCustService != null" >
+        	guid_cust_service = #{domain.guidCustService,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.service_sno != null" >
-        	service_sno = #{domain.serviceSno,jdbcType=VARCHAR}
+		<if test="domain.serviceSno != null" >
+        	service_sno = #{domain.serviceSno,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.promoting_origin != null" >
-        	promoting_origin = #{domain.promotingOrigin,jdbcType=VARCHAR}
+		<if test="domain.promotingOrigin != null" >
+        	promoting_origin = #{domain.promotingOrigin,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.promoting_biz_type != null" >
-        	promoting_biz_type = #{domain.promotingBizType,jdbcType=VARCHAR}
+		<if test="domain.promotingBizType != null" >
+        	promoting_biz_type = #{domain.promotingBizType,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.promoting_title != null" >
-        	promoting_title = #{domain.promotingTitle,jdbcType=VARCHAR}
+		<if test="domain.promotingTitle != null" >
+        	promoting_title = #{domain.promotingTitle,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.promoting_info != null" >
-        	promoting_info = #{domain.promotingInfo,jdbcType=TEXT}
+		<if test="domain.promotingInfo != null" >
+        	promoting_info = #{domain.promotingInfo,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.promoting_action != null" >
-        	promoting_action = #{domain.promotingAction,jdbcType=VARCHAR}
+		<if test="domain.promotingAction != null" >
+        	promoting_action = #{domain.promotingAction,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.teller_no != null" >
-        	teller_no = #{domain.tellerNo,jdbcType=VARCHAR}
+		<if test="domain.tellerNo != null" >
+        	teller_no = #{domain.tellerNo,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.instno != null" >
-        	instno = #{domain.instno,jdbcType=VARCHAR}
+        	instno = #{domain.instno,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.promoting_date != null" >
-        	promoting_date = #{domain.promotingDate,jdbcType=CHAR}
+		<if test="domain.promotingDate != null" >
+        	promoting_date = #{domain.promotingDate,jdbcType=CHAR},
       	</if>
-		<if test="domain.promoting_time != null" >
-        	promoting_time = #{domain.promotingTime,jdbcType=VARCHAR}
+		<if test="domain.promotingTime != null" >
+        	promoting_time = #{domain.promotingTime,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.promoting_feedback != null" >
+		<if test="domain.promotingFeedback != null" >
         	promoting_feedback = #{domain.promotingFeedback,jdbcType=VARCHAR}
       	</if>
 	    </set>
@@ -179,18 +179,18 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid
-		,guid_cust_service
-		,service_sno
-		,promoting_origin
-		,promoting_biz_type
-		,promoting_title
-		,promoting_info
-		,promoting_action
-		,teller_no
-		,instno
-		,promoting_date
-		,promoting_time
-		,promoting_feedback
+		 guid as guid
+		,guid_cust_service as guidCustService
+		,service_sno as serviceSno
+		,promoting_origin as promotingOrigin
+		,promoting_biz_type as promotingBizType
+		,promoting_title as promotingTitle
+		,promoting_info as promotingInfo
+		,promoting_action as promotingAction
+		,teller_no as tellerNo
+		,instno as instno
+		,promoting_date as promotingDate
+		,promoting_time as promotingTime
+		,promoting_feedback as promotingFeedback
 	</sql>
 </mapper>

@@ -25,8 +25,12 @@
 	
 	mvn tools:gen-dao -Dmodel.file.type=erm -Dmodel.file=ABF-mysql -Dgen.type=model,dao,biz,service
 	mvn tools:gen-dao -Dmodel.file.type=erm -Dmodel.file=JNL-mysql -Dgen.type=model,dao,biz,service
+	mvn tools:gen-dao -Dmodel.file.type=erm -Dmodel.file=ABF-mysql -Dfixed.bizmodels=sys -Djust.show=true -Dgen.type=model,dao,biz,service -Dtemplates.path=E:/tools/tistools/tools-maven-plugin/src/main/resources/META-INF/templates4erm/biz
 
-	mvn tools:gen-dao -Dmodel.file.type=erm -Dmodel.file=ABF-mysql -Dfixed.bizmodels=sys -Dgen.type=model,dao,biz,service -Dtemplates.path=E:/tools/tistools/tools-maven-plugin/src/main/resources/META-INF/templates4erm/biz
+	mvn tools:gen-dao -Dmodel.file.type=erm -Dmodel.file=JNL-oracle -Dfixed.bizmodels=log -Djust.show=true -Dgen.type=model,dao,biz,service -Dtemplates.path=E:/tools/tistools/tools-maven-plugin/src/main/resources/META-INF/templates4erm/biz
+
+
+    mvn tools:gen-api -Djava.file.path=E:/tools/tistools/tools-facade-ac/src/main/java/org/tis/tools/rservice/ac/capable/IRoleRService.java
 
 
 -- 更多参数使用

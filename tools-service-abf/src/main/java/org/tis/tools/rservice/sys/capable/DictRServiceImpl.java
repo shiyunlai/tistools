@@ -25,6 +25,7 @@ import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.common.utils.StringUtil;
+import org.tis.tools.core.exception.ExceptionCodes;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.def.SysConstants;
 import org.tis.tools.model.po.sys.SysDict;
@@ -170,12 +171,24 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 					BasicUtil.wrap("ITEM_NAME", "SYS_DICT_ITEM"));
 		}
 
+		// ITEM_TYPE 为必须字段
+		if (StringUtils.isBlank(dictItem.getItemType())) {
+			throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
+					BasicUtil.wrap("ITEM_TYPE", "SYS_DICT_ITEM"));
+		}
+
 		// ITEM_VALUE 为必须字段
 		if (StringUtils.isBlank(dictItem.getItemValue())) {
 			throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
 					BasicUtil.wrap("ITEM_VALUE", "SYS_DICT_ITEM"));
 		}
 
+		// 如果ITEM_TYPE为字典，对应字典必须存在
+		if (StringUtils.equals(dictItem.getItemType(), SysConstants.DICT_ITEM_TYPE_DICT)) {
+			if (sysDictService.count(new WhereCondition().andEquals(SysDict.COLUMN_DICT_KEY, dictItem.getItemValue())) < 1) {
+				throw new SysManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap(dictItem.getItemValue(), "SYS_DICT"));
+			}
+		}
 		// SEND_VALUE 为必须字段
 		if (StringUtils.isBlank(dictItem.getSendValue())) {
 			throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
@@ -576,6 +589,7 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 					BasicUtil.wrap( "SYS_DICT_ITEM", e.getCause().getMessage()));
 		}
 	}
+
 	/**
 	 * 查询所有业务字典项
 	 *
@@ -595,4 +609,6 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 					BasicUtil.wrap( "SYS_DICT_ITEM", e.getCause().getMessage()));
 		}
 	}
+
+
 }

@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.jnl;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 客户服务流水
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\JNL-mysql.erm
  * 业务域：jnl
  * 模型：JNL_CUST_SERVICE 客户服务流水
  *
@@ -95,7 +95,7 @@ public class JnlCustService implements Serializable {
 	/** 字段类型：char<br/>字段名：证件类型<br/>描述：证件类型，见业务字典： DICT_PAPER_TYPE */
 	private String paperType ;
 	
-	/** 字段类型：text<br/>字段名：客户服务信息<br/>描述：本次客户服务的上下文。预先获取的关于客户的信息，如：客户基本信息，客户资产信息。。。 便于客户服务过程中柜员使用，提高服务质量； 以JSON格式存储信息； 一般： 1、排队时获取 2、预约时获取 3、身份核查时获取 新客户则为空 */
+	/** 字段类型：varchar<br/>字段名：客户服务信息<br/>描述：本次客户服务的上下文。预先获取的关于客户的信息，如：客户基本信息，客户资产信息。。。 便于客户服务过程中柜员使用，提高服务质量； 以JSON格式存储信息； 一般： 1、排队时获取 2、预约时获取 3、身份核查时获取 新客户则为空 */
 	private String custServiceCtx ;
 	
 	/** 字段类型：int<br/>字段名：服务总时长<br/>描述：从开始服务到结束服务两个状态之间的时长 */
@@ -112,7 +112,13 @@ public class JnlCustService implements Serializable {
 	
 	/** 字段类型：int<br/>字段名：总交易笔数<br/>描述：服务过程中成功操作过的交易笔数（包括：柜员操作、系统自动完成、客户自助操作等），事后系统自己统计完善客户服务流水； */
 	private Integer transNum ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public JnlCustService() {
+	}
+
 	
 	/**
 	 * Set the 数据主键.

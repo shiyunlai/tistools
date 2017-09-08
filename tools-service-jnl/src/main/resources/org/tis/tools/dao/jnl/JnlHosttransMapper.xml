@@ -46,40 +46,40 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_trans != null" >
+		<if test="guidTrans != null" >
 			guid_trans = #{guidTrans,jdbcType=VARCHAR},
 		</if>
-		<if test="trans_sno != null" >
+		<if test="transSno != null" >
 			trans_sno = #{transSno,jdbcType=VARCHAR},
 		</if>
-		<if test="host_code != null" >
+		<if test="hostCode != null" >
 			host_code = #{hostCode,jdbcType=VARCHAR},
 		</if>
-		<if test="hosttrans_code != null" >
+		<if test="hosttransCode != null" >
 			hosttrans_code = #{hosttransCode,jdbcType=VARCHAR},
 		</if>
-		<if test="hosttrans_name != null" >
+		<if test="hosttransName != null" >
 			hosttrans_name = #{hosttransName,jdbcType=VARCHAR},
 		</if>
-		<if test="start_time != null" >
+		<if test="startTime != null" >
 			start_time = #{startTime,jdbcType=VARCHAR},
 		</if>
-		<if test="end_time != null" >
+		<if test="endTime != null" >
 			end_time = #{endTime,jdbcType=VARCHAR},
 		</if>
-		<if test="host_sno_req != null" >
+		<if test="hostSnoReq != null" >
 			host_sno_req = #{hostSnoReq,jdbcType=VARCHAR},
 		</if>
-		<if test="host_sno_rsp != null" >
+		<if test="hostSnoRsp != null" >
 			host_sno_rsp = #{hostSnoRsp,jdbcType=VARCHAR},
 		</if>
-		<if test="hsottrans_status != null" >
+		<if test="hsottransStatus != null" >
 			hsottrans_status = #{hsottransStatus,jdbcType=VARCHAR},
 		</if>
-		<if test="host_err_code != null" >
+		<if test="hostErrCode != null" >
 			host_err_code = #{hostErrCode,jdbcType=VARCHAR},
 		</if>
-		<if test="host_err_msg != null" >
+		<if test="hostErrMsg != null" >
 			host_err_msg = #{hostErrMsg,jdbcType=VARCHAR}
 		</if>
 	    </set>
@@ -118,42 +118,42 @@
     	UPDATE JNL_HOSTTRANS 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_trans != null" >
-        	guid_trans = #{domain.guidTrans,jdbcType=VARCHAR}
+		<if test="domain.guidTrans != null" >
+        	guid_trans = #{domain.guidTrans,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.trans_sno != null" >
-        	trans_sno = #{domain.transSno,jdbcType=VARCHAR}
+		<if test="domain.transSno != null" >
+        	trans_sno = #{domain.transSno,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.host_code != null" >
-        	host_code = #{domain.hostCode,jdbcType=VARCHAR}
+		<if test="domain.hostCode != null" >
+        	host_code = #{domain.hostCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.hosttrans_code != null" >
-        	hosttrans_code = #{domain.hosttransCode,jdbcType=VARCHAR}
+		<if test="domain.hosttransCode != null" >
+        	hosttrans_code = #{domain.hosttransCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.hosttrans_name != null" >
-        	hosttrans_name = #{domain.hosttransName,jdbcType=VARCHAR}
+		<if test="domain.hosttransName != null" >
+        	hosttrans_name = #{domain.hosttransName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.start_time != null" >
-        	start_time = #{domain.startTime,jdbcType=VARCHAR}
+		<if test="domain.startTime != null" >
+        	start_time = #{domain.startTime,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.end_time != null" >
-        	end_time = #{domain.endTime,jdbcType=VARCHAR}
+		<if test="domain.endTime != null" >
+        	end_time = #{domain.endTime,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.host_sno_req != null" >
-        	host_sno_req = #{domain.hostSnoReq,jdbcType=VARCHAR}
+		<if test="domain.hostSnoReq != null" >
+        	host_sno_req = #{domain.hostSnoReq,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.host_sno_rsp != null" >
-        	host_sno_rsp = #{domain.hostSnoRsp,jdbcType=VARCHAR}
+		<if test="domain.hostSnoRsp != null" >
+        	host_sno_rsp = #{domain.hostSnoRsp,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.hsottrans_status != null" >
-        	hsottrans_status = #{domain.hsottransStatus,jdbcType=VARCHAR}
+		<if test="domain.hsottransStatus != null" >
+        	hsottrans_status = #{domain.hsottransStatus,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.host_err_code != null" >
-        	host_err_code = #{domain.hostErrCode,jdbcType=VARCHAR}
+		<if test="domain.hostErrCode != null" >
+        	host_err_code = #{domain.hostErrCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.host_err_msg != null" >
+		<if test="domain.hostErrMsg != null" >
         	host_err_msg = #{domain.hostErrMsg,jdbcType=VARCHAR}
       	</if>
 	    </set>
@@ -179,18 +179,18 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid
-		,guid_trans
-		,trans_sno
-		,host_code
-		,hosttrans_code
-		,hosttrans_name
-		,start_time
-		,end_time
-		,host_sno_req
-		,host_sno_rsp
-		,hsottrans_status
-		,host_err_code
-		,host_err_msg
+		 guid as guid
+		,guid_trans as guidTrans
+		,trans_sno as transSno
+		,host_code as hostCode
+		,hosttrans_code as hosttransCode
+		,hosttrans_name as hosttransName
+		,start_time as startTime
+		,end_time as endTime
+		,host_sno_req as hostSnoReq
+		,host_sno_rsp as hostSnoRsp
+		,hsottrans_status as hsottransStatus
+		,host_err_code as hostErrCode
+		,host_err_msg as hostErrMsg
 	</sql>
 </mapper>

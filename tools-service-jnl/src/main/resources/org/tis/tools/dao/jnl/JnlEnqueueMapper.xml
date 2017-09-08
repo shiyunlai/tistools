@@ -30,7 +30,7 @@
 			#{guid,jdbcType=VARCHAR},
 			#{guidCustService,jdbcType=VARCHAR},
 			#{serviceSno,jdbcType=VARCHAR},
-			#{enqueueNo,jdbcType=INT},
+			#{enqueueNo,jdbcType=INTEGER},
 			#{enqueueBizType,jdbcType=VARCHAR},
 			#{chnCode,jdbcType=VARCHAR},
 			#{enqueueInTime,jdbcType=VARCHAR},
@@ -52,49 +52,49 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_cust_service != null" >
+		<if test="guidCustService != null" >
 			guid_cust_service = #{guidCustService,jdbcType=VARCHAR},
 		</if>
-		<if test="service_sno != null" >
+		<if test="serviceSno != null" >
 			service_sno = #{serviceSno,jdbcType=VARCHAR},
 		</if>
-		<if test="enqueue_no != null" >
-			enqueue_no = #{enqueueNo,jdbcType=INT},
+		<if test="enqueueNo != null" >
+			enqueue_no = #{enqueueNo,jdbcType=INTEGER},
 		</if>
-		<if test="enqueue_biz_type != null" >
+		<if test="enqueueBizType != null" >
 			enqueue_biz_type = #{enqueueBizType,jdbcType=VARCHAR},
 		</if>
-		<if test="chn_code != null" >
+		<if test="chnCode != null" >
 			chn_code = #{chnCode,jdbcType=VARCHAR},
 		</if>
-		<if test="enqueue_in_time != null" >
+		<if test="enqueueInTime != null" >
 			enqueue_in_time = #{enqueueInTime,jdbcType=VARCHAR},
 		</if>
-		<if test="enqueue_code != null" >
+		<if test="enqueueCode != null" >
 			enqueue_code = #{enqueueCode,jdbcType=VARCHAR},
 		</if>
-		<if test="cust_no != null" >
+		<if test="custNo != null" >
 			cust_no = #{custNo,jdbcType=VARCHAR},
 		</if>
-		<if test="cust_name != null" >
+		<if test="custName != null" >
 			cust_name = #{custName,jdbcType=VARCHAR},
 		</if>
-		<if test="cust_level != null" >
+		<if test="custLevel != null" >
 			cust_level = #{custLevel,jdbcType=VARCHAR},
 		</if>
-		<if test="paper_type != null" >
+		<if test="paperType != null" >
 			paper_type = #{paperType,jdbcType=CHAR},
 		</if>
-		<if test="paper_no != null" >
+		<if test="paperNo != null" >
 			paper_no = #{paperNo,jdbcType=VARCHAR},
 		</if>
-		<if test="call_teller != null" >
+		<if test="callTeller != null" >
 			call_teller = #{callTeller,jdbcType=VARCHAR},
 		</if>
-		<if test="call_time != null" >
+		<if test="callTime != null" >
 			call_time = #{callTime,jdbcType=VARCHAR},
 		</if>
-		<if test="call_instno != null" >
+		<if test="callInstno != null" >
 			call_instno = #{callInstno,jdbcType=VARCHAR}
 		</if>
 	    </set>
@@ -107,7 +107,7 @@
 		guid = #{guid,jdbcType=VARCHAR},
 		guid_cust_service = #{guidCustService,jdbcType=VARCHAR},
 		service_sno = #{serviceSno,jdbcType=VARCHAR},
-		enqueue_no = #{enqueueNo,jdbcType=INT},
+		enqueue_no = #{enqueueNo,jdbcType=INTEGER},
 		enqueue_biz_type = #{enqueueBizType,jdbcType=VARCHAR},
 		chn_code = #{chnCode,jdbcType=VARCHAR},
 		enqueue_in_time = #{enqueueInTime,jdbcType=VARCHAR},
@@ -136,51 +136,51 @@
     	UPDATE JNL_ENQUEUE 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_cust_service != null" >
-        	guid_cust_service = #{domain.guidCustService,jdbcType=VARCHAR}
+		<if test="domain.guidCustService != null" >
+        	guid_cust_service = #{domain.guidCustService,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.service_sno != null" >
-        	service_sno = #{domain.serviceSno,jdbcType=VARCHAR}
+		<if test="domain.serviceSno != null" >
+        	service_sno = #{domain.serviceSno,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.enqueue_no != null" >
-        	enqueue_no = #{domain.enqueueNo,jdbcType=INT}
+		<if test="domain.enqueueNo != null" >
+        	enqueue_no = #{domain.enqueueNo,jdbcType=INTEGER},
       	</if>
-		<if test="domain.enqueue_biz_type != null" >
-        	enqueue_biz_type = #{domain.enqueueBizType,jdbcType=VARCHAR}
+		<if test="domain.enqueueBizType != null" >
+        	enqueue_biz_type = #{domain.enqueueBizType,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.chn_code != null" >
-        	chn_code = #{domain.chnCode,jdbcType=VARCHAR}
+		<if test="domain.chnCode != null" >
+        	chn_code = #{domain.chnCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.enqueue_in_time != null" >
-        	enqueue_in_time = #{domain.enqueueInTime,jdbcType=VARCHAR}
+		<if test="domain.enqueueInTime != null" >
+        	enqueue_in_time = #{domain.enqueueInTime,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.enqueue_code != null" >
-        	enqueue_code = #{domain.enqueueCode,jdbcType=VARCHAR}
+		<if test="domain.enqueueCode != null" >
+        	enqueue_code = #{domain.enqueueCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.cust_no != null" >
-        	cust_no = #{domain.custNo,jdbcType=VARCHAR}
+		<if test="domain.custNo != null" >
+        	cust_no = #{domain.custNo,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.cust_name != null" >
-        	cust_name = #{domain.custName,jdbcType=VARCHAR}
+		<if test="domain.custName != null" >
+        	cust_name = #{domain.custName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.cust_level != null" >
-        	cust_level = #{domain.custLevel,jdbcType=VARCHAR}
+		<if test="domain.custLevel != null" >
+        	cust_level = #{domain.custLevel,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.paper_type != null" >
-        	paper_type = #{domain.paperType,jdbcType=CHAR}
+		<if test="domain.paperType != null" >
+        	paper_type = #{domain.paperType,jdbcType=CHAR},
       	</if>
-		<if test="domain.paper_no != null" >
-        	paper_no = #{domain.paperNo,jdbcType=VARCHAR}
+		<if test="domain.paperNo != null" >
+        	paper_no = #{domain.paperNo,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.call_teller != null" >
-        	call_teller = #{domain.callTeller,jdbcType=VARCHAR}
+		<if test="domain.callTeller != null" >
+        	call_teller = #{domain.callTeller,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.call_time != null" >
-        	call_time = #{domain.callTime,jdbcType=VARCHAR}
+		<if test="domain.callTime != null" >
+        	call_time = #{domain.callTime,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.call_instno != null" >
+		<if test="domain.callInstno != null" >
         	call_instno = #{domain.callInstno,jdbcType=VARCHAR}
       	</if>
 	    </set>
@@ -206,21 +206,21 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid
-		,guid_cust_service
-		,service_sno
-		,enqueue_no
-		,enqueue_biz_type
-		,chn_code
-		,enqueue_in_time
-		,enqueue_code
-		,cust_no
-		,cust_name
-		,cust_level
-		,paper_type
-		,paper_no
-		,call_teller
-		,call_time
-		,call_instno
+		 guid as guid
+		,guid_cust_service as guidCustService
+		,service_sno as serviceSno
+		,enqueue_no as enqueueNo
+		,enqueue_biz_type as enqueueBizType
+		,chn_code as chnCode
+		,enqueue_in_time as enqueueInTime
+		,enqueue_code as enqueueCode
+		,cust_no as custNo
+		,cust_name as custName
+		,cust_level as custLevel
+		,paper_type as paperType
+		,paper_no as paperNo
+		,call_teller as callTeller
+		,call_time as callTime
+		,call_instno as callInstno
 	</sql>
 </mapper>

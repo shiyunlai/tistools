@@ -30,19 +30,19 @@ public interface IDictRService {
 	 * @throws SysManagementException
 	 */
 	SysDict addDict( SysDict dict ) throws SysManagementException;
-	
+
 	/**
 	 * <pre>
 	 * 新增业务字典项
 	 * 系统自动补充guid
-	 * 
+	 *
 	 * </pre>
 	 * @param dictItem 业务字典项
 	 * @return 新增的业务字典项记录
 	 * @throws SysManagementException
 	 */
 	SysDictItem addDictItem( SysDictItem dictItem ) throws SysManagementException;
-	
+
 	/**
 	 * <pre>
 	 * 查询指定dictKey对应的业务字典信息（包括子业务字典信息）
@@ -50,7 +50,7 @@ public interface IDictRService {
 	 * 1. 业务字典
 	 * 2. 字典项
 	 * 3. 子业务字典
-	 * 
+	 *
 	 * </pre>
 	 * @param dictKey 字典KEY
 	 * @return 字典信息视图对象(SysDictDetail)

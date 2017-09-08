@@ -73,7 +73,7 @@ public class MenuRServiceTest extends SpringJunitSupport {
     @Test
     public void getMenuByUserIdTest() {
         try {
-            String userId = "admin";
+            String userId = "test123";
             String appGuid = "APP1499956132";
             BigDecimal order = new BigDecimal("0");
             AcMenuDetail menuByUserId = menuRService.getMenuByUserId(userId, appGuid);

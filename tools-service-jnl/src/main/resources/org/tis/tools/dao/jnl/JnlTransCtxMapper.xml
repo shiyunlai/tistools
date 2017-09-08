@@ -22,7 +22,7 @@
 			#{transSno,jdbcType=VARCHAR},
 			#{transPhase,jdbcType=VARCHAR},
 			#{saveTime,jdbcType=VARCHAR},
-			#{transCtx,jdbcType=TEXT}
+			#{transCtx,jdbcType=VARCHAR}
   		)
  	</insert>
  	
@@ -32,20 +32,20 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_trans != null" >
+		<if test="guidTrans != null" >
 			guid_trans = #{guidTrans,jdbcType=VARCHAR},
 		</if>
-		<if test="trans_sno != null" >
+		<if test="transSno != null" >
 			trans_sno = #{transSno,jdbcType=VARCHAR},
 		</if>
-		<if test="trans_phase != null" >
+		<if test="transPhase != null" >
 			trans_phase = #{transPhase,jdbcType=VARCHAR},
 		</if>
-		<if test="save_time != null" >
+		<if test="saveTime != null" >
 			save_time = #{saveTime,jdbcType=VARCHAR},
 		</if>
-		<if test="trans_ctx != null" >
-			trans_ctx = #{transCtx,jdbcType=TEXT}
+		<if test="transCtx != null" >
+			trans_ctx = #{transCtx,jdbcType=VARCHAR}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -59,7 +59,7 @@
 		trans_sno = #{transSno,jdbcType=VARCHAR},
 		trans_phase = #{transPhase,jdbcType=VARCHAR},
 		save_time = #{saveTime,jdbcType=VARCHAR},
-		trans_ctx = #{transCtx,jdbcType=TEXT}
+		trans_ctx = #{transCtx,jdbcType=VARCHAR}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -76,22 +76,22 @@
     	UPDATE JNL_TRANS_CTX 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_trans != null" >
-        	guid_trans = #{domain.guidTrans,jdbcType=VARCHAR}
+		<if test="domain.guidTrans != null" >
+        	guid_trans = #{domain.guidTrans,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.trans_sno != null" >
-        	trans_sno = #{domain.transSno,jdbcType=VARCHAR}
+		<if test="domain.transSno != null" >
+        	trans_sno = #{domain.transSno,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.trans_phase != null" >
-        	trans_phase = #{domain.transPhase,jdbcType=VARCHAR}
+		<if test="domain.transPhase != null" >
+        	trans_phase = #{domain.transPhase,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.save_time != null" >
-        	save_time = #{domain.saveTime,jdbcType=VARCHAR}
+		<if test="domain.saveTime != null" >
+        	save_time = #{domain.saveTime,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.trans_ctx != null" >
-        	trans_ctx = #{domain.transCtx,jdbcType=TEXT}
+		<if test="domain.transCtx != null" >
+        	trans_ctx = #{domain.transCtx,jdbcType=VARCHAR}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>
@@ -116,11 +116,11 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid
-		,guid_trans
-		,trans_sno
-		,trans_phase
-		,save_time
-		,trans_ctx
+		 guid as guid
+		,guid_trans as guidTrans
+		,trans_sno as transSno
+		,trans_phase as transPhase
+		,save_time as saveTime
+		,trans_ctx as transCtx
 	</sql>
 </mapper>

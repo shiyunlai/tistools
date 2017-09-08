@@ -11,6 +11,7 @@
 	    	 guid
 	    	,guid_dict
 	    	,item_name
+	    	,item_type
 	    	,item_value
 	    	,send_value
 	    	,seqno
@@ -20,6 +21,7 @@
 			#{guid,jdbcType=VARCHAR},
 			#{guidDict,jdbcType=VARCHAR},
 			#{itemName,jdbcType=VARCHAR},
+			#{itemType,jdbcType=VARCHAR},
 			#{itemValue,jdbcType=VARCHAR},
 			#{sendValue,jdbcType=VARCHAR},
 			#{seqno,jdbcType=DECIMAL}
@@ -37,6 +39,9 @@
 		</if>
 		<if test="itemName != null" >
 			item_name = #{itemName,jdbcType=VARCHAR},
+		</if>
+		<if test="itemType != null" >
+			item_type = #{itemType,jdbcType=VARCHAR},
 		</if>
 		<if test="itemValue != null" >
 			item_value = #{itemValue,jdbcType=VARCHAR},
@@ -57,6 +62,7 @@
 		guid = #{guid,jdbcType=VARCHAR},
 		guid_dict = #{guidDict,jdbcType=VARCHAR},
 		item_name = #{itemName,jdbcType=VARCHAR},
+		item_type = #{itemType,jdbcType=VARCHAR},
 		item_value = #{itemValue,jdbcType=VARCHAR},
 		send_value = #{sendValue,jdbcType=VARCHAR},
 		seqno = #{seqno,jdbcType=DECIMAL}
@@ -83,6 +89,9 @@
       	</if>
 		<if test="domain.itemName != null" >
         	item_name = #{domain.itemName,jdbcType=VARCHAR},
+      	</if>
+		<if test="domain.itemType != null" >
+        	item_type = #{domain.itemType,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.itemValue != null" >
         	item_value = #{domain.itemValue,jdbcType=VARCHAR},
@@ -119,6 +128,7 @@
 		 guid as guid
 		,guid_dict as guidDict
 		,item_name as itemName
+		,item_type as itemType
 		,item_value as itemValue
 		,send_value as sendValue
 		,seqno as seqno

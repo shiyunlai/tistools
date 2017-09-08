@@ -89,7 +89,16 @@ public class ApplicationService {
 	}
 
 
-
+	/**
+	 * 查询应用下的功能列表
+	 * @param appGuid
+	 * @return
+	 */
 	public List<AcFunc> queryFuncListInApp(String appGuid) { return acFuncMapperExt.queryFuncListInApp(appGuid);}
-    
+
+
+	public List<AcApp> queryEmpAllApp(String empGuid) {
+		return applitionMapper.queryEmpAllApp(empGuid);
+	}
+
 }

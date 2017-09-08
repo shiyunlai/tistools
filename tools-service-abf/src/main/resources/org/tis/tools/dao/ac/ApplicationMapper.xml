@@ -37,10 +37,40 @@
 		<include refid="Where_Clause" />
 	</select>
 
+	<select id="queryEmpAllApp" resultType="org.tis.tools.model.po.ac.AcApp">
+		SELECT
+			<include refid="Base_Column_List" />
+		FROM
+			AC_APP
+		WHERE
+			GUID IN (
+				SELECT
+				a2.GUID_APP AS GUID_APP
+				FROM
+				OM_EMP_GROUP a,
+				OM_GROUP_APP a2
+				WHERE
+				a.GUID_GROUP = a2.GUID_GROUP
+				AND
+				GUID_EMP = #{empGuid}
+				UNION
+				SELECT
+				b2.GUID_APP AS GUID_APP
+				FROM
+				OM_EMP_POSITION b ,
+				OM_POSITION_APP b2
+				WHERE
+				b.GUID_POSITION = b2.GUID_POSITION
+				and
+				b.GUID_EMP = #{empGuid}
+			)
+
+	</select>
+
 	<sql id="Where_Clause">
 	    <if test="condition != null"><where>${condition}</where></if> 
 	</sql>
-  
+
 	<sql id="Base_Column_List" >
 		 guid as guid
 		,app_code as appCode
@@ -89,6 +119,25 @@
 		,a.bhv_code as bhvCode
 		,a.bhv_name as bhvName
 		,b.iseffective as iseffective
+	</sql>
+
+
+	<sql id="AcApp_Column_List" >
+		guid as guid
+		,app_code as appCode
+		,app_name as appName
+		,app_type as appType
+		,isopen as isopen
+		,open_date as openDate
+		,url as url
+		,app_desc as appDesc
+		,guid_emp_maintenance as guidEmpMaintenance
+		,guid_role_maintenance as guidRoleMaintenance
+		,remark as remark
+		,iniwp as iniwp
+		,intaskcenter as intaskcenter
+		,ip_addr as ipAddr
+		,ip_port as ipPort
 	</sql>
 
 </mapper>

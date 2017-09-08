@@ -17,14 +17,14 @@
 	 <dubbo:reference 
 		id="jnlPrefillRService"    
 		group="jnl" 
-		version="1.0" 
+		version="0.4"
 		interface="org.tis.tools.rservice.jnl.IJnlPrefillRService"     
 		check="false"/>
 	
 	<dubbo:reference 
 		id="jnlPromotingRService"    
 		group="jnl" 
-		version="1.0" 
+		version="0.4"
 		interface="org.tis.tools.rservice.jnl.IJnlPromotingRService"     
 		check="false"/>
 
@@ -32,7 +32,7 @@
 	<dubbo:reference 
 		id="logTxTraceRService" 
 		group="jnl" 
-		version="1.0" 
+		version="0.4"
 		interface="org.tis.tools.rservice.log.basic.ILogTxTraceRService"     
 		check="false"/>
 
@@ -48,9 +48,15 @@
 	<dubbo:reference 
 		id="jnlRRService"    
 		group="jnl" 
-		version="1.0" 
-		interface="org.tis.tools.rservice.jnl.IJnlRRService"     
+		version="0.4"
+		interface="org.tis.tools.rservice.jnl.IJnlRRService"
+		check="false"/>
 
+	<dubbo:reference
+		id="operateLogRService"
+		group="jnl"
+		version="0.4"
+		interface="org.tis.tools.rservice.log.capable.IOperateLogRService"
 		check="false"/>
 	
 </beans>

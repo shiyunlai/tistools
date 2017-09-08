@@ -18,7 +18,7 @@ public class AcFuncServiceExt {
      * @param appGuid
      * @return
      */
-    List<AcFunc> queryFuncListInApp(String appGuid) {
+    public List<AcFunc> queryFuncListInApp(String appGuid) {
         return  acFuncMapperExt.queryFuncListInApp(appGuid);
     }
 }

@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.tis.tools.base.WhereCondition;
+import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcBhvDef;
 import org.tis.tools.model.po.ac.AcBhvtypeDef;
 import org.tis.tools.model.vo.ac.AcAppVo;
@@ -44,5 +45,7 @@ public interface ApplicationMapper{
 
 
 	public List<Map> queryFuncBhvRelation(WhereCondition wc);
+
+	List<AcApp> queryEmpAllApp(@Param("empGuid") String empGuid);
 
 }

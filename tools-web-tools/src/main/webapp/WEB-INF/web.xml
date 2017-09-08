@@ -110,7 +110,7 @@
 
 
     <welcome-file-list>
-        <welcome-file>m/m_login.html</welcome-file>
+        <welcome-file>tools/login.html</welcome-file>
     </welcome-file-list>
 
     <error-page>

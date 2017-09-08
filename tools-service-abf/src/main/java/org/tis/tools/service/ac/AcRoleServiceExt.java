@@ -15,6 +15,7 @@ import org.tis.tools.base.WhereCondition;
 import org.tis.tools.dao.ac.AcRoleMapper;
 import org.tis.tools.dao.ac.AcRoleMapperExt;
 import org.tis.tools.model.po.ac.AcPartyRole;
+import org.tis.tools.model.po.ac.AcRole;
 
 
 /**
@@ -99,12 +100,26 @@ public class AcRoleServiceExt {
 		return acRoleMapperExt.queryAllRolePartyExt(roleGuid, partyType);
 	}
 
+	/**
+	 * 查询角色已经授权的角色列表
+	 * @param roleGuid
+	 * @return
+	 */
 	public List<Map> queryAllOperatorRoleExt(String roleGuid) {
 		return acRoleMapperExt.queryAllOperatorRoleExt(roleGuid);
 	}
 
 
-
+	/**
+	 * 查询操作员在所在工作组和岗位下的所有角色
+	 *
+	 * @param empGuid
+	 * 			员工GUID
+	 * @return
+	 */
+	public List<AcRole> queryEmployeeAllPartyRoleList(String empGuid) {
+		return acRoleMapperExt.queryEmployeeAllPartyRoleList(empGuid);
+	}
 
 
 }

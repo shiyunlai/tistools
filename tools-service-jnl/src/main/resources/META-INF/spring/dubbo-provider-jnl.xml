@@ -34,7 +34,7 @@
 	<!-- ============================================================= -->
 	<!-- 暴露服务 -->
 	<!-- 服务提供者：柜员操作日志(JNL_TELLER_TRACE) 基本远程服务 -->
-	<dubbo:service 
+	<!--<dubbo:service
 		interface="org.tis.tools.rservice.jnl.IJnlPrefillRService" group="jnl" version="1.0"
 		ref="jnlPrefillRServiceImpl" 
 		protocol="dubbo"  timeout="3000" provider="service-jnl"/>
@@ -51,14 +51,14 @@
 		ref="jnlRRServiceImpl" 
 		protocol="rest"  timeout="2000" connections="100" provider="service-jnl"/>
  	
-	<!-- 具体实现 -->
+	&lt;!&ndash; 具体实现 &ndash;&gt;
     <bean id="jnlPrefillRServiceImpl" class="org.tis.tools.rservice.jnl.JnlPrefillRServiceImpl" />
     
     <bean id="jnlPromotingRServiceImpl" class="org.tis.tools.rservice.jnl.JnlPromotingRServiceImpl" />
     
     <bean id="jnlTellerTraceRServiceImpl" class="org.tis.tools.rservice.jnl.JnlTellerTraceRServiceImpl" />
 
-    <bean id="jnlRRServiceImpl" class="org.tis.tools.rservice.jnl.JnlRRServiceImpl" />
+    <bean id="jnlRRServiceImpl" class="org.tis.tools.rservice.jnl.JnlRRServiceImpl" />-->
     
     
 </beans>

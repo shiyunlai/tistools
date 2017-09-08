@@ -68,6 +68,9 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
     @Autowired
     AcOperatorMenuService acOperatorMenuService;
 
+    @Autowired
+    AcOperatorFuncService acOperatorFuncService;
+
     /**
      * 查询所有应用系统
      *
@@ -146,7 +149,7 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
      * @throws MenuManagementException
      */
     @Override
-    public void createRootMenu(AcMenu acMenu) throws MenuManagementException {
+    public AcMenu createRootMenu(AcMenu acMenu) throws MenuManagementException {
         try {
             if(null == acMenu) {
                 throw new MenuManagementException(ACExceptionCodes.OBJECT_IS_NULL, BasicUtil.wrap("AcMenu"));
@@ -176,6 +179,7 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             acMenu.setGuidRoot(acMenu.getGuid());
             acMenu.setDisplayOrder(new BigDecimal("0"));
             acMenuService.insert(acMenu);
+            return acMenu;
         } catch (MenuManagementException ae) {
             throw ae;
         } catch (Exception e) {
@@ -606,6 +610,12 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             if (StringUtil.isEmpty(userId)) {
                 throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("USER_ID"));
             }
+            /** 查询对应操作员*/
+            List<AcOperator> acOperators = acOperatorService.query(new WhereCondition().andEquals(AcOperator.COLUMN_USER_ID, userId));
+            if (acOperators.size() != 1) {
+                throw new MenuManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap(userId, "AC_OPERATOR"));
+            }
+            AcOperator operator = acOperators.get(0);
             if (StringUtil.isEmpty(appGuid)) {
                 throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID_APP"));
             }
@@ -628,6 +638,13 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                         .andIn(AcRoleFunc.COLUMN_GUID_ROLE, new ArrayList<>(roleGuidList)));
                 for (AcRoleFunc roleFunc : acRoleFuncs) {
                     funcGuidList.add(roleFunc.getGuidFunc());
+                }
+                // 获取角色下的特殊功能列表
+                List<AcOperatorFunc> acOperatorFuncs = acOperatorFuncService.query(new WhereCondition()
+                        .andEquals(AcOperatorFunc.COLUMN_GUID_APP, appGuid)
+                        .andEquals(AcOperatorFunc.COLUMN_GUID_OPERATOR, operator.getGuid()));
+                for (AcOperatorFunc operatorFunc : acOperatorFuncs) {
+                    funcGuidList.add(operatorFunc.getGuidFunc());
                 }
             }
             if (funcGuidList.size() > 0) {

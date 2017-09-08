@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.jnl;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 交易上下文
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\JNL-mysql.erm
  * 业务域：jnl
  * 模型：JNL_TRANS_CTX 交易上下文
  *
@@ -65,9 +65,15 @@ public class JnlTransCtx implements Serializable {
 	/** 字段类型：varchar<br/>字段名：保存时间<br/>描述：yyyyMMddHHmmssSSS */
 	private String saveTime ;
 	
-	/** 字段类型：text<br/>字段名：交易上下文<br/>描述： */
+	/** 字段类型：varchar<br/>字段名：交易上下文<br/>描述： */
 	private String transCtx ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public JnlTransCtx() {
+	}
+
 	
 	/**
 	 * Set the 数据主键.

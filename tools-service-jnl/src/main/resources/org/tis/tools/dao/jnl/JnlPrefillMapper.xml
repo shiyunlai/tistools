@@ -30,7 +30,7 @@
 			#{prefillDate,jdbcType=CHAR},
 			#{prefillTime,jdbcType=VARCHAR},
 			#{transCode,jdbcType=VARCHAR},
-			#{prefillData,jdbcType=TEXT},
+			#{prefillData,jdbcType=VARCHAR},
 			#{prefillStatus,jdbcType=VARCHAR},
 			#{prefillChn,jdbcType=VARCHAR},
 			#{tellerNo,jdbcType=VARCHAR},
@@ -46,40 +46,40 @@
 		<if test="guid != null" >
 			guid = #{guid,jdbcType=VARCHAR},
 		</if>
-		<if test="guid_cust_service != null" >
+		<if test="guidCustService != null" >
 			guid_cust_service = #{guidCustService,jdbcType=VARCHAR},
 		</if>
-		<if test="service_sno != null" >
+		<if test="serviceSno != null" >
 			service_sno = #{serviceSno,jdbcType=VARCHAR},
 		</if>
-		<if test="prefill_date != null" >
+		<if test="prefillDate != null" >
 			prefill_date = #{prefillDate,jdbcType=CHAR},
 		</if>
-		<if test="prefill_time != null" >
+		<if test="prefillTime != null" >
 			prefill_time = #{prefillTime,jdbcType=VARCHAR},
 		</if>
-		<if test="trans_code != null" >
+		<if test="transCode != null" >
 			trans_code = #{transCode,jdbcType=VARCHAR},
 		</if>
-		<if test="prefill_data != null" >
-			prefill_data = #{prefillData,jdbcType=TEXT},
+		<if test="prefillData != null" >
+			prefill_data = #{prefillData,jdbcType=VARCHAR},
 		</if>
-		<if test="prefill_status != null" >
+		<if test="prefillStatus != null" >
 			prefill_status = #{prefillStatus,jdbcType=VARCHAR},
 		</if>
-		<if test="prefill_chn != null" >
+		<if test="prefillChn != null" >
 			prefill_chn = #{prefillChn,jdbcType=VARCHAR},
 		</if>
-		<if test="teller_no != null" >
+		<if test="tellerNo != null" >
 			teller_no = #{tellerNo,jdbcType=VARCHAR},
 		</if>
 		<if test="instno != null" >
 			instno = #{instno,jdbcType=VARCHAR},
 		</if>
-		<if test="trans_teller != null" >
+		<if test="transTeller != null" >
 			trans_teller = #{transTeller,jdbcType=VARCHAR},
 		</if>
-		<if test="trans_instno != null" >
+		<if test="transInstno != null" >
 			trans_instno = #{transInstno,jdbcType=VARCHAR}
 		</if>
 	    </set>
@@ -95,7 +95,7 @@
 		prefill_date = #{prefillDate,jdbcType=CHAR},
 		prefill_time = #{prefillTime,jdbcType=VARCHAR},
 		trans_code = #{transCode,jdbcType=VARCHAR},
-		prefill_data = #{prefillData,jdbcType=TEXT},
+		prefill_data = #{prefillData,jdbcType=VARCHAR},
 		prefill_status = #{prefillStatus,jdbcType=VARCHAR},
 		prefill_chn = #{prefillChn,jdbcType=VARCHAR},
 		teller_no = #{tellerNo,jdbcType=VARCHAR},
@@ -118,42 +118,42 @@
     	UPDATE JNL_PREFILL 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guid_cust_service != null" >
-        	guid_cust_service = #{domain.guidCustService,jdbcType=VARCHAR}
+		<if test="domain.guidCustService != null" >
+        	guid_cust_service = #{domain.guidCustService,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.service_sno != null" >
-        	service_sno = #{domain.serviceSno,jdbcType=VARCHAR}
+		<if test="domain.serviceSno != null" >
+        	service_sno = #{domain.serviceSno,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.prefill_date != null" >
-        	prefill_date = #{domain.prefillDate,jdbcType=CHAR}
+		<if test="domain.prefillDate != null" >
+        	prefill_date = #{domain.prefillDate,jdbcType=CHAR},
       	</if>
-		<if test="domain.prefill_time != null" >
-        	prefill_time = #{domain.prefillTime,jdbcType=VARCHAR}
+		<if test="domain.prefillTime != null" >
+        	prefill_time = #{domain.prefillTime,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.trans_code != null" >
-        	trans_code = #{domain.transCode,jdbcType=VARCHAR}
+		<if test="domain.transCode != null" >
+        	trans_code = #{domain.transCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.prefill_data != null" >
-        	prefill_data = #{domain.prefillData,jdbcType=TEXT}
+		<if test="domain.prefillData != null" >
+        	prefill_data = #{domain.prefillData,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.prefill_status != null" >
-        	prefill_status = #{domain.prefillStatus,jdbcType=VARCHAR}
+		<if test="domain.prefillStatus != null" >
+        	prefill_status = #{domain.prefillStatus,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.prefill_chn != null" >
-        	prefill_chn = #{domain.prefillChn,jdbcType=VARCHAR}
+		<if test="domain.prefillChn != null" >
+        	prefill_chn = #{domain.prefillChn,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.teller_no != null" >
-        	teller_no = #{domain.tellerNo,jdbcType=VARCHAR}
+		<if test="domain.tellerNo != null" >
+        	teller_no = #{domain.tellerNo,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.instno != null" >
-        	instno = #{domain.instno,jdbcType=VARCHAR}
+        	instno = #{domain.instno,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.trans_teller != null" >
-        	trans_teller = #{domain.transTeller,jdbcType=VARCHAR}
+		<if test="domain.transTeller != null" >
+        	trans_teller = #{domain.transTeller,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.trans_instno != null" >
+		<if test="domain.transInstno != null" >
         	trans_instno = #{domain.transInstno,jdbcType=VARCHAR}
       	</if>
 	    </set>
@@ -179,18 +179,18 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid
-		,guid_cust_service
-		,service_sno
-		,prefill_date
-		,prefill_time
-		,trans_code
-		,prefill_data
-		,prefill_status
-		,prefill_chn
-		,teller_no
-		,instno
-		,trans_teller
-		,trans_instno
+		 guid as guid
+		,guid_cust_service as guidCustService
+		,service_sno as serviceSno
+		,prefill_date as prefillDate
+		,prefill_time as prefillTime
+		,trans_code as transCode
+		,prefill_data as prefillData
+		,prefill_status as prefillStatus
+		,prefill_chn as prefillChn
+		,teller_no as tellerNo
+		,instno as instno
+		,trans_teller as transTeller
+		,trans_instno as transInstno
 	</sql>
 </mapper>

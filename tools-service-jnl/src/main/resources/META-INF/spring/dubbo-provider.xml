@@ -41,7 +41,7 @@
 	
     <!-- here we demonstrate both annotation-based and xml-based configs -->
     <!-- 扫描注解包路径，多个包用逗号分隔，不填pacakge表示扫描当前ApplicationContext中所有的类 -->  
-    <dubbo:annotation package="org.tis.tools.service.jnl" />
+    <dubbo:annotation package="org.tis.tools.service" />
 	
 	<!-- 关于 dubbo:protocol 的配置说明 -->
 	<!-- 
@@ -59,19 +59,28 @@
 		fixed 固定大小线程池，启动时建立线程，不关闭，一直持有。(缺省)
 		cached 缓存线程池，空闲一分钟自动删除，需要时重建。
 		limited 可伸缩线程池，但池中的线程数只会增长不会收缩。(为避免收缩时突然来了大流量引起的性能问题)。
+
+	serialization：序列号方式
+	fastjson
+	kryo
 	-->
-    <dubbo:protocol 
-    	name="${dubbo.protocol.name}" 
-    	port="${dubbo.protocol.port}" 
-    	serialization="fastjson" 
-    	dispatcher="all" 
-    	threadpool="fixed" 
-    	threads="20" 
-    	/>
+	<dubbo:protocol
+			name="dubbo"
+			port="${dubbo.protocol.port}"
+			serialization="kryo"
+			dispatcher="all"
+			threadpool="fixed"
+			threads="20"
+			optimizer="org.tis.tools.base.dubbo.optimizer.SerializationOptimizerImpl"
+	/>
 
 	<!-- use netty server -->
 	<dubbo:protocol name="rest" port="8888" keepalive="true"
-		server="netty" iothreads="5" threads="100" contextpath="services" />
+					server="netty" iothreads="5" threads="100" contextpath="services"
+					extension="
+			org.tools.core.dubbo.rest.support.TestContainerRequestFilter,
+			org.tools.core.dubbo.rest.support.CacheControlFilter,
+			org.tools.core.dubbo.rest.support.ExceptionMapperSupport"/>
     
     
 </beans>

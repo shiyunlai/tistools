@@ -21,6 +21,7 @@ import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcFunc;
 import org.tis.tools.model.po.ac.AcFuncgroup;
 import org.tis.tools.model.vo.ac.AcAppVo;
+import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
 import org.tis.tools.rservice.ac.basic.IAcAppRService;
 import org.tis.tools.rservice.ac.capable.IApplicationRService;
 import org.tools.design.SpringJunitSupport;
@@ -50,7 +51,7 @@ public class AppRServiceTest extends SpringJunitSupport{
 	private static String ipPort = "8083" ; //IP端口
 	
 	
-	@Before
+	/*@Before
 	public void before(){
 		//增加应用数据
 	
@@ -60,7 +61,7 @@ public class AppRServiceTest extends SpringJunitSupport{
     public void after(){
 //		sysDictRService.delete(null);
 		
-    }
+    }*/
 	
 	/**
 	 * <pre>
@@ -102,6 +103,7 @@ public class AppRServiceTest extends SpringJunitSupport{
 		}
 
 	}
+
 	
 	/**
 	 * 案例2:生成应用代码失败，缺少所需的业务字典

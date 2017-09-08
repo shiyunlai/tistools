@@ -40,6 +40,8 @@ public class SysDictItem implements Serializable {
 	public static final String COLUMN_GUID_DICT = "guid_dict" ; 
 	/** ITEM_NAME ：字典项名称<br/><br/> */
 	public static final String COLUMN_ITEM_NAME = "item_name" ; 
+	/** ITEM_TYPE ：字典项类型<br/><br/>来自 dict 字典、value 实际值 */
+	public static final String COLUMN_ITEM_TYPE = "item_type" ; 
 	/** ITEM_VALUE ：字典项<br/><br/> */
 	public static final String COLUMN_ITEM_VALUE = "item_value" ; 
 	/** SEND_VALUE ：实际值<br/><br/>实际值，及选中字典项后，实际发送值给系统的数值。 */
@@ -56,6 +58,9 @@ public class SysDictItem implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：字典项名称<br/>描述： */
 	private String itemName ;
+	
+	/** 字段类型：varchar<br/>字段名：字典项类型<br/>描述：来自 dict 字典、value 实际值 */
+	private String itemType ;
 	
 	/** 字段类型：varchar<br/>字段名：字典项<br/>描述： */
 	private String itemValue ;
@@ -128,6 +133,25 @@ public class SysDictItem implements Serializable {
 	 */
 	public String getItemName(){
 		return this.itemName ;
+    }
+	
+	/**
+	 * Set the 字典项类型.
+	 * 
+	 * @param itemType
+	 *            字典项类型
+	 */
+	public void setItemType(String itemType) {
+ 		this.itemType = itemType == null ? null : itemType.trim() ;
+    }
+    
+    /**
+	 * Get the 字典项类型.
+	 * 
+	 * @return 字典项类型
+	 */
+	public String getItemType(){
+		return this.itemType ;
     }
 	
 	/**

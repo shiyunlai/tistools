@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.jnl;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 营销流水
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\JNL-mysql.erm
  * 业务域：jnl
  * 模型：JNL_PROMOTING 营销流水
  *
@@ -80,7 +80,7 @@ public class JnlPromoting implements Serializable {
 	/** 字段类型：varchar<br/>字段名：营销标题<br/>描述：本营销内容的标题信息，有字数限制200个汉字以内 */
 	private String promotingTitle ;
 	
-	/** 字段类型：text<br/>字段名：营销信息<br/>描述： */
+	/** 字段类型：varchar<br/>字段名：营销信息<br/>描述： */
 	private String promotingInfo ;
 	
 	/** 字段类型：varchar<br/>字段名：营销行为<br/>描述：本次营销的行为，通常是按钮事件，系统根据本字段进行营销按钮呈现 */
@@ -100,7 +100,13 @@ public class JnlPromoting implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：营销反馈<br/>描述：见业务字典：DICT_PROMOTING_FEEDBACK */
 	private String promotingFeedback ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public JnlPromoting() {
+	}
+
 	
 	/**
 	 * Set the 数据主键.

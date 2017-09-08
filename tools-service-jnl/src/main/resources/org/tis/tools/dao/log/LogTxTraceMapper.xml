@@ -12,8 +12,9 @@
 	    	,instno
 	    	,teller_no
 	    	,chn_code
-	    	,action_type
-	    	,action_time
+	    	,bhv_code
+	    	,bhv_name
+	    	,happen_time
 	    	,trans_sno
 	    	,trans_code
 	    	,tws_code
@@ -25,12 +26,13 @@
 			#{instno,jdbcType=VARCHAR},
 			#{tellerNo,jdbcType=VARCHAR},
 			#{chnCode,jdbcType=VARCHAR},
-			#{actionType,jdbcType=VARCHAR},
-			#{actionTime,jdbcType=VARCHAR},
+			#{bhvCode,jdbcType=VARCHAR},
+			#{bhvName,jdbcType=VARCHAR},
+			#{happenTime,jdbcType=VARCHAR},
 			#{transSno,jdbcType=VARCHAR},
 			#{transCode,jdbcType=VARCHAR},
 			#{twsCode,jdbcType=VARCHAR},
-			#{remarkInfo,jdbcType=TEXT}
+			#{remarkInfo,jdbcType=VARCHAR}
   		)
  	</insert>
  	
@@ -43,29 +45,32 @@
 		<if test="instno != null" >
 			instno = #{instno,jdbcType=VARCHAR},
 		</if>
-		<if test="teller_no != null" >
+		<if test="tellerNo != null" >
 			teller_no = #{tellerNo,jdbcType=VARCHAR},
 		</if>
-		<if test="chn_code != null" >
+		<if test="chnCode != null" >
 			chn_code = #{chnCode,jdbcType=VARCHAR},
 		</if>
-		<if test="action_type != null" >
-			action_type = #{actionType,jdbcType=VARCHAR},
+		<if test="bhvCode != null" >
+			bhv_code = #{bhvCode,jdbcType=VARCHAR},
 		</if>
-		<if test="action_time != null" >
-			action_time = #{actionTime,jdbcType=VARCHAR},
+		<if test="bhvName != null" >
+			bhv_name = #{bhvName,jdbcType=VARCHAR},
 		</if>
-		<if test="trans_sno != null" >
+		<if test="happenTime != null" >
+			happen_time = #{happenTime,jdbcType=VARCHAR},
+		</if>
+		<if test="transSno != null" >
 			trans_sno = #{transSno,jdbcType=VARCHAR},
 		</if>
-		<if test="trans_code != null" >
+		<if test="transCode != null" >
 			trans_code = #{transCode,jdbcType=VARCHAR},
 		</if>
-		<if test="tws_code != null" >
+		<if test="twsCode != null" >
 			tws_code = #{twsCode,jdbcType=VARCHAR},
 		</if>
-		<if test="remark_info != null" >
-			remark_info = #{remarkInfo,jdbcType=TEXT}
+		<if test="remarkInfo != null" >
+			remark_info = #{remarkInfo,jdbcType=VARCHAR}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -78,12 +83,13 @@
 		instno = #{instno,jdbcType=VARCHAR},
 		teller_no = #{tellerNo,jdbcType=VARCHAR},
 		chn_code = #{chnCode,jdbcType=VARCHAR},
-		action_type = #{actionType,jdbcType=VARCHAR},
-		action_time = #{actionTime,jdbcType=VARCHAR},
+		bhv_code = #{bhvCode,jdbcType=VARCHAR},
+		bhv_name = #{bhvName,jdbcType=VARCHAR},
+		happen_time = #{happenTime,jdbcType=VARCHAR},
 		trans_sno = #{transSno,jdbcType=VARCHAR},
 		trans_code = #{transCode,jdbcType=VARCHAR},
 		tws_code = #{twsCode,jdbcType=VARCHAR},
-		remark_info = #{remarkInfo,jdbcType=TEXT}
+		remark_info = #{remarkInfo,jdbcType=VARCHAR}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -100,34 +106,37 @@
     	UPDATE LOG_TX_TRACE 
 	   <set>
 		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR}
+        	guid = #{domain.guid,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.instno != null" >
-        	instno = #{domain.instno,jdbcType=VARCHAR}
+        	instno = #{domain.instno,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.teller_no != null" >
-        	teller_no = #{domain.tellerNo,jdbcType=VARCHAR}
+		<if test="domain.tellerNo != null" >
+        	teller_no = #{domain.tellerNo,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.chn_code != null" >
-        	chn_code = #{domain.chnCode,jdbcType=VARCHAR}
+		<if test="domain.chnCode != null" >
+        	chn_code = #{domain.chnCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.action_type != null" >
-        	action_type = #{domain.actionType,jdbcType=VARCHAR}
+		<if test="domain.bhvCode != null" >
+        	bhv_code = #{domain.bhvCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.action_time != null" >
-        	action_time = #{domain.actionTime,jdbcType=VARCHAR}
+		<if test="domain.bhvName != null" >
+        	bhv_name = #{domain.bhvName,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.trans_sno != null" >
-        	trans_sno = #{domain.transSno,jdbcType=VARCHAR}
+		<if test="domain.happenTime != null" >
+        	happen_time = #{domain.happenTime,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.trans_code != null" >
-        	trans_code = #{domain.transCode,jdbcType=VARCHAR}
+		<if test="domain.transSno != null" >
+        	trans_sno = #{domain.transSno,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.tws_code != null" >
-        	tws_code = #{domain.twsCode,jdbcType=VARCHAR}
+		<if test="domain.transCode != null" >
+        	trans_code = #{domain.transCode,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.remark_info != null" >
-        	remark_info = #{domain.remarkInfo,jdbcType=TEXT}
+		<if test="domain.twsCode != null" >
+        	tws_code = #{domain.twsCode,jdbcType=VARCHAR},
+      	</if>
+		<if test="domain.remarkInfo != null" >
+        	remark_info = #{domain.remarkInfo,jdbcType=VARCHAR}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>
@@ -152,15 +161,16 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid
-		,instno
-		,teller_no
-		,chn_code
-		,action_type
-		,action_time
-		,trans_sno
-		,trans_code
-		,tws_code
-		,remark_info
+		 guid as guid
+		,instno as instno
+		,teller_no as tellerNo
+		,chn_code as chnCode
+		,bhv_code as bhvCode
+		,bhv_name as bhvName
+		,happen_time as happenTime
+		,trans_sno as transSno
+		,trans_code as transCode
+		,tws_code as twsCode
+		,remark_info as remarkInfo
 	</sql>
 </mapper>

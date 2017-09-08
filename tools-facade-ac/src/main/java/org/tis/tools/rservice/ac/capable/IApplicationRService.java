@@ -3,22 +3,14 @@
  */
 package org.tis.tools.rservice.ac.capable;
 
+import org.tis.tools.base.WhereCondition;
+import org.tis.tools.model.po.ac.*;
+import org.tis.tools.model.vo.ac.AcFuncVo;
+import org.tis.tools.rservice.ac.exception.AppManagementException;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import org.tis.tools.base.WhereCondition;
-import org.tis.tools.model.po.ac.AcApp;
-import org.tis.tools.model.po.ac.AcBhvDef;
-import org.tis.tools.model.po.ac.AcBhvtypeDef;
-import org.tis.tools.model.po.ac.AcFunc;
-import org.tis.tools.model.po.ac.AcFuncBehavior;
-import org.tis.tools.model.po.ac.AcFuncResource;
-import org.tis.tools.model.po.ac.AcFuncgroup;
-import org.tis.tools.model.po.ac.AcMenu;
-import org.tis.tools.model.po.ac.AcOperator;
-import org.tis.tools.model.vo.ac.AcAppVo;
-import org.tis.tools.model.vo.ac.AcFuncVo;
 
 /**
  * <pre>
@@ -48,14 +40,13 @@ import org.tis.tools.model.vo.ac.AcFuncVo;
  * <li>功能（AC_FUNC），及功能资源（AC_FUNC_RESOURCE）、功能行为（AC_BEHAVIOR）
  * </pre>
  * @author megapro
- *
  */
 public interface IApplicationRService {
 
 	/** 
 	 * 新增应用系统(AC_APP)
 	 * @param acApp 应用对象
-	 * return  acApp
+	 * @return  acApp
 	 */
 	public AcApp createAcApp(AcApp acApp);
 	
@@ -63,7 +54,7 @@ public interface IApplicationRService {
 	/**
 	 * 删除应用系统(AC_APP)
 	 * @param guid 应用系统的guid
-	 * return  acApp
+	 * @return  acApp
 	 */
 	public void deleteAcApp(String guid);
 	
@@ -94,7 +85,7 @@ public interface IApplicationRService {
 	 * @param 
 	 * @return 根目录list
 	 */
-	public List<AcAppVo> queryAcRootList();
+	public List<AcApp> queryAcRootList();
 	
 	
 	/**
@@ -474,5 +465,15 @@ public interface IApplicationRService {
 	 * @param  appGuid 应用GUID
 	 */
 	List<AcFunc> queryFuncListInApp(String appGuid);
+
+	/**
+	 * 查询操作员已拥有的应用集合
+	 * @param userId
+	 * 			用户ID
+	 * @return
+	 * @throws AppManagementException 应用
+	 */
+	List<AcApp> queryOperatorAllApp(String userId) throws AppManagementException;
+
 
 }

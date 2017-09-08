@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.log.LogAbfKeywordMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.log.LogAbfKeyword">
+	    INSERT INTO LOG_ABF_KEYWORD 
+	    (
+	    	 guid_history
+	    	,param
+	    	,value
+	    )
+	    VALUES 
+	    (
+			#{guidHistory,jdbcType=VARCHAR},
+			#{param,jdbcType=VARCHAR},
+			#{value,jdbcType=VARCHAR}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.log.LogAbfKeyword">
+    	UPDATE LOG_ABF_KEYWORD 
+	    <set>
+		<if test="guidHistory != null" >
+			guid_history = #{guidHistory,jdbcType=VARCHAR},
+		</if>
+		<if test="param != null" >
+			param = #{param,jdbcType=VARCHAR},
+		</if>
+		<if test="value != null" >
+			value = #{value,jdbcType=VARCHAR}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.log.LogAbfKeyword">
+    	UPDATE LOG_ABF_KEYWORD 
+	    <set>
+		guid_history = #{guidHistory,jdbcType=VARCHAR},
+		param = #{param,jdbcType=VARCHAR},
+		value = #{value,jdbcType=VARCHAR}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from LOG_ABF_KEYWORD where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from LOG_ABF_KEYWORD <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE LOG_ABF_KEYWORD 
+	   <set>
+		<if test="domain.guidHistory != null" >
+        	guid_history = #{domain.guidHistory,jdbcType=VARCHAR},
+      	</if>
+		<if test="domain.param != null" >
+        	param = #{domain.param,jdbcType=VARCHAR},
+      	</if>
+		<if test="domain.value != null" >
+        	value = #{domain.value,jdbcType=VARCHAR}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.log.LogAbfKeyword">
+		select <include refid="Base_Column_List"/> from LOG_ABF_KEYWORD where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.log.LogAbfKeyword" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from LOG_ABF_KEYWORD <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from LOG_ABF_KEYWORD <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid_history as guidHistory
+		,param as param
+		,value as value
+	</sql>
+</mapper>

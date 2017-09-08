@@ -2,10 +2,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
-                http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+                http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- Scans the classpath of this application for @Components to deploy as beans -->
     <context:component-scan base-package="org.tis.tools.webapp"/>
@@ -28,21 +28,23 @@
     </bean>
 
     <!-- Configures the @Controller programming model -->
+
     <mvc:annotation-driven/>
     <mvc:view-controller path="/index" view-name="index"/>
+    <aop:aspectj-autoproxy expose-proxy="true"/>
 
-    <mvc:interceptors>
+<!--    <mvc:interceptors>
     	<mvc:interceptor>
     		<mvc:mapping path="/**"/>
     		<bean class="org.tis.tools.webapp.SecurityInterceptor" />
     	</mvc:interceptor>
     
-    	<!-- <mvc:interceptor>
+    	&lt;!&ndash; <mvc:interceptor>
     		<mvc:mapping path="/phone/commons/sms*"/>
     		<bean class="com.lanmosoft.filter.SmsInterceptor" />
-    	</mvc:interceptor>-->
+    	</mvc:interceptor>&ndash;&gt;
     	
-    </mvc:interceptors>
+    </mvc:interceptors>-->
     <!-- Saves a locale change using a cookie -->
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver"/>
 
@@ -51,7 +53,7 @@
     </bean>
 
     <!-- FreeMarker Configurer and View Resolver -->
-    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+    <!--<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
         <property name="templateLoaderPath" value="/"/>
         <property name="freemarkerSettings">
             <props>
@@ -72,10 +74,12 @@
         <property name="requestContextAttribute" value="rc"/>
         <property name="contentType" value="text/html;charset=UTF-8"></property>
         <property name="prefix" value="/"/>
-        <!-- <property name="suffix" value=".ftl.html"/> -->
+        &lt;!&ndash; <property name="suffix" value=".ftl.html"/> &ndash;&gt;
         <property name="suffix" value=".ftl"/>
          
-    </bean>
+    </bean>-->
+
+
      <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
      	<!--  
 		<property name="maxUploadSize" value="20971520" />

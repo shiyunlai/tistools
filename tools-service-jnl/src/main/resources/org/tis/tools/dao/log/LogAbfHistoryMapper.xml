@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.log.LogAbfHistoryMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.log.LogAbfHistory">
+	    INSERT INTO LOG_ABF_HISTORY 
+	    (
+	    	 guid
+	    	,guid_operate
+	    	,obj_from
+	    	,obj_type
+	    	,obj_guid
+	    	,obj_name
+	    	,obj_value
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=VARCHAR},
+			#{guidOperate,jdbcType=VARCHAR},
+			#{objFrom,jdbcType=VARCHAR},
+			#{objType,jdbcType=VARCHAR},
+			#{objGuid,jdbcType=VARCHAR},
+			#{objName,jdbcType=VARCHAR},
+			#{objValue,jdbcType=VARCHAR}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.log.LogAbfHistory">
+    	UPDATE LOG_ABF_HISTORY 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=VARCHAR},
+		</if>
+		<if test="guidOperate != null" >
+			guid_operate = #{guidOperate,jdbcType=VARCHAR},
+		</if>
+		<if test="objFrom != null" >
+			obj_from = #{objFrom,jdbcType=VARCHAR},
+		</if>
+		<if test="objType != null" >
+			obj_type = #{objType,jdbcType=VARCHAR},
+		</if>
+		<if test="objGuid != null" >
+			obj_guid = #{objGuid,jdbcType=VARCHAR},
+		</if>
+		<if test="objName != null" >
+			obj_name = #{objName,jdbcType=VARCHAR},
+		</if>
+		<if test="objValue != null" >
+			obj_value = #{objValue,jdbcType=VARCHAR}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.log.LogAbfHistory">
+    	UPDATE LOG_ABF_HISTORY 
+	    <set>
+		guid = #{guid,jdbcType=VARCHAR},
+		guid_operate = #{guidOperate,jdbcType=VARCHAR},
+		obj_from = #{objFrom,jdbcType=VARCHAR},
+		obj_type = #{objType,jdbcType=VARCHAR},
+		obj_guid = #{objGuid,jdbcType=VARCHAR},
+		obj_name = #{objName,jdbcType=VARCHAR},
+		obj_value = #{objValue,jdbcType=VARCHAR}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from LOG_ABF_HISTORY where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from LOG_ABF_HISTORY <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE LOG_ABF_HISTORY 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=VARCHAR},
+      	</if>
+		<if test="domain.guidOperate != null" >
+        	guid_operate = #{domain.guidOperate,jdbcType=VARCHAR},
+      	</if>
+		<if test="domain.objFrom != null" >
+        	obj_from = #{domain.objFrom,jdbcType=VARCHAR},
+      	</if>
+		<if test="domain.objType != null" >
+        	obj_type = #{domain.objType,jdbcType=VARCHAR},
+      	</if>
+		<if test="domain.objGuid != null" >
+        	obj_guid = #{domain.objGuid,jdbcType=VARCHAR},
+      	</if>
+		<if test="domain.objName != null" >
+        	obj_name = #{domain.objName,jdbcType=VARCHAR},
+      	</if>
+		<if test="domain.objValue != null" >
+        	obj_value = #{domain.objValue,jdbcType=VARCHAR}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.log.LogAbfHistory">
+		select <include refid="Base_Column_List"/> from LOG_ABF_HISTORY where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.log.LogAbfHistory" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from LOG_ABF_HISTORY <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from LOG_ABF_HISTORY <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid as guid
+		,guid_operate as guidOperate
+		,obj_from as objFrom
+		,obj_type as objType
+		,obj_guid as objGuid
+		,obj_name as objName
+		,obj_value as objValue
+	</sql>
+</mapper>

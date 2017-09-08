@@ -4,9 +4,8 @@
 package org.tis.tools.rservice.ac.capable;
 
 import org.tis.tools.model.po.ac.*;
+import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
 import org.tis.tools.rservice.ac.exception.RoleManagementException;
-
-import javax.management.relation.Role;
 import java.util.List;
 import java.util.Map;
 
@@ -214,7 +213,23 @@ public interface IRoleRService {
     void removeRoleParty(String roleGuid, String partyGuid) throws RoleManagementException;
 
 
-    void removeRolePartyList(String roleGuid, List<String> partyGuid) throws RoleManagementException;
+    /**
+     * <p>角色批量移除组织对象权限</p>
+     * <p>
+     * <pre>
+     *     业务逻辑
+     *     传入角色的GUID和组织对象GUID移除角色组织对象权限
+     *     1.验证传入的对象不能为空
+     *
+     * </pre>
+     *
+     * @param roleGuid
+     *          角色GUID
+     * @param partyGuidList
+     *          组织对象GUID集合
+     * @throws RoleManagementException
+     */
+    void removeRolePartyList(String roleGuid, List<String> partyGuidList) throws RoleManagementException;
 
     /**
      * <p>查询角色的组织对象权限集合</p>
@@ -278,6 +293,12 @@ public interface IRoleRService {
      */
     List<AcOperatorRole> queryAllOperatorRole(String roleGuid) throws  RoleManagementException;
 
+    /**
+     * 查询角色下的操作员集合
+     * @param roleGuid
+     * @return
+     * @throws RoleManagementException
+     */
     List<Map> queryAllOperatorRoleExt(String roleGuid) throws  RoleManagementException;
 
     /**
@@ -305,13 +326,69 @@ public interface IRoleRService {
     List<AcRole> queryAllRoleByUserId(String userId)  throws  RoleManagementException;
 
     /**
-     * 查询员工拥有的所有机构权限集合
+     * 查询员工对应组织对象下的权限集合
      * @param empGuid
      * @return
      *          包含角色GUID的集合
      * @throws RoleManagementException
      */
     List<AcRole> queryEmpPartyRole(String partyType, String empGuid) throws RoleManagementException;
+
+    /**
+     * 查询应用下的所有角色
+     * @param appGuid
+     *           应用GUID
+     * @return
+     *           角色集合
+     * @throws RoleManagementException
+     */
+    List<AcRole> queryRoleListInApp(String appGuid) throws RoleManagementException;
+
+
+    /**
+     * 查询操作员所在工作组和岗位相关应用下所有角色
+     *    来源  操作员对应员工的工作组和岗位相关应用下所有的角色
+     * @param employeeGuid
+     *          员工GUID
+     * @return
+     *          角色集合
+     * @throws RoleManagementException
+     */
+    List<AcRole> queryEmployeeAllPartyRoleList(String employeeGuid) throws RoleManagementException;
+
+    /**
+     * 查询操作员未授权角色
+     *    来源  操作员对应员工的工作组和岗位相关应用下非继承的未授权给该操作员的角色
+     * @param userId
+     *          用户ID
+     * @return
+     *          角色集合
+     * @throws RoleManagementException
+     */
+    List<AcRole> queryOperatorUnauthorizedRoleList(String userId) throws RoleManagementException;
+
+    /**
+     * 查询操作员已授权角色
+     *    来源  操作员对应的工作组和岗位的应用下非继承的已授权给该操作员的角色
+     * @param userId
+     *          用户ID
+     * @return
+     *          角色集合
+     * @throws RoleManagementException
+     */
+    List<AcRole> queryOperatorAuthorizedRoleList(String userId) throws RoleManagementException;
+
+    /**
+     * 查询操作员继承角色
+     *    来源  操作员对应员工所属机构、岗位、职务、工作组直接关联的角色、无需授权默认拥有
+     * @param userId
+     *          用户ID
+     * @return
+     *          角色集合
+     * @throws RoleManagementException
+     */
+    List<AcRole> queryOperatorInheritRoleList(String userId) throws RoleManagementException;
+
 
 
 }
