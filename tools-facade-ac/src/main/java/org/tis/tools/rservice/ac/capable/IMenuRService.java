@@ -60,27 +60,29 @@ public interface IMenuRService {
      * @param acOperatorMenu
      * @throws MenuManagementException
      */
-    void createRootOperatorMenu(AcOperatorMenu acOperatorMenu) throws MenuManagementException;
+    AcOperatorMenu createRootOperatorMenu(AcOperatorMenu acOperatorMenu) throws MenuManagementException;
 
     /**
      * 创建子菜单
      * @param acMenu
+     * @return 创建的菜单
      * @throws MenuManagementException
      */
-    void createChildMenu(AcMenu acMenu) throws MenuManagementException;
+    AcMenu createChildMenu(AcMenu acMenu) throws MenuManagementException;
     /**
      * 创建子重组菜单
      * @param acOperatorMenu
      * @throws MenuManagementException
      */
-    void createChildOperatorMenu(AcOperatorMenu acOperatorMenu) throws MenuManagementException;
+    AcOperatorMenu createChildOperatorMenu(AcOperatorMenu acOperatorMenu) throws MenuManagementException;
 
     /**
      * 修改菜单
      * @param acMenu
+     * @return 修改后的菜单
      * @throws MenuManagementException
      */
-    void editMenu(AcMenu acMenu) throws MenuManagementException;
+    AcMenu editMenu(AcMenu acMenu) throws MenuManagementException;
     /**
      * 修改菜单
      * @param acOperatorMenu
@@ -91,9 +93,10 @@ public interface IMenuRService {
     /**
      * 删除菜单
      * @param menuGuid
+     * @return 删除的菜单
      * @throws MenuManagementException
      */
-    void deleteMenu(String menuGuid) throws MenuManagementException;
+    AcMenu deleteMenu(String menuGuid) throws MenuManagementException;
     /**
      * 删除重组菜单
      * @param menuGuid

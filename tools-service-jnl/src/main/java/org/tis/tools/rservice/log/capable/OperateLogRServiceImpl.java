@@ -18,6 +18,8 @@ import org.tis.tools.service.log.LogAbfHistoryService;
 import org.tis.tools.service.log.LogAbfKeywordService;
 import org.tis.tools.service.log.LogAbfOperateService;
 
+import java.util.Date;
+
 public class OperateLogRServiceImpl extends BaseRService implements IOperateLogRService {
 
     @Autowired
@@ -44,10 +46,6 @@ public class OperateLogRServiceImpl extends BaseRService implements IOperateLogR
             throw new LogManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT,
                     BasicUtil.wrap(LogAbfOperate.COLUMN_OPERATE_FROM, LogAbfOperate.TABLE_NAME));
         }
-        if (StringUtils.isBlank(logAbfOperate.getUserId())) {
-            throw new LogManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT,
-                    BasicUtil.wrap(LogAbfOperate.COLUMN_USER_ID, LogAbfOperate.TABLE_NAME));
-        }
         if (StringUtils.isBlank(logAbfOperate.getOperateResult())) {
             throw new LogManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT,
                     BasicUtil.wrap(LogAbfOperate.COLUMN_OPERATE_RESULT, LogAbfOperate.TABLE_NAME));
@@ -59,6 +57,7 @@ public class OperateLogRServiceImpl extends BaseRService implements IOperateLogR
                     try {
                         String logGuid = GUID.logOperate();
                         logAbfOperate.setGuid(logGuid);
+                        logAbfOperate.setOperateTime(new Date());
                         logAbfOperateService.insert(logAbfOperate);
                         for (LogHistoryDetail obj : log.getAllObj()) {
                             String objGuid = GUID.logObject();

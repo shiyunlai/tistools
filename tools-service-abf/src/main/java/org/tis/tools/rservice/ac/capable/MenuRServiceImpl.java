@@ -197,7 +197,7 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
      * @throws MenuManagementException
      */
     @Override
-    public void createRootOperatorMenu(AcOperatorMenu acOperatorMenu) throws MenuManagementException {
+    public AcOperatorMenu createRootOperatorMenu(AcOperatorMenu acOperatorMenu) throws MenuManagementException {
         try {
             if(null == acOperatorMenu) {
                 throw new MenuManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("AcOperatorMenu"));
@@ -230,6 +230,7 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             acOperatorMenu.setIsleaf(CommonConstants.NO);
             acOperatorMenu.setDisplayOrder(new BigDecimal("0"));
             acOperatorMenuService.insert(acOperatorMenu);
+            return acOperatorMenu;
         } catch (MenuManagementException ae) {
             throw ae;
         } catch (Exception e) {
@@ -247,7 +248,7 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
      * @throws MenuManagementException
      */
     @Override
-    public void createChildMenu(AcMenu acMenu) throws MenuManagementException {
+    public AcMenu createChildMenu(AcMenu acMenu) throws MenuManagementException {
         try {
             if(null == acMenu) {
                 throw new MenuManagementException(ACExceptionCodes.OBJECT_IS_NULL, BasicUtil.wrap("AcMenu"));
@@ -290,6 +291,7 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             acMenu.setGuidRoot(parMenu.getGuidRoot());
             acMenu.setDisplayOrder(new BigDecimal(acMenuService.count(new WhereCondition().andEquals(AcMenu.COLUMN_GUID_PARENTS, acMenu.getGuidParents()))));
             acMenuService.insert(acMenu);
+            return acMenu;
         } catch (MenuManagementException ae) {
             throw ae;
         } catch (Exception e) {
@@ -307,7 +309,7 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
      * @throws MenuManagementException
      */
     @Override
-    public void createChildOperatorMenu(AcOperatorMenu acOperatorMenu) throws MenuManagementException {
+    public AcOperatorMenu createChildOperatorMenu(AcOperatorMenu acOperatorMenu) throws MenuManagementException {
         try {
             if(null == acOperatorMenu) {
                 throw new MenuManagementException(ACExceptionCodes.OBJECT_IS_NULL, BasicUtil.wrap("AcMenu"));
@@ -351,6 +353,7 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             acOperatorMenu.setDisplayOrder(new BigDecimal(acOperatorMenuService.count(new WhereCondition().andEquals(AcMenu.COLUMN_GUID_PARENTS, acOperatorMenu.getGuidParents()))));
 
             acOperatorMenuService.insert(acOperatorMenu);
+            return  acOperatorMenu;
         } catch (MenuManagementException ae) {
             throw ae;
         } catch (Exception e) {
@@ -368,7 +371,7 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
      * @throws MenuManagementException
      */
     @Override
-    public void editMenu(AcMenu acMenu) throws MenuManagementException {
+    public AcMenu editMenu(AcMenu acMenu) throws MenuManagementException {
         try {
             if(null == acMenu) {
                 throw new MenuManagementException(ACExceptionCodes.OBJECT_IS_NULL, BasicUtil.wrap("acMenu"));
@@ -430,6 +433,7 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                     }
                 }
             });
+            return acMenu;
         } catch (MenuManagementException ae) {
             throw ae;
         } catch (Exception e) {
@@ -500,10 +504,15 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
      * @throws MenuManagementException
      */
     @Override
-    public void deleteMenu(String menuGuid) throws MenuManagementException {
+    public AcMenu deleteMenu(String menuGuid) throws MenuManagementException {
         try {
             if(StringUtil.isEmpty(menuGuid)) {
                 throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID_MENU"));
+            }
+            /*查询对应菜单是否存在*/
+            AcMenu acMenu = acMenuService.loadByGuid(menuGuid);
+            if (acMenu == null) {
+                throw new MenuManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap(menuGuid, AcMenu.TABLE_NAME));
             }
             /*查询子菜单，一并删除*/
             List<AcMenu> menuList = acMenuService.query(new WhereCondition().andFullLike(AcMenu.COLUMN_MENU_SEQ, menuGuid));
@@ -535,6 +544,7 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                     }
                 }
             });
+            return acMenu;
         } catch (MenuManagementException ae) {
             throw ae;
         } catch (Exception e) {

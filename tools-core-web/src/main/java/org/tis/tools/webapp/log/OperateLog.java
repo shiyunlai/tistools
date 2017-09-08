@@ -8,7 +8,7 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface OperatorLog {
+public @interface OperateLog {
 
 
     /**
@@ -44,7 +44,7 @@ public @interface OperatorLog {
      * 操作对象的身份标识
      * @return
      */
-    String id() default "GUID";
+    String id() default "";
 
     /**
      * 操作对象的名称
