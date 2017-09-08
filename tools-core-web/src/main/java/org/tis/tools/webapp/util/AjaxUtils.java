@@ -7,6 +7,7 @@
 package org.tis.tools.webapp.util;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,6 +80,14 @@ public class AjaxUtils {
      * </p>
      */
     public static final String ERROR = "error";
+
+    /**
+     * <p>
+     * Field FAILED: 失败
+     * </p>
+     */
+    public static final String FAILED = "failed";
+
     /**
      * <p>
      * Field KEEP_OPEN: 成功并保持window打开状态
@@ -125,6 +134,7 @@ public class AjaxUtils {
      */
     public static String ajax(HttpServletResponse response, String content, String type) {
         try {
+//            response.reset();
             response.setContentType(type + ";charset=UTF-8");
           
             response.setHeader("Cache-Control", "no-cache");
@@ -141,8 +151,10 @@ public class AjaxUtils {
 ////            	return null;
 //            }
             response.setHeader("Pragma", "No-cache");
+            PrintWriter writer = response.getWriter();
             response.getWriter().write(content);
             response.getWriter().flush();
+            response.getWriter().close();
         } catch (IOException e) {
             logger.error("AJAX响应错误", e);
         }
@@ -331,6 +343,21 @@ public class AjaxUtils {
     	jsonMap.put(RETMESSAGE, args[0]);
         String jsonString = JSON.toJSONString(jsonMap);
 //        JSON.toJSONStringWithDateFormat(resultMap, "yyyy-MM-dd HH:mm:ss.SSS");
+    	return ajax(response, jsonString, "text/html");
+    }
+
+    /**
+     * <p>Description: 输出JSON错误消息，返回null</p>
+     * @param response HttpServletResponse对象
+     * @param retMessage 信息字符串
+     * @return null
+     */
+    public static String ajaxJsonFailMessage(HttpServletResponse response, String code, String retMessage) {
+    	Map<String, Object> jsonMap = new HashMap<String, Object>();
+    	jsonMap.put(RETCODE, code);
+    	jsonMap.put(STATUS, FAILED);
+    	jsonMap.put(RETMESSAGE, retMessage);
+        String jsonString = JSON.toJSONString(jsonMap);
     	return ajax(response, jsonString, "text/html");
     }
 }
