@@ -3,14 +3,12 @@
  */
 package org.tis.tools.rservice.ac.capable;
 
-
-
-import org.tis.tools.model.po.ac.*;
+import org.tis.tools.model.po.ac.AcApp;
+import org.tis.tools.model.po.ac.AcMenu;
+import org.tis.tools.model.po.ac.AcOperatorMenu;
 import org.tis.tools.model.vo.ac.AcMenuDetail;
 import org.tis.tools.rservice.ac.exception.MenuManagementException;
-import org.tis.tools.rservice.ac.exception.MenuManagementException;
 
-import java.awt.*;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +54,7 @@ public interface IMenuRService {
      * @param acMenu
      * @throws MenuManagementException
      */
-    void createRootMenu(AcMenu acMenu) throws MenuManagementException;
+    AcMenu createRootMenu(AcMenu acMenu) throws MenuManagementException;
     /**
      * 创建重组根菜单
      * @param acOperatorMenu
