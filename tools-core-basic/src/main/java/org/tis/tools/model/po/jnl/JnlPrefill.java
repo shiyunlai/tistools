@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.jnl;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 预填流水
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\JNL-mysql.erm
  * 业务域：jnl
  * 模型：JNL_PREFILL 预填流水
  *
@@ -82,7 +82,7 @@ public class JnlPrefill implements Serializable {
 	/** 字段类型：varchar<br/>字段名：交易代码<br/>描述： */
 	private String transCode ;
 	
-	/** 字段类型：text<br/>字段名：预填数据<br/>描述： */
+	/** 字段类型：varchar<br/>字段名：预填数据<br/>描述： */
 	private String prefillData ;
 	
 	/** 字段类型：varchar<br/>字段名：预填处理状态<br/>描述：见业务字典：DICT_PREFILL_STATUS */
@@ -102,7 +102,13 @@ public class JnlPrefill implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：交易机构<br/>描述：本次交易发生所在机构 */
 	private String transInstno ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public JnlPrefill() {
+	}
+
 	
 	/**
 	 * Set the 数据主键.

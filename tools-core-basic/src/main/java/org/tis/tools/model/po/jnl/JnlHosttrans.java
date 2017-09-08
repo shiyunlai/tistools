@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.jnl;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 主机交易流水
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\JNL-mysql.erm
  * 业务域：jnl
  * 模型：JNL_HOSTTRANS 主机交易流水
  *
@@ -102,7 +102,13 @@ public class JnlHosttrans implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：主机错误信息<br/>描述：主机系统返回的错误信息，超长的会被自动截取，完整的内容则只能在主机响应报文中获得。 */
 	private String hostErrMsg ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public JnlHosttrans() {
+	}
+
 	
 	/**
 	 * Set the 数据主键.

@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.jnl;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 交易流水
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\JNL-mysql.erm
  * 业务域：jnl
  * 模型：JNL_TRANS 交易流水
  *
@@ -115,7 +115,13 @@ public class JnlTrans implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：交易错误信息<br/>描述：交易的错误信息，另见错误代码表 SYS_ERR_CODE */
 	private String transErrMsg ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public JnlTrans() {
+	}
+
 	
 	/**
 	 * Set the 数据主键.

@@ -26,7 +26,7 @@
 	<font_name>.SF NS Text</font_name>
 	<font_size>9</font_size>
 	<settings>
-		<database>Oracle</database>
+		<database>MySQL</database>
 		<capital>true</capital>
 		<table_style></table_style>
 		<notation></notation>
@@ -186,7 +186,7 @@
 			</connections>
 			<display>true</display>
 			<creation_date>2017-01-18 19:04:59</creation_date>
-			<updated_date>2017-09-06 14:42:05</updated_date>
+			<updated_date>2017-09-07 15:13:21</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value>open branch plus</value>
@@ -226,6 +226,10 @@
 		</model_properties>
 		<table_properties>
 			<schema></schema>
+			<character_set></character_set>
+			<collation></collation>
+			<storage_engine></storage_engine>
+			<primary_key_length_of_text>null</primary_key_length_of_text>
 		</table_properties>
 		<environment_setting>
 			<environment>
@@ -461,7 +465,7 @@
 		</word>
 		<word>
 			<id>14</id>
-			<length>null</length>
+			<length>4000</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -473,7 +477,7 @@
 			<description>本次客户服务的上下文。预先获取的关于客户的信息，如：客户基本信息，客户资产信息。。。 便于客户服务过程中柜员使用，提高服务质量；&#x0A;以JSON格式存储信息； &#x0A;一般：&#x0A;1、排队时获取&#x0A;2、预约时获取&#x0A;3、身份核查时获取&#x0A;新客户则为空</description>
 			<logical_name>客户服务信息</logical_name>
 			<physical_name>CUST_SERVICE_CTX</physical_name>
-			<type>text</type>
+			<type>varchar(n)</type>
 		</word>
 		<word>
 			<id>15</id>
@@ -541,7 +545,7 @@
 		</word>
 		<word>
 			<id>19</id>
-			<length>null</length>
+			<length>0</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -877,7 +881,7 @@
 		</word>
 		<word>
 			<id>40</id>
-			<length>null</length>
+			<length>4000</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -889,7 +893,7 @@
 			<description>报文内容</description>
 			<logical_name>报文信息</logical_name>
 			<physical_name>MSG_INFO</physical_name>
-			<type>text</type>
+			<type>varchar(n)</type>
 		</word>
 		<word>
 			<id>41</id>
@@ -1005,6 +1009,22 @@
 		</word>
 		<word>
 			<id>48</id>
+			<length>256</length>
+			<decimal>null</decimal>
+			<array>false</array>
+			<array_dimension>null</array_dimension>
+			<unsigned>false</unsigned>
+			<zerofill>false</zerofill>
+			<binary>false</binary>
+			<args></args>
+			<char_semantics>false</char_semantics>
+			<description></description>
+			<logical_name>操作渠道</logical_name>
+			<physical_name>OPERATE_FROM</physical_name>
+			<type>varchar(n)</type>
+		</word>
+		<word>
+			<id>49</id>
 			<length>255</length>
 			<decimal>null</decimal>
 			<array>false</array>
@@ -1020,7 +1040,7 @@
 			<type>varchar(n)</type>
 		</word>
 		<word>
-			<id>49</id>
+			<id>50</id>
 			<length>null</length>
 			<decimal>null</decimal>
 			<array>false</array>
@@ -1036,7 +1056,7 @@
 			<type>date</type>
 		</word>
 		<word>
-			<id>50</id>
+			<id>51</id>
 			<length>64</length>
 			<decimal>null</decimal>
 			<array>false</array>
@@ -1052,7 +1072,7 @@
 			<type>varchar(n)</type>
 		</word>
 		<word>
-			<id>51</id>
+			<id>52</id>
 			<length>64</length>
 			<decimal>null</decimal>
 			<array>false</array>
@@ -1065,22 +1085,6 @@
 			<description>记录当前操作员姓名（只记录当前值，不随之改变）</description>
 			<logical_name>操作员姓名</logical_name>
 			<physical_name>OPERATOR_NAME</physical_name>
-			<type>varchar(n)</type>
-		</word>
-		<word>
-			<id>52</id>
-			<length>256</length>
-			<decimal>null</decimal>
-			<array>false</array>
-			<array_dimension>null</array_dimension>
-			<unsigned>false</unsigned>
-			<zerofill>false</zerofill>
-			<binary>false</binary>
-			<args></args>
-			<char_semantics>false</char_semantics>
-			<description></description>
-			<logical_name>操作渠道</logical_name>
-			<physical_name>OPERATE_FROM</physical_name>
 			<type>varchar(n)</type>
 		</word>
 		<word>
@@ -1149,7 +1153,7 @@
 		</word>
 		<word>
 			<id>57</id>
-			<length>null</length>
+			<length>4000</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -1161,7 +1165,7 @@
 			<description></description>
 			<logical_name>预填数据</logical_name>
 			<physical_name>PREFILL_DATA</physical_name>
-			<type>text</type>
+			<type>varchar(n)</type>
 		</word>
 		<word>
 			<id>58</id>
@@ -1213,7 +1217,7 @@
 		</word>
 		<word>
 			<id>61</id>
-			<length>null</length>
+			<length>4000</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -1225,7 +1229,7 @@
 			<description>存储生成的打印数据（已经是打印机执行编码）</description>
 			<logical_name>打印数据</logical_name>
 			<physical_name>PRINTED_DATA</physical_name>
-			<type>text</type>
+			<type>varchar(n)</type>
 		</word>
 		<word>
 			<id>62</id>
@@ -1341,7 +1345,7 @@
 		</word>
 		<word>
 			<id>69</id>
-			<length>null</length>
+			<length>4000</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -1353,7 +1357,7 @@
 			<description></description>
 			<logical_name>营销信息</logical_name>
 			<physical_name>PROMOTING_INFO</physical_name>
-			<type>text</type>
+			<type>varchar(n)</type>
 		</word>
 		<word>
 			<id>70</id>
@@ -1405,7 +1409,7 @@
 		</word>
 		<word>
 			<id>73</id>
-			<length>null</length>
+			<length>4000</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -1417,7 +1421,7 @@
 			<description>记录操作过程中的备注信息，比如存储操作前后某些字典的变化对照</description>
 			<logical_name>备注信息</logical_name>
 			<physical_name>REMARK_INFO</physical_name>
-			<type>text</type>
+			<type>varchar(n)</type>
 		</word>
 		<word>
 			<id>74</id>
@@ -1469,7 +1473,7 @@
 		</word>
 		<word>
 			<id>77</id>
-			<length>null</length>
+			<length>0</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -1597,7 +1601,7 @@
 		</word>
 		<word>
 			<id>85</id>
-			<length>null</length>
+			<length>4000</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -1609,7 +1613,7 @@
 			<description></description>
 			<logical_name>交易上下文</logical_name>
 			<physical_name>TRANS_CTX</physical_name>
-			<type>text</type>
+			<type>varchar(n)</type>
 		</word>
 		<word>
 			<id>86</id>
@@ -2121,6 +2125,10 @@
 			</complex_unique_key_list>
 			<table_properties>
 				<schema></schema>
+				<character_set></character_set>
+				<collation></collation>
+				<storage_engine></storage_engine>
+				<primary_key_length_of_text>null</primary_key_length_of_text>
 			</table_properties>
 		</table>
 		<table>
@@ -2605,6 +2613,10 @@
 			</complex_unique_key_list>
 			<table_properties>
 				<schema></schema>
+				<character_set></character_set>
+				<collation></collation>
+				<storage_engine></storage_engine>
+				<primary_key_length_of_text>null</primary_key_length_of_text>
 			</table_properties>
 		</table>
 		<table>
@@ -3098,6 +3110,10 @@
 			</complex_unique_key_list>
 			<table_properties>
 				<schema></schema>
+				<character_set></character_set>
+				<collation></collation>
+				<storage_engine></storage_engine>
+				<primary_key_length_of_text>null</primary_key_length_of_text>
 			</table_properties>
 		</table>
 		<table>
@@ -3318,7 +3334,7 @@
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type>text</type>
+					<type>varchar(n)</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>
@@ -3351,6 +3367,10 @@
 			</complex_unique_key_list>
 			<table_properties>
 				<schema></schema>
+				<character_set></character_set>
+				<collation></collation>
+				<storage_engine></storage_engine>
+				<primary_key_length_of_text>null</primary_key_length_of_text>
 			</table_properties>
 		</table>
 		<table>
@@ -3604,7 +3624,7 @@
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type>text</type>
+					<type>varchar(n)</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>
@@ -3835,6 +3855,10 @@
 			</complex_unique_key_list>
 			<table_properties>
 				<schema></schema>
+				<character_set></character_set>
+				<collation></collation>
+				<storage_engine></storage_engine>
+				<primary_key_length_of_text>null</primary_key_length_of_text>
 			</table_properties>
 		</table>
 		<table>
@@ -4021,7 +4045,7 @@
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type>text</type>
+					<type>varchar(n)</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>
@@ -4054,6 +4078,10 @@
 			</complex_unique_key_list>
 			<table_properties>
 				<schema></schema>
+				<character_set></character_set>
+				<collation></collation>
+				<storage_engine></storage_engine>
+				<primary_key_length_of_text>null</primary_key_length_of_text>
 			</table_properties>
 		</table>
 		<note>
@@ -4671,6 +4699,10 @@
 			</complex_unique_key_list>
 			<table_properties>
 				<schema></schema>
+				<character_set></character_set>
+				<collation></collation>
+				<storage_engine></storage_engine>
+				<primary_key_length_of_text>null</primary_key_length_of_text>
 			</table_properties>
 		</table>
 		<table>
@@ -4891,7 +4923,7 @@
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type>text</type>
+					<type>varchar(n)</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>
@@ -5056,6 +5088,10 @@
 			</complex_unique_key_list>
 			<table_properties>
 				<schema></schema>
+				<character_set></character_set>
+				<collation></collation>
+				<storage_engine></storage_engine>
+				<primary_key_length_of_text>null</primary_key_length_of_text>
 			</table_properties>
 		</table>
 		<table>
@@ -5309,7 +5345,7 @@
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type>text</type>
+					<type>varchar(n)</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>
@@ -5540,6 +5576,10 @@
 			</complex_unique_key_list>
 			<table_properties>
 				<schema></schema>
+				<character_set></character_set>
+				<collation></collation>
+				<storage_engine></storage_engine>
+				<primary_key_length_of_text>null</primary_key_length_of_text>
 			</table_properties>
 		</table>
 		<table>
@@ -6123,6 +6163,10 @@
 			</complex_unique_key_list>
 			<table_properties>
 				<schema></schema>
+				<character_set></character_set>
+				<collation></collation>
+				<storage_engine></storage_engine>
+				<primary_key_length_of_text>null</primary_key_length_of_text>
 			</table_properties>
 		</table>
 		<table>
@@ -6484,7 +6528,7 @@
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type>text</type>
+					<type>varchar(n)</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>
@@ -6517,6 +6561,10 @@
 			</complex_unique_key_list>
 			<table_properties>
 				<schema></schema>
+				<character_set></character_set>
+				<collation></collation>
+				<storage_engine></storage_engine>
+				<primary_key_length_of_text>null</primary_key_length_of_text>
 			</table_properties>
 		</table>
 		<table>
@@ -6845,6 +6893,10 @@
 			</complex_unique_key_list>
 			<table_properties>
 				<schema></schema>
+				<character_set></character_set>
+				<collation></collation>
+				<storage_engine></storage_engine>
+				<primary_key_length_of_text>null</primary_key_length_of_text>
 			</table_properties>
 		</table>
 		<table>
@@ -6975,6 +7027,10 @@
 			</complex_unique_key_list>
 			<table_properties>
 				<schema></schema>
+				<character_set></character_set>
+				<collation></collation>
+				<storage_engine></storage_engine>
+				<primary_key_length_of_text>null</primary_key_length_of_text>
 			</table_properties>
 		</table>
 		<table>
@@ -7237,6 +7293,10 @@
 			</complex_unique_key_list>
 			<table_properties>
 				<schema></schema>
+				<character_set></character_set>
+				<collation></collation>
+				<storage_engine></storage_engine>
+				<primary_key_length_of_text>null</primary_key_length_of_text>
 			</table_properties>
 		</table>
 		<table>
@@ -7295,7 +7355,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>52</word_id>
+					<word_id>48</word_id>
 					<id>142</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -7328,7 +7388,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>50</word_id>
+					<word_id>51</word_id>
 					<id>143</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -7361,7 +7421,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>49</word_id>
+					<word_id>50</word_id>
 					<id>144</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -7394,7 +7454,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>47</word_id>
+					<word_id>49</word_id>
 					<id>145</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -7427,7 +7487,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>48</word_id>
+					<word_id>47</word_id>
 					<id>146</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -7460,7 +7520,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>51</word_id>
+					<word_id>52</word_id>
 					<id>147</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -7763,6 +7823,10 @@
 			</complex_unique_key_list>
 			<table_properties>
 				<schema></schema>
+				<character_set></character_set>
+				<collation></collation>
+				<storage_engine></storage_engine>
+				<primary_key_length_of_text>null</primary_key_length_of_text>
 			</table_properties>
 		</table>
 	</contents>

@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.log;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 交易操作日志
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\JNL-mysql.erm
  * 业务域：log
  * 模型：LOG_TX_TRACE 交易操作日志
  *
@@ -42,10 +42,12 @@ public class LogTxTrace implements Serializable {
 	public static final String COLUMN_TELLER_NO = "teller_no" ; 
 	/** CHN_CODE ：渠道代码<br/><br/>记录接触系统对应的渠道代码； 来自渠道参数控制表： SYS_CHANNEL_CTL */
 	public static final String COLUMN_CHN_CODE = "chn_code" ; 
-	/** ACTION_TYPE ：操作行为类型<br/><br/>操作行为类型 见业务字典： DICT_ACTION_TYPE */
-	public static final String COLUMN_ACTION_TYPE = "action_type" ; 
-	/** ACTION_TIME ：操作时间<br/><br/> */
-	public static final String COLUMN_ACTION_TIME = "action_time" ; 
+	/** BHV_CODE ：行为代码<br/><br/>某个功能的行为代码，见表： AC_BHV_DEF */
+	public static final String COLUMN_BHV_CODE = "bhv_code" ; 
+	/** BHV_NAME ：行为名称<br/><br/> */
+	public static final String COLUMN_BHV_NAME = "bhv_name" ; 
+	/** HAPPEN_TIME ：发生时间<br/><br/> */
+	public static final String COLUMN_HAPPEN_TIME = "happen_time" ; 
 	/** TRANS_SNO ：交易流水号<br/><br/>交易流水号，唯一标识业务的唯一性 */
 	public static final String COLUMN_TRANS_SNO = "trans_sno" ; 
 	/** TRANS_CODE ：交易代码<br/><br/> */
@@ -68,11 +70,14 @@ public class LogTxTrace implements Serializable {
 	/** 字段类型：varchar<br/>字段名：渠道代码<br/>描述：记录接触系统对应的渠道代码； 来自渠道参数控制表： SYS_CHANNEL_CTL */
 	private String chnCode ;
 	
-	/** 字段类型：varchar<br/>字段名：操作行为类型<br/>描述：操作行为类型 见业务字典： DICT_ACTION_TYPE */
-	private String actionType ;
+	/** 字段类型：varchar<br/>字段名：行为代码<br/>描述：某个功能的行为代码，见表： AC_BHV_DEF */
+	private String bhvCode ;
 	
-	/** 字段类型：varchar<br/>字段名：操作时间<br/>描述： */
-	private String actionTime ;
+	/** 字段类型：varchar<br/>字段名：行为名称<br/>描述： */
+	private String bhvName ;
+	
+	/** 字段类型：varchar<br/>字段名：发生时间<br/>描述： */
+	private String happenTime ;
 	
 	/** 字段类型：varchar<br/>字段名：交易流水号<br/>描述：交易流水号，唯一标识业务的唯一性 */
 	private String transSno ;
@@ -83,9 +88,15 @@ public class LogTxTrace implements Serializable {
 	/** 字段类型：varchar<br/>字段名：工作站编码<br/>描述：柜员工作站编码 */
 	private String twsCode ;
 	
-	/** 字段类型：text<br/>字段名：备注信息<br/>描述：记录操作过程中的备注信息，比如存储操作前后某些字典的变化对照 */
+	/** 字段类型：varchar<br/>字段名：备注信息<br/>描述：记录操作过程中的备注信息，比如存储操作前后某些字典的变化对照 */
 	private String remarkInfo ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public LogTxTrace() {
+	}
+
 	
 	/**
 	 * Set the 数据主键.
@@ -164,41 +175,60 @@ public class LogTxTrace implements Serializable {
     }
 	
 	/**
-	 * Set the 操作行为类型.
+	 * Set the 行为代码.
 	 * 
-	 * @param actionType
-	 *            操作行为类型
+	 * @param bhvCode
+	 *            行为代码
 	 */
-	public void setActionType(String actionType) {
- 		this.actionType = actionType == null ? null : actionType.trim() ;
+	public void setBhvCode(String bhvCode) {
+ 		this.bhvCode = bhvCode == null ? null : bhvCode.trim() ;
     }
     
     /**
-	 * Get the 操作行为类型.
+	 * Get the 行为代码.
 	 * 
-	 * @return 操作行为类型
+	 * @return 行为代码
 	 */
-	public String getActionType(){
-		return this.actionType ;
+	public String getBhvCode(){
+		return this.bhvCode ;
     }
 	
 	/**
-	 * Set the 操作时间.
+	 * Set the 行为名称.
 	 * 
-	 * @param actionTime
-	 *            操作时间
+	 * @param bhvName
+	 *            行为名称
 	 */
-	public void setActionTime(String actionTime) {
- 		this.actionTime = actionTime == null ? null : actionTime.trim() ;
+	public void setBhvName(String bhvName) {
+ 		this.bhvName = bhvName == null ? null : bhvName.trim() ;
     }
     
     /**
-	 * Get the 操作时间.
+	 * Get the 行为名称.
 	 * 
-	 * @return 操作时间
+	 * @return 行为名称
 	 */
-	public String getActionTime(){
-		return this.actionTime ;
+	public String getBhvName(){
+		return this.bhvName ;
+    }
+	
+	/**
+	 * Set the 发生时间.
+	 * 
+	 * @param happenTime
+	 *            发生时间
+	 */
+	public void setHappenTime(String happenTime) {
+ 		this.happenTime = happenTime == null ? null : happenTime.trim() ;
+    }
+    
+    /**
+	 * Get the 发生时间.
+	 * 
+	 * @return 发生时间
+	 */
+	public String getHappenTime(){
+		return this.happenTime ;
     }
 	
 	/**

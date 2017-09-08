@@ -245,6 +245,31 @@ public class GUID {
 
 		return SequenceSimpleUtil.instance.GUID("RUNCONFIG");
 	}
+	/**
+	 * 取一个操作日志（LOG_ABF_OPERATE）的数据主键值
+	 *
+	 * @return
+	 */
+	public static String logOperate() {
+
+		return SequenceSimpleUtil.instance.GUID("OPERATELOG");
+	}
+	/**
+	 * 取一个操作对象（LOG_ABF_HISTORY）的数据主键值
+	 *
+	 * @return
+	 */
+	public static String logObject() {
+		return SequenceSimpleUtil.instance.GUID("OBJLOG");
+	}
+	/**
+	 * 取一个操作对象关键值（LOG_ABF_KEYWORD）的数据主键值
+	 *
+	 * @return
+	 */
+	public static String logKeyword() {
+		return SequenceSimpleUtil.instance.GUID("KEYLOG");
+	}
 
 	
 

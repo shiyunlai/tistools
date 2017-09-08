@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.log;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 客户接触日志
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\JNL-mysql.erm
  * 业务域：log
  * 模型：LOG_CUSTOMER_CONTACT 客户接触日志
  *
@@ -47,8 +47,8 @@ public class LogCustomerContact implements Serializable {
 	public static final String COLUMN_TELLER_NO = "teller_no" ; 
 	/** INSTNO ：网点代码<br/><br/>本次接触的网点代码 */
 	public static final String COLUMN_INSTNO = "instno" ; 
-	/** CONTACT_MODE ：接触方式<br/><br/>接触行为类型，见业务字典： DICT_CONTACT_MODE passive － 被动接触 active - 主动接触 */
-	public static final String COLUMN_CONTACT_MODE = "contact_mode" ; 
+	/** OBJ_VALUE ：对象值<br/><br/> */
+	public static final String COLUMN_OBJ_VALUE = "obj_value" ; 
 	/** CUST_NO ：客户编号<br/><br/>系统中的客户编号 */
 	public static final String COLUMN_CUST_NO = "cust_no" ; 
 	/** CUST_NAME ：客户名称<br/><br/> */
@@ -72,8 +72,8 @@ public class LogCustomerContact implements Serializable {
 	/** 字段类型：varchar<br/>字段名：网点代码<br/>描述：本次接触的网点代码 */
 	private String instno ;
 	
-	/** 字段类型：varchar<br/>字段名：接触方式<br/>描述：接触行为类型，见业务字典： DICT_CONTACT_MODE passive － 被动接触 active - 主动接触 */
-	private String contactMode ;
+	/** 字段类型：varchar<br/>字段名：对象值<br/>描述： */
+	private String objValue ;
 	
 	/** 字段类型：varchar<br/>字段名：客户编号<br/>描述：系统中的客户编号 */
 	private String custNo ;
@@ -83,7 +83,13 @@ public class LogCustomerContact implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：业务类型<br/>描述：对银行业务的类型划分 见业务字典： DICT_BIZ_TYPE */
 	private String bizType ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public LogCustomerContact() {
+	}
+
 	
 	/**
 	 * Set the 数据主键.
@@ -181,22 +187,22 @@ public class LogCustomerContact implements Serializable {
     }
 	
 	/**
-	 * Set the 接触方式.
+	 * Set the 对象值.
 	 * 
-	 * @param contactMode
-	 *            接触方式
+	 * @param objValue
+	 *            对象值
 	 */
-	public void setContactMode(String contactMode) {
- 		this.contactMode = contactMode == null ? null : contactMode.trim() ;
+	public void setObjValue(String objValue) {
+ 		this.objValue = objValue == null ? null : objValue.trim() ;
     }
     
     /**
-	 * Get the 接触方式.
+	 * Get the 对象值.
 	 * 
-	 * @return 接触方式
+	 * @return 对象值
 	 */
-	public String getContactMode(){
-		return this.contactMode ;
+	public String getObjValue(){
+		return this.objValue ;
     }
 	
 	/**

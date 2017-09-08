@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.jnl;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 交易输出凭证流水
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\JNL-mysql.erm
  * 业务域：jnl
  * 模型：JNL_TRANS_PRINTED 交易输出凭证流水
  *
@@ -71,7 +71,7 @@ public class JnlTransPrinted implements Serializable {
 	/** 字段类型：varchar<br/>字段名：凭证代码<br/>描述：凭证格式的代码 */
 	private String voucherCode ;
 	
-	/** 字段类型：text<br/>字段名：打印数据<br/>描述：存储生成的打印数据（已经是打印机执行编码） */
+	/** 字段类型：varchar<br/>字段名：打印数据<br/>描述：存储生成的打印数据（已经是打印机执行编码） */
 	private String printedData ;
 	
 	/** 字段类型：varchar<br/>字段名：凭证影像ID<br/>描述：存储交易凭证电子影像对应的记录ID，根据此ID，可查找对应的电子凭证影像记录。 如：影像套号 但不是每笔交易都有电子影像 */
@@ -85,7 +85,13 @@ public class JnlTransPrinted implements Serializable {
 	
 	/** 字段类型：int<br/>字段名：打印次数<br/>描述：凭证被打印的次数，每次打印都＋1 */
 	private Integer printedNum ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public JnlTransPrinted() {
+	}
+
 	
 	/**
 	 * Set the 数据主键.

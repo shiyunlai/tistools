@@ -1,6 +1,6 @@
 /**
  * auto generated
- * Copyright (C) 2016 bronsp.com, All rights reserved.
+ * Copyright (C) 2017 bronsp.com, All rights reserved.
  */
 package org.tis.tools.model.po.jnl;
 
@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 排队流水
- * 模型文件 ： /Users/megapro/Develop/tis/tools/tools-core/model/JNL-mysql.erm
+ * 模型文件 ： E:\tools\tistools\tools-core-basic\model\JNL-mysql.erm
  * 业务域：jnl
  * 模型：JNL_ENQUEUE 排队流水
  *
@@ -116,7 +116,13 @@ public class JnlEnqueue implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：叫号机构<br/>描述： */
 	private String callInstno ;
-	
+
+	/**
+	* Default Constructor
+	*/
+	public JnlEnqueue() {
+	}
+
 	
 	/**
 	 * Set the 数据主键.
