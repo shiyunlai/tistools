@@ -55,9 +55,9 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4"> 操作员状态: <span ng-class="{required:myform.oper_ators.$invalid}"  > * </span></label>
+                        <label class="control-label col-md-4">操作员状态:<span ng-class="{required:myform.oper_ators.$invalid}"  > * </span></label>
                         <div class="col-md-8" ng-init="$settings.getDictData('DICT_AC_OPERATOR_STATUS')">
-                            <select class="form-control"    ng-model="operatFrom.operatorStatus" required   name="oper_ators">
+                            <select class="form-control"   ng-disabled=true   ng-model="operatFrom.operatorStatus" required   name="oper_ators">
                                 <option ng-repeat="d in $settings.diclist['DICT_AC_OPERATOR_STATUS'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>

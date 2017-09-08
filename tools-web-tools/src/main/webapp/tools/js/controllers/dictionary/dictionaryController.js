@@ -859,7 +859,10 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
         }
     }
 
-});
+
+
+
+})
 
 
 angular.module('MetronicApp').controller('dictitwos_controller', function($rootScope, $scope,common_service, $http,$modal,filterFilter,FileUploader){

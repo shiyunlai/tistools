@@ -45,7 +45,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                 }
             },
         ];
-
         var f = function(row){
             if(row.isSelected){
                 $scope.selectRow = row.entity;
@@ -123,6 +122,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                         var type = datas.type;
                         var its = [];
                         if(type=='root'){
+                            //root加载
                             for(var i = 0 ;i <dataes.length;i++){
                                 dataes[i].text = dataes[i].rootName;
                                 dataes[i].children = true;
@@ -141,6 +141,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                                 its.push(dataes[i])
                             }
                         }else if(type =="group"){
+                            console.log(dataes)
                             if(!isNull(dataes.groupList)){
                                 for(var i = 0 ;i <dataes.groupList.length;i++){
                                     dataes.groupList[i].text = dataes.groupList[i].funcgroupName;
@@ -149,6 +150,16 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                                     dataes.groupList[i].icon = "fa  fa-files-o icon-state-info icon-lg"
                                     its.push(dataes.groupList[i])
                                 }
+                                if(!isNull(dataes.funcList)){
+                                    for(var i = 0 ;i <dataes.funcList.length;i++){
+                                        dataes.funcList[i].text = dataes.funcList[i].funcName;
+                                        dataes.funcList[i].children = true;
+                                        dataes.funcList[i].id = dataes.funcList[i].guid;
+                                        dataes.funcList[i].icon = "fa  fa-files-o icon-state-info icon-lg"
+                                        its.push(dataes.funcList[i])
+                                    }
+                                }
+
                             }else{
                                 for(var i = 0 ;i <dataes.funcList.length;i++){
                                     dataes.funcList[i].text = dataes.funcList[i].funcName;
@@ -156,6 +167,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                                     dataes.funcList[i].id = dataes.funcList[i].guid;
                                     dataes.funcList[i].icon = "fa fa-wrench icon-state-info icon-lg"
                                     its.push(dataes.funcList[i])
+                                    console.log(its);
                                 }
                             }
                         }
