@@ -2,11 +2,16 @@ package org.tis.tools.model.vo.log;
 
 import org.tis.tools.model.po.log.LogAbfOperate;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class LogOperateDetail {
+public class LogOperateDetail implements Serializable {
+
+    /** serialVersionUID */
+    private static final long serialVersionUID = 1L;
+
 
     private LogAbfOperate log = new LogAbfOperate();
 

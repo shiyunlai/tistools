@@ -3,10 +3,15 @@ package org.tis.tools.model.vo.log;
 import org.tis.tools.model.po.log.LogAbfHistory;
 import org.tis.tools.model.po.log.LogAbfKeyword;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LogHistoryDetail {
+public class LogHistoryDetail implements Serializable {
+
+    /** serialVersionUID */
+    private static final long serialVersionUID = 1L;
+
     private LogAbfHistory obj = new LogAbfHistory();
 
     private List<LogAbfKeyword> keywords = new ArrayList<>();
