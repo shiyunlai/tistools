@@ -4,11 +4,9 @@
 package org.tis.tools.rservice.ac.capable;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import com.alibaba.dubbo.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
@@ -20,34 +18,16 @@ import org.tis.tools.common.utils.StringUtil;
 import org.tis.tools.core.exception.ExceptionCodes;
 import org.tis.tools.model.def.CommonConstants;
 import org.tis.tools.model.def.GUID;
-import org.tis.tools.model.po.ac.AcApp;
-import org.tis.tools.model.po.ac.AcBhvDef;
-import org.tis.tools.model.po.ac.AcBhvtypeDef;
-import org.tis.tools.model.po.ac.AcFunc;
-import org.tis.tools.model.po.ac.AcFuncBehavior;
-import org.tis.tools.model.po.ac.AcFuncBhv;
-import org.tis.tools.model.po.ac.AcFuncBhvtype;
-import org.tis.tools.model.po.ac.AcFuncResource;
-import org.tis.tools.model.po.ac.AcFuncgroup;
-import org.tis.tools.model.po.ac.AcMenu;
-import org.tis.tools.model.po.ac.AcOperator;
+import org.tis.tools.model.po.ac.*;
+import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.vo.ac.AcAppVo;
 import org.tis.tools.model.vo.ac.AcFuncVo;
+import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.ac.exception.AppManagementException;
-import org.tis.tools.service.ac.AcAppService;
-import org.tis.tools.service.ac.AcBhvDefService;
-import org.tis.tools.service.ac.AcBhvtypeDefService;
-import org.tis.tools.service.ac.AcFuncBehaviorService;
-import org.tis.tools.service.ac.AcFuncBhvService;
-import org.tis.tools.service.ac.AcFuncBhvtypeService;
-import org.tis.tools.service.ac.AcFuncResourceService;
-import org.tis.tools.service.ac.AcFuncService;
-import org.tis.tools.service.ac.AcFuncgroupService;
-import org.tis.tools.service.ac.AcMenuService;
-import org.tis.tools.service.ac.AcOperatorService;
-import org.tis.tools.service.ac.ApplicationService;
+import org.tis.tools.service.ac.*;
 import org.tis.tools.service.ac.exception.ACExceptionCodes;
+import org.tis.tools.service.om.OmEmployeeService;
 
 /**
  * <pre>
@@ -85,6 +65,16 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	AcFuncBhvtypeService acFuncBhvtypeService;
 	@Autowired
 	AcFuncBhvService acFuncBhvService;
+	@Autowired
+	OmEmployeeService omEmployeeService;
+	@Autowired
+	AcFuncServiceExt acFuncServiceExt;
+	@Autowired
+	IRoleRService roleRService;
+	@Autowired
+	AcRoleFuncService acRoleFuncService;
+	@Autowired
+	AcOperatorFuncService acOperatorFuncService;
 
 
 	
@@ -202,14 +192,14 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 * 根据条件查询应用系统(AC_APP)
 	 * 
 	 * @param
-	 * @return 满足条件的记录list
+	 * @return 满足条件的记录licd
 	 */
 	@Override
-	public List<AcAppVo> queryAcRootList() throws AppManagementException {
-		List<AcAppVo> acAppList = new ArrayList<AcAppVo>();
+	public List<AcApp> queryAcRootList() throws AppManagementException {
+		List<AcApp> acAppList = new ArrayList<AcApp>();
 		try {
 			WhereCondition wc = new WhereCondition();
-			acAppList = applicationService.queryAcAppVo(wc);
+			acAppList = acAppService.query(wc);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
@@ -1585,4 +1575,35 @@ public class ApplicationRServiceImpl extends BaseRService implements
 					BasicUtil.wrap(e.getCause().getMessage()));
 		}
 	}
+
+	/**
+	 * 查询操作员已拥有的应用集合
+	 *
+	 * @param userId 用户ID
+	 * @return
+	 * @throws AppManagementException
+	 */
+	@Override
+	public List<AcApp> queryOperatorAllApp(String userId) throws AppManagementException {
+		try {
+			// 校验传入参数
+			if(StringUtil.isEmpty(userId)) {
+				throw new AppManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap("USER_ID", "AC_APP"));
+			}
+			/** 查询用户对应员工*/
+			List<OmEmployee> employees = omEmployeeService.query(new WhereCondition().andEquals(OmEmployee.COLUMN_USER_ID, userId));
+			if (employees.size() != 1) {
+				throw new AppManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap(userId, "AC_EMPLOYEE"));
+			}
+			return applicationService.queryEmpAllApp(employees.get(0).getGuid());
+		} catch (AppManagementException ae) {
+			throw ae;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ExceptionCodes.FAILURE_WHEN_QUERY,
+					BasicUtil.wrap("AC_APP", e.getCause().getMessage()));
+		}
+	}
+
 }

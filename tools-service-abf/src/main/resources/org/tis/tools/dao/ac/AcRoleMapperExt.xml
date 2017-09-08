@@ -44,6 +44,38 @@
         where a.GUID_ROLE = #{roleGuid}
     </select>
 
+
+
+    <select id="queryEmployeeAllPartyRoleList" resultType="org.tis.tools.model.po.ac.AcRole"  >
+        SELECT
+        <include refid="queryEmployeeAllPartyRole_Column" />
+        FROM
+          AC_ROLE d
+        WHERE
+          d.GUID_APP  IN (
+            SELECT
+              a2.GUID_APP AS GUID_APP
+            FROM
+              OM_EMP_GROUP a,
+              OM_GROUP_APP a2
+            WHERE
+              a.GUID_GROUP = a2.GUID_GROUP
+            AND
+              GUID_EMP = #{empGuid}
+          UNION
+            SELECT
+              b2.GUID_APP AS GUID_APP
+            FROM
+              OM_EMP_POSITION b ,
+              OM_POSITION_APP b2
+            WHERE
+              b.GUID_POSITION = b2.GUID_POSITION
+            and
+              b.GUID_EMP = #{empGuid}
+        )
+    </select>
+
+
     <sql id="Where_Clause">
         <if test="condition != null"><where>${condition}</where></if>
     </sql>
@@ -57,6 +89,7 @@
 		,a.role_desc as roleDesc
 		,b.app_name as appName
     </sql>
+
 
     <sql id="RolePartyExt_Column_List" >
         a.party_type as partyType
@@ -73,6 +106,15 @@
         ,b.user_id as userId
         ,b.operator_status as operatorStatus
         ,b.auth_mode as authMode
+    </sql>
+
+    <sql id="queryEmployeeAllPartyRole_Column" >
+        d.guid as guid
+        ,d.guid_app as guidApp
+        ,d.role_code as roleCode
+        ,d.role_name as roleName
+        ,d.role_type as roleType
+        ,d.role_desc as roleDesc
     </sql>
 
 </mapper>
