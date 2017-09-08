@@ -5,7 +5,7 @@
        xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
-                http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+                http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- Scans the classpath of this application for @Components to deploy as beans -->
     <context:component-scan base-package="org.tis.tools.webapp"/>
@@ -29,7 +29,11 @@
 
     <!-- Configures the @Controller programming model -->
 
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter"/>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
     <mvc:view-controller path="/index" view-name="index"/>
     <aop:aspectj-autoproxy expose-proxy="true"/>
 

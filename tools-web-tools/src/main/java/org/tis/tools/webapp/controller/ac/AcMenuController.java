@@ -2,7 +2,6 @@ package org.tis.tools.webapp.controller.ac;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,18 +13,18 @@ import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcFunc;
-import org.tis.tools.model.po.ac.AcFuncgroup;
 import org.tis.tools.model.po.ac.AcMenu;
 import org.tis.tools.model.po.ac.AcOperatorMenu;
 import org.tis.tools.model.vo.ac.AcMenuDetail;
 import org.tis.tools.rservice.ac.capable.IApplicationRService;
 import org.tis.tools.rservice.ac.capable.IMenuRService;
 import org.tis.tools.webapp.controller.BaseController;
+import org.tis.tools.webapp.log.OperateLog;
+import org.tis.tools.webapp.log.ReturnType;
 import org.tis.tools.webapp.util.AjaxUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.HashMap;
@@ -43,7 +42,8 @@ public class AcMenuController extends BaseController {
     IMenuRService menuRService;   
     @Autowired
 	IApplicationRService applicationRService;
-    private Map<String, Object> responseMsg ;
+
+    private Map<String, Object> responseMsg = getResponseMessage() ;
 
 
     /**
@@ -222,130 +222,82 @@ public class AcMenuController extends BaseController {
     /**
      * 新增根菜单
      * @param content
-     * @param request
-     * @param response
      * @return
-     * @throws ToolsRuntimeException
-     * @throws ParseException
      */
+    @OperateLog(
+            operateType = "add",  // 操作类型
+            operateDesc = "新增根菜单", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "guid", // 操作对象标识
+            name = "menuName", // 操作对象名
+            keys = {"guidApp", "menuCode", "menuLabel"}) // 操作对象的关键值的键值名
     @ResponseBody
-    @RequestMapping(value="/createRootMenu" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String createRootMenu(@RequestBody String content, HttpServletRequest request,
-                             HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("createRootMenu request : " + content);
-            }
-            JSONObject jsonObject= JSONObject.parseObject(content);
-            AcMenu acMenu = new AcMenu();
-            BeanUtils.populate(acMenu, jsonObject);
-//            String guidApp = jsonObject.getString("guidMenu");//所属应用GUID
-            menuRService.createRootMenu(acMenu);
-            AjaxUtils.ajaxJsonSuccessMessage(response,"");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("queryChildMenu exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("queryChildMenu exception : ", e);
-        }
-        return null;
+    @RequestMapping(value="/createRootMenu" ,produces ="application/json;charset=UTF-8", method= RequestMethod.POST)
+    public Map<String, Object> createRootMenu(@RequestBody String content){
+        AcMenu acMenu = JSONObject.parseObject(content, AcMenu.class);
+        AcMenu menu = menuRService.createRootMenu(acMenu);
+        return getReturnMap(menu);
     }
 
     /**
-     * 新增子菜单
+     * 添加子菜单
      * @param content
-     * @param request
-     * @param response
      * @return
-     * @throws ToolsRuntimeException
-     * @throws ParseException
      */
+    @OperateLog(
+            operateType = "add",
+            operateDesc = "添加子菜单",
+            retType = ReturnType.Object,
+            id = "guid",
+            name = "menuName",
+            keys = {"guidApp", "menuCode", "menuLabel"})
     @ResponseBody
-    @RequestMapping(value="/createChildMenu" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String createChildMenu(@RequestBody String content, HttpServletRequest request,
-                             HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("createChildMenu request : " + content);
-            }
-            JSONObject jsonObject= JSONObject.parseObject(content);
-            AcMenu acMenu = new AcMenu();
-            BeanUtils.populate(acMenu, jsonObject);
-//            String guidApp = jsonObject.getString("guidMenu");//所属应用GUID
-            menuRService.createChildMenu(acMenu);
-            AjaxUtils.ajaxJsonSuccessMessage(response,"");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("createChildMenu exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("createChildMenu exception : ", e);
-        }
-        return null;
+    @RequestMapping(value="/createChildMenu" ,produces ="application/json;charset=UTF-8", method= RequestMethod.POST)
+    public Map<String, Object> createChildMenu(@RequestBody String content){
+
+        AcMenu acMenu = menuRService.createChildMenu(JSONObject.parseObject(content, AcMenu.class));
+        return getReturnMap(acMenu);
     }
-    
-    
+
+
     /**
-     * 修改子菜单
+     * 修改菜单
      * @param content
-     * @param request
-     * @param response
      * @return
-     * @throws ToolsRuntimeException
-     * @throws ParseException
      */
+    @OperateLog(
+            operateType = "update",
+            operateDesc = "修改菜单",
+            retType = ReturnType.Object,
+            id = "guid",
+            name = "menuName",
+            keys = {"guidApp", "menuCode", "menuLabel"})
     @ResponseBody
-    @RequestMapping(value="/editMenu" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String editMenu(@RequestBody String content, HttpServletRequest request,
-                             HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("editMenu request : " + content);
-            }
-            JSONObject jsonObject= JSONObject.parseObject(content);
-            AcMenu acMenu = new AcMenu();
-            BeanUtils.populate(acMenu, jsonObject);
-            menuRService.editMenu(acMenu);
-            AjaxUtils.ajaxJsonSuccessMessage(response,"");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("editMenu exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("editMenu exception : ", e);
-        }
-        return null;
+    @RequestMapping(value="/editMenu",produces ="application/json;charset=UTF-8", method= RequestMethod.POST)
+    public Map<String, Object> editMenu(@RequestBody String content) {
+        AcMenu acMenu = menuRService.editMenu(JSONObject.parseObject(content, AcMenu.class));
+        return getReturnMap(acMenu);
+
     }
     /**
      * 删除子菜单
      * @param content
-     * @param request
-     * @param response
      * @return
-     * @throws ToolsRuntimeException
-     * @throws ParseException
      */
+    @OperateLog(
+            operateType = "delete",
+            operateDesc = "删除菜单",
+            retType = ReturnType.Object,
+            id = "guid",
+            name = "menuName",
+            keys = {"guidApp", "menuCode", "menuLabel"})
     @ResponseBody
-    @RequestMapping(value="/deleteMenu" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String deleteMenu(@RequestBody String content, HttpServletRequest request,
-                             HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("deleteMenu request : " + content);
-            }
-            JSONObject jsonObject= JSONObject.parseObject(content);
-            String menuGuid = jsonObject.getString("menuGuid");//菜单GUID
-            menuRService.deleteMenu(menuGuid);
-            AjaxUtils.ajaxJsonSuccessMessage(response,"");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("deleteMenu exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("deleteMenu exception : ", e);
-        }
-        return null;
+    @RequestMapping(value="/deleteMenu", produces ="application/json;charset=UTF-8", method= RequestMethod.POST)
+    public Map<String, Object> deleteMenu(@RequestBody String content) {
+        JSONObject jsonObject= JSONObject.parseObject(content);
+        String menuGuid = jsonObject.getString("menuGuid");//菜单GUID
+        AcMenu acMenu = menuRService.deleteMenu(menuGuid);
+        return getReturnMap(acMenu);
     }
     
     

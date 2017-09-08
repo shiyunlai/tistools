@@ -215,10 +215,9 @@ abstract public class BaseController {
     protected Map<String, Object> getReturnMap(Object data) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put(STATUS, SUCCESS);
-        map.put(RETMESSAGE, JSON.toJSONString(data));
+        map.put(RETMESSAGE, data);
         return map;
     }
 
-//    protected Map<String, Object>
 
 }

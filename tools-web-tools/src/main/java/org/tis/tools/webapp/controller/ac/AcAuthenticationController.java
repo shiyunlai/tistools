@@ -12,17 +12,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.base.exception.ToolsRuntimeException;
-import org.tis.tools.model.po.ac.AcFuncgroup;
+import org.tis.tools.model.po.ac.AcOperator;
 import org.tis.tools.model.po.ac.AcOperatorIdentity;
 import org.tis.tools.rservice.ac.capable.IAuthenticationRService;
 import org.tis.tools.webapp.controller.BaseController;
+import org.tis.tools.webapp.log.LogThreadLocal;
+import org.tis.tools.webapp.log.OperateLog;
+import org.tis.tools.webapp.log.ReturnType;
 import org.tis.tools.webapp.util.AjaxUtils;
-
-import org.tis.tools.model.po.ac.AcOperator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.text.ParseException;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,56 +40,43 @@ public class AcAuthenticationController extends BaseController {
     IAuthenticationRService authenticationRService;
 
     @ResponseBody
-    @RequestMapping(value="/checkUserStatus" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public void checkUserStatus(@RequestBody String content, HttpServletRequest request,
-                                     HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("checkUserStatus request : " + content);
-            }
-            JSONObject jsonObject= JSONObject.parseObject(content);
-            String userId = jsonObject.getString("userId");
-
-            List<AcOperatorIdentity> acOperatorIdentityList = authenticationRService.userStatusCheck(userId);
-            AjaxUtils.ajaxJsonSuccessMessage(response,acOperatorIdentityList);
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("checkUserStatus exception : ", e);
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("checkUserStatus exception : ", e);
-        }
+    @RequestMapping(value="/checkUserStatus", produces ="application/json; charset=UTF-8", method= RequestMethod.POST)
+    public Map<String, Object> checkUserStatus(@RequestBody String content)  {
+        JSONObject jsonObject= JSONObject.parseObject(content);
+        String userId = jsonObject.getString("userId");
+        List<AcOperatorIdentity> acOperatorIdentityList = authenticationRService.userStatusCheck(userId);
+        return getReturnMap(acOperatorIdentityList);
     }
 
-    
-   
-    
     /**
      * 登录
      */
+    @OperateLog(
+            operateType = "login",
+            operateDesc = "登录ABF",
+            retType = ReturnType.Map,
+            id = "user.operatorGuid",
+            name = "user.operatorName"
+    )
     @ResponseBody
-    @RequestMapping(value="/login" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public void login(@RequestBody String content, HttpServletRequest request,
-                                HttpServletResponse response) {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("login request : " + content);
-            }
-            JSONObject jsonObject= JSONObject.parseObject(content);
-            String userId = jsonObject.getString("userId");
-            String password = jsonObject.getString("password");
-            String identityGuid = jsonObject.getString("identityGuid");
-            String appGuid = jsonObject.getString("appGuid");
-            AcOperator acOperator = authenticationRService.loginCheck(userId, password, identityGuid, appGuid);
-            Map<String, Object> loginInfo = authenticationRService.getInitInfoByUserIdAndIden(userId, identityGuid, appGuid);
-            AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response,loginInfo,"YYYY-MM-dd HH:mm:ss");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("login exception : ", e);
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("login exception : ", e);
-        }
+    @RequestMapping(value="/login", produces ="application/json;charset=UTF-8", method= RequestMethod.POST)
+    public Map<String, Object> login(@RequestBody String content, HttpServletRequest request,
+                      HttpServletResponse response, HttpSession httpSession) {
+        JSONObject jsonObject= JSONObject.parseObject(content);
+        String userId = jsonObject.getString("userId");
+        String password = jsonObject.getString("password");
+        String identityGuid = jsonObject.getString("identityGuid");
+        String appGuid = jsonObject.getString("appGuid");
+        AcOperator acOperator = authenticationRService.loginCheck(userId, password, identityGuid, appGuid);
+        Map<String, Object> loginInfo = authenticationRService.getInitInfoByUserIdAndIden(userId, identityGuid, appGuid);
+
+        httpSession.setAttribute("userId", userId);
+        httpSession.setAttribute("operatorName", acOperator.getOperatorName());
+
+
+        LogThreadLocal.getLogBuilderLocal().getLog().setUserId(userId).setOperatorName(acOperator.getOperatorName());
+
+        return getReturnMap(loginInfo);
     }
 
 
