@@ -6,11 +6,11 @@
                     <i class="icon-close"></i>
                 </a>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search..." ng-model="searchParam" ng-change="search(searchParam)">
+                    <input type="text" class="form-control" placeholder="Search..." ng-model="searchParam" ng-click="search(searchParam)">
                     <span class="input-group-btn">
-                        <a href="javascript:;" class="btn submit">
+                        <button href="javascript:;" class="btn submit">
                             <i class="icon-magnifier"></i>
-                        </a>
+                        </button>
                     </span>
                 </div>
             </form>
@@ -25,6 +25,7 @@
             <a href="javascript:;">
                 <i class="fa fa-cubes"></i>
                 <span class="title">应用管理</span>
+                <span class="arrow "></span>
             </a>
             <ul class="sub-menu">
                 <li class="start nav-item">
@@ -37,26 +38,6 @@
                         <li>
                             <a href="#/abftree.html">
                                 <i class="icon-puzzle"></i>组织机构</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#/Emp.html">
-                                <i class="icon-puzzle"></i>员工管理</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#/busiorg.html">
-                                <i class="icon-puzzle"></i>业务机构</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#/Workgroup.html">
-                                <i class="icon-puzzle"></i>工作组</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#/duty.html">
-                                <i class="icon-puzzle"></i>职务定义</span>
                             </a>
                         </li>
                     </ul>
@@ -164,9 +145,8 @@
                     </ul>
                 </li>
             </ul>
-        </li>
--->
-        <li class="nav-item" ng-repeat="d in menusAndTrans track by $index"    ng-if=" !d.guid || (d.children && d.children.length > 0)">
+        </li>-->
+        <!--<li class="nav-item" ng-repeat="d in menusAndTrans track by $index"    ng-if=" !d.guid || (d.children && d.children.length > 0)">
             <a href="#/{{d.href}}" ng-if="!d.guid">
                 <i ng-class="{true : '{{d.icon}}',false:'icon-settings' }[d.icon!=null && d.icon !='']"></i><span ng-bind-html="d.label | highlightTrust2Html : searchParam: '#F0F0F0'"></span>
             </a>
@@ -192,7 +172,7 @@
                     </ul>
                 </li>
             </ul>
-        </li>
-
+        </li>-->
+        <li class="nav-item ids1"  test-repeats  comtasssble=menusAndTrans  ng-model="menusAndTrans"></li>
     </ul>
 </div>

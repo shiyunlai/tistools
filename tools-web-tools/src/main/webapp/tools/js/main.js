@@ -133,6 +133,8 @@ MetronicApp.factory('httpInterceptor', ['$log', function($log) {
                         //console.log('成功的请求')
                     }else if(response.data.status =="error"){
                         //console.log('失败的请求,进行处理 ')
+                    }else if(response.data.status =="fail"){
+                        window.location = "../tools/index.html";//如果正确，则进入主页
                     }
                 }
             }
@@ -355,7 +357,6 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
        if(sessionStorage.length == 0 ){
             window.location = "../tools/login.html";//如果正确，则进入主页
         }
-
         /*var item = sessionjson.children;
          $scope.menusAndTrans = angular.copy(item);//拿到登录页那边传来的目录*/
 /*        //根据order进行排序
@@ -388,7 +389,7 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
     $scope.menusAndTrans = angular.copy(srw);//拿到登录页那边传来的目录
     $scope.search = function(searchParam){
         if(_.isEmpty(searchParam)){ //如果是数组
-            $scope.menusAndTrans = angular.copy(srw);//复制数据
+           /* $scope.menusAndTrans = angular.copy(srw);//复制数据*/
             $timeout(function(){
                 $('.sub-menu').slideUp();//显示
             })
@@ -400,8 +401,16 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
         }
     };
 
+
     function search(all,key){ //包装了一个搜索方法，只要数据结构做成类似的，这个直接拿来用。
-        var hitLevel1 = [];//定义空数组
+        //思路:循环，找到对应的，拼接返回，同时把父结构同样拼接
+
+
+
+
+
+
+       /* var hitLevel1 = [];//定义空数组
         _.each(all,function(item1){//循环
             var hitLevel2 = [];//定义空数组
             _.each(item1.children,function(item2){//循环
@@ -421,7 +430,7 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
                 hitLevel1.push(item1);
             }
         });
-        return hitLevel1;
+        return hitLevel1;*/
     }
 }]);
 
