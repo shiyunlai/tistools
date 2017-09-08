@@ -19,4 +19,5 @@
 	
 	
 	<import resource="dubbo-reference-abf.xml"/>
+	<import resource="dubbo-reference-jnl.xml"/>
 </beans>

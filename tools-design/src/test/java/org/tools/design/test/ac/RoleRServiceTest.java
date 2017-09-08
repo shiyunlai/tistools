@@ -1,5 +1,6 @@
 package org.tools.design.test.ac;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tis.tools.base.exception.ToolsRuntimeException;
@@ -39,6 +40,59 @@ public class RoleRServiceTest extends SpringJunitSupport {
             String userId = "admin";
             List<AcRole> acRoleList = roleRService.queryAllRoleByUserId(userId);
             System.out.println(acRoleList);
+        } catch (ToolsRuntimeException e) {
+            System.out.println("错误码："+e.getCode());
+            System.out.println("错误信息："+e.getMessage());
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 测试通过应用GUID查询关联的角色列表
+     *
+     * @throws ToolsRuntimeException
+     */
+    @Test
+    public void queryRoleListInAppTest() throws ToolsRuntimeException {
+
+        try {
+            String appGuid = "APP1499956132";
+            List<AcRole> acRoleList = roleRService.queryRoleListInApp(appGuid);
+            Assert.assertNotNull(acRoleList);
+        } catch (ToolsRuntimeException e) {
+            System.out.println("错误码："+e.getCode());
+            System.out.println("错误信息："+e.getMessage());
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
+    }
+
+
+    @Test
+    public void queryOperatorInheritRoleListTest() throws ToolsRuntimeException {
+
+        try {
+            String userId = "test123";
+            List<AcRole> acRoleList = roleRService.queryOperatorInheritRoleList(userId);
+            Assert.assertNotNull(acRoleList);
+        } catch (ToolsRuntimeException e) {
+            System.out.println("错误码："+e.getCode());
+            System.out.println("错误信息："+e.getMessage());
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
+    }
+
+
+    @Test
+    public void queryOperatorAuthorizedRoleListTest() throws ToolsRuntimeException {
+
+        try {
+            String userId = "test123";
+            List<AcRole> acRoleList = roleRService.queryOperatorAuthorizedRoleList(userId);
+            Assert.assertNotNull(acRoleList);
         } catch (ToolsRuntimeException e) {
             System.out.println("错误码："+e.getCode());
             System.out.println("错误信息："+e.getMessage());
