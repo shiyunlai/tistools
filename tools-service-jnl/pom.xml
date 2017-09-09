@@ -212,6 +212,12 @@
 			<artifactId>hessian</artifactId>
 		</dependency>
 
+		<!-- fastjson -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+		</dependency>
+
 		<!-- kryo -->
 		<dependency>
 			<groupId>com.esotericsoftware.kryo</groupId>

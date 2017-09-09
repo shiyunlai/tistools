@@ -17,6 +17,16 @@ public class LogOperateDetail implements Serializable {
 
     private List<LogHistoryDetail> logAbfHistorie = new ArrayList<>();
 
+    public void setLogAbfHistorie(List<LogHistoryDetail> logAbfHistorie) {
+        this.logAbfHistorie = logAbfHistorie;
+    }
+
+    public void setLog(LogAbfOperate log) {
+        this.log = log;
+    }
+
+    public LogOperateDetail(){}
+
     public LogHistoryDetail addObj() {
         LogHistoryDetail obj = new LogHistoryDetail();
         this.logAbfHistorie.add(obj);

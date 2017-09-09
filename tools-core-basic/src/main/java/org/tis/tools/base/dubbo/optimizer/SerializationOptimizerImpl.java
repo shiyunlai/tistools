@@ -12,6 +12,7 @@ import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.ac.AcOperator;
 import com.alibaba.dubbo.common.serialize.support.SerializationOptimizer;
+import org.tis.tools.model.vo.log.LogOperateDetail;
 
 /**
  * <pre>
@@ -42,6 +43,7 @@ public class SerializationOptimizerImpl implements SerializationOptimizer {
 		classes.add(AcRole.class);
 		classes.add(WhereCondition.class);
 		classes.add(ToolsRuntimeException.class);
+		classes.add(LogOperateDetail.class);
 		return classes;
 	}
 
