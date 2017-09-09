@@ -1,12 +1,16 @@
 package org.tools.design.test.log;
 
+import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.tis.tools.model.po.log.LogAbfOperate;
+import org.tis.tools.model.vo.log.LogOperateDetail;
 import org.tis.tools.model.vo.log.OperateLogBuilder;
 import org.tis.tools.rservice.log.capable.IOperateLogRService;
 import org.tools.design.SpringJunitSupport;
 
 import java.util.Date;
+import java.util.List;
 
 public class OperateLogRServiceTest extends SpringJunitSupport {
 
@@ -49,5 +53,26 @@ public class OperateLogRServiceTest extends SpringJunitSupport {
         operateLogRService.createOperatorLog(logBuilder.getLog());
         System.out.println(logBuilder.getLog());
 
+    }
+
+    @Test
+    public void queryOperateLogListTest() {
+        List<LogAbfOperate> logAbfOperates = operateLogRService.queryOperateLogList();
+        String ret = JSON.toJSONString(logAbfOperates);
+        System.out.println(ret);
+    }
+    @Test
+    public void queryOperateDetailTest() {
+        String logGuid = "OPERATELOG1504889228";
+        LogOperateDetail detail = operateLogRService.queryOperateDetail(logGuid);
+        String ret = JSON.toJSONString(detail);
+        System.out.println(ret);
+    }
+    @Test
+    public void queryOperateHistoryListTest() {
+        String objGuid = "MENU1504880405";
+        List<LogOperateDetail> logOperateDetails = operateLogRService.queryOperateHistoryList(objGuid);
+        String ret = JSON.toJSONString(logOperateDetails);
+        System.out.println(ret);
     }
 }

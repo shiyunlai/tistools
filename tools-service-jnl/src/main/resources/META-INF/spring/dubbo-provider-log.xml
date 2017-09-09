@@ -43,9 +43,9 @@
     <bean id="logTxTraceRServiceImpl" class="org.tis.tools.rservice.log.basic.LogTxTraceRServiceImpl" />-->
 
 	<dubbo:service
-			interface="org.tis.tools.rservice.log.capable.IOperateLogRService" group="log" version="0.4"
+			interface="org.tis.tools.rservice.log.capable.IOperateLogRService" group="log" version="${IOperateLogRService.version}"
 			ref="operateLogRService"
-			protocol="dubbo" timeout="3000" />
+			protocol="dubbo" timeout="30000000" />
 
 	<bean id="operateLogRService" class="org.tis.tools.rservice.log.capable.OperateLogRServiceImpl" />
 

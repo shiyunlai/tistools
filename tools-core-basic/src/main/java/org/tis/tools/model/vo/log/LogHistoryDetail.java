@@ -24,6 +24,11 @@ public class LogHistoryDetail implements Serializable {
         return this;
     }
 
+    public void setObj(LogAbfHistory obj) {
+        this.obj = obj;
+    }
+
+
     public LogAbfHistory getInstance() {
         return obj;
     }

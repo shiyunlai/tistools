@@ -38,9 +38,10 @@ public class AbfExceptionHandler {
         map.put(RETCODE, ex.getCode());
         map.put(STATUS, ERROR);
         map.put(RETMESSAGE, ex.getMessage());
-        logger.error(request.getPathInfo() + "请求错误-ToolsRuntimeException : {}", ex);
+        logger.error(request.getPathInfo() + "请求错误-ToolsRuntimeException :", ex);
         return map;
     }
+
 
     @ResponseBody
     @ExceptionHandler(Exception.class)
