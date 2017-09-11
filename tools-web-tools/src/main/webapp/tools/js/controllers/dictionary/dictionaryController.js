@@ -147,11 +147,13 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                     $scope.id = idds;//编辑id
                     $scope.dictFrom = datasRow;//渲染数据
                     var tsxtcom = datasRow.guidParents;//业务字典
-                    var tsxttable = datasRow.fromTable;//来自于表回选
-                    $timeout(function () {
-                        $(".test123").select2("val",tsxtcom);//渲染表格数据
-                        $(".dictfrom").select2("val",tsxttable);//渲染表格数据
-                    },50);
+                    if(!isNull(tsxtcom)){
+                        var tsxttable = datasRow.fromTable;//来自于表回选
+                        $timeout(function () {
+                            $(".test123").select2("val",tsxtcom);//渲染表格数据
+                            $(".dictfrom").select2("val",tsxttable);//渲染表格数据
+                        },50);
+                    }
                     if(datasRow.fromType=='0'){
                         $scope.one = true;
                         $scope.two = false;
@@ -229,6 +231,7 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                 common_service.post(res.queryDict,subFrom).then(function(data){
                     if(data.status == "success"){
                         var dates = data.retMessage;
+                        console.log(dates);
                         var idds = id;
                         $scope.id = idds;//编辑id
                         $scope.dictFrom = dates;//根据获得的内容渲染数据

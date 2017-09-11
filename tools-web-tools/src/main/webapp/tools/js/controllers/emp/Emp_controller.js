@@ -306,7 +306,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                     $scope.title = "修改员工信息";
                     //增加方法
                     $scope.add = function (subFrom) {
-                        console.log(subFrom)
                         Emp_service.addemp(subFrom).then(function (data) {
                             if (data.status == "success") {
                                 toastr['success'](data.retMessage);

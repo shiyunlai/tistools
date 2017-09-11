@@ -6,11 +6,11 @@
                     <i class="icon-close"></i>
                 </a>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search..." ng-model="searchParam" ng-click="search(searchParam)">
+                    <input type="text" class="form-control" placeholder="Search..." ng-model="searchParam" ng-change = test(searchParam)>
                     <span class="input-group-btn">
-                        <button href="javascript:;" class="btn submit">
-                            <i class="icon-magnifier"></i>
-                        </button>
+                        <span class="btn" ng-click = "search(searchParam)">
+                            <i  class="icon-magnifier"></i>
+                        </span>
                     </span>
                 </div>
             </form>
@@ -146,33 +146,12 @@
                 </li>
             </ul>
         </li>-->
-        <!--<li class="nav-item" ng-repeat="d in menusAndTrans track by $index"    ng-if=" !d.guid || (d.children && d.children.length > 0)">
-            <a href="#/{{d.href}}" ng-if="!d.guid">
-                <i ng-class="{true : '{{d.icon}}',false:'icon-settings' }[d.icon!=null && d.icon !='']"></i><span ng-bind-html="d.label | highlightTrust2Html : searchParam: '#F0F0F0'"></span>
-            </a>
-            <a href="javascript:;"   class="nav-link nav-toggle" ng-if="d.guid">
-                <i ng-class="{true : '{{d.icon}}',false:'icon-settings' }[d.icon!=null && d.icon !='']"></i><span ng-bind-html="d.label | highlightTrust2Html : searchParam: '#F0F0F0'"></span>
-                <span class="arrow"></span>
-            </a>
-            <ul class="sub-menu" >
-                <li class="nav-item" ng-repeat="p in d.children track by $index" ng-if="p.label && p.isLeaf =='N'&&p.children.length>0 ">
-                    <a href="#/{{p.href}}" ng-if="!p.guid">
-                        <i ng-class="{true : '{{p.icon}}',false:'icon-settings' }[p.icon!=null && p.icon !='']"></i><span ng-bind-html="p.label | highlightTrust2Html : searchParam: '#F0F0F0'"></span>
-                    </a>
-                    <a href="javascript:;" style="height: 41px;line-height: 31px;"  class="nav-link nav-toggle" ng-if="p.guid">
-                        <i ng-class="{true : '{{p.icon}}',false:'icon-settings' }[p.icon!=null && p.icon !='']"></i><span ng-bind-html="p.label | highlightTrust2Html : searchParam: '#F0F0F0'"></span>
-                        <span class="arrow"></span>
-                    </a>
-                    <ul class="sub-menu" ng-if="p.guid && p.children && p.children.length > 0">
-                        <li ng-repeat="p1 in p.children  track by $index" >
-                            <a href="#/{{p1.href}}">
-                                <i ng-class="{true : '{{p1.icon}}',false:'icon-settings' }[p1.icon!=null && p1.icon !='']"></i><span ng-bind-html="p1.label | highlightTrust2Html : searchParam: '#F0F0F0'"></span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>-->
         <li class="nav-item ids1"  test-repeats  comtasssble=menusAndTrans  ng-model="menusAndTrans"></li>
+
+
+        <li class="nav-item search"></li>
+        <script>
+            $('.search').hide();
+        </script>
     </ul>
 </div>

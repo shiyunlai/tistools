@@ -141,7 +141,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                                 its.push(dataes[i])
                             }
                         }else if(type =="group"){
-                            console.log(dataes)
                             if(!isNull(dataes.groupList)){
                                 for(var i = 0 ;i <dataes.groupList.length;i++){
                                     dataes.groupList[i].text = dataes.groupList[i].funcgroupName;
@@ -159,16 +158,19 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                                         its.push(dataes.funcList[i])
                                     }
                                 }
-
                             }else{
-                                for(var i = 0 ;i <dataes.funcList.length;i++){
-                                    dataes.funcList[i].text = dataes.funcList[i].funcName;
-                                    dataes.funcList[i].children = false;
-                                    dataes.funcList[i].id = dataes.funcList[i].guid;
-                                    dataes.funcList[i].icon = "fa fa-wrench icon-state-info icon-lg"
-                                    its.push(dataes.funcList[i])
-                                    console.log(its);
+                                if(!isNull(dataes.funcList)){
+                                    for(var i = 0 ;i <dataes.funcList.length;i++){
+                                        dataes.funcList[i].text = dataes.funcList[i].funcName;
+                                        dataes.funcList[i].children = false;
+                                        dataes.funcList[i].id = dataes.funcList[i].guid;
+                                        dataes.funcList[i].icon = "fa fa-wrench icon-state-info icon-lg"
+                                        its.push(dataes.funcList[i])
+                                    }
+                                }else{
+                                    
                                 }
+
                             }
                         }
                         $scope.jsonarray = angular.copy(its);
@@ -192,7 +194,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                 },
             },
             "force_text": true,
-            plugins: ["sort", "types", "checkbox", "wholerow", "themes", "html_data"],
+            plugins: ["sort", "types", "checkbox", "wholerow", "sort","themes", "html_data"],
             "checkbox": {
                 "keep_selected_style": false,//是否默认选中
             },
@@ -211,6 +213,10 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                 'is_draggable':function (node) {
                     return true;
                 }
+            },
+            'sort': function (a, b) {
+                //排序插件，会两者比较，获取到节点的order属性，插件会自动两两比较。
+                return this.get_node(a).original.displayOrder > this.get_node(b).original.displayOrder ? 1 : -1;
             },
             'callback' : {
                 move_node:function (node) {

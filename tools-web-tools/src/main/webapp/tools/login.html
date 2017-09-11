@@ -181,7 +181,7 @@
     Rx.Observable.fromEvent(text, 'keyup')
             .debounceTime(1000)
             .pluck('target', 'value')
-            .switchMap(url => $.ajax({url:"..//AcAuthenticationController/checkUserStatus",type:"post",contentType:'application/json',data:JSON.stringify({userId:url}), processData:false,dataType:'json'}))
+            .switchMap(url => $.ajax({url:"../AcAuthenticationController/checkUserStatus",type:"post",contentType:'application/json',data:JSON.stringify({userId:url}), processData:false,dataType:'json'}))
         .subscribe(
             data => render(data))
 
@@ -238,14 +238,14 @@
         form.identityGuid =$("#opertor").val();
         form.appGuid = 'APP1499956132';
         $.ajax({
-            url:"..//AcAuthenticationController/login",
+            url:"../AcAuthenticationController/login",
             type:"post",
             dataType:'json',
             data:JSON.stringify(form),
+            headers:{token:'abck'},
             processData:false,
             contentType:'application/json',
             success:function(data){
-                console.log(data.retMessage)
                 data = angular.fromJson(data);
                 if(data.status == "success"){
                     sessionStorage.user = JSON.stringify(data.retMessage.user);
