@@ -23,8 +23,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
         }
     })
 
-    //ui-grid 具体配置
-    var testgrid = function(ids){
         var gridOptions = {};
         $scope.gridOptions = gridOptions;
         var com = [{ field: 'roleCode', displayName: '角色代码'},
@@ -36,14 +34,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                     type: uiGridConstants.filter.SELECT,
                     selectOptions: [{ value: 'sys', label: 'sys'}, { value: 'app', label: 'app' }]
                 }},
-            { field: "appName", displayName:'隶属应用',
-                filter:{
-                    //term: '0',//默认搜索那项
-                    type: uiGridConstants.filter.SELECT,
-                    //selectOptions: [{ value: 'ABF', label: 'ABF' }, { value: '测试应用', label: '测试应用' }]
-                    selectOptions: ids
-                }
-            },
+            { field: "appName", displayName:'隶属应用'}
         ];
         var f = function(row){
             if(row.isSelected){
@@ -61,14 +52,12 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
             }
         }
         $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,false,f);
-    }
-
-    testgrid()//调用grid函数
 
     //查询所有角色列表
     role_service.queryRoleList(subFrom).then(function(data){
         var  datas = data.retMessage;
         if(data.status == "success"){
+            /*
             var lodash = angular.copy(datas);
             var tis = [];
             for(var i = 0;i<lodash.length;i++){
@@ -82,7 +71,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                 obj['label'] = lodash[i];
                 array.push(obj)//把对象push进去
             }
-            testgrid(array);//调用列表生成方法
+            testgrid(array);//调用列表生成方法*/
             $scope.gridOptions.data =  datas;
             $scope.gridOptions.mydefalutData = datas;
             $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
@@ -168,7 +157,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                                         its.push(dataes.funcList[i])
                                     }
                                 }else{
-                                    
+
                                 }
 
                             }
