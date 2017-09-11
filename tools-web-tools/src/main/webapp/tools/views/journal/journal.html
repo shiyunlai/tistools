@@ -1,0 +1,32 @@
+<!--日志页面-->
+<div class="page-bar ng-scope" style="border-bottom: 1px solid #e7ecf1;">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="#">其他管理</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <a href="#">日志管理</a>
+        </li>
+    </ul>
+</div>
+<h3 class="page-title">
+    <small></small>
+</h3>
+<div class="row" ng-form="bigform">
+    <div class="col-md-12" >
+        <div class="portlet light">
+            <div class="portlet-body">
+                <div ui-grid="gridOptions"  class="grid"
+                     ui-grid-pagination
+                     ui-grid-selection ui-grid-resize-columns>
+                </div>
+                <div class="actions btn-set" style="float: right; margin-top:10px;">
+                    <button type="button" name="back" class="btn btn-primary" ng-click="logdetails.look()"> 查看详情
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,6 +1,7 @@
 package org.tis.tools.webapp.controller.log;
 
 import com.alibaba.fastjson.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,7 +11,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.rservice.log.capable.IOperateLogRService;
 import org.tis.tools.webapp.controller.BaseController;
 
+import java.util.HashMap;
 import java.util.Map;
+
+
+
 
 /**
  * 操作日志管理
@@ -20,8 +25,11 @@ import java.util.Map;
 @RequestMapping("OperateLogController")
 public class OperateLogController extends BaseController {
 
-    @Autowired
-    IOperateLogRService operateLogRService;
+	
+	@Autowired
+	IOperateLogRService operateLogRService;
+	private Map<String, Object> responseMsg = getResponseMessage();
+
 
 
     /**
@@ -67,6 +75,9 @@ public class OperateLogController extends BaseController {
      */
     @Override
     public Map<String, Object> getResponseMessage() {
-        return null;
+        if( null == responseMsg ){
+            responseMsg = new HashMap<String, Object>() ;
+        }
+        return responseMsg;
     }
 }

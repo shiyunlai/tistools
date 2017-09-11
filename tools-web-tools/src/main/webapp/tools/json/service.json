@@ -192,5 +192,11 @@
   },
   "login_service" : {
     "updatePassword": {"ctrl": "AcAuthenticationController", "func": "updatePassword","emo":"修改密码"}
+  },
+  "log_service" : {
+    "queryOperateLogList": {"ctrl": "OperateLogController", "func": "queryOperateLogList","emo":"查询操作日志列表"},
+    "queryOperateHistoryList": {"ctrl": "OperateLogController", "func": "queryOperateHistoryList","emo":"查询操作对象历史日志"},
+    "queryOperateDetail": {"ctrl": "OperateLogController", "func": "queryOperateDetail","emo":"查询操作日志详情"}
+
   }
 }

@@ -1,0 +1,141 @@
+<!--操作员权限开始-->
+<div class="page-bar ng-scope" style="border-bottom: 1px solid #e7ecf1;">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="#">日志管理</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <a href="#">日志详情</a>
+        </li>
+    </ul>
+    <div class="actions btn-set">
+        <button type="button" name="back" class="btn default"  style="float: right;margin-top:3px;" ng-click="myback()"><i
+                class="fa fa-angle-left"></i> 返回
+        </button>
+    </div>
+</div>
+<h3 class="page-title">
+    <small></small>
+</h3>
+<div class="tab-content portlet light clearfix">
+    <div class="col-md-12">
+        <form action="#" name="myform" class="form-horizontal clear">
+            <div class="form-body portlet light">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">操作员</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="loginfo.userId"
+                                   name="id" ng-readonly="!editflag"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">操作员姓名</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="loginfo.operatorName"
+                                   name="id" ng-readonly="!editflag"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">操作时间</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="loginfo.operateTime"
+                                   name="id" ng-readonly="!editflag"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">操作操作渠道</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="loginfo.operateFrom"
+                                   name="id" ng-readonly="!editflag"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">操作类型</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="loginfo.operateType"
+                                   name="id" ng-readonly="!editflag"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">操作描述</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="loginfo.processDesc"
+                                   name="id" ng-readonly="!editflag"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">服务地址</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="loginfo.restfulUrl"
+                                   name="id" ng-readonly="!editflag"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">操作结果</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="loginfo.operateResult"
+                                   name="id" ng-readonly="!editflag"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" ng-show ='logofail'>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">异常堆栈</label>
+                        <div class="col-md-10">
+                            <textarea class="form-control"  style="overflow: auto"  ng_model="loginfo.stackTrace" maxlength="1024"  ng-readonly="!editflag"  name="ctl_desc"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-12"  style="margin-top:20px;">
+        <div class="page-bar ng-scope" style="border-bottom: 1px solid #e7ecf1;">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="#">操作的对象集合
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <h3 class="page-title">
+            <small></small>
+        </h3>
+        <div class="portlet light">
+            <div class="portlet-body">
+                <div ui-grid="gridOptions1"  class="grid"
+                     ui-grid-pagination
+                     ui-grid-selection ui-grid-resize-columns>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 操作员权限结束 -->
+
+
+
