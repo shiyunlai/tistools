@@ -1,0 +1,32 @@
+<!--历史日志页面-->
+<div class="page-bar ng-scope" style="border-bottom: 1px solid #e7ecf1;">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="#">日志管理</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <a href="#">{{objGuid}}的历史记录</a>
+        </li>
+    </ul>
+    <div class="actions btn-set">
+        <button type="button" name="back" class="btn default"  style="float: right;margin-top:3px;" ng-click="myback()"><i
+                class="fa fa-angle-left"></i> 返回
+        </button>
+    </div>
+</div>
+<h3 class="page-title">
+    <small></small>
+</h3>
+<div class="row" ng-form="sysform">
+    <div class="col-md-12" >
+        <div class="portlet light">
+            <div class="portlet-body">
+                <div ui-grid="gridOptionsh"  class="grid"
+                     ui-grid-pagination
+                     ui-grid-selection ui-grid-resize-columns>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

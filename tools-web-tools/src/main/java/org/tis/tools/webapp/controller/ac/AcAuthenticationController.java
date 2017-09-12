@@ -67,14 +67,15 @@ public class AcAuthenticationController extends BaseController {
         String password = jsonObject.getString("password");
         String identityGuid = jsonObject.getString("identityGuid");
         String appGuid = jsonObject.getString("appGuid");
+        LogThreadLocal.getLogBuilderLocal().getLog().setUserId(userId);
         AcOperator acOperator = authenticationRService.loginCheck(userId, password, identityGuid, appGuid);
         Map<String, Object> loginInfo = authenticationRService.getInitInfoByUserIdAndIden(userId, identityGuid, appGuid);
-
+        LogThreadLocal.getLogBuilderLocal().getLog().setOperatorName(acOperator.getOperatorName());
         httpSession.setAttribute("userId", userId);
         httpSession.setAttribute("operatorName", acOperator.getOperatorName());
 
 
-        LogThreadLocal.getLogBuilderLocal().getLog().setUserId(userId).setOperatorName(acOperator.getOperatorName());
+        
 
         return getReturnMap(loginInfo);
     }

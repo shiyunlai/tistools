@@ -154,29 +154,34 @@
 
     var render = function (data) {
         if(data.status == "success"){
-            var datas = data.retMessage;
-            var html = '';
-            //进行默认验证
-            for(var i =0;i< datas.length; i++){
-                if(datas[i].identityFlag == 'Y'){
-                    html+= '<option value="'+datas[i].guid+'">'+datas[i].identityName+'</option>';
-                    break;
+            console.log(data);
+            if(!isNull(data.retMessage)){
+                var datas = data.retMessage;
+                var html = '';
+                //进行默认验证
+                for(var i =0;i< datas.length; i++){
+                    if(datas[i].identityFlag == 'Y'){
+                        html+= '<option value="'+datas[i].guid+'">'+datas[i].identityName+'</option>';
+                        break;
+                    }
                 }
-            }
-            for(var j =0;j< datas.length; j++){
-                if(datas[j].identityFlag == 'Y'){
-                    continue;
+                for(var j =0;j< datas.length; j++){
+                    if(datas[j].identityFlag == 'Y'){
+                        continue;
+                    }
+                    html+= '<option value="'+datas[j].guid+'">'+datas[j].identityName+'</option>';
                 }
-                html+= '<option value="'+datas[j].guid+'">'+datas[j].identityName+'</option>';
+                $('select').html(html);
+            }else{
+                console.log("目前暂无身份")
             }
-
-            $('select').html(html);
         }else{
             toastr['error'](data.retMessage+'登录失败');
             var html = '<option>请选择身份</option>';
             $('select').html(html);
         }
     }
+
     var text = document.querySelector('#loginname');
     Rx.Observable.fromEvent(text, 'keyup')
             .debounceTime(1000)
