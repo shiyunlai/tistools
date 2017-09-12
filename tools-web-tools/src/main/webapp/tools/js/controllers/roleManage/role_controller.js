@@ -79,7 +79,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
             toastr['error']('初始化查询失败'+'<br/>'+data.retMessage);
         }
     })
-    //初始化列表函数
 
     /* 树结构逻辑代码*/
     //树过滤
@@ -214,7 +213,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
         }).bind("copy.jstree", function (node,e, data ) {
         })
     }
-
     //点击保存权限分配
     $scope.role.checkAll = function(){
         var nodes=$("#container").jstree("get_checked");//获取所有选中的节点

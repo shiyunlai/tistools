@@ -1032,8 +1032,14 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
         .state("journinfo",{
             url:"/journinfo.html/{id:.*}",
             templateUrl:"views/journal/journinfo.html",
-            data: {pageTitle: '操作员个人配置'},
+            data: {pageTitle: '日志详情页面'},
             controller:"jourinfo_controller"
+        })
+        .state("loghistory",{
+            url:"/loghistory.html/{id:.*}",
+            templateUrl:"views/journal/loghistory.html",
+            data: {pageTitle: '日志历史页面'},
+            controller:"loghistory_controller"
         })
 }]);
 
