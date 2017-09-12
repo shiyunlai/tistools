@@ -10,28 +10,10 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-09-12 14:33:06
+Date: 2017-09-12 14:42:12
 */
 
 SET FOREIGN_KEY_CHECKS=0;
-
--- ----------------------------
--- Table structure for ac_operator_identity
--- ----------------------------
-DROP TABLE IF EXISTS `ac_operator_identity`;
-CREATE TABLE `ac_operator_identity` (
-  `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `GUID_OPERATOR` varchar(128) NOT NULL COMMENT '操作员GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `IDENTITY_NAME` varchar(255) NOT NULL COMMENT '身份名称',
-  `IDENTITY_FLAG` char(1) NOT NULL COMMENT '默认身份标志 : 见业务字典： DICT_YON\r\n只能有一个默认身份 Y是默认身份 N不是默认身份',
-  `SEQ_NO` decimal(4,0) DEFAULT NULL COMMENT '显示顺序',
-  PRIMARY KEY (`GUID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='操作员身份 : 操作员对自己的权限进行组合形成一个固定的登录身份；\r\n供登录时选项，每一个登录身份是员工操作员的权限子集';
-
--- ----------------------------
--- Records of ac_operator_identity
--- ----------------------------
-INSERT INTO `ac_operator_identity` VALUES ('3', '111', '全功能权限', 'Y', '1');
 
 -- ----------------------------
 -- Table structure for ac_role
