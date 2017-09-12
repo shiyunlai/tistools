@@ -1,4 +1,4 @@
-/*
+﻿/*
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
@@ -16,48 +16,11 @@ Date: 2017-09-12 14:31:19
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for ac_app
--- ----------------------------
-DROP TABLE IF EXISTS `ac_app`;
-CREATE TABLE `ac_app` (
-  `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `APP_CODE` varchar(64) NOT NULL COMMENT '应用代码',
-  `APP_NAME` varchar(128) NOT NULL COMMENT '应用名称',
-  `APP_TYPE` varchar(255) NOT NULL COMMENT '应用类型 : 取值来自业务菜单： DICT_AC_APPTYPE\r\n如：本地，远程',
-  `ISOPEN` char(1) NOT NULL DEFAULT 'N' COMMENT '是否开通 : 取值来自业务菜单： DICT_YON\r\n默认为N，新建后，必须执行应用开通操作，才被开通。',
-  `OPEN_DATE` timestamp NULL DEFAULT NULL COMMENT '开通时间 : 记录到时分秒',
-  `URL` varchar(256) DEFAULT NULL COMMENT '访问地址',
-  `APP_DESC` varchar(512) DEFAULT NULL COMMENT '应用描述',
-  `GUID_EMP_MAINTENANCE` varchar(128) DEFAULT NULL COMMENT '管理维护人员',
-  `GUID_ROLE_MAINTENANCE` varchar(128) DEFAULT NULL COMMENT '应用管理角色',
-  `REMARK` varchar(512) DEFAULT NULL COMMENT '备注',
-  `INIWP` char(1) DEFAULT NULL COMMENT '是否接入集中工作平台 : 取值来自业务菜单： DICT_YON',
-  `INTASKCENTER` char(1) DEFAULT NULL COMMENT '是否接入集中任务中心 : 取值来自业务菜单： DICT_YON',
-  `IP_ADDR` varchar(50) DEFAULT NULL COMMENT 'IP',
-  `IP_PORT` varchar(10) DEFAULT NULL COMMENT '端口',
-  PRIMARY KEY (`GUID`),
-  UNIQUE KEY `APP_CODE` (`APP_CODE`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='应用系统 : 应用系统（Application）注册表';
-
--- ----------------------------
--- Records of ac_app
 -- ----------------------------
 INSERT INTO `ac_app` VALUES ('APP1499956132', 'APP01', 'ABF', 'local', 'N', '2017-09-06 00:00:00', '192.168.2.202', '应用管理的描述', 'EMPLOYEE1503319028', 'ROLE1502354676', null, null, null, '192.168.2.202', '8090');
 
 -- ----------------------------
--- Table structure for ac_bhv_def
--- ----------------------------
-DROP TABLE IF EXISTS `ac_bhv_def`;
-CREATE TABLE `ac_bhv_def` (
-  `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `GUID_BEHTYPE` varchar(128) NOT NULL COMMENT '操作类型GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `BHV_CODE` varchar(64) DEFAULT NULL COMMENT '行为代码',
-  `BHV_NAME` varchar(512) DEFAULT NULL COMMENT '行为名称',
-  PRIMARY KEY (`GUID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='功能操作行为定义 : 每类行为中至少有一个行为定义';
 
--- ----------------------------
--- Records of ac_bhv_def
 -- ----------------------------
 INSERT INTO `ac_bhv_def` VALUES ('111', '11', null, null);
 INSERT INTO `ac_bhv_def` VALUES ('222', '11', null, null);
@@ -91,16 +54,6 @@ INSERT INTO `ac_bhv_def` VALUES ('BHVDEF1500076792', 'BHVTYPEDEF1500076791', 're
 
 -- ----------------------------
 -- Table structure for ac_bhvtype_def
--- ----------------------------
-DROP TABLE IF EXISTS `ac_bhvtype_def`;
-CREATE TABLE `ac_bhvtype_def` (
-  `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `BHVTYPE_CODE` varchar(64) DEFAULT NULL COMMENT '行为类型代码 : 应用中定义，定义了某种功能特有的操作行为',
-  `BHVTYPE_NAME` varchar(128) DEFAULT NULL COMMENT '行为类型名称',
-  PRIMARY KEY (`GUID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='行为类型定义 : 功能行为的分类定义，以便很好的归类和配置功能的行为（AC_FUNC_BHV）';
-
--- ----------------------------
 -- Records of ac_bhvtype_def
 -- ----------------------------
 INSERT INTO `ac_bhvtype_def` VALUES ('BHVTYPEDEF1499784150', 'common', '通用类');
@@ -110,25 +63,6 @@ INSERT INTO `ac_bhvtype_def` VALUES ('BHVTYPEDEF1500076791', 'account', '账务�
 
 -- ----------------------------
 -- Table structure for ac_func
--- ----------------------------
-DROP TABLE IF EXISTS `ac_func`;
-CREATE TABLE `ac_func` (
-  `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `GUID_FUNCGROUP` varchar(128) NOT NULL COMMENT '隶属功能组GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `FUNC_CODE` varchar(64) NOT NULL COMMENT '功能编号 : 业务上对功能的编码',
-  `FUNC_NAME` varchar(128) NOT NULL COMMENT '功能名称',
-  `FUNC_DESC` varchar(512) DEFAULT NULL COMMENT '功能描述',
-  `FUNC_ACTION` varchar(256) DEFAULT NULL COMMENT '功能调用入口',
-  `PARA_INFO` varchar(256) DEFAULT NULL COMMENT '输入参数 : 需要定义参数规范',
-  `FUNC_TYPE` varchar(255) DEFAULT '''1''' COMMENT '功能类型 : 取值来自业务菜单：DICT_AC_FUNCTYPE\r\n如：页面流、交易流、渠道服务、柜面交易...',
-  `ISCHECK` char(1) DEFAULT NULL COMMENT '是否验证权限 : 取值来自业务菜单： DICT_YON',
-  `ISMENU` char(1) DEFAULT NULL COMMENT '可否定义为菜单 : 取值来自业务菜单：DICT_YON。\r\n该功能是否可以作为菜单入口，如果作为菜单入口，则会展示在菜单树（有些接口服务功能无需挂在菜单上）\r\n',
-  PRIMARY KEY (`GUID`),
-  UNIQUE KEY `GUID` (`GUID`),
-  UNIQUE KEY `FUNC_CODE` (`FUNC_CODE`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='功能 : 功能定义表，每个功能属于一个功能点，隶属于某个应用系统，同时也隶属于某个功能组。\r\n应用系统中的某个功能，如：柜';
-
--- ----------------------------
 -- Records of ac_func
 -- ----------------------------
 INSERT INTO `ac_func` VALUES ('1', '1', '1', '1', null, null, null, '\'1\'', null, null);
@@ -192,17 +126,6 @@ INSERT INTO `ac_func` VALUES ('FUNC1504890589', 'FUNCGROUP1505021734', 'fun00132
 
 -- ----------------------------
 -- Table structure for ac_func_bhv
--- ----------------------------
-DROP TABLE IF EXISTS `ac_func_bhv`;
-CREATE TABLE `ac_func_bhv` (
-  `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `GUID_FUNC` varchar(128) NOT NULL COMMENT '功能GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `GUID_BHV` varchar(128) NOT NULL COMMENT '行为GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `ISEFFECTIVE` char(1) NOT NULL COMMENT '是否有效 : 见业务字典： DICT_YON\r\nY 有效（默认都是有效的操作行为）\r\nN 无效',
-  PRIMARY KEY (`GUID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='功能操作行为 : Behavior（BHV）操作行为，权限控制模块中最细粒度的授权、控制单位；一个功能中包括多个操作行为';
-
--- ----------------------------
 -- Records of ac_func_bhv
 -- ----------------------------
 INSERT INTO `ac_func_bhv` VALUES ('FUNCBHV1500017963', 'FUNC1499925316', 'BHVDEF1500011692', 'Y');
@@ -311,14 +234,6 @@ INSERT INTO `ac_func_bhv` VALUES ('FUNCBHV1504164756', 'FUNC1500601487', 'BHVDEF
 
 -- ----------------------------
 -- Table structure for ac_func_bhvtype
--- ----------------------------
-DROP TABLE IF EXISTS `ac_func_bhvtype`;
-CREATE TABLE `ac_func_bhvtype` (
-  `GUID_FUNC` varchar(128) NOT NULL COMMENT '功能GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `GUID_BHVTYPE` varchar(128) NOT NULL COMMENT '行为类型GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='功能行为类型表 : 功能有那些行为类型，通过本映射关系，也指明了功能可能具有的行为；\r\n每个功能可以有多个行为类型，至少一';
-
--- ----------------------------
 -- Records of ac_func_bhvtype
 -- ----------------------------
 INSERT INTO `ac_func_bhvtype` VALUES ('FUNC1499074823', 'BHVTYPEDEF1499784150');
@@ -379,17 +294,6 @@ INSERT INTO `ac_func_bhvtype` VALUES ('FUNC1500601487', 'BHVTYPEDEF1499784155');
 
 -- ----------------------------
 -- Table structure for ac_func_resource
--- ----------------------------
-DROP TABLE IF EXISTS `ac_func_resource`;
-CREATE TABLE `ac_func_resource` (
-  `GUID_FUNC` varchar(128) NOT NULL COMMENT '对应功能GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `RES_TYPE` varchar(255) DEFAULT NULL COMMENT '资源类型 : 见业务字典： DICT_AC_FUNCRESTYPE\r\n如：JSP、页面流、逻辑流等',
-  `RES_PATH` varchar(256) DEFAULT NULL COMMENT '资源路径',
-  `COMPACK_NAME` varchar(40) DEFAULT NULL COMMENT '构件包名',
-  `RES_SHOW_NAME` varchar(128) DEFAULT NULL COMMENT '资源显示名称'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='功能资源对应 : 功能点包含的系统资源内容，如jsp、页面流、逻辑流等资源。\r\n功能点对应实际的代码资源。';
-
--- ----------------------------
 -- Records of ac_func_resource
 -- ----------------------------
 INSERT INTO `ac_func_resource` VALUES ('FUNC1499440080', 'p', '12313', '12313', '123');
@@ -487,21 +391,6 @@ INSERT INTO `ac_func_resource` VALUES ('FUNC1504890589', 'jsp', '2312', '312', '
 
 -- ----------------------------
 -- Table structure for ac_funcgroup
--- ----------------------------
-DROP TABLE IF EXISTS `ac_funcgroup`;
-CREATE TABLE `ac_funcgroup` (
-  `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `GUID_APP` varchar(128) NOT NULL COMMENT '隶属应用GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `FUNCGROUP_NAME` varchar(64) DEFAULT NULL COMMENT '功能组名称',
-  `GUID_PARENTS` varchar(128) DEFAULT NULL COMMENT '父功能组GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `GROUP_LEVEL` decimal(4,0) DEFAULT NULL COMMENT '节点层次',
-  `FUNCGROUP_SEQ` varchar(256) DEFAULT NULL COMMENT '功能组路径序列',
-  `ISLEAF` char(1) DEFAULT NULL COMMENT '是否叶子节点 : 取值来自业务菜单： DICT_YON',
-  `SUB_COUNT` decimal(10,0) DEFAULT NULL COMMENT '子节点数 : 对功能组进行子节点的增加、删除时需要同步维护',
-  PRIMARY KEY (`GUID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='功能组 : 功能组可以理解为功能模块或者构件包，是指一类相关功能的集合。定义功能组主要是为了对系统的功能进行归类管理\r\n';
-
--- ----------------------------
 -- Records of ac_funcgroup
 -- ----------------------------
 INSERT INTO `ac_funcgroup` VALUES ('FUNCGROUP1500544714', 'APP1499956132', '应用管理', null, '1', 'APP1499956132.FUNCGROUP1500544714', 'Y', '0');

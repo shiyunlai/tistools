@@ -1,4 +1,4 @@
-/*
+﻿/*
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
@@ -17,36 +17,12 @@ SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
 -- Table structure for ac_role
--- ----------------------------
-DROP TABLE IF EXISTS `ac_role`;
-CREATE TABLE `ac_role` (
-  `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `GUID_APP` varchar(128) NOT NULL COMMENT '隶属应用GUID',
-  `ROLE_CODE` varchar(64) NOT NULL COMMENT '角色代码 : 业务上对角色的编码',
-  `ROLE_NAME` varchar(128) NOT NULL COMMENT '角色名称',
-  `ROLE_TYPE` varchar(255) NOT NULL COMMENT '角色类别 : 取值范围见 DICT_AC_ROLETYPE',
-  `ROLE_DESC` varchar(512) DEFAULT NULL COMMENT '角色描述',
-  PRIMARY KEY (`GUID`),
-  UNIQUE KEY `ROLE_CODE` (`ROLE_CODE`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限集(角色) : 权限集（角色）定义表';
-
--- ----------------------------
 -- Records of ac_role
 -- ----------------------------
 INSERT INTO `ac_role` VALUES ('ROLE1505052711', 'APP1499956132', 'ABF_ADMIN', 'ABF系统管理员', 'sys', 'ABF基础应用系统的系统管理员');
 
 -- ----------------------------
 -- Table structure for ac_role_func
--- ----------------------------
-DROP TABLE IF EXISTS `ac_role_func`;
-CREATE TABLE `ac_role_func` (
-  `GUID_ROLE` varchar(128) NOT NULL COMMENT '角色GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `GUID_FUNC` varchar(128) NOT NULL COMMENT '拥有功能GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `GUID_APP` varchar(128) NOT NULL COMMENT '应用GUID : 冗余字段',
-  `GUID_FUNCGROUP` varchar(128) NOT NULL COMMENT '功能组GUID : 冗余字段'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限集(角色)功能对应关系 : 角色所包含的功能清单';
-
--- ----------------------------
 -- Records of ac_role_func
 -- ----------------------------
 INSERT INTO `ac_role_func` VALUES ('ROLE1502354676', 'FUNC1500601536', 'APP1499956132', 'FUNCGROUP1500544717');
