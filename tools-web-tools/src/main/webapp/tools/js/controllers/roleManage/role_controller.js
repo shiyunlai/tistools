@@ -129,6 +129,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                                 its.push(dataes[i])
                             }
                         }else if(type =="group"){
+                            console.log(dataes.groupList)
                             if(!isNull(dataes.groupList)){
                                 for(var i = 0 ;i <dataes.groupList.length;i++){
                                     dataes.groupList[i].text = dataes.groupList[i].funcgroupName;
@@ -140,7 +141,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                                 if(!isNull(dataes.funcList)){
                                     for(var i = 0 ;i <dataes.funcList.length;i++){
                                         dataes.funcList[i].text = dataes.funcList[i].funcName;
-                                        dataes.funcList[i].children = true;
+                                        dataes.funcList[i].children = false;
                                         dataes.funcList[i].id = dataes.funcList[i].guid;
                                         dataes.funcList[i].icon = "fa  fa-files-o icon-state-info icon-lg"
                                         its.push(dataes.funcList[i])
@@ -158,7 +159,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                                 }else{
 
                                 }
-
                             }
                         }
                         $scope.jsonarray = angular.copy(its);
@@ -167,6 +167,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                         items.roleGuid = arrs.guid
                         role_service.queryRoleFunc(items).then(function(data){
                             var datas = data.retMessage;
+                            console.log(datas);
                             if(data.status == "success"){
                                 if(datas.length!==0){
                                     for(var i = 0; i<datas.length;i++){
@@ -216,14 +217,16 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
     //点击保存权限分配
     $scope.role.checkAll = function(){
         var nodes=$("#container").jstree("get_checked");//获取所有选中的节点
-
+        console.log(nodes);
         if(nodes.length>=0 ) {
             var subFrom = {};
             subFrom.roleGuid = role.roleinfo.guid;
             subFrom.appGuid = role.roleinfo.guidApp;
             subFrom.funcList = [];
             for (var i = 0; i < nodes.length; i++) {
+                console.log(nodes[i])
                 if (nodes[i].indexOf('FUNC') == 0 && nodes[i].indexOf('FUNCGROUP') !== 0) {
+                    //console.log(nodes[i])
                     var item = {};
                     item.funcGuid = nodes[i];
                     item.groupGuid = $("#container").jstree().get_node(nodes[i]).parent;

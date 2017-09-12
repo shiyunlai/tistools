@@ -1,4 +1,4 @@
-/*
+﻿/*
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
@@ -16,29 +16,7 @@ Date: 2017-09-12 14:30:29
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for sys_dict
--- ----------------------------
-DROP TABLE IF EXISTS `sys_dict`;
-CREATE TABLE `sys_dict` (
-  `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `DICT_KEY` varchar(128) NOT NULL COMMENT '业务字典',
-  `DICT_TYPE` char(1) NOT NULL COMMENT '类型 : 见业务字典： DICT_TYPEa 应用级（带业务含义的业务字典，应用开发时可扩展）s 系统级（平台自己的业务字典）',
-  `DICT_NAME` varchar(128) DEFAULT NULL COMMENT '字典名称',
-  `FROM_TYPE` char(1) DEFAULT NULL COMMENT '字典项的来源类型',
-  `DICT_DESC` varchar(512) DEFAULT NULL COMMENT '解释说明',
-  `GUID_PARENTS` varchar(128) DEFAULT NULL COMMENT '父字典GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `DEFAULT_VALUE` varchar(512) DEFAULT NULL COMMENT '业务字典默认值 : 指定某个字典项（ITEM_VALUE）为本业务字典的默认值（用于扶助View层实现展示默认值）',
-  `FROM_TABLE` varchar(512) DEFAULT NULL COMMENT '字典项来源表 : 如果业务字典用来描述某个表中的字段选项，则本字段保存表名；\r\n其他情况默认为空；',
-  `USE_FOR_KEY` varchar(512) DEFAULT NULL COMMENT '作为字典项的列 : 如果业务字典用来描述某个表中的字段选项，则本字段保存字段名；其他情况默认为空；',
-  `USE_FOR_NAME` varchar(512) DEFAULT NULL COMMENT '作为字典项名称的列',
-  `SQL_FILTER` varchar(512) DEFAULT NULL COMMENT 'SQL过滤条件',
-  `SEQNO` decimal(12,0) DEFAULT NULL COMMENT '顺序号 : 顺序号，从0开始排，按小到大排序',
-  PRIMARY KEY (`GUID`),
-  UNIQUE KEY `DICT_KEY` (`DICT_KEY`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='业务字典 : 业务字典表，定义系统中下拉菜单的数据（注意：仅仅包括下拉菜单中的数据，而不包括下拉菜单样式，是否多选这些与';
 
--- ----------------------------
--- Records of sys_dict
 -- ----------------------------
 INSERT INTO `sys_dict` VALUES ('DICT1501076672', 'DICT_BIZ_TYPE', 'A', '业务类型', '0', '银行业务的类型划分', 'DICT1501076672', null, null, null, null, null, '0');
 INSERT INTO `sys_dict` VALUES ('DICT1501076673', 'DICT_CONTACT_MODE', 'A', '接触方式', '0', '客户与银行接触的方式分类', null, null, null, null, null, null, '0');
@@ -101,23 +79,7 @@ INSERT INTO `sys_dict` VALUES ('DICT1504072036', 'DICT_COUNTY_GD', 'A', '广东�
 INSERT INTO `sys_dict` VALUES ('DICT1504072037', 'DICT_COUNTY_ZJ', 'A', '浙江省城市', '0', null, 'DICT1503908002', null, null, null, null, null, '0');
 INSERT INTO `sys_dict` VALUES ('DICT1504072038', 'DICT_COUNTY_HZ', 'A', '杭州城区', '0', null, 'DICT1504072037', null, null, null, null, null, '0');
 
--- ----------------------------
--- Table structure for sys_dict_item
--- ----------------------------
-DROP TABLE IF EXISTS `sys_dict_item`;
-CREATE TABLE `sys_dict_item` (
-  `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `GUID_DICT` varchar(128) NOT NULL COMMENT '隶属业务字典 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `ITEM_NAME` varchar(128) NOT NULL COMMENT '字典项名称',
-  `ITEM_TYPE` varchar(128) NOT NULL,
-  `ITEM_VALUE` varchar(128) NOT NULL COMMENT '字典项',
-  `SEND_VALUE` varchar(128) NOT NULL COMMENT '实际值 : 实际值，及选中字典项后，实际发送值给系统的数值。',
-  `SEQNO` decimal(12,0) DEFAULT NULL COMMENT '顺序号 : 顺序号，从0开始排，按小到大排序',
-  PRIMARY KEY (`GUID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='业务字典项 : 业务字典内容项， 展示下拉菜单结构时，一般需要： 字典项，字典项名称，实际值';
 
--- ----------------------------
--- Records of sys_dict_item
 -- ----------------------------
 INSERT INTO `sys_dict_item` VALUES ('DICTITEM1501077408', 'DICT1501076673', '被动接触', 'value', 'passive', 'passive', '0');
 INSERT INTO `sys_dict_item` VALUES ('DICTITEM1501077409', 'DICT1501076674', '处理中，柜员开启了一笔交易，正在办理中', 'value', '1', '0', '0');

@@ -1,4 +1,4 @@
-/*
+﻿/*
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
@@ -16,32 +16,6 @@ Date: 2017-09-12 14:31:47
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for ac_menu
--- ----------------------------
-DROP TABLE IF EXISTS `ac_menu`;
-CREATE TABLE `ac_menu` (
-  `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `GUID_APP` varchar(128) NOT NULL COMMENT '应用GUID',
-  `GUID_FUNC` varchar(128) DEFAULT NULL COMMENT '功能GUID',
-  `MENU_NAME` varchar(40) NOT NULL COMMENT '菜单名称 : 菜单树上显示的名称，一般同功能名称',
-  `MENU_LABEL` varchar(40) NOT NULL COMMENT '菜单显示（中文）',
-  `MENU_CODE` varchar(64) NOT NULL COMMENT '菜单代码 : 业务上对本菜单记录的编码',
-  `ISLEAF` char(1) NOT NULL COMMENT '是否叶子菜单 : 数值取自业务菜单：DICT_YON',
-  `UI_ENTRY` varchar(256) DEFAULT NULL COMMENT 'UI入口 : 针对EXT模式提供，例如abf_auth/function/module.xml',
-  `MENU_LEVEL` decimal(4,0) DEFAULT NULL COMMENT '菜单层次 : 原类型smalint',
-  `GUID_PARENTS` varchar(128) DEFAULT NULL COMMENT '父菜单GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `GUID_ROOT` varchar(40) DEFAULT NULL COMMENT '根菜单GUID : 本菜单所在菜单树的根节点菜单GUID',
-  `DISPLAY_ORDER` decimal(4,0) DEFAULT NULL COMMENT '显示顺序 : 原类型smalint',
-  `IMAGE_PATH` varchar(256) DEFAULT NULL COMMENT '菜单闭合图片路径',
-  `EXPAND_PATH` varchar(256) DEFAULT NULL COMMENT '菜单展开图片路径',
-  `MENU_SEQ` varchar(256) DEFAULT NULL COMMENT '菜单路径序列 : 类似面包屑导航，可以看出菜单的全路径；\r\n从应用系统开始，系统自动维护，如： /teller/loan/TX010112\r\n表示柜面系统（teller）中贷款功能组（loan）中的TX010112功能（交易）',
-  `OPEN_MODE` varchar(255) DEFAULT NULL COMMENT '页面打开方式 : 数值取自业务菜单： DICT_AC_OPENMODE\r\n如：主窗口打开、弹出窗口打开...',
-  `SUB_COUNT` decimal(10,0) DEFAULT NULL COMMENT '子节点数 : 菜单维护时同步更新',
-  PRIMARY KEY (`GUID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单 : 应用菜单表，从逻辑上为某个应用系统中的功能组织为一个有分类，有层级的树结构。\r\nUI可根据菜单数据结构，进行界面';
-
--- ----------------------------
--- Records of ac_menu
 -- ----------------------------
 INSERT INTO `ac_menu` VALUES ('MENU1502333254', 'APP1500799366', null, '测试12', '测试123', 'cs123', 'N', '21', '1', null, null, '0', '123', '123', 'MENU1502333254', null, '0');
 INSERT INTO `ac_menu` VALUES ('MENU1502953640', 'APP1499956132', null, 'ABF应用管理', 'ABF应用管理', 'Menu001', 'N', '', '0', null, 'MENU1502953640', '0', 'fa fa-cubes', 'fa fa-cubes', 'MENU1502953640', null, '0');

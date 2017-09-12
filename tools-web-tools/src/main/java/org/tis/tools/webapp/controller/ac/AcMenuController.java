@@ -42,7 +42,6 @@ public class AcMenuController extends BaseController {
     IMenuRService menuRService;   
     @Autowired
 	IApplicationRService applicationRService;
-
     private Map<String, Object> responseMsg = getResponseMessage() ;
 
 
