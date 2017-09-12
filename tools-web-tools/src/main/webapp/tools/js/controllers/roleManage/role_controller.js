@@ -129,7 +129,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                                 its.push(dataes[i])
                             }
                         }else if(type =="group"){
-                            console.log(dataes.groupList)
                             if(!isNull(dataes.groupList)){
                                 for(var i = 0 ;i <dataes.groupList.length;i++){
                                     dataes.groupList[i].text = dataes.groupList[i].funcgroupName;
