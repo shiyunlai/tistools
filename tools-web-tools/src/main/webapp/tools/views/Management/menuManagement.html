@@ -107,25 +107,26 @@
                                         </div>
                                         <div class="col-md-6" >
                                             <div class="form-group">
-                                                <label class="control-label col-md-4">菜单代码:<span ng-class="{required:menuform.dict_key2.$invalid}"  > * </span></label>
+                                                <label class="control-label col-md-4">菜单代码:<span ng-class="{required:menuform.dict_key001.$invalid}"  > * </span></label>
                                                 <div class="col-md-8">
                                                     <input type="text" class="form-control"
                                                            ng-model="menuFrom.menuCode"
-                                                           name="dict_key2" ng-disabled="!editflag" required/>
+                                                           name="dict_key001" ng-disabled="!editflag" required/>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6" ng-show="isleaftrue">
+                                        <div class="col-md-6" ng-if="isleaftrue">
                                             <div class="form-group">
-                                                <label class="control-label col-md-4">是否叶子菜单:<span ng-class="{required:menuform.dict_key3.$invalid}"  > * </span></label>
+                                                <label class="control-label col-md-4">是否叶子菜单</label>
                                                 <div class="col-md-8">
+                                                    <!--<input type="text" class="form-control"  translate-constants comtable="DICT_YON"-->
                                                     <input type="text" class="form-control"  translate-constants comtable="DICT_YON"
                                                            ng-model="menuFrom.isleaf"
-                                                           name="dict_key2" ng-disabled="!editflag"  ng-readonly="!isleaf" required/>
+                                                            ng-disabled="!editflag"  ng-readonly="!isleaf"/>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6" ng-show="!isleaftrue">
+                                        <div class="col-md-6" ng-if="!isleaftrue">
                                             <div class="form-group">
                                                 <label class="control-label col-md-4">是否叶子菜单:<span ng-class="{required:menuform.dict_key3.$invalid}"  > * </span></label>
                                                 <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">

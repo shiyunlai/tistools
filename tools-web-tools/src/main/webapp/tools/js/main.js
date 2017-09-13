@@ -128,13 +128,13 @@ MetronicApp.factory('httpInterceptor', ['$log', function($log) {
             //console.log(response);//打印所有的响应
             if(response.status == '200'){//首先要请求成功
                 if(response.config.url.indexOf(manurl) ==0 ){//判断post请求，post请求的url都是marurl开头。
-                    //console.log(response);//打印所有post请求
+                    console.log(response);//打印所有post请求
                     if(response.data.status =="success"){
                         //console.log('成功的请求')
                     }else if(response.data.status =="error"){
                         //console.log('失败的请求,进行处理 ')
-                    }else if(response.data.status =="fail"){
-                        window.location = "../tools/index.html";//如果正确，则进入主页
+                    }else if(response.data.status =="failed"){
+                        window.location = "../tools/login.html";//如果正确，则进入主页
                     }
                 }
             }

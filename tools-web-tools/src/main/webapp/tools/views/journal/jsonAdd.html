@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs font-green-sharp"></i>
+            <span class="caption-subject font-green-sharp bold uppercase">查看对象值</span>
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="remove" ng-click="cancel()">
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="portlet-body portlet light" id="test">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <table class="table table-striped table-bordered table-advance table-hover" style="margin-top:30px;">
+                <tbody >
+                <thead>
+                <tr>
+                    <th>
+                        <i class="fa fa-briefcase"></i> 关键值名称
+                    </th>
+                    <th class="hidden-xs">
+                        <i class="fa fa-user"></i> 关键值
+                    </th>
+                </tr>
+                </thead>
+                <tr ng-repeat="d in keywords track by $index">
+                    <td >
+                        <span>{{d.param}}</span>
+                    </td>
+                    <td >
+                        <span>{{d.value}}</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
