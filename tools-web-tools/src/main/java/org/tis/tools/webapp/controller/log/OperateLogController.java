@@ -62,7 +62,7 @@ public class OperateLogController extends BaseController {
     @ResponseBody
     @RequestMapping(value="/queryOperateHistoryList",produces ="application/json;charset=UTF-8", method= RequestMethod.POST)
     public Map<String, Object>  queryOperateHistoryList(@RequestBody String content) {
-        return getReturnMap(operateLogRService.queryOperateDetail(JSONObject.parseObject(content).getString("objGuid")));
+        return getReturnMap(operateLogRService.queryOperateHistoryList(JSONObject.parseObject(content).getString("objGuid")));
     }
 
 

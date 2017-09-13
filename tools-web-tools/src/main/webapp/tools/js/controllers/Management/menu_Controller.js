@@ -390,7 +390,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
         $scope.editflag = !$scope.editflag;//让保存取消方法显现
         //取消方法
         $scope.watcher =function(item){
-            if(item == 'N'){
+            if(item == 'N'){//如果是不，那么选择功能就不显示
                 $scope.selectfunc = false;
             }else{
                 $scope.selectfunc = true;

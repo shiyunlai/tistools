@@ -5,6 +5,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
         var role = {};
         $scope.role = role;
 
+
     var res = $rootScope.res.abftree_service;//页面所需调用的服务
 
         /* 左侧角色查询逻辑 */
@@ -115,7 +116,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                                 dataes[i].text = dataes[i].rootName;
                                 dataes[i].children = true;
                                 dataes[i].id = dataes[i].rootCode;
-                                dataes[i].icon = "fa fa-home  icon-state-info icon-lg";
+                                dataes[i].icon = "fa fa-home icon-state-info icon-lg";
                                 dataes[i].check_node =true;
                                 its.push(dataes[i])
                             }
@@ -125,7 +126,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                                 dataes[i].text = dataes[i].funcgroupName;
                                 dataes[i].children = true;
                                 dataes[i].id = dataes[i].guid;
-                                dataes[i].icon = "fa  fa-files-o icon-state-info icon-lg";
+                                dataes[i].icon = "fa fa-th-large icon-state-info icon-lg";
                                 its.push(dataes[i])
                             }
                         }else if(type =="group"){
@@ -134,7 +135,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                                     dataes.groupList[i].text = dataes.groupList[i].funcgroupName;
                                     dataes.groupList[i].children = true;
                                     dataes.groupList[i].id = dataes.groupList[i].guid;
-                                    dataes.groupList[i].icon = "fa  fa-files-o icon-state-info icon-lg"
+                                    dataes.groupList[i].icon = "fa  fa-th-list  icon-state-info icon-lg"
                                     its.push(dataes.groupList[i])
                                 }
                                 if(!isNull(dataes.funcList)){
@@ -142,7 +143,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                                         dataes.funcList[i].text = dataes.funcList[i].funcName;
                                         dataes.funcList[i].children = false;
                                         dataes.funcList[i].id = dataes.funcList[i].guid;
-                                        dataes.funcList[i].icon = "fa  fa-files-o icon-state-info icon-lg"
+                                        dataes.funcList[i].icon = "fa fa-wrench icon-state-info icon-lg"
                                         its.push(dataes.funcList[i])
                                     }
                                 }
@@ -166,7 +167,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                         items.roleGuid = arrs.guid
                         role_service.queryRoleFunc(items).then(function(data){
                             var datas = data.retMessage;
-                            console.log(datas);
                             if(data.status == "success"){
                                 if(datas.length!==0){
                                     for(var i = 0; i<datas.length;i++){
