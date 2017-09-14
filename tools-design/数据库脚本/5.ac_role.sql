@@ -1,8 +1,8 @@
 ﻿-- ----------------------------
--- Table structure for ac_role
--- Records of ac_role
+-- Table structure for AC_ROLE
+-- Records of AC_ROLE
 -- ----------------------------
-INSERT INTO `ac_role` VALUES ('ROLE1505052711', 'APP1499956132', 'ABF_ADMIN', 'ABF系统管理员', 'sys', 'ABF基础应用系统的系统管理员');
+INSERT INTO `AC_ROLE` VALUES ('ROLE1505052711', 'APP1499956132', 'ABF_ADMIN', 'ABF系统管理员', 'sys', 'ABF基础应用系统的系统管理员');
 
 -- ----------------------------
 -- Table structure for AC_ROLE_FUNC
