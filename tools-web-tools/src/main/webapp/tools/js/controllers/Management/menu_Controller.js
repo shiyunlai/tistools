@@ -46,6 +46,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                             var guidApp = menu.appselect
                             var  subFrom = {};
                             subFrom = menuFrom;
+                            subFrom.expandPath = subFrom.imagePath;
                             subFrom.guidApp = guidApp;
                             menu_service.createRootMenu(subFrom).then(function(data){
                                 if(data.status == "success"){
@@ -123,6 +124,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                             subFrom = item;
                             subFrom.guidApp = guidApp;
                             subFrom.guidParents = node.id;
+                            subFrom.expandPath = subFrom.imagePath;
                             if(!isNull(menuFrom.infosava)){
                                 subFrom.guidFunc = menuFrom.infosava.guid;
                             }
@@ -284,6 +286,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                             subFrom.guidApp = menu.appselect;
                             menu_service.queryRootMenuTree(subFrom).then(function (data) {
                                 var datas = data.retMessage.data;
+                                console.log(datas);
                                 for(var i =0;i <datas.length;i++){
                                     datas[i].text = datas[i].menuLabel;
                                     datas[i].children = true;
@@ -511,6 +514,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                     if(!isNull(menuFrom.infosava)){
                         subFrom.guidFunc = menuFrom.infosava.guid;
                     }
+                    subFrom.expandPath = subFrom.imagePath;
                     menu_service.createChildMenu(subFrom).then(function(data){
                         if(data.status == "success"){
                             toastr['success']( "新增成功！");
@@ -540,6 +544,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
         }else{
             subFrom.guidParents = item.guidParents;
         }
+        subFrom.expandPath = subFrom.imagePath;
         menu_service.editMenu(subFrom).then(function(data){
             if(data.status == "success"){
                 toastr['success']("保存成功");

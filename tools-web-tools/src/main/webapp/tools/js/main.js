@@ -128,7 +128,6 @@ MetronicApp.factory('httpInterceptor', ['$log', function($log) {
             //console.log(response);//打印所有的响应
             if(response.status == '200'){//首先要请求成功
                 if(response.config.url.indexOf(manurl) ==0 ){//判断post请求，post请求的url都是marurl开头。
-                    console.log(response);//打印所有post请求
                     if(response.data.status =="success"){
                         //console.log('成功的请求')
                     }else if(response.data.status =="error"){
@@ -318,7 +317,7 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
                 $scope.userid = session.userId;
                 $scope.operatorName = session.operatorName;
                 $scope.menuType = session.menuType;
-                $scope.lastLogin = session.lastLogin;
+                $scope.lastLogin =moment(session.lastLogin).format('YYYY-MM-DD HH:mm:ss');
                 $scope.opertor = sessionStorage.opertor;
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');

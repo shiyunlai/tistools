@@ -172,7 +172,10 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                                     for(var i = 0; i<datas.length;i++){
                                         $('#container').jstree(true).check_node(datas[i].guidFunc);//选中
                                     }
-                                    $('#container').jstree().open_all();
+
+                                    $timeout(function(){
+                                        $('#container').jstree().open_all();
+                                    },50)
                                 }
                             }else{
 

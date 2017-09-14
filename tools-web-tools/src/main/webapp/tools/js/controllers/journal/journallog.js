@@ -213,7 +213,7 @@ angular.module('MetronicApp').controller('loghistory_controller', function($root
         window.history.back(-1);
     }
     var objGuid = $stateParams.id;//拿到传入的对象guid
-    $scope.objGuid = objGuid;
+
     var subFrom = {};
     subFrom.objGuid = objGuid;
     //请求数据
@@ -224,8 +224,12 @@ angular.module('MetronicApp').controller('loghistory_controller', function($root
                 datas[i].instance.operateYmder = moment(datas[i].instance.operateTime).format('YYYY-MM-DD');
                 datas[i].instance.operateYmdess = moment(datas[i].instance.operateTime).format('HH:mm:ss');
             }
+
+            if(!isNull(datas[datas.length-1])){
+               //对象名，数组的最后一项，就是对象名,因为要对对象guid进行翻译，后台给了objname，可以利用state传入，也可以利用这种方法，历史的最后一项就是最开始的对象名，偷懒的做法
+                $scope.objGuid = datas[datas.length-1].allObj[0].instance.objName;
+            }
             $scope.loghistory.history = datas;
-            console.log(loghistory.history)
         }else{
             toastr['error']('查询失败'+'<br/>'+data.retMessage);
         }
