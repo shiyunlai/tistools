@@ -23,10 +23,11 @@
         <div class="page-content-wrapper">
             <div class="portlet light">
                 <div class="portlet-body">
-                    <div class="row">
+                    <div class="row" style="margin-left: -169px; margin-right: 260px;">
                         <div class="col-md-12">
                             <ul class="timeline">
-                                <li ng-repeat="d in loghistory.history track by $index" ng-class="{'timeline-noline':$last,'timeline-blue':$index%6 ==0,'timeline-yellow':$index%6 ==1,'timeline-green':$index%6 ==2,'timeline-purple':$index%6 ==3,'timeline-red':$index%7 ==4,'timeline-grey':$index%6 ==5}">
+                                <!--<li ng-repeat="d in loghistory.history track by $index" ng-class="{'timeline-noline':$last,'timeline-blue':$index%6 ==0,'timeline-yellow':$index%6 ==1,'timeline-green':$index%6 ==2,'timeline-purple':$index%6 ==3,'timeline-red':$index%7 ==4,'timeline-grey':$index%6 ==5}">-->
+                                <li ng-repeat="d in loghistory.history track by $index" ng-class="{'timeline-noline':$last,'timeline-green':d.instance.operateResult =='succ','!timeline-green':d.instance.operateResult =='fail'}">
                                     <div class="timeline-time">
                                 <span class="date">
                                     {{d.instance.operateYmder}} </span>
@@ -37,10 +38,10 @@
                                      <!--图标展示 -->
                                     </div>
                                     <div class="timeline-body">
-                                        <h2>用户名:{{d.instance.userId}} <span style="font-weight: normal;font-size: 14px;" class="pull-right">状态:{{d.instance.operateResult}}</span> </h2>
+                                        <h2>操作内容:{{d.instance.processDesc}} <span style="font-weight: normal;font-size: 14px;" class="pull-right">状态:{{d.instance.operateResult}}</span> </h2>
 
                                         <div class="timeline-content">
-                                           操作内容:{{d.instance.processDesc}}
+                                            用户名:{{d.instance.userId}}
                                         </div>
                                         <div class="timeline-footer">
                                             <a  class="nav-link pull-left" ng-click="jsonlook(d.allObj[0])">

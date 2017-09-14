@@ -20,41 +20,41 @@
 	<dubbo:reference
 			id="orgRService"
 			group="om"
-			version="1.0"
+			version="0.3"
 			interface="org.tis.tools.rservice.om.capable.IOrgRService"
 			check="false"/>
 
 	<dubbo:reference
 			id="omgroupRServicelmpl"
 			group="om"
-			version="1.0"
+			version="0.3"
 			interface="org.tis.tools.rservice.om.capable.IGroupRService"
 			check="false"/>
 
 	<dubbo:reference
 			id="OmPositionRServiceImpl"
 			group="om"
-			version="1.0"
+			version="0.3"
 			interface="org.tis.tools.rservice.om.capable.IPositionRService"
 			check="false"/>
 
 	<dubbo:reference
 			id="OmEmployeeRServicelmpl"
 			group="om"
-			version="1.0"
+			version="0.3"
 			interface="org.tis.tools.rservice.om.capable.IEmployeeRService"
 			check="false"/>
 	<dubbo:reference
 			id="OmBusiOrgRServiceImpl"
 			group="om"
-			version="1.0"
+			version="0.3"
 			interface="org.tis.tools.rservice.om.capable.IBusiOrgRService"
 			check="false"/>
 
 	<dubbo:reference
 			id="DutyRServicelmpl"
 			group="om"
-			version="1.0"
+			version="0.3"
 			interface="org.tis.tools.rservice.om.capable.IDutyRService"
 			check="false"/>
 
@@ -64,42 +64,42 @@
 	<dubbo:reference
 			id="acAppRService"
 			group="ac"
-			version="1.0"
+			version="0.3"
 			interface="org.tis.tools.rservice.ac.basic.IAcAppRService"
 			check="false"/>
 
 	<dubbo:reference
 			id="applicationRService"
 			group="ac"
-			version="1.0"
+			version="0.3"
 			interface="org.tis.tools.rservice.ac.capable.IApplicationRService"
 			check="false"/>
 
 	<dubbo:reference
 			id="authenticationRService"
 			group="ac"
-			version="1.0"
+			version="0.3"
 			interface="org.tis.tools.rservice.ac.capable.IAuthenticationRService"
 			check="false"/>
 
 	<dubbo:reference
 			id="menuRService"
 			group="ac"
-			version="1.0"
+			version="0.3"
 			interface="org.tis.tools.rservice.ac.capable.IMenuRService"
 			check="false"/>
 
 	<dubbo:reference
 			id="operatorRService"
 			group="ac"
-			version="1.0"
+			version="0.3"
 			interface="org.tis.tools.rservice.ac.capable.IOperatorRService"
 			check="false"/>
 
 	<dubbo:reference
 			id="roleRService"
 			group="ac"
-			version="1.0"
+			version="0.3"
 			interface="org.tis.tools.rservice.ac.capable.IRoleRService"
 			check="false"/>
 	<!--AC - END-->
@@ -108,21 +108,21 @@
 	<dubbo:reference
 			id="dictRService"
 			group="sys"
-			version="1.0"
+			version="0.3"
 			interface="org.tis.tools.rservice.sys.capable.IDictRService"
 			check="false"/>
 
 	<dubbo:reference
 			id="seqnoRService"
 			group="sys"
-			version="1.0"
+			version="0.3"
 			interface="org.tis.tools.rservice.sys.capable.ISeqnoRService"
 			check="false"/>
 
 	<dubbo:reference
 			id="runConfigRService"
 			group="sys"
-			version="1.0"
+			version="0.3"
 			interface="org.tis.tools.rservice.sys.capable.IRunConfigRService"
 			check="false"/>
 	<!--SYS - END-->
