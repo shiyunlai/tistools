@@ -17,7 +17,7 @@
 	<dubbo:reference 
 		id="biztraceRService" 
 		group="biztrace"
-		version="1.0" 
+		version="${biztraceRService.version}" 
 		interface="org.tis.tools.service.api.biztrace.IBiztraceRService" 
 		check="false" 
 		loadbalance="byhost" /><!-- 使用了扩展loadbalance，根据指定ip调用服务提供者 -->
