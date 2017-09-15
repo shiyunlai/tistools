@@ -17,14 +17,14 @@
 	<dubbo:reference 
 		id="devMgrRService"    
 		group="devmgr" 
-		version="1.0" 
+		version="${devMgrRService.version}" 
 		interface="org.tis.tools.service.api.devmgr.DevMgrRemoteService"     
 		check="false"/>
 	
 	<dubbo:reference 
 		id="featureRegRService" 
 		group="devmgr" 
-		version="1.0" 
+		version="${featureRegRService.version}" 
 		interface="org.tis.tools.service.api.devmgr.FeatureRegRemoteService" 
 		check="false" />
 	
