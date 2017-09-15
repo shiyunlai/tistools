@@ -60,7 +60,7 @@ INSERT INTO `SYS_DICT` VALUES ('DICT1504072037', 'DICT_COUNTY_ZJ', 'A', '浙江�
 INSERT INTO `SYS_DICT` VALUES ('DICT1504072038', 'DICT_COUNTY_HZ', 'A', '杭州城区', '0', null, 'DICT1504072037', null, null, null, null, null, '0');
 
 
--- ----------------------------
+
 INSERT INTO `SYS_DICT_ITEM` VALUES ('DICTITEM1501077408', 'DICT1501076673', '被动接触', 'value', 'passive', 'passive', '0');
 INSERT INTO `SYS_DICT_ITEM` VALUES ('DICTITEM1501077409', 'DICT1501076674', '处理中，柜员开启了一笔交易，正在办理中', 'value', '1', '0', '0');
 INSERT INTO `SYS_DICT_ITEM` VALUES ('DICTITEM1501077410', 'DICT1501076674', '取消，柜员强行关闭了未提交的交易；这种交易不能再次提交；', 'value', 'CANCEL', '1', '0');

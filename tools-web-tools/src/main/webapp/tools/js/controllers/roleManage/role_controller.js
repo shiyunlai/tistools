@@ -169,14 +169,17 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                             var datas = data.retMessage;
                             if(data.status == "success"){
                                 if(datas.length!==0){
-                                    for(var i = 0; i<datas.length;i++){
-                                        $('#container').jstree(true).check_node(datas[i].guidFunc);//选中
-                                    }
-
                                     $timeout(function(){
-                                        $('#container').jstree().open_all();
+                                        for(var i = 0; i<datas.length;i++){
+                                            console.log(datas[i].guidFunc)
+                                            $('#container').jstree(true).check_node(datas[i].guidFunc);//选中
+                                        }
                                     },50)
                                 }
+
+                                $timeout(function(){
+                                    $('#container').jstree().open_all();
+                                },30)
                             }else{
 
                             }
