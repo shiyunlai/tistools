@@ -881,7 +881,13 @@ angular.module('MetronicApp').controller('dictitwos_controller', function($rootS
             }
         })*/
     }
-    
+
+
+
+    //导入业务字典
+    $scope.import =function(){
+        $scope.imporots = true;
+    }
     
     
     //上传业务字典
