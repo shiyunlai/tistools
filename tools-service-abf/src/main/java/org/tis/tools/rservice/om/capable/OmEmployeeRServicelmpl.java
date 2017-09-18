@@ -119,11 +119,11 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 					status.setRollbackOnly();
 					e.printStackTrace();
 					throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
-							BasicUtil.wrap(e.getCause().getMessage()), "新增根节点机构失败！{0}");
+							BasicUtil.wrap(e.getCause().getMessage()), "新增员工失败！{0}");
 				}
 			}
 		});
-		return null;
+		return newEmployee;
 	}
 
 	@Override

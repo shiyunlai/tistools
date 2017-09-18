@@ -28,6 +28,7 @@ import org.tis.tools.webapp.util.AjaxUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -94,7 +95,7 @@ public class OrgManagerController extends BaseController {
                 // 为每一个节点增加岗位信息节点
                 og.setOrgName("岗位信息");
                 og.setOrgCode("GW" + id);
-
+                og.setSortNo(new BigDecimal("9999999"));
                 og.setGuid(guidOrg);
 
                 rootOrgs.add(og);

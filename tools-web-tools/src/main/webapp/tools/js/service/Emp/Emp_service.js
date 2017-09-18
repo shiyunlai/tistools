@@ -5,7 +5,7 @@ MetronicApp.factory('Emp_service',['$http', '$q', function ($http,$q) {
     var service={};
 
     service.loadempgrid = function () {
-        var res = $http.post(manurl + "/om/emp/queryemployee",null).then(function (response) {
+        var res = $http.post(manurl + "/om/emp/queryemployee",{}).then(function (response) {
             return response.data;
         });
         return res;
