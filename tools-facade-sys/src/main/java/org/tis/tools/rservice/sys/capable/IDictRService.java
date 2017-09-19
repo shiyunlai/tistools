@@ -138,10 +138,12 @@ public interface IDictRService {
 
 	/**
 	 * 查询所有业务字典
+	 *
+	 * @param isQueryRoot 是否查询全部根字典
 	 * @return
 	 * @throws SysManagementException
 	 */
-	List<SysDict> querySysDicts() throws SysManagementException;
+	List<SysDict> querySysDicts(String isQueryRoot) throws SysManagementException;
 
 	/**
 	 * 根据字典GUID查询所有业务字典项
@@ -190,5 +192,15 @@ public interface IDictRService {
 	 * @throws SysManagementException
 	 */
 	List<SysDictItem> querySysDictItemList() throws SysManagementException;
+
+	/**
+	 * 设置业务字典的默认字典项
+	 *
+	 * @return
+	 * @throws SysManagementException
+	 */
+	SysDict setDefaultDictValue(String dictKey, String itemValue) throws SysManagementException;
+
+
 
 }

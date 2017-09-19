@@ -15,6 +15,7 @@
 	    	,item_value
 	    	,send_value
 	    	,seqno
+	    	,item_desc
 	    )
 	    VALUES 
 	    (
@@ -24,7 +25,8 @@
 			#{itemType,jdbcType=VARCHAR},
 			#{itemValue,jdbcType=VARCHAR},
 			#{sendValue,jdbcType=VARCHAR},
-			#{seqno,jdbcType=DECIMAL}
+			#{seqno,jdbcType=DECIMAL},
+			#{itemDesc,jdbcType=VARCHAR}
   		)
  	</insert>
  	
@@ -50,7 +52,10 @@
 			send_value = #{sendValue,jdbcType=VARCHAR},
 		</if>
 		<if test="seqno != null" >
-			seqno = #{seqno,jdbcType=DECIMAL}
+			seqno = #{seqno,jdbcType=DECIMAL},
+		</if>
+		<if test="itemDesc != null" >
+			item_desc = #{itemDesc,jdbcType=VARCHAR}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -65,7 +70,8 @@
 		item_type = #{itemType,jdbcType=VARCHAR},
 		item_value = #{itemValue,jdbcType=VARCHAR},
 		send_value = #{sendValue,jdbcType=VARCHAR},
-		seqno = #{seqno,jdbcType=DECIMAL}
+		seqno = #{seqno,jdbcType=DECIMAL},
+		item_desc = #{itemDesc,jdbcType=VARCHAR}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -100,7 +106,10 @@
         	send_value = #{domain.sendValue,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.seqno != null" >
-        	seqno = #{domain.seqno,jdbcType=DECIMAL}
+        	seqno = #{domain.seqno,jdbcType=DECIMAL},
+      	</if>
+		<if test="domain.itemDesc != null" >
+        	item_desc = #{domain.itemDesc,jdbcType=VARCHAR}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>
@@ -132,5 +141,6 @@
 		,item_value as itemValue
 		,send_value as sendValue
 		,seqno as seqno
+		,item_desc as itemDesc
 	</sql>
 </mapper>

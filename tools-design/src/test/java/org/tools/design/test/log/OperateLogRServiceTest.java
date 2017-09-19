@@ -1,8 +1,11 @@
 package org.tools.design.test.log;
 
 import com.alibaba.fastjson.JSON;
+import javafx.scene.control.Alert;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.tis.tools.model.po.log.LogAbfOperate;
 import org.tis.tools.model.vo.log.LogOperateDetail;
 import org.tis.tools.model.vo.log.OperateLogBuilder;
@@ -70,9 +73,20 @@ public class OperateLogRServiceTest extends SpringJunitSupport {
     }
     @Test
     public void queryOperateHistoryListTest() {
-        String objGuid = "MENU1504880405";
+        String objGuid = "MENU1504855790";
         List<LogOperateDetail> logOperateDetails = operateLogRService.queryOperateHistoryList(objGuid);
         String ret = JSON.toJSONString(logOperateDetails);
         System.out.println(ret);
+
     }
+
+    @Test
+    public void queryLoginHistoryTest() {
+        String userId = "admin";
+        List<LogAbfOperate> logOperateDetails = operateLogRService.queryLoginHistory(userId);
+        Assert.assertNotNull(logOperateDetails);
+
+    }
+
+
 }
