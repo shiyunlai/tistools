@@ -81,7 +81,7 @@ public class AcAuthenticationController extends BaseController {
     /**
      * 修改密码
      */
-/*    @OperateLog(
+    @OperateLog(
             operateType = JNLConstants.OPEARTE_TYPE_UPDATE,
             operateDesc = "修改密码",
             retType = ReturnType.Object,
@@ -101,7 +101,7 @@ public class AcAuthenticationController extends BaseController {
             httpSession.removeAttribute(httpSession.getAttributeNames().nextElement());
         }
         return getReturnMap(acOperator);
-    }*/
+    }
 
     /**
      * 注销登陆
