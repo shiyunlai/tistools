@@ -22,7 +22,6 @@
         <div class="portlet light bordered">
             <div class="portlet-body">
                 <div class="row">
-                    <!-- 组织机构树 start -->
                     <div class="col-md-3">
                         <div class="portlet light">
                             <div class="portlet-title">
@@ -35,7 +34,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="portlet-body"  style="overflow-y:hidden;">
+                            <div class="portlet-bodyl">
                                 <form id="s">
                                     <input type="search" id="q"/>
                                     <button type="submit">检索</button>
@@ -44,7 +43,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- 组织机构树 end -->
                     <div class="col-md-9">
                         <!-- 右侧展示页面 start -->
                         <div class="portlet light portlet-fit portlet-datatable bordered"  ng-if='biz.applica'>
@@ -320,7 +318,7 @@
                                                         <label class="control-label col-md-2"></label>
                                                         <div class="col-md-10">
                                                             <div class="actions btn-set" style="float: right;" ng-if="!editsflag">
-                                                                <button type="button" name="back" class="btn btn-primary" ng-click="biz.addschild(dictionaryAdd)"> 编辑机构
+                                                                <button type="button" name="back" class="btn btn-primary" ng-click="biz.addschild(dictionaryAdd)"> 编辑功能组
                                                                 </button>
                                                             </div>
                                                             <div class="actions btn-set" style="float: right;" ng-if="editsflag">
@@ -390,7 +388,7 @@
                                     </li>
                                     <li ng-class="{true:'active',false:''}[appfunflag.gnactive]">
                                         <a  data-toggle="tab" href ng-class="{true:'link',false:''}[appfunflag.gnactive]" ng-click="appfunflag.loadgwdata(2)">
-                                            <i class="green ace-icon fa fa-bars bigger-120"></i>功能类型及行为
+                                            <i class="green ace-icon fa fa-bars bigger-120"></i>行为类型
                                         </a>
                                     </li>
                                 </ul>
@@ -476,7 +474,7 @@
                                                     <label class="control-label col-md-2"></label>
                                                     <div class="col-md-10">
                                                         <div class="actions btn-set" style="float: right;" ng-if="!editflag">
-                                                            <button type="button" name="back" class="btn btn-primary" ng-click="biz.appssedit(dictionaryAdd)"> 编辑机构
+                                                            <button type="button" name="back" class="btn btn-primary" ng-click="biz.appssedit(dictionaryAdd)"> 编辑功能
                                                             </button>
                                                         </div>
                                                         <div class="actions btn-set" style="float: right;" ng-if="editflag">
@@ -568,7 +566,7 @@
                                                 <div class="portlet-title">
                                                     <div class="caption">
                                                         <i class="fa fa-cogs font-green-sharp"></i>
-                                                        <span class="caption-subject font-green-sharp bold uppercase">功能类型</span>
+                                                        <span class="caption-subject font-green-sharp bold uppercase">功能具有如下行为类型:</span>
                                                     </div>
                                                 </div>
                                                 <div class="portlet-body">
@@ -582,8 +580,6 @@
                                                         </button>
                                                         <button type="button" name="back" class="btn btn-primary" ng-click="biz.addtypeDel()">删除功能类型
                                                         </button>
-                                                        <button type="button" name="back" class="btn btn-primary" ng-click="biz.addtypeDel()">删除功能类型
-                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -593,7 +589,7 @@
                                             <div class="portlet-title">
                                                 <div class="caption">
                                                     <i class="fa fa-cogs font-green-sharp"></i>
-                                                    <span class="caption-subject font-green-sharp bold uppercase">功能操作行为</span>
+                                                    <span class="caption-subject font-green-sharp bold uppercase">操作行为</span>
                                                 </div>
                                             </div>
                                             <div class="portlet-body">
@@ -604,7 +600,7 @@
                                                     <div class="actions btn-set" style="float: right; margin-top: 63px;">
                                                         <button type="button" name="back" class="btn btn-primary" ng-click="biz.functactive()">新增功能行为
                                                         </button>
-                                                        <button type="button" name="back" class="btn btn-primary" ng-click="biz.functactiveDel()">删除功能类型
+                                                        <button type="button" name="back" class="btn btn-primary" ng-click="biz.functactiveDel()">删除功能行为
                                                         </button>
                                                         <!--<button type="button" name="back" class="btn btn-primary" ng-click="biz.sesave()"> 保存
                                                         </button>-->

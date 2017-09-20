@@ -22,6 +22,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     //0、树结构逻辑代码
     $("#s").submit(function(e) {    //树过滤,搜索功能
         e.preventDefault();
+        //$('#container').jstree().open_all();
         $("#container").jstree(true).search($("#q").val());
     });
     //树自定义右键功能(根据类型判断)
@@ -1182,8 +1183,10 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         }
     }
     $scope.gridOption4 = initgrid($scope,gridOption4,filterFilter,com4,false,f4);
+    $scope.gridOption4.paginationPageSize = 20, //每页显示个数
+    $scope.gridOption4.enableFiltering = false, //关闭搜索
 
-
+    //$scope.gridOption4.
     //根据功能查询行为类型函数
     biz.typequery = function(num){
         var subFrom ={};
@@ -1193,7 +1196,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 $scope.gridOption4.data = datas;
                 $scope.gridOption4.mydefalutData = datas;
                 $scope.gridOption4.getPage(1,$scope.gridOption4.paginationPageSize);
-
         })
     }
     //新增行为类型
@@ -1327,6 +1329,9 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         }
     }
     $scope.gridOptions5 = initgrid($scope,gridOptions5,filterFilter,com5,true,f5);
+    $scope.gridOptions5.enablePaginationControls = true;
+    $scope.gridOptions5.paginationPageSize = 20, //每页显示个数
+
     //功能操作行为保存
     /*$scope.biz.sesave = function(){
         var it = $scope.gridOptions5.getSelectedRows();//多选事件

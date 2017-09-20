@@ -45,8 +45,15 @@ angular.module('MetronicApp').controller('journal_controller', function($rootSco
         if(isNull(getSel) || getSel.length>1){
             toastr['error']("请至少选中一条数据来查看！");
         }else{
-            var items = getSel[0].guid;//数据信息;
-            $state.go("journinfo",{id:items})
+            if(getSel[0].operateType == 'login'){
+                //直接去查看历史
+                var item = 'l'+getSel[0].userId;//到历史页面去调用，查询登陆的历史。 需要修改接口
+                $state.go("loghistory",{id:item});//跳转新页面
+            }else{
+                var items = getSel[0].guid;//数据信息;
+                $state.go("journinfo",{id:items})
+            }
+
         }
     }
 });
@@ -214,26 +221,48 @@ angular.module('MetronicApp').controller('loghistory_controller', function($root
     }
     var objGuid = $stateParams.id;//拿到传入的对象guid
 
+    //判断是否是登陆，如果是单独操作，否则还是原本的操作
     var subFrom = {};
-    subFrom.objGuid = objGuid;
-    //请求数据
-    common_service.post(res.queryOperateHistoryList,subFrom).then(function(data){
-        var datas = data.retMessage;
-        if(data.status == "success"){
-            for(var i = 0;i<datas.length;i++){
-                datas[i].instance.operateYmder = moment(datas[i].instance.operateTime).format('YYYY-MM-DD');
-                datas[i].instance.operateYmdess = moment(datas[i].instance.operateTime).format('HH:mm:ss');
-            }
+    if(objGuid.substring(0,1) =='l'){
+        var objuserid =objGuid.substr (1,objGuid.length-1);//把第一位截取掉，只保留后面的登陆id
+        subFrom.userId = objuserid;
+        common_service.post(res.queryLoginHistory,subFrom).then(function(data){
+            var datas = data.retMessage;
+            if(data.status == "success"){
+                $scope.login = true;
+                for(var i = 0;i<datas.length;i++){
+                    datas[i].operateYmder = moment(datas[i].operateTime).format('YYYY-MM-DD');
+                    datas[i].operateYmdess = moment(datas[i].operateTime).format('HH:mm:ss');
+                }
 
-            if(!isNull(datas[datas.length-1])){
-               //对象名，数组的最后一项，就是对象名,因为要对对象guid进行翻译，后台给了objname，可以利用state传入，也可以利用这种方法，历史的最后一项就是最开始的对象名，偷懒的做法
-                $scope.objGuid = datas[datas.length-1].allObj[0].instance.objName;
+                $scope.loghistory.history = datas;
+            }else{
+                toastr['error']('查询失败'+'<br/>'+data.retMessage);
             }
-            $scope.loghistory.history = datas;
-        }else{
-            toastr['error']('查询失败'+'<br/>'+data.retMessage);
-        }
-    })
+        })
+    }else{
+        //操作原本的代码逻辑
+        subFrom.objGuid = objGuid;
+        //请求数据
+        common_service.post(res.queryOperateHistoryList,subFrom).then(function(data){
+            var datas = data.retMessage;
+            if(data.status == "success"){
+                for(var i = 0;i<datas.length;i++){
+                    datas[i].instance.operateYmder = moment(datas[i].instance.operateTime).format('YYYY-MM-DD');
+                    datas[i].instance.operateYmdess = moment(datas[i].instance.operateTime).format('HH:mm:ss');
+                }
+
+                if(!isNull(datas[datas.length-1])){
+                    //对象名，数组的最后一项，就是对象名,因为要对对象guid进行翻译，后台给了objname，可以利用state传入，也可以利用这种方法，历史的最后一项就是最开始的对象名，偷懒的做法
+                    $scope.objGuid = datas[datas.length-1].allObj[0].instance.objName;
+                }
+                $scope.loghistory.history = datas;
+            }else{
+                toastr['error']('查询失败'+'<br/>'+data.retMessage);
+            }
+        })
+    }
+
 
     //查看对象详情:
     $scope.jsonlook =function(item){
