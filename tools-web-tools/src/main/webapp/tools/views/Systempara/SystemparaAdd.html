@@ -14,10 +14,10 @@
     <div class="portlet-body portlet light">
         <form action="#" name="myform" class="form-horizontal ">
             <div class="form-body ">
-                <div class="col-md-6" >
+                <div class="col-md-12" >
                     <div class="form-group">
-                        <label class="control-label col-md-4">应用系统:<span ng-class="{required:myform.sys_key.$invalid}"  > * </span></label>
-                        <div class="col-md-8">
+                        <label class="control-label col-md-2">应用系统:<span ng-class="{required:myform.sys_key.$invalid}"  > * </span></label>
+                        <div class="col-md-10">
                             <select class="form-control" name="sys_key" ng-model="sysFrom.guidApp"   required>
                                 <option ng-repeat="d in  sysList" value="{{d.guid}}">{{d.appName+','+ d.appCode}}</option>
                             </select>
@@ -44,11 +44,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6" >
+                <div class="col-md-12" >
                     <div class="form-group">
-                        <label class="control-label col-md-4">值来源类型:<span ng-class="{required:myform.sys_key3.$invalid}"  > * </span></label>
-                        <div class="col-md-8">
-                            <select class="form-control" name="sys_key3" ng-model="sysFrom.valueFrom"  ng-change="valuefrom(sysFrom.valueFrom)"  required>
+                        <label class="control-label col-md-2">值来源类型:<span ng-class="{required:myform.sys_key3.$invalid}"  > * </span></label>
+                        <div class="col-md-10">
+                            <select class="form-control sysfrom" name="sys_key3" style="width: 100%" ng-model="sysFrom.valueFrom"  ng-change="valuefrom(sysFrom.valueFrom)"  required>
                                 <option value=""></option>
                                 <option value="H">手动输入</option>
                                 <option ng-repeat="d in sysdict"  value="{{d.guid}}">{{d.dictName}}</option>
@@ -56,6 +56,9 @@
                         </div>
                     </div>
                 </div>
+                <script type="text/javascript">
+                    $('.sysfrom').select2();
+                </script>
                 <div class="col-md-6" ng-show="manual">
                     <div class="form-group">
                         <label class="control-label col-md-4">参数值:<span ng-class="{required:myform.sys_key4.$.invalid}"  > * </span></label>
@@ -70,7 +73,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">参数值:<span ng-class="{required:myform.sys_key5.$invalid}"  > * </span></label>
                         <div class="col-md-8">
-                            <select class="form-control" name="sys_key5" ng-model="sysFrom.value"   required>
+                            <select class="form-control" name="sys_key5" ng-model="sysFrom.value"   required style="width: 100%">
                                 <option ng-repeat="d in dictinfoAll"  value="{{d.guid}}">{{d.itemName}}</option>
                             </select>
                         </div>

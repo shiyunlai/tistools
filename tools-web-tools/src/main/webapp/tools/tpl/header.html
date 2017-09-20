@@ -61,11 +61,11 @@
                         <a href="#" onclick="loginout()">
                             <i class="icon-power"></i> 注销 </a>
                     </li>
-                    <li>
-                        <a href="#/opManage.html">
+                    <li ng-show = !useroper>
+                        <a href="#/operstatus.html">
                             <i class="icon-user-follow"></i> 设置身份 </a>
                     </li>
-                    <li>
+                    <li  ng-show = !opermenu>
                         <a href="#/Reorganizemenu.html">
                             <i class="icon-list"></i> 重组菜单 </a>
                     </li>

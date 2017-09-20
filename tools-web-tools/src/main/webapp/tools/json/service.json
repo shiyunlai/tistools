@@ -27,7 +27,8 @@
     "queryDictItemListByDictKey": {"ctrl": "DictController", "func": "queryDictItemListByDictKey","emo":"根据key查询业务字典项列表"},
     "exportDictExcel": {"ctrl": "DictController", "func": "exportDictExcel","emo":" 导出所有业务字典为excel"},
     "queryDictTree": {"ctrl": "DictController", "func": "queryDictTree","emo":" 查询业务字典对应树结构"},
-    "queryDict": {"ctrl": "DictController", "func": "queryDict","emo":" 根据key查询业务字典信息"}
+    "queryDict": {"ctrl": "DictController", "func": "queryDict","emo":" 根据key查询业务字典信息"},
+    "setDefaultDictValue": {"ctrl": "DictController", "func": "setDefaultDictValue","emo":" 修改业务字典项默认值"}
   },
   "duty_service" : {
     "dutytree": {"ctrl": "om/duty", "func": "dutytree"},
@@ -191,12 +192,14 @@
     "queryAllGroup": {"ctrl": "om/workgroup", "func": "queryAllGroup","em":"查询所有工作组"}
   },
   "login_service" : {
-    "updatePassword": {"ctrl": "AcAuthenticationController", "func": "updatePassword","emo":"修改密码"}
+    "updatePassword": {"ctrl": "AcAuthenticationController", "func": "updatePassword","emo":"修改密码"},
+    "pageInit": {"ctrl": "AcAuthenticationController", "func": "pageInit","emo":"页面初始化"}
   },
   "log_service" : {
     "queryOperateLogList": {"ctrl": "OperateLogController", "func": "queryOperateLogList","emo":"查询操作日志列表"},
     "queryOperateHistoryList": {"ctrl": "OperateLogController", "func": "queryOperateHistoryList","emo":"查询操作对象历史日志"},
-    "queryOperateDetail": {"ctrl": "OperateLogController", "func": "queryOperateDetail","emo":"查询操作日志详情"}
+    "queryOperateDetail": {"ctrl": "OperateLogController", "func": "queryOperateDetail","emo":"查询操作日志详情"},
+    "queryLoginHistory": {"ctrl": "OperateLogController", "func": "queryLoginHistory","emo":"查询操作员登录日志"}
 
   }
 }

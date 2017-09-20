@@ -133,6 +133,7 @@ MetronicApp.factory('httpInterceptor', ['$log', function($log) {
                     }else if(response.data.status =="error"){
                         //console.log('失败的请求,进行处理 ')
                     }else if(response.data.status =="failed"){
+                        toastr['error']("登陆失效，请重新登陆!");
                         window.location = "../tools/login.html";//如果正确，则进入主页
                     }
                 }
@@ -304,64 +305,88 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
         Demo.init();
-
-        var session = angular.fromJson(sessionStorage.user)
-        $scope.userId = session.userId;
-
+        var res = $rootScope.res.login_service;//页面所需调用的服务
+        common_service.post(res.pageInit,{}).then(function(data){
+            if(data.status == "success"){
+                 var session = data.retMessage.user;
+                $scope.userId = session.userId;//绑定登陆信息
+                userinfo(data.retMessage.user);//登陆信息页面
+                passedit(data.retMessage.user);//修改密码页面
+                $rootScope.menus = angular.fromJson(data.retMessage.menu);
+            }
+        })
+        //拿到用户信息
     });
     //个人信息页面
-    $scope.information = function(){
-        openwindow($uibModal, 'views/landinginfor/personalinfor.html','lg',
-            function ($scope, $modalInstance) {
-                var session = angular.fromJson(sessionStorage.user)
-                $scope.userid = session.userId;
-                $scope.operatorName = session.operatorName;
-                $scope.menuType = session.menuType;
-                $scope.lastLogin =moment(session.lastLogin).format('YYYY-MM-DD HH:mm:ss');
-                $scope.opertor = sessionStorage.opertor;
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            }
-        )
-    }
-    //修改密码页面
-    $scope.improved = function(){
-        var res = $rootScope.res.login_service;
-        openwindow($uibModal, 'views/landinginfor/Improved.html','lg',
-            function ($scope, $modalInstance) {
-                $scope.add = function(item){//保存新增的函数
-                    var subFrom = {};
-                    var session = angular.fromJson(sessionStorage.user)
-                    subFrom.userId =session.userId;
-                    subFrom.newPwd =item.newPassword ;
-                    subFrom.oldPwd =item.oldPassword;
-                    common_service.post(res.updatePassword,subFrom).then(function(data){
-                        console.log(data);
-                        if(data.status == "success"){
-                            toastr['success']("修改成功！");
-                            $modalInstance.close();
-                        }
-                    })
-
+    function userinfo(item){
+        $scope.information = function(){
+            openwindow($uibModal, 'views/landinginfor/personalinfor.html','lg',
+                function ($scope, $modalInstance) {
+                    console.log(item);
+                    //var session = angular.fromJson(sessionStorage.user)
+                    $scope.userid = item.userId;
+                    $scope.operatorName = item.operatorName;
+                    $scope.menuType = item.menuType;
+                    $scope.lastLogin =moment(item.lastLogin).format('YYYY-MM-DD HH:mm:ss');
+                    $scope.opertor = item.opertor;
+                    $scope.cancel = function () {
+                        $modalInstance.dismiss('cancel');
+                    };
                 }
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            }
-        )
+            )
+        }
     }
+
+    //修改密码页面
+    function passedit(datas){
+        $scope.improved = function(){
+            var res = $rootScope.res.login_service;
+            openwindow($uibModal, 'views/landinginfor/Improved.html','lg',
+                function ($scope, $modalInstance) {
+                    $scope.add = function(item){//保存新增的函数
+                        var subFrom = {};
+                        subFrom.userId =datas.userId;
+                        subFrom.newPwd =item.newPassword ;
+                        subFrom.oldPwd =item.oldPassword;
+                        common_service.post(res.updatePassword,subFrom).then(function(data){
+                            if(data.status == "success"){
+                                toastr['success']("修改成功！");
+                                $modalInstance.close();
+                            }
+                        })
+
+                    }
+                    $scope.cancel = function () {
+                        $modalInstance.dismiss('cancel');
+                    };
+                }
+            )
+        }
+    }
+
+
 
 }]);
 
 /* Setup Layout Part - Sidebar */
-MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scope,$timeout) {
+MetronicApp.controller('SidebarController', ['$scope', '$timeout','$rootScope','common_service',function($scope,$timeout,$rootScope,common_service) {
     $scope.$on('$includeContentLoaded', function () {
         Layout.initSidebar(); // init sidebar
-        var sessionjson = angular.fromJson(sessionStorage.menus)
-       if(sessionStorage.length == 0 ){
-            window.location = "../tools/login.html";//如果正确，则进入主页
-        }
+
+        var res = $rootScope.res.login_service;//页面所需调用的服务
+        common_service.post(res.pageInit,{}).then(function(data){
+            if(data.status == "success"){
+                var sessionjson = angular.fromJson(data.retMessage.menu);
+                $scope.menusAndTrans = angular.copy(sessionjson);
+                if(sessionjson.length == 0){
+                    window.location = "../tools/login.html";//如果正确，则进入主页
+                }
+            }
+        })
+
+        //拿到菜单信息
+        //var sessionjson = angular.fromJson(sessionStorage.menus)
+
         /*var item = sessionjson.children;
          $scope.menusAndTrans = angular.copy(item);//拿到登录页那边传来的目录*/
 /*        //根据order进行排序
@@ -379,18 +404,14 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
         });
         $scope.menusAndTrans = angular.copy(sts);//拿到登录页那边传来的目录*/
         //第一层也要，直接用数组包起来
-        var srw = [];
+       /* var srw = [];
         srw.push(sessionjson)
-        $scope.menusAndTrans = angular.copy(srw);//拿到登录页那边传来的目录
+        $scope.menusAndTrans = angular.copy(srw);//拿到登录页那边传来的目录*/
     });
 
 
-    var sessionjson = angular.fromJson(sessionStorage.menus)
+    //var sessionjson = angular.fromJson(sessionStorage.menus);
 
-    //第一层也要，直接用数组包起来
-    var srw = [];
-    srw.push(sessionjson)
-    $scope.menusAndTrans = angular.copy(srw);//拿到登录页那边传来的目录
 
     $scope.test = function(searchParam){
         if(_.isEmpty(searchParam)){ //如果是数组
@@ -412,7 +433,7 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scop
         $('.search').html('');//制空
         var sum = 0;//标识，判断第几次循环
         var html = ''//字符串模板
-        var num = all;//数组
+        var num = all//数组
         getArray(all,key);//调用
         function  getArray(data,key){
             sum++;//标识++

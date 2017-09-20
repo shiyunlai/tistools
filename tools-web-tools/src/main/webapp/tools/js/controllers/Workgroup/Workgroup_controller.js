@@ -24,6 +24,11 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
     flag.index = true;
     //节点导航
     var indextitle = "";
+    //树刷新
+    $scope.jstreereload = function(){
+        $("#container").jstree().refresh();
+    }
+
     $scope.indextitle = indextitle;
     //树自定义右键功能
     var items = function customMenu(node) {

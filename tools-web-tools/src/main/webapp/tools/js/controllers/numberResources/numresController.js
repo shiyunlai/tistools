@@ -40,8 +40,9 @@ MetronicApp.controller('numres_controller', function ($filter, $scope, $state,nu
     var gridOptions = {};
     $scope.gridOptions = gridOptions;
     var com = [
+        { field: 'seqName', displayName: '序号资源名称'},
         { field: 'seqKey', displayName: '序号键值'},
-        { field: 'seqNo', displayName: '序号数'},
+        { field: 'seqNo', displayName: '当前序号值'},
         { field: "reset", displayName:'重置方式',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.reset | translateConstants :\'DICT_SYS_RESET\') + $root.constant[\'DICT_SYS_RESET-\'+row.entity.reset]}}</div>'},
         { field: "resetParams", displayName:'重置处理参数',visible: false}
     ];
@@ -62,7 +63,16 @@ MetronicApp.controller('numres_controller', function ($filter, $scope, $state,nu
             toastr['error']("请至少选中一条进行重置！");
         }else{
             var str = getSel[0];
-            if(confirm('确定要把序号键为' + str.seqKey+ '的值按照' + str.reset +  '方式重置吗?' )){
+            if(str.reset == 'E'){
+                  str.config = '不重置'
+            }else if(str.reset == 'D'){
+                str.config = '按天重置'
+            }else if(str.reset == 'W'){
+                str.config = '按周重置'
+            }else if(str.reset == 'C'){
+                str.config = '自定义重置'
+            }
+            if(confirm('确定要把序号键为' + str.seqKey+ '的值按照' + str.config +  '方式重置吗?' )){
                 //$scope.selectRow.seqNo = '0'
             }
         }
@@ -136,7 +146,7 @@ MetronicApp.controller('numres_controller', function ($filter, $scope, $state,nu
             toastr['error']("请选则一条数据进行修改！");
         }else{
             var str =  getSel[0];
-            if(confirm('确定删除该运行参数吗')){
+            if(confirm('确定删除'+ str.seqKey+'运行参数吗')){
                 var subFrom = {};
                 subFrom.seqKey = str.seqKey;
                 numres_service.deleteSeqno(subFrom).then(function (data) {
