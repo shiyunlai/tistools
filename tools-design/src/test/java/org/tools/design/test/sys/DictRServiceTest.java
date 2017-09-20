@@ -14,9 +14,12 @@ import org.tis.tools.model.po.sys.SysDictItem;
 import org.tis.tools.rservice.om.capable.IOrgRService;
 import org.tis.tools.rservice.sys.basic.ISysDictItemRService;
 import org.tis.tools.rservice.sys.basic.ISysDictRService;
+import org.tis.tools.rservice.sys.capable.IDictRService;
 import org.tools.design.SpringJunitSupport;
 
 import junit.framework.Assert;
+
+import java.util.List;
 
 /**
  *
@@ -26,7 +29,7 @@ import junit.framework.Assert;
  *
  */
 public class DictRServiceTest extends SpringJunitSupport{
-
+/*
     @Autowired
     IOrgRService orgRService;
 
@@ -34,7 +37,10 @@ public class DictRServiceTest extends SpringJunitSupport{
     ISysDictRService sysDictRService ;
 
     @Autowired
-    ISysDictItemRService sysDictItemRService ;
+    ISysDictItemRService sysDictItemRService ;*/
+
+    @Autowired
+    IDictRService dictRService;
 
 
 
@@ -57,8 +63,8 @@ public class DictRServiceTest extends SpringJunitSupport{
 
     @After
     public void after(){
-        sysDictRService.deleteByCondition(wcSysDict);
-        sysDictItemRService.deleteByCondition(wcSysDictItem);
+//        sysDictRService.deleteByCondition(wcSysDict);
+//        sysDictItemRService.deleteByCondition(wcSysDictItem);
     }
 
     /**
@@ -74,12 +80,12 @@ public class DictRServiceTest extends SpringJunitSupport{
     public void genOrgCodeSucc() {
 
         //调用生成机构代码
-        String orgCodeStr = orgRService.genOrgCode(areaCode, orgDegree, orgType) ;
-
-        Assert.assertNotNull("成功生成机构代码不能为空", orgCodeStr);
-        Assert.assertEquals("机构代码共10位",10, orgCodeStr.length());
-        Assert.assertEquals("前两位是机构等级",orgCodeStr.substring(0, 2), orgDegree);
-        Assert.assertEquals("三四五位是地区码",orgCodeStr.substring(3, 5), areaCode);
+//        String orgCodeStr = orgRService.genOrgCode(areaCode, orgDegree, orgType) ;
+//
+//        Assert.assertNotNull("成功生成机构代码不能为空", orgCodeStr);
+//        Assert.assertEquals("机构代码共10位",10, orgCodeStr.length());
+//        Assert.assertEquals("前两位是机构等级",orgCodeStr.substring(0, 2), orgDegree);
+//        Assert.assertEquals("三四五位是地区码",orgCodeStr.substring(3, 5), areaCode);
 
     }
 
@@ -91,6 +97,27 @@ public class DictRServiceTest extends SpringJunitSupport{
 
     }
 
+    /**
+     * 设置字典默认值测试
+     */
+    @Test
+    public void setDefaultDictValueTest() {
+        String dictKey = "DICT_BIZ_TYPE";
+        String itemValue = "1";
+        dictRService.setDefaultDictValue(dictKey, itemValue);
+
+        Assert.assertEquals(dictRService.queryDict(dictKey).getDefaultValue(), itemValue);
+    }
+
+    /**
+     * 查询字典列表测试
+     */
+    @Test
+    public void queryDictListTest() {
+        String isQueryRoot = "Y";
+        List<SysDict> sysDicts = dictRService.querySysDicts(isQueryRoot);
+        Assert.assertNotNull(sysDicts);
+    }
 
 
 

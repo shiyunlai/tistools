@@ -281,6 +281,16 @@
 				<artifactId>tools-facade-sys</artifactId>
 				<version>${tools-facade-sys-version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.tis</groupId>
+				<artifactId>tools-facade-log</artifactId>
+				<version>${tools-facade-log-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.tis</groupId>
+				<artifactId>tools-facade-jnl</artifactId>
+				<version>${tools-facade-jnl-version}</version>
+			</dependency>
 			<!-- | tools 资源 end -->
 
 			<!--### Common libs start ### -->
@@ -897,6 +907,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.20.1</version>
 				<configuration>
 					<skip>true</skip>
 				</configuration>

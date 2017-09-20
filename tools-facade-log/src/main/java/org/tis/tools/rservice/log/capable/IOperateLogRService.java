@@ -1,9 +1,6 @@
 package org.tis.tools.rservice.log.capable;
 
-import org.tis.tools.model.po.log.LogAbfHistory;
-import org.tis.tools.model.po.log.LogAbfKeyword;
 import org.tis.tools.model.po.log.LogAbfOperate;
-import org.tis.tools.model.vo.log.LogHistoryDetail;
 import org.tis.tools.model.vo.log.LogOperateDetail;
 import org.tis.tools.rservice.log.exception.LogManagementException;
 
@@ -47,5 +44,12 @@ public interface IOperateLogRService {
      */
     List<LogOperateDetail> queryOperateHistoryList(String objGuid) throws LogManagementException;
 
+    /**
+     * 查询操作员的登录历史
+     * @param userId
+     * @return 操作日志集合
+     * @throws LogManagementException
+     */
+    List<LogAbfOperate> queryLoginHistory(String userId) throws LogManagementException;
 
 }

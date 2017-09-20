@@ -18,7 +18,6 @@
 	</properties>
 
 	<dependencies>
-
 		<!-- tools common、core -->
 		<dependency>
 			<groupId>org.tis</groupId>
@@ -28,7 +27,6 @@
 			<groupId>org.tis</groupId>
 			<artifactId>tools-core-basic</artifactId>
 		</dependency>
-		
 		<!-- 
 		| tools facade
 		| service-jnl 负责提供jnl和log两个业务域的服务能力 
@@ -36,12 +34,10 @@
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-facade-jnl</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-facade-log</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
 		<!-- apache commons -->

@@ -8,13 +8,15 @@
   	<insert id="insert" parameterType="org.tis.tools.model.po.sys.SysSeqno">
 	    INSERT INTO SYS_SEQNO 
 	    (
-	    	 seq_key
+	    	 seq_name
+	    	,seq_key
 	    	,seq_no
 	    	,reset
 	    	,reset_params
 	    )
 	    VALUES 
 	    (
+			#{seqName,jdbcType=VARCHAR},
 			#{seqKey,jdbcType=VARCHAR},
 			#{seqNo,jdbcType=DECIMAL},
 			#{reset,jdbcType=VARCHAR},
@@ -25,6 +27,9 @@
  	<update id="update" parameterType="org.tis.tools.model.po.sys.SysSeqno">
     	UPDATE SYS_SEQNO 
 	    <set>
+		<if test="seqName != null" >
+			seq_name = #{seqName,jdbcType=VARCHAR},
+		</if>
 		<if test="seqKey != null" >
 			seq_key = #{seqKey,jdbcType=VARCHAR},
 		</if>
@@ -44,6 +49,7 @@
  	<update id="updateForce" parameterType="org.tis.tools.model.po.sys.SysSeqno">
     	UPDATE SYS_SEQNO 
 	    <set>
+		seq_name = #{seqName,jdbcType=VARCHAR},
 		seq_key = #{seqKey,jdbcType=VARCHAR},
 		seq_no = #{seqNo,jdbcType=DECIMAL},
 		reset = #{reset,jdbcType=VARCHAR},
@@ -63,6 +69,9 @@
 	 <update id="updateByCondition" parameterType="map">
     	UPDATE SYS_SEQNO 
 	   <set>
+		<if test="domain.seqName != null" >
+        	seq_name = #{domain.seqName,jdbcType=VARCHAR},
+      	</if>
 		<if test="domain.seqKey != null" >
         	seq_key = #{domain.seqKey,jdbcType=VARCHAR},
       	</if>
@@ -98,7 +107,8 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 seq_key as seqKey
+		 seq_name as seqName
+		,seq_key as seqKey
 		,seq_no as seqNo
 		,reset as reset
 		,reset_params as resetParams

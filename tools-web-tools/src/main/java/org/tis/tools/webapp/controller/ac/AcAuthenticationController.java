@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.base.exception.ToolsRuntimeException;
+import org.tis.tools.model.def.JNLConstants;
 import org.tis.tools.model.po.ac.AcOperator;
 import org.tis.tools.model.po.ac.AcOperatorIdentity;
 import org.tis.tools.rservice.ac.capable.IAuthenticationRService;
@@ -52,7 +53,7 @@ public class AcAuthenticationController extends BaseController {
      * 登录
      */
     @OperateLog(
-            operateType = "login",
+            operateType = JNLConstants.OPEARTE_TYPE_LOGIN,
             operateDesc = "登录ABF",
             retType = ReturnType.Map,
             id = "user.operatorGuid",
@@ -105,6 +106,18 @@ public class AcAuthenticationController extends BaseController {
             AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
             logger.error("updatePassword exception : ", e);
         }
+    }
+
+    /**
+     * 注销登陆
+     */
+    @ResponseBody
+    @RequestMapping(value="/logout" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    public Map<String,Object> logout(@RequestBody String content, HttpSession httpSession) {
+        while(httpSession.getAttributeNames().hasMoreElements()) {
+            httpSession.removeAttribute(httpSession.getAttributeNames().nextElement());
+        }
+        return getReturnMap(null);
     }
     
     
