@@ -12,13 +12,11 @@
 	<version>${tools-facade-log-version}</version>
 	<name>tools-facade-log</name>
 	<url>http://maven.apache.org</url>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<dependencies>
-
 		<!-- tools common、core -->
 		<dependency>
 			<groupId>org.tis</groupId>
@@ -30,10 +28,10 @@
 		</dependency>
 
 		<!-- dubbo -->
-		<dependency>
+		<!--<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>dubbo</artifactId>
-		</dependency>
+		</dependency>-->
 		<!-- jax-rs -->
 		<dependency>
 			<groupId>javax.ws.rs</groupId>
