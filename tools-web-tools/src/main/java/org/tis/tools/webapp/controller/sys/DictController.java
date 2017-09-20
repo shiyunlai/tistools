@@ -1,7 +1,6 @@
 package org.tis.tools.webapp.controller.sys;
 
 import com.alibaba.fastjson.JSONObject;
-
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -12,11 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.common.utils.ExcelReader;
-import org.tis.tools.model.po.ac.AcMenu;
+import org.tis.tools.model.def.JNLConstants;
 import org.tis.tools.model.po.sys.SysDict;
 import org.tis.tools.model.po.sys.SysDictItem;
 import org.tis.tools.rservice.sys.capable.IDictRService;
 import org.tis.tools.webapp.controller.BaseController;
+import org.tis.tools.webapp.log.OperateLog;
+import org.tis.tools.webapp.log.ReturnType;
 import org.tis.tools.webapp.util.AjaxUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -344,31 +345,13 @@ public class DictController extends BaseController {
     
     /**
      * 查询所有业务字典
-     * @param content
-     * @param request
-     * @param response
-     * @return
-     * @throws ToolsRuntimeException
-     * @throws ParseException
      */
     @ResponseBody
-    @RequestMapping(value="/querySysDictList" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String querySysDictList(@RequestBody String content, HttpServletRequest request,
-                                 HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("querySysDictList request : " + content);
-            }
-            List<SysDict> sysDicts = dictRService.querySysDicts();
-            AjaxUtils.ajaxJsonSuccessMessage(response,sysDicts);
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("querySysDictList exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("querySysDictList exception : ", e);
-        }
-        return null;
+    @RequestMapping(value="/querySysDictList" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
+    public Map<String, Object> querySysDictList(@RequestBody String content){
+        JSONObject jsonObject= JSONObject.parseObject(content);
+        String isQueryRoot = jsonObject.getString("isQueryRoot");
+        return getReturnMap(dictRService.querySysDicts(isQueryRoot)) ;
     }
 
     /**
@@ -381,7 +364,7 @@ public class DictController extends BaseController {
      * @throws ParseException
      */
     @ResponseBody
-    @RequestMapping(value="/querySysDictItemList" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    @RequestMapping(value="/querySysDictItemList" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public String querySysDictItemList(@RequestBody String content, HttpServletRequest request,
                                  HttpServletResponse response) throws ToolsRuntimeException, ParseException {
         try {
@@ -474,7 +457,7 @@ public class DictController extends BaseController {
             String codedFileName = URLEncoder.encode("业务字典数据", "UTF-8");
             response.setHeader("content-disposition", "attachment;filename=" + codedFileName + ".xlsx");
 
-            List<SysDict> sysDicts = dictRService.querySysDicts();
+            List<SysDict> sysDicts = dictRService.querySysDicts(null);
             List<SysDictItem> sysDictItems = dictRService.querySysDictItemList();
 
             XSSFWorkbook wb = new XSSFWorkbook();  //--->创建了一个excel文件
@@ -655,6 +638,27 @@ public class DictController extends BaseController {
             logger.error("queryDict exception : ", e);
         }
         return null;
+    }
+
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,
+            operateDesc = "设置字典默认字典项",
+            retType = ReturnType.Object,
+            id = "dictKey",
+            name = "dictName",
+            keys = "defaultValue"
+    )
+    /**
+     * 修改字典项默认值
+     *
+     */
+    @ResponseBody
+    @RequestMapping(value="/setDefaultDictValue" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
+    public Map<String, Object> setDefaultDictValue(@RequestBody String content) {
+        JSONObject obj = JSONObject.parseObject(content);
+        String dictKey = obj.getString("dictKey");
+        String itemValue = obj.getString("itemValue");
+        return getReturnMap(dictRService.setDefaultDictValue(dictKey, itemValue));
     }
     
     /**
