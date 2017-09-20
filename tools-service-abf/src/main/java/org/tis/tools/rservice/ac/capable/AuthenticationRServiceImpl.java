@@ -246,7 +246,7 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
      * @throws AuthManagementException
      */
     @Override
-    public void updatePassword(String userId, String oldPwd, String newPwd) throws AuthManagementException {
+    public AcOperator updatePassword(String userId, String oldPwd, String newPwd) throws AuthManagementException {
         try {
             // 校验传入参数
             if (StringUtil.isEmpty(userId)) {
@@ -274,6 +274,8 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
                 // 保存数据库
                 acOperatorService.update(acOperator);
             }
+            acOperator.setPassword(null);
+            return acOperator;
         } catch (AuthManagementException ae) {
             throw ae;
         } catch (Exception e) {
