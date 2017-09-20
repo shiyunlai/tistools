@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.tis.tools.base.exception.ToolsRuntimeException;
+import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.common.utils.StringUtil;
 import org.tis.tools.model.def.JNLConstants;
 import org.tis.tools.rservice.log.capable.IOperateLogRService;
@@ -52,12 +53,20 @@ public class OperateLogHandler {
     @Before("requestPointcut()")
     public void enterController(JoinPoint point) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String reqInfo = "";
         for(Object arg : point.getArgs()){
             if (arg.getClass() == String.class) {
-                logger.info("{}请求, 参数: {}",request.getPathInfo(), arg) ;
+                reqInfo = String.valueOf(arg);
                 break;
             }
         }
+        logger.info(" [请求] Request URL:{}; Request Method:{}; Request Body:{}", BasicUtil.wrap(request.getPathInfo(), request.getMethod(), reqInfo)) ;
+    }
+    @AfterReturning(value = "requestPointcut()", returning = "ret")
+    public void exitController(JoinPoint point, Map<String, Object> ret) throws Throwable {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String objStr = JSON.toJSONString(ret.get(RETMESSAGE));
+        logger.info(" [响应] Request URL:{}; Response Body:{}", BasicUtil.wrap(request.getPathInfo(), objStr)) ;
     }
 
     /**
@@ -89,11 +98,11 @@ public class OperateLogHandler {
      */
     @AfterReturning(value = "@annotation(logAnt)", returning = "ret")
     public void logAfterExecution(JoinPoint point, Map<String, Object> ret, OperateLog logAnt) throws Throwable {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         LogOperateDetail log = LogThreadLocal.getLogBuilderLocal().getLog();
         log.setOperateResult(JNLConstants.OPERATE_STATUS_SUCCESS);
 
         String objStr = JSON.toJSONString(ret.get(RETMESSAGE));
-
         if(logAnt.retType() == ReturnType.Object) {
             JSONObject jsonObject = JSONObject.parseObject(objStr);
             if(StringUtils.isNotBlank(logAnt.id())) {
@@ -120,6 +129,7 @@ public class OperateLogHandler {
         }
         saveLogInfo();
 
+
     }
 
     /**
@@ -129,7 +139,6 @@ public class OperateLogHandler {
      */
     @AfterThrowing(value = "methodCachePointcut()", throwing = "e")
     public void logAfterExecutionThrowException(JoinPoint point, Exception e) throws Throwable {
-        System.out.println("**************************controller抛出异常后*************************************");
         OperateLogBuilder logBuilder = LogThreadLocal.getLogBuilderLocal();
 
         if(e instanceof ToolsRuntimeException) {
