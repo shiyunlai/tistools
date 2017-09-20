@@ -66,8 +66,8 @@ angular.module('MetronicApp').controller('systempara_controller', function($root
     var com = [
         { field: 'guidApp', displayName: '应用系统',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidApp | translateApp) + $root.constant[row.entity.guidApp]}}</div>'},
         { field: 'groupName', displayName: '参数组别'},
-        { field: "keyName", displayName:'参数值'},
-        { field: "valueFrom", displayName:'值来源',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.valueFrom | translateDict) + $root.constant[row.entity.valueFrom]}}</div>'},
+        { field: "keyName", displayName:'参数键'},
+        { field: "valueFrom", displayName:'值来源', cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.valueFrom | translateDict) + $root.constant[row.entity.valueFrom]}}</div>'},
         { field: "value", displayName:'参数值',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.value | translateDictitem) + $root.constant[row.entity.value]}}</div>'},
         { field: "description", displayName:'参数描述'}
     ];
@@ -136,11 +136,12 @@ angular.module('MetronicApp').controller('systempara_controller', function($root
         }else{
             openwindow($uibModal, 'views/Systempara/SystemparaAdd.html', 'lg',
                 function ($scope, $modalInstance) {
-
-                    console.log(getSel[0])
                     var ids = id;
                     $scope.id = ids;
                     $scope.sysFrom = getSel[0];
+                    $timeout(function () {
+                        $(".sysfrom").select2("val",getSel[0].valueFrom);//渲染表格数据
+                    },50);
                     $scope.sysList = sys.Appall;//循环渲染，在弹窗中
                     $scope.sysdict = sys.dictAll;
                     //根据来源选择值内容

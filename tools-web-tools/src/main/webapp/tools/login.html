@@ -260,7 +260,7 @@
                 }else if(data.retCode == '2'){
                     toastr['error'](data.retMessage, "登录失败！");
                 } else {
-                    toastr['error']( "登录异常！");
+                    toastr['error']( data.retMessage);
                 }
             }
         });

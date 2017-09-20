@@ -793,6 +793,15 @@ MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common
         $scope.opmer.saveconfig = function () {
             creattopmenu()
             }
+
+
+        //撤销重组菜单
+        $scope.opmer.delconfig= function () {
+            if(confirm("撤销之后，原有重组菜单将消失，菜单恢复成默认菜单")){
+                //让菜单树消失
+                searchMenu();//刷新重新加载
+            }
+        }
         //树结构生成提取
         var jstreecre = function(datas){
             $("#container2").jstree({
