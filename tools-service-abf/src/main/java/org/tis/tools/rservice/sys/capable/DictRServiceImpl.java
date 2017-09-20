@@ -610,23 +610,23 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 	/**
 	 * 设置业务字典的默认字典项
 	 *
-	 * @param dictKey
+	 * @param dictGuid
 	 * @param itemValue
 	 * @return
 	 * @throws SysManagementException
 	 */
 	@Override
-	public SysDict setDefaultDictValue(String dictKey, String itemValue) throws SysManagementException {
-		if(StringUtils.isBlank(dictKey)) {
-			throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap(SysDict.COLUMN_DICT_KEY, "SYS_DICT"));
+	public SysDict setDefaultDictValue(String dictGuid, String itemValue) throws SysManagementException {
+		if(StringUtils.isBlank(dictGuid)) {
+			throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap(SysDict.COLUMN_GUID, "SYS_DICT"));
 		}
 		if(StringUtils.isBlank(itemValue)) {
 			throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap(SysDict.COLUMN_DEFAULT_VALUE, "SYS_DICT"));
 		}
 		try {
-			List<SysDict> sysDicts = sysDictService.query(new WhereCondition().andEquals(SysDict.COLUMN_DICT_KEY, dictKey));
+			List<SysDict> sysDicts = sysDictService.query(new WhereCondition().andEquals(SysDict.COLUMN_GUID, dictGuid));
 			if(sysDicts.size() < 1) {
-				throw new SysManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap(SysDict.COLUMN_DICT_KEY, "SYS_DICT"));
+				throw new SysManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap(SysDict.COLUMN_GUID, "SYS_DICT"));
 			}
 			SysDict sysDict = sysDicts.get(0);
 			sysDict.setDefaultValue(itemValue);

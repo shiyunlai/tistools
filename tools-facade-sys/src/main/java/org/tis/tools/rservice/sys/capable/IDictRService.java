@@ -196,10 +196,12 @@ public interface IDictRService {
 	/**
 	 * 设置业务字典的默认字典项
 	 *
+	 * @param dictGuid 字典GUID
+	 * @param itemValue 默认值
 	 * @return
 	 * @throws SysManagementException
 	 */
-	SysDict setDefaultDictValue(String dictKey, String itemValue) throws SysManagementException;
+	SysDict setDefaultDictValue(String dictGuid, String itemValue) throws SysManagementException;
 
 
 
