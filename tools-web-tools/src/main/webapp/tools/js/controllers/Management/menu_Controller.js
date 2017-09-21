@@ -16,13 +16,31 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
     })
     var res = $rootScope.res.menu_service;//页面所需调用的服务
     /*0、菜单管理机构树逻辑*/
-/*
-    搜索逻辑目前不用
-    $("#s").submit(function(e) {
-        e.preventDefault();
-        $("#container").jstree(true).search($("#q").val());
+    //菜单搜索修改，改成键盘弹起事件，加上search组件
+    var to = false;
+    $('#q').keyup(function () {
+        if(to) {
+            clearTimeout(to);
+        }
+        $('#container').jstree().load_all();
+        to = setTimeout(function () {
+            var v = $('#q').val();
+            $('#container').jstree(true).search(v);
+        }, 250);
     });
-*/
+
+    //清空
+    menu.clear = function () {
+        $scope.searchitem = "";
+        if(to) {
+            clearTimeout(to);
+        }
+        $('#container').jstree().load_all();
+        to = setTimeout(function () {
+            var v = $('#q').val();
+            $('#container').jstree(true).search(v);
+        }, 250);
+    }
     //刷新菜单树
     $scope.reload = function(){
         $("#container").jstree().refresh();

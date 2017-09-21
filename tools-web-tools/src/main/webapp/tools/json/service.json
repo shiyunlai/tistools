@@ -193,7 +193,8 @@
   },
   "login_service" : {
     "updatePassword": {"ctrl": "AcAuthenticationController", "func": "updatePassword","emo":"修改密码"},
-    "pageInit": {"ctrl": "AcAuthenticationController", "func": "pageInit","emo":"页面初始化"}
+    "pageInit": {"ctrl": "AcAuthenticationController", "func": "pageInit","emo":"页面初始化"},
+    "logout": {"ctrl": "AcAuthenticationController", "func": "logout","emo":"注销登陆"}
   },
   "log_service" : {
     "queryOperateLogList": {"ctrl": "OperateLogController", "func": "queryOperateLogList","emo":"查询操作日志列表"},

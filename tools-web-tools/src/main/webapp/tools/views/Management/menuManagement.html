@@ -50,10 +50,10 @@
                             </div>
                             <div class="portlet-body"  ng-show="menushow">
                                 <div class="shu" style="margin-top: 20px;">
-                                    <!--<form id="s">
-                                        <input type="search" id="q"/>
-                                        <button type="submit">检索</button>
-                                    </form>-->
+                                    <form id="s">
+                                        <input type="search" ng-model="searchitem" id="q"/>
+                                        <button type="submit" ng-click="menu.clear()">清空</button>
+                                    </form>
                                     <div id="container"></div>
                                 </div>
                             </div>

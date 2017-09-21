@@ -70,8 +70,8 @@
                                 <div class="tab-content portlet light" ng-show="roleflag.limit">
                                     <div class="portlet-body">
                                         <form id="s">
-                                            <input type="search" id="q"/>
-                                            <button type="submit">检索</button>
+                                            <input type="search" ng-model="searchitem" id="q"/>
+                                            <button type="submit" ng-click="role.clear()">清空</button>
                                         </form>
                                         <div id="container"></div>
                                     </div>
