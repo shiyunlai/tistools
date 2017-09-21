@@ -74,11 +74,31 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
     })
 
     /* 树结构逻辑代码*/
-    //树过滤
-    $("#s").submit(function(e) {
-        e.preventDefault();
-        $("#container").jstree(true).search($("#q").val());
+    //菜单搜索修改，改成键盘弹起事件，加上search组件
+    var to = false;
+    $('#q').keyup(function () {
+        if(to) {
+            clearTimeout(to);
+        }
+        $('#container').jstree().load_all();
+        to = setTimeout(function () {
+            var v = $('#q').val();
+            $('#container').jstree(true).search(v);
+        }, 250);
     });
+
+    //清空n
+    role.clear = function () {
+        $scope.searchitem = "";
+        if(to) {
+            clearTimeout(to);
+        }
+        $('#container').jstree().load_all();
+        to = setTimeout(function () {
+            var v = $('#q').val();
+            $('#container').jstree(true).search(v);
+        }, 250);
+    }
     //创建树结构
     var control=function(id,arrs){
         $('#container').jstree('destroy',false);//删除重新加载，只删除数据。
@@ -180,7 +200,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                 },
             },
             "force_text": true,
-            plugins: ["sort", "types", "checkbox", "wholerow", "sort","themes", "html_data"],
+            plugins: ["sort", "types", "checkbox", "wholerow", "sort","themes", "html_data","search"],
             "checkbox": {
                 "keep_selected_style": false,//是否默认选中
             },
@@ -199,6 +219,9 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                 'is_draggable':function (node) {
                     return true;
                 }
+            },
+            'search':{
+                show_only_matches:true,
             },
             'sort': function (a, b) {
                 //排序插件，会两者比较，获取到节点的order属性，插件会自动两两比较。

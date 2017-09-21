@@ -58,3 +58,4 @@ tools.ipr
 tools-service-abf/src/main/resources/META-INF/spring/dubbo-provider-sys.xml
 
 tools-service-abf/src/main/resources/META-INF/spring/dubbo-provider-ac.xml
+tools-web-tools/src/main/resources/disconf.properties

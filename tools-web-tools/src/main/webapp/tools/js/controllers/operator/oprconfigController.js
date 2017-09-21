@@ -2,71 +2,11 @@
  * Created by wangbo on 2017/6/23.
  */
 
-//操作员个性化配置
+//页面个性化配置
 angular.module('MetronicApp').controller('operconfig_controller', function($rootScope, $scope ,$modal,$http,i18nService, $timeout,filterFilter,$uibModal,uiGridConstants) {
-    var operconfig = {};
-    $scope.operconfig = operconfig;
-    i18nService.setCurrentLang("zh-cn");
-    $scope.myData = [
-        {'USER_ID':'001000','OPERATOR_NAME':'王五','APP_CODE':'ABFRAME','APP_NAME':'应用框架模型1','CONFIG_TYPE': "测试类型", 'CONFIG_NAME': '测试','CONFIG_VALUE':'一','ISVALID':"是"},
-        {'USER_ID':'001001','OPERATOR_NAME':'李四','APP_CODE':'ABFRAME1','APP_NAME':'应用框架模型2','CONFIG_TYPE': "练习类型", 'CONFIG_NAME': '练习','CONFIG_VALUE':'二','ISVALID':"否"},
-        {'USER_ID':'001002','OPERATOR_NAME':'张三','APP_CODE':'ABFRAME2','APP_NAME':'应用框架模型3','CONFIG_TYPE': "保护类型", 'CONFIG_NAME': '配置','CONFIG_VALUE':'三','ISVALID':"是"}
-    ];
-    //ui-grid 具体配置
 
-    var gridOptions = {};
-    $scope.gridOptions = gridOptions;
-    //操作员名称，代码  应用系统名称 代码
-    var com = [
-        { field: "USER_ID", displayName:'登录用户名'},
-        { field: "OPERATOR_NAME", displayName:'操作用姓名'},
-        { field: "APP_CODE", displayName:'应用代码'},
-        { field: "APP_NAME", displayName:'应用名称'},
-        { field: 'CONFIG_TYPE', displayName: '配置类型'},
-        { field: "CONFIG_NAME", displayName:'配置名'},
-        { field: "CONFIG_VALUE", displayName:'配置值'},
-        { field: "ISVALID", displayName:'是否启用',
-            //配置搜索下拉框
-            filter:{
-                //term: '0',//默认搜索那项
-                type: uiGridConstants.filter.SELECT,
-                selectOptions: [{ value: '是', label: '是' }, { value: '否', label: '否' }]
-            }}
-    ];
-    var f = function(row){
-        if(row.isSelected){
-            $scope.selectRow = row.entity;
-            console.log($scope.selectRow)
-        }else{
-            delete $scope.selectRow;//制空
-        }
-    }
-    $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,false,f);
-    $scope.gridOptions.data = $scope.myData;
 
-    //修改个性化配置
-    $scope.opconfigEdit = function(){
-       if($scope.selectRow){
-           openwindow($modal, 'views/operator/opconfiEdit.html', 'lg',//弹出页面
-               function ($scope, $modalInstance) {
-                   $scope.add = function(item){
-                       //新增代码
-                       toastr['success']("保存成功！");
-                       $modalInstance.close();
-                   }
-                   $scope.cancel = function () {
-                       $modalInstance.dismiss('cancel');
-                   };
-
-               })
-       }else{
-           toastr['error']("请至少选中一条！");
-       }
-    }
 });
-
-
-
 //操作员身份
 angular.module('MetronicApp').controller('operstatus_controller', function($rootScope, $scope ,$modal,$http,operator_service,dictonary_service,common_service,i18nService, role_service,$timeout,filterFilter,$uibModal,uiGridConstants) {
     //操作员身份控制器
@@ -447,9 +387,7 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                                     $scope.gridOptions.data = datas;
                                     //新增代码
                                     toastr['success']("保存成功！");
-                                    opensf.inittx1(opersguid);//重新查询列表
-                                    $modalInstance.close();
-                                }
+                              }
                             })
                         }else{
                             toastr['error']("请选则一条数据进行添加！");
