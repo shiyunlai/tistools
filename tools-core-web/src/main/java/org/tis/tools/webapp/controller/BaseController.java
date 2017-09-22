@@ -132,7 +132,12 @@ abstract public class BaseController {
      *
      * @return
      */
-    public abstract Map<String, Object> getResponseMessage();
+//    public abstract Map<String, Object> getResponseMessage();
+    public  Map<String, Object> getResponseMessage() {
+        return new HashMap<String, Object>();
+    }
+
+
 
     protected void initWanNengChaXun(JSONObject jsonObj, WhereCondition wc) {
         // 查询项
