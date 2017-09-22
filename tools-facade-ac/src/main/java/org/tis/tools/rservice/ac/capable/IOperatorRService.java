@@ -213,4 +213,38 @@ public interface IOperatorRService {
      * @throws OperatorManagementException
      */
     void removeAcOperatorFun(String operatorGuid, String funcGuid) throws OperatorManagementException;
+
+    /**
+     * 查询操作员的所有个性化配置
+     * @param userId 操作员ID
+     * @return 配置集合
+     * @throws OperatorManagementException
+     */
+    List<AcOperatorConfig> queryOperatorConfigList(String userId) throws OperatorManagementException;
+
+    /**
+     * 新增操作员个性化配置
+     * @param config
+     * @return
+     * @throws OperatorManagementException
+     */
+    AcOperatorConfig addOperatorConfig(AcOperatorConfig config) throws OperatorManagementException;
+
+    /**
+     * 批量删除操作员个性化配置
+     * @param cfgList
+     * @return
+     * @throws OperatorManagementException
+     */
+    List<AcOperatorConfig> deleteOperatorConfig(List<AcOperatorConfig> cfgList) throws OperatorManagementException;
+
+    /**
+     * 修改操作员个性化配置
+     * @param config
+     * @return
+     * @throws OperatorManagementException
+     */
+    AcOperatorConfig updateOperatorConfig(AcOperatorConfig config) throws OperatorManagementException;
+
+
 }

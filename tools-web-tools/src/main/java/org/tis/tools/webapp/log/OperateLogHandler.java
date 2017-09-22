@@ -62,6 +62,7 @@ public class OperateLogHandler {
         }
         logger.info(" [请求] Request URL:{}; Request Method:{}; Request Body:{}", BasicUtil.wrap(request.getPathInfo(), request.getMethod(), reqInfo)) ;
     }
+
     @AfterReturning(value = "requestPointcut()", returning = "ret")
     public void exitController(JoinPoint point, Map<String, Object> ret) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();

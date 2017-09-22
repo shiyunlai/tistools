@@ -271,6 +271,13 @@ public class GUID {
 		return SequenceSimpleUtil.instance.GUID("KEYLOG");
 	}
 
+	/**
+	 * 取一个操作员个性配置(AC_OPERATOR_CONFIG)的数据主键值
+	 * @return
+	 */
+	public static String operatorConfig() {
+		return SequenceSimpleUtil.instance.GUID("OPERATORCFG");
+	}
 	
 
 	
