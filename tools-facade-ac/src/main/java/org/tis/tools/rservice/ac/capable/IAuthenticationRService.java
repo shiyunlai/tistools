@@ -101,7 +101,7 @@ public interface IAuthenticationRService {
      *          新密码
      * @throws AuthManagementException
      */
-    void updatePassword(String userId, String oldPwd, String newPwd) throws AuthManagementException;
+    AcOperator updatePassword(String userId, String oldPwd, String newPwd) throws AuthManagementException;
 
 
 

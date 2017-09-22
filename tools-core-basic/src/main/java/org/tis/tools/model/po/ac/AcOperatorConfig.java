@@ -41,6 +41,8 @@ public class AcOperatorConfig implements Serializable {
 	/** 对应的数据库表名称 */
 	public static final String TABLE_NAME = "AC_OPERATOR_CONFIG" ; 
 	/* AC_OPERATOR_CONFIG table's columns definition */
+	/** GUID ：数据主键<br/><br/> */
+	public static final String COLUMN_GUID = "guid" ; 
 	/** GUID_OPERATOR ：操作员GUID<br/><br/> */
 	public static final String COLUMN_GUID_OPERATOR = "guid_operator" ; 
 	/** GUID_APP ：应用GUID<br/><br/> */
@@ -54,6 +56,9 @@ public class AcOperatorConfig implements Serializable {
 	/** ISVALID ：是否启用<br/><br/>见业务菜单： DICT_YON */
 	public static final String COLUMN_ISVALID = "isvalid" ; 
 	
+	
+	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述： */
+	private String guid ;
 	
 	/** 字段类型：varchar<br/>字段名：操作员GUID<br/>描述： */
 	private String guidOperator ;
@@ -79,6 +84,25 @@ public class AcOperatorConfig implements Serializable {
 	public AcOperatorConfig() {
 	}
 
+	
+	/**
+	 * Set the 数据主键.
+	 * 
+	 * @param guid
+	 *            数据主键
+	 */
+	public void setGuid(String guid) {
+ 		this.guid = guid == null ? null : guid.trim() ;
+    }
+    
+    /**
+	 * Get the 数据主键.
+	 * 
+	 * @return 数据主键
+	 */
+	public String getGuid(){
+		return this.guid ;
+    }
 	
 	/**
 	 * Set the 操作员GUID.
