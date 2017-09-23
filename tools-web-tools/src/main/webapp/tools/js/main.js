@@ -515,11 +515,11 @@ MetronicApp.controller('FooterController', ['$scope', function($scope) {
     });
 }]);
 
-MetronicApp.controller('ThemePanelController', ['$scope', function($scope) {
+/*MetronicApp.controller('ThemePanelController', ['$scope', function($scope) {
     $scope.$on('$includeContentLoaded', function() {
         Demo.init(); // init theme panel
     });
-}]);
+}]);*/
 
 
 
@@ -932,7 +932,18 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             url:"/applicationFun.html",
             templateUrl:"views/Jurisdiction/applicationFun.html",
             data: {pageTitle: '应用功能管理'},
-            controller:"application_controller"
+            controller:"application_controller",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load([{
+                        name: 'MetronicApp',
+                        insertBefore: '#ng_load_plugins_before',
+                        files: [
+                            '../assets/global/plugins/angular-ui-grid/ui-grid2.min.js'
+                        ]
+                    }]);
+                }]
+            }
         })
         .state("menuManagement",{
             url:"/menuManagement.html",
@@ -963,6 +974,12 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             templateUrl:"views/operator/operatsetqx.html",
             data: {pageTitle: '操作员个人配置'},
             controller:"operat_controller"
+        })
+        .state("permission",{
+            url:"/permission.html/{id:.*}",
+            templateUrl:"views/permission/permission.html",
+            data: {pageTitle: '操作员功能行为权限配置'},
+            controller:"permission_controller"
         })
         .state("Reorganizemenu",{
             url:"/Reorganizemenu.html/{id:.*}",
