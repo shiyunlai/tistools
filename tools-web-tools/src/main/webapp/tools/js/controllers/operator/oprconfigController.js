@@ -387,6 +387,8 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                                     $scope.gridOptions.data = datas;
                                     //新增代码
                                     toastr['success']("保存成功！");
+                                    opensf.inittx1(opersguid);//重新查询列表
+                                    $modalInstance.close();
                               }
                             })
                         }else{
