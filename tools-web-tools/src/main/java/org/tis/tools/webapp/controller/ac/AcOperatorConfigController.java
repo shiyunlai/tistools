@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.model.def.JNLConstants;
-import org.tis.tools.model.po.ac.AcOperatorConfig;
+import org.tis.tools.model.po.ac.AcConfig;
 import org.tis.tools.rservice.ac.capable.IOperatorRService;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.log.OperateLog;
@@ -26,41 +26,44 @@ public class AcOperatorConfigController extends BaseController {
     @Autowired
     IOperatorRService operatorRService;
 
-
+    /**
+     * 查询个性化配置列表
+     * @return
+     */
     @ResponseBody
-    @RequestMapping(value="/queryOperatorConfig", produces ="application/json;charset=UTF-8", method= RequestMethod.POST)
-    public Map<String, Object> queryOperatorConfig(@RequestBody String content) {
-        List<AcOperatorConfig> acOperatorConfigs = operatorRService.queryOperatorConfigList(JSONObject.parseObject(content).getString("userId"));
-        return getReturnMap(acOperatorConfigs);
+    @RequestMapping(value="/queryConfigList", produces ="application/json;charset=UTF-8", method= RequestMethod.POST)
+    public Map<String, Object> queryConfigList() {
+        List<AcConfig> configs = operatorRService.queryConfigList();
+        return getReturnMap(configs);
     }
 
     @OperateLog(
             operateType = JNLConstants.OPEARTE_TYPE_LOGIN,
-            operateDesc = "删除操作员个性化配置",
+            operateDesc = "删除个性化配置",
             retType = ReturnType.List,
             id = "guid",
             name = "configName",
-            keys = {"guidOperator", "guidApp"}
+            keys = {"guidApp", "configName"}
     )
     @ResponseBody
-    @RequestMapping(value="/deleteOperatorConfig", produces ="application/json;charset=UTF-8", method= RequestMethod.POST)
-    public Map<String, Object> deleteOperatorConfig(@RequestBody String content) {
-        List<AcOperatorConfig> operatorConfigs = JSON.parseArray(content, AcOperatorConfig.class);
-        return getReturnMap(operatorRService.deleteOperatorConfig(operatorConfigs));
+    @RequestMapping(value="/deleteConfig", produces ="application/json;charset=UTF-8", method= RequestMethod.POST)
+    public Map<String, Object> deleteConfig(@RequestBody String content) {
+        List<AcConfig> configs = JSON.parseArray(content, AcConfig.class);
+        return getReturnMap(operatorRService.deleteConfig(configs));
     }
 
     @OperateLog(
             operateType = JNLConstants.OPEARTE_TYPE_LOGIN,
-            operateDesc = "新增操作员个性化配置",
+            operateDesc = "新增个性化配置",
             retType = ReturnType.Object,
             id = "guid",
             name = "configName",
-            keys = {"guidOperator", "guidApp"}
+            keys = {"guidApp", "configName"}
     )
     @ResponseBody
-    @RequestMapping(value="/addOperatorConfig", produces ="application/json;charset=UTF-8", method= RequestMethod.POST)
-    public Map<String, Object> addOperatorConfig(@RequestBody String content) {
-        return getReturnMap(operatorRService.addOperatorConfig(JSONObject.parseObject(content, AcOperatorConfig.class)));
+    @RequestMapping(value="/addConfig", produces ="application/json;charset=UTF-8", method= RequestMethod.POST)
+    public Map<String, Object> addConfig(@RequestBody String content) {
+        return getReturnMap(operatorRService.addConfig(JSONObject.parseObject(content, AcConfig.class)));
     }
 
     @OperateLog(
@@ -69,11 +72,14 @@ public class AcOperatorConfigController extends BaseController {
             retType = ReturnType.Object,
             id = "guid",
             name = "configName",
-            keys = {"guidOperator", "guidApp"}
+            keys = {"guidApp", "configName"}
     )
     @ResponseBody
-    @RequestMapping(value="/updateOperatorConfig", produces ="application/json;charset=UTF-8", method= RequestMethod.POST)
-    public Map<String, Object> updateOperatorConfig(@RequestBody String content) {
-        return getReturnMap(operatorRService.updateOperatorConfig(JSONObject.parseObject(content, AcOperatorConfig.class)));
+    @RequestMapping(value="/updateConfig", produces ="application/json;charset=UTF-8", method= RequestMethod.POST)
+    public Map<String, Object> updateConfig(@RequestBody String content) {
+        return getReturnMap(operatorRService.updateConfig(JSONObject.parseObject(content, AcConfig.class)));
     }
+
+
+
 }
