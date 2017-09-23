@@ -940,6 +940,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                         insertBefore: '#ng_load_plugins_before',
                         files: [
                             '../assets/global/plugins/angular-ui-grid/ui-grid2.min.js'
+                            // '../assets/global/plugins/angular-ui-grid/ui-grid.js'
                         ]
                     }]);
                 }]

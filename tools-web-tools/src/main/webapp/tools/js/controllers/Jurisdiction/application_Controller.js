@@ -1357,7 +1357,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     }
     $scope.gridOptions5 = initgrid($scope,gridOptions5,filterFilter,com5,true,f5);
     $scope.gridOptions5.paginationPageSize = 20, //每页显示个数
-        $scope.gridOptions5.totalItems = false;
 
 
     //功能操作行为保存
