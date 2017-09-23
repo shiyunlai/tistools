@@ -1,4 +1,4 @@
-package org.tis.tools.webapp.controller.ac;
+/*package org.tis.tools.webapp.controller.ac;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -77,3 +77,4 @@ public class AcOperatorConfigController extends BaseController {
         return getReturnMap(operatorRService.updateOperatorConfig(JSONObject.parseObject(content, AcOperatorConfig.class)));
     }
 }
+*/

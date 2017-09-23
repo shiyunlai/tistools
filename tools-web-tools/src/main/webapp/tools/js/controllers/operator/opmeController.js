@@ -117,6 +117,16 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
             toastr['error']("请至少选中一个操作员进行权限的分配！");
         }
     }
+
+
+    //操作员配置功能行为权限
+    $scope.funconfig = function (id) {
+        if($scope.selectRow){
+            $state.go("permission",{id:id})
+        }else{
+            toastr['error']("请至少选中一个操作员进行权限的分配！");
+        }
+    }
 });
 
 /*操作员个人配置控制器*/

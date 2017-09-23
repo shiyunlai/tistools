@@ -31,15 +31,15 @@
     "setDefaultDictValue": {"ctrl": "DictController", "func": "setDefaultDictValue","emo":" 修改业务字典项默认值"}
   },
   "duty_service" : {
-    "dutytree": {"ctrl": "om/duty", "func": "dutytree"},
+    "dutytree": {"ctrl": "om/duty", "func": "dutytree","em":"查询职务树"},
     "loadallduty": {"ctrl": "om/duty", "func": "loadallduty"},
-    "addduty": {"ctrl": "om/duty", "func": "addduty"},
+    "addduty": {"ctrl": "om/duty", "func": "addduty","em":"新增职务"},
     "initdutyCode": {"ctrl": "om/duty", "func": "initdutyCode"},
     "querydutybyType": {"ctrl": "om/duty", "func": "querydutybyType"},
     "querychild": {"ctrl": "om/duty", "func": "querychild"},
     "queryempbudutyCode": {"ctrl": "om/duty", "func": "queryempbudutyCode"},
     "deletedutyByCode": {"ctrl": "om/duty", "func": "deletedutyByCode"},
-    "updateDuty": {"ctrl": "om/duty", "func": "updateDuty"},
+    "updateDuty": {"ctrl": "om/duty", "func": "updateDuty","em":"更新职务"},
     "queryDucyList": {"ctrl": "om/duty", "func": "queryDutyList","em":"查询所有职务"}
   },
   "Emp_service" : {

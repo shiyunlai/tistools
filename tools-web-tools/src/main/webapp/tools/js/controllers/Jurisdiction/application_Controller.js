@@ -1208,8 +1208,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     }
     $scope.gridOption4 = initgrid($scope,gridOption4,filterFilter,com4,false,f4);
     $scope.gridOption4.paginationPageSize = 20, //每页显示个数
-    //$scope.gridOption4.enableFiltering = false //关闭搜索
-
 
 
     //根据功能查询行为类型函数
@@ -1322,38 +1320,18 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         })
     }
 
+
+
     //查询功能下所有行为类型
     biz.inittAll = function(funcGuid){//查询类型对应操作行为方法
         var subFrom = {};
         subFrom.funcGuid = funcGuid;
         application_service.queryAllBhvDefForFunc(subFrom).then(function (data){
             var datas = data.retMessage
-           /* $scope.gridOptions5.data = datas;//把获取到的数据复制给表
+           $scope.gridOptions5.data = datas;//把获取到的数据复制给表
             $scope.gridOptions5.mydefalutData = datas;
-            $scope.gridOptions5.totalItems = 0;//data.length;
             $scope.gridOptions5.getPage(1,$scope.gridOptions5.paginationPageSize);
-            $scope.gridOptions5.totalItems = 0;//data.length;*/
-            $scope.gridOptions5.totalItems = 0;//data.length;
-            $scope.gridOptions5.data = getPage($scope.grid2data, 1);
 
-            function getPage(datas, pageNumber) {
-                var initials = [];
-                return data.reduce(function(pages, row) {
-                        var initial = row.name.charAt(0);
-
-                        if(!pages[initial]) pages[initial] = [];
-                        pages[initial].push(row);
-
-                        if(initials.indexOf(initial) < 0)
-                        {
-                            initials.push(initial);
-                            initials.sort();
-                        }
-
-                        return pages;
-
-                    }, {})[initials[pageNumber - 1]] || [];
-            }
         })
     }
 
@@ -1379,8 +1357,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     }
     $scope.gridOptions5 = initgrid($scope,gridOptions5,filterFilter,com5,true,f5);
     $scope.gridOptions5.paginationPageSize = 20, //每页显示个数
-
-
+        $scope.gridOptions5.totalItems = false;
 
 
     //功能操作行为保存
