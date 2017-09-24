@@ -58,7 +58,7 @@
     <div class="col-md-4" ng-if="permiss.selectApp" >
         <div class="portlet-title col-md-12">
             <div class="caption col-md-10">
-                <span class="caption-subject font-blue-sharp bold uppercase">未允许行为</span>
+                <span class="caption-subject font-blue-sharp bold uppercase">白名单</span>
             </div>
         </div>
         <div class="col-md-12">
@@ -68,19 +68,19 @@
         </div>
     </div>
     <div class="col-md-1" style="margin-top:5%;margin-left: -3%;" ng-if="permiss.selectApp">
-        <div class="col-md-12" style="margin-left: 35%;">
-            <button   type="button" name="back" class="btn btn-primary" ng-click="operatqx.add()"> 授予 >
+        <div class="col-md-12" style="margin-left: 10%;">
+            <button   type="button" name="back" class="btn btn-primary" ng-click="operatqx.add()"> 添加黑名单 >
             </button>
         </div>
-        <div class="col-md-12" style="margin-top: 10px;margin-left: 35%;">
-            <button  type="button" name="back" class="btn btn-danger" ng-click="operatqx.del()"> < 移除
+        <div class="col-md-12" style="margin-top: 10px;margin-left: 10%;">
+            <button  type="button" name="back" class="btn btn-danger" ng-click="operatqx.del()"> < 移除黑名单
             </button>
         </div>
     </div>
     <div class="col-md-4"  ng-if="permiss.selectApp">
         <div class="portlet-title col-md-12">
             <div class="caption col-md-10">
-                <span class="caption-subject font-blue-sharp bold uppercase">已允许行为</span>
+                <span class="caption-subject font-blue-sharp bold uppercase">黑名单</span>
             </div>
 
         </div>
