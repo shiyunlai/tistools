@@ -184,7 +184,8 @@ public interface IOperatorRService {
     AcOperatorFuncDetail queryOperatorFuncInfoInApp(String userId) throws OperatorManagementException;
 
     /**
-     * 查询用户的特殊权限列表
+     * 查询用户的功能列表详情
+     *  可用于展示特殊权限列表
      *
      * @param userId
      *          用户名
@@ -258,6 +259,32 @@ public interface IOperatorRService {
      * @throws OperatorManagementException
      */
     List<AcConfig> queryOperatorConfig(String userId) throws OperatorManagementException;
+
+
+    /**
+     * 查询操作员在某功能的行为白名单和黑名单
+     * @param funGuid
+     * @param userId
+     * @return
+     * @throws OperatorManagementException
+     */
+    Map<String, Object> queryOperatorBhvListInFunc(String funGuid, String userId) throws OperatorManagementException;
+
+    /**
+     * 操作员功能行为添加黑名单
+     * @param operatorBhvList
+     * @return
+     * @throws OperatorManagementException
+     */
+    List<AcOperatorBhv> addOperatorBhvBlackList(List<AcOperatorBhv> operatorBhvList) throws OperatorManagementException;
+
+    /**
+     * 操作员功能行为移除黑名单
+     * @param operatorBhvList
+     * @return
+     * @throws OperatorManagementException
+     */
+    List<AcOperatorBhv> deleteOperatorBhvBlackList(List<AcOperatorBhv> operatorBhvList) throws OperatorManagementException;
 
 
 }
