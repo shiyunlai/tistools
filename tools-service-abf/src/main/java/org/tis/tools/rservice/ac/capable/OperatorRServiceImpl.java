@@ -18,7 +18,6 @@ import org.tis.tools.model.po.ac.*;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
 import org.tis.tools.rservice.BaseRService;
-import org.tis.tools.rservice.ac.basic.AcOperatorIdentityresRServiceImpl;
 import org.tis.tools.rservice.ac.exception.OperatorManagementException;
 import org.tis.tools.service.ac.*;
 import org.tis.tools.service.ac.exception.ACExceptionCodes;
@@ -83,6 +82,13 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
 
     @Autowired
     AcOperatorConfigService acOperatorConfigService;
+
+    @Autowired
+    AcFuncBhvService acFuncBhvService;
+
+    @Autowired
+    AcBhvDefService acBhvDefService;
+
 
     /**
      * 新增操作员
@@ -1178,14 +1184,14 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
                     matchVal.put(cfg.getGuidConfig(), cfg.getConfigValue())
                 );
 
-                List<AcConfig> afterHandle = defaultConfigs.stream().map(cfg -> {
+                List<AcConfig> afterHandleConfigs = defaultConfigs.stream().map(cfg -> {
                     if (matchVal.containsKey(cfg.getGuid())) {
                         cfg.setConfigValue(matchVal.get(cfg.getGuid()));
                     }
                     return cfg;
                 }).collect(Collectors.toList());
 
-                return afterHandle;
+                return afterHandleConfigs;
             } else {
                 return defaultConfigs;
             }
@@ -1196,4 +1202,154 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
                     ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap(AcOperatorConfig.TABLE_NAME, e.getCause().getMessage()));
         }
     }
+
+    /**
+     * 查询操作员在某功能的行为白名单和黑名单
+     *
+     * @param funGuid
+     * @param userId
+     * @return
+     * @throws OperatorManagementException
+     */
+    @Override
+    public Map<String, Object> queryOperatorBhvListInFunc(String funGuid, String userId) throws OperatorManagementException {
+        if(StringUtils.isBlank(funGuid)) {
+            throw new OperatorManagementException(
+                    ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("funGuid", AcOperatorBhv.TABLE_NAME)
+            );
+        }
+        if(StringUtils.isBlank(userId)) {
+            throw new OperatorManagementException(
+                    ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("UserId", AcOperatorBhv.TABLE_NAME)
+            );
+        }
+        String operatorGuid = queryOperatorByUserId(userId).getGuid();
+        try {
+            Map<String, Object> bhvMap = new HashMap<>();
+            List<Map> whiteList = new ArrayList<>();
+            List<Map> blackList = new ArrayList<>();
+
+            // 查询功能下的所有行为定义
+            List<Map> allBhvDef = applicationRService.queryAllBhvDefForFunc(funGuid);
+            // 取出GUID
+            List<String> guidList = allBhvDef.stream().map(map -> map.get("guid").toString()).collect(Collectors.toList());
+            // 查询功能下的所有黑名单与所有功能定义对比
+            if(guidList != null && guidList.size() > 0) {
+                List<AcOperatorBhv> black = acOperatorBhvService.query(new WhereCondition()
+                        .andEquals(AcOperatorBhv.COLUMN_GUID_OPERATOR, operatorGuid)
+                        .andIn(AcOperatorBhv.COLUMN_GUID_FUNC_BHV, guidList));
+                List<String> blackGuids = black.stream().map(AcOperatorBhv::getGuidFuncBhv).collect(Collectors.toList());
+                whiteList = allBhvDef.stream().filter(m -> ! blackGuids.contains(m.get("guid"))).collect(Collectors.toList());
+                blackList = allBhvDef.stream().filter(m -> blackGuids.contains(m.get("guid"))).collect(Collectors.toList());
+            }
+            bhvMap.put("whiteList", whiteList);
+            bhvMap.put("blackList", blackList);
+            return bhvMap;
+
+        } catch (OperatorManagementException ae) {
+            throw ae;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new OperatorManagementException(
+                    ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap(AcOperatorBhv.TABLE_NAME, e));
+        }
+    }
+
+    /**
+     * 操作员功能行为添加黑名单
+     *
+     * @param operatorBhvList
+     * @return
+     * @throws OperatorManagementException
+     */
+    @Override
+    public List<AcOperatorBhv> addOperatorBhvBlackList(List<AcOperatorBhv> operatorBhvList) throws OperatorManagementException {
+        if(CollectionUtils.isEmpty(operatorBhvList)) {
+            throw new OperatorManagementException(
+                    ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("operatorBhv", AcOperatorBhv.TABLE_NAME)
+            );
+        }
+        try {
+            transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+                @Override
+                public void doInTransactionWithoutResult(TransactionStatus status) {
+                    try {
+                        for (AcOperatorBhv operatorBhv : operatorBhvList) {
+                            if (operatorBhv == null) {
+                                throw new OperatorManagementException(
+                                        ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("operatorBhv", AcOperatorBhv.TABLE_NAME)
+                                );
+                            }
+                            String validate = BeanFieldValidateUtil.checkObjFieldNotRequired(operatorBhv, new String[]{"authType"});
+                            if (StringUtils.isNotEmpty(validate)) {
+                                throw new OperatorManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, BasicUtil.wrap(validate, AcOperatorBhv.TABLE_NAME));
+                            }
+                            if (acOperatorBhvService.count(new WhereCondition()
+                                    .andEquals(AcOperatorBhv.COLUMN_GUID_FUNC_BHV, operatorBhv.getGuidFuncBhv())
+                                    .andEquals(AcOperatorBhv.COLUMN_GUID_OPERATOR, operatorBhv.getGuidOperator())) > 0) {
+                                throw new OperatorManagementException(ExceptionCodes.DUPLICATE_WHEN_INSERT, BasicUtil.wrap(operatorBhv.getGuidFuncBhv(), AcOperatorBhv.TABLE_NAME));
+                            }
+                            acOperatorBhvService.insert(operatorBhv);
+
+                        }
+                    } catch (OperatorManagementException ae) {
+                        status.setRollbackOnly();
+                        throw ae;
+                    } catch (Exception e) {
+                        status.setRollbackOnly();
+                        e.printStackTrace();
+                        throw new OperatorManagementException(
+                                ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap(AcOperatorBhv.TABLE_NAME, e));
+                    }
+                }
+            });
+            return  operatorBhvList;
+        } catch (OperatorManagementException ae) {
+            throw ae;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new OperatorManagementException(
+                    ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap(AcOperatorBhv.TABLE_NAME, e));
+        }
+    }
+
+    /**
+     * 操作员功能行为移除黑名单
+     *
+     * @param operatorBhvList
+     * @return
+     * @throws OperatorManagementException
+     */
+    @Override
+    public List<AcOperatorBhv> deleteOperatorBhvBlackList(List<AcOperatorBhv> operatorBhvList) throws OperatorManagementException {
+        if(CollectionUtils.isEmpty(operatorBhvList)) {
+            throw new OperatorManagementException(
+                    ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, BasicUtil.wrap("operatorBhv", AcOperatorBhv.TABLE_NAME)
+            );
+        }
+        try {
+            List<String> funcBhvGuids = operatorBhvList.stream().map(AcOperatorBhv::getGuidFuncBhv).distinct().collect(Collectors.toList());
+            String operatorGuid = "";
+            Optional<String> first = operatorBhvList.stream().map(AcOperatorBhv::getGuidOperator).findFirst();
+            if (first.isPresent()) {
+                operatorGuid = first.get();
+            }
+            if(StringUtils.isNotEmpty(operatorGuid) && funcBhvGuids.size() > 0) {
+                acOperatorBhvService.deleteByCondition(new WhereCondition().andEquals(AcOperatorBhv.COLUMN_GUID_OPERATOR, operatorGuid)
+                .andIn(AcOperatorBhv.COLUMN_GUID_FUNC_BHV, funcBhvGuids));
+            } else {
+                throw new OperatorManagementException(
+                        ExceptionCodes.LACK_PARAMETERS_WHEN_DELETE, BasicUtil.wrap("operatorBhv", AcOperatorBhv.TABLE_NAME)
+                );
+            }
+            return  operatorBhvList;
+        } catch (OperatorManagementException ae) {
+            throw ae;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new OperatorManagementException(
+                    ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap(AcOperatorBhv.TABLE_NAME, e));
+        }
+    }
+
 }

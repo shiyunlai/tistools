@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.def.ACConstants;
+import org.tis.tools.model.po.ac.AcConfig;
 import org.tis.tools.model.po.ac.AcRole;
 import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
 import org.tis.tools.rservice.ac.capable.IOperatorRService;
@@ -73,6 +74,37 @@ public class OperatorRServiceTest extends SpringJunitSupport {
             String userId = "admin";
             List<Map> maps = operatorRService.queryAcOperatorFunListByUserId(userId);
             System.out.println(maps);
+        } catch (ToolsRuntimeException e) {
+            System.out.println("错误码："+e.getCode());
+            System.out.println("错误信息："+e.getMessage());
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void queryOperatorConfigTest() throws ToolsRuntimeException {
+
+        try {
+            String userId = "admin";
+            List<AcConfig> maps = operatorRService.queryOperatorConfig(userId);
+            System.out.println(maps);
+        } catch (ToolsRuntimeException e) {
+            System.out.println("错误码："+e.getCode());
+            System.out.println("错误信息："+e.getMessage());
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void queryOperatorBhvListInFuncTest() throws ToolsRuntimeException {
+
+        try {
+            String operatorGuid = "1111";
+            String funcGuid = "FUNC1500601486";
+            Map<String, Object> map = operatorRService.queryOperatorBhvListInFunc(funcGuid, operatorGuid);
+            System.out.println(map);
         } catch (ToolsRuntimeException e) {
             System.out.println("错误码："+e.getCode());
             System.out.println("错误信息："+e.getMessage());
