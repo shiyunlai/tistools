@@ -26,6 +26,7 @@ import org.tis.tools.service.om.OmEmployeeService;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class OperatorRServiceImpl extends BaseRService implements IOperatorRService {
 
@@ -76,6 +77,9 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
 
     @Autowired
     AcFuncServiceExt acFuncServiceExt;
+
+    @Autowired
+    AcConfigService acConfigService;
 
     @Autowired
     AcOperatorConfigService acOperatorConfigService;
@@ -233,7 +237,7 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
                         // 6.操作员与权限集对应关系
                         acOperatorRoleService.deleteByCondition(commonWc);
                         // 7.操作员个性配置
-                        acOperatorConfigService.deleteByCondition(commonWc);
+                        acConfigService.deleteByCondition(commonWc);
                         // 删除操作员
                         acOperatorService.delete(operatorGuid);
                     } catch (Exception e) {
@@ -982,22 +986,17 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
     /**
      * 查询操作员的所有个性化配置
      *
-     * @param userId 操作员ID
      * @return 配置集合
      * @throws OperatorManagementException
      */
     @Override
-    public List<AcOperatorConfig> queryOperatorConfigList(String userId) throws OperatorManagementException {
-        if (StringUtils.isBlank(userId)) {
-            throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("UserId", AcOperatorConfig.TABLE_NAME));
-        }
-        AcOperator acOperator = queryOperatorByUserId(userId);
+    public List<AcConfig> queryConfigList() throws OperatorManagementException {
         try {
-            return acOperatorConfigService.query(new WhereCondition().andEquals(AcOperatorConfig.COLUMN_GUID_OPERATOR, acOperator.getGuid()));
+            return acConfigService.query(new WhereCondition());
         } catch (Exception e) {
             e.printStackTrace();
             throw new OperatorManagementException(
-                    ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap(AcOperatorConfig.TABLE_NAME, e.getCause().getMessage()));
+                    ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap(AcConfig.TABLE_NAME, e.getCause().getMessage()));
         }
     }
 
@@ -1009,31 +1008,30 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
      * @throws OperatorManagementException
      */
     @Override
-    public AcOperatorConfig addOperatorConfig(AcOperatorConfig config) throws OperatorManagementException {
+    public AcConfig addConfig(AcConfig config) throws OperatorManagementException {
         if(config == null) {
-            throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("", AcOperatorConfig.TABLE_NAME));
+            throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("config", AcConfig.TABLE_NAME));
         }
         try {
             config.setGuid(GUID.operatorConfig());
-            String validate = BeanFieldValidateUtil.checkObjFieldAllRequired(config);
+            String validate = BeanFieldValidateUtil.checkObjFieldNotRequired(config, new String[]{"configDesc"});
             if(StringUtils.isNotEmpty(validate)) {
-                throw new OperatorManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, BasicUtil.wrap(validate, AcOperatorConfig.TABLE_NAME));
+                throw new OperatorManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, BasicUtil.wrap(validate, AcConfig.TABLE_NAME));
             }
-            if(acOperatorConfigService.count(new WhereCondition()
-                    .andEquals(AcOperatorConfig.COLUMN_GUID_OPERATOR, config.getGuidOperator())
-                    .andEquals(AcOperatorConfig.COLUMN_GUID_APP, config.getGuidApp())
-                    .andEquals(AcOperatorConfig.COLUMN_CONFIG_TYPE, config.getConfigType())
-                    .andEquals(AcOperatorConfig.COLUMN_CONFIG_NAME, config.getConfigName())) > 0) {
-                throw new OperatorManagementException(ExceptionCodes.DUPLICATE_WHEN_INSERT, BasicUtil.wrap(config.getConfigName(), AcOperatorConfig.TABLE_NAME));
+            if(acConfigService.count(new WhereCondition()
+                    .andEquals(AcConfig.COLUMN_GUID_APP, config.getGuidApp())
+                    .andEquals(AcConfig.COLUMN_CONFIG_TYPE, config.getConfigType())
+                    .andEquals(AcConfig.COLUMN_CONFIG_NAME, config.getConfigName())) > 0) {
+                throw new OperatorManagementException(ExceptionCodes.DUPLICATE_WHEN_INSERT, BasicUtil.wrap(config.getConfigName(), AcConfig.TABLE_NAME));
             }
-            acOperatorConfigService.insert(config);
+            acConfigService.insert(config);
             return config;
         } catch (OperatorManagementException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new OperatorManagementException(
-                    ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap(AcOperatorConfig.TABLE_NAME, e.getCause().getMessage()));
+                    ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap(AcConfig.TABLE_NAME, e.getMessage()));
         }
     }
 
@@ -1045,20 +1043,23 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
      * @throws OperatorManagementException
      */
     @Override
-    public List<AcOperatorConfig> deleteOperatorConfig(List<AcOperatorConfig> cfgList) throws OperatorManagementException {
+    public List<AcConfig> deleteConfig(List<AcConfig> cfgList) throws OperatorManagementException {
         if(CollectionUtils.isEmpty(cfgList)) {
-            throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, BasicUtil.wrap("", AcOperatorConfig.TABLE_NAME));
+            throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, BasicUtil.wrap("configList", AcConfig.TABLE_NAME));
         }
         try {
             List<String> guids = new ArrayList<>();
             cfgList.stream().forEach(cfg -> {
+                if(cfg == null) {
+                    throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, BasicUtil.wrap("", AcConfig.TABLE_NAME));
+                }
                 if(StringUtils.isBlank(cfg.getGuid())) {
-                    throw new OperatorManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_DELETE, BasicUtil.wrap(AcOperatorConfig.COLUMN_GUID, AcOperatorConfig.TABLE_NAME));
+                    throw new OperatorManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_DELETE, BasicUtil.wrap(AcConfig.COLUMN_GUID, AcConfig.TABLE_NAME));
                 }
                 guids.add(cfg.getGuid());
             });
             if(guids.size() > 0) {
-                acOperatorConfigService.deleteByCondition(new WhereCondition().andIn(AcOperatorConfig.COLUMN_GUID, guids));
+                acConfigService.deleteByCondition(new WhereCondition().andIn(AcConfig.COLUMN_GUID, guids));
             }
             return cfgList;
         } catch (OperatorManagementException ae) {
@@ -1066,7 +1067,7 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
         } catch (Exception e) {
             e.printStackTrace();
             throw new OperatorManagementException(
-                    ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap(AcOperatorConfig.TABLE_NAME, e.getCause().getMessage()));
+                    ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap(AcConfig.TABLE_NAME, e));
         }
     }
 
@@ -1078,23 +1079,121 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
      * @throws OperatorManagementException
      */
     @Override
-    public AcOperatorConfig updateOperatorConfig(AcOperatorConfig config) throws OperatorManagementException {
+    public AcConfig updateConfig(AcConfig config) throws OperatorManagementException {
         if(config == null) {
-            throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap("", AcOperatorConfig.TABLE_NAME));
+            throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap("", AcConfig.TABLE_NAME));
         }
         try {
-            String validate = BeanFieldValidateUtil.checkObjFieldAllRequired(config);
+            String validate = BeanFieldValidateUtil.checkObjFieldNotRequired(config, new String[]{"configDesc"});
             if(StringUtils.isNotEmpty(validate)) {
-                throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap(validate, AcOperatorConfig.TABLE_NAME));
+                throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap(validate, AcConfig.TABLE_NAME));
             }
-            acOperatorConfigService.update(config);
+            if(acConfigService.count(new WhereCondition()
+                    .andEquals(AcConfig.COLUMN_GUID_APP, config.getGuidApp())
+                    .andEquals(AcConfig.COLUMN_CONFIG_TYPE, config.getConfigType())
+                    .andEquals(AcConfig.COLUMN_CONFIG_NAME, config.getConfigName())
+                    .andNotEquals(AcConfig.COLUMN_GUID, config.getGuid())) > 0) {
+                throw new OperatorManagementException(ExceptionCodes.DUPLICATE_WHEN_INSERT, BasicUtil.wrap(config.getConfigName(), AcConfig.TABLE_NAME));
+            }
+            acConfigService.update(config);
             return config;
         } catch (OperatorManagementException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new OperatorManagementException(
+                    ExceptionCodes.FAILURE_WHEN_UPDATE, BasicUtil.wrap(AcConfig.TABLE_NAME, e.getCause().getMessage()));
+        }
+    }
+
+    /**
+     * 保存操作员配置
+     *
+     * @param acOperatorConfig
+     * @return
+     * @throws OperatorManagementException
+     */
+    @Override
+    public AcOperatorConfig saveOperatorLog(AcOperatorConfig acOperatorConfig) throws OperatorManagementException {
+        if(acOperatorConfig == null) {
+            throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap("", AcOperatorConfig.TABLE_NAME));
+        }
+        try {
+            String validate = BeanFieldValidateUtil.checkObjFieldAllRequired(acOperatorConfig);
+            if(StringUtils.isNotEmpty(validate)) {
+                throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap(validate, AcOperatorConfig.TABLE_NAME));
+            }
+            transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+                @Override
+                public void doInTransactionWithoutResult(TransactionStatus status) {
+                    try {
+                        WhereCondition wc = new WhereCondition();
+                        wc.andEquals(AcOperatorConfig.COLUMN_GUID_CONFIG, acOperatorConfig.getGuidConfig())
+                                .andEquals(AcOperatorConfig.COLUMN_GUID_OPERATOR, acOperatorConfig.getGuidOperator());
+                        acOperatorConfigService.deleteByCondition(wc);
+                        acOperatorConfigService.insert(acOperatorConfig);
+                    } catch (Exception e) {
+                        status.setRollbackOnly();
+                        e.printStackTrace();
+                        throw new OperatorManagementException(
+                                ExceptionCodes.FAILURE_WHEN_UPDATE, BasicUtil.wrap(AcOperatorConfig.TABLE_NAME, e.getMessage()));
+                    }
+                }
+            });
+            return acOperatorConfig;
+        } catch (OperatorManagementException ae) {
+            throw ae;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new OperatorManagementException(
                     ExceptionCodes.FAILURE_WHEN_UPDATE, BasicUtil.wrap(AcOperatorConfig.TABLE_NAME, e.getCause().getMessage()));
+        }
+    }
+
+    /**
+     * 查询操作员的个性化配置
+     *
+     * @param userId
+     * @return
+     * @throws OperatorManagementException
+     */
+    @Override
+    public List<AcConfig> queryOperatorConfig(String userId) throws OperatorManagementException {
+        if(StringUtils.isBlank(userId)) {
+            throw new OperatorManagementException(
+                    ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("UserId", AcOperatorConfig.TABLE_NAME)
+            );
+        }
+        AcOperator operator = queryOperatorByUserId(userId);
+        try {
+            /**
+             * 查询全部配置，与操作员修改的配置，替换默认配置中的已修改项
+             */
+            List<AcOperatorConfig> privateConfigs = acOperatorConfigService.query(
+                    new WhereCondition().andEquals(AcOperatorConfig.COLUMN_GUID_OPERATOR, operator.getGuid()));
+            List<AcConfig> defaultConfigs = queryConfigList();
+            if(privateConfigs.size() > 0) {
+                Map<String, String> matchVal = new HashMap<>();
+                privateConfigs.stream().forEach(cfg ->
+                    matchVal.put(cfg.getGuidConfig(), cfg.getConfigValue())
+                );
+
+                List<AcConfig> afterHandle = defaultConfigs.stream().map(cfg -> {
+                    if (matchVal.containsKey(cfg.getGuid())) {
+                        cfg.setConfigValue(matchVal.get(cfg.getGuid()));
+                    }
+                    return cfg;
+                }).collect(Collectors.toList());
+
+                return afterHandle;
+            } else {
+                return defaultConfigs;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new OperatorManagementException(
+                    ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap(AcOperatorConfig.TABLE_NAME, e.getCause().getMessage()));
         }
     }
 }
