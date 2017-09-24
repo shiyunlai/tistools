@@ -3,8 +3,6 @@
  */
 package org.tis.tools.rservice.ac.capable;
 
-
-import org.springframework.expression.spel.ast.Operator;
 import org.tis.tools.model.po.ac.*;
 import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
 import org.tis.tools.rservice.ac.exception.AuthManagementException;
@@ -215,36 +213,51 @@ public interface IOperatorRService {
     void removeAcOperatorFun(String operatorGuid, String funcGuid) throws OperatorManagementException;
 
     /**
-     * 查询操作员的所有个性化配置
-     * @param userId 操作员ID
+     * 查询所有个性化配置
      * @return 配置集合
      * @throws OperatorManagementException
      */
-    List<AcOperatorConfig> queryOperatorConfigList(String userId) throws OperatorManagementException;
+    List<AcConfig> queryConfigList() throws OperatorManagementException;
 
     /**
-     * 新增操作员个性化配置
+     * 新增个性化配置
      * @param config
      * @return
      * @throws OperatorManagementException
      */
-    AcOperatorConfig addOperatorConfig(AcOperatorConfig config) throws OperatorManagementException;
+    AcConfig addConfig(AcConfig config) throws OperatorManagementException;
 
     /**
-     * 批量删除操作员个性化配置
+     * 批量删除个性化配置
      * @param cfgList
      * @return
      * @throws OperatorManagementException
      */
-    List<AcOperatorConfig> deleteOperatorConfig(List<AcOperatorConfig> cfgList) throws OperatorManagementException;
+    List<AcConfig> deleteConfig(List<AcConfig> cfgList) throws OperatorManagementException;
 
     /**
-     * 修改操作员个性化配置
+     * 修改个性化配置
      * @param config
      * @return
      * @throws OperatorManagementException
      */
-    AcOperatorConfig updateOperatorConfig(AcOperatorConfig config) throws OperatorManagementException;
+    AcConfig updateConfig(AcConfig config) throws OperatorManagementException;
+
+    /**
+     * 保存操作员配置
+     * @param acOperatorConfig
+     * @return
+     * @throws OperatorManagementException
+     */
+    AcOperatorConfig saveOperatorLog(AcOperatorConfig acOperatorConfig) throws OperatorManagementException;
+
+    /**
+     * 查询操作员的个性化配置
+     * @param userId
+     * @return
+     * @throws OperatorManagementException
+     */
+    List<AcConfig> queryOperatorConfig(String userId) throws OperatorManagementException;
 
 
 }

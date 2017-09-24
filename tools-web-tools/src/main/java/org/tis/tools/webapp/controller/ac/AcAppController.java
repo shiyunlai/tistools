@@ -1,17 +1,7 @@
 package org.tis.tools.webapp.controller.ac;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,21 +10,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
-import org.tis.tools.model.po.ac.AcApp;
-import org.tis.tools.model.po.ac.AcBhvDef;
-import org.tis.tools.model.po.ac.AcBhvtypeDef;
-import org.tis.tools.model.po.ac.AcFuncResource;
-import org.tis.tools.model.po.ac.AcFuncgroup;
-import org.tis.tools.model.po.ac.AcFunc;
-import org.tis.tools.model.po.om.OmOrg;
-import org.tis.tools.model.vo.ac.AcAppVo;
+import org.tis.tools.model.def.JNLConstants;
+import org.tis.tools.model.po.ac.*;
 import org.tis.tools.model.vo.ac.AcFuncVo;
-import org.tis.tools.rservice.ac.basic.IAcAppRService;
 import org.tis.tools.rservice.ac.capable.IApplicationRService;
 import org.tis.tools.webapp.controller.BaseController;
+import org.tis.tools.webapp.log.OperateLog;
+import org.tis.tools.webapp.log.ReturnType;
 import org.tis.tools.webapp.util.AjaxUtils;
 
-import java.math.BigDecimal; //转换
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/AcAppController")
@@ -44,31 +36,19 @@ public class AcAppController extends BaseController {
 	
 	/**
 	 * appAdd新增应用服务
-	 * @param content
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws ParseException 
 	 */
+	@OperateLog(
+			operateType = JNLConstants.OPEARTE_TYPE_ADD,
+			operateDesc = "新增应用",
+			retType = ReturnType.Object,
+			id = "guid",
+			name = "appName",
+			keys = "appCode"
+	)
 	@ResponseBody
-	@RequestMapping(value="/appAdd" ,produces = "text/plain;charset=UTF-8",method=RequestMethod.POST)
-	public String testPostController(@RequestBody String content, HttpServletRequest request,
-			HttpServletResponse response) throws ToolsRuntimeException, ParseException{
-		try {
-			if (logger.isInfoEnabled()) {
-				logger.info("appAdd request : " + content);
-			}
-			AcApp ac = JSONObject.parseObject(content, AcApp.class);
-		    applicationRService.createAcApp(ac);//把参数全部填写上
-			AjaxUtils.ajaxJsonSuccessMessage(response,"");
-		} catch (ToolsRuntimeException e) {
-			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-			logger.error("appAdd exception : ", e);
-		}catch (Exception e) {
-			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-			logger.error("appAdd exception : ", e);
-		}
-		return null;
+	@RequestMapping(value="/appAdd" ,produces = "application/json;charset=UTF-8", method=RequestMethod.POST)
+	public Map<String, Object> testPostController(@RequestBody String content) {
+		return getReturnMap(applicationRService.createAcApp(JSONObject.parseObject(content, AcApp.class)));
 	}
 	
 	/**
@@ -78,7 +58,15 @@ public class AcAppController extends BaseController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value="/appDel",method=RequestMethod.POST)
+	@OperateLog(
+			operateType = JNLConstants.OPEARTE_TYPE_DELETE,
+			operateDesc = "删除应用",
+			retType = ReturnType.Object,
+			id = "guid",
+			name = "appName",
+			keys = "appCode"
+	)
+	@RequestMapping(value="/appDel", produces = "application/json;charset=UTF-8", method=RequestMethod.POST)
 	public String appDel(@RequestBody String content, HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
@@ -779,15 +767,7 @@ public class AcAppController extends BaseController {
 		}
 		return null;
 	}
-	
-	private Map<String, Object> responseMsg ;
-	@Override
-	public Map<String, Object> getResponseMessage() {
-		if( null == responseMsg ){
-			responseMsg = new HashMap<String, Object> () ;
-		}
-		return responseMsg;
-	}
+
 
 	/**
 	 * queryBhvtypeDefByFunc 根据功能的GUID查询行为类型定义

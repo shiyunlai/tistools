@@ -8,49 +8,29 @@
   	<insert id="insert" parameterType="org.tis.tools.model.po.ac.AcOperatorConfig">
 	    INSERT INTO AC_OPERATOR_CONFIG 
 	    (
-	    	 guid
-	    	,guid_operator
-	    	,guid_app
-	    	,config_type
-	    	,config_name
+	    	 guid_operator
+	    	,guid_config
 	    	,config_value
-	    	,isvalid
 	    )
 	    VALUES 
 	    (
-			#{guid,jdbcType=VARCHAR},
 			#{guidOperator,jdbcType=VARCHAR},
-			#{guidApp,jdbcType=VARCHAR},
-			#{configType,jdbcType=VARCHAR},
-			#{configName,jdbcType=VARCHAR},
-			#{configValue,jdbcType=VARCHAR},
-			#{isvalid,jdbcType=CHAR}
+			#{guidConfig,jdbcType=VARCHAR},
+			#{configValue,jdbcType=VARCHAR}
   		)
  	</insert>
  	
  	<update id="update" parameterType="org.tis.tools.model.po.ac.AcOperatorConfig">
     	UPDATE AC_OPERATOR_CONFIG 
 	    <set>
-		<if test="guid != null" >
-			guid = #{guid,jdbcType=VARCHAR},
-		</if>
 		<if test="guidOperator != null" >
 			guid_operator = #{guidOperator,jdbcType=VARCHAR},
 		</if>
-		<if test="guidApp != null" >
-			guid_app = #{guidApp,jdbcType=VARCHAR},
-		</if>
-		<if test="configType != null" >
-			config_type = #{configType,jdbcType=VARCHAR},
-		</if>
-		<if test="configName != null" >
-			config_name = #{configName,jdbcType=VARCHAR},
+		<if test="guidConfig != null" >
+			guid_config = #{guidConfig,jdbcType=VARCHAR},
 		</if>
 		<if test="configValue != null" >
-			config_value = #{configValue,jdbcType=VARCHAR},
-		</if>
-		<if test="isvalid != null" >
-			isvalid = #{isvalid,jdbcType=CHAR}
+			config_value = #{configValue,jdbcType=VARCHAR}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -59,13 +39,9 @@
  	<update id="updateForce" parameterType="org.tis.tools.model.po.ac.AcOperatorConfig">
     	UPDATE AC_OPERATOR_CONFIG 
 	    <set>
-		guid = #{guid,jdbcType=VARCHAR},
 		guid_operator = #{guidOperator,jdbcType=VARCHAR},
-		guid_app = #{guidApp,jdbcType=VARCHAR},
-		config_type = #{configType,jdbcType=VARCHAR},
-		config_name = #{configName,jdbcType=VARCHAR},
-		config_value = #{configValue,jdbcType=VARCHAR},
-		isvalid = #{isvalid,jdbcType=CHAR}
+		guid_config = #{guidConfig,jdbcType=VARCHAR},
+		config_value = #{configValue,jdbcType=VARCHAR}
 	    </set>
 	    WHERE guid = #{guid}
  	</update>
@@ -81,26 +57,14 @@
 	 <update id="updateByCondition" parameterType="map">
     	UPDATE AC_OPERATOR_CONFIG 
 	   <set>
-		<if test="domain.guid != null" >
-        	guid = #{domain.guid,jdbcType=VARCHAR},
-      	</if>
 		<if test="domain.guidOperator != null" >
         	guid_operator = #{domain.guidOperator,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.guidApp != null" >
-        	guid_app = #{domain.guidApp,jdbcType=VARCHAR},
-      	</if>
-		<if test="domain.configType != null" >
-        	config_type = #{domain.configType,jdbcType=VARCHAR},
-      	</if>
-		<if test="domain.configName != null" >
-        	config_name = #{domain.configName,jdbcType=VARCHAR},
+		<if test="domain.guidConfig != null" >
+        	guid_config = #{domain.guidConfig,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.configValue != null" >
-        	config_value = #{domain.configValue,jdbcType=VARCHAR},
-      	</if>
-		<if test="domain.isvalid != null" >
-        	isvalid = #{domain.isvalid,jdbcType=CHAR}
+        	config_value = #{domain.configValue,jdbcType=VARCHAR}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>
@@ -125,12 +89,8 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid as guid
-		,guid_operator as guidOperator
-		,guid_app as guidApp
-		,config_type as configType
-		,config_name as configName
+		 guid_operator as guidOperator
+		,guid_config as guidConfig
 		,config_value as configValue
-		,isvalid as isvalid
 	</sql>
 </mapper>
