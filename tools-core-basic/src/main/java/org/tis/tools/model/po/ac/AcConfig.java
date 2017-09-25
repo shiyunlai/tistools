@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 个性化配置
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\work\workspace\ws1\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_CONFIG 个性化配置
  *
@@ -44,10 +44,14 @@ public class AcConfig implements Serializable {
 	public static final String COLUMN_CONFIG_NAME = "config_name" ; 
 	/** CONFIG_DICT ：配置值字典<br/><br/> */
 	public static final String COLUMN_CONFIG_DICT = "config_dict" ; 
+	/** CONFIG_STYLE ：配置风格<br/><br/> */
+	public static final String COLUMN_CONFIG_STYLE = "config_style" ; 
 	/** CONFIG_VALUE ：默认配置值<br/><br/> */
 	public static final String COLUMN_CONFIG_VALUE = "config_value" ; 
 	/** ENABLED ：是否启用<br/><br/> */
 	public static final String COLUMN_ENABLED = "enabled" ; 
+	/** DISPLAY_ORDER ：显示顺序<br/><br/> */
+	public static final String COLUMN_DISPLAY_ORDER = "display_order" ; 
 	/** CONFIG_DESC ：配置描述说明<br/><br/> */
 	public static final String COLUMN_CONFIG_DESC = "config_desc" ; 
 	
@@ -67,11 +71,17 @@ public class AcConfig implements Serializable {
 	/** 字段类型：varchar<br/>字段名：配置值字典<br/>描述： */
 	private String configDict ;
 	
+	/** 字段类型：varchar<br/>字段名：配置风格<br/>描述： */
+	private String configStyle ;
+	
 	/** 字段类型：varchar<br/>字段名：默认配置值<br/>描述： */
 	private String configValue ;
 	
 	/** 字段类型：varchar<br/>字段名：是否启用<br/>描述： */
 	private String enabled ;
+	
+	/** 字段类型：decimal<br/>字段名：显示顺序<br/>描述： */
+	private BigDecimal displayOrder ;
 	
 	/** 字段类型：varchar<br/>字段名：配置描述说明<br/>描述： */
 	private String configDesc ;
@@ -179,6 +189,25 @@ public class AcConfig implements Serializable {
     }
 	
 	/**
+	 * Set the 配置风格.
+	 * 
+	 * @param configStyle
+	 *            配置风格
+	 */
+	public void setConfigStyle(String configStyle) {
+ 		this.configStyle = configStyle == null ? null : configStyle.trim() ;
+    }
+    
+    /**
+	 * Get the 配置风格.
+	 * 
+	 * @return 配置风格
+	 */
+	public String getConfigStyle(){
+		return this.configStyle ;
+    }
+	
+	/**
 	 * Set the 默认配置值.
 	 * 
 	 * @param configValue
@@ -214,6 +243,28 @@ public class AcConfig implements Serializable {
 	 */
 	public String getEnabled(){
 		return this.enabled ;
+    }
+	
+	/**
+	 * Set the 显示顺序.
+	 * 
+	 * @param displayOrder
+	 *            显示顺序
+	 */
+	public void setDisplayOrder(BigDecimal displayOrder) {
+ 		this.displayOrder = displayOrder ;
+    }
+    
+    /**
+	 * Get the 显示顺序.
+	 * 
+	 * @return 显示顺序，如果setDisplayOrder时原值为空，返回BigDecimal(0d)
+	 */
+	public BigDecimal getDisplayOrder(){
+		if(displayOrder==null){
+			return new BigDecimal(0d);
+		}
+		return displayOrder;
     }
 	
 	/**

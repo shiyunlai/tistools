@@ -38,7 +38,7 @@ public class AcOperatorConfigController extends BaseController {
     }
 
     @OperateLog(
-            operateType = JNLConstants.OPEARTE_TYPE_LOGIN,
+            operateType = JNLConstants.OPEARTE_TYPE_DELETE,
             operateDesc = "删除个性化配置",
             retType = ReturnType.List,
             id = "guid",
@@ -53,7 +53,7 @@ public class AcOperatorConfigController extends BaseController {
     }
 
     @OperateLog(
-            operateType = JNLConstants.OPEARTE_TYPE_LOGIN,
+            operateType = JNLConstants.OPEARTE_TYPE_ADD,
             operateDesc = "新增个性化配置",
             retType = ReturnType.Object,
             id = "guid",
@@ -67,7 +67,7 @@ public class AcOperatorConfigController extends BaseController {
     }
 
     @OperateLog(
-            operateType = JNLConstants.OPEARTE_TYPE_LOGIN,
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,
             operateDesc = "修改操作员个性化配置",
             retType = ReturnType.Object,
             id = "guid",
