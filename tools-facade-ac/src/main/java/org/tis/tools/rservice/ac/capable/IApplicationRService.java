@@ -48,7 +48,7 @@ public interface IApplicationRService {
 	 * @param acApp 应用对象
 	 * @return  acApp
 	 */
-	 AcApp createAcApp(AcApp acApp);
+	 AcApp createAcApp(AcApp acApp) throws AppManagementException;
 	
 	
 	/**
@@ -56,21 +56,22 @@ public interface IApplicationRService {
 	 * @param guid 应用系统的guid
 	 * @return  acApp
 	 */
-	 void deleteAcApp(String guid);
-	
-	
+	 AcApp deleteAcApp(String guid) throws AppManagementException;
+
+
 	/**
 	 * 更新应用系统(AC_APP)
-	 * @param t 新值
+	 * @param acApp
+	 * @return
 	 */
-	 void updateAcApp(AcApp t);
+	AcApp updateAcApp(AcApp acApp) throws AppManagementException;
 
 	/**
 	 * 根据条件查询应用系统(AC_APP)
 	 * @param wc 条件
 	 * @return 满足条件的记录list
 	 */
-	 List<AcApp> queryAcAppList(WhereCondition wc);
+	 List<AcApp> queryAcAppList(WhereCondition wc) throws AppManagementException;
 	
 	/**
 	 * 根据条件查询应用系统(AC_APP)
@@ -110,18 +111,20 @@ public interface IApplicationRService {
 	 */
 	 AcFuncgroup createAcFuncGroup(AcFuncgroup acFuncgroup);
 
-	
+
 	/**
 	 * 删除功能组(AC_FUNCGROUP)
-	 * @param guid 记录guid
+	 * @param guid
+	 * @return
 	 */
-	 void deleteAcFuncGroup(String guid);
-	
+	AcFuncgroup deleteAcFuncGroup(String guid);
+
 	/**
 	 * 更新功能组(AC_FUNCGROUP)
-	 * @param t 新值
+	 * @param t
+	 * @return
 	 */
-	 void updateAcFuncgroup(AcFuncgroup t);
+	 AcFuncgroup updateAcFuncgroup(AcFuncgroup t);
 	
 	/**
 	 * 根据条件查询功能组(AC_FUNCGROUP)

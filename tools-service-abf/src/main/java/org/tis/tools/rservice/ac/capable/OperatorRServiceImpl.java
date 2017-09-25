@@ -990,7 +990,7 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
     }
 
     /**
-     * 查询操作员的所有个性化配置
+     * 查询所有个性化配置
      *
      * @return 配置集合
      * @throws OperatorManagementException
@@ -1007,7 +1007,7 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
     }
 
     /**
-     * 新增操作员个性化配置
+     * 新增个性化配置
      *
      * @param config
      * @return
@@ -1020,7 +1020,7 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
         }
         try {
             config.setGuid(GUID.operatorConfig());
-            String validate = BeanFieldValidateUtil.checkObjFieldNotRequired(config, new String[]{"configDesc"});
+            String validate = BeanFieldValidateUtil.checkObjFieldNotRequired(config, new String[]{"configDesc, displayOrder"});
             if(StringUtils.isNotEmpty(validate)) {
                 throw new OperatorManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, BasicUtil.wrap(validate, AcConfig.TABLE_NAME));
             }
@@ -1030,6 +1030,9 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
                     .andEquals(AcConfig.COLUMN_CONFIG_NAME, config.getConfigName())) > 0) {
                 throw new OperatorManagementException(ExceptionCodes.DUPLICATE_WHEN_INSERT, BasicUtil.wrap(config.getConfigName(), AcConfig.TABLE_NAME));
             }
+            config.setDisplayOrder(new BigDecimal(acConfigService.count(new WhereCondition()
+                    .andEquals(AcConfig.COLUMN_GUID_APP, config.getGuidApp())
+                    .andEquals(AcConfig.COLUMN_CONFIG_TYPE, config.getConfigType()))));
             acConfigService.insert(config);
             return config;
         } catch (OperatorManagementException ae) {
@@ -1042,7 +1045,7 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
     }
 
     /**
-     * 批量删除操作员个性化配置
+     * 批量删除个性化配置
      *
      * @param cfgList
      * @return
@@ -1057,7 +1060,7 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
             List<String> guids = new ArrayList<>();
             cfgList.stream().forEach(cfg -> {
                 if(cfg == null) {
-                    throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, BasicUtil.wrap("", AcConfig.TABLE_NAME));
+                    throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, BasicUtil.wrap("acOperatorConfig", AcConfig.TABLE_NAME));
                 }
                 if(StringUtils.isBlank(cfg.getGuid())) {
                     throw new OperatorManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_DELETE, BasicUtil.wrap(AcConfig.COLUMN_GUID, AcConfig.TABLE_NAME));
@@ -1078,7 +1081,7 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
     }
 
     /**
-     * 修改操作员个性化配置
+     * 修改个性化配置
      *
      * @param config
      * @return
@@ -1087,10 +1090,10 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
     @Override
     public AcConfig updateConfig(AcConfig config) throws OperatorManagementException {
         if(config == null) {
-            throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap("", AcConfig.TABLE_NAME));
+            throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap("acOperatorConfig", AcConfig.TABLE_NAME));
         }
         try {
-            String validate = BeanFieldValidateUtil.checkObjFieldNotRequired(config, new String[]{"configDesc"});
+            String validate = BeanFieldValidateUtil.checkObjFieldNotRequired(config, new String[]{"configDesc", "displayOrder"});
             if(StringUtils.isNotEmpty(validate)) {
                 throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap(validate, AcConfig.TABLE_NAME));
             }
@@ -1122,7 +1125,7 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
     @Override
     public AcOperatorConfig saveOperatorLog(AcOperatorConfig acOperatorConfig) throws OperatorManagementException {
         if(acOperatorConfig == null) {
-            throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap("", AcOperatorConfig.TABLE_NAME));
+            throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap("acOperatorConfig", AcOperatorConfig.TABLE_NAME));
         }
         try {
             String validate = BeanFieldValidateUtil.checkObjFieldAllRequired(acOperatorConfig);

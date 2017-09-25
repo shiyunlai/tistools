@@ -5,6 +5,7 @@ package org.tis.tools.rservice.ac.capable;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import com.alibaba.dubbo.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.util.CollectionUtils;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.common.utils.BasicUtil;
+import org.tis.tools.common.utils.BeanFieldValidateUtil;
 import org.tis.tools.common.utils.StringUtil;
 import org.tis.tools.core.exception.ExceptionCodes;
 import org.tis.tools.model.def.CommonConstants;
@@ -77,7 +79,6 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	AcOperatorFuncService acOperatorFuncService;
 
 
-	
 
 	/**
 	 * 新增应用系统(AC_APP)
@@ -88,10 +89,16 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 */
 	@Override
 	public AcApp createAcApp(AcApp acApp) throws AppManagementException {
-
 		try {
 			if (null == acApp) {
-				throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("AC_APP"));
+				throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("AC_APP", AcApp.TABLE_NAME));
+			}
+			String[] validateField = {
+					"appCode", "appName", "appType", "isopen"
+			};
+			String validate = BeanFieldValidateUtil.checkObjFieldNotRequired(acApp, validateField);
+			if(StringUtils.isNotEmpty(validate)) {
+				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, BasicUtil.wrap(validate, AcApp.TABLE_NAME));
 			}
 			acApp.setGuid(GUID.app());
 			acAppService.insert(acApp);
@@ -100,7 +107,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			throw ae;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap("AC_APP", e.getCause().getMessage()));
+			throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap(AcApp.TABLE_NAME, e));
 		}
 	}
 
@@ -111,58 +118,74 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 *            应用系统guid
 	 */
 	@Override
-	public void deleteAcApp(String guid) throws AppManagementException {
+	public AcApp deleteAcApp(String guid) throws AppManagementException {
+		if(StringUtils.isBlank(guid)) {
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, BasicUtil.wrap(AcApp.COLUMN_GUID, AcApp.TABLE_NAME));
+		}
 		try {
-			final String GUID = guid;
-			transactionTemplate.execute(new TransactionCallback<AcApp>() {
+			List<AcApp> apps = acAppService.query(new WhereCondition().andEquals(AcApp.COLUMN_GUID, guid));
+			if (apps.size() != 1) {
+				throw new AppManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap(guid, AcApp.TABLE_NAME));
+			}
+			AcApp app = apps.get(0);
+			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 				@Override
-				public AcApp doInTransaction(TransactionStatus arg0) {
-					WhereCondition wc =new WhereCondition();
-					wc.andEquals("GUID_APP", GUID);
-					List<AcFuncgroup> funcgroup = acFuncgroupService.query(wc);
-					WhereCondition wc1 =new WhereCondition();
-					for(int i =0 ;i < funcgroup.size();i++){
-						String groupid=funcgroup.get(i).getGuid();
-						wc1.clear();
-						wc1.andEquals("GUID_FUNCGROUP", groupid);
-						acFuncService.deleteByCondition(wc1);//删除下面所有的功能
-						
+				public void doInTransactionWithoutResult(TransactionStatus status) {
+					try {
+						WhereCondition wc = new WhereCondition();
+						wc.andEquals("GUID_APP", guid);
+						List<AcFuncgroup> funcgroup = acFuncgroupService.query(wc);
+						List<String> groupList = funcgroup.stream().map(AcFuncgroup::getGuid).collect(Collectors.toList());
+						if (!CollectionUtils.isEmpty(groupList)) {
+							acFuncService.deleteByCondition(new WhereCondition().andIn(AcFunc.COLUMN_GUID_FUNCGROUP, groupList));
+
+						}
+						acFuncgroupService.deleteByCondition(wc);
+						acAppService.delete(guid);
+					} catch (Exception e) {
+						throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap("AcApp(" + guid + ")", e));
 					}
-					acFuncgroupService.deleteByCondition(wc );//删除下面所有的功能组
-					acAppService.delete(GUID);//删除应用
-					return null;
 				}
 			});
+			return app;
+		} catch (AppManagementException e) {
+			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_APP,
-					BasicUtil.wrap(e.getCause().getMessage()), "删除应用失败！{0}");
+					ExceptionCodes.FAILURE_WHEN_DELETE,
+					BasicUtil.wrap("AcApp(" + guid + ")", e));
 		}
 	}
 
 	/**
 	 * 更新应用系统(AC_APP)
-	 * 
-	 * @param t
-	 *            新值
+	 * @param acApp
+	 * @return
+	 * @throws AppManagementException
 	 */
 	@Override
-	public void updateAcApp(AcApp t) throws AppManagementException {
-		final AcApp app = t;
+	public AcApp updateAcApp(AcApp acApp) throws AppManagementException {
+		if(acApp == null) {
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap("AcApp", AcApp.TABLE_NAME));
+		}
 		try {
-			transactionTemplate.execute(new TransactionCallback<AcApp>() {
-				@Override
-				public AcApp doInTransaction(TransactionStatus arg0) {
-					acAppService.updateForce(app);
-					return null;
-				}
-			});
+			String[] validateField = {
+					"guid", "appCode", "appName", "appType", "isopen"
+			};
+			String validate = BeanFieldValidateUtil.checkObjFieldNotRequired(acApp, validateField);
+			if(StringUtils.isNotEmpty(validate)) {
+				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_UPDATE, BasicUtil.wrap(validate, AcApp.TABLE_NAME));
+			}
+			acAppService.update(acApp);
+			return acApp;
+		} catch (AppManagementException e) {
+			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_APP,
-					BasicUtil.wrap(e.getCause().getMessage()), "更新应用失败！{0}");
+					ExceptionCodes.FAILURE_WHEN_UPDATE,
+					BasicUtil.wrap(AcApp.TABLE_NAME, e));
 		}
 	}
 
@@ -175,17 +198,14 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 */
 	@Override
 	public List<AcApp> queryAcAppList(WhereCondition wc) throws AppManagementException {
-		List<AcApp> acAppList = new ArrayList<AcApp>();
-		
 		try {
-			acAppList = acAppService.query(wc);
+			return acAppService.query(wc);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_APP,
-					BasicUtil.wrap(e.getCause().getMessage()), "查询应用失败！{0}");
+					ExceptionCodes.FAILURE_WHEN_QUERY,
+					BasicUtil.wrap(AcApp.TABLE_NAME, e));
 		}
-		return acAppList;
 	}
 	
 	/**
@@ -196,17 +216,14 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 */
 	@Override
 	public List<AcApp> queryAcRootList() throws AppManagementException {
-		List<AcApp> acAppList = new ArrayList<AcApp>();
 		try {
-			WhereCondition wc = new WhereCondition();
-			acAppList = acAppService.query(wc);
+			return acAppService.query(new WhereCondition());
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_APP,
-					BasicUtil.wrap(e.getCause().getMessage()), "查询应用失败！{0}");
+					ExceptionCodes.FAILURE_WHEN_QUERY,
+					BasicUtil.wrap(AcApp.TABLE_NAME, e));
 		}
-		return acAppList;
 	}
 	
 
@@ -218,26 +235,22 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 */
 	@Override
 	public AcApp queryAcApp(String guid) throws AppManagementException {
-		List<AcApp> acAppList = new ArrayList<AcApp>();
-		AcApp acApp = new AcApp();
 		try {
-			WhereCondition wc =new WhereCondition();
-			wc.andEquals("GUID", guid);
-			acAppList = acAppService.query(wc);
+			List<AcApp> acAppList = acAppService.query(new WhereCondition().andEquals(AcApp.COLUMN_GUID, guid));
 			if(acAppList.size()>0){
-				acApp = acAppList.get(0);
+				return acAppList.get(0);
 			}else{
 				throw new AppManagementException(
-						ACExceptionCodes.FAILURE_WHRN_QUERY_AC_NULL,
-						null, "记录不存在！{0}");
+						ExceptionCodes.NOT_FOUND_WHEN_QUERY,BasicUtil.wrap(guid, AcApp.TABLE_NAME));
 			}
+		} catch (AppManagementException e) {
+			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_APP,
-					BasicUtil.wrap(e.getCause().getMessage()), "查询应用失败！{0}");
+					ExceptionCodes.FAILURE_WHEN_QUERY,
+					BasicUtil.wrap(AcApp.TABLE_NAME, e));
 		}
-		return acApp;
 	}
 	
 	/**
@@ -247,109 +260,122 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 *            功能组对象 return AcFuncgroup
 	 */
 	@Override
-	public AcFuncgroup createAcFuncGroup(AcFuncgroup acFuncgroup) {
-		String guid = GUID.funcGroup();
-		String guidApp = acFuncgroup.getGuidApp();
-		String funcgroupSeq = "";
-		String guidParents = acFuncgroup.getGuidParents();
-		acFuncgroup.setGuid(guid);
-		// 根据时候有父功能组设置序列
-		if (guidParents.isEmpty()) {
-			acFuncgroup.setGuidParents(null);
-			funcgroupSeq = guidApp + "." + guid;
-		} else {
-			acFuncgroup.setGuidParents(guidParents);
-			WhereCondition wc = new WhereCondition();
-			wc.andEquals("GUID", guidParents);
-			List<AcFuncgroup> list = acFuncgroupService.query(wc);
-			String parentSeq = list.get(0).getFuncgroupSeq();
-			funcgroupSeq = parentSeq + "." + guid;
+	public AcFuncgroup createAcFuncGroup(AcFuncgroup acFuncgroup) throws AppManagementException {
+		if(acFuncgroup == null) {
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("acFuncgroup", AcFuncgroup.TABLE_NAME));
 		}
-		acFuncgroup.setFuncgroupSeq(funcgroupSeq);
-		acFuncgroup.setIsleaf(CommonConstants.YES);// 默认叶子节点
-		acFuncgroup.setSubCount(new BigDecimal(0));// 默认无节点数
-		final AcFuncgroup newAcFuncgroup = acFuncgroup;
 		try {
-			acFuncgroup = transactionTemplate
-					.execute(new TransactionCallback<AcFuncgroup>() {
-						@Override
-						public AcFuncgroup doInTransaction(
-								TransactionStatus arg0) {
-							acFuncgroupService.insert(newAcFuncgroup);
-							return newAcFuncgroup;
-						}
-					});
+			String[] validateFields = {
+					"guidApp", "funcgroupName"
+			};
+			String validate = BeanFieldValidateUtil.checkObjFieldRequired(acFuncgroup, validateFields);
+			if (StringUtils.isNotEmpty(validate)) {
+				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, BasicUtil.wrap(validate, AcFuncgroup.TABLE_NAME));
+			}
+			String guid = GUID.funcGroup();
+			acFuncgroup.setGuid(guid);
+			// 根据父功能是否为空设置序列
+			if (StringUtils.isEmpty(acFuncgroup.getGuidParents())) {
+				acFuncgroup.setGuidParents(null);
+				acFuncgroup.setFuncgroupSeq(acFuncgroup.getGuidApp() + "." + guid);
+			} else {
+				Optional<AcFuncgroup> funcgroupOptional = acFuncgroupService.query(new WhereCondition()
+						.andEquals(AcFuncgroup.COLUMN_GUID, acFuncgroup.getGuidParents())).stream().findFirst();
+				if (funcgroupOptional.isPresent()) {
+					acFuncgroup.setFuncgroupSeq(acFuncgroup.getFuncgroupSeq() + "." + guid);
+				} else {
+					throw new AppManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY,
+							BasicUtil.wrap("AcFuncgroup(" + acFuncgroup.getGuidParents() + ")", AcFuncgroup.TABLE_NAME));
+				}
+			}
+			acFuncgroup.setIsleaf(CommonConstants.YES);// 默认叶子节点
+			acFuncgroupService.insert(acFuncgroup);
+			return acFuncgroup;
+		} catch (AppManagementException e) {
+			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_FUNCGROUP,
-					BasicUtil.wrap(e.getCause().getMessage()), "新增功能组失败！{0}");
+					ExceptionCodes.FAILURE_WHEN_INSERT,
+					BasicUtil.wrap(AcFuncgroup.TABLE_NAME, e));
 		}
-		return acFuncgroup;
 	}
 
 	/**
 	 * 删除功能组(AC_FUNCGROUP)
 	 * 
-	 * @param GUID
+	 * @param guid
 	 *            记录guid
 	 */
 	@Override
-	public void deleteAcFuncGroup(String GUID) throws AppManagementException {
+	public AcFuncgroup deleteAcFuncGroup(String guid) throws AppManagementException {
+		if(StringUtils.isBlank(guid)) {
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE,
+					BasicUtil.wrap(AcFuncgroup.COLUMN_GUID, AcFuncgroup.TABLE_NAME));
+		}
 		try {
-			final String guid = GUID;
-			// 新增事务提交机制
-			transactionTemplate.execute(new TransactionCallback<AcFuncgroup>() {
+			AcFuncgroup acFuncgroup;
+			Optional<AcFuncgroup> funcgroupOptional = acFuncgroupService.query(new WhereCondition().andEquals(AcFuncgroup.COLUMN_GUID, guid)).stream().findFirst();
+			if (funcgroupOptional.isPresent()) {
+				acFuncgroup = funcgroupOptional.get();
+			} else {
+				throw new AppManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY,
+						BasicUtil.wrap(BasicUtil.surroundBracketsWithLFStr(AcFuncgroup.COLUMN_GUID, guid), AcFuncgroup.TABLE_NAME));
+			}
+			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 				@Override
-				public AcFuncgroup doInTransaction(TransactionStatus arg0) {
-					//删除功能组下子功能组及功能
-					WhereCondition wc =new WhereCondition();
-					wc.andEquals("GUID_PARENTS", guid);
-					acFuncgroupService.deleteByCondition(wc);					
-					List<AcFuncgroup> childGroup = acFuncgroupService.query(wc);
-					//删除下面所有的功能
-					for(int i=0;i<childGroup.size();i++){
-						String childGroupGuid=childGroup.get(i).getGuid();
-						acFuncgroupService.delete(childGroupGuid);
-						wc.clear();
-						wc.andEquals("GUID_FUNCGROUP", childGroupGuid);
-						acFuncService.deleteByCondition(wc);
+				public void doInTransactionWithoutResult(TransactionStatus status) {
+					try {
+						//删除功能组下子功能组及功能
+						WhereCondition wc =new WhereCondition();
+						wc.andEquals("GUID_PARENTS", guid);
+						List<String> funcgroupGuids = acFuncgroupService.query(new WhereCondition().andFullLike(AcFuncgroup.COLUMN_FUNCGROUP_SEQ, guid))
+								.stream()
+								.map(AcFuncgroup::getGuid)
+								.collect(Collectors.toList());
+						acFuncService.deleteByCondition(new WhereCondition().andIn(AcFunc.COLUMN_GUID_FUNCGROUP, funcgroupGuids));
+						acFuncgroupService.deleteByCondition(new WhereCondition().andIn(AcFuncgroup.COLUMN_GUID, funcgroupGuids));
+
+					} catch (Exception e) {
+						throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_DELETE,
+								BasicUtil.wrap(BasicUtil.surroundBracketsWithLFStr(AcFuncgroup.TABLE_NAME, guid), e));
 					}
-					acFuncgroupService.delete(guid);
-					return null;
 				}
 			});
+			return acFuncgroup;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_FUNCGROUP,
-					BasicUtil.wrap(e.getCause().getMessage()), "删除功能组失败！{0}");
+			throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_DELETE,
+					BasicUtil.wrap(BasicUtil.surroundBracketsWithLFStr(AcFuncgroup.TABLE_NAME, guid), e));
 		}
 	}
 
 	/**
 	 * 更新功能组(AC_FUNCGROUP)
-	 * @param t 新值
+	 * @param acFuncgroup 新值
 	 */
 	@Override
-	public void updateAcFuncgroup(AcFuncgroup t) throws AppManagementException {
-		if(t.getGuidParents()==null||t.getGuidParents().isEmpty()){
-			t.setGuidParents(null);
+	public AcFuncgroup updateAcFuncgroup(AcFuncgroup acFuncgroup) throws AppManagementException {
+		if(acFuncgroup == null) {
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap("acFuncgroup", AcFuncgroup.TABLE_NAME));
 		}
-		final AcFuncgroup fg = t;
 		try {
-			transactionTemplate.execute(new TransactionCallback<AcFuncgroup>() {
-				@Override
-				public AcFuncgroup doInTransaction(TransactionStatus arg0) {
-					acFuncgroupService.updateForce(fg);
-					return null;
-				}
-			});
+			String[] validateFields = {
+					"guid", "guidApp", "funcgroupName"
+			};
+			String validate = BeanFieldValidateUtil.checkObjFieldRequired(acFuncgroup, validateFields);
+			if (StringUtils.isNotEmpty(validate)) {
+				throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap(validate, AcFuncgroup.TABLE_NAME));
+			}
+			acFuncgroupService.update(acFuncgroup);
+			return acFuncgroup;
+		} catch (AppManagementException e) {
+			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_FUNCGROUP,
-					BasicUtil.wrap(e.getCause().getMessage()), "更新功能组失败！{0}");
+					ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE,
+					BasicUtil.wrap(AcFuncgroup.TABLE_NAME, e));
 		}
 	}
 	
