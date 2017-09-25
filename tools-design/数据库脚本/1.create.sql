@@ -1,4 +1,19 @@
-﻿SET FOREIGN_KEY_CHECKS=0;
+/*
+Navicat MySQL Data Transfer
+
+Source Server         : 139.196.145.67
+Source Server Version : 50629
+Source Host           : 139.196.145.67:3306
+Source Database       : tistools
+
+Target Server Type    : MYSQL
+Target Server Version : 50629
+File Encoding         : 65001
+
+Date: 2017-09-25 15:54:17
+*/
+
+SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
 -- Table structure for AC_APP
@@ -46,6 +61,22 @@ CREATE TABLE `AC_BHVTYPE_DEF` (
   `BHVTYPE_NAME` varchar(128) DEFAULT NULL COMMENT '行为类型名称',
   PRIMARY KEY (`GUID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='行为类型定义 : 功能行为的分类定义，以便很好的归类和配置功能的行为（AC_FUNC_BHV）';
+
+-- ----------------------------
+-- Table structure for AC_CONFIG
+-- ----------------------------
+DROP TABLE IF EXISTS `AC_CONFIG`;
+CREATE TABLE `AC_CONFIG` (
+  `GUID` varchar(128) NOT NULL COMMENT '数据主键',
+  `GUID_APP` varchar(128) NOT NULL COMMENT '应用GUID',
+  `CONFIG_TYPE` varchar(64) NOT NULL COMMENT '配置类型',
+  `CONFIG_NAME` varchar(64) NOT NULL COMMENT '配置名',
+  `CONFIG_DICT` varchar(256) NOT NULL COMMENT '配置值字典',
+  `CONFIG_VALUE` varchar(128) NOT NULL COMMENT '默认配置值',
+  `ENABLED` varchar(10) DEFAULT NULL COMMENT '是否启用',
+  `CONFIG_DESC` varchar(512) DEFAULT NULL COMMENT '配置描述说明',
+  PRIMARY KEY (`GUID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='个性化配置';
 
 -- ----------------------------
 -- Table structure for AC_DATASCOPE
@@ -255,13 +286,9 @@ CREATE TABLE `AC_OPERATOR_BHV` (
 DROP TABLE IF EXISTS `AC_OPERATOR_CONFIG`;
 CREATE TABLE `AC_OPERATOR_CONFIG` (
   `GUID_OPERATOR` varchar(128) NOT NULL COMMENT '操作员GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `GUID_APP` varchar(128) NOT NULL COMMENT '应用GUID',
-  `CONFIG_TYPE` varchar(64) NOT NULL COMMENT '配置类型 : 见业务字典： DICT_AC_CONFIGTYPE',
-  `CONFIG_NAME` varchar(64) NOT NULL COMMENT '配置名',
-  `CONFIG_VALUE` varchar(1024) DEFAULT NULL COMMENT '配置值',
-  `ISVALID` char(1) NOT NULL COMMENT '是否启用 : 见业务菜单： DICT_YON',
-  UNIQUE KEY `GUID_APP` (`GUID_APP`,`CONFIG_TYPE`,`CONFIG_NAME`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='操作员个性配置 : 操作员个性化配置\r\n如颜色配置\r\n    登录风格\r\n    是否使用重组菜单\r\n    默认身份\r\n';
+  `GUID_CONFIG` varchar(128) NOT NULL COMMENT '配置GUID',
+  `CONFIG_VALUE` varchar(1024) DEFAULT NULL COMMENT '配置值'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for AC_OPERATOR_FUNC
@@ -746,6 +773,7 @@ CREATE TABLE `SYS_DICT_ITEM` (
   `ITEM_TYPE` varchar(128) NOT NULL,
   `ITEM_VALUE` varchar(128) NOT NULL COMMENT '字典项',
   `SEND_VALUE` varchar(128) NOT NULL COMMENT '实际值 : 实际值，及选中字典项后，实际发送值给系统的数值。',
+  `ITEM_DESC` varchar(255) DEFAULT NULL,
   `SEQNO` decimal(12,0) DEFAULT NULL COMMENT '顺序号 : 顺序号，从0开始排，按小到大排序',
   PRIMARY KEY (`GUID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='业务字典项 : 业务字典内容项， 展示下拉菜单结构时，一般需要： 字典项，字典项名称，实际值';
@@ -804,6 +832,7 @@ CREATE TABLE `SYS_RUN_CONFIG` (
 -- ----------------------------
 DROP TABLE IF EXISTS `SYS_SEQNO`;
 CREATE TABLE `SYS_SEQNO` (
+  `SEQ_NAME` varchar(256) NOT NULL,
   `SEQ_KEY` varchar(128) NOT NULL COMMENT '序号键值',
   `SEQ_NO` decimal(20,0) NOT NULL DEFAULT '0' COMMENT '序号数 : 顺序增加的数字',
   `RESET` varchar(32) NOT NULL COMMENT '重置方式 : 来自业务字典： DICT_SYS_RESET\r\n如：\r\n不重置（默认）\r\n按天重置\r\n按周重置\r\n自定义重置周期（按指定时间间隔重置）\r\n...',
