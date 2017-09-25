@@ -260,8 +260,12 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                 console.log(node)
             }
         },
+        'sort': function (a, b) {
+            //排序插件，会两者比较，获取到节点的order属性，插件会自动两两比较。
+            return this.get_node(a).original.seqno > this.get_node(b).original.seqno ? 1 : -1;
+        },
 
-        "plugins" : [ "dnd", "state", "types","search","contextmenu" ]
+        "plugins" : [ "dnd", "state", "types","search","contextmenu","sort" ]
     }).bind("copy.jstree", function (node,e, data ) {
         console.log(e);
         console.log(data);
@@ -662,6 +666,10 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
     //提示帮助控制
     duty.showdoc = function () {
         $scope.showdoc = !$scope.showdoc;
+    }
+
+    duty.reload = function () {
+        $("#dutytree").jstree().refresh();
     }
 
 

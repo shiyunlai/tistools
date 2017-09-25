@@ -27,13 +27,13 @@
                     </a>
                 </div>
             </div>
-            <div class="portlet-body">
+            <div class="portlet-body" style="overflow-y:auto; overflow-x:auto">
                 <form id="s">
-                    <input id="search" type="search" id="q" ng-model="searchitem"/>
+                    <input  type="search" id="q" ng-model="searchitem"/>
                     <button type="submit" ng-click="abftree.clear()">清空</button>
                 </form>
-                <div id="container" ng-show="showtree"></div>
-                <div id="searchtree" ng-show="!showtree"></div>
+                <div id="container" ></div>
+                <!--<div id="searchtree" ng-show="!showtree"></div>-->
             </div>
         </div>
     </div>
