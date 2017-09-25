@@ -1,0 +1,111 @@
+<!-- 新增子集菜单页面 -->
+<div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs font-green-sharp"></i>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="!id">新增个性化配置</span>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="id">编辑个性化配置</span>
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="remove" ng-click="cancel()">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body portlet light">
+        <form action="#" name="myform" class="form-horizontal ">
+            <div class="form-body ">
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">选择应用:<span ng-class="{required:myform.dict_key3.$invalid}"  > * </span></label>
+                        <div class="col-md-8" ng-init="$settings.getCommData('APP')">
+                            <select class="form-control"  name="dict_key3" required  ng-model="configFrom.guidApp">
+                                <!-- 渲染，不能绑定同一个，不然每次点击，都会改变，重新渲染，所以ng-model绑定和渲染必须不同-->
+                                <option ng-repeat="d in $settings.commlist['APP'] track by $index" value="{{d.guid}}">{{d.appName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">配置类型:<span ng-class="{required:myform.dict_key2.$invalid}"  > * </span></label>
+                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_AC_CONFIGTYPE')">
+                            <select class="form-control"  name="dict_key2" required  ng-model="configFrom.configType">
+                                <!-- 渲染，不能绑定同一个，不然每次点击，都会改变，重新渲染，所以ng-model绑定和渲染必须不同-->
+                                <option ng-repeat="d in $settings.diclist['DICT_AC_CONFIGTYPE'] track by  $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">配置名:<span ng-class="{required:myform.dict_key.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="configFrom.configName"
+                                   name="dict_key"  required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 配置值字典:<span ng-class="{required:myform.dict_key4.$invalid}"  > * </span></label>
+                        <div class="col-md-8" ng-init="$settings.getCommData('DICT')">
+                            <select class="form-control test123"  name="dict_key4" required  ng-model="configFrom.configDict" style="width: 100%">
+                                <option ng-repeat="d in $settings.commlist['DICT'] track by $index" value="{{d.dictKey}}">{{d.dictKey+'---'+d.dictName}}</option>
+                    </select>
+                </div>
+            </div>
+                </div>
+                <script type="text/javascript">
+                    $('.test123').select2();
+                </script>
+                <div class="col-md-6" ng-if="config.dictisNull">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">默认配置值:<span ng-class="{required:myform.dict_key5.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <select class="form-control test123" name="dict_key5" required   ng-model="configFrom.configValue" style="width: 100%">
+                                <option ng-repeat="x in config.dictnameLitem" value="{{x.guid}}">{{x.itemName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">是否启用:<span ng-class="{required:myform.dict_isopen.$invalid}"  > * </span></label>
+                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                            <select class="form-control" required  ng-model="configFrom.enabled"  name="dict_isopen">
+                                <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                            </select>
+                            <!--<span style="color: #ccc;">即菜单路由路径</span>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-2"> 配置描述说明:</label>
+                        <div class="col-md-10">
+                            <textarea class="form-control"  ng_model="configFrom.configDesc" maxlength="128" length-limit  num-length=128  scope-models="configFrom.configDesc"  name="ctl_desc"></textarea>
+                            <!--<p class="help-block">检查项详细描述信息</code></p>-->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-2"></label>
+                        <div class="col-md-10">
+                            <div class="actions btn-set" style="text-align: center" >
+                                <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="add(configFrom)" > 保存
+                                </button>
+                                <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存
+                                </button>
+                                <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
