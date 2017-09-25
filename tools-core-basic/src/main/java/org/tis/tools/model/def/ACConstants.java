@@ -59,6 +59,14 @@ public interface ACConstants {
 	public static final String RECORD_AUTO_MINUS = "minus";
 
 
+	/** 个性化配置类型 重组菜单配置**/
+	String CONFIG_TYPE_MENUREORG = "menureorg";
+	/** 个性化配置类型 身份配置**/
+	String CONFIG_TYPE_IDENTITY = "identity";
+	/** 个性化配置类型 页面布局配置**/
+	String CONFIG_TYPE_STYPE = "style";
+
+
 
 
 }

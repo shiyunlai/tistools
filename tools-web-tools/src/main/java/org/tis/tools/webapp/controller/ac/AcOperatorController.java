@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.tis.tools.model.po.ac.AcOperatorIdentity;
+import org.tis.tools.model.def.JNLConstants;
+import org.tis.tools.model.po.ac.*;
 import org.tis.tools.base.exception.ToolsRuntimeException;
-import org.tis.tools.model.po.ac.AcOperator;
-import org.tis.tools.model.po.ac.AcOperatorFunc;
-import org.tis.tools.model.po.ac.AcOperatorIdentityres;
-import org.tis.tools.model.po.ac.AcRole;
 import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
+import org.tis.tools.rservice.ac.capable.IApplicationRService;
 import org.tis.tools.rservice.ac.capable.IOperatorRService;
 import org.tis.tools.rservice.ac.capable.IRoleRService;
 import org.tis.tools.webapp.controller.BaseController;
+import org.tis.tools.webapp.log.OperateLog;
+import org.tis.tools.webapp.log.ReturnType;
 import org.tis.tools.webapp.util.AjaxUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +40,8 @@ public class AcOperatorController extends BaseController {
     IOperatorRService operatorRService;
     @Autowired
     IRoleRService roleRService;
+    @Autowired
+    IApplicationRService applicationRService;
     
     /**
      * 查询操作员列表
@@ -586,7 +588,9 @@ public class AcOperatorController extends BaseController {
     } 
     
     /**
-     * 查询用户的特殊权限列表
+     * 查询用户的所有功能列表
+     *  用于展示特殊功能列表
+     *  用于展示用户已有的功能权限
      */
     @ResponseBody
     @RequestMapping(value="/queryAcOperatorFunListByUserId" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
@@ -660,16 +664,91 @@ public class AcOperatorController extends BaseController {
         }
         return null;
     }
+
     /**
-     * 要求子类构造自己的响应数据
-     *
+     * 查询操作员的所有应用
+     * @param content
      * @return
      */
-    @Override
-    public Map<String, Object> getResponseMessage() {
-        if( null == responseMsg ){
-            responseMsg = new HashMap<String, Object>() ;
-        }
-        return responseMsg;
+    @RequestMapping(value="/queryOperatorAllApp" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
+    public Map<String, Object> queryOperatorAllApp(@RequestBody String content) {
+        return getReturnMap(applicationRService.queryOperatorAllApp(JSONObject.parseObject(content).getString("userId")));
     }
+
+    /**
+     * 修改个性化配置
+     * @param content
+     * @return
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,
+            operateDesc = "修改个人配置",
+            retType = ReturnType.Object,
+            id = "guidConfig"
+    )
+    @RequestMapping(value="/saveOperatorLog" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
+    public Map<String, Object> saveOperatorLog(@RequestBody String content) {
+        return getReturnMap(operatorRService.saveOperatorLog(JSONObject.parseObject(content, AcOperatorConfig.class)));
+    }
+
+
+    /**
+     * 查询操作员的个性化配置
+     * @param content
+     * @return
+     */
+    @RequestMapping(value="/queryOperatorConfig" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
+    public Map<String, Object> queryOperatorConfig(@RequestBody String content) {
+        return getReturnMap(operatorRService.queryOperatorConfig(JSONObject.parseObject(content).getString("userId")));
+    }
+
+    /**
+     * 查询操作员在某功能的行为白名单和黑名单
+     * @param content
+     * @return
+     */
+    @RequestMapping(value="/queryOperatorBhvListInFunc" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
+    public Map<String, Object> queryOperatorBhvListInFunc(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        String funcGuid = jsonObject.getString("funcGuid");
+        String userId = jsonObject.getString("userId");
+        return getReturnMap(operatorRService.queryOperatorBhvListInFunc(funcGuid, userId));
+    }
+
+    /**
+     * 操作员功能行为添加黑名单
+     * @param content
+     * @return
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_ADD,
+            operateDesc = "添加操作员功能行为黑名单",
+            retType = ReturnType.List,
+            id = "guidFuncBhv",
+            name = "bhvName",
+            keys = "bhvCode"
+    )
+    @RequestMapping(value="/addOperatorBhvBlackList" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
+    public Map<String, Object> addOperatorBhvBlackList(@RequestBody String content) {
+        return getReturnMap(operatorRService.addOperatorBhvBlackList(JSON.parseArray(content, AcOperatorBhv.class)));
+    }
+
+    /**
+     * 操作员功能行为移除黑名单
+     * @param content
+     * @return
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_DELETE,
+            operateDesc = "移除操作员功能行为黑名单",
+            retType = ReturnType.List,
+            id = "guidFuncBhv",
+            name = "bhvName",
+            keys = "bhvCode"
+    )
+    @RequestMapping(value="/deleteOperatorBhvBlackList" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
+    public Map<String, Object> deleteOperatorBhvBlackList(@RequestBody String content) {
+        return getReturnMap(operatorRService.deleteOperatorBhvBlackList(JSON.parseArray(content, AcOperatorBhv.class)));
+    }
+
 }
