@@ -1,7 +1,7 @@
 /**
  * Created by wangbo on 2017/7/4.
  */
-angular.module('MetronicApp').controller('dictionary_controller', function($rootScope, $scope, $http,i18nService,$modal,filterFilter,common_service,$timeout,$uibModal,dictonary_service){
+angular.module('MetronicApp').controller('dictionary_controller', function($rootScope, $scope, $http,i18nService,$modal,filterFilter,common_service,$timeout,$uibModal,uiGridConstants,dictonary_service){
 
     var res = $rootScope.res.dictonary_service;//页面所需调用的服务
 
@@ -31,12 +31,27 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
     $scope.dictconfig = dictconfig;
     //表格渲染
     i18nService.setCurrentLang("zh-cn");
+    //默认查询的是所有业务字典
+    var dictFrom = {};
+    $scope.dictFrom = dictFrom;
+    dictFrom.Alldict = 'All';
+
+
 
     var gridOptions0 = {};
     $scope.gridOptions0 = gridOptions0;
     var com = [{ field: 'dictKey', displayName: '业务字典'},
-        { field: "dictName", displayName:'字典名称'}
+        { field: "dictName", displayName:'字典名称'},
+        { field: "dictType", displayName:'字典类型',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.dictType | translateConstants :\'DICT_TYPE\') + $root.constant[\'DICT_TYPE-\'+row.entity.dictType]}}</div>',
+            //配置搜索下拉框
+            filter:{
+                //term: '0',//默认搜索那项
+                type: uiGridConstants.filter.SELECT,
+                selectOptions: [{ value: 'A', label: '应用级'}, { value: 'S', label: '系统级' }]
+            }},
+        { field: "fromType", displayName:'字典项来源',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.fromType | translateConstants :\'DICT_SYS_DICTFROMTYPE\') + $root.constant[\'DICT_SYS_DICTFROMTYPE-\'+row.entity.fromType]}}</div>'}
     ];
+
     //自定义点击事件
     var f = function(row){
         if(row.isSelected){
@@ -55,22 +70,45 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
     }
     $scope.gridOptions0 = initgrid($scope,gridOptions0,filterFilter,com,false,f);
 
-    //查询所有业务字典
+//查询所有业务字典
     var  queryAlldict = function(){
-        var subFrom = {};
-        dictonary_service.querySysDictList(subFrom).then(function(data){
-            var datas = data.retMessage;
-            if(data.status == "success"){
-                dictflag.dictnameL = datas;
-                $scope.gridOptions0.data =  datas;
-                $scope.gridOptions0.mydefalutData = datas;
-                $scope.gridOptions0.getPage(1,$scope.gridOptions0.paginationPageSize);
+
+        //监控单选框，配置数据
+        $scope.$watch('dictFrom.Alldict',function(newvalue,oldvalue){
+            if(newvalue == 'Root'){
+                var subFrom = {};
+                subFrom.isQueryRoot = 'Y';
+                dictonary_service.querySysDictList(subFrom).then(function(data){
+                    var datas = data.retMessage;
+                    if(data.status == "success"){
+                        dictflag.dictnameL = datas;
+                        $scope.gridOptions0.data =  datas;
+                        $scope.gridOptions0.mydefalutData = datas;
+                        $scope.gridOptions0.getPage(1,$scope.gridOptions0.paginationPageSize);
+                    }else{
+                        toastr['error']('查询失败'+'<br/>'+data.retMessage);
+                    }
+                })
             }else{
-                toastr['error']('查询失败'+'<br/>'+data.retMessage);
+                var subFrom = {};
+                subFrom.isQueryRoot = 'N';
+                dictonary_service.querySysDictList(subFrom).then(function(data){
+                    var datas = data.retMessage;
+                    if(data.status == "success"){
+                        dictflag.dictnameL = datas;
+                        $scope.gridOptions0.data =  datas;
+                        $scope.gridOptions0.mydefalutData = datas;
+                        $scope.gridOptions0.getPage(1,$scope.gridOptions0.paginationPageSize);
+                    }else{
+                        toastr['error']('查询失败'+'<br/>'+data.retMessage);
+                    }
+                })
             }
         })
+
     }
     queryAlldict();//调用查询业务字典
+
     //查询公共方法
     dictflag.initt = function(pages){//查询服务公用方法
         var subFrom = {};
@@ -86,8 +124,6 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                     $scope.gridOptions0.getPage(str,$scope.gridOptions0.paginationPageSize);
                     angular.forEach($scope.gridOptions0.data, function(data,index){
                         if(data.dictKey == pages){
-                            console.log(data);
-                            console.log(index);
                             $timeout(function() {
                                 //选中之前的节点
                                 if ($scope.gridApi.selection.selectRow) {
@@ -115,6 +151,7 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                 $scope.dictFrom =dictFrom;
                 dictFrom.seqno =0;//默认
                 dictFrom.fromType =0;//首先给个默认
+                dictFrom.dictType ='A';
                 $scope.dictlist = dictflag.dictnameL;//渲染业务字典数据
                 $scope.add = function(item){//保存新增的函数
                     var subFrom = {};
@@ -190,7 +227,6 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
             toastr['error']("请至少选中一条进行修改！");
         }
     }
-
     //删除业务字典
     $scope.showDelAll=function(){
         if($scope.selectRow){
@@ -266,6 +302,7 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                         if(data.status == "success"){
                             toastr['success']( "修改成功！");
                             dictflag.initt();//调用刷新列表
+                            //jstreeshu()//重新查询树结构
                             $modalInstance.close();
                             $scope.dictconfig.show =false;
                         }else{
@@ -363,6 +400,28 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
         )
     }
 
+    /* 设置默认值提取*/
+    var editdefault = function(item){
+        console.log(item)
+        if(confirm("确定设置"+item.text+"为默认值吗")){
+                var serFrom = {};
+                serFrom.dictKey = item.guidDict;
+                serFrom.itemValue = item.sendValue;
+                common_service.post(res.setDefaultDictValue,serFrom).then(function(data){
+
+                    if(data.status == "success"){
+                        toastr['success']( "设置默认值成功！");
+                    }else{
+                        toastr['success']( "设置默认值失败！");
+                    }
+
+                })
+
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+        }
+    }
     /*增完业务字典返回字典项*/
     var backdictitem = function(dictvalue){
         var guidParents = angular.copy(dictvalue);
@@ -498,10 +557,10 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                     $scope.subFrom =subFrom;
                     subFrom =item;
                     subFrom.guid = item.guid;
-                    console.log(subFrom)
                     dictonary_service.editSysDictItem(subFrom).then(function(data){
                         if(data.status == "success"){
                             toastr['success']( "修改成功！");
+                            jstreeshu()//重新查询树结构
                             $modalInstance.close();
                         }else{
                             toastr['error']('新增失败'+'<br/>'+data.retMessage);
@@ -563,7 +622,7 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                             //修改逻辑
                             dictedit(1,node.original)
                         }
-                    },
+                    }
                 }
                 return it;
             }
@@ -589,6 +648,14 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
 
                         }
                     },
+                    "设置默认值":{
+                        "label":"设置默认值",
+                        "action":function(data){
+                            //修改逻辑
+                            editdefault(node.original);
+                            //editdefault();
+                        }
+                    }
                 }
                 return it;
             }
@@ -606,6 +673,13 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                         "label":"修改字典项",
                         "action":function(data){
                             editdictitem(1,node.original)
+                        }
+                    },
+                    "设置默认值":{
+                        "label":"设置默认值",
+                        "action":function(data){
+                            //修改逻辑
+                            editdefault(node.original);
                         }
                     }
                 }
@@ -636,16 +710,17 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                     common_service.post(res.queryDictTree,$scope.treeFrom).then(function(data){
                         if(data.status == 'success'){
                             var datas = data.retMessage;
+
                             var its = [];
                             if(!isNull(datas.rootName)){
-                                datas.text = datas.rootName;
+                                datas.text = datas.itemValue+'_'+datas.rootName;
                                 datas.children = true;
                                 datas.id = datas.rootCode;
                                 datas.icon = "fa fa-home icon-state-info icon-lg"
                                 its.push(datas)
                             }else{
                                 for(var i =0;i <datas.length;i++){
-                                    datas[i].text = datas[i].itemName;
+                                    datas[i].text = datas[i].guidDict+'_'+datas[i].itemName;
                                     datas[i].children = true;
                                     if(datas[i].itemType == 'value'){
                                         datas[i].children = false;
@@ -675,12 +750,16 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                     return true;
                 }
             },
+            'sort': function (a, b) {
+                //排序插件，会两者比较，获取到节点的order属性，插件会自动两两比较。
+                return this.get_node(a).original.seqno > this.get_node(b).original.seqno ? 1 : -1;
+            },
             'callback' : {
                 move_node:function (node) {
                 }
             },
 
-            "plugins" : [ "state", "types","search","contextmenu"]
+            "plugins" : [ "state", "types","search","sort","contextmenu"]
         })
     }
 
@@ -881,7 +960,13 @@ angular.module('MetronicApp').controller('dictitwos_controller', function($rootS
             }
         })*/
     }
-    
+
+
+
+    //导入业务字典
+    $scope.import =function(){
+        $scope.imporots = true;
+    }
     
     
     //上传业务字典

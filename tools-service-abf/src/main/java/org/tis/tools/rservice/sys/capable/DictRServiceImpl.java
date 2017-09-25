@@ -3,18 +3,7 @@
  */
 package org.tis.tools.rservice.sys.capable;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
-
+import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +15,7 @@ import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.common.utils.StringUtil;
 import org.tis.tools.core.exception.ExceptionCodes;
+import org.tis.tools.model.def.CommonConstants;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.def.SysConstants;
 import org.tis.tools.model.po.sys.SysDict;
@@ -38,7 +28,10 @@ import org.tis.tools.service.sys.SysDictService;
 import org.tis.tools.service.sys.SysDictServiceExt;
 import org.tis.tools.service.sys.exception.SYSExceptionCodes;
 
-import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 业务字典服务实现
@@ -440,14 +433,18 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 
 	/**
 	 * 查询所有业务字典
-	 *
+	 * @param isQueryRoot 是否查询根字典
 	 * @return
 	 * @throws SysManagementException
 	 */
 	@Override
-	public List<SysDict> querySysDicts() throws SysManagementException {
+	public List<SysDict> querySysDicts(String isQueryRoot) throws SysManagementException {
 		try {
-			List<SysDict> sysDicts = sysDictService.query(new WhereCondition());
+			WhereCondition wc = new WhereCondition();
+			if(StringUtils.equals(isQueryRoot, CommonConstants.YES)) {
+				wc.andIsNull(SysDict.COLUMN_GUID_PARENTS);
+			}
+			List<SysDict> sysDicts = sysDictService.query(wc);
 			return sysDicts;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -610,5 +607,39 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 		}
 	}
 
+	/**
+	 * 设置业务字典的默认字典项
+	 *
+	 * @param dictGuid
+	 * @param itemValue
+	 * @return
+	 * @throws SysManagementException
+	 */
+	@Override
+	public SysDict setDefaultDictValue(String dictGuid, String itemValue) throws SysManagementException {
+		if(StringUtils.isBlank(dictGuid)) {
+			throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap(SysDict.COLUMN_GUID, "SYS_DICT"));
+		}
+		if(StringUtils.isBlank(itemValue)) {
+			throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap(SysDict.COLUMN_DEFAULT_VALUE, "SYS_DICT"));
+		}
+		try {
+			List<SysDict> sysDicts = sysDictService.query(new WhereCondition().andEquals(SysDict.COLUMN_GUID, dictGuid));
+			if(sysDicts.size() < 1) {
+				throw new SysManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap(SysDict.COLUMN_GUID, "SYS_DICT"));
+			}
+			SysDict sysDict = sysDicts.get(0);
+			sysDict.setDefaultValue(itemValue);
+			sysDictService.update(sysDict);
+			return sysDict;
 
+		} catch (SysManagementException se) {
+			throw se;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new SysManagementException(
+					SYSExceptionCodes.FAILURE_WHEN_UPDATE,
+					BasicUtil.wrap( "SYS_DICT", e.getCause().getMessage()));
+		}
+	}
 }

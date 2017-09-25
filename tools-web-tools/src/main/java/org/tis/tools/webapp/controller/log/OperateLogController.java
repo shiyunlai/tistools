@@ -62,7 +62,18 @@ public class OperateLogController extends BaseController {
     @ResponseBody
     @RequestMapping(value="/queryOperateHistoryList",produces ="application/json;charset=UTF-8", method= RequestMethod.POST)
     public Map<String, Object>  queryOperateHistoryList(@RequestBody String content) {
-        return getReturnMap(operateLogRService.queryOperateDetail(JSONObject.parseObject(content).getString("objGuid")));
+        return getReturnMap(operateLogRService.queryOperateHistoryList(JSONObject.parseObject(content).getString("objGuid")));
+    }
+    
+    /**
+     * 查询操作员登录日志
+     * @param content
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="/queryLoginHistory",produces ="application/json;charset=UTF-8", method= RequestMethod.POST)
+    public Map<String, Object>  queryLoginHistory(@RequestBody String content) {
+        return getReturnMap(operateLogRService.queryLoginHistory(JSONObject.parseObject(content).getString("userId")));
     }
 
 

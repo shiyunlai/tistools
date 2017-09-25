@@ -102,7 +102,7 @@
 		<!-- Common libs -->
 		<!--<spring.bom.version>3.2.9.RELEASE</spring.bom.version> -->
 		<spring.bom.version>4.2.4.RELEASE</spring.bom.version>
-		<javassist_version>3.15.0-GA</javassist_version>
+		<javassist_version>3.21.0-GA</javassist_version>
 		<mybatis-spring.version>1.3.1</mybatis-spring.version>
 		<mybatis.version>3.4.1</mybatis.version>
 		<spring.version.web>3.1.3.RELEASE</spring.version.web>
@@ -144,7 +144,7 @@
 		<jcache_version>0.4</jcache_version>
 		<sca_version>2.0-M5.1</sca_version>
 		<guice_version>3.0</guice_version>
-		<cglib_version>2.2</cglib_version>
+		<cglib_version>3.2.5</cglib_version>
 		<!--<webx_version>3.0.8</webx_version> -->
 		<webx_version>3.1.6</webx_version>
 		<!--<jackson_version>2.3.3</jackson_version> -->
@@ -280,6 +280,16 @@
 				<groupId>org.tis</groupId>
 				<artifactId>tools-facade-sys</artifactId>
 				<version>${tools-facade-sys-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.tis</groupId>
+				<artifactId>tools-facade-log</artifactId>
+				<version>${tools-facade-log-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.tis</groupId>
+				<artifactId>tools-facade-jnl</artifactId>
+				<version>${tools-facade-jnl-version}</version>
 			</dependency>
 			<!-- | tools 资源 end -->
 
@@ -726,6 +736,16 @@
 			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>dubbo</artifactId>
+				<exclusions>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.javassist</groupId>
+						<artifactId>javassist</artifactId>
+					</exclusion>
+				</exclusions>
 				<version>${dubbo-version}</version>
 			</dependency>
 			<!-- druid -->
@@ -897,6 +917,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.20.1</version>
 				<configuration>
 					<skip>true</skip>
 				</configuration>

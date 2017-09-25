@@ -128,13 +128,13 @@ MetronicApp.factory('httpInterceptor', ['$log', function($log) {
             //console.log(response);//打印所有的响应
             if(response.status == '200'){//首先要请求成功
                 if(response.config.url.indexOf(manurl) ==0 ){//判断post请求，post请求的url都是marurl开头。
-                    //console.log(response);//打印所有post请求
                     if(response.data.status =="success"){
                         //console.log('成功的请求')
                     }else if(response.data.status =="error"){
                         //console.log('失败的请求,进行处理 ')
-                    }else if(response.data.status =="fail"){
-                        window.location = "../tools/index.html";//如果正确，则进入主页
+                    }else if(response.data.status =="failed"){
+                        toastr['error']("登陆失效，请重新登陆!");
+                        window.location = "../tools/login.html";//如果正确，则进入主页
                     }
                 }
             }
@@ -301,181 +301,195 @@ MetronicApp.controller('AppController', ['$scope','$rootScope','$http','$q', fun
  ***/
 
 /* Setup Layout Part - Header */
-MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope', '$http','$uibModal','common_service', function($scope,filterFilter,$rootScope,$http,$uibModal,common_service) {
+MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope', '$http','$uibModal','common_service','$state', function($scope,filterFilter,$rootScope,$http,$uibModal,common_service,$state) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
         Demo.init();
-
-        var session = angular.fromJson(sessionStorage.user)
-        $scope.userId = session.userId;
-
+        var res = $rootScope.res.login_service;//页面所需调用的服务
+        common_service.post(res.pageInit,{}).then(function(data){
+            if(data.status == "success"){
+                 var session = data.retMessage.user;
+                session.opertor = sessionStorage.opertor;//身份绑定;
+                $scope.userId = session.userId;//绑定登陆信息
+                userinfo(data.retMessage.user);//登陆信息页面
+                passedit(data.retMessage.user);//修改密码页面
+                opermenu($scope.userId);//重组菜单入口
+                persona($scope.userId);//个性化配置入口
+                $rootScope.menus = angular.fromJson(data.retMessage.menu);
+            }
+        })
+        //拿到用户信息
     });
     //个人信息页面
-    $scope.information = function(){
-        openwindow($uibModal, 'views/landinginfor/personalinfor.html','lg',
-            function ($scope, $modalInstance) {
-                var session = angular.fromJson(sessionStorage.user)
-                $scope.userid = session.userId;
-                $scope.operatorName = session.operatorName;
-                $scope.menuType = session.menuType;
-                $scope.lastLogin = session.lastLogin;
-                $scope.opertor = sessionStorage.opertor;
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            }
-        )
-    }
-    //修改密码页面
-    $scope.improved = function(){
-        var res = $rootScope.res.login_service;
-        openwindow($uibModal, 'views/landinginfor/Improved.html','lg',
-            function ($scope, $modalInstance) {
-                $scope.add = function(item){//保存新增的函数
-                    var subFrom = {};
-                    var session = angular.fromJson(sessionStorage.user)
-                    subFrom.userId =session.userId;
-                    subFrom.newPwd =item.newPassword ;
-                    subFrom.oldPwd =item.oldPassword;
-                    common_service.post(res.updatePassword,subFrom).then(function(data){
-                        console.log(data);
-                        if(data.status == "success"){
-                            toastr['success']("修改成功！");
-                            $modalInstance.close();
-                        }
-                    })
-
+    function userinfo(item){
+        $scope.information = function(){
+            openwindow($uibModal, 'views/landinginfor/personalinfor.html','lg',
+                function ($scope, $modalInstance) {
+                    //var session = angular.fromJson(sessionStorage.user)
+                    $scope.userid = item.userId;
+                    $scope.operatorName = item.operatorName;
+                    $scope.menuType = item.menuType;
+                    $scope.lastLogin =moment(item.lastLogin).format('YYYY-MM-DD HH:mm:ss');
+                    $scope.opertor = item.opertor;
+                    $scope.cancel = function () {
+                        $modalInstance.dismiss('cancel');
+                    };
                 }
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            }
-        )
+            )
+        }
     }
 
+    //修改密码页面
+    function passedit(datas){
+        $scope.improved = function(){
+            var res = $rootScope.res.login_service;
+            openwindow($uibModal, 'views/landinginfor/Improved.html','lg',
+                function ($scope, $modalInstance) {
+                    $scope.add = function(item){//保存新增的函数
+                        var subFrom = {};
+                        subFrom.userId =datas.userId;
+                        subFrom.newPwd =item.newPassword ;
+                        subFrom.oldPwd =item.oldPassword;
+                        common_service.post(res.updatePassword,subFrom).then(function(data){
+                            if(data.status == "success"){
+                                toastr['success']("修改成功！");
+                                $modalInstance.close();
+                            }
+                        })
+
+                    }
+                    $scope.cancel = function () {
+                        $modalInstance.dismiss('cancel');
+                    };
+                }
+            )
+        }
+    }
+    //注销登录
+    $scope.logout  = function(){
+       if(confirm('是否确定注销')){
+           var res = $rootScope.res.login_service;//页面所需调用的服务
+           common_service.post(res.logout,{}).then(function(data){
+               if(data.status == "success"){
+                   window.location = "../tools/login.html";//如果正确，则进入主页
+               }
+           })
+       }
+    }
+
+    //重组菜单
+    function opermenu(item){
+        $scope.opermenus = function(){
+            $state.go("Reorganizemenu",{id:item})
+        }
+
+    }
+    //个性化配置页面
+    function persona(item){
+        $scope.personalise = function(){
+            $state.go("roleConfig",{id:item})
+        }
+    }
 }]);
 
 /* Setup Layout Part - Sidebar */
-MetronicApp.controller('SidebarController', ['$scope', '$timeout',function($scope,$timeout) {
+MetronicApp.controller('SidebarController', ['$scope', '$timeout','$rootScope','common_service',function($scope,$timeout,$rootScope,common_service) {
     $scope.$on('$includeContentLoaded', function () {
         Layout.initSidebar(); // init sidebar
-        var sessionjson = angular.fromJson(sessionStorage.menus)
-       if(sessionStorage.length == 0 ){
-            window.location = "../tools/login.html";//如果正确，则进入主页
-        }
-        /*var item = sessionjson.children;
-         $scope.menusAndTrans = angular.copy(item);//拿到登录页那边传来的目录*/
-/*        //根据order进行排序
-        let getSortData = (data, sortFn) => {
-            data = data.sort(sortFn);
-            data.forEach(v => {
-                if (v.children && v.children.length !== 0) {
-                    v.children = getSortData(v.children, sortFn);
+        //调用菜单
+        var res = $rootScope.res.login_service;//页面所需调用的服务
+        common_service.post(res.pageInit, {}).then(function (data) {
+            if (data.status == "success") {
+                var sessionjson = angular.fromJson(data.retMessage.menu);
+                $scope.menusAndTrans = angular.copy(sessionjson);
+                //搜索框点击事件调用
+                $scope.test = function (searchParam) {
+                    if (_.isEmpty(searchParam)) { //如果是数组
+                        $('.search').html('');//制空
+                        $('.search').slideUp();//让搜索的内容隐藏
+                        $(".ids1").slideDown();//让原本的树结构显示
+                    }
+                }
+                //调用搜索逻辑
+                $scope.search = function (searchParam) {
+                    //如果不是数组,说明有搜索值,那就进行处理
+                    search([sessionjson], searchParam);//调用搜索方法，传入搜索的值
+                    $timeout(function () {
+                        $(".ids1").slideUp();//让原本的菜单结构隐藏
+                    })
+                };
             }
         })
-        return data;
-    }
-    var sts= getSortData(item,(a, b) => {
-            return b.order - a.order;//倒序排序
-        });
-        $scope.menusAndTrans = angular.copy(sts);//拿到登录页那边传来的目录*/
-        //第一层也要，直接用数组包起来
-        var srw = [];
-        srw.push(sessionjson)
-        $scope.menusAndTrans = angular.copy(srw);//拿到登录页那边传来的目录
-    });
 
-
-    var sessionjson = angular.fromJson(sessionStorage.menus)
-
-    //第一层也要，直接用数组包起来
-    var srw = [];
-    srw.push(sessionjson)
-    $scope.menusAndTrans = angular.copy(srw);//拿到登录页那边传来的目录
-
-    $scope.test = function(searchParam){
-        if(_.isEmpty(searchParam)){ //如果是数组
+        function search(all, key) { //包装了一个搜索方法，只要数据结构做成类似的，这个直接拿来用。
             $('.search').html('');//制空
-            $('.search').slideUp();//让搜索的内容隐藏
-            $(".ids1").slideDown();//让原本的树结构显示
-        }
-    }
-
-    $scope.search = function(searchParam){
-            //如果不是数组,说明有搜索值,那就进行处理
-            search(angular.copy(srw),searchParam);//调用搜索方法，传入搜索的值
-            $timeout(function(){
-                $(".ids1").slideUp();//让原本的菜单结构隐藏
-            })
-    };
-
-    function search(all,key){ //包装了一个搜索方法，只要数据结构做成类似的，这个直接拿来用。
-        $('.search').html('');//制空
-        var sum = 0;//标识，判断第几次循环
-        var html = ''//字符串模板
-        var num = all;//数组
-        getArray(all,key);//调用
-        function  getArray(data,key){
-            sum++;//标识++
-            var sumer = sum+1;
-            if(!isNull(num)){//如果不为空，那就进行处理
-                num = [];
-                for(var i=0;i< data.length;i++){
-                    if(!isNull(data[i].children)){
-                        num = num.concat(data[i].children);//把所有的子合并在一个数组中。即把所有的子取出
-                    }
-                }
-            }
-            if(sum == 1){//sum是标识，区分第一次循环
-                for(var i = 0;i< data.length;i++){
-                    if(data[i].isLeaf == 'Y'){//如果是，那么按照最后一层循环
-                        html +=  '<a href=" '+ data[i].href + '"><i class="'+data[i].icon+'"></i><span class="title">'+data[i].label+'</span></a><ul class="sub-menu ids'+ sumer +'" id="'+ 'ABF' + data[i].guid  +'"></ul>'
-                    }else{//如果不是，按照正常循环方式
-                        html +=  '<a href="javascript:;"><i class="'+data[i].icon+'"></i><span class="title">'+data[i].label+'</span> <span class="arrow "></span></a><ul class="sub-menu idss'+ sumer +'" id="'+ 'ABF' +data[i].guid  +'"></ul>'
-                    }
-                }
-                $(".search").append(html);//追加到li中
-            }
-            for(var j =0;j<data.length;j++){//循环，拿到第一层,与本身这层进行判断，找到对应的层级，guid和parentguid匹配
-                var array = [];
-                for(var i =0; i<num.length;i++){//循环所有的子级，然后进行匹配
-                    if(data[j].guid == num[i].parentGuid){
-                        array.push(num[i]);
-                    }
-                }
-                var htmltwo = '';//模板标识
-
-                var indexofs  = [];
-                array.forEach(function(v,i){
-                    if(array[i].label.indexOf(key) != -1){
-                        indexofs.push(array[i]);//匹配的放入数组中
-                    }
-                })
-                var strea = ''
-                for(var i = 0;i<indexofs.length;i++){//匹配的内容
-                    if(indexofs[i].isLeaf =='Y'){
-                        //是最后一层
-                        htmltwo += '<li><a  href="#/'+indexofs[i].href + '"><i class="'+indexofs[i].icon+'"></i><span class="title">'+indexofs[i].label+'</span></a></li>'
-                        strea =true;
-                    }else{
-                        htmltwo += '<li class="start nav-item"><a  style="height: 41px;line-height: 31px;"   href="javascript:;"><i class="'+indexofs[i].icon+'"></i><span class="title">'+indexofs[i].label+'</span><span class="arrow "></span></a><ul class="sub-menu ids'+ sumer +'"id="'+ 'ABF' + indexofs[i].guid+'"></ul></li>'
-                        strea =false;
-                    }
-                        if(strea){
-                            $('.idss2').append(htmltwo);//追加到对应的父节点的标签中
-                        }else{
-                            $('#'+'ABF'+indexofs[i].guid).append(htmltwo);//追加到对应的父节点的标签中
+            var sum = 0;//标识，判断第几次循环
+            var html = ''//字符串模板
+            var num = all//数组
+            getArray(all, key);//调用
+            function getArray(data, key) {
+                sum++;//标识++
+                var sumer = sum + 1;
+                if (!isNull(num)) {//如果不为空，那就进行处理
+                    num = [];
+                    for (var i = 0; i < data.length; i++) {
+                        if (!isNull(data[i].children)) {
+                            num = num.concat(data[i].children);//把所有的子合并在一个数组中。即把所有的子取出
                         }
                     }
+                }
+                if (sum == 1) {//sum是标识，区分第一次循环
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].isLeaf == 'Y') {//如果是，那么按照最后一层循环
+                            html += '<a href=" ' + data[i].href + '"><i class="' + data[i].icon + '"></i><span class="title">' + data[i].label + '</span></a><ul class="sub-menu ids' + sumer + '" id="' + 'ABF' + data[i].guid + '"></ul>'
+                        } else {//如果不是，按照正常循环方式
+                            html += '<a href="javascript:;"><i class="' + data[i].icon + '"></i><span class="title">' + data[i].label + '</span> <span class="arrow "></span></a><ul class="sub-menu idss' + sumer + '" id="' + 'ABF' + data[i].guid + '"></ul>'
+                        }
+                    }
+                    $(".search").append(html);//追加到li中
+                }
+                for (var j = 0; j < data.length; j++) {//循环，拿到第一层,与本身这层进行判断，找到对应的层级，guid和parentguid匹配
+                    var array = [];
+                    for (var i = 0; i < num.length; i++) {//循环所有的子级，然后进行匹配
+                        if (data[j].guid == num[i].parentGuid) {
+                            array.push(num[i]);
+                        }
+                    }
+                    var htmltwo = '';//模板标识
+
+                    var indexofs = [];
+                    array.forEach(function (v, i) {
+                        if (array[i].label.indexOf(key) != -1) {
+                            indexofs.push(array[i]);//匹配的放入数组中
+                        }
+                    })
+                    var strea = ''
+                    for (var i = 0; i < indexofs.length; i++) {//匹配的内容
+                        if (indexofs[i].isLeaf == 'Y') {
+                            //是最后一层
+                            htmltwo += '<li><a  href="#/' + indexofs[i].href + '"><i class="' + indexofs[i].icon + '"></i><span class="title">' + indexofs[i].label + '</span></a></li>'
+                            strea = true;
+                        } else {
+                            htmltwo += '<li class="start nav-item"><a  style="height: 41px;line-height: 31px;"   href="javascript:;"><i class="' + indexofs[i].icon + '"></i><span class="title">' + indexofs[i].label + '</span><span class="arrow "></span></a><ul class="sub-menu ids' + sumer + '"id="' + 'ABF' + indexofs[i].guid + '"></ul></li>'
+                            strea = false;
+                        }
+                        if (strea) {
+                            $('.idss2').append(htmltwo);//追加到对应的父节点的标签中
+                        } else {
+                            $('#' + 'ABF' + indexofs[i].guid).append(htmltwo);//追加到对应的父节点的标签中
+                        }
+                    }
+                }
             }
+
+            if (sum < 40) {//标识,如果有children,那么就一直递归下去
+                getArray(num, key);//递归调用
+            } else {
+                return num;
+            }
+            $('.search').slideDown();//让搜索内容显示
         }
-        if(sum<40){//标识,如果有children,那么就一直递归下去
-            getArray(num,key);//递归调用
-        }else{
-            return num;
-        }
-        $('.search').slideDown();//让搜索内容显示
-    }
+    });
 }]);
 
 MetronicApp.controller('QuickSidebarController', ['$scope', function($scope) {
@@ -501,11 +515,11 @@ MetronicApp.controller('FooterController', ['$scope', function($scope) {
     });
 }]);
 
-MetronicApp.controller('ThemePanelController', ['$scope', function($scope) {
+/*MetronicApp.controller('ThemePanelController', ['$scope', function($scope) {
     $scope.$on('$includeContentLoaded', function() {
         Demo.init(); // init theme panel
     });
-}]);
+}]);*/
 
 
 
@@ -918,7 +932,19 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             url:"/applicationFun.html",
             templateUrl:"views/Jurisdiction/applicationFun.html",
             data: {pageTitle: '应用功能管理'},
-            controller:"application_controller"
+            controller:"application_controller",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load([{
+                        name: 'MetronicApp',
+                        insertBefore: '#ng_load_plugins_before',
+                        files: [
+                            '../assets/global/plugins/angular-ui-grid/ui-grid2.min.js'
+                            // '../assets/global/plugins/angular-ui-grid/ui-grid.js'
+                        ]
+                    }]);
+                }]
+            }
         })
         .state("menuManagement",{
             url:"/menuManagement.html",
@@ -950,14 +976,20 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             data: {pageTitle: '操作员个人配置'},
             controller:"operat_controller"
         })
+        .state("permission",{
+            url:"/permission.html/{id:.*}",
+            templateUrl:"views/permission/permission.html",
+            data: {pageTitle: '操作员功能行为权限配置'},
+            controller:"permission_controller"
+        })
         .state("Reorganizemenu",{
-            url:"/Reorganizemenu.html",
+            url:"/Reorganizemenu.html/{id:.*}",
             templateUrl:"views/operator/Reorganizemenu.html",
             data: {pageTitle: '重组菜单'},
             controller:"reomenu_controller"
         })
         .state("roleConfig",{
-            url:"/roleConfig.html",
+            url:"/roleConfig.html/{id:.*}",
             templateUrl:"views/operator/roleConfig.html",
             data: {pageTitle: '操作员个性配置'},
             controller:"operconfig_controller"
@@ -1032,8 +1064,14 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
         .state("journinfo",{
             url:"/journinfo.html/{id:.*}",
             templateUrl:"views/journal/journinfo.html",
-            data: {pageTitle: '操作员个人配置'},
+            data: {pageTitle: '日志详情页面'},
             controller:"jourinfo_controller"
+        })
+        .state("loghistory",{
+            url:"/loghistory.html/{id:.*}",
+            templateUrl:"views/journal/loghistory.html",
+            data: {pageTitle: '日志历史页面'},
+            controller:"loghistory_controller"
         })
 }]);
 

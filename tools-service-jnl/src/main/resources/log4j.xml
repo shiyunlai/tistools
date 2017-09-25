@@ -24,11 +24,6 @@
 		</encoder>
 	</appender>
 
-	<logger name="org.tis.tools">
-		<level value="INFO" />
-		<appender-ref ref="file" />
-	</logger>
-
 	<logger name="org.apache">
 		<level value="WARN" />
 	</logger>
@@ -38,7 +33,7 @@
 	</logger>
 
 	<logger name="org.hibernate.SQL">
-		<level value="DEBUG" />
+		<level value="WARN" />
 	</logger>
 
 	<!-- Suppress warnings from Commons Validator -->
@@ -52,11 +47,12 @@
 
 	<logger name="org.tis.tools">
 		<level value="DEBUG" />
+		<appender-ref ref="file" />
 	</logger>
 
 	<root>
 		<appender-ref ref="CONSOLE" />
-		<level value="DEBUG" />
+		<level value="INFO" />
 	</root>
 
 </log4j:configuration>

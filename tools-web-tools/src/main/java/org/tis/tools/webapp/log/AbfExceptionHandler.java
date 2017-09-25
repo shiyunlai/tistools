@@ -42,7 +42,11 @@ public class AbfExceptionHandler {
         return map;
     }
 
-
+    /**
+     * 请求异常处理
+     * @param ex
+     * @return
+     */
     @ResponseBody
     @ExceptionHandler(Exception.class)
     public Map<String, Object> handleUnexpectedServerError(Exception ex) {

@@ -3,8 +3,6 @@
  */
 package org.tis.tools.rservice.ac.capable;
 
-
-import org.springframework.expression.spel.ast.Operator;
 import org.tis.tools.model.po.ac.*;
 import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
 import org.tis.tools.rservice.ac.exception.AuthManagementException;
@@ -186,7 +184,8 @@ public interface IOperatorRService {
     AcOperatorFuncDetail queryOperatorFuncInfoInApp(String userId) throws OperatorManagementException;
 
     /**
-     * 查询用户的特殊权限列表
+     * 查询用户的功能列表详情
+     *  可用于展示特殊权限列表
      *
      * @param userId
      *          用户名
@@ -213,4 +212,79 @@ public interface IOperatorRService {
      * @throws OperatorManagementException
      */
     void removeAcOperatorFun(String operatorGuid, String funcGuid) throws OperatorManagementException;
+
+    /**
+     * 查询所有个性化配置
+     * @return 配置集合
+     * @throws OperatorManagementException
+     */
+    List<AcConfig> queryConfigList() throws OperatorManagementException;
+
+    /**
+     * 新增个性化配置
+     * @param config
+     * @return
+     * @throws OperatorManagementException
+     */
+    AcConfig addConfig(AcConfig config) throws OperatorManagementException;
+
+    /**
+     * 批量删除个性化配置
+     * @param cfgList
+     * @return
+     * @throws OperatorManagementException
+     */
+    List<AcConfig> deleteConfig(List<AcConfig> cfgList) throws OperatorManagementException;
+
+    /**
+     * 修改个性化配置
+     * @param config
+     * @return
+     * @throws OperatorManagementException
+     */
+    AcConfig updateConfig(AcConfig config) throws OperatorManagementException;
+
+    /**
+     * 保存操作员配置
+     * @param acOperatorConfig
+     * @return
+     * @throws OperatorManagementException
+     */
+    AcOperatorConfig saveOperatorLog(AcOperatorConfig acOperatorConfig) throws OperatorManagementException;
+
+    /**
+     * 查询操作员的个性化配置
+     * @param userId
+     * @return
+     * @throws OperatorManagementException
+     */
+    List<AcConfig> queryOperatorConfig(String userId) throws OperatorManagementException;
+
+
+    /**
+     * 查询操作员在某功能的行为白名单和黑名单
+     * @param funGuid
+     * @param userId
+     * @return
+     * @throws OperatorManagementException
+     */
+    Map<String, Object> queryOperatorBhvListInFunc(String funGuid, String userId) throws OperatorManagementException;
+
+    /**
+     * 操作员功能行为添加黑名单
+     * @param operatorBhvList
+     * @return
+     * @throws OperatorManagementException
+     */
+    List<AcOperatorBhv> addOperatorBhvBlackList(List<AcOperatorBhv> operatorBhvList) throws OperatorManagementException;
+
+    /**
+     * 操作员功能行为移除黑名单
+     * @param operatorBhvList
+     * @return
+     * @throws OperatorManagementException
+     */
+    List<AcOperatorBhv> deleteOperatorBhvBlackList(List<AcOperatorBhv> operatorBhvList) throws OperatorManagementException;
+
+
 }

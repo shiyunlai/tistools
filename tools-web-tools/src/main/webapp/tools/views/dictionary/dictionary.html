@@ -35,10 +35,21 @@
                            <div class="col-md-6" ng-form="bigform" style="padding-left: 0px;">
                                 <div class="portlet light"  style="margin-top: 10px;">
                                     <div class="portlet-title">
-                                        <div class="caption">
+                                       <!-- <div class="caption">
                                             <i class=""></i>
                                             <span class="caption-subject font-green-sharp bold uppercase">业务字典</span>
-                                        </div>
+                                        </div>-->
+                                        <div class="col-md-12  clearfix"   style="margin-bottom:10px;margin-left: 20%;">
+                                                <div class="col-md-8" style="margin-top:7px;">
+                                                    <label class="control-label col-md-4"> 筛选条件:</label>
+                                                    <div class="col-md-4" >
+                                                        <input type="radio"   name="Alldict"  ng-model="dictFrom.Alldict" ng-checked="dictFrom.Alldict == 'All'"  value="All" />所有业务字典
+                                                    </div>
+                                                    <div class="col-md-4" >
+                                                        <input type="radio"   name="Alldict" ng-model="dictFrom.Alldict"   ng-checked="dictFrom.Alldict == 'Root'"  value="Root" />仅显示根字典
+                                                    </div>
+                                                </div>
+                                            </div>
                                     </div>
                                     <div ui-grid="gridOptions0"  class="grid"
                                          ui-grid-pagination ui-grid-exporter
@@ -105,9 +116,10 @@
                       <div class="div" ng-controller="dictitwos_controller">
                           <div class="dictdown" style="margin-top: 60px;">
                               <a class="btn btn-primary" style="margin-left: 100px;" href="../tools/documents/dict_template.xlsx">下载业务字典模板</a>
-                              <a class="btn btn-primary" style="margin-left: 100px;"  ng-click="downdict()" >导出全量业务字典</a>
+                              <a class="btn btn-primary" style="margin-left: 100px;"  ng-click="downdict()" >导出业务字典</a>
+                              <a class="btn btn-primary" style="margin-left: 100px;"  ng-click="import()" >导入业务字典</a>
                           </div>
-                          <div class="portlet light"  style="margin-top: 10px;">
+                          <div class="portlet light"  style="margin-top: 10px;"  ng-if="imporots">
                               <div class="portlet-title">
                                   <div class="caption">
                                       <i class=""></i>

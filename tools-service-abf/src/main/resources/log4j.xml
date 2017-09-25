@@ -50,13 +50,9 @@
 		<level value="WARN" />
 	</logger>
 
-	<logger name="org.tis.tools">
-		<level value="DEBUG" />
-	</logger>
-
 	<root>
 		<appender-ref ref="CONSOLE" />
-		<level value="DEBUG" />
+		<level value="INFO" />
 	</root>
 
 </log4j:configuration>

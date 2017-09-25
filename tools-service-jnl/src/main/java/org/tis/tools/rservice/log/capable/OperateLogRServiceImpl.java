@@ -1,6 +1,5 @@
 package org.tis.tools.rservice.log.capable;
 
-import com.sun.corba.se.impl.orbutil.LogKeywords;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
@@ -10,6 +9,7 @@ import org.tis.tools.base.WhereCondition;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.core.exception.ExceptionCodes;
 import org.tis.tools.model.def.GUID;
+import org.tis.tools.model.def.JNLConstants;
 import org.tis.tools.model.po.log.LogAbfHistory;
 import org.tis.tools.model.po.log.LogAbfKeyword;
 import org.tis.tools.model.po.log.LogAbfOperate;
@@ -99,7 +99,9 @@ public class OperateLogRServiceImpl extends BaseRService implements IOperateLogR
     @Override
     public List<LogAbfOperate> queryOperateLogList() throws LogManagementException {
         try {
-            return logAbfOperateService.query(new WhereCondition());
+            WhereCondition whereCondition = new WhereCondition();
+            whereCondition.setOrderBy(LogAbfOperate.COLUMN_OPERATE_TIME + " DESC");
+            return logAbfOperateService.query(whereCondition);
         } catch (Exception e) {
             e.printStackTrace();
             throw new LogManagementException(
@@ -181,7 +183,10 @@ public class OperateLogRServiceImpl extends BaseRService implements IOperateLogR
                     objGuidMap.put(obj.getGuid(), objDetail);
                     logGuidMap.put(obj.getGuidOperate(), objDetail);
                 }
-                List<LogAbfOperate> logs = logAbfOperateService.query(new WhereCondition().andIn(LogAbfOperate.COLUMN_GUID, logGuids));
+                WhereCondition wc = new WhereCondition();
+                wc.andIn(LogAbfOperate.COLUMN_GUID, logGuids);
+                wc.setOrderBy(LogAbfOperate.COLUMN_OPERATE_TIME + " DESC");
+                List<LogAbfOperate> logs = logAbfOperateService.query(wc);
                 List<LogAbfKeyword> keywords = logAbfKeywordService.query(new WhereCondition().andIn(LogAbfKeyword.COLUMN_GUID_HISTORY, objGUids));
                 for(LogAbfOperate log : logs) {
                     LogOperateDetail detail = new LogOperateDetail();
@@ -194,6 +199,27 @@ public class OperateLogRServiceImpl extends BaseRService implements IOperateLogR
                 }
             }
             return logDetails;
+        } catch (Exception e) {
+            throw new LogManagementException(ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap("OPERATE_LOG", e.getMessage()));
+        }
+    }
+
+    /**
+     * 查询操作员的登录历史
+     *
+     * @param userId
+     * @return 操作日志集合
+     * @throws LogManagementException
+     */
+    @Override
+    public List<LogAbfOperate> queryLoginHistory(String userId) throws LogManagementException {
+        if(StringUtils.isBlank(userId)) {
+            throw new LogManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap(LogAbfOperate.COLUMN_USER_ID, "OPERATE_LOG"));
+        }
+        try {
+            return logAbfOperateService.query(new WhereCondition()
+                    .andEquals(LogAbfOperate.COLUMN_OPERATE_TYPE, JNLConstants.OPEARTE_TYPE_LOGIN)
+                    .andEquals(LogAbfOperate.COLUMN_USER_ID, userId));
         } catch (Exception e) {
             throw new LogManagementException(ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap("OPERATE_LOG", e.getMessage()));
         }

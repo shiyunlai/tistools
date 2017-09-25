@@ -1,48 +1,80 @@
-<!--操作员个性化配置-->
-<div class="page-bar ng-scope" style="border-bottom: 1px solid #e7ecf1;">
+<div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
-            <a href="#">操作员</a>
+            <a href="javascript:;">首页</a>
             <i class="fa fa-circle"></i>
         </li>
         <li>
-            <a href="#">个性化配置</a>
+            <a href="javascript:;">个人权限配置</a>
         </li>
     </ul>
 </div>
 <h3 class="page-title">
     <small></small>
 </h3>
-<div class="row" ng-form="bigform">
-    <div class="col-md-12" >
-        <div class="portlet light">
-            <div class="portlet-body">
-                <div ui-grid="gridOptions"
-                      ui-grid-pagination
-                     ui-grid-selection ui-grid-resize-columns>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light form-fit bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-settings font-red"></i>
+                    <span class="caption-subject font-red sbold uppercase">个人权限配置</span>
                 </div>
-                <div class="actions btn-set" style="float: right; margin-top:12px;">
-                    <button type="button" name="back" class="btn btn-primary" ng-click="opconfigEdit(4)">  修改
+                <div class="actions btn-set">
+                    <button type="button" name="back" class="btn btn-success" popover-trigger="mouseenter" ng-click="submit()" > 保存
                     </button>
+                    <button type="button" name="back" class="btn default" ng-click="$root.settings.utils.back()"><i
+                            class="fa fa-angle-left"></i> <返回></返回>
+                    </button>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="tab-content">
+                    <div  role="tabpanel">
+                        <form action="#" class="form-horizontal form-bordered">
+                            <div class="form-body">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">身份设置</label>
+                                    <div class="col-md-9">
+                                        <label class="radio-inline">
+                                            <input type="radio"  name="{{item.value}}" value="true" ng-model="item.bool"> 开启
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio"    name="{{item.value}}" value="false" ng-model="item.bool" > 关闭
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-body">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">重组菜单</label>
+                                    <div class="col-md-9">
+                                        <label class="radio-inline">
+                                            <input type="radio" id="switchFlag_open"  name="{{item.value}}" value="true" ng-model="item.bool"> 开启
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio"  id="switchFlag_close"   name="{{item.value}}" value="false" ng-model="item.bool" > 关闭
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-body">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">操作员管理</label>
+                                    <div class="col-md-9">
+                                        <label class="radio-inline">
+                                            <input type="radio"  name="{{item.value}}" value="true" ng-model="item.bool"> 开启
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio"     name="{{item.value}}" value="false" ng-model="item.bool" > 关闭
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

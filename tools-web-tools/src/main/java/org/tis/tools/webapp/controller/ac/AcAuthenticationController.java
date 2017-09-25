@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.base.exception.ToolsRuntimeException;
+import org.tis.tools.model.def.JNLConstants;
 import org.tis.tools.model.po.ac.AcOperator;
 import org.tis.tools.model.po.ac.AcOperatorIdentity;
 import org.tis.tools.rservice.ac.capable.IAuthenticationRService;
@@ -52,59 +53,83 @@ public class AcAuthenticationController extends BaseController {
      * 登录
      */
     @OperateLog(
-            operateType = "login",
+            operateType = JNLConstants.OPEARTE_TYPE_LOGIN,
             operateDesc = "登录ABF",
-            retType = ReturnType.Map,
-            id = "user.operatorGuid",
-            name = "user.operatorName"
+            retType = ReturnType.Object,
+            id = "userId",
+            name = "operatorName"
     )
     @ResponseBody
     @RequestMapping(value="/login", produces ="application/json;charset=UTF-8", method= RequestMethod.POST)
-    public Map<String, Object> login(@RequestBody String content, HttpServletRequest request,
-                      HttpServletResponse response, HttpSession httpSession) {
+    public Map<String, Object> login(@RequestBody String content, HttpSession httpSession) {
         JSONObject jsonObject= JSONObject.parseObject(content);
         String userId = jsonObject.getString("userId");
         String password = jsonObject.getString("password");
         String identityGuid = jsonObject.getString("identityGuid");
         String appGuid = jsonObject.getString("appGuid");
+        LogThreadLocal.getLogBuilderLocal().getLog().setUserId(userId);
         AcOperator acOperator = authenticationRService.loginCheck(userId, password, identityGuid, appGuid);
-        Map<String, Object> loginInfo = authenticationRService.getInitInfoByUserIdAndIden(userId, identityGuid, appGuid);
-
+        LogThreadLocal.getLogBuilderLocal().getLog().setOperatorName(acOperator.getOperatorName());
         httpSession.setAttribute("userId", userId);
+        httpSession.setAttribute("identity", identityGuid);
         httpSession.setAttribute("operatorName", acOperator.getOperatorName());
-
-
-        LogThreadLocal.getLogBuilderLocal().getLog().setUserId(userId).setOperatorName(acOperator.getOperatorName());
-
-        return getReturnMap(loginInfo);
+        httpSession.setAttribute("app", appGuid);
+        return getReturnMap(acOperator);
     }
 
 
     /**
      * 修改密码
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,
+            operateDesc = "修改密码",
+            retType = ReturnType.Object,
+            id = "userId",
+            name = "operatorName"
+    )
     @ResponseBody
-    @RequestMapping(value="/updatePassword" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public void updatePassword(@RequestBody String content, HttpServletRequest request,
-                                HttpServletResponse response) {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("updatePassword request : " + content);
-            }
-            JSONObject jsonObject= JSONObject.parseObject(content);
-            String userId = jsonObject.getString("userId");
-            String newPwd = jsonObject.getString("newPwd");
-            String oldPwd = jsonObject.getString("oldPwd");;
-             authenticationRService.updatePassword(userId, oldPwd, newPwd);
-            AjaxUtils.ajaxJsonSuccessMessage(response,"");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("updatePassword exception : ", e);
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("updatePassword exception : ", e);
+    @RequestMapping(value="/updatePassword" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
+    public Map<String,Object> updatePassword(@RequestBody String content, HttpSession httpSession) {
+
+        JSONObject jsonObject= JSONObject.parseObject(content);
+        String userId = jsonObject.getString("userId");
+        String newPwd = jsonObject.getString("newPwd");
+        String oldPwd = jsonObject.getString("oldPwd");
+        AcOperator acOperator = authenticationRService.updatePassword(userId, oldPwd, newPwd);
+        while(httpSession.getAttributeNames().hasMoreElements()) {
+            httpSession.removeAttribute(httpSession.getAttributeNames().nextElement());
         }
+        return getReturnMap(acOperator);
     }
+
+    /**
+     * 注销登陆
+     */
+    @ResponseBody
+    @RequestMapping(value="/logout" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
+    public Map<String,Object> logout(@RequestBody String content, HttpSession httpSession) {
+        while(httpSession.getAttributeNames().hasMoreElements()) {
+            httpSession.removeAttribute(httpSession.getAttributeNames().nextElement());
+        }
+        return getReturnMap(null);
+    }
+
+    /**
+     * 页面初始化
+     * @param httpSession
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="/pageInit" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
+    public Map<String, Object> pageInit(HttpSession httpSession) {
+        String userId = (String) httpSession.getAttribute("userId");
+        String identityGuid = (String) httpSession.getAttribute("identity");
+        String appGuid = (String) httpSession.getAttribute("app");
+        return getReturnMap(authenticationRService.getInitInfoByUserIdAndIden(userId, identityGuid, appGuid));
+    }
+
+
     
     
     

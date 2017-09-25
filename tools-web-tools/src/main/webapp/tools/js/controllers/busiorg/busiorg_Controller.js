@@ -29,6 +29,10 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
     var ywjgxq = false;
     $scope.flag.ywjgxq = ywjgxq;
     /**-----------------------------------右键自定义菜单-------------------------------- */
+        //菜单上刷新
+        $scope.jstreereload = function(){
+            $("#busiorgtree").jstree().refresh();
+        }
         //树自定义右键功能
     var items = function customMenu(node) {
             if (node.parent == "#") {
