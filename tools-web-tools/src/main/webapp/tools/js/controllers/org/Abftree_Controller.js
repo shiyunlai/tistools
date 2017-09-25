@@ -399,7 +399,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
             return this.get_node(a).original.sortNo > this.get_node(b).original.sortNo ? 1 : -1;
         },
 
-        "plugins": ["dnd", "state", "types", "contextmenu","sort"]
+        "plugins": ["dnd", "state", "types", "contextmenu","sort","search"]
     }).bind("copy.jstree", function (node, e, data) {
         console.log(e);
         console.log(data);
@@ -489,17 +489,41 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
     $(document).on('dnd_start.vakata',function(e,data){
 
     });
+
+
     //jstree 自定义筛选事件
     //筛选字段
     $scope.searchitem = "";
+    // var to = false;
+    // $('#q').keyup(function () {
+    //     console.log(1)
+    //     if(to) {
+    //         clearTimeout(to);
+    //     }
+    //
+    //     to = setTimeout(function () {
+    //         $('#container').jstree(true).search($('#q').val());
+    //     }, 250);
+    // });
+    abftree.searchtree = function () {
+
+
+
+    }
+
+    var to = false;
+    $('#q').keyup(function () {
+        if(to) { clearTimeout(to); }
+        $('#container').jstree().load_all();
+        console.log(11111)
+        to = setTimeout(function () {
+            var v = $('#q').val();
+            $('#container').jstree(true).search(v);
+        }, 250);
+    });
     //清空
     abftree.clear = function () {
         $scope.searchitem = "";
-        $scope.showtree = true;
-        if( $("#searchtree").jstree()){
-            $("#searchtree").jstree().destroy();
-        }
-        console.log($("#container").jstree().get_json())
     }
 
     //控制2个树显示标识,true为默认值,false为筛选状态
@@ -1547,158 +1571,158 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
     // const example = source.mergeMap(val => Rx.Observable.of(`${val} World!`));
     // const subscribe = example.subscribe(val => console.log(val));
 
-    var text = document.querySelector('#search');
-    Rx.Observable.fromEvent(text, 'keyup')
-        .debounceTime(1500) // <- throttling behaviour
-        .pluck('target', 'value')
-        .map(url => loadsearchtree({"id":'#',"searchitem":url})).subscribe(data => console.log(data));
-
-    var loadsearchtree = function (subFrom) {
-        console.log(subFrom)
-        if(isNull(subFrom.searchitem)){
-            $scope.showtree = true;
-            if( $("#searchtree").jstree()){
-                $("#searchtree").jstree().destroy();
-            }
-            ($scope.$$phase) ? null : $scope.$apply();
-        }else{
-            if( $("#searchtree").jstree()){
-                $("#searchtree").jstree().destroy();
-            }
-            $scope.showtree = false;
-            $("#searchtree").jstree({
-                "core": {
-                    "themes": {
-                        "responsive": false
-                    },
-                    // so that create works
-                    "check_callback": true,
-                    'data': function (obj, callback) {
-                        var jsonarray = [];
-                        $scope.jsonarray = jsonarray;
-                        console.log(obj)
-                        subFrom.id = obj.id;
-                        if(obj.id != "#"){
-                            if (!isNull(obj.original)) {
-                                subFrom.guidOrg = obj.original.guid;
-                                subFrom.positionCode = obj.original.positionCode;
-                            } else {
-                                subFrom.guidOrg = "";
-                                subFrom.positionCode = "";
-                            }
-                        }
-                        abftree_service.loadsearchtree(subFrom).then(function (datas) {
-                            console.log(datas)
-                            var data = datas.retMessage;
-                            if (isNull(data)) {
-
-                            } else if (isNull(data[0].orgName)) {
-                                for (var i = 0; i < data.length; i++) {
-                                    data[i].text = data[i].positionName;
-                                    data[i].children = true;
-                                    data[i].id = data[i].guid;
-                                    data[i].icon = 'fa fa-users icon-state-info icon-lg'
-                                }
-                            } else {
-                                for (var i = 0; i < data.length; i++) {
-                                    data[i].text = data[i].orgName;
-                                    data[i].children = true;
-                                    data[i].id = data[i].orgCode;
-                                    data[i].icon = 'fa fa-institution  icon-state-info icon-lg';
-                                    if (data[i].orgName == "岗位信息") {
-                                        data[i].icon = 'fa fa-users  icon-state-info icon-lg';
-                                        data[i].children = true;
-                                    }
-                                }
-                            }
-
-                            $scope.jsonarray = angular.copy(data);
-                            callback.call(this, $scope.jsonarray);
-                        })
-                    }
-                },
-                "types": {
-                    "default": {
-                        "icon": "fa fa-folder icon-state-warning icon-lg"
-                    },
-                    "file": {
-                        "icon": "fa fa-file icon-state-warning icon-lg"
-                    }
-                },
-                "state": {"key": "demo3"},
-                "contextmenu": {'items': items},
-                'dnd': {
-                    'dnd_start': function () {
-                        console.log("start");
-                    },
-                    'is_draggable': function (node) {
-                        //用于控制节点是否可以拖拽.
-                        return true;
-                    }
-                },
-                'callback': {
-                    move_node: function (node) {
-                        console.log(node)
-                    }
-                },
-
-                "plugins": ["dnd", "types", "contextmenu"]
-            }).bind("select_node.jstree", function (e, data) {
-                    if (typeof data.node !== 'undefined') {//拿到结点详情
-                        // console.log(data.node.original.id.indexOf("@"));
-                        $scope.abftree.item = {};
-                        console.log(data.node.original);
-                        $scope.currNode = data.node.text;
-                        if (data.node.original.id.indexOf("POSIT") == 0) {
-                            for (var i in $scope.flag) {
-                                flag[i] = false;
-                            }
-                            for (var i in $scope.gwflag) {
-                                gwflag[i] = false;
-                            }
-                            $scope.flag.index = true;
-                            $scope.gwflag.gwxx = true;
-                            $scope.tabflag = false;
-                            $scope.abftree.item = data.node.original;
-                        } else if (data.node.original.id.indexOf("9999") == 0) {
-                            for (var i in $scope.flag) {
-                                flag[i] = false;
-                            }
-                            for (var i in $scope.gwflag) {
-                                gwflag[i] = false;
-                            }
-                            $scope.flag.index = false;
-                        } else if (data.node.original.id.indexOf("GW") == 0) {
-                            for (var i in $scope.gwflag) {
-                                gwflag[i] = false;
-                            }
-                            for (var i in $scope.flag) {
-                                flag[i] = false;
-                            }
-                            $scope.gwflag.gwlb = true;
-                            $scope.flag.index = true;
-                            var subFrom = {};
-                            subFrom.orgGuid = data.node.original.guid;
-                            $scope.abftree.item = data.node.original;
-                            regwlbgird(subFrom)
-                        } else {
-                            for (var i in $scope.gwflag) {
-                                gwflag[i] = false;
-                            }
-                            for (var i in $scope.flag) {
-                                flag[i] = false;
-                            }
-                            $scope.flag.index = true;
-                            $scope.flag.xqxx = true;
-                            $scope.tabflag = true;
-                            $scope.abftree.item = data.node.original;
-                        }
-
-                        ($scope.$$phase) ? null : $scope.$apply();
-                    }
-                });
-        }
-    }
+    // var text = document.querySelector('#search');
+    // Rx.Observable.fromEvent(text, 'keyup')
+    //     .debounceTime(1500) // <- throttling behaviour
+    //     .pluck('target', 'value')
+    //     .map(url => loadsearchtree({"id":'#',"searchitem":url})).subscribe(data => console.log(data));
+    //
+    // var loadsearchtree = function (subFrom) {
+    //     console.log(subFrom)
+    //     if(isNull(subFrom.searchitem)){
+    //         $scope.showtree = true;
+    //         if( $("#searchtree").jstree()){
+    //             $("#searchtree").jstree().destroy();
+    //         }
+    //         ($scope.$$phase) ? null : $scope.$apply();
+    //     }else{
+    //         if( $("#searchtree").jstree()){
+    //             $("#searchtree").jstree().destroy();
+    //         }
+    //         $scope.showtree = false;
+    //         $("#searchtree").jstree({
+    //             "core": {
+    //                 "themes": {
+    //                     "responsive": false
+    //                 },
+    //                 // so that create works
+    //                 "check_callback": true,
+    //                 'data': function (obj, callback) {
+    //                     var jsonarray = [];
+    //                     $scope.jsonarray = jsonarray;
+    //                     console.log(obj)
+    //                     subFrom.id = obj.id;
+    //                     if(obj.id != "#"){
+    //                         if (!isNull(obj.original)) {
+    //                             subFrom.guidOrg = obj.original.guid;
+    //                             subFrom.positionCode = obj.original.positionCode;
+    //                         } else {
+    //                             subFrom.guidOrg = "";
+    //                             subFrom.positionCode = "";
+    //                         }
+    //                     }
+    //                     abftree_service.loadsearchtree(subFrom).then(function (datas) {
+    //                         console.log(datas)
+    //                         var data = datas.retMessage;
+    //                         if (isNull(data)) {
+    //
+    //                         } else if (isNull(data[0].orgName)) {
+    //                             for (var i = 0; i < data.length; i++) {
+    //                                 data[i].text = data[i].positionName;
+    //                                 data[i].children = true;
+    //                                 data[i].id = data[i].guid;
+    //                                 data[i].icon = 'fa fa-users icon-state-info icon-lg'
+    //                             }
+    //                         } else {
+    //                             for (var i = 0; i < data.length; i++) {
+    //                                 data[i].text = data[i].orgName;
+    //                                 data[i].children = true;
+    //                                 data[i].id = data[i].orgCode;
+    //                                 data[i].icon = 'fa fa-institution  icon-state-info icon-lg';
+    //                                 if (data[i].orgName == "岗位信息") {
+    //                                     data[i].icon = 'fa fa-users  icon-state-info icon-lg';
+    //                                     data[i].children = true;
+    //                                 }
+    //                             }
+    //                         }
+    //
+    //                         $scope.jsonarray = angular.copy(data);
+    //                         callback.call(this, $scope.jsonarray);
+    //                     })
+    //                 }
+    //             },
+    //             "types": {
+    //                 "default": {
+    //                     "icon": "fa fa-folder icon-state-warning icon-lg"
+    //                 },
+    //                 "file": {
+    //                     "icon": "fa fa-file icon-state-warning icon-lg"
+    //                 }
+    //             },
+    //             "state": {"key": "demo3"},
+    //             "contextmenu": {'items': items},
+    //             'dnd': {
+    //                 'dnd_start': function () {
+    //                     console.log("start");
+    //                 },
+    //                 'is_draggable': function (node) {
+    //                     //用于控制节点是否可以拖拽.
+    //                     return true;
+    //                 }
+    //             },
+    //             'callback': {
+    //                 move_node: function (node) {
+    //                     console.log(node)
+    //                 }
+    //             },
+    //
+    //             "plugins": ["dnd", "types", "contextmenu"]
+    //         }).bind("select_node.jstree", function (e, data) {
+    //                 if (typeof data.node !== 'undefined') {//拿到结点详情
+    //                     // console.log(data.node.original.id.indexOf("@"));
+    //                     $scope.abftree.item = {};
+    //                     console.log(data.node.original);
+    //                     $scope.currNode = data.node.text;
+    //                     if (data.node.original.id.indexOf("POSIT") == 0) {
+    //                         for (var i in $scope.flag) {
+    //                             flag[i] = false;
+    //                         }
+    //                         for (var i in $scope.gwflag) {
+    //                             gwflag[i] = false;
+    //                         }
+    //                         $scope.flag.index = true;
+    //                         $scope.gwflag.gwxx = true;
+    //                         $scope.tabflag = false;
+    //                         $scope.abftree.item = data.node.original;
+    //                     } else if (data.node.original.id.indexOf("9999") == 0) {
+    //                         for (var i in $scope.flag) {
+    //                             flag[i] = false;
+    //                         }
+    //                         for (var i in $scope.gwflag) {
+    //                             gwflag[i] = false;
+    //                         }
+    //                         $scope.flag.index = false;
+    //                     } else if (data.node.original.id.indexOf("GW") == 0) {
+    //                         for (var i in $scope.gwflag) {
+    //                             gwflag[i] = false;
+    //                         }
+    //                         for (var i in $scope.flag) {
+    //                             flag[i] = false;
+    //                         }
+    //                         $scope.gwflag.gwlb = true;
+    //                         $scope.flag.index = true;
+    //                         var subFrom = {};
+    //                         subFrom.orgGuid = data.node.original.guid;
+    //                         $scope.abftree.item = data.node.original;
+    //                         regwlbgird(subFrom)
+    //                     } else {
+    //                         for (var i in $scope.gwflag) {
+    //                             gwflag[i] = false;
+    //                         }
+    //                         for (var i in $scope.flag) {
+    //                             flag[i] = false;
+    //                         }
+    //                         $scope.flag.index = true;
+    //                         $scope.flag.xqxx = true;
+    //                         $scope.tabflag = true;
+    //                         $scope.abftree.item = data.node.original;
+    //                     }
+    //
+    //                     ($scope.$$phase) ? null : $scope.$apply();
+    //                 }
+    //             });
+    //     }
+    // }
 
     /**-------------------------------测试table自适应---------------------------*/
         //测试封装
