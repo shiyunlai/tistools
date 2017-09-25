@@ -121,7 +121,11 @@
     "queryOperatorFuncInfoInApp": {"ctrl": "AcOperatorController", "func": "queryOperatorFuncInfoInApp","emo":"根据USERID查询特殊权限树"},
     "queryAcOperatorFunListByUserId": {"ctrl": "AcOperatorController", "func": "queryAcOperatorFunListByUserId","emo":"查询用户的特殊权限列表"},
     "addAcOperatorFun": {"ctrl": "AcOperatorController", "func": "addAcOperatorFun","emo":"新增用户特殊功能权限"},
-    "removeAcOperatorFun": {"ctrl": "AcOperatorController", "func": "removeAcOperatorFun","emo":"移除用户特殊功能权限"}
+    "removeAcOperatorFun": {"ctrl": "AcOperatorController", "func": "removeAcOperatorFun","emo":"移除用户特殊功能权限"},
+    "queryConfigList": {"ctrl": "AcOperatorConfig", "func": "queryConfigList","emo":"查询个性化配置列表"},
+    "deleteConfig": {"ctrl": "AcOperatorConfig", "func": "deleteConfig","emo":"删除个性化配置"},
+    "addConfig": {"ctrl": "AcOperatorConfig", "func": "addConfig","emo":"新增个性化配置"},
+    "updateConfig": {"ctrl": "AcOperatorConfig", "func": "updateConfig","emo":"修改操作员个性化配置"}
   },
   "abftree_service" : {
     "loadmaintree": {"ctrl": "om/org", "func": "tree"},

@@ -224,7 +224,6 @@ MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http
      * @param dictKey 代码数据表表名
      */
     settings.getDictData = function (dictKey) {
-        console.debug(settings.diclist[dictKey]);
         if(_.isNil(settings.diclist[dictKey])) {
             var subForm = {};
             subForm.dictKey = dictKey;
@@ -241,7 +240,7 @@ MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http
      * 翻译guid-objName
      * @param type
      */
-    settings.getCommData = function (type) {
+    settings.getCommData = function (type,key) {
         if(type == "ORG"){
             if(_.isNil(settings.commlist[type])) {
                 $http.post(manurl + "/om/org/queryAllorg").then(function (response) {
@@ -269,6 +268,18 @@ MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http
         }else if(type == "DUTY"){
             if(_.isNil(settings.commlist[type])) {
                 $http.post(manurl + "/om/duty/loadallduty").then(function (response) {
+                    settings.commlist[type] = response.data.retMessage;
+                });
+            }
+        }else if(type == "APP"){
+            if(_.isNil(settings.commlist[type])) {
+                $http.post(manurl + "/AcMenuController/queryAllAcApp",{}).then(function (response) {
+                    settings.commlist[type] = response.data.retMessage;
+                });
+            }
+        }else if(type == "DICT"){
+            if(_.isNil(settings.commlist[type])) {
+                $http.post(manurl + "/DictController/querySysDictList",{}).then(function (response) {
                     settings.commlist[type] = response.data.retMessage;
                 });
             }
@@ -1072,6 +1083,12 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             templateUrl:"views/journal/loghistory.html",
             data: {pageTitle: '日志历史页面'},
             controller:"loghistory_controller"
+        })
+        .state("configuration",{
+            url:"/configuration.html",
+            templateUrl:"views/configuration/configuration.html",
+            data: {pageTitle: '个性化配置管理'},
+            controller:"configuration_controller"
         })
 }]);
 
