@@ -1,19 +1,17 @@
 package org.tools.design.test.log;
 
-import com.alibaba.fastjson.JSON;
-import javafx.scene.control.Alert;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
 import org.tis.tools.model.po.log.LogAbfOperate;
 import org.tis.tools.model.vo.log.LogOperateDetail;
 import org.tis.tools.model.vo.log.OperateLogBuilder;
 import org.tis.tools.rservice.log.capable.IOperateLogRService;
 import org.tools.design.SpringJunitSupport;
 
-import java.util.Date;
-import java.util.List;
+import com.alibaba.fastjson.JSON;
 
 public class OperateLogRServiceTest extends SpringJunitSupport {
 
