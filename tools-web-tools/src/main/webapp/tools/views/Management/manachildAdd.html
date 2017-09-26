@@ -3,8 +3,8 @@
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-cogs font-green-sharp"></i>
-            <span class="caption-subject font-green-sharp bold uppercase" ng-if="!id">新增顶级菜单</span>
-            <span class="caption-subject font-green-sharp bold uppercase" ng-if="id">编辑顶级菜单</span>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="!id">新增菜单</span>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="id">编辑菜单</span>
         </div>
         <div class="tools">
             <a href="javascript:;" class="remove" ng-click="cancel()">
@@ -14,6 +14,27 @@
     <div class="portlet-body portlet light">
         <form action="#" name="myform" class="form-horizontal ">
             <div class="form-body ">
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">是否叶子菜单:<span ng-class="{required:myform.dict_key3.$invalid}"  > * </span></label>
+                        <div class="col-md-8" >
+                            <input type="text" class="form-control"  name="dict_key3"   ng-model="menuFrom.isleaf"  translate-constants comtable="DICT_YON"  ng-readonly="!sdasd"/>
+                            <!--<select class="form-control" name="dict_key3" ng-model="menuFrom.isleaf"  ng-change="ceshi(menuFrom.isleaf)"   required>
+                                <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                            </select>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">菜单代码:<span ng-class="{required:myform.dict_key2.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <input type="text" placeholder="请输入菜单代码,如MENU_XXXX" class="form-control"
+                                   ng-model="menuFrom.menuCode"
+                                   name="dict_key2" required/>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-6" >
                     <div class="form-group">
                         <label class="control-label col-md-4">菜单名称:<span ng-class="{required:myform.dict_key.$invalid}"  > * </span></label>
@@ -34,6 +55,20 @@
                         </div>
                     </div>
                 </div>
+
+                <!--<div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">是否叶子菜单:<span ng-class="{required:myform.dict_key3.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <select class="form-control" name="dict_key3" ng-model="menuFrom.isleaf"   required>
+                                <option value=""></option>
+                                <option value="Y">是</option>
+                                <option value="N">否</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>-->
+
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">菜单显示图标</label>
@@ -49,39 +84,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6" >
-                    <div class="form-group">
-                        <label class="control-label col-md-4">菜单代码:<span ng-class="{required:myform.dict_key2.$invalid}"  > * </span></label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="menuFrom.menuCode"
-                                   name="dict_key2" required/>
-                        </div>
-                    </div>
-                </div>
-                <!--<div class="col-md-6" >
-                    <div class="form-group">
-                        <label class="control-label col-md-4">是否叶子菜单:<span ng-class="{required:myform.dict_key3.$invalid}"  > * </span></label>
-                        <div class="col-md-8">
-                            <select class="form-control" name="dict_key3" ng-model="menuFrom.isleaf"   required>
-                                <option value=""></option>
-                                <option value="Y">是</option>
-                                <option value="N">否</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>-->
-                <div class="col-md-6" >
-                    <div class="form-group">
-                        <label class="control-label col-md-4">是否叶子菜单:<span ng-class="{required:myform.dict_key3.$invalid}"  > * </span></label>
-                        <div class="col-md-8"  ng-init="$settings.getDictData('DICT_YON')">
-                            <select class="form-control" name="dict_key3" ng-model="menuFrom.isleaf"  ng-change="ceshi(menuFrom.isleaf)"   required>
-                                <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="col-md-6" >
                     <div class="form-group">
                         <label class="control-label col-md-4">ui入口</label>

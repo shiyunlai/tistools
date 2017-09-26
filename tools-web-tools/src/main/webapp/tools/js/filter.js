@@ -163,6 +163,7 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
         };
     }])
     .filter('translateDict', ['$http', '$rootScope', function ($http, $rootScope) {
+        //翻译所有业务字典
         return function (val, name) {
             var subFrom = {};
             subFrom.dictKey = name;
@@ -189,6 +190,7 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
         };
     }])
     .filter('translateDictitem', ['$http', '$rootScope', function ($http, $rootScope) {
+        //翻译所有业务字典项
         return function (val, name) {
             var subFrom = {};
             subFrom.dictKey = name;
@@ -206,6 +208,30 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
                                 return;
                             }else{
                                 $rootScope.constant[val] = val;
+                            }
+                        }
+                    }
+
+                })
+            }
+            return '';
+        };
+    }])
+    .filter('translateDictKey', ['$http', '$rootScope', function ($http, $rootScope) {
+        //根据key翻译所有业务字典
+        return function (val, name) {
+            var subFrom = {};
+            subFrom.dictKey = name;
+            if (isNull($rootScope.constant[val])) {
+                $http.post("http://localhost:8089/tis/DictController/querySysDictList",{}).then(function (data) {
+                    var retval = "";
+                    if (data.data.status == "success") {
+                        for (var i = 0; i < data.data.retMessage.length; i++) {
+                            if (val == data.data.retMessage[i].dictKey) {
+                                // console.log(data.data.retMessage)
+                                retval = data.data.retMessage[i].dictName;
+                                $rootScope.constant[val] = retval;
+                                return;
                             }
                         }
                     }

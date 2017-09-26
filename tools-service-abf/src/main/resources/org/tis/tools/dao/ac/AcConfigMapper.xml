@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.tis.tools.dao.ac.AcConfigMapper">
+  
+  	<insert id="insert" parameterType="org.tis.tools.model.po.ac.AcConfig">
+	    INSERT INTO AC_CONFIG 
+	    (
+	    	 guid
+	    	,guid_app
+	    	,config_type
+	    	,config_name
+	    	,config_dict
+	    	,config_style
+	    	,config_value
+	    	,enabled
+	    	,display_order
+	    	,config_desc
+	    )
+	    VALUES 
+	    (
+			#{guid,jdbcType=VARCHAR},
+			#{guidApp,jdbcType=VARCHAR},
+			#{configType,jdbcType=VARCHAR},
+			#{configName,jdbcType=VARCHAR},
+			#{configDict,jdbcType=VARCHAR},
+			#{configStyle,jdbcType=VARCHAR},
+			#{configValue,jdbcType=VARCHAR},
+			#{enabled,jdbcType=VARCHAR},
+			#{displayOrder,jdbcType=DECIMAL},
+			#{configDesc,jdbcType=VARCHAR}
+  		)
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="org.tis.tools.model.po.ac.AcConfig">
+    	UPDATE AC_CONFIG 
+	    <set>
+		<if test="guid != null" >
+			guid = #{guid,jdbcType=VARCHAR},
+		</if>
+		<if test="guidApp != null" >
+			guid_app = #{guidApp,jdbcType=VARCHAR},
+		</if>
+		<if test="configType != null" >
+			config_type = #{configType,jdbcType=VARCHAR},
+		</if>
+		<if test="configName != null" >
+			config_name = #{configName,jdbcType=VARCHAR},
+		</if>
+		<if test="configDict != null" >
+			config_dict = #{configDict,jdbcType=VARCHAR},
+		</if>
+		<if test="configStyle != null" >
+			config_style = #{configStyle,jdbcType=VARCHAR},
+		</if>
+		<if test="configValue != null" >
+			config_value = #{configValue,jdbcType=VARCHAR},
+		</if>
+		<if test="enabled != null" >
+			enabled = #{enabled,jdbcType=VARCHAR},
+		</if>
+		<if test="displayOrder != null" >
+			display_order = #{displayOrder,jdbcType=DECIMAL},
+		</if>
+		<if test="configDesc != null" >
+			config_desc = #{configDesc,jdbcType=VARCHAR}
+		</if>
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	
+ 	<update id="updateForce" parameterType="org.tis.tools.model.po.ac.AcConfig">
+    	UPDATE AC_CONFIG 
+	    <set>
+		guid = #{guid,jdbcType=VARCHAR},
+		guid_app = #{guidApp,jdbcType=VARCHAR},
+		config_type = #{configType,jdbcType=VARCHAR},
+		config_name = #{configName,jdbcType=VARCHAR},
+		config_dict = #{configDict,jdbcType=VARCHAR},
+		config_style = #{configStyle,jdbcType=VARCHAR},
+		config_value = #{configValue,jdbcType=VARCHAR},
+		enabled = #{enabled,jdbcType=VARCHAR},
+		display_order = #{displayOrder,jdbcType=DECIMAL},
+		config_desc = #{configDesc,jdbcType=VARCHAR}
+	    </set>
+	    WHERE guid = #{guid}
+ 	</update>
+ 	 
+    <delete id="delete" parameterType="java.lang.String">
+	  	delete from AC_CONFIG where guid = #{guid}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="org.tis.tools.base.WhereCondition">
+	  	delete from AC_CONFIG <include refid="Where_Clause" />
+	</delete>
+	
+	 <update id="updateByCondition" parameterType="map">
+    	UPDATE AC_CONFIG 
+	   <set>
+		<if test="domain.guid != null" >
+        	guid = #{domain.guid,jdbcType=VARCHAR},
+      	</if>
+		<if test="domain.guidApp != null" >
+        	guid_app = #{domain.guidApp,jdbcType=VARCHAR},
+      	</if>
+		<if test="domain.configType != null" >
+        	config_type = #{domain.configType,jdbcType=VARCHAR},
+      	</if>
+		<if test="domain.configName != null" >
+        	config_name = #{domain.configName,jdbcType=VARCHAR},
+      	</if>
+		<if test="domain.configDict != null" >
+        	config_dict = #{domain.configDict,jdbcType=VARCHAR},
+      	</if>
+		<if test="domain.configStyle != null" >
+        	config_style = #{domain.configStyle,jdbcType=VARCHAR},
+      	</if>
+		<if test="domain.configValue != null" >
+        	config_value = #{domain.configValue,jdbcType=VARCHAR},
+      	</if>
+		<if test="domain.enabled != null" >
+        	enabled = #{domain.enabled,jdbcType=VARCHAR},
+      	</if>
+		<if test="domain.displayOrder != null" >
+        	display_order = #{domain.displayOrder,jdbcType=DECIMAL},
+      	</if>
+		<if test="domain.configDesc != null" >
+        	config_desc = #{domain.configDesc,jdbcType=VARCHAR}
+      	</if>
+	    </set>
+	   <where>${wc.condition}</where>
+ 	</update>
+	 
+	<select id="loadByGuid" parameterType="String" resultType="org.tis.tools.model.po.ac.AcConfig">
+		select <include refid="Base_Column_List"/> from AC_CONFIG where guid = #{guid}
+	</select>
+	
+    <select id="query" resultType="org.tis.tools.model.po.ac.AcConfig" parameterType="org.tis.tools.base.WhereCondition" >
+    	select <include refid="Base_Column_List" /> from AC_CONFIG <include refid="Where_Clause" />
+        <if test="orderBy != null" >${orderBy}</if>
+        <if test="length > 0" >LIMIT ${offset}, ${length}</if>
+  	</select>
+  
+   	<select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
+	    select count(*) from AC_CONFIG <include refid="Where_Clause"/>
+  	</select>
+  
+	<sql id="Where_Clause">
+	    <if test="condition != null"><where>${condition}</where></if> 
+	</sql>
+  
+	<sql id="Base_Column_List" >
+		 guid as guid
+		,guid_app as guidApp
+		,config_type as configType
+		,config_name as configName
+		,config_dict as configDict
+		,config_style as configStyle
+		,config_value as configValue
+		,enabled as enabled
+		,display_order as displayOrder
+		,config_desc as configDesc
+	</sql>
+</mapper>

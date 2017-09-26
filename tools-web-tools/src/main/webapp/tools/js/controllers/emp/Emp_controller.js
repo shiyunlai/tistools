@@ -76,9 +76,18 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
     //生成员工列表信息
     var empgrid = {};
     $scope.empgrid = empgrid;
+    //定义按钮控制
+    var buttonflag = false;
+    $scope.buttonflag = buttonflag;
     //定义单选事件
-    var sele = function () {
-
+    var sele = function (a,b) {
+        if(a.isSelected){
+            $scope.buttonflag = true;
+            console.log($scope.buttonflag)
+        }else{
+            $scope.buttonflag = false;
+        }
+        ($scope.$$phase) ? null : $scope.$apply();
     }
     //定义表头名
     var com = [{field: 'empCode', displayName: '员工代码'},
@@ -224,7 +233,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                                     }
                                     reempgrid();
                                     $scope.cancel();
-
                                 })
                             }
                             //返回
@@ -462,7 +470,7 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
             subFrom.empCode = arr[0].empCode;
             Emp_service.deletemp(subFrom).then(function (data) {
                 if (data.status == "success") {
-                    toastr['success'](data.retMessage);
+                    toastr['success']("删除成功!");
                 } else {
                     toastr['error'](data.retMessage);
                 }

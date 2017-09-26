@@ -34,6 +34,8 @@ public class SysSeqno implements Serializable {
 	/** 对应的数据库表名称 */
 	public static final String TABLE_NAME = "SYS_SEQNO" ; 
 	/* SYS_SEQNO table's columns definition */
+	/** SEQ_NAME ：序号资源名称<br/><br/>序号资源的名称，如:柜员660001的交易流水序号资源 */
+	public static final String COLUMN_SEQ_NAME = "seq_name" ; 
 	/** SEQ_KEY ：序号键值<br/><br/> */
 	public static final String COLUMN_SEQ_KEY = "seq_key" ; 
 	/** SEQ_NO ：序号数<br/><br/>顺序增加的数字 */
@@ -43,6 +45,9 @@ public class SysSeqno implements Serializable {
 	/** RESET_PARAMS ：重置处理参数<br/><br/>重置程序执行时的输入参数，通过本参数指定六重置周期，重置执行时间，重置起始数字等 */
 	public static final String COLUMN_RESET_PARAMS = "reset_params" ; 
 	
+	
+	/** 字段类型：varchar<br/>字段名：序号资源名称<br/>描述：序号资源的名称，如:柜员660001的交易流水序号资源 */
+	private String seqName ;
 	
 	/** 字段类型：varchar<br/>字段名：序号键值<br/>描述： */
 	private String seqKey ;
@@ -62,6 +67,25 @@ public class SysSeqno implements Serializable {
 	public SysSeqno() {
 	}
 
+	
+	/**
+	 * Set the 序号资源名称.
+	 * 
+	 * @param seqName
+	 *            序号资源名称
+	 */
+	public void setSeqName(String seqName) {
+ 		this.seqName = seqName == null ? null : seqName.trim() ;
+    }
+    
+    /**
+	 * Get the 序号资源名称.
+	 * 
+	 * @return 序号资源名称
+	 */
+	public String getSeqName(){
+		return this.seqName ;
+    }
 	
 	/**
 	 * Set the 序号键值.

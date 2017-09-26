@@ -15,6 +15,16 @@
             <div class="form-body ">
                 <div class="col-md-6">
                     <div class="form-group">
+                        <label class="control-label col-md-4"> 序号资源名称:</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="numberFrom.seqName"  ng-disabled="!editsflags"
+                                   name="dict_key"  />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
                         <label class="control-label col-md-4"> 序号键值:</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
@@ -27,7 +37,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4"> 序号数:<span ng-class="{required:myform.dict_key1.$invalid}"  > * </span></label>
                         <div class="col-md-8">
-                            <input type="number"  class="form-control" required  ng-disabled="!editsflag"
+                            <input type="number" min="0" class="form-control" required  ng-disabled="!editsflag"
                                    ng-model="numberFrom.seqNo"
                                    name="dict_key1" />
                         </div>
@@ -43,13 +53,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="form-group">
-                        <label class="control-label col-md-4"> 重置处理参数:</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="numberFrom.resetParams" ng-disabled="!editsflag"
-                                   name="dict_key" />
+                        <label class="control-label col-md-2"> 重置处理参数:</label>
+                        <div class="col-md-10">
+                            <textarea class="form-control"  ng_model="numberFrom.resetParams" maxlength="128" length-limit  num-length=128  scope-models="numberFrom.resetParams" ng-disabled="!editsflag"  name="dict_key"></textarea>
                         </div>
                     </div>
                 </div>

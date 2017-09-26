@@ -33,9 +33,16 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                 filter:{
                     //term: '0',//默认搜索那项
                     type: uiGridConstants.filter.SELECT,
-                    selectOptions: [{ value: 'sys', label: 'sys'}, { value: 'app', label: 'app' }]
+                    selectOptions: [{ value: 'sys', label: '系统级'}, { value: 'app', label: '应用级' }]
                 }},
-            { field: "appName", displayName:'隶属应用'}
+            { field: "appName", displayName:'隶属应用',
+                filter:{
+                    //term: '0',//默认搜索那项
+                    type: uiGridConstants.filter.SELECT,
+                    //如果非常多，直接自己拼接，所有的数组，循环，拼接成这个样子就可以了。
+                    selectOptions: [{ value: 'ABF', label: '基础应用系统ABF'}]
+                }
+            }
         ];
         var f = function(row){
             if(row.isSelected){
@@ -57,36 +64,41 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
     //查询所有角色列表
     role_service.queryRoleList(subFrom).then(function(data){
         var  datas = data.retMessage;
-        if(data.status == "success"){
-            /*
-            var lodash = angular.copy(datas);
-            var tis = [];
-            for(var i = 0;i<lodash.length;i++){
-                tis.push(lodash[i].appName)
-            }
-            lodash =_.uniq(tis, true);//去重
-            var array=[];
-            for(var i=0;i<lodash.length;i++){
-                var obj={};
-                obj['value'] = lodash[i];
-                obj['label'] = lodash[i];
-                array.push(obj)//把对象push进去
-            }
-            testgrid(array);//调用列表生成方法*/
-            $scope.gridOptions.data =  datas;
+        if(data.status == "success"&& datas.length > 0){
+            $scope.gridOptions.data = datas;
             $scope.gridOptions.mydefalutData = datas;
-            $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
+            $scope.gridOptions.getPage(1, $scope.gridOptions.paginationPageSize);
         }else{
             toastr['error']('初始化查询失败'+'<br/>'+data.retMessage);
         }
     })
 
     /* 树结构逻辑代码*/
-    //树过滤
-    $("#s").submit(function(e) {
-        e.preventDefault();
-        $("#container").jstree(true).search($("#q").val());
+    //菜单搜索修改，改成键盘弹起事件，加上search组件
+    var to = false;
+    $('#q').keyup(function () {
+        if(to) {
+            clearTimeout(to);
+        }
+        $('#container').jstree().load_all();
+        to = setTimeout(function () {
+            var v = $('#q').val();
+            $('#container').jstree(true).search(v);
+        }, 250);
     });
+
+    //清空n
+    role.clear = function () {
+        $scope.searchitem = "";
+        if(to) {
+            clearTimeout(to);
+        }
+        $('#container').jstree().load_all();
+        to = setTimeout(function () {
+            var v = $('#q').val();
+            $('#container').jstree(true).search(v);
+        }, 250);
+    }
     //创建树结构
     var control=function(id,arrs){
         $('#container').jstree('destroy',false);//删除重新加载，只删除数据。
@@ -188,7 +200,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                 },
             },
             "force_text": true,
-            plugins: ["sort", "types", "checkbox", "wholerow", "sort","themes", "html_data"],
+            plugins: ["sort", "types", "checkbox", "wholerow", "sort","themes", "html_data","search"],
             "checkbox": {
                 "keep_selected_style": false,//是否默认选中
             },
@@ -207,6 +219,9 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                 'is_draggable':function (node) {
                     return true;
                 }
+            },
+            'search':{
+                show_only_matches:true,
             },
             'sort': function (a, b) {
                 //排序插件，会两者比较，获取到节点的order属性，插件会自动两两比较。

@@ -36,6 +36,10 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
     $scope.showdoc = showdoc;
     //ui-grid
     i18nService.setCurrentLang("zh-cn");
+    //树刷新
+    $scope.jstreereload = function(){
+        $("#dutytree").jstree().refresh();
+    }
     //自定义树右键菜单
     var items = function customMenu(node) {
         console.log(node);
@@ -260,8 +264,12 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                 console.log(node)
             }
         },
+        'sort': function (a, b) {
+            //排序插件，会两者比较，获取到节点的order属性，插件会自动两两比较。
+            return this.get_node(a).original.seqno > this.get_node(b).original.seqno ? 1 : -1;
+        },
 
-        "plugins" : [ "dnd", "state", "types","search","contextmenu" ]
+        "plugins" : [ "dnd", "state", "types","search","contextmenu","sort" ]
     }).bind("copy.jstree", function (node,e, data ) {
         console.log(e);
         console.log(data);
@@ -337,7 +345,7 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
             $scope.xjzwgrid = xjzwgrid;
             var com = [{ field: 'dutyCode', displayName: '职务代码', enableHiding: false},
                 { field: 'dutyName', displayName: '职务名称', enableHiding: false},
-                { field: 'dutyType', displayName: '职务类型', enableHiding: false},
+                { field: 'dutyType', displayName: '职务类型', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.dutyType | translateConstants :\'DICT_OM_DUTYTYPE\') + $root.constant[\'DICT_OM_DUTYTYPE-\'+row.entity.dutyType]}}</div>'},
                 { field: 'remark', displayName: '备注', enableHiding: false}]
             $scope.xjzwgrid = initgrid($scope,xjzwgrid,filterFilter,com,true,function () {
                 
@@ -418,7 +426,7 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
     $scope.dutygrid = dutygrid;
     var com = [{ field: 'dutyCode', displayName: '职务代码', enableHiding: false},
         { field: 'dutyName', displayName: '职务名称', enableHiding: false},
-        { field: 'dutyType', displayName: '职务类型', enableHiding: false},
+        { field: 'dutyType', displayName: '职务类型', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.dutyType | translateConstants :\'DICT_OM_DUTYTYPE\') + $root.constant[\'DICT_OM_DUTYTYPE-\'+row.entity.dutyType]}}</div>'},
         { field: 'remark', displayName: '备注', enableHiding: false}
     ]
     $scope.dutygrid = initgrid($scope,dutygrid,filterFilter,com,true,function () {
@@ -662,6 +670,10 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
     //提示帮助控制
     duty.showdoc = function () {
         $scope.showdoc = !$scope.showdoc;
+    }
+
+    duty.reload = function () {
+        $("#dutytree").jstree().refresh();
     }
 
 

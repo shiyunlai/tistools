@@ -55,11 +55,6 @@ public class EmployeeController extends BaseController {
      * @param content
      * @return
      */
-    /**
-     * 新增根菜单
-     * @param content
-     * @return
-     */
     @OperateLog(
             operateType = "add",  // 操作类型
             operateDesc = "新增员工", // 操作描述
@@ -80,6 +75,32 @@ public class EmployeeController extends BaseController {
         }
 
     }
+    /**
+     * 新增人员信息
+     *
+     * @param content
+     * @return
+     */
+    @OperateLog(
+            operateType = "update",  // 操作类型
+            operateDesc = "更新员工信息", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "guid", // 操作对象标识
+            name = "employeeName", // 操作对象名
+            keys = {"guidPosition", "empCode", "guidOrg"}) // 操作对象的关键值的键值名
+    @ResponseBody
+    @RequestMapping(value = "/updateemployee", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> updateemployee( @RequestBody String content) {
+        OmEmployee oe = JSONObject.parseObject(content, OmEmployee.class);
+        if (oe.getGuid() == null || oe.getGuid() == "") {
+            OmEmployee emp = employeeRService.createEmployee(oe);
+            return getReturnMap(emp);
+        } else {
+            employeeRService.updateEmployee(oe);
+            return getReturnMap("修改成功!");
+        }
+
+    }
 
     /**
      * 删除人员信息
@@ -87,13 +108,20 @@ public class EmployeeController extends BaseController {
      * @param content
      * @return
      */
+    @OperateLog(
+            operateType = "delete",  // 操作类型
+            operateDesc = "删除员工信息", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "guid", // 操作对象标识
+            name = "employeeName", // 操作对象名
+            keys = {"guidPosition", "empCode", "guidOrg"}) // 操作对象的关键值的键值名
     @ResponseBody
     @RequestMapping(value = "/deletemp",produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> deletemp(@RequestBody String content) {
         JSONObject jsonObj = JSONObject.parseObject(content);
         String empCode = jsonObj.getString("empCode");
-        employeeRService.deleteEmployee(empCode);
-        return getReturnMap("删除成功!");
+        OmEmployee emp = employeeRService.deleteEmployee(empCode);
+        return getReturnMap(emp);
     }
 
     /**
@@ -164,6 +192,13 @@ public class EmployeeController extends BaseController {
      * @param content
      * @return
      */
+    @OperateLog(
+            operateType = "update",  // 操作类型
+            operateDesc = "指派员工机构", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "guid", // 操作对象标识
+            name = "employeeName", // 操作对象名
+            keys = {"guidPosition", "empCode", "guidOrg"}) // 操作对象的关键值的键值名
     @ResponseBody
     @RequestMapping(value = "/assignOrg",produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> assignOrg( @RequestBody String content) {

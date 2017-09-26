@@ -10,7 +10,6 @@ Version: 4.5.6
 <html lang="en" class="ie9 no-js" data-ng-app="MetronicApp"> <![endif]-->
 <!--[if !IE]><!-->
 <html lang="zh" data-ng-app="MetronicApp">
-<html lang="zh" data-ng-app="MetronicApp">
 <!--<![endif]-->
 <!-- BEGIN HEAD -->
 <head>
@@ -216,15 +215,24 @@ Version: 4.5.6
 <!--日志页面-->
 <script src="js/controllers/journal/journallog.js"></script>
 <!--日志页面-->
+<!--操作员功能行为配置页面  start-->
+<script src="js/controllers/permission/permission_controller.js"></script>
+<!--操作员功能行为配置页面 end-->
 
 <!-- select start -->
 <script src="../assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js" type="text/javascript"></script>
 <link href="../assets/global/plugins/jquery-multi-select/css/multi-select.css" rel="stylesheet" type="text/css"/>
 <!-- select end -->
+<!--个性配置功能页面-->
+<script src="js/controllers/configuration/configuration.js"></script>
+<!--个性配置功能页面-->
 
 <!--ui-grid start-->
 <link rel="stylesheet" href="../assets/global/plugins/angular-ui-grid/ui-grid.min.css"/>
+<!--源代码修改ng-show条件，不显示下方行数-->
 <script src="../assets/global/plugins/angular-ui-grid/ui-grid.min.js"></script>
+<!--<script src=""></script>-->
+
 <!--ui-grid end-->
 
 <!--biztrace start-->
@@ -251,9 +259,11 @@ Version: 4.5.6
 
 <!-- BEGIN APP LEVEL JQUERY SCRIPTS -->
 <script src="../assets/global/scripts/app.min.js" type="text/javascript"></script>
-<script src="../assets/layouts/layout4/scripts/layout.min.js" type="text/javascript"></script>
 <script src="../assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+<!--主题切换js 开始-->
+<script src="../assets/layouts/layout4/scripts/layout.js" type="text/javascript"></script>
 <script src="../assets/layouts/layout4/scripts/demo.min.js" type="text/javascript"></script>
+<!--主题切换js  结束-->
 <!-- END APP LEVEL JQUERY SCRIPTS -->
 <!-- END JAVASCRIPTS -->
 
@@ -263,7 +273,7 @@ Version: 4.5.6
 <script src="../assets/global/plugins/select2/js/select2.js" type="text/javascript"></script>
 
 
-<!--测试无限循环-->
+<!--测试菜单无限循环-->
 <script src="js/directive/testrepeat.js"></script>
 
 <!-- END APP LEVEL JQUERY SCRIPTS -->
@@ -324,7 +334,7 @@ Version: 4.5.6
 <!-- Insert this line after script imports -->
 <script>if (window.module) module = window.module;</script>
 
-<script type="text/javascript">
+<!--<script type="text/javascript">
 
     $(function () { $("[data-toggle='tooltip']").tooltip(); });
 
@@ -347,7 +357,7 @@ Version: 4.5.6
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     }
-</script>
+</script>-->
 
 
 

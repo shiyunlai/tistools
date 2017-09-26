@@ -20,10 +20,31 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     }
     /*-------------------------------------------------------------------------------分割符--------------------------------------------------------------------------------*/
     //0、树结构逻辑代码
-    $("#s").submit(function(e) {    //树过滤,搜索功能
-        e.preventDefault();
-        $("#container").jstree(true).search($("#q").val());
+    //菜单搜索修改，改成键盘弹起事件，加上search组件
+    var to = false;
+    $('#q').keyup(function () {
+        if(to) {
+            clearTimeout(to);
+        }
+        $('#container').jstree().load_all();
+        to = setTimeout(function () {
+            var v = $('#q').val();
+            $('#container').jstree(true).search(v);
+        }, 250);
     });
+
+    //清空
+    biz.clear = function () {
+        $scope.searchitem = "";
+        if(to) {
+            clearTimeout(to);
+        }
+        $('#container').jstree().load_all();
+        to = setTimeout(function () {
+            var v = $('#q').val();
+            $('#container').jstree(true).search(v);
+        }, 250);
+    }
     //树自定义右键功能(根据类型判断)
     var items = function customMenu(node) {
         var control;
@@ -293,6 +314,10 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                     callback.call(this, $scope.jsonarray);
                 })
             },
+        },
+        'search': {
+            //只显示符合条件的
+            show_only_matches: true,
         },
         "state" : { "key" : "demo3" },
         "contextmenu":{'items':items
@@ -1182,6 +1207,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         }
     }
     $scope.gridOption4 = initgrid($scope,gridOption4,filterFilter,com4,false,f4);
+    $scope.gridOption4.paginationPageSize = 20, //每页显示个数
 
 
     //根据功能查询行为类型函数
@@ -1193,7 +1219,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 $scope.gridOption4.data = datas;
                 $scope.gridOption4.mydefalutData = datas;
                 $scope.gridOption4.getPage(1,$scope.gridOption4.paginationPageSize);
-
         })
     }
     //新增行为类型
@@ -1282,7 +1307,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             toastr['error']("请至少选中一条类型进行删除！");
         }
     }
-        biz.initt5 = function(funcGuid,bhvtypeGuid){//查询类型对应操作行为方法
+    biz.initt5 = function(funcGuid,bhvtypeGuid){//查询类型对应操作行为方法
         var subFrom = {};
         subFrom.funcGuid = funcGuid;
         subFrom.bhvtypeGuid = bhvtypeGuid;
@@ -1291,8 +1316,11 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             $scope.gridOptions5.data = datas;//把获取到的数据复制给表
             $scope.gridOptions5.mydefalutData = datas;
             $scope.gridOptions5.getPage(1,$scope.gridOptions5.paginationPageSize);
+
         })
     }
+
+
 
     //查询功能下所有行为类型
     biz.inittAll = function(funcGuid){//查询类型对应操作行为方法
@@ -1300,9 +1328,10 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         subFrom.funcGuid = funcGuid;
         application_service.queryAllBhvDefForFunc(subFrom).then(function (data){
             var datas = data.retMessage
-            $scope.gridOptions5.data = datas;//把获取到的数据复制给表
+           $scope.gridOptions5.data = datas;//把获取到的数据复制给表
             $scope.gridOptions5.mydefalutData = datas;
             $scope.gridOptions5.getPage(1,$scope.gridOptions5.paginationPageSize);
+
         })
     }
 
@@ -1327,6 +1356,9 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         }
     }
     $scope.gridOptions5 = initgrid($scope,gridOptions5,filterFilter,com5,true,f5);
+    $scope.gridOptions5.paginationPageSize = 20, //每页显示个数
+
+
     //功能操作行为保存
     /*$scope.biz.sesave = function(){
         var it = $scope.gridOptions5.getSelectedRows();//多选事件

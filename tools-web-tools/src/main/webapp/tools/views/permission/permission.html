@@ -1,0 +1,107 @@
+<!--功能权限配置页面-->
+<!--操作员权限开始-->
+<div class="page-bar ng-scope" style="border-bottom: 1px solid #e7ecf1;">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="#">操作员</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <a href="#">操作员个人配置</a>
+        </li>
+        <li ng-if="currRole!=''">
+            <i class="fa fa-circle"></i>
+            <a href="#">当前操作员:{{currRole}}</a>
+        </li>
+    </ul>
+    <div class="actions btn-set">
+        <button type="button" name="back" class="btn default"  style="float: right;margin-top:3px;" ng-click="myback()"><i
+                class="fa fa-angle-left"></i> 返回
+        </button>
+    </div>
+</div>
+<h3 class="page-title">
+    <small></small>
+</h3>
+<div class="row">
+    <form action="#" name="myform" class="form-horizontal clearfix">
+        <div class="form-body ">
+            <div class="col-md-6  col-md-offset-3" >
+                <div class="form-group">
+                    <label class="control-label col-md-4"> 选择应用: </label>
+                    <div class="col-md-5">
+                        <select class="form-control"  name="select_app"  ng-model="permissFrom.appselect">
+                            <!-- 渲染，不能绑定同一个，不然每次点击，都会改变，重新渲染，所以ng-model绑定和渲染必须不同-->
+                            <option ng-repeat="d in permiss.appselectApp" value="{{d.guid}}">{{d.appName}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" name="back"  class="btn btn-primary"    popover-trigger="mouseenter" ng-click="permiss.search(permissFrom.appselect)" > 查询
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<div class="tab-content portlet light clearfix"  style="margin-top: 20px;">
+    <div class="col-md-3" ng-show="permiss.selectApp">
+        <div class="portlet-body">
+            <form id="s">
+                <input type="search" ng-model="searchitem" id="q"/>
+                <button type="submit" ng-click="permiss.clear()">清空</button>
+            </form>
+            <div id="container"></div>
+        </div>
+    </div>
+    <div class="col-md-4" ng-if="permiss.selectApp" >
+        <div class="portlet-title col-md-12">
+            <div class="caption col-md-10">
+                <span class="caption-subject font-blue-sharp bold uppercase">白名单</span>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div ui-grid="notrolegird" style="height:200px;"
+                 ui-grid-pagination
+                 ui-grid-selection ui-grid-resize-columns></div>
+        </div>
+    </div>
+    <div class="col-md-1" style="margin-top:5%;margin-left: -3%;" ng-if="permiss.selectApp">
+        <div class="col-md-12" style="margin-left: 10%;">
+            <button   type="button" name="back" class="btn btn-primary" ng-click="operatqx.add()"> 添加黑名单 >
+            </button>
+        </div>
+        <div class="col-md-12" style="margin-top: 10px;margin-left: 10%;">
+            <button  type="button" name="back" class="btn btn-danger" ng-click="operatqx.del()"> < 移除黑名单
+            </button>
+        </div>
+    </div>
+    <div class="col-md-4"  ng-if="permiss.selectApp">
+        <div class="portlet-title col-md-12">
+            <div class="caption col-md-10">
+                <span class="caption-subject font-blue-sharp bold uppercase">黑名单</span>
+            </div>
+
+        </div>
+        <div class="col-md-12">
+            <div ui-grid="alrolegird" style="height:200px;"
+                 ui-grid-pagination
+                 ui-grid-selection ui-grid-resize-columns></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

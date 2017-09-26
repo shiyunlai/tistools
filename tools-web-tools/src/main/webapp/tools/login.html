@@ -188,52 +188,8 @@
             .pluck('target', 'value')
             .switchMap(url => $.ajax({url:"../AcAuthenticationController/checkUserStatus",type:"post",contentType:'application/json',data:JSON.stringify({userId:url}), processData:false,dataType:'json'}))
         .subscribe(
-            data => render(data))
+            data => render(data));
 
-  /*  $("#loginname").on('blur',function(){
-        var form = {};
-        form.userId = $("#loginname").val()
-       if($("#loginname").val().length>=5){
-            $.ajax({
-                url:"..//AcAuthenticationController/checkUserStatus",
-                type:"post",
-                dataType:'json',
-                data:JSON.stringify(form),
-                processData:false,
-                contentType:'application/json',
-                success:function(data){
-                    console.log(data);
-                    if(data.status == "success"){
-                        var datas = data.retMessage;
-                        console.log(datas)
-                        var html = '';
-                        //进行默认验证
-                        for(var i =0;i< datas.length; i++){
-                            if(datas[i].identityFlag == 'Y'){
-                                html+= '<option value= " '+ datas[i].guid  +'">'+datas[i].identityName+'</option>';
-                                break;
-                            }
-                        }
-                        for(var j =0;j< datas.length; j++){
-                            if(datas[j].identityFlag == 'Y'){
-                                continue;
-                            }
-                            html+= '<option value= "'+ datas[j].guid +' ">'+datas[j].identityName+'</option>';
-                        }
-
-                        $('select').html(html);
-                    }else{
-                        toastr['error'](data.retMessage+'登录失败');
-                        var html = '<option>请选择身份</option>';
-                        $('select').html(html);
-                    }
-                }
-            })
-        }else{
-           var html = '<option>请选择身份</option>';
-           $('select').html(html);
-       }
-    });*/
     var btn=document.getElementById('login');
     //登陆调用服务,传入所需参数
     btn.onclick = function () {
@@ -260,7 +216,7 @@
                 }else if(data.retCode == '2'){
                     toastr['error'](data.retMessage, "登录失败！");
                 } else {
-                    toastr['error']( "登录异常！");
+                    toastr['error']( data.retMessage);
                 }
             }
         });

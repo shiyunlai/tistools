@@ -11,15 +11,24 @@ import org.tis.tools.common.utils.StringUtil;
 import org.tis.tools.core.exception.ExceptionCodes;
 import org.tis.tools.model.def.ACConstants;
 import org.tis.tools.model.def.CommonConstants;
-import org.tis.tools.model.po.ac.*;
-import org.tis.tools.model.vo.ac.AcMenuDetail;
+import org.tis.tools.model.po.ac.AcConfig;
+import org.tis.tools.model.po.ac.AcOperator;
+import org.tis.tools.model.po.ac.AcOperatorIdentity;
+import org.tis.tools.model.po.ac.AcOperatorMenu;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.ac.exception.AuthManagementException;
-import org.tis.tools.service.ac.*;
+import org.tis.tools.service.ac.AcOperatorBhvService;
+import org.tis.tools.service.ac.AcOperatorIdentityService;
+import org.tis.tools.service.ac.AcOperatorMenuService;
+import org.tis.tools.service.ac.AcOperatorService;
 import org.tis.tools.service.ac.exception.ACExceptionCodes;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by zhaoch on 2017/7/20.
@@ -37,6 +46,12 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
 
     @Autowired
     IMenuRService menuRService;
+
+    @Autowired
+    IOperatorRService operatorRService;
+
+    @Autowired
+    AcOperatorBhvService acOperatorBhvService;
 
     /**
      *   用户状态检查
@@ -196,30 +211,35 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
      */
     @Override
     public Map<String, Object> getInitInfoByUserIdAndIden(String userId, String identityGuid, String appGuid) throws AuthManagementException {
+        // 校验传入参数
+        if (StringUtil.isEmpty(userId)) {
+            throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("userId"));
+        }
+        if (StringUtil.isEmpty(identityGuid)) {
+            throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("identityGuid"));
+        }
+        if (StringUtil.isEmpty(appGuid)) {
+            throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
+        }
         try {
+            AcOperator operator = operatorRService.queryOperatorByUserId(userId);
+
+            List<AcConfig> acConfigs = operatorRService.queryOperatorConfig(userId);
+            final boolean[] enableRecombine = {false};
+            acConfigs.stream()
+                    .filter(cfg -> StringUtils.isEquals(cfg.getGuidApp(), appGuid) &&
+                            StringUtils.isEquals(cfg.getConfigType(), ACConstants.CONFIG_TYPE_MENUREORG) &&
+                            StringUtils.isEquals(cfg.getConfigValue(), CommonConstants.YES))
+                    .findFirst()
+                    .ifPresent(a -> enableRecombine[0] = true);
+
             Map<String, Object> resultInfo = new HashMap<>();
-            // 校验传入参数
-            if (StringUtil.isEmpty(userId)) {
-                throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("userId"));
-            }
-            if (StringUtil.isEmpty(identityGuid)) {
-                throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("identityGuid"));
-            }
-            if (StringUtil.isEmpty(appGuid)) {
-                throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
-            }
-            // 获取操作员详情
-            List<AcOperator> acOperators = acOperatorService.query(new WhereCondition().andEquals("USER_ID", userId));
-            if(CollectionUtils.isEmpty(acOperators)) {
-                throw new AuthManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap("USER_ID "+ userId, "AC_OPERATOR"));
-            }
-            AcOperator operator = acOperators.get(0);
             operator.setPassword(null);
             resultInfo.put("user", operator);
             // 查询重组菜单
             if (acOperatorMenuService.count(new WhereCondition()
                     .andEquals(AcOperatorMenu.COLUMN_GUID_APP, appGuid)
-                    .andEquals("GUID_OPERATOR", operator.getGuid())) > 0) {
+                    .andEquals("GUID_OPERATOR", operator.getGuid())) > 0 && enableRecombine[0]) {
                 resultInfo.put("menu", menuRService.getOperatorMenuByUserId(userId, appGuid, identityGuid).toJson());
             } else {
                 resultInfo.put("menu", menuRService.getMenuByUserId(userId, appGuid, identityGuid).toJson());
@@ -246,7 +266,7 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
      * @throws AuthManagementException
      */
     @Override
-    public void updatePassword(String userId, String oldPwd, String newPwd) throws AuthManagementException {
+    public AcOperator updatePassword(String userId, String oldPwd, String newPwd) throws AuthManagementException {
         try {
             // 校验传入参数
             if (StringUtil.isEmpty(userId)) {
@@ -274,6 +294,8 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
                 // 保存数据库
                 acOperatorService.update(acOperator);
             }
+            acOperator.setPassword(null);
+            return acOperator;
         } catch (AuthManagementException ae) {
             throw ae;
         } catch (Exception e) {
@@ -284,4 +306,25 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
         }
     }
 
+    /**
+     * 检查操作权限
+     *
+     * @param userId
+     * @param reqInfo
+     * @return
+     * @throws AuthManagementException
+     */
+    @Override
+    public boolean operateAuthCheck(String userId, String reqInfo) throws AuthManagementException {
+        // 校验传入参数
+        if (StringUtil.isEmpty(userId)) {
+            throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("userId", "user authentication"));
+        }
+        if (StringUtil.isEmpty(reqInfo)) {
+            throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("reqInfo", "user authentication"));
+        }
+        AcOperator acOperator = operatorRService.queryOperatorByUserId(userId);
+
+        return false;
+    }
 }

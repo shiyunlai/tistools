@@ -28,7 +28,7 @@ public @interface OperateLog {
 
 
     /**
-     *
+     * 返回类型  实体对象 Map List
      * @return
      */
     ReturnType retType() default ReturnType.Object;

@@ -43,7 +43,7 @@
     <!-- 扫描注解包路径，多个包用逗号分隔，不填pacakge表示扫描当前ApplicationContext中所有的类 -->  
     <dubbo:annotation package="org.tis.tools.service" />
 
-	<dubbo:provider delay="-1" timeout="6000" retries="0"/>
+	<dubbo:provider delay="-1" timeout="1200000" retries="0"/>
 
 	<!-- 关于 dubbo:protocol 的配置说明 -->
 	<!-- 

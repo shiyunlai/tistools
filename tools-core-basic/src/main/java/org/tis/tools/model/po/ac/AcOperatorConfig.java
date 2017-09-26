@@ -43,35 +43,20 @@ public class AcOperatorConfig implements Serializable {
 	/* AC_OPERATOR_CONFIG table's columns definition */
 	/** GUID_OPERATOR ：操作员GUID<br/><br/> */
 	public static final String COLUMN_GUID_OPERATOR = "guid_operator" ; 
-	/** GUID_APP ：应用GUID<br/><br/> */
-	public static final String COLUMN_GUID_APP = "guid_app" ; 
-	/** CONFIG_TYPE ：配置类型<br/><br/>见业务字典： DICT_AC_CONFIGTYPE */
-	public static final String COLUMN_CONFIG_TYPE = "config_type" ; 
-	/** CONFIG_NAME ：配置名<br/><br/> */
-	public static final String COLUMN_CONFIG_NAME = "config_name" ; 
+	/** GUID_CONFIG ：配置GUID<br/><br/> */
+	public static final String COLUMN_GUID_CONFIG = "guid_config" ; 
 	/** CONFIG_VALUE ：配置值<br/><br/> */
 	public static final String COLUMN_CONFIG_VALUE = "config_value" ; 
-	/** ISVALID ：是否启用<br/><br/>见业务菜单： DICT_YON */
-	public static final String COLUMN_ISVALID = "isvalid" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：操作员GUID<br/>描述： */
 	private String guidOperator ;
 	
-	/** 字段类型：varchar<br/>字段名：应用GUID<br/>描述： */
-	private String guidApp ;
-	
-	/** 字段类型：varchar<br/>字段名：配置类型<br/>描述：见业务字典： DICT_AC_CONFIGTYPE */
-	private String configType ;
-	
-	/** 字段类型：varchar<br/>字段名：配置名<br/>描述： */
-	private String configName ;
+	/** 字段类型：varchar<br/>字段名：配置GUID<br/>描述： */
+	private String guidConfig ;
 	
 	/** 字段类型：varchar<br/>字段名：配置值<br/>描述： */
 	private String configValue ;
-	
-	/** 字段类型：char<br/>字段名：是否启用<br/>描述：见业务菜单： DICT_YON */
-	private String isvalid ;
 
 	/**
 	* Default Constructor
@@ -100,60 +85,22 @@ public class AcOperatorConfig implements Serializable {
     }
 	
 	/**
-	 * Set the 应用GUID.
+	 * Set the 配置GUID.
 	 * 
-	 * @param guidApp
-	 *            应用GUID
+	 * @param guidConfig
+	 *            配置GUID
 	 */
-	public void setGuidApp(String guidApp) {
- 		this.guidApp = guidApp == null ? null : guidApp.trim() ;
+	public void setGuidConfig(String guidConfig) {
+ 		this.guidConfig = guidConfig == null ? null : guidConfig.trim() ;
     }
     
     /**
-	 * Get the 应用GUID.
+	 * Get the 配置GUID.
 	 * 
-	 * @return 应用GUID
+	 * @return 配置GUID
 	 */
-	public String getGuidApp(){
-		return this.guidApp ;
-    }
-	
-	/**
-	 * Set the 配置类型.
-	 * 
-	 * @param configType
-	 *            配置类型
-	 */
-	public void setConfigType(String configType) {
- 		this.configType = configType == null ? null : configType.trim() ;
-    }
-    
-    /**
-	 * Get the 配置类型.
-	 * 
-	 * @return 配置类型
-	 */
-	public String getConfigType(){
-		return this.configType ;
-    }
-	
-	/**
-	 * Set the 配置名.
-	 * 
-	 * @param configName
-	 *            配置名
-	 */
-	public void setConfigName(String configName) {
- 		this.configName = configName == null ? null : configName.trim() ;
-    }
-    
-    /**
-	 * Get the 配置名.
-	 * 
-	 * @return 配置名
-	 */
-	public String getConfigName(){
-		return this.configName ;
+	public String getGuidConfig(){
+		return this.guidConfig ;
     }
 	
 	/**
@@ -173,25 +120,6 @@ public class AcOperatorConfig implements Serializable {
 	 */
 	public String getConfigValue(){
 		return this.configValue ;
-    }
-	
-	/**
-	 * Set the 是否启用.
-	 * 
-	 * @param isvalid
-	 *            是否启用
-	 */
-	public void setIsvalid(String isvalid) {
- 		this.isvalid = isvalid == null ? null : isvalid.trim() ;
-    }
-    
-    /**
-	 * Get the 是否启用.
-	 * 
-	 * @return 是否启用
-	 */
-	public String getIsvalid(){
-		return this.isvalid ;
     }
 	
 	public String toString(){

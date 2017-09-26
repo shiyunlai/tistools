@@ -48,12 +48,12 @@
                                 <button type="button" name="back"  class="btn btn-primary"    popover-trigger="mouseenter" ng-click="menu.search(menu)" > 查询
                                 </button>
                             </div>
-                            <div class="portlet-body" style="overflow-y:hidden;" ng-show="menushow">
+                            <div class="portlet-body"  ng-show="menushow">
                                 <div class="shu" style="margin-top: 20px;">
-                                    <!--<form id="s">
-                                        <input type="search" id="q"/>
-                                        <button type="submit">检索</button>
-                                    </form>-->
+                                    <form id="s">
+                                        <input type="search" ng-model="searchitem" id="q"/>
+                                        <button type="submit" ng-click="menu.clear()">清空</button>
+                                    </form>
                                     <div id="container"></div>
                                 </div>
                             </div>
@@ -129,10 +129,11 @@
                                         <div class="col-md-6" ng-if="!isleaftrue">
                                             <div class="form-group">
                                                 <label class="control-label col-md-4">是否叶子菜单:<span ng-class="{required:menuform.dict_key3.$invalid}"  > * </span></label>
-                                                <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
-                                                    <select class="form-control" name="dict_key3" ng-model="menuFrom.isleaf"  ng-change="watcher(menuFrom.isleaf)" ng-readonly="readonly"  ng-disabled="!editflag" required>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control"  name="dict_key3"   ng-model="menuFrom.isleaf"  translate-constants comtable="DICT_YON"  ng-readonly="!sdasd"/>
+                                                    <!--<select class="form-control" name="dict_key3" ng-model="menuFrom.isleaf"  ng-change="watcher(menuFrom.isleaf)" ng-readonly="readonly"  ng-disabled="!editflag" required>
                                                         <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
-                                                    </select>
+                                                    </select>-->
                                                 </div>
                                             </div>
                                         </div>
@@ -198,10 +199,11 @@
                                                 <label class="control-label col-md-2"></label>
                                                 <div class="col-md-10">
                                                     <div class="actions btn-set" style="text-align: center;" ng-if="!editflag">
-                                                        <button type="button" name="back" class="btn btn-primary" ng-click="menu.menuEdit(menuFrom)"> 编辑信息
+                                                        <button type="button" name="back" class="btn btn-primary" style="float: right;" ng-click="menu.menuEdit(menuFrom)"> 编辑信息
                                                         </button>
-                                                        <button type="button" name="back" class="btn btn-primary" ng-disabled="testussef" ng-click="menu.childAdd(menuFrom)">增加子菜单
-                                                        </button>
+                                                        <!--  去掉，统一在右侧树上修改 -->
+                                                        <!--<button type="button" name="back" class="btn btn-primary" ng-disabled="testussef" ng-click="menu.childAdd(menuFrom)">增加子菜单
+                                                        </button>-->
                                                     </div>
                                                     <div class="actions btn-set" style="text-align: center" ng-if="editflag">
                                                         <button type="button" name="back"  class="btn btn-primary" ng-if="menuform.$invalid == false"  ng-disabled="menuform.$invalid" popover-trigger="mouseenter" ng-click="menu.save(menuFrom)" > 保存

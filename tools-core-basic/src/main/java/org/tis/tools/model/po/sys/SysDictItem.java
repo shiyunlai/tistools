@@ -48,6 +48,8 @@ public class SysDictItem implements Serializable {
 	public static final String COLUMN_SEND_VALUE = "send_value" ; 
 	/** SEQNO ：顺序号<br/><br/>顺序号，从0开始排，按小到大排序 */
 	public static final String COLUMN_SEQNO = "seqno" ; 
+	/** ITEM_DESC ：字典项说明<br/><br/> */
+	public static final String COLUMN_ITEM_DESC = "item_desc" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
@@ -70,6 +72,9 @@ public class SysDictItem implements Serializable {
 	
 	/** 字段类型：decimal<br/>字段名：顺序号<br/>描述：顺序号，从0开始排，按小到大排序 */
 	private BigDecimal seqno ;
+	
+	/** 字段类型：varchar<br/>字段名：字典项说明<br/>描述： */
+	private String itemDesc ;
 
 	/**
 	* Default Constructor
@@ -212,6 +217,25 @@ public class SysDictItem implements Serializable {
 			return new BigDecimal(0d);
 		}
 		return seqno;
+    }
+	
+	/**
+	 * Set the 字典项说明.
+	 * 
+	 * @param itemDesc
+	 *            字典项说明
+	 */
+	public void setItemDesc(String itemDesc) {
+ 		this.itemDesc = itemDesc == null ? null : itemDesc.trim() ;
+    }
+    
+    /**
+	 * Get the 字典项说明.
+	 * 
+	 * @return 字典项说明
+	 */
+	public String getItemDesc(){
+		return this.itemDesc ;
     }
 	
 	public String toString(){
