@@ -31,7 +31,7 @@
 		<module>tools-service-devmgr</module>
 		<module>tools-service-jnl</module>
 		<module>tools-web-tools</module>
-		<module>tools-facade-txengine</module>
+		<module>tools-facade-txmodel</module>
 	</modules>
 
 	<profiles>
