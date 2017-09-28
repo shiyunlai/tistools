@@ -129,30 +129,5 @@ public class AcAuthenticationController extends BaseController {
         return getReturnMap(authenticationRService.getInitInfoByUserIdAndIden(userId, identityGuid, appGuid));
     }
 
-    /**
-     * 注销登陆
-     */
-    @ResponseBody
-    @RequestMapping(value="/logout" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public Map<String,Object> logout(@RequestBody String content, HttpSession httpSession) {
-        while(httpSession.getAttributeNames().hasMoreElements()) {
-            httpSession.removeAttribute(httpSession.getAttributeNames().nextElement());
-        }
-        return getReturnMap(null);
-    }
-    
-    
-    
-    /**
-     * 要求子类构造自己的响应数据
-     *
-     * @return
-     */
-    @Override
-    public Map<String, Object> getResponseMessage() {
-        if( null == responseMsg ){
-            responseMsg = new HashMap<String, Object>() ;
-        }
-        return responseMsg;
-    }
+
 }

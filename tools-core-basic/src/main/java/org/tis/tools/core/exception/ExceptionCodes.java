@@ -30,6 +30,21 @@ public class ExceptionCodes {
 	public static final int errorCode = 500;
 
 	/**
+	 * 异常： 应用权限不足
+	 */
+	public static final String APP_PERMISSION_DENIED = "AUTH-4440";
+
+	/**
+	 * 异常： 功能权限不足
+	 */
+	public static final String FUNC_PERMISSION_DENIED = "AUTH-4441";
+
+	/**
+	 * 异常： 操作权限不足
+	 */
+	public static final String BHV_PERMISSION_DENIED = "AUTH-4442";
+
+	/**
 	 * 异常：系统执行失败.<br>
 	 */
 	public static final String SYSTEM_PROCESS_FAILURE = R_EX_CODE("9999");

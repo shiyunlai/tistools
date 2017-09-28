@@ -54,6 +54,8 @@ public class AcOperatorConfigRServiceTest  extends SpringJunitSupport {
     /** 字段类型：varchar<br/>字段名：配置描述说明<br/>描述： */
     private String configDesc = "配置菜单风格" ;
 
+    private String configStyle = "radio" ;
+
     private AcConfig acOperatorConfig;
 
 	@Before
@@ -66,7 +68,8 @@ public class AcOperatorConfigRServiceTest  extends SpringJunitSupport {
             cfg.setConfigDict(configDict);
             cfg.setConfigValue(configValue);
             cfg.setEnabled(enabled);
-            cfg.setConfigType(configDesc);
+//            cfg.setConfigType(configDesc);
+            cfg.setConfigStyle(configStyle);
             acOperatorConfig = operatorRService.addConfig(cfg);
             System.out.println(acOperatorConfig);
         }catch (Exception e) {

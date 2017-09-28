@@ -11,23 +11,14 @@ import org.tis.tools.common.utils.StringUtil;
 import org.tis.tools.core.exception.ExceptionCodes;
 import org.tis.tools.model.def.ACConstants;
 import org.tis.tools.model.def.CommonConstants;
-import org.tis.tools.model.po.ac.AcConfig;
-import org.tis.tools.model.po.ac.AcOperator;
-import org.tis.tools.model.po.ac.AcOperatorIdentity;
-import org.tis.tools.model.po.ac.AcOperatorMenu;
+import org.tis.tools.model.po.ac.*;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.ac.exception.AuthManagementException;
-import org.tis.tools.service.ac.AcOperatorBhvService;
-import org.tis.tools.service.ac.AcOperatorIdentityService;
-import org.tis.tools.service.ac.AcOperatorMenuService;
-import org.tis.tools.service.ac.AcOperatorService;
+import org.tis.tools.service.ac.*;
 import org.tis.tools.service.ac.exception.ACExceptionCodes;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -53,6 +44,24 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
     @Autowired
     AcOperatorBhvService acOperatorBhvService;
 
+    @Autowired
+    IRoleRService roleRService;
+
+    @Autowired
+    AcRoleFuncService acRoleFuncService;
+
+    @Autowired
+    AcOperatorFuncService acOperatorFuncService;
+
+    @Autowired
+    AcFuncService acFuncService;
+
+    @Autowired
+    AcFuncBhvService acFuncBhvService;
+
+    @Autowired
+    AcBhvDefService acBhvDefService;
+
     /**
      *   用户状态检查
      * a)	判断用户是否存在；
@@ -77,19 +86,9 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
             if (StringUtil.isEmpty(userId)) {
                 throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("userId"));
             }
-//            if (StringUtil.isEmpty(macCode)) {
-//                throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("macCode"));
-//            }
-//            if (StringUtil.isEmpty(ipAddress)) {
-//                throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("ipAddress"));
-//            }
             //判断用户是否存在
-            List<AcOperator> acOperators = acOperatorService.query(new WhereCondition().andEquals("USER_ID", userId));
-            if (acOperators.size() != 1) {
-                throw new AuthManagementException(ACExceptionCodes.USER_ID_NOT_EXIST, BasicUtil.wrap(userId));
-            }
             //判断用户状态，只能是“退出、正常、挂起”，否则报错提示
-            AcOperator acOperator = acOperators.get(0);
+            AcOperator acOperator = operatorRService.queryOperatorByUserId(userId);
             String operatorStatus = acOperator.getOperatorStatus();
             if(!StringUtil.isEqualsIn(operatorStatus,
                     ACConstants.OPERATE_STATUS_LOGOUT,
@@ -224,7 +223,7 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
         try {
             AcOperator operator = operatorRService.queryOperatorByUserId(userId);
 
-            List<AcConfig> acConfigs = operatorRService.queryOperatorConfig(userId);
+            List<AcConfig> acConfigs = operatorRService.queryOperatorConfig(userId, appGuid);
             final boolean[] enableRecombine = {false};
             acConfigs.stream()
                     .filter(cfg -> StringUtils.isEquals(cfg.getGuidApp(), appGuid) &&
@@ -308,14 +307,18 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
 
     /**
      * 检查操作权限
+     *      1.判断请求的功能是否在操作员权限之中
+     *      2.判断请求的操作是否在操作员的允许列表中
      *
-     * @param userId
-     * @param reqInfo
+     * @param userId 操作员
+     * @param reqInfo 请求代码
+     * @param appGuid 应用id
+     * @param funcGuid 功能id
      * @return
      * @throws AuthManagementException
      */
     @Override
-    public boolean operateAuthCheck(String userId, String reqInfo) throws AuthManagementException {
+    public boolean operateAuthCheck(String userId, String reqInfo, String appGuid, String funcGuid) throws AuthManagementException {
         // 校验传入参数
         if (StringUtil.isEmpty(userId)) {
             throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("userId", "user authentication"));
@@ -323,8 +326,134 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
         if (StringUtil.isEmpty(reqInfo)) {
             throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("reqInfo", "user authentication"));
         }
-        AcOperator acOperator = operatorRService.queryOperatorByUserId(userId);
+        if (StringUtil.isEmpty(appGuid)) {
+            throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("appGuid", "user authentication"));
+        }
+        if (StringUtil.isEmpty(funcGuid)) {
+            throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("funcGuid", "user authentication"));
+        }
+        try {
+            if (funcAuthCheck(userId, funcGuid, appGuid)) {
+                boolean flag = false;
+                AcOperator operator = operatorRService.queryOperatorByUserId(userId);
+                // 根据请求代码查询行为GUID
+                List<String> bhvDefGuids = acBhvDefService.query(new WhereCondition().andEquals(AcBhvDef.COLUMN_BHV_CODE, reqInfo))
+                        .stream().map(AcBhvDef::getGuid).collect(Collectors.toList());
+                if (bhvDefGuids.size() > 0) {
+                    // 根据行为GUID查询功能
+                    List<String> funcBhvGuids = acFuncBhvService.query(new WhereCondition()
+                            .andIn(AcFuncBhv.COLUMN_GUID_BHV, bhvDefGuids))
+                            .stream()
+                            .filter(acFuncBhv -> StringUtils.isEquals(acFuncBhv.getGuidFunc(), funcGuid))
+                            .map(AcFuncBhv::getGuid).collect(Collectors.toList());
+                    if (CollectionUtils.isNotEmpty(funcBhvGuids)) {
+                        int count = acOperatorBhvService.count(new WhereCondition()
+                                .andEquals(AcOperatorBhv.COLUMN_GUID_OPERATOR, operator.getGuid())
+                                .andEquals(AcOperatorBhv.COLUMN_GUID_FUNC_BHV, funcBhvGuids.get(0)));
+                        if (count > 0)
+                            flag = true;
+                    }
+                }
+                return flag;
+            } else {
+                throw new AuthManagementException(ExceptionCodes.FUNC_PERMISSION_DENIED);
+            }
+        } catch (AuthManagementException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new AuthManagementException(
+                    ExceptionCodes.FAILURE_WHEN_QUERY,
+                    BasicUtil.wrap("operateAuthCheck", e));
+        }
 
-        return false;
+    }
+
+    /**
+     * 检查功能权限
+     *
+     * @param userId
+     * @param funcGuid
+     * @param appGuid
+     * @return
+     * @throws AuthManagementException
+     */
+    @Override
+    public boolean funcAuthCheck(String userId, String funcGuid, String appGuid) throws AuthManagementException {
+        if (StringUtil.isEmpty(userId)) {
+            throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("userId", "funcAuthCheck"));
+        }
+        if (StringUtil.isEmpty(funcGuid)) {
+            throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("funcGuid", "funcAuthCheck"));
+        }
+        if (StringUtil.isEmpty(appGuid)) {
+            throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("appGuid", "funcAuthCheck"));
+        }
+        try {
+            long count = queryOperatorAuthFuncsInApp(userId, appGuid).stream().filter(acFunc ->
+                    StringUtils.isEquals(acFunc.getGuid(), funcGuid)
+            ).count();
+            if(count > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (AuthManagementException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new AuthManagementException(
+                    ExceptionCodes.FAILURE_WHEN_QUERY,
+                    BasicUtil.wrap("funcAuthCheck", e));
+        }
+    }
+
+    /**
+     * 查询操作员在应用下的已授权功能
+     *
+     * @param userId
+     * @param appGuid
+     * @return
+     * @throws AuthManagementException
+     */
+    @Override
+    public List<AcFunc> queryOperatorAuthFuncsInApp(String userId, String appGuid) throws AuthManagementException {
+        if (StringUtil.isEmpty(userId)) {
+            throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("userId", "queryOperatorAuthFuncsInApp"));
+        }
+        if (StringUtil.isEmpty(appGuid)) {
+            throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("appGuid", "queryOperatorAuthFuncsInApp"));
+        }
+        try {
+            AcOperator operator = operatorRService.queryOperatorByUserId(userId);
+            //查询当前用户拥有该应用的功能
+            List<AcRole> acRoleList = roleRService.queryAllRoleByUserId(userId);
+            Set<String> funcGuidList = new HashSet<>(); // 功能GUID
+            List<String> roleGuidList = acRoleList.stream().map(AcRole::getGuid).collect(Collectors.toList());// 角色GUID
+            if (roleGuidList.size() > 0) {
+                // 获取角色拥有该应用下功能列表
+                funcGuidList.addAll(acRoleFuncService.query(new WhereCondition()
+                        .andEquals(AcRoleFunc.COLUMN_GUID_APP, appGuid)
+                        .andIn(AcRoleFunc.COLUMN_GUID_ROLE, new ArrayList<>(roleGuidList)))
+                        .stream()
+                        .map(AcRoleFunc::getGuidFunc)
+                        .collect(Collectors.toList()));
+                // 获取角色下的特殊功能列表
+                funcGuidList.addAll(acOperatorFuncService.query(new WhereCondition()
+                        .andEquals(AcOperatorFunc.COLUMN_GUID_APP, appGuid)
+                        .andEquals(AcOperatorFunc.COLUMN_GUID_OPERATOR, operator.getGuid()))
+                        .stream()
+                        .map(AcOperatorFunc::getGuidFunc)
+                        .collect(Collectors.toList()));
+            }
+            List<AcFunc> funcList = new ArrayList<>();
+            if(funcGuidList.size() > 0)
+                funcList = acFuncService.query(new WhereCondition().andIn(AcFunc.COLUMN_GUID, new ArrayList<>(funcGuidList)));
+            return funcList;
+        } catch (AuthManagementException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new AuthManagementException(
+                    ExceptionCodes.FAILURE_WHEN_QUERY,
+                    BasicUtil.wrap("queryOperatorAuthFuncsInApp", e));
+        }
     }
 }
