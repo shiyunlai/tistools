@@ -128,21 +128,4 @@ public class AcAuthenticationController extends BaseController {
         String appGuid = (String) httpSession.getAttribute("app");
         return getReturnMap(authenticationRService.getInitInfoByUserIdAndIden(userId, identityGuid, appGuid));
     }
-
-
-    
-    
-    
-    /**
-     * 要求子类构造自己的响应数据
-     *
-     * @return
-     */
-    @Override
-    public Map<String, Object> getResponseMessage() {
-        if( null == responseMsg ){
-            responseMsg = new HashMap<String, Object>() ;
-        }
-        return responseMsg;
-    }
 }
