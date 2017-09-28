@@ -671,14 +671,13 @@ public class AcOperatorController extends BaseController {
      * @param content
      * @return
      */
-    @ResponseBody
     @RequestMapping(value="/queryOperatorAllApp" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public Map<String, Object> queryOperatorAllApp(@RequestBody String content) {
         return getReturnMap(applicationRService.queryOperatorAllApp(JSONObject.parseObject(content).getString("userId")));
     }
-    
+
     /**
-     * 修改个人配置
+     * 修改个性化配置
      * @param content
      * @return
      */
@@ -688,7 +687,6 @@ public class AcOperatorController extends BaseController {
             retType = ReturnType.Object,
             id = "guidConfig"
     )
-    @ResponseBody
     @RequestMapping(value="/saveOperatorLog" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public Map<String, Object> saveOperatorLog(@RequestBody String content) {
         return getReturnMap(operatorRService.saveOperatorLog(JSONObject.parseObject(content, AcOperatorConfig.class)));
@@ -700,7 +698,6 @@ public class AcOperatorController extends BaseController {
      * @param content
      * @return
      */
-    @ResponseBody
     @RequestMapping(value="/queryOperatorConfig" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public Map<String, Object> queryOperatorConfig(@RequestBody String content) {
         String userId = JSONObject.parseObject(content).getString("userId");
@@ -715,7 +712,6 @@ public class AcOperatorController extends BaseController {
      * @param content
      * @return
      */
-    @ResponseBody
     @RequestMapping(value="/queryOperatorBhvListInFunc" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public Map<String, Object> queryOperatorBhvListInFunc(@RequestBody String content) {
         JSONObject jsonObject = JSONObject.parseObject(content);
@@ -737,7 +733,6 @@ public class AcOperatorController extends BaseController {
             name = "bhvName",
             keys = "bhvCode"
     )
-    @ResponseBody
     @RequestMapping(value="/addOperatorBhvBlackList" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public Map<String, Object> addOperatorBhvBlackList(@RequestBody String content) {
         return getReturnMap(operatorRService.addOperatorBhvBlackList(JSON.parseArray(content, AcOperatorBhv.class)));
@@ -756,7 +751,6 @@ public class AcOperatorController extends BaseController {
             name = "bhvName",
             keys = "bhvCode"
     )
-    @ResponseBody
     @RequestMapping(value="/deleteOperatorBhvBlackList" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public Map<String, Object> deleteOperatorBhvBlackList(@RequestBody String content) {
         return getReturnMap(operatorRService.deleteOperatorBhvBlackList(JSON.parseArray(content, AcOperatorBhv.class)));
