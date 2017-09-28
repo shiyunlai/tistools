@@ -23,7 +23,6 @@ MetronicApp.controller('configuration_controller', function ($filter, $scope, $r
 
 
 
-
     //grid表格
     i18nService.setCurrentLang("zh-cn");
     var gridOptions = {};
@@ -34,7 +33,8 @@ MetronicApp.controller('configuration_controller', function ($filter, $scope, $r
         { field: 'configName', displayName: '配置名',width:"8%"},
         { field: 'configDict', displayName: '配置值字典',width:"10%",cellTemplate:'<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.configDict | translateDictKey) + $root.constant[row.entity.configDict]}}</div>'},
         { field: 'configValue', displayName: '配置默认值',width:"15%",cellTemplate:'<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.configValue | translateDictitem) + $root.constant[row.entity.configValue]}}</div>'},
-        { field: "enabled", displayName:'是否启用',width:"8%",cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.enabled | translateConstants :\'DICT_YON\') + $root.constant[\'DICT_YON-\'+row.entity.enabled]}}</div>'},
+        { field: "enabled", displayName:'配置风格',width:"8%",cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.configStyle | translateConstants :\'DICT_CONFIG_STYLE\') + $root.constant[\'DICT_CONFIG_STYLE-\'+row.entity.configStyle]}}</div>'},
+        { field: "configStyle", displayName:'是否启用',width:"8%",cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.enabled | translateConstants :\'DICT_YON\') + $root.constant[\'DICT_YON-\'+row.entity.enabled]}}</div>'},
         { field: "configDesc", displayName:'配置描述说明'}
     ];
     var f = function(row){
@@ -83,10 +83,12 @@ MetronicApp.controller('configuration_controller', function ($filter, $scope, $r
                         })
                     });
                     $scope.add = function(item){//保存新增的函数
+                        console.log(item)
                         var subFrom = {};
                         subFrom = item;
                         var res = $rootScope.res.operator_service;//页面所需调用的服务
                         common_service.post(res.updateConfig,subFrom).then(function(data){
+                            console.log(data);
                             if(data.status == "success"){
                                 queryallconfig();//查询所有列表
                                 toastr['success']("修改配置成功！");

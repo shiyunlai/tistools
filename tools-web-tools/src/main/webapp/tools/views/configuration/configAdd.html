@@ -69,6 +69,16 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">配置风格:<span ng-class="{required:myform.dictconfig.$invalid}"  > * </span></label>
+                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_CONFIG_STYLE')">
+                            <select class="form-control" name="dictconfig" required   ng-model="configFrom.configStyle" >
+                                <option ng-repeat="d in $settings.diclist['DICT_CONFIG_STYLE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-6" >
                     <div class="form-group">
                         <label class="control-label col-md-4">是否启用:<span ng-class="{required:myform.dict_isopen.$invalid}"  > * </span></label>
