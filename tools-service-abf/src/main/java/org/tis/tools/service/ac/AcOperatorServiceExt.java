@@ -30,4 +30,6 @@ public class AcOperatorServiceExt {
     public List<Map> queryOperatorFuncDetail(String operatorGuid) {
         return acOperatorMapperExt.queryOperatorFuncDetail(operatorGuid);
     }
+
+
 }

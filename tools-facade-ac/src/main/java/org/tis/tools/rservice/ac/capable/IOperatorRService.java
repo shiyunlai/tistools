@@ -3,6 +3,7 @@
  */
 package org.tis.tools.rservice.ac.capable;
 
+import org.springframework.expression.spel.ast.Operator;
 import org.tis.tools.model.po.ac.*;
 import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
 import org.tis.tools.rservice.ac.exception.AuthManagementException;
@@ -254,11 +255,12 @@ public interface IOperatorRService {
 
     /**
      * 查询操作员的个性化配置
-     * @param userId
+     * @param userId 操作员
+     * @param appGuid 应用
      * @return
      * @throws OperatorManagementException
      */
-    List<AcConfig> queryOperatorConfig(String userId) throws OperatorManagementException;
+    List<AcConfig> queryOperatorConfig(String userId, String appGuid) throws OperatorManagementException;
 
 
     /**
@@ -285,6 +287,17 @@ public interface IOperatorRService {
      * @throws OperatorManagementException
      */
     List<AcOperatorBhv> deleteOperatorBhvBlackList(List<AcOperatorBhv> operatorBhvList) throws OperatorManagementException;
+
+    /**
+     * throws OperatorManagementException;
+     * @param userId 操作员
+     * @param appGuid 应用
+     * @return
+     * @throws OperatorManagementException
+     */
+    AcOperatorFuncDetail getOperatorFuncInfo(String userId, String appGuid) throws OperatorManagementException;
+
+
 
 
 }
