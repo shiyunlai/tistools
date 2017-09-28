@@ -32,6 +32,7 @@
 		<module>tools-service-jnl</module>
 		<module>tools-web-tools</module>
 		<module>tools-facade-txmodel</module>
+		<module>tools-service-txmodel</module>
 	</modules>
 
 	<profiles>
