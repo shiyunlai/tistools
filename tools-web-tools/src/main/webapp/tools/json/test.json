@@ -1,0 +1,143 @@
+{
+  "abftree": {
+    "url": "/abftree.html",
+    "templateUrl": "views/org/abftree.html",
+    "data": "{pageTitle: '组织机构管理'}",
+    "controller": "abftree_controller"
+  },
+  "applicationFun": {
+    "url": "/applicationFun.html",
+    "templateUrl": "views/Jurisdiction/applicationFun.html",
+    "data": "{pageTitle: '应用功能管理'}",
+    "controller": "application_controller"
+  },
+  "menuManagement": {
+    "url": "/menuManagement.html",
+    "templateUrl": "views/Management/menuManagement.html",
+    "data": "{pageTitle: '菜单管理'}",
+    "controller": "menu_controller"
+  },
+  "roleManagement": {
+    "url": "/roleManagement.html",
+    "templateUrl": "views/roleManage/roleManagement.html",
+    "data": "{pageTitle: '角色管理'}",
+    "controller": "role_controller"
+  },
+  "behavior": {
+    "url": "/behavior.html",
+    "templateUrl": "views/behavior/behavior.html",
+    "data": "{pageTitle: '功能管理'}",
+    "controller": "behavior_controller"
+  },
+  "opManage": {
+    "url": "/opManage.html",
+    "templateUrl": "views/operator/opManage.html",
+    "data": "{pageTitle: '操作员管理'}",
+    "controller": "opmanage_controller"
+  },
+  "operatsetqx": {
+    "url": "/operatsetqx.html/{id:.*}",
+    "templateUrl": "views/operator/operatsetqx.html",
+    "data": "{pageTitle: '操作员个人配置'}",
+    "controller": "operat_controller"
+  },
+  "permission": {
+    "url": "/permission.html/{id:.*}",
+    "templateUrl": "views/permission/permission.html",
+    "data": "{pageTitle: '操作员功能行为权限配置'}",
+    "controller": "permission_controller"
+  },
+  "Reorganizemenu": {
+    "url": "/Reorganizemenu.html/{id:.*}",
+    "templateUrl": "views/operator/Reorganizemenu.html",
+    "data": "{pageTitle: '重组菜单'}",
+    "controller": "reomenu_controller"
+  },
+  "roleConfig": {
+    "url": "/roleConfig.html/{id:.*}",
+    "templateUrl": "views/operator/roleConfig.html",
+    "data": "{pageTitle: '操作员个性配置'}",
+    "controller": "operconfig_controller"
+  },
+  "operstatus": {
+    "url": "/operstatus.html",
+    "templateUrl": "views/operator/operstatus.html",
+    "data": "{pageTitle: '操作员身份'}",
+    "controller": "operstatus_controller"
+  },
+  "emp": {
+    "url": "/Emp.html",
+    "templateUrl": "views/emp/emp.html",
+    "data": "{pageTitle: '员工管理'}",
+    "controller": "Emp_controller"
+  },
+  "Workgroup": {
+    "url": "/Workgroup.html",
+    "templateUrl": "views/Workgroup/Workgroup.html",
+    "data": "{pageTitle: '工作组管理'}",
+    "controller": "Workgroup_controller"
+  },
+  "dictionary": {
+    "url": "/dictionary.html",
+    "templateUrl": "views/dictionary/dictionary.html",
+    "data": "{pageTitle: '业务字典'}",
+    "controller": "dictionary_controller"
+  },
+  "numberResources": {
+    "url": "/numberResources.html",
+    "templateUrl": "views/numberResources/numberResources.html",
+    "data": "{pageTitle: '操作员身份'}",
+    "controller": "numres_controller"
+  },
+  "duty": {
+    "url": "/duty.html",
+    "templateUrl": "views/duty/duty.html",
+    "data": "{pageTitle: '职务定义'}",
+    "controller": "duty_controller"
+  },
+  "Systempara": {
+    "url": "/Systempara.html",
+    "templateUrl": "views/Systempara/Systempara.html",
+    "data": "{pageTitle: '序号资源表'}",
+    "controller": "systempara_controller"
+  },
+  "busiorg": {
+    "url": "/busiorg.html",
+    "templateUrl": "views/busiorg/busiorg.html",
+    "data": "{pageTitle: '业务机构'}",
+    "controller": "busiorg_controller"
+  },
+  "transtime": {
+    "url": "/transtimeer.html",
+    "templateUrl": "views/transtimes/transtimeer.html",
+    "data": "{pageTitle: '定时器'}",
+    "controller": "transtime_controller"
+  },
+  "journal": {
+    "url": "/journal.html",
+    "templateUrl": "views/journal/journal.html",
+    "data": "{pageTitle: '日志页面'}",
+    "controller": "journal_controller"
+  },
+  "journinfo": {
+    "url": "/journinfo.html/{id:.*}",
+    "templateUrl": "views/journal/journinfo.html",
+    "data": "{pageTitle: '日志详情页面'}",
+    "controller": "jourinfo_controller"
+  },
+  "loghistory": {
+    "url": "/loghistory.html/{id:.*}",
+    "templateUrl": "views/journal/loghistory.html",
+    "data": "{pageTitle: '日志历史页面'}",
+    "controller": "loghistory_controller"
+  },
+  "configuration": {
+    "url": "/configuration.html",
+    "templateUrl": "views/configuration/configuration.html",
+    "data": "{pageTitle: '个性化配置管理'}",
+    "controller": "configuration_controller"
+  }
+}
+
+
+

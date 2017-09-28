@@ -1,6 +1,4 @@
-/**
- * Created by wangbo on 2017/9/22.
- */
+
 /*操作员功能行为权限控制器*/
 MetronicApp.controller('permission_controller', function ($rootScope, $scope, $state, $stateParams,common_service, filterFilter, $modal,$uibModal, $http, $timeout,$interval,i18nService) {
 
@@ -14,25 +12,27 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
     var userid = $stateParams.id;//接受传入的值
     $scope.currRole = userid;//显示当前操作员
 
-    /*查询所有应用，稍后修改成操作员应用查询接口*/
-    var res = $rootScope.res.menu_service;//页面所需调用的服务
-    common_service.post(res.queryAllAcApp,{}).then(function(data){
+
+   /* var res = $rootScope.res.operator_service;//页面所需调用的服务
+    var subFrom = {};
+    subFrom.userId  = userid;
+    common_service.post(res.queryOperatorAllApp,subFrom).then(function(data){
         if(data.status == "success"){
             permiss.appselectApp= data.retMessage;
         }
-    })
+    })*/
 
     //查询应用内容显示
-    $scope.permiss.search =function (item) {
-           //让下方内容显示
-            if(!isNull(item)){
-                $scope.permiss.selectApp = true;
-                //调用刷新树方法，传入应用
-                //调用刷新列表方法，传入应用
-        }else{
-                $scope.permiss.selectApp = false;
-            }
-    }
+    // $scope.permiss.search =function (item) {
+    //        //让下方内容显示
+    //         if(!isNull(item)){
+    //             $scope.permiss.selectApp = true;
+    //             //调用刷新树方法，传入应用
+    //             //调用刷新列表方法，传入应用
+    //     }else{
+    //             $scope.permiss.selectApp = false;
+    //         }
+    // }
     /* 树结构逻辑代码*/
     //菜单搜索修改，改成键盘弹起事件，加上search组件
     var to = false;
@@ -59,52 +59,8 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
             $('#container').jstree(true).search(v);
         }, 250);
     }
-    //创建树结构
-    $('#container').jstree({
-        "core" : {
-            "themes": {
-                "responsive": false
-            },
-            "check_callback": true,
-            'data':[
-                {'id:':'js1',
-                  'text':'应用',
-                   'children':[
-                       {
-                           'id:':'js2',
-                           'text':'功能组',
-                           'children':[
-                               {
-                                   'id:':'js3',
-                                   'text':'功能',
-                               }
-                           ]
-                       }
-                   ]}
-            ]
-        },
-        "state" : { "key" : "demo3" },
-        'dnd': {
-            'dnd_start': function () {
-            },
-            'is_draggable':function (node) {
-                return true;
-            }
-        },
-        'search':{
-            show_only_matches:true,
-        },
-        /*'sort': function (a, b) {
-            //排序插件，会两者比较，获取到节点的order属性，插件会自动两两比较。
-            return this.get_node(a).original.displayOrder > this.get_node(b).original.displayOrder ? 1 : -1;
-        },*/
-        'callback' : {
 
-        },
-        "plugins" : [ "dnd", "state", "types","search","sort" ]
-    }).bind("select_node.jstree", function (e, data) {
 
-    });
 
 
     //表格创建

@@ -3,7 +3,45 @@
  */
 
 //页面个性化配置
-angular.module('MetronicApp').controller('operconfig_controller', function($rootScope, $scope ,$modal,$http,i18nService, $timeout,filterFilter,$uibModal,uiGridConstants) {
+angular.module('MetronicApp').controller('operconfig_controller', function($rootScope, $scope ,$stateParams,$modal,common_service,$http, $timeout,filterFilter,$uibModal) {
+    var operconfig = {};
+    $scope.operconfig = operconfig;
+
+
+    var userid = $stateParams.id;//接受传入的值
+    $scope.currRole = userid;//显示当前操作员
+    //查询操作员应用接口
+    var res = $rootScope.res.operator_service;//页面所需调用的服务
+    var subFrom = {};
+    subFrom.userId  = userid;
+    common_service.post(res.queryOperatorAllApp,subFrom).then(function(data){
+        if(data.status == "success"){
+            operconfig.appselectApp= data.retMessage;
+        }
+    })
+    
+    //查询应用对应的配置
+    operconfig.search = function (item) {
+           if(!isNull(item)){
+               operconfig.queryqx(subFrom);
+               $scope.operconfig.selectapp = true;
+           }else{
+               $scope.operconfig.selectapp = false;
+           }
+    }
+
+    //查询操作员的个性化配置
+    operconfig.queryqx=function (subFrom) {
+        common_service.post(res.queryOperatorConfig,subFrom).then(function(data){
+            console.log(data);
+           var datas = data.retMessage;
+            if(data.status == "success"){
+                console.log(datas);
+                $scope.operconfig.Allpx = datas;
+            }
+        })
+    }
+
 
 
 });
