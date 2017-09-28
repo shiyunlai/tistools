@@ -128,6 +128,4 @@ public class AcAuthenticationController extends BaseController {
         String appGuid = (String) httpSession.getAttribute("app");
         return getReturnMap(authenticationRService.getInitInfoByUserIdAndIden(userId, identityGuid, appGuid));
     }
-
-
 }

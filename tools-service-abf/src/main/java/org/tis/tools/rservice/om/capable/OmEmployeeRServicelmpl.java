@@ -499,7 +499,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_DEEP_COPY_ORG,
 					BasicUtil.wrap(employee.getEmpCode(), e.getCause().getMessage()));
 		} finally {
-			return null;
+			return employee;
 		}
 	}
 
@@ -799,4 +799,5 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		opList.removeAll(inopList);
 		return opList;
 	}
+
 }

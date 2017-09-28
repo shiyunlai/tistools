@@ -50,10 +50,10 @@
                             </div>
                             <div class="portlet-body"  ng-show="menushow">
                                 <div class="shu" style="margin-top: 20px;">
-                                    <!--<form id="s">
-                                        <input type="search" id="q"/>
-                                        <button type="submit">检索</button>
-                                    </form>-->
+                                    <form id="s">
+                                        <input type="search" ng-model="searchitem" id="q"/>
+                                        <button type="submit" ng-click="menu.clear()">清空</button>
+                                    </form>
                                     <div id="container"></div>
                                 </div>
                             </div>
@@ -199,7 +199,7 @@
                                                 <label class="control-label col-md-2"></label>
                                                 <div class="col-md-10">
                                                     <div class="actions btn-set" style="text-align: center;" ng-if="!editflag">
-                                                        <button type="button" name="back" class="btn btn-primary" ng-click="menu.menuEdit(menuFrom)"> 编辑信息
+                                                        <button type="button" name="back" class="btn btn-primary" style="float: right;" ng-click="menu.menuEdit(menuFrom)"> 编辑信息
                                                         </button>
                                                         <!--  去掉，统一在右侧树上修改 -->
                                                         <!--<button type="button" name="back" class="btn btn-primary" ng-disabled="testussef" ng-click="menu.childAdd(menuFrom)">增加子菜单

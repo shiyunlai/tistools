@@ -37,7 +37,7 @@
                         <a href="#/profile/dashboard">view all</a>
                     </li>-->
                     <li>
-                        <div data-ng-include="'tpl/theme-panel.html'" data-ng-controller="ThemePanelController" style="top: -35px;right: -23px;" class="theme-panel hidden-xs hidden-sm"> </div>
+                        <div data-ng-include="'tpl/theme-panel.html'"  style="top: -35px;right: -23px;" class="theme-panel hidden-xs hidden-sm"> </div>
                     </li>
                 </ul>
 
@@ -58,16 +58,20 @@
                             <i class="icon-key"></i>改密</a>
                     </li>
                     <li>
-                        <a href="#" onclick="loginout()">
+                        <a href="#" ng-click="logout()">
                             <i class="icon-power"></i> 注销 </a>
                     </li>
-                    <li ng-show = !useroper>
+                    <li >
                         <a href="#/operstatus.html">
                             <i class="icon-user-follow"></i> 设置身份 </a>
                     </li>
-                    <li  ng-show = !opermenu>
-                        <a href="#/Reorganizemenu.html">
+                    <li>
+                        <a href="javascript:;" ng-click="opermenus()">
                             <i class="icon-list"></i> 重组菜单 </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" ng-click="personalise()">
+                            <i class="fa fa-lg fa-gears"></i> 个性化配置 </a>
                     </li>
                 </ul>
             </li>
@@ -78,12 +82,3 @@
     <!-- END TOP NAVIGATION MENU -->
 </div>
 <!-- END HEADER INNER -->
-<script>
-    function loginout(){
-        sessionStorage.clear();
-        window.location.reload();
-        if(confirm("是否退出系统")){
-            window.location = "../tools/login.html";//如果正确，则进入主页
-        }
-    }
-</script>

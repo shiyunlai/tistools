@@ -31,15 +31,15 @@
     "setDefaultDictValue": {"ctrl": "DictController", "func": "setDefaultDictValue","emo":" 修改业务字典项默认值"}
   },
   "duty_service" : {
-    "dutytree": {"ctrl": "om/duty", "func": "dutytree"},
+    "dutytree": {"ctrl": "om/duty", "func": "dutytree","em":"查询职务树"},
     "loadallduty": {"ctrl": "om/duty", "func": "loadallduty"},
-    "addduty": {"ctrl": "om/duty", "func": "addduty"},
+    "addduty": {"ctrl": "om/duty", "func": "addduty","em":"新增职务"},
     "initdutyCode": {"ctrl": "om/duty", "func": "initdutyCode"},
     "querydutybyType": {"ctrl": "om/duty", "func": "querydutybyType"},
     "querychild": {"ctrl": "om/duty", "func": "querychild"},
     "queryempbudutyCode": {"ctrl": "om/duty", "func": "queryempbudutyCode"},
     "deletedutyByCode": {"ctrl": "om/duty", "func": "deletedutyByCode"},
-    "updateDuty": {"ctrl": "om/duty", "func": "updateDuty"},
+    "updateDuty": {"ctrl": "om/duty", "func": "updateDuty","em":"更新职务"},
     "queryDucyList": {"ctrl": "om/duty", "func": "queryDutyList","em":"查询所有职务"}
   },
   "Emp_service" : {
@@ -121,7 +121,11 @@
     "queryOperatorFuncInfoInApp": {"ctrl": "AcOperatorController", "func": "queryOperatorFuncInfoInApp","emo":"根据USERID查询特殊权限树"},
     "queryAcOperatorFunListByUserId": {"ctrl": "AcOperatorController", "func": "queryAcOperatorFunListByUserId","emo":"查询用户的特殊权限列表"},
     "addAcOperatorFun": {"ctrl": "AcOperatorController", "func": "addAcOperatorFun","emo":"新增用户特殊功能权限"},
-    "removeAcOperatorFun": {"ctrl": "AcOperatorController", "func": "removeAcOperatorFun","emo":"移除用户特殊功能权限"}
+    "removeAcOperatorFun": {"ctrl": "AcOperatorController", "func": "removeAcOperatorFun","emo":"移除用户特殊功能权限"},
+    "queryConfigList": {"ctrl": "AcOperatorConfig", "func": "queryConfigList","emo":"查询个性化配置列表"},
+    "deleteConfig": {"ctrl": "AcOperatorConfig", "func": "deleteConfig","emo":"删除个性化配置"},
+    "addConfig": {"ctrl": "AcOperatorConfig", "func": "addConfig","emo":"新增个性化配置"},
+    "updateConfig": {"ctrl": "AcOperatorConfig", "func": "updateConfig","emo":"修改操作员个性化配置"}
   },
   "abftree_service" : {
     "loadmaintree": {"ctrl": "om/org", "func": "tree"},
@@ -193,7 +197,8 @@
   },
   "login_service" : {
     "updatePassword": {"ctrl": "AcAuthenticationController", "func": "updatePassword","emo":"修改密码"},
-    "pageInit": {"ctrl": "AcAuthenticationController", "func": "pageInit","emo":"页面初始化"}
+    "pageInit": {"ctrl": "AcAuthenticationController", "func": "pageInit","emo":"页面初始化"},
+    "logout": {"ctrl": "AcAuthenticationController", "func": "logout","emo":"注销登陆"}
   },
   "log_service" : {
     "queryOperateLogList": {"ctrl": "OperateLogController", "func": "queryOperateLogList","emo":"查询操作日志列表"},

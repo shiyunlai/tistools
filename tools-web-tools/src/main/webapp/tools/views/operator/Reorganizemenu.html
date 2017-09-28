@@ -26,7 +26,7 @@
                                             <label class="control-label col-md-4">操作员<span ng-class="{required:myform.dict_key.$invalid}"  >* </span> </label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control"
-                                                       ng-model="searchFrom.operuser" required
+                                                       ng-model="searchFrom.operuser" required  ng-disabled="!jsclose"
                                                        name="dict_key" />
                                             </div>
                                         </div>
@@ -57,7 +57,6 @@
                                     </div>
                                 </div>
                             </form>
-
                         </div>
                     <!-- 组织机构树 start -->
                     <div class="col-md-6" style="margin-top: 14px;" ng-show="opmer.searchok">

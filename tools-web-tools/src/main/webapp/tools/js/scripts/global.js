@@ -559,7 +559,7 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
         thisobj.totalItems = thisobj.mydefalutData.length;  //显示每行多少页  设置不显示
         thisobj.data = thisobj.mydefalutData.slice(firstRow, firstRow + pageSize);
         //或者像下面这种写法
-        //$scope.myData = mydefalutData.slice(firstRow, firstRow + pageSize);
+        //thisobj.mydata = thisobj.mydefalutData.slice(firstRow, firstRow + pageSize);
     };
     //测试
     // var a = $scope.gridApi.selection.getSelectedRows();

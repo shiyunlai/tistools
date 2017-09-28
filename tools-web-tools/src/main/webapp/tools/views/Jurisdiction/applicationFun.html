@@ -36,8 +36,8 @@
                             </div>
                             <div class="portlet-bodyl">
                                 <form id="s">
-                                    <input type="search" id="q"/>
-                                    <button type="submit">检索</button>
+                                    <input type="search" ng-model="searchitem" placeholder="搜索"  id="q"/>
+                                    <button type="submit" ng-click="biz.clear()">清空</button>
                                 </form>
                                 <div id="container" style="margin-top: 20px;"></div>
                             </div>
@@ -594,9 +594,9 @@
                                             </div>
                                             <div class="portlet-body">
                                                 <div class="tab-content portlet light" >
-                                                    <div ui-grid="gridOptions5"  class="grid"
+                                                    <div ui-grid="gridOptions5"  class="grid"  id="tests"
                                                         ui-grid-pagination
-                                                         ui-grid-selection ui-grid-resize-columns></div>
+                                                         ui-grid-selection ui-grid-resize-columns ></div>
                                                     <div class="actions btn-set" style="float: right; margin-top: 63px;">
                                                         <button type="button" name="back" class="btn btn-primary" ng-click="biz.functactive()">新增功能行为
                                                         </button>

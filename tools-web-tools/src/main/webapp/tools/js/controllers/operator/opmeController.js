@@ -117,6 +117,16 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
             toastr['error']("请至少选中一个操作员进行权限的分配！");
         }
     }
+
+
+    //操作员配置功能行为权限
+    $scope.funconfig = function (id) {
+        if($scope.selectRow){
+            $state.go("permission",{id:id})
+        }else{
+            toastr['error']("请至少选中一个操作员进行权限的分配！");
+        }
+    }
 });
 
 /*操作员个人配置控制器*/
@@ -471,6 +481,11 @@ MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state
 
 /* 重组菜单控制器*/
 MetronicApp.controller('reomenu_controller', function ($filter,$rootScope,common_service,$scope, $state, $stateParams, filterFilter, $modal,$uibModal, $http, $timeout) {
+    //拿到传递的内容,即userid
+    var userId = $stateParams.id;
+    var searchFrom = {};
+    $scope.searchFrom= searchFrom;
+    searchFrom.operuser = userId;//绑定
     var opmer ={};
     $scope.opmer = opmer;
     var res = $rootScope.res.menu_service;//页面所需调用的服务
