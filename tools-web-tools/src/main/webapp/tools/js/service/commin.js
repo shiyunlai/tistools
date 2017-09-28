@@ -3,7 +3,7 @@
  */
 MetronicApp.factory('common_service',['$http', '$q', function ($http,$q) {
     var service={};
-    //鍏叡鐨勬湇鍔℃柟娉曪紝鐩存帴璋冪敤鍗冲彲
+    //新增行为类型
     service.post = function (api, subFrom) {
         var res = $http.post(manurl+'/' + api.ctrl + "/" + api.func,subFrom).then(function (response) {
             return response.data;
@@ -13,8 +13,8 @@ MetronicApp.factory('common_service',['$http', '$q', function ($http,$q) {
 
 
 
-    //锟斤拷锟矫碉拷service锟斤拷锟皆猴拷筒锟斤拷锟揭匡拷锟揭筹拷娑夹磗ervice锟剿ｏ拷直锟斤拷锟斤拷每锟斤拷页锟斤拷锟斤拷锟斤拷common_service,然锟斤拷锟斤拷main.js 锟斤拷锟斤拷锟斤拷锟矫碉拷API
-    //service.post(API.app_service,subFrom)  直锟斤拷锟斤拷锟斤拷锟斤拷锟矫硷拷锟斤拷
+    //公用的service，以后就不需要每个页面都写service了，直接在每个页面引用common_service,然后传入main.js 我们配置的API
+    //service.post(API.app_service,subFrom)  直接这样调用即可
 
 /*
     service.get = function (api) {
