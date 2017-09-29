@@ -32,8 +32,6 @@
 
     mvn tools:gen-api -Djava.file.path=E:/tools/tistools/tools-facade-ac/src/main/java/org/tis/tools/rservice/ac/capable/IRoleRService.java
 
-    mvn tools:gen-dao -Dmodel.file.type=erm -Dmodel.file=ABF-mysql -Dfixed.bizmodels=sys -Dfixed.models=SYS_DICT_ITEM -Dgen.type=model,dao,biz,service -Dtemplates.path=E:/tools/tistools/tools-maven
-    -plugin/src/main/resources/META-INF/templates4erm/biz
 
 
 
