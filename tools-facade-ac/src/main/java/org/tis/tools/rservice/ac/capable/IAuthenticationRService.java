@@ -4,9 +4,9 @@
 package org.tis.tools.rservice.ac.capable;
 
 import org.tis.tools.base.exception.ToolsRuntimeException;
+import org.tis.tools.model.po.ac.AcFunc;
 import org.tis.tools.model.po.ac.AcOperator;
 import org.tis.tools.model.po.ac.AcOperatorIdentity;
-import org.tis.tools.model.vo.ac.AcMenuDetail;
 import org.tis.tools.rservice.ac.exception.AuthManagementException;
 
 import java.util.List;
@@ -50,7 +50,6 @@ public interface IAuthenticationRService {
      */
     List<AcOperatorIdentity> userStatusCheck(String userId) throws AuthManagementException;
 
-
     /**
      *   用户登录
      a)	用户必须存在；
@@ -89,8 +88,6 @@ public interface IAuthenticationRService {
     Map<String, Object> getInitInfoByUserIdAndIden(String userId, String identity, String appGuid) throws AuthManagementException;
 
 
-
-
     /**
      * 修改密码
      * @param userId
@@ -104,7 +101,35 @@ public interface IAuthenticationRService {
     AcOperator updatePassword(String userId, String oldPwd, String newPwd) throws AuthManagementException;
 
 
+    /**
+     * 检查操作权限
+     * @param userId 操作员
+     * @param reqInfo 请求代码
+     * @param appGuid 应用id
+     * @param funcGuid 功能id
+     * @return
+     * @throws AuthManagementException
+     */
+    boolean operateAuthCheck(String userId, String reqInfo, String appGuid, String funcGuid) throws AuthManagementException;
 
+    /**
+     * 检查功能权限
+     * @param userId
+     * @param funcGuid
+     * @param appGuid
+     * @return
+     * @throws AuthManagementException
+     */
+    boolean funcAuthCheck(String userId, String funcGuid, String appGuid) throws AuthManagementException;
+
+    /**
+     * 查询操作员在应用下的已授权功能
+     * @param userId
+     * @param appGuid
+     * @return
+     * @throws AuthManagementException
+     */
+    List<AcFunc> queryOperatorAuthFuncsInApp(String userId, String appGuid) throws AuthManagementException;
 
 
 }

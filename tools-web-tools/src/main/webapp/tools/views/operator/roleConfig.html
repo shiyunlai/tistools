@@ -12,8 +12,9 @@
 <h3 class="page-title">
     <small></small>
 </h3>
+
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12"  >
         <div class="portlet light form-fit bordered">
             <div class="portlet-title">
                 <div class="caption">
@@ -28,52 +29,123 @@
                     </button>
                 </div>
             </div>
-            <div class="portlet-body form">
-                <div class="tab-content">
-                    <div  role="tabpanel">
-                        <form action="#" class="form-horizontal form-bordered">
-                            <div class="form-body">
-                                <div class="form-group">
-                                    <label class="control-label col-md-3">身份设置</label>
-                                    <div class="col-md-9">
-                                        <label class="radio-inline">
-                                            <input type="radio"  name="{{item.value}}" value="true" ng-model="item.bool"> 开启
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio"    name="{{item.value}}" value="false" ng-model="item.bool" > 关闭
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-body">
-                                <div class="form-group">
-                                    <label class="control-label col-md-3">重组菜单</label>
-                                    <div class="col-md-9">
-                                        <label class="radio-inline">
-                                            <input type="radio" id="switchFlag_open"  name="{{item.value}}" value="true" ng-model="item.bool"> 开启
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio"  id="switchFlag_close"   name="{{item.value}}" value="false" ng-model="item.bool" > 关闭
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-body">
-                                <div class="form-group">
-                                    <label class="control-label col-md-3">操作员管理</label>
-                                    <div class="col-md-9">
-                                        <label class="radio-inline">
-                                            <input type="radio"  name="{{item.value}}" value="true" ng-model="item.bool"> 开启
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio"     name="{{item.value}}" value="false" ng-model="item.bool" > 关闭
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <form action="#" name="myform" class="form-horizontal clearfix">
+        <div class="form-body ">
+            <div class="col-md-6  col-md-offset-3"  >
+                <div class="form-group">
+                    <label class="control-label col-md-4"> 选择应用: </label>
+                    <div class="col-md-5">
+                        <select class="form-control"  name="select_app"  ng-model="operconfig.appselect">
+                            <option ng-repeat="d in operconfig.appselectApp" value="{{d.guid}}">{{d.appName}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" name="back"  class="btn btn-primary"    popover-trigger="mouseenter" ng-click="operconfig.search(operconfig.appselect)" > 查询
+                        </button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!--页面修改，双循环-->
+<div class="row" style="margin-top:40px;" ng-show="operconfig.selectapp">
+    <div class="col-md-12"  ng-repeat="d in operconfig.Allpx track by $index">
+        <div class="portlet light" style="border:1px solid #ccc">
+            <div class="portlet-title">
+                <div class="caption font-green-haze">
+                    <i class="icon-settings font-green-haze"></i>
+                    <span class="caption-subject bold uppercase">{{d.configType}}</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse">
+                    </a>
+                </div>
+            </div>
+            <div cfgStype=" d.sadad" cfgvalue="333" defval="d.vale" name="ddq">
+
+            </div>
+            <div class="portlet-body form">
+                <form role="form" class="form-horizontal">
+                    <div class="form-body">
+                        <div class="form-group form-md-line-input"  ng-if="d.configStyle=='checked'">
+                            <label class="col-md-2 control-label" for="form_control_1">{{d.configName}}</label>
+                            <div class="col-md-10">
+                                <div class="md-checkbox-inline">
+                                    <div class="md-checkbox">
+                                        <input type="checkbox" id="checkbox33" class="md-check">
+                                        <label for="checkbox33">
+                                            <span></span>
+                                            <span class="check"></span>
+                                            <span class="box"></span>
+                                            选择 </label>
+                                    </div>
+                                    <div class="md-checkbox has-error">
+                                        <input type="checkbox" id="checkbox34" class="md-check" checked>
+                                        <label for="checkbox34">
+                                            <span></span>
+                                            <span class="check"></span>
+                                            <span class="box"></span>
+                                            关闭 </label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-md-line-input" ng-if="d.configStyle=='radio'">
+                            <label class="col-md-2 control-label" for="form_control_1">{{d.configName}}</label>
+                            <div class="col-md-10">
+                                <div class="md-radio-inline">
+                                    <div class="md-radio">
+                                        <input type="radio" id="radio53" name="radio2" class="md-radiobtn">
+                                        <label for="radio53">
+                                            <span></span>
+                                            <span class="check"></span>
+                                            <span class="box"></span>
+                                            开启 </label>
+                                    </div>
+                                    <div class="md-radio has-error">
+                                        <input type="radio" id="radio54" name="radio2" class="md-radiobtn" checked>
+                                        <label for="radio54">
+                                            <span></span>
+                                            <span class="check"></span>
+                                            <span class="box"></span>
+                                            关闭</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-md-line-input"  ng-if="d.configStyle=='select'">
+                            <label class="col-md-2 control-label" for="form_control_1">{{d.configName}}</label>
+                            <div class="col-md-10">
+                                <div class="from-group">
+                                    <select id="growl_type" style="border:1px solid #ccc;border-radius:5px; padding-left:10px;" class="form-control  input-small input-inline">
+                                        <option value="info">Info</option>
+                                        <option value="danger">Danger</option>
+                                        <option value="success">Success</option>
+                                        <option value="warning">Warning</option>
+                                    </select>
+                                    </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group form-md-line-input" ng-show="d.configStyle=='toggle'">
+                            <label class="col-md-2 control-label" for="form_control_1">{{d.configName}}</label>
+                            <div class="col-md-10">
+                                <div class="btn-group">
+                                    <div class="switch" data-on="primary" data-off="info">
+                                        <input name="status" type="checkbox" data-size="small">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
