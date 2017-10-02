@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.tis</groupId>
 	<artifactId>tools</artifactId>
@@ -33,7 +32,8 @@
 		<module>tools-web-tools</module>
 		<module>tools-facade-txmodel</module>
 		<module>tools-service-txmodel</module>
-	</modules>
+    <module>tools-core-sdo</module>
+  </modules>
 
 	<profiles>
 		<profile>
@@ -47,6 +47,7 @@
 				<tools-common-assembly-version>1.0.0</tools-common-assembly-version>
 				<tools-common-util-version>1.0.0</tools-common-util-version>
 				<tools-core-basic-version>1.0.0</tools-core-basic-version>
+				<tools-core-sdo-version>1.0.0</tools-core-sdo-version>
 				<tools-core-service-version>1.0.0</tools-core-service-version>
 				<tools-core-web-version>1.0.0</tools-core-web-version>
 				<tools-design-version>1.0.0</tools-design-version>
@@ -62,6 +63,7 @@
 				<tools-service-biztrace-version>1.0.0</tools-service-biztrace-version>
 				<tools-service-devmgr-version>1.0.0</tools-service-devmgr-version>
 				<tools-service-jnl-version>1.0.0</tools-service-jnl-version>
+				<tools-service-txmodel-version>1.0.0</tools-service-txmodel-version>
 				<tools-web-tools-version>1.0.0</tools-web-tools-version>
 			</properties>
 		</profile>
@@ -82,6 +84,7 @@
 		<tools-common-assembly-version>0.0.1-SNAPSHOT</tools-common-assembly-version>
 		<tools-common-util-version>0.0.1-SNAPSHOT</tools-common-util-version>
 		<tools-core-basic-version>0.0.1-SNAPSHOT</tools-core-basic-version>
+		<tools-core-sdo-version>0.0.1-SNAPSHOT</tools-core-sdo-version>
 		<tools-core-service-version>0.0.1-SNAPSHOT</tools-core-service-version>
 		<tools-core-web-version>0.0.1-SNAPSHOT</tools-core-web-version>
 		<tools-design-version>0.0.1-SNAPSHOT</tools-design-version>
@@ -97,6 +100,7 @@
 		<tools-service-biztrace-version>0.0.1-SNAPSHOT</tools-service-biztrace-version>
 		<tools-service-devmgr-version>0.0.1-SNAPSHOT</tools-service-devmgr-version>
 		<tools-service-jnl-version>0.0.1-SNAPSHOT</tools-service-jnl-version>
+		<tools-service-txmodel-version>0.0.1-SNAPSHOT</tools-service-txmodel-version>
 		<tools-web-tools-version>0.0.1-SNAPSHOT</tools-web-tools-version>
 		<!-- 快照版本号定义结束 -->
 		
@@ -256,6 +260,11 @@
 				<groupId>org.tis</groupId>
 				<artifactId>tools-core-basic</artifactId>
 				<version>${tools-core-basic-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.tis</groupId>
+				<artifactId>tools-core-sdo</artifactId>
+				<version>${tools-core-sdo-version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.tis</groupId>
