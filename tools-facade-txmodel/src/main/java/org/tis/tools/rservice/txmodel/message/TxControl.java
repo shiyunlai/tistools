@@ -5,6 +5,8 @@ package org.tis.tools.rservice.txmodel.message;
 
 import java.io.Serializable;
 
+import org.tools.core.sdo.DataObject;
+
 /**
  * <pre>
  * 交易控制信息
@@ -20,16 +22,96 @@ import java.io.Serializable;
  * 又如：当前交易操作为‘翻页查询’时
  * 	前端 --> 服务端，交易控制信息中会包括‘当前页参数’、‘翻页控制’，
  * 	服务端 --> 前端，交易控制信息中除了包括原‘当前参数’、‘翻页控制’，还会加入‘剩余页信息’。
- * 
  * </pre>
  * @author megapro
  *
+ * @param <O> 授权方式
+ * @param <OC> 授权控制信息
  */
-public class TxControl implements Serializable {
+public interface TxControl<O,C,M> extends Serializable {
+	
+	/**
+	 * 是否处理成功
+	 * @return
+	 */
+	public boolean isSuccess() ; 
+	
+	/**
+	 * 取返回码
+	 * @return
+	 */
+	public String getRetCode() ; 
+	
+	/**
+	 * 取返回信息
+	 * @return
+	 */
+	public String getRetMessage() ; 
+	
+	
+	/**
+	 * 是否需要授权
+	 * @return
+	 */
+	public boolean isOverride() ;
 
 	/**
-	 * 
+	 * 取授权方式
+	 * @return
 	 */
-	private static final long serialVersionUID = 1L;
+	public O getOverrideType() ;
+	
+	/**
+	 * 取授权控制参数
+	 * @return
+	 */
+	public DataObject getOverrideControl() ;
+	
+	/**
+	 * 是否需要复核
+	 * @return
+	 */
+	public boolean isReCheck() ;
 
+	/**
+	 * 取复核方式
+	 * @return
+	 */
+	public C getCheckType( ) ; 
+	
+	/**
+	 * 取复核控制参数
+	 * @return
+	 */
+	public DataObject getReCheckControl() ;
+	
+	/**
+	 * 是否双录
+	 * @return
+	 */
+	public boolean isDoubleRecord() ;
+	
+	/**
+	 * 取双录控制参数
+	 * @return
+	 */
+	public DataObject getDoubleRecordControl() ;
+	
+	/**
+	 * 是否进行交易监控
+	 * @return
+	 */
+	public boolean isMonitor() ;
+	
+	/**
+	 * 取监控方式
+	 * @return
+	 */
+	public M getMonitorType( ) ; 
+	
+	/**
+	 * 取监控控制参数
+	 * @return
+	 */
+	public DataObject getMonitorControl() ;
 }

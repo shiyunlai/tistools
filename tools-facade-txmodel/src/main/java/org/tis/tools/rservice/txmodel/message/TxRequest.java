@@ -17,10 +17,12 @@ import java.io.Serializable;
  * 	txHeader : {
  * 		"channel": "TWS",             // 渠道代码 TWS 柜面系统
  * 		"termial": "TWS6601234",      // 终端标示 TWS6601234
- * 		"operatorCode" : "commit-override", // 当前操作行为：授权后提交交易
+ * 		"userID" : "660001",          // 用户ID(AC_OPERATOR.USER_ID)
+ * 		"orgCode": "CN660001",        // 机构代码
+ * 		"bhvCode": "commit-override", // 操作行为代码：授权后提交交易
  * 		"txCode" : "TX010505",        // 当前提交交易TX010505
  * 		"txDate" : "2017-10-01",      // 交易日期 2017-10-01
- * 		"operatorGuid" : "dsfasfafsafsdaf", //本次交易操作的GUID
+ * 		"bhvGUID" : "dsfa-sfaf-safs-ddaf", //本次交易操作的GUID
  * 		"txSerialNo" : "1710014567",  // 交易流水号 1710014567
  * 		...
  * 	},
@@ -51,25 +53,35 @@ import java.io.Serializable;
  * @author megapro
  *
  */
-public class TxRequest implements Serializable {
-
+public interface TxRequest extends Serializable {
+	
 	/**
-	 * 
+	 * 取交易控制信息对象
+	 * @return
 	 */
-	private static final long serialVersionUID = 1L;
-
-	public TxControl getTxControl () {
-		
-		return null ; 
-	}
+	public TxControl getTxControl ()  ; 
 	
-	public TxHeader getTxHeader(){
-		
-		return null ;
-	}
+	/**
+	 * 取交易请求头信息对象
+	 * @return
+	 */
+	public TxHeader getTxHeader() ; 
 	
-	public TxData getRequestData(){
-		
-		return null ; 
-	}
+	/**
+	 * 取交易请求数据对象
+	 * @return
+	 */
+	public TxData getRequestData() ; 
+	
+	/**
+	 * 取合法性校验信息
+	 * @return
+	 */
+	public Object getToken() ;
+	
+	/**
+	 * 是否为合法的交易请求
+	 * @return
+	 */
+	public boolean isValid() ; 
 }

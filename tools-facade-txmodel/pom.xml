@@ -27,5 +27,13 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.tis</groupId>
+			<artifactId>tools-core-sdo</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.tis</groupId>
+			<artifactId>tools-core-basic</artifactId>
+		</dependency>
 	</dependencies>
 </project>
