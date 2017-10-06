@@ -158,6 +158,7 @@
 		<mysql-version>5.1.37</mysql-version>
 		<commons_pool_version>1.6</commons_pool_version>
 		<commons-lang_version>2.6</commons-lang_version>
+		<commons-io-version>2.5</commons-io-version>
 		<commons.collections.version>3.2.1</commons.collections.version>
 		<commons.beanutils.version>1.9.3</commons.beanutils.version>
 		<tomcat_embed_version>8.0.11</tomcat_embed_version>
@@ -238,6 +239,9 @@
 		<disconf_version>2.6.36-luban</disconf_version>
 		<dom4j_version>1.6.1</dom4j_version>
 		<jaxen_version>1.1.6</jaxen_version>
+		<xstream-version>1.4.7</xstream-version>
+		<xalan-version>2.7.1</xalan-version>
+		<apache-ant-version>1.8.4</apache-ant-version>
 	</properties>
 
 	<dependencyManagement>
@@ -683,6 +687,12 @@
 				<artifactId>commons-beanutils</artifactId>
 				<version>${commons.beanutils.version}</version>
 			</dependency>
+			<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons-io-version}</version>
+			</dependency>
 			<dependency>
 				<groupId>org.apache.tomcat.embed</groupId>
 				<artifactId>tomcat-embed-core</artifactId>
@@ -873,6 +883,27 @@
 				<groupId>jaxen</groupId>
 				<artifactId>jaxen</artifactId>
 				<version>${jaxen_version}</version>
+			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/com.thoughtworks.xstream/xstream -->
+			<dependency>
+			    <groupId>com.thoughtworks.xstream</groupId>
+			    <artifactId>xstream</artifactId>
+			    <version>${xstream-version}</version>
+			</dependency>
+			
+			<!-- https://mvnrepository.com/artifact/xalan/xalan -->
+			<dependency>
+			    <groupId>xalan</groupId>
+			    <artifactId>xalan</artifactId>
+			    <version>${xalan-version}</version>
+			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/org.apache.ant/ant -->
+			<dependency>
+				<groupId>org.apache.ant</groupId>
+				<artifactId>ant</artifactId>
+				<version>${apache-ant-version}</version>
 			</dependency>
 
 			<!--### Common libs end ### -->
