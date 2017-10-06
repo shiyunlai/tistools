@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tools.core.sdo.Data;
 import org.tools.core.sdo.DataField;
 import org.tools.core.sdo.DataFieldDictionary;
@@ -51,6 +53,8 @@ public class DynamicDataObject implements DataObject {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private static final Logger logger = LoggerFactory.getLogger(DynamicDataObject.class);
 
 	/** 数据名称 */
 	private String name;
@@ -278,7 +282,7 @@ public class DynamicDataObject implements DataObject {
 	 * 
 	 * @return 数据域的字符串值
 	 */
-	public String getStringValue() {
+	public String toString() {
 
 		/**
 		 * StringBuffer sb = new StringBuffer(); PbsObjectable[] objects =
@@ -587,8 +591,8 @@ public class DynamicDataObject implements DataObject {
 				df.setValueWithString(Boolean.toString(arg1));
 			}
 
-		} else if (DataFieldDictionary.getInstance().getMetaField(arg0) != null) {
-			this.dataMap.put(arg0, DataFieldDictionary.getInstance().createDataField(arg0, Boolean.toString(arg1)));
+		} else if (DataFieldDictionary.instance().getMetaField(arg0) != null) {
+			this.dataMap.put(arg0, DataFieldDictionary.instance().createDataField(arg0, Boolean.toString(arg1)));
 		} else {
 			BooleanField bf = new BooleanField(arg0);
 			bf.setValue(arg1);
@@ -604,8 +608,8 @@ public class DynamicDataObject implements DataObject {
 				DataField df = (DataField) data;
 				df.setValueWithString(Byte.toString(arg1));
 			}
-		} else if (DataFieldDictionary.getInstance().getMetaField(arg0) != null) {
-			this.dataMap.put(arg0, DataFieldDictionary.getInstance().createDataField(arg0, Byte.toString(arg1)));
+		} else if (DataFieldDictionary.instance().getMetaField(arg0) != null) {
+			this.dataMap.put(arg0, DataFieldDictionary.instance().createDataField(arg0, Byte.toString(arg1)));
 		} else {
 			ByteField bf = new ByteField(arg0);
 			bf.setValue(arg1);
@@ -621,8 +625,8 @@ public class DynamicDataObject implements DataObject {
 				DataField df = (DataField) data;
 				df.setValueWithString(Character.toString(arg1));
 			}
-		} else if (DataFieldDictionary.getInstance().getMetaField(arg0) != null) {
-			this.dataMap.put(arg0, DataFieldDictionary.getInstance().createDataField(arg0, Character.toString(arg1)));
+		} else if (DataFieldDictionary.instance().getMetaField(arg0) != null) {
+			this.dataMap.put(arg0, DataFieldDictionary.instance().createDataField(arg0, Character.toString(arg1)));
 		} else {
 			CharField cf = new CharField(arg0);
 			cf.setValue(arg1);
@@ -638,8 +642,8 @@ public class DynamicDataObject implements DataObject {
 				DataField df = (DataField) data;
 				df.setValueWithString(Double.toString(arg1));
 			}
-		} else if (DataFieldDictionary.getInstance().getMetaField(arg0) != null) {
-			this.dataMap.put(arg0, DataFieldDictionary.getInstance().createDataField(arg0, Double.toString(arg1)));
+		} else if (DataFieldDictionary.instance().getMetaField(arg0) != null) {
+			this.dataMap.put(arg0, DataFieldDictionary.instance().createDataField(arg0, Double.toString(arg1)));
 		} else {
 			DoubleField df = new DoubleField(arg0);
 			df.setValue(arg1);
@@ -655,8 +659,8 @@ public class DynamicDataObject implements DataObject {
 				DataField df = (DataField) data;
 				df.setValueWithString(Float.toString(arg1));
 			}
-		} else if (DataFieldDictionary.getInstance().getMetaField(arg0) != null) {
-			this.dataMap.put(arg0, DataFieldDictionary.getInstance().createDataField(arg0, Float.toString(arg1)));
+		} else if (DataFieldDictionary.instance().getMetaField(arg0) != null) {
+			this.dataMap.put(arg0, DataFieldDictionary.instance().createDataField(arg0, Float.toString(arg1)));
 		} else {
 			FloatField ff = new FloatField(arg0);
 			ff.setValue(arg1);
@@ -672,8 +676,8 @@ public class DynamicDataObject implements DataObject {
 				DataField df = (DataField) data;
 				df.setValueWithString(Integer.toString(arg1));
 			}
-		} else if (DataFieldDictionary.getInstance().getMetaField(arg0) != null) {
-			this.dataMap.put(arg0, DataFieldDictionary.getInstance().createDataField(arg0, Integer.toString(arg1)));
+		} else if (DataFieldDictionary.instance().getMetaField(arg0) != null) {
+			this.dataMap.put(arg0, DataFieldDictionary.instance().createDataField(arg0, Integer.toString(arg1)));
 		} else {
 			IntField inf = new IntField(arg0);
 			inf.setValue(arg1);
@@ -689,8 +693,8 @@ public class DynamicDataObject implements DataObject {
 				DataField df = (DataField) data;
 				df.setValueWithString(Long.toString(arg1));
 			}
-		} else if (DataFieldDictionary.getInstance().getMetaField(arg0) != null) {
-			this.dataMap.put(arg0, DataFieldDictionary.getInstance().createDataField(arg0, Long.toString(arg1)));
+		} else if (DataFieldDictionary.instance().getMetaField(arg0) != null) {
+			this.dataMap.put(arg0, DataFieldDictionary.instance().createDataField(arg0, Long.toString(arg1)));
 		} else {
 			LongField lf = new LongField(arg0);
 			lf.setValue(arg1);
@@ -706,8 +710,8 @@ public class DynamicDataObject implements DataObject {
 				DataField df = (DataField) data;
 				df.setValueWithString(Short.toString(arg1));
 			}
-		} else if (DataFieldDictionary.getInstance().getMetaField(arg0) != null) {
-			this.dataMap.put(arg0, DataFieldDictionary.getInstance().createDataField(arg0, Short.toString(arg1)));
+		} else if (DataFieldDictionary.instance().getMetaField(arg0) != null) {
+			this.dataMap.put(arg0, DataFieldDictionary.instance().createDataField(arg0, Short.toString(arg1)));
 		} else {
 			ShortField sf = new ShortField(arg0);
 			sf.setValue(arg1);
@@ -723,8 +727,8 @@ public class DynamicDataObject implements DataObject {
 				DataField df = (DataField) data;
 				df.setValueWithString(arg1.toString());
 			}
-		} else if (DataFieldDictionary.getInstance().getMetaField(arg0) != null) {
-			this.dataMap.put(arg0, DataFieldDictionary.getInstance().createDataField(arg0, arg1.toString()));
+		} else if (DataFieldDictionary.instance().getMetaField(arg0) != null) {
+			this.dataMap.put(arg0, DataFieldDictionary.instance().createDataField(arg0, arg1.toString()));
 		} else {
 			ByteArrayField sf = new ByteArrayField(arg0);
 			sf.setValue(arg1);
@@ -740,8 +744,8 @@ public class DynamicDataObject implements DataObject {
 				DataField df = (DataField) data;
 				df.setValueWithString(String.valueOf(arg1));
 			}
-		} else if (DataFieldDictionary.getInstance().getMetaField(arg0) != null) {
-			this.dataMap.put(arg0, DataFieldDictionary.getInstance().createDataField(arg0, String.valueOf(arg1)));
+		} else if (DataFieldDictionary.instance().getMetaField(arg0) != null) {
+			this.dataMap.put(arg0, DataFieldDictionary.instance().createDataField(arg0, String.valueOf(arg1)));
 		} else {
 			BigDecimalField bf = new BigDecimalField(arg0);
 			bf.setValue(arg1);
@@ -757,8 +761,8 @@ public class DynamicDataObject implements DataObject {
 				DataField df = (DataField) data;
 				df.setValueWithString(String.valueOf(arg1));
 			}
-		} else if (DataFieldDictionary.getInstance().getMetaField(arg0) != null) {
-			this.dataMap.put(arg0, DataFieldDictionary.getInstance().createDataField(arg0, String.valueOf(arg1)));
+		} else if (DataFieldDictionary.instance().getMetaField(arg0) != null) {
+			this.dataMap.put(arg0, DataFieldDictionary.instance().createDataField(arg0, String.valueOf(arg1)));
 		} else {
 			BigIntegerField bf = new BigIntegerField(arg0);
 			bf.setValue(arg1);
@@ -777,8 +781,8 @@ public class DynamicDataObject implements DataObject {
 				DataField df = (DataField) data;
 				df.setValueWithString(String.valueOf(arg1));
 			}
-		} else if (DataFieldDictionary.getInstance().getMetaField(arg0) != null) {
-			this.dataMap.put(arg0, DataFieldDictionary.getInstance().createDataField(arg0, String.valueOf(arg1)));
+		} else if (DataFieldDictionary.instance().getMetaField(arg0) != null) {
+			this.dataMap.put(arg0, DataFieldDictionary.instance().createDataField(arg0, String.valueOf(arg1)));
 		} else {
 			DateField df = new DateField(arg0);
 			df.setValue(arg1);
@@ -801,8 +805,8 @@ public class DynamicDataObject implements DataObject {
 				DataField df = (DataField) data;
 				df.setValueWithString(arg1);
 			}
-		} else if (DataFieldDictionary.getInstance().getMetaField(arg0) != null) {
-			this.dataMap.put(arg0, DataFieldDictionary.getInstance().createDataField(arg0, arg1));
+		} else if (DataFieldDictionary.instance().getMetaField(arg0) != null) {
+			this.dataMap.put(arg0, DataFieldDictionary.instance().createDataField(arg0, arg1));
 		} else {
 			StringField sf = new StringField(arg0);
 			sf.setValue(arg1);
@@ -892,11 +896,13 @@ public class DynamicDataObject implements DataObject {
 	 * @param propertyName
 	 * @return
 	 */
-	public Object getField(String propertyName) {
+	@SuppressWarnings("unchecked")
+	public <T extends DataField> T getField(String propertyName) {
 		Object data = dataMap.get(propertyName);
 		if (data != null) {
-			return data;
+			return (T)data;
 		}
+		logger.warn("没有找到名称为["+propertyName+"]的数据字段!") ; 
 		return null;
 	}
 
@@ -969,22 +975,26 @@ public class DynamicDataObject implements DataObject {
 	}
 
 	/**
+	 * 存放一个时间类型的字段
+	 * 
 	 * @param propertyName
+	 *            字段名称
 	 * @param value
+	 *            值
 	 */
-	private void setTime(String arg0, Time arg1) {
-		if (dataMap.get(arg0) != null) {
-			Data data = (Data) dataMap.get(arg0);
+	private void setTime(String propertyName, Time value) {
+		if (dataMap.get(propertyName) != null) {
+			Data data = (Data) dataMap.get(propertyName);
 			if (data instanceof DataField) {
 				DataField df = (DataField) data;
-				df.setValueWithString(arg1.toLocaleString());
+				df.setValueWithString(value.toLocaleString());
 			}
-		} else if (DataFieldDictionary.getInstance().getMetaField(arg0) != null) {
-			this.dataMap.put(arg0, DataFieldDictionary.getInstance().createDataField(arg0, arg1.toLocaleString()));
+		} else if (DataFieldDictionary.instance().getMetaField(propertyName) != null) {
+			this.dataMap.put(propertyName, DataFieldDictionary.instance().createDataField(propertyName, value.toLocaleString()));
 		} else {
-			TimeField tf = new TimeField(arg0);
-			tf.setValueWithString(arg1.toLocaleString());
-			this.dataMap.put(arg0, tf);
+			TimeField tf = new TimeField(propertyName);
+			tf.setValueWithString(value.toLocaleString());
+			this.dataMap.put(propertyName, tf);
 		}
 	}
 
