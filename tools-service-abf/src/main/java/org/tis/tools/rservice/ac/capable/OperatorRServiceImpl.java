@@ -89,6 +89,12 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
     @Autowired
     AcBhvDefService acBhvDefService;
 
+    @Autowired
+    AcFuncService acFuncService;
+
+    @Autowired
+    IAuthenticationRService authenticationRService;
+
 
     /**
      * 新增操作员
@@ -775,11 +781,7 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
                 throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("USER_ID", "queryOperatorFuncInfoInApp"));
             }
             /** 查询对应操作员*/
-            List<AcOperator> acOperators = acOperatorService.query(new WhereCondition().andEquals(AcOperator.COLUMN_USER_ID, userId));
-            if (acOperators.size() != 1) {
-                throw new OperatorManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap(userId, "AC_OPERATOR"));
-            }
-            AcOperator operator = acOperators.get(0);
+            AcOperator operator = queryOperatorByUserId(userId);
             // 创建根节点
             AcOperatorFuncDetail rootNode = new AcOperatorFuncDetail();
             rootNode.setId("root");
@@ -878,10 +880,6 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
                             nodeMap.get(node.getParentGuid()).addChildren(node);
                         }
                     }
-
-                    // 查询已拥有功能
-
-
                 }
             }
             return rootNode;
@@ -1020,7 +1018,7 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
         }
         try {
             config.setGuid(GUID.operatorConfig());
-            String validate = BeanFieldValidateUtil.checkObjFieldNotRequired(config, new String[]{"configDesc, displayOrder"});
+            String validate = BeanFieldValidateUtil.checkObjFieldNotRequired(config, new String[]{"configDesc", "displayOrder"});
             if(StringUtils.isNotEmpty(validate)) {
                 throw new OperatorManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, BasicUtil.wrap(validate, AcConfig.TABLE_NAME));
             }
@@ -1163,15 +1161,17 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
      * 查询操作员的个性化配置
      *
      * @param userId
+     * @param appGuid
      * @return
      * @throws OperatorManagementException
      */
     @Override
-    public List<AcConfig> queryOperatorConfig(String userId) throws OperatorManagementException {
+    public List<AcConfig> queryOperatorConfig(String userId, String appGuid) throws OperatorManagementException {
         if(StringUtils.isBlank(userId)) {
-            throw new OperatorManagementException(
-                    ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("UserId", AcOperatorConfig.TABLE_NAME)
-            );
+            throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("UserId", AcOperatorConfig.TABLE_NAME));
+        }
+        if(StringUtils.isBlank(appGuid)) {
+            throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("UserId", AcOperatorConfig.TABLE_NAME));
         }
         AcOperator operator = queryOperatorByUserId(userId);
         try {
@@ -1180,7 +1180,8 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
              */
             List<AcOperatorConfig> privateConfigs = acOperatorConfigService.query(
                     new WhereCondition().andEquals(AcOperatorConfig.COLUMN_GUID_OPERATOR, operator.getGuid()));
-            List<AcConfig> defaultConfigs = queryConfigList();
+            List<AcConfig> defaultConfigs = acConfigService.query(
+                    new WhereCondition().andEquals(AcConfig.COLUMN_GUID_APP, appGuid));
             if(privateConfigs.size() > 0) {
                 Map<String, String> matchVal = new HashMap<>();
                 privateConfigs.stream().forEach(cfg ->
@@ -1354,5 +1355,102 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
                     ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap(AcOperatorBhv.TABLE_NAME, e));
         }
     }
+
+    /**
+     * 查询操作员在应用下已授权功能
+     *
+     * @param userId  操作员
+     * @param appGuid 应用
+     * @return
+     * @throws OperatorManagementException
+     */
+    @Override
+    public AcOperatorFuncDetail getOperatorFuncInfo(String userId, String appGuid) throws OperatorManagementException {
+        try {
+            if (StringUtils.isBlank(userId)) {
+                throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("USER_ID", "getOperatorFuncInfo"));
+            }
+
+            if (StringUtils.isBlank(appGuid)) {
+                throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("GUID_APP", "getOperatorFuncInfo"));
+            }
+            // 构造应用节点
+            AcOperatorFuncDetail appNode = new AcOperatorFuncDetail();
+            /** 查询用户下所有应用 */
+            List<AcApp> acApps = applicationRService.queryOperatorAllApp(userId);
+            acApps.stream()
+                    .filter(app -> StringUtils.isEquals(app.getGuid(), appGuid))
+                    .findFirst()
+                    .ifPresent(acApp ->
+                    {
+                        appNode.setId(acApp.getGuid());
+                        appNode.setText(acApp.getAppName());
+//                        appNode.setParentGuid(rootNode.getId());
+                        appNode.setIcon(AcOperatorFuncDetail.NODE_ICON_APP);
+                        appNode.setNodeType(AcOperatorFuncDetail.NODE_TYPE_APP);
+                        appNode.setAppGuid(acApp.getGuid());
+                        appNode.setIsLeaf(CommonConstants.NO);
+//                        rootNode.addChildren(appNode);
+
+                        List<AcOperatorFuncDetail> nodeList = new ArrayList<>();
+                        // 节点列表（散列表，用于临时存储节点对象）
+                        HashMap<String, AcOperatorFuncDetail> nodeMap = new HashMap<>();
+                        // 查询所有的功能组
+                        acFuncgroupService
+                                .query(new WhereCondition().andEquals(AcFuncgroup.COLUMN_GUID_APP, acApp.getGuid()))
+                                .stream()
+                                .forEach(acFuncgroup -> {
+                                    AcOperatorFuncDetail groupNode = new AcOperatorFuncDetail();
+                                    groupNode.setId(acFuncgroup.getGuid());
+                                    groupNode.setText(acFuncgroup.getFuncgroupName());
+                                    groupNode.setParentGuid(acFuncgroup.getGuidParents());
+                                    groupNode.setIcon(AcOperatorFuncDetail.NODE_ICON_FUNCGROUP);
+                                    groupNode.setNodeType(AcOperatorFuncDetail.NODE_TYPE_FUNCGROUP);
+                                    groupNode.setStatus(AcOperatorFuncDetail.NODE_STATUS_ENABLED);
+                                    groupNode.setIsLeaf(CommonConstants.NO);
+                                    groupNode.setAppGuid(acFuncgroup.getGuidApp());
+                                    groupNode.setFuncGroupGuid(acFuncgroup.getGuidParents());
+                                    nodeList.add(groupNode);
+                                    nodeMap.put(groupNode.getId(), groupNode);
+                                });
+                        //查询当前用户拥有该应用的功能
+                        authenticationRService.queryOperatorAuthFuncsInApp(userId, appGuid)
+                                .stream()
+                                .forEach(acFunc -> {
+                                    AcOperatorFuncDetail funcNode = new AcOperatorFuncDetail();
+                                    funcNode.setId(acFunc.getGuid());
+                                    funcNode.setText(acFunc.getFuncName());
+                                    funcNode.setParentGuid(acFunc.getGuidFuncgroup());
+                                    funcNode.setIcon(AcOperatorFuncDetail.NODE_ICON_FUNC);
+                                    funcNode.setNodeType(AcOperatorFuncDetail.NODE_TYPE_FUNC);
+                                    funcNode.setStatus(AcOperatorFuncDetail.NODE_STATUS_DISABLED);
+                                    funcNode.setIsLeaf(CommonConstants.YES);
+                                    funcNode.setFuncGroupGuid(acFunc.getGuidFuncgroup());
+                                    funcNode.setAppGuid(nodeMap.get(acFunc.getGuidFuncgroup()).getAppGuid());
+                                    nodeList.add(funcNode);
+                                    nodeMap.put(funcNode.getId(), funcNode);
+                                });
+                        // 构造功能树节点
+                        for (AcOperatorFuncDetail node : nodeList) {
+                            // 如果节点的父节点为空，则为应用下的子节点
+                            if (StringUtils.isBlank(node.getParentGuid())) {
+                                appNode.addChildren(node);
+                            } else { // 否则获取父节点添加
+                                nodeMap.get(node.getParentGuid()).addChildren(node);
+                            }
+                        }
+                    }
+            );
+            return appNode;
+        } catch (OperatorManagementException ae) {
+            throw ae;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new OperatorManagementException(
+                    ExceptionCodes.FAILURE_WHEN_QUERY,
+                    BasicUtil.wrap("getOperatorFuncInfo", e));
+        }
+    }
+
 
 }

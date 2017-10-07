@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/AcOperatorController")
@@ -699,7 +700,11 @@ public class AcOperatorController extends BaseController {
      */
     @RequestMapping(value="/queryOperatorConfig" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public Map<String, Object> queryOperatorConfig(@RequestBody String content) {
-        return getReturnMap(operatorRService.queryOperatorConfig(JSONObject.parseObject(content).getString("userId")));
+        String userId = JSONObject.parseObject(content).getString("userId");
+        String appGuid = JSONObject.parseObject(content).getString("appGuid");
+        return getReturnMap(operatorRService.queryOperatorConfig(userId, appGuid)
+                .stream()
+                .collect(Collectors.groupingBy(AcConfig::getConfigStyle)));
     }
 
     /**
@@ -751,4 +756,16 @@ public class AcOperatorController extends BaseController {
         return getReturnMap(operatorRService.deleteOperatorBhvBlackList(JSON.parseArray(content, AcOperatorBhv.class)));
     }
 
+    /**
+     * 根据用户和应用id查询功能树
+     */
+    @ResponseBody
+    @RequestMapping(value="/getOperatorFuncInfo" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
+    public Map<String, Object> getOperatorFuncInfo(@RequestBody String content)  {
+        JSONObject jsonObject= JSONObject.parseObject(content);
+        String userId = jsonObject.getString("userId");//操作员USER_ID
+        String appGuid = jsonObject.getString("appGuid");//应用id
+        AcOperatorFuncDetail info = operatorRService.getOperatorFuncInfo(userId, appGuid);
+        return getReturnMap(info.toString());
+    }
 }
