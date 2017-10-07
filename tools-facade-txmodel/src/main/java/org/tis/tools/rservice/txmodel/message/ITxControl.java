@@ -5,6 +5,9 @@ package org.tis.tools.rservice.txmodel.message;
 
 import java.io.Serializable;
 
+import org.tis.tools.rservice.txmodel.monitor.MonitorTypeEnum;
+import org.tis.tools.rservice.txmodel.override.OverrideTypeEnum;
+import org.tis.tools.rservice.txmodel.recheck.ReCheckTypeEnum;
 import org.tools.core.sdo.DataObject;
 
 /**
@@ -28,7 +31,7 @@ import org.tools.core.sdo.DataObject;
  * @param <O> 授权方式
  * @param <OC> 授权控制信息
  */
-public interface TxControl<O,C,M> extends Serializable {
+public interface ITxControl extends Serializable {
 	
 	/**
 	 * 是否处理成功
@@ -56,10 +59,11 @@ public interface TxControl<O,C,M> extends Serializable {
 	public boolean isOverride() ;
 
 	/**
-	 * 取授权方式
-	 * @return
+	 * 取交易授权方式
+	 * 
+	 * @return {@link OverrideTypeEnum 交易授权方式}
 	 */
-	public O getOverrideType() ;
+	public OverrideTypeEnum getOverrideType();
 	
 	/**
 	 * 取授权控制参数
@@ -74,10 +78,10 @@ public interface TxControl<O,C,M> extends Serializable {
 	public boolean isReCheck() ;
 
 	/**
-	 * 取复核方式
-	 * @return
+	 * 取交易复核方式
+	 * @return {@link ReCheckTypeEnum 交易复核方式}
 	 */
-	public C getCheckType( ) ; 
+	public ReCheckTypeEnum getReCheckType( ) ; 
 	
 	/**
 	 * 取复核控制参数
@@ -104,10 +108,10 @@ public interface TxControl<O,C,M> extends Serializable {
 	public boolean isMonitor() ;
 	
 	/**
-	 * 取监控方式
-	 * @return
+	 * 取交易监控方式
+	 * @return {@link MonitorTypeEnum 交易监控方式}
 	 */
-	public M getMonitorType( ) ; 
+	public MonitorTypeEnum getMonitorType( ) ; 
 	
 	/**
 	 * 取监控控制参数

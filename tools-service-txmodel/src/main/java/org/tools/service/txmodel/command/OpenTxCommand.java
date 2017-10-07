@@ -3,8 +3,8 @@
  */
 package org.tools.service.txmodel.command;
 
-import org.tis.tools.rservice.txmodel.message.TxRequest;
-import org.tis.tools.rservice.txmodel.message.TxResponse;
+import org.tis.tools.rservice.txmodel.message.ITxRequest;
+import org.tis.tools.rservice.txmodel.message.ITxResponse;
 import org.tools.service.txmodel.TxModelConstants;
 import org.tools.service.txmodel.TxModelConstants.BHVCODE;
 
@@ -24,8 +24,8 @@ public class OpenTxCommand extends AbstractBhvCommand {
 	 * tools.rservice.txmodel.message.TxRequest)
 	 */
 	@Override
-	public TxResponse execute(TxRequest request) {
-		TxResponse response = null;
+	public ITxResponse execute(ITxRequest request) {
+		ITxResponse response = null;
 		handler.handle(request, response);
 		return response;
 	}

@@ -50,7 +50,7 @@ public class TxEngineManager {
 	 * @author megapro
 	 */
 	private static class TxEngineManagerHolder {
-		public static TxEngineManager instance = new TxEngineManager();
+		public static final TxEngineManager instance = new TxEngineManager();
 	}
 
 	/**

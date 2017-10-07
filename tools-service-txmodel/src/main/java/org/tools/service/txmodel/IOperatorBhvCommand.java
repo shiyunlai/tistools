@@ -3,8 +3,8 @@
  */
 package org.tools.service.txmodel;
 
-import org.tis.tools.rservice.txmodel.message.TxRequest;
-import org.tis.tools.rservice.txmodel.message.TxResponse;
+import org.tis.tools.rservice.txmodel.message.ITxRequest;
+import org.tis.tools.rservice.txmodel.message.ITxResponse;
 import org.tools.service.txmodel.TxModelConstants.BHVCODE;
 
 /**
@@ -38,8 +38,8 @@ public interface IOperatorBhvCommand {
 	 * 执行一次交易请求
 	 * 
 	 * @param request
-	 *            {@link TxRequest 交易请求}
+	 *            {@link ITxRequest 交易请求}
 	 * @return
 	 */
-	public TxResponse execute(TxRequest request ) ;
+	public ITxResponse execute(ITxRequest request ) ;
 }

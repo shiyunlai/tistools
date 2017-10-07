@@ -3,8 +3,8 @@
  */
 package org.tools.service.txmodel;
 
-import org.tis.tools.rservice.txmodel.message.TxRequest;
-import org.tis.tools.rservice.txmodel.message.TxResponse;
+import org.tis.tools.rservice.txmodel.message.ITxRequest;
+import org.tis.tools.rservice.txmodel.message.ITxResponse;
 
 /**
  * 
@@ -31,10 +31,10 @@ public interface IOperatorBhvHandler {
 	 * 处理交易操作行为
 	 * 
 	 * @param request
-	 *            {@link TxRequest 交易操作请求}
+	 *            {@link ITxRequest 交易操作请求}
 	 * @param response
-	 *            {@link TxResponse 交易响应}
+	 *            {@link ITxResponse 交易响应}
 	 */
-	public void handle(TxRequest request, TxResponse response);
+	public void handle(ITxRequest request, ITxResponse response);
 	
 }

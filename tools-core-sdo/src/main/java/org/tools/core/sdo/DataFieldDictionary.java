@@ -38,25 +38,9 @@ public class DataFieldDictionary {
 	
 	private static final Logger logger = LoggerFactory.getLogger(DataFieldDictionary.class);
 
-	private static DataFieldDictionary  INSTANCE = new DataFieldDictionary();
-	
 	private ConcurrentHashMap<String, FieldTypeDefinition>    fieldTypeMap;
 
 	private ConcurrentHashMap<String, MetaField>              metaFieldMap;
-	
-
-	public static DataFieldDictionary getInstance() {
-		if (INSTANCE == null) {
-			synchronized (DataFieldDictionary.class) {
-				if (INSTANCE == null) {
-					INSTANCE = new DataFieldDictionary();
-				}
-			}			
-		}
-		return INSTANCE;
-	}
-
-	
 	
 	private DataFieldDictionary()
 	{
@@ -65,6 +49,14 @@ public class DataFieldDictionary {
 	
 		// 注册系统默认的FieldTypeDefinition
 		registerDefaultFieldTypeDefintions();
+	}
+	
+	public static DataFieldDictionary instance() {
+		return DataFieldDictionaryHolder.instance ;
+	}
+
+	private static class DataFieldDictionaryHolder{
+		public static final DataFieldDictionary instance = new DataFieldDictionary() ; 
 	}
 
 	/**

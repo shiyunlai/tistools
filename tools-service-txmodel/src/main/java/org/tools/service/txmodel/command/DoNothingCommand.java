@@ -5,8 +5,8 @@ package org.tools.service.txmodel.command;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.tis.tools.rservice.txmodel.message.TxRequest;
-import org.tis.tools.rservice.txmodel.message.TxResponse;
+import org.tis.tools.rservice.txmodel.message.ITxRequest;
+import org.tis.tools.rservice.txmodel.message.ITxResponse;
 import org.tools.service.txmodel.IOperatorBhvCommand;
 import org.tools.service.txmodel.IOperatorBhvHandler;
 import org.tools.service.txmodel.TxModelConstants.BHVCODE;
@@ -32,7 +32,7 @@ public class DoNothingCommand implements IOperatorBhvCommand {
 	}
 
 	@Override
-	public TxResponse execute(TxRequest request) {
+	public ITxResponse execute(ITxRequest request) {
 		logger.info("交易引擎执行空操作！");
 		logger.debug("当前交易操作请求:"+request);
 		return null;

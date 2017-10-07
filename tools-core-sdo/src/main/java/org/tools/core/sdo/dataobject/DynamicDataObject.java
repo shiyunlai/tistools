@@ -37,6 +37,8 @@ import org.tools.core.sdo.field.ShortField;
 import org.tools.core.sdo.field.StringField;
 import org.tools.core.sdo.field.TimeField;
 
+import com.alibaba.fastjson.JSON;
+
 /**
  * <pre>
  * 
@@ -284,21 +286,28 @@ public class DynamicDataObject implements DataObject {
 	 */
 	public String toString() {
 
-		/**
-		 * StringBuffer sb = new StringBuffer(); PbsObjectable[] objects =
-		 * dataPool.getElements(); for (int i = 0; i < objects.length; i++) {
-		 * DataElement object = (DataElement) objects[i]; String datastr =
-		 * object.getStringValue(); if (datastr == null) datastr = "";
-		 * sb.append(object.getDataName()); sb.append(DataConstants.delimeter);
-		 * sb.append(object.getDataType()); if (object.getDataType() ==
-		 * DataElement.DATA_TYPE_FIELD) { Field field = (Field) object;
-		 * sb.append(field.getFieldType()); }
-		 * sb.append(DataConstants.delimeter); sb.append(datastr.length());
-		 * sb.append(DataConstants.delimeter); sb.append(datastr); } return
-		 * sb.toString();
-		 */
-
-		return (null);
+//		StringBuffer sb = new StringBuffer();
+//		PbsObjectable[] objects = dataPool.getElements();
+//		for (int i = 0; i < objects.length; i++) {
+//			DataElement object = (DataElement) objects[i];
+//			String datastr = object.getStringValue();
+//			if (datastr == null)
+//				datastr = "";
+//			sb.append(object.getDataName());
+//			sb.append(DataConstants.delimeter);
+//			sb.append(object.getDataType());
+//			if (object.getDataType() == DataElement.DATA_TYPE_FIELD) {
+//				Field field = (Field) object;
+//				sb.append(field.getFieldType());
+//			}
+//			sb.append(DataConstants.delimeter);
+//			sb.append(datastr.length());
+//			sb.append(DataConstants.delimeter);
+//			sb.append(datastr);
+//		}
+//		return sb.toString();
+		
+		return JSON.toJSONString(this) ;
 	}
 
 	/**

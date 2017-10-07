@@ -3,8 +3,8 @@
  */
 package org.tools.service.txmodel.handler;
 
-import org.tis.tools.rservice.txmodel.message.TxRequest;
-import org.tis.tools.rservice.txmodel.message.TxResponse;
+import org.tis.tools.rservice.txmodel.message.ITxRequest;
+import org.tis.tools.rservice.txmodel.message.ITxResponse;
 
 /**
  * <pre>
@@ -22,7 +22,7 @@ public class TWSOpenTxHandler extends AbstractBhvHandler {
 	}
 
 	@Override
-	protected void doHandle(TxRequest request, TxResponse response) {
+	protected void doHandle(ITxRequest request, ITxResponse response) {
 		// 新生成交易流水号
 		String txSerialNo = allocationTxSerialNo(request.getTxHeader().getTxCode(), request.getTxHeader().getUserID());
 		// 补充请求头中交易流水号，也是把交易流水号返回给请求者

@@ -3,7 +3,7 @@
  */
 package org.tools.service.txmodel.engine;
 
-import org.tis.tools.rservice.txmodel.message.TxRequest;
+import org.tis.tools.rservice.txmodel.message.ITxRequest;
 import org.tools.service.txmodel.IOperatorBhvHandler;
 import org.tools.service.txmodel.TxModelConstants;
 import org.tools.service.txmodel.command.CloseTxCommand;
@@ -35,7 +35,7 @@ public class AccountTxEngine extends AbstractTxEngine {
 	}
 
 	@Override
-	protected IOperatorBhvHandler judgeHandler(TxRequest request) {
+	protected IOperatorBhvHandler judgeHandler(ITxRequest request) {
 		
 		String channelID = request.getTxHeader().getChannelID() ; 
 		

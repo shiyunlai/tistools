@@ -3,8 +3,8 @@
  */
 package org.tools.service.txmodel.handler;
 
-import org.tis.tools.rservice.txmodel.message.TxRequest;
-import org.tis.tools.rservice.txmodel.message.TxResponse;
+import org.tis.tools.rservice.txmodel.message.ITxRequest;
+import org.tis.tools.rservice.txmodel.message.ITxResponse;
 import org.tools.service.txmodel.IOperatorBhvHandler;
 
 /**
@@ -16,7 +16,7 @@ abstract class AbstractBhvHandler implements IOperatorBhvHandler {
 
 	
 	@Override
-	public void handle(TxRequest request, TxResponse response) {
+	public void handle(ITxRequest request, ITxResponse response) {
 		
 		recordOperatorLog(request);
 		
@@ -34,7 +34,7 @@ abstract class AbstractBhvHandler implements IOperatorBhvHandler {
 	 * @param response
 	 * @return
 	 */
-	private boolean operatorAuthentication(TxRequest request, TxResponse response) {
+	private boolean operatorAuthentication(ITxRequest request, ITxResponse response) {
 		// TODO Auto-generated method stub 结合ABF的AC模型，进行交易操作的认证处理 
 		
 		if( true ){
@@ -56,7 +56,7 @@ abstract class AbstractBhvHandler implements IOperatorBhvHandler {
 	 * 
 	 * @param request
 	 */
-	private void recordOperatorLog(TxRequest request) {
+	private void recordOperatorLog(ITxRequest request) {
 		// TODO Auto-generated method stub 收集当前交易操作信息，并调用JNL中的日志记录
 
 	}
@@ -66,5 +66,5 @@ abstract class AbstractBhvHandler implements IOperatorBhvHandler {
 	 * @param request 交易请求
 	 * @param response 处理响应
 	 */
-	abstract protected void doHandle(TxRequest request, TxResponse response) ;
+	abstract protected void doHandle(ITxRequest request, ITxResponse response) ;
 }

@@ -4,8 +4,8 @@
 package org.tools.service.txmodel;
 
 import org.tis.tools.rservice.txmodel.ITxModelRService;
-import org.tis.tools.rservice.txmodel.message.TxRequest;
-import org.tis.tools.rservice.txmodel.message.TxResponse;
+import org.tis.tools.rservice.txmodel.message.ITxRequest;
+import org.tis.tools.rservice.txmodel.message.ITxResponse;
 import org.tools.service.txmodel.TxModelConstants.BHVTYPE;
 
 /**
@@ -25,7 +25,7 @@ public class TxModelRServiceImpl implements ITxModelRService {
 	 * rservice.txmodel.message.TxRequest)
 	 */
 	@Override
-	public TxResponse execute(TxRequest txRequest) {
+	public ITxResponse execute(ITxRequest txRequest) {
 
 		// 根据请求数据，判断使用那个引擎
 		String txCode = txRequest.getTxHeader().getTxCode();
@@ -35,7 +35,7 @@ public class TxModelRServiceImpl implements ITxModelRService {
 		ITxEngine txEngine = TxEngineManager.instance().getTxEngine(bhvType);
 		
 		// 调用交易引擎处理本次交易操作请求
-		TxResponse response = txEngine.execute(txRequest);
+		ITxResponse response = txEngine.execute(txRequest);
 		
 		// 整理响应信息
 		reCollection(txRequest,response) ;
@@ -48,7 +48,7 @@ public class TxModelRServiceImpl implements ITxModelRService {
 	 * @param txRequest
 	 * @param response
 	 */
-	private void reCollection(TxRequest txRequest, TxResponse response) {
+	private void reCollection(ITxRequest txRequest, ITxResponse response) {
 		// TODO Auto-generated method stub
 		
 	}

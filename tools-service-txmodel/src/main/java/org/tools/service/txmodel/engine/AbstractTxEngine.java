@@ -9,8 +9,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tis.tools.common.utils.StringUtil;
-import org.tis.tools.rservice.txmodel.message.TxRequest;
-import org.tis.tools.rservice.txmodel.message.TxResponse;
+import org.tis.tools.rservice.txmodel.message.ITxRequest;
+import org.tis.tools.rservice.txmodel.message.ITxResponse;
 import org.tools.service.txmodel.IOperatorBhvCommand;
 import org.tools.service.txmodel.IOperatorBhvHandler;
 import org.tools.service.txmodel.ITxEngine;
@@ -99,7 +99,7 @@ abstract class AbstractTxEngine implements ITxEngine {
 	}
 	
 	@Override
-	public TxResponse execute(TxRequest request) {
+	public ITxResponse execute(ITxRequest request) {
 
 		// 如果没有设置过执行命令，则引擎自己判断当前请求中的行为代码，选择一个可执行命令
 		if (null == executeCommand) {
@@ -141,5 +141,5 @@ abstract class AbstractTxEngine implements ITxEngine {
 	 * @param request
 	 * @return
 	 */
-	abstract protected  IOperatorBhvHandler judgeHandler(TxRequest request) ;
+	abstract protected  IOperatorBhvHandler judgeHandler(ITxRequest request) ;
 }

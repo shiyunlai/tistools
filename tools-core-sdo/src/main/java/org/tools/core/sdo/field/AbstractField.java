@@ -11,7 +11,7 @@ import org.tools.core.sdo.DataField;
 /**
  * <pre>
  * 
- * 抽象数据域
+ * 抽象数据Field实现
  * 
  * </pre>
  */

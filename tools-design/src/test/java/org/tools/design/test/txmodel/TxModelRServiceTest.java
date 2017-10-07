@@ -8,8 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tis.tools.rservice.txmodel.ITxModelRService;
-import org.tis.tools.rservice.txmodel.message.TxRequest;
-import org.tis.tools.rservice.txmodel.message.TxResponse;
+import org.tis.tools.rservice.txmodel.message.ITxRequest;
+import org.tis.tools.rservice.txmodel.message.ITxResponse;
 import org.tools.design.SpringJunitSupport;
 
 import junit.framework.Assert;
@@ -39,8 +39,8 @@ public class TxModelRServiceTest extends SpringJunitSupport {
 	@Test
 	public void testOpenTx() {
 
-		TxRequest request = null;
-		TxResponse response = txModelRService.execute(request);
+		ITxRequest request = null;
+		ITxResponse response = txModelRService.execute(request);
 
 //		Assert.assertEquals(expected, actual);
 	}

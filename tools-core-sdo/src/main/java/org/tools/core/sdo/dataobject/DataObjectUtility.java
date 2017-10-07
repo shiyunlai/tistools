@@ -59,6 +59,7 @@ import com.alibaba.fastjson.JSONObject;
 public class DataObjectUtility  implements DataObjectTool {
 
 	// FIXME 暂时在 DataObjectUtility 中增加 DataObjectAccessor, 应该搞一个StartupListener
+	//TODO del by shiyl temp 20171006
 //	static {
 //		ObjectAccessorRegistry.registerObjectAccessor(new DataObjectAccessor());
 //	}
@@ -388,7 +389,7 @@ public class DataObjectUtility  implements DataObjectTool {
 			else if(obj instanceof Map){
 				Map map = (Map)obj;
 				Iterator iterator = map.entrySet().iterator();
-				DataObject dataObject = DataObjectManager.getInstance().createDynamicDataObject();
+				DataObject dataObject = DataObjectManager.instance().createDynamicDataObject();
 				while(iterator.hasNext()){
 					Map.Entry entry = (Entry) iterator.next();
 					String key = (String)entry.getKey();
@@ -504,7 +505,7 @@ public class DataObjectUtility  implements DataObjectTool {
 			}else{
 				Object obj = newData.get(paths[i]);
 				if(obj == null)
-					newData.set(paths[i], DataObjectManager.getInstance().createDynamicDataObject());
+					newData.set(paths[i], DataObjectManager.instance().createDynamicDataObject());
 				newData = (DataObject)newData.get(paths[i]);
 			}
 		}
@@ -565,7 +566,7 @@ public class DataObjectUtility  implements DataObjectTool {
             key = (String) iterator.next();
             value = jsonObject.getString(key);
             if(value.startsWith("{")&&value.endsWith("}")){
-            	DataObject sub_dataObject = DataObjectManager.getInstance().createDataObject(key);
+            	DataObject sub_dataObject = DataObjectManager.instance().createDataObject(key);
             	DataObject data = json2DataObject(value,sub_dataObject);
             	dataObject.setData(key, data);
             }else{
@@ -579,7 +580,7 @@ public class DataObjectUtility  implements DataObjectTool {
 		List<DataObject> dataList = new ArrayList<DataObject>();
 		JSONArray jsonArray = JSONArray.parseArray(jsonArrayStr);
 		for (int i = 0, j = jsonArray.size(); i < j; i++) {
-			DataObject dataObject = DataObjectManager.getInstance().createDynamicDataObject();
+			DataObject dataObject = DataObjectManager.instance().createDynamicDataObject();
 			dataObject = json2DataObject(jsonArray.get(i).toString(), dataObject);
 			dataList.add(dataObject);
 		}
@@ -587,7 +588,7 @@ public class DataObjectUtility  implements DataObjectTool {
 	}
 	
 	public static void main(String[] args) throws Exception{
-		DataObject sub_dataObject = DataObjectManager.getInstance().createDataObject("dataObject");
+		DataObject sub_dataObject = DataObjectManager.instance().createDataObject("dataObject");
 		new DataObjectUtility().jsonList2DataObjectList("[{\"ds\":\"dfdsfa\"},{\"dds\":\"dfdsfa\"}]");
 	}
 		

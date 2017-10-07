@@ -24,33 +24,22 @@ import org.tools.core.sdo.dataobject.StaticDataObject;
  */
 public class DataObjectManager {
 	
-	private static DataObjectManager                 managerInstance  = new DataObjectManager();
-	
-	private static DataObjectTool                    toolInstance     = DataObjectUtility.instance();
-	
 	private ConcurrentHashMap<String, MetaObject>    metaObjectMap;
 	
+	private DataObjectManager() {
+		this.metaObjectMap = new ConcurrentHashMap<String, MetaObject>();
+	}
 
 	/**
 	 * 取实例
 	 * @return
 	 */
-
-	public static DataObjectManager getInstance() {
-		if ( managerInstance == null) {
-			synchronized (DataObjectManager.class) {
-				if (managerInstance == null) {
-					managerInstance = new DataObjectManager();
-				}
-			}			
-		}
-		return managerInstance;
+	public static DataObjectManager instance() {
+		return DataObjectManagerHolder.instance ; 
 	}
-
 	
-	private DataObjectManager()
-	{
-		this.metaObjectMap = new ConcurrentHashMap<String, MetaObject>();
+	private static class DataObjectManagerHolder{
+		public static final DataObjectManager instance = new DataObjectManager() ; 
 	}
 
 	/**
@@ -59,7 +48,7 @@ public class DataObjectManager {
 	 */
 	public DataObjectTool getDataObjectTool() {
 		
-		return( this.toolInstance );
+		return( DataObjectUtility.instance() );
 	}
 	
 	public void register(MetaObject[] metaDef) {
@@ -119,9 +108,9 @@ public class DataObjectManager {
 	/**
 	 * 创建一个动态数据对象
 	 * 
-	 * @return
+	 * @return {@link DynamicDataObject 动态数据对象}
 	 */
-	public DataObject createDynamicDataObject() {
+	public DynamicDataObject createDynamicDataObject() {
 
 		return (new DynamicDataObject());
 	}
@@ -148,7 +137,7 @@ public class DataObjectManager {
 				obj.setName(prop.getName());
 				sdo.setData(obj);
 			}else if (prop.getDataType().contains("Field")){
-				DataField df=DataFieldDictionary.getInstance().createDataField(prop.getDataName());
+				DataField df=DataFieldDictionary.instance().createDataField(prop.getDataName());
 				df.setName(prop.getName());
 				sdo.setData(df);
 			} 

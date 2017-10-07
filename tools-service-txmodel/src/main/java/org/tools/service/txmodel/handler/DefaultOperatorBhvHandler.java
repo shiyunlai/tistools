@@ -1,7 +1,7 @@
 package org.tools.service.txmodel.handler;
 
-import org.tis.tools.rservice.txmodel.message.TxRequest;
-import org.tis.tools.rservice.txmodel.message.TxResponse;
+import org.tis.tools.rservice.txmodel.message.ITxRequest;
+import org.tis.tools.rservice.txmodel.message.ITxResponse;
 import org.tools.service.txmodel.IOperatorBhvHandler;
 
 /**
@@ -18,7 +18,7 @@ public class DefaultOperatorBhvHandler implements IOperatorBhvHandler {
 
 
 	@Override
-	public void handle(TxRequest request, TxResponse response) {
+	public void handle(ITxRequest request, ITxResponse response) {
 		// TODO Auto-generated method stub
 		
 	}

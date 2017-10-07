@@ -3,8 +3,8 @@
  */
 package org.tools.service.txmodel.command;
 
-import org.tis.tools.rservice.txmodel.message.TxRequest;
-import org.tis.tools.rservice.txmodel.message.TxResponse;
+import org.tis.tools.rservice.txmodel.message.ITxRequest;
+import org.tis.tools.rservice.txmodel.message.ITxResponse;
 import org.tools.service.txmodel.TxModelConstants.BHVCODE;
 
 /**
@@ -14,7 +14,7 @@ import org.tools.service.txmodel.TxModelConstants.BHVCODE;
 public class CloseTxCommand  extends AbstractBhvCommand {
 
 	@Override
-	public TxResponse execute(TxRequest request) {
+	public ITxResponse execute(ITxRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}

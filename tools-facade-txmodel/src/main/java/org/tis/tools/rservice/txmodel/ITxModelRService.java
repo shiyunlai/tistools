@@ -3,8 +3,8 @@
  */
 package org.tis.tools.rservice.txmodel;
 
-import org.tis.tools.rservice.txmodel.message.TxRequest;
-import org.tis.tools.rservice.txmodel.message.TxResponse;
+import org.tis.tools.rservice.txmodel.message.ITxRequest;
+import org.tis.tools.rservice.txmodel.message.ITxResponse;
 
 /**
  * 
@@ -27,8 +27,8 @@ public interface ITxModelRService {
 	 * 是同步还是异步？无论如何，本服务都将即时返回TxResponse给交易模式服务的请求者，但是会在TxResponse中反应出交易是同步处理还是异步处理后另外途径返回处理结果。
 	 * 
 	 * </pre>
-	 * @param txRequest {@link TxRequest 交易请求对象}
-	 * @return {@link TxResponse 交易响应对象}
+	 * @param txRequest {@link ITxRequest 交易请求对象}
+	 * @return {@link ITxResponse 交易响应对象}
 	 */
-	public TxResponse execute(TxRequest txRequest) ;  
+	public ITxResponse execute(ITxRequest txRequest) ;  
 }

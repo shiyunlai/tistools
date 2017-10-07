@@ -21,6 +21,8 @@ import java.util.Properties;
 import java.util.jar.Manifest;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -31,6 +33,8 @@ import org.apache.commons.beanutils.BeanUtils;
  */
 public class ObjectUtil {
 
+	private static Logger logger = LoggerFactory.getLogger(ObjectUtil.class);
+	
 	/** 空数组对象 */
 	public static final Object[] NULL_OBJECTS = new Object[0];
 
@@ -82,8 +86,10 @@ public class ObjectUtil {
 	 * 根据类名创建一个对象
 	 * 
 	 * @param classFullName
-	 * @return
+	 *            全路径类名
+	 * @return 对应类型的实例
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T> T createObject(String classFullName) {
 
 		if (null == classFullName || "".compareToIgnoreCase(classFullName) == 0) {
@@ -91,10 +97,11 @@ public class ObjectUtil {
 		}
 
 		try {
-			Class clazz = ClassUtil.getClass(ClassUtil.getDefaultClassLoader(), classFullName);
+			Class<?> clazz = ClassUtil.getClass(ClassUtil.getDefaultClassLoader(), classFullName);
 			Object obj = clazz.newInstance();
-			return ((T)obj);
+			return ((T) obj);
 		} catch (Exception e) {
+			logger.error("实例化类<"+classFullName+">出错！",e);
 			return (null);
 		}
 	}
@@ -113,7 +120,7 @@ public class ObjectUtil {
 			return r_Value;
 		}
 
-		Class t_Type = r_Value.getClass();
+		Class<? extends Object> t_Type = r_Value.getClass();
 
 		if (t_Type.isArray()) {
 			int t_Length = Array.getLength(r_Value);

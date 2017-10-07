@@ -26,6 +26,8 @@ import org.tis.tools.common.utils.marshaller.XStreamDataMarshaller;
  */
 public class DataMarshallerUtil {
 
+	private static Logger logger = LoggerFactory.getLogger(DataMarshallerUtil.class);
+
 	/**
 	 * <pre>
 	 * 设置序列化类型的系统启动参数名称
@@ -46,7 +48,6 @@ public class DataMarshallerUtil {
 	 */
 	public static final String MARSHALLER_TYPE_XSTREAM = "xstream";
 
-	private static Logger logger = LoggerFactory.getLogger(DataMarshallerUtil.class);
 	private static String marshallerType = MARSHALLER_TYPE_JDK;// 默认采用JDK
 	private static IDataMarshaller marshaller = null;// 默认使用
 	private static Map<String, IDataMarshaller> marshallerMaps = new HashMap<String, IDataMarshaller>(); // 指定使用

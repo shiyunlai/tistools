@@ -10,13 +10,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 
 /**
- * 时间、日期操作工具类
+ * 用来处理时间和日期的工具类
+ * 
  * @author mega-t420
  *
  */
@@ -27,10 +30,12 @@ public class TimeUtil {
 	
 	/**
 	 * 格式化指定日期为字符串<br>
-	 * @param tag
+	 * 
+	 * @param date
+	 *            日期对象
 	 * @return yyyyMMdd格式的字符串
 	 */
-	public static String formatDateStr(Date date){
+	public static String formatDateStr(Date date) {
 		SimpleDateFormat df = new SimpleDateFormat(DATE_FORMATE_SIMPLE);
 		Date now = date;
 		return df.format(now);
@@ -38,10 +43,11 @@ public class TimeUtil {
 	
 	/**
 	 * 格式化指定日期为字符串<br>
+	 * 
 	 * @param tag
 	 * @return yyyyMMddHHmmss格式的字符串
 	 */
-	public static String formatPayDateStr(Date date){
+	public static String formatPayDateStr(Date date) {
 		SimpleDateFormat df = new SimpleDateFormat(DATE_FORMATE_SECONDS);
 		Date now = date;
 		return df.format(now);
@@ -49,11 +55,12 @@ public class TimeUtil {
 	
 	/**
 	 * 获取当前日期字符串<br>
+	 * 
 	 * @return yyyyMMdd格式的字符串
 	 */
-	public static String getCurrDateStr(){
-		Date now = new Date() ;
-		return formatDateStr(now) ;
+	public static String getCurrDateStr() {
+		Date now = new Date();
+		return formatDateStr(now);
 	}
 	
 	/**
@@ -389,6 +396,240 @@ public class TimeUtil {
 			return matcher.group();
 		}
 		return "";
+	}
+	
+	
+	/**
+	 * 因为不需要实例，所以构造函数为私有<BR>
+	 * 参见Singleton模式<BR>
+	 *
+	 * Only one instance is needed,so the default constructor is private<BR>
+	 * Please refer to singleton design pattern.
+	 */
+	private TimeUtil() {
+		super();
+	}
+
+	/**
+	 * Gets the current time string.
+	 *
+	 * @return the current time string
+	 */
+	public static String getCurrentTimeAsString() {
+		return getTimeAsString(System.currentTimeMillis());
+	}
+
+	/**
+	 * Gets the current date string.
+	 *
+	 * @return the current date string
+	 */
+	public static String getCurrentDateAsString() {
+		Date date = new Date();
+		SimpleDateFormat dateFormat = new SimpleDateFormat();
+		dateFormat.applyPattern("yyyyMMdd");
+		return dateFormat.format(new Date(date.getTime()));
+	}
+
+	/**
+	 * Gets the time string.
+	 *
+	 * @param timeMillis the time long
+	 * @param newFormat the time Format
+	 *
+	 * @return the time string
+	 */
+	public static String getTimeAsString(long timeMillis, String newFormat) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat();
+		dateFormat.applyPattern(newFormat);
+		return dateFormat.format(new Date(timeMillis));
+	}
+
+	/**
+	 * Gets the time string.
+	 *
+	 * @param timeMillis the time long
+	 *
+	 * @return the time string
+	 */
+	public static String getTimeAsString(long timeMillis) {
+		return getTimeAsString(timeMillis, "yyyyMMddHHmmss");
+	}
+
+	/**
+	 * Gets the time.
+	 *
+	 * @param timeString the time string
+	 *
+	 * @return the time
+	 *
+	 * @throws ParseException the parse exception
+	 */
+	public static long getTimeMillis(String timeString) throws ParseException {
+		SimpleDateFormat dateFormat = new SimpleDateFormat();
+		dateFormat.applyPattern("yyyyMMddHHmmss");
+		Date dt = dateFormat.parse(timeString);
+		return dt.getTime();
+	}
+
+	/**
+	 * Gets the time description.
+	 *
+	 * @param timeMillis the time
+	 *
+	 * @return the time description
+	 */
+	public static String format(long timeMillis) {
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.MEDIUM);
+		return dateFormat.format(new Date(timeMillis));
+	}
+
+	/**
+	 * Gets the time millis.
+	 *
+	 * @param days the days
+	 * @param hour the hour
+	 * @param minutes the minutes
+	 *
+	 * @return the period long
+	 */
+	public static long getTimeMillis(int days, int hour, int minutes) {
+		return days * 24 * 60 * 60 * 1000L + hour * 60 * 60 * 1000L + minutes * 60 * 1000L;
+	}
+
+	/**
+	 * Gets the days.
+	 *
+	 * @param timeMillis the times
+	 *
+	 * @return the days
+	 */
+	public static long getDays(long timeMillis) {
+		return timeMillis / (24 * 60 * 60 * 1000L);
+	}
+
+	/**
+	 * Gets the hours.
+	 *
+	 * @param timeMillis the times
+	 *
+	 * @return the hours
+	 */
+	public static long getHours(long timeMillis) {
+		return timeMillis / (60 * 60 * 1000L);
+	}
+
+	/**
+	 * Gets the minutes.
+	 *
+	 * @param timeMillis the times
+	 *
+	 * @return the minutes
+	 */
+	public static long getMinutes(long timeMillis) {
+		return timeMillis / (60 * 1000L);
+	}
+	
+	/**
+	 * Gets the dHM.
+	 *
+	 * @param timeMillis the times
+	 *
+	 * @return the dHM
+	 */
+	public static String getDHM(long timeMillis) {
+		return getDHM(timeMillis,Locale.getDefault());
+	}
+	
+	/**
+	 * Gets the dHM.
+	 *
+	 * @param timeMillis the times
+	 * @param locale the locale of date time symbols;
+	 *
+	 * @return the dHM
+	 */
+	public static String getDHM(long timeMillis,Locale locale) {
+		long hours = timeMillis % (24 * 60 * 60 * 1000L);
+		long minutes = hours % ((60 * 60 * 1000L));
+		String day=" day(s)";
+		String hour=" hour(s)";
+		String minute=" minute(s)";
+		try{
+			ResourceBundle DatetimeSymbols = ResourceBundle.getBundle("DatetimeSymbols",locale);
+			day = DatetimeSymbols.getString("day");
+			hour = DatetimeSymbols.getString("hour");
+			minute = DatetimeSymbols.getString("minute");
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return String.valueOf(getDays(timeMillis)) + day +","+ String.valueOf(getHours(hours)) + hour +","+ String.valueOf(getMinutes(minutes)) + minute;
+	}
+
+	/**
+	 * Gets the hour24 of time.
+	 *
+	 * @param timeMillis the time
+	 *
+	 * @return the hour24 of time
+	 */
+	public static int getHourOfDay(long timeMillis) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date(timeMillis));
+		return calendar.get(Calendar.HOUR_OF_DAY);
+	}
+
+	/**
+	 * Gets the minite of time.
+	 *
+	 * @param timeMillis the time
+	 *
+	 * @return the minite of time
+	 */
+	public static int getMinite(long timeMillis) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date(timeMillis));
+		return calendar.get(Calendar.MINUTE);
+	}
+
+	/**
+	 * Gets the second of time.
+	 *
+	 * @param timeMillis the time
+	 *
+	 * @return the second of time
+	 */
+	public static int getSecond(long timeMillis) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date(timeMillis));
+		return calendar.get(Calendar.SECOND);
+	}
+
+	/**
+	 * 格式化日期。<BR>
+	 * 如果日期为 <code>null</code>，它也返回 <code>null</code>，而不是抛出异常。<BR>
+	 * 如果格式为 <code>null</code>，它按照<code>yyyyMMdd</code>返回，而不是抛出异常。<BR>
+	 *
+	 * @param java.util.Date
+	 *            date if the parameter is <code>null</code>,return <code>null</code>.
+	 * @param String
+	 *            newFormat
+	 * @return String </br>
+	 * 	example formatDate(date, "MMMM dd, yyyy") = July 20, 2000
+	 * 	example formatDate(date, null) = 20000720
+	 */
+	public static String formatDate(Date date, String newFormat) {
+
+		if ((date == null)) {
+			return null;
+		}
+
+		if ((newFormat == null)) {
+			newFormat = "yyyyMMdd";
+		}
+
+		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat(newFormat);
+		return formatter.format(date);
 	}
 	
 }
