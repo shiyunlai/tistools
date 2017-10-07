@@ -87,8 +87,8 @@ public class OperatorRServiceTest extends SpringJunitSupport {
 
         try {
             String userId = "admin";
-            String appGuid = "123123" ; 
-            List<AcConfig> maps = operatorRService.queryOperatorConfig(userId,appGuid);
+            String appCode = "ABF" ; // 指定应用系统
+            List<AcConfig> maps = operatorRService.queryOperatorConfig(userId,appCode);
             System.out.println(maps);
         } catch (ToolsRuntimeException e) {
             System.out.println("错误码："+e.getCode());
