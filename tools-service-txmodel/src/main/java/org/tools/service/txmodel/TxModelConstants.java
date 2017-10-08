@@ -21,41 +21,43 @@ public interface TxModelConstants {
 		/**
 		 * 默认行为类型: 无分类
 		 */
-		NOCATEGORY("nocategory", "无分类"),
+		NO_CATEGORY("无分类"),
 
 		/**
 		 * 行为类型: 账务类
 		 */
-		ACCOUNT("account", "账务类"),
+		ACCOUNT("账务类"),
 
 		/**
 		 * 行为类型: 维护类
 		 */
-		MAINTAIN("maintain", "维护类");
+		MAINTAIN("维护类");
 
-		private String type = "";
-		private String name = "";
+		/**
+		 * 分类描述信息
+		 */
+		private String desc = "";
 
-		private BHVTYPE(String type, String name) {
-			this.type = type;
-			this.name = name;
+		private BHVTYPE( String desc) {
+			this.desc = desc;
 		}
 
-		public String getType() {
-			return this.type;
-		}
-
-		public String getName() {
-			return this.name;
+		public String getDesc() {
+			return this.desc;
 		}
 		
 		public String toString(){
-			return this.type + ":" + this.name;
+			return this.name() + ":" + getDesc();
 		}
 	}
 
 	/**
+	 * <pre>
 	 * 操作代码枚举
+	 * 
+	 * 构造：操作代码("操作代码描述")
+	 * 
+	 * </pre>
 	 * 
 	 * @author megapro
 	 *
@@ -65,33 +67,33 @@ public interface TxModelConstants {
 		/**
 		 * 行为代码: 空操作
 		 */
-		NONOPERATOR("non-op", "空操作"),
+		NONOPERATOR("空操作"),
 		
 		/**
 		 * 行为代码: 打开交易
 		 */
-		OPEN_TX("open-tx", "打开交易"),
+		OPEN_TX("打开交易"),
 
 		/**
 		 * 行为代码: 关闭交易
 		 */
-		CLOSE_TX("close-tx", "关闭交易");
+		CLOSE_TX("关闭交易");
 
-		private String bhvCode = "";
-		private String bhvName = "";
+		/**
+		 * 操作代码描述
+		 */
+		private String desc = "";
 
-		private BHVCODE(String code, String name) {
-			this.bhvCode = code;
-			this.bhvName = name;
+		private BHVCODE(String desc) {
+			this.desc = desc;
 		}
 
-		public String getBhvCode() {
-			return this.bhvCode;
+		public String getDesc() {
+			return this.desc;
 		}
-
-		public String getBhvName() {
-			return this.bhvName;
+		
+		public String toString(){
+			return this.name() + ":" + getDesc() ; 
 		}
 	}
-
 }

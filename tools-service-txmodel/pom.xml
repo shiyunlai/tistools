@@ -16,13 +16,13 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
-	
+
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-facade-txmodel</artifactId>
 			<version>1.0.0</version>
 		</dependency>
-		
+
 		<!-- logback -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -44,6 +44,19 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<scope>runtime</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit-dep</artifactId>
+			<scope>test</scope>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 </project>
