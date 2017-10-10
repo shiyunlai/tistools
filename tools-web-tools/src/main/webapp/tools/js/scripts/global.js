@@ -520,7 +520,7 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
                 var grid=this.grid;
                 grid.options.data = thisobj.mydefalutData;
                 grid.columns.forEach(function(column) {
-                    // console.log(column)
+                    console.log(column)
                     var everyFilters=[];
                     column.filters.forEach(function(filter) {
                         if(filter.term!=null&&filter.term!='undefined'){
@@ -528,13 +528,12 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
                         }
                     });
                     if(everyFilters.length>0){
-                        filterConditions[column.field]=everyFilters;//生成一个自己定义的对象,以便传给后台去操作  
+                        filterConditions[column.field]=everyFilters;//生成一个自己定义的对象,以便传给后台去操作
+                        console.log(everyFilters)
                     }
                 });
 
             });
-
-
         },
         ref:function () {
             $scope.gridApi.core.refresh();

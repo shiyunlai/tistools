@@ -22,7 +22,7 @@
 <h3 class="page-title">
     <small></small>
 </h3>
-<!--<div class="row">
+<div class="row">
     <form action="#" name="myform" class="form-horizontal clearfix">
         <div class="form-body ">
             <div class="col-md-6  col-md-offset-3" >
@@ -30,7 +30,7 @@
                     <label class="control-label col-md-4"> 选择应用: </label>
                     <div class="col-md-5">
                         <select class="form-control"  name="select_app"  ng-model="permissFrom.appselect">
-                            &lt;!&ndash; 渲染，不能绑定同一个，不然每次点击，都会改变，重新渲染，所以ng-model绑定和渲染必须不同&ndash;&gt;
+                            <!-- 渲染，不能绑定同一个，不然每次点击，都会改变，重新渲染，所以ng-model绑定和渲染必须不同-->
                             <option ng-repeat="d in permiss.appselectApp" value="{{d.guid}}">{{d.appName}}</option>
                         </select>
                     </div>
@@ -43,9 +43,9 @@
 
         </div>
     </form>
-</div>-->
-<div class="tab-content portlet light clearfix"  style="margin-top: 20px;">
-    <div class="col-md-3" >
+</div>
+<div class="tab-content portlet light clearfix"  style="margin-top: 20px;"  >
+    <div class="col-md-3" ng-show="permiss.selectApp">
         <div class="portlet-body">
             <form id="s">
                 <input type="search" ng-model="searchitem" id="q"/>
@@ -54,41 +54,41 @@
             <div id="container"></div>
         </div>
     </div>
-    <div class="col-md-4"  >
-        <div class="portlet-title col-md-12">
-            <div class="caption col-md-10">
-                <span class="caption-subject font-blue-sharp bold uppercase">白名单</span>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div ui-grid="notrolegird" style="height:200px;"
-                 ui-grid-pagination
-                 ui-grid-selection ui-grid-resize-columns></div>
-        </div>
-    </div>
-    <div class="col-md-1" style="margin-top:5%;margin-left: -3%;" >
-        <div class="col-md-12" style="margin-left: 10%;">
-            <button   type="button" name="back" class="btn btn-primary" ng-click="operatqx.add()"> 添加黑名单 >
-            </button>
-        </div>
-        <div class="col-md-12" style="margin-top: 10px;margin-left: 10%;">
-            <button  type="button" name="back" class="btn btn-danger" ng-click="operatqx.del()"> < 移除黑名单
-            </button>
-        </div>
-    </div>
-    <div class="col-md-4"  >
-        <div class="portlet-title col-md-12">
-            <div class="caption col-md-10">
-                <span class="caption-subject font-blue-sharp bold uppercase">黑名单</span>
-            </div>
+    <div class="col-md-4"  ng-if="permiss.funcselect">
+           <div class="portlet-title col-md-12">
+               <div class="caption col-md-10">
+                   <span class="caption-subject font-blue-sharp bold uppercase">白名单</span>
+               </div>
+           </div>
+           <div class="col-md-12" >
+               <div ui-grid="notrolegird" style="height:380px;"
+                    ui-grid-pagination
+                    ui-grid-selection ui-grid-resize-columns></div>
+           </div>
+       </div>
+    <div class="col-md-1" style="margin-top:11%;margin-left: -3%;"  ng-if="permiss.funcselect">
+           <div class="col-md-12" style="margin-left: 10%;">
+               <button   type="button" name="back" class="btn btn-primary" ng-click="permiss.add()"> 添加黑名单 >
+               </button>
+           </div>
+           <div class="col-md-12" style="margin-top: 10px;margin-left: 10%;">
+               <button  type="button" name="back" class="btn btn-danger" ng-click="permiss.del()"> < 移除黑名单
+               </button>
+           </div>
+       </div>
+    <div class="col-md-4"  ng-if="permiss.funcselect">
+           <div class="portlet-title col-md-12">
+               <div class="caption col-md-10">
+                   <span class="caption-subject font-blue-sharp bold uppercase">黑名单</span>
+               </div>
 
-        </div>
-        <div class="col-md-12">
-            <div ui-grid="alrolegird" style="height:200px;"
-                 ui-grid-pagination
-                 ui-grid-selection ui-grid-resize-columns></div>
-        </div>
-    </div>
+           </div>
+           <div class="col-md-12">
+               <div ui-grid="alrolegird" style="height:380px;"
+                    ui-grid-pagination
+                    ui-grid-selection ui-grid-resize-columns></div>
+           </div>
+       </div>
 </div>
 
 

@@ -707,7 +707,7 @@ public class AcOperatorController extends BaseController {
         String appGuid = JSONObject.parseObject(content).getString("appGuid");
         return getReturnMap(operatorRService.queryOperatorConfig(userId, appGuid)
                 .stream()
-                .collect(Collectors.groupingBy(AcConfig::getConfigStyle)));
+                .collect(Collectors.groupingBy(AcConfig::getConfigType)));
     }
 
     /**
@@ -724,6 +724,8 @@ public class AcOperatorController extends BaseController {
         return getReturnMap(operatorRService.queryOperatorBhvListInFunc(funcGuid, userId));
     }
 
+    
+    
     /**
      * 操作员功能行为添加黑名单
      * @param content
