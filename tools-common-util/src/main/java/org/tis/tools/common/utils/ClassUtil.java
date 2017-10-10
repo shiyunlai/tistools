@@ -13,6 +13,7 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -138,7 +139,8 @@ public final class ClassUtil {
 		return classLoader;
 	}
 
-	private static Class getClass(ClassLoader classLoader, String className, boolean initialize) throws ClassNotFoundException {
+	private static Class getClass(ClassLoader classLoader, String className, boolean initialize)
+			throws ClassNotFoundException {
 		Class clazz;
 		if (abbreviationMap.containsKey(className)) {
 			String clsName = "[" + abbreviationMap.get(className);
@@ -1445,6 +1447,18 @@ public final class ClassUtil {
 		return false;
 	}
 
+	/**
+	 * <pre>
+	 * 判断一个类是否为具体类
+	 * clazz == null => false
+	 * clazz == Object => false
+	 * clazz 是接口(interface) => false
+	 * clazz 是抽象类(ABSTRACT) => false
+	 * 
+	 * </pre>
+	 * @param clazz
+	 * @return
+	 */
 	public static boolean isConcreteClass(Class clazz) {
 		if (clazz == null)
 			return false;
@@ -1454,5 +1468,159 @@ public final class ClassUtil {
 			return true;
 		return (!clazz.isInterface())
 				&& ((Modifier.ABSTRACT & clazz.getModifiers()) == 0);
+	}
+	
+	/**
+	 * 在接口／抽象类的同包路径及子路径下，查找接口／父类的全部实现类／子类
+	 * 
+	 * @param inface
+	 *            接口／抽象类
+	 * @return
+	 */
+	public static ArrayList<Class> getAllClassByInterface(Class inface) {
+		
+		return getAllClassByInterface(inface, inface.getPackage().getName());
+	}
+
+	/**
+	 * 在接口／抽象类的同包路径及子路径下，查找接口／父类的全部实现类／子类
+	 * 
+	 * @param inface
+	 *            接口／抽象类
+	 * @param patchs
+	 *            指定多个package路径
+	 * @return
+	 */
+	public static ArrayList<Class> getAllClassByInterface(Class inface, String [] patchs ) {
+		
+		ArrayList<Class> all = new ArrayList<Class>() ;
+		for( String p : patchs  ){
+			all.addAll( getAllClassByInterface(inface, inface.getPackage().getName()) ) ;
+		}
+		
+		return all ; 
+	}
+	
+	/**
+	 * 
+	 * 查找指定路径下面实现指定接口的全部类
+	 * 
+	 * @param inface
+	 *            接口／抽象类
+	 * @param path
+	 *            指定package路径
+	 * @return
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static ArrayList<Class> getAllClassByInterface(Class inface, String path) {
+		ArrayList<Class> list = new ArrayList<>();
+		// 获取指定接口的实现类
+		if (inface.isInterface()) {
+			try {
+				ArrayList<Class> allClass = getAllClass(path);
+				/**
+				 * 循环判断路径下的所有类是否实现了指定的接口 并且排除接口类自己
+				 */
+				for (int i = 0; i < allClass.size(); i++) {
+					/**
+					 * 判断是不是同一个接口 isAssignableFrom该方法的解析，请参考博客：
+					 * http://blog.csdn.net/u010156024/article/details/44875195
+					 */
+					if (inface.isAssignableFrom(allClass.get(i))) {
+						if (!inface.equals(allClass.get(i))) {// 自身并不加进去
+							list.add(allClass.get(i));
+						} else {
+
+						}
+					}
+				}
+			} catch (Exception e) {
+				System.out.println("出现异常:" + e.getLocalizedMessage());
+			}
+			
+		} 
+		// 如果不是接口，则获取它的所有子类
+		else {
+			try {
+				ArrayList<Class> allClass = getAllClass(path);
+				/**
+				 * 循环判断路径下的所有类是否继承了指定类 并且排除父类自己
+				 */
+				for (int i = 0; i < allClass.size(); i++) {
+					/**
+					 * isAssignableFrom该方法的解析，请参考博客：
+					 * http://blog.csdn.net/u010156024/article/details/44875195
+					 */
+					if (inface.isAssignableFrom(allClass.get(i))) {
+						if (!inface.equals(allClass.get(i))) {// 自身并不加进去
+							list.add(allClass.get(i));
+						} else {
+
+						}
+					}
+				}
+			} catch (Exception e) {
+				System.out.println("出现异常" + e.getLocalizedMessage());
+			}
+		}
+		return list;
+	}
+
+	/**
+	 * 从一个指定路径下查找所有的类
+	 * 
+	 * @param name
+	 */
+	@SuppressWarnings("rawtypes")
+	private static ArrayList<Class> getAllClass(String packagename) {
+		ArrayList<Class> list = new ArrayList<>();
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		String path = packagename.replace('.', '/');
+		try {
+			ArrayList<File> fileList = new ArrayList<>();
+			Enumeration<URL> enumeration = classLoader.getResources(path); //获取jar包中的实现类
+			while (enumeration.hasMoreElements()) {
+				URL url = enumeration.nextElement();
+				fileList.add(new File(url.getFile()));
+			}
+			for (int i = 0; i < fileList.size(); i++) {
+				list.addAll(findClass(fileList.get(i), packagename));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+    /**
+     * 如果file是文件夹，则递归调用findClass方法，或者文件夹下的类
+     * 如果file本身是类文件，则加入list中进行保存，并返回
+     * @param file
+     * @param packagename
+     * @return
+     */
+	@SuppressWarnings("rawtypes")
+	private static ArrayList<Class> findClass(File file, String packagename) {
+		ArrayList<Class> list = new ArrayList<>();
+		if (!file.exists()) {
+			return list;
+		}
+		File[] files = file.listFiles();
+		for (File file2 : files) {
+			if (file2.isDirectory()) {
+				assert !file2.getName().contains(".");// 添加断言用于判断
+				ArrayList<Class> arrayList = findClass(file2, packagename + "." + file2.getName());
+				list.addAll(arrayList);
+			} else if (file2.getName().endsWith(".class")) {
+				try {
+					// 保存的类文件不需要后缀.class
+					list.add(Class
+							.forName(packagename + '.' + file2.getName().substring(0, file2.getName().length() - 6)));
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list;
 	}
 }

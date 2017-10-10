@@ -1,14 +1,16 @@
 /**
  * 
  */
-package org.tis.tools.common.utils;
+package org.tools.design.test.util;
 
 import java.util.List;
 
 import org.junit.Test;
+import org.tis.tools.common.utils.ClassUtil;
 import org.tis.tools.common.utils.helper.classutil.IAbc;
 import org.tis.tools.common.utils.helper.classutil.Phone;
 import org.tis.tools.common.utils.helper.classutil.User;
+import org.tools.design.User5;
 
 import junit.framework.Assert;
 
@@ -110,4 +112,73 @@ public class ClassUtilTest {
 		Assert.assertEquals(7, classes.size());
 	}
 	
+	/**
+	 * 测试getAllClassByInterface(class, path)：指定路径下查找接口的实现类，查找异构jar中的子类
+	 */
+	@Test
+	public void testGetAllClassByInterface4() {
+
+		String packagePath = User5.class.getPackage().getName();
+		System.out.println(packagePath);
+
+		// 在 org.tis.tools.common.utils 目录及子目录下查找
+		List<Class> classes = ClassUtil.getAllClassByInterface(IAbc.class, packagePath);
+
+		/*
+		 * 只有User5 这1 个 
+		 */
+		Assert.assertEquals(1, classes.size());
+		
+		Assert.assertEquals(User5.class.getPackage().getName(), classes.get(0).getPackage().getName()); 
+	}
+	
+	/**
+	 * 测试getAllClassByInterface(class, path)：指定路径下查找接口的实现类，查找异构jar中的子类
+	 */
+	@Test
+	public void testGetAllClassByInterface5() {
+		
+		String packagePath = "org.tools";
+		System.out.println(packagePath);
+		
+		// 在 org.tis.tools.common.utils 目录及子目录下查找
+		List<Class> classes = ClassUtil.getAllClassByInterface(IAbc.class, packagePath);
+		
+		/*
+		 * 只有User5 这1 个 
+		 */
+		Assert.assertEquals(1, classes.size());
+		
+		Assert.assertEquals(User5.class.getPackage().getName(), classes.get(0).getPackage().getName()); 
+	}
+	
+	/**
+	 * 测试getAllClassByInterface(class, path)：指定路径下查找接口的实现类，查找异构jar中的子类
+	 */
+	@Test
+	public void testGetAllClassByInterface6() {
+
+		/*
+		 * 查找org.tis.tools路径及子路径下的IAbc的实现类
+		 */
+		String packagePath = "org.tis.tools";
+		System.out.println(packagePath);
+
+		// 在 org.tis.tools.common.utils 目录及子目录下查找
+		List<Class> classes = ClassUtil.getAllClassByInterface(IAbc.class, packagePath);
+
+		Assert.assertEquals(9, classes.size());
+
+		/*
+		 * 查找org.tis.tools路径及子路径下的IAbc的实现类
+		 */
+		String[] packagePaths = { "org.tis.tools", "org.tools.design" };
+		System.out.println(packagePaths);
+
+		// 在 "org.tis.tools","org.tools.design" 两个目录下总共10个IAbc的实现类
+		List<Class> classess = ClassUtil.getAllClassByInterface(IAbc.class, packagePaths);
+
+		Assert.assertEquals(10, classess.size());
+	}
+
 }

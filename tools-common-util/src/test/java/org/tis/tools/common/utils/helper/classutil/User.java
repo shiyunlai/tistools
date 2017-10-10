@@ -3,6 +3,7 @@
  */
 package org.tis.tools.common.utils.helper.classutil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.Map;
  * @author megapro
  *
  */
-public class User {
+public class User implements IAbc, Serializable{
 
 	/**
 	 * 姓名

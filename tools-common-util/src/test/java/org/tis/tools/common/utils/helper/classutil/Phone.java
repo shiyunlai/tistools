@@ -3,11 +3,13 @@
  */
 package org.tis.tools.common.utils.helper.classutil;
 
+import java.io.Serializable;
+
 /**
  * @author megapro
  *
  */
-public class Phone {
+public class Phone implements IAbc,Serializable {
 
 	/**
 	 * 号码
