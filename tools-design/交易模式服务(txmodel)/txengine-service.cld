@@ -85,8 +85,8 @@
             <constraint>
               <height>-1</height>
               <width>-1</width>
-              <x>262</x>
-              <y>148</y>
+              <x>268</x>
+              <y>271</y>
             </constraint>
             <sourceConnections>
               <net.java.amateras.uml.classdiagram.model.DependencyModel>
@@ -156,8 +156,8 @@
                         <constraint>
                           <height>-1</height>
                           <width>-1</width>
-                          <x>214</x>
-                          <y>396</y>
+                          <x>220</x>
+                          <y>519</y>
                         </constraint>
                         <sourceConnections>
                           <net.java.amateras.uml.classdiagram.model.GeneralizationModel>
@@ -197,8 +197,8 @@
                               <constraint>
                                 <height>-1</height>
                                 <width>-1</width>
-                                <x>345</x>
-                                <y>294</y>
+                                <x>351</x>
+                                <y>417</y>
                               </constraint>
                               <sourceConnections>
                                 <net.java.amateras.uml.classdiagram.model.RealizationModel>
@@ -255,8 +255,8 @@
                                     <constraint>
                                       <height>-1</height>
                                       <width>-1</width>
-                                      <x>360</x>
-                                      <y>396</y>
+                                      <x>366</x>
+                                      <y>519</y>
                                     </constraint>
                                     <sourceConnections>
                                       <net.java.amateras.uml.classdiagram.model.GeneralizationModel reference="../../.."/>
@@ -344,8 +344,8 @@
                                     <constraint>
                                       <height>-1</height>
                                       <width>-1</width>
-                                      <x>523</x>
-                                      <y>395</y>
+                                      <x>529</x>
+                                      <y>518</y>
                                     </constraint>
                                     <sourceConnections>
                                       <net.java.amateras.uml.classdiagram.model.GeneralizationModel reference="../../.."/>
@@ -516,8 +516,8 @@
                         <constraint>
                           <height>-1</height>
                           <width>-1</width>
-                          <x>893</x>
-                          <y>164</y>
+                          <x>899</x>
+                          <y>287</y>
                         </constraint>
                         <sourceConnections/>
                         <targetConnections>
@@ -549,8 +549,8 @@
                               <constraint>
                                 <height>-1</height>
                                 <width>-1</width>
-                                <x>628</x>
-                                <y>132</y>
+                                <x>634</x>
+                                <y>255</y>
                               </constraint>
                               <sourceConnections>
                                 <net.java.amateras.uml.classdiagram.model.AggregationModel>
@@ -602,8 +602,8 @@
                                     <constraint>
                                       <height>-1</height>
                                       <width>-1</width>
-                                      <x>542</x>
-                                      <y>282</y>
+                                      <x>548</x>
+                                      <y>405</y>
                                     </constraint>
                                     <sourceConnections>
                                       <net.java.amateras.uml.classdiagram.model.RealizationModel reference="../../.."/>
@@ -683,8 +683,8 @@
                                     <constraint>
                                       <height>-1</height>
                                       <width>-1</width>
-                                      <x>643</x>
-                                      <y>337</y>
+                                      <x>649</x>
+                                      <y>460</y>
                                     </constraint>
                                     <sourceConnections>
                                       <net.java.amateras.uml.classdiagram.model.RealizationModel reference="../../.."/>
@@ -764,8 +764,8 @@
                                     <constraint>
                                       <height>-1</height>
                                       <width>-1</width>
-                                      <x>0</x>
-                                      <y>17</y>
+                                      <x>6</x>
+                                      <y>140</y>
                                     </constraint>
                                     <sourceConnections>
                                       <net.java.amateras.uml.classdiagram.model.DependencyModel>
@@ -842,8 +842,8 @@
                                           <constraint>
                                             <height>52</height>
                                             <width>169</width>
-                                            <x>3</x>
-                                            <y>308</y>
+                                            <x>65</x>
+                                            <y>24</y>
                                           </constraint>
                                           <sourceConnections/>
                                           <targetConnections>
@@ -1088,8 +1088,8 @@
                               <constraint>
                                 <height>-1</height>
                                 <width>-1</width>
-                                <x>851</x>
-                                <y>281</y>
+                                <x>857</x>
+                                <y>404</y>
                               </constraint>
                               <sourceConnections>
                                 <net.java.amateras.uml.classdiagram.model.RealizationModel reference="../../.."/>
@@ -1123,8 +1123,8 @@
                                     <constraint>
                                       <height>-1</height>
                                       <width>-1</width>
-                                      <x>815</x>
-                                      <y>389</y>
+                                      <x>821</x>
+                                      <y>512</y>
                                     </constraint>
                                     <sourceConnections>
                                       <net.java.amateras.uml.classdiagram.model.AggregationModel reference="../../.."/>
@@ -1158,8 +1158,8 @@
                                           <constraint>
                                             <height>-1</height>
                                             <width>-1</width>
-                                            <x>908</x>
-                                            <y>494</y>
+                                            <x>914</x>
+                                            <y>617</y>
                                           </constraint>
                                           <sourceConnections>
                                             <net.java.amateras.uml.classdiagram.model.RealizationModel reference="../../.."/>
@@ -1239,8 +1239,8 @@
                                           <constraint>
                                             <height>-1</height>
                                             <width>-1</width>
-                                            <x>750</x>
-                                            <y>493</y>
+                                            <x>756</x>
+                                            <y>616</y>
                                           </constraint>
                                           <sourceConnections>
                                             <net.java.amateras.uml.classdiagram.model.RealizationModel reference="../../.."/>
@@ -1518,8 +1518,8 @@
                               <constraint>
                                 <height>-1</height>
                                 <width>-1</width>
-                                <x>980</x>
-                                <y>364</y>
+                                <x>986</x>
+                                <y>487</y>
                               </constraint>
                               <sourceConnections>
                                 <net.java.amateras.uml.classdiagram.model.RealizationModel reference="../../.."/>
@@ -1654,8 +1654,8 @@
                   <constraint>
                     <height>91</height>
                     <width>151</width>
-                    <x>2</x>
-                    <y>382</y>
+                    <x>417</x>
+                    <y>30</y>
                   </constraint>
                   <sourceConnections/>
                   <targetConnections>
@@ -1671,6 +1671,193 @@
 获取流水号服务
 登记流水
 记录操作日志</old>
+                </target>
+                <bendpoints/>
+                <stereoType></stereoType>
+              </net.java.amateras.uml.classdiagram.model.DependencyModel>
+              <net.java.amateras.uml.classdiagram.model.DependencyModel>
+                <showIcon>true</showIcon>
+                <listeners serialization="custom">
+                  <java.beans.PropertyChangeSupport>
+                    <default>
+                      <source class="net.java.amateras.uml.classdiagram.model.DependencyModel" reference="../../../.."/>
+                      <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                    </default>
+                    <null/>
+                  </java.beans.PropertyChangeSupport>
+                </listeners>
+                <source class="net.java.amateras.uml.classdiagram.model.InterfaceModel" reference="../../.."/>
+                <target class="net.java.amateras.uml.classdiagram.model.ClassModel">
+                  <backgroundColor>
+                    <red>255</red>
+                    <green>255</green>
+                    <blue>206</blue>
+                  </backgroundColor>
+                  <foregroundColor>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                  </foregroundColor>
+                  <showIcon>true</showIcon>
+                  <parent class="net.java.amateras.uml.model.RootModel">
+                    <backgroundColor>
+                      <red>255</red>
+                      <green>255</green>
+                      <blue>206</blue>
+                    </backgroundColor>
+                    <foregroundColor>
+                      <red>0</red>
+                      <green>0</green>
+                      <blue>0</blue>
+                    </foregroundColor>
+                    <showIcon>true</showIcon>
+                    <listeners serialization="custom">
+                      <java.beans.PropertyChangeSupport>
+                        <default>
+                          <source class="net.java.amateras.uml.model.RootModel" reference="../../../.."/>
+                          <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                        </default>
+                        <null/>
+                      </java.beans.PropertyChangeSupport>
+                    </listeners>
+                    <sourceConnections/>
+                    <targetConnections/>
+                    <children>
+                      <net.java.amateras.uml.classdiagram.model.ClassModel reference="../../../../../../../../.."/>
+                      <net.java.amateras.uml.classdiagram.model.InterfaceModel reference="../../../../../.."/>
+                      <net.java.amateras.uml.classdiagram.model.ClassModel reference="../../../../../net.java.amateras.uml.classdiagram.model.DependencyModel/target/parent/children/net.java.amateras.uml.classdiagram.model.ClassModel[2]"/>
+                      <net.java.amateras.uml.classdiagram.model.ClassModel reference="../../../../../net.java.amateras.uml.classdiagram.model.DependencyModel/target/parent/children/net.java.amateras.uml.classdiagram.model.ClassModel[2]/sourceConnections/net.java.amateras.uml.classdiagram.model.GeneralizationModel/target/targetConnections/net.java.amateras.uml.classdiagram.model.GeneralizationModel[2]/source"/>
+                      <net.java.amateras.uml.classdiagram.model.ClassModel reference="../../../../../net.java.amateras.uml.classdiagram.model.DependencyModel/target/parent/children/net.java.amateras.uml.classdiagram.model.ClassModel[2]/sourceConnections/net.java.amateras.uml.classdiagram.model.GeneralizationModel/target/targetConnections/net.java.amateras.uml.classdiagram.model.GeneralizationModel[3]/source"/>
+                      <net.java.amateras.uml.classdiagram.model.ClassModel reference="../../../../../net.java.amateras.uml.classdiagram.model.DependencyModel/target/parent/children/net.java.amateras.uml.classdiagram.model.ClassModel[2]/sourceConnections/net.java.amateras.uml.classdiagram.model.GeneralizationModel/target"/>
+                      <net.java.amateras.uml.classdiagram.model.InterfaceModel reference="../../../../../net.java.amateras.uml.classdiagram.model.DependencyModel/target/parent/children/net.java.amateras.uml.classdiagram.model.InterfaceModel[2]"/>
+                      <net.java.amateras.uml.classdiagram.model.ClassModel reference="../../../../../net.java.amateras.uml.classdiagram.model.DependencyModel/target/parent/children/net.java.amateras.uml.classdiagram.model.InterfaceModel[2]/targetConnections/net.java.amateras.uml.classdiagram.model.DependencyModel/source/targetConnections/net.java.amateras.uml.classdiagram.model.DependencyModel/source"/>
+                      <net.java.amateras.uml.classdiagram.model.InterfaceModel reference="../../../../../net.java.amateras.uml.classdiagram.model.DependencyModel/target/parent/children/net.java.amateras.uml.classdiagram.model.InterfaceModel[2]/targetConnections/net.java.amateras.uml.classdiagram.model.DependencyModel/source"/>
+                      <net.java.amateras.uml.classdiagram.model.ClassModel reference="../../../../../net.java.amateras.uml.classdiagram.model.DependencyModel/target/parent/children/net.java.amateras.uml.classdiagram.model.InterfaceModel[2]/targetConnections/net.java.amateras.uml.classdiagram.model.DependencyModel/source/targetConnections/net.java.amateras.uml.classdiagram.model.RealizationModel/source"/>
+                      <net.java.amateras.uml.classdiagram.model.ClassModel reference="../../../../../net.java.amateras.uml.classdiagram.model.DependencyModel/target/parent/children/net.java.amateras.uml.classdiagram.model.InterfaceModel[2]/targetConnections/net.java.amateras.uml.classdiagram.model.DependencyModel/source/targetConnections/net.java.amateras.uml.classdiagram.model.RealizationModel[2]/source"/>
+                      <net.java.amateras.uml.classdiagram.model.ClassModel reference="../../../../../net.java.amateras.uml.classdiagram.model.DependencyModel/target/parent/children/net.java.amateras.uml.classdiagram.model.InterfaceModel[2]/targetConnections/net.java.amateras.uml.classdiagram.model.RealizationModel/source"/>
+                      <net.java.amateras.uml.classdiagram.model.InterfaceModel reference="../../../../../net.java.amateras.uml.classdiagram.model.DependencyModel/target/parent/children/net.java.amateras.uml.classdiagram.model.InterfaceModel[2]/targetConnections/net.java.amateras.uml.classdiagram.model.RealizationModel/source/targetConnections/net.java.amateras.uml.classdiagram.model.AggregationModel/source"/>
+                      <net.java.amateras.uml.classdiagram.model.ClassModel reference="../../../../../net.java.amateras.uml.classdiagram.model.DependencyModel/target/parent/children/net.java.amateras.uml.classdiagram.model.InterfaceModel[2]/targetConnections/net.java.amateras.uml.classdiagram.model.RealizationModel/source/targetConnections/net.java.amateras.uml.classdiagram.model.AggregationModel/source/targetConnections/net.java.amateras.uml.classdiagram.model.RealizationModel/source"/>
+                      <net.java.amateras.uml.classdiagram.model.ClassModel reference="../../../../../net.java.amateras.uml.classdiagram.model.DependencyModel/target/parent/children/net.java.amateras.uml.classdiagram.model.InterfaceModel[2]/targetConnections/net.java.amateras.uml.classdiagram.model.RealizationModel/source/targetConnections/net.java.amateras.uml.classdiagram.model.AggregationModel/source/targetConnections/net.java.amateras.uml.classdiagram.model.RealizationModel[2]/source"/>
+                      <net.java.amateras.uml.model.NoteModel reference="../../../../../net.java.amateras.uml.classdiagram.model.DependencyModel/target/parent/children/net.java.amateras.uml.classdiagram.model.InterfaceModel[2]/targetConnections/net.java.amateras.uml.classdiagram.model.DependencyModel/source/targetConnections/net.java.amateras.uml.classdiagram.model.DependencyModel/source/sourceConnections/net.java.amateras.uml.classdiagram.model.DependencyModel[4]/target"/>
+                      <net.java.amateras.uml.model.NoteModel reference="../../../../../net.java.amateras.uml.classdiagram.model.DependencyModel/target"/>
+                      <net.java.amateras.uml.classdiagram.model.ClassModel reference="../../../../../net.java.amateras.uml.classdiagram.model.DependencyModel/target/parent/children/net.java.amateras.uml.classdiagram.model.InterfaceModel[2]/targetConnections/net.java.amateras.uml.classdiagram.model.RealizationModel[2]/source"/>
+                      <net.java.amateras.uml.classdiagram.model.ClassModel reference="../../.."/>
+                    </children>
+                    <filterProperty/>
+                  </parent>
+                  <listeners serialization="custom">
+                    <java.beans.PropertyChangeSupport>
+                      <default>
+                        <source class="net.java.amateras.uml.classdiagram.model.ClassModel" reference="../../../.."/>
+                        <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                      </default>
+                      <null/>
+                    </java.beans.PropertyChangeSupport>
+                  </listeners>
+                  <constraint>
+                    <height>-1</height>
+                    <width>-1</width>
+                    <x>84</x>
+                    <y>375</y>
+                  </constraint>
+                  <sourceConnections/>
+                  <targetConnections>
+                    <net.java.amateras.uml.classdiagram.model.DependencyModel reference="../../.."/>
+                  </targetConnections>
+                  <children>
+                    <net.java.amateras.uml.classdiagram.model.AttributeModel>
+                      <showIcon>true</showIcon>
+                      <parent class="net.java.amateras.uml.classdiagram.model.ClassModel" reference="../../.."/>
+                      <listeners serialization="custom">
+                        <java.beans.PropertyChangeSupport>
+                          <default>
+                            <source class="net.java.amateras.uml.classdiagram.model.AttributeModel" reference="../../../.."/>
+                            <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                          </default>
+                          <null/>
+                        </java.beans.PropertyChangeSupport>
+                      </listeners>
+                      <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$2"/>
+                      <name>txDefinition</name>
+                      <type>ITxDefinition</type>
+                      <isStatic>false</isStatic>
+                    </net.java.amateras.uml.classdiagram.model.AttributeModel>
+                    <net.java.amateras.uml.classdiagram.model.AttributeModel>
+                      <showIcon>true</showIcon>
+                      <parent class="net.java.amateras.uml.classdiagram.model.ClassModel" reference="../../.."/>
+                      <listeners serialization="custom">
+                        <java.beans.PropertyChangeSupport>
+                          <default>
+                            <source class="net.java.amateras.uml.classdiagram.model.AttributeModel" reference="../../../.."/>
+                            <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                          </default>
+                          <null/>
+                        </java.beans.PropertyChangeSupport>
+                      </listeners>
+                      <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$2" reference="../../net.java.amateras.uml.classdiagram.model.AttributeModel/visibility"/>
+                      <name>txRequest</name>
+                      <type>ITxRequest</type>
+                      <isStatic>false</isStatic>
+                    </net.java.amateras.uml.classdiagram.model.AttributeModel>
+                    <net.java.amateras.uml.classdiagram.model.AttributeModel>
+                      <showIcon>true</showIcon>
+                      <parent class="net.java.amateras.uml.classdiagram.model.ClassModel" reference="../../.."/>
+                      <listeners serialization="custom">
+                        <java.beans.PropertyChangeSupport>
+                          <default>
+                            <source class="net.java.amateras.uml.classdiagram.model.AttributeModel" reference="../../../.."/>
+                            <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                          </default>
+                          <null/>
+                        </java.beans.PropertyChangeSupport>
+                      </listeners>
+                      <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$2" reference="../../net.java.amateras.uml.classdiagram.model.AttributeModel/visibility"/>
+                      <name>processData</name>
+                      <type>DataObject</type>
+                      <isStatic>false</isStatic>
+                    </net.java.amateras.uml.classdiagram.model.AttributeModel>
+                  </children>
+                  <filterProperty/>
+                  <propertyDescriptors>
+                    <org.eclipse.ui.views.properties.TextPropertyDescriptor>
+                      <id class="string">_stereo_type</id>
+                      <display>Stereo Type</display>
+                      <incompatible>false</incompatible>
+                    </org.eclipse.ui.views.properties.TextPropertyDescriptor>
+                    <org.eclipse.ui.views.properties.PropertyDescriptor>
+                      <id class="string">_simpleEntityName</id>
+                      <display>Simple Name</display>
+                      <incompatible>false</incompatible>
+                    </org.eclipse.ui.views.properties.PropertyDescriptor>
+                    <org.eclipse.ui.views.properties.TextPropertyDescriptor>
+                      <id class="string">_entityName</id>
+                      <display>Name</display>
+                      <incompatible>false</incompatible>
+                    </org.eclipse.ui.views.properties.TextPropertyDescriptor>
+                    <org.eclipse.ui.views.properties.ColorPropertyDescriptor>
+                      <id class="string">_background</id>
+                      <display>Background Color</display>
+                      <incompatible>false</incompatible>
+                    </org.eclipse.ui.views.properties.ColorPropertyDescriptor>
+                    <org.eclipse.ui.views.properties.PropertyDescriptor>
+                      <id class="string">_attrs</id>
+                      <display>Attributes...</display>
+                      <incompatible>false</incompatible>
+                    </org.eclipse.ui.views.properties.PropertyDescriptor>
+                    <org.eclipse.ui.views.properties.PropertyDescriptor>
+                      <id class="string">_operations</id>
+                      <display>Operations...</display>
+                      <incompatible>false</incompatible>
+                    </org.eclipse.ui.views.properties.PropertyDescriptor>
+                    <net.java.amateras.uml.properties.BooleanPropertyDescriptor>
+                      <id class="string">_abstract</id>
+                      <display>abstract</display>
+                      <incompatible>false</incompatible>
+                    </net.java.amateras.uml.properties.BooleanPropertyDescriptor>
+                  </propertyDescriptors>
+                  <stereoType></stereoType>
+                  <name>TxContext</name>
+                  <isAbstract>false</isAbstract>
                 </target>
                 <bendpoints/>
                 <stereoType></stereoType>
@@ -1714,8 +1901,8 @@
                 <type>TxResponse</type>
                 <params>
                   <net.java.amateras.uml.classdiagram.model.Argument>
-                    <name>txRequest</name>
-                    <type>TxRequest</type>
+                    <name>txContext</name>
+                    <type>TxContext</type>
                   </net.java.amateras.uml.classdiagram.model.Argument>
                 </params>
                 <isAbstract>false</isAbstract>
@@ -1941,8 +2128,8 @@
       <constraint>
         <height>-1</height>
         <width>-1</width>
-        <x>51</x>
-        <y>161</y>
+        <x>57</x>
+        <y>284</y>
       </constraint>
       <sourceConnections>
         <net.java.amateras.uml.classdiagram.model.DependencyModel reference="../../parent/children/net.java.amateras.uml.classdiagram.model.InterfaceModel/targetConnections/net.java.amateras.uml.classdiagram.model.DependencyModel"/>
@@ -2032,6 +2219,7 @@
     <net.java.amateras.uml.model.NoteModel reference="../net.java.amateras.uml.classdiagram.model.ClassModel/parent/children/net.java.amateras.uml.classdiagram.model.InterfaceModel/sourceConnections/net.java.amateras.uml.classdiagram.model.DependencyModel/target/parent/children/net.java.amateras.uml.classdiagram.model.InterfaceModel[2]/targetConnections/net.java.amateras.uml.classdiagram.model.DependencyModel/source/targetConnections/net.java.amateras.uml.classdiagram.model.DependencyModel/source/sourceConnections/net.java.amateras.uml.classdiagram.model.DependencyModel[4]/target"/>
     <net.java.amateras.uml.model.NoteModel reference="../net.java.amateras.uml.classdiagram.model.ClassModel/parent/children/net.java.amateras.uml.classdiagram.model.InterfaceModel/sourceConnections/net.java.amateras.uml.classdiagram.model.DependencyModel/target"/>
     <net.java.amateras.uml.classdiagram.model.ClassModel reference="../net.java.amateras.uml.classdiagram.model.ClassModel/parent/children/net.java.amateras.uml.classdiagram.model.InterfaceModel/sourceConnections/net.java.amateras.uml.classdiagram.model.DependencyModel/target/parent/children/net.java.amateras.uml.classdiagram.model.InterfaceModel[2]/targetConnections/net.java.amateras.uml.classdiagram.model.RealizationModel[2]/source"/>
+    <net.java.amateras.uml.classdiagram.model.ClassModel reference="../net.java.amateras.uml.classdiagram.model.ClassModel/parent/children/net.java.amateras.uml.classdiagram.model.InterfaceModel/sourceConnections/net.java.amateras.uml.classdiagram.model.DependencyModel[2]/target"/>
   </children>
   <filterProperty/>
 </net.java.amateras.uml.model.RootModel>
