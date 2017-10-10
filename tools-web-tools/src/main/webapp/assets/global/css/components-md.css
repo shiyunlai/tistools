@@ -7063,7 +7063,7 @@ Portlets
 /* Light Portlet */
 .portlet.light {
   padding: 12px 20px 15px 20px;
-  background-color: #fff; }
+  background-color: #fff;  }
   .portlet.light.bordered {
     border: 1px solid #e7ecf1 !important; }
     .portlet.light.bordered > .portlet-title {

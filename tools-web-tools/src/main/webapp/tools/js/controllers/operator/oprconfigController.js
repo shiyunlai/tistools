@@ -3,7 +3,94 @@
  */
 
 //页面个性化配置
-angular.module('MetronicApp').controller('operconfig_controller', function($rootScope, $scope ,$modal,$http,i18nService, $timeout,filterFilter,$uibModal,uiGridConstants) {
+angular.module('MetronicApp').controller('operconfig_controller', function($rootScope, $scope ,$stateParams,$modal,common_service,$http, $timeout,filterFilter,$uibModal) {
+    var operconfig = {};
+    $scope.operconfig = operconfig;
+
+    //因为传入的是对象，拿到的是字符串，所以先转成json对象
+    var peaids = angular.fromJson($stateParams.id);
+    var userid = peaids.userid;//接受传入的值
+    var operguid = peaids.operguid;//拿到传入的操作员guid
+
+    $scope.currRole = userid;//显示当前操作员
+    //查询操作员应用接口
+    var res = $rootScope.res.operator_service;//页面所需调用的服务
+    var subFrom = {};
+    subFrom.userId  = userid;
+    common_service.post(res.queryOperatorAllApp,subFrom).then(function(data){
+        if(data.status == "success"){
+            operconfig.appselectApp= data.retMessage;
+        }
+    })
+
+    //查询业务字典项服务
+    var querydict = function () {
+        var subFrom = {};
+        subFrom.dictKey = 'DICT_AC_CONFIGTYPE';
+        var res = $rootScope.res.dictonary_service;//页面所需调用的服务
+        common_service.post(res.queryDictItemListByDictKey,subFrom).then(function(data){
+                console.log(data)
+            if(data.status == "success"){
+                operconfig.dictkeyvalue= data.retMessage;
+                console.log(operconfig.dictkeyvalue)
+            }
+        })
+    }
+    querydict()
+    //查询应用对应的配置
+    operconfig.search = function (item) {
+           if(!isNull(item)){
+               operconfig.queryqx(item);
+               $scope.operconfig.selectapp = true;
+           }else{
+               $scope.operconfig.selectapp = false;
+           }
+    }
+
+    //查询操作员的个性化配置
+    operconfig.queryqx=function (item) {
+        var subFrom = {}
+        subFrom.userId= userid;
+        subFrom.appGuid= item;
+        common_service.post(res.queryOperatorConfig,subFrom).then(function(data){
+           var datas = data.retMessage;
+           console.log(datas)
+            if(data.status == "success"){
+                $scope.operconfig.Allpx = datas;
+            }
+        })
+    }
+
+
+    //操作员配置保存 radio保存
+    operconfig.radiosele = function (item) {
+       console.log(item);
+        var subFrom = {};
+        subFrom.guidOperator = operguid;
+        subFrom.guidConfig = item.guid;
+        subFrom.configValue = item.configValue;
+        common_service.post(res.saveOperatorLog,subFrom).then(function(data){
+            var datas = data.retMessage;
+            if(data.status == "success"){
+                toastr['success']("修改成功");
+            }
+        })
+    }
+
+    operconfig.optionsselect = function (item) {
+        var subFrom = {};
+        subFrom.guidOperator = operguid;
+        subFrom.guidConfig = item.guid;
+        subFrom.configValue = item.configValue;
+        common_service.post(res.saveOperatorLog,subFrom).then(function(data){
+            var datas = data.retMessage;
+            if(data.status == "success"){
+                toastr['success']("修改成功");
+            }
+        })
+    }
+
+
 
 
 });

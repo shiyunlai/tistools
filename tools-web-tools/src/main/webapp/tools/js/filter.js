@@ -241,4 +241,31 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
             return '';
         };
     }])
+    .filter('translateDictitemvalue', ['$http', '$rootScope', function ($http, $rootScope) {
+        return function (val, name) {
+            var subFrom = {};
+            subFrom.dictKey = name;
+            console.info(name + "-" + val)
+            // console.info($rootScope.constant)
+            if (isNull($rootScope.constant[val])) {
+                $http.post("http://localhost:8089/tis/DictController/queryAllDictItem",{}).then(function (data) {
+                    var retval = "";
+                    if (data.data.status == "success") {
+                        for (var i = 0; i < data.data.retMessage.length; i++) {
+                            if (val == data.data.retMessage[i].sendValue) {
+                                retval = data.data.retMessage[i].itemName;
+                                console.log(retval)
+                                $rootScope.constant[val] = retval;
+                                return;
+                            }else{
+                                $rootScope.constant[val] = val;
+                            }
+                        }
+                    }
+
+                })
+            }
+            return '';
+        };
+    }])
 ;

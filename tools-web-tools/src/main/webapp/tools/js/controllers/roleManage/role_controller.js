@@ -4,10 +4,7 @@
 angular.module('MetronicApp').controller('role_controller', function($scope ,$rootScope,$modal,$timeout,$http,abftree_service,dictonary_service,common_service,i18nService,role_service,menu_service,operator_service,filterFilter,$uibModal,uiGridConstants) {
         var role = {};
         $scope.role = role;
-
-
-    var res = $rootScope.res.abftree_service;//页面所需调用的服务
-
+        var res = $rootScope.res.abftree_service;//页面所需调用的服务
         /* 左侧角色查询逻辑 */
         i18nService.setCurrentLang("zh-cn");
         //组织类别
@@ -15,7 +12,8 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
 
     //查询应用
     var subFrom  = {};
-    menu_service.queryAllAcApp(subFrom).then(function(data){
+    var headers ='FUN0001'
+    menu_service.queryAllAcApp(subFrom,headers).then(function(data){
         if(data.status == "success"){
             var datas = data.retMessage;
            role.Appall = datas;//所有应用数据，最终要在弹窗中渲染
