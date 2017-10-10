@@ -1,14 +1,10 @@
 package org.tis.tools.common.utils;
 
-import static org.junit.Assert.*;
+import junit.framework.Assert;
+import org.junit.Test;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import junit.framework.Assert;
-
-import org.junit.Test;
-import org.tis.tools.common.utils.TimeUtil;
 
 public class TimeUtilsTest {
 
@@ -17,9 +13,9 @@ public class TimeUtilsTest {
 		
 		long dateLong = 1479100943510L ;//2016-11-14 13:22:23
 		
-		Assert.assertEquals("Mon Nov 14 13:22:23 CST 2016",TimeUtil.longToDate(dateLong).toString());
-		Assert.assertEquals("2016-11-14 13:22:23:510",TimeUtil.longToDateStr(dateLong,null));
-		Assert.assertEquals(dateLong,TimeUtil.toTime("2016-11-14 13:22:23:510", "yyyy-MM-dd HH:mm:ss:SSS"));
+		Assert.assertEquals("Mon Nov 14 13:22:23 CST 2016", TimeUtil.longToDate(dateLong).toString());
+		Assert.assertEquals("2016-11-14 13:22:23:510", TimeUtil.longToDateStr(dateLong,null));
+		Assert.assertEquals(dateLong, TimeUtil.toTime("2016-11-14 13:22:23:510", "yyyy-MM-dd HH:mm:ss:SSS"));
 	}
 	
 	@Test

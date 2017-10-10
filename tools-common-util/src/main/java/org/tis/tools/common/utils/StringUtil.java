@@ -3,9 +3,9 @@
  */
 package org.tis.tools.common.utils;
 
-import java.text.MessageFormat;
-
 import org.apache.commons.lang.builder.ToStringBuilder;
+
+import java.text.MessageFormat;
 
 /**
  * @author megapro
@@ -15,6 +15,11 @@ public class StringUtil {
 	
 	/**
 	 * 检查输入的参数中是否有空值
+	 * StringUtil.isEmpty(null, "zch")      = true
+	 * StringUtil.isEmpty("", "zch")        = true
+	 * StringUtil.isEmpty(" ", "zch")       = true
+	 * StringUtil.isEmpty("zch")     = false
+	 * StringUtil.isEmpty(" zch ") = false
 	 * @param strs
 	 * @return
 	 */
@@ -35,7 +40,7 @@ public class StringUtil {
 	 * @param args 
 	 * @return 替换后的字符串
 	 */
-	public static String format(String patternStr, Object ...args){
+	public static String format(String patternStr, Object ...args) {
 		return MessageFormat.format(patternStr, args) ; 
 	}
 	
@@ -56,11 +61,12 @@ public class StringUtil {
 	 * <pre>
 	 * 在字符（target）左边补充字符（filler），并返回总长度为len的字符串
 	 * 如：
-	 * fillLeft("1",5,'0')      => "00001"
-	 * fillLeft("123",5,'0')    => "00123"
-	 * fillLeft("12345",5,'0')  => "12345"
-	 * fillLeft("123456",5,'0') => "12345"
-	 * 
+	 * "00001", StringUtil.leftPad("1",5,'0'));
+	 * "00123", StringUtil.leftPad("123",5,'0'));
+	 * "01234", StringUtil.leftPad("1234",5,'0'));
+	 * "12345", StringUtil.leftPad("12345",5,'0'));
+	 * "12345", StringUtil.leftPad("12345",4,'0'));
+	 *
 	 * </pre>
 	 * 
 	 * @param target
@@ -80,10 +86,10 @@ public class StringUtil {
 	 * <pre>
 	 * 在字符（target）右边补充字符（filler），并返回总长度为len的字符串
 	 * 如：
-	 * fillRight("1",5,'0')      => "10000"
-	 * fillRight("123",5,'0')    => "12300"
-	 * fillRight("12345",5,'0')  => "12345"
-	 * fillRight("123456",5,'0') => "12345"
+	 * rightPad("1",5,'0')      => "10000"
+	 * rightPad("123",5,'0')    => "12300"
+	 * rightPad("12345",5,'0')  => "12345"
+	 * rightPad("123456",5,'0') => "12345"
 	 * 
 	 * </pre>
 	 * 

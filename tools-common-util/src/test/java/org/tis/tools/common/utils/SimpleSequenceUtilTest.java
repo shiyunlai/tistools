@@ -1,12 +1,10 @@
 package org.tis.tools.common.utils;
 
+import junit.framework.Assert;
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import junit.framework.Assert;
-
-import org.junit.Test;
-import org.tis.tools.common.utils.SequenceSimpleUtil;
 
 public class SimpleSequenceUtilTest {
 
@@ -15,7 +13,7 @@ public class SimpleSequenceUtilTest {
 		System.out.println(SequenceSimpleUtil.instance.getId());
 		Assert.assertEquals(17, SequenceSimpleUtil.instance.getId().length());
 		Assert.assertEquals(26, SequenceSimpleUtil.instance.getId("shiyunlai").length());
-		Assert.assertNotSame(SequenceSimpleUtil.instance.getId("shiyunlai"), 
+		Assert.assertNotSame(SequenceSimpleUtil.instance.getId("shiyunlai"),
 				SequenceSimpleUtil.instance.getId("shiyunlai"));
 		Assert.assertEquals("无重复", isReSequence(1000));//一秒内 1000个不重复的序号
 		Assert.assertEquals("无重复", isReSequence(5000));//一秒内 5000个不重复的序号

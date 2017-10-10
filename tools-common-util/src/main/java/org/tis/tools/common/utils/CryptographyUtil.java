@@ -3,11 +3,11 @@
  */
 package org.tis.tools.common.utils;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * <pre>
@@ -26,7 +26,7 @@ public class CryptographyUtil {
 	/**
 	 * 通用的MD5加密算法
 	 * 
-	 * @param sourceStr
+	 * @param sourceStr 待加密字符串
 	 * @return 加密后的字符串
 	 */
 	public static String md5(String sourceStr) {

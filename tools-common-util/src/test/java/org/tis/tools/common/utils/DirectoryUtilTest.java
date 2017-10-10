@@ -3,22 +3,28 @@
  */
 package org.tis.tools.common.utils;
 
-import static org.junit.Assert.*;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
-
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.tis.tools.common.utils.DirectoryUtil;
+import java.util.List;
 
 /**
  * @author megapro
  *
  */
 public class DirectoryUtilTest {
+	@Test
+	public void listFile() throws Exception {
+		System.out.println("目录路径：" + DirectoryUtil.getAppMainDirectory());
+		List<File> files = DirectoryUtil.listFile(DirectoryUtil.getAppMainDirectory(), true, "java");
+		for(File file : files) {
+			System.out.println(file.getPath() + file.getName());
+		}
+	}
+
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -32,10 +38,10 @@ public class DirectoryUtilTest {
 	
 	@Test
 	public void test() {
-		System.out.println("getAppMainDirectory:" +DirectoryUtil.getAppMainDirectory());
-		System.out.println("getAppMainDirectory:" +DirectoryUtil.getAppMainDirectory()+"/../../");
+		System.out.println("getAppMainDirectory:" + DirectoryUtil.getAppMainDirectory());
+		System.out.println("getAppMainDirectory:" + DirectoryUtil.getAppMainDirectory()+"/../../");
 //		System.out.println("getClassDirectory:"+DirectoryUtil.getClassDirectory(DirectoryUtilTest.class));
-		System.out.println("getClassRootDirectory:"+DirectoryUtil.getClassRootDirectory(DirectoryUtilTest.class));
+		System.out.println("getClassRootDirectory:"+ DirectoryUtil.getClassRootDirectory(DirectoryUtilTest.class));
 	}
 
 	

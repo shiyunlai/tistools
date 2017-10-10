@@ -3,13 +3,12 @@
  */
 package org.tis.tools.common.utils;
 
-import java.time.LocalDateTime;
-
+import junit.framework.Assert;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import junit.framework.Assert;
+import java.time.LocalDateTime;
 
 /**
  * @author megapro
@@ -18,14 +17,14 @@ import junit.framework.Assert;
 public class TestAny {
 
 	/**
-	 * @throws java.lang.Exception
+	 * @throws Exception
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
 
 	/**
-	 * @throws java.lang.Exception
+	 * @throws Exception
 	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {

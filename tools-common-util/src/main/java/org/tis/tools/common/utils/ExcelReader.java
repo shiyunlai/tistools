@@ -1,6 +1,12 @@
 package org.tis.tools.common.utils;
 
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,16 +14,6 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DateUtil;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ExcelReader {
 
@@ -70,7 +66,6 @@ public class ExcelReader {
     /**
      * 读取Excel表格表头的内容
      *
-     * @param InputStream
      * @return String 表头内容的数组
      * @author zengwendong
      */
@@ -94,7 +89,8 @@ public class ExcelReader {
     /**
      * 读取Excel数据内容
      *
-     * @param InputStream
+     * @param sheetname 工作表名
+     *
      * @return Map 包含单元格数据内容的Map对象
      * @author zengwendong
      */
