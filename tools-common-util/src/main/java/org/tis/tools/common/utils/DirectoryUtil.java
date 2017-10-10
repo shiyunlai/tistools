@@ -24,7 +24,7 @@ public class DirectoryUtil {
 	 * @param subfix 文件后缀
 	 * @return
 	 */
-	public static List<File> listFile(String path,boolean recusive , final String subfix){
+	public static List<File> listFile(String path, boolean recusive, final String subfix){
 		List<File> files = null;
 		
 		try {
