@@ -1,10 +1,10 @@
 package org.tis.tools.common.utils;
 
-import static org.junit.Assert.*;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import static org.junit.Assert.fail;
 
 public class saf {
 

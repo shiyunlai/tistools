@@ -3,14 +3,11 @@
  */
 package org.tis.tools.common.utils;
 
-import static org.junit.Assert.*;
-
-import java.util.Set;
-
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.Set;
 
 /**
  * 对ScanClassUtil的单元测试
@@ -20,14 +17,14 @@ import org.junit.Test;
 public class ScanClassUtilTest {
 
 	/**
-	 * @throws java.lang.Exception
+	 * @throws Exception
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
 
 	/**
-	 * @throws java.lang.Exception
+	 * @throws Exception
 	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
