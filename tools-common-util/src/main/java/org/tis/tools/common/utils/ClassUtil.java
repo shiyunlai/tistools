@@ -1477,7 +1477,7 @@ public final class ClassUtil {
 	 *            接口／抽象类
 	 * @return
 	 */
-	public static ArrayList<Class> getAllClassByInterface(Class inface) {
+	public static List<Class> getAllClassByInterface(Class inface) {
 		
 		return getAllClassByInterface(inface, inface.getPackage().getName());
 	}
@@ -1491,9 +1491,9 @@ public final class ClassUtil {
 	 *            指定多个package路径
 	 * @return
 	 */
-	public static ArrayList<Class> getAllClassByInterface(Class inface, String [] patchs ) {
+	public static List<Class> getAllClassByInterface(Class inface, String [] patchs ) {
 		
-		ArrayList<Class> all = new ArrayList<Class>() ;
+		List<Class> all = new ArrayList<Class>() ;
 		for( String p : patchs  ){
 			all.addAll( getAllClassByInterface(inface, inface.getPackage().getName()) ) ;
 		}
@@ -1512,8 +1512,8 @@ public final class ClassUtil {
 	 * @return
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static ArrayList<Class> getAllClassByInterface(Class inface, String path) {
-		ArrayList<Class> list = new ArrayList<>();
+	public static List<Class> getAllClassByInterface(Class inface, String path) {
+		List<Class> list = new ArrayList<>();
 		// 获取指定接口的实现类
 		if (inface.isInterface()) {
 			try {
