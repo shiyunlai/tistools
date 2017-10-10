@@ -58,7 +58,7 @@ public class ClassUtilTest {
 	@Test
 	public void testGetAllClassByInterface(){
 		
-		List<Class> classes = ClassUtil.getAllClassByInterface(IAbc.class) ; 
+		List<Class<IAbc>> classes = ClassUtil.getAllClassByInterface(IAbc.class) ; 
 		
 		/*
 		 * 在IAbc同包路径及子路径下只有三个IAbc的实现类
@@ -86,7 +86,7 @@ public class ClassUtilTest {
 	@Test
 	public void testGetAllClassByInterface2(){
 		
-		List<Class> classes = ClassUtil.getAllClassByInterface(User.class) ; 
+		List<Class<User>> classes = ClassUtil.getAllClassByInterface(User.class) ; 
 		
 		/*
 		 * 与User同包路径及子路径下只有2个User的实现类
@@ -104,7 +104,7 @@ public class ClassUtilTest {
 		System.out.println(packagePath);
 
 		// 在 org.tis.tools.common.utils 目录及子目录下查找
-		List<Class> classes = ClassUtil.getAllClassByInterface(IAbc.class, packagePath);
+		List<Class<IAbc>> classes = ClassUtil.getAllClassByInterface(IAbc.class, packagePath);
 
 		/*
 		 * 总共有7个
@@ -122,7 +122,7 @@ public class ClassUtilTest {
 		System.out.println(packagePath);
 
 		// 在 org.tis.tools.common.utils 目录及子目录下查找
-		List<Class> classes = ClassUtil.getAllClassByInterface(IAbc.class, packagePath);
+		List<Class<IAbc>> classes = ClassUtil.getAllClassByInterface(IAbc.class, packagePath);
 
 		/*
 		 * 只有User5 这1 个 
@@ -142,7 +142,7 @@ public class ClassUtilTest {
 		System.out.println(packagePath);
 		
 		// 在 org.tis.tools.common.utils 目录及子目录下查找
-		List<Class> classes = ClassUtil.getAllClassByInterface(IAbc.class, packagePath);
+		List<Class<IAbc>> classes = ClassUtil.getAllClassByInterface(IAbc.class, packagePath);
 		
 		/*
 		 * 只有User5 这1 个 
@@ -165,7 +165,7 @@ public class ClassUtilTest {
 		System.out.println(packagePath);
 
 		// 在 org.tis.tools.common.utils 目录及子目录下查找
-		List<Class> classes = ClassUtil.getAllClassByInterface(IAbc.class, packagePath);
+		List<Class<IAbc>> classes = ClassUtil.getAllClassByInterface(IAbc.class, packagePath);
 
 		Assert.assertEquals(9, classes.size());
 
@@ -176,7 +176,7 @@ public class ClassUtilTest {
 		System.out.println(packagePaths);
 
 		// 在 "org.tis.tools","org.tools.design" 两个目录下总共10个IAbc的实现类
-		List<Class> classess = ClassUtil.getAllClassByInterface(IAbc.class, packagePaths);
+		List<Class<IAbc>> classess = ClassUtil.getAllClassByInterface(IAbc.class, packagePaths);
 
 		Assert.assertEquals(10, classess.size());
 	}
