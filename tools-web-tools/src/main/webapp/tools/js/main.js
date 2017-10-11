@@ -116,6 +116,8 @@ MetronicApp.config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
  **/
 
 
+
+
 MetronicApp.factory('httpInterceptor', ['$log', function($log) {
     return {
         //请求的方法
@@ -148,6 +150,13 @@ MetronicApp.factory('httpInterceptor', ['$log', function($log) {
 MetronicApp.config(['$httpProvider', function($httpProvider) {
     $httpProvider.interceptors.push('httpInterceptor');
 }]);
+
+/* 统一添加请求头方法，弊端，可以给不同的请求方式添加统一的请求头，不符合需求
+MetronicApp.config(['$httpProvider', function($httpProvider) {
+    $httpProvider.defaults.headers.common = { 'My-Header' : 'testceshi' }
+}]);
+*/
+
 
 
 //AngularJS v1.3.x workaround for old style controller declarition in HTML
@@ -229,6 +238,7 @@ MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http
             subForm.dictKey = dictKey;
             $http.post(manurl + "/DictController/queryDictItemListByDictKey",subForm).then(function (response) {
                 settings.diclist[dictKey] = response.data.retMessage;
+                console.log(response.data.retMessage)
             });
         }
     }
@@ -325,7 +335,7 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
                 userinfo(data.retMessage.user);//登陆信息页面
                 passedit(data.retMessage.user);//修改密码页面
                 opermenu($scope.userId);//重组菜单入口
-                persona($scope.userId);//个性化配置入口
+                persona(session);//个性化配置入口
                 $rootScope.menus = angular.fromJson(data.retMessage.menu);
             }
         })
@@ -397,8 +407,10 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
     }
     //个性化配置页面
     function persona(item){
+        var opertis = {"userid":item.userId,"operguid":item.guid}
+        var jsonObj= angular.toJson(opertis);//传对象，必须转成json格式传入
         $scope.personalise = function(){
-            $state.go("roleConfig",{id:item})
+            $state.go("roleConfig",{'id':jsonObj})
         }
     }
 }]);
@@ -629,8 +641,9 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider, routerProvider)
     })
     .run(function (router) {
         router.setUpRoutes();
-    })
-;
+    });
+
+
 /* Setup Rounting For All Pages */
 /*MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
@@ -1159,10 +1172,9 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider, routerProvider)
 MetronicApp.run(['$rootScope', '$state', function ($rootScope, $state) {
     $rootScope.$state = $state;
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-/*        console.log(toState);
-        console.log(toParams);
-        console.log(fromState);
-        console.log(fromParams);*/
+        if(!isNull(toState.header)){
+            $rootScope.Appfunc = toState.header;//把路由中对应的请求头，放入全局rootscope中。
+        }
     });
 }
 ]);

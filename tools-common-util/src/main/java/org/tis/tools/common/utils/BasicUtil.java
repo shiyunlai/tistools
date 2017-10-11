@@ -214,4 +214,32 @@ public class BasicUtil {
 		}
 		return retList;
 	}
+
+
+	/**
+	 * 包裹括号
+	 * 	例： APP123123  -> "(APP123123)"
+	 * @param val
+	 * @return
+	 */
+	public static String surroundBrackets(String val) {
+		if(StringUtils.isNotBlank(val))
+			return "(" + val + ")";
+		 else
+		 	return "";
+	}
+
+	/**
+	 * 包裹括号和左边字符串
+	 * 	例： guid APP123123  -> "guid(APP123123)"
+	 * @param leftStr
+	 * @param str
+	 * @return
+	 */
+	public static String surroundBracketsWithLFStr(String leftStr, String str) {
+		if(StringUtils.isNotBlank(leftStr))
+			return leftStr + surroundBrackets(str);
+		 else
+		 	return "";
+	}
 }

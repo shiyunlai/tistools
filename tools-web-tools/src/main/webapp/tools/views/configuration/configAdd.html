@@ -63,8 +63,8 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">默认配置值:<span ng-class="{required:myform.dict_key5.$invalid}"  > * </span></label>
                         <div class="col-md-8">
-                            <select class="form-control test123" name="dict_key5" required   ng-model="configFrom.configValue" style="width: 100%">
-                                <option ng-repeat="x in config.dictnameLitem" value="{{x.guid}}">{{x.itemName}}</option>
+                            <select class="form-control" name="dict_key5" required   ng-model="configFrom.configValue" style="width: 100%">
+                                <option ng-repeat="x in config.dictnameLitem" value="{{x.sendValue}}">{{x.itemName}}</option>
                             </select>
                         </div>
                     </div>

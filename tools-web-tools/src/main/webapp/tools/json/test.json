@@ -135,6 +135,7 @@
     "url": "/configuration.html",
     "templateUrl": "views/configuration/configuration.html",
     "data": "{pageTitle: '个性化配置管理'}",
+    "header":"{appguid:'APPtest111',funguid:'FUN00101'}",
     "controller": "configuration_controller"
   }
 }

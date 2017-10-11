@@ -747,9 +747,8 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
                 throw new OperatorManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap("USER_ID " + userId, "AC_OPERATOR"));
             }
 
-            AcOperator acOperator = new AcOperator();
-            acOperator.setUserId(userId);
-            acOperator.setGuid(operatorList.get(0).getGuid());
+            AcOperator acOperator = operatorList.get(0);
+            acOperator.setPassword(null);
             return acOperator;
 
         } catch (OperatorManagementException ae) {
@@ -1423,7 +1422,7 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
                                     funcNode.setParentGuid(acFunc.getGuidFuncgroup());
                                     funcNode.setIcon(AcOperatorFuncDetail.NODE_ICON_FUNC);
                                     funcNode.setNodeType(AcOperatorFuncDetail.NODE_TYPE_FUNC);
-                                    funcNode.setStatus(AcOperatorFuncDetail.NODE_STATUS_DISABLED);
+                                    funcNode.setStatus(AcOperatorFuncDetail.NODE_STATUS_ENABLED);
                                     funcNode.setIsLeaf(CommonConstants.YES);
                                     funcNode.setFuncGroupGuid(acFunc.getGuidFuncgroup());
                                     funcNode.setAppGuid(nodeMap.get(acFunc.getGuidFuncgroup()).getAppGuid());

@@ -122,7 +122,9 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
     //操作员配置功能行为权限
     $scope.funconfig = function (id) {
         if($scope.selectRow){
-            $state.go("permission",{id:id})
+            var opertis = {"userid":$scope.selectRow.userId,"operguid":$scope.selectRow.guid}
+            var jsonObj= angular.toJson(opertis);//传对象，必须转成json格式传入
+            $state.go("permission",{'id':jsonObj})
         }else{
             toastr['error']("请至少选中一个操作员进行权限的分配！");
         }
