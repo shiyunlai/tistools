@@ -14,7 +14,7 @@
   },
   "dictonary_service" : {
     "createSysDict": {"ctrl": "DictController", "func": "createSysDict","emo":"新增业务字典"},
-    "deleteSysDict": {"ctrl": "DictController", "func": "deleteSysDict","emo":"删除业务字典"},
+      "deleteSysDict": {"ctrl": "DictController", "func": "deleteSysDict","emo":"删除业务字典"},
     "editSysDict": {"ctrl": "DictController", "func": "editSysDict","emo":"修改业务字典"},
     "querySysDict": {"ctrl": "DictController", "func": "querySysDict","emo":"查询单个业务字典"},
     "createSysDictItem": {"ctrl": "DictController", "func": "createSysDictItem","emo":"新增业务字典项"},

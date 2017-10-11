@@ -10,7 +10,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     $scope.biz.datas = [];
     //定义权限
     $scope.biz.applica = false;
-
     //当前节点定义
     var thisNode = '';
     $scope.thisNode = thisNode;

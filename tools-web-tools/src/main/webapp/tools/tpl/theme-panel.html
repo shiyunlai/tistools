@@ -12,13 +12,15 @@
             <li class="color-light2 tooltips" data-style="light2" data-container="body" data-html="true" data-original-title="Light 2"> </li>
         </ul>
         <script>
+            var color_ = 'blue';//从后台拿到颜色值
+            console.log(color_)
+            $('#style_color1').attr("href", Layout.getLayoutCssPath() + 'themes/' + color_ + ".css");//设置成我们想要的
             $("ul").find("li").on("click",function(){
                 $(this).attr('data-style');
-                console.log($(this).attr('data-style'));//获取点击的颜色
+                var tis = $(this).attr('data-style');
+                console.log(tis)
                 //把获取到的颜色存入后台
 
-                //举例， 我无论点击那个颜色，我都设置成蓝色，那么效果就是我点击任何颜色，都是蓝色的效果
-//                $(this).attr('data-style',"blue");
             })
 
             var nis = "blue";
