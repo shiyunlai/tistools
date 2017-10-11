@@ -479,9 +479,9 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 * 
 	 */
 	@Override
-	public AcFunc createAcFunc(AcFunc acFunc,AcFuncResource acFuncResource) {
+	public AcFunc createAcFunc(AcFunc acFunc) throws AppManagementException {
 		String guid=GUID.func();
-		acFuncResource.setGuidFunc(guid);
+//		acFuncResource.setGuidFunc(guid);
 		acFunc.setGuid(guid);
 		final AcFunc newAcFunc = acFunc;
 		try {
@@ -490,7 +490,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 						@Override
 						public AcFunc doInTransaction(TransactionStatus arg0) {
 							acFuncService.insert(newAcFunc);
-							acFuncResourceService.insert(acFuncResource);
+//							acFuncResourceService.insert(acFuncResource);
 							return newAcFunc;
 						}
 					});
@@ -729,87 +729,130 @@ public class ApplicationRServiceImpl extends BaseRService implements
 
 	/**
 	 * 新增功能资源对应(AC_FUNC_RESOURCE),新增t对象有值的字段
-	 * @param t 新值
+	 * @param acFuncResource 新值
 	 */
 	@Override
-	public void createAcFuncResource(AcFuncResource t) throws AppManagementException {
+	public AcFuncResource createAcFuncResource(AcFuncResource acFuncResource) throws AppManagementException {
+		if(acFuncResource == null) {
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("AcFuncResource", AcFuncResource.TABLE_NAME));
+		}
 		try {
-			transactionTemplate.execute(new TransactionCallback<AcFuncResource>() {
-				@Override
-				public AcFuncResource doInTransaction(TransactionStatus arg0) {
-					acFuncResourceService.insert(t);
-					return null;
-				}
-			});
+			String validate = BeanFieldValidateUtil.checkObjFieldNotRequired(acFuncResource, new String[]{"memo"});
+			if (StringUtils.isNotEmpty(validate)) {
+				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, BasicUtil.wrap(validate, AcFuncResource.TABLE_NAME));
+			}
+			if(acFuncResourceService.count(
+					new WhereCondition().andEquals(AcFuncResource.COLUMN_GUID_FUNC, acFuncResource.getGuidFunc())
+					.andEquals(AcFuncResource.COLUMN_ATTR_KEY, acFuncResource.getAttrKey())) > 0) {
+				throw new AppManagementException(ExceptionCodes.DUPLICATE_WHEN_INSERT, BasicUtil.wrap(acFuncResource.getAttrKey(), AcFuncResource.TABLE_NAME));
+			}
+			acFuncResourceService.insert(acFuncResource);
+			return  acFuncResource;
+		} catch (AppManagementException e) {
+			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_FUNCRESOURCE,
-					BasicUtil.wrap(e.getCause().getMessage()), "增加功能对应资源失败！{0}");
+					ExceptionCodes.FAILURE_WHEN_INSERT,
+					BasicUtil.wrap(AcFuncResource.TABLE_NAME, e));
 		}
 	}
 
 	/**
 	 * 删除功能资源对应(AC_FUNC_RESOURCE)
-	 * @param guid 记录guid
+	 * @param acFuncResourceList 删除的资源集合
 	 */
 	@Override
-	public void deleteAcFuncResource(String guid) throws AppManagementException {
+	public List<AcFuncResource> deleteAcFuncResource(List<AcFuncResource> acFuncResourceList) throws AppManagementException {
+		if(CollectionUtils.isEmpty(acFuncResourceList)) {
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, BasicUtil.wrap("acFuncResourceList", AcFuncResource.TABLE_NAME));
+
+		}
 		try {
-			transactionTemplate.execute(new TransactionCallback<AcFuncResource>() {
+			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 				@Override
-				public AcFuncResource doInTransaction(TransactionStatus arg0) {
-					acFuncResourceService.delete(guid);
-					return null;
+				public void doInTransactionWithoutResult(TransactionStatus status) {
+					try {
+						for (AcFuncResource acFuncResource : acFuncResourceList) {
+							if (acFuncResource == null) {
+								throw new AppManagementException(
+										ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, BasicUtil.wrap("acFuncResource", AcFuncResource.TABLE_NAME)
+								);
+							}
+							String validate = BeanFieldValidateUtil.checkObjFieldRequired(acFuncResource, new String[]{"guidFunc, attrKey"});
+							if (StringUtils.isNotEmpty(validate)) {
+								throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_DELETE, BasicUtil.wrap(validate, AcFuncResource.TABLE_NAME));
+							}
+							acFuncResourceService.deleteByCondition(new WhereCondition().andEquals(AcFuncResource.COLUMN_GUID_FUNC, acFuncResource.getGuidFunc())
+									.andEquals(AcFuncResource.COLUMN_ATTR_KEY, acFuncResource.getAttrKey()));
+						}
+					} catch (AppManagementException ae) {
+						status.setRollbackOnly();
+						throw ae;
+					} catch (Exception e) {
+						status.setRollbackOnly();
+						e.printStackTrace();
+						throw new AppManagementException(
+								ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap(AcFuncResource.TABLE_NAME, e));
+					}
 				}
 			});
+			return  acFuncResourceList;
+		} catch (AppManagementException ae) {
+			throw ae;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_FUNCRESOURCE,
-					BasicUtil.wrap(e.getCause().getMessage()), "删除功能对应资源失败！{0}");
+					ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap(AcFuncResource.TABLE_NAME, e));
 		}
 	}
 
 	/**
-	 * 更新功能资源对应(AC_FUNC_RESOURCE),只修改t对象有值的字段
-	 * @param t 新值
+	 * 更新功能资源对应(AC_FUNC_RESOURCE)
+	 * @param acFuncResource
 	 */
 	@Override
-	public void updateAcFuncResource(AcFuncResource t) throws AppManagementException {
+	public AcFuncResource updateAcFuncResource(AcFuncResource acFuncResource) throws AppManagementException {
+		if(acFuncResource == null) {
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap("AcFuncResource", AcFuncResource.TABLE_NAME));
+		}
 		try {
-			// 校验传入参数
-			if(StringUtil.isEmpty(t.getGuidFunc())) {
-				throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, "功能资源GUID为空{0}");
+			String validate = BeanFieldValidateUtil.checkObjFieldNotRequired(acFuncResource, new String[]{"memo"});
+			if (StringUtils.isNotEmpty(validate)) {
+				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_UPDATE, BasicUtil.wrap(validate, AcFuncResource.TABLE_NAME));
 			}
-			acFuncResourceService.updateByCondition(new WhereCondition().andEquals("GUID_FUNC", t.getGuidFunc()), t);
-
+			acFuncResourceService.updateByCondition(new WhereCondition().andEquals(AcFuncResource.COLUMN_GUID_FUNC, acFuncResource.getGuidFunc())
+					.andEquals(AcFuncResource.COLUMN_ATTR_KEY, acFuncResource.getAttrKey()), acFuncResource);
+			return  acFuncResource;
+		} catch (AppManagementException e) {
+			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_FUNCRESOURCE,
-					BasicUtil.wrap(e.getCause().getMessage()), "更新功能对应资源失败！{0}");
+					ExceptionCodes.FAILURE_WHEN_INSERT,
+					BasicUtil.wrap(AcFuncResource.TABLE_NAME, e));
 		}
 	}
 
 	/**
 	 * 根据条件查询功能资源对应(AC_FUNC_RESOURCE)
-	 * @param wc 条件
+	 * @param funcGuid 功能guid
 	 * @return 满足条件的记录list
 	 */
 	@Override
-	public List<AcFuncResource> queryAcFuncResource(WhereCondition wc) throws AppManagementException {
-		List<AcFuncResource> acFuncResourceList = new ArrayList<AcFuncResource>();
-
+	public List<AcFuncResource> queryAcFuncResource(String funcGuid) throws AppManagementException {
+		if(StringUtils.isBlank(funcGuid)) {
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap(AcFuncResource.COLUMN_GUID_FUNC, AcFuncResource.TABLE_NAME));
+		}
 		try {
-			acFuncResourceList = acFuncResourceService.query(wc);
+			List<AcFuncResource> acFuncResourceList = acFuncResourceService.query(new WhereCondition().andEquals(AcFuncResource.COLUMN_GUID_FUNC, funcGuid));
+			return  acFuncResourceList;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNCRESOURCE,
-					BasicUtil.wrap(e.getCause().getMessage()), "查询功能对应资源失败！{0}");
+					ExceptionCodes.FAILURE_WHEN_QUERY,
+					BasicUtil.wrap(AcFuncResource.TABLE_NAME, e));
 		}
-		return acFuncResourceList;
 	}
 
 	/**
@@ -1021,12 +1064,12 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 * @return 满足条件的记录
 	 */
 	@Override
-	public List<AcFuncVo> queryAcFuncVo(String guid) throws AppManagementException {
-		List<AcFuncVo> acFuncVoList = new ArrayList<AcFuncVo>();
+	public List<AcFunc> queryAcFunc(String guid) throws AppManagementException {
+		List<AcFunc> acFuncVoList = new ArrayList<>();
 		WhereCondition wc = new WhereCondition();
 		wc.andEquals("guid_funcgroup", guid);
 		try {
-			acFuncVoList = applicationService.queryAcFuncVo(wc );
+			acFuncVoList = acFuncService.query(wc);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
