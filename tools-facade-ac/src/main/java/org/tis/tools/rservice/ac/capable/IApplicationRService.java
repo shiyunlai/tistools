@@ -144,10 +144,9 @@ public interface IApplicationRService {
 	/**
 	 * 新增功能(AC_FUNC)
 	 * @param acFunc 功能对象
-	 * @param acFuncResource 功能对应资源
 	 * return  AcFunc
 	 */
-	 AcFunc createAcFunc(AcFunc acFunc,AcFuncResource acFuncResource);
+	 AcFunc createAcFunc(AcFunc acFunc);
 
 	
 	/**
@@ -182,7 +181,7 @@ public interface IApplicationRService {
 	 * @param guid 条件
 	 * @return 满足条件的记录
 	 */
-	 List<AcFuncVo> queryAcFuncVo(String guid);
+	 List<AcFunc> queryAcFunc(String guid);
 	
 	
 	/**
@@ -192,8 +191,7 @@ public interface IApplicationRService {
 	 */
 	 List<AcFunc> queryAcGroupFunc(String groupGuid);
 	
-	
-	
+
 	/**
 	 * 新增菜单(AC_MENU)
 	 * @param acMenu 菜单对象
@@ -224,26 +222,26 @@ public interface IApplicationRService {
 	 * 新增功能资源对应(AC_FUNC_RESOURCE),新增t对象有值的字段
 	 * @param t 新值
 	 */
-	 void createAcFuncResource(AcFuncResource t);
+	 AcFuncResource createAcFuncResource(AcFuncResource t);
 
 	/**
 	 * 删除功能资源对应(AC_FUNC_RESOURCE)
-	 * @param guid 记录guid
+	 * @param acFuncResourceList 需要删除的资源集合
 	 */
-	 void deleteAcFuncResource(String guid);
+	List<AcFuncResource> deleteAcFuncResource(List<AcFuncResource> acFuncResourceList);
 
 	/**
 	 * 更新功能资源对应(AC_FUNC_RESOURCE),只修改t对象有值的字段
 	 * @param t 新值
 	 */
-	 void updateAcFuncResource(AcFuncResource t);
+	AcFuncResource updateAcFuncResource(AcFuncResource t);
 	
-		/**
+	/**
 	 * 根据条件查询功能资源对应(AC_FUNC_RESOURCE)
-	 * @param wc 条件
+	 * @param funcGuid 功能GUID
 	 * @return 满足条件的记录list
 	 */
-	 List<AcFuncResource> queryAcFuncResource(WhereCondition wc);
+	 List<AcFuncResource> queryAcFuncResource(String funcGuid);
 	
 	/**
 	 * 根据条件查询功能资源对应(AC_FUNC_RESOURCE)

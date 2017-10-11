@@ -122,7 +122,7 @@ public class AcAppController extends BaseController {
             if (groupList.size() > 0) {
                 map.put("groupList", groupList);
             }
-            List<AcFuncVo> funcList = applicationRService.queryAcFuncVo(id);
+            List<AcFunc> funcList = applicationRService.queryAcFunc(id);
             if (funcList.size() > 0) {
                 map.put("funcList", funcList);
             }
@@ -242,15 +242,15 @@ public class AcAppController extends BaseController {
             String funcDesc = jsonObj.getString("funcDesc");
             String guidFuncgroup = jsonObj.getString("guidFuncgroup");
             //设置功能对应资源
-            AcFuncResource acFuncResource = new AcFuncResource();
-            String resType = jsonObj.getString("resType");
-            String compackName = jsonObj.getString("compackName");
-            String resshowName = jsonObj.getString("resShowName");
-            String resPath = jsonObj.getString("resPath");
-            acFuncResource.setResType(resType);
-            acFuncResource.setCompackName(compackName);
-            acFuncResource.setResShowName(resshowName);
-            acFuncResource.setResPath(resPath);
+//            AcFuncResource acFuncResource = new AcFuncResource();
+//            String resType = jsonObj.getString("resType");
+//            String compackName = jsonObj.getString("compackName");
+//            String resshowName = jsonObj.getString("resShowName");
+//            String resPath = jsonObj.getString("resPath");
+//            acFuncResource.setResType(resType);
+//            acFuncResource.setCompackName(compackName);
+//            acFuncResource.setResShowName(resshowName);
+//            acFuncResource.setResPath(resPath);
 
             AcFunc acFunc = new AcFunc();
             acFunc.setFuncCode(funcCode);
@@ -262,7 +262,8 @@ public class AcAppController extends BaseController {
             acFunc.setIscheck(isCheck);
             acFunc.setIsmenu(isMenu);
             acFunc.setGuidFuncgroup(guidFuncgroup);
-            applicationRService.createAcFunc(acFunc, acFuncResource);//把new的并且填入参数的对象，传入，返回
+//            applicationRService.createAcFunc(acFunc, acFuncResource);//把new的并且填入参数的对象，传入，返回
+            applicationRService.createAcFunc(acFunc);//把new的并且填入参数的对象，传入，返回
             AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
         } catch (ToolsRuntimeException e) {
             AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
@@ -360,7 +361,7 @@ public class AcAppController extends BaseController {
      * @param response
      * @return
      */
-    @ResponseBody
+    /*@ResponseBody
     @RequestMapping(value = "/acFuncResourceEdit", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public String acFuncResourceEdit(@RequestBody String content, HttpServletRequest request,
                                      HttpServletResponse response) {
@@ -395,7 +396,7 @@ public class AcAppController extends BaseController {
             logger.error("acFuncEdit exception : ", e);
         }
         return null;
-    }
+    }*/
 
     /**
      * acFuncResouceQuery功能对应资源查询
@@ -1041,5 +1042,86 @@ public class AcAppController extends BaseController {
             logger.error("disableApp exception : ", e);
         }
     }
+
+    /**
+     * 新增功能资源
+     * @param content
+     * @return
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_ADD,
+            operateDesc = "新增功能资源",
+            retType = ReturnType.Object,
+            id = "guidFunc",
+            name = "attrKey")
+    @ResponseBody
+    @RequestMapping(value = "/createAcFuncResource", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> createAcFuncResource(@RequestBody String content) {
+        JSONObject jsonObj = JSONObject.parseObject(content);
+
+        JSONObject data = jsonObj.getJSONObject("data");
+        AcFuncResource acFuncResource = JSONObject.parseObject(data.toJSONString(), AcFuncResource.class);
+        AcFuncResource funcResource = applicationRService.createAcFuncResource(acFuncResource);
+        return getReturnMap(funcResource);
+    }
+    /**
+     * 删除功能资源
+     * @param content
+     * @return
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_DELETE,
+            operateDesc = "删除功能资源",
+            retType = ReturnType.List,
+            id = "guidFunc",
+            name = "attrKey")
+    @ResponseBody
+    @RequestMapping(value = "/deleteAcFuncResource", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> deleteAcFuncResource(@RequestBody String content) {
+        JSONObject jsonObj = JSONObject.parseObject(content);
+
+        JSONObject data = jsonObj.getJSONObject("data");
+        List<AcFuncResource> acFuncResources = JSONObject.parseArray(data.toJSONString(), AcFuncResource.class);
+        List<AcFuncResource> funcResources = applicationRService.deleteAcFuncResource(acFuncResources);
+        return getReturnMap(funcResources);
+    }
+    /**
+     * 删除功能资源
+     * @param content
+     * @return
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,
+            operateDesc = "修改功能资源",
+            retType = ReturnType.Object,
+            id = "guidFunc",
+            name = "attrKey")
+    @ResponseBody
+    @RequestMapping(value = "/updateAcFuncResource", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> updateAcFuncResource(@RequestBody String content) {
+        JSONObject jsonObj = JSONObject.parseObject(content);
+        JSONObject data = jsonObj.getJSONObject("data");
+        AcFuncResource acFuncResource = JSONObject.parseObject(data.toJSONString(), AcFuncResource.class);
+        AcFuncResource funcResource = applicationRService.updateAcFuncResource(acFuncResource);
+        return getReturnMap(funcResource);
+    }
+
+    /**
+     * 查询功能资源
+     * @param content
+     * @return
+     */
+    @RequestMapping(value = "/queryAcFuncResource", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> queryAcFuncResource(@RequestBody String content) {
+        JSONObject jsonObj = JSONObject.parseObject(content);
+
+        JSONObject data = jsonObj.getJSONObject("data");
+        String appGuid = data.getString("appGuid");
+        List<AcFuncResource> funcResources = applicationRService.queryAcFuncResource(appGuid);
+        return getReturnMap(funcResources);
+    }
+
+
+
 
 }

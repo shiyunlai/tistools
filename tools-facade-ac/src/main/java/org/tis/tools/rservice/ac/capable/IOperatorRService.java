@@ -289,7 +289,7 @@ public interface IOperatorRService {
     List<AcOperatorBhv> deleteOperatorBhvBlackList(List<AcOperatorBhv> operatorBhvList) throws OperatorManagementException;
 
     /**
-     * throws OperatorManagementException;
+     * 查询操作员在应用下已授权功能;
      * @param userId 操作员
      * @param appGuid 应用
      * @return
