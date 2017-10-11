@@ -72,16 +72,16 @@
                 <form role="form" class="form-horizontal"  ng-repeat="p in operconfig.Allpx[d.itemValue] track by $index | orderBy : p.displayOrder  ">
                     <!--循环，根据每一项的itemValue循环，并且排序，这样把相同类型不同内容放在了一起-->
                     <div class="form-body">
-                        <!--单选框-->
-                        <div class="form-group form-md-line-input" ng-if="p.configStyle=='radio'">
+                        <!--单选框，把颜色风格隐藏-->
+                        <div class="form-group form-md-line-input" ng-if="p.configStyle=='radio'"  ng-hide="p.configDict == 'DICT_STYLE_COLOR'">
                             <label class="col-md-2 control-label" for="form_control_1">{{p.configName}}</label>
                             <div class="col-md-10">
                                 <div class="md-radio-inline" style="margin-top:-2px;" ng-init="$settings.getDictData(p.configDict)">
                                         <div class="md-radio" ng-repeat="s in $settings.diclist[p.configDict] track by $index">
                                             <!--也是查询业务字典，只不过循环的是字典项-->
-                                            <div class="radio"  style="margin-bottom: 2%;">
+                                            <div class="radio"  style="margin-bottom: 2%;" >
                                                 <label>
-                                                    <input type="radio" style="visibility: visible;" ng-checked="s.sendValue == p.configValue "  ng-model="p.configValue"  ng-change="operconfig.radiosele(p)"  name="testopselect"  id="optionsRadios2" value="{{s.sendValue}}">
+                                                    <input type="radio" style="visibility: visible;" ng-checked="s.sendValue == p.configValue "    ng-model="p.configValue"  ng-change="operconfig.radiosele(p)"  name="testopselect"  id="optionsRadios2" value="{{s.sendValue}}">
                                                     {{s.itemName}}
                                                 </label>
                                             </div>

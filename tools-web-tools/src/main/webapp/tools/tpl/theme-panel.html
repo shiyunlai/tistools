@@ -4,34 +4,13 @@
     <div class="theme-option theme-colors clearfix">
         <span> 主题颜色 </span>
         <ul id="proid">
-            <li class="color-default  tooltips" data-style="default" data-container="body" data-original-title="Default"> </li>
-            <li class="color-darkblue current tooltips" data-style="darkblue" data-container="body" data-original-title="Dark Blue"> </li>
-            <li class="color-blue tooltips" data-style="blue" data-container="body" data-original-title="Blue"> </li>
-            <li class="color-grey tooltips" data-style="grey" data-container="body" data-original-title="Grey"> </li>
-            <li class="color-light tooltips" data-style="light" data-container="body" data-original-title="Light"> </li>
-            <li class="color-light2 tooltips" data-style="light2" data-container="body" data-html="true" data-original-title="Light 2"> </li>
+            <li class="color-default  tooltips" data-style="default" data-container="body" data-theme="default" data-original-title="Default"> </li>
+            <li class="color-darkblue current tooltips" data-style="darkblue" data-theme="darkblue" data-container="body" data-original-title="Dark Blue"> </li>
+            <li class="color-blue tooltips" data-style="blue" data-container="body" data-theme="blue" data-original-title="Blue"> </li>
+            <li class="color-grey tooltips" data-style="grey" data-container="body" data-theme="grey" data-original-title="Grey"> </li>
+            <li class="color-light tooltips" data-style="light" data-container="body"  data-theme="light" data-original-title="Light"> </li>
+            <li class="color-light2 tooltips" data-style="light2" data-container="body" data-html="true" data-theme="light2" data-original-title="Light 2"> </li>
         </ul>
-        <script>
-            var color_ = 'blue';//从后台拿到颜色值
-            console.log(color_)
-            $('#style_color1').attr("href", Layout.getLayoutCssPath() + 'themes/' + color_ + ".css");//设置成我们想要的
-            $("ul").find("li").on("click",function(){
-                $(this).attr('data-style');
-                var tis = $(this).attr('data-style');
-                console.log(tis)
-                //把获取到的颜色存入后台
-
-            })
-
-            var nis = "blue";
-            $("#proid").find("li").each(function(){
-                if($(this).attr("data-style") == nis){
-                    $(this).siblings("li").removeClass("current")
-                    $(this).addClass('current');
-//                    $(this).attr('data-style',"blue");//设置主题颜色？ 看源代码 找到控制方法，然后这里改变对应的 就OK了
-                }
-            });
-        </script>
     </div>
 
     <div class="theme-option">
@@ -98,3 +77,4 @@
         </select>
     </div>
 </div>
+
