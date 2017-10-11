@@ -48,7 +48,6 @@ function action(bdy){
     COH.tranTellerNo = "";
     COH.TRANSTIME = getHMS();
     COH.TRANSAUTHNO = "";
-
     CTL.TRANSMODELSERVICE="TCM";
     CTL.TRANSMODEL="1";
     CTL.ISREGOPRTRACE="";
@@ -59,15 +58,11 @@ function action(bdy){
     CTL.PAGENO="0";
     CTL.PAGELENGTH="20";
     CTL.OPERATEMODEL="";
-
     BDY = bdy;
-
     request.COH = COH;
     request.CTL = CTL;
     request.BDY = BDY;
-
     return request;
-
 }
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
@@ -238,7 +233,6 @@ MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http
             subForm.dictKey = dictKey;
             $http.post(manurl + "/DictController/queryDictItemListByDictKey",subForm).then(function (response) {
                 settings.diclist[dictKey] = response.data.retMessage;
-                console.log(response.data.retMessage)
             });
         }
     }
@@ -359,7 +353,6 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
             )
         }
     }
-
     //修改密码页面
     function passedit(datas){
         $scope.improved = function(){
@@ -524,12 +517,14 @@ MetronicApp.controller('QuickSidebarController', ['$scope', function($scope) {
 }]);
 
 /* Setup Layout Part - Sidebar */
+/*
 MetronicApp.controller('PageHeadController', ['$scope', function($scope) {
     $scope.$on('$includeContentLoaded', function() {
         Demo.init(); // init theme panel
     });
 }]);
 
+*/
 
 /* Setup Layout Part - Footer */
 MetronicApp.controller('FooterController', ['$scope', function($scope) {
@@ -538,11 +533,64 @@ MetronicApp.controller('FooterController', ['$scope', function($scope) {
     });
 }]);
 
-/*MetronicApp.controller('ThemePanelController', ['$scope', function($scope) {
+MetronicApp.controller('ThemePanelController', ['$scope','common_service','$rootScope', '$http' ,function($scope,common_service,$rootScope,$http) {
     $scope.$on('$includeContentLoaded', function() {
+        var color_ = localStorage.getItem("colors_")
+        $('#style_color1').attr("href", Layout.getLayoutCssPath() + 'themes/' + color_ + ".css");//设置成我们想要的
+
+        var res = $rootScope.res.login_service;//页面所需调用的服务
+        common_service.post(res.pageInit,{}).then(function(data){
+            if(data.status == "success"){
+                var session = data.retMessage.user;
+                //获取用户选择的配置信息
+                getsubColor(session)
+                //存储用户选择颜色信息
+                subjectColor(session.guid)
+
+            }
+        })
         Demo.init(); // init theme panel
+        //存储主题风格颜色内容
+        function subjectColor(operguid){
+            $("#proid").find("li").on("click",function(){
+                var tis = $(this).attr('data-style');//用户选择的颜色值
+                var res = $rootScope.res.operator_service;//页面所需调用的服务
+                var subFrom = {};
+                subFrom.guidOperator = operguid;
+                subFrom.guidConfig = 'OPERATORCFG1507720783';
+                subFrom.configValue = tis;
+                //把用户选择的颜色存入后台
+                common_service.post(res.saveOperatorLog,subFrom).then(function(data){
+                    var datas = data.retMessage;
+                    if(data.status == "success"){
+                        toastr['success']("保存成功");
+                    }
+                })
+            })
+        }
+        //取用户存储的主题风格颜色
+        function getsubColor(item){
+            var subFrom = {}
+            subFrom.userId= item.userId;
+            subFrom.appGuid= 'APP1499956132';
+            var res = $rootScope.res.operator_service;//页面所需调用的服务
+            common_service.post(res.queryOperatorConfig,subFrom).then(function(data){
+                var datas = data.retMessage;
+                if(data.status == "success"){
+                    var styles = datas.style
+                    for(var i = 0; i<styles.length; i++){
+                        if(styles[i].configDict == "DICT_STYLE_COLOR"){
+                            var color_ = styles[i].configValue;//用户之前存储的颜色
+                            $('#style_color1').attr("href", Layout.getLayoutCssPath() + 'themes/' + color_ + ".css");//设置成用户之前保存的
+                        }
+
+                    }
+                }
+            })
+        }
+
     });
-}]);*/
+}]);
 
 
 

@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.tis.tools.AcFunc;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.core.exception.ExceptionCodes;
 import org.tis.tools.model.po.ac.AcApp;
+import org.tis.tools.model.po.ac.AcFunc;
 import org.tis.tools.model.po.ac.AcFuncgroup;
 import org.tis.tools.model.po.ac.AcOperatorRole;
 import org.tis.tools.model.po.ac.AcPartyRole;
@@ -201,7 +201,7 @@ public class AcRoleController extends BaseController {
 				if(groupList.size()>0){
 					map.put("groupList", groupList);
 				}
-				List<AcFuncVo> funcList = applicationRService.queryAcFuncVo(id);
+				List<AcFunc> funcList = applicationRService.queryAcFunc(id);
 				if(funcList.size()>0){
 					map.put("funcList", funcList);
 				}
