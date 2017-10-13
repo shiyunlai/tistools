@@ -5,54 +5,54 @@ MetronicApp.directive('testRepeats', ['$http','common_service',function($http,co
             var sem = $(elm).attr("comtasssble");
             ctrl.$formatters.push(function(viewValue){
                 if(!isNull(viewValue)){
-                    var sem = viewValue.children;//ÄÃµ½Êı¾İ  ²»´æ·Å¸ú½á¹¹
-                    var sum = 0;//±êÊ¶£¬ÅĞ¶ÏµÚ¼¸´ÎÑ­»·
-                    var html = ''//×Ö·û´®Ä£°å
-                    var num = sem;//Êı×é
+                    var sem = viewValue.children;//æ‹¿åˆ°æ•°æ®  ä¸å­˜æ”¾è·Ÿç»“æ„
+                    var sum = 0;//æ ‡è¯†ï¼Œåˆ¤æ–­ç¬¬å‡ æ¬¡å¾ªç¯
+                    var html = ''//å­—ç¬¦ä¸²æ¨¡æ¿
+                    var num = sem;//æ•°ç»„
                     getArray(sem);
                 }
                 function  getArray(data){
-                    sum++;//±êÊ¶++
+                    sum++;//æ ‡è¯†++
                     var sumer = sum+1;
                     if(!isNull(num)){
                         num = [];
                         for(var i=0;i< data.length;i++){
                             if(!isNull(data[i].children)){
-                                num = num.concat(data[i].children);//°ÑËùÓĞµÄ×ÓºÏ²¢ÔÚÒ»¸öÊı×éÖĞ¡£¼´°ÑËùÓĞµÄ×ÓÈ¡³ö
+                                num = num.concat(data[i].children);//æŠŠæ‰€æœ‰çš„å­åˆå¹¶åœ¨ä¸€ä¸ªæ•°ç»„ä¸­ã€‚å³æŠŠæ‰€æœ‰çš„å­å–å‡º
                             }
                         }
                     }
-                    if(sum == 1){//sumÊÇ±êÊ¶£¬Çø·ÖµÚÒ»´ÎÑ­»·
+                    if(sum == 1){//sumæ˜¯æ ‡è¯†ï¼ŒåŒºåˆ†ç¬¬ä¸€æ¬¡å¾ªç¯
                         for(var i = 0;i< data.length;i++){
-                            if(data[i].isLeaf == 'Y'){//Èç¹ûÊÇ£¬ÄÇÃ´°´ÕÕ×îºóÒ»²ãÑ­»·
+                            if(data[i].isLeaf == 'Y'){//å¦‚æœæ˜¯ï¼Œé‚£ä¹ˆæŒ‰ç…§æœ€åä¸€å±‚å¾ªç¯
                                 html +=  '<li class="nav-item"><a href=" '+ data[i].href + '"><i class="'+data[i].icon+'"></i><span class="title">'+data[i].label+'</span></a><ul class="sub-menu ids'+ sumer +'" id="'+ data[i].guid +'"></ul></li>'
-                            }else{//Èç¹û²»ÊÇ£¬°´ÕÕÕı³£Ñ­»··½Ê½
+                            }else{//å¦‚æœä¸æ˜¯ï¼ŒæŒ‰ç…§æ­£å¸¸å¾ªç¯æ–¹å¼
                                 html +=  '<li class="nav-item"><a href="javascript:;"><i class="'+data[i].icon+'"></i><span class="title">'+data[i].label+'</span> <span class="arrow "></span></a><ul class="sub-menu ids'+ sumer +'" id="'+ data[i].guid +'"></ul></li>'
                             }
                         }
-                        $(".ids" + sum).append(html);//×·¼Óµ½liÖĞ
+                        $(".ids" + sum).append(html);//è¿½åŠ åˆ°liä¸­
                     }
-                    for(var j =0;j<data.length;j++){//Ñ­»·£¬ÄÃµ½µÚÒ»²ã,Óë±¾ÉíÕâ²ã½øĞĞÅĞ¶Ï£¬ÕÒµ½¶ÔÓ¦µÄ²ã¼¶£¬guidºÍparentguidÆ¥Åä
+                    for(var j =0;j<data.length;j++){//å¾ªç¯ï¼Œæ‹¿åˆ°ç¬¬ä¸€å±‚,ä¸æœ¬èº«è¿™å±‚è¿›è¡Œåˆ¤æ–­ï¼Œæ‰¾åˆ°å¯¹åº”çš„å±‚çº§ï¼Œguidå’ŒparentguidåŒ¹é…
                         var array = [];
-                        for(var i =0; i<num.length;i++){//Ñ­»·ËùÓĞµÄ×Ó¼¶£¬È»ºó½øĞĞÆ¥Åä
+                        for(var i =0; i<num.length;i++){//å¾ªç¯æ‰€æœ‰çš„å­çº§ï¼Œç„¶åè¿›è¡ŒåŒ¹é…
                             if(data[j].guid == num[i].parentGuid){
                                 array.push(num[i]);
                             }
-                        }style="height: 41px;line-height: 31px;"
-                        var htmltwo = '';//Ä£°å±êÊ¶
+                        }
+                        var htmltwo = '';//æ¨¡æ¿æ ‡è¯†
                         array.forEach(function(v,i){
-                            if(array[i].isLeaf =='Y'){//ÊÇ·ñÊÇ×îºóÒ»²ã£¬Èç¹ûÊÇ£¬ÄÇÃ´°´ÕÕ×îºóÒ»²ãµÄÑùÊ½Æ´½Ó
+                            if(array[i].isLeaf =='Y'){//æ˜¯å¦æ˜¯æœ€åä¸€å±‚ï¼Œå¦‚æœæ˜¯ï¼Œé‚£ä¹ˆæŒ‰ç…§æœ€åä¸€å±‚çš„æ ·å¼æ‹¼æ¥
                                 htmltwo += '<li><a style="height: 41px;line-height: 31px;"  href="#/'+array[i].href + '"><i class="'+array[i].icon+'"></i><span class="title">'+array[i].label+'</span></a></li>'
-                            }else if(array[i].isLeaf !=='Y' && !isNull(array[i].children) ){//·ñÔò£¬°´ÕÕ·Ç×îºóÒ»²ãÑùÊ½Æ´½Ó
+                            }else if(array[i].isLeaf !=='Y' && !isNull(array[i].children) ){//å¦åˆ™ï¼ŒæŒ‰ç…§éæœ€åä¸€å±‚æ ·å¼æ‹¼æ¥
                                 htmltwo += '<li class="start nav-item"><a  style="height: 41px;line-height: 31px;"   href="javascript:;"><i class="'+array[i].icon+'"></i><span class="title">'+array[i].label+'</span><span class="arrow "></span></a><ul class="sub-menu ids'+ sumer +'"id="'+ array[i].guid+'"></ul></li>'
                             }
                         })
 
-                        $('#'+data[j].guid).append(htmltwo);//×·¼Óµ½¶ÔÓ¦µÄ¸¸½ÚµãµÄ±êÇ©ÖĞ
+                        $('#'+data[j].guid).append(htmltwo);//è¿½åŠ åˆ°å¯¹åº”çš„çˆ¶èŠ‚ç‚¹çš„æ ‡ç­¾ä¸­
                     }
-                    /*   if(isNull(data.children)){//±êÊ¶,Èç¹ûÓĞchildren,ÄÇÃ´¾ÍÒ»Ö±µİ¹éÏÂÈ¥*/
-                    if(sum<40){//±êÊ¶,Èç¹ûÓĞchildren,ÄÇÃ´¾ÍÒ»Ö±µİ¹éÏÂÈ¥
-                        getArray(num);//µİ¹éµ÷ÓÃ
+                    /*   if(isNull(data.children)){//æ ‡è¯†,å¦‚æœæœ‰children,é‚£ä¹ˆå°±ä¸€ç›´é€’å½’ä¸‹å»*/
+                    if(sum<40){//æ ‡è¯†,å¦‚æœæœ‰children,é‚£ä¹ˆå°±ä¸€ç›´é€’å½’ä¸‹å»
+                        getArray(num);//é€’å½’è°ƒç”¨
                     }else{
                         return num;
                     }

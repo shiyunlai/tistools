@@ -845,7 +845,7 @@ public class AcAppController extends BaseController {
 
 
     /**
-     * 查询功能下某个行为类型的操作行为
+     *queryBhvDefInTypeForFunc 查询功能下某个行为类型的操作行为
      *
      * @param content
      * @param request
@@ -1079,14 +1079,13 @@ public class AcAppController extends BaseController {
     @RequestMapping(value = "/deleteAcFuncResource", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> deleteAcFuncResource(@RequestBody String content) {
         JSONObject jsonObj = JSONObject.parseObject(content);
-
-        JSONObject data = jsonObj.getJSONObject("data");
+        JSONArray data = jsonObj.getJSONArray("data");
         List<AcFuncResource> acFuncResources = JSONObject.parseArray(data.toJSONString(), AcFuncResource.class);
         List<AcFuncResource> funcResources = applicationRService.deleteAcFuncResource(acFuncResources);
         return getReturnMap(funcResources);
     }
     /**
-     * 删除功能资源
+     * 修改功能资源
      * @param content
      * @return
      */
@@ -1111,13 +1110,13 @@ public class AcAppController extends BaseController {
      * @param content
      * @return
      */
+    @ResponseBody
     @RequestMapping(value = "/queryAcFuncResource", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> queryAcFuncResource(@RequestBody String content) {
         JSONObject jsonObj = JSONObject.parseObject(content);
-
         JSONObject data = jsonObj.getJSONObject("data");
-        String appGuid = data.getString("appGuid");
-        List<AcFuncResource> funcResources = applicationRService.queryAcFuncResource(appGuid);
+        String funcGuid = data.getString("funcGuid");
+        List<AcFuncResource> funcResources = applicationRService.queryAcFuncResource(funcGuid);
         return getReturnMap(funcResources);
     }
 
