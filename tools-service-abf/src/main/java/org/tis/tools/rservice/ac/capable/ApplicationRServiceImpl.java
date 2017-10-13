@@ -779,7 +779,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 										ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, BasicUtil.wrap("acFuncResource", AcFuncResource.TABLE_NAME)
 								);
 							}
-							String validate = BeanFieldValidateUtil.checkObjFieldRequired(acFuncResource, new String[]{"guidFunc, attrKey"});
+							String validate = BeanFieldValidateUtil.checkObjFieldRequired(acFuncResource, new String[]{"guidFunc", "attrKey"});
 							if (StringUtils.isNotEmpty(validate)) {
 								throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_DELETE, BasicUtil.wrap(validate, AcFuncResource.TABLE_NAME));
 							}

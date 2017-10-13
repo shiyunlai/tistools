@@ -287,6 +287,13 @@ MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http
                     settings.commlist[type] = response.data.retMessage;
                 });
             }
+        }else if(type == "BHVTYPE"){
+            //查询所有行为类型
+            if(_.isNil(settings.commlist[type])) {
+                $http.post(manurl + "/AcAppController/functypequery",{}).then(function (response) {
+                    settings.commlist[type] = response.data.retMessage;
+                });
+            }
         }
     }
 
@@ -333,7 +340,6 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
                 $rootScope.menus = angular.fromJson(data.retMessage.menu);
             }
         })
-        //拿到用户信息
     });
     //个人信息页面
     function userinfo(item){
@@ -413,43 +419,52 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout','$rootScope','
     $scope.$on('$includeContentLoaded', function () {
         Layout.initSidebar(); // init sidebar
         //调用菜单
+
         var res = $rootScope.res.login_service;//页面所需调用的服务
         common_service.post(res.pageInit, {}).then(function (data) {
             if (data.status == "success") {
                 var sessionjson = angular.fromJson(data.retMessage.menu);
                 $scope.menusAndTrans = angular.copy(sessionjson);
-                //搜索框点击事件调用
+                $scope.issearchmenu = false;//让搜索菜单隐藏
+                //搜索框改变事件调用
                 $scope.test = function (searchParam) {
                     if (_.isEmpty(searchParam)) { //如果是数组
-                        $('.search').html('');//制空
+                        // $('.search').html('');//制空
+                        $scope.searchParam = '';//把搜索内容复制过去
                         $('.search').slideUp();//让搜索的内容隐藏
                         $(".ids1").slideDown();//让原本的树结构显示
+                        $scope.issearchmenu = false;//让搜索菜单隐藏
                     }
                 }
                 //调用搜索逻辑
                 $scope.search = function (searchParam) {
                     //如果不是数组,说明有搜索值,那就进行处理
-                    search([sessionjson], searchParam);//调用搜索方法，传入搜索的值
-                    $timeout(function () {
-                        $(".ids1").slideUp();//让原本的菜单结构隐藏
-                    })
+                    if (_.isEmpty(searchParam)) { //如果是数组
+                      /*  $('.search').slideDown();//让搜索的内容隐藏
+                        $(".ids1").slideUp();//让原本的树结构显显示*!/*/
+                    }else{
+                        $scope.issearchmenu = true;//让搜索菜单隐藏
+                        $scope.searchParam = searchParam;//把搜索内容复制过去
+                        search([sessionjson], searchParam);//调用搜索方法，传入搜索的值
+                       //看是否能用动画来做
+                    }
                 };
             }
         })
 
         function search(all, key) { //包装了一个搜索方法，只要数据结构做成类似的，这个直接拿来用。
-            $('.search').html('');//制空
+            // $('.search').html('');//制空
             var sum = 0;//标识，判断第几次循环
             var html = ''//字符串模板
             var num = all//数组
             getArray(all, key);//调用
             function getArray(data, key) {
                 sum++;//标识++
-                var sumer = sum + 1;
-                if (!isNull(num)) {//如果不为空，那就进行处理
+                var sumer = sum+1;
+                if(!isNull(num)){
                     num = [];
-                    for (var i = 0; i < data.length; i++) {
-                        if (!isNull(data[i].children)) {
+                    for(var i=0;i< data.length;i++){
+                        if(!isNull(data[i].children)){
                             num = num.concat(data[i].children);//把所有的子合并在一个数组中。即把所有的子取出
                         }
                     }
@@ -457,53 +472,51 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout','$rootScope','
                 if (sum == 1) {//sum是标识，区分第一次循环
                     for (var i = 0; i < data.length; i++) {
                         if (data[i].isLeaf == 'Y') {//如果是，那么按照最后一层循环
-                            html += '<a href=" ' + data[i].href + '"><i class="' + data[i].icon + '"></i><span class="title">' + data[i].label + '</span></a><ul class="sub-menu ids' + sumer + '" id="' + 'ABF' + data[i].guid + '"></ul>'
+                            html +=  '<li class="nav-item"><a href=" '+ data[i].href + '"><i class="'+data[i].icon+'"></i><span class="title">'+data[i].label+'</span></a><ul class="sub-menu search'+ sumer +'" id="'+ data[i].guid +'"></ul></li>'
                         } else {//如果不是，按照正常循环方式
-                            html += '<a href="javascript:;"><i class="' + data[i].icon + '"></i><span class="title">' + data[i].label + '</span> <span class="arrow "></span></a><ul class="sub-menu idss' + sumer + '" id="' + 'ABF' + data[i].guid + '"></ul>'
+                            html +=  '<li class="nav-item"><a href="javascript:;"><i class="'+data[i].icon+'"></i><span class="title">'+data[i].label+'</span> <span class="arrow "></span></a><ul class="sub-menu search'+ sumer +'" id="'+ data[i].guid +'"></ul></li>'
                         }
                     }
-                    $(".search").append(html);//追加到li中
+                    $(".search" + sum).append(html);//追加到li中
                 }
-                for (var j = 0; j < data.length; j++) {//循环，拿到第一层,与本身这层进行判断，找到对应的层级，guid和parentguid匹配
+
+                for(var j =0;j<data.length;j++){//循环，拿到第一层,与本身这层进行判断，找到对应的层级，guid和parentguid匹配
                     var array = [];
-                    for (var i = 0; i < num.length; i++) {//循环所有的子级，然后进行匹配
-                        if (data[j].guid == num[i].parentGuid) {
+                    for(var i =0; i<num.length;i++){//循环所有的子级，然后进行匹配
+                        if(data[j].guid == num[i].parentGuid){
                             array.push(num[i]);
                         }
                     }
                     var htmltwo = '';//模板标识
+                    array.forEach(function(v,i){
+                        if(array[i].isLeaf =='Y'){//是否是最后一层，如果是，那么按照最后一层的样式拼接
+                            /*if(array[i].label.indexOf(key)>0){
+                                console.log(array[i])
+                            }*/
+                            if(array[i].label.indexOf(key) == 0){
+                                console.log(array[i])
+                                htmltwo += '<li><a style="height: 41px;line-height: 31px;"  href="#/'+array[i].href + '"><i class="'+array[i].icon+'"></i><span class="title">'+array[i].label+'</span></a></li>'
+                                // htmltwo += '<li class="start nav-item"><a  style="height: 41px;line-height: 31px;"   href="javascript:;"><i class="'+array[i].icon+'"></i><span class="title">'+array[i].label+'</span><span class="arrow "></span></a><ul class="sub-menu search'+ sumer +'"id="'+ array[i].guid+'"></ul></li>'
+                            }
 
-                    var indexofs = [];
-                    array.forEach(function (v, i) {
-                        if (array[i].label.indexOf(key) != -1) {
-                            indexofs.push(array[i]);//匹配的放入数组中
+                        }else if(array[i].isLeaf !=='Y' && !isNull(array[i].children) ){//否则，按照非最后一层样式拼接
+                            /*if(array[i].label.indexOf(key) == 0){
+                                htmltwo += '<li class="start nav-item"><a  style="height: 41px;line-height: 31px;"   href="javascript:;"><i class="'+array[i].icon+'"></i><span class="title">'+array[i].label+'</span><span class="arrow "></span></a><ul class="sub-menu ids'+ sumer +'"id="'+ array[i].guid+'"></ul></li>'
+                            }*//*if(array[i].label.indexOf(key) == 0){
+                                htmltwo += '<li class="start nav-item"><a  style="height: 41px;line-height: 31px;"   href="javascript:;"><i class="'+array[i].icon+'"></i><span class="title">'+array[i].label+'</span><span class="arrow "></span></a><ul class="sub-menu ids'+ sumer +'"id="'+ array[i].guid+'"></ul></li>'
+                            }*/
                         }
                     })
-                    var strea = ''
-                    for (var i = 0; i < indexofs.length; i++) {//匹配的内容
-                        if (indexofs[i].isLeaf == 'Y') {
-                            //是最后一层
-                            htmltwo += '<li><a  href="#/' + indexofs[i].href + '"><i class="' + indexofs[i].icon + '"></i><span class="title">' + indexofs[i].label + '</span></a></li>'
-                            strea = true;
-                        } else {
-                            htmltwo += '<li class="start nav-item"><a  style="height: 41px;line-height: 31px;"   href="javascript:;"><i class="' + indexofs[i].icon + '"></i><span class="title">' + indexofs[i].label + '</span><span class="arrow "></span></a><ul class="sub-menu ids' + sumer + '"id="' + 'ABF' + indexofs[i].guid + '"></ul></li>'
-                            strea = false;
-                        }
-                        if (strea) {
-                            $('.idss2').append(htmltwo);//追加到对应的父节点的标签中
-                        } else {
-                            $('#' + 'ABF' + indexofs[i].guid).append(htmltwo);//追加到对应的父节点的标签中
-                        }
-                    }
+
+                    $('#'+data[j].guid).append(htmltwo);//追加到对应的父节点的标签中
+                }
+                if(sum<40){//标识,如果有children,那么就一直递归下去
+                    getArray(num,key);//递归调用
+                }else{
+                    return num;
                 }
             }
 
-            if (sum < 40) {//标识,如果有children,那么就一直递归下去
-                getArray(num, key);//递归调用
-            } else {
-                return num;
-            }
-            $('.search').slideDown();//让搜索内容显示
         }
     });
 }]);
