@@ -3,7 +3,7 @@ Demo script to handle the theme demo
 **/
 var Demo = function () {
 
-    // Handle Theme Settings
+    // Handle Theme Settings  处理主题设置
     var handleTheme = function () {
 
         var panel = $('.theme-panel');
@@ -19,7 +19,7 @@ var Demo = function () {
             $('.sidebar-pos-option', panel).val(App.isRTL() ? 'right' : 'left');
         }
 
-        //handle theme layout
+        //handle theme layout  处理主题布局
         var resetLayout = function () {
             $("body").
             removeClass("page-boxed").
@@ -68,19 +68,19 @@ var Demo = function () {
                 headerOption = 'fixed';
             }
 
-            resetLayout(); // reset layout to default state
+            resetLayout(); // reset layout to default state  将布局重置为默认状态
 
             if (layoutOption === "boxed") {
                 $("body").addClass("page-boxed");
 
-                // set header
+                // set header  设置标题
                 $('.page-header > .page-header-inner').addClass("container");
                 var cont = $('body > .clearfix').after('<div class="container"></div>');
 
-                // set content
+                // set content  设置内容
                 $('.page-container').appendTo('body > .container');
 
-                // set footer
+                // set footer  设置页脚
                 if (footerOption === 'fixed') {
                     $('.page-footer').html('<div class="container">' + $('.page-footer').html() + '</div>');
                 } else {
@@ -89,7 +89,7 @@ var Demo = function () {
             }
 
             if (lastSelectedLayout != layoutOption) {
-                //layout changed, run responsive handler: 
+                //layout changed, run responsive handler: 布局改变，运行响应处理程序：
                 App.runResizeHandlers();
             }
             lastSelectedLayout = layoutOption;
@@ -118,40 +118,40 @@ var Demo = function () {
                 }
             }
 
-            // top dropdown style
+            // top dropdown style  顶部下拉风格
             if (headerTopDropdownStyle === 'dark') {
                 $(".top-menu > .navbar-nav > li.dropdown").addClass("dropdown-dark");
             } else {
                 $(".top-menu > .navbar-nav > li.dropdown").removeClass("dropdown-dark");
             }
 
-            //footer 
+            //footer
             if (footerOption === 'fixed') {
                 $("body").addClass("page-footer-fixed");
             } else {
                 $("body").removeClass("page-footer-fixed");
             }
 
-            //sidebar style
+            //sidebar style  侧栏风格
             if (sidebarStyleOption === 'compact') {
                 $(".page-sidebar-menu").addClass("page-sidebar-menu-compact");
             } else {
                 $(".page-sidebar-menu").removeClass("page-sidebar-menu-compact");
             }
 
-            //sidebar menu 
+            //sidebar menu  侧边栏菜单
             if (sidebarMenuOption === 'hover') {
                 if (sidebarOption == 'fixed') {
                     $('.sidebar-menu-option', panel).val("accordion");
                     alert("Hover Sidebar Menu is not compatible with Fixed Sidebar Mode. Select Default Sidebar Mode Instead.");
                 } else {
                     $(".page-sidebar-menu").addClass("page-sidebar-menu-hover-submenu");
-                }                
+                }
             } else {
                 $(".page-sidebar-menu").removeClass("page-sidebar-menu-hover-submenu");
             }
 
-            //sidebar position
+            //sidebar position 侧栏位置
             if (App.isRTL()) {
                 if (sidebarPosOption === 'left') {
                     $("body").addClass("page-sidebar-reversed");
@@ -178,11 +178,11 @@ var Demo = function () {
                 }
             }
 
-            Layout.fixContentHeight(); // fix content height            
-            Layout.initFixedSidebar(); // reinitialize fixed sidebar
+            Layout.fixContentHeight(); // 修复内容高度
+            Layout.initFixedSidebar(); // 重新初始化固定侧边栏
         };
 
-        // handle theme colors
+        // handle theme colors  处理主题颜色  主要原因
         var setColor = function (color) {
             var color_ = (App.isRTL() ? color + '-rtl' : color);
             $('#style_color').attr("href", Layout.getLayoutCssPath() + 'themes/' + color_ + ".min.css");
@@ -202,7 +202,7 @@ var Demo = function () {
             }
         });
 
-        // set default theme options:
+        // set default theme options:设置默认主题选项：
 
         if ($("body").hasClass("page-boxed")) {
             $('.layout-option', panel).val("boxed");
@@ -230,7 +230,7 @@ var Demo = function () {
 
         if ($(".page-sidebar-menu").hasClass("page-sidebar-menu-hover-submenu")) {
             $('.sidebar-menu-option', panel).val("hover");
-        }        
+        }
 
         var sidebarOption = $('.sidebar-option', panel).val();
             var headerOption = $('.page-header-option', panel).val();
@@ -242,7 +242,7 @@ var Demo = function () {
         $('.layout-option, .page-header-top-dropdown-style-option, .page-header-option, .sidebar-option, .page-footer-option, .sidebar-pos-option, .sidebar-style-option, .sidebar-menu-option', panel).change(setLayout);
     };
 
-    // handle theme style
+    // handle theme style 处理主题风格
     var setThemeStyle = function(style) {
         var file = (style === 'rounded' ? 'components-rounded' : 'components');
         file = (App.isRTL() ? file + '-rtl' : file);
@@ -256,28 +256,28 @@ var Demo = function () {
 
     return {
 
-        //main function to initiate the theme
+        //main function to initiate the theme 主要功能启动主题
         init: function() {
-            // handles style customer tool
-            handleTheme(); 
+            // handles style customer tool 处理样式客户工具
+            handleTheme();
 
-            // handle layout style change
+            // handle layout style change  处理布局风格的变化
             $('.theme-panel .layout-style-option').change(function() {
                  setThemeStyle($(this).val());
             });
 
-            // set layout style from cookie
+            // set layout style from cookie  从cookie设置布局样式
             if (typeof Cookies !== "undefined" && Cookies.get('layout-style-option') === 'rounded') {
                 setThemeStyle(Cookies.get('layout-style-option'));
                 $('.theme-panel .layout-style-option').val(Cookies.get('layout-style-option'));
-            }             
+            }
         }
     };
 
 }();
 
 if (App.isAngularJsApp() === false) {
-    jQuery(document).ready(function() {    
-       Demo.init(); // init metronic core componets
+    jQuery(document).ready(function() {
+       Demo.init(); // init metronic core componets  init medtronic核心组件
     });
 }

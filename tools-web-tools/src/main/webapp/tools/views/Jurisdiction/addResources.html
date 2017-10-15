@@ -3,7 +3,8 @@
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-cogs font-green-sharp"></i>
-            <span class="caption-subject font-green-sharp bold uppercase">新增资源</span>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="!id">新增资源</span>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="id">修改资源</span>
         </div>
         <div class="tools">
             <a href="javascript:;" class="remove" ng-click="cancel()">
@@ -13,45 +14,42 @@
     <div class="portlet-body portlet light">
         <form action="#" name="myform" class="form-horizontal ">
             <div class="form-body ">
-                <div class="col-md-12" >
+                <div class="col-md-6" >
                     <div class="form-group">
-                        <label class="control-label col-md-2">构建包名</label>
+                        <label class="control-label col-md-4">属性类型:<span ng-class="{required:myform.dict_key1.$invalid}"  > * </span></label>
 
-                        <div class="col-md-10">
+                        <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="resourFrom.appname"
-                                   name="id" />
+                                   ng-model="resourFrom.attrType" required
+                                   name="dict_key1"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6" >
                     <div class="form-group">
-                        <label class="control-label col-md-4">显示名称</label>
+                        <label class="control-label col-md-4">属性名:<span ng-class="{required:myform.dict_key2.$invalid}"  > * </span></label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="resourFrom.showname"
-                                   name="id" />
+                                   ng-model="resourFrom.attrKey"
+                                   name="dict_key2"  required />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6" >
                     <div class="form-group">
-                        <label class="control-label col-md-4">资源类型</label>
+                        <label class="control-label col-md-4">属性值:<span ng-class="{required:myform.dict_key3.$invalid}"  > * </span></label>
                         <div class="col-md-8">
-                            <select class="form-control" name="dict_open" ng-model="resourFrom.type">
-                                <option value="s" selected>页面流</option>
-                                <option value="a">测试功能</option>
-                            </select>
+                            <input type="text" class="form-control"
+                                   ng-model="resourFrom.attrValue" required
+                                   name="dict_key3" />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12" >
                     <div class="form-group">
-                        <label class="control-label col-md-2">资源路径</label>
+                        <label class="control-label col-md-2">备注</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control"
-                                   ng-model="resourFrom.url"
-                                   name="id" />
+                            <textarea class="form-control"  ng_model="resourFrom.memo" maxlength="128" length-limit  num-length=512  scope-models="resourFrom.memo"  name="ctl_desc"></textarea>
                         </div>
                     </div>
                 </div>
@@ -61,7 +59,9 @@
                         <div class="col-md-10">
 
                             <div class="actions btn-set" style="float: right;">
-                                <button type="button" name="back" class="btn btn-primary" ng-click="add(appFrom)"> 保存
+                                <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="add(resourFrom)" > 保存
+                                </button>
+                                <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存
                                 </button>
                                 <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
                                 </button>

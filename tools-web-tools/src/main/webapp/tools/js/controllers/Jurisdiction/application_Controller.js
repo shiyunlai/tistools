@@ -1,7 +1,7 @@
 /**
  * Created by wangbo on 2017/6/1.
  */
-angular.module('MetronicApp').controller('application_controller', function($rootScope, $scope ,$modal,$http,i18nService, $timeout,filterFilter,$uibModal,uiGridConstants,application_service) {
+angular.module('MetronicApp').controller('application_controller', function($rootScope, $scope ,$modal,$http,i18nService,common_service, $timeout,filterFilter,$uibModal,uiGridConstants,application_service) {
     var biz = {};
     $scope.biz = biz;
     var item = {};
@@ -10,7 +10,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     $scope.biz.datas = [];
     //定义权限
     $scope.biz.applica = false;
-
     //当前节点定义
     var thisNode = '';
     $scope.thisNode = thisNode;
@@ -18,6 +17,8 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     $scope.biz.reload = function(){
         $("#container").jstree().refresh();
     }
+
+    var res = $rootScope.res.application_service;//页面所需调用的服务
     /*-------------------------------------------------------------------------------分割符--------------------------------------------------------------------------------*/
     //0、树结构逻辑代码
     //菜单搜索修改，改成键盘弹起事件，加上search组件
@@ -421,8 +422,8 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 appfunflag.gnlist = true;
                 appfunflag.zylist = false;
                 appfunflag.gnactive =false;
-                //查询类型
-                application_service.queryBhvtypeDefByFunc(subFrom).then(function (data) {
+                //查询功能行为类型
+               /* application_service.queryBhvtypeDefByFunc(subFrom).then(function (data) {
                     if(!isNull(data.retMessage)){//查询判断，如果是空，则返回空。
                         var datas = data.retMessage;//功能列表资源
                         $scope.gridOption4.data = datas;
@@ -431,6 +432,18 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                     }else{
                         var datast = [];
                         $scope.gridOption4.data = datast;
+                    }
+                })*/
+                //查询资源列表
+                var resouir = {};
+                resouir.data = {}
+                resouir.data.funcGuid = data.node.id;
+                common_service.post(res.queryAcFuncResource,resouir).then(function(data){
+                    if(data.status == "success"){
+                        var datas  = data.retMessage;
+                        $scope.gridResources.data =  datas;
+                        $scope.gridResources.mydefalutData = datas;
+                        $scope.gridResources.getPage(1,$scope.gridResources.paginationPageSize);
                     }
                 })
                 var ids = data.node.original.id;//点击功能的id
@@ -1128,7 +1141,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     }
 
     //资源信息编辑方法
-    $scope.biz.resources = function(item){
+/*    $scope.biz.resources = function(item){
         $scope.copyresEdit = angular.copy(item)
         $scope.editflag = !$scope.editflag;//让保存取消方法显现,并且让文本框可以输入
     }
@@ -1136,7 +1149,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     $scope.biz.resourcesedit = function(item){
         $scope.dictionaryAdd = $scope.copyresEdit;
         $scope.editflag = !$scope.editflag;//让保存取消方法显现
-    }
+    }*/
 
     //应用信息修改方法
     $scope.biz.appsave = function(item){
@@ -1171,110 +1184,62 @@ angular.module('MetronicApp').controller('application_controller', function($roo
 
 
 
-    //资源修改保存方法
-    $scope.biz.save = function(item){
-        item.id = item.guid;
-        application_service.acFuncResourceEdit(item).then(function(data){
-            if(data.status == "success"){;
-                toastr['success']("修改成功！");
-                $("#container").jstree().refresh();
-                $scope.editflag = !$scope.editflag;
+
+    //资源类型列表
+    var gridResources = {};
+    $scope.gridResources = gridResources;
+    var comRes = [
+        { field: 'attrType', displayName: '属性类型'},
+        { field: 'attrKey', displayName: '属性名'},
+        { field: 'attrValue', displayName: '属性值'},
+        { field: 'memo', displayName: '备注'}
+    ];
+    var fRes = function(row){
+        if(row.isSelected){
+            $scope.selectRow = row.entity;
+        }else{
+            delete $scope.selectRow;//制空
+        }
+}
+    $scope.gridResources = initgrid($scope,gridResources,filterFilter,comRes,true,fRes);
+
+    //查询功能资源封装
+    biz.queryResources = function(num){
+        var resouir = {};
+        resouir.data = {}
+        resouir.data.funcGuid = num;
+        common_service.post(res.queryAcFuncResource,resouir).then(function(data){
+            if(data.status == "success"){
+                var datas  = data.retMessage;
+                $scope.gridResources.data = datas;
+                $scope.gridResources.mydefalutData = datas;
+                $scope.gridResources.getPage(1,$scope.gridResources.paginationPageSize);
             }else{
-                toastr['error']('修改失败'+'<br/>'+data.retMessage);
+                $scope.gridResources.data = [];
+                $scope.gridResources.mydefalutData = [];
+                $scope.gridResources.getPage(1,$scope.gridResources.paginationPageSize);
             }
         })
     }
 
-
-    //功能对应类型逻辑
-    var gridOption4 = {};
-    $scope.gridOption4 = gridOption4;
-    var  com4= [{ field: "bhvtypeName", displayName:'类型名称'},
-        { field: "bhvtypeCode", displayName:'类型代码'}
-    ];
-    //自定义点击事件
-    var f4 = function(row){
-        if(row.isSelected){
-            $scope.selectRow4 = row.entity;
-            var ids = $scope.selectRow4.guid;//类型guid
-            var guids = $scope.biz.item.id;//fun的guid
-            biz.initt5(guids,ids);//查询对应的操作行为
-        }else{
-            delete $scope.selectRow4;//制空
-            $scope.biz.active = false;
-            var ids = $scope.biz.item.id;//获取点击的根节点的值
-            biz.inittAll(ids)
-        }
-    }
-    $scope.gridOption4 = initgrid($scope,gridOption4,filterFilter,com4,false,f4);
-    $scope.gridOption4.paginationPageSize = 20, //每页显示个数
-
-
-    //根据功能查询行为类型函数
-    biz.typequery = function(num){
-        var subFrom ={};
-        subFrom.id = num;
-        application_service.queryBhvtypeDefByFunc(subFrom).then(function (data) {
-                var datas = data.retMessage;//功能列表资源
-                $scope.gridOption4.data = datas;
-                $scope.gridOption4.mydefalutData = datas;
-                $scope.gridOption4.getPage(1,$scope.gridOption4.paginationPageSize);
-        })
-    }
-    //新增行为类型
-    $scope.biz.addtype = function () {
-        var ids = $scope.biz.item.id;//获取点击的根节点的值，这里指点击功能节点的guid
-        openwindow($uibModal, 'views/Jurisdiction/activetypeAdd.html', 'lg',
+    //新增资源逻辑
+    $scope.biz.addResources = function () {
+        var ids = $scope.biz.item//获取到点击根节点
+        openwindow($uibModal, 'views/Jurisdiction/addResources.html', 'lg',// 弹出页面
             function ($scope, $modalInstance) {
-                var gridOptions = {};
-                $scope.gridOptions = gridOptions;
-                var com = [
-                    { field: "bhvtypeName", displayName:'名称'},
-                    { field: "bhvtypeCode", displayName:'类型代码'}
-                ];
-                //自定义点击事件
-                var f1 = function(row){
-                    if(row.isSelected){
-                        $scope.selectRow3 = row.entity;
-                    }else{
-                        delete $scope.selectRow3;//制空
-                    }
-                }
-                $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
-                //查询功能类型
-                var subFrom = {};
-                application_service.functypequery(subFrom).then(function(data){
-                    if(data.status == "success"){
-                        var datas = data.retMessage;
-                        $scope.gridOptions.data = datas;
-                        $scope.gridOptions.mydefalutData = datas;
-                        $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
-                    }else{
-                        toastr['error']('初始化失败'+'<br/>'+data.retMessage);
-                    }
-                })
-                //导入方法
-                $scope.importAdd = function () {
-                    var dats = $scope.gridOptions.getSelectedRows();
-                    if(dats.length >0){
-                        var fun = [];
-                        for(var i =0; i<dats.length;i++){
-                            fun.push(dats[i].guid)
+                $scope.add = function(item){//保存新增的函数
+                    var subFrom = {};
+                    subFrom.data  = {};
+                    subFrom.data = item;
+                    subFrom.data.guidFunc = ids.id;
+                    common_service.post(res.createAcFuncResource,subFrom).then(function(data){
+                        console.log(data);
+                        if(data.status == "success"){
+                            toastr['success']("新增资源成功！");
+                            biz.queryResources(ids.id)
+                            $modalInstance.close();
                         }
-                        subFrom.id = ids;
-                        subFrom.bhvDefGuids = fun;
-                        application_service.addBhvtypeForFunc(subFrom).then(function(data){
-                            if(data.status == "success"){
-                                biz.typequery(ids)
-                                toastr['success']("导入成功！");
-                                $modalInstance.close();
-                            }else{
-                                toastr['error']('导入失败'+'<br/>'+data.retMessage);
-                            }
-                        })
-                    }else{
-                        toastr['error']("请至少选中一个！");
-                    }
+                    })
                 }
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
@@ -1282,31 +1247,201 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             }
         )
     }
-    //删除功能对应类型
-    $scope.biz.addtypeDel = function(){
-        if($scope.selectRow4){
-            var guid = $scope.selectRow4.guid;//类型的guid
-            var ids = $scope.biz.item.id;//功能的guid
-            var fun = [];
-            fun.push(guid);
-            if(confirm('确定删除该类型？删除该类型会删除对应的操作行为')){
-                var guids = {};
-                guids.funcGuid = ids;//删除传入的必须是json格式
-                guids.bhvtypeGuids = fun;
-                application_service.delFuncBhvType(guids).then(function(data){
+
+
+    //修改资源逻辑
+    $scope.biz.editResources = function () {
+        var ids = $scope.biz.item//获取到点击根节点
+        var getSel = $scope.gridResources.getSelectedRows();
+        if(isNull(getSel) || getSel.length>1){
+            toastr['error']("请至少选中一条！");
+        }else{
+            var str =  getSel[0];//信息回选
+            openwindow($uibModal, 'views/Jurisdiction/addResources.html', 'lg',// 弹出页面
+                function ($scope, $modalInstance) {
+                    $scope.id = true;
+                    if(!isNull(str)){//如果参数不为空，则就回显
+                        $scope.resourFrom = angular.copy(str);
+                    }
+                    $scope.add = function(item){//保存新增的函数
+                        var subFrom = {};
+                        subFrom.data  = {};
+                        subFrom.data = item;
+                        subFrom.data.guidFunc = ids.id;
+                        common_service.post(res.updateAcFuncResource,subFrom).then(function(data){
+                            if(data.status == "success"){
+                                toastr['success']("修改资源成功！");
+                                biz.queryResources(ids.id)
+                                $modalInstance.close();
+                            }else{
+                                toastr['error']('修改资源失败'+'<br/>'+data.retMessage);
+                            }
+                        })
+                    }
+                    $scope.cancel = function () {
+                        $modalInstance.dismiss('cancel');
+                    };
+                }
+            )
+        }
+    }
+
+    //删除资源成功
+    $scope.biz.delResources = function () {
+        var ids = $scope.biz.item;//获取到点击根节点
+        var getSel = $scope.gridResources.getSelectedRows();
+        if(isNull(getSel) || getSel.length<1){
+            toastr['error']("请选择一条数据进行修改！");
+        }else{
+            if(confirm('确定删除改配置吗')){
+                var tis = {};
+                tis.data = []
+                for(var i =0;i<getSel.length;i++){
+                    var subFrom = {};
+                    subFrom = getSel[i];
+                    subFrom.guidFunc = ids.id;
+                    tis.data.push(subFrom);
+                }
+                console.log(tis)
+                common_service.post(res.deleteAcFuncResource,tis).then(function(data){
                     if(data.status == "success"){
-                        toastr['success']("删除成功!");
-                        biz.typequery(ids)//重新调用查询类型
-                        biz.inittAll(ids);//查询功能下所有行为
+                        toastr['success']("删除资源成功！");
+                        biz.queryResources(ids.id)
                     }else{
                         toastr['error']('删除失败'+'<br/>'+data.retMessage);
                     }
                 })
             }
-        }else{
-            toastr['error']("请至少选中一条类型进行删除！");
         }
     }
+
+
+
+    //功能对应类型逻辑
+    //页面更改,逻辑改变
+    /*    var gridOption4 = {};
+        $scope.gridOption4 = gridOption4;
+        var  com4= [{ field: "bhvtypeName", displayName:'类型名称'},
+            { field: "bhvtypeCode", displayName:'类型代码'}
+        ];
+        //自定义点击事件
+        var f4 = function(row){
+            if(row.isSelected){
+                $scope.selectRow4 = row.entity;
+                var ids = $scope.selectRow4.guid;//类型guid
+                var guids = $scope.biz.item.id;//fun的guid
+                biz.initt5(guids,ids);//查询对应的操作行为
+            }else{
+                delete $scope.selectRow4;//制空
+                $scope.biz.active = false;
+                var ids = $scope.biz.item.id;//获取点击的根节点的值
+                biz.inittAll(ids)
+            }
+        }
+        $scope.gridOption4 = initgrid($scope,gridOption4,filterFilter,com4,false,f4);
+        $scope.gridOption4.paginationPageSize = 20, //每页显示个数
+
+
+        //根据功能查询行为类型函数
+        biz.typequery = function(num){
+            var subFrom ={};
+            subFrom.id = num;
+            application_service.queryBhvtypeDefByFunc(subFrom).then(function (data) {
+                    var datas = data.retMessage;//功能列表资源
+                    $scope.gridOption4.data = datas;
+                    $scope.gridOption4.mydefalutData = datas;
+                    $scope.gridOption4.getPage(1,$scope.gridOption4.paginationPageSize);
+            })
+        }
+        //新增行为类型
+        $scope.biz.addtype = function () {
+            var ids = $scope.biz.item.id;//获取点击的根节点的值，这里指点击功能节点的guid
+            openwindow($uibModal, 'views/Jurisdiction/activetypeAdd.html', 'lg',
+                function ($scope, $modalInstance) {
+                    var gridOptions = {};
+                    $scope.gridOptions = gridOptions;
+                    var com = [
+                        { field: "bhvtypeName", displayName:'名称'},
+                        { field: "bhvtypeCode", displayName:'类型代码'}
+                    ];
+                    //自定义点击事件
+                    var f1 = function(row){
+                        if(row.isSelected){
+                            $scope.selectRow3 = row.entity;
+                        }else{
+                            delete $scope.selectRow3;//制空
+                        }
+                    }
+                    $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
+                    //查询功能类型
+                    var subFrom = {};
+                    application_service.functypequery(subFrom).then(function(data){
+                        if(data.status == "success"){
+                            var datas = data.retMessage;
+                            $scope.gridOptions.data = datas;
+                            $scope.gridOptions.mydefalutData = datas;
+                            $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
+                        }else{
+                            toastr['error']('初始化失败'+'<br/>'+data.retMessage);
+                        }
+                    })
+                    //导入方法
+                    $scope.importAdd = function () {
+                        var dats = $scope.gridOptions.getSelectedRows();
+                        if(dats.length >0){
+                            var fun = [];
+                            for(var i =0; i<dats.length;i++){
+                                fun.push(dats[i].guid)
+                            }
+                            subFrom.id = ids;
+                            subFrom.bhvDefGuids = fun;
+                            application_service.addBhvtypeForFunc(subFrom).then(function(data){
+                                if(data.status == "success"){
+                                    biz.typequery(ids)
+                                    toastr['success']("导入成功！");
+                                    $modalInstance.close();
+                                }else{
+                                    toastr['error']('导入失败'+'<br/>'+data.retMessage);
+                                }
+                            })
+                        }else{
+                            toastr['error']("请至少选中一个！");
+                        }
+                    }
+                    $scope.cancel = function () {
+                        $modalInstance.dismiss('cancel');
+                    };
+                }
+            )
+        }
+        //删除功能对应类型
+        $scope.biz.addtypeDel = function(){
+            if($scope.selectRow4){
+                var guid = $scope.selectRow4.guid;//类型的guid
+                var ids = $scope.biz.item.id;//功能的guid
+                var fun = [];
+                fun.push(guid);
+                if(confirm('确定删除该类型？删除该类型会删除对应的操作行为')){
+                    var guids = {};
+                    guids.funcGuid = ids;//删除传入的必须是json格式
+                    guids.bhvtypeGuids = fun;
+                    application_service.delFuncBhvType(guids).then(function(data){
+                        if(data.status == "success"){
+                            toastr['success']("删除成功!");
+                            biz.typequery(ids)//重新调用查询类型
+                            biz.inittAll(ids);//查询功能下所有行为
+                        }else{
+                            toastr['error']('删除失败'+'<br/>'+data.retMessage);
+                        }
+                    })
+                }
+            }else{
+                toastr['error']("请至少选中一条类型进行删除！");
+            }
+    }*/
+
+
+    //查询功能行为
     biz.initt5 = function(funcGuid,bhvtypeGuid){//查询类型对应操作行为方法
         var subFrom = {};
         subFrom.funcGuid = funcGuid;
@@ -1322,7 +1457,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
 
 
 
-    //查询功能下所有行为类型
+    //查询功能下所有行为
     biz.inittAll = function(funcGuid){//查询类型对应操作行为方法
         var subFrom = {};
         subFrom.funcGuid = funcGuid;
@@ -1370,10 +1505,11 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     }*/
 
     //新增功能行为
-    $scope.biz.functactive = function() {
-        var ids = $scope.biz.item.id;//获取点击的根节点的值，这里指点击功能节点的guid
-        if($scope.selectRow4){
-            var guid = $scope.selectRow4.guid;//类型guid
+        $scope.biz.functactive = function() {
+            var ids = $scope.biz.item.id;//获取点击的根节点的值，这里指点击功能节点的guid
+            var guidBhv = $scope.biz.item.original.guidBhvtypedef;
+            var guid = guidBhv;//类型guid 因为模型改了,通过ids可以拿到类型的guid,把类型的guid写上去就可以了,目前还不是 等到后台部署好就可以了
+            console.log(guid)
             openwindow($uibModal, 'views/Jurisdiction/funactiveAdd.html', 'lg',
                 function ($scope, $modalInstance) {
                     var gridOptions = {};
@@ -1430,13 +1566,9 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                     };
                 }
             )
-        }else{
-            toastr['error']("请至少选中一个功能类型来添加！");
         }
 
-
-    }
-    //删除行为类型
+    //删除功能行为
     $scope.biz.functactiveDel = function(){
         var it = $scope.gridOptions5.getSelectedRows();//多选事件
         var ids = $scope.biz.item.id;//功能的guid

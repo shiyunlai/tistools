@@ -14,7 +14,7 @@
   },
   "dictonary_service" : {
     "createSysDict": {"ctrl": "DictController", "func": "createSysDict","emo":"新增业务字典"},
-    "deleteSysDict": {"ctrl": "DictController", "func": "deleteSysDict","emo":"删除业务字典"},
+      "deleteSysDict": {"ctrl": "DictController", "func": "deleteSysDict","emo":"删除业务字典"},
     "editSysDict": {"ctrl": "DictController", "func": "editSysDict","emo":"修改业务字典"},
     "querySysDict": {"ctrl": "DictController", "func": "querySysDict","emo":"查询单个业务字典"},
     "createSysDictItem": {"ctrl": "DictController", "func": "createSysDictItem","emo":"新增业务字典项"},
@@ -73,7 +73,11 @@
     "delFuncBhvType": {"ctrl": "AcAppController", "func": "delFuncBhvType","emo":"删除功能对应的行为类型"},
     "delFuncBhvDef": {"ctrl": "AcAppController", "func": "delFuncBhvDef","emo":"删除功能对应的行为定义"},
     "enableApp": {"ctrl": "AcAppController", "func": "enableApp","emo":"开启应用"},
-    "disableApp": {"ctrl": "AcAppController", "func": "disableApp","emo":"关闭应用"}
+    "disableApp": {"ctrl": "AcAppController", "func": "disableApp","emo":"关闭应用"},
+    "createAcFuncResource": {"ctrl": "AcAppController", "func": "createAcFuncResource","emo":"新增功能资源"},
+    "deleteAcFuncResource": {"ctrl": "AcAppController", "func": "deleteAcFuncResource","emo":"删除功能资源"},
+    "updateAcFuncResource": {"ctrl": "AcAppController", "func": "updateAcFuncResource","emo":"修改功能资源"},
+    "queryAcFuncResource": {"ctrl": "AcAppController", "func": "queryAcFuncResource","emo":"查询功能资源"}
   },
   "menu_service" : {
     "queryAllAcApp": {"ctrl": "AcMenuController", "func": "queryAllAcApp","emo":"查询所有应用"},
