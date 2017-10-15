@@ -144,7 +144,7 @@ public interface IApplicationRService {
 	/**
 	 * 新增功能(AC_FUNC)
 	 * @param acFunc 功能对象
-	 * return  AcFunc
+	 * @return  AcFunc
 	 */
 	 AcFunc createAcFunc(AcFunc acFunc);
 
@@ -152,14 +152,15 @@ public interface IApplicationRService {
 	/**
 	 * 删除功能(AC_FUNC)
 	 * @param guid 记录guid
+	 * @return 删除的功能对象信息
 	 */
-	 void deleteAcFunc(String guid);
+	 AcFunc deleteAcFunc(String guid);
 	
 	/**
 	 * 更新功能(AC_FUNC)
 	 * @param acFunc 功能
 	 */
-	 void updateAcFunc(AcFunc acFunc);
+	 AcFunc updateAcFunc(AcFunc acFunc);
 
 	/**
 	 * 根据条件查询功能(AC_FUNC)
@@ -398,16 +399,6 @@ public interface IApplicationRService {
 	 List<AcBhvDef> queryBhvDefByBhvType(String bhvtypeGuid);
 
 
-
-	/**
-	 * addBhctypeForFunc 功能添加行为类型(AC_BHVTYPE_DEF)
-	 *
-	 * @param funcGuid 功能GUID
-	 * @param bhvtypeGuids 功能GUID数组
-	 * 返回list
-	 */
-	 void addBhvtypeForFunc(String funcGuid, List bhvtypeGuids);
-
 	/**
 	 * addBhvDefForFunc 功能添加行为定义(AC_BHV_DEF)
 	 *
@@ -417,28 +408,12 @@ public interface IApplicationRService {
 	 */
 	 void addBhvDefForFunc(String funcGuid, List bhvDefGuids);
 
-
-	/**
-	 * queryBhvDefInTypeForFunc 查询功能下指定行为类型的行为定义
-	 * @param funcGuid
-	 * @param bhvtypeGuid
-	 */
-	 List<Map> queryBhvDefInTypeForFunc(String funcGuid, String bhvtypeGuid);
-
-
 	/**
 	 * queryAllBhvDefForFunc 查询功能下所有行为定义
 	 * @param funcGuid 功能GUID
 	 * @return list
 	 */
 	 List<Map> queryAllBhvDefForFunc(String funcGuid);
-
-	/**
-	 * 删除功能下的行为类型
-	 * @param funcGuid
-	 * @param bhvtypeGuid
-	 */
-	 void delFuncBhvType(String funcGuid, List<String> bhvtypeGuid);
 
 	/**
 	 * 删除功能下的行为定义

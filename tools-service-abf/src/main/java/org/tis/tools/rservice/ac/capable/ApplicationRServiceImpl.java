@@ -64,8 +64,6 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	@Autowired
 	AcBhvDefService acBhvDefService;
 	@Autowired
-	AcFuncBhvtypeService acFuncBhvtypeService;
-	@Autowired
 	AcFuncBhvService acFuncBhvService;
 	@Autowired
 	OmEmployeeService omEmployeeService;
@@ -77,6 +75,8 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	AcRoleFuncService acRoleFuncService;
 	@Autowired
 	AcOperatorFuncService acOperatorFuncService;
+	@Autowired
+	AcOperatorMenuService acOperatorMenuService;
 
 
 
@@ -480,27 +480,26 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 */
 	@Override
 	public AcFunc createAcFunc(AcFunc acFunc) throws AppManagementException {
-		String guid=GUID.func();
-//		acFuncResource.setGuidFunc(guid);
-		acFunc.setGuid(guid);
-		final AcFunc newAcFunc = acFunc;
+		if(acFunc == null) {
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("acFunc", AcFunc.TABLE_NAME));
+		}
 		try {
-			acFunc = transactionTemplate
-					.execute(new TransactionCallback<AcFunc>() {
-						@Override
-						public AcFunc doInTransaction(TransactionStatus arg0) {
-							acFuncService.insert(newAcFunc);
-//							acFuncResourceService.insert(acFuncResource);
-							return newAcFunc;
-						}
-					});
+			String guid=GUID.func();
+			acFunc.setGuid(guid);
+			String validate = BeanFieldValidateUtil.checkObjFieldRequired(acFunc, new String[]{
+					"guidFuncgroup", "funcCode", "funcName", "funcType", "guidBhvtypeDef"
+			});
+			if(StringUtils.isNotEmpty(validate)) {
+				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, BasicUtil.wrap(validate, AcFunc.TABLE_NAME));
+			}
+			acFuncService.insert(acFunc);
+			return  acFunc;
+		} catch (AppManagementException e) {
+			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_FUNC,
-					BasicUtil.wrap(e.getCause().getMessage()), "新增功能失败！{0}");
+			throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap(AcFunc.TABLE_NAME, e));
 		}
-		return acFunc;
 	}
 	
 	/**
@@ -508,21 +507,47 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 * @param guid 记录guid
 	 */
 	@Override
-	public void deleteAcFunc(String guid)  throws AppManagementException {
+	public AcFunc deleteAcFunc(String guid)  throws AppManagementException {
+		if(StringUtils.isBlank(guid)) {
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, BasicUtil.wrap(AcFunc.COLUMN_GUID, AcFunc.TABLE_NAME));
+		}
 		try {
-			// 新增事务提交机制
-			transactionTemplate.execute(new TransactionCallback<AcFunc>() {
+			AcFunc acFunc = acFuncService.loadByGuid(guid);
+			if(acFunc == null) {
+				throw new AppManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY,
+						BasicUtil.wrap(BasicUtil.surroundBracketsWithLFStr(AcFunc.COLUMN_GUID, guid), AcFunc.TABLE_NAME));
+			}
+			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 				@Override
-				public AcFunc doInTransaction(TransactionStatus arg0) {
-					acFuncService.delete(guid);
-					return null;
+				public void doInTransactionWithoutResult(TransactionStatus status) {
+					try {
+						WhereCondition wc = new WhereCondition();
+						wc.andEquals("guid_func", guid);
+						// 删除功能行为定义
+						acFuncBhvService.deleteByCondition(wc);
+						// 删除操作员特殊权限配置
+						acOperatorFuncService.deleteByCondition(wc);
+						// 删除功能与角色对应关系
+						acRoleFuncService.deleteByCondition(wc);
+						// 删除功能对应资源
+						acFuncResourceService.deleteByCondition(wc);
+						// 删除功能对应菜单
+						acMenuService.deleteByCondition(wc);
+						// 删除重组菜单对应菜单
+						acOperatorMenuService.deleteByCondition(wc);
+						// 删除功能
+						acFuncService.delete(guid);
+					} catch (Exception e) {
+						throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap(AcFunc.TABLE_NAME, e));
+					}
 				}
 			});
-		} catch (Exception e) {
+			return acFunc;
+		} catch (AppManagementException e) {
+			throw e;
+		}catch (Exception e) {
 			e.printStackTrace();
-			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_FUNC,
-					BasicUtil.wrap(e.getCause().getMessage()), "删除功能失败！{0}");
+			throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap(AcFunc.TABLE_NAME, e));
 		}
 	}
 
@@ -531,21 +556,24 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 * @param acFunc 功能
 	 */
 	@Override
-	public void updateAcFunc(AcFunc acFunc) throws AppManagementException {
-		final AcFunc newAcFunc = acFunc; 
+	public AcFunc updateAcFunc(AcFunc acFunc) throws AppManagementException {
+		if(acFunc == null) {
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap("acFunc", AcFunc.TABLE_NAME));
+		}
 		try {
-			transactionTemplate.execute(new TransactionCallback<AcFunc>() {
-				@Override
-				public AcFunc doInTransaction(TransactionStatus arg0) {
-					acFuncService.updateForce(newAcFunc);
-					return null;
-				}
+			String validate = BeanFieldValidateUtil.checkObjFieldRequired(acFunc, new String[]{
+					"guid", "guidFuncgroup", "funcCode", "funcName", "funcType", "guidBhvtypeDef"
 			});
+			if(StringUtils.isNotEmpty(validate)) {
+				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_UPDATE, BasicUtil.wrap(validate, AcFunc.TABLE_NAME));
+			}
+			acFuncService.update(acFunc);
+			return  acFunc;
+		} catch (AppManagementException e) {
+			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_FUNC,
-					BasicUtil.wrap(e.getCause().getMessage()), "更新功能失败！{0}");
+			throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_UPDATE, BasicUtil.wrap(AcFunc.TABLE_NAME, e));
 		}
 	}
 
@@ -1378,47 +1406,6 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	}
 
 	/**
-	 * 功能添加行为类型
-	 * @param funcGuid 功能GUID
-	 * @param bhvtypeGuids 行为类型GUID数组
-	 */
-	@Override
-	public void addBhvtypeForFunc(String funcGuid, List bhvtypeGuids) throws AppManagementException{
-		// 校验传入参数
-		if(StringUtil.isEmpty(funcGuid)) {
-			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, "功能GUID为空{0}");
-		}
-		if(CollectionUtils.isEmpty(bhvtypeGuids)) {
-			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, "行为类型GUID数组为空{0}");
-		}
-		if(acFuncBhvtypeService.count(
-				new WhereCondition()
-						.andEquals("GUID_FUNC", funcGuid)
-						.andIn("GUID_BHVTYPE", bhvtypeGuids)) > 0) {
-			throw new AppManagementException(ACExceptionCodes.DUPLICATE_ADD_FUNC_BHVTYPE, "重复添加功能行为类型{0}");
-		}
-		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-			@Override
-			public void doInTransactionWithoutResult(TransactionStatus status) {
-				try {
-					for(Object bhvtypeGuid : bhvtypeGuids) {
-						AcFuncBhvtype afb = new AcFuncBhvtype();
-						afb.setGuidBhvtype((String) bhvtypeGuid);
-						afb.setGuidFunc(funcGuid);
-						acFuncBhvtypeService.insert(afb);
-					}
-				} catch (Exception e) {
-					status.setRollbackOnly();
-					e.printStackTrace();
-					throw new AppManagementException(
-							ACExceptionCodes.FAILURE_WHEN_CREATE_AC_FUNC_BHVTYPE,
-							BasicUtil.wrap(e.getCause().getMessage()), "新增功能行为类型失败！{0}");
-				}
-			}
-		});
-	}
-
-	/**
 	 * 功能添加行为定义
 	 * @param funcGuid 功能GUID
 	 * @param bhvDefGuids 行为类型GUID数组
@@ -1461,24 +1448,6 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		});
 	}
 
-	/**
-	 * queryBhcDefForFunc 查询功能下的行为类型的行为定义
-	 *
-	 * @param funcGuid
-	 * @param bhvtypeGuid
-	 * @return List<AcBhvDef>
-	 */
-	@Override
-	public List<Map> queryBhvDefInTypeForFunc(String funcGuid, String bhvtypeGuid) throws AppManagementException{
-		// 校验传入参数
-		if(StringUtil.isEmpty(funcGuid)) {
-			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, "功能GUID为空{0}");
-		}
-		if(StringUtil.isEmpty(bhvtypeGuid)) {
-			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, "行为类型GUID为空{0}");
-		}
-		return applicationService.queryBhvDefInTypeForFunc(funcGuid, bhvtypeGuid);
-	}
 
 	/**
 	 * queryAllBhcDefForFunc 查询功能下的行所有行为定义
@@ -1495,52 +1464,6 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		return applicationService.queryAllBhvDefForFunc(funcGuid);
 	}
 
-	/**
-	 * 删除功能下的行为类型
-	 *
-	 * @param funcGuid
-	 * @param bhvtypeGuid
-	 */
-	@Override
-	public void delFuncBhvType(String funcGuid, List<String> bhvtypeGuid) throws AppManagementException{
-		// 校验传入参数
-		if(StringUtil.isEmpty(funcGuid)) {
-			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, "功能GUID为空{0}");
-		}
-		if(CollectionUtils.isEmpty(bhvtypeGuid)) {
-			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, "行为类型GUID数组为空{0}");
-		}
-		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-			@Override
-			public void doInTransactionWithoutResult(TransactionStatus status) {
-				try {
-					WhereCondition wc = new WhereCondition();
-					wc.andEquals("GUID_FUNC", funcGuid).andIn("GUID_BHVTYPE", bhvtypeGuid);
-					acFuncBhvtypeService.deleteByCondition(wc);
-
-					wc.clear();
-					wc.andEquals("GUID_FUNC", funcGuid).andIn("GUID_BEHTYPE", bhvtypeGuid);
-					List<Map> maps = applicationService.queryFuncBhvRelation(wc);
-					List bhvGuids = new ArrayList();
-					for(Map map : maps) {
-						bhvGuids.add(map.get("GUID_BHV"));
-					}
-					if(!CollectionUtils.isEmpty(bhvGuids)) {
-						acFuncBhvService.deleteByCondition(
-								new WhereCondition()
-										.andEquals("GUID_FUNC", funcGuid)
-										.andIn("GUID_BHV", bhvGuids));
-					}
-				} catch (Exception e) {
-					status.setRollbackOnly();
-					e.printStackTrace();
-					throw new AppManagementException(
-							ACExceptionCodes.FAILURE_WHEN_CREATE_AC_FUNC_BHV,
-							BasicUtil.wrap(e.getCause().getMessage()), "删除功能行为类型失败！{0}");
-				}
-			}
-		});
-	}
 
 	/**
 	 * 删除功能下的行为定义
