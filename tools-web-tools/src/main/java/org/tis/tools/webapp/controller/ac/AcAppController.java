@@ -950,8 +950,8 @@ public class AcAppController extends BaseController {
     public Map<String, Object> queryAcFuncResource(@RequestBody String content) {
         JSONObject jsonObj = JSONObject.parseObject(content);
         JSONObject data = jsonObj.getJSONObject("data");
-        String appGuid = data.getString("appGuid");
-        List<AcFuncResource> funcResources = applicationRService.queryAcFuncResource(appGuid);
+        String funcGuid = data.getString("funcGuid");
+        List<AcFuncResource> funcResources = applicationRService.queryAcFuncResource(funcGuid);
         return getReturnMap(funcResources);
     }
 
