@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 功能
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_FUNC 功能
  *
@@ -51,6 +51,8 @@ public class AcFunc implements Serializable {
 	public static final String COLUMN_PARA_INFO = "para_info" ; 
 	/** FUNC_TYPE ：功能类型<br/><br/>取值来自业务菜单：DICT_AC_FUNCTYPE 如：页面流、交易流、渠道服务、柜面交易... */
 	public static final String COLUMN_FUNC_TYPE = "func_type" ; 
+	/** GUID_BHVTYPE_DEF ：行为类型<br/><br/>PS:对应应用类别 */
+	public static final String COLUMN_GUID_BHVTYPE_DEF = "guid_bhvtype_def" ; 
 	/** ISCHECK ：是否验证权限<br/><br/>取值来自业务菜单： DICT_YON */
 	public static final String COLUMN_ISCHECK = "ischeck" ; 
 	/** ISMENU ：可否定义为菜单<br/><br/>取值来自业务菜单：DICT_YON。 该功能是否可以作为菜单入口，如果作为菜单入口，则会展示在菜单树（有些接口服务功能无需挂在菜单上） */
@@ -80,6 +82,9 @@ public class AcFunc implements Serializable {
 	
 	/** 字段类型：varchar<br/>字段名：功能类型<br/>描述：取值来自业务菜单：DICT_AC_FUNCTYPE 如：页面流、交易流、渠道服务、柜面交易... */
 	private String funcType ;
+	
+	/** 字段类型：varchar<br/>字段名：行为类型<br/>描述：PS:对应应用类别 */
+	private String guidBhvtypeDef ;
 	
 	/** 字段类型：char<br/>字段名：是否验证权限<br/>描述：取值来自业务菜单： DICT_YON */
 	private String ischeck ;
@@ -244,6 +249,25 @@ public class AcFunc implements Serializable {
 	 */
 	public String getFuncType(){
 		return this.funcType ;
+    }
+	
+	/**
+	 * Set the 行为类型.
+	 * 
+	 * @param guidBhvtypeDef
+	 *            行为类型
+	 */
+	public void setGuidBhvtypeDef(String guidBhvtypeDef) {
+ 		this.guidBhvtypeDef = guidBhvtypeDef == null ? null : guidBhvtypeDef.trim() ;
+    }
+    
+    /**
+	 * Get the 行为类型.
+	 * 
+	 * @return 行为类型
+	 */
+	public String getGuidBhvtypeDef(){
+		return this.guidBhvtypeDef ;
     }
 	
 	/**

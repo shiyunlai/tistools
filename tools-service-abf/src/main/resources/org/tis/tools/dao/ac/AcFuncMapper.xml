@@ -16,6 +16,7 @@
 	    	,func_action
 	    	,para_info
 	    	,func_type
+	    	,guid_bhvtype_def
 	    	,ischeck
 	    	,ismenu
 	    )
@@ -29,6 +30,7 @@
 			#{funcAction,jdbcType=VARCHAR},
 			#{paraInfo,jdbcType=VARCHAR},
 			#{funcType,jdbcType=VARCHAR},
+			#{guidBhvtypeDef,jdbcType=VARCHAR},
 			#{ischeck,jdbcType=CHAR},
 			#{ismenu,jdbcType=CHAR}
   		)
@@ -61,6 +63,9 @@
 		<if test="funcType != null" >
 			func_type = #{funcType,jdbcType=VARCHAR},
 		</if>
+		<if test="guidBhvtypeDef != null" >
+			guid_bhvtype_def = #{guidBhvtypeDef,jdbcType=VARCHAR},
+		</if>
 		<if test="ischeck != null" >
 			ischeck = #{ischeck,jdbcType=CHAR},
 		</if>
@@ -82,6 +87,7 @@
 		func_action = #{funcAction,jdbcType=VARCHAR},
 		para_info = #{paraInfo,jdbcType=VARCHAR},
 		func_type = #{funcType,jdbcType=VARCHAR},
+		guid_bhvtype_def = #{guidBhvtypeDef,jdbcType=VARCHAR},
 		ischeck = #{ischeck,jdbcType=CHAR},
 		ismenu = #{ismenu,jdbcType=CHAR}
 	    </set>
@@ -123,6 +129,9 @@
 		<if test="domain.funcType != null" >
         	func_type = #{domain.funcType,jdbcType=VARCHAR},
       	</if>
+		<if test="domain.guidBhvtypeDef != null" >
+        	guid_bhvtype_def = #{domain.guidBhvtypeDef,jdbcType=VARCHAR},
+      	</if>
 		<if test="domain.ischeck != null" >
         	ischeck = #{domain.ischeck,jdbcType=CHAR},
       	</if>
@@ -160,6 +169,7 @@
 		,func_action as funcAction
 		,para_info as paraInfo
 		,func_type as funcType
+		,guid_bhvtype_def as guidBhvtypeDef
 		,ischeck as ischeck
 		,ismenu as ismenu
 	</sql>
