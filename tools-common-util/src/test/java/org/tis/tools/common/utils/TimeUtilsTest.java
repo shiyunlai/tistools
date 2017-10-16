@@ -13,7 +13,7 @@ public class TimeUtilsTest {
 		
 		long dateLong = 1479100943510L ;//2016-11-14 13:22:23
 		
-		Assert.assertEquals("Mon Nov 14 13:22:23 CST 2016", TimeUtil.longToDate(dateLong).toString());
+		Assert.assertEquals("Mon Nov 14 13:22:23 CST 2016", TimeUtil.longToDate(dateLong).toString()); // XXX Actual   :Mon Nov 14 13:22:23 GMT+08:00 2016
 		Assert.assertEquals("2016-11-14 13:22:23:510", TimeUtil.longToDateStr(dateLong,null));
 		Assert.assertEquals(dateLong, TimeUtil.toTime("2016-11-14 13:22:23:510", "yyyy-MM-dd HH:mm:ss:SSS"));
 	}

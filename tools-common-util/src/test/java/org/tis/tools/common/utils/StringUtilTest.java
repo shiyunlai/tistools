@@ -85,6 +85,8 @@ public class StringUtilTest {
         Assert.assertFalse(StringUtil.isEquals("1", null));
     }
 
+
+
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
         System.out.println(" =================== StringUtilTest begin ==================== ");
@@ -93,11 +95,6 @@ public class StringUtilTest {
     @AfterClass
     public static void tearDownAfterClass() throws Exception {
         System.out.println(" =================== StringUtilTest finish =================== ");
-    }
-
-    @Test
-    public void test() {
-        System.out.println("login is equals in [login, logout, pause] ? :" + StringUtil.isEqualsIn("login", "login2", "logout", "pause"));
     }
 
 

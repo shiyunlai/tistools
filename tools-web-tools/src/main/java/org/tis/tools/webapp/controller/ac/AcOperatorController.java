@@ -771,8 +771,8 @@ public class AcOperatorController extends BaseController {
     @RequestMapping(value="/getOperatorFuncInfo" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public Map<String, Object> getOperatorFuncInfo(@RequestBody String content)  {
         JSONObject jsonObject= JSONObject.parseObject(content);
-        String userId = jsonObject.getString("userId");//操作员USER_ID
-        String appGuid = jsonObject.getString("appGuid");//应用id
+        String userId = jsonObject.getString("userId"); // 操作员USER_ID
+        String appGuid = jsonObject.getString("appGuid");// 应用id
         AcOperatorFuncDetail info = operatorRService.getOperatorFuncInfo(userId, appGuid);
         return getReturnMap(info.toString());
     }
