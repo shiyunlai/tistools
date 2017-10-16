@@ -217,6 +217,18 @@ abstract public class BaseController {
         return page;
     }
 
+    /**
+     * 规范返回数据格式
+     * 结构示意：
+     * {
+     *  "result":{
+     *      "status":"xxxx",
+     *      "retMessage":"...."
+     *   }
+     * }
+     * @param data 需要返回的数据
+     * @return  规范格式后的数据
+     */
     protected Map<String, Object> getReturnMap(Object data) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put(STATUS, SUCCESS);
