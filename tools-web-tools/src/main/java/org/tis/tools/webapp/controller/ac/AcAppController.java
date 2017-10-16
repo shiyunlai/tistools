@@ -748,7 +748,6 @@ public class AcAppController extends BaseController {
 
 
 
-
     /**
      * 查询功能下全部的操作行为
      *
@@ -914,14 +913,13 @@ public class AcAppController extends BaseController {
     @RequestMapping(value = "/deleteAcFuncResource", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> deleteAcFuncResource(@RequestBody String content) {
         JSONObject jsonObj = JSONObject.parseObject(content);
-
         JSONArray data = jsonObj.getJSONArray("data");
         List<AcFuncResource> acFuncResources = JSONObject.parseArray(data.toJSONString(), AcFuncResource.class);
         List<AcFuncResource> funcResources = applicationRService.deleteAcFuncResource(acFuncResources);
         return getReturnMap(funcResources);
     }
     /**
-     * 删除功能资源
+     * 修改功能资源
      * @param content
      * @return
      */
@@ -946,6 +944,7 @@ public class AcAppController extends BaseController {
      * @param content
      * @return
      */
+    @ResponseBody
     @RequestMapping(value = "/queryAcFuncResource", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> queryAcFuncResource(@RequestBody String content) {
         JSONObject jsonObj = JSONObject.parseObject(content);

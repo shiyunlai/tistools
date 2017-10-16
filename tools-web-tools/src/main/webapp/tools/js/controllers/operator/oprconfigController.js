@@ -54,8 +54,8 @@ angular.module('MetronicApp').controller('operconfig_controller', function($root
         subFrom.appGuid= item;
         common_service.post(res.queryOperatorConfig,subFrom).then(function(data){
            var datas = data.retMessage;
-           console.log(datas)
             if(data.status == "success"){
+                console.log(datas)
                 $scope.operconfig.Allpx = datas;
             }
         })
@@ -64,7 +64,6 @@ angular.module('MetronicApp').controller('operconfig_controller', function($root
 
     //操作员配置保存 radio保存
     operconfig.radiosele = function (item) {
-       console.log(item);
         var subFrom = {};
         subFrom.guidOperator = operguid;
         subFrom.guidConfig = item.guid;
@@ -89,9 +88,6 @@ angular.module('MetronicApp').controller('operconfig_controller', function($root
             }
         })
     }
-
-
-
 
 });
 //操作员身份

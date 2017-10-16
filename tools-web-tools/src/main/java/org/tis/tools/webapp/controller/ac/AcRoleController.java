@@ -4,6 +4,8 @@ import com.alibaba.dubbo.common.json.ParseException;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.TransactionStatus;
@@ -16,8 +18,17 @@ import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.core.exception.ExceptionCodes;
-import org.tis.tools.model.po.ac.*;
+import org.tis.tools.model.po.ac.AcApp;
+import org.tis.tools.model.po.ac.AcFunc;
+import org.tis.tools.model.po.ac.AcFuncgroup;
+import org.tis.tools.model.po.ac.AcOperatorRole;
+import org.tis.tools.model.po.ac.AcPartyRole;
+import org.tis.tools.model.po.ac.AcRole;
+import org.tis.tools.model.po.ac.AcRoleFunc;
+import org.tis.tools.model.vo.ac.AcAppVo;
+import org.tis.tools.model.vo.ac.AcFuncVo;
 import org.tis.tools.rservice.ac.capable.IApplicationRService;
+import org.tis.tools.rservice.ac.capable.IMenuRService;
 import org.tis.tools.rservice.ac.capable.IRoleRService;
 import org.tis.tools.rservice.ac.exception.RoleManagementException;
 import org.tis.tools.webapp.controller.BaseController;
@@ -25,7 +36,12 @@ import org.tis.tools.webapp.util.AjaxUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhaoch on 2017/7/16.
