@@ -6,6 +6,15 @@ import org.junit.Test;
 import java.util.HashMap;
 
 public class BasicUtilTest {
+    @Test
+    public void surroundBrackets() throws Exception {
+        Assert.assertEquals("(zch)", BasicUtil.surroundBrackets("zch"));
+    }
+
+    @Test
+    public void surroundBracketsWithLFStr() throws Exception {
+        Assert.assertEquals("name(zch)", BasicUtil.surroundBracketsWithLFStr("name","zch"));
+    }
 
     @Test
     public void showMaps() throws Exception {
@@ -23,10 +32,10 @@ public class BasicUtilTest {
 
     @Test
     public void isEmpty() throws Exception {
-        Assert.assertEquals(true, BasicUtil.isEmpty(null));
-        Assert.assertEquals(true, BasicUtil.isEmpty(""));
-        Assert.assertEquals(true, BasicUtil.isEmpty("a", null));
-        Assert.assertEquals(false, BasicUtil.isEmpty("a", "b"));
+        Assert.assertTrue(BasicUtil.isEmpty(null));
+        Assert.assertTrue(BasicUtil.isEmpty(""));
+        Assert.assertTrue(BasicUtil.isEmpty("a", null));
+        Assert.assertFalse(BasicUtil.isEmpty("a", "b"));
     }
 
     @Test

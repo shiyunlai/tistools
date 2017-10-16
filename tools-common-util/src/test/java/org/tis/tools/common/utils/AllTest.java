@@ -13,11 +13,13 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-	BasicUtilsTest.class,
-	DirectoryUtilTest.class,
-	PinyinUtilTest.class,
-	SimpleSequenceUtilTest.class,
-	TimeUtilsTest.class
+		BasicUtilTest.class,
+		BeanFieldValidateUtilTest.class,
+		DirectoryUtilTest.class,
+		CryptographyUtilTest.class,
+		PinyinUtilTest.class,
+		SimpleSequenceUtilTest.class,
+		TimeUtilsTest.class
 })
 public class AllTest {
 

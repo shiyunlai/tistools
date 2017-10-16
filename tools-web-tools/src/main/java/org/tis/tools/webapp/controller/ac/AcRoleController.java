@@ -4,8 +4,6 @@ import com.alibaba.dubbo.common.json.ParseException;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.TransactionStatus;
@@ -14,21 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.tis.tools.AcFunc;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.core.exception.ExceptionCodes;
-import org.tis.tools.model.po.ac.AcApp;
-import org.tis.tools.model.po.ac.AcFuncgroup;
-import org.tis.tools.model.po.ac.AcOperatorRole;
-import org.tis.tools.model.po.ac.AcPartyRole;
-import org.tis.tools.model.po.ac.AcRole;
-import org.tis.tools.model.po.ac.AcRoleFunc;
-import org.tis.tools.model.vo.ac.AcAppVo;
-import org.tis.tools.model.vo.ac.AcFuncVo;
+import org.tis.tools.model.po.ac.*;
 import org.tis.tools.rservice.ac.capable.IApplicationRService;
-import org.tis.tools.rservice.ac.capable.IMenuRService;
 import org.tis.tools.rservice.ac.capable.IRoleRService;
 import org.tis.tools.rservice.ac.exception.RoleManagementException;
 import org.tis.tools.webapp.controller.BaseController;
@@ -36,12 +25,7 @@ import org.tis.tools.webapp.util.AjaxUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by zhaoch on 2017/7/16.
@@ -201,7 +185,7 @@ public class AcRoleController extends BaseController {
 				if(groupList.size()>0){
 					map.put("groupList", groupList);
 				}
-				List<AcFuncVo> funcList = applicationRService.queryAcFuncVo(id);
+				List<AcFunc> funcList = applicationRService.queryAcFunc(id);
 				if(funcList.size()>0){
 					map.put("funcList", funcList);
 				}
