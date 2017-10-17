@@ -175,9 +175,22 @@ public abstract interface DataObject extends Data {
 	 * 获取对象值
 	 * 
 	 * @param propertyName
+	 *            属性名称
 	 * @return
 	 */
 	public Object get(String propertyName);
+
+	/**
+	 * 获取对象值
+	 * 
+	 * @param propertyName
+	 *            属性名称
+	 * @param propertyType
+	 *            值的真实类型
+	 * @return 返回实际类型的值
+	 */
+	public <T> T get(String propertyName, Class<T> propertyType);
+
 
 	/**
 	 * 设置对象值

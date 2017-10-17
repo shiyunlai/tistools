@@ -83,7 +83,14 @@ public class SDOExceptionCodes {
 	 * 异常：非法变量.<br>
 	 */
 	public static final String SDO_ERROR_ARGUMENTE = R_EX_CODE("1000");
-
+	
+	/**
+	 * 异常：属性xxx的值，实际类型与期望的返回类型不一致.<br>
+	 * "Incorrect type specified for SDO '" + property
+	 * "'. Expected [" + type + "] but actual type is [" + value.getClass() + "]"
+	 */
+	public static final String INCORRECT_TYPE = R_EX_CODE("1001");
+	
 	
 	/**
 	 * 以烤串方式拼接异常码

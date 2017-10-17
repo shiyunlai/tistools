@@ -14,6 +14,7 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tis.tools.common.utils.BasicUtil;
 import org.tools.core.sdo.Data;
 import org.tools.core.sdo.DataField;
 import org.tools.core.sdo.DataFieldDictionary;
@@ -920,6 +921,7 @@ public class DynamicDataObject implements DataObject {
 	 * 
 	 * @param propertyName
 	 *            属性类型
+	 * @return 返回Object对象，由使用者自行判断值类型
 	 */
 	public Object get(String propertyName) {
 		Object data = dataMap.get(propertyName);
@@ -932,6 +934,23 @@ public class DynamicDataObject implements DataObject {
 		}
 		return null;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> T get(String propertyName, Class<T> propertyType) {
+		Object o = get(propertyName) ;
+		if( null == o ){
+			return null;
+		}
+		
+		if (!propertyType.isAssignableFrom(o.getClass())) {
+			throw new SDOException(SDOExceptionCodes.INCORRECT_TYPE, 
+					BasicUtil.wrap(propertyName, propertyType, o.getClass()));
+		}
+		
+		return (T) o ; 
+	}
+	
 
 	public Object set(String propertyName, Object value) {
 		
