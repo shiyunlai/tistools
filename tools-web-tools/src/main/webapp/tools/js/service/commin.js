@@ -34,7 +34,5 @@ MetronicApp.factory('common_service',['$rootScope','$http', '$q',function ($root
         return res;
     };
 */
-
-
     return service;
 }]);

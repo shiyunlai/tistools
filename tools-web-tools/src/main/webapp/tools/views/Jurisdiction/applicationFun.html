@@ -431,6 +431,16 @@
                                             </div>
                                             <div class="col-md-6" >
                                                 <div class="form-group">
+                                                    <label class="control-label col-md-4">行为类型</label>
+                                                    <div class="col-md-8" ng-init="$settings.getCommData('BHVTYPE')">
+                                                        <select class="form-control" name="dict_open" ng-model="dictionaryAdd.guidBhvtypeDef" maxlength="255" ng-disabled="!editflag">
+                                                            <option ng-repeat="d in $settings.commlist['BHVTYPE'] track by $index" value="{{d.guid}}">{{d.bhvtypeName}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6" >
+                                                <div class="form-group">
                                                     <label class="control-label col-md-4">是否定义为菜单</label>
                                                     <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
                                                         <select class="form-control" name="dict_open" ng-model="dictionaryAdd.ismenu" ng-disabled="!editflag">
@@ -599,12 +609,6 @@
                                         <!--</div>-->
                                         <!-- 右侧显示-->
                                         <div class="col-md-12 portlet light" style="height:100%;" >
-                                            <div class="portlet-title">
-                                                <div class="caption">
-                                                    <i class="fa fa-cogs font-green-sharp"></i>
-                                                    <span class="caption-subject font-green-sharp bold uppercase">操作行为</span>
-                                                </div>
-                                            </div>
                                             <div class="portlet-body">
                                                 <div class="tab-content portlet light" >
                                                     <div ui-grid="gridOptions5"  class="grid"  id="tests"

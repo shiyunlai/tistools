@@ -218,10 +218,11 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                         openwindow($modal, 'views/Jurisdiction/afAdd.html', 'lg',//弹出页面
                             function ($scope, $modalInstance) {
                                 $scope.add = function(item){
+                                    var subFrom = {};
                                     item.guidFuncgroup = ids;
-                                    console.log(item)
-                                    application_service.acFuncAdd(item).then(function(data){
-                                        console.log(data);
+                                    subFrom.data = item;
+                                    console.log(subFrom)
+                                    application_service.acFuncAdd(subFrom).then(function(data){
                                         if(data.status == "success"){
                                             toastr['success']("新增成功！");
                                             biz.initt2(ids.id);//调用列表刷新方法
@@ -418,22 +419,21 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             }else if(!isNull(data.node.original.funcName)){
                 var subFrom = {};
                 $scope.subFrom = subFrom;
-                $scope.subFrom.id = data.node.id;
+                $scope.subFrom.funcGuid = data.node.original.guid;
                 appfunflag.gnlist = true;
                 appfunflag.zylist = false;
                 appfunflag.gnactive =false;
-                //查询功能行为类型
-               /* application_service.queryBhvtypeDefByFunc(subFrom).then(function (data) {
-                    if(!isNull(data.retMessage)){//查询判断，如果是空，则返回空。
-                        var datas = data.retMessage;//功能列表资源
-                        $scope.gridOption4.data = datas;
-                        $scope.gridOption4.mydefalutData = datas;
-                        $scope.gridOption4.getPage(1,$scope.gridOption4.paginationPageSize);
+                //查询功能行为
+                application_service.queryAllBhvDefForFunc(subFrom).then(function (data) {
+                    if(data.status == 'success'){
+                        var datas = data.retMessage;
+                        $scope.gridOptions5.data = datas;//把获取到的数据复制给表
+                        $scope.gridOptions5.mydefalutData = datas;
+                        $scope.gridOptions5.getPage(1,$scope.gridOptions5.paginationPageSize);
                     }else{
-                        var datast = [];
-                        $scope.gridOption4.data = datast;
+                        $scope.gridOptions5.data = [];
                     }
-                })*/
+                })
                 //查询资源列表
                 var resouir = {};
                 resouir.data = {}
@@ -939,7 +939,9 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         openwindow($modal, 'views/Jurisdiction/afAdd.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
                 $scope.add = function(item){
-                    item.guidFuncgroup = ids;
+                    var  subFrom = {};
+                    subFrom.data.guidFuncgroup = ids
+                    subFrom.data = item;
                     application_service.acFuncAdd(item).then(function(data){
                         if(data.status == "success"){
                             toastr['success']("新增成功！");
@@ -1128,7 +1130,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         $scope.editflag = !$scope.editflag;//让保存取消方法显现
     }
 
-
+    //全局对象
     //功能信息编辑方法
     $scope.biz.appssedit = function(item){
         $scope.copyfunEdit = angular.copy(item)
@@ -1166,15 +1168,27 @@ angular.module('MetronicApp').controller('application_controller', function($roo
 
     }
 
-    //功能信息保存方法
+    //功能修改方法
     $scope.biz.appfunsave = function (item) {
-        //var ids = $scope.biz.item.id;//获取点击的根节点的值
+        var original = $scope.copyfunEdit;//原本修改前的数据
+        //item 是修改后的数据
+        var  changeData = {};
+        for(var key in original){//循环最初的数据?
+            if(original[key] !== item[key]){
+                changeData[key]= original[key];
+            }
+        }
+        // console.log(changedata);//修改前的值
+        var subFrom = {}
         item.id = item.guid;
+        subFrom.data = item;
+        subFrom.changeData = changeData;
+        console.log(subFrom)
         //获取到选中的guid，参入item，然后传入修改就可以
-        application_service.acFuncEdit(item).then(function(data){
+        application_service.acFuncEdit(subFrom).then(function(data){
             if(data.status == "success"){;
                 toastr['success']("修改成功！");
-                $("#container").jstree().refresh();
+                $("#container").jstree().refresh();//树结构重新刷新
                 $scope.editflag = !$scope.editflag;
             }else{
                 toastr['error']('修改失败'+'<br/>'+data.retMessage);
@@ -1442,11 +1456,11 @@ angular.module('MetronicApp').controller('application_controller', function($roo
 
 
     //查询功能行为
-    biz.initt5 = function(funcGuid,bhvtypeGuid){//查询类型对应操作行为方法
+    biz.initt5 = function(funcGuid){//查询类型对应操作行为方法
         var subFrom = {};
         subFrom.funcGuid = funcGuid;
-        subFrom.bhvtypeGuid = bhvtypeGuid;
-        application_service.queryBhvDefInTypeForFunc(subFrom).then(function (data){
+        // subFrom.bhvtypeGuid = bhvtypeGuid;
+        application_service.queryAllBhvDefForFunc(subFrom).then(function (data){
             var datas = data.retMessage
             $scope.gridOptions5.data = datas;//把获取到的数据复制给表
             $scope.gridOptions5.mydefalutData = datas;
@@ -1469,7 +1483,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
 
         })
     }
-
 
 
     /*事件行为列表*/
@@ -1507,9 +1520,8 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     //新增功能行为
         $scope.biz.functactive = function() {
             var ids = $scope.biz.item.id;//获取点击的根节点的值，这里指点击功能节点的guid
-            var guidBhv = $scope.biz.item.original.guidBhvtypedef;
+            var guidBhv = $scope.biz.item.original.guidBhvtypeDef;
             var guid = guidBhv;//类型guid 因为模型改了,通过ids可以拿到类型的guid,把类型的guid写上去就可以了,目前还不是 等到后台部署好就可以了
-            console.log(guid)
             openwindow($uibModal, 'views/Jurisdiction/funactiveAdd.html', 'lg',
                 function ($scope, $modalInstance) {
                     var gridOptions = {};
@@ -1532,10 +1544,12 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                     var subFrom = {};
                     subFrom.id = guid;
                     application_service.queryBhvDefByBhvType(subFrom).then(function (data) {
-                        var datas = data.retMessage
-                        $scope.gridOptions.data = datas;//把获取到的数据复制给表
-                        $scope.gridOptions.mydefalutData = datas;
-                        $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
+                        if(data.status == "success"){
+                            var datas = data.retMessage
+                            $scope.gridOptions.data = datas;//把获取到的数据复制给表
+                            $scope.gridOptions.mydefalutData = datas;
+                            $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
+                        }
                     })
                     //创建机构实例
                     //导入方法
@@ -1551,7 +1565,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                             application_service.addBhvDefForFunc(subFrom).then(function(data){
                                 if(data.status == "success"){
                                     toastr['success']("新增成功！");
-                                    biz.initt5(ids,guid);//查询类型下行为
+                                    biz.initt5(ids);//重新查询功能下行为
                                     $modalInstance.close();
                                 }else{
                                     toastr['error']('导入失败'+'<br/>'+data.retMessage);
