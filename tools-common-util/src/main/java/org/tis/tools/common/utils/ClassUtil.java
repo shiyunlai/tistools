@@ -1503,7 +1503,7 @@ public final class ClassUtil {
 	
 	/**
 	 * 
-	 * 查找指定路径下面实现指定接口的全部类
+	 * 查找指定路径下面（包括子路径）实现指定接口的全部类
 	 * 
 	 * @param inface
 	 *            接口／抽象类
