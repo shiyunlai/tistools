@@ -16,8 +16,7 @@
             <div class="form-body ">
                 <div class="col-md-6" >
                     <div class="form-group">
-                        <label class="control-label col-md-4">功能名称<span ng-class="{required:myform.dict_key.$invalid}"  >* </span></label>
-
+                        <label class="control-label col-md-4">功能名称<span  ng-class="{required:myform.dict_key.$invalid}"  >* </span></label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="appFrom.funcName" required  maxlength="128"
@@ -48,7 +47,7 @@
                 </div>
                 <div class="col-md-6" >
                     <div class="form-group">
-                        <label class="control-label col-md-4">功能类型</label>
+                        <label class="control-label col-md-4">行为类型</label>
                         <div class="col-md-8" ng-init="$settings.getCommData('BHVTYPE')">
                             <select class="form-control" name="dict_open" ng-model="appFrom.guidBhvtypedef" maxlength="255">
                                 <option ng-repeat="d in $settings.commlist['BHVTYPE'] track by $index" value="{{d.guid}}">{{d.bhvtypeName}}</option>
