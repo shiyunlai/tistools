@@ -12,7 +12,7 @@
 	<version>${tools-web-tools-version}</version>
 	<packaging>war</packaging>
 	<name>tools-web-tools</name>
-	    <repositories>
+	<repositories>
         <repository>
             <id>tools_nexus</id>
             <name>maven-public</name>
