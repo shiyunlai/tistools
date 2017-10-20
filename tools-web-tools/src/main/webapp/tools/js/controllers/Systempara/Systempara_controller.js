@@ -138,7 +138,8 @@ angular.module('MetronicApp').controller('systempara_controller', function($root
                 function ($scope, $modalInstance) {
                     var ids = id;
                     $scope.id = ids;
-                    $scope.sysFrom = getSel[0];
+                    var copydatas = angular.copy(getSel[0])
+                    $scope.sysFrom = copydatas;
                     $timeout(function () {
                         $(".sysfrom").select2("val",getSel[0].valueFrom);//渲染表格数据
                     },50);
