@@ -1,25 +1,25 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 139.196.145.67
-Source Server Version : 50629
-Source Host           : 139.196.145.67:3306
-Source Database       : tistools
+Source Server         : localhost
+Source Server Version : 50717
+Source Host           : 127.0.0.1:3306
+Source Database       : mysql
 
 Target Server Type    : MYSQL
-Target Server Version : 50629
+Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-09-25 15:54:17
+Date: 2017-10-19 16:02:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for AC_APP
+-- Table structure for ac_app
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_APP`;
-CREATE TABLE `AC_APP` (
+DROP TABLE IF EXISTS `ac_app`;
+CREATE TABLE `ac_app` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `APP_CODE` varchar(64) NOT NULL COMMENT '应用代码',
   `APP_NAME` varchar(128) NOT NULL COMMENT '应用名称',
@@ -40,10 +40,10 @@ CREATE TABLE `AC_APP` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='应用系统 : 应用系统（Application）注册表';
 
 -- ----------------------------
--- Table structure for AC_BHV_DEF
+-- Table structure for ac_bhv_def
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_BHV_DEF`;
-CREATE TABLE `AC_BHV_DEF` (
+DROP TABLE IF EXISTS `ac_bhv_def`;
+CREATE TABLE `ac_bhv_def` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_BEHTYPE` varchar(128) NOT NULL COMMENT '操作类型GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `BHV_CODE` varchar(64) DEFAULT NULL COMMENT '行为代码',
@@ -52,10 +52,10 @@ CREATE TABLE `AC_BHV_DEF` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='功能操作行为定义 : 每类行为中至少有一个行为定义';
 
 -- ----------------------------
--- Table structure for AC_BHVTYPE_DEF
+-- Table structure for ac_bhvtype_def
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_BHVTYPE_DEF`;
-CREATE TABLE `AC_BHVTYPE_DEF` (
+DROP TABLE IF EXISTS `ac_bhvtype_def`;
+CREATE TABLE `ac_bhvtype_def` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `BHVTYPE_CODE` varchar(64) DEFAULT NULL COMMENT '行为类型代码 : 应用中定义，定义了某种功能特有的操作行为',
   `BHVTYPE_NAME` varchar(128) DEFAULT NULL COMMENT '行为类型名称',
@@ -63,26 +63,28 @@ CREATE TABLE `AC_BHVTYPE_DEF` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='行为类型定义 : 功能行为的分类定义，以便很好的归类和配置功能的行为（AC_FUNC_BHV）';
 
 -- ----------------------------
--- Table structure for AC_CONFIG
+-- Table structure for ac_config
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_CONFIG`;
-CREATE TABLE `AC_CONFIG` (
+DROP TABLE IF EXISTS `ac_config`;
+CREATE TABLE `ac_config` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键',
   `GUID_APP` varchar(128) NOT NULL COMMENT '应用GUID',
   `CONFIG_TYPE` varchar(64) NOT NULL COMMENT '配置类型',
   `CONFIG_NAME` varchar(64) NOT NULL COMMENT '配置名',
   `CONFIG_DICT` varchar(256) NOT NULL COMMENT '配置值字典',
+  `CONFIG_STYLE` varchar(64) DEFAULT NULL,
   `CONFIG_VALUE` varchar(128) NOT NULL COMMENT '默认配置值',
   `ENABLED` varchar(10) DEFAULT NULL COMMENT '是否启用',
+  `DISPLAY_ORDER` decimal(4,0) DEFAULT NULL,
   `CONFIG_DESC` varchar(512) DEFAULT NULL COMMENT '配置描述说明',
   PRIMARY KEY (`GUID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='个性化配置';
 
 -- ----------------------------
--- Table structure for AC_DATASCOPE
+-- Table structure for ac_datascope
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_DATASCOPE`;
-CREATE TABLE `AC_DATASCOPE` (
+DROP TABLE IF EXISTS `ac_datascope`;
+CREATE TABLE `ac_datascope` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_ENTITY` varchar(128) NOT NULL COMMENT '实体GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `PRIV_NAME` varchar(64) NOT NULL COMMENT '数据范围权限名称',
@@ -93,10 +95,10 @@ CREATE TABLE `AC_DATASCOPE` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='数据范围权限 : 定义能够操作某个表数据的范围';
 
 -- ----------------------------
--- Table structure for AC_ENTITY
+-- Table structure for ac_entity
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_ENTITY`;
-CREATE TABLE `AC_ENTITY` (
+DROP TABLE IF EXISTS `ac_entity`;
+CREATE TABLE `ac_entity` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_APP` varchar(128) NOT NULL COMMENT '隶属应用GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `ENTITY_NAME` varchar(50) NOT NULL COMMENT '实体名称',
@@ -115,10 +117,10 @@ CREATE TABLE `AC_ENTITY` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='实体 : 数据实体定义表';
 
 -- ----------------------------
--- Table structure for AC_ENTITYFIELD
+-- Table structure for ac_entityfield
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_ENTITYFIELD`;
-CREATE TABLE `AC_ENTITYFIELD` (
+DROP TABLE IF EXISTS `ac_entityfield`;
+CREATE TABLE `ac_entityfield` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_ENTITY` varchar(128) NOT NULL COMMENT '隶属实体GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `FIELD_NAME` varchar(50) NOT NULL COMMENT '属性名称',
@@ -151,10 +153,10 @@ CREATE TABLE `AC_ENTITYFIELD` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='实体属性 : 数据实体的字段（属性）定义表';
 
 -- ----------------------------
--- Table structure for AC_FUNC
+-- Table structure for ac_func
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_FUNC`;
-CREATE TABLE `AC_FUNC` (
+DROP TABLE IF EXISTS `ac_func`;
+CREATE TABLE `ac_func` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_FUNCGROUP` varchar(128) NOT NULL COMMENT '隶属功能组GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `FUNC_CODE` varchar(64) NOT NULL COMMENT '功能编号 : 业务上对功能的编码',
@@ -163,6 +165,7 @@ CREATE TABLE `AC_FUNC` (
   `FUNC_ACTION` varchar(256) DEFAULT NULL COMMENT '功能调用入口',
   `PARA_INFO` varchar(256) DEFAULT NULL COMMENT '输入参数 : 需要定义参数规范',
   `FUNC_TYPE` varchar(255) DEFAULT '''1''' COMMENT '功能类型 : 取值来自业务菜单：DICT_AC_FUNCTYPE\r\n如：页面流、交易流、渠道服务、柜面交易...',
+  `GUID_BHVTYPE_DEF` varchar(128) DEFAULT NULL,
   `ISCHECK` char(1) DEFAULT NULL COMMENT '是否验证权限 : 取值来自业务菜单： DICT_YON',
   `ISMENU` char(1) DEFAULT NULL COMMENT '可否定义为菜单 : 取值来自业务菜单：DICT_YON。\r\n该功能是否可以作为菜单入口，如果作为菜单入口，则会展示在菜单树（有些接口服务功能无需挂在菜单上）\r\n',
   PRIMARY KEY (`GUID`),
@@ -171,10 +174,10 @@ CREATE TABLE `AC_FUNC` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='功能 : 功能定义表，每个功能属于一个功能点，隶属于某个应用系统，同时也隶属于某个功能组。\r\n应用系统中的某个功能，如：柜';
 
 -- ----------------------------
--- Table structure for AC_FUNC_BHV
+-- Table structure for ac_func_bhv
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_FUNC_BHV`;
-CREATE TABLE `AC_FUNC_BHV` (
+DROP TABLE IF EXISTS `ac_func_bhv`;
+CREATE TABLE `ac_func_bhv` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_FUNC` varchar(128) NOT NULL COMMENT '功能GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_BHV` varchar(128) NOT NULL COMMENT '行为GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
@@ -183,31 +186,31 @@ CREATE TABLE `AC_FUNC_BHV` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='功能操作行为 : Behavior（BHV）操作行为，权限控制模块中最细粒度的授权、控制单位；一个功能中包括多个操作行为';
 
 -- ----------------------------
--- Table structure for AC_FUNC_BHVTYPE
+-- Table structure for ac_func_bhvtype
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_FUNC_BHVTYPE`;
-CREATE TABLE `AC_FUNC_BHVTYPE` (
+DROP TABLE IF EXISTS `ac_func_bhvtype`;
+CREATE TABLE `ac_func_bhvtype` (
   `GUID_FUNC` varchar(128) NOT NULL COMMENT '功能GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_BHVTYPE` varchar(128) NOT NULL COMMENT '行为类型GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='功能行为类型表 : 功能有那些行为类型，通过本映射关系，也指明了功能可能具有的行为；\r\n每个功能可以有多个行为类型，至少一';
 
 -- ----------------------------
--- Table structure for AC_FUNC_RESOURCE
+-- Table structure for ac_func_resource
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_FUNC_RESOURCE`;
-CREATE TABLE `AC_FUNC_RESOURCE` (
+DROP TABLE IF EXISTS `ac_func_resource`;
+CREATE TABLE `ac_func_resource` (
   `GUID_FUNC` varchar(128) NOT NULL COMMENT '对应功能GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
-  `RES_TYPE` varchar(255) DEFAULT NULL COMMENT '资源类型 : 见业务字典： DICT_AC_FUNCRESTYPE\r\n如：JSP、页面流、逻辑流等',
-  `RES_PATH` varchar(256) DEFAULT NULL COMMENT '资源路径',
-  `COMPACK_NAME` varchar(40) DEFAULT NULL COMMENT '构件包名',
-  `RES_SHOW_NAME` varchar(128) DEFAULT NULL COMMENT '资源显示名称'
+  `ATTR_TYPE` varchar(128) DEFAULT NULL COMMENT '资源类型 : 见业务字典： DICT_AC_FUNCRESTYPE\r\n如：JSP、页面流、逻辑流等',
+  `ATTR_KEY` varchar(256) DEFAULT NULL COMMENT '资源路径',
+  `ATTR_VALUE` varchar(256) DEFAULT NULL COMMENT '构件包名',
+  `MEMO` varchar(512) DEFAULT NULL COMMENT '资源显示名称'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='功能资源对应 : 功能点包含的系统资源内容，如jsp、页面流、逻辑流等资源。\r\n功能点对应实际的代码资源。';
 
 -- ----------------------------
--- Table structure for AC_FUNCGROUP
+-- Table structure for ac_funcgroup
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_FUNCGROUP`;
-CREATE TABLE `AC_FUNCGROUP` (
+DROP TABLE IF EXISTS `ac_funcgroup`;
+CREATE TABLE `ac_funcgroup` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_APP` varchar(128) NOT NULL COMMENT '隶属应用GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `FUNCGROUP_NAME` varchar(64) DEFAULT NULL COMMENT '功能组名称',
@@ -220,10 +223,10 @@ CREATE TABLE `AC_FUNCGROUP` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='功能组 : 功能组可以理解为功能模块或者构件包，是指一类相关功能的集合。定义功能组主要是为了对系统的功能进行归类管理\r\n';
 
 -- ----------------------------
--- Table structure for AC_MENU
+-- Table structure for ac_menu
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_MENU`;
-CREATE TABLE `AC_MENU` (
+DROP TABLE IF EXISTS `ac_menu`;
+CREATE TABLE `ac_menu` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_APP` varchar(128) NOT NULL COMMENT '应用GUID',
   `GUID_FUNC` varchar(128) DEFAULT NULL COMMENT '功能GUID',
@@ -245,10 +248,10 @@ CREATE TABLE `AC_MENU` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单 : 应用菜单表，从逻辑上为某个应用系统中的功能组织为一个有分类，有层级的树结构。\r\nUI可根据菜单数据结构，进行界面';
 
 -- ----------------------------
--- Table structure for AC_OPERATOR
+-- Table structure for ac_operator
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_OPERATOR`;
-CREATE TABLE `AC_OPERATOR` (
+DROP TABLE IF EXISTS `ac_operator`;
+CREATE TABLE `ac_operator` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `USER_ID` varchar(64) NOT NULL COMMENT '登录用户名',
   `PASSWORD` varchar(100) DEFAULT NULL COMMENT '密码',
@@ -271,30 +274,30 @@ CREATE TABLE `AC_OPERATOR` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='操作员 : 系统登录用户表，一个用户只能有一个或零个操作员';
 
 -- ----------------------------
--- Table structure for AC_OPERATOR_BHV
+-- Table structure for ac_operator_bhv
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_OPERATOR_BHV`;
-CREATE TABLE `AC_OPERATOR_BHV` (
+DROP TABLE IF EXISTS `ac_operator_bhv`;
+CREATE TABLE `ac_operator_bhv` (
   `GUID_OPERATOR` varchar(128) NOT NULL COMMENT '操作员GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_FUNC_BHV` varchar(128) NOT NULL COMMENT '操作行为GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `AUTH_TYPE` varchar(255) NOT NULL COMMENT '授权标志 : 取值来自业务菜单：DICT_AC_AUTHTYPE\r\n如：特别禁止、特别允许'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='操作员特殊功能行为配置 : 配合人员特殊授权配置表一起使用，可设置操作员只有功能的某些行为权限；\r\n特别授权某个功能给操作';
 
 -- ----------------------------
--- Table structure for AC_OPERATOR_CONFIG
+-- Table structure for ac_operator_config
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_OPERATOR_CONFIG`;
-CREATE TABLE `AC_OPERATOR_CONFIG` (
+DROP TABLE IF EXISTS `ac_operator_config`;
+CREATE TABLE `ac_operator_config` (
   `GUID_OPERATOR` varchar(128) NOT NULL COMMENT '操作员GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_CONFIG` varchar(128) NOT NULL COMMENT '配置GUID',
   `CONFIG_VALUE` varchar(1024) DEFAULT NULL COMMENT '配置值'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Table structure for AC_OPERATOR_FUNC
+-- Table structure for ac_operator_func
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_OPERATOR_FUNC`;
-CREATE TABLE `AC_OPERATOR_FUNC` (
+DROP TABLE IF EXISTS `ac_operator_func`;
+CREATE TABLE `ac_operator_func` (
   `GUID_OPERATOR` varchar(128) NOT NULL COMMENT '操作员GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_FUNC` varchar(128) NOT NULL COMMENT '功能GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `AUTH_TYPE` varchar(255) NOT NULL COMMENT '授权标志 : 取值来自业务菜单：DICT_AC_AUTHTYPE\r\n如：特别禁止、特别允许',
@@ -305,10 +308,10 @@ CREATE TABLE `AC_OPERATOR_FUNC` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='操作员特殊权限配置 : 针对人员配置的特殊权限，如特别开通的功能，或者特别禁止的功能';
 
 -- ----------------------------
--- Table structure for AC_OPERATOR_IDENTITY
+-- Table structure for ac_operator_identity
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_OPERATOR_IDENTITY`;
-CREATE TABLE `AC_OPERATOR_IDENTITY` (
+DROP TABLE IF EXISTS `ac_operator_identity`;
+CREATE TABLE `ac_operator_identity` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_OPERATOR` varchar(128) NOT NULL COMMENT '操作员GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `IDENTITY_NAME` varchar(255) NOT NULL COMMENT '身份名称',
@@ -318,20 +321,20 @@ CREATE TABLE `AC_OPERATOR_IDENTITY` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='操作员身份 : 操作员对自己的权限进行组合形成一个固定的登录身份；\r\n供登录时选项，每一个登录身份是员工操作员的权限子集';
 
 -- ----------------------------
--- Table structure for AC_OPERATOR_IDENTITYRES
+-- Table structure for ac_operator_identityres
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_OPERATOR_IDENTITYRES`;
-CREATE TABLE `AC_OPERATOR_IDENTITYRES` (
+DROP TABLE IF EXISTS `ac_operator_identityres`;
+CREATE TABLE `ac_operator_identityres` (
   `GUID_IDENTITY` varchar(128) NOT NULL COMMENT '身份GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `AC_RESOURCETYPE` varchar(255) NOT NULL COMMENT '资源类型 : 资源：操作员所拥有的权限来源\r\n见业务字典： DICT_AC_RESOURCETYPE\r\n表示：角色编号或者组织编号（如机构编号，工作组编号）',
   `GUID_AC_RESOURCE` varchar(128) NOT NULL COMMENT '资源GUID : 根据资源类型对应到不同权限资源的GUID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='身份权限集 : 操作员身份对应的权限子集\r\n可配置内容包括 \r\n角色\r\n组织';
 
 -- ----------------------------
--- Table structure for AC_OPERATOR_MENU
+-- Table structure for ac_operator_menu
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_OPERATOR_MENU`;
-CREATE TABLE `AC_OPERATOR_MENU` (
+DROP TABLE IF EXISTS `ac_operator_menu`;
+CREATE TABLE `ac_operator_menu` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_OPERATOR` varchar(128) NOT NULL COMMENT '操作员GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_APP` varchar(128) DEFAULT NULL COMMENT '应用GUID',
@@ -353,20 +356,20 @@ CREATE TABLE `AC_OPERATOR_MENU` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='操作员重组菜单 : 重组菜单；\r\n操作员对AC_MENU的定制化重组';
 
 -- ----------------------------
--- Table structure for AC_OPERATOR_ROLE
+-- Table structure for ac_operator_role
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_OPERATOR_ROLE`;
-CREATE TABLE `AC_OPERATOR_ROLE` (
+DROP TABLE IF EXISTS `ac_operator_role`;
+CREATE TABLE `ac_operator_role` (
   `GUID_OPERATOR` varchar(128) NOT NULL COMMENT '操作员GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_ROLE` varchar(128) NOT NULL COMMENT '拥有角色GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `AUTH` varchar(255) DEFAULT NULL COMMENT '是否可分级授权 : 预留字段，暂不使用。意图将操作员所拥有的权限赋予其他操作员。'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='操作员与权限集（角色）对应关系 : 操作员与权限集（角色）对应关系表';
 
 -- ----------------------------
--- Table structure for AC_OPERATOR_SHORTCUT
+-- Table structure for ac_operator_shortcut
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_OPERATOR_SHORTCUT`;
-CREATE TABLE `AC_OPERATOR_SHORTCUT` (
+DROP TABLE IF EXISTS `ac_operator_shortcut`;
+CREATE TABLE `ac_operator_shortcut` (
   `GUID_OPERATOR` varchar(128) NOT NULL COMMENT '操作员GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_FUNC` varchar(128) NOT NULL COMMENT '功能GUID',
   `GUID_FUNCGROUP` varchar(128) NOT NULL COMMENT '功能组GUID : 冗余字段，方便为快捷键分组',
@@ -377,20 +380,20 @@ CREATE TABLE `AC_OPERATOR_SHORTCUT` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='操作员快捷菜单 : 用户自定义的快捷菜单（以应用系统进行区分）；\r\n快捷菜单中的功能可在快捷菜单面板中点击启动，也可通过对';
 
 -- ----------------------------
--- Table structure for AC_PARTY_ROLE
+-- Table structure for ac_party_role
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_PARTY_ROLE`;
-CREATE TABLE `AC_PARTY_ROLE` (
+DROP TABLE IF EXISTS `ac_party_role`;
+CREATE TABLE `ac_party_role` (
   `PARTY_TYPE` varchar(255) NOT NULL COMMENT '组织对象类型 : 取值范围，见业务字典 DICT_OM_PARTYTYPE\r\n如：机构、工作组、岗位、职务',
   `GUID_PARTY` varchar(128) NOT NULL COMMENT '组织对象GUID : 根据组织类型存储对应组织的GUID',
   `GUID_ROLE` varchar(128) NOT NULL COMMENT '拥有角色GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组织对象与角色对应关系 : 设置机构、工作组、岗位、职务等组织对象与角色之间的对应关系';
 
 -- ----------------------------
--- Table structure for AC_ROLE
+-- Table structure for ac_role
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_ROLE`;
-CREATE TABLE `AC_ROLE` (
+DROP TABLE IF EXISTS `ac_role`;
+CREATE TABLE `ac_role` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_APP` varchar(128) NOT NULL COMMENT '隶属应用GUID',
   `ROLE_CODE` varchar(64) NOT NULL COMMENT '角色代码 : 业务上对角色的编码',
@@ -402,19 +405,19 @@ CREATE TABLE `AC_ROLE` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限集(角色) : 权限集（角色）定义表';
 
 -- ----------------------------
--- Table structure for AC_ROLE_DATASCOPE
+-- Table structure for ac_role_datascope
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_ROLE_DATASCOPE`;
-CREATE TABLE `AC_ROLE_DATASCOPE` (
+DROP TABLE IF EXISTS `ac_role_datascope`;
+CREATE TABLE `ac_role_datascope` (
   `GUID_ROLE` varchar(128) NOT NULL COMMENT '角色GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_DATASCOPE` varchar(128) NOT NULL COMMENT '拥有数据范围GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色数据范围权限对应 : 配置角色具有的数据权限。\r\n说明角色拥有某个实体数据中哪些范围的操作权。';
 
 -- ----------------------------
--- Table structure for AC_ROLE_ENTITY
+-- Table structure for ac_role_entity
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_ROLE_ENTITY`;
-CREATE TABLE `AC_ROLE_ENTITY` (
+DROP TABLE IF EXISTS `ac_role_entity`;
+CREATE TABLE `ac_role_entity` (
   `GUID_ROLE` varchar(128) NOT NULL COMMENT '角色GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_ENTITY` varchar(128) NOT NULL COMMENT '拥有实体GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `ISADD` char(1) NOT NULL DEFAULT 'N' COMMENT '可增加 : 取值来自业务菜单： DICT_YON',
@@ -424,10 +427,10 @@ CREATE TABLE `AC_ROLE_ENTITY` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色实体关系 : 角色与数据实体的对应关系。\r\n说明角色拥有哪些实体操作权。';
 
 -- ----------------------------
--- Table structure for AC_ROLE_ENTITYFIELD
+-- Table structure for ac_role_entityfield
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_ROLE_ENTITYFIELD`;
-CREATE TABLE `AC_ROLE_ENTITYFIELD` (
+DROP TABLE IF EXISTS `ac_role_entityfield`;
+CREATE TABLE `ac_role_entityfield` (
   `GUID_ROLE` varchar(128) NOT NULL COMMENT '角色GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_ENTITYFIELD` varchar(128) NOT NULL COMMENT '拥有实体属性GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `ISMODIFY` char(1) NOT NULL DEFAULT 'N' COMMENT '可修改 : 取值来自业务菜单： DICT_YON',
@@ -435,10 +438,10 @@ CREATE TABLE `AC_ROLE_ENTITYFIELD` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色与实体属性关系 : 角色与实体字段（属性）的对应关系。\r\n说明某个角色拥有哪些属性的操作权。';
 
 -- ----------------------------
--- Table structure for AC_ROLE_FUNC
+-- Table structure for ac_role_func
 -- ----------------------------
-DROP TABLE IF EXISTS `AC_ROLE_FUNC`;
-CREATE TABLE `AC_ROLE_FUNC` (
+DROP TABLE IF EXISTS `ac_role_func`;
+CREATE TABLE `ac_role_func` (
   `GUID_ROLE` varchar(128) NOT NULL COMMENT '角色GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_FUNC` varchar(128) NOT NULL COMMENT '拥有功能GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_APP` varchar(128) NOT NULL COMMENT '应用GUID : 冗余字段',
@@ -446,10 +449,21 @@ CREATE TABLE `AC_ROLE_FUNC` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限集(角色)功能对应关系 : 角色所包含的功能清单';
 
 -- ----------------------------
--- Table structure for LOG_ABF_HISTORY
+-- Table structure for log_abf_change
 -- ----------------------------
-DROP TABLE IF EXISTS `LOG_ABF_HISTORY`;
-CREATE TABLE `LOG_ABF_HISTORY` (
+DROP TABLE IF EXISTS `log_abf_change`;
+CREATE TABLE `log_abf_change` (
+  `GUID_HISTORY` varchar(128) DEFAULT NULL COMMENT '全局唯一标识符（GUID，Globally Unique Identifier）',
+  `CHANGE_KEY` varchar(128) DEFAULT NULL,
+  `CHANGE_VALUE` varchar(512) DEFAULT NULL,
+  KEY `GUID_HISTORY` (`GUID_HISTORY`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for log_abf_history
+-- ----------------------------
+DROP TABLE IF EXISTS `log_abf_history`;
+CREATE TABLE `log_abf_history` (
   `GUID` varchar(128) NOT NULL COMMENT '全局唯一标识符（GUID，Globally Unique Identifier）',
   `GUID_OPERATE` varchar(128) DEFAULT NULL,
   `OBJ_FROM` varchar(255) DEFAULT NULL,
@@ -461,26 +475,27 @@ CREATE TABLE `LOG_ABF_HISTORY` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='记录客户与网点系统接触的所有日志明细，这些接触行为包括：\r\n客户主动接触网点，如：使用自助设备；\r\n柜员主动接触客户，如';
 
 -- ----------------------------
--- Table structure for LOG_ABF_KEYWORD
+-- Table structure for log_abf_keyword
 -- ----------------------------
-DROP TABLE IF EXISTS `LOG_ABF_KEYWORD`;
-CREATE TABLE `LOG_ABF_KEYWORD` (
-  `GUID_HISTORY` varchar(128) DEFAULT NULL,
+DROP TABLE IF EXISTS `log_abf_keyword`;
+CREATE TABLE `log_abf_keyword` (
+  `GUID_HISTORY` varchar(128) DEFAULT NULL COMMENT '全局唯一标识符（GUID，Globally Unique Identifier）',
   `PARAM` varchar(128) DEFAULT NULL,
-  `VALUE` varchar(512) DEFAULT NULL
+  `VALUE` varchar(512) DEFAULT NULL,
+  KEY `GUID_HISTORY` (`GUID_HISTORY`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Table structure for LOG_ABF_OPERATE
+-- Table structure for log_abf_operate
 -- ----------------------------
-DROP TABLE IF EXISTS `LOG_ABF_OPERATE`;
-CREATE TABLE `LOG_ABF_OPERATE` (
+DROP TABLE IF EXISTS `log_abf_operate`;
+CREATE TABLE `log_abf_operate` (
   `GUID` varchar(128) NOT NULL COMMENT '全局唯一标识符（GUID，Globally Unique Identifier）',
   `OPERATE_FROM` varchar(256) DEFAULT NULL,
   `OPERATE_TYPE` varchar(64) DEFAULT NULL COMMENT '见业务字典：DICT_OPERATOR_TYPE',
-  `OPERATE_TIME` timestamp NULL DEFAULT NULL,
-  `OPERATE_DESC` varchar(512) DEFAULT NULL,
+  `OPERATE_TIME` date DEFAULT NULL,
   `OPERATE_RESULT` varchar(255) DEFAULT NULL COMMENT '见业务字典：DICT_OPERATOR_RESULT',
+  `OPERATE_DESC` varchar(512) DEFAULT NULL,
   `OPERATOR_NAME` varchar(64) DEFAULT NULL COMMENT '记录当前操作员姓名（只记录当前值，不随之改变）',
   `USER_ID` varchar(64) DEFAULT NULL COMMENT '登陆用户id',
   `APP_CODE` varchar(64) DEFAULT NULL,
@@ -488,16 +503,16 @@ CREATE TABLE `LOG_ABF_OPERATE` (
   `FUNC_CODE` varchar(64) DEFAULT NULL COMMENT '业务上对功能的编码',
   `FUNC_NAME` varchar(128) DEFAULT NULL,
   `RESTFUL_URL` varchar(512) DEFAULT NULL COMMENT '功能对应的RESTFul服务地址',
-  `STACK_TRACE` text COMMENT '记录异常堆栈信息，超过4000的部分被自动丢弃',
+  `STACK_TRACE` varchar(10000) DEFAULT NULL COMMENT '记录异常堆栈信息，超过4000的部分被自动丢弃',
   `PROCESS_DESC` varchar(1024) DEFAULT NULL COMMENT '记录功能执行时的业务处理信息',
   PRIMARY KEY (`GUID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='记录操作员对ABF系统的操作日志（交易操作日志另见： LOG_TX_TRACE）';
 
 -- ----------------------------
--- Table structure for OM_BUSIORG
+-- Table structure for om_busiorg
 -- ----------------------------
-DROP TABLE IF EXISTS `OM_BUSIORG`;
-CREATE TABLE `OM_BUSIORG` (
+DROP TABLE IF EXISTS `om_busiorg`;
+CREATE TABLE `om_busiorg` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `NODE_TYPE` varchar(255) NOT NULL COMMENT '节点类型 : 业务字典 DICT_OM_NODETYPE\r\n该业务机构的节点类型，虚拟节点，机构节点，如果是机构节点，则对应机构信息表的一个机构',
   `BUSIORG_CODE` varchar(64) NOT NULL COMMENT '业务机构代码 : 业务上对业务机构的编码',
@@ -517,10 +532,10 @@ CREATE TABLE `OM_BUSIORG` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='业务机构 : 业务机构是以业务视角来对机构进行分类分组，每个业务视角称为“业务套别”或者“业务条线”，\r\n作为业务处理的机';
 
 -- ----------------------------
--- Table structure for OM_DUTY
+-- Table structure for om_duty
 -- ----------------------------
-DROP TABLE IF EXISTS `OM_DUTY`;
-CREATE TABLE `OM_DUTY` (
+DROP TABLE IF EXISTS `om_duty`;
+CREATE TABLE `om_duty` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `DUTY_CODE` varchar(64) NOT NULL COMMENT '职务代码',
   `DUTY_NAME` varchar(128) NOT NULL COMMENT '职务名称',
@@ -536,39 +551,39 @@ CREATE TABLE `OM_DUTY` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='职务定义表 : 职务及responsiblity。定义职务及上下级关系（可以把“职务”理解为岗位的岗位类型，岗位是在机构';
 
 -- ----------------------------
--- Table structure for OM_EMP_GROUP
+-- Table structure for om_emp_group
 -- ----------------------------
-DROP TABLE IF EXISTS `OM_EMP_GROUP`;
-CREATE TABLE `OM_EMP_GROUP` (
+DROP TABLE IF EXISTS `om_emp_group`;
+CREATE TABLE `om_emp_group` (
   `GUID_EMP` varchar(128) NOT NULL COMMENT '员工GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_GROUP` varchar(128) NOT NULL COMMENT '隶属工作组GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='人员工作组对应关系 : 定义工作组包含的人员（工作组中有哪些人员）\r\n如：某个项目组有哪些人员';
 
 -- ----------------------------
--- Table structure for OM_EMP_ORG
+-- Table structure for om_emp_org
 -- ----------------------------
-DROP TABLE IF EXISTS `OM_EMP_ORG`;
-CREATE TABLE `OM_EMP_ORG` (
+DROP TABLE IF EXISTS `om_emp_org`;
+CREATE TABLE `om_emp_org` (
   `GUID_EMP` varchar(128) NOT NULL COMMENT '员工GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_ORG` varchar(128) NOT NULL COMMENT '隶属机构GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `ISMAIN` char(1) NOT NULL DEFAULT 'N' COMMENT '是否主机构 : 取值来自业务菜单： DICT_YON\r\n必须有且只能有一个主机构，默认N，人员管理时程序检查当前是否只有一条主机构；'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='员工隶属机构关系表 : 定义人员和机构的关系表（机构有哪些人员）。\r\n允许一个人员同时在多个机构，但是只能有一个主机构。';
 
 -- ----------------------------
--- Table structure for OM_EMP_POSITION
+-- Table structure for om_emp_position
 -- ----------------------------
-DROP TABLE IF EXISTS `OM_EMP_POSITION`;
-CREATE TABLE `OM_EMP_POSITION` (
+DROP TABLE IF EXISTS `om_emp_position`;
+CREATE TABLE `om_emp_position` (
   `GUID_EMP` varchar(128) NOT NULL COMMENT '员工GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_POSITION` varchar(128) NOT NULL COMMENT '所在岗位GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `ISMAIN` char(1) NOT NULL COMMENT '是否主岗位 : 取值来自业务菜单：DICT_YON\r\n只能有一个主岗位'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='员工岗位对应关系 : 定义人员和岗位的对应关系，需要注明，一个人员可以设定一个基本岗位';
 
 -- ----------------------------
--- Table structure for OM_EMPLOYEE
+-- Table structure for om_employee
 -- ----------------------------
-DROP TABLE IF EXISTS `OM_EMPLOYEE`;
-CREATE TABLE `OM_EMPLOYEE` (
+DROP TABLE IF EXISTS `om_employee`;
+CREATE TABLE `om_employee` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `EMP_CODE` varchar(32) NOT NULL COMMENT '员工代码',
   `EMP_NAME` varchar(50) NOT NULL COMMENT '员工姓名',
@@ -610,10 +625,10 @@ CREATE TABLE `OM_EMPLOYEE` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='员工 : 人员信息表\r\n人员至少隶属于一个机构；\r\n本表记录了：人员基本信息，人员联系信息，人员在机构中的信息，人员对应的操';
 
 -- ----------------------------
--- Table structure for OM_GROUP
+-- Table structure for om_group
 -- ----------------------------
-DROP TABLE IF EXISTS `OM_GROUP`;
-CREATE TABLE `OM_GROUP` (
+DROP TABLE IF EXISTS `om_group`;
+CREATE TABLE `om_group` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GROUP_CODE` varchar(64) NOT NULL COMMENT '工作组代码 : 业务上对工作组的编码',
   `GROUP_NAME` varchar(50) NOT NULL COMMENT '工作组名称',
@@ -637,28 +652,28 @@ CREATE TABLE `OM_GROUP` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='工作组 : 工作组定义表，用于定义临时组、虚拟组，跨部门的项目组等。\r\n工作组实质上与机构类似，是为了将项目组、工作组等临';
 
 -- ----------------------------
--- Table structure for OM_GROUP_APP
+-- Table structure for om_group_app
 -- ----------------------------
-DROP TABLE IF EXISTS `OM_GROUP_APP`;
-CREATE TABLE `OM_GROUP_APP` (
+DROP TABLE IF EXISTS `om_group_app`;
+CREATE TABLE `om_group_app` (
   `GUID_GROUP` varchar(128) NOT NULL COMMENT '工作组GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_APP` varchar(128) NOT NULL COMMENT '应用GUID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='工作组应用列表 : 工作组所拥有（允许操作）的应用列表';
 
 -- ----------------------------
--- Table structure for OM_GROUP_POSITION
+-- Table structure for om_group_position
 -- ----------------------------
-DROP TABLE IF EXISTS `OM_GROUP_POSITION`;
-CREATE TABLE `OM_GROUP_POSITION` (
+DROP TABLE IF EXISTS `om_group_position`;
+CREATE TABLE `om_group_position` (
   `GUID_GROUP` varchar(128) NOT NULL COMMENT '工作组GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_POSITION` varchar(128) NOT NULL COMMENT '岗位GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='工作组岗位列表 : 工作组岗位列表:一个工作组允许定义多个岗位，岗位之间允许存在层次关系';
 
 -- ----------------------------
--- Table structure for OM_ORG
+-- Table structure for om_org
 -- ----------------------------
-DROP TABLE IF EXISTS `OM_ORG`;
-CREATE TABLE `OM_ORG` (
+DROP TABLE IF EXISTS `om_org`;
+CREATE TABLE `om_org` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `ORG_CODE` varchar(32) NOT NULL COMMENT '机构代码 : 业务上对机构实体的编码。\r\n一般根据机构等级和机构类型进行有规则的编码。',
   `ORG_NAME` varchar(64) NOT NULL COMMENT '机构名称',
@@ -692,10 +707,10 @@ CREATE TABLE `OM_ORG` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='机构信息表 : 机构部门（Organization）表\r\n允许定义多个平行机构';
 
 -- ----------------------------
--- Table structure for OM_POSITION
+-- Table structure for om_position
 -- ----------------------------
-DROP TABLE IF EXISTS `OM_POSITION`;
-CREATE TABLE `OM_POSITION` (
+DROP TABLE IF EXISTS `om_position`;
+CREATE TABLE `om_position` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_ORG` varchar(128) NOT NULL COMMENT '隶属机构GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `POSITION_CODE` varchar(64) NOT NULL COMMENT '岗位代码 : 业务上对岗位的编码',
@@ -718,19 +733,19 @@ CREATE TABLE `OM_POSITION` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='岗位 : 岗位定义表\r\n岗位是职务在机构上的实例化表现（某个机构／部门中对某个职务（Responsibility）的工作定';
 
 -- ----------------------------
--- Table structure for OM_POSITION_APP
+-- Table structure for om_position_app
 -- ----------------------------
-DROP TABLE IF EXISTS `OM_POSITION_APP`;
-CREATE TABLE `OM_POSITION_APP` (
+DROP TABLE IF EXISTS `om_position_app`;
+CREATE TABLE `om_position_app` (
   `GUID_POSITION` varchar(128) NOT NULL COMMENT '岗位GUID : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_APP` varchar(128) NOT NULL COMMENT '应用GUID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='岗位应用列表 : 岗位所拥有（允许操作）的应用列表信息';
 
 -- ----------------------------
--- Table structure for SYS_CHANNEL_CTL
+-- Table structure for sys_channel_ctl
 -- ----------------------------
-DROP TABLE IF EXISTS `SYS_CHANNEL_CTL`;
-CREATE TABLE `SYS_CHANNEL_CTL` (
+DROP TABLE IF EXISTS `sys_channel_ctl`;
+CREATE TABLE `sys_channel_ctl` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier）',
   `CHN_CODE` varchar(128) NOT NULL COMMENT '渠道代码 : 记录接触系统对应的渠道代码',
   `CHN_NAME` varchar(256) NOT NULL COMMENT '渠道名称',
@@ -741,10 +756,10 @@ CREATE TABLE `SYS_CHANNEL_CTL` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='渠道参数控制表';
 
 -- ----------------------------
--- Table structure for SYS_DICT
+-- Table structure for sys_dict
 -- ----------------------------
-DROP TABLE IF EXISTS `SYS_DICT`;
-CREATE TABLE `SYS_DICT` (
+DROP TABLE IF EXISTS `sys_dict`;
+CREATE TABLE `sys_dict` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `DICT_KEY` varchar(128) NOT NULL COMMENT '业务字典',
   `DICT_TYPE` char(1) NOT NULL COMMENT '类型 : 见业务字典： DICT_TYPEa 应用级（带业务含义的业务字典，应用开发时可扩展）s 系统级（平台自己的业务字典）',
@@ -763,10 +778,10 @@ CREATE TABLE `SYS_DICT` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='业务字典 : 业务字典表，定义系统中下拉菜单的数据（注意：仅仅包括下拉菜单中的数据，而不包括下拉菜单样式，是否多选这些与';
 
 -- ----------------------------
--- Table structure for SYS_DICT_ITEM
+-- Table structure for sys_dict_item
 -- ----------------------------
-DROP TABLE IF EXISTS `SYS_DICT_ITEM`;
-CREATE TABLE `SYS_DICT_ITEM` (
+DROP TABLE IF EXISTS `sys_dict_item`;
+CREATE TABLE `sys_dict_item` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_DICT` varchar(128) NOT NULL COMMENT '隶属业务字典 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `ITEM_NAME` varchar(128) NOT NULL COMMENT '字典项名称',
@@ -779,10 +794,10 @@ CREATE TABLE `SYS_DICT_ITEM` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='业务字典项 : 业务字典内容项， 展示下拉菜单结构时，一般需要： 字典项，字典项名称，实际值';
 
 -- ----------------------------
--- Table structure for SYS_ERR_CODE
+-- Table structure for sys_err_code
 -- ----------------------------
-DROP TABLE IF EXISTS `SYS_ERR_CODE`;
-CREATE TABLE `SYS_ERR_CODE` (
+DROP TABLE IF EXISTS `sys_err_code`;
+CREATE TABLE `sys_err_code` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier）',
   `ERRCODE_KIND` char(8) DEFAULT NULL COMMENT '错误代码分类 : 见业务字典： DICT_ERRCODE_KIND\r\nSYS 系统错误码\r\nTRANS 交易错误码\r\n',
   `ERR_CODE` varchar(32) DEFAULT NULL COMMENT '错误代码',
@@ -792,10 +807,10 @@ CREATE TABLE `SYS_ERR_CODE` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='错误码表 : 记录系统中的各种错误代码信息，如系统抛出的错误信息，交易执行时的错误码等';
 
 -- ----------------------------
--- Table structure for SYS_OPERATOR_LOG
+-- Table structure for sys_operator_log
 -- ----------------------------
-DROP TABLE IF EXISTS `SYS_OPERATOR_LOG`;
-CREATE TABLE `SYS_OPERATOR_LOG` (
+DROP TABLE IF EXISTS `sys_operator_log`;
+CREATE TABLE `sys_operator_log` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier）',
   `OPERATOR_TYPE` varchar(64) DEFAULT NULL COMMENT '操作类型 : 见业务字典：DICT_OPERATOR_TYPE',
   `OPERATOR_TIME` timestamp NULL DEFAULT NULL COMMENT '操作时间',
@@ -813,10 +828,10 @@ CREATE TABLE `SYS_OPERATOR_LOG` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='操作日志 : 记录操作员使用系统的操作日志（交易操作日志另见： LOG_TX_TRACE）';
 
 -- ----------------------------
--- Table structure for SYS_RUN_CONFIG
+-- Table structure for sys_run_config
 -- ----------------------------
-DROP TABLE IF EXISTS `SYS_RUN_CONFIG`;
-CREATE TABLE `SYS_RUN_CONFIG` (
+DROP TABLE IF EXISTS `sys_run_config`;
+CREATE TABLE `sys_run_config` (
   `GUID` varchar(128) NOT NULL COMMENT '数据主键 : 全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成；',
   `GUID_APP` varchar(64) NOT NULL COMMENT '应用系统GUID : 用于表识一组参数属于某个应用系统 。下拉AC_APP表记录',
   `GROUP_NAME` varchar(64) NOT NULL COMMENT '参数组别 : 参数组别，手工输入',
@@ -828,10 +843,10 @@ CREATE TABLE `SYS_RUN_CONFIG` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统运行参数表 : 运行期系统参数表，以三段式结构进行参数存储';
 
 -- ----------------------------
--- Table structure for SYS_SEQNO
+-- Table structure for sys_seqno
 -- ----------------------------
-DROP TABLE IF EXISTS `SYS_SEQNO`;
-CREATE TABLE `SYS_SEQNO` (
+DROP TABLE IF EXISTS `sys_seqno`;
+CREATE TABLE `sys_seqno` (
   `SEQ_NAME` varchar(256) NOT NULL,
   `SEQ_KEY` varchar(128) NOT NULL COMMENT '序号键值',
   `SEQ_NO` decimal(20,0) NOT NULL DEFAULT '0' COMMENT '序号数 : 顺序增加的数字',

@@ -1,4 +1,3 @@
-
 INSERT INTO `SYS_DICT` VALUES ('DICT1501076672', 'DICT_BIZ_TYPE', 'S', '业务类型', '0', '银行业务的类型划分', null, '1', null, null, null, null, '0');
 INSERT INTO `SYS_DICT` VALUES ('DICT1501076673', 'DICT_CONTACT_MODE', 'A', '接触方式', '0', '客户与银行接触的方式分类', null, null, null, null, null, null, '0');
 INSERT INTO `SYS_DICT` VALUES ('DICT1501076674', 'DICT_TRANS_STATUS', 'S', '交易状态', '0', '交易流水的状态信息', null, null, null, null, null, null, '0');
@@ -60,6 +59,8 @@ INSERT INTO `SYS_DICT` VALUES ('DICT1504072036', 'DICT_COUNTY_GD', 'A', '广东�
 INSERT INTO `SYS_DICT` VALUES ('DICT1504072037', 'DICT_COUNTY_ZJ', 'A', '浙江省城市', '0', null, 'DICT1503908002', null, null, null, null, null, '0');
 INSERT INTO `SYS_DICT` VALUES ('DICT1504072038', 'DICT_COUNTY_HZ', 'A', '杭州城区', '0', null, 'DICT1504072037', null, null, null, null, null, '0');
 INSERT INTO `SYS_DICT` VALUES ('DICT1505722474', 'DICT_SYS_DICTFROMTYPE', 'S', '字典项来源类型', '0', '字典项来源的类型', null, '2', null, null, null, null, '0');
+INSERT INTO `SYS_DICT` VALUES ('DICT1506325574', 'DICT_CONFIG_STYLE', 'A', '配置风格', '0', '个性化配置风格', null, null, null, null, null, null, '0');
+INSERT INTO `SYS_DICT` VALUES ('DICT1507720238', 'DICT_STYLE_COLOR', 'A', '页面风格颜色', '0', null, null, null, null, null, null, null, '0');
 
 
 INSERT INTO `SYS_DICT_ITEM` VALUES ('DICTITEM1501077408', 'DICT1501076673', '被动接触', 'value', 'passive', 'passive', null, '0');
@@ -293,3 +294,11 @@ INSERT INTO `SYS_DICT_ITEM` VALUES ('DICTITEM1504072040', 'DICT1504072037', '杭
 INSERT INTO `SYS_DICT_ITEM` VALUES ('DICTITEM1505722554', 'DICT1505722474', '字典项', 'value', '0', '0', '代表来自字典项', '0');
 INSERT INTO `SYS_DICT_ITEM` VALUES ('DICTITEM1505722555', 'DICT1505722474', '来自单表', 'value', '1', '1', '代表来自多表', '1');
 INSERT INTO `SYS_DICT_ITEM` VALUES ('DICTITEM1505722605', 'DICT1505722474', '多表或视图', 'value', '2', '2', '代表多表和视图', '2');
+INSERT INTO `SYS_DICT_ITEM` VALUES ('DICTITEM1506325613', 'DICT1506325574', '单选按钮', 'value', 'radio', 'radio', '单选按钮', '0');
+INSERT INTO `SYS_DICT_ITEM` VALUES ('DICTITEM1506325614', 'DICT1506325574', '下拉选择', 'value', 'select', 'select', '下拉选择', '2');
+INSERT INTO `SYS_DICT_ITEM` VALUES ('DICTITEM1507720289', 'DICT1507720238', '默认', 'value', 'default', 'default', '默认', '0');
+INSERT INTO `SYS_DICT_ITEM` VALUES ('DICTITEM1507720290', 'DICT1507720238', '深蓝', 'value', 'darkblue', 'darkblue', '深蓝', '0');
+INSERT INTO `SYS_DICT_ITEM` VALUES ('DICTITEM1507720291', 'DICT1507720238', '蓝色', 'value', 'blue', 'blue', '蓝色', '0');
+INSERT INTO `SYS_DICT_ITEM` VALUES ('DICTITEM1507720292', 'DICT1507720238', '灰色', 'value', 'grey', 'grey', '灰色', '0');
+INSERT INTO `SYS_DICT_ITEM` VALUES ('DICTITEM1507720293', 'DICT1507720238', '浅灰色', 'value', 'light', 'light', '浅灰色', '0');
+INSERT INTO `SYS_DICT_ITEM` VALUES ('DICTITEM1507720294', 'DICT1507720238', '浅灰色2', 'value', 'light2', 'light2', '浅灰色2', '0');

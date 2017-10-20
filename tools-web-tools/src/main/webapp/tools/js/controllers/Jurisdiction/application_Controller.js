@@ -1183,7 +1183,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         item.id = item.guid;
         subFrom.data = item;
         subFrom.changeData = changeData;
-        console.log(subFrom)
+        // console.log(subFrom)
         //获取到选中的guid，参入item，然后传入修改就可以
         application_service.acFuncEdit(subFrom).then(function(data){
             if(data.status == "success"){;
