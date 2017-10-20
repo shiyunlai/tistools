@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-10-19 16:02:43
+Date: 2017-10-20 15:22:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -493,7 +493,7 @@ CREATE TABLE `log_abf_operate` (
   `GUID` varchar(128) NOT NULL COMMENT '全局唯一标识符（GUID，Globally Unique Identifier）',
   `OPERATE_FROM` varchar(256) DEFAULT NULL,
   `OPERATE_TYPE` varchar(64) DEFAULT NULL COMMENT '见业务字典：DICT_OPERATOR_TYPE',
-  `OPERATE_TIME` date DEFAULT NULL,
+  `OPERATE_TIME` timestamp NULL DEFAULT NULL,
   `OPERATE_RESULT` varchar(255) DEFAULT NULL COMMENT '见业务字典：DICT_OPERATOR_RESULT',
   `OPERATE_DESC` varchar(512) DEFAULT NULL,
   `OPERATOR_NAME` varchar(64) DEFAULT NULL COMMENT '记录当前操作员姓名（只记录当前值，不随之改变）',

@@ -91,7 +91,6 @@ MetronicApp.controller('numres_controller', function ($filter, $scope, $state,nu
                         console.log(str);
                         $scope.numberFrom = angular.copy(str);
                     }
-
                     $scope.editsflag = true;
                     $scope.add = function(item){//保存新增的函数
                         //if(confirm('确定要把'+ str.seqKey+'的序号数修改成'+str.seqNo +'吗？')){
@@ -126,7 +125,8 @@ MetronicApp.controller('numres_controller', function ($filter, $scope, $state,nu
             var str =  getSel[0];
             openwindow($uibModal, 'views/numberResources/numberEdit.html', 'lg',// 弹出页面
                 function ($scope, $modalInstance) {
-                    $scope.numberFrom =str;
+                    var copynums = angular.copy(str)
+                    $scope.numberFrom =copynums;
                     $scope.add = function(item){//保存新增的函数
                         toastr['success']("保存成功！");
                         $modalInstance.close();
@@ -137,7 +137,6 @@ MetronicApp.controller('numres_controller', function ($filter, $scope, $state,nu
                 }
             )
         }
-
     }
     //删除序号资源
     $scope.numresDel = function(){
