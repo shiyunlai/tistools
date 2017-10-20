@@ -17,6 +17,19 @@
 		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
 	<!-- =======================================================
+	| txmode模块装配：引擎管理器（TxEngineManager）的装配
+	| 一共有那些交易引擎
+	============================================================= -->
+	<bean id="txEngineManager" class="org.tools.service.txmodel.TxEngineManager">
+		<property name="txEngines">
+			<map>
+				<entry key="ACCOUNT" value-ref="accountTxEngine" />
+				<!-- <entry key="MAINTAIN" value-ref="closeTxBhvCommand" /> -->
+			</map>
+		</property>
+	</bean>
+	
+	<!-- =======================================================
 	| txmode模块装配：账务类交易引擎（AccountTxEngine）的装配
 	| 配置引擎可以处理那些操作命令
 	============================================================= -->
@@ -25,8 +38,8 @@
 		<property name="bhvType" value="ACCOUNT" />
 		<property name="commands">
 			<map>
-				<!-- 操作命令：打开交易 -->
 				<entry key="OPEN_TX" value-ref="openTxBhvCommand" />
+				<entry key="CLOSE_TX" value-ref="closeTxBhvCommand" />
 			</map>
 		</property>
 	</bean>
@@ -43,7 +56,7 @@
 	
 	<!-- 操作行为命令：关闭交易 -->
 	<bean id="closeTxBhvCommand" class="org.tools.service.txmodel.command.CloseTxBhvCommand">
-		<property name="bhvCode" value="OPEN_TX" />
+		<property name="bhvCode" value="CLOSE_TX" />
 	</bean>
 	
 	

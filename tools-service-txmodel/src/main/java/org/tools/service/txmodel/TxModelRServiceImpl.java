@@ -3,10 +3,12 @@
  */
 package org.tools.service.txmodel;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.tis.tools.rservice.txmodel.ITxModelRService;
 import org.tis.tools.rservice.txmodel.message.ITxRequest;
 import org.tis.tools.rservice.txmodel.message.ITxResponse;
 import org.tools.service.txmodel.TxModelConstants.BHVTYPE;
+import org.tools.service.txmodel.tx.TxDefinition;
 
 /**
  * 
@@ -17,6 +19,9 @@ import org.tools.service.txmodel.TxModelConstants.BHVTYPE;
  */
 public class TxModelRServiceImpl implements ITxModelRService {
 
+	@Autowired
+	TxEngineManager txEngineManager ;
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -29,39 +34,53 @@ public class TxModelRServiceImpl implements ITxModelRService {
 
 		// 根据请求数据，判断使用那个引擎
 		String txCode = txRequest.getTxHeader().getTxCode();
-		BHVTYPE bhvType = getBhvTypeByTxCode(txCode);
+		TxDefinition txDef = getTxDefByTxCode(txCode) ; 
+		BHVTYPE bhvType = txDef.getBhvType() ;
 
-		// 取出对应的交易引擎
-		ITxEngine txEngine = TxEngineManager.instance().getTxEngine(bhvType);
+		// 根据行为类型(BHVTYPE)取出对应的交易引擎
+		ITxEngine txEngine = txEngineManager.getTxEngine(bhvType);
+		
+		// 构造/取回 交易上下文
+		TxContext context = buildTxContext(txDef,txRequest) ; 
 		
 		// 调用交易引擎处理本次交易操作请求
-		ITxResponse response = txEngine.execute(txRequest);
-		
-		// 整理响应信息
-		reCollection(txRequest,response) ;
+		ITxResponse response = txEngine.execute(context);
 		
 		return response ; 
 	}
 
 	/**
-	 * 重新整理响应信息
+	 * <pre>
+	 * 如果交易为首次操作请求，新建一个交易上下文对象,
+	 * 如果已经存在，直接返回.
+	 * 
+	 * </pre>
+	 * 
+	 * @param txDef
+	 *            当前运行的交易定义
 	 * @param txRequest
-	 * @param response
+	 *            交易请求数据
+	 * @return
 	 */
-	private void reCollection(ITxRequest txRequest, ITxResponse response) {
-		// TODO Auto-generated method stub
+	private TxContext buildTxContext(TxDefinition txDef, ITxRequest txRequest) {
 		
+		return new TxContext(txDef, txRequest);// FIXME 临时
 	}
 
 	/**
-	 * 取交易对应的行为类型
+	 * 取交易定义
 	 * 
-	 * @param txCode 交易代码
-	 * @return
+	 * @param txCode
+	 *            交易代码
+	 * @return {@link TxDefinition 对应的交易定义}
 	 */
-	private BHVTYPE getBhvTypeByTxCode(String txCode) {
-		// TODO Auto-generated method stub 结合ABF中功能、行为模型进行识别
+	private TxDefinition getTxDefByTxCode(String txCode) {
+
+		// TODO Auto-generated method stub txmodel启动时加载交易定义
+		// TODO 此处获取加载后的交易定义
+		
+		// FIXME 或者txmodel启动时无需加载，运行期间按需加载，加载后放到缓存，也解决来分部署情况下统一交易定义的需求。
+
 		return null;
 	}
-
 }

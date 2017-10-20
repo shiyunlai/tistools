@@ -1,8 +1,10 @@
 package org.tools.service.txmodel.handler;
 
-import org.tis.tools.rservice.txmodel.message.ITxRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tis.tools.rservice.txmodel.message.ITxResponse;
 import org.tools.service.txmodel.IOperatorBhvHandler;
+import org.tools.service.txmodel.TxContext;
 
 /**
  * <pre>
@@ -16,17 +18,19 @@ import org.tools.service.txmodel.IOperatorBhvHandler;
  */
 public class DefaultOperatorBhvHandler implements IOperatorBhvHandler {
 
+	protected final Logger logger = LoggerFactory.getLogger(DefaultOperatorBhvHandler.class);
 
 	@Override
-	public void handle(ITxRequest request, ITxResponse response) {
-		// TODO Auto-generated method stub
-		
+	public boolean canHandle(String channelID) {
+		logger.warn("收到渠道<" + channelID + ">的交易操作请求，但不能识别操作类型！");
+		return true;//所有渠道都适用
 	}
 
 	@Override
-	public String which() {
-		return null;
+	public ITxResponse handle(TxContext context) {
+		logger.warn("收到渠道<" + context.getTxRequest().getTxHeader().getChannelID() + ">的交易操作请求，但不能识别这个操作类型<"
+				+ context.getTxRequest().getTxHeader().getBhvCode() + ">！");
+		return null;//TODO new 一个 ITxResponse对象回去
 	}
 
-	
 }

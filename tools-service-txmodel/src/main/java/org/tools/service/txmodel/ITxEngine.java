@@ -3,7 +3,6 @@
  */
 package org.tools.service.txmodel;
 
-import org.tis.tools.rservice.txmodel.message.ITxRequest;
 import org.tis.tools.rservice.txmodel.message.ITxResponse;
 import org.tools.service.txmodel.TxModelConstants.BHVTYPE;
 
@@ -25,7 +24,7 @@ public interface ITxEngine {
 	 * </pre>
 	 * @param command
 	 */
-	public void addCommand(IOperatorBhvCommand command)  ; 
+	public void registerCommand(IOperatorBhvCommand command)  ; 
 	
 	/**
 	 * 指定执行那个操作行为命令
@@ -48,10 +47,11 @@ public interface ITxEngine {
 	 * </pre>
 	 * 
 	 * @param request
-	 *            {@link ITxRequest 交易请求}
-	 * @return
+	 *            {@link TxContext 交易处理上下文} 包括请求数据，交易定义等等运行时信息
+	 * @return {@link ITxResponse 处理结果}
+	 *
 	 */
-	public ITxResponse execute(ITxRequest request);
+	public ITxResponse execute(TxContext context);
 	
 	/**
 	 * 取引擎对应的行为分类

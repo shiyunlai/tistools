@@ -3,10 +3,10 @@
  */
 package org.tools.service.txmodel.engine;
 
-import org.tis.tools.rservice.txmodel.message.ITxRequest;
 import org.tis.tools.rservice.txmodel.message.ITxResponse;
 import org.tools.service.txmodel.IOperatorBhvCommand;
 import org.tools.service.txmodel.ITxEngine;
+import org.tools.service.txmodel.TxContext;
 import org.tools.service.txmodel.TxModelConstants.BHVTYPE;
 
 /**
@@ -17,7 +17,7 @@ import org.tools.service.txmodel.TxModelConstants.BHVTYPE;
 public class DefaultTxEngine implements ITxEngine {
 
 	@Override
-	public void addCommand(IOperatorBhvCommand command) {
+	public void registerCommand(IOperatorBhvCommand command) {
 		
 	}
 
@@ -25,15 +25,15 @@ public class DefaultTxEngine implements ITxEngine {
 	public void setExecuteCommand(IOperatorBhvCommand command) {
 		
 	}
-
+	
 	@Override
-	public ITxResponse execute(ITxRequest request) {
+	public ITxResponse execute(TxContext context) {
 		return null;
 	}
 
 	@Override
 	public BHVTYPE getBhvType() {
-		return BHVTYPE.NOCATEGORY;
+		return BHVTYPE.NO_CATEGORY;
 	}
 
 }

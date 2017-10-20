@@ -3,7 +3,6 @@
  */
 package org.tools.service.txmodel;
 
-import org.tis.tools.rservice.txmodel.message.ITxRequest;
 import org.tis.tools.rservice.txmodel.message.ITxResponse;
 
 /**
@@ -13,7 +12,7 @@ import org.tis.tools.rservice.txmodel.message.ITxResponse;
  * 
  * 操作行为处理器，是具体执行交易操作处理逻辑的接口，每个操作都有具体的处理实现类，
  * 
- * 同一个行为，不同渠道，对应不同的处理实现。
+ * 同一个行为，在不同渠道<code>channelID</code>，有不同的处理实现。
  * </pre>
  * 
  * @author megapro
@@ -22,19 +21,21 @@ import org.tis.tools.rservice.txmodel.message.ITxResponse;
 public interface IOperatorBhvHandler {
 	
 	/**
-	 * 返回我能处理那个渠道
-	 * @return 渠道ID
+	 * 我能处理那个渠道
+	 * 
+	 * @param channelID
+	 *            渠道ID
+	 * @return true 能处理渠道channelID请求来的操作行为 </br> false 不支持
 	 */
-	public String which();
+	public boolean canHandle(String channelID);
 	
 	/**
 	 * 处理交易操作行为
 	 * 
 	 * @param request
-	 *            {@link ITxRequest 交易操作请求}
-	 * @param response
-	 *            {@link ITxResponse 交易响应}
+	 *            {@link TxContext 交易上下文}
+	 * @return 交易响应
 	 */
-	public void handle(ITxRequest request, ITxResponse response);
+	public ITxResponse handle(TxContext context);
 	
 }

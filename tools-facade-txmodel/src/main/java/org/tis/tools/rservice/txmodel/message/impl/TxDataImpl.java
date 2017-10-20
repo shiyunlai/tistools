@@ -18,10 +18,11 @@ import org.tools.core.sdo.dataobject.DynamicDataObject;
  */
 public class TxDataImpl extends DynamicDataObject implements ITxData {
 
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -3251428677661454214L;
 
 	@Override
 	public String[] getFieldsName() {

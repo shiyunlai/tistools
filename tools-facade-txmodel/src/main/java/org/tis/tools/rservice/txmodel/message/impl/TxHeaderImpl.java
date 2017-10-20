@@ -29,7 +29,7 @@ public class TxHeaderImpl extends DynamicDataObject implements ITxHeader {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -2850395012776300414L;
 	
 	/**
 	 * 交易头数据字段： 渠道ID
