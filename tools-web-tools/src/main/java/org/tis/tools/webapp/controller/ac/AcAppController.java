@@ -12,7 +12,6 @@ import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.def.JNLConstants;
 import org.tis.tools.model.po.ac.*;
-import org.tis.tools.model.vo.ac.AcFuncVo;
 import org.tis.tools.rservice.ac.capable.IApplicationRService;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.log.OperateLog;
@@ -22,7 +21,6 @@ import org.tis.tools.webapp.util.AjaxUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
-import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -746,6 +744,28 @@ public class AcAppController extends BaseController {
         return null;
     }
 
+    /**
+     * 修改功能行为定义
+     * @param content
+     * @return
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,
+            operateDesc = "修改行为类型",
+            retType = ReturnType.Object,
+            id = "guid",
+            name = "funcName",
+            keys = "guidBhvtypeDef"
+    )
+    @ResponseBody
+    @RequestMapping(value = "/updateFuncBhvType", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> updateFuncBhvType(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        JSONObject data = jsonObject.getJSONObject("data");
+        String funcGuid = data.getString("data");
+        String bhvtypeGuid = data.getString("bhvtypeGuid");
+        return getReturnMap(applicationRService.updateFuncBhvType(funcGuid, bhvtypeGuid));
+    }
 
 
     /**

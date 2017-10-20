@@ -44,14 +44,6 @@ public @interface OperateLog {
     ReturnType retType() default ReturnType.Object;
 
     /**
-     * 记录需要提取的key值集合
-     * 获取Controlller返回数据中的指定字段作为需要额外记录的特殊值记录
-     * 如：新增功能，返回新增功能的对象信息，需要额外记录功能的编号 funcCode、功能类型 funcType，则keys 为 {"funcCode", "funcType"}
-     * @return
-     */
-    String[] keys() default {};
-
-    /**
      * 操作对象的身份标识
      * 获取Controlller返回数据中的指定字段作为操作对象的身份标识
      * 如：新增功能，返回新增功能的对象信息，功能的身份标识为 guid， 则Id为 “guid”
@@ -67,6 +59,12 @@ public @interface OperateLog {
      */
     String name() default "";
 
-
+   /**
+    * 记录需要提取的key值集合
+    * 获取Controlller返回数据中的指定字段作为需要额外记录的特殊值记录
+    * 如：新增功能，返回新增功能的对象信息，需要额外记录功能的编号 funcCode、功能类型 funcType，则keys 为 {"funcCode", "funcType"}
+    * @return
+    */
+   String[] keys() default {};
 
 }
