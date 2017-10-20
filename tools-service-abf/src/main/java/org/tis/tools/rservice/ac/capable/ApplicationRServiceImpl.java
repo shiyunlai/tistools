@@ -3,10 +3,6 @@
  */
 package org.tis.tools.rservice.ac.capable;
 
-import java.math.BigDecimal;
-import java.util.*;
-import java.util.stream.Collectors;
-
 import com.alibaba.dubbo.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
@@ -22,14 +18,15 @@ import org.tis.tools.model.def.CommonConstants;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.po.ac.*;
 import org.tis.tools.model.po.om.OmEmployee;
-import org.tis.tools.model.vo.ac.AcAppVo;
-import org.tis.tools.model.vo.ac.AcFuncVo;
-import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.ac.exception.AppManagementException;
 import org.tis.tools.service.ac.*;
 import org.tis.tools.service.ac.exception.ACExceptionCodes;
 import org.tis.tools.service.om.OmEmployeeService;
+
+import java.math.BigDecimal;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <pre>
@@ -1448,6 +1445,37 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		});
 	}
 
+	/**
+	 * 修改功能的行为类别
+	 *
+	 * @param funcGuid       功能GUID
+	 * @param bhvtypeDefGuid 行为类别GUID
+	 * @return
+	 * @throws AppManagementException
+	 */
+	@Override
+	public AcFunc updateFuncBhvType(String funcGuid, String bhvtypeDefGuid) throws AppManagementException {
+		if (StringUtils.isBlank(funcGuid)) {
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap(AcFunc.COLUMN_GUID, "updateFuncBhvType"));
+		}
+		if (StringUtils.isBlank(funcGuid)) {
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap(AcFunc.COLUMN_GUID_BHVTYPE_DEF, "updateFuncBhvType"));
+		}
+		try {
+			AcFunc acFunc = acFuncService.loadByGuid(funcGuid);
+			if (acFunc == null) {
+				throw new AppManagementException(ExceptionCodes.NOT_FOUND_WHEN_UPDATE, BasicUtil.wrap(BasicUtil.surroundBracketsWithLFStr(AcFunc.COLUMN_GUID, funcGuid), AcFunc.TABLE_NAME));
+			}
+			acFunc.setGuidBhvtypeDef(bhvtypeDefGuid);
+			acFuncService.update(acFunc);
+			return acFunc;
+		} catch (AppManagementException e) {
+			throw e;
+		} catch (Exception e) {
+			logger.error("updateFuncBhvType exception:", e);
+			throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_UPDATE, BasicUtil.wrap(AcFunc.TABLE_NAME, e));
+		}
+	}
 
 	/**
 	 * queryAllBhcDefForFunc 查询功能下的行所有行为定义
@@ -1458,10 +1486,14 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	@Override
 	public List<Map> queryAllBhvDefForFunc(String funcGuid) throws AppManagementException{
 		// 校验传入参数
-		if(StringUtil.isEmpty(funcGuid)) {
-			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, "功能GUID为空{0}");
+		if(StringUtils.isBlank(funcGuid)) {
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap(AcFuncBhv.COLUMN_GUID_FUNC, "queryAllBhvDefForFunc"));
 		}
-		return applicationService.queryAllBhvDefForFunc(funcGuid);
+		try {
+			return applicationService.queryAllBhvDefForFunc(funcGuid);
+		} catch (Exception e) {
+			throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap("queryAllBhvDefForFunc", e));
+		}
 	}
 
 

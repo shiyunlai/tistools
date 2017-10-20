@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>org.tis</groupId>
 	<artifactId>tools-facade-txmodel</artifactId>
-	<version>1.0.0</version>
+	<version>${tools-facade-txmodel-version}</version>
 	<name>tools-facade-txmodel</name>
 	<url>http://maven.apache.org</url>
 	<properties>
