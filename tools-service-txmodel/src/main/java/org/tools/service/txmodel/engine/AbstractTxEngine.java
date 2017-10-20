@@ -119,6 +119,10 @@ abstract class AbstractTxEngine implements ITxEngine {
 	public Map<BHVCODE, IOperatorBhvCommand> getCommands() {
 		return this.commands;
 	}
+	
+	public void setCommands(Map<BHVCODE, IOperatorBhvCommand> commands) {
+		this.commands = commands;
+	}
 
 	@Override
 	public void setExecuteCommand(IOperatorBhvCommand command) {
@@ -143,7 +147,15 @@ abstract class AbstractTxEngine implements ITxEngine {
 	public BHVTYPE getBhvType() {
 		return this.bhvType;
 	}
-
+	
+	public void setBhvType(String bhvType){
+		this.bhvType = BHVTYPE.valueOf(bhvType) ; 
+	}
+	
+	public void setBhvType(BHVTYPE bhvType){
+		this.bhvType =  bhvType ; 
+	}
+	
 	@Override
 	public ITxResponse execute(TxContext txContext) {
 
@@ -193,7 +205,7 @@ abstract class AbstractTxEngine implements ITxEngine {
 		
 		return new DoNothingBhvCommand(); // 返回一个空的行为命令，避免空指针
 	}
-
+	
 	public String toString() {
 		return StringUtil.concat("交易引擎<", bhvType.toString() + ">");
 	}

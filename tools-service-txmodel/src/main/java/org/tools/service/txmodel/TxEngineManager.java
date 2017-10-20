@@ -89,4 +89,13 @@ public class TxEngineManager {
 			txEngines.put(engine.getBhvType(), engine);
 		}
 	}
+
+	public Map<BHVTYPE, ITxEngine> getTxEngines() {
+		return txEngines;
+	}
+
+	public void setTxEngines(Map<BHVTYPE, ITxEngine> txEngines) {
+		this.txEngines = txEngines;
+	}
+	
 }
