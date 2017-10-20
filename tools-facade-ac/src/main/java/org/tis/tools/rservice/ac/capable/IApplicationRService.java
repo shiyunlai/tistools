@@ -5,7 +5,6 @@ package org.tis.tools.rservice.ac.capable;
 
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.model.po.ac.*;
-import org.tis.tools.model.vo.ac.AcFuncVo;
 import org.tis.tools.rservice.ac.exception.AppManagementException;
 
 import java.util.Date;
@@ -407,6 +406,16 @@ public interface IApplicationRService {
 	 * 返回list
 	 */
 	 void addBhvDefForFunc(String funcGuid, List bhvDefGuids);
+
+	/**
+	 * 修改功能的行为类别
+	 * @param funcGuid 功能GUID
+	 * @param bhvtypeDefGuid 行为类别GUID
+	 * @return
+	 * @throws AppManagementException
+	 */
+	 AcFunc updateFuncBhvType(String funcGuid, String bhvtypeDefGuid) throws AppManagementException;
+
 
 	/**
 	 * queryAllBhvDefForFunc 查询功能下所有行为定义
