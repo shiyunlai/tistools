@@ -21,7 +21,8 @@ public class BooleanField extends AbstractField {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1846679432513212059L;
+	
 	private boolean value;
 
 	/**

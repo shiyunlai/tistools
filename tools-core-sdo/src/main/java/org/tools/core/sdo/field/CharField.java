@@ -24,8 +24,7 @@ public class CharField extends AbstractField {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = -5765632783930489657L;
 	private char value = 0;
 
 	public CharField(String fieldName) {

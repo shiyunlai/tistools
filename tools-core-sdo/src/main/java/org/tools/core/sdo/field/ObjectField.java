@@ -19,7 +19,7 @@ public class ObjectField extends AbstractField {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 686638250625545353L;
 	/**
 	 * 具体值
 	 */

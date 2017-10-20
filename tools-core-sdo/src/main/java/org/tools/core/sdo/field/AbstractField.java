@@ -22,7 +22,7 @@ public abstract class AbstractField implements DataField , Comparable<AbstractFi
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -3763585038576865672L;
 
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 	

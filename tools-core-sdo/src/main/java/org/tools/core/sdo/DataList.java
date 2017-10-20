@@ -21,10 +21,8 @@ import java.util.List;
 
 public final class DataList implements Data {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = -2123564214821129482L;
 
 	private String name;
 

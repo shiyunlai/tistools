@@ -13,10 +13,11 @@ package org.tools.core.sdo.field;
  *
  */
 public class StringField extends AbstractField {
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 4677026314660213446L;
 	private String value;
 
 	/**

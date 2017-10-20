@@ -28,7 +28,7 @@ public class DateField extends AbstractField {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 6854719901317392103L;
 	private String format = "yyyy-MM-dd";
 	private Date dateValue;
 

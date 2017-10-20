@@ -52,11 +52,12 @@ import com.alibaba.fastjson.JSON;
 
 public class DynamicDataObject implements DataObject {
 
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = -1673848390149314054L;
+
 	private static final Logger logger = LoggerFactory.getLogger(DynamicDataObject.class);
 
 	/** 数据名称 */

@@ -26,7 +26,7 @@ public class TimeField extends AbstractField {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -6784888002071930439L;
 	private Time value;
 	private String timeFormat = "HH:MM:SS" ; 
 

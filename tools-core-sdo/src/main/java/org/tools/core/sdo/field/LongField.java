@@ -17,10 +17,11 @@ import org.tools.core.sdo.exception.SDOExceptionCodes;
  *
  */
 public class LongField extends AbstractField {
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8050243271575892727L;
 	private long value = 0l;
 
 	public LongField(String fieldName) {

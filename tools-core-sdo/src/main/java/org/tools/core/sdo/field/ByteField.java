@@ -23,7 +23,8 @@ public class ByteField extends AbstractField {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -7759992458855715575L;
+	
 	private byte value = 0;
 
 	public ByteField(String name) {

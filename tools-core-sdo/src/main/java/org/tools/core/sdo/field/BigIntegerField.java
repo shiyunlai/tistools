@@ -24,7 +24,8 @@ public class BigIntegerField extends AbstractField {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 459351179427208659L;
+	
 	private BigInteger value = new BigInteger("0");
 
 	public BigIntegerField(String fieldName) {

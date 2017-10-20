@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- - Copyright org tis 2016. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://code.alibabatech.com/schema/dubbo 
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- =======================================================
+	| txmode模块装配：账务类交易引擎（AccountTxEngine）的装配
+	| 配置引擎可以处理那些操作命令
+	============================================================= -->
+	
+	<bean id="accountTxEngine" class="org.tools.service.txmodel.engine.AccountTxEngine">
+		<property name="bhvType" value="ACCOUNT" />
+		<property name="commands">
+			<map>
+				<!-- 操作命令：打开交易 -->
+				<entry key="OPEN_TX" value-ref="openTxBhvCommand" />
+			</map>
+		</property>
+	</bean>
+    
+    
+	<!-- ========================================================
+	| txmode模块装配：操作行为命令 ( IOperatorBhvCommand )
+	============================================================= -->
+
+	<!-- 操作行为命令：打开交易 -->
+	<bean id="openTxBhvCommand" class="org.tools.service.txmodel.command.OpenTxBhvCommand">
+		<property name="bhvCode" value="OPEN_TX" />
+	</bean>
+	
+	<!-- 操作行为命令：关闭交易 -->
+	<bean id="closeTxBhvCommand" class="org.tools.service.txmodel.command.CloseTxBhvCommand">
+		<property name="bhvCode" value="OPEN_TX" />
+	</bean>
+	
+	
+    
+</beans>

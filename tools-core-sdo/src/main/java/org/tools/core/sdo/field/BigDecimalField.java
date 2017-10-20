@@ -21,10 +21,9 @@ import org.tools.core.sdo.exception.SDOExceptionCodes;
  */
 public class BigDecimalField extends AbstractField {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	
+	private static final long serialVersionUID = 3585248473681468177L;
+	
 	/**
 	 * 域的原数值
 	 */

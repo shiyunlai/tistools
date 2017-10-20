@@ -24,7 +24,7 @@ public class ShortField extends AbstractField {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -2716566101537693451L;
 	private short value = 0;
 
 	public ShortField(String fieldName) {

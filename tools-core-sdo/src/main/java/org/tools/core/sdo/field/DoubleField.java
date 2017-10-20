@@ -20,10 +20,11 @@ import org.tools.core.sdo.exception.SDOExceptionCodes;
  *
  */
 public class DoubleField extends AbstractField {
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -6233626157524276437L;
 	private Double value = 0.0;
 
 	public DoubleField(String fieldName) {

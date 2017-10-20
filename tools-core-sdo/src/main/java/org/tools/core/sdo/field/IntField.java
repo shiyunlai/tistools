@@ -22,10 +22,11 @@ import org.tools.core.sdo.exception.SDOExceptionCodes;
  *
  */
 public class IntField extends AbstractField {
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 66098922318778334L;
 	private int value = 0;
 
 	public IntField(String fieldName) {
