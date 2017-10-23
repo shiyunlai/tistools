@@ -5,9 +5,10 @@ package org.tools.service.txmodel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tis.tools.rservice.txmodel.ITxModelRService;
+import org.tis.tools.rservice.txmodel.TxModelConstants.BHVTYPE;
 import org.tis.tools.rservice.txmodel.message.ITxRequest;
 import org.tis.tools.rservice.txmodel.message.ITxResponse;
-import org.tools.service.txmodel.TxModelConstants.BHVTYPE;
+import org.tis.tools.rservice.txmodel.message.impl.TxResponseImpl;
 import org.tools.service.txmodel.tx.TxDefinition;
 
 /**
@@ -64,7 +65,8 @@ public class TxModelRServiceImpl implements ITxModelRService {
 	 */
 	private TxContext buildTxContext(TxDefinition txDef, ITxRequest txRequest) {
 		
-		return new TxContext(txDef, txRequest);// FIXME 临时
+		ITxResponse txResponse = new TxResponseImpl() ; 
+		return new TxContext(txDef, txRequest, txResponse);// FIXME 临时
 	}
 
 	/**
@@ -76,11 +78,21 @@ public class TxModelRServiceImpl implements ITxModelRService {
 	 */
 	private TxDefinition getTxDefByTxCode(String txCode) {
 
+		return mock(txCode) ; 
 		// TODO Auto-generated method stub txmodel启动时加载交易定义
 		// TODO 此处获取加载后的交易定义
 		
 		// FIXME 或者txmodel启动时无需加载，运行期间按需加载，加载后放到缓存，也解决来分部署情况下统一交易定义的需求。
+		
+		//return null;
+	}
 
-		return null;
+	// 临时测试
+	private TxDefinition mock(String txCode) {
+		TxDefinition def = new TxDefinition() ; 
+		def.setTxCode(txCode);
+		def.setBhvType(BHVTYPE.ACCOUNT);//假设是个账务类交易
+		def.setTxName("测试交易"+txCode);
+		return def;
 	}
 }

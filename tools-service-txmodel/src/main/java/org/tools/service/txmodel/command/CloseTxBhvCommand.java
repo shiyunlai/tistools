@@ -3,8 +3,8 @@
  */
 package org.tools.service.txmodel.command;
 
-import org.tools.service.txmodel.TxModelConstants.BHVCODE;
-import org.tools.service.txmodel.TxModelConstants.BHVTYPE;
+import org.tis.tools.rservice.txmodel.TxModelConstants.BHVCODE;
+import org.tis.tools.rservice.txmodel.TxModelConstants.BHVTYPE;
 
 /**
  * 

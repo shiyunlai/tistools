@@ -59,6 +59,7 @@
 				<tools-facade-ac-version>1.0.0</tools-facade-ac-version>
 				<tools-facade-sys-version>1.0.0</tools-facade-sys-version>
 				<tools-facade-log-version>1.0.0</tools-facade-log-version>
+				<tools-facade-txmodel-version>1.0.0</tools-facade-txmodel-version>
 				<tools-service-abf-version>1.0.0</tools-service-abf-version>
 				<tools-service-biztrace-version>1.0.0</tools-service-biztrace-version>
 				<tools-service-devmgr-version>1.0.0</tools-service-devmgr-version>
@@ -96,6 +97,7 @@
 		<tools-facade-ac-version>0.0.1-SNAPSHOT</tools-facade-ac-version>
 		<tools-facade-sys-version>0.0.1-SNAPSHOT</tools-facade-sys-version>
 		<tools-facade-log-version>0.0.1-SNAPSHOT</tools-facade-log-version>
+		<tools-facade-txmodel-version>0.0.1-SNAPSHOT</tools-facade-txmodel-version>
 		<tools-service-abf-version>0.0.1-SNAPSHOT</tools-service-abf-version>
 		<tools-service-biztrace-version>0.0.1-SNAPSHOT</tools-service-biztrace-version>
 		<tools-service-devmgr-version>0.0.1-SNAPSHOT</tools-service-devmgr-version>
@@ -305,6 +307,11 @@
 				<groupId>org.tis</groupId>
 				<artifactId>tools-facade-jnl</artifactId>
 				<version>${tools-facade-jnl-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.tis</groupId>
+				<artifactId>tools-facade-txmodel</artifactId>
+				<version>${tools-facade-txmodel-version}</version>
 			</dependency>
 			<!-- | tools 资源 end -->
 

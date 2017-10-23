@@ -3,11 +3,11 @@
  */
 package org.tools.service.txmodel.engine;
 
+import org.tis.tools.rservice.txmodel.TxModelConstants.BHVTYPE;
 import org.tis.tools.rservice.txmodel.message.ITxResponse;
 import org.tools.service.txmodel.IOperatorBhvCommand;
 import org.tools.service.txmodel.ITxEngine;
 import org.tools.service.txmodel.TxContext;
-import org.tools.service.txmodel.TxModelConstants.BHVTYPE;
 
 /**
  * 交易引擎的默认实现

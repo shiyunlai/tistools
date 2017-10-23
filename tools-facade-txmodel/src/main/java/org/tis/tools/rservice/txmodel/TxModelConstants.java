@@ -1,10 +1,10 @@
 /**
  * 
  */
-package org.tools.service.txmodel;
+package org.tis.tools.rservice.txmodel;
 
 /**
- * 常量定义
+ * 交易模式服务模块使用到的常量定义
  * 
  * @author megapro
  *

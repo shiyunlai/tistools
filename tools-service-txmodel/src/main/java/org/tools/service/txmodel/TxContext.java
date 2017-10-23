@@ -6,8 +6,7 @@ package org.tools.service.txmodel;
 import java.io.Serializable;
 
 import org.tis.tools.rservice.txmodel.message.ITxRequest;
-import org.tools.core.sdo.DataObject;
-import org.tools.core.sdo.DataObjectManager;
+import org.tis.tools.rservice.txmodel.message.ITxResponse;
 import org.tools.service.txmodel.tx.TxDefinition;
 
 /**
@@ -44,17 +43,17 @@ public class TxContext implements Serializable {
 	private ITxRequest txRequest = null;
 
 	/**
-	 * 交易过程数据
+	 * 交易响应数据
 	 */
-	private DataObject processData = null;
+	private ITxResponse txResponse = null ; 
 
 	// TODO 其他上下文属性
 	
 	
-	public TxContext(TxDefinition def, ITxRequest request ){
+	public TxContext(TxDefinition def, ITxRequest request , ITxResponse response ){
 		this.txDefinition = def ; 
 		this.txRequest = request ; 
-		this.processData = DataObjectManager.instance().createDynamicDataObject() ; 
+		this.txResponse = response ; 
 	}
 
 	public TxDefinition getTxDefinition() {
@@ -77,11 +76,16 @@ public class TxContext implements Serializable {
 		return this.txRequest  ; 
 	}
 
-	public DataObject getProcessData() {
-		return processData;
+	public ITxResponse getTxResponse() {
+		//将header、control转换到response中一并返回
+		txResponse.setTxHeader(this.txRequest.getTxHeader());
+		txResponse.setTxControl(this.getTxRequest().getTxControl());
+		txResponse.setResponseData(this.getTxRequest().getRequestData());//也返回原来的请求数据
+		return txResponse;
 	}
 
-	public void setProcessData(DataObject processData) {
-		this.processData = processData;
+	public void setTxResponse(ITxResponse response) {
+		this.txResponse = response;
 	}
+	
 }

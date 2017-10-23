@@ -48,7 +48,7 @@ import java.io.Serializable;
  * 		....
  * 	},
  * 
- * 	"MD5": "28c8edde3d61a0411511d3b1866f01233" // 报文校验码
+ * 	"token": "28c8edde3d61a0411511d3b1866f01233" // 报文校验码
  * 
  * }
  * </pre>
@@ -62,28 +62,27 @@ public interface ITxResponse  extends Serializable{
 	 * @return
 	 */
 	public ITxControl getTxControl ()  ; 
+	public void setTxControl (ITxControl txControl)  ; 
 	
 	/**
 	 * 取交易请求头信息对象
 	 * @return
 	 */
 	public ITxHeader getTxHeader() ; 
+	public void setTxHeader(ITxHeader txHeader) ; 
 	
 	/**
 	 * 取交易响应数据对象
 	 * @return
 	 */
 	public ITxData getResponseData() ; 
+	public void setResponseData(ITxData txResponseData) ; 
 	
 	/**
 	 * 取合法性校验信息
 	 * @return
 	 */
 	public Object getToken() ;
+	public void setToken(Object token) ;
 	
-	/**
-	 * 是否为合法的响应
-	 * @return
-	 */
-	public boolean isValid() ; 
 }

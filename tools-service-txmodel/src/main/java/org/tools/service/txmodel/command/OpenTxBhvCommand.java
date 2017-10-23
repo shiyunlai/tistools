@@ -3,8 +3,8 @@
  */
 package org.tools.service.txmodel.command;
 
-import org.tools.service.txmodel.TxModelConstants.BHVCODE;
-import org.tools.service.txmodel.TxModelConstants.BHVTYPE;
+import org.tis.tools.rservice.txmodel.TxModelConstants.BHVCODE;
+import org.tis.tools.rservice.txmodel.TxModelConstants.BHVTYPE;
 
 /**
  * 操作行为命令：打开交易
@@ -16,7 +16,7 @@ public class OpenTxBhvCommand extends AbstractBhvCommand {
 
 
 	OpenTxBhvCommand(){
-		this(BHVCODE.OPEN_TX) ; 
+		this(BHVCODE.OPEN_TX) ; //使用默认的代码
 	}
 	
 	OpenTxBhvCommand(BHVCODE bhvCode) {

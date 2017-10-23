@@ -22,14 +22,13 @@ public class DefaultOperatorBhvHandler implements IOperatorBhvHandler {
 
 	@Override
 	public boolean canHandle(String channelID) {
-		logger.warn("收到渠道<" + channelID + ">的交易操作请求，但不能识别操作类型！");
 		return true;//所有渠道都适用
 	}
 
 	@Override
 	public ITxResponse handle(TxContext context) {
-		logger.warn("收到渠道<" + context.getTxRequest().getTxHeader().getChannelID() + ">的交易操作请求，但不能识别这个操作类型<"
-				+ context.getTxRequest().getTxHeader().getBhvCode() + ">！");
+		logger.warn("收到渠道<" + context.getTxRequest().getTxHeader().getChannelID() + ">的交易操作请求，但不能识别这个操作<"
+				+ context.getTxRequest().getTxHeader().getBhvCode() + ">，找不到对应的操作行为处理器IOperatorBhvHandler！");
 		return null;//TODO new 一个 ITxResponse对象回去
 	}
 

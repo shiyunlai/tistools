@@ -44,7 +44,7 @@ import java.io.Serializable;
  * 		....
  * 	},
  * 
- * 	"MD5": "28c8edde3d61a0411511d3b1866f0636" // 报文校验码
+ * 	"token": "28c8edde3d61a0411511d3b1866f0636" // 报文校验码
  * 
  * }
  * 
@@ -74,14 +74,13 @@ public interface ITxRequest extends Serializable {
 	public ITxData getRequestData() ; 
 	
 	/**
+	 * <pre>
 	 * 取合法性校验信息
+	 * 每次交易请求有对应的token
+	 * token由交易请求者使用公钥对指定数据内容进行加密后生成basic64数据串
+	 * </pre>
 	 * @return
 	 */
 	public Object getToken() ;
 	
-	/**
-	 * 是否为合法的交易请求
-	 * @return
-	 */
-	public boolean isValid() ; 
 }

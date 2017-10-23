@@ -8,11 +8,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tis.tools.rservice.txmodel.ITxModelRService;
+import org.tis.tools.rservice.txmodel.TxModelConstants;
 import org.tis.tools.rservice.txmodel.message.ITxRequest;
 import org.tis.tools.rservice.txmodel.message.ITxResponse;
+import org.tis.tools.rservice.txmodel.message.impl.TxRequestImpl;
 import org.tools.design.SpringJunitSupport;
-
-import junit.framework.Assert;
 
 /**
  * @author megapro
@@ -39,7 +39,10 @@ public class TxModelRServiceTest extends SpringJunitSupport {
 	@Test
 	public void testOpenTx() {
 
-		ITxRequest request = null;
+		ITxRequest request = new TxRequestImpl();
+		request.getTxHeader().setTxCode("TX010505");
+		request.getTxHeader().setBhvCode(TxModelConstants.BHVCODE.OPEN_TX.name());
+		
 		ITxResponse response = txModelRService.execute(request);
 
 //		Assert.assertEquals(expected, actual);

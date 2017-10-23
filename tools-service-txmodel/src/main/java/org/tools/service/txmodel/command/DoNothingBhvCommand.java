@@ -5,13 +5,13 @@ package org.tools.service.txmodel.command;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tis.tools.rservice.txmodel.TxModelConstants.BHVCODE;
+import org.tis.tools.rservice.txmodel.TxModelConstants.BHVTYPE;
 import org.tis.tools.rservice.txmodel.message.ITxResponse;
 import org.tools.service.txmodel.IOperatorBhvCommand;
 import org.tools.service.txmodel.IOperatorBhvHandler;
 import org.tools.service.txmodel.ITxEngine;
 import org.tools.service.txmodel.TxContext;
-import org.tools.service.txmodel.TxModelConstants.BHVCODE;
-import org.tools.service.txmodel.TxModelConstants.BHVTYPE;
 import org.tools.service.txmodel.handler.DefaultOperatorBhvHandler;
 
 /**
@@ -47,8 +47,7 @@ public class DoNothingBhvCommand implements IOperatorBhvCommand {
 
 	@Override
 	public ITxResponse execute(TxContext txContext) {
-		logger.info("交易引擎执行空操作！");
-		logger.debug("当前正在处理交易<"+txContext.getTxDefinition()+">操作请求:"+txContext.getTxRequest());
+		logger.warn("收到交易操作请求:"+txContext.getTxRequest()+".但不能识别操作命令<"+this.getBhvCode()+">");
 		return handler.handle(txContext);
 	}
 

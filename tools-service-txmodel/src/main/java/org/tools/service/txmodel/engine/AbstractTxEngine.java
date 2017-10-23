@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.common.utils.ClassUtil;
 import org.tis.tools.common.utils.StringUtil;
+import org.tis.tools.rservice.txmodel.TxModelConstants.BHVCODE;
+import org.tis.tools.rservice.txmodel.TxModelConstants.BHVTYPE;
 import org.tis.tools.rservice.txmodel.exception.TxModelException;
 import org.tis.tools.rservice.txmodel.exception.TxModelExceptionCodes;
 import org.tis.tools.rservice.txmodel.message.ITxResponse;
@@ -19,9 +21,8 @@ import org.tools.service.txmodel.IOperatorBhvCommand;
 import org.tools.service.txmodel.IOperatorBhvHandler;
 import org.tools.service.txmodel.ITxEngine;
 import org.tools.service.txmodel.TxContext;
-import org.tools.service.txmodel.TxModelConstants.BHVCODE;
-import org.tools.service.txmodel.TxModelConstants.BHVTYPE;
 import org.tools.service.txmodel.command.DoNothingBhvCommand;
+import org.tools.service.txmodel.handler.DefaultOperatorBhvHandler;
 
 /**
  * 抽象交易引擎
@@ -76,7 +77,7 @@ abstract class AbstractTxEngine implements ITxEngine {
 
 		this.bhvType = bhvType;
 
-		initCommand();
+		//initCommand(); 已经使用spring进行初始化
 	}
 
 	/**
@@ -167,6 +168,9 @@ abstract class AbstractTxEngine implements ITxEngine {
 
 		// 选择对应命令逻辑实现
 		IOperatorBhvHandler handler = judgeHandler(txContext);
+		if( null == handler ){
+			handler = new DefaultOperatorBhvHandler() ;
+		}
 		this.getExecuteCommand().setOperatorBhvHandler(handler);
 
 		// 执行交易操作命令

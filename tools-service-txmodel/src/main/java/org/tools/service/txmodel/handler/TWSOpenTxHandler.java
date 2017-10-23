@@ -46,7 +46,7 @@ public class TWSOpenTxHandler extends AbstractBhvHandler {
 		
 		// TODO 更多内容待细化...
 		
-		return null ; 
+		return context.getTxResponse()  ; 
 	}
 	
 	private String allocationTxSerialNo(String txCode, String userID) {
