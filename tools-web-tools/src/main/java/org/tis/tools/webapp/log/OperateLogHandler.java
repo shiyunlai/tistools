@@ -110,7 +110,7 @@ public class OperateLogHandler {
         String objStr = JSON.toJSONString(ret.get(RETMESSAGE));
         if(logAnt.retType() == ReturnType.Object) {
             JSONObject jsonObject = JSONObject.parseObject(objStr);
-            JSONObject ChangeData = reqData.getJSONObject("changeData");
+            JSONObject changeData = reqData.getJSONObject("changeData");
             if(StringUtils.isNotBlank(logAnt.id())) {
                 log.addObj()
                         .setObjGuid(jsonObject.getString(logAnt.id()))
@@ -119,7 +119,8 @@ public class OperateLogHandler {
                 for (String key : logAnt.keys()) {
                     log.getObj(0).addKey(key, jsonObject.getString(key));
                 }
-                ChangeData.keySet().forEach(key -> log.getObj(0).addChangeItem(key, ChangeData.getString(key)));
+                if(changeData != null)
+                    changeData.keySet().forEach(key -> log.getObj(0).addChangeItem(key, changeData.getString(key)));
             }
 
         } else if(logAnt.retType() == ReturnType.List) {
@@ -133,7 +134,8 @@ public class OperateLogHandler {
                         log.getObj(i).addKey(key, jsonObject.getString(key));
                     }
                     int finalI = i;
-                    changeData.getJSONObject(i).keySet()
+                    if(changeData != null)
+                        changeData.getJSONObject(i).keySet()
                             .forEach(key ->
                                     log.getObj(finalI).addChangeItem(key, changeData.getJSONObject(finalI).getString(key)));
                 }
