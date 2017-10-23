@@ -64,7 +64,7 @@ public class OperateLogRServiceTest extends SpringJunitSupport {
     }
     @Test
     public void queryOperateDetailTest() {
-        String logGuid = "OPERATELOG1504889228";
+        String logGuid = "OPERATELOG1505787576";
         LogOperateDetail detail = operateLogRService.queryOperateDetail(logGuid);
         String ret = JSON.toJSONString(detail);
         System.out.println(ret);
