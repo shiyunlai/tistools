@@ -147,15 +147,15 @@ public class AcAppController extends BaseController {
     public Map<String, Object> groupAdd(@RequestBody String content) {
         JSONObject jsonObj = JSONObject.parseObject(content);    //传入的参数
         String funcgroupName = jsonObj.getString("funcgroupName");
-        String groupLevel = jsonObj.getString("groupLevel");
+//        String groupLevel = jsonObj.getString("groupLevel");
         String guidApp = jsonObj.getString("guidApp");
         String guidParents = jsonObj.getString("guidParents");
         //转换成BigDecimal类型
-        BigDecimal groupLevelBd = new BigDecimal(groupLevel);
+        /*BigDecimal groupLevelBd = new BigDecimal(groupLevel);
         groupLevelBd = groupLevelBd.setScale(2, BigDecimal.ROUND_HALF_UP); //小数位2位，四舍五入
-        AcFuncgroup acFuncgroup = new AcFuncgroup();//new 一个新对象
+*/        AcFuncgroup acFuncgroup = new AcFuncgroup();//new 一个新对象
         acFuncgroup.setFuncgroupName(funcgroupName);
-        acFuncgroup.setGroupLevel(groupLevelBd);
+//        acFuncgroup.setGroupLevel(groupLevelBd);
         acFuncgroup.setGuidApp(guidApp);
         acFuncgroup.setGuidParents(guidParents);
         return getReturnMap(applicationRService.createAcFuncGroup(acFuncgroup));//把new的并且填入参数的对象，传入，返回

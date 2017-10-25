@@ -664,8 +664,8 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                     {field: 'gender', displayName: '性别', enableHiding: false},
                     {field: 'empstatus', displayName: '员工状态', enableHiding: false},
                     {field: 'empDegree', displayName: '员工职级', enableHiding: false},
-                    {field: 'guidPostition', displayName: '基本岗位', enableHiding: false},
-                    {field: 'guidempmajor', displayName: '直接主管', enableHiding: false},
+                    {field: 'guidPosition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
+                    {field: 'guidEmpMajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpMajor | translateEmp) + $root.constant[row.entity.guidEmpMajor]}}</div>'},
                     {field: 'indate', displayName: '入职日期', enableHiding: false},
                     {field: 'otel', displayName: '办公电话', enableHiding: false}
                 ]
@@ -674,7 +674,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                 var recommonGrid = function () {
                     //调取工作组信息OM_GROUP
                     Workgroup_service.loadempNotin(subFrom).then(function (data) {
-                        console.log(data)
+                        console.log(data.retMessage)
                         if (data.status == "success" && !isNull(data.retMessage)) {
                             $scope.commonGrid.data = data.retMessage;
                             $scope.commonGrid.mydefalutData = data.retMessage;

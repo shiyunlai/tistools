@@ -112,7 +112,11 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
             displayName: '基本岗位',
             cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'
         },
-        {field: 'guidempmajor', displayName: '直接主管'},
+        {field: 'guidEmpMajor',
+            displayName: '直接主管',
+            enableHiding: false,
+            cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpMajor | translateEmp) + $root.constant[row.entity.guidEmpMajor]}}</div>'
+        },
         {
             field: 'guidOrg',
             displayName: '主机构',
@@ -359,7 +363,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
             }
             openwindow($uibModal, 'views/emp/addemppart2_window.html', 'lg',
                 function ($scope, $modalInstance) {
-
                     //创建员工实例
                     var subFrom = {};
                     $scope.subFrom = subFrom;

@@ -1,6 +1,7 @@
 package org.tis.tools.webapp.controller.abf;
 
 import com.alibaba.fastjson.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -8,13 +9,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.om.OmBusiorg;
+import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.po.sys.SysDictItem;
 import org.tis.tools.rservice.om.capable.IBusiOrgRService;
+import org.tis.tools.rservice.om.capable.IOrgRService;
 import org.tis.tools.rservice.sys.capable.IDictRService;
 import org.tis.tools.webapp.util.AjaxUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +36,8 @@ public class BusiorgController {
     IDictRService dictRService;
     @Autowired
     IBusiOrgRService busiOrgRService;
+    @Autowired
+    IOrgRService orgRService;
 
 
 
@@ -148,13 +154,21 @@ public class BusiorgController {
     public String addbusiorg(ModelMap model,@RequestBody String content,HttpServletRequest request,
                            HttpServletResponse response) {
         try{
-            JSONObject jsonObject = JSONObject.parseObject(content);
+        	JSONObject jsonObject = JSONObject.parseObject(content);
             String busiorgCode = jsonObject.getString("busiorgCode");
             String busiorgName = jsonObject.getString("busiorgName");
             String busiDomain = jsonObject.getString("busiDomain");
-            String orgCode = jsonObject.getString("orgCode");
+            String guidOrg = jsonObject.getString("guidOrg");
+            String orgCode = "";
+            List<OmOrg> list = orgRService.queryAllOrg();
+            for(OmOrg org : list){
+                if(org.getGuid().equals(guidOrg)){
+                    orgCode = org.getOrgCode();
+                }
+            }
             String parentsBusiorgCode = jsonObject.getString("parentsBusiorgCode");
             String nodeType = jsonObject.getString("nodeType");
+            OmBusiorg ob = new OmBusiorg();
             if("reality".equals(nodeType)){
                 busiOrgRService.createRealityBusiorg(busiorgCode, busiorgName, orgCode, busiDomain, parentsBusiorgCode);
             }else if("dummy".equals(nodeType)){

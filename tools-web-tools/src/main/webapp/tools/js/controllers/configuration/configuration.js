@@ -20,8 +20,6 @@ MetronicApp.controller('configuration_controller', function ($filter, $scope, $r
     }
     config.queryallconfig();//调用查询所有配置
 
-
-
     //grid表格
     i18nService.setCurrentLang("zh-cn");
     var gridOptions = {};
@@ -43,9 +41,7 @@ MetronicApp.controller('configuration_controller', function ($filter, $scope, $r
             delete $scope.selectRow;//制空
         }
     }
-    $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,false,f);
-
-
+    $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f);
 
     //修改配置
     $scope.config.edit = function(){

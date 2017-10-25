@@ -42,12 +42,10 @@ public class EmployeeController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/queryemployee", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public Map<String, Object> queryemployee(@RequestBody String content) {
+    public Map<String, Object> queryemployee() {
         List<OmEmployee> list = employeeRService.queryAllEmployyee();
         return getReturnMap(list);
-
     }
-
 
     /**
      * 新增人员信息
@@ -71,7 +69,7 @@ public class EmployeeController extends BaseController {
             return getReturnMap(emp);
         } else {
             employeeRService.updateEmployee(oe);
-            return getReturnMap("修改成功!");
+            return getReturnMap(oe);
         }
 
     }

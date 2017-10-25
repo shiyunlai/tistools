@@ -21,7 +21,7 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
             subFrom.dictKey = name;
             // console.info($rootScope.constant)
             if (isNull($rootScope.constant[name + "-" + val])) {
-                $http.post("http://localhost:8089/tis/DictController/queryDictItemListByDictKey", subFrom).then(function (data) {
+                $http.post(manurl +  "/DictController/queryDictItemListByDictKey", subFrom).then(function (data) {
                     var retval = "";
                     if (data.data.status == "success") {
                         for (var i = 0; i < data.data.retMessage.length; i++) {
@@ -43,9 +43,8 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
         return function (val, name) {
             // console.info($rootScope.constant)
             if (isNull($rootScope.constant[val])) {
-                $http.post("http://localhost:8089/tis/om/org/queryAllposition").then(function (data) {
+                $http.post(manurl +  "/om/org/queryAllposition").then(function (data) {
                     var retval = "";
-                    // console.log(data)
                     if (data.data.status == "success") {
                         for (var i = 0; i < data.data.retMessage.length; i++) {
                             if (val == data.data.retMessage[i].guid) {
@@ -69,7 +68,7 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
             console.info(name + "-" + val)
             // console.info($rootScope.constant)
             if (isNull($rootScope.constant[val])) {
-                $http.post("http://localhost:8089/tis/om/emp/queryemployee").then(function (data) {
+                $http.post(manurl +  "/om/emp/queryemployee").then(function (data) {
                     var retval = "";
                     // console.log(data)
                     if (data.data.status == "success") {
@@ -95,7 +94,7 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
             console.info(name + "-" + val)
             // console.info($rootScope.constant)
             if (isNull($rootScope.constant[val])) {
-                $http.post("http://localhost:8089/tis/om/org/queryAllorg").then(function (data) {
+                $http.post(manurl +  "/om/org/queryAllorg").then(function (data) {
                     var retval = "";
                     // console.log(data)
                     if (data.data.status == "success") {
@@ -120,7 +119,7 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
             subFrom.dictKey = name;
             // console.info($rootScope.constant)
             if (isNull($rootScope.constant[val])) {
-                $http.post("http://localhost:8089/tis/om/duty/loadallduty").then(function (data) {
+                $http.post(manurl +  "/om/duty/loadallduty").then(function (data) {
                     var retval = "";
                     if (data.data.status == "success") {
                         for (var i = 0; i < data.data.retMessage.length; i++) {
@@ -144,7 +143,7 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
             subFrom.dictKey = name;
             // console.info($rootScope.constant)
             if (isNull($rootScope.constant[val])) {
-                $http.post("http://localhost:8089/tis/AcMenuController  /queryAllAcApp",{}).then(function (data) {
+                $http.post(manurl +  "/AcMenuController  /queryAllAcApp",{}).then(function (data) {
                     var retval = "";
                     if (data.data.status == "success") {
                         for (var i = 0; i < data.data.retMessage.length; i++) {
@@ -168,7 +167,7 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
             var subFrom = {};
             subFrom.dictKey = name;
             if (isNull($rootScope.constant[val])) {
-                $http.post("http://localhost:8089/tis/DictController/querySysDictList",{}).then(function (data) {
+                $http.post(manurl +  "/DictController/querySysDictList",{}).then(function (data) {
                     var retval = "";
                     if (data.data.status == "success") {
                         for (var i = 0; i < data.data.retMessage.length; i++) {
@@ -197,7 +196,7 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
             console.info(name + "-" + val)
             // console.info($rootScope.constant)
             if (isNull($rootScope.constant[val])) {
-                $http.post("http://localhost:8089/tis/DictController/queryAllDictItem",{}).then(function (data) {
+                $http.post(manurl +  "/DictController/queryAllDictItem",{}).then(function (data) {
                     var retval = "";
                     if (data.data.status == "success") {
                         for (var i = 0; i < data.data.retMessage.length; i++) {
@@ -223,7 +222,7 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
             var subFrom = {};
             subFrom.dictKey = name;
             if (isNull($rootScope.constant[val])) {
-                $http.post("http://localhost:8089/tis/DictController/querySysDictList",{}).then(function (data) {
+                $http.post(manurl +  "/DictController/querySysDictList",{}).then(function (data) {
                     var retval = "";
                     if (data.data.status == "success") {
                         for (var i = 0; i < data.data.retMessage.length; i++) {
@@ -248,7 +247,7 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
             console.info(name + "-" + val)
             // console.info($rootScope.constant)
             if (isNull($rootScope.constant[val])) {
-                $http.post("http://localhost:8089/tis/DictController/queryAllDictItem",{}).then(function (data) {
+                $http.post(manurl + "/DictController/queryAllDictItem",{}).then(function (data) {
                     var retval = "";
                     if (data.data.status == "success") {
                         for (var i = 0; i < data.data.retMessage.length; i++) {

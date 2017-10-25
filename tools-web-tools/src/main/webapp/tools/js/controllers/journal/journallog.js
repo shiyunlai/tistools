@@ -3,7 +3,6 @@
  */
 
 angular.module('MetronicApp').controller('journal_controller', function($rootScope, $scope, $http,$state,i18nService,$modal,filterFilter,behavior_service,common_service) {
-
     i18nService.setCurrentLang("zh-cn");
     var logdetails = {};
     $scope.logdetails = logdetails;
@@ -62,7 +61,6 @@ angular.module('MetronicApp').controller('journal_controller', function($rootSco
 //日志详情页面
 angular.module('MetronicApp').controller('jourinfo_controller', function($rootScope, $scope,$state, $timeout,$http,i18nService,$uibModal,$stateParams,filterFilter,behavior_service,common_service) {
     i18nService.setCurrentLang("zh-cn");
-
     var res = $rootScope.res.log_service;//页面所需调用的日志服务
     var loginfo = {};
     $scope.loginfo = loginfo;
@@ -83,6 +81,10 @@ angular.module('MetronicApp').controller('jourinfo_controller', function($rootSc
             }else{
                 $scope.logofail = false;
             }
+            //渲染表格
+            $scope.gridOptions1.data =  datas.allObj;
+            $scope.gridOptions1.mydefalutData = datas.allObj;
+            $scope.gridOptions1.getPage(1,$scope.gridOptions1.paginationPageSize);
             $scope.loginfo.operateTime = moment(datas.instance).format('YYYY-MM-DD HH:mm:ss');
         }else{
             toastr['error']('查询失败'+'<br/>'+data.retMessage);
@@ -106,6 +108,7 @@ angular.module('MetronicApp').controller('jourinfo_controller', function($rootSc
         }
     }
     $scope.gridOptions1 = initgrid($scope,gridOptions1,filterFilter,com,false,f);
+/*      没有必要调两次
     common_service.post(res.queryOperateDetail,subFrom).then(function(data){
         var datas = data.retMessage;
         if(data.status == "success"){
@@ -115,8 +118,7 @@ angular.module('MetronicApp').controller('jourinfo_controller', function($rootSc
         }else{
             toastr['error']('查询失败'+'<br/>'+data.retMessage);
         }
-    })
-
+    })*/
 
     $scope.ceshi = function(item){
         $state.go("loghistory",{id:item});//跳转新页面
@@ -143,8 +145,14 @@ angular.module('MetronicApp').controller('jourinfo_controller', function($rootSc
                         var cls = 'number';
                         if (/^"/.test(match)) {
                             if (/:$/.test(match)) {
-                                cls = 'key';
+                                if(match.indexOf('&') != -1){
+                                    cls = 'string reds';
+                                    match= match.replace(/&amp;/, "");//把标识$替换掉，不然影响界面效果
+                                }else{
+                                    cls = 'key';
+                                }
                             } else {
+
                                 cls = 'string';
                             }
                         } else if (/true|false/.test(match)) {
@@ -152,11 +160,31 @@ angular.module('MetronicApp').controller('jourinfo_controller', function($rootSc
                         } else if (/null/.test(match)) {
                             cls = 'null';
                         }
-                        return '<span class="' + cls + '">' + match + '</span>';
+                        return '<span class="' + cls + '" >' + match + '</span>';
                     });
                 }
                 var obj = angular.fromJson(item.instance.objValue);
-                var str = JSON.stringify(obj, undefined, 4);
+                if(!isNull(item.changes)){//如果有修改值，那就给对应的key加上标识
+                    var newObj = {};//定义一个新对象
+                    for(var key in obj){//循环
+                        newObj[key] = obj[key];//新对象拷贝旧对象的值
+                        var changeArray = item.changes;
+                        for(var i = 0; i<changeArray.length;i++){
+                            if(key == changeArray[i].changeKey){//判断key是否相等
+                                newObj['&'+key] = newObj[key];//重写符合条件的key,添加标识
+                                changeArray[i].newValue = newObj[key];//即把最新的值也添加给changeArray中
+                                delete newObj[key];
+                                break;
+                            }
+                        }
+                    }
+                    $scope.changedata = changeArray;//修改的项,拿到前台循环
+                    $scope.ischange = true;
+                    var str = JSON.stringify(newObj, undefined, 4);//如果存在改变值，那就用新对象去处理
+                }else{
+                    $scope.ischange = false;
+                    var str = JSON.stringify(obj, undefined, 4);
+                }
                 output(syntaxHighlight(str));
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
@@ -164,49 +192,6 @@ angular.module('MetronicApp').controller('jourinfo_controller', function($rootSc
             }
         )
     }
-    //查看关键参数
-    /*$scope.parameter = function(){
-        var getSel = $scope.gridOptions1.getSelectedRows();
-        if(isNull(getSel) || getSel.length>1){
-            toastr['error']("请至少选中一条数据来查看！");
-        }else{
-            openwindow($uibModal, 'views/journal/keywords.html', 'lg',
-                function ($scope, $modalInstance) {
-                    var gridOptions2 = {};
-                    $scope.gridOptions2 = gridOptions1;
-                    var com = [
-                        { field: 'guidHistory', displayName: '操作记录guid'},
-                        { field: 'param', displayName: '关键值名称' },
-                        { field: 'value', displayName: '关键值'}
-                    ];
-                    var f = function(row){
-                        if(row.isSelected){
-                            $scope.selectRow1 = row.entity;
-                        }else{
-                            delete $scope.selectRow1;//制空
-                        }
-                    }
-                    $scope.gridOptions2 = initgrid($scope,gridOptions2,filterFilter,com,false,f);
-                    var subFrom = {};
-                    subFrom.logGuid = $stateParams.id;
-                    common_service.post(res.queryOperateDetail,subFrom).then(function(data){
-                        var datas = data.retMessage;
-                        if(data.status == "success"){
-                            $scope.gridOptions2.data =  datas.allObj[0].keywords;
-                            $scope.gridOptions2.mydefalutData = datas.allObj[0].keywords;
-                            $scope.gridOptions2.getPage(1,$scope.gridOptions2.paginationPageSize);
-                        }else{
-                            toastr['error']('查询失败'+'<br/>'+data.retMessage);
-                        }
-                    })
-                    $scope.cancel = function () {
-                        $modalInstance.dismiss('cancel');
-                    };
-                }
-            )
-        }
-    }*/
-
 });
 
 //日志历史页面
@@ -234,7 +219,6 @@ angular.module('MetronicApp').controller('loghistory_controller', function($root
                     datas[i].operateYmder = moment(datas[i].operateTime).format('YYYY-MM-DD');
                     datas[i].operateYmdess = moment(datas[i].operateTime).format('HH:mm:ss');
                 }
-
                 $scope.loghistory.history = datas;
             }else{
                 toastr['error']('查询失败'+'<br/>'+data.retMessage);
@@ -268,9 +252,9 @@ angular.module('MetronicApp').controller('loghistory_controller', function($root
     $scope.jsonlook =function(item){
         openwindow($uibModal, 'views/journal/jsonAdd.html', 'lg',// 弹出页面
             function ($scope, $modalInstance) {
-                $scope.keywords =item.keywords;
                 //json自动格式化，展现页面。
                 //http://www.cnblogs.com/lvdabao/p/4662612.html 原文。
+                $scope.keywords =item.keywords;//关键值
                 function output(inp) {
                     $timeout(function () {
                         var id = document.getElementById('test');
@@ -279,6 +263,7 @@ angular.module('MetronicApp').controller('loghistory_controller', function($root
                         list.innerHTML = inp;
                     },50);
                 }
+                /*  原内容
                 function syntaxHighlight(json) {
                     json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
                     return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
@@ -299,6 +284,56 @@ angular.module('MetronicApp').controller('loghistory_controller', function($root
                 }
                 var obj = angular.fromJson(item.instance.objValue);
                 var str = JSON.stringify(obj, undefined, 4);
+                output(syntaxHighlight(str));
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };*/
+                function syntaxHighlight(json) {
+                    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                        var cls = 'number';
+                        if (/^"/.test(match)) {
+                            if (/:$/.test(match)) {
+                                if(match.indexOf('&') != -1){
+                                    cls = 'string reds';
+                                    match= match.replace(/&amp;/, "");//把标识$替换掉，不然影响界面效果
+                                }else{
+                                    cls = 'key';
+                                }
+                            } else {
+
+                                cls = 'string';
+                            }
+                        } else if (/true|false/.test(match)) {
+                            cls = 'boolean';
+                        } else if (/null/.test(match)) {
+                            cls = 'null';
+                        }
+                        return '<span class="' + cls + '" >' + match + '</span>';
+                    });
+                }
+                var obj = angular.fromJson(item.instance.objValue);
+                if(!isNull(item.changes)){//如果有修改值，那就给对应的key加上标识
+                    var newObj = {};//定义一个新对象
+                    for(var key in obj){//循环
+                        newObj[key] = obj[key];//新对象拷贝旧对象的值
+                        var changeArray = item.changes;
+                        for(var i = 0; i<changeArray.length;i++){
+                            if(key == changeArray[i].changeKey){//判断key是否相等
+                                newObj['&'+key] = newObj[key];//重写符合条件的key,添加标识
+                                changeArray[i].newValue = newObj[key];//即把最新的值也添加给changeArray中
+                                delete newObj[key];
+                                break;
+                            }
+                        }
+                    }
+                    $scope.changedata = changeArray;//修改的项,拿到前台循环
+                    $scope.ischange = true;
+                    var str = JSON.stringify(newObj, undefined, 4);
+                }else{
+                    $scope.ischange = false;
+                    var str = JSON.stringify(obj, undefined, 4);
+                }
                 output(syntaxHighlight(str));
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
