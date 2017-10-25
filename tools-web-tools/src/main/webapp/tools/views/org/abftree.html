@@ -163,7 +163,7 @@
                                     <label class="control-label col-md-4">机构等级</label>
                                     <div class="col-md-8">
                                         <input type="text" class="form-control"
-                                               ng-model="abftree.item.Degree" translate-constants comtable="DICT_OM_ORGDEGREE"
+                                               ng-model="abftree.item.orgDegree" translate-constants comtable="DICT_OM_ORGDEGREE"
                                                name="id" ng-readonly="!editflag"/>
                                     </div>
                                 </div>
@@ -192,18 +192,8 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-4">机构主管人员</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control"  translate-constants comtable="EMP"
+                                        <input type="text" class="form-control"  translate-constants  comtable="EMP"
                                                ng-model="abftree.item.guidEmpMaster"
-                                               name="id" ng-readonly="!editflag"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">机构管理员</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control"  translate-constants comtable="EMP"
-                                               ng-model="abftree.item.GUID_EMP_MANAGER"
                                                name="id" ng-readonly="!editflag"/>
                                     </div>
                                 </div>
@@ -328,6 +318,46 @@
                                         <input type="text" class="form-control"
                                                ng-model="position.orgName"
                                                name="id"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">机构类型</label>
+                                    <div class="col-md-8" ng-init="$settings.getDictData('DICT_OM_ORGTYPE')">
+                                        <select class="form-control" ng-model="position.orgType">
+                                            <option ng-repeat="d in $settings.diclist['DICT_OM_ORGTYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">机构等级</label>
+                                    <div class="col-md-8" ng-init="$settings.getDictData('DICT_OM_ORGDEGREE')">
+                                        <select class="form-control" ng-model="position.orgDegree">
+                                            <option ng-repeat="d in $settings.diclist['DICT_OM_ORGDEGREE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">机构主管岗位</label>
+                                    <div class="col-md-8" ng-init="$settings.getCommData('POS')">
+                                        <select class="form-control"  ng-model="position.guidPosition">
+                                            <option ng-repeat="d in $settings.commlist['POS'] track by $index" value="{{d.guid}}">{{d.positionName}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">机构主管人员</label>
+                                    <div class="col-md-8" ng-init="$settings.getCommData('EMP')">
+                                        <select class="form-control" ng-model="position.guidEmpMaster">
+                                            <option ng-repeat="d in $settings.commlist['EMP'] track by $index" value="{{d.guid}}">{{d.empName}}</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -644,10 +674,10 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="control-label col-md-4">所属职务</label>
-                                                <div class="col-md-8">
-                                                    <input type="text" class="form-control"  translate-constants comtable="DUTY"
-                                                           ng-model="position.guidDuty"
-                                                           name="id"/>
+                                                <div class="col-md-8" ng-init="$settings.getCommData('DUTY')">
+                                                    <select class="form-control" ng-model="position.guidDuty">
+                                                        <option ng-repeat="d in $settings.commlist['DUTY'] track by $index" value="{{d.guid}}">{{d.dutyName}}</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
