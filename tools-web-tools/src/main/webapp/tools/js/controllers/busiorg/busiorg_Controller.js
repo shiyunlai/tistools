@@ -368,7 +368,7 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
     var loworgGrid = {};
     $scope.loworgGrid = loworgGrid;
     com = [{field: 'nodeType', displayName: '节点类型', enableHiding: false},
-        {field: 'busiorgode', displayName: '业务机构代码', enableHiding: false},
+        {field: 'busiorgCode', displayName: '业务机构代码', enableHiding: false},
         {field: 'busiDomain', displayName: '业务线条', enableHiding: false},
         {field: 'busiorgName', displayName: '业务机构名称', enableHiding: false},
         {field: 'guidOrg', displayName: '对应实体机构', enableHiding: false},
