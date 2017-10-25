@@ -11,6 +11,7 @@ var MetronicApp = angular.module("MetronicApp", [
     "ui.bootstrap",
     "oc.lazyLoad",
     "ngSanitize",
+    "ngSanitize",
     'angularFileUpload',
     'ui.grid',
     'ui.grid.selection',
@@ -255,12 +256,14 @@ MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http
             if(_.isNil(settings.commlist[type])) {
                 $http.post(manurl + "/om/org/queryAllposition").then(function (response) {
                     settings.commlist[type] = response.data.retMessage;
+                    console.log(response.data.retMessage)
                 });
             }
         }else if(type == "EMP"){
             if(_.isNil(settings.commlist[type])) {
                 $http.post(manurl + "/om/emp/queryemployee").then(function (response) {
                     settings.commlist[type] = response.data.retMessage;
+                    console.log(response.data.retMessage)
                 });
             }
         }else if(type == "ROLE"){
@@ -272,12 +275,19 @@ MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http
         }else if(type == "DUTY"){
             if(_.isNil(settings.commlist[type])) {
                 $http.post(manurl + "/om/duty/loadallduty").then(function (response) {
+                    console.log(response)
                     settings.commlist[type] = response.data.retMessage;
                 });
             }
         }else if(type == "APP"){
             if(_.isNil(settings.commlist[type])) {
                 $http.post(manurl + "/AcMenuController/queryAllAcApp",{}).then(function (response) {
+                    settings.commlist[type] = response.data.retMessage;
+                });
+            }
+        }else if(type == "OPER"){
+            if(_.isNil(settings.commlist[type])) {
+                $http.post(manurl + "/AcOperatorController/queryAllOperator",{}).then(function (response) {
                     settings.commlist[type] = response.data.retMessage;
                 });
             }
@@ -308,7 +318,11 @@ MetronicApp.controller('AppController', ['$scope','$rootScope','$http','$q', fun
         App.initComponents(); // init core components
         //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive
     });*/
-    var res = $http.get(manurl + '/tools/json/service.json').then(function (response) {
+    /*var res = $http.get(manurl + '/tools/json/service.json').then(function (response) {
+        $rootScope.res = response.data;//绑定到rootscope中，在其他页面可以直接调用
+        return response;
+    })*/
+    var res = $http.get('./json/service.json').then(function (response) {
         $rootScope.res = response.data;//绑定到rootscope中，在其他页面可以直接调用
         return response;
     })
@@ -419,7 +433,6 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout','$rootScope','
     $scope.$on('$includeContentLoaded', function () {
         Layout.initSidebar(); // init sidebar
         //调用菜单
-
         var res = $rootScope.res.login_service;//页面所需调用的服务
         common_service.post(res.pageInit, {}).then(function (data) {
             if (data.status == "success") {

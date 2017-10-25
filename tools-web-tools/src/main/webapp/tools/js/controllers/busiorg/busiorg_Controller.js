@@ -570,7 +570,9 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
                         //增加方法
                         $scope.add = function (subFrom) {
                             //TODO.新增逻辑
+                            console.log(subFrom)
                             busiorg_service.addbusiorg(subFrom).then(function (data) {
+                                console.log(data)
                                 if (data.status == "success") {
                                     toastr['success'](data.retMessage);
                                 } else {

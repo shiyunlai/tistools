@@ -54,7 +54,8 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
                 var operatFrom = {};
                 $scope.operatFrom = operatFrom;
                 $scope.operatFrom.lockLimit = 5;
-                $scope.operatFrom.operatorStatus = 'stop';//默认停用
+                // $scope.operatFrom.operatorStatus = 'stop';//默认停用
+                $scope.operatFrom.operatorStatus = 'login';//默认停用
                 $scope.add = function(item){//保存新增的函数
                     var subFrom = {};
                     $scope.subFrom = subFrom;

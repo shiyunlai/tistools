@@ -73,7 +73,7 @@ MetronicApp.controller('numres_controller', function ($filter, $scope, $state,nu
                 str.config = '自定义重置'
             }
             if(confirm('确定要把序号键为' + str.seqKey+ '的值按照' + str.config +  '方式重置吗?' )){
-                //$scope.selectRow.seqNo = '0'
+                $scope.selectRow.seqNo = '0'
             }
         }
     }

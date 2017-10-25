@@ -18,6 +18,7 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
     var res = $rootScope.res.operator_service;//页面所需调用的服务
     var subFrom = {};
     subFrom.userId  = userid;
+    console.log(subFrom)
     common_service.post(res.queryOperatorAllApp,subFrom).then(function(data){
         if(data.status == "success"){
             permiss.appselectApp= data.retMessage;

@@ -133,7 +133,7 @@ public class DutyController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/loadallduty")
-	public String loadallduty(ModelMap model, String age, HttpServletRequest request,
+	public String loadallduty(ModelMap model, HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
 			// 收到请求
@@ -159,7 +159,7 @@ public class DutyController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/addduty")
-	public String addduty(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+	public String addduty(ModelMap model, @RequestBody String content,  HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
 			// 收到请求
@@ -192,7 +192,7 @@ public class DutyController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/initdutyCode")
-	public String initdutyCode(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+	public String initdutyCode(ModelMap model, @RequestBody String content,  HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
 			// 收到请求
@@ -220,7 +220,7 @@ public class DutyController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/querydutybyType")
-	public String querydutybyType(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+	public String querydutybyType(ModelMap model, @RequestBody String content,  HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
 			// 收到请求
@@ -248,7 +248,7 @@ public class DutyController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/querychild")
-	public String querychild(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+	public String querychild(ModelMap model, @RequestBody String content,  HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
 			// 收到请求
@@ -275,7 +275,7 @@ public class DutyController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/queryempbudutyCode")
-	public String queryempbudutyCode(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+	public String queryempbudutyCode(ModelMap model, @RequestBody String content,  HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
 			// 收到请求
@@ -303,7 +303,7 @@ public class DutyController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/deletedutyByCode")
-	public String deletedutyByCode(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+	public String deletedutyByCode(ModelMap model, @RequestBody String content,  HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
 			// 收到请求
@@ -330,7 +330,7 @@ public class DutyController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/updateDuty")
-	public String updateDuty(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+	public String updateDuty(ModelMap model, @RequestBody String content,  HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
 			// 收到请求
