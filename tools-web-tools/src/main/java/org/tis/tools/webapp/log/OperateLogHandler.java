@@ -102,8 +102,12 @@ public class OperateLogHandler {
         // 添加数据变化项（LogAbfChange）到操作日志
         JSONObject reqData = new JSONObject();
         for(Object arg : point.getArgs()){
-            if (arg.getClass() == String.class) {
-                reqData = JSONObject.parseObject(String.valueOf(arg));
+            if (arg != null &&  String.class.equals(arg.getClass())) {
+                try{
+                    reqData = JSONObject.parseObject(String.valueOf(arg));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
 

@@ -13,6 +13,7 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
     var peaids = angular.fromJson($stateParams.id);
     var userid = peaids.userid;//操作员userid
     var operguid = peaids.operguid;//操作员guid
+    console.log(operguid)
     $scope.currRole = userid;//显示当前操作员
 
     var res = $rootScope.res.operator_service;//页面所需调用的服务
@@ -200,12 +201,14 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
                 subFrom.guidOperator = operguid;
                 subFrom.guidFuncBhv = dates.guid;
                 subFrom.authType = 0;
+                console.log(operguid)
                 //调用查询接口,模拟多选
                 var tis = [];
                 tis.push(subFrom)
                 common_service.post(res.addOperatorBhvBlackList,tis).then(function(data){
                     var datas = data.retMessage;
                     if(data.status == "success"){
+                        toastr['success']("添加成功");
                         queryfunlist(funtguid,userid);//调用刷新类别方法，传入功能guid才行
                     }
                 })
@@ -242,9 +245,9 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
     var delblack = function (funtguid) {
         $scope.permiss.del = function () {
             var dats = $scope.alrolegird.getSelectedRows();
+            console.log(dats)
             if(!dats.length> 0){
                 toastr['error']("请至少选择一个角色");
-
             }else{
                 var tis = [];
                 for(var i =0;i<dats.length;i++){

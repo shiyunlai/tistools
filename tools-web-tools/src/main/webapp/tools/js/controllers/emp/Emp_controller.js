@@ -6,7 +6,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
         // initialize core components
         App.initAjax();
     });
-
     var res = $rootScope.res.role_service;
     //定义主题对象
     var emp = {};
@@ -83,11 +82,17 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
     var sele = function (a,b) {
         if(a.isSelected){
             $scope.buttonflag = true;
-            console.log($scope.buttonflag)
+            if(a.entity.empstatus == 'offer'){//如果人员状态是在招,那么入职按钮显示
+                $scope.ruzhi = true;
+            }else{//离职状态显示
+                $scope.lizhi=true;
+            }
         }else{
             $scope.buttonflag = false;
+            $scope.ruzhi = false;
+            $scope.lizhi=false;
         }
-        ($scope.$$phase) ? null : $scope.$apply();
+        ($scope.$$phase) ? null : $scope.$apply();//避免报错的,意思是如果已经在进行脏检查就是Null啥都不干,如果没有,就执行脏检查
     }
     //定义表头名
     var com = [{field: 'empCode', displayName: '员工代码'},
@@ -143,12 +148,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
 
         })
     }
-    // var subFrom = {};
-    // subFrom.dictKey = dictKey;
-    // $http.post("http://localhost:8089/tis/DictController/queryAllDictItem",subFrom).then(function (data) {
-    //     console.log(data)
-    //     $scope.dataList = data.data.retMessage
-    // })
     $scope.formatLocation = function (a, b) {
         var list = $rootScope.$settings.diclist[b];
         console.log(list)
@@ -197,8 +196,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                 $scope.subFrom = subFrom;
                 //标题
                 $scope.title = "新增员工";
-
-
                 $scope.shownext = function () {
                     $scope.cancel();
                     //打开第二个模态框
@@ -208,27 +205,31 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                             console.log(pinyin.getFullChars(subFrom.empName));
                             subFrom.userId = pinyin.getFullChars(subFrom.empName);
                             $scope.title = "操作员信息";
-                            $scope.operflag = "1"
+                            var emp = {};
+                            $scope.emp = emp;
+                            emp.operflag = "1";
                             //增加方法
                             $scope.add = function (subFrom) {
-                                console.log(subFrom.orgList)
                                 var a = [];
-                                for (var i = 0; i < subFrom.orgList.length; i++) {
-                                    var b = {};
-                                    b.orgGuid = subFrom.orgList[i];
-                                    a.push((b));
+                                if(!isNull(subFrom.orgList)){
+                                    for (var i = 0; i < subFrom.orgList.length; i++) {
+                                        var b = {};
+                                        b.orgGuid = subFrom.orgList[i];
+                                        a.push((b));
+                                    }
                                 }
                                 subFrom.orgList = a;
                                 a = [];
-                                for (var i = 0; i < subFrom.specialty.length; i++) {
-                                    var b = {};
-                                    b.roleGuid = subFrom.specialty[i];
-                                    a.push((b));
+                                if(!isNull(subFrom.specialty)){
+                                    for (var i = 0; i < subFrom.specialty.length; i++) {
+                                        var b = {};
+                                        b.roleGuid = subFrom.specialty[i];
+                                        a.push((b));
+                                    }
                                 }
                                 subFrom.specialty = a;
                                 subFrom.orgList = JSON.stringify(subFrom.orgList);
                                 subFrom.specialty = JSON.stringify(subFrom.specialty);
-                                console.log(subFrom)
                                 Emp_service.addemp(subFrom).then(function (data) {
                                     if (data.status == "success") {
                                         toastr['success']("新增成功!");
@@ -238,6 +239,21 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                                     reempgrid();
                                     $scope.cancel();
                                 })
+
+                                if(emp.operflag == '1'){//只有是系统默认的时候才新增，否则不新增
+                                    //新增操作员
+                                    var res = $rootScope.res.operator_service;//页面所需调用的服务
+                                    var opersFrom = {}
+                                    opersFrom.operatorName= subFrom.empName;//操作员姓名
+                                    opersFrom.userId=subFrom.userId;
+                                    opersFrom.operatorStatus='stop';
+                                    opersFrom.lockLimit=5;
+                                    opersFrom.authMode='password';
+                                    opersFrom.password = '111111'//默认密码
+                                    opersFrom.menuType = 'default'//默认页面布局
+                                    common_service.post(res.createOperator,opersFrom).then(function(data){
+                                    })
+                                }
                             }
                             //返回
                             $scope.back = function () {
@@ -367,15 +383,16 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                     var subFrom = {};
                     $scope.subFrom = subFrom;
                     $scope.subFrom = angular.copy(arr[0]);
-                    console.log(arr[0]);
-                    if($scope.subFrom.userId == pinyin.getFullChars($scope.subFrom.empName)){
-                        $scope.operflag = "1";
+                    var emp = {};
+                    $scope.emp = emp;
+                    emp.operflag = "2";
+                    /*if($scope.subFrom.userId == pinyin.getFullChars($scope.subFrom.empName)){
+                        emp.operflag = "1";
                     }else{
-                        $scope.operflag = "2";
-                    }
+                        emp.operflag = "2";
+                    }*/
                     var b = JSON.parse(arr[0].specialty);
                     var a = JSON.parse(arr[0].orgList);
-                    console.log(b);
                     var orgL = [];
                     var speL = [];
                     for(var i in a) {
@@ -394,7 +411,7 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                         $(".se2").select2().val(orgL).trigger("change");
                     }, 250);
                     //标题
-                    $scope.title = "修改员工操作员信息";
+                    $scope.title = "关联操作员";
                     //增加方法
                     $scope.add = function (subFrom) {
                         console.log(subFrom.orgList)
@@ -423,8 +440,22 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                             }
                             reempgrid();
                             $scope.cancel();
-
                         })
+                        //只有是系统默认的时候才新增，否则不新增
+                        if(emp.operflag == '1'){
+                            //新增操作员
+                            var res = $rootScope.res.operator_service;//页面所需调用的服务
+                            var opersFrom = {}
+                            opersFrom.operatorName= subFrom.empName;//操作员姓名
+                            opersFrom.userId=subFrom.userId;
+                            opersFrom.operatorStatus='stop';
+                            opersFrom.lockLimit=5;
+                            opersFrom.authMode='password';
+                            opersFrom.password = '111111'//默认密码
+                            opersFrom.menuType = 'default'//默认页面布局
+                            common_service.post(res.createOperator,opersFrom).then(function(data){
+                            })
+                        }
                     }
                     $scope.cancel = function () {
                         reempgrid();

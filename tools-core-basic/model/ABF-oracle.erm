@@ -12,7 +12,7 @@
 	<category_index>2</category_index>
 	<zoom>1.0</zoom>
 	<x>505</x>
-	<y>356</y>
+	<y>131</y>
 	<default_color>
 		<r>230</r>
 		<g>230</g>
@@ -249,7 +249,7 @@
 			</connections>
 			<display>true</display>
 			<creation_date>2017-03-28 08:50:33</creation_date>
-			<updated_date>2017-10-26 10:06:21</updated_date>
+			<updated_date>2017-10-26 15:49:27</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -2181,7 +2181,7 @@
 			<binary>false</binary>
 			<args></args>
 			<char_semantics>false</char_semantics>
-			<description>冗余字段</description>
+			<description></description>
 			<logical_name>应用GUID</logical_name>
 			<physical_name>GUID_APP</physical_name>
 			<type>varchar(n)</type>
@@ -2213,7 +2213,7 @@
 			<binary>false</binary>
 			<args></args>
 			<char_semantics>false</char_semantics>
-			<description>冗余字段，方便为快捷键分组</description>
+			<description>冗余字段</description>
 			<logical_name>应用GUID</logical_name>
 			<physical_name>GUID_APP</physical_name>
 			<type>varchar(n)</type>
@@ -2229,7 +2229,7 @@
 			<binary>false</binary>
 			<args></args>
 			<char_semantics>false</char_semantics>
-			<description></description>
+			<description>冗余字段，方便为快捷键分组</description>
 			<logical_name>应用GUID</logical_name>
 			<physical_name>GUID_APP</physical_name>
 			<type>varchar(n)</type>
@@ -5406,28 +5406,6 @@
 			<connections>
 				<relation>
 					<id>0</id>
-					<source>44</source>
-					<target>0</target>
-						<source_xp>100</source_xp>
-						<source_yp>75</source_yp>
-						<target_xp>-1</target_xp>
-						<target_yp>-1</target_yp>
-						<color>
-							<r>0</r>
-							<g>0</g>
-							<b>0</b>
-						</color>
-					<child_cardinality>0..n</child_cardinality>
-					<parent_cardinality>1</parent_cardinality>
-					<reference_for_pk>true</reference_for_pk>
-					<name></name>
-					<on_delete_action>RESTRICT</on_delete_action>
-					<on_update_action>RESTRICT</on_update_action>
-					<referenced_column>null</referenced_column>
-					<referenced_complex_unique_key>null</referenced_complex_unique_key>
-				</relation>
-				<relation>
-					<id>1</id>
 					<source>43</source>
 					<target>0</target>
 						<source_xp>85</source_xp>
@@ -5448,6 +5426,28 @@
 					<referenced_column>null</referenced_column>
 					<referenced_complex_unique_key>null</referenced_complex_unique_key>
 				</relation>
+				<relation>
+					<id>1</id>
+					<source>44</source>
+					<target>0</target>
+						<source_xp>100</source_xp>
+						<source_yp>75</source_yp>
+						<target_xp>-1</target_xp>
+						<target_yp>-1</target_yp>
+						<color>
+							<r>0</r>
+							<g>0</g>
+							<b>0</b>
+						</color>
+					<child_cardinality>0..n</child_cardinality>
+					<parent_cardinality>1</parent_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<name></name>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+					<referenced_column>null</referenced_column>
+					<referenced_complex_unique_key>null</referenced_complex_unique_key>
+				</relation>
 			</connections>
 			<physical_name>OM_EMP_GROUP</physical_name>
 			<logical_name>人员工作组对应关系</logical_name>
@@ -5459,7 +5459,7 @@
 				<normal_column>
 					<id>0</id>
 					<referenced_column>214</referenced_column>
-					<relation>1</relation>
+					<relation>0</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>员工GUID</logical_name>
@@ -5493,7 +5493,7 @@
 				<normal_column>
 					<id>1</id>
 					<referenced_column>250</referenced_column>
-					<relation>0</relation>
+					<relation>1</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>隶属工作组GUID</logical_name>
@@ -6121,7 +6121,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>180</word_id>
+					<word_id>178</word_id>
 					<id>12</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -6154,7 +6154,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>187</word_id>
+					<word_id>186</word_id>
 					<id>13</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -6322,22 +6322,8 @@
 				<b>35</b>
 			</color>
 			<connections>
-				<comment_connection>
-					<id>9</id>
-					<source>1</source>
-					<target>14</target>
-						<source_xp>-1</source_xp>
-						<source_yp>-1</source_yp>
-						<target_xp>-1</target_xp>
-						<target_yp>-1</target_yp>
-						<color>
-							<r>0</r>
-							<g>0</g>
-							<b>0</b>
-						</color>
-				</comment_connection>
 				<relation>
-					<id>10</id>
+					<id>9</id>
 					<source>44</source>
 					<target>14</target>
 						<source_xp>74</source_xp>
@@ -6358,6 +6344,20 @@
 					<referenced_column>null</referenced_column>
 					<referenced_complex_unique_key>null</referenced_complex_unique_key>
 				</relation>
+				<comment_connection>
+					<id>10</id>
+					<source>1</source>
+					<target>14</target>
+						<source_xp>-1</source_xp>
+						<source_yp>-1</source_yp>
+						<target_xp>-1</target_xp>
+						<target_yp>-1</target_yp>
+						<color>
+							<r>0</r>
+							<g>0</g>
+							<b>0</b>
+						</color>
+				</comment_connection>
 			</connections>
 			<physical_name>OM_GROUP_APP</physical_name>
 			<logical_name>工作组应用列表</logical_name>
@@ -6369,7 +6369,7 @@
 				<normal_column>
 					<id>14</id>
 					<referenced_column>250</referenced_column>
-					<relation>10</relation>
+					<relation>9</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>工作组GUID</logical_name>
@@ -6458,28 +6458,6 @@
 			<connections>
 				<relation>
 					<id>11</id>
-					<source>3</source>
-					<target>15</target>
-						<source_xp>100</source_xp>
-						<source_yp>56</source_yp>
-						<target_xp>0</target_xp>
-						<target_yp>23</target_yp>
-						<color>
-							<r>0</r>
-							<g>0</g>
-							<b>0</b>
-						</color>
-					<child_cardinality>0..n</child_cardinality>
-					<parent_cardinality>1</parent_cardinality>
-					<reference_for_pk>true</reference_for_pk>
-					<name>F_DATA_ROLE</name>
-					<on_delete_action>RESTRICT</on_delete_action>
-					<on_update_action>RESTRICT</on_update_action>
-					<referenced_column>null</referenced_column>
-					<referenced_complex_unique_key>null</referenced_complex_unique_key>
-				</relation>
-				<relation>
-					<id>12</id>
 					<source>37</source>
 					<target>15</target>
 						<source_xp>27</source_xp>
@@ -6505,6 +6483,28 @@
 					<referenced_column>null</referenced_column>
 					<referenced_complex_unique_key>null</referenced_complex_unique_key>
 				</relation>
+				<relation>
+					<id>12</id>
+					<source>3</source>
+					<target>15</target>
+						<source_xp>100</source_xp>
+						<source_yp>56</source_yp>
+						<target_xp>0</target_xp>
+						<target_yp>23</target_yp>
+						<color>
+							<r>0</r>
+							<g>0</g>
+							<b>0</b>
+						</color>
+					<child_cardinality>0..n</child_cardinality>
+					<parent_cardinality>1</parent_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<name>F_DATA_ROLE</name>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+					<referenced_column>null</referenced_column>
+					<referenced_complex_unique_key>null</referenced_complex_unique_key>
+				</relation>
 			</connections>
 			<physical_name>AC_ROLE_DATASCOPE</physical_name>
 			<logical_name>角色数据范围权限对应</logical_name>
@@ -6516,7 +6516,7 @@
 				<normal_column>
 					<id>16</id>
 					<referenced_column>171</referenced_column>
-					<relation>12</relation>
+					<relation>11</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>角色GUID</logical_name>
@@ -6550,7 +6550,7 @@
 				<normal_column>
 					<id>17</id>
 					<referenced_column>2</referenced_column>
-					<relation>11</relation>
+					<relation>12</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>拥有数据范围GUID</logical_name>
@@ -6604,8 +6604,22 @@
 				<b>35</b>
 			</color>
 			<connections>
-				<relation>
+				<comment_connection>
 					<id>13</id>
+					<source>1</source>
+					<target>16</target>
+						<source_xp>-1</source_xp>
+						<source_yp>-1</source_yp>
+						<target_xp>-1</target_xp>
+						<target_yp>-1</target_yp>
+						<color>
+							<r>0</r>
+							<g>0</g>
+							<b>0</b>
+						</color>
+				</comment_connection>
+				<relation>
+					<id>14</id>
 					<source>25</source>
 					<target>16</target>
 						<source_xp>0</source_xp>
@@ -6626,20 +6640,6 @@
 					<referenced_column>null</referenced_column>
 					<referenced_complex_unique_key>null</referenced_complex_unique_key>
 				</relation>
-				<comment_connection>
-					<id>14</id>
-					<source>1</source>
-					<target>16</target>
-						<source_xp>-1</source_xp>
-						<source_yp>-1</source_yp>
-						<target_xp>-1</target_xp>
-						<target_yp>-1</target_yp>
-						<color>
-							<r>0</r>
-							<g>0</g>
-							<b>0</b>
-						</color>
-				</comment_connection>
 			</connections>
 			<physical_name>OM_POSITION_APP</physical_name>
 			<logical_name>岗位应用列表</logical_name>
@@ -6651,7 +6651,7 @@
 				<normal_column>
 					<id>18</id>
 					<referenced_column>95</referenced_column>
-					<relation>13</relation>
+					<relation>14</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>岗位GUID</logical_name>
@@ -6683,7 +6683,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>115</word_id>
+					<word_id>116</word_id>
 					<id>19</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -6740,28 +6740,6 @@
 			<connections>
 				<relation>
 					<id>15</id>
-					<source>43</source>
-					<target>17</target>
-						<source_xp>0</source_xp>
-						<source_yp>83</source_yp>
-						<target_xp>100</target_xp>
-						<target_yp>53</target_yp>
-						<color>
-							<r>0</r>
-							<g>0</g>
-							<b>0</b>
-						</color>
-					<child_cardinality>0..n</child_cardinality>
-					<parent_cardinality>1</parent_cardinality>
-					<reference_for_pk>true</reference_for_pk>
-					<name>F_EMP_POS</name>
-					<on_delete_action>RESTRICT</on_delete_action>
-					<on_update_action>RESTRICT</on_update_action>
-					<referenced_column>null</referenced_column>
-					<referenced_complex_unique_key>null</referenced_complex_unique_key>
-				</relation>
-				<relation>
-					<id>16</id>
 					<source>25</source>
 					<target>17</target>
 						<source_xp>61</source_xp>
@@ -6782,6 +6760,28 @@
 					<referenced_column>null</referenced_column>
 					<referenced_complex_unique_key>null</referenced_complex_unique_key>
 				</relation>
+				<relation>
+					<id>16</id>
+					<source>43</source>
+					<target>17</target>
+						<source_xp>0</source_xp>
+						<source_yp>83</source_yp>
+						<target_xp>100</target_xp>
+						<target_yp>53</target_yp>
+						<color>
+							<r>0</r>
+							<g>0</g>
+							<b>0</b>
+						</color>
+					<child_cardinality>0..n</child_cardinality>
+					<parent_cardinality>1</parent_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<name>F_EMP_POS</name>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+					<referenced_column>null</referenced_column>
+					<referenced_complex_unique_key>null</referenced_complex_unique_key>
+				</relation>
 			</connections>
 			<physical_name>OM_EMP_POSITION</physical_name>
 			<logical_name>员工岗位对应关系</logical_name>
@@ -6793,7 +6793,7 @@
 				<normal_column>
 					<id>20</id>
 					<referenced_column>214</referenced_column>
-					<relation>15</relation>
+					<relation>16</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>员工GUID</logical_name>
@@ -6827,7 +6827,7 @@
 				<normal_column>
 					<id>21</id>
 					<referenced_column>95</referenced_column>
-					<relation>16</relation>
+					<relation>15</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>所在岗位GUID</logical_name>
@@ -7125,7 +7125,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>52</word_id>
+					<word_id>53</word_id>
 					<id>28</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -7257,7 +7257,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>178</word_id>
+					<word_id>180</word_id>
 					<id>32</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -7290,7 +7290,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>186</word_id>
+					<word_id>187</word_id>
 					<id>33</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -7509,7 +7509,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>129</word_id>
+					<word_id>128</word_id>
 					<id>38</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -7575,7 +7575,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>119</word_id>
+					<word_id>120</word_id>
 					<id>40</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -9171,7 +9171,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>53</word_id>
+					<word_id>52</word_id>
 					<id>81</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -9657,6 +9657,28 @@
 			<connections>
 				<relation>
 					<id>24</id>
+					<source>49</source>
+					<target>25</target>
+						<source_xp>0</source_xp>
+						<source_yp>20</source_yp>
+						<target_xp>100</target_xp>
+						<target_yp>28</target_yp>
+						<color>
+							<r>0</r>
+							<g>0</g>
+							<b>0</b>
+						</color>
+					<child_cardinality>0..n</child_cardinality>
+					<parent_cardinality>1</parent_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<name>F_DUTY_POS</name>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+					<referenced_column>null</referenced_column>
+					<referenced_complex_unique_key>null</referenced_complex_unique_key>
+				</relation>
+				<relation>
+					<id>25</id>
 					<source>25</source>
 					<target>25</target>
 						<source_xp>100</source_xp>
@@ -9677,28 +9699,6 @@
 					<parent_cardinality>0..1</parent_cardinality>
 					<reference_for_pk>true</reference_for_pk>
 					<name>F_POS_POS</name>
-					<on_delete_action>RESTRICT</on_delete_action>
-					<on_update_action>RESTRICT</on_update_action>
-					<referenced_column>null</referenced_column>
-					<referenced_complex_unique_key>null</referenced_complex_unique_key>
-				</relation>
-				<relation>
-					<id>25</id>
-					<source>49</source>
-					<target>25</target>
-						<source_xp>0</source_xp>
-						<source_yp>20</source_yp>
-						<target_xp>100</target_xp>
-						<target_yp>28</target_yp>
-						<color>
-							<r>0</r>
-							<g>0</g>
-							<b>0</b>
-						</color>
-					<child_cardinality>0..n</child_cardinality>
-					<parent_cardinality>1</parent_cardinality>
-					<reference_for_pk>true</reference_for_pk>
-					<name>F_DUTY_POS</name>
 					<on_delete_action>RESTRICT</on_delete_action>
 					<on_update_action>RESTRICT</on_update_action>
 					<referenced_column>null</referenced_column>
@@ -9972,7 +9972,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>293</word_id>
+					<word_id>292</word_id>
 					<id>102</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -10073,7 +10073,7 @@
 				<normal_column>
 					<id>105</id>
 					<referenced_column>95</referenced_column>
-					<relation>24</relation>
+					<relation>25</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>父岗位GUID</logical_name>
@@ -10107,7 +10107,7 @@
 				<normal_column>
 					<id>106</id>
 					<referenced_column>302</referenced_column>
-					<relation>25</relation>
+					<relation>24</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>所属职务GUID</logical_name>
@@ -10238,7 +10238,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>196</word_id>
+					<word_id>195</word_id>
 					<id>110</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -10343,8 +10343,22 @@
 				<b>0</b>
 			</color>
 			<connections>
-				<relation>
+				<comment_connection>
 					<id>27</id>
+					<source>30</source>
+					<target>27</target>
+						<source_xp>-1</source_xp>
+						<source_yp>-1</source_yp>
+						<target_xp>-1</target_xp>
+						<target_yp>-1</target_yp>
+						<color>
+							<r>255</r>
+							<g>0</g>
+							<b>0</b>
+						</color>
+				</comment_connection>
+				<relation>
+					<id>28</id>
 					<source>29</source>
 					<target>27</target>
 						<source_xp>-1</source_xp>
@@ -10365,20 +10379,6 @@
 					<referenced_column>null</referenced_column>
 					<referenced_complex_unique_key>null</referenced_complex_unique_key>
 				</relation>
-				<comment_connection>
-					<id>28</id>
-					<source>30</source>
-					<target>27</target>
-						<source_xp>-1</source_xp>
-						<source_yp>-1</source_yp>
-						<target_xp>-1</target_xp>
-						<target_yp>-1</target_yp>
-						<color>
-							<r>255</r>
-							<g>0</g>
-							<b>0</b>
-						</color>
-				</comment_connection>
 			</connections>
 			<physical_name>AC_BHV_DEF</physical_name>
 			<logical_name>功能操作行为定义</logical_name>
@@ -10423,7 +10423,7 @@
 				<normal_column>
 					<id>113</id>
 					<referenced_column>121</referenced_column>
-					<relation>27</relation>
+					<relation>28</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>操作类型GUID</logical_name>
@@ -12027,7 +12027,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>265</word_id>
+					<word_id>264</word_id>
 					<id>154</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -12084,28 +12084,6 @@
 			<connections>
 				<relation>
 					<id>34</id>
-					<source>37</source>
-					<target>33</target>
-						<source_xp>-1</source_xp>
-						<source_yp>-1</source_yp>
-						<target_xp>-1</target_xp>
-						<target_yp>-1</target_yp>
-						<color>
-							<r>255</r>
-							<g>0</g>
-							<b>0</b>
-						</color>
-					<child_cardinality>0..n</child_cardinality>
-					<parent_cardinality>1</parent_cardinality>
-					<reference_for_pk>true</reference_for_pk>
-					<name>F_ROLENTY_ROLE</name>
-					<on_delete_action>RESTRICT</on_delete_action>
-					<on_update_action>RESTRICT</on_update_action>
-					<referenced_column>null</referenced_column>
-					<referenced_complex_unique_key>null</referenced_complex_unique_key>
-				</relation>
-				<relation>
-					<id>35</id>
 					<source>24</source>
 					<target>33</target>
 						<source_xp>100</source_xp>
@@ -12126,6 +12104,28 @@
 					<referenced_column>null</referenced_column>
 					<referenced_complex_unique_key>null</referenced_complex_unique_key>
 				</relation>
+				<relation>
+					<id>35</id>
+					<source>37</source>
+					<target>33</target>
+						<source_xp>-1</source_xp>
+						<source_yp>-1</source_yp>
+						<target_xp>-1</target_xp>
+						<target_yp>-1</target_yp>
+						<color>
+							<r>255</r>
+							<g>0</g>
+							<b>0</b>
+						</color>
+					<child_cardinality>0..n</child_cardinality>
+					<parent_cardinality>1</parent_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<name>F_ROLENTY_ROLE</name>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+					<referenced_column>null</referenced_column>
+					<referenced_complex_unique_key>null</referenced_complex_unique_key>
+				</relation>
 			</connections>
 			<physical_name>AC_ROLE_ENTITYFIELD</physical_name>
 			<logical_name>角色与实体属性关系</logical_name>
@@ -12137,7 +12137,7 @@
 				<normal_column>
 					<id>155</id>
 					<referenced_column>171</referenced_column>
-					<relation>34</relation>
+					<relation>35</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>角色GUID</logical_name>
@@ -12171,7 +12171,7 @@
 				<normal_column>
 					<id>156</id>
 					<referenced_column>67</referenced_column>
-					<relation>35</relation>
+					<relation>34</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>拥有实体属性GUID</logical_name>
@@ -12472,30 +12472,8 @@
 				<b>0</b>
 			</color>
 			<connections>
-				<relation>
-					<id>38</id>
-					<source>60</source>
-					<target>35</target>
-						<source_xp>90</source_xp>
-						<source_yp>100</source_yp>
-						<target_xp>36</target_xp>
-						<target_yp>0</target_yp>
-						<color>
-							<r>0</r>
-							<g>0</g>
-							<b>0</b>
-						</color>
-					<child_cardinality>1..n</child_cardinality>
-					<parent_cardinality>1</parent_cardinality>
-					<reference_for_pk>true</reference_for_pk>
-					<name></name>
-					<on_delete_action>RESTRICT</on_delete_action>
-					<on_update_action>RESTRICT</on_update_action>
-					<referenced_column>null</referenced_column>
-					<referenced_complex_unique_key>null</referenced_complex_unique_key>
-				</relation>
 				<comment_connection>
-					<id>39</id>
+					<id>38</id>
 					<source>26</source>
 					<target>35</target>
 						<source_xp>-1</source_xp>
@@ -12509,7 +12487,7 @@
 						</color>
 				</comment_connection>
 				<relation>
-					<id>40</id>
+					<id>39</id>
 					<source>27</source>
 					<target>35</target>
 						<source_xp>17</source_xp>
@@ -12522,6 +12500,28 @@
 							<b>0</b>
 						</color>
 					<child_cardinality>0..n</child_cardinality>
+					<parent_cardinality>1</parent_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<name></name>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+					<referenced_column>null</referenced_column>
+					<referenced_complex_unique_key>null</referenced_complex_unique_key>
+				</relation>
+				<relation>
+					<id>40</id>
+					<source>60</source>
+					<target>35</target>
+						<source_xp>90</source_xp>
+						<source_yp>100</source_yp>
+						<target_xp>36</target_xp>
+						<target_yp>0</target_yp>
+						<color>
+							<r>0</r>
+							<g>0</g>
+							<b>0</b>
+						</color>
+					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
 					<reference_for_pk>true</reference_for_pk>
 					<name></name>
@@ -12574,7 +12574,7 @@
 				<normal_column>
 					<id>163</id>
 					<referenced_column>402</referenced_column>
-					<relation>38</relation>
+					<relation>40</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>功能GUID</logical_name>
@@ -12608,7 +12608,7 @@
 				<normal_column>
 					<id>164</id>
 					<referenced_column>112</referenced_column>
-					<relation>40</relation>
+					<relation>39</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>行为GUID</logical_name>
@@ -13159,28 +13159,6 @@
 			<connections>
 				<relation>
 					<id>43</id>
-					<source>35</source>
-					<target>38</target>
-						<source_xp>100</source_xp>
-						<source_yp>65</source_yp>
-						<target_xp>-1</target_xp>
-						<target_yp>-1</target_yp>
-						<color>
-							<r>0</r>
-							<g>0</g>
-							<b>0</b>
-						</color>
-					<child_cardinality>0..n</child_cardinality>
-					<parent_cardinality>1</parent_cardinality>
-					<reference_for_pk>true</reference_for_pk>
-					<name></name>
-					<on_delete_action>RESTRICT</on_delete_action>
-					<on_update_action>RESTRICT</on_update_action>
-					<referenced_column>null</referenced_column>
-					<referenced_complex_unique_key>null</referenced_complex_unique_key>
-				</relation>
-				<relation>
-					<id>44</id>
 					<source>50</source>
 					<target>38</target>
 						<source_xp>30</source_xp>
@@ -13206,6 +13184,28 @@
 					<referenced_column>null</referenced_column>
 					<referenced_complex_unique_key>null</referenced_complex_unique_key>
 				</relation>
+				<relation>
+					<id>44</id>
+					<source>35</source>
+					<target>38</target>
+						<source_xp>100</source_xp>
+						<source_yp>65</source_yp>
+						<target_xp>-1</target_xp>
+						<target_yp>-1</target_yp>
+						<color>
+							<r>0</r>
+							<g>0</g>
+							<b>0</b>
+						</color>
+					<child_cardinality>0..n</child_cardinality>
+					<parent_cardinality>1</parent_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<name></name>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+					<referenced_column>null</referenced_column>
+					<referenced_complex_unique_key>null</referenced_complex_unique_key>
+				</relation>
 			</connections>
 			<physical_name>AC_OPERATOR_BHV</physical_name>
 			<logical_name>操作员特殊功能行为配置</logical_name>
@@ -13217,7 +13217,7 @@
 				<normal_column>
 					<id>177</id>
 					<referenced_column>162</referenced_column>
-					<relation>43</relation>
+					<relation>44</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>操作行为GUID</logical_name>
@@ -13251,7 +13251,7 @@
 				<normal_column>
 					<id>178</id>
 					<referenced_column>312</referenced_column>
-					<relation>44</relation>
+					<relation>43</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>操作员GUID</logical_name>
@@ -13591,7 +13591,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>132</word_id>
+					<word_id>131</word_id>
 					<id>186</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -13648,28 +13648,6 @@
 			<connections>
 				<relation>
 					<id>47</id>
-					<source>37</source>
-					<target>40</target>
-						<source_xp>-1</source_xp>
-						<source_yp>-1</source_yp>
-						<target_xp>47</target_xp>
-						<target_yp>0</target_yp>
-						<color>
-							<r>255</r>
-							<g>0</g>
-							<b>0</b>
-						</color>
-					<child_cardinality>0..n</child_cardinality>
-					<parent_cardinality>1</parent_cardinality>
-					<reference_for_pk>true</reference_for_pk>
-					<name>F_ROLE_FUN</name>
-					<on_delete_action>RESTRICT</on_delete_action>
-					<on_update_action>RESTRICT</on_update_action>
-					<referenced_column>null</referenced_column>
-					<referenced_complex_unique_key>null</referenced_complex_unique_key>
-				</relation>
-				<relation>
-					<id>48</id>
 					<source>60</source>
 					<target>40</target>
 						<source_xp>100</source_xp>
@@ -13690,6 +13668,28 @@
 					<referenced_column>null</referenced_column>
 					<referenced_complex_unique_key>null</referenced_complex_unique_key>
 				</relation>
+				<relation>
+					<id>48</id>
+					<source>37</source>
+					<target>40</target>
+						<source_xp>-1</source_xp>
+						<source_yp>-1</source_yp>
+						<target_xp>47</target_xp>
+						<target_yp>0</target_yp>
+						<color>
+							<r>255</r>
+							<g>0</g>
+							<b>0</b>
+						</color>
+					<child_cardinality>0..n</child_cardinality>
+					<parent_cardinality>1</parent_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<name>F_ROLE_FUN</name>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+					<referenced_column>null</referenced_column>
+					<referenced_complex_unique_key>null</referenced_complex_unique_key>
+				</relation>
 			</connections>
 			<physical_name>AC_ROLE_FUNC</physical_name>
 			<logical_name>权限集(角色)功能对应关系</logical_name>
@@ -13701,7 +13701,7 @@
 				<normal_column>
 					<id>187</id>
 					<referenced_column>171</referenced_column>
-					<relation>47</relation>
+					<relation>48</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>角色GUID</logical_name>
@@ -13735,7 +13735,7 @@
 				<normal_column>
 					<id>188</id>
 					<referenced_column>402</referenced_column>
-					<relation>48</relation>
+					<relation>47</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>拥有功能GUID</logical_name>
@@ -13767,7 +13767,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>117</word_id>
+					<word_id>119</word_id>
 					<id>189</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -13800,7 +13800,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>131</word_id>
+					<word_id>132</word_id>
 					<id>190</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -14554,7 +14554,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>265</word_id>
+					<word_id>264</word_id>
 					<id>209</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -15806,7 +15806,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>264</word_id>
+					<word_id>265</word_id>
 					<id>246</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -16350,7 +16350,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>292</word_id>
+					<word_id>294</word_id>
 					<id>260</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -16548,7 +16548,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>195</word_id>
+					<word_id>196</word_id>
 					<id>266</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -17125,7 +17125,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>292</word_id>
+					<word_id>294</word_id>
 					<id>281</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -17419,7 +17419,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>116</word_id>
+					<word_id>117</word_id>
 					<id>286</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -17452,7 +17452,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>128</word_id>
+					<word_id>129</word_id>
 					<id>287</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -17617,7 +17617,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>299</word_id>
+					<word_id>300</word_id>
 					<id>292</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -18205,7 +18205,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>291</word_id>
+					<word_id>293</word_id>
 					<id>308</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -19380,22 +19380,8 @@
 				<b>194</b>
 			</color>
 			<connections>
-				<comment_connection>
-					<id>61</id>
-					<source>47</source>
-					<target>53</target>
-						<source_xp>-1</source_xp>
-						<source_yp>-1</source_yp>
-						<target_xp>-1</target_xp>
-						<target_yp>-1</target_yp>
-						<color>
-							<r>0</r>
-							<g>0</g>
-							<b>0</b>
-						</color>
-				</comment_connection>
 				<relation>
-					<id>62</id>
+					<id>61</id>
 					<source>53</source>
 					<target>53</target>
 						<source_xp>100</source_xp>
@@ -19421,6 +19407,20 @@
 					<referenced_column>null</referenced_column>
 					<referenced_complex_unique_key>null</referenced_complex_unique_key>
 				</relation>
+				<comment_connection>
+					<id>62</id>
+					<source>47</source>
+					<target>53</target>
+						<source_xp>-1</source_xp>
+						<source_yp>-1</source_yp>
+						<target_xp>-1</target_xp>
+						<target_yp>-1</target_yp>
+						<color>
+							<r>0</r>
+							<g>0</g>
+							<b>0</b>
+						</color>
+				</comment_connection>
 			</connections>
 			<physical_name>SYS_DICT</physical_name>
 			<logical_name>业务字典</logical_name>
@@ -19597,7 +19597,7 @@
 				<normal_column>
 					<id>344</id>
 					<referenced_column>339</referenced_column>
-					<relation>62</relation>
+					<relation>61</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>父字典GUID</logical_name>
@@ -20513,7 +20513,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>115</word_id>
+					<word_id>116</word_id>
 					<id>367</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -20893,28 +20893,6 @@
 			<connections>
 				<relation>
 					<id>68</id>
-					<source>50</source>
-					<target>58</target>
-						<source_xp>100</source_xp>
-						<source_yp>94</source_yp>
-						<target_xp>0</target_xp>
-						<target_yp>4</target_yp>
-						<color>
-							<r>0</r>
-							<g>0</g>
-							<b>0</b>
-						</color>
-					<child_cardinality>0..n</child_cardinality>
-					<parent_cardinality>1</parent_cardinality>
-					<reference_for_pk>true</reference_for_pk>
-					<name>F_OPER_RMENU</name>
-					<on_delete_action>RESTRICT</on_delete_action>
-					<on_update_action>RESTRICT</on_update_action>
-					<referenced_column>null</referenced_column>
-					<referenced_complex_unique_key>null</referenced_complex_unique_key>
-				</relation>
-				<relation>
-					<id>69</id>
 					<source>58</source>
 					<target>58</target>
 						<source_xp>100</source_xp>
@@ -20935,6 +20913,28 @@
 					<parent_cardinality>0..1</parent_cardinality>
 					<reference_for_pk>true</reference_for_pk>
 					<name>F_ROM_ROM</name>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+					<referenced_column>null</referenced_column>
+					<referenced_complex_unique_key>null</referenced_complex_unique_key>
+				</relation>
+				<relation>
+					<id>69</id>
+					<source>50</source>
+					<target>58</target>
+						<source_xp>100</source_xp>
+						<source_yp>94</source_yp>
+						<target_xp>0</target_xp>
+						<target_yp>4</target_yp>
+						<color>
+							<r>0</r>
+							<g>0</g>
+							<b>0</b>
+						</color>
+					<child_cardinality>0..n</child_cardinality>
+					<parent_cardinality>1</parent_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<name>F_OPER_RMENU</name>
 					<on_delete_action>RESTRICT</on_delete_action>
 					<on_update_action>RESTRICT</on_update_action>
 					<referenced_column>null</referenced_column>
@@ -20984,7 +20984,7 @@
 				<normal_column>
 					<id>376</id>
 					<referenced_column>312</referenced_column>
-					<relation>68</relation>
+					<relation>69</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>操作员GUID</logical_name>
@@ -21016,7 +21016,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>116</word_id>
+					<word_id>117</word_id>
 					<id>377</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -21150,7 +21150,7 @@
 				<normal_column>
 					<id>381</id>
 					<referenced_column>375</referenced_column>
-					<relation>69</relation>
+					<relation>68</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>父菜单GUID</logical_name>
@@ -21215,7 +21215,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>300</word_id>
+					<word_id>299</word_id>
 					<id>383</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -21479,7 +21479,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>294</word_id>
+					<word_id>291</word_id>
 					<id>391</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -21576,7 +21576,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>115</word_id>
+					<word_id>116</word_id>
 					<id>393</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -21895,8 +21895,22 @@
 				<b>255</b>
 			</color>
 			<connections>
-				<relation>
+				<comment_connection>
 					<id>70</id>
+					<source>5</source>
+					<target>60</target>
+						<source_xp>-1</source_xp>
+						<source_yp>-1</source_yp>
+						<target_xp>-1</target_xp>
+						<target_yp>-1</target_yp>
+						<color>
+							<r>0</r>
+							<g>0</g>
+							<b>0</b>
+						</color>
+				</comment_connection>
+				<relation>
+					<id>71</id>
 					<source>41</source>
 					<target>60</target>
 						<source_xp>-1</source_xp>
@@ -21918,7 +21932,7 @@
 					<referenced_complex_unique_key>null</referenced_complex_unique_key>
 				</relation>
 				<relation>
-					<id>71</id>
+					<id>72</id>
 					<source>29</source>
 					<target>60</target>
 						<source_xp>-1</source_xp>
@@ -21939,20 +21953,6 @@
 					<referenced_column>null</referenced_column>
 					<referenced_complex_unique_key>null</referenced_complex_unique_key>
 				</relation>
-				<comment_connection>
-					<id>72</id>
-					<source>5</source>
-					<target>60</target>
-						<source_xp>-1</source_xp>
-						<source_yp>-1</source_yp>
-						<target_xp>-1</target_xp>
-						<target_yp>-1</target_yp>
-						<color>
-							<r>0</r>
-							<g>0</g>
-							<b>0</b>
-						</color>
-				</comment_connection>
 			</connections>
 			<physical_name>AC_FUNC</physical_name>
 			<logical_name>功能</logical_name>
@@ -21997,7 +21997,7 @@
 				<normal_column>
 					<id>403</id>
 					<referenced_column>191</referenced_column>
-					<relation>70</relation>
+					<relation>71</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>隶属功能组GUID</logical_name>
@@ -22229,7 +22229,7 @@
 				<normal_column>
 					<id>410</id>
 					<referenced_column>121</referenced_column>
-					<relation>71</relation>
+					<relation>72</relation>
 					<description>PS:对应应用类别</description>
 					<unique_key_name></unique_key_name>
 					<logical_name>行为类型</logical_name>
@@ -22351,7 +22351,7 @@
 			<connections>
 				<relation>
 					<id>73</id>
-					<source>35</source>
+					<source>37</source>
 					<target>61</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -22373,7 +22373,7 @@
 				</relation>
 				<relation>
 					<id>74</id>
-					<source>37</source>
+					<source>35</source>
 					<target>61</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -22404,7 +22404,7 @@
 				<normal_column>
 					<id>413</id>
 					<referenced_column>171</referenced_column>
-					<relation>74</relation>
+					<relation>73</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>角色GUID</logical_name>
@@ -22438,7 +22438,7 @@
 				<normal_column>
 					<id>414</id>
 					<referenced_column>162</referenced_column>
-					<relation>73</relation>
+					<relation>74</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>拥有功能行为</logical_name>
@@ -22470,7 +22470,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>120</word_id>
+					<word_id>115</word_id>
 					<id>415</id>
 					<description></description>
 					<unique_key_name></unique_key_name>

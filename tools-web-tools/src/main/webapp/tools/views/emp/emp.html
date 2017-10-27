@@ -39,12 +39,16 @@
         <div ui-grid="empgrid"
              ui-grid-pagination
              ui-grid-selection ui-grid-resize-columns></div>
-        <div class="actions btn-set" style="float: right;">
+        <div class="actions btn-set" style="float: right;margin-top:20px;">
             <button type="button" name="back" class="btn btn-primary" ng-click="emp.add({})"> 新增
             </button>
             <button type="button" name="back" class="btn btn-primary" ng-click="emp.edit()" ng-disabled="!buttonflag"> 编辑基础信息
             </button>
             <button type="button" name="back" class="btn btn-primary" ng-click="emp.editoper()" ng-disabled="!buttonflag"> 编辑相关操作员信息
+            </button>
+            <button type="button" name="back" class="btn btn-primary" ng-if="ruzhi" > 入职
+            </button>
+            <button type="button" name="back" class="btn btn-primary" ng-if="lizhi"> 离职
             </button>
             <button type="button" name="back" class="btn btn-primary" ng-click="emp.detail()" ng-disabled="!buttonflag"> 查看详情
             </button>
