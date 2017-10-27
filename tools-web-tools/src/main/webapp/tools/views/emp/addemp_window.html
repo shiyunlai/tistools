@@ -195,7 +195,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4">证件类型</label>
+                        <label class="control-label col-md-4">证件号码</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="subFrom.paperType"
@@ -205,7 +205,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4">证件号码</label>
+                        <label class="control-label col-md-4">证件类型</label>
                         <div class="col-md-8" ng-init="$settings.getDictData('DICT_SD_PAPERTYPE')">
                             <select class="form-control" ng-model="subFrom.paperNo">
                                 <option ng-repeat="d in $settings.diclist['DICT_SD_PAPERTYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>

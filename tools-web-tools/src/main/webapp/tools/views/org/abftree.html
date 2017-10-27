@@ -664,10 +664,13 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="control-label col-md-4">岗位类别</label>
-                                                <div class="col-md-8">
-                                                    <input type="text" class="form-control"
+                                                <div class="col-md-8" ng-init="$settings.getDictData('DICT_OM_POSITYPE')">
+                                                    <!--<input type="text" class="form-control"
                                                            ng-model="position.positionType"  translate-constants comtable="DICT_OM_POSITYPE"
-                                                           name="id"/>
+                                                           name="id"/>-->
+                                                    <select class="form-control" ng-model="position.positionType">
+                                                        <option ng-repeat="d in $settings.diclist['DICT_OM_POSITYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>

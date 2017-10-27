@@ -161,7 +161,6 @@ MetronicApp.controller('configuration_controller', function ($filter, $scope, $r
                     }else{
                         toastr['error']("'删除失败'+'<br/>'+data.retMessage！");
                     }
-
                 })
             }
         }
