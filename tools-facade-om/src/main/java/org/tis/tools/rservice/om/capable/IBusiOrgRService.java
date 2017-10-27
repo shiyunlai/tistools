@@ -253,7 +253,7 @@ public interface IBusiOrgRService {
 	 *            待删除的业务机构代码
 	 * @throws BusiOrgManagementException
 	 */
-	void deleteBusiorg(String busiorgCode) throws BusiOrgManagementException ;
+	OmBusiorg deleteBusiorg(String busiorgCode) throws BusiOrgManagementException ;
 	
 	/*
 	 * ========================================== 

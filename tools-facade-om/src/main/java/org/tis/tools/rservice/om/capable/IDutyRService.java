@@ -156,7 +156,7 @@ public interface IDutyRService {
 	 *            职务代码
 	 * @exception ToolsRuntimeException
 	 */
-	void deleteDuty(String dutyCode) throws ToolsRuntimeException;;
+	OmDuty deleteDuty(String dutyCode) throws ToolsRuntimeException;;
 	
 	/*
 	 * ==========================================

@@ -586,7 +586,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 	 * 添加人员-机构关系表数据
 	 */
 	@Override
-	public void insertEmpOrg(String orgGuid, String empGuid) {
+	public OmEmpOrg insertEmpOrg(String orgGuid, String empGuid) {
 		//校验入参
 		if(StringUtil.isEmpty(orgGuid)){
 			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
@@ -599,6 +599,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		oeo.setGuidOrg(orgGuid);
 		oeo.setIsmain("N");//默认为否
 		omEmpOrgService.insert(oeo);
+		return oeo;
 	}
 	/**
 	 * 删除

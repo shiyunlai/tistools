@@ -444,7 +444,7 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
      * @throws RoleManagementException
      */
     @Override
-    public void addRoleParty(AcPartyRole acPartyRole) throws RoleManagementException {
+    public AcPartyRole addRoleParty(AcPartyRole acPartyRole) throws RoleManagementException {
         try {
             if (null == acPartyRole) {
                 throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("acPartyRole", "AC_PARTY_ROLE"));
@@ -466,6 +466,7 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                 throw new RoleManagementException(ExceptionCodes.DUPLICATE_WHEN_INSERT, BasicUtil.wrap("GUID_PARTY", "AC_PARTY_ROLE"));
             }
             acPartyRoleService.insert(acPartyRole);
+            return acPartyRole;
         } catch (RoleManagementException ae) {
             throw ae;
         } catch (Exception e) {

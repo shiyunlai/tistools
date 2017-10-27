@@ -473,8 +473,8 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
         //paginationTemplate:"<div></div>", //自定义底部分页代码
         useExternalPagination: true,//是否使用分页按钮
         //选择优化
-         /*enableFullRowSelection:false,
-         enableRowHeaderSelection:true,*/
+        // enableFullRowSelection:false,
+        // enableRowHeaderSelection:true,
         filterCellFiltered:true,
         enableSelectAll: true,
         //导出测试
@@ -523,6 +523,7 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
                     console.log(column)
                     var everyFilters=[];
                     column.filters.forEach(function(filter) {
+                        console.log(column)
                         if(filter.term!=null&&filter.term!='undefined'){
                             everyFilters.push(filter);
                         }
@@ -555,10 +556,10 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
     //ui-grid getPage方法
     thisobj.getPage = function(curPage, pageSize) {
         var firstRow = (curPage - 1) * pageSize;
-        thisobj.totalItems = thisobj.mydefalutData.length;  //显示每行多少页  设置不显示
+        thisobj.totalItems = thisobj.mydefalutData.length;
         thisobj.data = thisobj.mydefalutData.slice(firstRow, firstRow + pageSize);
         //或者像下面这种写法
-        //thisobj.mydata = thisobj.mydefalutData.slice(firstRow, firstRow + pageSize);
+        //$scope.myData = mydefalutData.slice(firstRow, firstRow + pageSize);
     };
     //测试
     // var a = $scope.gridApi.selection.getSelectedRows();

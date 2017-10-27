@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.ac.AcApp;
-import org.tis.tools.model.po.om.OmEmployee;
-import org.tis.tools.model.po.om.OmGroup;
-import org.tis.tools.model.po.om.OmPosition;
+import org.tis.tools.model.po.om.*;
 import org.tis.tools.rservice.om.capable.IEmployeeRService;
 import org.tis.tools.rservice.om.capable.IGroupRService;
 import org.tis.tools.webapp.controller.BaseController;
+import org.tis.tools.webapp.log.OperateLog;
+import org.tis.tools.webapp.log.ReturnType;
 import org.tis.tools.webapp.util.AjaxUtils;
 
 import com.alibaba.dubbo.common.json.ParseException;
@@ -119,93 +119,81 @@ public class WorkGroupController extends BaseController {
     /**
      * 新增根工作组
      *
-     * @param model
      * @param content
-     * @param age
-     * @param request
-     * @param response
      * @return
      */
+    @OperateLog(
+            operateType = "add",  // 操作类型
+            operateDesc = "新增工作组", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "guid", // 操作对象标识
+            name = "groupName", // 操作对象名
+            keys = {"groupName","groupCode"}) // 操作对象的关键值的键值名
+    @ResponseBody
     @RequestMapping(value = "/add")
-    public String add(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
-                      HttpServletResponse response) {
-        try {
-
-            JSONObject jsonObj = JSONObject.parseObject(content);
-
-            String flag = jsonObj.getString("flag");
-            jsonObj.remove("flag");
-            if (flag.equals("root")) {
-                OmGroup og = new OmGroup();
-                BeanUtils.populate(og, jsonObj);
-                groupRService.createRootGroup(og);
-            } else {// 新增子节点
-                OmGroup og = new OmGroup();
-                BeanUtils.populate(og, jsonObj);
-                groupRService.createGroup(og);
-            }
-            AjaxUtils.ajaxJsonSuccessMessage(response, "新增工作组成功!");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getParams());
-            e.printStackTrace();
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, "新增工作组失败");
+    public Map<String, Object> add(@RequestBody String content) {
+        JSONObject jsonObj = JSONObject.parseObject(content);
+        String flag = jsonObj.getString("flag");
+        jsonObj.remove("flag");
+        OmGroup og = new OmGroup();
+        OmGroup reog = new OmGroup();
+        if (flag.equals("root")) {
+            og = JSONObject.parseObject(content, OmGroup.class);
+            reog = groupRService.createRootGroup(og);
+        } else {// 新增子节点
+            og = JSONObject.parseObject(content, OmGroup.class);
+            reog = groupRService.createGroup(og);
         }
-        return null;
+        return getReturnMap(reog);
     }
 
-    /**
-     * 编辑工作组
-     *
-     * @param model
-     * @param content
-     * @param age
-     * @param request
-     * @param response
-     * @return
-     */
-    @RequestMapping(value = "/edit")
-    public String edit(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
-                       HttpServletResponse response) {
-        try {
-
-            JSONObject jsonObj = JSONObject.parseObject(content);
-            OmGroup og = new OmGroup();
-            BeanUtils.populate(og, jsonObj);
-            groupRService.createRootGroup(og);
-            AjaxUtils.ajaxJsonSuccessMessage(response, "新增根工作组成功!");
-        } catch (Exception e) {// TODO
-            AjaxUtils.ajaxJsonErrorMessage(response, "新增根工作组失败!");
-            e.printStackTrace();
-        }
-        return null;
-    }
+//    /**
+//     * 编辑工作组
+//     *
+//     * @param model
+//     * @param content
+//     * @param age
+//     * @param request
+//     * @param response
+//     * @return
+//     */
+//    @RequestMapping(value = "/edit")
+//    public String edit(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+//                       HttpServletResponse response) {
+//        try {
+//
+//            JSONObject jsonObj = JSONObject.parseObject(content);
+//            OmGroup og = new OmGroup();
+//            BeanUtils.populate(og, jsonObj);
+//            groupRService.createRootGroup(og);
+//            AjaxUtils.ajaxJsonSuccessMessage(response, "新增根工作组成功!");
+//        } catch (Exception e) {// TODO
+//            AjaxUtils.ajaxJsonErrorMessage(response, "新增根工作组失败!");
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 
     /**
      * 删除工作组
      *
-     * @param model
      * @param content
-     * @param age
-     * @param request
-     * @param response
      * @return
      */
+    @OperateLog(
+            operateType = "delete",  // 操作类型
+            operateDesc = "删除工作组", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "guid", // 操作对象标识
+            name = "groupName", // 操作对象名
+            keys = {"groupName","groupCode"}) // 操作对象的关键值的键值名
+    @ResponseBody
     @RequestMapping(value = "/delete")
-    public String delete(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
-                         HttpServletResponse response) {
-        try {
-            JSONObject jsonObj = JSONObject.parseObject(content);
-            String groupCode = jsonObj.getString("groupCode");
-            groupRService.deleteGroup(groupCode);
-            AjaxUtils.ajaxJsonSuccessMessage(response, "删除工作组成功!");
-        } catch (ToolsRuntimeException e) {// TODO
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            e.printStackTrace();
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
-        }
-        return null;
+    public Map<String, Object> delete(@RequestBody String content) {
+        JSONObject jsonObj = JSONObject.parseObject(content);
+        String groupCode = jsonObj.getString("groupCode");
+        OmGroup og = groupRService.deleteGroup(groupCode);
+        return getReturnMap(og);
     }
 
     /**
@@ -293,59 +281,50 @@ public class WorkGroupController extends BaseController {
     /**
      * 启用---注销工作组
      *
-     * @param model
      * @param content
-     * @param age
-     * @param request
-     * @param response
      * @return
      */
+    @OperateLog(
+            operateType = "update",  // 操作类型
+            operateDesc = "更改工作组状态", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "guid", // 操作对象标识
+            name = "groupName", // 操作对象名
+            keys = {"groupName","groupStatus"}) // 操作对象的关键值的键值名
+    @ResponseBody
     @RequestMapping(value = "/enableGroup")
-    public String enableGroup(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
-                              HttpServletResponse response) {
-        try {
-            JSONObject jsonObj = JSONObject.parseObject(content);
-            String groupCode = jsonObj.getString("groupCode");
-            String flag = jsonObj.getString("flag");
-            if ("running".equals(flag)) {
-                groupRService.cancelGroup(groupCode);
-            } else if ("cancel".equals(flag)) {
-                groupRService.reenableGroup(groupCode, true);
-            }
-            AjaxUtils.ajaxJsonSuccessMessage(response, "启用成功!");
-        } catch (ToolsRuntimeException e) {// TODO
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            e.printStackTrace();
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+    public Map<String, Object> enableGroup(@RequestBody String content) {
+        JSONObject jsonObj = JSONObject.parseObject(content);
+        String groupCode = jsonObj.getString("groupCode");
+        String flag = jsonObj.getString("flag");
+        OmGroup og = new OmGroup();
+        if ("running".equals(flag)) {
+            og = groupRService.cancelGroup(groupCode);
+        } else if ("cancel".equals(flag)) {
+            og = groupRService.reenableGroup(groupCode, true);
         }
-        return null;
+        return getReturnMap(og);
     }
 
     /**
      * 更新修改工作组
      *
-     * @param model
      * @param content
-     * @param age
-     * @param request
-     * @param response
      * @return
      */
+    @OperateLog(
+            operateType = "update",  // 操作类型
+            operateDesc = "更新工作组", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "guid", // 操作对象标识
+            name = "groupName", // 操作对象名
+            keys = {"groupName","groupCode"}) // 操作对象的关键值的键值名
+    @ResponseBody
     @RequestMapping(value = "/updateGroup")
-    public String updateGroup(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
-                              HttpServletResponse response) {
-        try {
-            OmGroup og = JSONObject.parseObject(content, OmGroup.class);
-            groupRService.updateGroup(og);
-            AjaxUtils.ajaxJsonSuccessMessage(response, "修改成功!");
-        } catch (ToolsRuntimeException e) {// TODO
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            e.printStackTrace();
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
-        }
-        return null;
+    public Map<String, Object> updateGroup(@RequestBody String content) {
+        OmGroup og = JSONObject.parseObject(content, OmGroup.class);
+        OmGroup reog = groupRService.updateGroup(og);
+        return getReturnMap(reog);
     }
 
     /**
@@ -432,59 +411,63 @@ public class WorkGroupController extends BaseController {
     /**
      * 新添人员
      *
-     * @param model
      * @param content
-     * @param age
-     * @param request
-     * @param response
      * @return
      */
+    @OperateLog(
+            operateType = "add",  // 操作类型
+            operateDesc = "为工作组新增员工", // 操作描述
+            retType = ReturnType.List, // 返回类型，对象或数组
+            id = "guidGroup", // 操作对象标识
+            name = "guidGroup", // 操作对象名
+            keys = {"guidGroup","guidEmp"}) // 操作对象的关键值的键值名
+    @ResponseBody
     @RequestMapping(value = "/addEmpGroup")
-    public String addEmpGroup(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
-                              HttpServletResponse response) {
-        try {
-            JSONObject jsonObj = JSONObject.parseObject(content);
-            String groupGuid = jsonObj.getString("groupGuid");
-            List<Object> empguidList = jsonObj.getJSONArray("empGuidlist");
-            transactionTemplate.execute(new TransactionCallback<String>() {
-                @Override
-                public String doInTransaction(TransactionStatus status) {
-                    try {
-                        for (Object o : empguidList) {
-                            employeeRService.insertEmpGroup(groupGuid, o.toString());
-                        }
-                        return "success";
-                    } catch (Exception e) {
-                        status.setRollbackOnly();
-                        e.printStackTrace();
-                        throw e;
+    public Map<String, Object> addEmpGroup(@RequestBody String content) {
+        JSONObject jsonObj = JSONObject.parseObject(content);
+        String groupGuid = jsonObj.getString("groupGuid");
+        List<Object> empguidList = jsonObj.getJSONArray("empGuidlist");
+        transactionTemplate.execute(new TransactionCallback<String>() {
+            @Override
+            public String doInTransaction(TransactionStatus status) {
+                try {
+                    for (Object o : empguidList) {
+                        employeeRService.insertEmpGroup(groupGuid, o.toString());
                     }
+                    return "success";
+                } catch (Exception e) {
+                    status.setRollbackOnly();
+                    e.printStackTrace();
+                    throw e;
                 }
-            });
-            AjaxUtils.ajaxJsonSuccessMessage(response, "新增成功!");
-        } catch (ToolsRuntimeException e) {// TODO
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            e.printStackTrace();
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+            }
+        });
+        List<OmEmpGroup> list = new ArrayList<>();
+        for (Object o : empguidList) {
+            OmEmpGroup oeg = new OmEmpGroup();
+            oeg.setGuidEmp(o.toString());
+            oeg.setGuidGroup(groupGuid);
+            list.add(oeg);
         }
-        return null;
+        return getReturnMap(list);
     }
 
     /**
      * 删除人员-工作组关联
      *
-     * @param model
      * @param content
-     * @param age
-     * @param request
-     * @param response
      * @return
      */
+    @OperateLog(
+            operateType = "delete",  // 操作类型
+            operateDesc = "为工作组删除员工", // 操作描述
+            retType = ReturnType.List, // 返回类型，对象或数组
+            id = "guidGroup", // 操作对象标识
+            name = "guidGroup", // 操作对象名
+            keys = {"guidGroup","guidEmp"}) // 操作对象的关键值的键值名
+    @ResponseBody
     @RequestMapping(value = "/deleteEmpGroup")
-    public String deleteEmpGroup(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
-                                 HttpServletResponse response) {
-        try {
+    public Map<String, Object> deleteEmpGroup(@RequestBody String content) {
             JSONObject jsonObj = JSONObject.parseObject(content);
             String groupGuid = jsonObj.getString("groupGuid");
             List<Object> empguidList = jsonObj.getJSONArray("empGuidlist");
@@ -503,14 +486,14 @@ public class WorkGroupController extends BaseController {
                     }
                 }
             });
-            AjaxUtils.ajaxJsonSuccessMessage(response, "删除成功!");
-        } catch (ToolsRuntimeException e) {// TODO
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            e.printStackTrace();
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+        List<OmEmpGroup> list = new ArrayList<>();
+        for (Object o : empguidList) {
+            OmEmpGroup oeg = new OmEmpGroup();
+            oeg.setGuidEmp(o.toString());
+            oeg.setGuidGroup(groupGuid);
+            list.add(oeg);
         }
-        return null;
+        return getReturnMap(list);
     }
 
     /**
@@ -570,57 +553,61 @@ public class WorkGroupController extends BaseController {
     /**
      * 新添岗位
      *
-     * @param model
      * @param content
-     * @param age
-     * @param request
-     * @param response
      * @return
      */
+    @OperateLog(
+            operateType = "add",  // 操作类型
+            operateDesc = "为工作组新增岗位", // 操作描述
+            retType = ReturnType.List, // 返回类型，对象或数组
+            id = "guidGroup", // 操作对象标识
+            name = "guidGroup", // 操作对象名
+            keys = {"guidGroup","guidPosition"}) // 操作对象的关键值的键值名
+    @ResponseBody
     @RequestMapping(value = "/addGroupPosition")
-    public String addGroupPosition(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
-                                   HttpServletResponse response) {
-        try {
-            JSONObject jsonObj = JSONObject.parseObject(content);
-            String groupGuid = jsonObj.getString("groupGuid");
-            List<String> posGuidlist = JSON.parseArray(jsonObj.getJSONArray("posGuidlist").toJSONString(), String.class);
-            groupRService.insertGroupPosition(groupGuid, posGuidlist);
-            AjaxUtils.ajaxJsonSuccessMessage(response, "新增成功!");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            e.printStackTrace();
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+    public Map<String, Object> addGroupPosition(@RequestBody String content) {
+        JSONObject jsonObj = JSONObject.parseObject(content);
+        String groupGuid = jsonObj.getString("groupGuid");
+        List<String> posGuidlist = JSON.parseArray(jsonObj.getJSONArray("posGuidlist").toJSONString(), String.class);
+        groupRService.insertGroupPosition(groupGuid, posGuidlist);
+        List<OmGroupPosition> list = new ArrayList<>();
+        for (String posGuid : posGuidlist) {
+            OmGroupPosition ogp = new OmGroupPosition();
+            ogp.setGuidGroup(groupGuid);
+            ogp.setGuidPosition(posGuid);
+            list.add(ogp);
         }
-        return null;
+        return getReturnMap(list);
     }
 
     /**
      * 删除岗位
      *
-     * @param model
      * @param content
-     * @param age
-     * @param request
-     * @param response
      * @return
      */
+    @OperateLog(
+            operateType = "delete",  // 操作类型
+            operateDesc = "为工作组删除岗位", // 操作描述
+            retType = ReturnType.List, // 返回类型，对象或数组
+            id = "guidGroup", // 操作对象标识
+            name = "guidGroup", // 操作对象名
+            keys = {"guidGroup","guidPosition"}) // 操作对象的关键值的键值名
+    @ResponseBody
     @RequestMapping(value = "/deleteGroupPosition")
-    public String deleteGroupPosition(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
-                                      HttpServletResponse response) {
-        try {
-            JSONObject jsonObj = JSONObject.parseObject(content);
-            String groupGuid = jsonObj.getString("groupGuid");
-            List<String> posGuidlist = JSON.parseArray(jsonObj.getJSONArray("posGuidlist").toJSONString(), String.class);
-            groupRService.deleteGroupPosition(groupGuid, posGuidlist);
-            AjaxUtils.ajaxJsonSuccessMessage(response, "删除成功!");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            e.printStackTrace();
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+    public Map<String, Object> deleteGroupPosition(@RequestBody String content) {
+        JSONObject jsonObj = JSONObject.parseObject(content);
+        String groupGuid = jsonObj.getString("groupGuid");
+        List<String> posGuidlist = JSON.parseArray(jsonObj.getJSONArray("posGuidlist").toJSONString(), String.class);
+        groupRService.deleteGroupPosition(groupGuid, posGuidlist);
+        List<OmGroupPosition> list = new ArrayList<>();
+        for (String posGuid : posGuidlist) {
+            OmGroupPosition ogp = new OmGroupPosition();
+            ogp.setGuidGroup(groupGuid);
+            ogp.setGuidPosition(posGuid);
+            list.add(ogp);
         }
-        return null;
+        return getReturnMap(list);
     }
 
 
@@ -698,50 +685,46 @@ public class WorkGroupController extends BaseController {
     /**
      * 新增工作组-应用记录
      */
+    @OperateLog(
+            operateType = "add",  // 操作类型
+            operateDesc = "为工作组添加应用", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "guidGroup", // 操作对象标识
+            name = "guidGroup", // 操作对象名
+            keys = {"guidGroup","guidApp"}) // 操作对象的关键值的键值名
+    @ResponseBody
     @RequestMapping(value = "/addGroupApp", produces = "text/plain;charset=UTF-8", method = RequestMethod.POST)
-    public String addGroupApp(@RequestBody String content, HttpServletRequest request,
-                                HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("queryApp request : " + content);
-            }
-            JSONObject jsonObj = JSONObject.parseObject(content);
-            String groupGuid = jsonObj.getString("groupGuid");
-            String appGuid = jsonObj.getString("appGuid");
-            groupRService.addGroupApp(appGuid, groupGuid);
-            AjaxUtils.ajaxJsonSuccessMessage(response, "添加成功!");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            logger.error("queryApp exception : ", e);
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
-            logger.error("queryApp exception : ", e);
-        }
-        return null;
+    public Map<String, Object> addGroupApp(@RequestBody String content) throws ToolsRuntimeException, ParseException {
+        JSONObject jsonObj = JSONObject.parseObject(content);
+        String groupGuid = jsonObj.getString("groupGuid");
+        String appGuid = jsonObj.getString("appGuid");
+        groupRService.addGroupApp(appGuid, groupGuid);
+        Map map = new HashMap();
+        map.put("guidGroup", groupGuid);
+        map.put("guidApp", appGuid);
+        return getReturnMap(map);
     }
     /**
      * 删除工作组-应用记录
      */
+    @OperateLog(
+            operateType = "delete",  // 操作类型
+            operateDesc = "为工作组删除应用", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "guidGroup", // 操作对象标识
+            name = "guidGroup", // 操作对象名
+            keys = {"guidGroup","guidApp"}) // 操作对象的关键值的键值名
+    @ResponseBody
     @RequestMapping(value = "/deleteGroupApp", produces = "text/plain;charset=UTF-8", method = RequestMethod.POST)
-    public String deleteGroupApp(@RequestBody String content, HttpServletRequest request,
-                              HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("queryApp request : " + content);
-            }
-            JSONObject jsonObj = JSONObject.parseObject(content);
-            String groupGuid = jsonObj.getString("groupGuid");
-            String appGuid = jsonObj.getString("appGuid");
-            groupRService.deleteGroupApp(appGuid, groupGuid);
-            AjaxUtils.ajaxJsonSuccessMessage(response, "删除成功!");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            logger.error("queryApp exception : ", e);
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
-            logger.error("queryApp exception : ", e);
-        }
-        return null;
+    public Map<String, Object> deleteGroupApp(@RequestBody String content) throws ToolsRuntimeException, ParseException {
+        JSONObject jsonObj = JSONObject.parseObject(content);
+        String groupGuid = jsonObj.getString("groupGuid");
+        String appGuid = jsonObj.getString("appGuid");
+        groupRService.deleteGroupApp(appGuid, groupGuid);
+        Map map = new HashMap();
+        map.put("guidGroup", groupGuid);
+        map.put("guidApp", appGuid);
+        return getReturnMap(map);
     }
 
 

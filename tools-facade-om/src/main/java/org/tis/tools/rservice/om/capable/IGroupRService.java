@@ -255,7 +255,7 @@ public interface IGroupRService {
 	 * @param groupCode 工作组代码
 	 * @throws ToolsRuntimeException
 	 */
-	void deleteGroup(String groupCode ) throws ToolsRuntimeException  ;
+	OmGroup deleteGroup(String groupCode ) throws ToolsRuntimeException  ;
 	
 	/*
 	 * ========================================== 
@@ -282,7 +282,7 @@ public interface IGroupRService {
 	 *            工作组代码
 	 * @throws ToolsRuntimeException
 	 */
-	void cancelGroup(String groupCode) throws ToolsRuntimeException  ;
+	OmGroup cancelGroup(String groupCode) throws ToolsRuntimeException  ;
 	
 	/**
 	 * <pre>
@@ -298,7 +298,7 @@ public interface IGroupRService {
 	 *            false - 不启用（默认）
 	 * @throws ToolsRuntimeException
 	 */
-	void reenableGroup(String groupCode, boolean reenableChile) throws ToolsRuntimeException  ;
+	OmGroup reenableGroup(String groupCode, boolean reenableChile) throws ToolsRuntimeException  ;
 	
 	/*
 	 * ========================================== 

@@ -194,9 +194,9 @@ public class EmployeeController extends BaseController {
             operateType = "update",  // 操作类型
             operateDesc = "指派员工机构", // 操作描述
             retType = ReturnType.Object, // 返回类型，对象或数组
-            id = "guid", // 操作对象标识
-            name = "employeeName", // 操作对象名
-            keys = {"guidPosition", "empCode", "guidOrg"}) // 操作对象的关键值的键值名
+            id = "empCode", // 操作对象标识
+            name = "empCode", // 操作对象名
+            keys = {"empCode", "orgCode", "isMain"}) // 操作对象的关键值的键值名
     @ResponseBody
     @RequestMapping(value = "/assignOrg",produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> assignOrg( @RequestBody String content) {
@@ -209,7 +209,11 @@ public class EmployeeController extends BaseController {
         } else {
             employeeRService.assignOrg(empCode, orgCode, false);
         }
-        return getReturnMap("指派成功!");
+        Map map = new HashMap();
+        map.put("empCode", empCode);
+        map.put("orgCode", orgCode);
+        map.put("isMain", isMain);
+        return getReturnMap(map);
     }
 
     /**
@@ -218,6 +222,13 @@ public class EmployeeController extends BaseController {
      * @param content
      * @return
      */
+    @OperateLog(
+            operateType = "update",  // 操作类型
+            operateDesc = "取消指派员工机构", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "empCode", // 操作对象标识
+            name = "empCode", // 操作对象名
+            keys = {"empCode", "orgCode", "isMain"}) // 操作对象的关键值的键值名
     @ResponseBody
     @RequestMapping(value = "/disassignOrg",produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> disassignOrg( @RequestBody String content) {
