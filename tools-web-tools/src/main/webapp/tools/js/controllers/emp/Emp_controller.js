@@ -670,12 +670,12 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                     subFrom.isMain = isMain;
                     Emp_service.assignOrg(subFrom).then(function (data) {
                         if (data.status == "success") {
-                            toastr['success'](data.retMessage);
+                            toastr['success']("指派成功!");
                             reorggrid();
                             reempgrid();
                             $scope.cancel();
                         } else {
-                            toastr['error'](data.retMessage);
+                            toastr['error']("指派失败!");
                         }
                     })
                 }
@@ -736,6 +736,7 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                     console.log(subFrom.empCode);
                     //调取工作组信息OM_GROUP
                     Emp_service.loadPosNotInbyEmp(subFrom).then(function (data) {
+                        console.log(data)
                         if (data.status == "success" && !isNull(data.retMessage)) {
                             $scope.commonGrid.data = data.retMessage;
                             $scope.commonGrid.mydefalutData = data.retMessage;

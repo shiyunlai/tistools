@@ -195,7 +195,7 @@ public interface IRoleRService {
      * @param acPartyRole
      * @throws RoleManagementException
      */
-    void addRoleParty(AcPartyRole acPartyRole) throws RoleManagementException;
+    AcPartyRole addRoleParty(AcPartyRole acPartyRole) throws RoleManagementException;
 
     /**
      * <p>角色移除组织对象权限</p>

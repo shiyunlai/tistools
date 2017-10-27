@@ -85,7 +85,7 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                                 $scope.save = function () {
                                     duty_service.addduty(subFrom).then(function (data) {
                                         if(data.status == "success"){
-                                            toastr['success'](data.retMessage);
+                                            toastr['success']("新增成功!");
                                             $("#dutytree").jstree().refresh();
                                             redutygrid();
                                             $scope.cancel();
@@ -140,7 +140,7 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                                 $scope.save = function () {
                                     duty_service.addduty(subFrom).then(function (data) {
                                         if(data.status == "success"){
-                                            toastr['success'](data.retMessage);
+                                            toastr['success']("新增成功!");
                                             $("#dutytree").jstree().refresh();
                                             redutygrid();
                                             $scope.cancel();
@@ -167,7 +167,7 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                             subFrom.dutyCode = obj.id;
                             duty_service.deletedutyByCode(subFrom).then(function (data) {
                                 if(data.status == "success"){
-                                    toastr['success'](data.retMessage);
+                                    toastr['success']("删除成功!");
                                     $("#dutytree").jstree().refresh();
                                 }else{
                                     toastr['error'](data.retMessage);
@@ -477,7 +477,7 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
         console.log($scope.subFrom);
         duty_service.updateDuty($scope.subFrom).then(function (data) {
             if(data.status == "success"){
-                toastr['success'](data.retMessage);
+                toastr['success']("修改成功!");
                 $("#dutytree").jstree().refresh();
                 $scope.editflag = !$scope.editflag;
                 // var node = {};
@@ -496,7 +496,7 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
             subFrom.dutyCode = $scope.duty.item.dutyCode;
             duty_service.deletedutyByCode(subFrom).then(function (data) {
                 if(data.status == "success"){
-                    toastr['success'](data.retMessage);
+                    toastr['success']("删除成功!");
                     $("#dutytree").jstree().refresh();
                     var node = {};
                     node.id = $scope.duty.item.parentsCode;
@@ -532,7 +532,7 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                 $scope.save = function () {
                     duty_service.addduty(subFrom).then(function (data) {
                         if(data.status == "success"){
-                            toastr['success'](data.retMessage);
+                            toastr['success']("新增成功!");
                             $("#dutytree").jstree().refresh();
                             redutygrid();
                             $scope.cancel();
@@ -575,7 +575,7 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
             subFrom.dutyCode = arr[0].dutyCode;
             duty_service.deletedutyByCode(subFrom).then(function (data) {
                 if(data.status == "success"){
-                    toastr['success'](data.retMessage);
+                    toastr['success']("删除成功!");
                     $("#dutytree").jstree().refresh();
                     redutygrid();
                 }else{
@@ -613,7 +613,7 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                 $scope.save = function () {
                     duty_service.addduty(subFrom).then(function (data) {
                         if(data.status == "success"){
-                            toastr['success'](data.retMessage);
+                            toastr['success']("新增成功!");
                             $("#dutytree").jstree().refresh();
                             redutygrid();
                             $scope.cancel();

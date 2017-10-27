@@ -240,7 +240,7 @@ public interface IPositionRService {
 	 *            岗位代码
 	 * @throws ToolsRuntimeException
 	 */
-	void cancelPosition(String positionCode) throws ToolsRuntimeException;
+	OmPosition cancelPosition(String positionCode) throws ToolsRuntimeException;
 
 	/**
 	 * <pre>
@@ -255,7 +255,7 @@ public interface IPositionRService {
 	 *            岗位代码
 	 * @throws ToolsRuntimeException
 	 */
-	void reenablePosition(String positionCode) throws ToolsRuntimeException;
+	OmPosition reenablePosition(String positionCode) throws ToolsRuntimeException;
 	
 	/*
 	 * ========================================== 
@@ -370,7 +370,7 @@ public interface IPositionRService {
 	 * 删除岗位
 	 * @param positionCode
 	 */
-	void deletePosition(String positionCode);
+	OmPosition deletePosition(String positionCode);
 
 	/**
 	 * 拉取所有岗位信息

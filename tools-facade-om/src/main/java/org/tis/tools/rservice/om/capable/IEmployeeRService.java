@@ -6,6 +6,7 @@ package org.tis.tools.rservice.om.capable;
 import java.util.List;
 
 import org.tis.tools.base.exception.ToolsRuntimeException;
+import org.tis.tools.model.po.om.OmEmpOrg;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.po.om.OmPosition;
@@ -379,7 +380,7 @@ public interface IEmployeeRService {
 	/**
 	 * 添加人员-机构关系表数据
 	 */
-	void insertEmpOrg(String orgGuid,String empGuid);
+	OmEmpOrg insertEmpOrg(String orgGuid, String empGuid);
 	
 	/**
 	 * 删除人员-机构关系表数据

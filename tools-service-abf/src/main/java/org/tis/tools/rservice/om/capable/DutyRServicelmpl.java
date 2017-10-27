@@ -92,6 +92,7 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 					}
 				}
 			});
+			return od;
 		}else{//有父职务编号,新增子机构
 			//拉取父职务信息
 			OmDuty parentod = queryByDutyCode(parentsDutyCode);
@@ -126,9 +127,9 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 					}
 				}
 			});
+			return od;
 		}
 
-		return null;
 	}
 
 	@Override
@@ -167,7 +168,7 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 	}
 
 	@Override
-	public void deleteDuty(String dutyCode) throws ToolsRuntimeException {
+	public OmDuty deleteDuty(String dutyCode) throws ToolsRuntimeException {
 		// 验证传入参数
 		if (StringUtil.isEmpty(dutyCode)) {
 			throw new DutyManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("dutyCode"));
@@ -176,6 +177,7 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 		//删除操作,同时删除人员-职务关系表数据
 		//TODO
 		omDutyService.delete(od.getGuid());
+		return od;
 	}
 
 	@Override

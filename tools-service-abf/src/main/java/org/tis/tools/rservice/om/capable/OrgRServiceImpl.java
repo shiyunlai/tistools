@@ -359,7 +359,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 * @throws OrgManagementException
 	 */
 	@Override
-	public void updateOrg(OmOrg omOrg) throws OrgManagementException {	
+	public OmOrg updateOrg(OmOrg omOrg) throws OrgManagementException {
 		WhereCondition wc = new WhereCondition() ;
 		wc.andEquals("ORG_CODE", omOrg.getOrgCode());
 		List<OmOrg> orgList=omOrgService.query(wc);
@@ -379,6 +379,8 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 			e.printStackTrace();
 			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHEN_UPDATE_ORG_APP,
 					BasicUtil.wrap(e.getCause().getMessage()));
+		}finally {
+			return omOrg;
 		}
 		
 
@@ -853,7 +855,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		//暂时直接停用
 		org.setOrgStatus(OMConstants.ORG_STATUS_STOP);
 		omOrgService.update(org);
-		return null;
+		return org;
 	}
 
 	/* (non-Javadoc)
@@ -892,7 +894,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 * @see org.tis.tools.rservice.om.capable.IOrgRService#deleteOrg(java.lang.String)
 	 */
 	@Override
-	public void deleteEmptyOrg(String orgCode) throws OrgManagementException {
+	public OmOrg deleteEmptyOrg(String orgCode) throws OrgManagementException {
 
 		OmOrg delOrg = omOrgServiceExt.loadByOrgCode(orgCode) ; 
 		
@@ -923,6 +925,8 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 			e.printStackTrace();
 			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_DEEP_COPY_ORG,
 					BasicUtil.wrap(delOrg.getOrgCode(), e.getCause().getMessage()), "删除机构失败！机构{0} {1}");
+		}finally {
+			return  delOrg;
 		}
 		
 	}

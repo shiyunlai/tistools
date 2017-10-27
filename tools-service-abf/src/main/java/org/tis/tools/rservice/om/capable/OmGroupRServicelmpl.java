@@ -89,15 +89,7 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 	 * 新增的工作组状态为‘正常’；
 	 * 
 	 * </pre>
-	 * 
-	 * @param groupCode
-	 *            新工作组代码
-	 * @param groupType
-	 *            新工作组类型
-	 * @param groupName
-	 *            新工作组名称
-	 * @param orgCode
-	 *            隶属机构代码
+	 *
 	 * @return 新增的工作组对象
 	 * @throws ToolsRuntimeException
 	 */
@@ -374,7 +366,7 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 	}
 
 	@Override
-	public void deleteGroup(String groupCode) throws ToolsRuntimeException {
+	public OmGroup deleteGroup(String groupCode) throws ToolsRuntimeException {
 		//校验入参
 		if(StringUtil.isEmpty(groupCode)){
 			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
@@ -387,10 +379,11 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 		WhereCondition wc = new WhereCondition();
 		wc.andEquals("GROUP_CODE", groupCode);
 		omGroupService.deleteByCondition(wc);
+		return og;
 	}
 
 	@Override
-	public void cancelGroup(String groupCode) throws ToolsRuntimeException {
+	public OmGroup cancelGroup(String groupCode) throws ToolsRuntimeException {
 		OmGroup og = queryGroup(groupCode);
 		List<OmGroup> ogList = queryAllchild(groupCode);
 		for(OmGroup omGroup : ogList){
@@ -400,10 +393,11 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 		}
 		og.setGroupStatus(OMConstants.GROUP_STATUS_CANCEL);
 		omGroupService.update(og);
+		return og;
 	}
 
 	@Override
-	public void reenableGroup(String groupCode, boolean reenableChile) throws ToolsRuntimeException {
+	public OmGroup reenableGroup(String groupCode, boolean reenableChile) throws ToolsRuntimeException {
 		//调用方法中已经有参数检验
 		OmGroup og = queryGroup(groupCode);
 		List<OmGroup> ogList = queryAllchild(groupCode);
@@ -428,6 +422,7 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 					}
 				}
 			});
+			return og;
 		}else{
 			og.setGroupStatus(OMConstants.GROUP_STATUS_RUNNING);
 			transactionTemplate.execute(new TransactionCallback<OmGroup>() {
@@ -445,6 +440,7 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 					}
 				}
 			});
+			return og;
 		}
 	}
 

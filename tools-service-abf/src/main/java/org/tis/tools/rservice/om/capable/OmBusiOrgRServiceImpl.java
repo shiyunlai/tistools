@@ -644,7 +644,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
      * @throws BusiOrgManagementException
      */
     @Override
-    public void deleteBusiorg(String busiorgCode) throws BusiOrgManagementException {
+    public OmBusiorg deleteBusiorg(String busiorgCode) throws BusiOrgManagementException {
         OmBusiorg omBusiorg = queryBusiorg(busiorgCode);
         if (null == omBusiorg) {
             throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("busiorgCode"));
@@ -667,6 +667,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
                 }
             }
         });
+        return obo;
     }
 
     /**
