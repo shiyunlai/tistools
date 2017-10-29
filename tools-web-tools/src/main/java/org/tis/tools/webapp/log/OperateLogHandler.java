@@ -35,12 +35,16 @@ public class OperateLogHandler {
     IOperateLogRService logOperatorRService;
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private JoinPoint point;
 
     @Pointcut("@annotation(org.tis.tools.webapp.log.OperateLog)")
     public void methodCachePointcut() {}
 
     @Pointcut("@annotation(org.springframework.web.bind.annotation.RequestMapping)")
     public void requestPointcut() {}
+
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.RequestBody)")
+    public void requestBodyPointcut() {}
 
     /**
      * 统一处理 LOG4J
@@ -49,11 +53,10 @@ public class OperateLogHandler {
     @Before("requestPointcut()")
     public void enterController(JoinPoint point) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        String reqInfo = "";
+        String reqInfo = "{}";
         for(Object arg : point.getArgs()){
-            if (arg.getClass() == String.class) {
+            if (arg != null && arg.getClass() == String.class) {
                 reqInfo = String.valueOf(arg);
-                break;
             }
         }
         logger.info(" [请求] Request URL:{}; Request Method:{}; Request Body:{}", BasicUtil.wrap(request.getPathInfo(), request.getMethod(), reqInfo)) ;
@@ -101,6 +104,7 @@ public class OperateLogHandler {
 
         // 添加数据变化项（LogAbfChange）到操作日志
         JSONObject reqData = new JSONObject();
+
         for(Object arg : point.getArgs()){
             if (arg != null &&  String.class.equals(arg.getClass())) {
                 try{
@@ -110,7 +114,6 @@ public class OperateLogHandler {
                 }
             }
         }
-
         String objStr = JSON.toJSONString(ret.get(RETMESSAGE));
         if(logAnt.retType() == ReturnType.Object) {
             JSONObject jsonObject = JSONObject.parseObject(objStr);

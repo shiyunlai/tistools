@@ -1,7 +1,5 @@
 package org.tis.tools.webapp.controller.abf;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.tis.tools.model.def.JNLConstants;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.po.om.OmPosition;
@@ -17,7 +16,6 @@ import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.log.OperateLog;
 import org.tis.tools.webapp.log.ReturnType;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -321,6 +319,29 @@ public class EmployeeController extends BaseController {
         String posCode = jsonObj.getString("posCode");
         employeeRService.fixMainPosition(empCode, posCode);
        return getReturnMap("指定成功!");
+    }
+
+    /**
+     * 改变员工状态
+     * @param content
+     * @return
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,
+            operateDesc = "修改员工状态",
+            retType = ReturnType.Object,
+            id = "guid",
+            name = "empName",
+            keys = "empstatus"
+    )
+    @ResponseBody
+    @RequestMapping(value="/changeEmpStatus" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
+    public Map<String, Object> changeEmpStatus(@RequestBody String content) {
+        JSONObject jsonObject= JSONObject.parseObject(content);
+        JSONObject data= jsonObject.getJSONObject("data");
+        String empGuid = data.getString("empGuid");
+        String status = data.getString("status");
+        return getReturnMap(employeeRService.changeEmpStatus(empGuid, status));
     }
 
 

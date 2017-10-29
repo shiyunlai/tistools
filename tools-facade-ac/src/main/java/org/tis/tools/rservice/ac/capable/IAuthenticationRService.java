@@ -123,6 +123,24 @@ public interface IAuthenticationRService {
     boolean funcAuthCheck(String userId, String funcGuid, String appGuid) throws AuthManagementException;
 
     /**
+     * 获取操作员在应用下的操作权限
+     * @param userId 用户名
+     * @param appCode 应用code
+     * @return
+     * @throws AuthManagementException
+     */
+    List<String> getOperatePermissions(String userId, String appCode) throws AuthManagementException;
+
+    /**
+     * 获取操作员的视图权限
+     * @param userId 用户名
+     * @param appCode 应用code
+     * @return
+     * @throws AuthManagementException
+     */
+    List<String> getViewPermissions(String userId, String appCode) throws AuthManagementException;
+
+    /**
      * 查询操作员在应用下的已授权功能
      * @param userId
      * @param appGuid

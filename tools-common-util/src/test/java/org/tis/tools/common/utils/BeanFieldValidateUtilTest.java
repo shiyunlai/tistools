@@ -11,16 +11,16 @@ public class BeanFieldValidateUtilTest {
      * AAAA 测试类 有属性 id, name, memo
      */
     private class AAAA {
-        private int id;
+        private Integer id;
         private String name;
         private String memo;
 
-        public int getId() {
-            return id;
+        public void setId(Integer id) {
+            this.id = id;
         }
 
-        public void setId(int id) {
-            this.id = id;
+        public Integer getId() {
+            return id;
         }
 
         public String getName() {
@@ -37,6 +37,15 @@ public class BeanFieldValidateUtilTest {
 
         public void setMemo(String memo) {
             this.memo = memo;
+        }
+
+        @Override
+        public String toString() {
+            return "AAAA{" +
+                    "id=" + id +
+                    ", name='" + name + '\'' +
+                    ", memo='" + memo + '\'' +
+                    '}';
         }
     }
 
@@ -56,7 +65,7 @@ public class BeanFieldValidateUtilTest {
         AAAA test = new AAAA();
         test.setId(1);
         Assert.assertNull(BeanFieldValidateUtil.checkObjFieldNotRequired(test, new String[]{"name", "memo"}));
-        Assert.assertEquals("name", BeanFieldValidateUtil.checkObjFieldNotRequired(test, new String[]{"id","memo"}));
+        Assert.assertEquals("name", BeanFieldValidateUtil.checkObjFieldNotRequired(test, new String[]{"id", "memo"}));
         test.setName("a");
         Assert.assertNull(BeanFieldValidateUtil.checkObjFieldNotRequired(test, new String[]{"id", "memo"}));
     }
@@ -71,5 +80,19 @@ public class BeanFieldValidateUtilTest {
         Assert.assertNull(BeanFieldValidateUtil.checkObjFieldAllRequired(test));
     }
 
+    @Test
+    public void processObjSensitiveFields() throws Exception {
+        AAAA test = new AAAA();
+        test.setId(1);
+        test.setName("A");
+        test.setMemo("aaaa");
+        String[] fields = {
+                "name", "id"
+        };
+        BeanFieldValidateUtil.processObjSensitiveFields(test, fields);
+        Assert.assertNull(test.getName());
 
+    }
 }
+
+

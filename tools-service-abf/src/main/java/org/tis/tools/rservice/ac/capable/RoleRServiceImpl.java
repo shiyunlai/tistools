@@ -1,27 +1,25 @@
 package org.tis.tools.rservice.ac.capable;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.util.CollectionUtils;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.common.utils.BasicUtil;
+import org.tis.tools.common.utils.BeanFieldValidateUtil;
 import org.tis.tools.core.exception.ExceptionCodes;
 import org.tis.tools.model.def.ACConstants;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.po.ac.*;
 import org.tis.tools.model.po.om.*;
-import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
 import org.tis.tools.rservice.BaseRService;
-import org.tis.tools.service.ac.*;
 import org.tis.tools.rservice.ac.exception.RoleManagementException;
+import org.tis.tools.service.ac.*;
 import org.tis.tools.service.ac.exception.ACExceptionCodes;
-import org.apache.commons.lang.StringUtils;
 import org.tis.tools.service.om.*;
 
 import java.util.*;
-
-import static org.tis.tools.model.def.ACConstants.PARTY_TYPE_ORGANIZATION;
 
 public class RoleRServiceImpl extends BaseRService implements IRoleRService {
 
@@ -75,6 +73,9 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
 
     @Autowired
     AcRoleServiceExt acRoleServiceExt;
+
+    @Autowired
+    AcRoleBhvService acRoleBhvService;
 
     /**
      * <p>查询所有角色</p>
@@ -276,6 +277,8 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                         acOperatorRoleService.deleteByCondition(wc);
                         // 组织对象与角色对应关系 AC_PARTY_ROLE
                         acPartyRoleService.deleteByCondition(wc);
+                        // 角色与功能行为对应关系 AC_ROLE_BHV
+                        acRoleBhvService.deleteByCondition(wc);
 
                         acRoleService.delete(guid);
                     } catch (Exception e) {
@@ -1119,5 +1122,108 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
         }
     }
 
+    /**
+     * 查询角色在功能下的行为列表
+     *
+     * @param roleGuid 需要查询的角色GUID
+     * @param funcGuid 查询的功能GUID
+     * @return 返回该角色拥有此功能的行为列表 {@link AcRoleBhv}
+     * @throws RoleManagementException
+     */
+    @Override
+    public List<AcBhvDef> queryAcRoleBhvsByFuncGuid(String roleGuid, String funcGuid) throws RoleManagementException {
+        if (StringUtils.isBlank(roleGuid)) {
+            throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("roleGuid", "queryAcRoleBhvsByFuncGuid"));
+        }
+        if (StringUtils.isBlank(funcGuid)) {
+            throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("funcGuid", "queryAcRoleBhvsByFuncGuid"));
+        }
+        try {
+            return acRoleServiceExt.queryAcRoleBhvsByFuncGuid(roleGuid, funcGuid);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RoleManagementException(
+                    ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap("queryAcRoleBhvsByFuncGuid", e));
+        }
+    }
 
+    /**
+     * 批量添加角色在功能下的行为列表
+     *
+     * @param acRoleBhvs 需要添加的行为列表 {@link AcRoleBhv}
+     * @return 返回添加的该行为列表 {@link AcRoleBhv}
+     * @throws RoleManagementException
+     */
+    @Override
+    public void addAcRoleBhvs(List<AcRoleBhv> acRoleBhvs) throws RoleManagementException {
+        if(CollectionUtils.isEmpty(acRoleBhvs)) {
+            throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("acRoleBhvs", AcRoleBhv.TABLE_NAME));
+        }
+        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+            @Override
+            public void doInTransactionWithoutResult(TransactionStatus status) {
+                try {
+                    for(AcRoleBhv acRoleBhv : acRoleBhvs) {
+                        String validateStr = BeanFieldValidateUtil.checkObjFieldNotRequired(acRoleBhv, new String[]{"guidApp"});
+                        if(StringUtils.isNotBlank(validateStr)) {
+                            throw new RoleManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, BasicUtil.wrap(validateStr, AcRoleBhv.TABLE_NAME));
+                        }
+                        // 防止重复添加
+                        if(acRoleBhvService.count(new WhereCondition().andEquals(AcRoleBhv.COLUMN_GUID_ROLE, acRoleBhv.getGuidRole())
+                                .andEquals(AcRoleBhv.COLUMN_GUID_FUNC_BHV, acRoleBhv.getGuidFuncBhv())) > 0) {
+                            throw new RoleManagementException(ExceptionCodes.DUPLICATE_WHEN_INSERT, BasicUtil.wrap(
+                                    BasicUtil.surroundBracketsWithLFStr(AcRoleBhv.COLUMN_GUID_FUNC_BHV, acRoleBhv.getGuidFuncBhv()), AcRoleBhv.TABLE_NAME));
+                        }
+                        acRoleBhvService.insert(acRoleBhv);
+                    }
+                } catch (RoleManagementException e) {
+                    status.setRollbackOnly();
+                    throw e;
+                } catch (Exception e) {
+                    status.setRollbackOnly();
+                    e.printStackTrace();
+                    throw new RoleManagementException(
+                            ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap(AcBhvDef.TABLE_NAME, e));
+                }
+            }
+        });
+    }
+
+    /**
+     * 批量移除角色在功能下的行为列表
+     *
+     * @param acRoleBhvs 需要移除的行为列表 {@link AcRoleBhv}
+     * @return 返回移除的该行为列表 {@link AcRoleBhv}
+     * @throws RoleManagementException
+     */
+    @Override
+    public void removeAcRoleBhvs(List<AcRoleBhv> acRoleBhvs) throws RoleManagementException {
+        if(CollectionUtils.isEmpty(acRoleBhvs)) {
+            throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, BasicUtil.wrap("acRoleBhvs", AcRoleBhv.TABLE_NAME));
+        }
+        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+            @Override
+            public void doInTransactionWithoutResult(TransactionStatus status) {
+                try {
+                    for(AcRoleBhv acRoleBhv : acRoleBhvs) {
+                        String validateStr = BeanFieldValidateUtil.checkObjFieldNotRequired(acRoleBhv, new String[]{"guidApp"});
+                        if(StringUtils.isNotBlank(validateStr)) {
+                            throw new RoleManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_DELETE, BasicUtil.wrap(validateStr, AcRoleBhv.TABLE_NAME));
+                        }
+                        acRoleBhvService.deleteByCondition(new WhereCondition()
+                                .andEquals(AcRoleBhv.COLUMN_GUID_ROLE, acRoleBhv.getGuidRole())
+                                .andEquals(AcRoleBhv.COLUMN_GUID_FUNC_BHV, acRoleBhv.getGuidFuncBhv()));
+                    }
+                } catch (RoleManagementException e) {
+                    status.setRollbackOnly();
+                    throw e;
+                } catch (Exception e) {
+                    status.setRollbackOnly();
+                    e.printStackTrace();
+                    throw new RoleManagementException(
+                            ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap(AcBhvDef.TABLE_NAME, e));
+                }
+            }
+        });
+    }
 }

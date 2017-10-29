@@ -62,6 +62,12 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
     @Autowired
     AcBhvDefService acBhvDefService;
 
+    @Autowired
+    AcFuncResourceService acFuncResourceService;
+
+    @Autowired
+    AcAppService acAppService;
+
     /**
      *   用户状态检查
      * a)	判断用户是否存在；
@@ -83,7 +89,7 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
 
         try {
             // 校验传入参数
-            if (StringUtil.isEmpty(userId)) {
+            if (StringUtils.isBlank(userId)) {
                 throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("userId"));
             }
             //判断用户是否存在
@@ -135,13 +141,13 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
     public AcOperator loginCheck(String userId, String password, String identityGuid, String appGuid) throws AuthManagementException {
         try {
             // 校验传入参数
-            if (StringUtil.isEmpty(userId)) {
+            if (StringUtils.isBlank(userId)) {
                 throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("userId"));
             }
-            if (StringUtil.isEmpty(password)) {
+            if (StringUtils.isBlank(password)) {
                 throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("password"));
             }
-            if (StringUtil.isEmpty(identityGuid)) {
+            if (StringUtils.isBlank(identityGuid)) {
                 throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("identityGuid"));
             }
             // 判断用户是否存在
@@ -211,13 +217,13 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
     @Override
     public Map<String, Object> getInitInfoByUserIdAndIden(String userId, String identityGuid, String appGuid) throws AuthManagementException {
         // 校验传入参数
-        if (StringUtil.isEmpty(userId)) {
+        if (StringUtils.isBlank(userId)) {
             throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("userId"));
         }
-        if (StringUtil.isEmpty(identityGuid)) {
+        if (StringUtils.isBlank(identityGuid)) {
             throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("identityGuid"));
         }
-        if (StringUtil.isEmpty(appGuid)) {
+        if (StringUtils.isBlank(appGuid)) {
             throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
         }
         try {
@@ -243,6 +249,12 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
             } else {
                 resultInfo.put("menu", menuRService.getMenuByUserId(userId, appGuid, identityGuid).toJson());
             }
+            // 查询资源信息
+            List<String> funcGuids = queryOperatorAuthFuncsInApp(userId, appGuid).stream().map(AcFunc::getGuid).collect(Collectors.toList());
+            List<AcFuncResource> resources = new ArrayList<>();
+            if(CollectionUtils.isNotEmpty(funcGuids))
+                resources = acFuncResourceService.query(new WhereCondition().andIn(AcFuncResource.COLUMN_GUID_FUNC, funcGuids));
+            resultInfo.put("resouces", resources);
             return resultInfo;
         } catch (AuthManagementException ae) {
             throw ae;
@@ -250,7 +262,7 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
             e.printStackTrace();
             throw new AuthManagementException(
                     ACExceptionCodes.FAILURE_WHEN_LOGIN,
-                    BasicUtil.wrap(e.getCause().getMessage()));
+                    BasicUtil.wrap(e));
         }
     }
 
@@ -268,13 +280,13 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
     public AcOperator updatePassword(String userId, String oldPwd, String newPwd) throws AuthManagementException {
         try {
             // 校验传入参数
-            if (StringUtil.isEmpty(userId)) {
+            if (StringUtils.isBlank(userId)) {
                 throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("userId"));
             }
-            if (StringUtil.isEmpty(oldPwd)) {
+            if (StringUtils.isBlank(oldPwd)) {
                 throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("old_password"));
             }
-            if (StringUtil.isEmpty(newPwd)) {
+            if (StringUtils.isBlank(newPwd)) {
                 throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("new_password"));
             }
             // 判断用户是否存在
@@ -320,16 +332,16 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
     @Override
     public boolean operateAuthCheck(String userId, String reqInfo, String appGuid, String funcGuid) throws AuthManagementException {
         // 校验传入参数
-        if (StringUtil.isEmpty(userId)) {
+        if (StringUtils.isBlank(userId)) {
             throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("userId", "user authentication"));
         }
-        if (StringUtil.isEmpty(reqInfo)) {
+        if (StringUtils.isBlank(reqInfo)) {
             throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("reqInfo", "user authentication"));
         }
-        if (StringUtil.isEmpty(appGuid)) {
+        if (StringUtils.isBlank(appGuid)) {
             throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("appGuid", "user authentication"));
         }
-        if (StringUtil.isEmpty(funcGuid)) {
+        if (StringUtils.isBlank(funcGuid)) {
             throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("funcGuid", "user authentication"));
         }
         try {
@@ -379,13 +391,13 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
      */
     @Override
     public boolean funcAuthCheck(String userId, String funcGuid, String appGuid) throws AuthManagementException {
-        if (StringUtil.isEmpty(userId)) {
+        if (StringUtils.isBlank(userId)) {
             throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("userId", "funcAuthCheck"));
         }
-        if (StringUtil.isEmpty(funcGuid)) {
+        if (StringUtils.isBlank(funcGuid)) {
             throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("funcGuid", "funcAuthCheck"));
         }
-        if (StringUtil.isEmpty(appGuid)) {
+        if (StringUtils.isBlank(appGuid)) {
             throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("appGuid", "funcAuthCheck"));
         }
         try {
@@ -416,10 +428,10 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
      */
     @Override
     public List<AcFunc> queryOperatorAuthFuncsInApp(String userId, String appGuid) throws AuthManagementException {
-        if (StringUtil.isEmpty(userId)) {
+        if (StringUtils.isBlank(userId)) {
             throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("userId", "queryOperatorAuthFuncsInApp"));
         }
-        if (StringUtil.isEmpty(appGuid)) {
+        if (StringUtils.isBlank(appGuid)) {
             throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("appGuid", "queryOperatorAuthFuncsInApp"));
         }
         try {
@@ -455,5 +467,53 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
                     ExceptionCodes.FAILURE_WHEN_QUERY,
                     BasicUtil.wrap("queryOperatorAuthFuncsInApp", e));
         }
+    }
+
+    /**
+     * 获取操作员在应用下的操作权限
+     *
+     * @param userId  用户名
+     * @param appCode 应用code
+     * @return
+     * @throws AuthManagementException
+     */
+    @Override
+    public List<String> getOperatePermissions(String userId, String appCode) throws AuthManagementException {
+        if (StringUtils.isBlank(userId)) {
+            throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("userId", "getViewPermissions"));
+        }
+        if (StringUtils.isBlank(appCode)) {
+            throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("appGuid", "getViewPermissions"));
+        }
+        //
+        List<AcApp> acApps = acAppService.query(new WhereCondition().andEquals(AcApp.COLUMN_APP_CODE, appCode));
+        if(CollectionUtils.isEmpty(acApps)) {
+            throw new AuthManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap(BasicUtil.surroundBracketsWithLFStr(AcApp.COLUMN_APP_CODE, appCode), AcApp.TABLE_NAME));
+        }
+        AcApp acFunc = acApps.get(0);
+
+
+        List<String> pers = queryOperatorAuthFuncsInApp(userId, acFunc.getGuid()).stream().map(AcFunc::getFuncCode).collect(Collectors.toList());
+        return null;
+    }
+
+    /**
+     * 获取操作员的视图权限
+     *
+     * @param userId  用户名
+     * @param appCode 应用code
+     * @return
+     * @throws AuthManagementException
+     */
+    @Override
+    public List<String> getViewPermissions(String userId, String appCode) throws AuthManagementException {
+        if (StringUtils.isBlank(userId)) {
+            throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("userId", "getViewPermissions"));
+        }
+        if (StringUtils.isBlank(appCode)) {
+            throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("appGuid", "getViewPermissions"));
+        }
+        
+        return null;
     }
 }
