@@ -80,4 +80,17 @@ public class BeanFieldValidateUtil {
         }
         return null;
     }
+
+    /**
+     * 对修改对象的属性值做保护，防止通过其他接口更改
+     * 如操作员的密码只能通过 修改密码接口做更改，防止通过修改操作员信息接口改变
+     */
+    public static <T> T processObjSensitiveFields(T obj, String[] fields) throws NoSuchFieldException, IllegalAccessException {
+        for(String field : fields) {
+            Field f = obj.getClass().getDeclaredField(field);
+            f.setAccessible(true);
+            f.set(obj, null);
+        }
+        return obj;
+    }
 }

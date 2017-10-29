@@ -3,7 +3,6 @@
  */
 package org.tis.tools.rservice.ac.capable;
 
-import org.springframework.expression.spel.ast.Operator;
 import org.tis.tools.model.po.ac.*;
 import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
 import org.tis.tools.rservice.ac.exception.AuthManagementException;
@@ -297,7 +296,26 @@ public interface IOperatorRService {
      */
     AcOperatorFuncDetail getOperatorFuncInfo(String userId, String appGuid) throws OperatorManagementException;
 
+    /**
+     * 改变操作员状态
+     * @param userId 用户名
+     * @param status 用户状态
+     * @see org.tis.tools.model.def.ACConstants#OPERATE_STATUS_CLEAR 注销
+     * @see org.tis.tools.model.def.ACConstants#OPERATE_STATUS_LOCK 锁定
+     * @see org.tis.tools.model.def.ACConstants#OPERATE_STATUS_LOGIN 正常
+     * @see org.tis.tools.model.def.ACConstants#OPERATE_STATUS_LOGOUT 退出
+     * @see org.tis.tools.model.def.ACConstants#OPERATE_STATUS_PAUSE 挂起
+     * @see org.tis.tools.model.def.ACConstants#OPERATE_STATUS_STOP 停用
+     * @return
+     * @throws OperatorManagementException
+     */
+    AcOperator changeOperatorStatus(String userId, String status) throws OperatorManagementException;
 
-
+    /**
+     * 获取没有关联员工的操作员
+     * @return
+     * @throws OperatorManagementException
+     */
+    List<AcOperator> getOperatorsNotLinkEmp() throws OperatorManagementException;
 
 }

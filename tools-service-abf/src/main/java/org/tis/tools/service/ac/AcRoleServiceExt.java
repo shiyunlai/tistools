@@ -4,18 +4,20 @@
  */
 package org.tis.tools.service.ac;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.dao.ac.AcRoleMapper;
 import org.tis.tools.dao.ac.AcRoleMapperExt;
+import org.tis.tools.model.po.ac.AcBhvDef;
 import org.tis.tools.model.po.ac.AcPartyRole;
 import org.tis.tools.model.po.ac.AcRole;
+import org.tis.tools.model.po.ac.AcRoleBhv;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -119,6 +121,17 @@ public class AcRoleServiceExt {
 	 */
 	public List<AcRole> queryEmployeeAllPartyRoleList(String empGuid) {
 		return acRoleMapperExt.queryEmployeeAllPartyRoleList(empGuid);
+	}
+
+	/**
+	 * 查询角色在功能下的行为列表
+	 *
+	 * @param roleGuid 需要查询的角色GUID
+	 * @param funcGuid 查询的功能GUID
+	 * @return 返回该角色拥有此功能的行为列表 {@link AcRoleBhv}
+	 */
+	public List<AcBhvDef> queryAcRoleBhvsByFuncGuid(String roleGuid, String funcGuid) {
+		return acRoleMapperExt.queryAcRoleBhvsByFuncGuid(roleGuid, funcGuid);
 	}
 
 

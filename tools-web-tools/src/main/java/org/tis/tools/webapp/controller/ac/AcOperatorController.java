@@ -3,7 +3,6 @@ package org.tis.tools.webapp.controller.ac;
 import com.alibaba.dubbo.common.json.ParseException;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.def.JNLConstants;
 import org.tis.tools.model.po.ac.*;
-import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
 import org.tis.tools.rservice.ac.capable.IApplicationRService;
 import org.tis.tools.rservice.ac.capable.IOperatorRService;
@@ -25,8 +24,6 @@ import org.tis.tools.webapp.util.AjaxUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -775,5 +772,37 @@ public class AcOperatorController extends BaseController {
         String appGuid = jsonObject.getString("appGuid");// 应用id
         AcOperatorFuncDetail info = operatorRService.getOperatorFuncInfo(userId, appGuid);
         return getReturnMap(info.toString());
+    }
+
+    /**
+     * 获取没有关联员工的操作员
+     */
+    @ResponseBody
+    @RequestMapping(value="/getOperatorsNotLinkEmp" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
+    public Map<String, Object> getOperatorsNotLinkEmp()  {
+        return getReturnMap(operatorRService.getOperatorsNotLinkEmp());
+    }
+
+    /**
+     * 改变操作员状态
+     * @param content
+     * @return
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,
+            operateDesc = "修改操作员状态",
+            retType = ReturnType.Object,
+            id = "guid",
+            name = "operatorName",
+            keys = "operatorStatus"
+    )
+    @ResponseBody
+    @RequestMapping(value="/changeOperatorStatus" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
+    public Map<String, Object> changeOperatorStatus(@RequestBody String content) {
+        JSONObject jsonObject= JSONObject.parseObject(content);
+        JSONObject data= jsonObject.getJSONObject("data");
+        String userId = data.getString("userId");
+        String status = data.getString("status");
+        return getReturnMap(operatorRService.changeOperatorStatus(userId, status));
     }
 }

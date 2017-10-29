@@ -381,10 +381,17 @@ public class ACExceptionCodes {
 	 */
 	public static final String IDENTITY_NOT_CORRESPONDING_TO_USER  = R_EX_CODE("0071");
 
-
-
-
 	/**
+	 * 操作员状态变更异常
+	 */
+	public static final String CURRENT_STATUS_IS_NOT_ALLOWED_CHANGE = R_EX_CODE("0072");
+	/**
+	 * 操作员状态值异常
+	 */
+    public static final String OPERATOR_STATUS_ERROR = R_EX_CODE("0073");
+
+
+    /**
 	 * 以烤串方式拼接异常码
 	 * @param code 业务域范围内的异常编码
 	 * @return

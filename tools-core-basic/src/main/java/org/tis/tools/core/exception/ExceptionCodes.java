@@ -130,6 +130,15 @@ public class ExceptionCodes {
 	 * 用户ID已经存在
 	 */
 	public static final String OBJECT_IS_ALREADY_EXIST  = R_EX_CODE("0018");
+
+	/**
+	 * 异常：对象不能为空.<br>
+	 */
+	public static final String NOT_ALLOW_NULL_WHEN_CALL = R_EX_CODE("0019");
+	/**
+	 * 异常：对象不能为空.<br>
+	 */
+	public static final String FAILURE_WHEN_CALL = R_EX_CODE("0020");
 	
 	/**
 	 * 以烤串方式拼接异常码

@@ -90,14 +90,16 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			if (null == acApp) {
 				throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("AC_APP", AcApp.TABLE_NAME));
 			}
+			acApp.setGuid(GUID.app());
+			// 新建应用默认 不开通
+			acApp.setIsopen(CommonConstants.NO);
 			String[] validateField = {
-					"appCode", "appName", "appType", "isopen"
+					"guid", "appCode", "appName", "appType"
 			};
-			String validate = BeanFieldValidateUtil.checkObjFieldNotRequired(acApp, validateField);
+			String validate = BeanFieldValidateUtil.checkObjFieldRequired(acApp, validateField);
 			if(StringUtils.isNotEmpty(validate)) {
 				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, BasicUtil.wrap(validate, AcApp.TABLE_NAME));
 			}
-			acApp.setGuid(GUID.app());
 			acAppService.insert(acApp);
 			return acApp;
 		} catch (AppManagementException ae) {
@@ -170,7 +172,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			String[] validateField = {
 					"guid", "appCode", "appName", "appType", "isopen"
 			};
-			String validate = BeanFieldValidateUtil.checkObjFieldNotRequired(acApp, validateField);
+			String validate = BeanFieldValidateUtil.checkObjFieldRequired(acApp, validateField);
 			if(StringUtils.isNotEmpty(validate)) {
 				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_UPDATE, BasicUtil.wrap(validate, AcApp.TABLE_NAME));
 			}

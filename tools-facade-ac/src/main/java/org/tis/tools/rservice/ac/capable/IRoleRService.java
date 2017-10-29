@@ -4,8 +4,8 @@
 package org.tis.tools.rservice.ac.capable;
 
 import org.tis.tools.model.po.ac.*;
-import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
 import org.tis.tools.rservice.ac.exception.RoleManagementException;
+
 import java.util.List;
 import java.util.Map;
 
@@ -389,6 +389,29 @@ public interface IRoleRService {
      */
     List<AcRole> queryOperatorInheritRoleList(String userId) throws RoleManagementException;
 
+    /**
+     * 查询角色在功能下的行为列表
+     * @param roleGuid 需要查询的角色GUID
+     * @param funcGuid 查询的功能GUID
+     * @return 返回该角色拥有此功能的行为列表 {@link AcRoleBhv}
+     * @throws RoleManagementException
+     */
+    List<AcBhvDef> queryAcRoleBhvsByFuncGuid(String roleGuid, String funcGuid) throws RoleManagementException;
 
+    /**
+     * 批量添加角色在功能下的行为列表
+     * @param acRoleBhvs 需要添加的行为列表 {@link AcRoleBhv}
+     * @return 返回添加的该行为列表 {@link AcRoleBhv}
+     * @throws RoleManagementException
+     */
+    void addAcRoleBhvs(List<AcRoleBhv> acRoleBhvs) throws RoleManagementException;
+
+    /**
+     * 批量移除角色在功能下的行为列表
+     * @param acRoleBhvs 需要移除的行为列表 {@link AcRoleBhv}
+     * @return 返回移除的该行为列表 {@link AcRoleBhv}
+     * @throws RoleManagementException
+     */
+    void removeAcRoleBhvs(List<AcRoleBhv> acRoleBhvs) throws RoleManagementException;
 
 }

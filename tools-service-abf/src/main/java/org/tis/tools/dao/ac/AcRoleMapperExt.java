@@ -2,7 +2,9 @@ package org.tis.tools.dao.ac;
 
 
 import org.apache.ibatis.annotations.Param;
+import org.tis.tools.model.po.ac.AcBhvDef;
 import org.tis.tools.model.po.ac.AcRole;
+import org.tis.tools.model.po.ac.AcRoleBhv;
 
 import java.util.List;
 import java.util.Map;
@@ -39,4 +41,14 @@ public interface AcRoleMapperExt {
      * @return
      */
     List<AcRole> queryEmployeeAllPartyRoleList(@Param("empGuid") String empGuid);
+
+
+    /**
+     * 查询角色在功能下的行为列表
+     *
+     * @param roleGuid 需要查询的角色GUID
+     * @param funcGuid 查询的功能GUID
+     * @return 返回该角色拥有此功能的行为列表 {@link AcRoleBhv}
+     */
+    List<AcBhvDef> queryAcRoleBhvsByFuncGuid(@Param("roleGuid")String roleGuid, @Param("funcGuid")String funcGuid);
 }

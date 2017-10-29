@@ -184,34 +184,39 @@ public class OperateLogRServiceImpl extends BaseRService implements IOperateLogR
                 throw new LogManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap(objGuid, LogAbfHistory.TABLE_NAME));
             }
             List<LogOperateDetail> logDetails = new ArrayList<>();
-            if (objs.size() > 0) {
-                Map<String, LogHistoryDetail> logGuidMap = new HashMap<>();
-                Map<String, LogHistoryDetail> objGuidMap = new HashMap<>();
-                List<String> logGuids = new ArrayList<>();
-                List<String> objGUids = new ArrayList<>();
-                for (LogAbfHistory obj : objs) {
-                    logGuids.add(obj.getGuidOperate());
-                    objGUids.add(obj.getGuid());
-                    LogHistoryDetail objDetail = new LogHistoryDetail();
-                    objDetail.setObj(obj);
-                    objGuidMap.put(obj.getGuid(), objDetail);
-                    logGuidMap.put(obj.getGuidOperate(), objDetail);
-                }
-                WhereCondition wc = new WhereCondition();
-                wc.andIn(LogAbfOperate.COLUMN_GUID, logGuids);
-                wc.setOrderBy(LogAbfOperate.COLUMN_OPERATE_TIME + " DESC");
-                List<LogAbfOperate> logs = logAbfOperateService.query(wc);
-                List<LogAbfKeyword> keywords = logAbfKeywordService.query(new WhereCondition().andIn(LogAbfKeyword.COLUMN_GUID_HISTORY, objGUids));
-                for(LogAbfOperate log : logs) {
-                    LogOperateDetail detail = new LogOperateDetail();
-                    detail.setLog(log);
-                    detail.getAllObj().add(logGuidMap.get(log.getGuid()));
-                    logDetails.add(detail);
-                }
-                for(LogAbfKeyword keyword : keywords) {
-                    objGuidMap.get(keyword.getGuidHistory()).getKeywords().add(keyword);
-                }
+
+            Map<String, LogHistoryDetail> logGuidMap = new HashMap<>();
+            Map<String, LogHistoryDetail> objGuidMap = new HashMap<>();
+            List<String> logGuids = new ArrayList<>();
+            List<String> objGuids = new ArrayList<>();
+            for (LogAbfHistory obj : objs) {
+                logGuids.add(obj.getGuidOperate());
+                objGuids.add(obj.getGuid());
+                LogHistoryDetail objDetail = new LogHistoryDetail();
+                objDetail.setObj(obj);
+                objGuidMap.put(obj.getGuid(), objDetail);
+                logGuidMap.put(obj.getGuidOperate(), objDetail);
             }
+            WhereCondition wc = new WhereCondition();
+            wc.andIn(LogAbfOperate.COLUMN_GUID, logGuids);
+            wc.setOrderBy(LogAbfOperate.COLUMN_OPERATE_TIME + " DESC");
+            List<LogAbfOperate> logs = logAbfOperateService.query(wc);
+            List<LogAbfKeyword> keywords = logAbfKeywordService.query(new WhereCondition().andIn(LogAbfKeyword.COLUMN_GUID_HISTORY, objGuids));
+            List<LogAbfChange> changes = logAbfChangeService.query(new WhereCondition().andIn(LogAbfChange.COLUMN_GUID_HISTORY, objGuids));
+
+            for(LogAbfOperate log : logs) {
+                LogOperateDetail detail = new LogOperateDetail();
+                detail.setLog(log);
+                detail.getAllObj().add(logGuidMap.get(log.getGuid()));
+                logDetails.add(detail);
+            }
+            for(LogAbfKeyword keyword : keywords) {
+                objGuidMap.get(keyword.getGuidHistory()).getKeywords().add(keyword);
+            }
+            for (LogAbfChange change : changes) {
+                objGuidMap.get(change.getGuidHistory()).getChanges().add(change);
+            }
+
             return logDetails;
         } catch (LogManagementException e) {
             throw e;

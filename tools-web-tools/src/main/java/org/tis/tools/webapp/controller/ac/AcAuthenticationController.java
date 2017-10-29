@@ -11,21 +11,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.tis.tools.base.exception.ToolsRuntimeException;
+import org.tis.tools.model.def.ACConstants;
 import org.tis.tools.model.def.JNLConstants;
 import org.tis.tools.model.po.ac.AcOperator;
 import org.tis.tools.model.po.ac.AcOperatorIdentity;
 import org.tis.tools.rservice.ac.capable.IAuthenticationRService;
+import org.tis.tools.rservice.ac.capable.IOperatorRService;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.log.LogThreadLocal;
 import org.tis.tools.webapp.log.OperateLog;
 import org.tis.tools.webapp.log.ReturnType;
-import org.tis.tools.webapp.util.AjaxUtils;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,9 +33,11 @@ import java.util.Map;
 @RequestMapping("/AcAuthenticationController")
 public class AcAuthenticationController extends BaseController {
 
-    private Map<String, Object> responseMsg ;
+
     @Autowired
     IAuthenticationRService authenticationRService;
+    @Autowired
+    IOperatorRService operatorRService;
 
     @ResponseBody
     @RequestMapping(value="/checkUserStatus", produces ="application/json; charset=UTF-8", method= RequestMethod.POST)
@@ -108,7 +107,9 @@ public class AcAuthenticationController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value="/logout" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
-    public Map<String,Object> logout(@RequestBody String content, HttpSession httpSession) {
+    public Map<String,Object> logout(HttpSession httpSession) {
+        String userId = (String) httpSession.getAttribute("userId");
+        operatorRService.changeOperatorStatus(userId, ACConstants.OPERATE_STATUS_LOGOUT);
         while(httpSession.getAttributeNames().hasMoreElements()) {
             httpSession.removeAttribute(httpSession.getAttributeNames().nextElement());
         }
