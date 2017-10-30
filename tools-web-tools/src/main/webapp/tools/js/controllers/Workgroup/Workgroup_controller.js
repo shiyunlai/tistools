@@ -897,7 +897,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                     subFrom.appGuid = arr[0].guid;
                     Workgroup_service.addGroupApp(subFrom).then(function (data) {
                         if (data.status == "success") {
-                            toastr['success'](data.retMessage);
+                            toastr['success']("新增成功!");
                             reappgrid();
                             $scope.cancel();
                         } else {
@@ -923,7 +923,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
         subFrom.appGuid = arr[0].guid;
         Workgroup_service.deleteGroupApp(subFrom).then(function (data) {
             if (data.status == "success") {
-                toastr['success'](data.retMessage);
+                toastr['success']("删除成功!");
                 reappgrid();
             } else {
                 toastr['error'](data.retMessage);

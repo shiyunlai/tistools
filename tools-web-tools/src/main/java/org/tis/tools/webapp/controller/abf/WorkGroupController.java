@@ -615,7 +615,7 @@ public class WorkGroupController extends BaseController {
      * 查询所有工作组
      */
     @ResponseBody
-    @RequestMapping(value = "/queryAllGroup", produces = "text/plain;charset=UTF-8", method = RequestMethod.POST)
+    @RequestMapping(value = "/queryAllGroup", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public String queryAllGroup(@RequestBody String content, HttpServletRequest request,
                                 HttpServletResponse response) throws ToolsRuntimeException, ParseException {
         try {
@@ -693,7 +693,7 @@ public class WorkGroupController extends BaseController {
             name = "guidGroup", // 操作对象名
             keys = {"guidGroup","guidApp"}) // 操作对象的关键值的键值名
     @ResponseBody
-    @RequestMapping(value = "/addGroupApp", produces = "text/plain;charset=UTF-8", method = RequestMethod.POST)
+    @RequestMapping(value = "/addGroupApp", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> addGroupApp(@RequestBody String content) throws ToolsRuntimeException, ParseException {
         JSONObject jsonObj = JSONObject.parseObject(content);
         String groupGuid = jsonObj.getString("groupGuid");
@@ -715,7 +715,7 @@ public class WorkGroupController extends BaseController {
             name = "guidGroup", // 操作对象名
             keys = {"guidGroup","guidApp"}) // 操作对象的关键值的键值名
     @ResponseBody
-    @RequestMapping(value = "/deleteGroupApp", produces = "text/plain;charset=UTF-8", method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteGroupApp", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> deleteGroupApp(@RequestBody String content) throws ToolsRuntimeException, ParseException {
         JSONObject jsonObj = JSONObject.parseObject(content);
         String groupGuid = jsonObj.getString("groupGuid");
