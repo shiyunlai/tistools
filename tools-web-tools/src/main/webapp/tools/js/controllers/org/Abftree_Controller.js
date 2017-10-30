@@ -107,7 +107,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                                         if(data.status == "error"){
                                             toastr['error']( data.retMessage);
                                         }else{
-                                            subFrom.orgCode = data.retMessage;
+                                            subFrom.orgCode = data.retMessage.orgCode;
                                             $scope.next = !next;
                                         }
                                     })
@@ -163,7 +163,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                                         if(data.status == "error"){
                                             toastr['error']( data.retMessage);
                                         }else{
-                                            subFrom.orgCode = data.retMessage;
+                                            subFrom.orgCode = data.retMessage.orgCode;
                                             $scope.next = !next;
                                         }
                                     })
@@ -225,7 +225,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                             if (data.status == "success") {
                                 //生成机构代码,成功继续执行复制.
                                 subFrom = {};
-                                subFrom.neworgCode = data.retMessage;
+                                subFrom.neworgCode = data.retMessage.orgCode;
                                 subFrom.copyCode = copyCode;
                                 abftree_service.copyOrg(subFrom).then(function (data) {
                                     if (data.status == "success") {
@@ -762,7 +762,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                                 if(data.status == "error"){
                                     toastr['error']( data.retMessage);
                                 }else{
-                                    subFrom.orgCode = data.retMessage;
+                                    subFrom.orgCode = data.retMessage.orgCode;
                                     $scope.next = !next;
                                 }
                             })
