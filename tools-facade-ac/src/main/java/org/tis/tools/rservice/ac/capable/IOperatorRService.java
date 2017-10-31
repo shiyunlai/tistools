@@ -5,7 +5,6 @@ package org.tis.tools.rservice.ac.capable;
 
 import org.tis.tools.model.po.ac.*;
 import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
-import org.tis.tools.rservice.ac.exception.AuthManagementException;
 import org.tis.tools.rservice.ac.exception.OperatorManagementException;
 
 import java.util.List;
@@ -39,14 +38,14 @@ public interface IOperatorRService {
      * @param acOperator
      * @throws OperatorManagementException
      */
-    void createOperator(AcOperator acOperator) throws OperatorManagementException;
+    AcOperator createOperator(AcOperator acOperator) throws OperatorManagementException;
 
     /**
      * 修改操作员
      * @param acOperator
      * @throws OperatorManagementException
      */
-    void editOperator(AcOperator acOperator) throws OperatorManagementException;
+    AcOperator editOperator(AcOperator acOperator) throws OperatorManagementException;
 
     /**
      * 删除操作员
@@ -54,7 +53,7 @@ public interface IOperatorRService {
      *              操作员GUID
      * @throws OperatorManagementException
      */
-    void deleteOperator(String operatorGuid) throws OperatorManagementException;
+    AcOperator deleteOperator(String operatorGuid) throws OperatorManagementException;
 
     /**
      * 查询操作员列表
@@ -149,14 +148,6 @@ public interface IOperatorRService {
      */
     List<AcRole> queryOperatorRoleByResType(String operatorGuid, String resType) throws OperatorManagementException;
 
-    /**
-     * 用户状态修改
-     *
-     * @param userId
-     * @param status
-     * @throws AuthManagementException
-     */
-    void updateUserStatus(String userId, String status) throws OperatorManagementException;
 
 
     /**
@@ -317,5 +308,25 @@ public interface IOperatorRService {
      * @throws OperatorManagementException
      */
     List<AcOperator> getOperatorsNotLinkEmp() throws OperatorManagementException;
+
+    /**
+     * 获取操作员已授权功能行为
+     *  包含 已授权（从角色授权） 和 特别禁止 列表
+     * @param userId
+     * @param funcGuid
+     * @return
+     * @throws OperatorManagementException
+     */
+    Map<String, List<AcBhvDef>> getAuthOperatorFuncBhv(String userId, String funcGuid) throws OperatorManagementException;
+
+    /**
+     * 获取操作员未授权功能行为
+     *  包含 未授权（从功能所有行为筛选掉角色授权） 和 特别允许 列表
+     * @param userId
+     * @param funcGuid
+     * @return
+     * @throws OperatorManagementException
+     */
+    Map<String, List<AcBhvDef>> getUnAuthOperatorFuncBhv(String userId, String funcGuid) throws OperatorManagementException;
 
 }

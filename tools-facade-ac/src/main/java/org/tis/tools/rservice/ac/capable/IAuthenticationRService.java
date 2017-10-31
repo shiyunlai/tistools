@@ -7,6 +7,7 @@ import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.ac.AcFunc;
 import org.tis.tools.model.po.ac.AcOperator;
 import org.tis.tools.model.po.ac.AcOperatorIdentity;
+import org.tis.tools.model.vo.ac.AcPermission;
 import org.tis.tools.rservice.ac.exception.AuthManagementException;
 
 import java.util.List;
@@ -123,22 +124,14 @@ public interface IAuthenticationRService {
     boolean funcAuthCheck(String userId, String funcGuid, String appGuid) throws AuthManagementException;
 
     /**
-     * 获取操作员在应用下的操作权限
+     * 获取操作员在应用下的权限信息
      * @param userId 用户名
      * @param appCode 应用code
      * @return
      * @throws AuthManagementException
      */
-    List<String> getOperatePermissions(String userId, String appCode) throws AuthManagementException;
+    AcPermission getPermissions(String userId, String appCode) throws AuthManagementException;
 
-    /**
-     * 获取操作员的视图权限
-     * @param userId 用户名
-     * @param appCode 应用code
-     * @return
-     * @throws AuthManagementException
-     */
-    List<String> getViewPermissions(String userId, String appCode) throws AuthManagementException;
 
     /**
      * 查询操作员在应用下的已授权功能
