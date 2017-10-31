@@ -44,92 +44,76 @@ public class AcOperatorController extends BaseController {
     /**
      * 查询操作员列表
      * @param content
-     * @param request
-     * @param response
-     * @return
-     * @throws ToolsRuntimeException
-     * @throws ParseException
      */
     @ResponseBody
-    @RequestMapping(value="/queryAllOperator" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String queryAllOperator(@RequestBody String content, HttpServletRequest request,
-                                HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("queryAllOperator request : " + content);
-            }
-            List<AcOperator> acOperators = operatorRService.queryOperators();
-            AjaxUtils.ajaxJsonSuccessMessageWithDateFormat(response,acOperators, "YYYY-MM-dd");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("queryAllOperator exception : ", e);
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("queryAllOperator exception : ", e);
-        }
-        return null;
+    @RequestMapping(value="/queryAllOperator" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
+    public Map<String, Object> queryAllOperator(@RequestBody String content) {
+        List<AcOperator> acOperators = operatorRService.queryOperators();
+        return getReturnMap(acOperators);
     }
+
     /**
      * 新增操作员
      * @param content
-     * @param request
-     * @param response
-     * @return
-     * @throws ToolsRuntimeException
-     * @throws ParseException
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_ADD,
+            operateDesc = "新增操作员",
+            retType = ReturnType.Object,
+            id = "guid",
+            name = "operatorName",
+            keys = "userId"
+    )
     @ResponseBody
-    @RequestMapping(value="/createOperator" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String createOperator(@RequestBody String content, HttpServletRequest request,
-                                  HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("createOperator request : " + content);
-            }
-            JSONObject jsonObject= JSONObject.parseObject(content);
-            AcOperator acOperator = new AcOperator();
-            BeanUtils.populate(acOperator, jsonObject);
-            operatorRService.createOperator(acOperator);
-            AjaxUtils.ajaxJsonSuccessMessage(response,"");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("createOperator exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("createOperator exception : ", e);
-        }
-        return null;
+    @RequestMapping(value="/createOperator" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
+    public Map<String, Object> createOperator(@RequestBody String content)  {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        AcOperator acOperator = jsonObject.getObject("data", AcOperator.class);
+        return getReturnMap(operatorRService.createOperator(acOperator));
+    }
+
+    /**
+     * 删除操作员
+     * @param content
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_DELETE,
+            operateDesc = "删除操作员",
+            retType = ReturnType.Object,
+            id = "guid",
+            name = "operatorName",
+            keys = "userId"
+    )
+    @ResponseBody
+    @RequestMapping(value="/deleteOperator" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
+    public Map<String, Object> deleteOperator(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        String operatorGuid = jsonObject.getJSONObject("data").getString("operatorGuid");
+        return getReturnMap(operatorRService.deleteOperator(operatorGuid));
     }
     /**
      * 修改操作员
      * @param content
-     * @param request
-     * @param response
      * @return
-     * @throws ToolsRuntimeException
-     * @throws ParseException
      */
+    /**
+     * 删除操作员
+     * @param content
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,
+            operateDesc = "修改操作员",
+            retType = ReturnType.Object,
+            id = "guid",
+            name = "operatorName",
+            keys = "userId"
+    )
     @ResponseBody
-    @RequestMapping(value="/editOperator" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String editOperator(@RequestBody String content, HttpServletRequest request,
-                           HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("editOperator request : " + content);
-            }
-            JSONObject jsonObject= JSONObject.parseObject(content);
-            AcOperator acOperator = new AcOperator();
-            BeanUtils.populate(acOperator, jsonObject);
-            operatorRService.editOperator(acOperator);
-            AjaxUtils.ajaxJsonSuccessMessage(response,"");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("editOperator exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("editOperator exception : ", e);
-        }
-        return null;
+    @RequestMapping(value="/editOperator" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
+    public Map<String, Object> editOperator(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        AcOperator acOperator = jsonObject.getObject("data", AcOperator.class);
+        return getReturnMap(operatorRService.editOperator(acOperator));
     }
 
     /**
@@ -142,7 +126,7 @@ public class AcOperatorController extends BaseController {
      * @throws ParseException
      */
     @ResponseBody
-    @RequestMapping(value="/setDefaultOperatorIdentity" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    @RequestMapping(value="/setDefaultOperatorIdentity" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public String setDefaultOperator(@RequestBody String content, HttpServletRequest request,
                            HttpServletResponse response) throws ToolsRuntimeException, ParseException {
         try {
@@ -165,31 +149,6 @@ public class AcOperatorController extends BaseController {
 
     
     /**
-     * 修改用户状态
-     */
-    @ResponseBody
-    @RequestMapping(value="/updateOperatorStatus" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public void updateOperatorStatus(@RequestBody String content, HttpServletRequest request,
-                                     HttpServletResponse response) {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("updateOperatorStatus request : " + content);
-            }
-            JSONObject jsonObject= JSONObject.parseObject(content);
-            String userId = jsonObject.getString("userId");
-            String OperatorStatus = jsonObject.getString("OperatorStatus");
-            operatorRService.updateUserStatus(userId, OperatorStatus);
-            AjaxUtils.ajaxJsonSuccessMessage(response,"");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("updateOperatorStatus exception : ", e);
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("updateOperatorStatus exception : ", e);
-        }
-    }
-    
-    /**
      * 查询操作员身份列表
      *     传入操作员GUID
      * @param content
@@ -200,7 +159,7 @@ public class AcOperatorController extends BaseController {
      * @throws ParseException
      */
     @ResponseBody
-    @RequestMapping(value="/queryAllOperatorIdentity" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    @RequestMapping(value="/queryAllOperatorIdentity" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public String queryAllOperatorIdentity(@RequestBody String content, HttpServletRequest request,
                                    HttpServletResponse response) throws ToolsRuntimeException, ParseException {
         try {
@@ -231,7 +190,7 @@ public class AcOperatorController extends BaseController {
      * @throws ParseException
      */
     @ResponseBody
-    @RequestMapping(value="/createOperatorIdentity" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    @RequestMapping(value="/createOperatorIdentity" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public String createOperatorIdentity(@RequestBody String content, HttpServletRequest request,
                                  HttpServletResponse response) throws ToolsRuntimeException, ParseException {
         try {
@@ -263,7 +222,7 @@ public class AcOperatorController extends BaseController {
      * @throws ParseException
      */
     @ResponseBody
-    @RequestMapping(value="/deleteOperatorIdentity" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    @RequestMapping(value="/deleteOperatorIdentity" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public String deleteMenu(@RequestBody String content, HttpServletRequest request,
                              HttpServletResponse response) throws ToolsRuntimeException, ParseException {
         try {
@@ -294,7 +253,7 @@ public class AcOperatorController extends BaseController {
      * @throws ParseException
      */
     @ResponseBody
-    @RequestMapping(value="/editOperatorIdentity" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    @RequestMapping(value="/editOperatorIdentity" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public String editOperatorIdentity(@RequestBody String content, HttpServletRequest request,
                                HttpServletResponse response) throws ToolsRuntimeException, ParseException {
         try {
@@ -320,7 +279,7 @@ public class AcOperatorController extends BaseController {
      * 查询操作员身份权限集列表
      */
     @ResponseBody
-    @RequestMapping(value="/queryAllOperatorIdentityRes" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    @RequestMapping(value="/queryAllOperatorIdentityRes" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public String queryAllOperatorIdentityRes(@RequestBody String content, HttpServletRequest request,
                                    HttpServletResponse response) {
         try {
@@ -351,7 +310,7 @@ public class AcOperatorController extends BaseController {
      * @throws ParseException
      */
     @ResponseBody
-    @RequestMapping(value="/createOperatorIdentityres" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    @RequestMapping(value="/createOperatorIdentityres" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public String createOperatorIdentityres(@RequestBody String content, HttpServletRequest request,
                                  HttpServletResponse response) throws ToolsRuntimeException, ParseException {
         try {
@@ -376,7 +335,7 @@ public class AcOperatorController extends BaseController {
      * 删除操作员身份权限
      */
     @ResponseBody
-    @RequestMapping(value="/deleteOperatorIdentityres" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    @RequestMapping(value="/deleteOperatorIdentityres" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public String deleteOperatorIdentityres(@RequestBody String content, HttpServletRequest request,
                              HttpServletResponse response) throws ToolsRuntimeException, ParseException {
         try {
@@ -407,7 +366,7 @@ public class AcOperatorController extends BaseController {
      * @throws ParseException
      */
     @ResponseBody
-    @RequestMapping(value="/editOperatorIdentityres" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    @RequestMapping(value="/editOperatorIdentityres" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public String editOperatorIdentityres(@RequestBody String content, HttpServletRequest request,
                                HttpServletResponse response) throws ToolsRuntimeException, ParseException {
         try {
@@ -434,7 +393,7 @@ public class AcOperatorController extends BaseController {
      * 根据资源类型查询操作员对应角色
      */
     @ResponseBody
-    @RequestMapping(value="/queryRoleInOperatorByResType" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    @RequestMapping(value="/queryRoleInOperatorByResType" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public String queryRoleInOperatorByResType(@RequestBody String content, HttpServletRequest request,
                                HttpServletResponse response)  {
         try {
@@ -463,7 +422,7 @@ public class AcOperatorController extends BaseController {
      * 根据USERID查询操作员GUID
      */
     @ResponseBody
-    @RequestMapping(value="/queryOperatorByUserId" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    @RequestMapping(value="/queryOperatorByUserId" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public String queryOperatorByUserId(@RequestBody String content, HttpServletRequest request,
                                HttpServletResponse response)  {
         try {
@@ -489,7 +448,7 @@ public class AcOperatorController extends BaseController {
      * 根据USERID查询操作员未授权角色
      */
     @ResponseBody
-    @RequestMapping(value="/queryOperatorUnauthorizedRoleList" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    @RequestMapping(value="/queryOperatorUnauthorizedRoleList" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public String queryOperatorUnauthorizedRoleList(@RequestBody String content, HttpServletRequest request,
                                HttpServletResponse response)  {
         try {
@@ -514,7 +473,7 @@ public class AcOperatorController extends BaseController {
      * 根据USERID查询操作员已授权角色
      */
     @ResponseBody
-    @RequestMapping(value="/queryOperatorAuthorizedRoleList" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    @RequestMapping(value="/queryOperatorAuthorizedRoleList" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public String queryOperatorAuthorizedRoleList(@RequestBody String content, HttpServletRequest request,
                                HttpServletResponse response)  {
         try {
@@ -538,7 +497,7 @@ public class AcOperatorController extends BaseController {
      * 根据USERID查询操作员继承角色
      */
     @ResponseBody
-    @RequestMapping(value="/queryOperatorInheritRoleList" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    @RequestMapping(value="/queryOperatorInheritRoleList" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public String queryOperatorInheritRoleList(@RequestBody String content, HttpServletRequest request,
                                HttpServletResponse response)  {
         try {
@@ -564,7 +523,7 @@ public class AcOperatorController extends BaseController {
      * 根据USERID查询特殊权限树
      */
     @ResponseBody
-    @RequestMapping(value="/queryOperatorFuncInfoInApp" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    @RequestMapping(value="/queryOperatorFuncInfoInApp" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public String queryOperatorFuncInfoInApp(@RequestBody String content, HttpServletRequest request,
                                HttpServletResponse response)  {
         try {
@@ -591,7 +550,7 @@ public class AcOperatorController extends BaseController {
      *  用于展示用户已有的功能权限
      */
     @ResponseBody
-    @RequestMapping(value="/queryAcOperatorFunListByUserId" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    @RequestMapping(value="/queryAcOperatorFunListByUserId" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public String queryAcOperatorFunListByUserId(@RequestBody String content, HttpServletRequest request,
                                HttpServletResponse response)  {
         try {
@@ -617,7 +576,7 @@ public class AcOperatorController extends BaseController {
      * 新增用户特殊功能权限
      */
     @ResponseBody
-    @RequestMapping(value="/addAcOperatorFun" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    @RequestMapping(value="/addAcOperatorFun" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public String addAcOperatorFun(@RequestBody String content, HttpServletRequest request,
                                HttpServletResponse response)  {
         try {
@@ -641,7 +600,7 @@ public class AcOperatorController extends BaseController {
      * 移除用户特殊功能权限
      */
     @ResponseBody
-    @RequestMapping(value="/removeAcOperatorFun" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    @RequestMapping(value="/removeAcOperatorFun" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
     public String removeAcOperatorFun(@RequestBody String content, HttpServletRequest request,
                                HttpServletResponse response)  {
         try {
