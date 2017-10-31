@@ -287,8 +287,9 @@ MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http
             }
         }else if(type == "OPER"){
             if(_.isNil(settings.commlist[type])) {
-                $http.post(manurl + "/AcOperatorController/queryAllOperator",{}).then(function (response) {
+                $http.post(manurl + "/AcOperatorController/getOperatorsNotLinkEmp",{}).then(function (response) {
                     settings.commlist[type] = response.data.retMessage;
+                    console.log(response.data.retMessage)
                 });
             }
         }else if(type == "DICT"){
@@ -341,6 +342,7 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
         Demo.init();
+
         var res = $rootScope.res.login_service;//页面所需调用的服务
         common_service.post(res.pageInit,{}).then(function(data){
             if(data.status == "success"){
@@ -686,10 +688,10 @@ MetronicApp.provider('router', function ($stateProvider) {
 
 //配置内容,首页写死，其他页面路由从后台拿取
 MetronicApp.config(function ($stateProvider, $urlRouterProvider, routerProvider) {
-    $urlRouterProvider.otherwise('/dashboard.html');
+    $urlRouterProvider.otherwise('/dashboard');
         $stateProvider
             .state('dashboard', {
-                url: '/dashboard.html',
+                url: '/dashboard',
                 templateUrl: "views/dashboard.html",
                 data: {pageTitle: '控制台'},
                 controller: "DashboardController",

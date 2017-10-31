@@ -41,7 +41,6 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                     "action": function (data) {
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
-                        console.log(obj)
                         openwindow($uibModal, 'views/Workgroup/addworkgroup_window.html', 'lg',
                             function ($scope, $modalInstance) {
                                 //创建机构实例
@@ -868,7 +867,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                 $scope.commonGrid = commonGrid;
                 var com = [
                     {field: 'appName', displayName: '应用名称', enableHiding: false},
-                    {field: 'appType', displayName: '应用类别', enableHiding: false},
+                    {field: 'appType', displayName: '应用类别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.appType | translateConstants :\'DICT_AC_APPTYPE\') + $root.constant[\'DICT_AC_APPTYPE-\'+row.entity.appType]}}</div>'},
                     {field: 'openDate', displayName: '开通时间', enableHiding: false},
                     {field: 'appDesc', displayName: '功能描述', enableHiding: false}
                 ];

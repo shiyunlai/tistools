@@ -84,6 +84,7 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                                 })
                                 $scope.save = function () {
                                     duty_service.addduty(subFrom).then(function (data) {
+                                        console.log(data)
                                         if(data.status == "success"){
                                             toastr['success']("新增成功!");
                                             $("#dutytree").jstree().refresh();

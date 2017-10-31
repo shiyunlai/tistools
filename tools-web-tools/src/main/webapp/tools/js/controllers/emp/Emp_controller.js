@@ -78,19 +78,28 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
     //定义按钮控制
     var buttonflag = false;
     $scope.buttonflag = buttonflag;
+    //封装不显示方式
+    var Allfalse = function () {//全部都不显示
+        $scope.buttonflag = false;
+        $scope.empentry = false;
+        $scope.empleave=false;
+        $scope.editoper = false;
+    }
     //定义单选事件
     var sele = function (a,b) {
         if(a.isSelected){
             $scope.buttonflag = true;
             if(a.entity.empstatus == 'offer'){//如果人员状态是在招,那么入职按钮显示
-                $scope.ruzhi = true;
+                $scope.empentry = true;
+            // }else if(a.entity.empstatus == 'onjob'&&isNull(!a.entity.userId)){
             }else{//离职状态显示
-                $scope.lizhi=true;
+                $scope.empleave=true;
+            }
+            if(a.entity.empstatus == 'offer'&& isNull(!a.entity.userId)){
+                $scope.editoper = true;//如果是在职状态，并且存在操作员那么就出现编辑按钮
             }
         }else{
-            $scope.buttonflag = false;
-            $scope.ruzhi = false;
-            $scope.lizhi=false;
+            Allfalse();
         }
         ($scope.$$phase) ? null : $scope.$apply();//避免报错的,意思是如果已经在进行脏检查就是Null啥都不干,如果没有,就执行脏检查
     }
@@ -174,7 +183,7 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
             function ($scope, $modalInstance) {
                 var next = true;
                 $scope.next = next;
-                //创建员工实例
+                //创建员工实例,初始化一些数据
                 if(isNull(subFrom)){
                     var subFrom = {
                         "empName": "第一个员工",
@@ -196,8 +205,9 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                 $scope.subFrom = subFrom;
                 //标题
                 $scope.title = "新增员工";
-                $scope.shownext = function () {
-                    $scope.cancel();
+                /*$scope.empadd = function () {
+                    //新增操作员
+                    // $scope.cancel();
                     //打开第二个模态框
                     openwindow($uibModal, 'views/emp/addemppart2_window.html', 'lg',
                         function ($scope, $modalInstance) {
@@ -256,17 +266,31 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                                 }
                             }
                             //返回
-                            $scope.back = function () {
+                           /!* $scope.back = function () {
                                 $scope.cancel();
                                 emp.add(subFrom)
-                            }
+                            }*!/
                             $scope.cancel = function () {
                                 $modalInstance.dismiss('cancel');
                             };
                         })
-                    $scope.next = !$scope.next;
-                }
+                    // $scope.next = !$scope.next;
+                }*/
+                $scope.empadd = function (item) {
+                    var subFrom = item;
+                    Emp_service.addemp(subFrom).then(function (data) {
+                        if (data.status == "success") {
+                            toastr['success']("新增员工成功!"+data.retMessag);
+                            $scope.cancel();
+                            reempgrid();//更新表格
+                            Allfalse()
+                        } else {
+                            toastr['error'](data.retMessage);
+                        }
 
+
+                    })
+                }
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                 };
@@ -334,7 +358,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                     arr[0][i] = "";
                 }
             }
-            console.log(arr[0]);
             openwindow($uibModal, 'views/emp/addemp_window.html', 'lg',
                 function ($scope, $modalInstance) {
                     //创建员工实例
@@ -343,18 +366,17 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                     $scope.subFrom = arr[0];
                     //标题
                     $scope.title = "修改员工信息";
-                    //增加方法
-                    $scope.add = function (subFrom) {
-                        console.log($scope.subFrom)
+                    //更新操作员基础信息方法
+                    $scope.empadd = function (subFrom) {
                         Emp_service.addemp(subFrom).then(function (data) {
                             if (data.status == "success") {
-                                toastr['success'](data.retMessage);
+                                toastr['success']('修改成功' + data.retMessage);
                             } else {
-                                toastr['error'](data.retMessage);
+                                toastr['error']('修改失败' + data.retMessage);
                             }
                             reempgrid();
+                            Allfalse()
                             $scope.cancel();
-
                         })
                     }
                     $scope.cancel = function () {
@@ -364,9 +386,112 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
             )
         }
     }
+    //员工入职按钮
+    emp.Entry = function () {
+        var arr = $scope.empgrid.getSelectedRows();//拿到操作员信息
+        openwindow($uibModal, 'views/emp/addemppart2_window.html', 'lg',
+            function ($scope, $modalInstance) {
+                var subFrom = arr[0]
+                $scope.subFrom = subFrom;
+                subFrom.userId = pinyin.getFullChars(subFrom.empName);//把员工名字当做默认新建的操作员
+                $scope.title = "绑定操作员";
+                var emp = {};
+                $scope.emp = emp;
+                emp.operflag = "1";
+                //添加绑定操作员信息以及可管理组织机构信息
+                $scope.add = function (subFrom) {
+                    var a = [];
+                    if (!isNull(subFrom.orgList)) {
+                        for (var i = 0; i < subFrom.orgList.length; i++) {
+                            var b = {};
+                            b.orgGuid = subFrom.orgList[i];
+                            a.push((b));
+                        }
+                    }
+                    subFrom.orgList = a;
+                    /* //管理角色 暂时不需要 注释掉
+                    a = [];
+                    if (!isNull(subFrom.specialty)) {
+                        for (var i = 0; i < subFrom.specialty.length; i++) {
+                            var b = {};
+                            b.roleGuid = subFrom.specialty[i];
+                            a.push((b));
+                        }
+                    }
+                   subFrom.specialty = JSON.stringify(subFrom.specialty);
+                    subFrom.specialty = a;
+                      */
+                    subFrom.orgList = JSON.stringify(subFrom.orgList);//所有的组织机构信息
+                    Emp_service.addemp(subFrom).then(function (data) {
+                        if (data.status == "success") {
+                        } else {
+                            toastr['error']("绑定失败!" + data.retMessage);
+                        }
+                    })
+                    if(emp.operflag == '1'){//只有是系统默认的时候才新增，否则不新增
+                        //新增操作员
+                        var res = $rootScope.res.operator_service;//页面所需调用的服务
+                        var opersFrom = {}
+                        opersFrom.operatorName= subFrom.empName;//操作员姓名
+                        opersFrom.userId=subFrom.userId;
+                        opersFrom.operatorStatus='stop';
+                        opersFrom.lockLimit=5;
+                        opersFrom.authMode='password';
+                        opersFrom.password = '111111'//默认密码
+                        opersFrom.menuType = 'default'//默认页面布局
+                        common_service.post(res.createOperator,opersFrom).then(function(data){
+                            if (data.status == "success") {
+                            }
+                        })
+                    }
+                    //入职方法
+                    var ret = $rootScope.res.Emp_service;//页面所需调用的服务
+                    var operFrom= {};
+                    operFrom.data = {};
+                    operFrom.data.empGuid = subFrom.guid;
+                    operFrom.data.status = 'onjob';
+                    console.log(operFrom)
+                    common_service.post(ret.changeEmpStatus,operFrom).then(function(data){
+                        console.log(data);
+                        if (data.status == "success") {
+                            toastr['success']("入职成功!");
+                            reempgrid();//刷新列表
+                            Allfalse()
+                            $modalInstance.dismiss('cancel');
+                        }else{
+                            toastr['error']("入职失败!"+ data.retMessage);
+                        }
+                    })
+                }
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+        })
+    }
 
+    //员工离职
+    emp.Leave = function () {
+        var arr = $scope.empgrid.getSelectedRows();//拿到操作员信息
+        var subFrom = arr[0];
+        var ret = $rootScope.res.Emp_service;//页面所需调用的服务
+        var operFrom= {};
+        operFrom.data = {};
+        operFrom.data.empGuid = subFrom.guid;
+        operFrom.data.status = 'offjob';
+        common_service.post(ret.changeEmpStatus,operFrom).then(function(data){
+            console.log(data);
+            if (data.status == "success") {
+                toastr['success']("离职成功!");
+                reempgrid();//刷新列表
+                Allfalse()
+            }else{
+                toastr['error']("离职失败!"+ data.retMessage);
+            }
+
+        })
+    }
     //编辑操作员按钮事件
-    emp.editoper = function () {
+    emp.editoper = function (item) {
         var arr = $scope.empgrid.getSelectedRows();
         if (isNull(arr) && arr.length != 1) {
             toastr['error']("请选择一条记录！");
@@ -377,44 +502,43 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                     arr[0][i] = "";
                 }
             }
-            openwindow($uibModal, 'views/emp/addemppart2_window.html', 'lg',
+            openwindow($uibModal, 'views/emp/addemppartedit.html', 'lg',
                 function ($scope, $modalInstance) {
+                    console.log(arr[0])
                     //创建员工实例
                     var subFrom = {};
                     $scope.subFrom = subFrom;
                     $scope.subFrom = angular.copy(arr[0]);
                     var emp = {};
                     $scope.emp = emp;
-                    emp.operflag = "2";
-                    /*if($scope.subFrom.userId == pinyin.getFullChars($scope.subFrom.empName)){
-                        emp.operflag = "1";
-                    }else{
-                        emp.operflag = "2";
-                    }*/
-                    var b = JSON.parse(arr[0].specialty);
+                    emp.operflag = "1";
+                    // var b = JSON.parse(arr[0].specialty);
                     var a = JSON.parse(arr[0].orgList);
                     var orgL = [];
-                    var speL = [];
+                    // var speL = [];
                     for(var i in a) {
                         orgL.push(a[i].orgGuid)
                     }
-                    for(var i in b) {
+                    /*for(var i in b) {
                         speL.push(b[i].roleGuid)
                     }
                     $timeout(function () {
                         $(".se1").select2("val",speL);
-                    }, 250);
-                    $timeout(function () {
-                        // $(".se2").select2("val", a);
+                    }, 250);*/
+                    $timeout(function () {//回选组织机构内容
                         $scope.subFrom.orgList = a;
-                        console.log($scope.subFrom.orgList);
                         $(".se2").select2().val(orgL).trigger("change");
                     }, 250);
                     //标题
-                    $scope.title = "关联操作员";
+                    $scope.title = "修改操作员";
+
+                    $scope.$watch('subFrom.userId',function(newVal, oldVal){
+                       if(newVal!=oldVal && newVal!=arr[0].userId ){
+                           arr[0].panduan = true;//监视操作员修改变化，如果不改变或者不是最开始的,那么才需要新建操作员  否则不需要
+                       }
+                    })
                     //增加方法
                     $scope.add = function (subFrom) {
-                        console.log(subFrom.orgList)
                         var a = [];
                         for (var i = 0; i < subFrom.orgList.length; i++) {
                             var b = {};
@@ -422,32 +546,34 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                             a.push((b));
                         }
                         subFrom.orgList = a;
-                        a = [];
+                       /* a = [];
                         for (var i = 0; i < subFrom.specialty.length; i++) {
                             var b = {};
                             b.roleGuid = subFrom.specialty[i];
                             a.push((b));
                         }
-                        subFrom.specialty = a;
-                        subFrom.orgList = JSON.stringify(subFrom.orgList);
                         subFrom.specialty = JSON.stringify(subFrom.specialty);
-                        console.log(subFrom)
+                         subFrom.specialty = a;
+                         */
+                        subFrom.orgList = JSON.stringify(subFrom.orgList);
                         Emp_service.addemp(subFrom).then(function (data) {
+                            console.log(data)
                             if (data.status == "success") {
-                                toastr['success'](data.retMessage);
+                                toastr['success']('修改成功');
                             } else {
-                                toastr['error'](data.retMessage);
+                                toastr['error']('修改失败'+data.retMessage);
                             }
                             reempgrid();
+                            Allfalse()
                             $scope.cancel();
                         })
-                        //只有是系统默认的时候才新增，否则不新增
-                        if(emp.operflag == '1'){
+                        //只有是对当前操作员进行了修改的情况下，且修改前值和修改后值不同才可以。
+                        if(emp.operflag == '1'&&arr[0].panduan){
                             //新增操作员
                             var res = $rootScope.res.operator_service;//页面所需调用的服务
                             var opersFrom = {}
                             opersFrom.operatorName= subFrom.empName;//操作员姓名
-                            opersFrom.userId=subFrom.userId;
+                            opersFrom.userId= subFrom.userId;
                             opersFrom.operatorStatus='stop';
                             opersFrom.lockLimit=5;
                             opersFrom.authMode='password';
@@ -458,13 +584,14 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                         }
                     }
                     $scope.cancel = function () {
-                        reempgrid();
+                        // reempgrid();
                         $modalInstance.dismiss('cancel');
                     };
                 }
             )
         }
     }
+
     //员工组织归属按钮事件
     emp.belongorg = function () {
         var arr = $scope.empgrid.getSelectedRows();
@@ -480,20 +607,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
         reorggrid();
         repostgrid();
     }
-    //个人权限设置按钮事件
-    // emp.setqx = function () {
-    //     var arr = $scope.empgrid.getSelectedRows();
-    //     $scope.item = arr[0];
-    //     if (isNull($scope.item)) {
-    //         toastr['error']("请选择一条记录！");
-    //         return false;
-    //     }
-    //     for (var i in $scope.flag) {
-    //         $scope.flag[i] = false;
-    //     }
-    //     $scope.flag.ryqx = true;
-    // }
-    //删除人员信息
     emp.deletemp = function () {
         var arr = $scope.empgrid.getSelectedRows();
         if (isNull(arr) && arr.length != 1) {

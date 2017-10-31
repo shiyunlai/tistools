@@ -49,7 +49,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">行为类型</label>
                         <div class="col-md-8" ng-init="$settings.getCommData('BHVTYPE')">
-                            <select class="form-control" name="dict_open" ng-model="appFrom.guidBhvtypedef" maxlength="255">
+                            <select class="form-control" name="dict_open" ng-model="appFrom.guidBhvtypeDef" maxlength="255">
                                 <option ng-repeat="d in $settings.commlist['BHVTYPE'] track by $index" value="{{d.guid}}">{{d.bhvtypeName}}</option>
                             </select>
                         </div>
@@ -69,7 +69,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">是否验证权限</label>
                         <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
-                            <select class="form-control" name="dict_open" ng-model="appFrom.isCheck">
+                            <select class="form-control" name="dict_open" ng-model="appFrom.ischeck">
                                 <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>
