@@ -72,12 +72,23 @@ public class FormattingUtil {
 	
 	/**
 	 * 将对象格式化为json样式的字符串
+	 * 
 	 * @param obj
-	 * @return
+	 * @return json字符串
 	 */
 	public String toJsonString(Object obj) {
 		return obj2json(obj);
-	}	
+	}
+
+	/**
+	 * 将对象格式化为json样式的字符串，并进行json字符串可读性处理
+	 * 
+	 * @param obj
+	 * @return 可读的json字符串
+	 */
+	public String toJsonStringFormatted(Object obj) {
+		return formatJsonString(toJsonString(obj));
+	}
 	
 	/**
 	 * <pre>
