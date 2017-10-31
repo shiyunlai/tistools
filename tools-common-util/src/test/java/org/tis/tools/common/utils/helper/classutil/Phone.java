@@ -12,6 +12,11 @@ import java.io.Serializable;
 public class Phone implements IAbc,Serializable {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5469732463694203824L;
+	
+	/**
 	 * 号码
 	 */
 	private String no;
@@ -20,6 +25,10 @@ public class Phone implements IAbc,Serializable {
 	 */
 	private String telecom;
 
+	public Phone() {
+		
+	}
+	
 	public Phone(String telecom, String no){
 		this.no = no ; 
 		this.telecom = telecom ; 
@@ -29,15 +38,17 @@ public class Phone implements IAbc,Serializable {
 		return no;
 	}
 
-	public void setNo(String no) {
+	public Phone setNo(String no) {
 		this.no = no;
+		return this ; 
 	}
 
 	public String getTelecom() {
 		return telecom;
 	}
 
-	public void setTelecom(String telecom) {
+	public Phone setTelecom(String telecom) {
 		this.telecom = telecom;
+		return this ; 
 	}
 }

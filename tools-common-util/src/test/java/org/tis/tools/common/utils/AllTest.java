@@ -17,7 +17,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	DirectoryUtilTest.class,
 	PinyinUtilTest.class,
 	SimpleSequenceUtilTest.class,
-	TimeUtilsTest.class
+	TimeUtilsTest.class,
+	FormattingUtilTest.class
 })
 public class AllTest {
 
