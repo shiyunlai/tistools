@@ -815,7 +815,6 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 	 */
 	@Override
 	public OmEmployee changeEmpStatus(String empGuid, String status) throws EmployeeManagementException {
-		// TODO 修改异常
 		if(StringUtils.isBlank(empGuid)) {
 			throw new EmployeeManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap(OmEmployee.COLUMN_GUID, "changeEmpStatus"));
 		}
@@ -830,7 +829,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
                 * 限制当前状态为： 在招
                 * */
 				case OMConstants.EMPLOYEE_STATUS_ONJOB :
-					if (StringUtils.equals(old_status, OMConstants.EMPLOYEE_STATUS_OFFER)) {
+					if (!StringUtils.equals(old_status, OMConstants.EMPLOYEE_STATUS_OFFER)) {
 						throw new EmployeeManagementException(ACExceptionCodes.CURRENT_STATUS_IS_NOT_ALLOWED_CHANGE, wrap(old_status, OMConstants.EMPLOYEE_STATUS_ONJOB));
 					}
 					omEmployee.setEmpstatus(status);
@@ -839,7 +838,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
                 * 限制当前状态为： 在职
                 * */
 				case OMConstants.EMPLOYEE_STATUS_OFFJOB :
-					if (StringUtils.equals(old_status, OMConstants.EMPLOYEE_STATUS_ONJOB)) {
+					if (!StringUtils.equals(old_status, OMConstants.EMPLOYEE_STATUS_ONJOB)) {
 						throw new EmployeeManagementException(ACExceptionCodes.CURRENT_STATUS_IS_NOT_ALLOWED_CHANGE, wrap(old_status, OMConstants.EMPLOYEE_STATUS_OFFJOB));
 					}
 					omEmployee.setEmpstatus(status);
@@ -847,6 +846,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 				default:
 					throw new EmployeeManagementException(ACExceptionCodes.OPERATOR_STATUS_ERROR, old_status);
 			}
+			omEmployeeService.update(omEmployee);
 			return omEmployee;
 		} catch (EmployeeManagementException e) {
 			e.printStackTrace();

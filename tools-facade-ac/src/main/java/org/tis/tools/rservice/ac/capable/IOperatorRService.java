@@ -64,54 +64,51 @@ public interface IOperatorRService {
 
     /**
      * 查询操作员对应的身份集合
-     * @param operatorGuid
-     * @return
+     * @param operatorGuid 操作员GUID
+     * @return 返回操作员的身份集合
      * @throws OperatorManagementException
      */
     List<AcOperatorIdentity> queryOperatorIdentities(String operatorGuid) throws OperatorManagementException;
 
     /**
      * 新增操作员身份
-     * @param operatorIdentity
+     * @param operatorIdentity 操作员身份对象
+     * @return 返回新增的操作员身份信息
      * @throws OperatorManagementException
      */
-    void createOperatorIdentity(AcOperatorIdentity operatorIdentity) throws OperatorManagementException;
+    AcOperatorIdentity createOperatorIdentity(AcOperatorIdentity operatorIdentity) throws OperatorManagementException;
 
     /**
      * 修改操作员身份
-     * @param operatorIdentity
+     * @param operatorIdentity 操作员身份对象
+     * @return 返回修改后操作员身份
      * @throws OperatorManagementException
      */
-    void editOperatorIdentity(AcOperatorIdentity operatorIdentity) throws OperatorManagementException;
+    AcOperatorIdentity editOperatorIdentity(AcOperatorIdentity operatorIdentity) throws OperatorManagementException;
 
     /**
      * 删除操作员身份
-     * @param operatorIdenGuid
+     * @param operatorIdenGuid 操作员身份GUID
+     * @return 返回删除的操作员身份
      * @throws OperatorManagementException
      */
-    void deleteOperatorIdentity(String operatorIdenGuid) throws OperatorManagementException;
+    AcOperatorIdentity deleteOperatorIdentity(String operatorIdenGuid) throws OperatorManagementException;
 
     /**
      * 设置默认操作员身份
-     * @param operatorIdenGuid
+     * @param operatorIdenGuid 操作员身份GUID
+     * @return 返回修改的操作员身份对象
      * @throws OperatorManagementException
      */
-    void setDefaultOperatorIdentity(String operatorIdenGuid) throws OperatorManagementException;
+    AcOperatorIdentity setDefaultOperatorIdentity(String operatorIdenGuid) throws OperatorManagementException;
 
 
     /**
      * 新增操作员身份权限
-     * @param operatorIdentityresList
+     * @param operatorIdentityresList 身份权限集合
      * @throws OperatorManagementException
      */
     void createOperatorIdentityres(List<AcOperatorIdentityres> operatorIdentityresList) throws OperatorManagementException;
-
-    /**
-     * 修改操作员身份权限
-     * @param operatorIdentityres
-     * @throws OperatorManagementException
-     */
-    void editOperatorIdentityres(AcOperatorIdentityres operatorIdentityres) throws OperatorManagementException;
 
     /**
      * 删除操作员身份权限
@@ -190,19 +187,18 @@ public interface IOperatorRService {
      * @param acOperatorFunc
      * @throws OperatorManagementException
      */
-    void addAcOperatorFun(AcOperatorFunc acOperatorFunc) throws OperatorManagementException;
+    AcOperatorFunc addAcOperatorFunc(AcOperatorFunc acOperatorFunc) throws OperatorManagementException;
 
     /**
      * 移除特殊权限
      *
      * @param operatorGuid
      *          操作员GUID
-     *
      * @param funcGuid
      *          功能GUID
      * @throws OperatorManagementException
      */
-    void removeAcOperatorFun(String operatorGuid, String funcGuid) throws OperatorManagementException;
+    AcOperatorFunc removeAcOperatorFunc(String operatorGuid, String funcGuid) throws OperatorManagementException;
 
     /**
      * 查询所有个性化配置
@@ -310,23 +306,30 @@ public interface IOperatorRService {
     List<AcOperator> getOperatorsNotLinkEmp() throws OperatorManagementException;
 
     /**
-     * 获取操作员已授权功能行为
-     *  包含 已授权（从角色授权） 和 特别禁止 列表
+     * 获取操作员功能行为信息
+     * 包含 已授权（从角色授权） 特别禁止
+     * 未授权（从功能所有行为筛选掉角色授权） 和 特别允许 列表
+     *
      * @param userId
      * @param funcGuid
      * @return
      * @throws OperatorManagementException
      */
-    Map<String, List<AcBhvDef>> getAuthOperatorFuncBhv(String userId, String funcGuid) throws OperatorManagementException;
+    Map<String, List<AcBhvDef>> getOperatorFuncBhvInfo(String userId, String funcGuid) throws OperatorManagementException;
 
     /**
-     * 获取操作员未授权功能行为
-     *  包含 未授权（从功能所有行为筛选掉角色授权） 和 特别允许 列表
-     * @param userId
-     * @param funcGuid
-     * @return
+     * 添加操作员特殊功能行为
+     * @param acOperatorBhv
      * @throws OperatorManagementException
      */
-    Map<String, List<AcBhvDef>> getUnAuthOperatorFuncBhv(String userId, String funcGuid) throws OperatorManagementException;
+    void addAcOperatorBhv(List<AcOperatorBhv> acOperatorBhv) throws OperatorManagementException;
+
+    /**
+     * 移除操作员特殊功能行为
+     * @param acOperatorBhv
+     * @throws OperatorManagementException
+     */
+    void removeAcOperatorBhv(List<AcOperatorBhv> acOperatorBhv) throws OperatorManagementException;
+
 
 }

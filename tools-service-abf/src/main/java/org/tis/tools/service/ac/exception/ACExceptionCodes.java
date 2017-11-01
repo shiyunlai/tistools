@@ -389,7 +389,14 @@ public class ACExceptionCodes {
 	 * 操作员状态值异常
 	 */
     public static final String OPERATOR_STATUS_ERROR = R_EX_CODE("0073");
-
+	/**
+	 * 操作员状态不能被删除异常
+	 */
+	public static final String CURRENT_STATUS_IS_NOT_ALLOWED_DELETE = R_EX_CODE("0074");
+	/**
+	 * 权限不足
+	 */
+	public static final String PERMISSION_DENIED = R_EX_CODE("0075");
 
     /**
 	 * 以烤串方式拼接异常码

@@ -4,22 +4,19 @@
  */
 package org.tis.tools.service.ac;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tis.tools.base.WhereCondition;
-import org.tis.tools.dao.ac.AcAppMapper;
 import org.tis.tools.dao.ac.AcFuncMapperExt;
 import org.tis.tools.dao.ac.ApplicationMapper;
 import org.tis.tools.model.po.ac.AcApp;
-import org.tis.tools.model.po.ac.AcBhvDef;
 import org.tis.tools.model.po.ac.AcBhvtypeDef;
 import org.tis.tools.model.po.ac.AcFunc;
 import org.tis.tools.model.vo.ac.AcAppVo;
 import org.tis.tools.model.vo.ac.AcFuncVo;
+
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -87,7 +84,6 @@ public class ApplicationService {
 	public List<Map> queryFuncBhvRelation(WhereCondition wc) {
 		return applitionMapper.queryFuncBhvRelation(wc);
 	}
-
 
 	/**
 	 * 查询应用下的功能列表
