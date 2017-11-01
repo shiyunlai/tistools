@@ -2,7 +2,7 @@ package org.tools.service.txmodel.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.tis.tools.rservice.txmodel.message.ITxResponse;
+import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;
 import org.tools.service.txmodel.IOperatorBhvHandler;
 import org.tools.service.txmodel.TxContext;
 

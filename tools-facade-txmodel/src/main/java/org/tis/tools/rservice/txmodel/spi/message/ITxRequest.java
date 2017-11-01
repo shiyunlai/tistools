@@ -1,13 +1,13 @@
 /**
  * 
  */
-package org.tis.tools.rservice.txmodel.message;
+package org.tis.tools.rservice.txmodel.spi.message;
 
 import java.io.Serializable;
 
 /**
  * <pre>
- * 交易请求对象
+ * 交易请求对象.</br>（Trade Request Object 简称： TxRequest . 为延续习惯,以Tx表示Trade. ）
  * 
  * 一个完整的请求对象由{@link ITxHeader 交易头}、{@link ITxControl 交易控制}、{@link ITxData 交易请求数据}、校验信息四部分组成
  * 

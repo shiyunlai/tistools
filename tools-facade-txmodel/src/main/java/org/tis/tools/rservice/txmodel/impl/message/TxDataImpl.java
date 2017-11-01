@@ -1,9 +1,9 @@
 /**
  * 
  */
-package org.tis.tools.rservice.txmodel.message.impl;
+package org.tis.tools.rservice.txmodel.impl.message;
 
-import org.tis.tools.rservice.txmodel.message.ITxData;
+import org.tis.tools.rservice.txmodel.spi.message.ITxData;
 import org.tools.core.sdo.DataField;
 import org.tools.core.sdo.dataobject.DynamicDataObject;
 
@@ -46,6 +46,18 @@ public class TxDataImpl extends DynamicDataObject implements ITxData {
 	@Override
 	public <T extends DataField> T getField(String propertyName) {
 		return super.getField(propertyName);
+	}
+
+	@Override
+	public <T> T getProperty(String key, T Default) {
+		
+		return getProperty(key, Default);
+	}
+
+	@Override
+	public void setProperty(String key, Object value) {
+		
+		set(key, value) ; 
 	}
 	
 }

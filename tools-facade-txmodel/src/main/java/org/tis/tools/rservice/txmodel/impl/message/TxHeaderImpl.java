@@ -1,12 +1,12 @@
 /**
  * 
  */
-package org.tis.tools.rservice.txmodel.message.impl;
+package org.tis.tools.rservice.txmodel.impl.message;
 
 import java.util.Date;
 
 import org.tis.tools.common.utils.TimeUtil;
-import org.tis.tools.rservice.txmodel.message.ITxHeader;
+import org.tis.tools.rservice.txmodel.spi.message.ITxHeader;
 import org.tools.core.sdo.dataobject.DynamicDataObject;
 
 /**
@@ -234,5 +234,21 @@ public class TxHeaderImpl extends DynamicDataObject implements ITxHeader {
 	@Override
 	public void setBhvGUID(String bhvGUID) {
 		super.setString(HEADER_FIELD_BHV_GUID, bhvGUID); 
+	}
+
+	@Override
+	public <T> T getProperty(String key, T Default) {
+		
+		return getProperty(key, Default);
+	}
+
+	@Override
+	public void setProperty(String key, Object value) {
+		this.set(key, value) ; 
+	}
+	
+	@Override
+	public String toString() {
+		return super.toString();
 	}
 }

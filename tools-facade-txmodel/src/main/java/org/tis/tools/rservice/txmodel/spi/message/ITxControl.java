@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tis.tools.rservice.txmodel.message;
+package org.tis.tools.rservice.txmodel.spi.message;
 
 import java.io.Serializable;
 
@@ -31,7 +31,7 @@ import org.tools.core.sdo.DataObject;
  * @param <O> 授权方式
  * @param <OC> 授权控制信息
  */
-public interface ITxControl extends Serializable {
+public interface ITxControl extends IExtPropertyAble {
 	
 	/**
 	 * 是否处理成功

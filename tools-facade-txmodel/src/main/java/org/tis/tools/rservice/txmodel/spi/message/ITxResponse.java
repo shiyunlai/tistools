@@ -1,13 +1,13 @@
 /**
  * 
  */
-package org.tis.tools.rservice.txmodel.message;
+package org.tis.tools.rservice.txmodel.spi.message;
 
 import java.io.Serializable;
 
 /**
  * <pre>
- * 交易处理响应对象
+ * 交易响应对象（Trade Response Object 简称： TxResponse）
  * 
  * 一个完整的响应对象由{@link ITxHeader 交易头}、{@link ITxControl 交易控制}、{@link ITxData 响应数据}、校验信息四部分组成
  * 

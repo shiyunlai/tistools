@@ -4,7 +4,7 @@
 package org.tools.service.txmodel.engine;
 
 import org.tis.tools.rservice.txmodel.TxModelConstants;
-import org.tis.tools.rservice.txmodel.message.ITxResponse;
+import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;
 import org.tools.service.txmodel.IOperatorBhvHandler;
 import org.tools.service.txmodel.TxContext;
 

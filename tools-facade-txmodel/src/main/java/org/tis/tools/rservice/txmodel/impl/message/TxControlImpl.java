@@ -1,12 +1,12 @@
 /**
  * 
  */
-package org.tis.tools.rservice.txmodel.message.impl;
+package org.tis.tools.rservice.txmodel.impl.message;
 
-import org.tis.tools.rservice.txmodel.message.ITxControl;
 import org.tis.tools.rservice.txmodel.monitor.MonitorTypeEnum;
 import org.tis.tools.rservice.txmodel.override.OverrideTypeEnum;
 import org.tis.tools.rservice.txmodel.recheck.ReCheckTypeEnum;
+import org.tis.tools.rservice.txmodel.spi.message.ITxControl;
 import org.tools.core.sdo.DataObject;
 
 /**
@@ -139,6 +139,18 @@ public class TxControlImpl implements ITxControl {
 	public DataObject getMonitorControl() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public <T> T getProperty(String key, T Default) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setProperty(String key, Object value) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

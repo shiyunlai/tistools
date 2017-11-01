@@ -5,7 +5,7 @@ package org.tools.service.txmodel;
 
 import org.tis.tools.rservice.txmodel.TxModelConstants.BHVCODE;
 import org.tis.tools.rservice.txmodel.TxModelConstants.BHVTYPE;
-import org.tis.tools.rservice.txmodel.message.ITxResponse;
+import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;
 
 /**
  * <pre>

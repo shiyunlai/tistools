@@ -16,7 +16,7 @@ import org.tis.tools.rservice.txmodel.TxModelConstants.BHVCODE;
 import org.tis.tools.rservice.txmodel.TxModelConstants.BHVTYPE;
 import org.tis.tools.rservice.txmodel.exception.TxModelException;
 import org.tis.tools.rservice.txmodel.exception.TxModelExceptionCodes;
-import org.tis.tools.rservice.txmodel.message.ITxResponse;
+import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;
 import org.tools.service.txmodel.IOperatorBhvCommand;
 import org.tools.service.txmodel.IOperatorBhvHandler;
 import org.tools.service.txmodel.ITxEngine;

@@ -5,8 +5,8 @@ package org.tools.service.txmodel;
 
 import java.io.Serializable;
 
-import org.tis.tools.rservice.txmodel.message.ITxRequest;
-import org.tis.tools.rservice.txmodel.message.ITxResponse;
+import org.tis.tools.rservice.txmodel.spi.message.ITxRequest;
+import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;
 import org.tools.service.txmodel.tx.TxDefinition;
 
 /**

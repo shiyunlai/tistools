@@ -1,12 +1,15 @@
 /**
  * 
  */
-package org.tis.tools.rservice.txmodel.message.impl;
+package org.tis.tools.rservice.txmodel.impl.message;
 
-import org.tis.tools.rservice.txmodel.message.ITxControl;
-import org.tis.tools.rservice.txmodel.message.ITxData;
-import org.tis.tools.rservice.txmodel.message.ITxHeader;
-import org.tis.tools.rservice.txmodel.message.ITxRequest;
+import org.tis.tools.common.utils.FormattingUtil;
+import org.tis.tools.rservice.txmodel.spi.message.ITxControl;
+import org.tis.tools.rservice.txmodel.spi.message.ITxData;
+import org.tis.tools.rservice.txmodel.spi.message.ITxHeader;
+import org.tis.tools.rservice.txmodel.spi.message.ITxRequest;
+
+import com.alibaba.fastjson.JSON;
 
 /**
  * 
@@ -92,6 +95,12 @@ public class TxRequestImpl implements ITxRequest {
 	private boolean checkToken() {
 		// TODO Auto-generated method stub 使用私钥解密token，并进行数据项检查，通过则认为合法
 		return true;
+	}
+	
+	@Override
+	public String toString(){
+		return JSON.toJSONString(this) ; // 使用ali fastjson
+		//return FormattingUtil.instance().toJsonStringFormatted(this) ; 
 	}
 
 }

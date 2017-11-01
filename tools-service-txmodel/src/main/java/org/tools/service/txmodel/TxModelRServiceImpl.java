@@ -4,16 +4,16 @@
 package org.tools.service.txmodel;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.tis.tools.rservice.txmodel.ITxModelRService;
+import org.tis.tools.rservice.api.txmodel.ITxModelRService;
 import org.tis.tools.rservice.txmodel.TxModelConstants.BHVTYPE;
-import org.tis.tools.rservice.txmodel.message.ITxRequest;
-import org.tis.tools.rservice.txmodel.message.ITxResponse;
-import org.tis.tools.rservice.txmodel.message.impl.TxResponseImpl;
+import org.tis.tools.rservice.txmodel.impl.message.TxResponseImpl;
+import org.tis.tools.rservice.txmodel.spi.message.ITxRequest;
+import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;
 import org.tools.service.txmodel.tx.TxDefinition;
 
 /**
  * 
- * 交易模式服务实现
+ * 交易模式服务实现类
  * 
  * @author megapro
  *

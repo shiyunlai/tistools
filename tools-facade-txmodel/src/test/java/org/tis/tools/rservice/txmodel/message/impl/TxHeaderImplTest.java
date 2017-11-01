@@ -9,7 +9,8 @@ import java.util.Date;
 import org.junit.Test;
 import org.tis.tools.common.utils.FormattingUtil;
 import org.tis.tools.common.utils.TimeUtil;
-import org.tis.tools.rservice.txmodel.message.ITxHeader;
+import org.tis.tools.rservice.txmodel.impl.message.TxHeaderImpl;
+import org.tis.tools.rservice.txmodel.spi.message.ITxHeader;
 
 import junit.framework.Assert;
 
@@ -87,4 +88,6 @@ public class TxHeaderImplTest {
 		System.out.println( FormattingUtil.instance().formatJsonString(header.toString()));
 		//System.out.println(DataObjectUtility.instance().toString((DataObject)header));
 	}
+	
+	//TODO 补其他交易相关的 数据对象的 单元测试 —— 对于一个facade工程来说，最重要的就是确保接口和接口参数对象的正确性。
 }

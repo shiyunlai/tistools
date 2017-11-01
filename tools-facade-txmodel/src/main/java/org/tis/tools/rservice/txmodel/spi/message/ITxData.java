@@ -1,16 +1,14 @@
 /**
  * 
  */
-package org.tis.tools.rservice.txmodel.message;
-
-import java.io.Serializable;
+package org.tis.tools.rservice.txmodel.spi.message;
 
 import org.tools.core.sdo.DataField;
 
 /**
  * <pre>
  * 
- * 交易数据
+ * 交易请求数据（Trade Request Data 简称： TxData）
  * 
  * 一个交易的数据，是由交易界面（就是交易的form表单）上各个字段构成，包括：
  * 
@@ -28,7 +26,7 @@ import org.tools.core.sdo.DataField;
  *
  */
 // TODO 引入DataObject封装任意数据结构,DataObject 作为基础能力，放到 core-basic 中
-public interface ITxData extends Serializable {
+public interface ITxData extends IExtPropertyAble {
 
 	/**
 	 * 取所有交易数据字段名称

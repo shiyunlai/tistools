@@ -1,16 +1,15 @@
 /**
  * 
  */
-package org.tis.tools.rservice.txmodel.message;
+package org.tis.tools.rservice.txmodel.spi.message;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 
  * <pre>
  * 
- * 交易头信息 
+ * 交易请求头信息 （Trade Request Header 简称： TxHeader）
  * 
  * 一般包括了交易发生当时客户端环境信息、身份信息，
  * 
@@ -24,7 +23,7 @@ import java.util.Date;
  * @author megapro
  *
  */
-public interface ITxHeader extends Serializable {
+public interface ITxHeader extends IExtPropertyAble {
 	
 	/**
 	 * 取渠道识别号
