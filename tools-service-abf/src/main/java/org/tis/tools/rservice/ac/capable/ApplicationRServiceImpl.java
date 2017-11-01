@@ -10,6 +10,7 @@ import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.util.CollectionUtils;
 import org.tis.tools.base.WhereCondition;
+import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.common.utils.BeanFieldValidateUtil;
 import org.tis.tools.common.utils.StringUtil;
@@ -27,6 +28,8 @@ import org.tis.tools.service.om.OmEmployeeService;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static org.tis.tools.common.utils.BasicUtil.wrap;
 
 /**
  * <pre>
@@ -88,7 +91,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	public AcApp createAcApp(AcApp acApp) throws AppManagementException {
 		try {
 			if (null == acApp) {
-				throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("AC_APP", AcApp.TABLE_NAME));
+				throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, wrap("AC_APP", AcApp.TABLE_NAME));
 			}
 			acApp.setGuid(GUID.app());
 			// 新建应用默认 不开通
@@ -98,15 +101,15 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			};
 			String validate = BeanFieldValidateUtil.checkObjFieldRequired(acApp, validateField);
 			if(StringUtils.isNotEmpty(validate)) {
-				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, BasicUtil.wrap(validate, AcApp.TABLE_NAME));
+				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, wrap(validate, AcApp.TABLE_NAME));
 			}
 			acAppService.insert(acApp);
 			return acApp;
-		} catch (AppManagementException ae) {
+		} catch (ToolsRuntimeException ae) {
 			throw ae;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap(AcApp.TABLE_NAME, e));
+			throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_INSERT, wrap(AcApp.TABLE_NAME, e));
 		}
 	}
 
@@ -119,12 +122,12 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	@Override
 	public AcApp deleteAcApp(String guid) throws AppManagementException {
 		if(StringUtils.isBlank(guid)) {
-			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, BasicUtil.wrap(AcApp.COLUMN_GUID, AcApp.TABLE_NAME));
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, wrap(AcApp.COLUMN_GUID, AcApp.TABLE_NAME));
 		}
 		try {
 			List<AcApp> apps = acAppService.query(new WhereCondition().andEquals(AcApp.COLUMN_GUID, guid));
 			if (apps.size() != 1) {
-				throw new AppManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap(guid, AcApp.TABLE_NAME));
+				throw new AppManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, wrap(guid, AcApp.TABLE_NAME));
 			}
 			AcApp app = apps.get(0);
 			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
@@ -142,18 +145,18 @@ public class ApplicationRServiceImpl extends BaseRService implements
 						acFuncgroupService.deleteByCondition(wc);
 						acAppService.delete(guid);
 					} catch (Exception e) {
-						throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap("AcApp(" + guid + ")", e));
+						throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_DELETE, wrap("AcApp(" + guid + ")", e));
 					}
 				}
 			});
 			return app;
-		} catch (AppManagementException e) {
+		} catch (ToolsRuntimeException e) {
 			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
 					ExceptionCodes.FAILURE_WHEN_DELETE,
-					BasicUtil.wrap("AcApp(" + guid + ")", e));
+					wrap("AcApp(" + guid + ")", e));
 		}
 	}
 
@@ -166,7 +169,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	@Override
 	public AcApp updateAcApp(AcApp acApp) throws AppManagementException {
 		if(acApp == null) {
-			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap("AcApp", AcApp.TABLE_NAME));
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, wrap("AcApp", AcApp.TABLE_NAME));
 		}
 		try {
 			String[] validateField = {
@@ -174,17 +177,17 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			};
 			String validate = BeanFieldValidateUtil.checkObjFieldRequired(acApp, validateField);
 			if(StringUtils.isNotEmpty(validate)) {
-				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_UPDATE, BasicUtil.wrap(validate, AcApp.TABLE_NAME));
+				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_UPDATE, wrap(validate, AcApp.TABLE_NAME));
 			}
 			acAppService.update(acApp);
 			return acApp;
-		} catch (AppManagementException e) {
+		} catch (ToolsRuntimeException e) {
 			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
 					ExceptionCodes.FAILURE_WHEN_UPDATE,
-					BasicUtil.wrap(AcApp.TABLE_NAME, e));
+					wrap(AcApp.TABLE_NAME, e));
 		}
 	}
 
@@ -203,7 +206,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ExceptionCodes.FAILURE_WHEN_QUERY,
-					BasicUtil.wrap(AcApp.TABLE_NAME, e));
+					wrap(AcApp.TABLE_NAME, e));
 		}
 	}
 	
@@ -221,7 +224,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ExceptionCodes.FAILURE_WHEN_QUERY,
-					BasicUtil.wrap(AcApp.TABLE_NAME, e));
+					wrap(AcApp.TABLE_NAME, e));
 		}
 	}
 	
@@ -240,15 +243,15 @@ public class ApplicationRServiceImpl extends BaseRService implements
 				return acAppList.get(0);
 			}else{
 				throw new AppManagementException(
-						ExceptionCodes.NOT_FOUND_WHEN_QUERY,BasicUtil.wrap(guid, AcApp.TABLE_NAME));
+						ExceptionCodes.NOT_FOUND_WHEN_QUERY, wrap(guid, AcApp.TABLE_NAME));
 			}
-		} catch (AppManagementException e) {
+		} catch (ToolsRuntimeException e) {
 			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
 					ExceptionCodes.FAILURE_WHEN_QUERY,
-					BasicUtil.wrap(AcApp.TABLE_NAME, e));
+					wrap(AcApp.TABLE_NAME, e));
 		}
 	}
 	
@@ -261,7 +264,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	@Override
 	public AcFuncgroup createAcFuncGroup(AcFuncgroup acFuncgroup) throws AppManagementException {
 		if(acFuncgroup == null) {
-			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("acFuncgroup", AcFuncgroup.TABLE_NAME));
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, wrap("acFuncgroup", AcFuncgroup.TABLE_NAME));
 		}
 		try {
 			String[] validateFields = {
@@ -269,7 +272,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			};
 			String validate = BeanFieldValidateUtil.checkObjFieldRequired(acFuncgroup, validateFields);
 			if (StringUtils.isNotEmpty(validate)) {
-				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, BasicUtil.wrap(validate, AcFuncgroup.TABLE_NAME));
+				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, wrap(validate, AcFuncgroup.TABLE_NAME));
 			}
 			String guid = GUID.funcGroup();
 			acFuncgroup.setGuid(guid);
@@ -284,19 +287,19 @@ public class ApplicationRServiceImpl extends BaseRService implements
 					acFuncgroup.setFuncgroupSeq(acFuncgroup.getFuncgroupSeq() + "." + guid);
 				} else {
 					throw new AppManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY,
-							BasicUtil.wrap("AcFuncgroup(" + acFuncgroup.getGuidParents() + ")", AcFuncgroup.TABLE_NAME));
+							wrap("AcFuncgroup(" + acFuncgroup.getGuidParents() + ")", AcFuncgroup.TABLE_NAME));
 				}
 			}
 			acFuncgroup.setIsleaf(CommonConstants.YES);// 默认叶子节点
 			acFuncgroupService.insert(acFuncgroup);
 			return acFuncgroup;
-		} catch (AppManagementException e) {
+		} catch (ToolsRuntimeException e) {
 			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
 					ExceptionCodes.FAILURE_WHEN_INSERT,
-					BasicUtil.wrap(AcFuncgroup.TABLE_NAME, e));
+					wrap(AcFuncgroup.TABLE_NAME, e));
 		}
 	}
 
@@ -310,7 +313,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	public AcFuncgroup deleteAcFuncGroup(String guid) throws AppManagementException {
 		if(StringUtils.isBlank(guid)) {
 			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE,
-					BasicUtil.wrap(AcFuncgroup.COLUMN_GUID, AcFuncgroup.TABLE_NAME));
+					wrap(AcFuncgroup.COLUMN_GUID, AcFuncgroup.TABLE_NAME));
 		}
 		try {
 			AcFuncgroup acFuncgroup;
@@ -319,7 +322,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 				acFuncgroup = funcgroupOptional.get();
 			} else {
 				throw new AppManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY,
-						BasicUtil.wrap(BasicUtil.surroundBracketsWithLFStr(AcFuncgroup.COLUMN_GUID, guid), AcFuncgroup.TABLE_NAME));
+						wrap(BasicUtil.surroundBracketsWithLFStr(AcFuncgroup.COLUMN_GUID, guid), AcFuncgroup.TABLE_NAME));
 			}
 			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 				@Override
@@ -337,7 +340,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 
 					} catch (Exception e) {
 						throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_DELETE,
-								BasicUtil.wrap(BasicUtil.surroundBracketsWithLFStr(AcFuncgroup.TABLE_NAME, guid), e));
+								wrap(BasicUtil.surroundBracketsWithLFStr(AcFuncgroup.TABLE_NAME, guid), e));
 					}
 				}
 			});
@@ -345,7 +348,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_DELETE,
-					BasicUtil.wrap(BasicUtil.surroundBracketsWithLFStr(AcFuncgroup.TABLE_NAME, guid), e));
+					wrap(BasicUtil.surroundBracketsWithLFStr(AcFuncgroup.TABLE_NAME, guid), e));
 		}
 	}
 
@@ -356,7 +359,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	@Override
 	public AcFuncgroup updateAcFuncgroup(AcFuncgroup acFuncgroup) throws AppManagementException {
 		if(acFuncgroup == null) {
-			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap("acFuncgroup", AcFuncgroup.TABLE_NAME));
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, wrap("acFuncgroup", AcFuncgroup.TABLE_NAME));
 		}
 		try {
 			String[] validateFields = {
@@ -364,17 +367,17 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			};
 			String validate = BeanFieldValidateUtil.checkObjFieldRequired(acFuncgroup, validateFields);
 			if (StringUtils.isNotEmpty(validate)) {
-				throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap(validate, AcFuncgroup.TABLE_NAME));
+				throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, wrap(validate, AcFuncgroup.TABLE_NAME));
 			}
 			acFuncgroupService.update(acFuncgroup);
 			return acFuncgroup;
-		} catch (AppManagementException e) {
+		} catch (ToolsRuntimeException e) {
 			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
 					ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE,
-					BasicUtil.wrap(AcFuncgroup.TABLE_NAME, e));
+					wrap(AcFuncgroup.TABLE_NAME, e));
 		}
 	}
 	
@@ -394,7 +397,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNCGROUP,
-					BasicUtil.wrap(e.getCause().getMessage()), "查询功能组失败！{0}");
+					wrap(e), "查询功能组失败！{0}");
 		}
 		return acFuncgroupList;
 	}
@@ -416,7 +419,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNCGROUP,
-					BasicUtil.wrap(e.getCause().getMessage()), "查询功能组失败！{0}");
+					wrap(e), "查询功能组失败！{0}");
 		}
 		if(acFuncgroupList.size()>0){
 			return acFuncgroupList.get(0);
@@ -443,7 +446,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNCGROUP,
-					BasicUtil.wrap(e.getCause().getMessage()), "查询功能组失败！{0}");
+					wrap(e), "查询功能组失败！{0}");
 		}
 		return acFuncList;
 	};
@@ -467,7 +470,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNCGROUP,
-					BasicUtil.wrap(e.getCause().getMessage()), "查询功能组失败！{0}");
+					wrap(e), "查询功能组失败！{0}");
 		}
 		return acFuncList;
 	};
@@ -480,7 +483,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	@Override
 	public AcFunc createAcFunc(AcFunc acFunc) throws AppManagementException {
 		if(acFunc == null) {
-			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("acFunc", AcFunc.TABLE_NAME));
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, wrap("acFunc", AcFunc.TABLE_NAME));
 		}
 		try {
 			String guid=GUID.func();
@@ -489,15 +492,15 @@ public class ApplicationRServiceImpl extends BaseRService implements
 					"guidFuncgroup", "funcCode", "funcName", "funcType", "guidBhvtypeDef"
 			});
 			if(StringUtils.isNotEmpty(validate)) {
-				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, BasicUtil.wrap(validate, AcFunc.TABLE_NAME));
+				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, wrap(validate, AcFunc.TABLE_NAME));
 			}
 			acFuncService.insert(acFunc);
 			return  acFunc;
-		} catch (AppManagementException e) {
+		} catch (ToolsRuntimeException e) {
 			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap(AcFunc.TABLE_NAME, e));
+			throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_INSERT, wrap(AcFunc.TABLE_NAME, e));
 		}
 	}
 	
@@ -508,13 +511,13 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	@Override
 	public AcFunc deleteAcFunc(String guid)  throws AppManagementException {
 		if(StringUtils.isBlank(guid)) {
-			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, BasicUtil.wrap(AcFunc.COLUMN_GUID, AcFunc.TABLE_NAME));
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, wrap(AcFunc.COLUMN_GUID, AcFunc.TABLE_NAME));
 		}
 		try {
 			AcFunc acFunc = acFuncService.loadByGuid(guid);
 			if(acFunc == null) {
 				throw new AppManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY,
-						BasicUtil.wrap(BasicUtil.surroundBracketsWithLFStr(AcFunc.COLUMN_GUID, guid), AcFunc.TABLE_NAME));
+						wrap(BasicUtil.surroundBracketsWithLFStr(AcFunc.COLUMN_GUID, guid), AcFunc.TABLE_NAME));
 			}
 			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 				@Override
@@ -537,16 +540,16 @@ public class ApplicationRServiceImpl extends BaseRService implements
 						// 删除功能
 						acFuncService.delete(guid);
 					} catch (Exception e) {
-						throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap(AcFunc.TABLE_NAME, e));
+						throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_DELETE, wrap(AcFunc.TABLE_NAME, e));
 					}
 				}
 			});
 			return acFunc;
-		} catch (AppManagementException e) {
+		} catch (ToolsRuntimeException e) {
 			throw e;
 		}catch (Exception e) {
 			e.printStackTrace();
-			throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap(AcFunc.TABLE_NAME, e));
+			throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_DELETE, wrap(AcFunc.TABLE_NAME, e));
 		}
 	}
 
@@ -557,22 +560,22 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	@Override
 	public AcFunc updateAcFunc(AcFunc acFunc) throws AppManagementException {
 		if(acFunc == null) {
-			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap("acFunc", AcFunc.TABLE_NAME));
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, wrap("acFunc", AcFunc.TABLE_NAME));
 		}
 		try {
 			String validate = BeanFieldValidateUtil.checkObjFieldRequired(acFunc, new String[]{
 					"guid", "guidFuncgroup", "funcCode", "funcName", "funcType", "guidBhvtypeDef"
 			});
 			if(StringUtils.isNotEmpty(validate)) {
-				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_UPDATE, BasicUtil.wrap(validate, AcFunc.TABLE_NAME));
+				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_UPDATE, wrap(validate, AcFunc.TABLE_NAME));
 			}
 			acFuncService.update(acFunc);
 			return  acFunc;
-		} catch (AppManagementException e) {
+		} catch (ToolsRuntimeException e) {
 			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_UPDATE, BasicUtil.wrap(AcFunc.TABLE_NAME, e));
+			throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_UPDATE, wrap(AcFunc.TABLE_NAME, e));
 		}
 	}
 
@@ -591,7 +594,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNC,
-					BasicUtil.wrap(e.getCause().getMessage()), "查询功能失败！{0}");
+					wrap(e), "查询功能失败！{0}");
 		}
 		return acFuncList;
 	}
@@ -613,7 +616,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNC,
-					BasicUtil.wrap(e.getCause().getMessage()), "查询功能失败！{0}");
+					wrap(e), "查询功能失败！{0}");
 		}
 		if(acFuncList.size()>0){
 			return acFuncList.get(0);
@@ -638,7 +641,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNC,
-					BasicUtil.wrap(e.getCause().getMessage()), "查询功能失败！{0}");
+					wrap(e), "查询功能失败！{0}");
 		}
 		return acFuncList;
 	};
@@ -685,7 +688,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_MENU,
-					BasicUtil.wrap(e.getCause().getMessage()), "新增菜单失败！{0}");
+					wrap(e), "新增菜单失败！{0}");
 		}
 		return acMenu;
 	}
@@ -708,7 +711,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHEN_DELETE_AC_MENU,
-					BasicUtil.wrap(e.getCause().getMessage()), "删除菜单失败！{0}");
+					wrap(e), "删除菜单失败！{0}");
 		}
 	}
 
@@ -730,7 +733,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHEN_UPDATE_AC_MENU,
-					BasicUtil.wrap(e.getCause().getMessage()), "更新菜单失败！{0}");
+					wrap(e), "更新菜单失败！{0}");
 		}
 	}
 
@@ -749,7 +752,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_MENU,
-					BasicUtil.wrap(e.getCause().getMessage()), "查询菜单失败！{0}");
+					wrap(e), "查询菜单失败！{0}");
 		}
 		return acMenuList;
 	}
@@ -761,27 +764,27 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	@Override
 	public AcFuncResource createAcFuncResource(AcFuncResource acFuncResource) throws AppManagementException {
 		if(acFuncResource == null) {
-			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("AcFuncResource", AcFuncResource.TABLE_NAME));
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, wrap("AcFuncResource", AcFuncResource.TABLE_NAME));
 		}
 		try {
 			String validate = BeanFieldValidateUtil.checkObjFieldNotRequired(acFuncResource, new String[]{"memo"});
 			if (StringUtils.isNotEmpty(validate)) {
-				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, BasicUtil.wrap(validate, AcFuncResource.TABLE_NAME));
+				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, wrap(validate, AcFuncResource.TABLE_NAME));
 			}
 			if(acFuncResourceService.count(
 					new WhereCondition().andEquals(AcFuncResource.COLUMN_GUID_FUNC, acFuncResource.getGuidFunc())
 					.andEquals(AcFuncResource.COLUMN_ATTR_KEY, acFuncResource.getAttrKey())) > 0) {
-				throw new AppManagementException(ExceptionCodes.DUPLICATE_WHEN_INSERT, BasicUtil.wrap(acFuncResource.getAttrKey(), AcFuncResource.TABLE_NAME));
+				throw new AppManagementException(ExceptionCodes.DUPLICATE_WHEN_INSERT, wrap(acFuncResource.getAttrKey(), AcFuncResource.TABLE_NAME));
 			}
 			acFuncResourceService.insert(acFuncResource);
 			return  acFuncResource;
-		} catch (AppManagementException e) {
+		} catch (ToolsRuntimeException e) {
 			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
 					ExceptionCodes.FAILURE_WHEN_INSERT,
-					BasicUtil.wrap(AcFuncResource.TABLE_NAME, e));
+					wrap(AcFuncResource.TABLE_NAME, e));
 		}
 	}
 
@@ -792,7 +795,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	@Override
 	public List<AcFuncResource> deleteAcFuncResource(List<AcFuncResource> acFuncResourceList) throws AppManagementException {
 		if(CollectionUtils.isEmpty(acFuncResourceList)) {
-			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, BasicUtil.wrap("acFuncResourceList", AcFuncResource.TABLE_NAME));
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, wrap("acFuncResourceList", AcFuncResource.TABLE_NAME));
 
 		}
 		try {
@@ -803,34 +806,34 @@ public class ApplicationRServiceImpl extends BaseRService implements
 						for (AcFuncResource acFuncResource : acFuncResourceList) {
 							if (acFuncResource == null) {
 								throw new AppManagementException(
-										ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, BasicUtil.wrap("acFuncResource", AcFuncResource.TABLE_NAME)
+										ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, wrap("acFuncResource", AcFuncResource.TABLE_NAME)
 								);
 							}
 							String validate = BeanFieldValidateUtil.checkObjFieldRequired(acFuncResource, new String[]{"guidFunc", "attrKey"});
 							if (StringUtils.isNotEmpty(validate)) {
-								throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_DELETE, BasicUtil.wrap(validate, AcFuncResource.TABLE_NAME));
+								throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_DELETE, wrap(validate, AcFuncResource.TABLE_NAME));
 							}
 							acFuncResourceService.deleteByCondition(new WhereCondition().andEquals(AcFuncResource.COLUMN_GUID_FUNC, acFuncResource.getGuidFunc())
 									.andEquals(AcFuncResource.COLUMN_ATTR_KEY, acFuncResource.getAttrKey()));
 						}
-					} catch (AppManagementException ae) {
+					} catch (ToolsRuntimeException ae) {
 						status.setRollbackOnly();
 						throw ae;
 					} catch (Exception e) {
 						status.setRollbackOnly();
 						e.printStackTrace();
 						throw new AppManagementException(
-								ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap(AcFuncResource.TABLE_NAME, e));
+								ExceptionCodes.FAILURE_WHEN_DELETE, wrap(AcFuncResource.TABLE_NAME, e));
 					}
 				}
 			});
 			return  acFuncResourceList;
-		} catch (AppManagementException ae) {
+		} catch (ToolsRuntimeException ae) {
 			throw ae;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap(AcFuncResource.TABLE_NAME, e));
+					ExceptionCodes.FAILURE_WHEN_DELETE, wrap(AcFuncResource.TABLE_NAME, e));
 		}
 	}
 
@@ -841,23 +844,23 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	@Override
 	public AcFuncResource updateAcFuncResource(AcFuncResource acFuncResource) throws AppManagementException {
 		if(acFuncResource == null) {
-			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap("AcFuncResource", AcFuncResource.TABLE_NAME));
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, wrap("AcFuncResource", AcFuncResource.TABLE_NAME));
 		}
 		try {
 			String validate = BeanFieldValidateUtil.checkObjFieldNotRequired(acFuncResource, new String[]{"memo"});
 			if (StringUtils.isNotEmpty(validate)) {
-				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_UPDATE, BasicUtil.wrap(validate, AcFuncResource.TABLE_NAME));
+				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_UPDATE, wrap(validate, AcFuncResource.TABLE_NAME));
 			}
 			acFuncResourceService.updateByCondition(new WhereCondition().andEquals(AcFuncResource.COLUMN_GUID_FUNC, acFuncResource.getGuidFunc())
 					.andEquals(AcFuncResource.COLUMN_ATTR_KEY, acFuncResource.getAttrKey()), acFuncResource);
 			return  acFuncResource;
-		} catch (AppManagementException e) {
+		} catch (ToolsRuntimeException e) {
 			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
 					ExceptionCodes.FAILURE_WHEN_INSERT,
-					BasicUtil.wrap(AcFuncResource.TABLE_NAME, e));
+					wrap(AcFuncResource.TABLE_NAME, e));
 		}
 	}
 
@@ -869,7 +872,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	@Override
 	public List<AcFuncResource> queryAcFuncResource(String funcGuid) throws AppManagementException {
 		if(StringUtils.isBlank(funcGuid)) {
-			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap(AcFuncResource.COLUMN_GUID_FUNC, AcFuncResource.TABLE_NAME));
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap(AcFuncResource.COLUMN_GUID_FUNC, AcFuncResource.TABLE_NAME));
 		}
 		try {
 			List<AcFuncResource> acFuncResourceList = acFuncResourceService.query(new WhereCondition().andEquals(AcFuncResource.COLUMN_GUID_FUNC, funcGuid));
@@ -878,7 +881,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ExceptionCodes.FAILURE_WHEN_QUERY,
-					BasicUtil.wrap(AcFuncResource.TABLE_NAME, e));
+					wrap(AcFuncResource.TABLE_NAME, e));
 		}
 	}
 
@@ -899,7 +902,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNCRESOURCE,
-					BasicUtil.wrap(e.getCause().getMessage()), "查询功能对应资源失败！{0}");
+					wrap(e), "查询功能对应资源失败！{0}");
 		}
 		if(acFuncResourceList.size()>0){
 			return acFuncResourceList.get(0);
@@ -926,7 +929,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHEN_CREATE_AC_OPERATOR,
-					BasicUtil.wrap(e.getCause().getMessage()), "增加操作员失败！{0}");
+					wrap(e), "增加操作员失败！{0}");
 		}
 	}
 		
@@ -950,7 +953,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHEN_DELETE_AC_OPERATOR,
-					BasicUtil.wrap(e.getCause().getMessage()), "删除操作员失败！{0}");
+					wrap(e), "删除操作员失败！{0}");
 		}
 	}
 
@@ -972,7 +975,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHEN_UPDATE_AC_OPERATOR,
-					BasicUtil.wrap(e.getCause().getMessage()), "更新操作员失败！{0}");
+					wrap(e), "更新操作员失败！{0}");
 		}
 	}
 
@@ -992,7 +995,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNCRESOURCE,
-					BasicUtil.wrap(e.getCause().getMessage()), "查询功能对应资源失败！{0}");
+					wrap(e), "查询功能对应资源失败！{0}");
 		}
 		return acOperatorList;
 	}
@@ -1016,7 +1019,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_FUNCBEHAVIOR,
-					BasicUtil.wrap(e.getCause().getMessage()), "增加功能操作行为失败！{0}");
+					wrap(e), "增加功能操作行为失败！{0}");
 		}
 	}
 
@@ -1039,7 +1042,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_FUNCBEHAVIOR,
-					BasicUtil.wrap(e.getCause().getMessage()), "删除功能操作行为失败！{0}");
+					wrap(e), "删除功能操作行为失败！{0}");
 		}
 	}
 
@@ -1061,7 +1064,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_FUNCBEHAVIOR,
-					BasicUtil.wrap(e.getCause().getMessage()), "更新功能操作行为失败！{0}");
+					wrap(e), "更新功能操作行为失败！{0}");
 		}
 	}
 
@@ -1080,7 +1083,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNCBEHAVIOR,
-					BasicUtil.wrap(e.getCause().getMessage()), "查询功能操作行为失败！{0}");
+					wrap(e), "查询功能操作行为失败！{0}");
 		}
 		return acFuncBehaviorList;
 	}
@@ -1101,7 +1104,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNC,
-					BasicUtil.wrap(e.getCause().getMessage()), "查询功能失败！{0}");
+					wrap(e), "查询功能失败！{0}");
 		}
 		return acFuncVoList;
 	}
@@ -1116,7 +1119,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNC,
-					BasicUtil.wrap(e.getCause().getMessage()), "查询功能失败！{0}");
+					wrap(e), "查询功能失败！{0}");
 		}
 		return acFuncList;
 	}
@@ -1150,7 +1153,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_IMPORT_AC_FUNC,
-					BasicUtil.wrap(e.getCause().getMessage()), "导入功能失败！{0}");
+					wrap(e), "导入功能失败！{0}");
 		}
 	}
 
@@ -1174,7 +1177,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_BHVTYPE_DEF,
-					BasicUtil.wrap(e.getCause().getMessage()), "新增行为类型失败！{0}");
+					wrap(e), "新增行为类型失败！{0}");
 		}
 	}
 
@@ -1197,7 +1200,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_BHVTYPE_DEF,
-					BasicUtil.wrap(e.getCause().getMessage()), "删除行为类型失败！{0}");
+					wrap(e), "删除行为类型失败！{0}");
 		}
 	}
 
@@ -1220,7 +1223,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_BHVTYPE_DEF,
-					BasicUtil.wrap(e.getCause().getMessage()), "修改行为类型失败！{0}");
+					wrap(e), "修改行为类型失败！{0}");
 		}
 	}
 
@@ -1239,7 +1242,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_BHVTYPE_DEF,
-					BasicUtil.wrap(e.getCause().getMessage()), "查询行为类型失败！{0}");
+					wrap(e), "查询行为类型失败！{0}");
 		}
 		return acBhvtypeDef;
 	}
@@ -1265,7 +1268,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_BHV_DEF,
-					BasicUtil.wrap(e.getCause().getMessage()), "新增功能操作行为失败！{0}");
+					wrap(e), "新增功能操作行为失败！{0}");
 		}
 	}
 
@@ -1296,7 +1299,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 					e.printStackTrace();
 					throw new AppManagementException(
 							ACExceptionCodes.FAILURE_WHRN_DELETE_AC_BHV_DEF,
-							BasicUtil.wrap(e.getCause().getMessage()), "删除功能操作行为失败！{0}");
+							wrap(e), "删除功能操作行为失败！{0}");
 				}
 			}
 		});
@@ -1327,7 +1330,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_BHV_DEF,
-					BasicUtil.wrap(e.getCause().getMessage()), "修改功能操作行为失败！{0}");
+					wrap(e), "修改功能操作行为失败！{0}");
 		}
 	}
 
@@ -1348,7 +1351,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_BHV_DEF,
-					BasicUtil.wrap(e.getCause().getMessage()), "查询功能操作行为失败！{0}");
+					wrap(e), "查询功能操作行为失败！{0}");
 		}
 		return acBhvDef;
 	}
@@ -1366,17 +1369,17 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		if(StringUtil.isEmpty(funcGuid)) {
 			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, "功能GUID为空{0}");
 		}
-		List<AcBhvtypeDef> acBhvtypeDefList = new ArrayList<>();
 		try {
-			WhereCondition wc =new WhereCondition();
+			List<AcBhvtypeDef> acBhvtypeDefList = new ArrayList<>();
 			acBhvtypeDefList = applicationService.queryBhvtypeDefByFunc(funcGuid);
+			return acBhvtypeDefList;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_BHVTYPE_DEF,
-					BasicUtil.wrap(e.getCause().getMessage()), "查询行为类型失败！{0}");
+					wrap(e), "查询行为类型失败！{0}");
 		}
-		return acBhvtypeDefList;
+
 	}
 
 	/**
@@ -1399,7 +1402,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_BHV_DEF,
-					BasicUtil.wrap(e.getCause().getMessage()), "查询操作行为失败！{0}");
+					wrap(e), "查询操作行为失败！{0}");
 		}
 		return acBhvDefList;
 	}
@@ -1441,7 +1444,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 					e.printStackTrace();
 					throw new AppManagementException(
 							ACExceptionCodes.FAILURE_WHEN_CREATE_AC_FUNC_BHV,
-							BasicUtil.wrap(e.getCause().getMessage()), "新增功能行为定义失败！{0}");
+							wrap(e), "新增功能行为定义失败！{0}");
 				}
 			}
 		});
@@ -1458,24 +1461,40 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	@Override
 	public AcFunc updateFuncBhvType(String funcGuid, String bhvtypeDefGuid) throws AppManagementException {
 		if (StringUtils.isBlank(funcGuid)) {
-			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap(AcFunc.COLUMN_GUID, "updateFuncBhvType"));
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, wrap(AcFunc.COLUMN_GUID, "updateFuncBhvType"));
 		}
 		if (StringUtils.isBlank(funcGuid)) {
-			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap(AcFunc.COLUMN_GUID_BHVTYPE_DEF, "updateFuncBhvType"));
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, wrap(AcFunc.COLUMN_GUID_BHVTYPE_DEF, "updateFuncBhvType"));
 		}
 		try {
 			AcFunc acFunc = acFuncService.loadByGuid(funcGuid);
 			if (acFunc == null) {
-				throw new AppManagementException(ExceptionCodes.NOT_FOUND_WHEN_UPDATE, BasicUtil.wrap(BasicUtil.surroundBracketsWithLFStr(AcFunc.COLUMN_GUID, funcGuid), AcFunc.TABLE_NAME));
+				throw new AppManagementException(ExceptionCodes.NOT_FOUND_WHEN_UPDATE, wrap(BasicUtil.surroundBracketsWithLFStr(AcFunc.COLUMN_GUID, funcGuid), AcFunc.TABLE_NAME));
 			}
 			acFunc.setGuidBhvtypeDef(bhvtypeDefGuid);
-			acFuncService.update(acFunc);
+			// 删除之前该功能类别下的所有行为定义
+			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+				@Override
+				public void doInTransactionWithoutResult(TransactionStatus status) {
+					try {
+						acFuncBhvService.deleteByCondition(new WhereCondition().andEquals(AcFuncBhv.COLUMN_GUID_FUNC, funcGuid));
+						acFuncService.update(acFunc);
+					} catch (Exception e) {
+						status.setRollbackOnly();
+						e.printStackTrace();
+						throw new AppManagementException(
+								ExceptionCodes.FAILURE_WHEN_CALL,
+								wrap("updateFuncBhvType", e));
+					}
+				}
+			});
 			return acFunc;
-		} catch (AppManagementException e) {
+		} catch (ToolsRuntimeException e) {
+			logger.error("updateFuncBhvType exception:", e);
 			throw e;
 		} catch (Exception e) {
 			logger.error("updateFuncBhvType exception:", e);
-			throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_UPDATE, BasicUtil.wrap(AcFunc.TABLE_NAME, e));
+			throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_CALL, wrap("updateFuncBhvType", e));
 		}
 	}
 
@@ -1489,12 +1508,12 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	public List<Map> queryAllBhvDefForFunc(String funcGuid) throws AppManagementException{
 		// 校验传入参数
 		if(StringUtils.isBlank(funcGuid)) {
-			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap(AcFuncBhv.COLUMN_GUID_FUNC, "queryAllBhvDefForFunc"));
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap(AcFuncBhv.COLUMN_GUID_FUNC, "queryAllBhvDefForFunc"));
 		}
 		try {
 			return applicationService.queryAllBhvDefForFunc(funcGuid);
 		} catch (Exception e) {
-			throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap("queryAllBhvDefForFunc", e));
+			throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_QUERY, wrap("queryAllBhvDefForFunc", e));
 		}
 	}
 
@@ -1523,7 +1542,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHEN_CREATE_AC_FUNC_BHV,
-					BasicUtil.wrap(e.getCause().getMessage()), "删除功能行为定义失败！{0}");
+					wrap(e), "删除功能行为定义失败！{0}");
 		}
 	}
 
@@ -1537,10 +1556,10 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	public void enableApp(String appGuid, Date openDate) {
 		// 校验传入参数
 		if(StringUtil.isEmpty(appGuid)) {
-			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
+			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("appGuid"));
 		}
 		if(null == openDate) {
-			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("openDate"));
+			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("openDate"));
 		}
 		try {
 			AcApp app = new AcApp();
@@ -1552,7 +1571,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHEN_ENABLE_ACAPP,
-					BasicUtil.wrap(e.getCause().getMessage()));
+					wrap(e));
 		}
 	}
 
@@ -1565,7 +1584,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	public void disableApp(String appGuid) {
 		// 校验传入参数
 		if(StringUtil.isEmpty(appGuid)) {
-			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
+			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("appGuid"));
 		}
 		try {
 			AcApp app = new AcApp();
@@ -1577,7 +1596,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHEN_DISABLE_ACAPP,
-					BasicUtil.wrap(e.getCause().getMessage()));
+					wrap(e));
 		}
 	}
 
@@ -1590,7 +1609,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	public List<AcFunc> queryFuncListInApp(String appGuid) {
 		// 校验传入参数
 		if(StringUtil.isEmpty(appGuid)) {
-			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
+			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("appGuid"));
 		}
 		try {
 			return applicationService.queryFuncListInApp(appGuid);
@@ -1598,7 +1617,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			e.printStackTrace();
 			throw new AppManagementException(
 					ACExceptionCodes.FAILURE_WHRN_QUERY_AC_FUNC,
-					BasicUtil.wrap(e.getCause().getMessage()));
+					wrap(e));
 		}
 	}
 
@@ -1614,21 +1633,21 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		try {
 			// 校验传入参数
 			if(StringUtil.isEmpty(userId)) {
-				throw new AppManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap("USER_ID", "AC_APP"));
+				throw new AppManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, wrap("USER_ID", "AC_APP"));
 			}
 			/** 查询用户对应员工*/
 			List<OmEmployee> employees = omEmployeeService.query(new WhereCondition().andEquals(OmEmployee.COLUMN_USER_ID, userId));
 			if (employees.size() != 1) {
-				throw new AppManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap(userId, "AC_EMPLOYEE"));
+				throw new AppManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, wrap(userId, "AC_EMPLOYEE"));
 			}
 			return applicationService.queryEmpAllApp(employees.get(0).getGuid());
-		} catch (AppManagementException ae) {
+		} catch (ToolsRuntimeException ae) {
 			throw ae;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
 					ExceptionCodes.FAILURE_WHEN_QUERY,
-					BasicUtil.wrap("AC_APP", e.getCause().getMessage()));
+					wrap("AC_APP", e));
 		}
 	}
 

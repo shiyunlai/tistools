@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.tis.tools.base.WhereCondition;
+import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.common.utils.StringUtil;
 import org.tis.tools.core.exception.ExceptionCodes;
@@ -85,7 +86,7 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             e.printStackTrace();
             throw new MenuManagementException(
                     ACExceptionCodes.FAILURE_WHRN_QUERY_AC_APP,
-                    BasicUtil.wrap(e.getCause().getMessage()));
+                    BasicUtil.wrap(e));
         }
         return acAppList;
     }
@@ -107,13 +108,13 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             return acMenuService.query(new WhereCondition()
                     .andEquals("GUID_APP", GUID_APP)
                     .andIsNull("GUID_PARENTS"));
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
                     ACExceptionCodes.FAILURE_WHEN_QUERY_ROOT_MENU,
-                    BasicUtil.wrap(e.getCause().getMessage()));
+                    BasicUtil.wrap(e));
         }
 
     }
@@ -132,13 +133,13 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                 throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID_MENU"));
             }
             return acMenuService.query(new WhereCondition().andEquals("GUID_PARENTS", GUID_MENU));
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
                     ACExceptionCodes.FAILURE_WHEN_QUERY_CHILD_MENU,
-                    BasicUtil.wrap(e.getCause().getMessage()));
+                    BasicUtil.wrap(e));
         }
     }
 
@@ -180,13 +181,13 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             acMenu.setDisplayOrder(new BigDecimal("0"));
             acMenuService.insert(acMenu);
             return acMenu;
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
                     ExceptionCodes.FAILURE_WHEN_INSERT,
-                    BasicUtil.wrap("AC_MENU", e.getCause().getMessage()));
+                    BasicUtil.wrap("AC_MENU", e));
         }
     }
 
@@ -231,13 +232,13 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             acOperatorMenu.setDisplayOrder(new BigDecimal("0"));
             acOperatorMenuService.insert(acOperatorMenu);
             return acOperatorMenu;
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
                     ExceptionCodes.FAILURE_WHEN_INSERT,
-                    BasicUtil.wrap("AC_OPERATOR_MENU", e.getCause().getMessage()));
+                    BasicUtil.wrap("AC_OPERATOR_MENU", e));
         }
     }
 
@@ -292,13 +293,13 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             acMenu.setDisplayOrder(new BigDecimal(acMenuService.count(new WhereCondition().andEquals(AcMenu.COLUMN_GUID_PARENTS, acMenu.getGuidParents()))));
             acMenuService.insert(acMenu);
             return acMenu;
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
                     ExceptionCodes.FAILURE_WHEN_INSERT,
-                    BasicUtil.wrap("AC_MENU", e.getCause().getMessage()));
+                    BasicUtil.wrap("AC_MENU", e));
         }
     }
 
@@ -354,13 +355,13 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
 
             acOperatorMenuService.insert(acOperatorMenu);
             return  acOperatorMenu;
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
                     ExceptionCodes.FAILURE_WHEN_INSERT,
-                    BasicUtil.wrap("AC_OPERATOR_MENU", e.getCause().getMessage()));
+                    BasicUtil.wrap("AC_OPERATOR_MENU", e));
         }
     }
 
@@ -429,17 +430,17 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                         status.setRollbackOnly();
                         e.printStackTrace();
                         throw new MenuManagementException(
-                                ACExceptionCodes.FAILURE_WHEN_UPDATE_AC_MENU, BasicUtil.wrap(e.getCause().getMessage()));
+                                ACExceptionCodes.FAILURE_WHEN_UPDATE_AC_MENU, BasicUtil.wrap(e));
                     }
                 }
             });
             return acMenu;
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
-                    ACExceptionCodes.FAILURE_WHEN_UPDATE_AC_MENU, BasicUtil.wrap(e.getCause().getMessage()));
+                    ACExceptionCodes.FAILURE_WHEN_UPDATE_AC_MENU, BasicUtil.wrap(e));
         }
     }
 
@@ -488,12 +489,12 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             acMenu.setGuidRoot(operatorMenu.getGuidRoot());
             acMenu.setIsleaf(CommonConstants.NO);
             acOperatorMenuService.update(acMenu);
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
-                    ACExceptionCodes.FAILURE_WHEN_UPDATE_AC_MENU, BasicUtil.wrap(e.getCause().getMessage()));
+                    ACExceptionCodes.FAILURE_WHEN_UPDATE_AC_MENU, BasicUtil.wrap(e));
         }
     }
 
@@ -540,17 +541,17 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                         status.setRollbackOnly();
                         e.printStackTrace();
                         throw new MenuManagementException(
-                                ACExceptionCodes.FAILURE_WHEN_DELETE_AC_MENU, BasicUtil.wrap(e.getCause().getMessage()));
+                                ACExceptionCodes.FAILURE_WHEN_DELETE_AC_MENU, BasicUtil.wrap(e));
                     }
                 }
             });
             return acMenu;
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
-                    ACExceptionCodes.FAILURE_WHEN_DELETE_AC_MENU, BasicUtil.wrap(e.getCause().getMessage()));
+                    ACExceptionCodes.FAILURE_WHEN_DELETE_AC_MENU, BasicUtil.wrap(e));
         }
     }
 
@@ -592,16 +593,16 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                         status.setRollbackOnly();
                         e.printStackTrace();
                         throw new MenuManagementException(
-                                ACExceptionCodes.FAILURE_WHEN_DELETE_AC_MENU, BasicUtil.wrap(e.getCause().getMessage()));
+                                ACExceptionCodes.FAILURE_WHEN_DELETE_AC_MENU, BasicUtil.wrap(e));
                     }
                 }
             });
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
-                    ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap("AC_OPERATOR_MENU", e.getCause().getMessage()));
+                    ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap("AC_OPERATOR_MENU", e));
         }
     }
 
@@ -664,13 +665,13 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             }
             return createMenuTree(menuList);
 
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
                     ExceptionCodes.FAILURE_WHEN_QUERY,
-                    BasicUtil.wrap("AC_MENU", e.getCause().getMessage()));
+                    BasicUtil.wrap("AC_MENU", e));
         }
     }
 
@@ -726,13 +727,13 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             }*/
             return createMenuTree(menuList);
 
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
                     ExceptionCodes.FAILURE_WHEN_QUERY,
-                    BasicUtil.wrap("AC_MENU", e.getCause().getMessage()));
+                    BasicUtil.wrap("AC_MENU", e));
         }
     }
 
@@ -773,13 +774,13 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             } else {
                 return new AcMenuDetail();
             }
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
                     ExceptionCodes.FAILURE_WHEN_QUERY,
-                    BasicUtil.wrap("AC_OPERATOR_MENU", e.getCause().getMessage()));
+                    BasicUtil.wrap("AC_OPERATOR_MENU", e));
         }
     }
 
@@ -861,13 +862,13 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                 return createOperatorMenuTree(menuList);
             }
             return new AcMenuDetail();
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
                     ExceptionCodes.FAILURE_WHEN_QUERY,
-                    BasicUtil.wrap("AC_OPERATOR_MENU", e.getCause().getMessage()));
+                    BasicUtil.wrap("AC_OPERATOR_MENU", e));
         }
     }
 
@@ -984,13 +985,13 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
 //            }
 
             return null;
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
                     ACExceptionCodes.FAILURE_WHEN_LOGIN,
-                    BasicUtil.wrap(e.getCause().getMessage()));
+                    BasicUtil.wrap(e));
         }
     }
 
@@ -1091,17 +1092,17 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                         status.setRollbackOnly();
                         e.printStackTrace();
                         throw new MenuManagementException(
-                                ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap("AC_OPERATOR_MENU", e.getCause().getMessage()));
+                                ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap("AC_OPERATOR_MENU", e));
                     }
                 }
             });
 
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
-                    ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap("AC_OPERATOR_MENU", e.getCause().getMessage()));
+                    ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap("AC_OPERATOR_MENU", e));
         }
     }
 
@@ -1184,17 +1185,17 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                         status.setRollbackOnly();
                         e.printStackTrace();
                         throw new MenuManagementException(
-                                ExceptionCodes.FAILURE_WHEN_UPDATE, BasicUtil.wrap("AC_OPERATOR_MENU", e.getCause().getMessage()));
+                                ExceptionCodes.FAILURE_WHEN_UPDATE, BasicUtil.wrap("AC_OPERATOR_MENU", e));
                     }
                 }
             });
 
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
-                    ExceptionCodes.FAILURE_WHEN_UPDATE, BasicUtil.wrap("AC_OPERATOR_MENU", e.getCause().getMessage()));
+                    ExceptionCodes.FAILURE_WHEN_UPDATE, BasicUtil.wrap("AC_OPERATOR_MENU", e));
         }
     }
     /**
@@ -1278,17 +1279,17 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                         status.setRollbackOnly();
                         e.printStackTrace();
                         throw new MenuManagementException(
-                                ExceptionCodes.FAILURE_WHEN_UPDATE, BasicUtil.wrap("AC_MENU", e.getCause().getMessage()));
+                                ExceptionCodes.FAILURE_WHEN_UPDATE, BasicUtil.wrap("AC_MENU", e));
                     }
                 }
             });
 
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
-                    ExceptionCodes.FAILURE_WHEN_UPDATE, BasicUtil.wrap("AC_MENU", e.getCause().getMessage()));
+                    ExceptionCodes.FAILURE_WHEN_UPDATE, BasicUtil.wrap("AC_MENU", e));
         }
     }
 }

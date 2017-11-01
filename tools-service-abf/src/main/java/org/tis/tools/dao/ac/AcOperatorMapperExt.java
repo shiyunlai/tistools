@@ -1,6 +1,7 @@
 package org.tis.tools.dao.ac;
 
 import org.apache.ibatis.annotations.Param;
+import org.tis.tools.model.po.ac.AcBhvDef;
 
 import java.util.List;
 import java.util.Map;
@@ -21,5 +22,36 @@ public interface AcOperatorMapperExt {
      */
     List<Map> queryOperatorFuncDetail(@Param("operatorGuid") String operatorGuid);
 
+    /**
+     * 查询操作员已授权功能行为
+     * @param roleGuid 角色GUID
+     * @param operatorGuid 操作员GUID
+     * @param funcGuid 功能GUID
+     * @return
+     */
+    List<AcBhvDef> getAuthOperatorFuncBhv(
+            @Param("roleGuid")String roleGuid,
+            @Param("operatorGuid")String operatorGuid,
+            @Param("funcGuid")String funcGuid);
+
+    /**
+     * 查询操作员已授权功能中特别禁止行为
+     * @param operatorGuid 操作员GUID
+     * @param funcGuid 功能GUID
+     * @return
+     */
+    List<AcBhvDef> getAuthOperatorFuncFbdBhv(
+            @Param("operatorGuid")String operatorGuid,
+            @Param("funcGuid")String funcGuid);
+
+    /**
+     * 查询操作员未授权功能中特别允许行为
+     * @param operatorGuid 操作员GUID
+     * @param funcGuid 功能GUID
+     * @return
+     */
+    List<AcBhvDef> getUnauthOperatorFuncPmtBhv(
+            @Param("operatorGuid")String operatorGuid,
+            @Param("funcGuid")String funcGuid);
 
 }

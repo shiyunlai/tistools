@@ -6,6 +6,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.util.CollectionUtils;
 import org.tis.tools.base.WhereCondition;
+import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.common.utils.BeanFieldValidateUtil;
 import org.tis.tools.core.exception.ExceptionCodes;
@@ -94,7 +95,7 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
         } catch (Exception e) {
             throw new RoleManagementException(
                     ExceptionCodes.FAILURE_WHEN_QUERY,
-                    BasicUtil.wrap("AC_ROLE", e.getCause().getMessage()));
+                    BasicUtil.wrap("AC_ROLE", e));
         }
     }
 
@@ -115,7 +116,7 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
         } catch (Exception e) {
             throw new RoleManagementException(
                     ExceptionCodes.FAILURE_WHEN_QUERY,
-                    BasicUtil.wrap("AC_ROLE", e.getCause().getMessage()));
+                    BasicUtil.wrap("AC_ROLE", e));
         }
     }
 
@@ -162,13 +163,13 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
             acRole.setGuid(GUID.role());
             acRoleService.insert(acRole);
             return acRole;
-        } catch (RoleManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RoleManagementException(
                     ExceptionCodes.FAILURE_WHEN_INSERT,
-                    BasicUtil.wrap("AC_ROLE", e.getCause().getMessage()));
+                    BasicUtil.wrap("AC_ROLE", e));
         }
     }
 
@@ -218,13 +219,13 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
             }
             acRoleService.update(acRole);
             return acRole;
-        } catch (RoleManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RoleManagementException(
                     ExceptionCodes.FAILURE_WHEN_UPDATE,
-                    BasicUtil.wrap("AC_ROLE", e.getCause().getMessage()));
+                    BasicUtil.wrap("AC_ROLE", e));
         }
     }
 
@@ -285,16 +286,16 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                         status.setRollbackOnly();
                         e.printStackTrace();
                         throw new RoleManagementException(
-                                ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap("AC_ROLE", e.getCause().getMessage()));
+                                ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap("AC_ROLE", e));
                     }
                 }
             });
-        } catch (RoleManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RoleManagementException(
-                    ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap("AC_ROLE", e.getCause().getMessage()));
+                    ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap("AC_ROLE", e));
         }
     }
 
@@ -327,13 +328,13 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                 throw new RoleManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, BasicUtil.wrap("GUID_ROLE", "AC_ROLE_FUNC"));
             }
             acRoleFuncService.insert(acRoleFunc);
-        } catch (RoleManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RoleManagementException(
                     ExceptionCodes.FAILURE_WHEN_INSERT,
-                    BasicUtil.wrap("AC_ROLE_FUNC", e.getCause().getMessage()));
+                    BasicUtil.wrap("AC_ROLE_FUNC", e));
         }
     }
 
@@ -361,12 +362,12 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                 throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, BasicUtil.wrap("GUID_FUNC", "AC_ROLE_FUNC"));
             }
             acRoleFuncService.deleteByCondition(new WhereCondition().andEquals("GUID_ROLE", roleGuid).andEquals("GUID_FUNC", funcGuid));
-        } catch (RoleManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RoleManagementException(
-                    ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap("AC_ROLE_FUNC", e.getCause().getMessage()));
+                    ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap("AC_ROLE_FUNC", e));
         }
     }
 
@@ -394,12 +395,12 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                 throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, BasicUtil.wrap("GUID_APP", "AC_ROLE_FUNC"));
             }
             acRoleFuncService.deleteByCondition(new WhereCondition().andEquals("GUID_ROLE", roleGuid).andEquals("GUID_APP", appGuid));
-        } catch (RoleManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RoleManagementException(
-                    ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap("AC_ROLE_FUNC", e.getCause().getMessage()));
+                    ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap("AC_ROLE_FUNC", e));
         }
     }
 
@@ -426,7 +427,7 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
         } catch (Exception e) {
             throw new RoleManagementException(
                     ExceptionCodes.FAILURE_WHEN_QUERY,
-                    BasicUtil.wrap("AC_ROLE_FUNC", e.getCause().getMessage()));
+                    BasicUtil.wrap("AC_ROLE_FUNC", e));
         }
     }
 
@@ -470,13 +471,13 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
             }
             acPartyRoleService.insert(acPartyRole);
             return acPartyRole;
-        } catch (RoleManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RoleManagementException(
                     ExceptionCodes.FAILURE_WHEN_INSERT,
-                    BasicUtil.wrap("AC_PARTY_ROLE", e.getCause().getMessage()));
+                    BasicUtil.wrap("AC_PARTY_ROLE", e));
         }
     }
 
@@ -504,12 +505,12 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                 throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, BasicUtil.wrap("GUID_PARTY", "AC_PARTY_ROLE"));
             }
             acPartyRoleService.deleteByCondition(new WhereCondition().andEquals("GUID_ROLE", roleGuid).andEquals("GUID_PARTY", partyGuid));
-        } catch (RoleManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RoleManagementException(
-                    ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap("AC_PARTY_ROLE", e.getCause().getMessage()));
+                    ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap("AC_PARTY_ROLE", e));
         }
     }
 
@@ -539,12 +540,12 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                 throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, BasicUtil.wrap("GUID_PARTY LIST", "AC_PARTY_ROLE"));
             }
             acPartyRoleService.deleteByCondition(new WhereCondition().andEquals("GUID_ROLE", roleGuid).andIn("GUID_PARTY", partyGuidList));
-        } catch (RoleManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RoleManagementException(
-                    ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap("AC_PARTY_ROLE", e.getCause().getMessage()));
+                    ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap("AC_PARTY_ROLE", e));
         }
     }
 
@@ -575,7 +576,7 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
         } catch (Exception e) {
             throw new RoleManagementException(
                     ExceptionCodes.FAILURE_WHEN_QUERY,
-                    BasicUtil.wrap("AC_PARTY_ROLE", e.getCause().getMessage()));
+                    BasicUtil.wrap("AC_PARTY_ROLE", e));
         }
     }
 
@@ -606,7 +607,7 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
         } catch (Exception e) {
             throw new RoleManagementException(
                     ExceptionCodes.FAILURE_WHEN_QUERY,
-                    BasicUtil.wrap("AC_PARTY_ROLE", e.getCause().getMessage()));
+                    BasicUtil.wrap("AC_PARTY_ROLE", e));
         }
     }
 
@@ -644,13 +645,13 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                 throw new RoleManagementException(ExceptionCodes.DUPLICATE_WHEN_INSERT, BasicUtil.wrap("GUID_OPERATOR", "AC_OPERATOR_ROLE"));
             }
             acOperatorRoleService.insert(acOperatorRole);
-        } catch (RoleManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RoleManagementException(
                     ExceptionCodes.FAILURE_WHEN_INSERT,
-                    BasicUtil.wrap("AC_OPERATOR_ROLE", e.getCause().getMessage()));
+                    BasicUtil.wrap("AC_OPERATOR_ROLE", e));
         }
     }
 
@@ -677,7 +678,7 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
         } catch (Exception e) {
             throw new RoleManagementException(
                     ExceptionCodes.FAILURE_WHEN_QUERY,
-                    BasicUtil.wrap("AC_OPERATOR_ROLE", e.getCause().getMessage()));
+                    BasicUtil.wrap("AC_OPERATOR_ROLE", e));
         }
     }
 
@@ -698,7 +699,7 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
         } catch (Exception e) {
             throw new RoleManagementException(
                     ExceptionCodes.FAILURE_WHEN_QUERY,
-                    BasicUtil.wrap("AC_OPERATOR_ROLE", e.getCause().getMessage()));
+                    BasicUtil.wrap("AC_OPERATOR_ROLE", e));
         }
     }
 
@@ -726,12 +727,12 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                 throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, BasicUtil.wrap("GUID_OPERATOR", "AC_OPERATOR_ROLE"));
             }
             acOperatorRoleService.deleteByCondition(new WhereCondition().andEquals("GUID_ROLE", roleGuid).andEquals("GUID_OPERATOR", operatorGuid));
-        } catch (RoleManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RoleManagementException(
-                    ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap("AC_OPERATOR_ROLE", e.getCause().getMessage()));
+                    ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap("AC_OPERATOR_ROLE", e));
         }
     }
 
@@ -809,12 +810,12 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                 acRoleList = acRoleService.query(new WhereCondition().andIn("GUID", new ArrayList<String>(roleGuids)));
             }
             return acRoleList;
-        } catch (RoleManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RoleManagementException(
-                    ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("AC_ROLE", e.getCause().getMessage()));
+                    ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("AC_ROLE", e));
         }
     }
 
@@ -892,12 +893,12 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                 }
             }
             return acRoleList;
-        } catch (RoleManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RoleManagementException(
-                    ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("AC_ROLE", e.getCause().getMessage()));
+                    ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("AC_ROLE", e));
         }
     }
 
@@ -918,7 +919,7 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
         } catch (Exception e) {
             throw new RoleManagementException(
                     ExceptionCodes.FAILURE_WHEN_QUERY,
-                    BasicUtil.wrap("AC_ROLE_FUNC", e.getCause().getMessage()));
+                    BasicUtil.wrap("AC_ROLE_FUNC", e));
         }
     }
 
@@ -938,12 +939,12 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                 throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("GUID_EMPLOYEE", "OperatorInheritRoleList"));
             }
             return acRoleServiceExt.queryEmployeeAllPartyRoleList(employeeGuid);
-        } catch (RoleManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RoleManagementException(
-                    ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap("AC_ROLE", e.getCause().getMessage()));
+                    ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap("AC_ROLE", e));
         }
     }
 
@@ -997,12 +998,12 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                     roleIterator.remove();//这里要使用Iterator的remove方法移除当前对象，如果使用List的remove方法，会出现ConcurrentModificationException
             }
             return allRoleList;
-        } catch (RoleManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RoleManagementException(
-                    ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap("AC_ROLE", e.getCause().getMessage()));
+                    ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap("AC_ROLE", e));
         }
     }
 
@@ -1039,12 +1040,12 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                 roleList = acRoleService.query(new WhereCondition().andIn(AcRole.COLUMN_GUID, roleGuids));
             }
             return roleList;
-        } catch (RoleManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RoleManagementException(
-                    ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap("AC_ROLE", e.getCause().getMessage()));
+                    ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap("AC_ROLE", e));
         }
     }
 
@@ -1113,12 +1114,12 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                 }
             }
             return acRoleList;
-        } catch (RoleManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RoleManagementException(
-                    ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap("AC_ROLE", e.getCause().getMessage()));
+                    ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap("AC_ROLE", e));
         }
     }
 
@@ -1176,7 +1177,7 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                         }
                         acRoleBhvService.insert(acRoleBhv);
                     }
-                } catch (RoleManagementException e) {
+                } catch (ToolsRuntimeException e) {
                     status.setRollbackOnly();
                     throw e;
                 } catch (Exception e) {
@@ -1214,7 +1215,7 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                                 .andEquals(AcRoleBhv.COLUMN_GUID_ROLE, acRoleBhv.getGuidRole())
                                 .andEquals(AcRoleBhv.COLUMN_GUID_FUNC_BHV, acRoleBhv.getGuidFuncBhv()));
                     }
-                } catch (RoleManagementException e) {
+                } catch (ToolsRuntimeException e) {
                     status.setRollbackOnly();
                     throw e;
                 } catch (Exception e) {
