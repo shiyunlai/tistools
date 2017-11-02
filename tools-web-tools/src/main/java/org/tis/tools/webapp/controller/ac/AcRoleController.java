@@ -1,6 +1,5 @@
 package org.tis.tools.webapp.controller.ac;
 
-import com.alibaba.dubbo.common.json.ParseException;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.core.exception.ExceptionCodes;
@@ -24,10 +22,7 @@ import org.tis.tools.rservice.ac.exception.RoleManagementException;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.log.OperateLog;
 import org.tis.tools.webapp.log.ReturnType;
-import org.tis.tools.webapp.util.AjaxUtils;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
@@ -110,7 +105,7 @@ public class AcRoleController extends BaseController {
      * @param content
      * @return
      */
-    @RequestMapping(value = "/appQuery", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    @RequestMapping(value = "/appQuery", method = RequestMethod.POST)
     public Map<String, Object> appQuery(@RequestBody String content) {
         Map<String, Object> result = new HashMap<String, Object>();
         JSONObject jsonObj = JSONObject.parseObject(content);
@@ -153,38 +148,36 @@ public class AcRoleController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/configRoleFunc", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> addRoleFunc(@RequestBody String content) {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("configRoleFunc request : " + content);
-            }
-            JSONObject jsonObject = JSONObject.parseObject(content);
-            String roleGuid = jsonObject.getString("roleGuid");
-            String appGuid = jsonObject.getString("appGuid");
-            JSONArray funcList = jsonObject.getJSONArray("funcList");
-            transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-                @Override
-                public void doInTransactionWithoutResult(TransactionStatus status) {
-                    try {
-
-                    } catch (ToolsRuntimeException te) {
-                        throw te;
-                    } catch (Exception e) {
-                        status.setRollbackOnly();
-                        e.printStackTrace();
-                        throw new RoleManagementException(
-                                ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap("AC_FUNC_ROLE", e.getCause().getMessage()));
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        String roleGuid = jsonObject.getString("roleGuid");
+        String appGuid = jsonObject.getString("appGuid");
+        JSONArray funcList = jsonObject.getJSONArray("funcList");
+        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+            @Override
+            public void doInTransactionWithoutResult(TransactionStatus status) {
+                try {
+                    //删除修改前的角色权限配置
+                    roleRService.removeRoleFuncWithApp(roleGuid, appGuid);
+                    for (Iterator iterator = funcList.iterator(); iterator.hasNext(); ) {
+                        JSONObject job = (JSONObject) iterator.next();
+                        AcRoleFunc acRoleFunc = new AcRoleFunc();
+                        acRoleFunc.setGuidApp(appGuid);
+                        acRoleFunc.setGuidRole(roleGuid);
+                        acRoleFunc.setGuidFuncgroup(job.getString("groupGuid"));
+                        acRoleFunc.setGuidFunc(job.getString("funcGuid"));
+                        roleRService.addRoleFunc(acRoleFunc);
                     }
+                } catch (ToolsRuntimeException te) {
+                    throw te;
+                } catch (Exception e) {
+                    status.setRollbackOnly();
+                    e.printStackTrace();
+                    throw new RoleManagementException(
+                            ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap("AC_FUNC_ROLE", e.getCause().getMessage()));
                 }
-            });
-            AjaxUtils.ajaxJsonSuccessMessage(response, "");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            logger.error("addRoleFunc exception : ", e);
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
-            logger.error("addRoleFunc exception : ", e);
-        }
-        return getReturnMap();
+            }
+        });
+        return getReturnMap(null);
     }
 
 
@@ -193,24 +186,11 @@ public class AcRoleController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/queryRoleFunc", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public Map<String, Object> queryRoleFunc(@RequestBody String content, HttpServletRequest request,
-                                             HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("queryRoleFunc request : " + content);
-            }
-            JSONObject jsonObject = JSONObject.parseObject(content);
-            String roleGuid = jsonObject.getString("roleGuid");
-            List<AcRoleFunc> acRoleFuncs = roleRService.queryAllRoleFunByRoleGuid(roleGuid);
-            AjaxUtils.ajaxJsonSuccessMessage(response, acRoleFuncs);
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            logger.error("queryRoleFunc exception : ", e);
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
-            logger.error("queryRoleFunc exception : ", e);
-        }
-        return getReturnMap();
+    public Map<String, Object> queryRoleFunc(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        String roleGuid = jsonObject.getString("roleGuid");
+        List<AcRoleFunc> acRoleFuncs = roleRService.queryAllRoleFunByRoleGuid(roleGuid);
+        return getReturnMap(acRoleFuncs);
     }
 
 
@@ -220,39 +200,8 @@ public class AcRoleController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/addPartyRole", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> removeRoleFunc(@RequestBody String content) {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("addPartyRole request : " + content);
-            }
-//            AcPartyRole acPartyRole = JSONObject.parseObject(content, AcPartyRole.class);
-            List<AcPartyRole> acPartyRoleList = JSON.parseArray(content, AcPartyRole.class);
-            transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-                @Override
-                public void doInTransactionWithoutResult(TransactionStatus status) {
-                    try {
-                        for (AcPartyRole partyRole : acPartyRoleList) {
-                            roleRService.addRoleParty(partyRole);
-                        }
-                    } catch (ToolsRuntimeException te) {
-                        throw te;
-                    } catch (Exception e) {
-                        status.setRollbackOnly();
-                        e.printStackTrace();
-                        throw new RoleManagementException(
-                                ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap("AC_PARTY_ROLE", e.getCause().getMessage()));
-                    }
-                }
-            });
-//            roleRService.addRoleParty(acPartyRole);
-            AjaxUtils.ajaxJsonSuccessMessage(response, "");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            logger.error("addPartyRole exception : ", e);
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
-            logger.error("addPartyRole exception : ", e);
-        }
-        return getReturnMap();
+        List<AcPartyRole> acPartyRoleList = JSON.parseArray(content, AcPartyRole.class);
+        return getReturnMap(roleRService.addRoleParty(acPartyRoleList));
     }
 
 
@@ -262,24 +211,11 @@ public class AcRoleController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/queryRoleInParty", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> queryRoleInParty(@RequestBody String content) {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("queryRoleInParty request : " + content);
-            }
-            JSONObject jsonObject = JSONObject.parseObject(content);
-            String roleGuid = jsonObject.getString("roleGuid");
-            String partyType = jsonObject.getString("partyType");
-
-            List<Map> acPartyRoleList = roleRService.queryAllRolePartyExt(roleGuid, partyType);
-            AjaxUtils.ajaxJsonSuccessMessage(response, acPartyRoleList);
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            logger.error("queryRoleInParty exception : ", e);
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
-            logger.error("queryRoleInParty exception : ", e);
-        }
-        return getReturnMap();
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        String roleGuid = jsonObject.getString("roleGuid");
+        String partyType = jsonObject.getString("partyType");
+        List<Map> acPartyRoleList = roleRService.queryAllRolePartyExt(roleGuid, partyType);
+        return getReturnMap(acPartyRoleList);
     }
 
     /**
@@ -288,45 +224,9 @@ public class AcRoleController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/removePartyRole", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> removePartyRole(@RequestBody String content) {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("removePartyRole request : " + content);
-            }
-
-//            JSONObject jsonObject = JSONObject.parseObject(content);
-//            String roleGuid = jsonObject.getString("roleGuid");
-//            String partyGuid = jsonObject.getString("partyGuid");
-            JSONArray jsonArray = JSON.parseArray(content);
-            transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-                @Override
-                public void doInTransactionWithoutResult(TransactionStatus status) {
-                    try {
-                        for (int i = 0; i < jsonArray.size(); i++) {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            String roleGuid = jsonObject.getString("roleGuid");
-                            String partyGuid = jsonObject.getString("partyGuid");
-                            roleRService.removeRoleParty(roleGuid, partyGuid);
-                        }
-                    } catch (ToolsRuntimeException te) {
-                        throw te;
-                    } catch (Exception e) {
-                        status.setRollbackOnly();
-                        e.printStackTrace();
-                        throw new RoleManagementException(
-                                ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap("AC_PARTY_ROLE", e.getCause().getMessage()));
-                    }
-                }
-            });
-//            roleRService.removeRoleParty(roleGuid, roleGuid);
-            AjaxUtils.ajaxJsonSuccessMessage(response, "");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            logger.error("removePartyRole exception : ", e);
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
-            logger.error("removePartyRole exception : ", e);
-        }
-        return getReturnMap();
+        JSONObject object = JSON.parseObject(content);
+        List<AcPartyRole> acPartyRoleList = JSON.parseArray(object.getJSONArray("data").toJSONString(), AcPartyRole.class);
+        return getReturnMap(roleRService.removeRoleParty(acPartyRoleList));
     }
 
     /**
@@ -335,40 +235,8 @@ public class AcRoleController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/addOperatorRole", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> addOperatorRole(@RequestBody String content) {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("addOperatorRole request : " + content);
-            }
-//            AcOperatorRole acOperatorRole = JSONObject.parseObject(content, AcOperatorRole.class);
-//            roleRService.addOperatorRole(acOperatorRole);
-
-            List<AcOperatorRole> acOperatorRoleList = JSON.parseArray(content, AcOperatorRole.class);
-            transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-                @Override
-                public void doInTransactionWithoutResult(TransactionStatus status) {
-                    try {
-                        for (AcOperatorRole operatorRole : acOperatorRoleList) {
-                            roleRService.addOperatorRole(operatorRole);
-                        }
-                    } catch (ToolsRuntimeException te) {
-                        throw te;
-                    } catch (Exception e) {
-                        status.setRollbackOnly();
-                        e.printStackTrace();
-                        throw new RoleManagementException(
-                                ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap("AC_OPERATOR_ROLE", e.getCause().getMessage()));
-                    }
-                }
-            });
-            AjaxUtils.ajaxJsonSuccessMessage(response, "");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            logger.error("addOperatorRole exception : ", e);
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
-            logger.error("addOperatorRole exception : ", e);
-        }
-        return getReturnMap();
+        List<AcOperatorRole> acOperatorRoleList = JSON.parseArray(content, AcOperatorRole.class);
+        return getReturnMap(roleRService.addOperatorRole(acOperatorRoleList));
     }
 
 
@@ -378,23 +246,11 @@ public class AcRoleController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/queryOperatorRole", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> queryOperatorRole(@RequestBody String content) {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("queryOperatorRole request : " + content);
-            }
-            JSONObject jsonObject = JSONObject.parseObject(content);
-            String roleGuid = jsonObject.getString("roleGuid");
 
-            List<Map> acOperatorRoles = roleRService.queryAllOperatorRoleExt(roleGuid);
-            AjaxUtils.ajaxJsonSuccessMessage(response, acOperatorRoles);
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            logger.error("queryOperatorRole exception : ", e);
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
-            logger.error("queryOperatorRole exception : ", e);
-        }
-        return getReturnMap();
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        String roleGuid = jsonObject.getString("roleGuid");
+        List<Map> acOperatorRoles = roleRService.queryAllOperatorRoleExt(roleGuid);
+        return getReturnMap(acOperatorRoles);
     }
 
     /**
@@ -403,46 +259,8 @@ public class AcRoleController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/removeOperatorRole", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> removeOperatorRole(@RequestBody String content) {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("removeOperatorRole request : " + content);
-            }
-//            JSONObject jsonObject = JSONObject.parseObject(content);
-//            String roleGuid = jsonObject.getString("roleGuid");
-//            String operatorGuid = jsonObject.getString("operatorGuid");
-//            roleRService.removeOperatorRole(roleGuid, operatorGuid);
-
-            JSONArray jsonArray = JSON.parseArray(content);
-            transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-                @Override
-                public void doInTransactionWithoutResult(TransactionStatus status) {
-                    try {
-                        for (int i = 0; i < jsonArray.size(); i++) {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            String roleGuid = jsonObject.getString("roleGuid");
-                            String operatorGuid = jsonObject.getString("operatorGuid");
-                            roleRService.removeOperatorRole(roleGuid, operatorGuid);
-                        }
-                    } catch (ToolsRuntimeException te) {
-                        throw te;
-                    } catch (Exception e) {
-                        status.setRollbackOnly();
-                        e.printStackTrace();
-                        throw new RoleManagementException(
-                                ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap("AC_OPERATOR_ROLE", e.getCause().getMessage()));
-                    }
-                }
-            });
-
-            AjaxUtils.ajaxJsonSuccessMessage(response, "");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            logger.error("removeOperatorRole exception : ", e);
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
-            logger.error("removeOperatorRole exception : ", e);
-        }
-        return getReturnMap();
+        List<AcOperatorRole> acOperatorRoleList = JSON.parseArray(content, AcOperatorRole.class);
+        return getReturnMap(roleRService.removeOperatorRole(acOperatorRoleList));
     }
 
     /**
