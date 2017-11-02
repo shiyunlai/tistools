@@ -283,10 +283,10 @@ public interface IRoleRService {
      *          b.操作员GUID
      *
      * </pre>
-     * @param acOperatorRole
+     * @param acOperatorRoles
      * @throws RoleManagementException
      */
-    void addOperatorRole(AcOperatorRole acOperatorRole) throws  RoleManagementException;
+    List<AcOperatorRole> addOperatorRole(List<AcOperatorRole> acOperatorRoles) throws  RoleManagementException;
 
     /**
      * <p>查询角色的组织对象权限集合</p>
@@ -319,11 +319,10 @@ public interface IRoleRService {
      *     1.验证传入的对象不能为空
      *
      * </pre>
-     * @param roleGuid 角色GUID
-     * @param operatorGuid 操作员GUID
+     * @param acOperatorRoles
      * @throws RoleManagementException
      */
-    void removeOperatorRole(String roleGuid,  String operatorGuid) throws  RoleManagementException;
+    List<AcOperatorRole> removeOperatorRole(List<AcOperatorRole> acOperatorRoles) throws  RoleManagementException;
 
 
     /**
