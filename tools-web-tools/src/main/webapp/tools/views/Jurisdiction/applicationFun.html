@@ -608,8 +608,10 @@
                                                         </button>
                                                         <button type="button" name="back" class="btn btn-primary" ng-click="biz.functactiveDel()">删除功能行为
                                                         </button>
-                                                        <!--<button type="button" name="back" class="btn btn-primary" ng-click="biz.sesave()"> 保存
-                                                        </button>-->
+                                                        <button type="button" name="back" class="btn btn-primary" ng-if="seteffinv" ng-click="biz.effective()"> 设为有效
+                                                        </button>
+                                                        <button type="button" name="back" class="btn btn-danger" ng-if="invalid" ng-click="biz.invalid()"> 设为无效
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
