@@ -33,7 +33,6 @@ import org.tis.tools.webapp.util.AjaxUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -731,7 +730,6 @@ public class OrgManagerController extends BaseController {
             operateDesc = "为组织添加权限", // 操作描述
             retType = ReturnType.Object, // 返回类型，对象或数组
             id = "guidRole", // 操作对象标识
-            name = "guidRole", // 操作对象名
             keys = {"guidRole","guidParty"}) // 操作对象的关键值的键值名
     @ResponseBody
     @RequestMapping(value = "/addRoleParty")
@@ -745,7 +743,9 @@ public class OrgManagerController extends BaseController {
         apr.setGuidParty(partyGuid);
         apr.setGuidRole(roleGuid);
         apr.setPartyType(partyType);
-        roleRService.addRoleParty(apr);
+        ArrayList<AcPartyRole> acPartyRoles = new ArrayList<>();
+        acPartyRoles.add(apr);
+        roleRService.addRoleParty(acPartyRoles);
         return getReturnMap(apr);
     }
 
@@ -760,7 +760,6 @@ public class OrgManagerController extends BaseController {
             operateDesc = "为组织删除权限", // 操作描述
             retType = ReturnType.Object, // 返回类型，对象或数组
             id = "guidRole", // 操作对象标识
-            name = "guidRole", // 操作对象名
             keys = {"guidRole","guidParty"}) // 操作对象的关键值的键值名
     @ResponseBody
     @RequestMapping(value = "/deleteRoleParty")
@@ -768,11 +767,13 @@ public class OrgManagerController extends BaseController {
         JSONObject jsonObj = JSONObject.parseObject(content);
         String partyGuid = jsonObj.getString("partyGuid");
         String roleGuid = jsonObj.getString("roleGuid");
-        roleRService.removeRoleParty(roleGuid, partyGuid);
-        Map map = new HashMap();
-        map.put("guidRole", roleGuid);
-        map.put("guidParty", partyGuid);
-        return getReturnMap(map);
+        AcPartyRole apr = new AcPartyRole();
+        apr.setGuidParty(partyGuid);
+        apr.setGuidRole(roleGuid);
+        ArrayList<AcPartyRole> acPartyRoles = new ArrayList<>();
+        acPartyRoles.add(apr);
+        roleRService.removeRoleParty(acPartyRoles);
+        return getReturnMap(apr);
     }
 
     /**
