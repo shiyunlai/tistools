@@ -39,180 +39,120 @@ public class AcRoleController extends BaseController {
 
     @Autowired
     IRoleRService roleRService;
-    
+
     @Autowired
-	IApplicationRService applicationRService;
+    IApplicationRService applicationRService;
 
     /**
      * 查询角色列表
-     *
      */
     @ResponseBody
-    @RequestMapping(value="/queryRoleList" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String queryRoleList(@RequestBody String content, HttpServletRequest request,
-                           HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("queryRoleList request : " + content);
-            }
-            List<Map> acRoles = roleRService.queryAllRoleExt();
-            AjaxUtils.ajaxJsonSuccessMessage(response,acRoles);
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("queryRoleList exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("queryRoleList exception : ", e);
-        }
-        return null;
+    @RequestMapping(value = "/queryRoleList", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> queryRoleList() {
+        return getReturnMap(roleRService.queryAllRoleExt());
     }
 
     /**
      * 新增角色
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_ADD,  // 操作类型
+            operateDesc = "新增角色", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "guid", // 操作对象标识
+            name = "roleName", // 操作对象名
+            keys = {"guidApp", "roleCode"})
     @ResponseBody
-    @RequestMapping(value="/createRole" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String createRole(@RequestBody String content, HttpServletRequest request,
-                           HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("createRole request : " + content);
-            }
-/*            JSONObject jsonObject= JSONObject.parseObject(content);
-            AcRole acRole = new AcRole();
-            BeanUtils.populate(acRole, jsonObject);*/
-            AcRole acRole = JSON.parseObject(content, AcRole.class);
-            AcRole retRole = roleRService.createAcRole(acRole);
-            AjaxUtils.ajaxJsonSuccessMessage(response,retRole);
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("createRole exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("createRole exception : ", e);
-        }
-        return null;
+    @RequestMapping(value = "/createRole", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> createRole(@RequestBody String content) {
+        AcRole acRole = JSON.parseObject(content, AcRole.class);
+        return getReturnMap(roleRService.createAcRole(acRole));
     }
 
     /**
      * 修改角色
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,  // 操作类型
+            operateDesc = "修改角色", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "guid", // 操作对象标识
+            name = "roleName", // 操作对象名
+            keys = {"guidApp", "roleCode"})
     @ResponseBody
-    @RequestMapping(value="/editRole" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String editRole(@RequestBody String content, HttpServletRequest request,
-                           HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("editRole request : " + content);
-            }
-//            JSONObject jsonObject= JSONObject.parseObject(content);
-//            AcRole acrole = new AcRole();
-//            BeanUtils.populate(acrole, jsonObject);
-            AcRole acRole = JSON.parseObject(content, AcRole.class);
-            AcRole retRole = roleRService.eidtAcRole(acRole);
-            AjaxUtils.ajaxJsonSuccessMessage(response,retRole);
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("editRole exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("editRole exception : ", e);
-        }
-        return null;
+    @RequestMapping(value = "/editRole", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> editRole(@RequestBody String content) {
+        AcRole acRole = JSON.parseObject(content, AcRole.class);
+        return getReturnMap(roleRService.eidtAcRole(acRole));
     }
 
     /**
      * 删除角色
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_DELETE,  // 操作类型
+            operateDesc = "删除角色", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "guid", // 操作对象标识
+            name = "roleName", // 操作对象名
+            keys = {"guidApp", "roleCode"})
     @ResponseBody
-    @RequestMapping(value="/deleteRole" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String deleteRole(@RequestBody String content, HttpServletRequest request,
-                           HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("deleteRole request : " + content);
-            }
-            JSONObject jsonObject= JSONObject.parseObject(content);
-            String guid = jsonObject.getString("roleGuid");
-            roleRService.deleteAcRole(guid);
-            AjaxUtils.ajaxJsonSuccessMessage(response,"");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("deleteRole exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("deleteRole exception : ", e);
-        }
-        return null;
+    @RequestMapping(value = "/deleteRole", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> deleteRole(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        String guid = jsonObject.getString("roleGuid");
+        return getReturnMap(roleRService.deleteAcRole(guid));
     }
-    
+
     /**
-	 * appQuery查询对应的应用应用
-	 * @param content
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(value="/appQuery" ,method=RequestMethod.POST)
-	public String appQuery(@RequestBody String content, HttpServletRequest request,
-			HttpServletResponse response) {
-		Map<String, Object> result = new HashMap<String, Object>();
-		try {
-			if (logger.isInfoEnabled()) {
-				logger.info("appQuery request : " + content);
-			}
-			JSONObject jsonObj = JSONObject.parseObject(content);
-			String id = jsonObj.getString("id");
-			
-			//通过id判断需要加载的节点
-			WhereCondition wc;
-			if("#".equals(id.substring(0, 1))){
-				AcApp app = applicationRService.queryAcApp(id.substring(1));
-				List list = new ArrayList();
-				Map map=new HashMap();
-				map.put("rootName", app.getAppName());
-				map.put("rootCode", app.getGuid());
-				map.put("guid", app.getGuid());
-				list.add(map);
-				result.put("data", list);//返回给前台的数据
-				result.put("type", "root");//返回给前台的数据
-			}else  if(id.length()>3&&"APP".equals(id.substring(0, 3))){	
-				List<AcFuncgroup> group = applicationRService.queryAcRootFuncgroup(id);
-				result.put("data", group);//返回给前台的数据
-				result.put("type", "app");//返回给前台的数据
-			}else if(id.length()>9&&"FUNCGROUP".equals(id.substring(0, 9))){
-				Map map=new HashMap();
-				List<AcFuncgroup> groupList = applicationRService.queryAcChildFuncgroup(id);
-				if(groupList.size()>0){
-					map.put("groupList", groupList);
-				}
-				List<AcFunc> funcList = applicationRService.queryAcFunc(id);
-				if(funcList.size()>0){
-					map.put("funcList", funcList);
-				}
-				result.put("data", map);//返回给前台的数据
-				result.put("type", "group");//返回给前台的数据
-			}
-			AjaxUtils.ajaxJsonSuccessMessage(response, result);
-		} catch (ToolsRuntimeException e) {
-			AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-			logger.error("appQuery exception : ", e);
-		}catch (Exception e) {
-			AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-			logger.error("appQuery exception : ", e);
-		}
-		return null;
-	}
-	
-	
+     * appQuery查询对应的应用应用
+     *
+     * @param content
+     * @return
+     */
+    @RequestMapping(value = "/appQuery", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> appQuery(@RequestBody String content) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        JSONObject jsonObj = JSONObject.parseObject(content);
+        String id = jsonObj.getString("id");
+        //通过id判断需要加载的节点
+        if ("#".equals(id.substring(0, 1))) {
+            AcApp app = applicationRService.queryAcApp(id.substring(1));
+            List<Map> list = new ArrayList<>();
+            Map<String, Object> map = new HashMap<>();
+            map.put("rootName", app.getAppName());
+            map.put("rootCode", app.getGuid());
+            map.put("guid", app.getGuid());
+            list.add(map);
+            result.put("data", list);//返回给前台的数据
+            result.put("type", "root");//返回给前台的数据
+        } else if (id.length() > 3 && "APP".equals(id.substring(0, 3))) {
+            List<AcFuncgroup> group = applicationRService.queryAcRootFuncgroup(id);
+            result.put("data", group);//返回给前台的数据
+            result.put("type", "app");//返回给前台的数据
+        } else if (id.length() > 9 && "FUNCGROUP".equals(id.substring(0, 9))) {
+            Map<String, Object> map = new HashMap<>();
+            List<AcFuncgroup> groupList = applicationRService.queryAcChildFuncgroup(id);
+            if (groupList.size() > 0) {
+                map.put("groupList", groupList);
+            }
+            List<AcFunc> funcList = applicationRService.queryAcFunc(id);
+            if (funcList.size() > 0) {
+                map.put("funcList", funcList);
+            }
+            result.put("data", map);//返回给前台的数据
+            result.put("type", "group");//返回给前台的数据
+        }
+        return getReturnMap(result);
+    }
+
 
     /**
      * 角色配置功能权限
      */
     @ResponseBody
-    @RequestMapping(value="/configRoleFunc" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String addRoleFunc(@RequestBody String content, HttpServletRequest request,
-                           HttpServletResponse response) throws ToolsRuntimeException, ParseException {
+    @RequestMapping(value = "/configRoleFunc", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> addRoleFunc(@RequestBody String content) {
         try {
             if (logger.isInfoEnabled()) {
                 logger.info("configRoleFunc request : " + content);
@@ -225,20 +165,10 @@ public class AcRoleController extends BaseController {
                 @Override
                 public void doInTransactionWithoutResult(TransactionStatus status) {
                     try {
-                        //删除修改前的角色权限配置
-                        roleRService.removeRoleFuncWithApp(roleGuid, appGuid);
-                        for(Iterator iterator = funcList.iterator(); iterator.hasNext();) {
-                        	JSONObject job = (JSONObject) iterator.next();
-                            AcRoleFunc acRoleFunc = new AcRoleFunc();
-                            acRoleFunc.setGuidApp(appGuid);
-                            acRoleFunc.setGuidRole(roleGuid);
-                            acRoleFunc.setGuidFuncgroup(job.getString("groupGuid"));
-                            acRoleFunc.setGuidFunc(job.getString("funcGuid"));
-                            roleRService.addRoleFunc(acRoleFunc);
-                        }
-                    }  catch (ToolsRuntimeException te) {
+
+                    } catch (ToolsRuntimeException te) {
                         throw te;
-                    }catch (Exception e) {
+                    } catch (Exception e) {
                         status.setRollbackOnly();
                         e.printStackTrace();
                         throw new RoleManagementException(
@@ -246,26 +176,25 @@ public class AcRoleController extends BaseController {
                     }
                 }
             });
-            AjaxUtils.ajaxJsonSuccessMessage(response,"");
+            AjaxUtils.ajaxJsonSuccessMessage(response, "");
         } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
             logger.error("addRoleFunc exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
             logger.error("addRoleFunc exception : ", e);
         }
-        return null;
+        return getReturnMap();
     }
 
-    
-    
+
     /**
      * 查询角色的功能权限
      */
     @ResponseBody
-    @RequestMapping(value="/queryRoleFunc" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String queryRoleFunc(@RequestBody String content, HttpServletRequest request,
-                              HttpServletResponse response) throws ToolsRuntimeException, ParseException {
+    @RequestMapping(value = "/queryRoleFunc", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> queryRoleFunc(@RequestBody String content, HttpServletRequest request,
+                                             HttpServletResponse response) throws ToolsRuntimeException, ParseException {
         try {
             if (logger.isInfoEnabled()) {
                 logger.info("queryRoleFunc request : " + content);
@@ -273,26 +202,24 @@ public class AcRoleController extends BaseController {
             JSONObject jsonObject = JSONObject.parseObject(content);
             String roleGuid = jsonObject.getString("roleGuid");
             List<AcRoleFunc> acRoleFuncs = roleRService.queryAllRoleFunByRoleGuid(roleGuid);
-            AjaxUtils.ajaxJsonSuccessMessage(response,acRoleFuncs);
+            AjaxUtils.ajaxJsonSuccessMessage(response, acRoleFuncs);
         } catch (ToolsRuntimeException e) {
-        AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-        logger.error("queryRoleFunc exception : ", e);
-    }catch (Exception e) {
-        AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-        logger.error("queryRoleFunc exception : ", e);
-    }
-        return null;
+            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
+            logger.error("queryRoleFunc exception : ", e);
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
+            logger.error("queryRoleFunc exception : ", e);
+        }
+        return getReturnMap();
     }
 
-    
-    
+
     /**
      * 角色添加组织权限
      */
     @ResponseBody
-    @RequestMapping(value="/addPartyRole" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String removeRoleFunc(@RequestBody String content, HttpServletRequest request,
-                           HttpServletResponse response) throws ToolsRuntimeException, ParseException {
+    @RequestMapping(value = "/addPartyRole", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> removeRoleFunc(@RequestBody String content) {
         try {
             if (logger.isInfoEnabled()) {
                 logger.info("addPartyRole request : " + content);
@@ -303,12 +230,12 @@ public class AcRoleController extends BaseController {
                 @Override
                 public void doInTransactionWithoutResult(TransactionStatus status) {
                     try {
-                        for(AcPartyRole partyRole : acPartyRoleList) {
+                        for (AcPartyRole partyRole : acPartyRoleList) {
                             roleRService.addRoleParty(partyRole);
                         }
-                    }  catch (ToolsRuntimeException te) {
+                    } catch (ToolsRuntimeException te) {
                         throw te;
-                    }catch (Exception e) {
+                    } catch (Exception e) {
                         status.setRollbackOnly();
                         e.printStackTrace();
                         throw new RoleManagementException(
@@ -317,28 +244,24 @@ public class AcRoleController extends BaseController {
                 }
             });
 //            roleRService.addRoleParty(acPartyRole);
-            AjaxUtils.ajaxJsonSuccessMessage(response,"");
+            AjaxUtils.ajaxJsonSuccessMessage(response, "");
         } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
             logger.error("addPartyRole exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
             logger.error("addPartyRole exception : ", e);
         }
-        return null;
+        return getReturnMap();
     }
-    
-    
-    
-    
+
 
     /**
      * 查询角色下某组织类型的权限信息
      */
     @ResponseBody
-    @RequestMapping(value="/queryRoleInParty" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String queryRoleInParty(@RequestBody String content, HttpServletRequest request,
-                           HttpServletResponse response) throws ToolsRuntimeException, ParseException {
+    @RequestMapping(value = "/queryRoleInParty", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> queryRoleInParty(@RequestBody String content) {
         try {
             if (logger.isInfoEnabled()) {
                 logger.info("queryRoleInParty request : " + content);
@@ -348,24 +271,23 @@ public class AcRoleController extends BaseController {
             String partyType = jsonObject.getString("partyType");
 
             List<Map> acPartyRoleList = roleRService.queryAllRolePartyExt(roleGuid, partyType);
-            AjaxUtils.ajaxJsonSuccessMessage(response,acPartyRoleList);
+            AjaxUtils.ajaxJsonSuccessMessage(response, acPartyRoleList);
         } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
             logger.error("queryRoleInParty exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
             logger.error("queryRoleInParty exception : ", e);
         }
-        return null;
+        return getReturnMap();
     }
 
     /**
      * 移除角色下的组织对象
      */
     @ResponseBody
-    @RequestMapping(value="/removePartyRole" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String removePartyRole(@RequestBody String content, HttpServletRequest request,
-                           HttpServletResponse response) throws ToolsRuntimeException, ParseException {
+    @RequestMapping(value = "/removePartyRole", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> removePartyRole(@RequestBody String content) {
         try {
             if (logger.isInfoEnabled()) {
                 logger.info("removePartyRole request : " + content);
@@ -379,15 +301,15 @@ public class AcRoleController extends BaseController {
                 @Override
                 public void doInTransactionWithoutResult(TransactionStatus status) {
                     try {
-                        for(int i = 0; i < jsonArray.size(); i++) {
+                        for (int i = 0; i < jsonArray.size(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             String roleGuid = jsonObject.getString("roleGuid");
                             String partyGuid = jsonObject.getString("partyGuid");
                             roleRService.removeRoleParty(roleGuid, partyGuid);
                         }
-                    }  catch (ToolsRuntimeException te) {
+                    } catch (ToolsRuntimeException te) {
                         throw te;
-                    }catch (Exception e) {
+                    } catch (Exception e) {
                         status.setRollbackOnly();
                         e.printStackTrace();
                         throw new RoleManagementException(
@@ -396,24 +318,23 @@ public class AcRoleController extends BaseController {
                 }
             });
 //            roleRService.removeRoleParty(roleGuid, roleGuid);
-            AjaxUtils.ajaxJsonSuccessMessage(response,"");
+            AjaxUtils.ajaxJsonSuccessMessage(response, "");
         } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
             logger.error("removePartyRole exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
             logger.error("removePartyRole exception : ", e);
         }
-        return null;
+        return getReturnMap();
     }
 
     /**
      * 角色添加操作员
      */
     @ResponseBody
-    @RequestMapping(value="/addOperatorRole" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String addOperatorRole(@RequestBody String content, HttpServletRequest request,
-                           HttpServletResponse response) throws ToolsRuntimeException, ParseException {
+    @RequestMapping(value = "/addOperatorRole", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> addOperatorRole(@RequestBody String content) {
         try {
             if (logger.isInfoEnabled()) {
                 logger.info("addOperatorRole request : " + content);
@@ -426,12 +347,12 @@ public class AcRoleController extends BaseController {
                 @Override
                 public void doInTransactionWithoutResult(TransactionStatus status) {
                     try {
-                        for(AcOperatorRole operatorRole : acOperatorRoleList) {
+                        for (AcOperatorRole operatorRole : acOperatorRoleList) {
                             roleRService.addOperatorRole(operatorRole);
                         }
-                    }  catch (ToolsRuntimeException te) {
+                    } catch (ToolsRuntimeException te) {
                         throw te;
-                    }catch (Exception e) {
+                    } catch (Exception e) {
                         status.setRollbackOnly();
                         e.printStackTrace();
                         throw new RoleManagementException(
@@ -439,15 +360,15 @@ public class AcRoleController extends BaseController {
                     }
                 }
             });
-            AjaxUtils.ajaxJsonSuccessMessage(response,"");
+            AjaxUtils.ajaxJsonSuccessMessage(response, "");
         } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
             logger.error("addOperatorRole exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
             logger.error("addOperatorRole exception : ", e);
         }
-        return null;
+        return getReturnMap();
     }
 
 
@@ -455,9 +376,8 @@ public class AcRoleController extends BaseController {
      * 查询角色下的操作员集合
      */
     @ResponseBody
-    @RequestMapping(value="/queryOperatorRole",produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String queryOperatorRole(@RequestBody String content, HttpServletRequest request,
-                           HttpServletResponse response) throws ToolsRuntimeException, ParseException {
+    @RequestMapping(value = "/queryOperatorRole", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> queryOperatorRole(@RequestBody String content) {
         try {
             if (logger.isInfoEnabled()) {
                 logger.info("queryOperatorRole request : " + content);
@@ -466,24 +386,23 @@ public class AcRoleController extends BaseController {
             String roleGuid = jsonObject.getString("roleGuid");
 
             List<Map> acOperatorRoles = roleRService.queryAllOperatorRoleExt(roleGuid);
-            AjaxUtils.ajaxJsonSuccessMessage(response,acOperatorRoles);
+            AjaxUtils.ajaxJsonSuccessMessage(response, acOperatorRoles);
         } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
             logger.error("queryOperatorRole exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
             logger.error("queryOperatorRole exception : ", e);
         }
-        return null;
+        return getReturnMap();
     }
 
     /**
      * 移除角色下的操作员
      */
     @ResponseBody
-    @RequestMapping(value="/removeOperatorRole" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String removeOperatorRole(@RequestBody String content, HttpServletRequest request,
-                           HttpServletResponse response) throws ToolsRuntimeException, ParseException {
+    @RequestMapping(value = "/removeOperatorRole", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> removeOperatorRole(@RequestBody String content) {
         try {
             if (logger.isInfoEnabled()) {
                 logger.info("removeOperatorRole request : " + content);
@@ -498,15 +417,15 @@ public class AcRoleController extends BaseController {
                 @Override
                 public void doInTransactionWithoutResult(TransactionStatus status) {
                     try {
-                        for(int i = 0; i < jsonArray.size(); i++) {
+                        for (int i = 0; i < jsonArray.size(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             String roleGuid = jsonObject.getString("roleGuid");
                             String operatorGuid = jsonObject.getString("operatorGuid");
                             roleRService.removeOperatorRole(roleGuid, operatorGuid);
                         }
-                    }  catch (ToolsRuntimeException te) {
+                    } catch (ToolsRuntimeException te) {
                         throw te;
-                    }catch (Exception e) {
+                    } catch (Exception e) {
                         status.setRollbackOnly();
                         e.printStackTrace();
                         throw new RoleManagementException(
@@ -515,24 +434,25 @@ public class AcRoleController extends BaseController {
                 }
             });
 
-            AjaxUtils.ajaxJsonSuccessMessage(response,"");
+            AjaxUtils.ajaxJsonSuccessMessage(response, "");
         } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
+            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
             logger.error("removeOperatorRole exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
+        } catch (Exception e) {
+            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
             logger.error("removeOperatorRole exception : ", e);
         }
-        return null;
+        return getReturnMap();
     }
 
     /**
      * 查询角色拥有功能的权限行为
+     *
      * @param content
      * @return
      */
     @ResponseBody
-    @RequestMapping(value="/queryAcRoleBhvsByFuncGuid" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    @RequestMapping(value = "/queryAcRoleBhvsByFuncGuid", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> queryAcRoleBhvsByFuncGuid(@RequestBody String content) {
         JSONObject jsonObject = JSONObject.parseObject(content);
         JSONObject data = jsonObject.getJSONObject("data");
@@ -543,6 +463,7 @@ public class AcRoleController extends BaseController {
 
     /**
      * 角色添加功能的权限行为
+     *
      * @param content
      * @return
      */
@@ -554,7 +475,7 @@ public class AcRoleController extends BaseController {
             keys = {"guidFuncBhv", "guidApp"}
     )
     @ResponseBody
-    @RequestMapping(value="/addAcRoleBhvs" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    @RequestMapping(value = "/addAcRoleBhvs", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> addAcRoleBhvs(@RequestBody String content) {
         JSONObject jsonObject = JSONObject.parseObject(content);
         JSONArray data = jsonObject.getJSONArray("data");
@@ -565,6 +486,7 @@ public class AcRoleController extends BaseController {
 
     /**
      * 角色删除功能的权限行为
+     *
      * @param content
      * @return
      */
@@ -576,7 +498,7 @@ public class AcRoleController extends BaseController {
             keys = {"guidFuncBhv", "guidApp"}
     )
     @ResponseBody
-    @RequestMapping(value="/removeAcRoleBhvs" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
+    @RequestMapping(value = "/removeAcRoleBhvs", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> removeAcRoleBhvs(@RequestBody String content) {
         JSONObject jsonObject = JSONObject.parseObject(content);
         JSONArray data = jsonObject.getJSONArray("data");

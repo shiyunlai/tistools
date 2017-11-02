@@ -76,14 +76,18 @@
     </select>
 
     <select id="queryAcRoleBhvsByFuncGuid" resultType="org.tis.tools.model.po.ac.AcBhvDef"  >
+
         SELECT
           <include refid="queryAcRoleBhvsByFuncGuid_Column" />
         FROM
-	      `ac_role_bhv` a
-	    LEFT JOIN `ac_func_bhv` b ON a.guid_role = #{roleGuid}
-            AND b.GUID_FUNC = #{funcGuid}
-	        AND a.guid_func_bhv = b.GUID
-	    LEFT JOIN `ac_bhv_def` c ON b.GUID_BHV = c.GUID
+            `ac_role_bhv` a,
+            `ac_func_bhv` b,
+            `ac_bhv_def` c
+        WHERE
+          a.guid_role = #{roleGuid}
+        AND b.GUID_FUNC = #{funcGuid}
+        AND a.guid_func_bhv = b.GUID
+        AND b.GUID_BHV = c.GUID
     </select>
 
 
@@ -134,6 +138,7 @@
 		,c.guid_behtype as guidBehtype
 		,c.bhv_code as bhvCode
 		,c.bhv_name as bhvName
+        ,b.guid as guidFuncBhv
     </sql>
 
 
