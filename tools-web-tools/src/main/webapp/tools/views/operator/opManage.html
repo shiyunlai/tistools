@@ -21,15 +21,28 @@
                       ui-grid-pagination
                      ui-grid-selection ui-grid-resize-columns>
                 </div>
+                <div class="actions btn-set" style="float: left; margin-top:12px;">
+                    <button type="button" name="back" class="btn btn-primary"  ng-disabled="!checkstatus(Status,['stop','clear'])||isfalse" ng-click="operman.login(Status)"> 启用
+                    </button>
+                    <button type="button" name="back" class="btn btn-primary"  ng-disabled="!checkstatus(Status,['stop'])||isfalse" ng-click="operman.del(Status)">删除
+                    </button>
+                    <button type="button" name="back" class="btn btn-primary" ng-disabled="!checkstatus(Status,['lock'])||isfalse" ng-click="operman.logout(Status)"> 解锁
+                    </button>
+                    <button type="button" name="back" class="btn btn-primary"  ng-disabled="!checkstatus(Status,['logout','lock'])||isfalse"  ng-click="operman.clear(Status)"> 注销
+                    </button>
+                </div>
                 <div class="actions btn-set" style="float: right; margin-top:12px;">
                     <button type="button" name="back" class="btn btn-primary" ng-click="operatAdd()"> 新增
                     </button>
-                    <button type="button" name="back" class="btn btn-primary" ng-click="operatEdit(4)">  修改
+                    <button type="button" name="back" class="btn btn-primary" ng-click="operatEdit(4)">修改
                     </button>
                     <button type="button" name="back" class="btn btn-primary" ng-click="operatsetqx(operman.info)"> 个人权限设置
                     </button>
                     <button type="button" name="back" class="btn btn-primary" ng-click="funconfig(operman)"> 配置功能行为权限
                     </button>
+                </div>
+                <div class="stauts">
+
                 </div>
             </div>
         </div>

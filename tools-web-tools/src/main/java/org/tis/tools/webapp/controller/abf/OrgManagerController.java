@@ -294,6 +294,7 @@ public class OrgManagerController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/addposit")
+    @ResponseBody
     public Map<String, Object> addPosit(@RequestBody String content) {
         // 收到请求
         JSONObject jsonObj = JSONObject.parseObject(content);

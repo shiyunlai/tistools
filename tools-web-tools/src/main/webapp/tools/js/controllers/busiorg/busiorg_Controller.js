@@ -436,10 +436,10 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
     }
     //保存
     busiorg.save = function () {
-        console.log($scope.subFrom)
         busiorg_service.updatebusiorg($scope.subFrom).then(function (data) {
+            console.log(data);
             if (data.status == "success") {
-                toastr['success'](data.retMessage);
+                toastr['success']('修改成功');
                 $("#busiorgtree").jstree().refresh();
                 $scope.editflag = !$scope.editflag;
             } else {

@@ -131,16 +131,16 @@
                                                                 </div>
                                                             </div>
                                                         </div>-->
-                                                        <div class="col-lg-6 col-md-12">
+                                                        <!--<div class="col-lg-6 col-md-12">
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4"> 是否开通:<span ng-class="{required:myform.dict_isopen.$invalid}" >* </span></label>
                                                                 <div class="col-md-8">
                                                                     <input type="text" class="form-control"
                                                                            required  ng-model="dictionaryAdd.isopen"  translate-constants comtable="DICT_YON"
-                                                                           name="dicts_kesy" maxlength="64" ng-disabled="!edsssitflag"/>
+                                                                           name="dict_isopen" maxlength="64" ng-disabled="!edsssitflag"/>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div>-->
                                                         <div class="col-lg-6 col-md-12">
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4"> IP: </label>
@@ -232,9 +232,9 @@
                                                                         </button>
                                                                     </div>
                                                                     <div class="actions btn-set" style="float: right;" ng-if="editflag">
-                                                                        <button type="button" name="back"  class="btn btn-primary" ng-if="bigform.$invalid == false"  ng-disabled="bigform.$invalid" popover-trigger="mouseenter" ng-click="biz.appsave(dictionaryAdd)" > 保存
+                                                                        <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="bigform.$invalid" popover-trigger="mouseenter" ng-click="biz.appsave(dictionaryAdd)" > 保存
                                                                         </button>
-                                                                        <button type="button" name="back" class="btn default" ng-if="bigform.$invalid == true"  ng-disabled="bigform.$invalid" popover-trigger="mouseenter" > 保存
+                                                                        <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="bigform.$invalid" popover-trigger="mouseenter" > 保存
                                                                         </button>
                                                                         <button type="button" name="back" class="btn btn-danger" ng-click="biz.edit()"> 取消
                                                                         </button>
