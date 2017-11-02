@@ -331,5 +331,4 @@ public interface IOperatorRService {
      */
     void removeAcOperatorBhv(List<AcOperatorBhv> acOperatorBhv) throws OperatorManagementException;
 
-
 }

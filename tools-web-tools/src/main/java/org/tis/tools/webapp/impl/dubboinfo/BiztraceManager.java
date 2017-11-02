@@ -3,21 +3,16 @@
  */
 package org.tis.tools.webapp.impl.dubboinfo;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.alibaba.dubbo.common.URL;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.tis.tools.common.utils.DirectoryUtil;
 import org.tis.tools.webapp.exception.WebAppException;
 import org.tis.tools.webapp.spi.dubboinfo.DubboServiceInfo;
 import org.tis.tools.webapp.spi.dubboinfo.IDubboInfoManager;
 
-import com.alibaba.dubbo.common.URL;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author megapro
@@ -91,7 +86,7 @@ public class BiztraceManager implements IDubboInfoManager {
 			
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new WebAppException("WEB-0001","获取所有biztrace代理服务信息列表失败！",e) ;
+			throw new WebAppException("WEB-0001", "获取所有biztrace代理服务信息列表失败！",e) ;
 		}
 		return md;
 	}
