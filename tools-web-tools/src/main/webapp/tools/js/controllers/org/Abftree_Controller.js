@@ -107,7 +107,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                                         if(data.status == "error"){
                                             toastr['error']( data.retMessage);
                                         }else{
-                                            subFrom.orgCode = data.retMessage;
+                                            subFrom.orgCode = data.retMessage.orgCode;
                                             $scope.next = !next;
                                         }
                                     })
@@ -163,7 +163,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                                         if(data.status == "error"){
                                             toastr['error']( data.retMessage);
                                         }else{
-                                            subFrom.orgCode = data.retMessage;
+                                            subFrom.orgCode = data.retMessage.orgCode;
                                             $scope.next = !next;
                                         }
                                     })
@@ -225,7 +225,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                             if (data.status == "success") {
                                 //生成机构代码,成功继续执行复制.
                                 subFrom = {};
-                                subFrom.neworgCode = data.retMessage;
+                                subFrom.neworgCode = data.retMessage.orgCode;
                                 subFrom.copyCode = copyCode;
                                 abftree_service.copyOrg(subFrom).then(function (data) {
                                     if (data.status == "success") {
@@ -762,7 +762,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                                 if(data.status == "error"){
                                     toastr['error']( data.retMessage);
                                 }else{
-                                    subFrom.orgCode = data.retMessage;
+                                    subFrom.orgCode = data.retMessage.orgCode;
                                     $scope.next = !next;
                                 }
                             })
@@ -1526,13 +1526,11 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
             function ($scope, $modalInstance) {
                 //创建机构实例
                 $scope.subFrom = subFrom;
-                console.log(subFrom)
                 var next = true;
                 $scope.next = next;
                 //下一步
                 $scope.skip = function () {
                     abftree_service.initPosCode($scope.subFrom).then(function (data) {
-                        console.log(data)
                         if (data.status == "success") {
                             $scope.subFrom.positionCode = data.retMessage;
                         } else {
@@ -1544,6 +1542,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                 //增加方法
                 $scope.add = function (subFrom) {
                     abftree_service.addposit(subFrom).then(function (data) {
+                        console.log(data)
                         if (data.status == "success") {
                             toastr['success']("新增成功!");
                             $("#container").jstree().refresh();

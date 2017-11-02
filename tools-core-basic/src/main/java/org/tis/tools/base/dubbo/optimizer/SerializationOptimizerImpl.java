@@ -35,7 +35,7 @@ public class SerializationOptimizerImpl implements SerializationOptimizer {
 	 * @see com.alibaba.dubbo.common.serialize.support.SerializationOptimizer#
 	 * getSerializableClasses()
 	 */
-	@Override
+
 	public Collection<Class> getSerializableClasses() {
 
 		List<Class> classes = new LinkedList<Class>();

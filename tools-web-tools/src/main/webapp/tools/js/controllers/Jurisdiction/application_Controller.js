@@ -553,6 +553,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             var ids = $scope.biz.item.id;//获取点击的根节点的值
             openwindow($modal, 'views/Jurisdiction/applicationAdd.html', 'lg',//弹出页面
                 function ($scope, $modalInstance) {
+                    $scope.id = id;
                     if(!isNull(item)){//如果参数不为空，则就回显
                         $scope.dictionaryAdd = angular.copy(item);
                     }
@@ -939,9 +940,10 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             function ($scope, $modalInstance) {
                 $scope.add = function(item){
                     var  subFrom = {};
-                    subFrom.data.guidFuncgroup = ids
+                    item.guidFuncgroup = ids;
                     subFrom.data = item;
-                    application_service.acFuncAdd(item).then(function(data){
+                  console.log(subFrom)
+                    application_service.acFuncAdd(subFrom).then(function(data){
                         if(data.status == "success"){
                             toastr['success']("新增成功！");
                             biz.initt3(ids);//刷新列表
@@ -963,6 +965,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     $scope.exitappList = function(id){
         var ides = $scope.biz.item.id;//获取点击的根节点guid
         var getSel = $scope.gridOptions3.getSelectedRows();
+        console.log(getSel)
         if(isNull(getSel) || getSel.length>1){
             toastr['error']("请至少选中一条！");
         }else{
@@ -971,13 +974,23 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 function ($scope, $modalInstance) {
                     var ids = id;
                     $scope.id = ids;
+                    var original = $scope.copyfunEdit;//原本修改前的数据
                     if(!isNull(item)){//如果参数不为空，则就回显
                         $scope.appFrom = angular.copy(item);
                     }
                     $scope.add = function(item){
+                        var  changeData = {};
+                        for(var key in original){//循环最初的数据?
+                            if(original[key] !== item[key]){
+                                changeData[key]= original[key];
+                            }
+                        }
+                        var subFrom = {}
                         item.id = item.guid;
+                        subFrom.data = item;
+                        subFrom.changeData = changeData;
                         //获取到选中的guid，参入item，然后传入修改就可以
-                        application_service.acFuncEdit(item).then(function(data){
+                        application_service.acFuncEdit(subFrom).then(function(data){
                             if(data.status == "success"){
                                 toastr['success']("修改成功！");
                                 biz.initt3(ides);//刷新列表
@@ -1006,8 +1019,10 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             var ids = $scope.biz.item.id;//获取点击的根节点的值
             if(confirm("确定删除选中的功能吗？")){
                 var guids = {};
-                guids.id = guid;//删除传入的必须是json格式
+                guids.data = {};
+                guids.data.id = guid;//删除传入的必须是json格式
                 application_service.acFuncDel(guids).then(function(data){
+                    console.log(data)
                     if(data.status == "success"){
                         toastr['success']("删除成功!");
                         biz.initt3(ids);//调用查询服务//调用查询服务,传入点击树的id，查询
@@ -1182,7 +1197,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         item.id = item.guid;
         subFrom.data = item;
         subFrom.changeData = changeData;
-        console.log(subFrom)
         //获取到选中的guid，参入item，然后传入修改就可以
         application_service.acFuncEdit(subFrom).then(function(data){
             if(data.status == "success"){;
@@ -1328,14 +1342,23 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     }
 
 
-
-    //功能对应类型逻辑
     //改变功能类型方法
     $scope.changetype = function (item) {
         if(confirm('确定切换类型吗？切换类型会导致原类型下行为删除')){
             var ids = $scope.biz.item.id;//获取点击的根节点的值，这里指点击功能节点的guid
             //调用保存接口，传入item类型guid 和 ids 功能guid 即可
-            biz.initt5(ids);//重新查询功能下行为
+            var subFrom = {};
+            subFrom.data = {};
+            subFrom.data.funcGuid = ids;
+            subFrom.data.bhvtypeGuid = item;
+            common_service.post(res.updateFuncBhvType,subFrom).then(function(data){
+                if(data.status == "success"){
+                    toastr['success']("更改资源类型成功！");
+                    biz.initt5(ids);//重新查询功能下行为
+                }else{
+                    toastr['error']('更改资源类型失败'+'<br/>'+data.retMessage);
+                }
+            })
         }
     }
 
@@ -1472,7 +1495,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 application_service.delFuncBhvDef(guids).then(function(data){
                     if(data.status == "success"){
                         toastr['success']("删除成功!");
-                        biz.inittAll(ids);
+                        biz.initt5(ids);//重新查询功能下行为
                     }else{
                         toastr['error']('删除失败'+'<br/>'+data.retMessage);
                     }

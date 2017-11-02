@@ -25,7 +25,8 @@ public class BiztraceManager implements IDubboInfoManager {
 	/** duboo服务注册缓存文件 */
 	private static final String CACHE_TOOLS_WEB_TOOLS_CACHE = "dubbo/cache/tools-web-tools.cache";//fixme 重构 使用disoncf
 	/** biztrace 服务的url开头标示字符串 */
-	private static final String BIZTRACE_SERVICE_HEADSTR = "biztrace/org.tis.tools.service.api.biztrace.IBiztraceRService";
+	private static final String BIZTRACE_SERVICE_HEADSTR = "biztrace/org.t"
+			+ "is.tools.service.api.biztrace.IBiztraceRService";
 	
 	public static BiztraceManager instance = new BiztraceManager() ; 
 	
