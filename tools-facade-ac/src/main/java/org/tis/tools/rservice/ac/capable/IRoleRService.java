@@ -118,7 +118,7 @@ public interface IRoleRService {
      *          角色的GUID
      * @throws RoleManagementException
      */
-    void deleteAcRole(String guid) throws RoleManagementException;
+    AcRole deleteAcRole(String guid) throws RoleManagementException;
 
     /**
      * <p>角色添加功能权限</p>
@@ -135,6 +135,16 @@ public interface IRoleRService {
      * @throws RoleManagementException
      */
     void addRoleFunc(AcRoleFunc acRoleFunc) throws RoleManagementException;
+
+    /**
+     * 配置角色功能
+     * @param appGuid
+     * @param roleGuid
+     * @param funcList
+     * @return
+     * @throws RoleManagementException
+     */
+    List<AcRoleFunc> configRoleFunc(String appGuid, String roleGuid, List<AcFunc> funcList) throws RoleManagementException;
 
     /**
      * <p>角色移除功能权限</p>
@@ -396,7 +406,7 @@ public interface IRoleRService {
      * @return 返回该角色拥有此功能的行为列表 {@link AcRoleBhv}
      * @throws RoleManagementException
      */
-    List<AcBhvDef> queryAcRoleBhvsByFuncGuid(String roleGuid, String funcGuid) throws RoleManagementException;
+    List<Map> queryAcRoleBhvsByFuncGuid(String roleGuid, String funcGuid) throws RoleManagementException;
 
     /**
      * 批量添加角色在功能下的行为列表

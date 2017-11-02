@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.dao.ac.AcRoleMapper;
 import org.tis.tools.dao.ac.AcRoleMapperExt;
-import org.tis.tools.model.po.ac.AcBhvDef;
 import org.tis.tools.model.po.ac.AcPartyRole;
 import org.tis.tools.model.po.ac.AcRole;
 import org.tis.tools.model.po.ac.AcRoleBhv;
@@ -130,7 +129,7 @@ public class AcRoleServiceExt {
 	 * @param funcGuid 查询的功能GUID
 	 * @return 返回该角色拥有此功能的行为列表 {@link AcRoleBhv}
 	 */
-	public List<AcBhvDef> queryAcRoleBhvsByFuncGuid(String roleGuid, String funcGuid) {
+	public List<Map> queryAcRoleBhvsByFuncGuid(String roleGuid, String funcGuid) {
 		return acRoleMapperExt.queryAcRoleBhvsByFuncGuid(roleGuid, funcGuid);
 	}
 
