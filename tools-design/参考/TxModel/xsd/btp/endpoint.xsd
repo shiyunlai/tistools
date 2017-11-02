@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.primeton.com/btp/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/btp/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:simpleType name="EndpointTcpModeType">
+		<xs:annotation>
+			<xs:documentation>TCP通道的模式(包括单工,双工,半双工)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SIMPLEX"/>
+			<xs:enumeration value="HALF_DUPLEX"/>
+			<xs:enumeration value="DUPLEX"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--
+	<xs:element name="endpoint-after-request-channel-interceptors">
+		<xs:annotation>
+			<xs:documentation>请求拦截器链</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element name="interceptor" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>拦截器实现类</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="endpoint-before-reply-channel-interceptors">
+		<xs:annotation>
+			<xs:documentation>响应拦截器链</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element name="interceptor" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>拦截器实现类</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	-->
+	<xs:element name="endpoint-http">
+		<xs:annotation>
+			<xs:documentation>HTTP通道</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="name" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>通道的名称</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="description" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>通道的描述</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<!--
+				<xs:element name="connect-timeout" type="xs:int" default="5" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>连接超时,单位:秒, 小于等于0 表示无超时</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="reuse-address" type="xs:boolean" default="false" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>启用/禁用 SO_REUSEADDR 套接字选项</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="tcp-no-delay" type="xs:boolean" default="false" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>关闭Nagle算法.立即发包 </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="keep-alive" type="xs:boolean" default="false" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>为 TCP 套接字设置 keepalive 选项时，如果在 2 个小时（注：实际值与实现有关）内在任意方向上都没有跨越套接字交换数据，则 TCP 会自动将 keepalive 探头发送到同位体</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="so-timeout" type="xs:int" default="30" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>设置读超时,单位:秒, 小于等于0 表示无超时</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="so-linger" type="xs:int" default="-1" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>关闭后逗留时间,单位:秒</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="receive-buffer-size" type="xs:int" default="1024" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>设置接收缓冲大小</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="send-buffer-size" type="xs:int" default="1024" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>设置发送缓冲大小</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				-->
+				<xs:element name="url" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>请求url</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="data-exchange-class" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>数据交换类,用以从socket的输入流中读取合适的数据作为请求数据交由transport-handler处理并将处理结果写入socket的输出流。如从输入流读取数据时,先读取前3位表示将要接收的数据长度,然后读取真正的请求数据;向输出流写入时会在真正的返回数据前面加上3个字节表示输出数据的长度,实现接口com.primeton.btp.spi.endpoint.http.IHttpDataExchange, 默认值为com.primeton.btp.spi.endpoint.http.SimpleHttpDataExchange</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="endpoint-caller">
+					<xs:annotation>
+						<xs:documentation>主机调用者,负责和外部主机的数据的发送/接收,
+1、factory-class实现接口com.primeton.btp.api.endpoint.IEndpointCallerFactory；
+2、并且继承自com.primeton.btp.spi.endpoint.AbstractEndpointCallerFactory
+3、默认值为com.primeton.btp.impl.endpoint.http.HttpEndpointCallerFactory
+
+
+
+Http Client的扩展属性放在ext中进行处理</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:group ref="object-pool-group"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="work-threads" minOccurs="0"/>
+				<xs:element name="work-threads-ref" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>[V]</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<!--
+				<xs:element ref="endpoint-after-request-channel-interceptors" minOccurs="0"/>
+				<xs:element ref="endpoint-before-reply-channel-interceptors" minOccurs="0"/>
+				-->
+				<xs:element ref="ext-property" minOccurs="0"/>
+				<xs:element name="ext-class" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>扩展实现类,
+1、实现接口com.primeton.btp.api.endpoint.tcp.ITcpEndpoint
+2、并且继承自com.primeton.btp.spi.endpoint.tcp.AbstractTcpEndpoint</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+			<xs:attribute name="id" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>通道的id</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="endpoint-tcp">
+		<xs:annotation>
+			<xs:documentation>TCP通道</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="name" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>通道的名称</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="mode" type="EndpointTcpModeType">
+					<xs:annotation>
+						<xs:documentation>TCP通道的模式(如:单工,半双工,双工)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="description" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>通道的描述</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="host" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>绑定的主机</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="port" type="xs:int">
+					<xs:annotation>
+						<xs:documentation>绑定的端口号</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<!--
+				<xs:element name="connect-timeout" type="xs:int" default="5" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>连接超时,单位:秒, 小于等于0 表示无超时</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="reuse-address" type="xs:boolean" default="false" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>启用/禁用 SO_REUSEADDR 套接字选项</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="tcp-no-delay" type="xs:boolean" default="false" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>关闭Nagle算法.立即发包 </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="keep-alive" type="xs:boolean" default="false" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>为 TCP 套接字设置 keepalive 选项时，如果在 2 个小时（注：实际值与实现有关）内在任意方向上都没有跨越套接字交换数据，则 TCP 会自动将 keepalive 探头发送到同位体</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="so-timeout" type="xs:int" default="30" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>设置读超时,单位:秒, 小于等于0 表示无超时</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="so-linger" type="xs:int" default="-1" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>关闭后逗留时间,单位:秒</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="receive-buffer-size" type="xs:int" default="1024" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>设置接收缓冲大小</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="send-buffer-size" type="xs:int" default="1024" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>设置发送缓冲大小</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				-->
+				<xs:element name="is-short-socket" type="xs:boolean" default="true" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>是否是短连接</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="io-worker-count" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>[V]执行socket的输入输出操作的个数
+====
+本配置项IDE不需要提供配置，改为在扩展属性中配置。Server需要读取扩展属性“io-worker-count”，进行相应的处理</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="data-exchange-class" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>数据交换类,用以从socket的输入流中读取合适的数据作为请求数据交由transport-handler处理并将处理结果写入socket的输出流。如从输入流读取数据时,先读取前3位表示将要接收的数据长度,然后读取真正的请求数据;向输出流写入时会在真正的返回数据前面加上3个字节表示输出数据的长度,实现接口com.primeton.btp.spi.endpoint.tcp.ITcpDataExchange, 默认值为com.primeton.btp.spi.endpoint.tcp.SimpleTcpDataExchange</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="endpoint-caller">
+					<xs:annotation>
+						<xs:documentation>主机调用者,负责和外部主机的数据的发送/接收,
+1、factory-class实现接口com.primeton.btp.api.endpoint.IEndpointCallerFactory；
+2、并且继承自com.primeton.btp.spi.endpoint.AbstractEndpointCallerFactory
+3、默认值为com.primeton.btp.impl.endpoint.tcp.TcpEndpointCallerFactory</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:group ref="object-pool-group"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="work-threads" minOccurs="0"/>
+				<xs:element name="work-threads-ref" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>[V]</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<!--
+				<xs:element ref="endpoint-after-request-channel-interceptors" minOccurs="0"/>
+				<xs:element ref="endpoint-before-reply-channel-interceptors" minOccurs="0"/>
+				-->
+				<xs:element ref="ext-property" minOccurs="0"/>
+				<xs:element name="ext-class" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>扩展实现类,
+1、实现接口com.primeton.btp.api.endpoint.tcp.ITcpEndpoint
+2、并且继承自com.primeton.btp.spi.endpoint.tcp.AbstractTcpEndpoint</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+			<xs:attribute name="id" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>通道的id</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="endpoint-wtc">
+		<xs:annotation>
+			<xs:documentation>WTC通道</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="name" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>通道的名称</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="description" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>通道的描述</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="work-threads" minOccurs="0"/>
+				<xs:element name="work-threads-ref" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>[V]</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="forward-service-name" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>统一转发的服务名称，如果不为空,则必须也同时设置target-service-field-id</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="target-service-field-id" type="xs:int" default="0" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>存放真正服务的域id.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="endpoint-caller">
+					<xs:annotation>
+						<xs:documentation>主机调用者,负责和外部主机的数据的发送/接收,
+1、factory-class实现接口com.primeton.btp.api.endpoint.IEndpointCallerFactory
+2、并且继承自com.primeton.btp.spi.endpoint.AbstractEndpointCallerFactory</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:group ref="object-pool-group"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<!--
+				<xs:element ref="endpoint-after-request-channel-interceptors" minOccurs="0"/>
+				<xs:element ref="endpoint-before-reply-channel-interceptors" minOccurs="0"/>
+				-->
+				<xs:element ref="ext-property" minOccurs="0"/>
+				<xs:element name="ext-class" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>扩展实现类,
+1、实现接口com.primeton.btp.api.endpoint.wtc.IWtcEndpoint
+2、并且继承自com.primeton.btp.spi.endpoint.AbstractEndpoint</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+			<xs:attribute name="id" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>通道的id</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="endpoint-ftp">
+		<xs:annotation>
+			<xs:documentation>FTP通道</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="name" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>通道的名称</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="description" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>通道的描述</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="work-threads" minOccurs="0"/>
+				<xs:element name="work-threads-ref" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>[V]</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="host" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>主机名称</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="port" type="xs:int">
+					<xs:annotation>
+						<xs:documentation>端口号</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="user-name" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>用户名称</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="password" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>密码(3DES加密),格式如"{3DES}+密码"</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="remote-dir" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>远程目录</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<!--
+				<xs:element ref="endpoint-after-request-channel-interceptors" minOccurs="0"/>
+				<xs:element ref="endpoint-before-reply-channel-interceptors" minOccurs="0"/>
+				-->
+				<xs:element name="endpoint-caller">
+					<xs:annotation>
+						<xs:documentation>主机调用者,负责和外部主机的数据的发送/接收,
+1、factory-class实现接口com.primeton.btp.api.endpoint.IEndpointCallerFactory
+2、并且继承自com.primeton.btp.spi.endpoint.AbstractEndpointCallerFactory</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:group ref="object-pool-group"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="ext-property" minOccurs="0"/>
+				<xs:element name="ext-class" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>扩展实现类,
+1、实现接口com.primeton.btp.api.endpoint.ftp.IFtpEndpoint
+2、并且继承自com.primeton.btp.spi.endpoint.AbstractEndpoint</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+			<xs:attribute name="id" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>FTP通道标识</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="endpoint-custom">
+		<xs:annotation>
+			<xs:documentation>客户定制通道</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="name" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>渠道名称</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="work-threads" minOccurs="0"/>
+				<xs:element name="work-threads-ref" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>[V]</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="description" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>渠道描述</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<!--
+				<xs:element ref="transport-after-received-interceptors" minOccurs="0"/>
+				<xs:element ref="transport-before-send-interceptors" minOccurs="0"/>
+				-->
+				<xs:element ref="ext-property" minOccurs="0"/>
+				<xs:element name="endpoint-caller">
+					<xs:annotation>
+						<xs:documentation>主机调用者,负责和外部主机的数据的发送/接收,
+1、factory-class实现接口com.primeton.btp.api.endpoint.IEndpointCallerFactory
+2、并且继承自com.primeton.btp.spi.endpoint.AbstractEndpointCallerFactory</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:group ref="object-pool-group"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ext-class" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>扩展实现类,
+1、实现接口com.primeton.btp.api.endpoint.IEndpoint
+2、并且继承自com.primeton.btp.spi.endpoint.AbstractEndpoint</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+			<xs:attribute name="id" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>渠道标识</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

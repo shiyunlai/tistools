@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by guwei (EMBRACE) -->
+<xs:schema xmlns="http://www.primeton.com/ibs/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/ibs/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:element name="business-dict">
+		<xs:annotation>
+			<xs:documentation>Comment describing your root element</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="dict-list"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="dict-list">
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="dict"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="dict">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id" type="xs:string"/>
+				<xs:element name="name" type="xs:string"/>
+				<xs:element name="type" type="xs:string"/>
+				<xs:element name="data-name" type="xs:string"/>
+				<xs:element name="lable-fieldname" type="xs:string"/>
+				<xs:element name="value-fieldname" type="xs:string"/>
+				<xs:element name="query-condition" type="xs:string"/>
+				<xs:element name="description" type="xs:string"/>
+				<xs:sequence maxOccurs="unbounded">
+					<xs:element ref="dict-item"/>
+				</xs:sequence>
+				<xs:element ref="ext-property"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="dict-item">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id" type="xs:string"/>
+				<xs:element name="name" type="xs:string"/>
+				<xs:element name="value" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

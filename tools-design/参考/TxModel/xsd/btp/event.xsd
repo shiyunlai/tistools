@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.primeton.com/btp/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/btp/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:element name="event-service">
+		<xs:annotation>
+			<xs:documentation>事件服务</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="name" type="xs:NMTOKEN">
+					<xs:annotation>
+						<xs:documentation>事件服务名</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="description" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>事件服务描述</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="flow-id" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>事件处理流程，必须是“处理流”全称</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ext-class" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>事件服务扩展实现类</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="valid-time" type="xs:float" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>有效存储时间，单位为分钟</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="max-retry-count" type="xs:int" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>最大重试次数，默认不重试</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="retry-interval" minOccurs="0" type="xs:int">
+					<xs:annotation>
+						<xs:documentation>重试间隔，单位为秒</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="policy-class" minOccurs="0" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>存储转发策略扩展类，如果有这个配置，系统内置的默认策略不生效</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="ext-property" minOccurs="0"/>
+			</xs:all>
+			<xs:attribute name="id" use="required">
+				<xs:annotation>
+					<xs:documentation>事件服务码</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="event-type">
+		<xs:annotation>
+			<xs:documentation>事件类型:0 - 签到事件,1 - 交易事件,2 - 故障事件,3 - 匪警事件,4 - 通知事件（邮件）,5 - 授权请求事件</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string"/>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="alarm-type">
+		<xs:annotation>
+			<xs:documentation>警告类型</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string"/>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="alarm-level">
+		<xs:annotation>
+			<xs:documentation>警告级别</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string"/>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="event">
+		<xs:annotation>
+			<xs:documentation>事件</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="name" type="xs:NMTOKEN">
+					<xs:annotation>
+						<xs:documentation>事件名</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="description" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>事件描述</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="event-type"/>
+				<xs:element ref="alarm-type"/>
+				<xs:element ref="alarm-level"/>
+				<xs:element ref="ext-property" minOccurs="0"/>
+			</xs:all>
+			<xs:attribute name="id" use="required">
+				<xs:annotation>
+					<xs:documentation>事件ID</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

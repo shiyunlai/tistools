@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.primeton.com/btp/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/btp/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="module">
+		<xs:complexType>
+			<xs:attribute name="name" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>模块名称</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="activator" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>模块的激活类</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="dependency-modules" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>依赖的模块,多个模块之间用,分割</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

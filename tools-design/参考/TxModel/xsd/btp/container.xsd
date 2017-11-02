@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.primeton.com/btp/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/btp/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:complexType name="container">
+		<xs:all>
+			<xs:element name="name" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>服务器的名称</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>服务器的描述</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="timeout" type="xs:int" default="0" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>超时时间.单位:秒 ,小于等于0 表示无超时</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="work-threads" minOccurs="0"/>
+			<xs:element name="work-threads-ref" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>[V]引用其它地方定义的工作线程</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="ext-property" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+</xs:schema>

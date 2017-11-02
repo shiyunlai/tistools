@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by guwei (EMBRACE) -->
+<xs:schema xmlns="http://www.primeton.com/ibs/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/ibs/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:element name="security">
+		<xs:annotation>
+			<xs:documentation>安全配置</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element name="security-type">
+					<xs:annotation>
+						<xs:documentation>安全类型</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:all>
+							<xs:element ref="ext-property"/>
+						</xs:all>
+						<xs:attribute name="name" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>名称</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="description" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>描述</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="impl-class" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>实现类</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+			<xs:attribute name="description" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by guwei (EMBRACE) -->
+<xs:schema xmlns="http://www.primeton.com/ibs/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/ibs/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:element name="device-data-source">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id" type="xs:string"/>
+				<xs:element name="name" type="xs:string"/>
+				<xs:element name="type-name" type="xs:string"/>
+				<xs:element name="format-class" type="xs:string"/>
+				<xs:element name="data-type" type="xs:string"/>
+				<xs:element name="description" type="xs:string"/>
+				<xs:element ref="ext-property"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

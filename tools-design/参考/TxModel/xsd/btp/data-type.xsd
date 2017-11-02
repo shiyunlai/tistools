@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.primeton.com/btp/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/btp/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:element name="data-type">
+		<xs:annotation>
+			<xs:documentation>数据类型</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="description" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>数据类型的描述</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="ext-property" minOccurs="0" />
+				<xs:element ref="constraint-property" minOccurs="0"></xs:element>
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>数据类型编号</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="name" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>数据类型名称</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="impl-class" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>数据类型的实现类,必须实现IDataType接口</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="xsd-type" type="xs:string"></xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="constraint-property">
+		<xs:annotation>
+			<xs:documentation>约束属性</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="entry" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>条目</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="key" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>约束属性的名称</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="value" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>约束属性的值</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="type" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>约束属性类型，如整形（int），字符串（String）等</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="description" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>约束属性的描述</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

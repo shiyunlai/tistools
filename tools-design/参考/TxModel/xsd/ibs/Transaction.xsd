@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by guwei (EMBRACE) -->
+<xs:schema xmlns="http://www.primeton.com/ibs/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/ibs/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:element name="transaction">
+		<xs:annotation>
+			<xs:documentation>交易定制</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="name" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>交易名称</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="description" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>交易描述</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="access-mode" default="1">
+					<xs:simpleType>
+						<xs:annotation>
+							<xs:documentation>访问方式 1:同步 2:异步</xs:documentation>
+						</xs:annotation>
+						<xs:restriction base="xs:int">
+							<xs:enumeration value="1"/>
+							<xs:enumeration value="2"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="timeout" type="xs:int" default="0" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>超时时间.单位:秒 ,小于等于0 表示无超时 交易执行时间</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="transaction-pattern" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>交易模板类型 1:前台交易 2:公共交易 3：分行管理</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="transaction-pattern-parameter" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>交易模板参数（交易服务引用）</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="business-type" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>交易业务类型 1:查询 2:现金 3：转账 4：维护</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="business-parameter" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>业务参数</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="security-type" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>交易安全控制类型 1:NULL 2:加密 3：签名</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="security-parameter" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>控制参数</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="monitor-mode" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>监控方式</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="auth-flag" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>是否授权标志。no-不授权；cond-条件授权；force-强制授权；</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="check-flag" type="xs:string" default="no">
+					<xs:annotation>
+						<xs:documentation>是否复核标志。no-不复核；cond-条件复核；force-强制复核</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="transaction-level" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>级别</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="transaction-view" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>交易界面</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="dual-view" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>双屏界面</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="makeup-view" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>补录界面</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="slice-view" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>切片界面</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="transaction-in-data-ref" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>交易输入数据实体名称</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="transaction-out-data-ref" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>交易输出数据实体名称</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="transaction-output-ref" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>交易输出逻辑流名称</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="combine-transaction-ref" type="xs:string"/>
+				<xs:element ref="business-control"/>
+				<xs:element ref="ext-property"/>
+			</xs:all>
+			<xs:attribute name="id" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>交易代码</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="business-control">
+		<xs:annotation>
+			<xs:documentation>业务控制</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="control-data" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>控制配置</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="transaction-field" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>交易数据字段</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="encrypt-flag" type="xs:boolean" default="false">
+								<xs:annotation>
+									<xs:documentation>是否加密标志</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="check-flag" type="xs:boolean" default="false">
+								<xs:annotation>
+									<xs:documentation>是否复核标志</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="sign-flag" type="xs:boolean" default="false">
+								<xs:annotation>
+									<xs:documentation>数字签名标志</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="journal-field" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>流水字段（记录流水用），可以为空</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="statistics-field" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>统计字段，可以为空</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="ext-property"/>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

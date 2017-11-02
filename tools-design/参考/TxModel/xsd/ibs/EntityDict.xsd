@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 (http://www.altova.com) by wuyuhou (primeton) -->
+<xs:schema xmlns="http://www.primeton.com/ibs/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/ibs/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:element name="entity-dict-list">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="entity-dict" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="entity-dict">
+		<xs:annotation>
+			<xs:documentation>数据实体和数据字典的关联定义</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="field-dict">
+					<xs:complexType>
+						<xs:all minOccurs="1" maxOccurs="1">
+							<xs:element name="entity-field" type="xs:string" minOccurs="1">
+								<xs:annotation>
+									<xs:documentation>数据实体字段</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="data-dict-ref" type="xs:string" minOccurs="1">
+								<xs:annotation>
+									<xs:documentation>数据字典引用</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="ext-property"/>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="entity-qname" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>数据实体全名称</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

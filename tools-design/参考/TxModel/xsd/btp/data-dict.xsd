@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.primeton.com/btp/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/btp/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:element name="data-dict">
+		<xs:annotation>
+			<xs:documentation>数据字典</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="description" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>数据字典的描述</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="ext-property" minOccurs="0" />
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>数据字典编号</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="name" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>数据字典名称</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="data-type-id" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>数据类型标识,见data-type.xsd定义</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by guwei (EMBRACE) -->
+<xs:schema xmlns="http://www.primeton.com/ibs/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/ibs/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:element name="desktop">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ext-property"/>
+			</xs:sequence>
+			<xs:attribute name="desktop-id" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>主键</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+			<xs:attribute name="current-theme-id" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>
+						当前使用的主题id
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="current-lshape-id" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>
+						当前使用的lshape id
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="current-perspective-id" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>
+						当前使用的perspective id
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
