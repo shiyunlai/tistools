@@ -1,14 +1,10 @@
 package org.tis.tools.webapp.controller;
 
-import java.io.File;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import net.sf.ezmorph.object.DateMorpher;
+import net.sf.json.JsonConfig;
+import net.sf.json.util.PropertySetStrategy;
 import org.apache.commons.beanutils.ConversionException;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.Converter;
@@ -25,10 +21,12 @@ import org.tis.tools.webapp.util.JSONPropertyStrategyWrapper;
 import org.tis.tools.webapp.util.JsonDateProcessor;
 import org.tis.tools.webapp.util.JsonFileProcessor;
 
-import net.sf.ezmorph.object.DateMorpher;
-import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
-import net.sf.json.util.PropertySetStrategy;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import static org.tis.tools.webapp.util.AjaxUtils.*;
 
@@ -209,8 +207,7 @@ abstract public class BaseController {
     }
 
     protected Page getPage(JSONObject jsonObj) {
-        Page page = (Page) JSONObject.toBean(jsonObj.getJSONObject("page"),
-                Page.class);
+        Page page = (Page) JSON.toJSON(jsonObj);
         if (page == null) {
             page = new Page();
         }
@@ -236,5 +233,21 @@ abstract public class BaseController {
         return map;
     }
 
-
+    /**
+     * 规范请求数据格式
+     * 结构示意：
+     * {
+     *  "data":{
+     *      "guid":"xxxx",
+     *      "name":"...."
+     *      .....
+     *   }
+     *   "changeData" :{
+     *       ....
+     *   }
+     *   "request":{
+     *
+     *   }
+     * }
+     */
 }

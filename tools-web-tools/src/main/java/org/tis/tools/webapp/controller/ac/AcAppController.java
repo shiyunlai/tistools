@@ -745,7 +745,7 @@ public class AcAppController extends BaseController {
     }
 
     /**
-     * 修改功能行为定义
+     * 修改功能行为类别
      * @param content
      * @return
      */
@@ -762,7 +762,7 @@ public class AcAppController extends BaseController {
     public Map<String, Object> updateFuncBhvType(@RequestBody String content) {
         JSONObject jsonObject = JSONObject.parseObject(content);
         JSONObject data = jsonObject.getJSONObject("data");
-        String funcGuid = data.getString("data");
+        String funcGuid = data.getString("funcGuid");
         String bhvtypeGuid = data.getString("bhvtypeGuid");
         return getReturnMap(applicationRService.updateFuncBhvType(funcGuid, bhvtypeGuid));
     }

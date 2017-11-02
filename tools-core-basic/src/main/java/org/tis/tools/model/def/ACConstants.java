@@ -54,9 +54,9 @@ public interface ACConstants {
 	///////////////////////////////////////////////////
 
 	/** 重新排序： 自增*/
-	public static final String RECORD_AUTO_PLUS = "plus";
+	public static final String REORDER_AUTO_PLUS = "plus";
 	/** 重新排序： 自增*/
-	public static final String RECORD_AUTO_MINUS = "minus";
+	public static final String REORDER_AUTO_MINUS = "minus";
 
 
 	/** 个性化配置类型 重组菜单配置**/

@@ -2,6 +2,7 @@ package org.tis.tools.webapp.controller.ac;
 
 import com.alibaba.dubbo.common.json.ParseException;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -405,7 +406,6 @@ public class AcOperatorController extends BaseController {
 
     /**
      * 修改个人配置
-     *
      * @param content
      * @return
      */
@@ -518,7 +518,6 @@ public class AcOperatorController extends BaseController {
 
     /**
      * 改变操作员状态
-     *
      * @param content
      * @return
      */
@@ -539,4 +538,67 @@ public class AcOperatorController extends BaseController {
         String status = data.getString("status");
         return getReturnMap(operatorRService.changeOperatorStatus(userId, status));
     }
+
+    /**
+     * 获取操作员功能行为信息
+     * 包含 已授权（从角色授权） 特别禁止
+     * 未授权（从功能所有行为筛选掉角色授权） 和 特别允许 列表
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getOperatorFuncBhvInfo", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> getOperatorFuncBhvInfo(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        JSONObject data = jsonObject.getJSONObject("data");
+        String userId = data.getString("userId");
+        String funcGuid = data.getString("funcGuid");
+        return getReturnMap(operatorRService.getOperatorFuncBhvInfo(userId, funcGuid));
+    }
+
+
+    /**
+     * 添加操作员特殊功能行为权限
+     * @param content
+     * @return
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_ADD,
+            operateDesc = "新增操作员特殊功能行为权限",
+            retType = ReturnType.List,
+            id = "guidOperator",
+            keys = {"guidFuncBhv", "authType"}
+    )
+    @ResponseBody
+    @RequestMapping(value = "/addAcOperatorBhv", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> addAcOperatorBhv(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        JSONArray data = jsonObject.getJSONArray("data");
+        List<AcOperatorBhv> acOperatorBhvs = JSON.parseArray(data.toJSONString(), AcOperatorBhv.class);
+        operatorRService.addAcOperatorBhv(acOperatorBhvs);
+        return getReturnMap(acOperatorBhvs);
+    }
+
+    /**
+     * 移除操作员特殊功能行为权限
+     * @param content
+     * @return
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_DELETE,
+            operateDesc = "删除操作员特殊功能行为权限",
+            retType = ReturnType.List,
+            id = "guidOperator",
+            keys = {"guidFuncBhv", "authType"}
+    )
+    @ResponseBody
+    @RequestMapping(value = "/removeAcOperatorBhv", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> removeAcOperatorBhv(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        JSONArray data = jsonObject.getJSONArray("data");
+        List<AcOperatorBhv> acOperatorBhvs = JSON.parseArray(data.toJSONString(), AcOperatorBhv.class);
+        operatorRService.removeAcOperatorBhv(acOperatorBhvs);
+        return getReturnMap(acOperatorBhvs);
+    }
+
+
+
 }

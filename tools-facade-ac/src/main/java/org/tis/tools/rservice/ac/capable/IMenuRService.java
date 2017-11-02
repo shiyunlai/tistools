@@ -88,7 +88,7 @@ public interface IMenuRService {
      * @param acOperatorMenu
      * @throws MenuManagementException
      */
-    void editOperatorMenu(AcOperatorMenu acOperatorMenu) throws MenuManagementException;
+    AcOperatorMenu editOperatorMenu(AcOperatorMenu acOperatorMenu) throws MenuManagementException;
 
     /**
      * 删除菜单
@@ -96,13 +96,15 @@ public interface IMenuRService {
      * @return 删除的菜单
      * @throws MenuManagementException
      */
-    AcMenu deleteMenu(String menuGuid) throws MenuManagementException;
+    List<AcMenu> deleteMenu(String menuGuid) throws MenuManagementException;
+
     /**
      * 删除重组菜单
      * @param menuGuid
+     * @return
      * @throws MenuManagementException
      */
-    void deleteOperatorMenu(String menuGuid) throws MenuManagementException;
+    List<AcOperatorMenu> deleteOperatorMenu(String menuGuid) throws MenuManagementException;
 
     /**
      *  根据用户id和身份查询菜单信息
@@ -164,7 +166,7 @@ public interface IMenuRService {
      *
      * @throws MenuManagementException
      */
-    void copyMenuToOperatorMenu(String operatorGuid, String copyGuid, String goalGuid, BigDecimal order) throws MenuManagementException;
+    List<AcOperatorMenu> copyMenuToOperatorMenu(String operatorGuid, String copyGuid, String goalGuid, BigDecimal order) throws MenuManagementException;
 
     /**
      * 重组菜单移动
@@ -174,16 +176,16 @@ public interface IMenuRService {
      * @param order 排序
      * @throws MenuManagementException
      */
-    void moveOperatorMenu(String targetGuid, String moveGuid, BigDecimal order) throws MenuManagementException;
+    AcOperatorMenu moveOperatorMenu(String targetGuid, String moveGuid, BigDecimal order) throws MenuManagementException;
 
     /**
      * 菜单移动
      *
-     * @param targetGuid       目标菜单GUID
-     * @param moveGuid     移动的菜单GUID
+     * @param targetGuid  目标菜单GUID
+     * @param moveGuid   移动的菜单GUID
      * @param order 排序
      * @throws MenuManagementException
      */
-    void moveMenu(String targetGuid, String moveGuid, BigDecimal order) throws MenuManagementException;
+    AcMenu moveMenu(String targetGuid, String moveGuid, BigDecimal order) throws MenuManagementException;
 
 }

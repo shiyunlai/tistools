@@ -121,7 +121,7 @@ public class OperateLogHandler {
             if(StringUtils.isNotBlank(logAnt.id())) {
                 log.addObj()
                         .setObjGuid(jsonObject.getString(logAnt.id()))
-                        .setObjName(jsonObject.getString(logAnt.name()))
+                        .setObjName(StringUtils.isBlank(logAnt.name()) ? null : jsonObject.getString(logAnt.name()))
                         .setObjValue(objStr);
                 for (String key : logAnt.keys()) {
                     log.getObj(0).addKey(key, jsonObject.getString(key));
