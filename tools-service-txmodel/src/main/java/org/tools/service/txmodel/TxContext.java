@@ -33,6 +33,11 @@ public class TxContext implements Serializable {
 	private static final long serialVersionUID = 1413047679553764698L;
 
 	/**
+	 * 交易请求ID，唯一标识某次请求
+	 */
+	private String requestID = null ; 
+	
+	/**
 	 * 交易定义
 	 */
 	private TxDefinition txDefinition = null;
@@ -47,15 +52,18 @@ public class TxContext implements Serializable {
 	 */
 	private ITxResponse txResponse = null ; 
 
-	// TODO 其他上下文属性
 	
+	public TxContext() {
+		
+	}
 	
 	public TxContext(TxDefinition def, ITxRequest request , ITxResponse response ){
+		this.requestID = request.getTxHeader().getTxSerialNo() ; 
 		this.txDefinition = def ; 
 		this.txRequest = request ; 
 		this.txResponse = response ; 
 	}
-
+	
 	public TxDefinition getTxDefinition() {
 		return txDefinition;
 	}
@@ -86,6 +94,14 @@ public class TxContext implements Serializable {
 
 	public void setTxResponse(ITxResponse response) {
 		this.txResponse = response;
+	}
+
+	public String getRequestID() {
+		return requestID;
+	}
+
+	public void setRequestID(String requestID) {
+		this.requestID = requestID;
 	}
 	
 }

@@ -50,7 +50,7 @@ public class TxModelRServiceImpl implements ITxModelRService {
 		// 构造或取回 交易上下文
 		TxContext context = buildTxContext(txDef,txRequest) ; 
 		
-		// 处理本次交易操作请求
+		// 处理本次交易操作请求,并返回处理响应
 		ITxResponse response = txEngine.execute(context);
 		
 		return response ; 

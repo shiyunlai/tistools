@@ -9,6 +9,10 @@ import java.io.Serializable;
  * <pre>
  * 交易响应对象（Trade Response Object 简称： TxResponse）
  * 
+ * 系统接收的每次交易操作请求，都会实时返回一个响应对象. 
+ * 其中，非异步调用交易服务模式时，响应对象中包括处理结果；
+ * 否则，在异步调用交易服务模式时，响应对象中不包括处理结果；
+ * 
  * 一个完整的响应对象由{@link ITxHeader 交易头}、{@link ITxControl 交易控制}、{@link ITxData 响应数据}、校验信息四部分组成
  * 
  * 结构示意：
@@ -31,6 +35,7 @@ import java.io.Serializable;
  * 		"succFlag"  : "true",
  * 		"retCode"   : "00000",
  * 		"retMessage": "授权提交处理成功",
+ *      ....
  * 		"override-done"     : {                         // 返回原“授权处理信息”
  * 			overrideStatus  : "pass"                    // 授权通过
  * 			overrideTeller  : "6600345",                // 授权员
