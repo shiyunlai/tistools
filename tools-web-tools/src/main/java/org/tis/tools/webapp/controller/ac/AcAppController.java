@@ -745,6 +745,28 @@ public class AcAppController extends BaseController {
     }
 
     /**
+     * 设置功能行为是否有效
+     * @param content
+     * @return
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,
+            operateDesc = "修改行为类型",
+            retType = ReturnType.Object,
+            id = "guid",
+            keys = "isEffective"
+    )
+    @ResponseBody
+    @RequestMapping(value = "/setFuncBhvStatus", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> setFuncBhvStatus(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        JSONObject data = jsonObject.getJSONObject("data");
+        String funcBhvGuid = data.getString("funcBhvGuid");
+        String isEffective = data.getString("isEffective");
+        return getReturnMap(applicationRService.setFuncBhvStatus(funcBhvGuid, isEffective));
+    }
+
+    /**
      * 修改功能行为类别
      * @param content
      * @return

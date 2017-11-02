@@ -132,6 +132,7 @@
 		,c.BHVTYPE_NAME AS bhvtypeName
 		,a.bhv_code as bhvCode
 		,a.bhv_name as bhvName
+		,b.guid as guidFuncBhv
 		,b.iseffective as iseffective
 	</sql>
 

@@ -408,6 +408,15 @@ public interface IApplicationRService {
 	 void addBhvDefForFunc(String funcGuid, List bhvDefGuids);
 
 	/**
+	 * 设置功能行为定义是否有效
+	 * @param funcBhvGuid
+	 * @param isEffective
+	 * @return
+	 * @throws AppManagementException
+	 */
+	 AcFuncBhv setFuncBhvStatus(String funcBhvGuid, String isEffective) throws AppManagementException;
+
+	/**
 	 * 修改功能的行为类别
 	 * @param funcGuid 功能GUID
 	 * @param bhvtypeDefGuid 行为类别GUID

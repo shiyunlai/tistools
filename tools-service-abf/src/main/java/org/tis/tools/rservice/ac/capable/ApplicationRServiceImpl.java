@@ -29,6 +29,7 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static org.tis.tools.common.utils.BasicUtil.surroundBracketsWithLFStr;
 import static org.tis.tools.common.utils.BasicUtil.wrap;
 
 /**
@@ -1448,6 +1449,43 @@ public class ApplicationRServiceImpl extends BaseRService implements
 				}
 			}
 		});
+	}
+
+	/**
+	 * 设置功能行为定义是否有效
+	 *
+	 * @param funcBhvGuid
+	 * @param isEffective
+	 * @return
+	 * @throws AppManagementException
+	 */
+	@Override
+	public AcFuncBhv setFuncBhvStatus(String funcBhvGuid, String isEffective) throws AppManagementException {
+		if(StringUtil.isEmpty(funcBhvGuid)) {
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("funcBhvGuid","setFuncBhvStatus"));
+		}
+		if(StringUtil.isEmpty(isEffective)) {
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("isEffective","setFuncBhvStatus"));
+		}
+		try {
+			AcFuncBhv acFuncBhv = acFuncBhvService.loadByGuid(funcBhvGuid);
+			if(acFuncBhv == null) {
+				throw new AppManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY,
+						wrap(surroundBracketsWithLFStr(AcFuncBhv.COLUMN_GUID, funcBhvGuid), AcFuncBhv.TABLE_NAME));
+			}
+			if(StringUtils.isEquals(CommonConstants.YES, isEffective))
+			acFuncBhv.setIseffective(CommonConstants.YES);
+			else
+				acFuncBhv.setIseffective(CommonConstants.NO);
+			acFuncBhvService.update(acFuncBhv);
+			return acFuncBhv;
+		} catch (ToolsRuntimeException e) {
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_CALL, wrap("setFuncBhvStatus", e));
+		}
 	}
 
 	/**
