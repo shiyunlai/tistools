@@ -4,8 +4,11 @@
 package org.tools.service.txmodel;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.tis.tools.rservice.api.txmodel.ITxModelRService;
+import org.tis.tools.common.utils.StringUtil;
 import org.tis.tools.rservice.txmodel.TxModelConstants.BHVTYPE;
+import org.tis.tools.rservice.txmodel.api.ITxModelRService;
+import org.tis.tools.rservice.txmodel.exception.TxModelException;
+import org.tis.tools.rservice.txmodel.exception.TxModelExceptionCodes;
 import org.tis.tools.rservice.txmodel.impl.message.TxResponseImpl;
 import org.tis.tools.rservice.txmodel.spi.message.ITxRequest;
 import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;
@@ -32,22 +35,47 @@ public class TxModelRServiceImpl implements ITxModelRService {
 	 */
 	@Override
 	public ITxResponse execute(ITxRequest txRequest) {
-
-		// 根据请求数据，判断使用那个引擎
+		
+		// 校验请求数据
+		verifyTxReauest(txRequest) ; 
+		
+		// 判断使用那个引擎
 		String txCode = txRequest.getTxHeader().getTxCode();
 		TxDefinition txDef = getTxDefByTxCode(txCode) ; 
 		BHVTYPE bhvType = txDef.getBhvType() ;
 
-		// 根据行为类型(BHVTYPE)取出对应的交易引擎
+		// 取出处理当前请求的交易引擎
 		ITxEngine txEngine = txEngineManager.getTxEngine(bhvType);
 		
-		// 构造/取回 交易上下文
+		// 构造或取回 交易上下文
 		TxContext context = buildTxContext(txDef,txRequest) ; 
 		
-		// 调用交易引擎处理本次交易操作请求
+		// 处理本次交易操作请求
 		ITxResponse response = txEngine.execute(context);
 		
 		return response ; 
+	}
+
+	
+	/**
+	 * <pre>
+	 * 进行交易请求数据的合法性检查
+	 * 检查不通过抛出运行时异常
+	 * </pre>
+	 * @param txRequest
+	 */
+	private void verifyTxReauest(ITxRequest txRequest) {
+
+		// 必须指明行为动作
+		if (StringUtil.isNotNullAndBlank(txRequest.getTxHeader().getBhvCode())) {
+			throw new TxModelException(TxModelExceptionCodes.LACK_BHV_CODE);
+		}
+
+		// 必须有交易代码
+		if (StringUtil.isNotNullAndBlank(txRequest.getTxHeader().getTxCode())) {
+			throw new TxModelException(TxModelExceptionCodes.LACK_TX_CODE);
+		}
+
 	}
 
 	/**

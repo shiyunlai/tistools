@@ -16,7 +16,7 @@
             id="txModelRService"
             group="txmodel"
             version="0.1"
-            interface="org.tis.tools.rservice.api.txmodel.ITxModelRService"
+            interface="org.tis.tools.rservice.txmodel.api.ITxModelRService"
             check="false"/>
             
 </beans>

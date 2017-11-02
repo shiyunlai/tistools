@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tis.tools.rservice.api.txmodel;
+package org.tis.tools.rservice.txmodel.api;
 
 import org.tis.tools.rservice.txmodel.spi.message.ITxRequest;
 import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;

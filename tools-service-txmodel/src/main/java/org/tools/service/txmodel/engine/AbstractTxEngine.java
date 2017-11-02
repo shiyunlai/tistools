@@ -41,7 +41,10 @@ abstract class AbstractTxEngine implements ITxEngine {
 	BHVTYPE bhvType = null;
 
 	/**
+	 * <pre>
 	 * 本交易引擎支持的所有“操作行为命令”
+	 * 也就是,交易引擎能做哪些事情（交易操作处理）
+	 * </pre>
 	 */
 	Map<BHVCODE, IOperatorBhvCommand> commands = new HashMap<BHVCODE, IOperatorBhvCommand>();
 

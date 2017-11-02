@@ -34,7 +34,7 @@
 	<!-- ============================================================= -->
 	<!-- 暴露服务 -->
 	<dubbo:service
-		interface="org.tis.tools.rservice.api.txmodelITxModelRService" 
+		interface="org.tis.tools.rservice.txmodel.api.ITxModelRService" 
 		group="txmodel" 
 		version="${ITxModelRService.version}"
 		ref="txModelRServiceImpl"

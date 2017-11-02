@@ -16,22 +16,28 @@
 		http://code.alibabatech.com/schema/dubbo 
 		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
+	<!-- //FIXME 后期考虑以交易引擎为单位，进行配置文件拆分，以便实现每个交易引擎（TxEngine）独立一个配置文件 -->
+
 	<!-- =======================================================
 	| txmode模块装配：引擎管理器（TxEngineManager）的装配
-	| 一共有那些交易引擎
+	| 
+	| 交易引擎
+	| 
 	============================================================= -->
 	<bean id="txEngineManager" class="org.tools.service.txmodel.TxEngineManager">
 		<property name="txEngines">
 			<map>
 				<entry key="ACCOUNT" value-ref="accountTxEngine" />
 				<!-- <entry key="MAINTAIN" value-ref="closeTxBhvCommand" /> -->
+				<!-- extend for more trade engine -->
 			</map>
 		</property>
 	</bean>
 	
 	<!-- =======================================================
 	| txmode模块装配：账务类交易引擎（AccountTxEngine）的装配
-	| 配置引擎可以处理那些操作命令
+	| 1.配置引擎对应的行为分类.
+	| 2.配置引擎可以处理那些操作命令.
 	============================================================= -->
 	
 	<bean id="accountTxEngine" class="org.tools.service.txmodel.engine.AccountTxEngine">
@@ -47,6 +53,7 @@
     
 	<!-- ========================================================
 	| txmode模块装配：操作行为命令 ( IOperatorBhvCommand )
+	| 逐个配置交易操作行为命令
 	============================================================= -->
 
 	<!-- 操作行为命令：打开交易 -->
@@ -59,6 +66,6 @@
 		<property name="bhvCode" value="CLOSE_TX" />
 	</bean>
 	
+	<!-- extend for more trade opertor command -->
 	
-    
 </beans>
