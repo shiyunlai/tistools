@@ -343,7 +343,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         if(typeof data.node !== 'undefined'){//拿到结点详情
             $scope.dictionaryAdd = data.node.original;
             $scope.thisNode = data.node.text;
-            $scope.biz.item = data.node;//全局点击值传递
+            $scope.biz.item = data.node;//全局点击值传递$scope.biz.item = data.node;//全局点击值传递
             if(data.node.parent == '#'){
                 //创建机构实例
                 $scope.biz.applica = true;
@@ -1368,6 +1368,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         subFrom.funcGuid = funcGuid;
         // subFrom.bhvtypeGuid = bhvtypeGuid;
         application_service.queryAllBhvDefForFunc(subFrom).then(function (data){
+            console.log(data);
             if(data.status == "success"){
                 var datas = data.retMessage
                 $scope.gridOptions5.data = datas;//把获取到的数据复制给表
@@ -1391,7 +1392,11 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         })
     }*/
 
-
+    //按钮全部无效方法
+    function invalid() {
+        $scope.seteffinv =false;//设为有效按钮隐藏
+        $scope.invalid = false;//设为无效按钮隐藏
+    }
     /*事件行为列表*/
     var gridOptions5 = {};
     $scope.gridOptions5 = gridOptions5;
@@ -1400,20 +1405,63 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     }
     var  com5= [{ field: 'bhvName', displayName: '行为名称'},
         { field: "bhvCode", displayName:'行为代码'},
-        //{ field: "iseffecTive", displayName:'是否有效'}
+        { field: "iseffective", displayName:'是否有效',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.iseffective | translateConstants :\'DICT_YON\') + $root.constant[\'DICT_YON-\'+row.entity.iseffective]}}</div>'}
     ];
     //自定义点击事件
     var f5 = function(row){
         if(row.isSelected){
             $scope.selectRow5 = row.entity;
+            if(row.entity.iseffective == 'Y'){
+                $scope.seteffinv =false;//设为有效按钮隐藏
+                $scope.invalid = true;//设为无效按钮显示
+            }else{
+                $scope.seteffinv =true;//设为有效按钮显示
+                $scope.invalid = false;//设为无效按钮隐藏
+            }
         }else{
             delete $scope.selectRow5;//制空
+            invalid();//让按钮全部无效
         }
     }
     $scope.gridOptions5 = initgrid($scope,gridOptions5,filterFilter,com5,true,f5);
     $scope.gridOptions5.paginationPageSize = 20, //每页显示个数
 
+    //设为有效方法
+     biz.effective=function () {
+         var dats = $scope.gridOptions5.getSelectedRows()[0];//拿到对应行为数据
+         var ids = $scope.biz.item.id;//功能的guid
+         var subFrom = {};
+         subFrom.data = {};
+         subFrom.data.funcBhvGuid = dats.guidFuncBhv;
+         subFrom.data.isEffective = 'Y';
+         common_service.post(res.setFuncBhvStatus,subFrom).then(function(data){
+             if(data.status == "success"){
+                 toastr['success']("设置有效成功!");
+                 biz.initt5(ids);//重新查询功能下行为
+             }else{
+                 toastr['success']("设置有效失败!"+'<br/>'+data.retMessage);
+             }
+         })
+     }
 
+    //设为无效
+    biz.invalid=function () {
+        var dats = $scope.gridOptions5.getSelectedRows()[0];//拿到对应行为数据
+        var ids = $scope.biz.item.id;//功能的guid
+        console.log(dats);
+        var subFrom = {};
+        subFrom.data = {};
+        subFrom.data.funcBhvGuid = dats.guidFuncBhv;
+        subFrom.data.isEffective = 'N';
+        common_service.post(res.setFuncBhvStatus,subFrom).then(function(data){
+            if(data.status == "success"){
+                toastr['success']("设置无效成功!");
+                biz.initt5(ids);//重新查询功能下行为
+            }else{
+                toastr['success']("设置无效失败!"+'<br/>'+data.retMessage);
+            }
+        })
+    }
     //新增功能行为
         $scope.biz.functactive = function() {
             var ids = $scope.biz.item.id;//获取点击的根节点的值，这里指点击功能节点的guid

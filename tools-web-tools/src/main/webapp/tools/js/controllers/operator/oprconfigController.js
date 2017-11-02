@@ -254,7 +254,7 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                 operator_service.deleteOperatorIdentity(subFrom).then(function (data) {
                     console.log(data)
                     if (data.status == "success") {
-                        toastr['success']("修改成功！");
+                        toastr['success']("删除成功！");
                         opensf.inittx(info.userid, info.username);//测试查询
                     } else {
                         toastr['error'](data.retCode, data.retMessage + "删除失败!");
@@ -278,10 +278,10 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                operator_service.setDefaultOperatorIdentity(subFrom).then(function (data) {
                    console.log(data);
                    if (data.status == "success") {
-                       toastr['success']("修改成功！");
+                       toastr['success']("设置默认身份成功！");
                        opensf.inittx(info.userid, info.username);//测试查询
                    } else {
-                       toastr['error'](data.retCode, data.retMessage + "删除失败!");
+                       toastr['error'](data.retCode, data.retMessage + "设置默认身份失败!");
                    }
                })
            }else{

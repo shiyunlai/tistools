@@ -137,6 +137,12 @@
     "data": "{pageTitle: '个性化配置管理'}",
     "header":"{appguid:'APPtest111',funguid:'FUN00101'}",
     "controller": "configuration_controller"
+  },
+  "rolePermission": {
+    "url": "/rolePermission/{id:.*}",
+    "templateUrl": "views/roleManage/rolePermission.html",
+    "data": "{pageTitle: '角色权限配置'}",
+    "controller": "rolePermission_controller"
   }
 }
 

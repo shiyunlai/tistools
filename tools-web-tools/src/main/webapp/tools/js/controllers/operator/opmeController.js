@@ -115,11 +115,11 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
                         subFrom.changeData = changeData;
                         operator_service.editOperator(subFrom).then(function(data){
                             if(data.status == "success"){
-                                toastr['success']( "新增成功！");
+                                toastr['success']( "修改成功！");
                                 operman.queryAll();
                                 $modalInstance.close();
                             }else{
-                                toastr['error']('新增失败'+'<br/>'+data.retMessage);
+                                toastr['error']('修改失败'+'<br/>'+data.retMessage);
                             }
                         })
                     }
