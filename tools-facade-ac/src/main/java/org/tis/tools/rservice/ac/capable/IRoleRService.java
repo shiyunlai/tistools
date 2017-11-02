@@ -205,7 +205,7 @@ public interface IRoleRService {
      * @param acPartyRole
      * @throws RoleManagementException
      */
-    AcPartyRole addRoleParty(AcPartyRole acPartyRole) throws RoleManagementException;
+    List<AcPartyRole> addRoleParty(List<AcPartyRole> acPartyRole) throws RoleManagementException;
 
     /**
      * <p>角色移除组织对象权限</p>
@@ -216,11 +216,10 @@ public interface IRoleRService {
      *     1.验证传入的对象不能为空
      *
      * </pre>
-     * @param roleGuid 角色GUID
-     * @param partyGuid  组织对象GUID
+     * @param acPartyRoles
      * @throws RoleManagementException
      */
-    void removeRoleParty(String roleGuid, String partyGuid) throws RoleManagementException;
+    List<AcPartyRole> removeRoleParty(List<AcPartyRole> acPartyRoles) throws RoleManagementException;
 
 
     /**
