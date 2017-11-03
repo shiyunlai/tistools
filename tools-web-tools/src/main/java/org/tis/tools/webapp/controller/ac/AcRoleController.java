@@ -5,25 +5,22 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.tis.tools.base.exception.ToolsRuntimeException;
-import org.tis.tools.common.utils.BasicUtil;
-import org.tis.tools.core.exception.ExceptionCodes;
 import org.tis.tools.model.def.JNLConstants;
 import org.tis.tools.model.po.ac.*;
 import org.tis.tools.rservice.ac.capable.IApplicationRService;
 import org.tis.tools.rservice.ac.capable.IRoleRService;
-import org.tis.tools.rservice.ac.exception.RoleManagementException;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.log.OperateLog;
 import org.tis.tools.webapp.log.ReturnType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhaoch on 2017/7/16.
@@ -146,39 +143,22 @@ public class AcRoleController extends BaseController {
     /**
      * 角色配置功能权限
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,
+            operateDesc = "修改角色组织权限",
+            retType = ReturnType.List,
+            id = "guidRole",
+            keys = "guidFunc"
+    )
     @ResponseBody
     @RequestMapping(value = "/configRoleFunc", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public Map<String, Object> addRoleFunc(@RequestBody String content) {
+    public Map<String, Object> configRoleFunc(@RequestBody String content) {
         JSONObject jsonObject = JSONObject.parseObject(content);
-        String roleGuid = jsonObject.getString("roleGuid");
-        String appGuid = jsonObject.getString("appGuid");
-        JSONArray funcList = jsonObject.getJSONArray("funcList");
-        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-            @Override
-            public void doInTransactionWithoutResult(TransactionStatus status) {
-                try {
-                    //删除修改前的角色权限配置
-                    roleRService.removeRoleFuncWithApp(roleGuid, appGuid);
-                    for (Iterator iterator = funcList.iterator(); iterator.hasNext(); ) {
-                        JSONObject job = (JSONObject) iterator.next();
-                        AcRoleFunc acRoleFunc = new AcRoleFunc();
-                        acRoleFunc.setGuidApp(appGuid);
-                        acRoleFunc.setGuidRole(roleGuid);
-                        acRoleFunc.setGuidFuncgroup(job.getString("groupGuid"));
-                        acRoleFunc.setGuidFunc(job.getString("funcGuid"));
-                        roleRService.addRoleFunc(acRoleFunc);
-                    }
-                } catch (ToolsRuntimeException te) {
-                    throw te;
-                } catch (Exception e) {
-                    status.setRollbackOnly();
-                    e.printStackTrace();
-                    throw new RoleManagementException(
-                            ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap("AC_FUNC_ROLE", e.getCause().getMessage()));
-                }
-            }
-        });
-        return getReturnMap(null);
+        JSONObject data = jsonObject.getJSONObject("data");
+        String roleGuid = data.getString("roleGuid");
+        List<AcRoleFunc> funcList = JSON.parseArray(data.getJSONArray("funcList").toJSONString(), AcRoleFunc.class);
+        roleRService.configRoleFunc(roleGuid, funcList);
+        return getReturnMap(funcList);
     }
 
 
