@@ -105,7 +105,8 @@ public class AcRoleController extends BaseController {
      * @param content
      * @return
      */
-    @RequestMapping(value = "/appQuery", method = RequestMethod.POST)
+    @ResponseBody
+    @RequestMapping(value = "/appQuery", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> appQuery(@RequestBody String content) {
         Map<String, Object> result = new HashMap<String, Object>();
         JSONObject jsonObj = JSONObject.parseObject(content);
@@ -197,10 +198,18 @@ public class AcRoleController extends BaseController {
     /**
      * 角色添加组织权限
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_ADD,
+            operateDesc = "新增角色组织权限",
+            retType = ReturnType.List,
+            id = "guidRole",
+            keys = {"guidParty", "partyType"}
+    )
     @ResponseBody
     @RequestMapping(value = "/addPartyRole", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> removeRoleFunc(@RequestBody String content) {
-        List<AcPartyRole> acPartyRoleList = JSON.parseArray(content, AcPartyRole.class);
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        List<AcPartyRole> acPartyRoleList = JSON.parseArray(jsonObject.getJSONArray("data").toJSONString(), AcPartyRole.class);
         return getReturnMap(roleRService.addRoleParty(acPartyRoleList));
     }
 
@@ -221,6 +230,13 @@ public class AcRoleController extends BaseController {
     /**
      * 移除角色下的组织对象
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_DELETE,
+            operateDesc = "删除角色组织权限",
+            retType = ReturnType.List,
+            id = "guidRole",
+            keys = {"guidParty", "partyType"}
+    )
     @ResponseBody
     @RequestMapping(value = "/removePartyRole", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> removePartyRole(@RequestBody String content) {
@@ -232,10 +248,18 @@ public class AcRoleController extends BaseController {
     /**
      * 角色添加操作员
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_ADD,
+            operateDesc = "新增角色与操作员关系",
+            retType = ReturnType.List,
+            id = "guidOperator",
+            keys = "guidRole"
+    )
     @ResponseBody
     @RequestMapping(value = "/addOperatorRole", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> addOperatorRole(@RequestBody String content) {
-        List<AcOperatorRole> acOperatorRoleList = JSON.parseArray(content, AcOperatorRole.class);
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        List<AcOperatorRole> acOperatorRoleList = JSON.parseArray(jsonObject.getJSONArray("data").toJSONString(), AcOperatorRole.class);
         return getReturnMap(roleRService.addOperatorRole(acOperatorRoleList));
     }
 
@@ -256,10 +280,18 @@ public class AcRoleController extends BaseController {
     /**
      * 移除角色下的操作员
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_DELETE,
+            operateDesc = "删除角色与操作员关系",
+            retType = ReturnType.List,
+            id = "guidOperator",
+            keys = "guidRole"
+    )
     @ResponseBody
     @RequestMapping(value = "/removeOperatorRole", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> removeOperatorRole(@RequestBody String content) {
-        List<AcOperatorRole> acOperatorRoleList = JSON.parseArray(content, AcOperatorRole.class);
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        List<AcOperatorRole> acOperatorRoleList = JSON.parseArray(jsonObject.getJSONArray("data").toJSONString(), AcOperatorRole.class);
         return getReturnMap(roleRService.removeOperatorRole(acOperatorRoleList));
     }
 
