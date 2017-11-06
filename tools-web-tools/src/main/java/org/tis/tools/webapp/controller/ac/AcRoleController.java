@@ -157,8 +157,7 @@ public class AcRoleController extends BaseController {
         JSONObject data = jsonObject.getJSONObject("data");
         String roleGuid = data.getString("roleGuid");
         List<AcRoleFunc> funcList = JSON.parseArray(data.getJSONArray("funcList").toJSONString(), AcRoleFunc.class);
-        roleRService.configRoleFunc(roleGuid, funcList);
-        return getReturnMap(funcList);
+        return getReturnMap(roleRService.configRoleFunc(roleGuid, funcList));
     }
 
 

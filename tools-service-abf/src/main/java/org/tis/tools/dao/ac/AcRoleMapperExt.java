@@ -50,4 +50,12 @@ public interface AcRoleMapperExt {
      * @return 返回该角色拥有此功能的行为列表 {@link AcRoleBhv}
      */
     List<Map> queryAcRoleBhvsByFuncGuid(@Param("roleGuid")String roleGuid, @Param("funcGuid")String funcGuid);
+
+    /**
+     * 删除角色在功能下的行为列表
+     *
+     * @param roleGuid 需要删除的角色GUID
+     * @param funcGuids 查询的功能GUID
+     */
+    void deleteAcRoleBhvsByFuncGuid(@Param("roleGuid")String roleGuid, @Param("funcGuids")String funcGuids);
 }

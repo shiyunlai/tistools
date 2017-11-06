@@ -75,7 +75,7 @@
         )
     </select>
 
-    <select id="queryAcRoleBhvsByFuncGuid" resultType="org.tis.tools.model.po.ac.AcBhvDef"  >
+    <select id="queryAcRoleBhvsByFuncGuid" resultType="map"  >
 
         SELECT
           <include refid="queryAcRoleBhvsByFuncGuid_Column" />
@@ -89,6 +89,28 @@
         AND a.guid_func_bhv = b.GUID
         AND b.GUID_BHV = c.GUID
     </select>
+
+    <delete id="deleteAcRoleBhvsByFuncGuid" >
+        <!-- mysql中 delete语句在用别名的时候要多写一个别名在delete后边,否则会报错 -->
+        DELETE t
+        FROM
+        `Ac_ROLE_BHV` t
+        inner join (
+            SELECT
+            b.GUID
+            FROM
+            Ac_ROLE_BHV a,
+            ac_func_bhv b
+            WHERE
+            a.GUID_FUNC_BHV = b.GUID
+            AND a.guid_role =  #{roleGuid}
+
+            AND b.guid_FUNC IN ${funcGuids}
+        ) t2
+        on
+        t.guid_role =  #{roleGuid}
+        and t.guid_func_bhv = t2.GUID
+    </delete>
 
 
 

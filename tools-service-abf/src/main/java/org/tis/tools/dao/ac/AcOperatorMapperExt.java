@@ -1,7 +1,6 @@
 package org.tis.tools.dao.ac;
 
 import org.apache.ibatis.annotations.Param;
-import org.tis.tools.model.po.ac.AcBhvDef;
 
 import java.util.List;
 import java.util.Map;
@@ -29,7 +28,7 @@ public interface AcOperatorMapperExt {
      * @param funcGuid 功能GUID
      * @return
      */
-    List<AcBhvDef> getAuthOperatorFuncBhv(
+    List<Map> getAuthOperatorFuncBhv(
             @Param("roleGuid")String roleGuid,
             @Param("operatorGuid")String operatorGuid,
             @Param("funcGuid")String funcGuid);
@@ -40,7 +39,7 @@ public interface AcOperatorMapperExt {
      * @param funcGuid 功能GUID
      * @return
      */
-    List<AcBhvDef> getAuthOperatorFuncFbdBhv(
+    List<Map> getAuthOperatorFuncFbdBhv(
             @Param("operatorGuid")String operatorGuid,
             @Param("funcGuid")String funcGuid);
 
@@ -50,7 +49,7 @@ public interface AcOperatorMapperExt {
      * @param funcGuid 功能GUID
      * @return
      */
-    List<AcBhvDef> getUnauthOperatorFuncPmtBhv(
+    List<Map> getUnauthOperatorFuncPmtBhv(
             @Param("operatorGuid")String operatorGuid,
             @Param("funcGuid")String funcGuid);
 

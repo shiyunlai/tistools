@@ -138,13 +138,12 @@ public interface IRoleRService {
 
     /**
      * 配置角色功能
-     * @param appGuid
      * @param roleGuid
-     * @param funcList
+     * @param roleFuncList
      * @return
      * @throws RoleManagementException
      */
-    List<AcRoleFunc> configRoleFunc(String appGuid, String roleGuid, List<AcFunc> funcList) throws RoleManagementException;
+    List<AcRoleFunc> configRoleFunc(String roleGuid, List<AcRoleFunc> roleFuncList) throws RoleManagementException;
 
     /**
      * <p>角色移除功能权限</p>

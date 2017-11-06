@@ -315,7 +315,7 @@ public interface IOperatorRService {
      * @return
      * @throws OperatorManagementException
      */
-    Map<String, List<AcBhvDef>> getOperatorFuncBhvInfo(String userId, String funcGuid) throws OperatorManagementException;
+    Map<String, List<Map>> getOperatorFuncBhvInfo(String userId, String funcGuid) throws OperatorManagementException;
 
     /**
      * 添加操作员特殊功能行为
