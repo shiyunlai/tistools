@@ -119,13 +119,10 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                            role_service.editRole(subFrom).then(function(data){
                                if(data.status == "success"){
                                    toastr['success']("修改成功！");
+                                   $modalInstance.close();
                                    role.inint();
-
-                                   control('#'+items.guidApp,items); //调用树结构函数
-                                   $("#container").jstree().refresh();//刷新树结构
                                    role.rofault(items.guid);//刷新组织关系列表
                                    queryOeper(items.guid);//刷新操作员列表
-                                   $modalInstance.close();
 
                                }else{
                                    toastr['error']('修改失败'+'<br/>'+data.retMessage);
@@ -196,11 +193,9 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
         subFrom.data = {};
         subFrom.data.roleGuid =gridDate.guid;//角色guid
         subFrom.data.funcGuid =item.guid;
-        console.log(subFrom)
         common_service.post(res.queryAcRoleBhvsByFuncGuid,subFrom).then(function(data){
             if(data.status == 'success'){
                 var datas = data.retMessage;
-                console.log(datas)
                 $scope.gridFuncedit.data =  datas;
                 $scope.gridFuncedit.mydefalutData = datas;
                 $scope.gridFuncedit.getPage(1,$scope.gridFuncedit.paginationPageSize);
@@ -522,18 +517,17 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
         if(nodes.length>=0 ) {
             var subFrom = {};
             subFrom.roleGuid = gridDate.guid;
-            subFrom.appGuid = gridDate.guidApp;
             subFrom.funcList = [];
             for (var i = 0; i < nodes.length; i++) {
                 if (nodes[i].indexOf('FUNC') == 0 && nodes[i].indexOf('FUNCGROUP') !== 0) {
-                    //console.log(nodes[i])
                     var item = {};
-                    item.funcGuid = nodes[i];
-                    item.groupGuid = $("#container").jstree().get_node(nodes[i]).parent;
+                    item.guidFunc = nodes[i];
+                    item.guidFuncgroup = $("#container").jstree().get_node(nodes[i]).parent;
+                    item.guidApp = gridDate.guidApp;
                     subFrom.funcList.push(item);
                 }
             }
-            role_service.configRoleFunc(subFrom).then(function (data) {
+            role_service.configRoleFunc({data:subFrom}).then(function (data) {
                 var datas = data.retMessage;
                 if (data.status == "success") {
                     toastr['success']('保存权限成功');
@@ -618,7 +612,6 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
     }
     $scope.role_Deletefunc = function(){
         var dats = $scope.gridFuncedit.getSelectedRows();
-        console.log(dats);
         var funcGuid = $scope.role.item;//点击值guid
         if(dats.length>0){
             if(confirm('确定要删除行为类型吗?')){
@@ -828,13 +821,14 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                 $scope.importAdd = function () {
                     var dats = $scope.gridOptions.getSelectedRows();
                     if(dats.length >0){
-                        var tis = [];
+                        var tis = {};
+                        tis.data = [];
                         for(var i =0; i<dats.length; i++){
                             var subFrom = {};
                             subFrom.guidRole = gridDate.guid;
                             subFrom.partyType=DICT_AC_PARTYTYPE[0];
                             subFrom.guidParty =dats[i].guid;
-                            tis.push(subFrom)
+                            tis.data.push(subFrom)
                         }
                         role_service.addPartyRole(tis).then(function(data){
                             if(data.status == "success"){
@@ -857,15 +851,17 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
     }
     //删除tab组织方法
     $scope.role_orgDelete = function(){
-        var dats = $scope.gridOptions.getSelectedRows();
+        var dats = $scope.gridOptions2.getSelectedRows();
         if(dats.length>0){
             if(confirm('确定要删除对应组织吗')){
-                var tis = [];
+                var tis = {};
+                tis.data = [];
                 for(var i =0;i<dats.length;i++){
                     var subFrom = {};
-                    subFrom.roleGuid =gridDate.guid;
-                    subFrom.partyGuid =dats[i].guidParty;
-                    tis.push(subFrom);
+                    subFrom.guidRole =gridDate.guid;
+                    subFrom.guidParty =dats[i].guidParty;
+                    subFrom.partyType=DICT_AC_PARTYTYPE[0];
+                    tis.data.push(subFrom);
                 }
                 role_service.removePartyRole(tis).then(function(data){
                     if(data.status == "success"){
@@ -927,13 +923,14 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                 $scope.importAdd = function () {
                     var dats = $scope.gridOptions.getSelectedRows();
                     if (dats.length > 0) {
-                        var tis = [];
-                        for(var i =0;i<dats.length;i++){
+                        var tis = {};
+                        tis.data = [];
+                        for(var i =0; i<dats.length; i++){
                             var subFrom = {};
                             subFrom.guidRole = gridDate.guid;
                             subFrom.partyType=DICT_AC_PARTYTYPE[1];
                             subFrom.guidParty =dats[i].guid;
-                            tis.push(subFrom)
+                            tis.data.push(subFrom)
                         }
                         role_service.addPartyRole(tis).then(function(data){
                             var  datas = data.retMessage;
@@ -961,12 +958,14 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
         var dats = $scope.gridOptions3.getSelectedRows();
         if(dats.length>0){
             if(confirm('确定要删除该工作组吗')){
-                var tis = [];
-                for(var i = 0 ;i<dats.length; i++){
+                var tis = {};
+                tis.data = [];
+                for(var i =0;i<dats.length;i++){
                     var subFrom = {};
-                    subFrom.roleGuid =gridDate.guid;
-                    subFrom.partyGuid =dats[i].guidParty;
-                    tis.push(subFrom);
+                    subFrom.guidRole =gridDate.guid;
+                    subFrom.guidParty =dats[i].guidParty;
+                    subFrom.partyType=DICT_AC_PARTYTYPE[1];
+                    tis.data.push(subFrom);
                 }
                 role_service.removePartyRole(tis).then(function(data){
                     if(data.status == "success"){
@@ -1027,13 +1026,14 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                 $scope.importAdd = function () {
                     var dats = $scope.gridOptions.getSelectedRows();
                     if (dats.length > 0) {
-                        var tis = [];
-                        for(var i =0;i<dats.length;i++){
+                        var tis = {};
+                        tis.data = [];
+                        for(var i =0; i<dats.length; i++){
                             var subFrom = {};
                             subFrom.guidRole = gridDate.guid;
                             subFrom.partyType=DICT_AC_PARTYTYPE[2];
                             subFrom.guidParty =dats[i].guid;
-                            tis.push(subFrom)
+                            tis.data.push(subFrom)
                         }
                         role_service.addPartyRole(tis).then(function(data){
                             if(data.status == "success"){
@@ -1060,12 +1060,14 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
         var dats = $scope.gridOptions4.getSelectedRows();
         if(dats.length>0){
             if(confirm('确定要删除对应岗位吗')){
-                var tis=[];
-                for(var i = 0;i<dats.length; i++){
+                var tis = {};
+                tis.data = [];
+                for(var i =0;i<dats.length;i++){
                     var subFrom = {};
-                    subFrom.roleGuid =gridDate.guid;
-                    subFrom.partyGuid =dats[i].guidParty;
-                    tis.push(subFrom)
+                    subFrom.guidRole =gridDate.guid;
+                    subFrom.guidParty =dats[i].guidParty;
+                    subFrom.partyType=DICT_AC_PARTYTYPE[2];
+                    tis.data.push(subFrom);
                 }
                 role_service.removePartyRole(tis).then(function(data){
                     if(data.status == "success"){
@@ -1128,13 +1130,14 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                 $scope.importAdd = function () {
                     var dats = $scope.gridOptions.getSelectedRows();
                     if (dats.length > 0) {
-                        var tis = [];
-                        for(var i =0;i<dats.length;i++){
+                        var tis = {};
+                        tis.data = [];
+                        for(var i =0; i<dats.length; i++){
                             var subFrom = {};
                             subFrom.guidRole = gridDate.guid;
-                            subFrom.partyType=DICT_AC_PARTYTYPE[3]
+                            subFrom.partyType=DICT_AC_PARTYTYPE[3];
                             subFrom.guidParty =dats[i].guid;
-                            tis.push(subFrom)
+                            tis.data.push(subFrom)
                         }
                         role_service.addPartyRole(tis).then(function(data){
                             if(data.status == "success"){
@@ -1161,16 +1164,18 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
         var dats = $scope.gridOptionzw.getSelectedRows();
         if(dats.length>0){
             if(confirm('确定要删除对应职务吗')){
-                var tis =[];
-                for(var i = 0;i<dats.length; i++){
+                var tis = {};
+                tis.data = [];
+                for(var i =0;i<dats.length;i++){
                     var subFrom = {};
-                    subFrom.roleGuid =gridDate.guid;
-                    subFrom.partyGuid =dats[i].guidParty;
-                    tis.push(subFrom)
+                    subFrom.guidRole =gridDate.guid;
+                    subFrom.guidParty =dats[i].guidParty;
+                    subFrom.partyType=DICT_AC_PARTYTYPE[3];
+                    tis.data.push(subFrom);
                 }
                 role_service.removePartyRole(tis).then(function(data){
                     if(data.status == "success"){
-                        toastr['success']("删除组织成功！");
+                        toastr['success']("删除职务成功！");
                         queryParrty(gridDate.guid,DICT_AC_PARTYTYPE[3]);//重新查询组织信息
                     }else{
                         toastr['error']('删除失败'+'<br/>'+data.retMessage);
@@ -1249,12 +1254,14 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                 $scope.importAdd = function () {
                     var dats = $scope.gridOptions.getSelectedRows();
                     if (dats.length > 0) {
-                        var tis = [];
+                        var tis = {};
+                        tis.data = [];
                         for(var i =0;i<dats.length;i++){
                             var subFrom = {};
                             subFrom.guidRole = gridDate.guid;
                             subFrom.guidOperator = dats[i].guid;
-                            tis.push(subFrom)
+                            subFrom.auth = 'Y';
+                            tis.data.push(subFrom)
                         }
                         role_service.addOperatorRole(tis).then(function(data){
                             var datas = data.retMessage;
@@ -1283,12 +1290,14 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
         var dats = $scope.gridOptioner.getSelectedRows();
         if(dats.length>0){
             if(confirm('确定要删除选中操作员吗')){
-                var tis = [];
+                var tis = {};
+                tis.data = [];
                 for(var i=0;i<dats.length;i++){
                     var subFrom = {};
-                    subFrom.roleGuid =gridDate.guid;
-                    subFrom.operatorGuid =dats[i].guidOperator;
-                    tis.push(subFrom)
+                    subFrom.guidRole =gridDate.guid;
+                    subFrom.guidOperator =dats[i].guidOperator;
+                    subFrom.auth = 'Y';
+                    tis.data.push(subFrom)
                 }
                 role_service.removeOperatorRole(tis).then(function(data){
                     if(data.status == "success"){

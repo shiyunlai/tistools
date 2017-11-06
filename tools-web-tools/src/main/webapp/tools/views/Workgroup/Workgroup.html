@@ -260,10 +260,12 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label col-md-4">所属机构</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control"  translate-constants comtable="ORG"
-                                               ng-model="subFrom.guidOrg"
-                                               name="id"/>
+                                    <div class="col-md-8" ng-init="$settings.getCommData('ORG')">
+                                        <select class="form-control" ng-model="subFrom.guidOrg" name="id"  >
+                                            <option ng-repeat="d in $settings.commlist['ORG'] track by $index"
+                                                    value="{{d.guid}}">{{d.orgName}}
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

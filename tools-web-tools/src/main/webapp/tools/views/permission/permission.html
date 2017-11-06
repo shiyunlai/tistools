@@ -54,41 +54,82 @@
             <div id="container"></div>
         </div>
     </div>
-    <div class="col-md-4"  ng-if="permiss.funcselect">
-           <div class="portlet-title col-md-12">
-               <div class="caption col-md-10">
-                   <span class="caption-subject font-blue-sharp bold uppercase">白名单</span>
-               </div>
-           </div>
-           <div class="col-md-12" >
-               <div ui-grid="notrolegird" style="height:380px;"
-                    ui-grid-pagination
-                    ui-grid-selection ui-grid-resize-columns></div>
-           </div>
-       </div>
-    <div class="col-md-1" style="margin-top:11%;margin-left: -3%;"  ng-if="permiss.funcselect">
-           <div class="col-md-12" style="margin-left: 10%;">
-               <button   type="button" name="back" class="btn btn-primary" ng-click="permiss.add()"> 添加黑名单 >
-               </button>
-           </div>
-           <div class="col-md-12" style="margin-top: 10px;margin-left: 10%;">
-               <button  type="button" name="back" class="btn btn-danger" ng-click="permiss.del()"> < 移除黑名单
-               </button>
-           </div>
-       </div>
-    <div class="col-md-4"  ng-if="permiss.funcselect">
-           <div class="portlet-title col-md-12">
-               <div class="caption col-md-10">
-                   <span class="caption-subject font-blue-sharp bold uppercase">黑名单</span>
-               </div>
+    <div class="col-md-9">
+        <div class="row">
+            <div class="col-md-5"  ng-if="permiss.funcselect">
+                <div class="portlet-title col-md-12">
+                    <div class="caption col-md-10">
+                        <span class="caption-subject font-blue-sharp bold uppercase">已授予</span>
+                    </div>
+                </div>
+                <div class="col-md-12" >
+                    <div ui-grid="notrolegird" style="height:380px;"
+                         ui-grid-pagination
+                         ui-grid-selection ui-grid-resize-columns></div>
+                </div>
+            </div>
+            <div class="col-md-1" style="margin-top:11%;margin-left: -3%;"  ng-if="permiss.funcselect">
+                <div class="col-md-12" style="margin-left: 38%;">
+                    <button   type="button" name="back" class="btn btn-primary" ng-click="permiss.add()"> 添加特别禁止 >
+                    </button>
+                </div>
+                <div class="col-md-12" style="margin-top: 10px;margin-left: 38%;">
+                    <button  type="button" name="back" class="btn btn-danger" ng-click="permiss.del()"> < 移除特别禁止
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-5 col-md-offset-1"  ng-if="permiss.funcselect">
+                <div class="portlet-title col-md-12">
+                    <div class="caption col-md-10">
+                        <span class="caption-subject font-blue-sharp bold uppercase">特别禁止</span>
+                    </div>
 
-           </div>
-           <div class="col-md-12">
-               <div ui-grid="alrolegird" style="height:380px;"
-                    ui-grid-pagination
-                    ui-grid-selection ui-grid-resize-columns></div>
-           </div>
-       </div>
+                </div>
+                <div class="col-md-12">
+                    <div ui-grid="alrolegird" style="height:380px;"
+                         ui-grid-pagination
+                         ui-grid-selection ui-grid-resize-columns></div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 20px">
+            <div class="col-md-5"  ng-if="permiss.funcselect">
+                <div class="portlet-title col-md-12">
+                    <div class="caption col-md-10">
+                        <span class="caption-subject font-blue-sharp bold uppercase">未授予</span>
+                    </div>
+                </div>
+                <div class="col-md-12" >
+                    <div ui-grid="tograntgird" style="height:380px;"
+                         ui-grid-pagination
+                         ui-grid-selection ui-grid-resize-columns></div>
+                </div>
+            </div>
+            <div class="col-md-1" style="margin-top:11%;margin-left: -3%;"  ng-if="permiss.funcselect">
+                <div class="col-md-12" style="margin-left: 38%;">
+                    <button   type="button" name="back" class="btn btn-primary" ng-click="permiss.pagina()"> 添加特别允许 >
+                    </button>
+                </div>
+                <div class="col-md-12" style="margin-top: 10px;margin-left: 38%;">
+                    <button  type="button" name="back" class="btn btn-danger" ng-click="permiss.permiss()"> < 移除特别允许
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-5 col-md-offset-1"  ng-if="permiss.funcselect">
+                <div class="portlet-title col-md-12">
+                    <div class="caption col-md-10">
+                        <span class="caption-subject font-blue-sharp bold uppercase">特别允许</span>
+                    </div>
+
+                </div>
+                <div class="col-md-12">
+                    <div ui-grid="permissiongird" style="height:380px;"
+                         ui-grid-pagination
+                         ui-grid-selection ui-grid-resize-columns></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 

@@ -635,7 +635,6 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
             toastr['error']("请选择一条需要修改的数据!");
             return false;
         }else{
-            console.log(arr[0])
             var node2 = {};
             node2.id = arr[0].dutyCode;
             var node = {};

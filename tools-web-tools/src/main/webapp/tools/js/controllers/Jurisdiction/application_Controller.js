@@ -342,6 +342,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     $('#container').on("changed.jstree", function (e, data){
         if(typeof data.node !== 'undefined'){//拿到结点详情
             $scope.dictionaryAdd = data.node.original;
+            $scope.dictionaryAdd.openDateStr = moment($scope.dictionaryAdd.openDate).format('YYYY-MM-DD');
             $scope.thisNode = data.node.text;
             $scope.biz.item = data.node;//全局点击值传递$scope.biz.item = data.node;//全局点击值传递
             if(data.node.parent == '#'){
@@ -1072,7 +1073,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     /* 功能tab页面逻辑*/
     //应用开通逻辑
     biz.openApp = function(item){
-        console.log(item);
         var ids = $scope.biz.item.id;//获取点击的根节点的值
         var times = new Date();
         times  = moment().format('YYYY-MM-DD');
@@ -1156,16 +1156,6 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         $scope.editflag = !$scope.editflag;//让保存取消方法显现
     }
 
-    //资源信息编辑方法
-/*    $scope.biz.resources = function(item){
-        $scope.copyresEdit = angular.copy(item)
-        $scope.editflag = !$scope.editflag;//让保存取消方法显现,并且让文本框可以输入
-    }
-    //资源信息取消方法
-    $scope.biz.resourcesedit = function(item){
-        $scope.dictionaryAdd = $scope.copyresEdit;
-        $scope.editflag = !$scope.editflag;//让保存取消方法显现
-    }*/
 
     //应用信息修改方法
     $scope.biz.appsave = function(item){
@@ -1175,11 +1165,11 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                 toastr['success']("修改成功！");
                 $("#container").jstree().refresh();
                 $scope.editflag = !$scope.editflag;
+                $scope.dictionaryAdd = item;
             }else{
                 toastr['error']('修改失败'+'<br/>'+data.retMessage);
             }
         })
-
     }
     
     //功能修改方法
@@ -1368,8 +1358,8 @@ angular.module('MetronicApp').controller('application_controller', function($roo
         subFrom.funcGuid = funcGuid;
         // subFrom.bhvtypeGuid = bhvtypeGuid;
         application_service.queryAllBhvDefForFunc(subFrom).then(function (data){
-            console.log(data);
             if(data.status == "success"){
+                invalid();//有效无效按钮全部隐藏
                 var datas = data.retMessage
                 $scope.gridOptions5.data = datas;//把获取到的数据复制给表
                 $scope.gridOptions5.mydefalutData = datas;

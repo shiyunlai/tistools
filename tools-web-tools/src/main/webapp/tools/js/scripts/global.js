@@ -596,7 +596,6 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
         var subFrom = {};
         subFrom.roleGuid = roleGuid;
         abftree_service.queryRoleFun(subFrom).then(function (data) {
-            console.log(data.retMessage)
             if(data.status == "success" && !isNull(data.retMessage)){
                 $scope.mygrid.data =  data.retMessage;
                 $scope.mygrid.mydefalutData =  data.retMessage;
@@ -666,6 +665,7 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
         var subFrom = {};
         subFrom.guid = guid;
         abftree_service.queryRoleNot(subFrom).then(function (data) {
+            console.log(data);
             if(data.status == "success" && !isNull(data.retMessage)){
                 $scope.notrolegird.data =  data.retMessage;
                 $scope.notrolegird.mydefalutData =  data.retMessage;
@@ -681,6 +681,7 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
     renotrolegird();
     
     $scope.addRole = function (partyType) {
+        console.log(partyType)
         if($scope.addroleGuid == ""){
             toastr['error']("请选择一个角色");
             return false;
@@ -691,7 +692,7 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
             subFrom.partyType = partyType;
             abftree_service.addRoleParty(subFrom).then(function (data) {
                 if(data.status == "success"){
-                    toastr['success'](data.retMessage);
+                    toastr['success']('新增成功');
                     realrolegird();
                     renotrolegird();
                 }else{
@@ -700,7 +701,7 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
             })
         }
     }
-    $scope.deleteRole = function () {
+    $scope.deleteRole = function (partyType) {
         if($scope.deleteGUid == ""){
             toastr['error']("请选择一个角色");
             return false;
@@ -708,9 +709,10 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
             var subFrom = {};
             subFrom.partyGuid = guid;
             subFrom.roleGuid = $scope.deleteGUid;
+            subFrom.partyType = partyType;
             abftree_service.deleteRoleParty(subFrom).then(function (data) {
                 if(data.status == "success"){
-                    toastr['success'](data.retMessage);
+                    toastr['success']('移除成功');
                     realrolegird();
                     renotrolegird();
                 }else{

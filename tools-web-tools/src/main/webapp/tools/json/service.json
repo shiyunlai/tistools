@@ -142,7 +142,10 @@
     "getOperatorFuncInfo": {"ctrl": "AcOperatorController", "func": "getOperatorFuncInfo","emo":"根据用户和应用id查询功能树"},
     "getOperatorsNotLinkEmp": {"ctrl": "AcOperatorController", "func": "getOperatorsNotLinkEmp","emo":"获取没有关联员工的操作员"},
     "changeOperatorStatus": {"ctrl": "AcOperatorController", "func": "changeOperatorStatus","emo":" 改变操作员状态"},
-    "deleteOperator": {"ctrl": "AcOperatorController", "func": "deleteOperator","emo":" 删除操作员"}
+    "deleteOperator": {"ctrl": "AcOperatorController", "func": "deleteOperator","emo":" 删除操作员"},
+    "getOperatorFuncBhvInfo": {"ctrl": "AcOperatorController", "func": "getOperatorFuncBhvInfo","emo":" 获取操作员功能行为信息"},
+    "addAcOperatorBhv": {"ctrl": "AcOperatorController", "func": "addAcOperatorBhv","emo":" 添加操作员特殊功能行为权限"},
+    "removeAcOperatorBhv": {"ctrl": "AcOperatorController", "func": "removeAcOperatorBhv","emo":" 移除操作员特殊功能行为权限"}
   },
   "abftree_service" : {
     "loadmaintree": {"ctrl": "om/org", "func": "tree"},

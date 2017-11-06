@@ -9,7 +9,7 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
     var operman ={};
     $scope.operman = operman;
     operman.queryAll = function(){
-        //查询所有
+        //查询所有操作员列表
         var subFrom = {};
         operator_service.queryAllOperator(subFrom).then(function(data){
             var datas = data.retMessage;
@@ -99,6 +99,9 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
             openwindow($uibModal, 'views/operator/operatorAdd.html', 'lg',// 弹出页面
                 function ($scope, $modalInstance) {
                     if(!isNull(items)){//如果参数不为空，则就回显
+                        items.invalDate = moment(items.invalDate).format('YYYY-MM-DD');
+                        items.startDate = moment(items.startDate).format('YYYY-MM-DD');
+                        items.endDate = moment(items.endDate).format('YYYY-MM-DD');
                         $scope.operatFrom = angular.copy(items);
                     }
                     $scope.id = id;//获取到id，用来判断是否编辑，因为scope作用域不同，所以不同
