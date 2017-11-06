@@ -3,7 +3,6 @@
  */
 package org.tis.tools.rservice.txmodel.impl.message;
 
-import org.tis.tools.common.utils.FormattingUtil;
 import org.tis.tools.rservice.txmodel.spi.message.ITxControl;
 import org.tis.tools.rservice.txmodel.spi.message.ITxData;
 import org.tis.tools.rservice.txmodel.spi.message.ITxHeader;

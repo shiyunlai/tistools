@@ -41,17 +41,6 @@ public interface IOperatorBhvCommand {
 
 	/**
 	 * <pre>
-	 * 操作命令是否支持指定交易引擎
-	 * </pre>
-	 * 
-	 * @param engine
-	 *            交易引擎
-	 * @return
-	 */
-	public boolean canEngine(ITxEngine engine);
-	
-	/**
-	 * <pre>
 	 * 操作行为命令对应的代码
 	 * 每个操作命令有一个唯一的行为代码与之对应
 	 * </pre>
@@ -61,20 +50,25 @@ public interface IOperatorBhvCommand {
 	public BHVCODE getBhvCode();
 
 	/**
-	 * 取操作行为命令所属的行为分类
-	 * 
-	 * @return
-	 */
-	public BHVTYPE[] getBhvTypes();
-	
-	/**
 	 * 指定能够处理本次交易操作请求的行为处理器
 	 * 
 	 * @param handler
 	 *            {@link IOperatorBhvHandler 交易操作行为处理器}
 	 */
 	public void setOperatorBhvHandler(IOperatorBhvHandler handler);
-
+	
+	/**
+	 * <pre>
+	 * 由命令实现者根据请求，决定当前命令的处理实现类.
+	 * 如：根据渠道来源不同，对‘打开交易’命令的实现逻辑会不一样。
+	 * </pre>
+	 * 
+	 * @param context
+	 *            {@link TxContext 交易上下文}
+	 * @return
+	 */
+	public IOperatorBhvHandler judgeHandler(TxContext context);
+	
 	/**
 	 * 交易请求处理
 	 * 

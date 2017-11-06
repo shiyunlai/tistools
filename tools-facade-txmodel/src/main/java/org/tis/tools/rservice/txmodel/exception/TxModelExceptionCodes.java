@@ -44,16 +44,22 @@ public class TxModelExceptionCodes {
 	public static final String UNDEFINED_BHV_TYPE = R_EX_CODE("0003");
 	
 	/**
+	 * 异常：交易请求对象中，缺少请求ID. <br>
+	 * lcak request id to be a normal TxReqeust Object.<br>
+	 */
+	public static final String LACK_REQUEST_ID = R_EX_CODE("0004");
+
+	/**
 	 * 异常：交易请求对象中，缺少交易代码. <br>
 	 * lcak tx_code to be a normal TxReqeust Object.<br>
 	 */
-	public static final String LACK_TX_CODE = R_EX_CODE("0004");
+	public static final String LACK_TX_CODE = R_EX_CODE("0005");
 
 	/**
 	 * 异常：交易请求对象中，缺少操作行为代码.<br>
 	 * lcak bhv_code to be a normal TxReqeust Object.<br>
 	 */
-	public static final String LACK_BHV_CODE = R_EX_CODE("0005");
+	public static final String LACK_BHV_CODE = R_EX_CODE("0006");
 	
 	
 }

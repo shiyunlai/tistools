@@ -4,7 +4,8 @@
 package org.tools.service.txmodel.command;
 
 import org.tis.tools.rservice.txmodel.TxModelConstants.BHVCODE;
-import org.tis.tools.rservice.txmodel.TxModelConstants.BHVTYPE;
+import org.tools.service.txmodel.IOperatorBhvHandler;
+import org.tools.service.txmodel.TxContext;
 
 /**
  * 
@@ -24,7 +25,7 @@ public class CloseTxBhvCommand  extends AbstractBhvCommand {
 	}
 
 	@Override
-	public BHVTYPE[] getBhvTypes() {
+	public IOperatorBhvHandler judgeHandler(TxContext context) {
 		// TODO Auto-generated method stub
 		return null;
 	}

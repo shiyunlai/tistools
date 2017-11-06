@@ -9,7 +9,6 @@ import org.tis.tools.rservice.txmodel.TxModelConstants.BHVTYPE;
 import org.tis.tools.rservice.txmodel.api.ITxModelRService;
 import org.tis.tools.rservice.txmodel.exception.TxModelException;
 import org.tis.tools.rservice.txmodel.exception.TxModelExceptionCodes;
-import org.tis.tools.rservice.txmodel.impl.message.TxResponseImpl;
 import org.tis.tools.rservice.txmodel.spi.message.ITxRequest;
 import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;
 import org.tools.service.txmodel.tx.TxDefinition;
@@ -46,10 +45,10 @@ public class TxModelRServiceImpl implements ITxModelRService {
 
 		// 取出处理当前请求的交易引擎
 		ITxEngine txEngine = txEngineManager.getTxEngine(bhvType);
-		
+
 		// 构造或取回 交易上下文
-		TxContext context = buildTxContext(txDef,txRequest) ; 
-		
+		TxContext context = buildTxContext(txDef,txRequest,txEngine) ; 
+				
 		// 处理本次交易操作请求,并返回处理响应
 		ITxResponse response = txEngine.execute(context);
 		
@@ -66,6 +65,11 @@ public class TxModelRServiceImpl implements ITxModelRService {
 	 */
 	private void verifyTxReauest(ITxRequest txRequest) {
 
+		// 必须指定requestID
+		if(StringUtil.isNotNullAndBlank(txRequest.getRequestID())){
+			throw new TxModelException(TxModelExceptionCodes.LACK_REQUEST_ID);
+		}
+		
 		// 必须指明行为动作
 		if (StringUtil.isNotNullAndBlank(txRequest.getTxHeader().getBhvCode())) {
 			throw new TxModelException(TxModelExceptionCodes.LACK_BHV_CODE);
@@ -91,10 +95,11 @@ public class TxModelRServiceImpl implements ITxModelRService {
 	 *            交易请求数据
 	 * @return
 	 */
-	private TxContext buildTxContext(TxDefinition txDef, ITxRequest txRequest) {
+	private TxContext buildTxContext(TxDefinition txDef, ITxRequest txRequest, ITxEngine engine) {
 		
-		ITxResponse txResponse = new TxResponseImpl() ; 
-		return new TxContext(txDef, txRequest, txResponse);// FIXME 临时
+		TxContext context = new TxContext();
+		return context.setRequestID(txRequest.getRequestID()).setTxDefinition(txDef).setTxRequest(txRequest)
+				.setTxEngine(engine);
 	}
 
 	/**

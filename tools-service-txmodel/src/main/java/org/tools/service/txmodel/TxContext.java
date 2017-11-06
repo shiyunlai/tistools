@@ -51,33 +51,48 @@ public class TxContext implements Serializable {
 	 * 交易响应数据
 	 */
 	private ITxResponse txResponse = null ; 
+	
+	/**
+	 * 交易引擎
+	 */
+	private ITxEngine txEngine = null ; 
+	
+	/**
+	 * 交易操作行为命令
+	 */
+	private IOperatorBhvCommand executeCommand = null ; 
 
 	
 	public TxContext() {
 		
 	}
 	
-	public TxContext(TxDefinition def, ITxRequest request , ITxResponse response ){
-		this.requestID = request.getTxHeader().getTxSerialNo() ; 
-		this.txDefinition = def ; 
-		this.txRequest = request ; 
-		this.txResponse = response ; 
+	public TxContext(TxDefinition def, ITxRequest request, ITxResponse response, ITxEngine txEngine,
+			IOperatorBhvCommand executeCommand) {
+		this.requestID = request.getTxHeader().getTxSerialNo();
+		this.txDefinition = def;
+		this.txRequest = request;
+		this.txResponse = response;
+		this.txEngine = txEngine ; 
+		this.executeCommand = executeCommand ; 
 	}
 	
 	public TxDefinition getTxDefinition() {
 		return txDefinition;
 	}
 
-	public void setTxDefinition(TxDefinition txDefinition) {
+	public TxContext setTxDefinition(TxDefinition txDefinition) {
 		this.txDefinition = txDefinition;
+		return this ; 
 	}
 
 	public ITxRequest context() {
 		return txRequest;
 	}
 
-	public void setTxRequest(ITxRequest txRequest) {
+	public TxContext setTxRequest(ITxRequest txRequest) {
 		this.txRequest = txRequest;
+		return this ; 
 	}
 
 	public ITxRequest getTxRequest() {
@@ -92,16 +107,36 @@ public class TxContext implements Serializable {
 		return txResponse;
 	}
 
-	public void setTxResponse(ITxResponse response) {
+	public TxContext setTxResponse(ITxResponse response) {
 		this.txResponse = response;
+		return this ; 
 	}
 
 	public String getRequestID() {
 		return requestID;
 	}
 
-	public void setRequestID(String requestID) {
+	public TxContext setRequestID(String requestID) {
 		this.requestID = requestID;
+		return this ; 
+	}
+
+	public ITxEngine getTxEngine() {
+		return txEngine;
+	}
+
+	public TxContext setTxEngine(ITxEngine txEngine) {
+		this.txEngine = txEngine;
+		return this ; 
+	}
+
+	public IOperatorBhvCommand getExecuteCommand() {
+		return executeCommand;
+	}
+
+	public TxContext setExecuteCommand(IOperatorBhvCommand executeCommand) {
+		this.executeCommand = executeCommand;
+		return this ; 
 	}
 	
 }

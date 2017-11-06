@@ -83,26 +83,6 @@ abstract class AbstractTxEngine implements ITxEngine {
 		//initCommand(); 已经使用spring进行初始化
 	}
 
-	/**
-	 * 初始化引擎能处理哪些行为命令</br>
-	 * 如：账务类交易引擎、维护类交易引擎都支持打开交易、关闭交易，则这些命令都会在此被register进来，以构成一个交易引擎。
-	 */
-	private void initCommand() {
-
-		// FIXME 不能写死tools产品的主package路径"org.tools"
-		List<Class<IOperatorBhvCommand>> allBhvCommand = ClassUtil.getAllClassByInterface(IOperatorBhvCommand.class,
-				"org.tools");
-
-		for (Class c : allBhvCommand) {
-
-			IOperatorBhvCommand command = (IOperatorBhvCommand) ClassUtil.instantiateNewInstance(c);
-			if (command.canEngine(this)) {
-				// 属于本操作分类的行为命令
-				registerCommand(command);
-			}
-		}
-	}
-
 	@Override
 	public void registerCommand(IOperatorBhvCommand command) {
 
@@ -166,18 +146,20 @@ abstract class AbstractTxEngine implements ITxEngine {
 		// 如果没有设置过执行命令，则引擎根据请求数据中的操作代码（BHVCODE），决策一个操作行为命令 IOperatorBhvCommand
 		if (null == this.getExecuteCommand()) {
 
-			this.setExecuteCommand(judgeCommand(txContext.getTxRequest().getTxHeader().getBhvCode()));
+			executeCommand = judgeCommand(txContext.getTxRequest().getTxHeader().getBhvCode());
 		}
-
-		// 选择对应命令逻辑实现
-		IOperatorBhvHandler handler = judgeHandler(txContext);
+		
+		txContext.setExecuteCommand(executeCommand) ; // 收集执行命令
+		
+		// 选择命令对应的逻辑实现
+		IOperatorBhvHandler handler = executeCommand.judgeHandler(txContext) ; 
 		if( null == handler ){
 			handler = new DefaultOperatorBhvHandler() ;
 		}
-		this.getExecuteCommand().setOperatorBhvHandler(handler);
-
+		executeCommand.setOperatorBhvHandler(handler);
+		
 		// 执行交易操作命令
-		ITxResponse resp = this.getExecuteCommand().execute(txContext);
+		ITxResponse resp = executeCommand.execute(txContext);
 
 		// 整理收集返回结果
 		return reCollection(txContext, resp );
@@ -216,19 +198,7 @@ abstract class AbstractTxEngine implements ITxEngine {
 	public String toString() {
 		return StringUtil.concat("交易引擎<", bhvType.toString() + ">");
 	}
-
-	/**
-	 * <pre>
-	 * 子类实现：根据请求，选择对应命令逻辑实现.
-	 * 如：根据渠道来源不同，对‘打开交易’命令的实现逻辑会不一样。
-	 * </pre>
-	 * 
-	 * @param context
-	 *            {@link TxContext 交易上下文}
-	 * @return
-	 */
-	abstract protected IOperatorBhvHandler judgeHandler(TxContext context);
-
+	
 	/**
 	 * 从上下文中收集整理交易响应数据
 	 * 

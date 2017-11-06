@@ -3,7 +3,6 @@
  */
 package org.tis.tools.rservice.txmodel.impl.message;
 
-import org.tis.tools.common.utils.FormattingUtil;
 import org.tis.tools.rservice.txmodel.spi.message.ITxControl;
 import org.tis.tools.rservice.txmodel.spi.message.ITxData;
 import org.tis.tools.rservice.txmodel.spi.message.ITxHeader;
@@ -25,6 +24,7 @@ public class TxRequestImpl implements ITxRequest {
 	 */
 	private static final long serialVersionUID = 4206102931429636996L;
 
+	private String requestID ; 
 	private ITxControl txControl ; 
 	private ITxHeader txHeader ; 
 	private ITxData txData ; 
@@ -101,6 +101,15 @@ public class TxRequestImpl implements ITxRequest {
 	public String toString(){
 		return JSON.toJSONString(this) ; // 使用ali fastjson
 		//return FormattingUtil.instance().toJsonStringFormatted(this) ; 
+	}
+
+	@Override
+	public String getRequestID() {
+		return this.requestID;
+	}
+	
+	public void setRequestID(String requestID) {
+		this.requestID = requestID;
 	}
 
 }

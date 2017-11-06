@@ -56,6 +56,12 @@ import java.io.Serializable;
 public interface ITxRequest extends Serializable {
 	
 	/**
+	 * 本次请求的ID，全局唯一，且不能重复，以此进行防重控制
+	 * @return
+	 */
+	public String getRequestID() ;
+	
+	/**
 	 * 取交易控制信息对象
 	 * @return
 	 */
