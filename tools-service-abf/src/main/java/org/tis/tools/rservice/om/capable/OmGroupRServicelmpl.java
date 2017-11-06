@@ -1,12 +1,5 @@
 package org.tis.tools.rservice.om.capable;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
@@ -30,7 +23,8 @@ import org.tis.tools.service.ac.AcAppService;
 import org.tis.tools.service.om.*;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
 
-import jdk.nashorn.internal.objects.annotations.Where;
+import java.math.BigDecimal;
+import java.util.*;
 
 public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService{
 	@Autowired
@@ -288,9 +282,7 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 	public OmGroup createGroup(OmGroup group) throws ToolsRuntimeException {
 		//查询父工作组信息
 		WhereCondition wc = new WhereCondition();
-		wc.andEquals("guid", group.getGuidParents());
-		List<OmGroup> parentsList = omGroupService.query(wc);
-		OmGroup parentsGp = parentsList.get(0);
+		OmGroup parentsGp = omGroupService.loadByGuid(group.getGuidParents());
 		String parentsGroupSeq = parentsGp.getGroupSeq();
 		// 补充信息
 		group.setGuid(GUID.group());

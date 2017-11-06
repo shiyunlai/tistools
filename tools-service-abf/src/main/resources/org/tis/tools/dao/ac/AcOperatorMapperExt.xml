@@ -28,7 +28,7 @@
     </select>
 
 
-    <select id="getAuthOperatorFuncBhv" resultType="org.tis.tools.model.po.ac.AcBhvDef">
+    <select id="getAuthOperatorFuncBhv" resultType="map">
         SELECT
             <include refid="getAuthOperatorFuncBhvColumn"/>
         FROM
@@ -38,7 +38,7 @@
             FROM
                 `ac_role_bhv` a
             WHERE
-                a.guid_role IN #{roleGuid}
+                a.guid_role IN ${roleGuid}
                 AND a.guid_func_bhv NOT IN ( SELECT d.GUID_FUNC_BHV FROM `ac_operator_bhv` d WHERE d.GUID_OPERATOR = #{operatorGuid} AND d.AUTH_TYPE = '0' )
             ) aa,
             `ac_func_bhv` b,
@@ -51,7 +51,7 @@
     </select>
 
 
-    <select id="getAuthOperatorFuncFbdBhv" resultType="org.tis.tools.model.po.ac.AcBhvDef">
+    <select id="getAuthOperatorFuncFbdBhv" resultType="map">
         SELECT
         <include refid="getAuthOperatorFuncBhvColumn"/>
         FROM
@@ -67,7 +67,7 @@
             AND b.GUID_BHV = c.GUID
     </select>
 
-    <select id="getUnauthOperatorFuncPmtBhv" resultType="org.tis.tools.model.po.ac.AcBhvDef">
+    <select id="getUnauthOperatorFuncPmtBhv" resultType="map">
         SELECT
         <include refid="getAuthOperatorFuncBhvColumn"/>
         FROM
@@ -116,5 +116,6 @@
         ,c.guid_behtype as guidBehtype
         ,c.bhv_code as bhvCode
         ,c.bhv_name as bhvName
+        ,b.guid as guidFuncBhv
     </sql>
 </mapper>

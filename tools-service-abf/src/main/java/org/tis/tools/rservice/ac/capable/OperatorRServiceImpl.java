@@ -1357,7 +1357,6 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
             if (StringUtils.isBlank(userId)) {
                 throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap("USER_ID", "getOperatorFuncInfo"));
             }
-
             if (StringUtils.isBlank(appGuid)) {
                 throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap("GUID_APP", "getOperatorFuncInfo"));
             }
@@ -1557,7 +1556,7 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
      * @throws OperatorManagementException
      */
     @Override
-    public Map<String, List<AcBhvDef>> getOperatorFuncBhvInfo(String userId, String funcGuid) throws OperatorManagementException {
+    public Map<String, List<Map>> getOperatorFuncBhvInfo(String userId, String funcGuid) throws OperatorManagementException {
         if(StringUtils.isBlank(userId)) {
             throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap(AcOperator.COLUMN_USER_ID, "getAuthOperatorFuncBhv"));
         }
@@ -1571,26 +1570,19 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
             // 查询角色对应功能行为
             List<Map> allBhvs = applicationRService.queryAllBhvDefForFunc(funcGuid);
             // 已授权
-            List<AcBhvDef> authOperatorFuncBhv = acOperatorServiceExt.getAuthOperatorFuncBhv(roleGuids, operatorGuid, funcGuid);
+            List<Map> authOperatorFuncBhv = acOperatorServiceExt.getAuthOperatorFuncBhv(roleGuids, operatorGuid, funcGuid);
             // 特别禁止
-            List<AcBhvDef> authOperatorFuncFbdBhv = acOperatorServiceExt.getAuthOperatorFuncFbdBhv(operatorGuid, funcGuid);
+            List<Map> authOperatorFuncFbdBhv = acOperatorServiceExt.getAuthOperatorFuncFbdBhv(operatorGuid, funcGuid);
             // 特别允许
-            List<AcBhvDef> unauthOperatorFuncPmtBhv = acOperatorServiceExt.getUnauthOperatorFuncPmtBhv(operatorGuid, funcGuid);
+            List<Map> unauthOperatorFuncPmtBhv = acOperatorServiceExt.getUnauthOperatorFuncPmtBhv(operatorGuid, funcGuid);
             // 从以上三个集合中获取到的GUID 从所有功能行为集合中筛选掉这些就是未授权行为集合
             Set<String> filterGuids = Stream.concat(Stream.concat(authOperatorFuncBhv.stream(),
                     authOperatorFuncFbdBhv.stream()), unauthOperatorFuncPmtBhv.stream())
-                    .map(AcBhvDef::getGuid).collect(Collectors.toSet());
-            List<AcBhvDef> unauthOperatorFuncBhv = new ArrayList<>();
-            // 筛选出有效行为 和 上面需要过滤的行为
-            allBhvs.stream().filter(map -> StringUtils.isEquals(CommonConstants.YES, (String) map.get("iseffective")) &&
-                            !filterGuids.contains(map.get("guid").toString())).forEach( m -> {
-                                AcBhvDef acBhvDef = new AcBhvDef();
-                                acBhvDef.setGuid((String) m.get("guid"));
-                                acBhvDef.setBhvCode((String) m.get("bhvCode"));
-                                acBhvDef.setBhvName((String) m.get("bhvName"));
-                                acBhvDef.setGuidBehtype((String) m.get("guidBehtype"));
-                                unauthOperatorFuncBhv.add(acBhvDef); });
-            Map<String, List<AcBhvDef>> map = new HashMap<>();
+                    .map(map -> String.valueOf(map.get("guid"))).collect(Collectors.toSet());
+            // 未授权 筛选出有效行为 和 上面需要过滤的行为
+            List<Map> unauthOperatorFuncBhv = allBhvs.stream().filter(map -> StringUtils.isEquals(CommonConstants.YES, (String) map.get("iseffective")) &&
+                    !filterGuids.contains(map.get("guid").toString())).collect(Collectors.toList());
+            Map<String, List<Map>> map = new HashMap<>();
             map.put("auth", authOperatorFuncBhv);
             map.put("forbid", authOperatorFuncFbdBhv);
             map.put("unauth", unauthOperatorFuncBhv);

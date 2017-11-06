@@ -4,7 +4,6 @@ import com.alibaba.dubbo.common.utils.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tis.tools.dao.ac.AcOperatorMapperExt;
-import org.tis.tools.model.po.ac.AcBhvDef;
 
 import java.util.List;
 import java.util.Map;
@@ -41,7 +40,7 @@ public class AcOperatorServiceExt {
      * @param funcGuid 功能GUID
      * @return
      */
-    public List<AcBhvDef> getAuthOperatorFuncBhv(List<String> roleGuid, String operatorGuid, String funcGuid) {
+    public List<Map> getAuthOperatorFuncBhv(List<String> roleGuid, String operatorGuid, String funcGuid) {
         if (!CollectionUtils.isEmpty(roleGuid)) {
             StringBuilder sb = new StringBuilder("(");
             for (int k = 0; k < roleGuid.size(); k++) {
@@ -62,7 +61,7 @@ public class AcOperatorServiceExt {
      * @param funcGuid 功能GUID
      * @return
      */
-    public List<AcBhvDef> getAuthOperatorFuncFbdBhv(String operatorGuid, String funcGuid) {
+    public List<Map> getAuthOperatorFuncFbdBhv(String operatorGuid, String funcGuid) {
         return acOperatorMapperExt.getAuthOperatorFuncFbdBhv(operatorGuid, funcGuid);
     }
 
@@ -72,7 +71,7 @@ public class AcOperatorServiceExt {
      * @param funcGuid 功能GUID
      * @return
      */
-    public List<AcBhvDef> getUnauthOperatorFuncPmtBhv(String operatorGuid, String funcGuid) {
+    public List<Map> getUnauthOperatorFuncPmtBhv(String operatorGuid, String funcGuid) {
         return acOperatorMapperExt.getUnauthOperatorFuncPmtBhv(operatorGuid, funcGuid);
     }
 
