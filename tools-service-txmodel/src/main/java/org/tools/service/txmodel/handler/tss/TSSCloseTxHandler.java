@@ -1,19 +1,18 @@
 /**
  * 
  */
-package org.tools.service.txmodel.handler;
+package org.tools.service.txmodel.handler.tss;
 
 import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;
 import org.tools.service.txmodel.TxContext;
 
 /**
- * 交易操作行为处理器：柜面关闭交易</br>
- * 柜面系统中，操作员执行了关闭交易操作时，服务端对应的处理逻辑
+ * 交易操作行为处理器：超柜关闭交易</br>
  * 
  * @author megapro
  *
  */
-public class TWSCloseTxHandler extends AbstractTWSBhvHandler {
+public class TSSCloseTxHandler extends AbstractTSSBhvHandler {
 
 	/*
 	 * (non-Javadoc)
@@ -25,8 +24,7 @@ public class TWSCloseTxHandler extends AbstractTWSBhvHandler {
 	@Override
 	public ITxResponse doHandle(TxContext context) {
 		
-		
-		return null;
+		return context.getTxResponse() ;
 	}
 
 }

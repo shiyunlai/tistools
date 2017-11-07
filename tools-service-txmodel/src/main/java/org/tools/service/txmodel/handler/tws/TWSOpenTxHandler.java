@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tools.service.txmodel.handler;
+package org.tools.service.txmodel.handler.tws;
 
 import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;
 import org.tools.service.txmodel.TxContext;

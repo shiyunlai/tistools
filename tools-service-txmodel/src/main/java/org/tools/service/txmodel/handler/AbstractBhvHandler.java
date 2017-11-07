@@ -15,7 +15,7 @@ import org.tools.service.txmodel.TxContext;
  * @author megapro
  *
  */
-abstract class AbstractBhvHandler implements IOperatorBhvHandler {
+public abstract class AbstractBhvHandler implements IOperatorBhvHandler {
 
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 	

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tools.service.txmodel.handler;
+package org.tools.service.txmodel.handler.tss;
 
 import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;
 import org.tools.service.txmodel.TxContext;
@@ -14,7 +14,7 @@ import org.tools.service.txmodel.TxContext;
  * @author megapro
  *
  */
-public class TSSOpenTxHandler extends AbstractTWSBhvHandler {
+public class TSSOpenTxHandler extends AbstractTSSBhvHandler {
 
 	@Override
 	public ITxResponse doHandle(TxContext context) {
