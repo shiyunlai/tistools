@@ -3,6 +3,7 @@
  */
 package org.tis.tools.rservice.txmodel.impl.message;
 
+import org.tis.tools.common.utils.FormattingUtil;
 import org.tis.tools.rservice.txmodel.spi.message.ITxControl;
 import org.tis.tools.rservice.txmodel.spi.message.ITxData;
 import org.tis.tools.rservice.txmodel.spi.message.ITxHeader;
@@ -63,7 +64,7 @@ public class TxRequestImpl implements ITxRequest {
 	}
 
 	@Override
-	public Object getToken() {
+	public String getToken() {
 		//TODO 生成token
 		this.token = "tokenstring" ; 
 		return this.token;
@@ -98,12 +99,6 @@ public class TxRequestImpl implements ITxRequest {
 	}
 	
 	@Override
-	public String toString(){
-		return JSON.toJSONString(this) ; // 使用ali fastjson
-		//return FormattingUtil.instance().toJsonStringFormatted(this) ; 
-	}
-
-	@Override
 	public String getRequestID() {
 		return this.requestID;
 	}
@@ -112,4 +107,23 @@ public class TxRequestImpl implements ITxRequest {
 		this.requestID = requestID;
 	}
 
+	@Override
+	public void setTxControl(ITxControl control) {
+		this.txControl = control ; 
+	}
+
+	@Override
+	public void setTxHeader(ITxHeader header) {
+		this.txHeader = header ; 
+	}
+
+	@Override
+	public void setRequestData(ITxData txData) {
+		this.txData = txData ; 
+	}
+	
+	@Override
+	public String toString(){
+		return  FormattingUtil.instance().formatJsonString( JSON.toJSONString(this) ) ; // 使用ali fastjson //FIXME 简化日志输出内容，减少toJSONString频繁操作导致的性能损耗
+	}
 }

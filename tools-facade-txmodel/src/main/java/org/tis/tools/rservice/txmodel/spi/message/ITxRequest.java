@@ -61,11 +61,15 @@ public interface ITxRequest extends Serializable {
 	 */
 	public String getRequestID() ;
 	
+	public void setRequestID(String requestID) ; 
+	
 	/**
 	 * 取交易控制信息对象
 	 * @return
 	 */
 	public ITxControl getTxControl ()  ; 
+	
+	public void setTxControl(ITxControl control) ; 
 	
 	/**
 	 * 取交易请求头信息对象
@@ -73,11 +77,15 @@ public interface ITxRequest extends Serializable {
 	 */
 	public ITxHeader getTxHeader() ; 
 	
+	public void setTxHeader(ITxHeader header) ; 
+	
 	/**
 	 * 取交易请求数据对象
 	 * @return
 	 */
 	public ITxData getRequestData() ; 
+	
+	public void setRequestData(ITxData txData) ; 
 	
 	/**
 	 * <pre>
@@ -87,6 +95,8 @@ public interface ITxRequest extends Serializable {
 	 * </pre>
 	 * @return
 	 */
-	public Object getToken() ;
+	public String getToken() ;
+	
+	public void setToken(String token) ; 
 	
 }

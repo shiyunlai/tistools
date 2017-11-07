@@ -3,7 +3,7 @@
  */
 package org.tools.service.txmodel.tx;
 
-import org.tis.tools.rservice.txmodel.TxModelConstants.BHVTYPE;
+import org.tis.tools.rservice.txmodel.TxModelEnums.BHVTYPE;
 
 /**
  * <pre>

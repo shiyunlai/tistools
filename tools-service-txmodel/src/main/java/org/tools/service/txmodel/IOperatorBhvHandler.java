@@ -21,18 +21,26 @@ import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;
 public interface IOperatorBhvHandler {
 	
 	/**
+	 * 处理器名称
+	 * @return
+	 */
+	public String getName() ; 
+	
+	public void setName(String name) ; 
+	
+	/**
 	 * 我能处理那个渠道
 	 * 
-	 * @param channelID
-	 *            渠道ID
+	 * @param context
+	 *            {@link TxContext 交易上下文}
 	 * @return true 能处理渠道channelID请求来的操作行为 </br> false 不支持
 	 */
-	public boolean canHandle(String channelID);
+	public boolean canHandle(TxContext context);
 	
 	/**
 	 * 处理交易操作行为
 	 * 
-	 * @param request
+	 * @param context
 	 *            {@link TxContext 交易上下文}
 	 * @return 交易响应
 	 */

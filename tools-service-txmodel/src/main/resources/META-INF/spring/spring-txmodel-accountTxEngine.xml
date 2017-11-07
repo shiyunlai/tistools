@@ -59,13 +59,43 @@
 	<!-- 操作行为命令：打开交易 -->
 	<bean id="openTxBhvCommand" class="org.tools.service.txmodel.command.OpenTxBhvCommand">
 		<property name="bhvCode" value="OPEN_TX" />
+		<property name="handlers">
+			<list>
+				<ref bean="twsOpenTxHandler" />
+				<ref bean="tssOpenTxHandler" />
+			</list>
+		</property>
 	</bean>
 	
 	<!-- 操作行为命令：关闭交易 -->
 	<bean id="closeTxBhvCommand" class="org.tools.service.txmodel.command.CloseTxBhvCommand">
 		<property name="bhvCode" value="CLOSE_TX" />
+		<property name="handlers">
+			<list>
+				<ref bean="twsCloseTxHandler" />
+				<ref bean="tssCloseTxHandler" />
+			</list>
+		</property>
 	</bean>
 	
 	<!-- extend for more trade opertor command -->
+	
+	<!-- ========================================================
+	| txmode模块装配：操作行为处理器 ( IOperatorBhvHandler )
+	============================================================= -->
+	<bean id="twsOpenTxHandler" class="org.tools.service.txmodel.handler.TWSOpenTxHandler">
+		<property name="name" value="打开柜面交易" />
+	</bean>
+	<bean id="tssOpenTxHandler" class="org.tools.service.txmodel.handler.TSSOpenTxHandler">
+		<property name="name" value="打开超柜交易" />
+	</bean>
+	
+	<bean id="twsCloseTxHandler" class="org.tools.service.txmodel.handler.TWSCloseTxHandler">
+		<property name="name" value="关闭柜面交易" />
+	</bean>
+	<bean id="tssCloseTxHandler" class="org.tools.service.txmodel.handler.TSSCloseTxHandler">
+		<property name="name" value="关闭超柜交易" />
+	</bean>
+	
 	
 </beans>

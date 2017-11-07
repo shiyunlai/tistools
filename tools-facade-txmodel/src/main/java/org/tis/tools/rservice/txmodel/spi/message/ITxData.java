@@ -35,14 +35,14 @@ public interface ITxData extends IExtPropertyAble {
 	 */
 	public String[] getFieldsName();
 	
-	/**
-	 * <pre>
-	 * 取所有交易数据字段
-	 * 只返回第一层数据字段名称
-	 * </pre>
-	 * @return 当前交易所有的数据字段
-	 */
-	public <T extends DataField> T[] getFields();
+//	/**
+//	 * <pre>
+//	 * 取所有交易数据字段
+//	 * 只返回第一层数据字段名称
+//	 * </pre>
+//	 * @return 当前交易所有的数据字段
+//	 */
+//	public <T extends DataField> T[] getFields();
 
 	/**
 	 * 根据字段名称，从交易数据中取数据字段

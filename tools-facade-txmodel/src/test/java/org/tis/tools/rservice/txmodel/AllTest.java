@@ -16,7 +16,7 @@ import org.tis.tools.rservice.txmodel.message.impl.TxHeaderImplTest;
  */
 @RunWith(Suite.class)
 @SuiteClasses({ 
-	TxModelConstantsTest.class, 
+	TxModelEnumsTest.class, 
 	TxHeaderImplTest.class 
 })
 public class AllTest {

@@ -21,7 +21,7 @@ public class DefaultOperatorBhvHandler implements IOperatorBhvHandler {
 	protected final Logger logger = LoggerFactory.getLogger(DefaultOperatorBhvHandler.class);
 
 	@Override
-	public boolean canHandle(String channelID) {
+	public boolean canHandle(TxContext context) {
 		return true;//所有渠道都适用
 	}
 
@@ -30,6 +30,15 @@ public class DefaultOperatorBhvHandler implements IOperatorBhvHandler {
 		logger.warn("收到渠道<" + context.getTxRequest().getTxHeader().getChannelID() + ">的交易操作请求，但不能识别这个操作<"
 				+ context.getTxRequest().getTxHeader().getBhvCode() + ">，找不到对应的操作行为处理器IOperatorBhvHandler！");
 		return null;//TODO new 一个 ITxResponse对象回去
+	}
+
+	@Override
+	public String getName() {
+		return "空处理器";
+	}
+
+	@Override
+	public void setName(String name) {
 	}
 
 }

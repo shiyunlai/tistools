@@ -61,5 +61,11 @@ public class TxModelExceptionCodes {
 	 */
 	public static final String LACK_BHV_CODE = R_EX_CODE("0006");
 	
+	/**
+	 * 异常：交易请求对象中，缺少渠道代码.<br>
+	 * lcak channel id be a normal TxReqeust Object.<br>
+	 */
+	public static final String LACK_CHANNEL_ID = R_EX_CODE("0007");
+	
 	
 }

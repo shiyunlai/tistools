@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * 
- * 可存储扩展属性对象接口
+ * 具备存储扩展属性能力的对象接口
  * 
  * @author megapro
  *

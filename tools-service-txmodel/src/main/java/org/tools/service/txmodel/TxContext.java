@@ -5,8 +5,11 @@ package org.tools.service.txmodel;
 
 import java.io.Serializable;
 
+import org.tis.tools.rservice.txmodel.impl.message.TxResponseImpl;
 import org.tis.tools.rservice.txmodel.spi.message.ITxRequest;
 import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;
+import org.tools.core.sdo.dataobject.DataObjectUtility;
+import org.tools.core.sdo.dataobject.DynamicDataObject;
 import org.tools.service.txmodel.tx.TxDefinition;
 
 /**
@@ -67,14 +70,21 @@ public class TxContext implements Serializable {
 		
 	}
 	
+	public TxContext(TxDefinition def, ITxRequest request, ITxResponse response) {
+		this.requestID = request.getTxHeader().getTxSerialNo();
+		this.txDefinition = def;
+		this.txRequest = request;
+		this.txResponse = response;
+	}
+
 	public TxContext(TxDefinition def, ITxRequest request, ITxResponse response, ITxEngine txEngine,
 			IOperatorBhvCommand executeCommand) {
 		this.requestID = request.getTxHeader().getTxSerialNo();
 		this.txDefinition = def;
 		this.txRequest = request;
 		this.txResponse = response;
-		this.txEngine = txEngine ; 
-		this.executeCommand = executeCommand ; 
+		this.txEngine = txEngine;
+		this.executeCommand = executeCommand;
 	}
 	
 	public TxDefinition getTxDefinition() {
@@ -100,10 +110,19 @@ public class TxContext implements Serializable {
 	}
 
 	public ITxResponse getTxResponse() {
-		//将header、control转换到response中一并返回
-		txResponse.setTxHeader(this.txRequest.getTxHeader());
-		txResponse.setTxControl(this.getTxRequest().getTxControl());
-		txResponse.setResponseData(this.getTxRequest().getRequestData());//也返回原来的请求数据
+
+		if( null == txResponse ){
+			txResponse = new TxResponseImpl() ; 
+		}
+		
+		// 将header、control转换到response中一并返回
+		DataObjectUtility.instance().copy((DynamicDataObject) this.txRequest.getTxHeader(),
+				(DynamicDataObject) txResponse.getTxHeader());
+		DataObjectUtility.instance().copy((DynamicDataObject) this.txRequest.getTxControl(),
+				(DynamicDataObject) txResponse.getTxControl());
+		DataObjectUtility.instance().copy((DynamicDataObject) this.getTxRequest().getRequestData(),
+				(DynamicDataObject) txResponse.getResponseData());
+
 		return txResponse;
 	}
 
@@ -137,6 +156,14 @@ public class TxContext implements Serializable {
 	public TxContext setExecuteCommand(IOperatorBhvCommand executeCommand) {
 		this.executeCommand = executeCommand;
 		return this ; 
+	}
+	
+	public String toString() {
+		StringBuffer sb = new StringBuffer() ;
+		sb.append("<").append(this.txEngine.toString()).append(">");
+		sb.append("<").append(this.getTxDefinition().toString()).append(">");
+		sb.append("<").append(this.executeCommand.toString()).append(">");
+		return sb.toString() ; 
 	}
 	
 }

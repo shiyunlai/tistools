@@ -3,8 +3,7 @@
  */
 package org.tools.service.txmodel;
 
-import org.tis.tools.rservice.txmodel.TxModelConstants.BHVCODE;
-import org.tis.tools.rservice.txmodel.TxModelConstants.BHVTYPE;
+import org.tis.tools.rservice.txmodel.TxModelEnums.BHVCODE;
 import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;
 
 /**
@@ -56,18 +55,6 @@ public interface IOperatorBhvCommand {
 	 *            {@link IOperatorBhvHandler 交易操作行为处理器}
 	 */
 	public void setOperatorBhvHandler(IOperatorBhvHandler handler);
-	
-	/**
-	 * <pre>
-	 * 由命令实现者根据请求，决定当前命令的处理实现类.
-	 * 如：根据渠道来源不同，对‘打开交易’命令的实现逻辑会不一样。
-	 * </pre>
-	 * 
-	 * @param context
-	 *            {@link TxContext 交易上下文}
-	 * @return
-	 */
-	public IOperatorBhvHandler judgeHandler(TxContext context);
 	
 	/**
 	 * 交易请求处理

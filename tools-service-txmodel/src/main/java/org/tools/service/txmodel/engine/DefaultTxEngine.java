@@ -3,7 +3,7 @@
  */
 package org.tools.service.txmodel.engine;
 
-import org.tis.tools.rservice.txmodel.TxModelConstants.BHVTYPE;
+import org.tis.tools.rservice.txmodel.TxModelEnums.BHVTYPE;
 import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;
 import org.tools.service.txmodel.IOperatorBhvCommand;
 import org.tools.service.txmodel.ITxEngine;

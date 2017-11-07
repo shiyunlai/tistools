@@ -4,8 +4,8 @@
 package org.tis.tools.rservice.txmodel;
 
 import org.junit.Test;
-import org.tis.tools.rservice.txmodel.TxModelConstants.BHVCODE;
-import org.tis.tools.rservice.txmodel.TxModelConstants.BHVTYPE;
+import org.tis.tools.rservice.txmodel.TxModelEnums.BHVCODE;
+import org.tis.tools.rservice.txmodel.TxModelEnums.BHVTYPE;
 
 import junit.framework.Assert;
 
@@ -15,7 +15,7 @@ import junit.framework.Assert;
  * @author megapro
  *
  */
-public class TxModelConstantsTest {
+public class TxModelEnumsTest {
 
 	@Test
 	public void testBHVCODE() {

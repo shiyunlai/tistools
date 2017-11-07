@@ -30,12 +30,12 @@ public class TxDataImpl extends DynamicDataObject implements ITxData {
 		return getPropertyNames() ;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T extends DataField> T[] getFields() {
-		
-		return (T[])this.getDataMap().values().toArray() ;
-	}
+//	@SuppressWarnings("unchecked")
+//	@Override
+//	public <T extends DataField> T[] getFields() {
+//		
+//		return (T[])this.getDataMap().values().toArray() ;
+//	}
 
 	@SuppressWarnings("unchecked")
 	@Override

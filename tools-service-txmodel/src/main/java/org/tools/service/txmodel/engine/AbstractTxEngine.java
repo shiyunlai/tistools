@@ -4,25 +4,20 @@
 package org.tools.service.txmodel.engine;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tis.tools.common.utils.BasicUtil;
-import org.tis.tools.common.utils.ClassUtil;
-import org.tis.tools.common.utils.StringUtil;
-import org.tis.tools.rservice.txmodel.TxModelConstants.BHVCODE;
-import org.tis.tools.rservice.txmodel.TxModelConstants.BHVTYPE;
+import org.tis.tools.rservice.txmodel.TxModelEnums.BHVCODE;
+import org.tis.tools.rservice.txmodel.TxModelEnums.BHVTYPE;
 import org.tis.tools.rservice.txmodel.exception.TxModelException;
 import org.tis.tools.rservice.txmodel.exception.TxModelExceptionCodes;
 import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;
 import org.tools.service.txmodel.IOperatorBhvCommand;
-import org.tools.service.txmodel.IOperatorBhvHandler;
 import org.tools.service.txmodel.ITxEngine;
 import org.tools.service.txmodel.TxContext;
 import org.tools.service.txmodel.command.DoNothingBhvCommand;
-import org.tools.service.txmodel.handler.DefaultOperatorBhvHandler;
 
 /**
  * 抽象交易引擎
@@ -39,7 +34,7 @@ abstract class AbstractTxEngine implements ITxEngine {
 	 * 说明：每种行为分类由一个交易引擎负责实现和处理对应的操作行为
 	 */
 	BHVTYPE bhvType = null;
-
+	
 	/**
 	 * <pre>
 	 * 本交易引擎支持的所有“操作行为命令”
@@ -58,7 +53,7 @@ abstract class AbstractTxEngine implements ITxEngine {
 	 * </pre>
 	 */
 	IOperatorBhvCommand executeCommand = null;
-
+	
 	/**
 	 * 构造函数
 	 * 
@@ -151,18 +146,12 @@ abstract class AbstractTxEngine implements ITxEngine {
 		
 		txContext.setExecuteCommand(executeCommand) ; // 收集执行命令
 		
-		// 选择命令对应的逻辑实现
-		IOperatorBhvHandler handler = executeCommand.judgeHandler(txContext) ; 
-		if( null == handler ){
-			handler = new DefaultOperatorBhvHandler() ;
-		}
-		executeCommand.setOperatorBhvHandler(handler);
+		logger.info("交易引擎:"+toString()+"开始处理交易操作请求.执行"+executeCommand.toString()) ;
 		
 		// 执行交易操作命令
 		ITxResponse resp = executeCommand.execute(txContext);
 
-		// 整理收集返回结果
-		return reCollection(txContext, resp );
+		return resp;
 	}
 
 	/**
@@ -196,16 +185,7 @@ abstract class AbstractTxEngine implements ITxEngine {
 	}
 	
 	public String toString() {
-		return StringUtil.concat("交易引擎<", bhvType.toString() + ">");
+		return this.bhvType.toString() ; 
 	}
 	
-	/**
-	 * 从上下文中收集整理交易响应数据
-	 * 
-	 * @param txContext
-	 *            {@link TxContext 当前交易上下文 }包括了交易处理过程信息，处理结果
-	 * @param response
-	 *            {@link ITxResponse 交易响应数据 }
-	 */
-	abstract protected ITxResponse reCollection(TxContext txContext,ITxResponse response);
 }

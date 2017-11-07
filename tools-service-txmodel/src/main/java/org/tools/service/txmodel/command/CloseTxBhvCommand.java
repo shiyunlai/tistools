@@ -3,9 +3,7 @@
  */
 package org.tools.service.txmodel.command;
 
-import org.tis.tools.rservice.txmodel.TxModelConstants.BHVCODE;
-import org.tools.service.txmodel.IOperatorBhvHandler;
-import org.tools.service.txmodel.TxContext;
+import org.tis.tools.rservice.txmodel.TxModelEnums.BHVCODE;
 
 /**
  * 
@@ -22,12 +20,6 @@ public class CloseTxBhvCommand  extends AbstractBhvCommand {
 
 	CloseTxBhvCommand(BHVCODE bhvCode) {
 		super(bhvCode);
-	}
-
-	@Override
-	public IOperatorBhvHandler judgeHandler(TxContext context) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

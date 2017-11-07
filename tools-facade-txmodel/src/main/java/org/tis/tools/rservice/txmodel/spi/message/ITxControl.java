@@ -35,15 +35,19 @@ public interface ITxControl extends IExtPropertyAble {
 	
 	/**
 	 * 是否处理成功
-	 * @return
+	 * @return true 成功 false 失败
 	 */
 	public boolean isSuccess() ; 
+	
+	public void success(boolean success) ; 
 	
 	/**
 	 * 取返回码
 	 * @return
 	 */
 	public String getRetCode() ; 
+
+	public void setRetCode(String retCode) ;
 	
 	/**
 	 * 取返回信息
@@ -51,12 +55,16 @@ public interface ITxControl extends IExtPropertyAble {
 	 */
 	public String getRetMessage() ; 
 	
+	public void setRetMessage(String message) ; 
+	
 	
 	/**
 	 * 是否需要授权
-	 * @return
+	 * @return true 需要授权 false 无需授权
 	 */
 	public boolean isOverride() ;
+	
+	public void override(boolean override) ; 
 
 	/**
 	 * 取交易授权方式
@@ -65,23 +73,31 @@ public interface ITxControl extends IExtPropertyAble {
 	 */
 	public OverrideTypeEnum getOverrideType();
 	
+	public void setOverrideType(OverrideTypeEnum overrideType)  ;
+	
 	/**
-	 * 取授权控制参数
-	 * @return
+	 * 取授权控制参数，由交易操作请求者取出，并按照控制参数执行授权行为
+	 * @return 授权控制参数对象
 	 */
 	public DataObject getOverrideControl() ;
 	
+	public void setOverrideControl(DataObject overrideControl) ; 
+	
 	/**
 	 * 是否需要复核
-	 * @return
+	 * @return true 需要复核 false 无需复核
 	 */
 	public boolean isReCheck() ;
+	
+	public void reCheck(boolean reCheck ) ; 
 
 	/**
 	 * 取交易复核方式
 	 * @return {@link ReCheckTypeEnum 交易复核方式}
 	 */
 	public ReCheckTypeEnum getReCheckType( ) ; 
+	
+	public void setReCheckType(ReCheckTypeEnum reCheckType) ; 
 	
 	/**
 	 * 取复核控制参数

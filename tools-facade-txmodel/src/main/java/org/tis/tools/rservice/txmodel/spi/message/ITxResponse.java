@@ -87,7 +87,7 @@ public interface ITxResponse  extends Serializable{
 	 * 取合法性校验信息
 	 * @return
 	 */
-	public Object getToken() ;
-	public void setToken(Object token) ;
+	public String getToken() ;
+	public void setToken(String token) ;
 	
 }

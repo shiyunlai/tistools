@@ -3,6 +3,7 @@
  */
 package org.tis.tools.rservice.txmodel.impl.message;
 
+import org.tis.tools.common.utils.FormattingUtil;
 import org.tis.tools.rservice.txmodel.spi.message.ITxControl;
 import org.tis.tools.rservice.txmodel.spi.message.ITxData;
 import org.tis.tools.rservice.txmodel.spi.message.ITxHeader;
@@ -27,8 +28,22 @@ public class TxResponseImpl implements ITxResponse {
 	private ITxControl txControl;
 	private ITxHeader txHeader;
 	private ITxData txResponseData;
-	private Object token;
+	private String token;
 
+	public TxResponseImpl() {
+		txControl = new TxControlImpl() ; 
+		txHeader = new TxHeaderImpl() ; 
+		txResponseData = new TxDataImpl() ; 
+		token = "asdfsafsfsdf" ;//TODO 临时 
+	}
+	
+	public TxResponseImpl(ITxControl txControl,ITxHeader txHeader,ITxData txResponseData, String token) {
+		this.txControl = txControl ; 
+		this.txHeader = txHeader ; 
+		this.txResponseData = txResponseData ; 
+		this.token = token ; 
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -46,7 +61,7 @@ public class TxResponseImpl implements ITxResponse {
 	 */
 	@Override
 	public ITxHeader getTxHeader() {
-		return this.getTxHeader();
+		return this.txHeader ; 
 	}
 
 	/*
@@ -65,7 +80,7 @@ public class TxResponseImpl implements ITxResponse {
 	 * @see org.tis.tools.rservice.txmodel.message.ITxResponse#getToken()
 	 */
 	@Override
-	public Object getToken() {
+	public String getToken() {
 		return this.token;
 	}
 
@@ -85,14 +100,14 @@ public class TxResponseImpl implements ITxResponse {
 	}
 
 	@Override
-	public void setToken(Object token) {
+	public void setToken(String token) {
 
 		this.token = token;
 	}
 
 	@Override
 	public String toString() {
-		return JSON.toJSONString(this) ; // 使用ali fastjson
+		return FormattingUtil.instance().formatJsonString( JSON.toJSONString(this) ) ; // 使用ali fastjson
 		//return FormattingUtil.instance().toJsonStringFormatted(this) ; 
 	}
 	

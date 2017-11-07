@@ -4,13 +4,13 @@
 package org.tis.tools.rservice.txmodel;
 
 /**
- * 交易模式服务模块使用到的常量定义
+ * 交易模式服务模块使用到的枚举定义
  * 
  * @author megapro
  *
  */
-public interface TxModelConstants {
-
+public interface TxModelEnums {
+	
 	/**
 	 * 行为类型枚举
 	 * 
