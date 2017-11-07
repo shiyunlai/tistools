@@ -91,11 +91,12 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
             $scope.buttonflag = true;
             if(a.entity.empstatus == 'offer'){//如果人员状态是在招,那么入职按钮显示
                 $scope.empentry = true;
-            // }else if(a.entity.empstatus == 'onjob'&&isNull(!a.entity.userId)){
-            }else{//离职状态显示
-                $scope.empleave=true;
+            }else if(a.entity.empstatus == 'onjob'){//在职的话可以离职
+                $scope.empleave= true;
+            } else{
+                $scope.empleave= false;
             }
-            if(a.entity.empstatus == 'offer'&& isNull(!a.entity.userId)){
+            if(a.entity.empstatus == 'onjob'&& isNull(!a.entity.userId)){
                 $scope.editoper = true;//如果是在职状态，并且存在操作员那么就出现编辑按钮
             }
         }else{
@@ -280,7 +281,7 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                     var subFrom = item;
                     Emp_service.addemp(subFrom).then(function (data) {
                         if (data.status == "success") {
-                            toastr['success']("新增员工成功!"+data.retMessag);
+                            toastr['success']("新增员工成功!");
                             $scope.cancel();
                             reempgrid();//更新表格
                             Allfalse()
@@ -300,10 +301,11 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
     //详情按钮事件
     emp.detail = function () {
         var arr = $scope.empgrid.getSelectedRows();
-        if(!isNull(arr[0].indate)||!isNull(arr[0].birthdate) || !isNull(arr[0].createtime)){
+        if(!isNull(arr[0].indate)||!isNull(arr[0].birthdate) || !isNull(arr[0].createtime)|| !isNull(arr[0].outdate)){
             arr[0].indate = moment(arr[0].indate).format('YYYY-MM-DD');
             arr[0].birthdate = moment(arr[0].birthdate).format('YYYY-MM-DD');
             arr[0].createtime = moment(arr[0].createtime).format('YYYY-MM-DD');
+            arr[0].outdate = moment(arr[0].outdate).format('YYYY-MM-DD');
         }
         $scope.item = angular.copy(arr[0]);
         if (isNull($scope.item)) {
@@ -375,7 +377,7 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                     $scope.empadd = function (subFrom) {
                         Emp_service.addemp(subFrom).then(function (data) {
                             if (data.status == "success") {
-                                toastr['success']('修改成功' + data.retMessage);
+                                toastr['success']('修改成功');
                             } else {
                                 toastr['error']('修改失败' + data.retMessage);
                             }
@@ -394,106 +396,122 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
     //员工入职按钮
     emp.Entry = function () {
         var arr = $scope.empgrid.getSelectedRows();//拿到操作员信息
-        openwindow($uibModal, 'views/emp/addemppart2_window.html', 'lg',
+        openwindow($uibModal, 'views/emp/addempindata.html', 'lg',
             function ($scope, $modalInstance) {
-                var subFrom = arr[0]
-                $scope.subFrom = subFrom;
-                subFrom.userId = pinyin.getFullChars(subFrom.empName);//把员工名字当做默认新建的操作员
-                $scope.title = "绑定操作员";
-                var emp = {};
-                $scope.emp = emp;
-                emp.operflag = "1";
-                //添加绑定操作员信息以及可管理组织机构信息
-                $scope.add = function (subFrom) {
-                    var a = [];
-                    if (!isNull(subFrom.orgList)) {
-                        for (var i = 0; i < subFrom.orgList.length; i++) {
-                            var b = {};
-                            b.orgGuid = subFrom.orgList[i];
-                            a.push((b));
-                        }
-                    }
-                    subFrom.orgList = a;
-                    /* //管理角色 暂时不需要 注释掉
-                    a = [];
-                    if (!isNull(subFrom.specialty)) {
-                        for (var i = 0; i < subFrom.specialty.length; i++) {
-                            var b = {};
-                            b.roleGuid = subFrom.specialty[i];
-                            a.push((b));
-                        }
-                    }
-                   subFrom.specialty = JSON.stringify(subFrom.specialty);
-                    subFrom.specialty = a;
-                      */
-                    subFrom.orgList = JSON.stringify(subFrom.orgList);//所有的组织机构信息
-                    Emp_service.addemp(subFrom).then(function (data) {
-                        if (data.status == "success") {
-                        } else {
-                            toastr['error']("绑定失败!" + data.retMessage);
-                        }
-                    })
-                    if(emp.operflag == '1'){//只有是系统默认的时候才新增，否则不新增
-                        //新增操作员
-                        var res = $rootScope.res.operator_service;//页面所需调用的服务
-                        var opersFrom = {}
-                        opersFrom.operatorName= subFrom.empName;//操作员姓名
-                        opersFrom.userId=subFrom.userId;
-                        opersFrom.operatorStatus='stop';
-                        opersFrom.lockLimit=5;
-                        opersFrom.authMode='password';
-                        opersFrom.password = '111111'//默认密码
-                        opersFrom.menuType = 'default'//默认页面布局
-                        common_service.post(res.createOperator,opersFrom).then(function(data){
-                            if (data.status == "success") {
+                //打开第二个弹窗
+                $scope.shownext = function (times) {
+                    $modalInstance.dismiss('cancel');
+                    var tims = times.indate;
+                    openwindow($uibModal, 'views/emp/addemppart2_window.html', 'lg',
+                        function ($scope, $modalInstance) {
+                            var subFrom = arr[0]
+                            $scope.subFrom = subFrom;
+                            subFrom.userId = pinyin.getFullChars(subFrom.empName);//把员工名字当做默认新建的操作员
+                            $scope.title = "绑定操作员";
+                            var emp = {};
+                            $scope.emp = emp;
+                            emp.operflag = "1";
+                            //添加绑定操作员信息以及可管理组织机构信息
+                            $scope.add = function (subFrom) {
+                                var a = [];
+                                if (!isNull(subFrom.orgList)) {
+                                    for (var i = 0; i < subFrom.orgList.length; i++) {
+                                        var b = {};
+                                        b.orgGuid = subFrom.orgList[i];
+                                        a.push((b));
+                                    }
+                                }
+                                subFrom.orgList = a;
+                                /* //管理角色 暂时不需要 注释掉
+                                a = [];
+                                if (!isNull(subFrom.specialty)) {
+                                    for (var i = 0; i < subFrom.specialty.length; i++) {
+                                        var b = {};
+                                        b.roleGuid = subFrom.specialty[i];
+                                        a.push((b));
+                                    }
+                                }
+                               subFrom.specialty = JSON.stringify(subFrom.specialty);
+                                subFrom.specialty = a;
+                                  */
+                                subFrom.orgList = JSON.stringify(subFrom.orgList);//所有的组织机构信息
+                                Emp_service.addemp(subFrom).then(function (data) {
+                                    if (data.status == "success") {
+                                    } else {
+                                        toastr['error']("绑定失败!" + data.retMessage);
+                                    }
+                                })
+                                if(emp.operflag == '1'){//只有是系统默认的时候才新增，否则不新增
+                                    //新增操作员
+                                    var res = $rootScope.res.operator_service;//页面所需调用的服务
+                                    var opersFrom = {}
+                                    opersFrom.operatorName= subFrom.empName;//操作员姓名
+                                    opersFrom.userId=subFrom.userId;
+                                    opersFrom.operatorStatus='stop';
+                                    opersFrom.lockLimit=5;
+                                    opersFrom.authMode='password';
+                                    opersFrom.password = '111111'//默认密码
+                                    opersFrom.menuType = 'default'//默认页面布局
+                                    common_service.post(res.createOperator,opersFrom).then(function(data){
+                                        if (data.status == "success") {
+                                        }
+                                    })
+                                }
+                                //入职方法
+                                var ret = $rootScope.res.Emp_service;//页面所需调用的服务
+                                var operFrom= {};
+                                operFrom.data = {};
+                                operFrom.data.empGuid = subFrom.guid;
+                                operFrom.data.status = 'onjob';
+                                operFrom.data.date = tims;//传入时间
+                                common_service.post(ret.changeEmpStatus,operFrom).then(function(data){
+                                    if (data.status == "success") {
+                                        toastr['success']("入职成功!");
+                                        reempgrid();//刷新列表
+                                        Allfalse()
+                                        $modalInstance.dismiss('cancel');
+                                    }else{
+                                        toastr['error']("入职失败!"+ data.retMessage);
+                                    }
+                                })
                             }
-                        })
-                    }
-                    //入职方法
-                    var ret = $rootScope.res.Emp_service;//页面所需调用的服务
-                    var operFrom= {};
-                    operFrom.data = {};
-                    operFrom.data.empGuid = subFrom.guid;
-                    operFrom.data.status = 'onjob';
-                    console.log(operFrom)
-                    common_service.post(ret.changeEmpStatus,operFrom).then(function(data){
-                        console.log(data);
-                        if (data.status == "success") {
-                            toastr['success']("入职成功!");
-                            reempgrid();//刷新列表
-                            Allfalse()
-                            $modalInstance.dismiss('cancel');
-                        }else{
-                            toastr['error']("入职失败!"+ data.retMessage);
-                        }
+                            $scope.cancel = function () {
+                                $modalInstance.dismiss('cancel');
+                            };
                     })
                 }
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
         })
     }
 
     //员工离职
     emp.Leave = function () {
         var arr = $scope.empgrid.getSelectedRows();//拿到操作员信息
-        var subFrom = arr[0];
-        var ret = $rootScope.res.Emp_service;//页面所需调用的服务
-        var operFrom= {};
-        operFrom.data = {};
-        operFrom.data.empGuid = subFrom.guid;
-        operFrom.data.status = 'offjob';
-        common_service.post(ret.changeEmpStatus,operFrom).then(function(data){
-            console.log(data);
-            if (data.status == "success") {
-                toastr['success']("离职成功!");
-                reempgrid();//刷新列表
-                Allfalse()
-            }else{
-                toastr['error']("离职失败!"+ data.retMessage);
-            }
+        openwindow($uibModal, 'views/emp/empQuit.html', 'lg',
+            function ($scope, $modalInstance) {
+                $scope.empquit= function (items) {
+                    var subFrom = arr[0];
+                    var ret = $rootScope.res.Emp_service;//页面所需调用的服务
+                    var operFrom= {};
+                    operFrom.data = {};
+                    operFrom.data.empGuid = subFrom.guid;
+                    operFrom.data.status = 'offjob';
+                    operFrom.data.date = items.outdate;//传入时间
+                    common_service.post(ret.changeEmpStatus,operFrom).then(function(data){
+                        if (data.status == "success") {
+                            toastr['success']("离职成功!");
+                            $modalInstance.dismiss('cancel');
+                            reempgrid();//刷新列表
+                            Allfalse()
+                        }else{
+                            toastr['error']("离职失败!"+ data.retMessage);
+                        }
 
-        })
+                    })
+                }
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            })
     }
     //编辑操作员按钮事件
     emp.editoper = function (item) {
