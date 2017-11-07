@@ -16,6 +16,7 @@ import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.log.OperateLog;
 import org.tis.tools.webapp.log.ReturnType;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -339,22 +340,7 @@ public class EmployeeController extends BaseController {
         JSONObject data= jsonObject.getJSONObject("data");
         String empGuid = data.getString("empGuid");
         String status = data.getString("status");
-        return getReturnMap(employeeRService.changeEmpStatus(empGuid, status));
+        Date date = data.getDate("date");
+        return getReturnMap(employeeRService.changeEmpStatus(empGuid, status, date));
     }
-
-
-    /**
-     * 每个controller定义自己的返回信息变量
-     */
-    private Map<String, Object> responseMsg;
-
-
-    @Override
-    public Map<String, Object> getResponseMessage() {
-        if (null == responseMsg) {
-            responseMsg = new HashMap<String, Object>();
-        }
-        return responseMsg;
-    }
-
 }
