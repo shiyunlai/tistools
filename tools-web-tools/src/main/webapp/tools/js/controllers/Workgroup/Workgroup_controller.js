@@ -263,6 +263,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                     flag[a] = false;
                 }
                 flag.index = true;
+                reworkgroupgrid();
             } else {
                 for (var a in flag) {
                     flag[a] = false;
@@ -299,15 +300,19 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
     var reworkgroupgrid = function () {
         //调取工作组信息OM_GROUP
         Workgroup_service.loadallgroup().then(function (data) {
-            for (var i = 0; i < data.length; i++) {
-                data[i].startDate = FormatDate(data[i].startDate);
-                data[i].createtime = FormatDate(data[i].createtime);
-                data[i].endDate = FormatDate(data[i].endDate);
-                data[i].lastupdate = FormatDate(data[i].lastupdate);
+            if(data.status == 'success'){
+                var datas = data.retMessage;
+                for (var i = 0; i < datas.length; i++) {
+                    datas[i].startDate = FormatDate(datas[i].startDate);
+                    datas[i].createtime = FormatDate(datas[i].createtime);
+                    datas[i].endDate = FormatDate(datas[i].endDate);
+                    datas[i].lastupdate = FormatDate(datas[i].lastupdate);
+                }
+                $scope.workgroupgrid.data = datas;
+                $scope.workgroupgrid.mydefalutData = datas;
+                $scope.workgroupgrid.getPage(1, $scope.workgroupgrid.paginationPageSize);
+            }else{
             }
-            $scope.workgroupgrid.data = data;
-            $scope.workgroupgrid.mydefalutData = data;
-            $scope.workgroupgrid.getPage(1, $scope.workgroupgrid.paginationPageSize);
         })
     }
     reworkgroupgrid();
@@ -376,11 +381,10 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
             var subFrom = {};
             subFrom.groupCode = item[0].groupCode;
             Workgroup_service.deletegroup(subFrom).then(function (data) {
-                console.log(data)
                 if (data.status == "success") {
-                    console.log(data)
                     toastr['success']('删除成功');
-                    rexjgroup();
+                    reworkgroupgrid();
+                    $("#container").jstree().refresh();
                 } else {
                     toastr['error']('删除失败'+ data.message);
                 }
@@ -610,6 +614,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
         $scope.editflag = !$scope.editflag;
     }
     workgroup.updateGroup = function () {
+        console.log($scope.subFrom)
         Workgroup_service.updateGroup($scope.subFrom).then(function (data) {
             if (data.status == "success") {
                 toastr['success']("修改工作组成功");

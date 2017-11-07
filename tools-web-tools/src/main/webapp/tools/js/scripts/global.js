@@ -568,7 +568,11 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
 
 function FormatDate (strTime) {
     var date = new Date(strTime);
-    return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+    if(date.getDate()<10){
+        return date.getFullYear()+"-"+(date.getMonth()+1)+"-0"+date.getDate();
+    }else{
+        return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+    }
 }
 
 /*封装grid刷新页*/

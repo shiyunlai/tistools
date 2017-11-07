@@ -572,7 +572,7 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
                             busiorg_service.addbusiorg(subFrom).then(function (data) {
                                 console.log(data)
                                 if (data.status == "success") {
-                                    toastr['success'](data.retMessage);
+                                    toastr['success']('新增业务机构成功');
                                     $("#busiorgtree").jstree().refresh();
                                 } else {
                                     toastr['error'](data.retMessage);
