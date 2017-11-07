@@ -71,7 +71,7 @@ angular.module('MetronicApp').controller('jourinfo_controller', function($rootSc
     $scope.operguid = $stateParams.id;
     var subFrom = {};
     subFrom.logGuid =  $stateParams.id;//接受传入的值
-    //根据guid查询操作员详情服务
+    //根据guid查询日志详情服务
     common_service.post(res.queryOperateDetail,subFrom).then(function(data){
         var datas = data.retMessage;
         if(data.status == "success"){
@@ -85,7 +85,7 @@ angular.module('MetronicApp').controller('jourinfo_controller', function($rootSc
             $scope.gridOptions1.data =  datas.allObj;
             $scope.gridOptions1.mydefalutData = datas.allObj;
             $scope.gridOptions1.getPage(1,$scope.gridOptions1.paginationPageSize);
-            $scope.loginfo.operateTime = moment(datas.instance).format('YYYY-MM-DD HH:mm:ss');
+            $scope.loginfo.operateTime = moment(datas.instance.operateTime).format('YYYY-MM-DD HH:mm:ss');
         }else{
             toastr['error']('查询失败'+'<br/>'+data.retMessage);
         }

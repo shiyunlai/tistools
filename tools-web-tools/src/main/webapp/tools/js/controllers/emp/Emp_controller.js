@@ -300,42 +300,46 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
     //详情按钮事件
     emp.detail = function () {
         var arr = $scope.empgrid.getSelectedRows();
-        console.log(arr[0]);
+        if(!isNull(arr[0].indate)||!isNull(arr[0].birthdate) || !isNull(arr[0].createtime)){
+            arr[0].indate = moment(arr[0].indate).format('YYYY-MM-DD');
+            arr[0].birthdate = moment(arr[0].birthdate).format('YYYY-MM-DD');
+            arr[0].createtime = moment(arr[0].createtime).format('YYYY-MM-DD');
+        }
         $scope.item = angular.copy(arr[0]);
         if (isNull($scope.item)) {
             toastr['error']("请选择一条记录！");
             return false;
         }
         abftree_service.queryAllorg().then(function (data) {
-            console.log(data.retMessage)
             var orgList = data.retMessage;
             var a = [];
-            console.log($scope.item.orgList)
-            $scope.item.orgList = JSON.parse($scope.item.orgList);
-            for (var i = 0; i < $scope.item.orgList.length; i++) {
-                for (var j = 0; j < orgList.length; j++) {
-                    if ($scope.item.orgList[i].orgGuid == orgList[j].guid) {
-                        a.push(orgList[j].orgName);
+            if(!isNull($scope.item.orgList)){
+                $scope.item.orgList = JSON.parse($scope.item.orgList);
+                for (var i = 0; i < $scope.item.orgList.length; i++) {
+                    for (var j = 0; j < orgList.length; j++) {
+                        if ($scope.item.orgList[i].orgGuid == orgList[j].guid) {
+                            a.push(orgList[j].orgName);
+                        }
                     }
                 }
+                $scope.item.orgList = a.join(",");
             }
-            $scope.item.orgList = a.join(",");
-            console.log(a)
         })
         common_service.post(res.queryRoleList,{}).then(function(data){
             console.log(data)
             var roleList = data.retMessage;
             var a = [];
-            $scope.item.specialty = JSON.parse($scope.item.specialty);
-            console.log($scope.item.specialty)
-            for (var i = 0; i < $scope.item.specialty.length; i++) {
-                for (var j = 0; j < roleList.length; j++) {
-                    if ($scope.item.specialty[i].roleGuid == roleList[j].guid) {
-                        a.push(roleList[j].roleName);
+            if(!isNull($scope.item.specialty)){
+                $scope.item.specialty = JSON.parse($scope.item.specialty);
+                for (var i = 0; i < $scope.item.specialty.length; i++) {
+                    for (var j = 0; j < roleList.length; j++) {
+                        if ($scope.item.specialty[i].roleGuid == roleList[j].guid) {
+                            a.push(roleList[j].roleName);
+                        }
                     }
                 }
+                $scope.item.specialty = a.join(",");
             }
-            $scope.item.specialty = a.join(",");
             console.log(a)
         })
 
@@ -363,6 +367,7 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                     //创建员工实例
                     var subFrom = {};
                     $scope.subFrom = subFrom;
+                    arr[0].birthdate = moment(arr[0].birthdate).format('YYYY-MM-DD');
                     $scope.subFrom = arr[0];
                     //标题
                     $scope.title = "修改员工信息";
@@ -615,7 +620,9 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
         } else {
             var subFrom = {};
             subFrom.empCode = arr[0].empCode;
+            console.log(subFrom)
             Emp_service.deletemp(subFrom).then(function (data) {
+                console.log(data)
                 if (data.status == "success") {
                     toastr['success']("删除成功!");
                 } else {
