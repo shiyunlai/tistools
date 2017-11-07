@@ -187,7 +187,7 @@ public class BusiorgController  extends BaseController {
         }else if("dummy".equals(nodeType)){
             ob = busiOrgRService.createDummyBusiorg(busiorgCode, busiorgName, busiDomain, parentsBusiorgCode);
         }
-        return null;
+        return getReturnMap(ob);
     }
 
     /**

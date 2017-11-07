@@ -252,7 +252,7 @@ public interface IEmployeeRService {
 	 * @return 修改后的员工信息
 	 * @throws ToolsRuntimeException
 	 */
-	void updateEmployee(OmEmployee newEmployee) throws ToolsRuntimeException;
+	OmEmployee updateEmployee(OmEmployee newEmployee) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -387,7 +387,7 @@ public interface IEmployeeRService {
 	/**
 	 * 删除人员-机构关系表数据
 	 */
-	void deleteEmpOrg(String orgGuid,String empGuid);
+	OmEmpOrg deleteEmpOrg(String orgGuid,String empGuid);
 
 	/**
 	 * 添加人员-机构关系表数据
