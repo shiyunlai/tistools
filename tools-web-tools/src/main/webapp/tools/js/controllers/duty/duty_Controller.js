@@ -679,7 +679,7 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
             subFrom.dutyCode = arr[0].dutyCode;
             duty_service.deletedutyByCode(subFrom).then(function (data) {
                 if(data.status == "success"){
-                    toastr['success'](data.retMessage);
+                    toastr['success']('删除成功');
                     $("#dutytree").jstree().refresh();
                     redutygrid();
                 }else{

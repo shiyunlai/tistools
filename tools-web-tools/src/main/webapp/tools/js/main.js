@@ -341,8 +341,21 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
         Demo.init();
-
-        var res = $rootScope.res.login_service;//页面所需调用的服务
+        // var res = $rootScope.res.login_service;//页面所需调用的服务
+        var ret ={ctrl: "AcAuthenticationController", func: "pageInit", emo: "页面初始化"};
+        common_service.post(ret,{}).then(function(data){
+            if(data.status == "success"){
+                var session = data.retMessage.user;
+                session.opertor = sessionStorage.opertor;//身份绑定;
+                $scope.userId = session.userId;//绑定登陆信息
+                userinfo(data.retMessage.user);//登陆信息页面
+                passedit(data.retMessage.user);//修改密码页面
+                opermenu($scope.userId);//重组菜单入口
+                persona(session);//个性化配置入口
+                $rootScope.menus = angular.fromJson(data.retMessage.menu);
+            }
+        })
+        /*var res = $rootScope.res.login_service;//页面所需调用的服务
         common_service.post(res.pageInit,{}).then(function(data){
             if(data.status == "success"){
                  var session = data.retMessage.user;
@@ -354,7 +367,7 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
                 persona(session);//个性化配置入口
                 $rootScope.menus = angular.fromJson(data.retMessage.menu);
             }
-        })
+        })*/
     });
     //个人信息页面
     function userinfo(item){
@@ -377,7 +390,8 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
     //修改密码页面
     function passedit(datas){
         $scope.improved = function(){
-            var res = $rootScope.res.login_service;
+           /* var res = $rootScope.res.login_service;*/
+            var ret ={"ctrl": "AcAuthenticationController", "func": "updatePassword","emo":"修改密码"};
             openwindow($uibModal, 'views/landinginfor/Improved.html','lg',
                 function ($scope, $modalInstance) {
                     $scope.add = function(item){//保存新增的函数
@@ -385,7 +399,7 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
                         subFrom.userId =datas.userId;
                         subFrom.newPwd =item.newPassword ;
                         subFrom.oldPwd =item.oldPassword;
-                        common_service.post(res.updatePassword,subFrom).then(function(data){
+                        common_service.post(ret,subFrom).then(function(data){
                             if(data.status == "success"){
                                 toastr['success']("修改成功！");
                                 $modalInstance.close();
@@ -403,8 +417,8 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
     //注销登录
     $scope.logout  = function(){
        if(confirm('是否确定注销')){
-           var res = $rootScope.res.login_service;//页面所需调用的服务
-           common_service.post(res.logout,{}).then(function(data){
+           var res = {"ctrl": "AcAuthenticationController", "func": "logout","emo":"注销登陆"}//页面所需调用的服务
+           common_service.post(res,{}).then(function(data){
                if(data.status == "success"){
                    window.location = "../tools/login.html";//如果正确，则进入主页
                }
@@ -433,9 +447,12 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
 MetronicApp.controller('SidebarController', ['$scope', '$timeout','$rootScope','common_service',function($scope,$timeout,$rootScope,common_service) {
     $scope.$on('$includeContentLoaded', function () {
         Layout.initSidebar(); // init sidebar
+        //拿不到数据,目前先写死 在找原因
         //调用菜单
-        var res = $rootScope.res.login_service;//页面所需调用的服务
-        common_service.post(res.pageInit, {}).then(function (data) {
+        /*var res = $rootScope.res.login_service;//页面所需调用的服务
+        common_service.post(res.pageInit, {}).then(function (data) {*/
+            var ret ={ctrl: "AcAuthenticationController", func: "pageInit", emo: "页面初始化"};
+            common_service.post(ret, {}).then(function (data) {
             if (data.status == "success") {
                 var sessionjson = angular.fromJson(data.retMessage.menu);
                 $scope.menusAndTrans = angular.copy(sessionjson);

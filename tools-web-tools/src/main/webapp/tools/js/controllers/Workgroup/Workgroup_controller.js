@@ -690,7 +690,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                         Workgroup_service.addEmpGroup(subFrom).then(function (data) {
                             console.log(data)
                             if (data.status == "success") {
-                                toastr['success'](data.retMessage);
+                                toastr['success']('添加成功');
                             } else {
                                 toastr['error'](data.retMessage);
                             }
@@ -726,7 +726,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
             Workgroup_service.deleteEmpGroup(subFrom).then(function (data) {
                 console.log(data)
                 if (data.status == "success") {
-                    toastr['success'](data.retMessage);
+                    toastr['success']('删除员工成功');
                 } else {
                     toastr['error'](data.retMessage);
                 }
@@ -794,7 +794,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                         Workgroup_service.addGroupPosition(subFrom).then(function (data) {
                             console.log(data)
                             if (data.status == "success") {
-                                toastr['success'](data.retMessage);
+                                toastr['success']('添加岗位成功');
                             } else {
                                 toastr['error'](data.retMessage);
                             }
@@ -828,7 +828,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
             Workgroup_service.deleteGroupPosition(subFrom).then(function (data) {
                 console.log(data)
                 if (data.status == "success") {
-                    toastr['success'](data.retMessage);
+                    toastr['success']('删除员工成功');
                 } else {
                     toastr['error'](data.retMessage);
                 }
