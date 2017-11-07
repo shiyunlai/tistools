@@ -81,19 +81,20 @@
 	<!-- extend for more trade opertor command -->
 	
 	<!-- ========================================================
-	| txmode模块装配：操作行为处理器 ( IOperatorBhvHandler )
+	| txmode模块装配：操作行为处理器 ( IOperatorBhvHandler ) 
+	| 交易操作请求的具体处理者
 	============================================================= -->
-	<bean id="twsOpenTxHandler" class="org.tools.service.txmodel.handler.TWSOpenTxHandler">
+	<bean id="twsOpenTxHandler" class="org.tools.service.txmodel.handler.tws.TWSOpenTxHandler">
 		<property name="name" value="打开柜面交易" />
 	</bean>
-	<bean id="tssOpenTxHandler" class="org.tools.service.txmodel.handler.TSSOpenTxHandler">
+	<bean id="tssOpenTxHandler" class="org.tools.service.txmodel.handler.tss.TSSOpenTxHandler">
 		<property name="name" value="打开超柜交易" />
 	</bean>
 	
-	<bean id="twsCloseTxHandler" class="org.tools.service.txmodel.handler.TWSCloseTxHandler">
+	<bean id="twsCloseTxHandler" class="org.tools.service.txmodel.handler.tws.TWSCloseTxHandler">
 		<property name="name" value="关闭柜面交易" />
 	</bean>
-	<bean id="tssCloseTxHandler" class="org.tools.service.txmodel.handler.TSSCloseTxHandler">
+	<bean id="tssCloseTxHandler" class="org.tools.service.txmodel.handler.tss.TSSCloseTxHandler">
 		<property name="name" value="关闭超柜交易" />
 	</bean>
 	
