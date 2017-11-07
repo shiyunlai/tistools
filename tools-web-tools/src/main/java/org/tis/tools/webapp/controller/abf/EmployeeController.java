@@ -92,8 +92,8 @@ public class EmployeeController extends BaseController {
             OmEmployee emp = employeeRService.createEmployee(oe);
             return getReturnMap(emp);
         } else {
-            employeeRService.updateEmployee(oe);
-            return getReturnMap("修改成功!");
+            OmEmployee emp = employeeRService.updateEmployee(oe);
+            return getReturnMap(emp);
         }
 
     }
@@ -189,12 +189,11 @@ public class EmployeeController extends BaseController {
      * @return
      */
     @OperateLog(
-            operateType = "update",  // 操作类型
+            operateType = JNLConstants.OPEARTE_TYPE_ADD,  // 操作类型
             operateDesc = "指派员工机构", // 操作描述
-            retType = ReturnType.Object, // 返回类型，对象或数组
-            id = "empCode", // 操作对象标识
-            name = "empCode", // 操作对象名
-            keys = {"empCode", "orgCode", "isMain"}) // 操作对象的关键值的键值名
+            retType = ReturnType.Object, // 返回类型
+            id = "guidEmp", // 操作对象标识
+            keys = "guidOrg") // 操作对象的关键值的键值名
     @ResponseBody
     @RequestMapping(value = "/assignOrg",produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> assignOrg( @RequestBody String content) {
@@ -224,17 +223,16 @@ public class EmployeeController extends BaseController {
             operateType = "update",  // 操作类型
             operateDesc = "取消指派员工机构", // 操作描述
             retType = ReturnType.Object, // 返回类型，对象或数组
-            id = "empCode", // 操作对象标识
-            name = "empCode", // 操作对象名
-            keys = {"empCode", "orgCode", "isMain"}) // 操作对象的关键值的键值名
+            id = "guidEmp", // 操作对象标识
+            keys = "guidOrg") // 操作对象的关键值的键值名
     @ResponseBody
     @RequestMapping(value = "/disassignOrg",produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> disassignOrg( @RequestBody String content) {
         JSONObject jsonObj = JSONObject.parseObject(content);
         String empGuid = jsonObj.getString("empGuid");
         String orgGuid = jsonObj.getString("orgGuid");
-        employeeRService.deleteEmpOrg(orgGuid, empGuid);
-        return getReturnMap("取消指派成功!");
+
+        return getReturnMap(employeeRService.deleteEmpOrg(orgGuid, empGuid));
     }
 
     /**

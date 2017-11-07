@@ -3,7 +3,6 @@
  */
 package org.tis.tools.rservice.om.capable;
 
-import jdk.nashorn.internal.objects.annotations.Where;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
@@ -18,7 +17,6 @@ import org.tis.tools.model.def.ACConstants;
 import org.tis.tools.model.def.CommonConstants;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.def.OMConstants;
-import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcFunc;
 import org.tis.tools.model.po.ac.AcPartyRole;
 import org.tis.tools.model.po.ac.AcRole;
@@ -827,7 +825,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		}
 		org.setOrgStatus(OMConstants.ORG_STATUS_RUNNING);// 更改状态
 		omOrgService.update(org);
-		return null;
+		return org;
 	}
 
 	/* (non-Javadoc)

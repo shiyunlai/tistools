@@ -419,7 +419,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 	}
 
 	@Override
-	public void updateEmployee(OmEmployee newEmployee) throws ToolsRuntimeException {
+	public OmEmployee updateEmployee(OmEmployee newEmployee) throws ToolsRuntimeException {
 		WhereCondition wc = new WhereCondition();
 		wc.andEquals("EMP_CODE", newEmployee.getEmpCode());
 		List<OmEmployee> empList = omEmployeeService.query(wc);
@@ -436,10 +436,11 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		}
 		try {
 			omEmployeeService.update(newEmployee);
+			return newEmployee;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHEN_UPDATE_ORG_APP,
-					wrap(e.getCause().getMessage()));
+					wrap(e));
 		}
 
 	}
@@ -606,7 +607,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 	 * 删除
 	 */
 	@Override
-	public void deleteEmpOrg(String orgGuid, String empGuid) {
+	public OmEmpOrg deleteEmpOrg(String orgGuid, String empGuid) {
 		//校验入参
 		if(StringUtil.isEmpty(orgGuid)){
 			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
@@ -627,6 +628,10 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		wc.andEquals("GUID_ORG", orgGuid);
 		wc.andEquals("GUID_EMP", empGuid);
 		omEmpOrgService.deleteByCondition(wc);
+		OmEmpOrg empOrg = new OmEmpOrg();
+		empOrg.setGuidEmp(empGuid);
+		empOrg.setGuidOrg(orgGuid);
+		return empOrg;
 	}
 	
 
