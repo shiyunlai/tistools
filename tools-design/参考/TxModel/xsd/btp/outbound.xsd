@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.primeton.com/btp/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/btp/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:simpleType name="OutboundTimeoutAction">
+		<xs:annotation>
+			<xs:documentation>超时后行为</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="IGNORE">
+				<xs:annotation>
+					<xs:documentation>忽略</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="THROWS">
+				<xs:annotation>
+					<xs:documentation>抛出异常</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CANCEL_THROWS">
+				<xs:annotation>
+					<xs:documentation>冲正并抛出异常</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OTHER">
+				<xs:annotation>
+					<xs:documentation>其它</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="outbound">
+		<xs:annotation>
+			<xs:documentation>主机服务</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="name" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>主机服务名称</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="description" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>主机服务描述</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="timeout" type="xs:int" default="0" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>超时时间.单位:秒, 小于等于0 表示无超时</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="timeout-action" type="OutboundTimeoutAction">
+					<xs:annotation>
+						<xs:documentation>超时后的行为</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="host-trans-code" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>对应的主机交易码</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="host-cancel-service-id" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>冲正服务id，对应一个新的主机服务</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="endpoint-id" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>所属的通道id</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="req-message-id" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>发往主机的请求报文</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="resp-message-id" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>由主机接收回来的（响应）报文</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="ext-property" minOccurs="0"/>
+				<xs:element name="ext-class" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>outbound的扩展实现类,需要实现接口com.primeton.components.api.container.IService</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="is-one-way" type="xs:boolean">
+					<xs:annotation>
+						<xs:documentation>主机服务是否单向,如果单向，则要回写correlationID</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+			<xs:attribute name="id" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>主机服务id</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by guwei (EMBRACE) -->
+<xs:schema xmlns="http://www.primeton.com/ibs/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/ibs/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:element name="voucher-style">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="voucher-code" type="xs:string"/>
+				<xs:element name="voucher-name" type="xs:string"/>
+				<xs:element name="voucher-image" type="xs:string"/>
+				<xs:element name="left-margin" type="xs:int" default="0"/>
+				<xs:element name="right-margin" type="xs:int" default="0"/>
+				<xs:element name="top-margin" type="xs:int" default="0"/>
+				<xs:element name="bottom-margin" type="xs:int" default="0"/>
+				<xs:element name="middle-width" type="xs:int" default="0"/>
+				<xs:element name="middle-lines" type="xs:int" default="0"/>
+				<xs:element name="total-lines" type="xs:int" default="0"/>
+				<xs:element name="line-space" type="xs:int" default="0"/>
+				<xs:element name="start-line" type="xs:int" default="0"/>
+				<xs:element ref="ext-property"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by guwei (EMBRACE) -->
+<xs:schema xmlns="http://www.primeton.com/ibs/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/ibs/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:element name="message">
+		<xs:annotation>
+			<xs:documentation>报文定义</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="name" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>显示名称</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="description" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>报文描述</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="encoding" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>报文字符集</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="message-type" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>报文格式类型 1:xml 2:定长 3：fml 4：8583等</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="message-content"/>
+				<xs:element ref="ext-property"/>
+			</xs:all>
+			<xs:attribute name="id" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>报文编码</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="message-content">
+		<xs:annotation>
+			<xs:documentation>报文内容</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="content-data" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>内容数据配置</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="sequence" type="xs:int">
+								<xs:annotation>
+									<xs:documentation>序号</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="item-type" type="xs:int" default="2">
+								<xs:annotation>
+									<xs:documentation>数据类型 1:常量 2:变量 3：子报文 4：循环控制开始 5:循环控制结束</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="item-value" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>数据值</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="item-length" type="xs:int">
+								<xs:annotation>
+									<xs:documentation>数据长度</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="align-type">
+								<xs:simpleType>
+									<xs:annotation>
+										<xs:documentation>对齐方式 1:左对齐 2:右对齐 3:居中靠左 4：居中靠右</xs:documentation>
+									</xs:annotation>
+									<xs:restriction base="xs:int">
+										<xs:enumeration value="1"/>
+										<xs:enumeration value="2"/>
+										<xs:enumeration value="3"/>
+										<xs:enumeration value="4"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="fill-character" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>填充符</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="process-type" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>数据处理方式 1:压缩 2:加密 3:日期格式转换</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="process-parameter" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>数据处理参数，逗号分隔</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="data-target" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>对方数据</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="default-value" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>默认值</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="description" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>报文项描述</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="ext-property"/>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

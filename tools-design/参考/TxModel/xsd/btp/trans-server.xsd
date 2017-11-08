@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.primeton.com/btp/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/btp/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="container.xsd"/>
+	<xs:element name="trans-server">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="container">
+					<xs:attribute name="id">
+						<xs:annotation>
+							<xs:documentation>交易服务器ID</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

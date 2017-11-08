@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.primeton.com/btp/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://www.primeton.com/btp/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="common.xsd" />
+	<xs:complexType name="FixedlengthType">
+		<xs:annotation>
+			<xs:documentation>定长字符消息类型</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="BaseMessageType">
+				<xs:choice maxOccurs="unbounded">
+					<xs:element name="constant" type="ConstantType" maxOccurs="unbounded" />
+					<xs:element name="variable" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="VariableType">
+									<xs:attribute name="align" use="required">
+										<xs:annotation>
+											<xs:documentation>1-左对齐 1-居中靠左 2-居中靠右 4-右对齐</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:int">
+												<xs:enumeration value="1" />
+												<xs:enumeration value="2" />
+												<xs:enumeration value="3" />
+												<xs:enumeration value="4" />
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="is-repeated" type="xs:boolean" use="required" />
+									<xs:attribute name="repeated-times" type="xs:string">
+										<xs:annotation>
+											<xs:documentation>
+												重复次数共四种表示：[具体数字]-以确定数字表示，[fieldName]-以本域前面出现的其他字段值表示，2L-以本域前的两个byte值表示，3L-以本域前的三个byte值表示
+											</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="pad-char" type="xs:string" use="optional" />
+									<xs:attribute name="length" type="xs:int" use="required" />
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="message" type="MessageType" maxOccurs="unbounded" />
+				</xs:choice>
+				<xs:attribute name="instance-class" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>生成静态SDO对应的类</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DelimiterType">
+		<xs:annotation>
+			<xs:documentation>分隔符消息类型</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="BaseMessageType">
+				<xs:choice maxOccurs="unbounded">
+					<xs:element name="constant" type="ConstantType" maxOccurs="unbounded" />
+					<xs:element name="variable" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="VariableType">
+									<xs:attribute name="align" use="optional">
+										<xs:annotation>
+											<xs:documentation>1-左对齐 1-居中靠左 2-居中靠右 4-右对齐</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="1" />
+												<xs:enumeration value="2" />
+												<xs:enumeration value="3" />
+												<xs:enumeration value="4" />
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="length" type="xs:int" use="optional" />
+									<xs:attribute name="pad-char" type="xs:string" use="optional" />
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="message" type="MessageType" maxOccurs="unbounded" />
+				</xs:choice>
+				<xs:attribute name="delimiter" type="xs:string" use="required" />
+				<xs:attribute name="instance-class" type="xs:string" use="optional"></xs:attribute>
+				<xs:attribute name="appear-type" use="optional">
+					<xs:annotation>
+						<xs:documentation>1-左侧出现 2-右侧出现 3-两侧出现 4-两侧都不出现；如果值为空，则默认为两侧都不出现</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:int">
+							<xs:enumeration value="1"></xs:enumeration>
+							<xs:enumeration value="2"></xs:enumeration>
+							<xs:enumeration value="3"></xs:enumeration>
+							<xs:enumeration value="4"></xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="FMLType">
+		<xs:annotation>
+			<xs:documentation>FML消息类型</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="BaseMessageType">
+				<xs:choice maxOccurs="unbounded">
+					<xs:element name="costant" type="FMLConstantType" maxOccurs="unbounded" />
+					<xs:element name="variable" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="VariableType">
+									<xs:attribute name="mapping-field" type="xs:NMTOKEN" use="required" />
+									<xs:attribute name="is-repeated" type="xs:boolean" use="optional" />
+									<xs:attribute name="repeated-times" type="xs:string">
+										<xs:annotation>
+											<xs:documentation>
+												重复次数共两种表示：[具体数字]-以确定数字表示，[fieldName]-以本域前面出现的其他字段值表示
+											</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="message" type="MessageType" maxOccurs="unbounded" />
+				</xs:choice>
+				<xs:attribute name="tuxedo-mapping-file" type="xs:string"></xs:attribute>
+				<xs:attribute name="instance-class" type="xs:string" use="optional"></xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="CustomType">
+		<xs:annotation>
+			<xs:documentation>客户化消息类型</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="BaseMessageType" />
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="VariableType">
+		<xs:annotation>
+			<xs:documentation>变量</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="ext-property" minOccurs="0" />
+			<xs:element name="ext-handler" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="handler-seqno" type="xs:int" use="required" />
+					<xs:attribute name="handler-name" type="xs:string" use="optional" />
+					<xs:attribute name="handler-impl" type="xs:string" use="required">
+						<xs:annotation>
+							<xs:documentation>实现com.primeton.components.api.message.IExtHandler接口</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="description" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+		<xs:attribute name="seqno" type="xs:int" use="required" />
+		<xs:attribute name="name" type="xs:NMTOKEN" use="required">
+			<xs:annotation>
+				<xs:documentation>名称</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="display-name" type="xs:string" use="optional" />
+		<xs:attribute name="dict-id" type="xs:string" use="required" />
+		<xs:attribute name="is-required" type="xs:boolean" use="required"></xs:attribute>
+		<xs:attribute name="mock-value" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>报文项模拟值</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="MessageType">
+		<xs:annotation>
+			<xs:documentation>消息</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="description" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+		<xs:attribute name="seqno" type="xs:int" use="required" />
+		<xs:attribute name="name" type="xs:NMTOKEN" use="required" />
+		<xs:attribute name="display-name" type="xs:string" use="optional" />
+		<xs:attribute name="ref" type="xs:string" use="required" />
+		<xs:attribute name="ref-path" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>引用的子报文的路径</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="is-repeated" type="xs:boolean" use="required" />
+		<xs:attribute name="repeated-times" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					重复次数共四种表示：[具体数字]-以确定数字表示，[fieldName]-以本域前面出现的其他字段值表示，2L-以本域前的两个byte值表示，3L-以本域前的三个byte值表示
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="is-required" type="xs:boolean" use="required"></xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="BaseMessageType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>基本消息类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence minOccurs="0" maxOccurs="1">
+			<xs:element name="description" type="xs:string" minOccurs="0" />
+			<xs:element ref="ext-property" minOccurs="0" />
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:NMTOKEN" use="required" />
+		<xs:attribute name="name" type="xs:NMTOKEN" use="required" />
+		<xs:attribute name="packer-class" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					扩展处理类，处理整个报文的扩展，需要实现com.primeton.components.api.message.IMessagePacker接口
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="message-encoding" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>报文编码类型</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="namespace" type="xs:string" use="required" />
+		<xs:attribute name="correlation-fieldname" type="xs:string" use="optional" />
+	</xs:complexType>
+	<xs:element name="fixed-length" type="FixedlengthType" />
+	<xs:element name="delimiter" type="DelimiterType" />
+	<xs:element name="fml" type="FMLType" />
+	<xs:element name="custom" type="CustomType" />
+	<xs:complexType name="ISO8583Type">
+		<xs:complexContent>
+			<xs:extension base="BaseMessageType">
+				<xs:sequence>
+					<xs:element name="variable" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>ISO8583域定义</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="VariableType">
+									<xs:attribute name="align" use="optional">
+										<xs:annotation>
+											<xs:documentation>1-左对齐 1-居中靠左 2-居中靠右 4-右对齐</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:int">
+												<xs:enumeration value="1" />
+												<xs:enumeration value="2" />
+												<xs:enumeration value="3" />
+												<xs:enumeration value="4" />
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="field-encoding" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation>
+												域类型：1-ASCII 2-BCD 3-EBCDIC 4-BINARY，域值的编码
+											</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="varing-encoding" type="xs:string" use="optional">
+										<xs:annotation>
+											<xs:documentation>
+												域长度类型：1-ASCII 2-BCD 3-EBCDIC 4-BINARY，表示变长域长度值的编码
+											</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="varing-type" use="required">
+										<xs:annotation>
+											<xs:documentation>1-定长 2-两位变长 3-三位变长</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:int">
+												<xs:enumeration value="1" />
+												<xs:enumeration value="2" />
+												<xs:enumeration value="3" />
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="length" type="xs:int" use="optional" />
+									<xs:attribute name="pad-char" type="xs:string" use="optional" />
+									<xs:attribute name="is-disable" type="xs:boolean" use="optional" />
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="message-type" use="required">
+					<xs:annotation>
+						<xs:documentation>报文类型，也就是第0域的值。</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:length value="4" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="instance-class" type="xs:string" use="optional"></xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="iso8583" type="ISO8583Type" />
+	<xs:complexType name="FMLConstantType">
+		<xs:complexContent>
+			<xs:extension base="ConstantType">
+				<xs:attribute name="mapping-field" type="xs:NMTOKEN" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ConstantType">
+		<xs:annotation>
+			<xs:documentation>常量</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="description" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+		<xs:attribute name="seqno" type="xs:int" use="required" />
+		<xs:attribute name="name" type="xs:NMTOKEN" use="required" />
+		<xs:attribute name="display-name" type="xs:string" use="optional" />
+		<xs:attribute name="value" type="xs:string" use="required" />
+		<xs:attribute name="dict-id" type="xs:string" use="required" />
+		<xs:attribute name="is-required" type="xs:boolean" use="required"></xs:attribute>
+	</xs:complexType>
+</xs:schema>

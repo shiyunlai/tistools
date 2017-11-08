@@ -243,6 +243,10 @@
 			<artifactId>spring-test</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.tis</groupId>
+			<artifactId>tools-facade-txmodel</artifactId>
+		</dependency>
 	</dependencies>
 
 </project>

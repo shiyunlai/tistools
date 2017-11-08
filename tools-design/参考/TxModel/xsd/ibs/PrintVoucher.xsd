@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by guwei (EMBRACE) -->
+<xs:schema xmlns="http://www.primeton.com/ibs/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/ibs/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:element name="print-voucher">
+		<xs:annotation>
+			<xs:documentation>Comment describing your root element</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="format-info" type="print-format"/>
+				<xs:element name="print-parameter-list">
+					<xs:complexType>
+						<xs:sequence minOccurs="0" maxOccurs="unbounded">
+							<xs:element name="print-parameter" type="print-parameter"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="ext-property"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="print-format">
+		<xs:annotation>
+			<xs:documentation>打印格式</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="format-code" type="xs:string"/>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="print-type" type="xs:string"/>
+			<xs:element name="printer-type" type="xs:string"/>
+			<xs:element name="from-feed" type="xs:string"/>
+			<xs:element name="to-feed" type="xs:string"/>
+			<xs:element name="prompt-message" type="xs:string" minOccurs="0"/>
+			<xs:element name="print-data-ref" type="xs:string"/>
+			<xs:element name="print-content-ref" type="xs:string"/>
+			<xs:element name="voucher-code-ref" type="xs:string"/>
+			<xs:element ref="ext-property"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="print-parameter">
+		<xs:annotation>
+			<xs:documentation>打印参数</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="seqno" type="xs:int"/>
+			<xs:element name="item-type" type="xs:string"/>
+			<xs:element name="item-value" type="xs:string"/>
+			<xs:element name="x-location" type="xs:int"/>
+			<xs:element name="y-location" type="xs:int"/>
+			<xs:element name="length" type="xs:int"/>
+			<xs:element name="align-type">
+				<xs:simpleType>
+					<xs:annotation>
+						<xs:documentation>1:左对齐 2:右对齐 3:中间对齐</xs:documentation>
+					</xs:annotation>
+					<xs:restriction base="xs:int">
+						<xs:enumeration value="1"/>
+						<xs:enumeration value="2"/>
+						<xs:enumeration value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="format-type" type="xs:string"/>
+			<xs:element name="format-parameter" type="xs:string"/>
+			<xs:element ref="ext-property"/>
+		</xs:all>
+	</xs:complexType>
+</xs:schema>

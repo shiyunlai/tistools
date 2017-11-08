@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.primeton.com/ibs/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/ibs/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:include schemaLocation="BusinessDict.xsd"/>
+<xs:include schemaLocation="CompositeTransaction.xsd"/>
+<xs:include schemaLocation="Desktop.xsd"/>
+<xs:include schemaLocation="DeviceConnectors.xsd"/>
+<xs:include schemaLocation="DeviceDatasource.xsd"/>
+<xs:include schemaLocation="DeviceDriver.xsd"/>
+<xs:include schemaLocation="EntityDict.xsd"/>
+<xs:include schemaLocation="Message.xsd"/>
+<xs:include schemaLocation="Security.xsd"/>
+<xs:include schemaLocation="Transaction.xsd"/>
+<xs:include schemaLocation="PrintVoucher.xsd"/>
+<xs:include schemaLocation="VoucherStyle.xsd"/>
+</xs:schema>

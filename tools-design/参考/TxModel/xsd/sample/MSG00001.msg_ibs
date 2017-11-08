@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration author="wuyuhou" category="message" create-date="2011-10-21 20:53:46" version="1.0.0" xsi:schemaLocation="http://www.primeton.com/ibs/cfg common.xsd" xmlns="http://www.primeton.com/ibs/cfg" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<message id="MSG00001">
+		<name>MSG00001</name>
+		<description>ÑùÀý</description>
+		<encoding>UTF-8</encoding>
+		<message-type></message-type>
+		<message-content>
+			<!--
+			<content-data>
+				<sequence>1</sequence>
+				<item-type></item-type>
+				<item-value></item-value>
+				<item-length></item-length>
+				<align-type></align-type>
+				<fill-character></fill-character>
+				<process-type></process-type>
+				<process-parameter></process-parameter>
+				<data-target></data-target>
+				<default-value></default-value>
+				<ext-property>
+					<entry value="" key=""/>
+				</ext-property>
+			</content-data>
+			-->
+		</message-content>
+		<ext-property>
+			<entry value="" key=""/>
+		</ext-property>	
+	</message>
+</configuration>

@@ -91,7 +91,7 @@ public class SysDictServiceExt {
 		
 		String actualValue = getActualValue(dictKey, itemValue);
 		if (StringUtils.isEmpty(actualValue)) {
-			logger.warn(StringUtil.format(
+			logger.warn(StringUtil.format2(
 					"找不到业务字典项( 字典KEY {0} 字典项 {0} ),返回默认值 {0} .", 
 					dictKey, itemValue, defaultValue));
 			return defaultValue;

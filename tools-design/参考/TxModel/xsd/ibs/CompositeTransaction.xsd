@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.primeton.com/ibs/cfg"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.primeton.com/ibs/cfg"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+	
+	<xs:include schemaLocation="common.xsd" />
+	
+	<!-- 
+	<xs:complexType name=XXX>
+		<xs:all>			
+			<xs:element name="name" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>名称</xs:documentation>
+				</xs:annotation>
+			</xs:element>				
+		</xs:all>
+	</xs:complexType>	
+    -->	
+</xs:schema>

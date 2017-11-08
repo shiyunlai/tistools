@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration author="wuyuhou" category="transaction" create-date="2011-10-21 20:53:46" version="1.0.0" xsi:schemaLocation="http://www.primeton.com/ibs/cfg common.xsd" xmlns="http://www.primeton.com/ibs/cfg" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<transaction id="TX00001">
+		<name>TX00001</name>
+		<description>ÑùÀý</description>
+		<access-mode>1</access-mode>
+		<timeout>-1</timeout>
+		<transaction-pattern>2</transaction-pattern>
+		<transaction-pattern-parameter>T0003</transaction-pattern-parameter>
+		<business-type></business-type>
+		<business-parameter></business-parameter>
+		<security-type></security-type>
+		<security-parameter></security-parameter>
+		<check-flag>false</check-flag>
+		<transaction-level></transaction-level>
+		<transaction-view></transaction-view>
+		<dual-view></dual-view>
+		<makeup-view></makeup-view>
+		<slice-view></slice-view>
+		<transaction-in-data-ref></transaction-in-data-ref>
+		<transaction-out-data-ref></transaction-out-data-ref>
+		<transaction-output-ref></transaction-output-ref>
+		<business-control>
+			<!--
+			<control-data>
+				<transaction-field></transaction-field>
+				<encrypt-flag>false</encrypt-flag>
+				<check-flag>false</check-flag>
+				<sign-flag>false</sign-flag>
+				<journal-field></journal-field>
+				<statistics-field></statistics-field>
+				<ext-property>
+					<entry value="" key=""/>
+				</ext-property>	
+			</control-data>
+			-->
+		</business-control>
+		<ext-property>
+			<entry value="" key=""/>
+		</ext-property>	
+	</transaction>
+</configuration>

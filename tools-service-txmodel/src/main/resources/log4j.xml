@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %c -%-4r [%t] %-5p %x - %m%n"/>
+		</layout>
+	</appender>
+
+	<appender name="file" class="org.apache.log4j.FileAppender">
+		<param name="File" value="logs/rservice.log" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %c -%-4r [%t] %-5p %x - %m%n" />
+		</layout>
+	</appender>
+
+	<!-- ch.qos.logback.core.ConsoleAppender 控制台输出 -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>[%-5level] %d{HH:mm:ss.SSS} [%thread] %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="org.tis.tools">
+		<level value="INFO" />
+		<appender-ref ref="file" />
+	</logger>
+
+	<logger name="org.apache">
+		<level value="WARN" />
+	</logger>
+
+	<logger name="org.hibernate">
+		<level value="WARN" />
+	</logger>
+
+	<logger name="org.hibernate.SQL">
+		<level value="DEBUG" />
+	</logger>
+
+	<!-- Suppress warnings from Commons Validator -->
+	<logger name="org.apache.commons.validator.ValidatorResources">
+		<level value="ERROR" />
+	</logger>
+
+	<logger name="org.springframework">
+		<level value="WARN" />
+	</logger>
+
+	<root>
+		<appender-ref ref="CONSOLE" />
+		<level value="INFO" />
+	</root>
+
+</log4j:configuration>
