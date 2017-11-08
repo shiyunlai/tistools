@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 功能资源对应
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_FUNC_RESOURCE 功能资源对应
  *
@@ -37,30 +37,30 @@ public class AcFuncResource implements Serializable {
 	/* AC_FUNC_RESOURCE table's columns definition */
 	/** GUID_FUNC ：对应功能GUID<br/><br/> */
 	public static final String COLUMN_GUID_FUNC = "guid_func" ; 
-	/** RES_TYPE ：资源类型<br/><br/>见业务字典： DICT_AC_FUNCRESTYPE 如：JSP、页面流、逻辑流等 */
-	public static final String COLUMN_RES_TYPE = "res_type" ; 
-	/** RES_PATH ：资源路径<br/><br/> */
-	public static final String COLUMN_RES_PATH = "res_path" ; 
-	/** COMPACK_NAME ：构件包名<br/><br/> */
-	public static final String COLUMN_COMPACK_NAME = "compack_name" ; 
-	/** RES_SHOW_NAME ：资源显示名称<br/><br/> */
-	public static final String COLUMN_RES_SHOW_NAME = "res_show_name" ; 
+	/** ATTR_TYPE ：属性类型<br/><br/> */
+	public static final String COLUMN_ATTR_TYPE = "attr_type" ; 
+	/** ATTR_KEY ：属性名<br/><br/> */
+	public static final String COLUMN_ATTR_KEY = "attr_key" ; 
+	/** ATTR_VALUE ：属性值<br/><br/> */
+	public static final String COLUMN_ATTR_VALUE = "attr_value" ; 
+	/** MEMO ：备注<br/><br/> */
+	public static final String COLUMN_MEMO = "memo" ; 
 	
 	
 	/** 字段类型：varchar<br/>字段名：对应功能GUID<br/>描述： */
 	private String guidFunc ;
 	
-	/** 字段类型：varchar<br/>字段名：资源类型<br/>描述：见业务字典： DICT_AC_FUNCRESTYPE 如：JSP、页面流、逻辑流等 */
-	private String resType ;
+	/** 字段类型：varchar<br/>字段名：属性类型<br/>描述： */
+	private String attrType ;
 	
-	/** 字段类型：varchar<br/>字段名：资源路径<br/>描述： */
-	private String resPath ;
+	/** 字段类型：varchar<br/>字段名：属性名<br/>描述： */
+	private String attrKey ;
 	
-	/** 字段类型：varchar<br/>字段名：构件包名<br/>描述： */
-	private String compackName ;
+	/** 字段类型：varchar<br/>字段名：属性值<br/>描述： */
+	private String attrValue ;
 	
-	/** 字段类型：varchar<br/>字段名：资源显示名称<br/>描述： */
-	private String resShowName ;
+	/** 字段类型：varchar<br/>字段名：备注<br/>描述： */
+	private String memo ;
 
 	/**
 	* Default Constructor
@@ -89,79 +89,79 @@ public class AcFuncResource implements Serializable {
     }
 	
 	/**
-	 * Set the 资源类型.
+	 * Set the 属性类型.
 	 * 
-	 * @param resType
-	 *            资源类型
+	 * @param attrType
+	 *            属性类型
 	 */
-	public void setResType(String resType) {
- 		this.resType = resType == null ? null : resType.trim() ;
+	public void setAttrType(String attrType) {
+ 		this.attrType = attrType == null ? null : attrType.trim() ;
     }
     
     /**
-	 * Get the 资源类型.
+	 * Get the 属性类型.
 	 * 
-	 * @return 资源类型
+	 * @return 属性类型
 	 */
-	public String getResType(){
-		return this.resType ;
+	public String getAttrType(){
+		return this.attrType ;
     }
 	
 	/**
-	 * Set the 资源路径.
+	 * Set the 属性名.
 	 * 
-	 * @param resPath
-	 *            资源路径
+	 * @param attrKey
+	 *            属性名
 	 */
-	public void setResPath(String resPath) {
- 		this.resPath = resPath == null ? null : resPath.trim() ;
+	public void setAttrKey(String attrKey) {
+ 		this.attrKey = attrKey == null ? null : attrKey.trim() ;
     }
     
     /**
-	 * Get the 资源路径.
+	 * Get the 属性名.
 	 * 
-	 * @return 资源路径
+	 * @return 属性名
 	 */
-	public String getResPath(){
-		return this.resPath ;
+	public String getAttrKey(){
+		return this.attrKey ;
     }
 	
 	/**
-	 * Set the 构件包名.
+	 * Set the 属性值.
 	 * 
-	 * @param compackName
-	 *            构件包名
+	 * @param attrValue
+	 *            属性值
 	 */
-	public void setCompackName(String compackName) {
- 		this.compackName = compackName == null ? null : compackName.trim() ;
+	public void setAttrValue(String attrValue) {
+ 		this.attrValue = attrValue == null ? null : attrValue.trim() ;
     }
     
     /**
-	 * Get the 构件包名.
+	 * Get the 属性值.
 	 * 
-	 * @return 构件包名
+	 * @return 属性值
 	 */
-	public String getCompackName(){
-		return this.compackName ;
+	public String getAttrValue(){
+		return this.attrValue ;
     }
 	
 	/**
-	 * Set the 资源显示名称.
+	 * Set the 备注.
 	 * 
-	 * @param resShowName
-	 *            资源显示名称
+	 * @param memo
+	 *            备注
 	 */
-	public void setResShowName(String resShowName) {
- 		this.resShowName = resShowName == null ? null : resShowName.trim() ;
+	public void setMemo(String memo) {
+ 		this.memo = memo == null ? null : memo.trim() ;
     }
     
     /**
-	 * Get the 资源显示名称.
+	 * Get the 备注.
 	 * 
-	 * @return 资源显示名称
+	 * @return 备注
 	 */
-	public String getResShowName(){
-		return this.resShowName ;
+	public String getMemo(){
+		return this.memo ;
     }
 	
 	public String toString(){

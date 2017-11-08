@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.tis.tools.base.WhereCondition;
-import org.tis.tools.common.utils.BasicUtil;
+import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.common.utils.StringUtil;
 import org.tis.tools.core.exception.ExceptionCodes;
 import org.tis.tools.model.def.ACConstants;
@@ -22,6 +22,9 @@ import org.tis.tools.service.ac.exception.ACExceptionCodes;
 
 import java.math.BigDecimal;
 import java.util.*;
+
+import static org.tis.tools.common.utils.BasicUtil.surroundBracketsWithLFStr;
+import static org.tis.tools.common.utils.BasicUtil.wrap;
 
 /**
  * Created by zhaoch on 2017/7/16.
@@ -85,7 +88,7 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             e.printStackTrace();
             throw new MenuManagementException(
                     ACExceptionCodes.FAILURE_WHRN_QUERY_AC_APP,
-                    BasicUtil.wrap(e.getCause().getMessage()));
+                    wrap(e));
         }
         return acAppList;
     }
@@ -101,19 +104,19 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
         try {
             // 校验传入参数
             if(StringUtil.isEmpty(GUID_APP)) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID_APP"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_APP"));
             }
             //查询应用下父节点字段为空的菜单，即为根菜单
             return acMenuService.query(new WhereCondition()
                     .andEquals("GUID_APP", GUID_APP)
                     .andIsNull("GUID_PARENTS"));
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
                     ACExceptionCodes.FAILURE_WHEN_QUERY_ROOT_MENU,
-                    BasicUtil.wrap(e.getCause().getMessage()));
+                    wrap(e));
         }
 
     }
@@ -129,16 +132,16 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
         try {
             // 校验传入参数
             if(StringUtil.isEmpty(GUID_MENU)) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID_MENU"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_MENU"));
             }
             return acMenuService.query(new WhereCondition().andEquals("GUID_PARENTS", GUID_MENU));
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
                     ACExceptionCodes.FAILURE_WHEN_QUERY_CHILD_MENU,
-                    BasicUtil.wrap(e.getCause().getMessage()));
+                    wrap(e));
         }
     }
 
@@ -152,20 +155,20 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
     public AcMenu createRootMenu(AcMenu acMenu) throws MenuManagementException {
         try {
             if(null == acMenu) {
-                throw new MenuManagementException(ACExceptionCodes.OBJECT_IS_NULL, BasicUtil.wrap("AcMenu"));
+                throw new MenuManagementException(ACExceptionCodes.OBJECT_IS_NULL, wrap("AcMenu"));
             }
             // 校验传入参数 菜单名称 菜单显示名称 菜单代码  是否叶子菜单  应用GUID
             if(StringUtil.isEmpty(acMenu.getGuidApp())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID_APP"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_APP"));
             }
             if(StringUtil.isEmpty(acMenu.getMenuName())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("MENU_NAME"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("MENU_NAME"));
             }
             if(StringUtil.isEmpty(acMenu.getMenuLabel())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("MENU_LABLE"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("MENU_LABLE"));
             }
             if(StringUtil.isEmpty(acMenu.getMenuCode())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("MENU_CODE"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("MENU_CODE"));
             }
             List<AcMenu> acMenus = queryRootMenu(acMenu.getGuidApp());
             if(acMenus.size() > 0) {
@@ -180,13 +183,13 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             acMenu.setDisplayOrder(new BigDecimal("0"));
             acMenuService.insert(acMenu);
             return acMenu;
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
                     ExceptionCodes.FAILURE_WHEN_INSERT,
-                    BasicUtil.wrap("AC_MENU", e.getCause().getMessage()));
+                    wrap("AC_MENU", e));
         }
     }
 
@@ -200,20 +203,20 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
     public AcOperatorMenu createRootOperatorMenu(AcOperatorMenu acOperatorMenu) throws MenuManagementException {
         try {
             if(null == acOperatorMenu) {
-                throw new MenuManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("AcOperatorMenu"));
+                throw new MenuManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, wrap("AcOperatorMenu"));
             }
             // 校验传入参数 菜单名称 菜单显示名称 菜单代码  是否叶子菜单  应用GUID
             if(StringUtil.isEmpty(acOperatorMenu.getGuidApp())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID_APP"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_APP"));
             }
             if(StringUtil.isEmpty(acOperatorMenu.getMenuName())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("MENU_NAME"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("MENU_NAME"));
             }
             if(StringUtil.isEmpty(acOperatorMenu.getMenuLabel())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("MENU_LABLE"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("MENU_LABLE"));
             }
             if(StringUtil.isEmpty(acOperatorMenu.getGuidOperator())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("ISLEAF"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("ISLEAF"));
             }
             // 判断是否存在根菜单
             if(acOperatorMenuService.count(new WhereCondition()
@@ -231,13 +234,13 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             acOperatorMenu.setDisplayOrder(new BigDecimal("0"));
             acOperatorMenuService.insert(acOperatorMenu);
             return acOperatorMenu;
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
                     ExceptionCodes.FAILURE_WHEN_INSERT,
-                    BasicUtil.wrap("AC_OPERATOR_MENU", e.getCause().getMessage()));
+                    wrap("AC_OPERATOR_MENU", e));
         }
     }
 
@@ -251,37 +254,37 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
     public AcMenu createChildMenu(AcMenu acMenu) throws MenuManagementException {
         try {
             if(null == acMenu) {
-                throw new MenuManagementException(ACExceptionCodes.OBJECT_IS_NULL, BasicUtil.wrap("AcMenu"));
+                throw new MenuManagementException(ACExceptionCodes.OBJECT_IS_NULL, wrap("AcMenu"));
             }
             // 校验传入参数 菜单名称 菜单显示名称 菜单代码  是否叶子菜单  应用GUID 父菜单GUID
             if(StringUtil.isEmpty(acMenu.getGuidApp())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID_APP"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_APP"));
             }
             if(StringUtil.isEmpty(acMenu.getMenuName())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("MENU_NAME"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("MENU_NAME"));
             }
             if(StringUtil.isEmpty(acMenu.getMenuLabel())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("MENU_LABLE"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("MENU_LABLE"));
             }
             if(StringUtil.isEmpty(acMenu.getMenuCode())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("MENU_CODE"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("MENU_CODE"));
             }
             if(StringUtil.isEmpty(acMenu.getIsleaf())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("ISLEAF"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("ISLEAF"));
             }
             if(StringUtil.isEmpty(acMenu.getGuidParents())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID_PARENTS"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_PARENTS"));
             }
             // 如果是叶子菜单，功能GUID不能为空
             if(StringUtils.equals(acMenu.getIsleaf(), CommonConstants.YES)) {
                 if(StringUtil.isEmpty(acMenu.getGuidFunc())) {
-                    throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID_FUNC"));
+                    throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_FUNC"));
                 }
             }
             List<AcMenu> list = acMenuService.query(new WhereCondition().andEquals("GUID", acMenu.getGuidParents()));
             /** 查询是否存在父菜单 */
             if (list.size() != 1) {
-                throw new MenuManagementException(ACExceptionCodes.MENU_NOT_EXIST_BY_GUID, BasicUtil.wrap(acMenu.getGuidParents()));
+                throw new MenuManagementException(ACExceptionCodes.MENU_NOT_EXIST_BY_GUID, wrap(acMenu.getGuidParents()));
             }
             /** 添加菜单GUID和序列*/
             String guid = GUID.menu();
@@ -292,13 +295,13 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             acMenu.setDisplayOrder(new BigDecimal(acMenuService.count(new WhereCondition().andEquals(AcMenu.COLUMN_GUID_PARENTS, acMenu.getGuidParents()))));
             acMenuService.insert(acMenu);
             return acMenu;
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
                     ExceptionCodes.FAILURE_WHEN_INSERT,
-                    BasicUtil.wrap("AC_MENU", e.getCause().getMessage()));
+                    wrap("AC_MENU", e));
         }
     }
 
@@ -312,37 +315,37 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
     public AcOperatorMenu createChildOperatorMenu(AcOperatorMenu acOperatorMenu) throws MenuManagementException {
         try {
             if(null == acOperatorMenu) {
-                throw new MenuManagementException(ACExceptionCodes.OBJECT_IS_NULL, BasicUtil.wrap("AcMenu"));
+                throw new MenuManagementException(ACExceptionCodes.OBJECT_IS_NULL, wrap("AcMenu"));
             }
             // 校验传入参数 菜单名称 菜单显示名  是否叶子菜单  应用GUID 父菜单GUID 操作员GUID
             if(StringUtil.isEmpty(acOperatorMenu.getGuidApp())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID_APP"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_APP"));
             }
             if(StringUtil.isEmpty(acOperatorMenu.getGuidOperator())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID_OPERATOR"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_OPERATOR"));
             }
             if(StringUtil.isEmpty(acOperatorMenu.getMenuName())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("MENU_NAME"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("MENU_NAME"));
             }
             if(StringUtil.isEmpty(acOperatorMenu.getMenuLabel())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("MENU_LABLE"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("MENU_LABLE"));
             }
             if(StringUtil.isEmpty(acOperatorMenu.getIsleaf())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("ISLEAF"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("ISLEAF"));
             }
             if(StringUtil.isEmpty(acOperatorMenu.getGuidParents())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID_PARENTS"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_PARENTS"));
             }
             // 如果是叶子菜单，功能GUID不能围攻
             if(StringUtils.equals(acOperatorMenu.getIsleaf(), CommonConstants.YES)) {
                 if(StringUtil.isEmpty(acOperatorMenu.getGuidFunc())) {
-                    throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID_FUNC"));
+                    throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_FUNC"));
                 }
             }
             List<AcOperatorMenu> list = acOperatorMenuService.query(new WhereCondition().andEquals("GUID", acOperatorMenu.getGuidParents()));
             /** 查询是否存在父菜单 */
             if (list.size() != 1) {
-                throw new MenuManagementException(ACExceptionCodes.MENU_NOT_EXIST_BY_GUID, BasicUtil.wrap(acOperatorMenu.getGuidParents()));
+                throw new MenuManagementException(ACExceptionCodes.MENU_NOT_EXIST_BY_GUID, wrap(acOperatorMenu.getGuidParents()));
             }
             /** 添加菜单GUID和序列*/
             String guid = GUID.operatorMenu();
@@ -354,13 +357,13 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
 
             acOperatorMenuService.insert(acOperatorMenu);
             return  acOperatorMenu;
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
                     ExceptionCodes.FAILURE_WHEN_INSERT,
-                    BasicUtil.wrap("AC_OPERATOR_MENU", e.getCause().getMessage()));
+                    wrap("AC_OPERATOR_MENU", e));
         }
     }
 
@@ -374,31 +377,31 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
     public AcMenu editMenu(AcMenu acMenu) throws MenuManagementException {
         try {
             if(null == acMenu) {
-                throw new MenuManagementException(ACExceptionCodes.OBJECT_IS_NULL, BasicUtil.wrap("acMenu"));
+                throw new MenuManagementException(ACExceptionCodes.OBJECT_IS_NULL, wrap("acMenu"));
             }
             if(StringUtil.isEmpty(acMenu.getGuid())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID"));
             }
             AcMenu menu = acMenuService.loadByGuid(acMenu.getGuid());
             if (menu == null) {
-                throw new MenuManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap(acMenu.getGuid(), "AC_MENU"));
+                throw new MenuManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, wrap(acMenu.getGuid(), "AC_MENU"));
             }
             if(StringUtil.isEmpty(acMenu.getMenuName())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("MENU_NAME"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("MENU_NAME"));
             }
             if(StringUtil.isEmpty(acMenu.getMenuLabel())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("MENU_LABLE"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("MENU_LABLE"));
             }
             if(StringUtil.isEmpty(acMenu.getMenuCode())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("MENU_CODE"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("MENU_CODE"));
             }
             if(StringUtil.isEmpty(acMenu.getIsleaf())) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("ISLEAF"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("ISLEAF"));
             }
             // 如果是叶子菜单，功能GUID不能为空
             if(StringUtils.equals(acMenu.getIsleaf(), CommonConstants.YES)) {
                 if(StringUtil.isEmpty(acMenu.getGuidFunc())) {
-                    throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID_FUNC"));
+                    throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_FUNC"));
                 }
             }
             // 如果为根菜单
@@ -429,17 +432,17 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                         status.setRollbackOnly();
                         e.printStackTrace();
                         throw new MenuManagementException(
-                                ACExceptionCodes.FAILURE_WHEN_UPDATE_AC_MENU, BasicUtil.wrap(e.getCause().getMessage()));
+                                ACExceptionCodes.FAILURE_WHEN_UPDATE_AC_MENU, wrap(e));
                     }
                 }
             });
             return acMenu;
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
-                    ACExceptionCodes.FAILURE_WHEN_UPDATE_AC_MENU, BasicUtil.wrap(e.getCause().getMessage()));
+                    ACExceptionCodes.FAILURE_WHEN_UPDATE_AC_MENU, wrap(e));
         }
     }
 
@@ -450,20 +453,20 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
      * @throws MenuManagementException
      */
     @Override
-    public void editOperatorMenu(AcOperatorMenu acMenu) throws MenuManagementException {
+    public AcOperatorMenu editOperatorMenu(AcOperatorMenu acMenu) throws MenuManagementException {
         try {
             if(null == acMenu) {
-                throw new MenuManagementException(ACExceptionCodes.OBJECT_IS_NULL, BasicUtil.wrap("acMenu"));
+                throw new MenuManagementException(ACExceptionCodes.OBJECT_IS_NULL, wrap("acMenu"));
             }
             if(StringUtil.isEmpty(acMenu.getGuid())) {
-                throw new MenuManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_UPDATE, BasicUtil.wrap("GUID", "AC_OPERATOR_MENU"));
+                throw new MenuManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_UPDATE, wrap("GUID", "AC_OPERATOR_MENU"));
             }
             AcOperatorMenu operatorMenu = acOperatorMenuService.loadByGuid(acMenu.getGuid());
             if (operatorMenu == null) {
-                throw new MenuManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap(acMenu.getGuid(), "AC_OPERATOR_MENU"));
+                throw new MenuManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, wrap(acMenu.getGuid(), "AC_OPERATOR_MENU"));
             }
             if(StringUtil.isEmpty(acMenu.getMenuName())) {
-                throw new MenuManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_UPDATE, BasicUtil.wrap("MENU_NAME", "AC_OPERATOR_MENU"));
+                throw new MenuManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_UPDATE, wrap("MENU_NAME", "AC_OPERATOR_MENU"));
             }
             // FIXME 重组菜单不允许添加功能菜单
 //            if(StringUtil.isEmpty(acMenu.getIsleaf())) {
@@ -472,7 +475,7 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             // 如果是叶子菜单，功能GUID不能为空
             if(StringUtils.equals(acMenu.getIsleaf(), CommonConstants.YES)) {
                 if(StringUtil.isEmpty(acMenu.getGuidFunc())) {
-                    throw new MenuManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_UPDATE, BasicUtil.wrap("GUID_FUNC", "AC_OPERATOR_MENU"));
+                    throw new MenuManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_UPDATE, wrap("GUID_FUNC", "AC_OPERATOR_MENU"));
                 }
             }
             // 如果为根菜单
@@ -488,12 +491,13 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             acMenu.setGuidRoot(operatorMenu.getGuidRoot());
             acMenu.setIsleaf(CommonConstants.NO);
             acOperatorMenuService.update(acMenu);
-        } catch (MenuManagementException ae) {
+            return acMenu;
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
-                    ACExceptionCodes.FAILURE_WHEN_UPDATE_AC_MENU, BasicUtil.wrap(e.getCause().getMessage()));
+                    ACExceptionCodes.FAILURE_WHEN_UPDATE_AC_MENU, wrap(e));
         }
     }
 
@@ -504,15 +508,15 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
      * @throws MenuManagementException
      */
     @Override
-    public AcMenu deleteMenu(String menuGuid) throws MenuManagementException {
+    public List<AcMenu> deleteMenu(String menuGuid) throws MenuManagementException {
         try {
             if(StringUtil.isEmpty(menuGuid)) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID_MENU"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_MENU"));
             }
             /*查询对应菜单是否存在*/
             AcMenu acMenu = acMenuService.loadByGuid(menuGuid);
             if (acMenu == null) {
-                throw new MenuManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap(menuGuid, AcMenu.TABLE_NAME));
+                throw new MenuManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, wrap(menuGuid, AcMenu.TABLE_NAME));
             }
             /*查询子菜单，一并删除*/
             List<AcMenu> menuList = acMenuService.query(new WhereCondition().andFullLike(AcMenu.COLUMN_MENU_SEQ, menuGuid));
@@ -534,23 +538,23 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                         if(guidList.size() > 0) {
                             acMenuService.deleteByCondition(new WhereCondition().andIn("GUID", guidList));
                             // 其余兄弟菜单重新排序
-                            acMenuServiceExt.reorderMenu(parentGuid, index, ACConstants.RECORD_AUTO_MINUS);
+                            acMenuServiceExt.reorderMenu(parentGuid, index, ACConstants.REORDER_AUTO_MINUS);
                         }
                     } catch (Exception e) {
                         status.setRollbackOnly();
                         e.printStackTrace();
                         throw new MenuManagementException(
-                                ACExceptionCodes.FAILURE_WHEN_DELETE_AC_MENU, BasicUtil.wrap(e.getCause().getMessage()));
+                                ACExceptionCodes.FAILURE_WHEN_DELETE_AC_MENU, wrap(e));
                     }
                 }
             });
-            return acMenu;
-        } catch (MenuManagementException ae) {
+            return menuList;
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
-                    ACExceptionCodes.FAILURE_WHEN_DELETE_AC_MENU, BasicUtil.wrap(e.getCause().getMessage()));
+                    ACExceptionCodes.FAILURE_WHEN_DELETE_AC_MENU, wrap(e));
         }
     }
 
@@ -561,10 +565,15 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
      * @throws MenuManagementException
      */
     @Override
-    public void deleteOperatorMenu(String menuGuid) throws MenuManagementException {
+    public List<AcOperatorMenu> deleteOperatorMenu(String menuGuid) throws MenuManagementException {
         try {
             if(StringUtil.isEmpty(menuGuid)) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID_MENU"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_MENU"));
+            }
+            /** 查询对应菜单是否存在*/
+            AcOperatorMenu acOperatorMenu = acOperatorMenuService.loadByGuid(menuGuid);
+            if (acOperatorMenu == null) {
+                throw new MenuManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, wrap(menuGuid, AcOperatorMenu.TABLE_NAME));
             }
             /** 查询子菜单，一并删除*/
             List<AcOperatorMenu> menuList = acOperatorMenuService.query(new WhereCondition().andFullLike(AcOperatorMenu.COLUMN_MENU_SEQ, menuGuid));
@@ -586,22 +595,23 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                         if(guidList.size() > 0) {
                             acOperatorMenuService.deleteByCondition(new WhereCondition().andIn(AcOperatorMenu.COLUMN_GUID, guidList));
                             // 其余兄弟菜单重新排序
-                            acMenuServiceExt.reorderOperatorMenu(parentGuid, index, ACConstants.RECORD_AUTO_MINUS);
+                            acMenuServiceExt.reorderOperatorMenu(parentGuid, index, ACConstants.REORDER_AUTO_MINUS);
                         }
                     } catch (Exception e) {
                         status.setRollbackOnly();
                         e.printStackTrace();
                         throw new MenuManagementException(
-                                ACExceptionCodes.FAILURE_WHEN_DELETE_AC_MENU, BasicUtil.wrap(e.getCause().getMessage()));
+                                ACExceptionCodes.FAILURE_WHEN_DELETE_AC_MENU, wrap(e));
                     }
                 }
             });
-        } catch (MenuManagementException ae) {
+            return menuList;
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
-                    ExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap("AC_OPERATOR_MENU", e.getCause().getMessage()));
+                    ExceptionCodes.FAILURE_WHEN_DELETE, wrap("AC_OPERATOR_MENU", e));
         }
     }
 
@@ -618,16 +628,16 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
         try {
             // 校验传入参数
             if (StringUtil.isEmpty(userId)) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("USER_ID"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("USER_ID"));
             }
             /** 查询对应操作员*/
             List<AcOperator> acOperators = acOperatorService.query(new WhereCondition().andEquals(AcOperator.COLUMN_USER_ID, userId));
             if (acOperators.size() != 1) {
-                throw new MenuManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap(userId, "AC_OPERATOR"));
+                throw new MenuManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, wrap(userId, "AC_OPERATOR"));
             }
             AcOperator operator = acOperators.get(0);
             if (StringUtil.isEmpty(appGuid)) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID_APP"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_APP"));
             }
             //查询当前应用的所有父菜单
             List<AcMenu> menuList = acMenuService.query(new WhereCondition()
@@ -664,13 +674,13 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             }
             return createMenuTree(menuList);
 
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
                     ExceptionCodes.FAILURE_WHEN_QUERY,
-                    BasicUtil.wrap("AC_MENU", e.getCause().getMessage()));
+                    wrap("AC_MENU", e));
         }
     }
 
@@ -688,13 +698,13 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
         try {
             // 校验传入参数
             if (StringUtil.isEmpty(userId)) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("USER_ID"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("USER_ID"));
             }
             if (StringUtil.isEmpty(appGuid)) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID_APP"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_APP"));
             }
             if (StringUtil.isEmpty(identityGuid)) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID_IDENTITY"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_IDENTITY"));
             }
             //查询当前应用的所有父菜单
             List<AcMenu> menuList = acMenuService.query(new WhereCondition()
@@ -726,13 +736,13 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             }*/
             return createMenuTree(menuList);
 
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
                     ExceptionCodes.FAILURE_WHEN_QUERY,
-                    BasicUtil.wrap("AC_MENU", e.getCause().getMessage()));
+                    wrap("AC_MENU", e));
         }
     }
 
@@ -749,14 +759,14 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
         try {
             // 校验传入参数
             if (StringUtil.isEmpty(userId)) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("USER_ID"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("USER_ID"));
             }
             if (StringUtil.isEmpty(appGuid)) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID_APP"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_APP"));
             }
             List<AcOperator> acOperators = acOperatorService.query(new WhereCondition().andEquals("USER_ID", userId));
             if(CollectionUtils.isEmpty(acOperators)) {
-                throw new MenuManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap("USER_ID "+ userId, "AC_OPERATOR"));
+                throw new MenuManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, wrap("USER_ID "+ userId, "AC_OPERATOR"));
             }
             AcOperator operator = acOperators.get(0);
 
@@ -773,13 +783,13 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             } else {
                 return new AcMenuDetail();
             }
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
                     ExceptionCodes.FAILURE_WHEN_QUERY,
-                    BasicUtil.wrap("AC_OPERATOR_MENU", e.getCause().getMessage()));
+                    wrap("AC_OPERATOR_MENU", e));
         }
     }
 
@@ -797,17 +807,17 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
         try {
             // 校验传入参数
             if (StringUtil.isEmpty(userId)) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("USER_ID"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("USER_ID"));
             }
             if (StringUtil.isEmpty(appGuid)) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID_APP"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_APP"));
             }
             if (StringUtil.isEmpty(identityGuid)) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("GUID_IDENTITY"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_IDENTITY"));
             }
             List<AcOperator> acOperators = acOperatorService.query(new WhereCondition().andEquals("USER_ID", userId));
             if(CollectionUtils.isEmpty(acOperators)) {
-                throw new MenuManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap("USER_ID "+ userId, "AC_OPERATOR"));
+                throw new MenuManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, wrap("USER_ID "+ userId, "AC_OPERATOR"));
             }
             AcOperator operator = acOperators.get(0);
 
@@ -821,7 +831,7 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                 if (acOperatorIdentityService.count(new WhereCondition()
                         .andEquals(AcOperatorIdentity.COLUMN_GUID_OPERATOR, operator.getGuid())
                         .andEquals(AcOperatorIdentity.COLUMN_GUID, identityGuid)) < 1) {
-                    throw new MenuManagementException(ACExceptionCodes.IDENTITY_NOT_CORRESPONDING_TO_USER, BasicUtil.wrap(identityGuid, userId));
+                    throw new MenuManagementException(ACExceptionCodes.IDENTITY_NOT_CORRESPONDING_TO_USER, wrap(identityGuid, userId));
                 }
                 // 查询当前身份拥有的角色菜单
                 List<AcOperatorIdentityres> acOperatorIdentityres = acOperatorIdentityresService
@@ -861,13 +871,13 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                 return createOperatorMenuTree(menuList);
             }
             return new AcMenuDetail();
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
                     ExceptionCodes.FAILURE_WHEN_QUERY,
-                    BasicUtil.wrap("AC_OPERATOR_MENU", e.getCause().getMessage()));
+                    wrap("AC_OPERATOR_MENU", e));
         }
     }
 
@@ -965,15 +975,15 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
         try {
             // 校验传入参数
             if (StringUtil.isEmpty(userId)) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("userId"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("userId"));
             }
             if (StringUtil.isEmpty(identityGuid)) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("identityGuid"));
+                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("identityGuid"));
             }
             //获取当前用户的角色列表
             List<AcOperator> acOperators = acOperatorService.query(new WhereCondition().andEquals("USER_ID", userId));
             if (acOperators.size() != 1) {
-                throw new MenuManagementException(ACExceptionCodes.USER_ID_NOT_EXIST, BasicUtil.wrap(userId));
+                throw new MenuManagementException(ACExceptionCodes.USER_ID_NOT_EXIST, wrap(userId));
             }
 
 //            AcOperator acOperator = acOperators.get(0);
@@ -984,13 +994,13 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
 //            }
 
             return null;
-        } catch (MenuManagementException ae) {
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
                     ACExceptionCodes.FAILURE_WHEN_LOGIN,
-                    BasicUtil.wrap(e.getCause().getMessage()));
+                    wrap(e));
         }
     }
 
@@ -1005,35 +1015,34 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
      * @throws MenuManagementException
      */
     @Override
-    public void copyMenuToOperatorMenu(String operatorGuid, String copyGuid, String goalGuid, BigDecimal order) throws MenuManagementException {
+    public List<AcOperatorMenu> copyMenuToOperatorMenu(String operatorGuid, String copyGuid, String goalGuid, BigDecimal order) throws MenuManagementException {
         try {
             // 校验传入参数
             if (StringUtil.isEmpty(operatorGuid)) {
                 throw new MenuManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT,
-                        BasicUtil.wrap(AcOperatorMenu.COLUMN_GUID_OPERATOR, "AC_OPERATOR_MENU"));
+                        wrap(AcOperatorMenu.COLUMN_GUID_OPERATOR, "AC_OPERATOR_MENU"));
             }
             if (StringUtil.isEmpty(copyGuid)) {
                 throw new MenuManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT,
-                        BasicUtil.wrap("GUID_COPY_MENU", "AC_OPERATOR_MENU"));
+                        wrap("GUID_COPY_MENU", "AC_OPERATOR_MENU"));
             }
             if (StringUtil.isEmpty(goalGuid)) {
                 throw new MenuManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT,
-                        BasicUtil.wrap("GUID_GOAL_MENU", "AC_OPERATOR_MENU"));
+                        wrap("GUID_GOAL_MENU", "AC_OPERATOR_MENU"));
             }
             if (null == order) {
                 throw new MenuManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT,
-                        BasicUtil.wrap("ORDER", "AC_OPERATOR_MENU"));
+                        wrap("ORDER", "AC_OPERATOR_MENU"));
             }
             // 查询复制的菜单信息及其下属的所有菜单信息
             AcMenu copyMenu = acMenuService.loadByGuid(copyGuid);
             String copySeq = copyMenu.getMenuSeq();
+            // 目标菜单节点
             AcOperatorMenu goalMenu = acOperatorMenuService.loadByGuid(goalGuid);
             if(goalMenu == null) {
                 throw new MenuManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY,
-                        BasicUtil.wrap("GUID '" + goalGuid + "' ", "AC_OPERATOR_MENU"));
+                        wrap(surroundBracketsWithLFStr(AcOperatorMenu.COLUMN_GUID, goalGuid) , AcOperatorMenu.TABLE_NAME));
             }
-
-
             // 查询复制菜单下的所有子菜单
             List<AcMenu> copyMenus = acMenuService.query(new WhereCondition().andFullLike(AcMenu.COLUMN_MENU_SEQ, copyGuid));
             // 节点列表（散列表，用于临时存储节点对象）
@@ -1069,39 +1078,43 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             temp.setGuidRoot(goalMenu.getGuidRoot());
             // 重构GUID
             root.restructureGuidForOperatorMenu(temp);
-
+            // 构造需要插入的重组菜单
+            List<AcOperatorMenu> menuList = new ArrayList<>();
+            for (AcMenu acMenu : copyMenus) {
+                AcOperatorMenu childMenu = new AcOperatorMenu();
+                BeanUtils.copyProperties(acMenu, childMenu);
+                childMenu.setGuidOperator(operatorGuid);
+                // 如果是根节点
+                if(StringUtils.equals(acMenu.getGuidParents(), goalGuid)) {
+                    childMenu.setDisplayOrder(order);
+                }
+                menuList.add(childMenu);
+            }
             transactionTemplate.execute(new TransactionCallbackWithoutResult() {
                 @Override
                 public void doInTransactionWithoutResult(TransactionStatus status) {
                     try {
                         // 重新排序当前父菜单下的子菜单自增
-                        acMenuServiceExt.reorderOperatorMenu(goalGuid, order, ACConstants.RECORD_AUTO_PLUS);
+                        acMenuServiceExt.reorderOperatorMenu(goalGuid, order, ACConstants.REORDER_AUTO_PLUS);
                         // 插入复制的菜单
-                        for (AcMenu acMenu : copyMenus) {
-                            AcOperatorMenu childMenu = new AcOperatorMenu();
-                            BeanUtils.copyProperties(acMenu, childMenu);
-                            childMenu.setGuidOperator(operatorGuid);
-                            // 如果是根节点
-                            if(StringUtils.equals(acMenu.getGuidParents(), goalGuid)) {
-                                childMenu.setDisplayOrder(order);
-                            }
-                            acOperatorMenuService.insert(childMenu);
+                        for (AcOperatorMenu menu : menuList) {
+                            acOperatorMenuService.insert(menu);
                         }
                     } catch (Exception e) {
                         status.setRollbackOnly();
                         e.printStackTrace();
                         throw new MenuManagementException(
-                                ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap("AC_OPERATOR_MENU", e.getCause().getMessage()));
+                                ExceptionCodes.FAILURE_WHEN_INSERT, wrap("AC_OPERATOR_MENU", e));
                     }
                 }
             });
-
-        } catch (MenuManagementException ae) {
+            return menuList;
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
-                    ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap("AC_OPERATOR_MENU", e.getCause().getMessage()));
+                    ExceptionCodes.FAILURE_WHEN_INSERT, wrap("AC_OPERATOR_MENU", e));
         }
     }
 
@@ -1114,25 +1127,25 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
      * @throws MenuManagementException
      */
     @Override
-    public void moveOperatorMenu(String targetGuid, String moveGuid, BigDecimal order) throws MenuManagementException {
+    public AcOperatorMenu moveOperatorMenu(String targetGuid, String moveGuid, BigDecimal order) throws MenuManagementException {
         try {
             if (StringUtil.isEmpty(targetGuid)) {
                 throw new MenuManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT,
-                        BasicUtil.wrap("GUID_GOAL_MENU", "AC_OPERATOR_MENU"));
+                        wrap("GUID_GOAL_MENU", "AC_OPERATOR_MENU"));
             }
             if (StringUtil.isEmpty(moveGuid)) {
                 throw new MenuManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT,
-                        BasicUtil.wrap("GUID_MOVE_MENU", "AC_OPERATOR_MENU"));
+                        wrap("GUID_MOVE_MENU", "AC_OPERATOR_MENU"));
             }
             if (null == order) {
                 throw new MenuManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT,
-                        BasicUtil.wrap("ORDER", "AC_OPERATOR_MENU"));
+                        wrap("ORDER", "AC_OPERATOR_MENU"));
             }
             // 查询移动的菜单信息及其下属的所有菜单信息
             AcOperatorMenu moveMenu = acOperatorMenuService.loadByGuid(moveGuid);
             if(moveMenu == null) {
                 throw new MenuManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY,
-                        BasicUtil.wrap("GUID '" + moveGuid + "' ", "AC_OPERATOR_MENU"));
+                        wrap("GUID '" + moveGuid + "' ", "AC_OPERATOR_MENU"));
             }
 
             List<AcOperatorMenu> childMenus = acOperatorMenuService.query(new WhereCondition().andFullLike(AcOperatorMenu.COLUMN_MENU_SEQ, moveGuid));
@@ -1140,7 +1153,7 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             AcOperatorMenu goalMenu = acOperatorMenuService.loadByGuid(targetGuid);
             if(goalMenu == null) {
                 throw new MenuManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY,
-                        BasicUtil.wrap("GUID '" + targetGuid + "' ", "AC_OPERATOR_MENU"));
+                        wrap("GUID '" + targetGuid + "' ", "AC_OPERATOR_MENU"));
             }
             // 源菜单节点
             String sourceGuid = moveMenu.getGuidParents(); // 源菜单GUID
@@ -1159,9 +1172,9 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                 public void doInTransactionWithoutResult(TransactionStatus status) {
                     try {
                         // 重新排序源菜单下的子菜单自减
-                        acMenuServiceExt.reorderOperatorMenu(sourceGuid, sourceOrder, ACConstants.RECORD_AUTO_MINUS);
+                        acMenuServiceExt.reorderOperatorMenu(sourceGuid, sourceOrder, ACConstants.REORDER_AUTO_MINUS);
                         // 重新排序目标菜单下的子菜单自增
-                        acMenuServiceExt.reorderOperatorMenu(targetGuid, order, ACConstants.RECORD_AUTO_PLUS);
+                        acMenuServiceExt.reorderOperatorMenu(targetGuid, order, ACConstants.REORDER_AUTO_PLUS);
                         // 更改移动的重组菜单信息
                         acOperatorMenuService.update(moveMenu);
                         // 如果改变了父节点需要同步改变子节点
@@ -1184,17 +1197,17 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                         status.setRollbackOnly();
                         e.printStackTrace();
                         throw new MenuManagementException(
-                                ExceptionCodes.FAILURE_WHEN_UPDATE, BasicUtil.wrap("AC_OPERATOR_MENU", e.getCause().getMessage()));
+                                ExceptionCodes.FAILURE_WHEN_UPDATE, wrap("AC_OPERATOR_MENU", e));
                     }
                 }
             });
-
-        } catch (MenuManagementException ae) {
+            return moveMenu;
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
-                    ExceptionCodes.FAILURE_WHEN_UPDATE, BasicUtil.wrap("AC_OPERATOR_MENU", e.getCause().getMessage()));
+                    ExceptionCodes.FAILURE_WHEN_UPDATE, wrap("AC_OPERATOR_MENU", e));
         }
     }
     /**
@@ -1206,26 +1219,26 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
      * @throws MenuManagementException
      */
     @Override
-    public void moveMenu(String targetGuid, String moveGuid, BigDecimal order) throws MenuManagementException {
+    public AcMenu moveMenu(String targetGuid, String moveGuid, BigDecimal order) throws MenuManagementException {
         try {
             // 校验传入参数
             if (StringUtil.isEmpty(targetGuid)) {
                 throw new MenuManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT,
-                        BasicUtil.wrap("GUID_GOAL_MENU", "AC_OPERATOR_MENU"));
+                        wrap("GUID_GOAL_MENU", "AC_OPERATOR_MENU"));
             }
             if (StringUtil.isEmpty(moveGuid)) {
                 throw new MenuManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT,
-                        BasicUtil.wrap("GUID_MOVE_MENU", "AC_OPERATOR_MENU"));
+                        wrap("GUID_MOVE_MENU", "AC_OPERATOR_MENU"));
             }
             if (null == order) {
                 throw new MenuManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT,
-                        BasicUtil.wrap("ORDER", "AC_OPERATOR_MENU"));
+                        wrap("ORDER", "AC_OPERATOR_MENU"));
             }
             // 查询移动的菜单信息及其下属的所有菜单信息
             AcMenu moveMenu = acMenuService.loadByGuid(moveGuid);
             if(moveMenu == null) {
                 throw new MenuManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY,
-                        BasicUtil.wrap("GUID '" + moveGuid + "' ", "AC_MENU"));
+                        wrap("GUID '" + moveGuid + "' ", "AC_MENU"));
             }
 
             List<AcMenu> childMenus = acMenuService.query(new WhereCondition().andFullLike(AcMenu.COLUMN_MENU_SEQ, moveGuid));
@@ -1233,28 +1246,26 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             AcMenu goalMenu = acMenuService.loadByGuid(targetGuid);
             if(goalMenu == null) {
                 throw new MenuManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY,
-                        BasicUtil.wrap("GUID '" + targetGuid + "' ", "AC_MENU"));
+                        wrap("GUID '" + targetGuid + "' ", "AC_MENU"));
             }
             // 源菜单节点
             String sourceGuid = moveMenu.getGuidParents(); // 源菜单GUID
             BigDecimal sourceOrder = moveMenu.getDisplayOrder(); // 源菜单显示顺序
             String sourceSeq = moveMenu.getMenuSeq();
 
-
             // 处理移动菜单信息
             moveMenu.setGuidParents(goalMenu.getGuid()); // 改变父菜单信息
             moveMenu.setMenuSeq(goalMenu.getMenuSeq() + "." + moveGuid); // 改变序列
             moveMenu.setDisplayOrder(order); // 改变显示顺序
-
 
             transactionTemplate.execute(new TransactionCallbackWithoutResult() {
                 @Override
                 public void doInTransactionWithoutResult(TransactionStatus status) {
                     try {
                         // 重新排序源菜单下的子菜单自减
-                        acMenuServiceExt.reorderMenu(sourceGuid, sourceOrder, ACConstants.RECORD_AUTO_MINUS);
+                        acMenuServiceExt.reorderMenu(sourceGuid, sourceOrder, ACConstants.REORDER_AUTO_MINUS);
                         // 重新排序目标菜单下的子菜单自增
-                        acMenuServiceExt.reorderMenu(targetGuid, order, ACConstants.RECORD_AUTO_PLUS);
+                        acMenuServiceExt.reorderMenu(targetGuid, order, ACConstants.REORDER_AUTO_PLUS);
                         // 更改移动的重组菜单信息
                         acMenuService.update(moveMenu);
 
@@ -1278,17 +1289,17 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                         status.setRollbackOnly();
                         e.printStackTrace();
                         throw new MenuManagementException(
-                                ExceptionCodes.FAILURE_WHEN_UPDATE, BasicUtil.wrap("AC_MENU", e.getCause().getMessage()));
+                                ExceptionCodes.FAILURE_WHEN_UPDATE, wrap("AC_MENU", e));
                     }
                 }
             });
-
-        } catch (MenuManagementException ae) {
+            return moveMenu;
+        } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new MenuManagementException(
-                    ExceptionCodes.FAILURE_WHEN_UPDATE, BasicUtil.wrap("AC_MENU", e.getCause().getMessage()));
+                    ExceptionCodes.FAILURE_WHEN_UPDATE, wrap("AC_MENU", e));
         }
     }
 }

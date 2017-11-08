@@ -9,28 +9,26 @@
         </div>
     </div>
     <div class="portlet-body portlet light">
-        <form action="#" name="myform1" class="form-horizontal" ng-if="!next">
-            <div class="col-md-6">
+        <form action="#" name="myform1" class="form-horizontal">
+            <div class="col-md-12">
                 <div class="form-group">
-                    <label class="control-label col-md-4">操作员</label>
-                    <!--<div class="col-md-8">-->
-                        <!--<input type="text" class="form-control"-->
-                               <!--ng-model="subFrom.guidOperator"-->
-                        <!--/>-->
-                    <!--</div>-->
-                    <div class="col-md-8">
+                    <label class="control-label col-md-2">操作员</label>
+                    <div class="col-md-10">
                         <div class="col-md-12"  style="margin-top: 5px">
-                            <div class="col-md-6">
-                                <input type="radio"   name="fromtable" ng-model="operflag" value="1"  checked/>系统默认
+                            <div class="col-md-3">
+                                <input type="radio"   name="fromtable" ng-model="emp.operflag" value="1"  checked/>新建默认操作员
                             </div>
-                            <div class="col-md-6">
-                                <input type="radio"   name="fromtable" ng-model="operflag" value="2" />选择已存在
+                            <div class="col-md-3">
+                                <input type="radio"   name="fromtable" ng-model="emp.operflag" value="2" />选择已存在
+                            </div>
+                            <div class="col-md-3">
+                                <input type="radio"   name="fromtable" ng-model="emp.operflag" value="3" />暂不选操作员
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6" ng-if="operflag == '1'">
+            <div class="col-md-6" ng-if="emp.operflag == '1'">
                 <div class="form-group">
                     <label class="control-label col-md-4">操作员</label>
                     <div class="col-md-8">
@@ -40,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6" ng-if="operflag == '2'">
+            <div class="col-md-6" ng-if="emp.operflag == '2'">
                 <div class="form-group" ng-init="$settings.getCommData('OPER')">
                     <label class="control-label col-md-4">操作员</label>
                     <div class="col-md-8">
@@ -50,7 +48,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <!--            <div class="col-md-6">
                 <div class="form-group">
                     <label class="control-label col-md-4">可授权角色</label>
                     <div class="col-md-8" ng-init="$settings.getCommData('ROLE')">
@@ -64,7 +62,7 @@
                         </script>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="control-label col-md-4">可管理机构</label>
@@ -84,13 +82,10 @@
                 <div class="form-group">
                     <label class="control-label col-md-2"></label>
                     <div class="col-md-10">
-
                         <div class="actions btn-set" style="float: right;">
-                            <!--<button type="button" name="back1" class="btn btn-primary" ng-click="back()"> 上一步-->
-                            <!--</button>-->
                             <button type="button" name="back1" class="btn btn-primary" ng-click="add(subFrom)"> 保存
                             </button>
-                            <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
+                             <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
                             </button>
                         </div>
                     </div>

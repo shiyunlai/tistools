@@ -2,14 +2,14 @@
  * Created by wangbo on 2017/6/20.
  */
 /*操作员管理控制器*/
-MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $state, $stateParams, filterFilter,operator_service,dictonary_service, $modal,$uibModal, $http, $timeout,$interval,i18nService) {
+MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $state, $stateParams, filterFilter,operator_service,dictonary_service,common_service, $modal,$uibModal, $http, $timeout,$interval,i18nService) {
     //grid表格
     i18nService.setCurrentLang("zh-cn");
     //查询操作员列表
     var operman ={};
     $scope.operman = operman;
     operman.queryAll = function(){
-        //查询所有
+        //查询所有操作员列表
         var subFrom = {};
         operator_service.queryAllOperator(subFrom).then(function(data){
             var datas = data.retMessage;
@@ -36,8 +36,23 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
         if(row.isSelected){
             $scope.selectRow = row.entity;
             operman.info = $scope.selectRow.userId;//传入userid.进行权限的分配
+            $scope.Status = row.entity.operatorStatus;//把状态绑定
+            $scope.isfalse = false;
+            $scope.copyfunEdit = angular.copy(row.entity);//修改之前的值
+            //操作员状态改变值
+            $scope.checkstatus = function (key,array) {
+                //封装方法，把几种状态放在数组中，拿到此时的状态，匹配 靠返回值来完成是否可以选择
+                for(var i = 0;i<array.length;i++){
+                    if(key === array[i]){
+                        return true;
+                    }
+                    //不能在这里写else，否则第一个没有就直接进入else里了，return false应该写在for循环后面，循环玩了都没有才return false
+                }
+                return false;
+            }
         }else{
             delete $scope.selectRow;//制空
+            $scope.isfalse = true;
         }
     }
     $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,false,f);
@@ -55,10 +70,11 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
                 $scope.operatFrom = operatFrom;
                 $scope.operatFrom.lockLimit = 5;
                 $scope.operatFrom.operatorStatus = 'stop';//默认停用
+                // $scope.operatFrom.operatorStatus = 'login';//默认停用
                 $scope.add = function(item){//保存新增的函数
                     var subFrom = {};
                     $scope.subFrom = subFrom;
-                    subFrom = item;
+                    subFrom.data = item;
                     operator_service.createOperator(subFrom).then(function(data){
                         if(data.status == "success"){
                             toastr['success']( "新增成功！");
@@ -79,23 +95,34 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
     $scope.operatEdit = function(id){
         if($scope.selectRow){
             var items = $scope.selectRow;
+            var changesDate = $scope.copyfunEdit;//修改之前的值
             openwindow($uibModal, 'views/operator/operatorAdd.html', 'lg',// 弹出页面
                 function ($scope, $modalInstance) {
                     if(!isNull(items)){//如果参数不为空，则就回显
+                        items.invalDate = moment(items.invalDate).format('YYYY-MM-DD');
+                        items.startDate = moment(items.startDate).format('YYYY-MM-DD');
+                        items.endDate = moment(items.endDate).format('YYYY-MM-DD');
                         $scope.operatFrom = angular.copy(items);
                     }
                     $scope.id = id;//获取到id，用来判断是否编辑，因为scope作用域不同，所以不同
                     $scope.add = function(item){//保存新增的函数
+                        var  changeData = {};//创建对象
+                        for(var key in changesDate){//循环最初的数据?
+                            if(changesDate[key] !== item[key]){
+                                changeData[key]= changesDate[key];
+                            }
+                        }
                         var subFrom = {};
                         $scope.subFrom = subFrom;
-                        subFrom = item;
+                        subFrom.data = item;
+                        subFrom.changeData = changeData;
                         operator_service.editOperator(subFrom).then(function(data){
                             if(data.status == "success"){
-                                toastr['success']( "新增成功！");
+                                toastr['success']( "修改成功！");
                                 operman.queryAll();
                                 $modalInstance.close();
                             }else{
-                                toastr['error']('新增失败'+'<br/>'+data.retMessage);
+                                toastr['error']('修改失败'+'<br/>'+data.retMessage);
                             }
                         })
                     }
@@ -122,12 +149,88 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
     //操作员配置功能行为权限
     $scope.funconfig = function (id) {
         if($scope.selectRow){
-            $state.go("permission",{id:id})
+            var opertis = {"userid":$scope.selectRow.userId,"operguid":$scope.selectRow.guid}
+            var jsonObj= angular.toJson(opertis);//传对象，必须转成json格式传入
+            $state.go("permission",{'id':jsonObj})
         }else{
             toastr['error']("请至少选中一个操作员进行权限的分配！");
         }
     }
+
+    //启用操作员状态
+    $scope.operman.login = function (item) {
+        var res = $rootScope.res.operator_service;//页面所需调用的服务
+        var dats = $scope.gridOptions.getSelectedRows();
+        var subFrom  = {};
+        subFrom.data = {};
+        subFrom.data.userId = dats[0].userId;
+        subFrom.data.status = 'logout';
+        common_service.post(res.changeOperatorStatus,subFrom).then(function(data){
+            if(data.status == 'success'){
+                toastr['success']( "启用成功！");
+                operman.queryAll();
+            }else{
+                toastr['error']('新增失败'+'<br/>'+data.retMessage);
+            }
+        })
+    }
+
+    //删除操作员状态
+    $scope.operman.del = function (item) {
+        var res = $rootScope.res.operator_service;//页面所需调用的服务
+        var dats = $scope.gridOptions.getSelectedRows();
+        var subFrom  = {};
+        subFrom.data = {};
+        subFrom.data.operatorGuid = dats[0].guid;
+        common_service.post(res.deleteOperator,subFrom).then(function(data){
+            if(data.status == 'success'){
+                toastr['success']( "删除成功！");
+                operman.queryAll();
+            }else{
+                toastr['error']('删除失败'+'<br/>'+data.retMessage);
+            }
+        })
+    }
+
+    //解锁操作员状态
+    $scope.operman.logout = function (item) {
+        var res = $rootScope.res.operator_service;//页面所需调用的服务
+        var dats = $scope.gridOptions.getSelectedRows();
+        var subFrom  = {};
+        subFrom.data = {};
+        subFrom.data.userId = dats[0].userId;
+        subFrom.data.status = 'logout';
+        common_service.post(res.changeOperatorStatus,subFrom).then(function(data){
+            if(data.status == 'success'){
+                toastr['success']( "解锁成功！");
+                operman.queryAll();
+            }else{
+                toastr['error']('解锁失败'+'<br/>'+data.retMessage);
+            }
+        })
+    }
+
+
+    //注销操作员状态
+    $scope.operman.clear = function (item) {
+        var res = $rootScope.res.operator_service;//页面所需调用的服务
+        var dats = $scope.gridOptions.getSelectedRows();
+        var subFrom = {};
+        subFrom.data = {};
+        subFrom.data.userId = dats[0].userId;
+        subFrom.data.status = 'clear';
+        common_service.post(res.changeOperatorStatus, subFrom).then(function (data) {
+            if(data.status == 'success'){
+                toastr['success']( "注销成功！");
+                operman.queryAll();
+            }else{
+                toastr['error']('注销失败'+'<br/>'+data.retMessage);
+            }
+        })
+    }
+
 });
+
 
 /*操作员个人配置控制器*/
 MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state, $stateParams,common_service,filterFilter,i18nService,$modal,$interval) {

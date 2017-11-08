@@ -1,5 +1,8 @@
-·<div class="page-sidebar navbar-collapse collapse">
-    <ul class="page-sidebar-menu ids1" test-repeats  comtasssble=menusAndTrans  ng-model="menusAndTrans" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" ng-class="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}">
+<div class="page-sidebar navbar-collapse collapse">
+
+
+
+    <ul class="page-sidebar-menu ids1" test-repeats ng-if="!issearchmenu"  comtasssble=menusAndTrans  ng-model="menusAndTrans" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" ng-class="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}">
         <li class="sidebar-search-wrapper">
             <form class="sidebar-search sidebar-search-bordered" action="#" method="POST">
                 <a href="javascript:;" class="remove">
@@ -16,139 +19,16 @@
             </form>
         </li>
         <li class="start nav-item">
-            <a href="#/dashboard.html">
+            <a href="#/dashboard">
                 <i class="icon-home"></i>
                 <span class="title">首页</span>
             </a>
         </li>
-        <!--  <li class="start nav-item">
-              <a href="javascript:;">
-                  <i class="fa fa-cubes"></i>
-                  <span class="title">应用管理</span>
-                  <span class="arrow "></span>
-              </a>
-              <ul class="sub-menu">
-                  <li class="start nav-item">
-                      <a href="javascript:;" style="height: 41px;line-height: 31px;" class="nav-link nav-toggle">
-                          <i class="fa fa-university"></i>
-                          <span class="title">组织机构管理</span>
-                          <span class="arrow "></span>
-                      </a>
-                      <ul class="sub-menu">
-                          <li>
-                              <a href="#/abftree.html">
-                                  <i class="icon-puzzle"></i>组织机构</span>
-                              </a>
-                          </li>
-                      </ul>
-                  </li>
-                  <li class="start nav-item">
-                      <a href="javascript:;" style="height: 41px;line-height: 31px;" class="nav-link nav-toggle">
-                          <i class="fa fa-lock"></i>
-                          <span class="title">权限管理</span>
-                          <span class="arrow "></span>
-                      </a>
-                      <ul class="sub-menu">
-                          <li>
-                              <a href="#/applicationFun.html">
-                                  <i class="icon-puzzle"></i>应用功能管理</span>
-                              </a>
-                          </li>
-                          <li>
-                              <a href="#/menuManagement.html">
-                                  <i class="icon-puzzle"></i>菜单管理</span>
-                              </a>
-                          </li>
-                          <li>
-                              <a href="javascript:;">
-                                  <i class="icon-puzzle"></i>数据形体管理</span>
-                              </a>
-                          </li>
-                          <li>
-                              <a href="javascript:;">
-                                  <i class="icon-puzzle"></i>数据范围管理</span>
-                              </a>
-                          </li>
-                          <li>
-                              <a href="#/behavior.html">
-                                  <i class="icon-puzzle"></i>功能行为类型定义</span>
-                              </a>
-                          </li>
-                          <li>
-                              <a href="#/roleManagement.html">
-                                  <i class="icon-puzzle"></i>角色管理</span>
-                              </a>
-                          </li>
-                      </ul>
-                  </li>
-                  <li class="start nav-item">
-                      <a href="javascript:;" style="height: 41px;line-height: 31px;" class="nav-link nav-toggle">
-                          <i class=" icon-user"></i>
-                          <span class="title">操作员管理</span>
-                          <span class="arrow "></span>
-                      </a>
-                      <ul class="sub-menu">
-                          <li>
-                              <a href="#/opManage.html">
-                                  <i class="icon-puzzle"></i>操作员管理</span>
-                              </a>
-                          </li>
-                          &lt;!&ndash;<li>
-                              <a href="#/roleConfig.html">
-                                  <i class="icon-puzzle"></i>个性化配置</span>
-                              </a>
-                          </li>&ndash;&gt;
-                          <li>
-                              <a href="#/Reorganizemenu.html">
-                                  <i class="icon-puzzle"></i>重组菜单</span>
-                              </a>
-                          </li>
-                          &lt;!&ndash;<li>
-                              <a href="#/shortcutMenu.html">
-                                  <i class="icon-puzzle"></i>快捷菜单</span>
-                              </a>
-                          </li>&ndash;&gt;
-                          <li>
-                              <a href="javascript:;">
-                                  <i class="icon-puzzle"></i>特殊权限</span>
-                              </a>
-                          </li>
-                          <li>
-                              <a href="#/operstatus.html">
-                                  <i class="icon-puzzle"></i>操作员身份</span>
-                              </a>
-                          </li>
-                      </ul>
-                  </li>
-                  <li class="start nav-item">
-                      <a href="javascript:;" style="height: 41px;line-height: 31px;" class="nav-link nav-toggle">
-                          <i class="fa fa-asterisk"></i>
-                          <span class="title">其他管理</span>
-                          <span class="arrow "></span>
-                      </a>
-                      <ul class="sub-menu">
-                          <li>
-                              <a href="#/dictionary.html">
-                                  <i class="fa fa-fax"></i>业务字典</span>
-                              </a>
-                          </li>
-                          <li>
-                               <a href="#/numberResources.html">
-                                   <i class="fa fa-fax"></i>序号资源表管理</span>
-                               </a>
-                          </li>
-                          <li>
-                              <a href="#/Systempara.html">
-                                  <i class="fa fa-fax"></i>系统运行参数</span>
-                              </a>
-                          </li>
-                      </ul>
-                  </li>
-              </ul>
-          </li>-->
     </ul>
+
+
     <!-- 搜索还未做-->
-    <!-- <ul class="page-sidebar-menu search" test-repeats  comtasssble=menusAndTrans  ng-model="menusAndTrans" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" ng-class="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}">
+    <ul class="page-sidebar-menu search1" ng-if="issearchmenu"  test-repeats  comtasssble=menusAndTrans  ng-model="menusAndTrans" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" ng-class="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}">
          <li class="sidebar-search-wrapper">
              <form class="sidebar-search sidebar-search-bordered" action="#" method="POST">
                  <a href="javascript:;" class="remove">
@@ -167,137 +47,8 @@
          <li class="start nav-item">
              <a href="#/dashboard.html">
                  <i class="icon-home"></i>
-                 <span class="title">首页</span>
+                 <span class="title">首页1312323</span>
              </a>
          </li>
-       &lt;!&ndash;  <li class="start nav-item">
-             <a href="javascript:;">
-                 <i class="fa fa-cubes"></i>
-                 <span class="title">应用管理</span>
-                 <span class="arrow "></span>
-             </a>
-             <ul class="sub-menu">
-                 <li class="start nav-item">
-                     <a href="javascript:;" style="height: 41px;line-height: 31px;" class="nav-link nav-toggle">
-                         <i class="fa fa-university"></i>
-                         <span class="title">组织机构管理</span>
-                         <span class="arrow "></span>
-                     </a>
-                     <ul class="sub-menu">
-                         <li>
-                             <a href="#/abftree.html">
-                                 <i class="icon-puzzle"></i>组织机构</span>
-                             </a>
-                         </li>
-                     </ul>
-                 </li>
-                 <li class="start nav-item">
-                     <a href="javascript:;" style="height: 41px;line-height: 31px;" class="nav-link nav-toggle">
-                         <i class="fa fa-lock"></i>
-                         <span class="title">权限管理</span>
-                         <span class="arrow "></span>
-                     </a>
-                     <ul class="sub-menu">
-                         <li>
-                             <a href="#/applicationFun.html">
-                                 <i class="icon-puzzle"></i>应用功能管理</span>
-                             </a>
-                         </li>
-                         <li>
-                             <a href="#/menuManagement.html">
-                                 <i class="icon-puzzle"></i>菜单管理</span>
-                             </a>
-                         </li>
-                         <li>
-                             <a href="javascript:;">
-                                 <i class="icon-puzzle"></i>数据形体管理</span>
-                             </a>
-                         </li>
-                         <li>
-                             <a href="javascript:;">
-                                 <i class="icon-puzzle"></i>数据范围管理</span>
-                             </a>
-                         </li>
-                         <li>
-                             <a href="#/behavior.html">
-                                 <i class="icon-puzzle"></i>功能行为类型定义</span>
-                             </a>
-                         </li>
-                         <li>
-                             <a href="#/roleManagement.html">
-                                 <i class="icon-puzzle"></i>角色管理</span>
-                             </a>
-                         </li>
-                     </ul>
-                 </li>
-                 <li class="start nav-item">
-                     <a href="javascript:;" style="height: 41px;line-height: 31px;" class="nav-link nav-toggle">
-                         <i class=" icon-user"></i>
-                         <span class="title">操作员管理</span>
-                         <span class="arrow "></span>
-                     </a>
-                     <ul class="sub-menu">
-                         <li>
-                             <a href="#/opManage.html">
-                                 <i class="icon-puzzle"></i>操作员管理</span>
-                             </a>
-                         </li>
-                         &lt;!&ndash;<li>
-                             <a href="#/roleConfig.html">
-                                 <i class="icon-puzzle"></i>个性化配置</span>
-                             </a>
-                         </li>&ndash;&gt;
-                         <li>
-                             <a href="#/Reorganizemenu.html">
-                                 <i class="icon-puzzle"></i>重组菜单</span>
-                             </a>
-                         </li>
-                         &lt;!&ndash;<li>
-                             <a href="#/shortcutMenu.html">
-                                 <i class="icon-puzzle"></i>快捷菜单</span>
-                             </a>
-                         </li>&ndash;&gt;
-                         <li>
-                             <a href="javascript:;">
-                                 <i class="icon-puzzle"></i>特殊权限</span>
-                             </a>
-                         </li>
-                         <li>
-                             <a href="#/operstatus.html">
-                                 <i class="icon-puzzle"></i>操作员身份</span>
-                             </a>
-                         </li>
-                     </ul>
-                 </li>
-                 <li class="start nav-item">
-                     <a href="javascript:;" style="height: 41px;line-height: 31px;" class="nav-link nav-toggle">
-                         <i class="fa fa-asterisk"></i>
-                         <span class="title">其他管理</span>
-                         <span class="arrow "></span>
-                     </a>
-                     <ul class="sub-menu">
-                         <li>
-                             <a href="#/dictionary.html">
-                                 <i class="fa fa-fax"></i>业务字典</span>
-                             </a>
-                         </li>
-                         <li>
-                              <a href="#/numberResources.html">
-                                  <i class="fa fa-fax"></i>序号资源表管理</span>
-                              </a>
-                         </li>
-                         <li>
-                             <a href="#/Systempara.html">
-                                 <i class="fa fa-fax"></i>系统运行参数</span>
-                             </a>
-                         </li>
-                     </ul>
-                 </li>
-             </ul>
-         </li>&ndash;&gt;
      </ul>
-     <script>
-         $('.search').hide();
-     </script>-->
-
 </div>

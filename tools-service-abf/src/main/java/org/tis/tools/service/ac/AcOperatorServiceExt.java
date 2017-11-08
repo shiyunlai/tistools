@@ -1,7 +1,8 @@
 package org.tis.tools.service.ac;
 
-import org.springframework.stereotype.Service;
+import com.alibaba.dubbo.common.utils.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.tis.tools.dao.ac.AcOperatorMapperExt;
 
 import java.util.List;
@@ -29,6 +30,49 @@ public class AcOperatorServiceExt {
      */
     public List<Map> queryOperatorFuncDetail(String operatorGuid) {
         return acOperatorMapperExt.queryOperatorFuncDetail(operatorGuid);
+    }
+
+
+    /**
+     * 查询操作员已授权功能行为
+     * @param roleGuid 角色GUID
+     * @param operatorGuid 操作员GUID
+     * @param funcGuid 功能GUID
+     * @return
+     */
+    public List<Map> getAuthOperatorFuncBhv(List<String> roleGuid, String operatorGuid, String funcGuid) {
+        if (!CollectionUtils.isEmpty(roleGuid)) {
+            StringBuilder sb = new StringBuilder("(");
+            for (int k = 0; k < roleGuid.size(); k++) {
+                sb.append("'").append(roleGuid.get(k)).append("'");
+                if (k != roleGuid.size() - 1) {
+                    sb.append(",");
+                }
+            }
+            sb.append(")");
+            return acOperatorMapperExt.getAuthOperatorFuncBhv(String.valueOf(sb), operatorGuid, funcGuid);
+        }
+        return null;
+    }
+
+    /**
+     * 查询操作员已授权功能中特别禁止行为
+     * @param operatorGuid 操作员GUID
+     * @param funcGuid 功能GUID
+     * @return
+     */
+    public List<Map> getAuthOperatorFuncFbdBhv(String operatorGuid, String funcGuid) {
+        return acOperatorMapperExt.getAuthOperatorFuncFbdBhv(operatorGuid, funcGuid);
+    }
+
+    /**
+     * 查询操作员未授权功能中特别允许行为
+     * @param operatorGuid 操作员GUID
+     * @param funcGuid 功能GUID
+     * @return
+     */
+    public List<Map> getUnauthOperatorFuncPmtBhv(String operatorGuid, String funcGuid) {
+        return acOperatorMapperExt.getUnauthOperatorFuncPmtBhv(operatorGuid, funcGuid);
     }
 
 

@@ -4,8 +4,8 @@
 package org.tis.tools.rservice.ac.capable;
 
 import org.tis.tools.model.po.ac.*;
-import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
 import org.tis.tools.rservice.ac.exception.RoleManagementException;
+
 import java.util.List;
 import java.util.Map;
 
@@ -118,7 +118,7 @@ public interface IRoleRService {
      *          角色的GUID
      * @throws RoleManagementException
      */
-    void deleteAcRole(String guid) throws RoleManagementException;
+    AcRole deleteAcRole(String guid) throws RoleManagementException;
 
     /**
      * <p>角色添加功能权限</p>
@@ -135,6 +135,15 @@ public interface IRoleRService {
      * @throws RoleManagementException
      */
     void addRoleFunc(AcRoleFunc acRoleFunc) throws RoleManagementException;
+
+    /**
+     * 配置角色功能
+     * @param roleGuid
+     * @param roleFuncList
+     * @return
+     * @throws RoleManagementException
+     */
+    List<AcRoleFunc> configRoleFunc(String roleGuid, List<AcRoleFunc> roleFuncList) throws RoleManagementException;
 
     /**
      * <p>角色移除功能权限</p>
@@ -195,7 +204,7 @@ public interface IRoleRService {
      * @param acPartyRole
      * @throws RoleManagementException
      */
-    void addRoleParty(AcPartyRole acPartyRole) throws RoleManagementException;
+    List<AcPartyRole> addRoleParty(List<AcPartyRole> acPartyRole) throws RoleManagementException;
 
     /**
      * <p>角色移除组织对象权限</p>
@@ -206,11 +215,10 @@ public interface IRoleRService {
      *     1.验证传入的对象不能为空
      *
      * </pre>
-     * @param roleGuid 角色GUID
-     * @param partyGuid  组织对象GUID
+     * @param acPartyRoles
      * @throws RoleManagementException
      */
-    void removeRoleParty(String roleGuid, String partyGuid) throws RoleManagementException;
+    List<AcPartyRole> removeRoleParty(List<AcPartyRole> acPartyRoles) throws RoleManagementException;
 
 
     /**
@@ -274,10 +282,10 @@ public interface IRoleRService {
      *          b.操作员GUID
      *
      * </pre>
-     * @param acOperatorRole
+     * @param acOperatorRoles
      * @throws RoleManagementException
      */
-    void addOperatorRole(AcOperatorRole acOperatorRole) throws  RoleManagementException;
+    List<AcOperatorRole> addOperatorRole(List<AcOperatorRole> acOperatorRoles) throws  RoleManagementException;
 
     /**
      * <p>查询角色的组织对象权限集合</p>
@@ -310,11 +318,10 @@ public interface IRoleRService {
      *     1.验证传入的对象不能为空
      *
      * </pre>
-     * @param roleGuid 角色GUID
-     * @param operatorGuid 操作员GUID
+     * @param acOperatorRoles
      * @throws RoleManagementException
      */
-    void removeOperatorRole(String roleGuid,  String operatorGuid) throws  RoleManagementException;
+    List<AcOperatorRole> removeOperatorRole(List<AcOperatorRole> acOperatorRoles) throws  RoleManagementException;
 
 
     /**
@@ -389,6 +396,29 @@ public interface IRoleRService {
      */
     List<AcRole> queryOperatorInheritRoleList(String userId) throws RoleManagementException;
 
+    /**
+     * 查询角色在功能下的行为列表
+     * @param roleGuid 需要查询的角色GUID
+     * @param funcGuid 查询的功能GUID
+     * @return 返回该角色拥有此功能的行为列表 {@link AcRoleBhv}
+     * @throws RoleManagementException
+     */
+    List<Map> queryAcRoleBhvsByFuncGuid(String roleGuid, String funcGuid) throws RoleManagementException;
 
+    /**
+     * 批量添加角色在功能下的行为列表
+     * @param acRoleBhvs 需要添加的行为列表 {@link AcRoleBhv}
+     * @return 返回添加的该行为列表 {@link AcRoleBhv}
+     * @throws RoleManagementException
+     */
+    void addAcRoleBhvs(List<AcRoleBhv> acRoleBhvs) throws RoleManagementException;
+
+    /**
+     * 批量移除角色在功能下的行为列表
+     * @param acRoleBhvs 需要移除的行为列表 {@link AcRoleBhv}
+     * @return 返回移除的该行为列表 {@link AcRoleBhv}
+     * @throws RoleManagementException
+     */
+    void removeAcRoleBhvs(List<AcRoleBhv> acRoleBhvs) throws RoleManagementException;
 
 }

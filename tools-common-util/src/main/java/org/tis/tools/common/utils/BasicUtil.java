@@ -3,11 +3,11 @@
  */
 package org.tis.tools.common.utils;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.Map.Entry;
-
-import org.apache.commons.lang.StringUtils;
 
 /**
  *
@@ -21,6 +21,18 @@ public class BasicUtil {
 
 	/**
 	 * 以 key = value 的方式显示Map对象数据
+	 * <pre>
+	 *     例：
+	 *     HashMap<String, Object> test = new HashMap<>();
+	 *     test.put("id", "1");
+	 *     test.put("name", "a");
+	 *     test.put("memo", "b");
+	 *
+	 *     BasicUtil.showMaps(test）返回：
+	 *     name = a
+	 *     memo = b
+	 *     id = 1
+	 * </pre>
 	 * @param maps
 	 * @return
 	 */
@@ -44,6 +56,12 @@ public class BasicUtil {
 	
 	/**
 	 * 检查输入的参数中是否有空值
+	 * <pre>
+	 *		BasicUtil.isEmpty(null) ==  true;
+	 *		BasicUtil.isEmpty("") ==  true;
+	 *		BasicUtil.isEmpty("a", null) ==  true;
+	 *		BasicUtil.isEmpty("a", "b") ==  false;
+	 * </pre>
 	 * @param strs
 	 * @return
 	 */
@@ -60,6 +78,10 @@ public class BasicUtil {
 	
 	/**
 	 * 对身份证号进行敏感处理
+	 * 保留前后四位，中间以6位*号替代
+	 * <pre>
+	 *      BasicUtil.ensitivePaperNo("123456190001231234") == 1234******1234
+	 * </pre>
 	 * @param paperNo
 	 */
 	public static String ensitivePaperNo(String paperNo){
@@ -69,6 +91,10 @@ public class BasicUtil {
 	
 	/**
 	 * 对手机号进行敏感处理
+	 * 保留前三位后四位，中间以4位*号替代
+	 * <pre>
+	 *      BasicUtil.ensitivePhoneNo("13812345678") == 138****5678
+	 * </pre>
 	 * @param phoneNO
 	 */
 	public static String ensitivePhoneNo(String phoneNO){
@@ -77,6 +103,10 @@ public class BasicUtil {
 
 	/**
 	 * 对账号进行敏感处理
+	 * 仅保留后四位
+	 * <pre>
+	 *      BasicUtil.ensitiveAcctNo("13812345678") == 5678
+	 * </pre>
 	 * @param acctNO
 	 */
 	public static String ensitiveAcctNo(String acctNO){
@@ -127,6 +157,9 @@ public class BasicUtil {
 	
 	/**
 	 * 连接args后输出
+	 * <pre>
+	 *     BasicUtil.concat("一", "二", "三", "四", "五") == 一二三四五
+	 * </pre>
 	 * @param args
 	 * @return 
 	 */

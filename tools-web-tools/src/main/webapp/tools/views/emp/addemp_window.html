@@ -11,12 +11,21 @@
     <div class="portlet-body portlet light">
         <form action="#" name="myform" class="form-horizontal ">
             <div class="form-body ">
-                <div class="col-md-6" >
+                <!--<div class="col-md-6" >
                     <div class="form-group">
                         <label class="control-label col-md-4">员工代码</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="subFrom.empCode" readonly />
+                        </div>
+                    </div>
+                </div>-->
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">员工代码</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="subFrom.empCode" />
                         </div>
                     </div>
                 </div>
@@ -86,7 +95,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <!--<div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">入职日期</label>
                         <div class="col-md-8">
@@ -111,7 +120,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">办公电话</label>
@@ -195,19 +204,19 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4">证件类型</label>
+                        <label class="control-label col-md-4">证件号码</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="subFrom.paperType"
+                                   ng-model="subFrom.paperNo"
                                     />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4">证件号码</label>
+                        <label class="control-label col-md-4">证件类型</label>
                         <div class="col-md-8" ng-init="$settings.getDictData('DICT_SD_PAPERTYPE')">
-                            <select class="form-control" ng-model="subFrom.paperNo">
+                            <select class="form-control" ng-model="subFrom.paperType">
                                 <option ng-repeat="d in $settings.diclist['DICT_SD_PAPERTYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>
@@ -287,11 +296,11 @@
                         <label class="control-label col-md-2"></label>
                         <div class="col-md-10">
                             <div class="actions btn-set" style="float: right;">
-                                <button type="button" name="back1" class="btn btn-primary" ng-click="shownext()" ng-if="next"> 下一步
+                               <!-- <button type="button" name="back1" class="btn btn-primary" ng-click="shownext()" ng-if="next"> 下一步
+                                </button>-->
+                                <button type="button" name="back1" class="btn btn-primary" ng-click="empadd(subFrom)"> 保存
                                 </button>
-                                <button type="button" name="back1" class="btn btn-primary" ng-click="add(subFrom)" ng-if="!next"> 保存
-                                </button>
-                                <button type="button" name="back" class="btn btn-danger" ng-click="cancel()" ng-if="!next"> 取消
+                                <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
                                 </button>
                             </div>
                         </div>

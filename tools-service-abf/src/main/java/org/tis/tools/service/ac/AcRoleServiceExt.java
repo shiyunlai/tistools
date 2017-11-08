@@ -4,11 +4,7 @@
  */
 package org.tis.tools.service.ac;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import com.alibaba.dubbo.common.utils.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tis.tools.base.WhereCondition;
@@ -16,6 +12,12 @@ import org.tis.tools.dao.ac.AcRoleMapper;
 import org.tis.tools.dao.ac.AcRoleMapperExt;
 import org.tis.tools.model.po.ac.AcPartyRole;
 import org.tis.tools.model.po.ac.AcRole;
+import org.tis.tools.model.po.ac.AcRoleBhv;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -119,6 +121,37 @@ public class AcRoleServiceExt {
 	 */
 	public List<AcRole> queryEmployeeAllPartyRoleList(String empGuid) {
 		return acRoleMapperExt.queryEmployeeAllPartyRoleList(empGuid);
+	}
+
+	/**
+	 * 查询角色在功能下的行为列表
+	 *
+	 * @param roleGuid 需要查询的角色GUID
+	 * @param funcGuid 查询的功能GUID
+	 * @return 返回该角色拥有此功能的行为列表 {@link AcRoleBhv}
+	 */
+	public List<Map> queryAcRoleBhvsByFuncGuid(String roleGuid, String funcGuid) {
+		return acRoleMapperExt.queryAcRoleBhvsByFuncGuid(roleGuid, funcGuid);
+	}
+
+	/**
+	 * 删除角色在功能下的行为列表
+	 *
+	 * @param roleGuid 需要查询的角色GUID
+	 * @param funcGuids 查询的功能GUID集合
+	 */
+	public void deleteAcRoleBhvsByFuncGuid(String roleGuid, List<String> funcGuids) {
+		if (!CollectionUtils.isEmpty(funcGuids)) {
+			StringBuilder sb = new StringBuilder("(");
+			for (int k = 0; k < funcGuids.size(); k++) {
+				sb.append("'").append(funcGuids.get(k)).append("'");
+				if (k != funcGuids.size() - 1) {
+					sb.append(",");
+				}
+			}
+			sb.append(")");
+			acRoleMapperExt.deleteAcRoleBhvsByFuncGuid(roleGuid, String.valueOf(sb));
+		}
 	}
 
 

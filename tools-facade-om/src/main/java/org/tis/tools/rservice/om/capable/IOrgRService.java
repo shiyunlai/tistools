@@ -145,7 +145,7 @@ public interface IOrgRService {
 	 * @return 修改后的机构信息
 	 * @throws ToolsRuntimeException
 	 */
-	void updateOrg(OmOrg omOrg) throws ToolsRuntimeException;
+	OmOrg updateOrg(OmOrg omOrg) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -329,7 +329,7 @@ public interface IOrgRService {
 	 *            待删除机构的org_code（机构代码）
 	 * @throws ToolsRuntimeException
 	 */
-	void deleteEmptyOrg(String orgCode) throws ToolsRuntimeException;
+	OmOrg deleteEmptyOrg(String orgCode) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>

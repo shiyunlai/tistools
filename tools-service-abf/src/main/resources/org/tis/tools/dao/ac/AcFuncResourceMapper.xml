@@ -9,18 +9,18 @@
 	    INSERT INTO AC_FUNC_RESOURCE 
 	    (
 	    	 guid_func
-	    	,res_type
-	    	,res_path
-	    	,compack_name
-	    	,res_show_name
+	    	,attr_type
+	    	,attr_key
+	    	,attr_value
+	    	,memo
 	    )
 	    VALUES 
 	    (
 			#{guidFunc,jdbcType=VARCHAR},
-			#{resType,jdbcType=VARCHAR},
-			#{resPath,jdbcType=VARCHAR},
-			#{compackName,jdbcType=VARCHAR},
-			#{resShowName,jdbcType=VARCHAR}
+			#{attrType,jdbcType=VARCHAR},
+			#{attrKey,jdbcType=VARCHAR},
+			#{attrValue,jdbcType=VARCHAR},
+			#{memo,jdbcType=VARCHAR}
   		)
  	</insert>
  	
@@ -30,17 +30,17 @@
 		<if test="guidFunc != null" >
 			guid_func = #{guidFunc,jdbcType=VARCHAR},
 		</if>
-		<if test="resType != null" >
-			res_type = #{resType,jdbcType=VARCHAR},
+		<if test="attrType != null" >
+			attr_type = #{attrType,jdbcType=VARCHAR},
 		</if>
-		<if test="resPath != null" >
-			res_path = #{resPath,jdbcType=VARCHAR},
+		<if test="attrKey != null" >
+			attr_key = #{attrKey,jdbcType=VARCHAR},
 		</if>
-		<if test="compackName != null" >
-			compack_name = #{compackName,jdbcType=VARCHAR},
+		<if test="attrValue != null" >
+			attr_value = #{attrValue,jdbcType=VARCHAR},
 		</if>
-		<if test="resShowName != null" >
-			res_show_name = #{resShowName,jdbcType=VARCHAR}
+		<if test="memo != null" >
+			memo = #{memo,jdbcType=VARCHAR}
 		</if>
 	    </set>
 	    WHERE guid = #{guid}
@@ -50,12 +50,12 @@
     	UPDATE AC_FUNC_RESOURCE 
 	    <set>
 		guid_func = #{guidFunc,jdbcType=VARCHAR},
-		res_type = #{resType,jdbcType=VARCHAR},
-		res_path = #{resPath,jdbcType=VARCHAR},
-		compack_name = #{compackName,jdbcType=VARCHAR},
-		res_show_name = #{resShowName,jdbcType=VARCHAR}
+		attr_type = #{attrType,jdbcType=VARCHAR},
+		attr_key = #{attrKey,jdbcType=VARCHAR},
+		attr_value = #{attrValue,jdbcType=VARCHAR},
+		memo = #{memo,jdbcType=VARCHAR}
 	    </set>
-	    WHERE guidFunc = #{guidFunc}
+	    WHERE guid = #{guid}
  	</update>
  	 
     <delete id="delete" parameterType="java.lang.String">
@@ -72,17 +72,17 @@
 		<if test="domain.guidFunc != null" >
         	guid_func = #{domain.guidFunc,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.resType != null" >
-        	res_type = #{domain.resType,jdbcType=VARCHAR},
+		<if test="domain.attrType != null" >
+        	attr_type = #{domain.attrType,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.resPath != null" >
-        	res_path = #{domain.resPath,jdbcType=VARCHAR},
+		<if test="domain.attrKey != null" >
+        	attr_key = #{domain.attrKey,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.compackName != null" >
-        	compack_name = #{domain.compackName,jdbcType=VARCHAR},
+		<if test="domain.attrValue != null" >
+        	attr_value = #{domain.attrValue,jdbcType=VARCHAR},
       	</if>
-		<if test="domain.resShowName != null" >
-        	res_show_name = #{domain.resShowName,jdbcType=VARCHAR}
+		<if test="domain.memo != null" >
+        	memo = #{domain.memo,jdbcType=VARCHAR}
       	</if>
 	    </set>
 	   <where>${wc.condition}</where>
@@ -108,9 +108,9 @@
   
 	<sql id="Base_Column_List" >
 		 guid_func as guidFunc
-		,res_type as resType
-		,res_path as resPath
-		,compack_name as compackName
-		,res_show_name as resShowName
+		,attr_type as attrType
+		,attr_key as attrKey
+		,attr_value as attrValue
+		,memo as memo
 	</sql>
 </mapper>

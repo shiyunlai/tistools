@@ -212,7 +212,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-4">主管岗位:</label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control"
+                                    <input type="text" class="form-control" translate-constants comtable="POS"
                                            ng-model="busiorg.item.guidPosition"
                                            name="id" readonly/>
                                 </div>
@@ -299,17 +299,18 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label col-md-4">主管岗位:</label>
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control"
-                                           ng-model="subFrom.guidPosition"
-                                           name="id" />
+                                <div class="col-md-8" ng-init="$settings.getCommData('POS')">
+                                    <select class="form-control" ng-model="subFrom.guidPosition">
+                                        <option ng-repeat="d in $settings.commlist['POS'] track by $index" value="{{d.guid}}">{{d.positionName}}</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-md-12">
                             <div class="form-group">
                                 <div class="actions btn-set" style="float: right;">
-                                    <button type="button" name="back" class="btn btn-primary" ng-click="busiorg.save()"> 保存
+                                    <button type="button" name="back" class="btn btn-primary" ng-click="busiorg.save(subFrom)"> 保存
                                     </button>
                                     <button type="button" name="back" class="btn btn-danger" ng-click="busiorg.back()"> 返回
                                     </button>

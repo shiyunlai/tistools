@@ -10,23 +10,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.common.utils.BasicUtil;
-import org.tis.tools.common.utils.StringUtil;
 import org.tis.tools.model.def.JNLConstants;
-import org.tis.tools.rservice.log.capable.IOperateLogRService;
-import org.tis.tools.model.vo.log.OperateLogBuilder;
 import org.tis.tools.model.vo.log.LogOperateDetail;
+import org.tis.tools.model.vo.log.OperateLogBuilder;
+import org.tis.tools.rservice.log.capable.IOperateLogRService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Date;
 import java.util.Map;
 
 import static org.tis.tools.webapp.util.AjaxUtils.RETMESSAGE;
@@ -39,12 +35,16 @@ public class OperateLogHandler {
     IOperateLogRService logOperatorRService;
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private JoinPoint point;
 
     @Pointcut("@annotation(org.tis.tools.webapp.log.OperateLog)")
     public void methodCachePointcut() {}
 
     @Pointcut("@annotation(org.springframework.web.bind.annotation.RequestMapping)")
     public void requestPointcut() {}
+
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.RequestBody)")
+    public void requestBodyPointcut() {}
 
     /**
      * 统一处理 LOG4J
@@ -53,11 +53,10 @@ public class OperateLogHandler {
     @Before("requestPointcut()")
     public void enterController(JoinPoint point) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        String reqInfo = "";
+        String reqInfo = "{}";
         for(Object arg : point.getArgs()){
-            if (arg.getClass() == String.class) {
+            if (arg != null && arg.getClass() == String.class) {
                 reqInfo = String.valueOf(arg);
-                break;
             }
         }
         logger.info(" [请求] Request URL:{}; Request Method:{}; Request Body:{}", BasicUtil.wrap(request.getPathInfo(), request.getMethod(), reqInfo)) ;
@@ -89,6 +88,7 @@ public class OperateLogHandler {
                 .setOperateType(log.operateType())
                 .setProcessDesc(log.operateDesc())
                 .setRestfulUrl(request.getPathInfo());
+
         LogThreadLocal.setLogBuilderLocal(logBuilder);
     }
 
@@ -99,25 +99,40 @@ public class OperateLogHandler {
      */
     @AfterReturning(value = "@annotation(logAnt)", returning = "ret")
     public void logAfterExecution(JoinPoint point, Map<String, Object> ret, OperateLog logAnt) throws Throwable {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         LogOperateDetail log = LogThreadLocal.getLogBuilderLocal().getLog();
         log.setOperateResult(JNLConstants.OPERATE_STATUS_SUCCESS);
 
+        // 添加数据变化项（LogAbfChange）到操作日志
+        JSONObject reqData = new JSONObject();
+
+        for(Object arg : point.getArgs()){
+            if (arg != null &&  String.class.equals(arg.getClass())) {
+                try{
+                    reqData = JSONObject.parseObject(String.valueOf(arg));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         String objStr = JSON.toJSONString(ret.get(RETMESSAGE));
         if(logAnt.retType() == ReturnType.Object) {
             JSONObject jsonObject = JSONObject.parseObject(objStr);
+            JSONObject changeData = reqData.getJSONObject("changeData");
             if(StringUtils.isNotBlank(logAnt.id())) {
                 log.addObj()
                         .setObjGuid(jsonObject.getString(logAnt.id()))
-                        .setObjName(jsonObject.getString(logAnt.name()))
+                        .setObjName(StringUtils.isBlank(logAnt.name()) ? null : jsonObject.getString(logAnt.name()))
                         .setObjValue(objStr);
                 for (String key : logAnt.keys()) {
                     log.getObj(0).addKey(key, jsonObject.getString(key));
                 }
+                if(changeData != null)
+                    changeData.keySet().forEach(key -> log.getObj(0).addChangeItem(key, changeData.getString(key)));
             }
 
         } else if(logAnt.retType() == ReturnType.List) {
             JSONArray array = JSONObject.parseArray(objStr);
+            JSONArray changeData = reqData.getJSONArray("changeData");
             if(StringUtils.isNotBlank(logAnt.id())) {
                 for (int i = 0; i < array.size(); i++) {
                     JSONObject jsonObject = array.getJSONObject(i);
@@ -125,12 +140,15 @@ public class OperateLogHandler {
                     for (String key : logAnt.keys()) {
                         log.getObj(i).addKey(key, jsonObject.getString(key));
                     }
+                    int finalI = i;
+                    if(changeData != null)
+                        changeData.getJSONObject(i).keySet()
+                            .forEach(key ->
+                                    log.getObj(finalI).addChangeItem(key, changeData.getJSONObject(finalI).getString(key)));
                 }
             }
         }
         saveLogInfo();
-
-
     }
 
     /**

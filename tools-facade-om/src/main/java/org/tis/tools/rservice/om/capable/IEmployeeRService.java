@@ -3,13 +3,16 @@
  */
 package org.tis.tools.rservice.om.capable;
 
-import java.util.List;
-
 import org.tis.tools.base.exception.ToolsRuntimeException;
+import org.tis.tools.model.def.OMConstants;
+import org.tis.tools.model.po.om.OmEmpOrg;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.po.om.OmPosition;
 import org.tis.tools.model.vo.om.OmEmployeeDetail;
+import org.tis.tools.rservice.om.exception.EmployeeManagementException;
+
+import java.util.List;
 
 /**
 * <pre>
@@ -249,7 +252,7 @@ public interface IEmployeeRService {
 	 * @return 修改后的员工信息
 	 * @throws ToolsRuntimeException
 	 */
-	void updateEmployee(OmEmployee newEmployee) throws ToolsRuntimeException;
+	OmEmployee updateEmployee(OmEmployee newEmployee) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -379,12 +382,12 @@ public interface IEmployeeRService {
 	/**
 	 * 添加人员-机构关系表数据
 	 */
-	void insertEmpOrg(String orgGuid,String empGuid);
+	OmEmpOrg insertEmpOrg(String orgGuid, String empGuid);
 	
 	/**
 	 * 删除人员-机构关系表数据
 	 */
-	void deleteEmpOrg(String orgGuid,String empGuid);
+	OmEmpOrg deleteEmpOrg(String orgGuid,String empGuid);
 
 	/**
 	 * 添加人员-机构关系表数据
@@ -430,4 +433,18 @@ public interface IEmployeeRService {
 	 * 查询所有人员信息
 	 */
 	List<OmEmployee> queryAllEmployyee();
+
+	/**
+	 * 改变员工状态
+	 *
+	 * @param empGuid 员工GUID
+	 * @param status  员工状态
+	 * @see OMConstants#EMPLOYEE_STATUS_OFFER 在招
+	 * @see OMConstants#EMPLOYEE_STATUS_OFFJOB 离职
+	 * @see OMConstants#EMPLOYEE_STATUS_ONJOB 在职
+	 * @return
+	 * @throws EmployeeManagementException
+	 *
+	 */
+	OmEmployee changeEmpStatus(String empGuid, String status) throws EmployeeManagementException;
 }

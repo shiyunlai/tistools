@@ -3,21 +3,16 @@
  */
 package org.tis.tools.webapp.impl.dubboinfo;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.alibaba.dubbo.common.URL;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.tis.tools.common.utils.DirectoryUtil;
 import org.tis.tools.webapp.exception.WebAppException;
 import org.tis.tools.webapp.spi.dubboinfo.DubboServiceInfo;
 import org.tis.tools.webapp.spi.dubboinfo.IDubboInfoManager;
 
-import com.alibaba.dubbo.common.URL;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author megapro
@@ -30,7 +25,8 @@ public class BiztraceManager implements IDubboInfoManager {
 	/** duboo服务注册缓存文件 */
 	private static final String CACHE_TOOLS_WEB_TOOLS_CACHE = "dubbo/cache/tools-web-tools.cache";//fixme 重构 使用disoncf
 	/** biztrace 服务的url开头标示字符串 */
-	private static final String BIZTRACE_SERVICE_HEADSTR = "biztrace/org.tis.tools.service.api.biztrace.IBiztraceRService";
+	private static final String BIZTRACE_SERVICE_HEADSTR = "biztrace/org.t"
+			+ "is.tools.service.api.biztrace.IBiztraceRService";
 	
 	public static BiztraceManager instance = new BiztraceManager() ; 
 	
@@ -90,7 +86,7 @@ public class BiztraceManager implements IDubboInfoManager {
 			
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new WebAppException("获取所有biztrace代理服务信息列表失败！",e) ;
+			throw new WebAppException("WEB-0001", "获取所有biztrace代理服务信息列表失败！",e) ;
 		}
 		return md;
 	}

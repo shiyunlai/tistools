@@ -39,12 +39,16 @@
         <div ui-grid="empgrid"
              ui-grid-pagination
              ui-grid-selection ui-grid-resize-columns></div>
-        <div class="actions btn-set" style="float: right;">
+        <div class="actions btn-set" style="float: right;margin-top:20px;">
             <button type="button" name="back" class="btn btn-primary" ng-click="emp.add({})"> 新增
             </button>
             <button type="button" name="back" class="btn btn-primary" ng-click="emp.edit()" ng-disabled="!buttonflag"> 编辑基础信息
             </button>
-            <button type="button" name="back" class="btn btn-primary" ng-click="emp.editoper()" ng-disabled="!buttonflag"> 编辑相关操作员信息
+            <button type="button" name="back" class="btn btn-primary" ng-click="emp.editoper()" ng-if="editoper"> 编辑相关操作员
+            </button>
+            <button type="button" name="back" class="btn btn-primary" ng-if="empentry" ng-click="emp.Entry()" > 入职
+            </button>
+            <button type="button" name="back" class="btn btn-primary" ng-if="empleave" ng-click="emp.Leave()"> 离职
             </button>
             <button type="button" name="back" class="btn btn-primary" ng-click="emp.detail()" ng-disabled="!buttonflag"> 查看详情
             </button>
@@ -92,7 +96,7 @@
                         <label class="control-label col-md-4">性别</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.gender"
+                                   ng-model="item.gender" translate-constants comtable="DICT_OM_GENDER"
                                    ng-readonly="editflag"/>
                         </div>
                     </div>
@@ -249,7 +253,7 @@
                         <label class="control-label col-md-4">证件类型</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="item.paperType"
+                                   ng-model="item.paperType"  translate-constants comtable="DICT_SD_PAPERTYPE"
                                    ng-readonly="editflag"/>
                         </div>
                     </div>
@@ -366,7 +370,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <!--<div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">可授权角色</label>
                         <div class="col-md-8">
@@ -375,7 +379,7 @@
                                    ng-readonly="editflag"/>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">可管理机构</label>

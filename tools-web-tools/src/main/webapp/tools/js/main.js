@@ -11,6 +11,7 @@ var MetronicApp = angular.module("MetronicApp", [
     "ui.bootstrap",
     "oc.lazyLoad",
     "ngSanitize",
+    "ngSanitize",
     'angularFileUpload',
     'ui.grid',
     'ui.grid.selection',
@@ -48,7 +49,6 @@ function action(bdy){
     COH.tranTellerNo = "";
     COH.TRANSTIME = getHMS();
     COH.TRANSAUTHNO = "";
-
     CTL.TRANSMODELSERVICE="TCM";
     CTL.TRANSMODEL="1";
     CTL.ISREGOPRTRACE="";
@@ -59,15 +59,11 @@ function action(bdy){
     CTL.PAGENO="0";
     CTL.PAGELENGTH="20";
     CTL.OPERATEMODEL="";
-
     BDY = bdy;
-
     request.COH = COH;
     request.CTL = CTL;
     request.BDY = BDY;
-
     return request;
-
 }
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
@@ -116,6 +112,8 @@ MetronicApp.config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
  **/
 
 
+
+
 MetronicApp.factory('httpInterceptor', ['$log', function($log) {
     return {
         //请求的方法
@@ -148,6 +146,13 @@ MetronicApp.factory('httpInterceptor', ['$log', function($log) {
 MetronicApp.config(['$httpProvider', function($httpProvider) {
     $httpProvider.interceptors.push('httpInterceptor');
 }]);
+
+/* 统一添加请求头方法，弊端，可以给不同的请求方式添加统一的请求头，不符合需求
+MetronicApp.config(['$httpProvider', function($httpProvider) {
+    $httpProvider.defaults.headers.common = { 'My-Header' : 'testceshi' }
+}]);
+*/
+
 
 
 //AngularJS v1.3.x workaround for old style controller declarition in HTML
@@ -257,6 +262,7 @@ MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http
             if(_.isNil(settings.commlist[type])) {
                 $http.post(manurl + "/om/emp/queryemployee").then(function (response) {
                     settings.commlist[type] = response.data.retMessage;
+                    console.log(response.data.retMessage)
                 });
             }
         }else if(type == "ROLE"){
@@ -268,6 +274,7 @@ MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http
         }else if(type == "DUTY"){
             if(_.isNil(settings.commlist[type])) {
                 $http.post(manurl + "/om/duty/loadallduty").then(function (response) {
+                    console.log(response)
                     settings.commlist[type] = response.data.retMessage;
                 });
             }
@@ -277,9 +284,23 @@ MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http
                     settings.commlist[type] = response.data.retMessage;
                 });
             }
+        }else if(type == "OPER"){
+            if(_.isNil(settings.commlist[type])) {
+                $http.post(manurl + "/AcOperatorController/getOperatorsNotLinkEmp",{}).then(function (response) {
+                    settings.commlist[type] = response.data.retMessage;
+                    console.log(response.data.retMessage)
+                });
+            }
         }else if(type == "DICT"){
             if(_.isNil(settings.commlist[type])) {
                 $http.post(manurl + "/DictController/querySysDictList",{}).then(function (response) {
+                    settings.commlist[type] = response.data.retMessage;
+                });
+            }
+        }else if(type == "BHVTYPE"){
+            //查询所有行为类型
+            if(_.isNil(settings.commlist[type])) {
+                $http.post(manurl + "/AcAppController/functypequery",{}).then(function (response) {
                     settings.commlist[type] = response.data.retMessage;
                 });
             }
@@ -297,7 +318,11 @@ MetronicApp.controller('AppController', ['$scope','$rootScope','$http','$q', fun
         App.initComponents(); // init core components
         //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive
     });*/
-    var res = $http.get(manurl + '/tools/json/service.json').then(function (response) {
+    /*var res = $http.get(manurl + '/tools/json/service.json').then(function (response) {
+        $rootScope.res = response.data;//绑定到rootscope中，在其他页面可以直接调用
+        return response;
+    })*/
+    var res = $http.get('./json/service.json').then(function (response) {
         $rootScope.res = response.data;//绑定到rootscope中，在其他页面可以直接调用
         return response;
     })
@@ -316,7 +341,21 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
         Demo.init();
-        var res = $rootScope.res.login_service;//页面所需调用的服务
+        // var res = $rootScope.res.login_service;//页面所需调用的服务
+        var ret ={ctrl: "AcAuthenticationController", func: "pageInit", emo: "页面初始化"};
+        common_service.post(ret,{}).then(function(data){
+            if(data.status == "success"){
+                var session = data.retMessage.user;
+                session.opertor = sessionStorage.opertor;//身份绑定;
+                $scope.userId = session.userId;//绑定登陆信息
+                userinfo(data.retMessage.user);//登陆信息页面
+                passedit(data.retMessage.user);//修改密码页面
+                opermenu($scope.userId);//重组菜单入口
+                persona(session);//个性化配置入口
+                $rootScope.menus = angular.fromJson(data.retMessage.menu);
+            }
+        })
+        /*var res = $rootScope.res.login_service;//页面所需调用的服务
         common_service.post(res.pageInit,{}).then(function(data){
             if(data.status == "success"){
                  var session = data.retMessage.user;
@@ -325,11 +364,10 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
                 userinfo(data.retMessage.user);//登陆信息页面
                 passedit(data.retMessage.user);//修改密码页面
                 opermenu($scope.userId);//重组菜单入口
-                persona($scope.userId);//个性化配置入口
+                persona(session);//个性化配置入口
                 $rootScope.menus = angular.fromJson(data.retMessage.menu);
             }
-        })
-        //拿到用户信息
+        })*/
     });
     //个人信息页面
     function userinfo(item){
@@ -349,11 +387,11 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
             )
         }
     }
-
     //修改密码页面
     function passedit(datas){
         $scope.improved = function(){
-            var res = $rootScope.res.login_service;
+           /* var res = $rootScope.res.login_service;*/
+            var ret ={"ctrl": "AcAuthenticationController", "func": "updatePassword","emo":"修改密码"};
             openwindow($uibModal, 'views/landinginfor/Improved.html','lg',
                 function ($scope, $modalInstance) {
                     $scope.add = function(item){//保存新增的函数
@@ -361,7 +399,7 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
                         subFrom.userId =datas.userId;
                         subFrom.newPwd =item.newPassword ;
                         subFrom.oldPwd =item.oldPassword;
-                        common_service.post(res.updatePassword,subFrom).then(function(data){
+                        common_service.post(ret,subFrom).then(function(data){
                             if(data.status == "success"){
                                 toastr['success']("修改成功！");
                                 $modalInstance.close();
@@ -379,8 +417,8 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
     //注销登录
     $scope.logout  = function(){
        if(confirm('是否确定注销')){
-           var res = $rootScope.res.login_service;//页面所需调用的服务
-           common_service.post(res.logout,{}).then(function(data){
+           var res = {"ctrl": "AcAuthenticationController", "func": "logout","emo":"注销登陆"}//页面所需调用的服务
+           common_service.post(res,{}).then(function(data){
                if(data.status == "success"){
                    window.location = "../tools/login.html";//如果正确，则进入主页
                }
@@ -397,8 +435,10 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
     }
     //个性化配置页面
     function persona(item){
+        var opertis = {"userid":item.userId,"operguid":item.guid}
+        var jsonObj= angular.toJson(opertis);//传对象，必须转成json格式传入
         $scope.personalise = function(){
-            $state.go("roleConfig",{id:item})
+            $state.go("roleConfig",{'id':jsonObj})
         }
     }
 }]);
@@ -407,44 +447,55 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
 MetronicApp.controller('SidebarController', ['$scope', '$timeout','$rootScope','common_service',function($scope,$timeout,$rootScope,common_service) {
     $scope.$on('$includeContentLoaded', function () {
         Layout.initSidebar(); // init sidebar
+        //拿不到数据,目前先写死 在找原因
         //调用菜单
-        var res = $rootScope.res.login_service;//页面所需调用的服务
-        common_service.post(res.pageInit, {}).then(function (data) {
+        /*var res = $rootScope.res.login_service;//页面所需调用的服务
+        common_service.post(res.pageInit, {}).then(function (data) {*/
+            var ret ={ctrl: "AcAuthenticationController", func: "pageInit", emo: "页面初始化"};
+            common_service.post(ret, {}).then(function (data) {
             if (data.status == "success") {
                 var sessionjson = angular.fromJson(data.retMessage.menu);
                 $scope.menusAndTrans = angular.copy(sessionjson);
-                //搜索框点击事件调用
+                $scope.issearchmenu = false;//让搜索菜单隐藏
+                //搜索框改变事件调用
                 $scope.test = function (searchParam) {
                     if (_.isEmpty(searchParam)) { //如果是数组
-                        $('.search').html('');//制空
+                        // $('.search').html('');//制空
+                        $scope.searchParam = '';//把搜索内容复制过去
                         $('.search').slideUp();//让搜索的内容隐藏
                         $(".ids1").slideDown();//让原本的树结构显示
+                        $scope.issearchmenu = false;//让搜索菜单隐藏
                     }
                 }
                 //调用搜索逻辑
                 $scope.search = function (searchParam) {
                     //如果不是数组,说明有搜索值,那就进行处理
-                    search([sessionjson], searchParam);//调用搜索方法，传入搜索的值
-                    $timeout(function () {
-                        $(".ids1").slideUp();//让原本的菜单结构隐藏
-                    })
+                    if (_.isEmpty(searchParam)) { //如果是数组
+                      /*  $('.search').slideDown();//让搜索的内容隐藏
+                        $(".ids1").slideUp();//让原本的树结构显显示*!/*/
+                    }else{
+                        $scope.issearchmenu = true;//让搜索菜单隐藏
+                        $scope.searchParam = searchParam;//把搜索内容复制过去
+                        search([sessionjson], searchParam);//调用搜索方法，传入搜索的值
+                       //看是否能用动画来做
+                    }
                 };
             }
         })
 
         function search(all, key) { //包装了一个搜索方法，只要数据结构做成类似的，这个直接拿来用。
-            $('.search').html('');//制空
+            // $('.search').html('');//制空
             var sum = 0;//标识，判断第几次循环
             var html = ''//字符串模板
             var num = all//数组
             getArray(all, key);//调用
             function getArray(data, key) {
                 sum++;//标识++
-                var sumer = sum + 1;
-                if (!isNull(num)) {//如果不为空，那就进行处理
+                var sumer = sum+1;
+                if(!isNull(num)){
                     num = [];
-                    for (var i = 0; i < data.length; i++) {
-                        if (!isNull(data[i].children)) {
+                    for(var i=0;i< data.length;i++){
+                        if(!isNull(data[i].children)){
                             num = num.concat(data[i].children);//把所有的子合并在一个数组中。即把所有的子取出
                         }
                     }
@@ -452,53 +503,51 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout','$rootScope','
                 if (sum == 1) {//sum是标识，区分第一次循环
                     for (var i = 0; i < data.length; i++) {
                         if (data[i].isLeaf == 'Y') {//如果是，那么按照最后一层循环
-                            html += '<a href=" ' + data[i].href + '"><i class="' + data[i].icon + '"></i><span class="title">' + data[i].label + '</span></a><ul class="sub-menu ids' + sumer + '" id="' + 'ABF' + data[i].guid + '"></ul>'
+                            html +=  '<li class="nav-item"><a href=" '+ data[i].href + '"><i class="'+data[i].icon+'"></i><span class="title">'+data[i].label+'</span></a><ul class="sub-menu search'+ sumer +'" id="'+ data[i].guid +'"></ul></li>'
                         } else {//如果不是，按照正常循环方式
-                            html += '<a href="javascript:;"><i class="' + data[i].icon + '"></i><span class="title">' + data[i].label + '</span> <span class="arrow "></span></a><ul class="sub-menu idss' + sumer + '" id="' + 'ABF' + data[i].guid + '"></ul>'
+                            html +=  '<li class="nav-item"><a href="javascript:;"><i class="'+data[i].icon+'"></i><span class="title">'+data[i].label+'</span> <span class="arrow "></span></a><ul class="sub-menu search'+ sumer +'" id="'+ data[i].guid +'"></ul></li>'
                         }
                     }
-                    $(".search").append(html);//追加到li中
+                    $(".search" + sum).append(html);//追加到li中
                 }
-                for (var j = 0; j < data.length; j++) {//循环，拿到第一层,与本身这层进行判断，找到对应的层级，guid和parentguid匹配
+
+                for(var j =0;j<data.length;j++){//循环，拿到第一层,与本身这层进行判断，找到对应的层级，guid和parentguid匹配
                     var array = [];
-                    for (var i = 0; i < num.length; i++) {//循环所有的子级，然后进行匹配
-                        if (data[j].guid == num[i].parentGuid) {
+                    for(var i =0; i<num.length;i++){//循环所有的子级，然后进行匹配
+                        if(data[j].guid == num[i].parentGuid){
                             array.push(num[i]);
                         }
                     }
                     var htmltwo = '';//模板标识
+                    array.forEach(function(v,i){
+                        if(array[i].isLeaf =='Y'){//是否是最后一层，如果是，那么按照最后一层的样式拼接
+                            /*if(array[i].label.indexOf(key)>0){
+                                console.log(array[i])
+                            }*/
+                            if(array[i].label.indexOf(key) == 0){
+                                console.log(array[i])
+                                htmltwo += '<li><a style="height: 41px;line-height: 31px;"  href="#/'+array[i].href + '"><i class="'+array[i].icon+'"></i><span class="title">'+array[i].label+'</span></a></li>'
+                                // htmltwo += '<li class="start nav-item"><a  style="height: 41px;line-height: 31px;"   href="javascript:;"><i class="'+array[i].icon+'"></i><span class="title">'+array[i].label+'</span><span class="arrow "></span></a><ul class="sub-menu search'+ sumer +'"id="'+ array[i].guid+'"></ul></li>'
+                            }
 
-                    var indexofs = [];
-                    array.forEach(function (v, i) {
-                        if (array[i].label.indexOf(key) != -1) {
-                            indexofs.push(array[i]);//匹配的放入数组中
+                        }else if(array[i].isLeaf !=='Y' && !isNull(array[i].children) ){//否则，按照非最后一层样式拼接
+                            /*if(array[i].label.indexOf(key) == 0){
+                                htmltwo += '<li class="start nav-item"><a  style="height: 41px;line-height: 31px;"   href="javascript:;"><i class="'+array[i].icon+'"></i><span class="title">'+array[i].label+'</span><span class="arrow "></span></a><ul class="sub-menu ids'+ sumer +'"id="'+ array[i].guid+'"></ul></li>'
+                            }*//*if(array[i].label.indexOf(key) == 0){
+                                htmltwo += '<li class="start nav-item"><a  style="height: 41px;line-height: 31px;"   href="javascript:;"><i class="'+array[i].icon+'"></i><span class="title">'+array[i].label+'</span><span class="arrow "></span></a><ul class="sub-menu ids'+ sumer +'"id="'+ array[i].guid+'"></ul></li>'
+                            }*/
                         }
                     })
-                    var strea = ''
-                    for (var i = 0; i < indexofs.length; i++) {//匹配的内容
-                        if (indexofs[i].isLeaf == 'Y') {
-                            //是最后一层
-                            htmltwo += '<li><a  href="#/' + indexofs[i].href + '"><i class="' + indexofs[i].icon + '"></i><span class="title">' + indexofs[i].label + '</span></a></li>'
-                            strea = true;
-                        } else {
-                            htmltwo += '<li class="start nav-item"><a  style="height: 41px;line-height: 31px;"   href="javascript:;"><i class="' + indexofs[i].icon + '"></i><span class="title">' + indexofs[i].label + '</span><span class="arrow "></span></a><ul class="sub-menu ids' + sumer + '"id="' + 'ABF' + indexofs[i].guid + '"></ul></li>'
-                            strea = false;
-                        }
-                        if (strea) {
-                            $('.idss2').append(htmltwo);//追加到对应的父节点的标签中
-                        } else {
-                            $('#' + 'ABF' + indexofs[i].guid).append(htmltwo);//追加到对应的父节点的标签中
-                        }
-                    }
+
+                    $('#'+data[j].guid).append(htmltwo);//追加到对应的父节点的标签中
+                }
+                if(sum<40){//标识,如果有children,那么就一直递归下去
+                    getArray(num,key);//递归调用
+                }else{
+                    return num;
                 }
             }
 
-            if (sum < 40) {//标识,如果有children,那么就一直递归下去
-                getArray(num, key);//递归调用
-            } else {
-                return num;
-            }
-            $('.search').slideDown();//让搜索内容显示
         }
     });
 }]);
@@ -512,12 +561,14 @@ MetronicApp.controller('QuickSidebarController', ['$scope', function($scope) {
 }]);
 
 /* Setup Layout Part - Sidebar */
+/*
 MetronicApp.controller('PageHeadController', ['$scope', function($scope) {
     $scope.$on('$includeContentLoaded', function() {
         Demo.init(); // init theme panel
     });
 }]);
 
+*/
 
 /* Setup Layout Part - Footer */
 MetronicApp.controller('FooterController', ['$scope', function($scope) {
@@ -526,11 +577,64 @@ MetronicApp.controller('FooterController', ['$scope', function($scope) {
     });
 }]);
 
-/*MetronicApp.controller('ThemePanelController', ['$scope', function($scope) {
+MetronicApp.controller('ThemePanelController', ['$scope','common_service','$rootScope', '$http' ,function($scope,common_service,$rootScope,$http) {
     $scope.$on('$includeContentLoaded', function() {
+        var color_ = localStorage.getItem("colors_")
+        $('#style_color1').attr("href", Layout.getLayoutCssPath() + 'themes/' + color_ + ".css");//设置成我们想要的
+
+        var res = $rootScope.res.login_service;//页面所需调用的服务
+        common_service.post(res.pageInit,{}).then(function(data){
+            if(data.status == "success"){
+                var session = data.retMessage.user;
+                //获取用户选择的配置信息
+                getsubColor(session)
+                //存储用户选择颜色信息
+                subjectColor(session.guid)
+
+            }
+        })
         Demo.init(); // init theme panel
+        //存储主题风格颜色内容
+        function subjectColor(operguid){
+            $("#proid").find("li").on("click",function(){
+                var tis = $(this).attr('data-style');//用户选择的颜色值
+                var res = $rootScope.res.operator_service;//页面所需调用的服务
+                var subFrom = {};
+                subFrom.guidOperator = operguid;
+                subFrom.guidConfig = 'OPERATORCFG1507720783';
+                subFrom.configValue = tis;
+                //把用户选择的颜色存入后台
+                common_service.post(res.saveOperatorLog,subFrom).then(function(data){
+                    var datas = data.retMessage;
+                    if(data.status == "success"){
+                        toastr['success']("保存成功");
+                    }
+                })
+            })
+        }
+        //取用户存储的主题风格颜色
+        function getsubColor(item){
+            var subFrom = {}
+            subFrom.userId= item.userId;
+            subFrom.appGuid= 'APP1499956132';
+            var res = $rootScope.res.operator_service;//页面所需调用的服务
+            common_service.post(res.queryOperatorConfig,subFrom).then(function(data){
+                var datas = data.retMessage;
+                if(data.status == "success"){
+                    var styles = datas.style
+                    for(var i = 0; i<styles.length; i++){
+                        if(styles[i].configDict == "DICT_STYLE_COLOR"){
+                            var color_ = styles[i].configValue;//用户之前存储的颜色
+                            $('#style_color1').attr("href", Layout.getLayoutCssPath() + 'themes/' + color_ + ".css");//设置成用户之前保存的
+                        }
+
+                    }
+                }
+            })
+        }
+
     });
-}]);*/
+}]);
 
 
 
@@ -569,8 +673,72 @@ MetronicApp.controller('Memocontroller', ['$scope','Memo_service', function($sco
 
 }]);
 
+var strs = {
+
+};
+
+//服务端定义路由控制，这里主要作用就是取数据
+MetronicApp.provider('router', function ($stateProvider) {
+    //定义一个router服务
+    var urlCollection;
+
+    this.$get = function ($http, $state) {
+        return {
+            setUpRoutes: function () {
+                $http.get(urlCollection).success(function (collection) {
+                    for (var routeName in collection) {
+                        //对每一项进行循环
+                        if (!$state.get(routeName)) {
+                            $stateProvider.state(routeName, collection[routeName]);
+                        }
+                    }
+                });
+            }
+        }
+    };
+
+    this.setCollectionUrl = function (url) {
+        urlCollection = url;
+    }
+})
+
+//配置内容,首页写死，其他页面路由从后台拿取
+MetronicApp.config(function ($stateProvider, $urlRouterProvider, routerProvider) {
+    $urlRouterProvider.otherwise('/dashboard');
+        $stateProvider
+            .state('dashboard', {
+                url: '/dashboard',
+                templateUrl: "views/dashboard.html",
+                data: {pageTitle: '控制台'},
+                controller: "DashboardController",
+                resolve: {
+                    deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            name: 'MetronicApp',
+                            insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                            files: [
+                                '../assets/global/plugins/morris/morris.css',
+                                '../assets/global/plugins/morris/morris.min.js',
+                                '../assets/global/plugins/morris/raphael-min.js',
+                                '../assets/global/plugins/jquery.sparkline.min.js',
+
+                                '../assets/pages/scripts/dashboard.min.js',
+                                'js/controllers/DashboardController.js',
+                            ]
+                        });
+                    }]
+                }
+            });
+        routerProvider.setCollectionUrl('json/test.json');
+    })
+    .run(function (router) {
+        router.setUpRoutes();
+    });
+
+
 /* Setup Rounting For All Pages */
-MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+/*MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+
     // Redirect any unmatched url
     $urlRouterProvider.otherwise("/dashboard.html");
     $stateProvider
@@ -903,7 +1071,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             url:"/biztraceQuery.html",
             templateUrl:"views/biztrace/biztraceQuery.html",
             data: {pageTitle: '业务日志查询'},
-            controller:"biztraceQuery_controller"
+            controller:"biztraceQuery_controller",
         })
 
         .state("biztraceSum",{
@@ -1017,7 +1185,6 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             data: {pageTitle: '操作员身份'},
             controller:"operstatus_controller"
         })
-
         .state("emp",{
             url:"/Emp.html",
             templateUrl:"views/emp/emp.html",
@@ -1063,7 +1230,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
         .state("transtime",{
             url:"/transtimeer.html",
             templateUrl:"views/transtimes/transtimeer.html",
-            data: {pageTitle: '业务机构'},
+            data: {pageTitle: '定时器'},
             controller:"transtime_controller"
         })
         .state("journal",{
@@ -1090,7 +1257,19 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             data: {pageTitle: '个性化配置管理'},
             controller:"configuration_controller"
         })
-}]);
+
+}]);*/
+
+//angular路由监控，跳转开始之前。
+MetronicApp.run(['$rootScope', '$state', function ($rootScope, $state) {
+    $rootScope.$state = $state;
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+        if(!isNull(toState.header)){
+            $rootScope.Appfunc = toState.header;//把路由中对应的请求头，放入全局rootscope中。
+        }
+    });
+}
+]);
 
 /* Init global settings and run the app */
 MetronicApp.run(["$rootScope", "settings", "$state", function($rootScope, settings, $state) {

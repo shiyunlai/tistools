@@ -473,8 +473,8 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
         //paginationTemplate:"<div></div>", //自定义底部分页代码
         useExternalPagination: true,//是否使用分页按钮
         //选择优化
-         /*enableFullRowSelection:false,
-         enableRowHeaderSelection:true,*/
+        // enableFullRowSelection:false,
+        // enableRowHeaderSelection:true,
         filterCellFiltered:true,
         enableSelectAll: true,
         //导出测试
@@ -520,21 +520,21 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
                 var grid=this.grid;
                 grid.options.data = thisobj.mydefalutData;
                 grid.columns.forEach(function(column) {
-                    // console.log(column)
+                    console.log(column)
                     var everyFilters=[];
                     column.filters.forEach(function(filter) {
+                        console.log(column)
                         if(filter.term!=null&&filter.term!='undefined'){
                             everyFilters.push(filter);
                         }
                     });
                     if(everyFilters.length>0){
-                        filterConditions[column.field]=everyFilters;//生成一个自己定义的对象,以便传给后台去操作  
+                        filterConditions[column.field]=everyFilters;//生成一个自己定义的对象,以便传给后台去操作
+                        console.log(everyFilters)
                     }
                 });
 
             });
-
-
         },
         ref:function () {
             $scope.gridApi.core.refresh();
@@ -556,10 +556,10 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
     //ui-grid getPage方法
     thisobj.getPage = function(curPage, pageSize) {
         var firstRow = (curPage - 1) * pageSize;
-        thisobj.totalItems = thisobj.mydefalutData.length;  //显示每行多少页  设置不显示
+        thisobj.totalItems = thisobj.mydefalutData.length;
         thisobj.data = thisobj.mydefalutData.slice(firstRow, firstRow + pageSize);
         //或者像下面这种写法
-        //thisobj.mydata = thisobj.mydefalutData.slice(firstRow, firstRow + pageSize);
+        //$scope.myData = mydefalutData.slice(firstRow, firstRow + pageSize);
     };
     //测试
     // var a = $scope.gridApi.selection.getSelectedRows();
@@ -568,7 +568,11 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
 
 function FormatDate (strTime) {
     var date = new Date(strTime);
-    return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+    if(date.getDate()<10){
+        return date.getFullYear()+"-"+(date.getMonth()+1)+"-0"+date.getDate();
+    }else{
+        return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+    }
 }
 
 /*封装grid刷新页*/
@@ -596,7 +600,6 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
         var subFrom = {};
         subFrom.roleGuid = roleGuid;
         abftree_service.queryRoleFun(subFrom).then(function (data) {
-            console.log(data.retMessage)
             if(data.status == "success" && !isNull(data.retMessage)){
                 $scope.mygrid.data =  data.retMessage;
                 $scope.mygrid.mydefalutData =  data.retMessage;
@@ -666,6 +669,7 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
         var subFrom = {};
         subFrom.guid = guid;
         abftree_service.queryRoleNot(subFrom).then(function (data) {
+            console.log(data);
             if(data.status == "success" && !isNull(data.retMessage)){
                 $scope.notrolegird.data =  data.retMessage;
                 $scope.notrolegird.mydefalutData =  data.retMessage;
@@ -681,6 +685,7 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
     renotrolegird();
     
     $scope.addRole = function (partyType) {
+        console.log(partyType)
         if($scope.addroleGuid == ""){
             toastr['error']("请选择一个角色");
             return false;
@@ -691,7 +696,7 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
             subFrom.partyType = partyType;
             abftree_service.addRoleParty(subFrom).then(function (data) {
                 if(data.status == "success"){
-                    toastr['success'](data.retMessage);
+                    toastr['success']('新增成功');
                     realrolegird();
                     renotrolegird();
                 }else{
@@ -700,7 +705,7 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
             })
         }
     }
-    $scope.deleteRole = function () {
+    $scope.deleteRole = function (partyType) {
         if($scope.deleteGUid == ""){
             toastr['error']("请选择一个角色");
             return false;
@@ -708,9 +713,10 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
             var subFrom = {};
             subFrom.partyGuid = guid;
             subFrom.roleGuid = $scope.deleteGUid;
+            subFrom.partyType = partyType;
             abftree_service.deleteRoleParty(subFrom).then(function (data) {
                 if(data.status == "success"){
-                    toastr['success'](data.retMessage);
+                    toastr['success']('移除成功');
                     realrolegird();
                     renotrolegird();
                 }else{

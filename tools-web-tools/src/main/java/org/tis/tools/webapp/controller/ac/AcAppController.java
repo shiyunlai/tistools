@@ -12,7 +12,6 @@ import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.def.JNLConstants;
 import org.tis.tools.model.po.ac.*;
-import org.tis.tools.model.vo.ac.AcFuncVo;
 import org.tis.tools.rservice.ac.capable.IApplicationRService;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.log.OperateLog;
@@ -22,7 +21,6 @@ import org.tis.tools.webapp.util.AjaxUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
-import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -122,7 +120,7 @@ public class AcAppController extends BaseController {
             if (groupList.size() > 0) {
                 map.put("groupList", groupList);
             }
-            List<AcFuncVo> funcList = applicationRService.queryAcFuncVo(id);
+            List<AcFunc> funcList = applicationRService.queryAcFunc(id);
             if (funcList.size() > 0) {
                 map.put("funcList", funcList);
             }
@@ -149,15 +147,15 @@ public class AcAppController extends BaseController {
     public Map<String, Object> groupAdd(@RequestBody String content) {
         JSONObject jsonObj = JSONObject.parseObject(content);    //传入的参数
         String funcgroupName = jsonObj.getString("funcgroupName");
-        String groupLevel = jsonObj.getString("groupLevel");
+//        String groupLevel = jsonObj.getString("groupLevel");
         String guidApp = jsonObj.getString("guidApp");
         String guidParents = jsonObj.getString("guidParents");
         //转换成BigDecimal类型
-        BigDecimal groupLevelBd = new BigDecimal(groupLevel);
+        /*BigDecimal groupLevelBd = new BigDecimal(groupLevel);
         groupLevelBd = groupLevelBd.setScale(2, BigDecimal.ROUND_HALF_UP); //小数位2位，四舍五入
-        AcFuncgroup acFuncgroup = new AcFuncgroup();//new 一个新对象
+*/        AcFuncgroup acFuncgroup = new AcFuncgroup();//new 一个新对象
         acFuncgroup.setFuncgroupName(funcgroupName);
-        acFuncgroup.setGroupLevel(groupLevelBd);
+//        acFuncgroup.setGroupLevel(groupLevelBd);
         acFuncgroup.setGuidApp(guidApp);
         acFuncgroup.setGuidParents(guidParents);
         return getReturnMap(applicationRService.createAcFuncGroup(acFuncgroup));//把new的并且填入参数的对象，传入，返回
@@ -217,139 +215,69 @@ public class AcAppController extends BaseController {
     /**
      * acFuncAdd新增功能
      *
-     * @param content
-     * @param request
-     * @param response
-     * @return
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_ADD,
+            operateDesc = "新增功能",
+            retType = ReturnType.Object,
+            id = "guid",
+            name = "funcName",
+            keys = {"funcCode", "funcType"}
+    )
     @ResponseBody
     @RequestMapping(value = "/acFuncAdd", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public String acFuncAdd(@RequestBody String content, HttpServletRequest request,
-                            HttpServletResponse response) {
-
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("acFuncAdd request : " + content);
-            }
-            JSONObject jsonObj = JSONObject.parseObject(content);    //传入的参数
-            String funcCode = jsonObj.getString("funcCode");
-            String funcName = jsonObj.getString("funcName");
-            String funcAction = jsonObj.getString("funcAction");
-            String paraInfo = jsonObj.getString("paraInfo");
-            String funcType = jsonObj.getString("funcType");
-            String isCheck = jsonObj.getString("isCheck");
-            String isMenu = jsonObj.getString("ismenu");
-            String funcDesc = jsonObj.getString("funcDesc");
-            String guidFuncgroup = jsonObj.getString("guidFuncgroup");
-            //设置功能对应资源
-            AcFuncResource acFuncResource = new AcFuncResource();
-            String resType = jsonObj.getString("resType");
-            String compackName = jsonObj.getString("compackName");
-            String resshowName = jsonObj.getString("resShowName");
-            String resPath = jsonObj.getString("resPath");
-            acFuncResource.setResType(resType);
-            acFuncResource.setCompackName(compackName);
-            acFuncResource.setResShowName(resshowName);
-            acFuncResource.setResPath(resPath);
-
-            AcFunc acFunc = new AcFunc();
-            acFunc.setFuncCode(funcCode);
-            acFunc.setFuncName(funcName);
-            acFunc.setFuncAction(funcAction);
-            acFunc.setFuncDesc(funcDesc);
-            acFunc.setParaInfo(paraInfo);
-            acFunc.setFuncType(funcType);
-            acFunc.setIscheck(isCheck);
-            acFunc.setIsmenu(isMenu);
-            acFunc.setGuidFuncgroup(guidFuncgroup);
-            applicationRService.createAcFunc(acFunc, acFuncResource);//把new的并且填入参数的对象，传入，返回
-            AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            logger.error("acFuncAdd exception : ", e);
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
-            logger.error("acFuncAdd exception : ", e);
-        }
-        return null;
+    public Map<String, Object> acFuncAdd(@RequestBody String content) {
+        JSONObject jsonObj = JSONObject.parseObject(content);    //传入的参数
+        JSONObject data = jsonObj.getJSONObject("data");
+        AcFunc acFunc = JSONObject.parseObject(data.toJSONString(), AcFunc.class);
+        AcFunc func = applicationRService.createAcFunc(acFunc);//把new的并且填入参数的对象，传入，返回
+        return getReturnMap(func);
     }
 
     /**
      * acFuncDel删除功能
      *
      * @param content
-     * @param request
-     * @param response
      * @return
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_DELETE,
+            operateDesc = "删除功能",
+            retType = ReturnType.Object,
+            id = "guid",
+            name = "funcName",
+            keys = {"funcCode", "funcType"}
+    )
     @ResponseBody
     @RequestMapping(value = "/acFuncDel", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public String acFuncDel(@RequestBody String content, HttpServletRequest request,
-                            HttpServletResponse response) {
-
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("acFuncDel request : " + content);
-            }
-            JSONObject jsonObj = JSONObject.parseObject(content);    //传入的参数
-            String guid = jsonObj.getString("id");
-            applicationRService.deleteAcFunc(guid);
-            AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            logger.error("acFuncDel exception : ", e);
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
-            logger.error("acFuncDel exception : ", e);
-        }
-        return null;
+    public Map<String, Object> acFuncDel(@RequestBody String content) {
+        JSONObject jsonObj = JSONObject.parseObject(content);    //传入的参数
+        JSONObject data = jsonObj.getJSONObject("data");
+        String guid = data.getString("id");
+        AcFunc func = applicationRService.deleteAcFunc(guid);//把new的并且填入参数的对象，传入，返回
+        return getReturnMap(func);
     }
 
     /**
      * acFuncEdit更新功能
-     *
-     * @param content
-     * @param request
-     * @param response
      * @return
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,
+            operateDesc = "修改功能",
+            retType = ReturnType.Object,
+            id = "guid",
+            name = "funcName",
+            keys = {"funcCode", "funcType"}
+    )
     @ResponseBody
     @RequestMapping(value = "/acFuncEdit", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public String acFuncEdit(@RequestBody String content, HttpServletRequest request,
-                             HttpServletResponse response) {
-
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("acFuncEdit request : " + content);
-            }
-            JSONObject jsonObj = JSONObject.parseObject(content);    //传入的参数
-            String guid = jsonObj.getString("id");
-            AcFunc acFunc = applicationRService.queryFunc(guid);
-            String funcCode = jsonObj.getString("funcCode");
-            String funcName = jsonObj.getString("funcName");
-            String funcAction = jsonObj.getString("funcAction");
-            String paraInfo = jsonObj.getString("paraInfo");
-            String funcType = jsonObj.getString("funcType");
-            //String isCheck = jsonObj.getString("isCheck");
-            String isMenu = jsonObj.getString("ismenu");
-            String funcDesc = jsonObj.getString("funcDesc");
-
-            acFunc.setFuncCode(funcCode);
-            acFunc.setFuncDesc(funcDesc);
-            acFunc.setFuncName(funcName);
-            acFunc.setFuncAction(funcAction);
-            acFunc.setParaInfo(paraInfo);
-            acFunc.setFuncType(funcType);
-            //acFunc.setIscheck(isCheck);
-            acFunc.setIsmenu(isMenu);
-
-            applicationRService.updateAcFunc(acFunc);
-            AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            logger.error("acFuncEdit exception : ", e);
-        }
-        return null;
+    public Map<String, Object> acFuncEdit(@RequestBody String content) {
+        JSONObject jsonObj = JSONObject.parseObject(content);    //传入的参数
+        JSONObject data = jsonObj.getJSONObject("data");
+        AcFunc acFunc = JSONObject.parseObject(data.toJSONString(), AcFunc.class);
+        AcFunc func = applicationRService.updateAcFunc(acFunc);//把new的并且填入参数的对象，传入，返回
+        return getReturnMap(func);
     }
 
     /**
@@ -360,7 +288,7 @@ public class AcAppController extends BaseController {
      * @param response
      * @return
      */
-    @ResponseBody
+    /*@ResponseBody
     @RequestMapping(value = "/acFuncResourceEdit", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public String acFuncResourceEdit(@RequestBody String content, HttpServletRequest request,
                                      HttpServletResponse response) {
@@ -395,7 +323,7 @@ public class AcAppController extends BaseController {
             logger.error("acFuncEdit exception : ", e);
         }
         return null;
-    }
+    }*/
 
     /**
      * acFuncResouceQuery功能对应资源查询
@@ -782,33 +710,7 @@ public class AcAppController extends BaseController {
 
     }
 
-    /**
-     * addBhvtypeForFunc 功能添加行为类型
-     *
-     * @param content
-     * @param request
-     * @param response
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/addBhvtypeForFunc", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public String addBhctypeForFunc(@RequestBody String content, HttpServletRequest request,
-                                    HttpServletResponse response) {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("addBhvtypeForFunc request : " + content);
-            }
-            JSONObject jsonObj = JSONObject.parseObject(content);    //传入的参数
-            String funcGuid = jsonObj.getString("id");
-            List bhvDefGuids = JSONObject.parseArray(jsonObj.getJSONArray("bhvDefGuids").toJSONString(), String.class);
-            applicationRService.addBhvtypeForFunc(funcGuid, bhvDefGuids);
-            AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            logger.error("addBhvtypeForFunc exception : ", e);
-        }
-        return null;
-    }
+
 
     /**
      * addBhvDefForFunc 功能添加行为定义
@@ -842,40 +744,51 @@ public class AcAppController extends BaseController {
         return null;
     }
 
-
     /**
-     * 查询功能下某个行为类型的操作行为
-     *
+     * 设置功能行为是否有效
      * @param content
-     * @param request
-     * @param response
      * @return
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,
+            operateDesc = "修改行为类型",
+            retType = ReturnType.Object,
+            id = "guid",
+            keys = "isEffective"
+    )
     @ResponseBody
-    @RequestMapping(value = "/queryBhvDefInTypeForFunc", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public String queryBhcDefForFunc(@RequestBody String content, HttpServletRequest request,
-                                     HttpServletResponse response) {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("queryBhvDefInTypeForFunc request : " + content);
-            }
-            JSONObject jsonObj = JSONObject.parseObject(content);    //传入的参数
-            String funcGuid = jsonObj.getString("funcGuid"); // 功能GUID
-            String bhvtypeGuid = jsonObj.getString("bhvtypeGuid"); //类型GUID
-
-            List list = applicationRService.queryBhvDefInTypeForFunc(funcGuid, bhvtypeGuid);
-
-            AjaxUtils.ajaxJsonSuccessMessage(response, list);//返回给前台的结
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            logger.error("queryBhvDefInTypeForFunc exception : ", e);
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
-            logger.error("queryBhvDefInTypeForFunc exception : ", e);
-        }
-        return null;
-
+    @RequestMapping(value = "/setFuncBhvStatus", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> setFuncBhvStatus(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        JSONObject data = jsonObject.getJSONObject("data");
+        String funcBhvGuid = data.getString("funcBhvGuid");
+        String isEffective = data.getString("isEffective");
+        return getReturnMap(applicationRService.setFuncBhvStatus(funcBhvGuid, isEffective));
     }
+
+    /**
+     * 修改功能行为类别
+     * @param content
+     * @return
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,
+            operateDesc = "修改行为类型",
+            retType = ReturnType.Object,
+            id = "guid",
+            name = "funcName",
+            keys = "guidBhvtypeDef"
+    )
+    @ResponseBody
+    @RequestMapping(value = "/updateFuncBhvType", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> updateFuncBhvType(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        JSONObject data = jsonObject.getJSONObject("data");
+        String funcGuid = data.getString("funcGuid");
+        String bhvtypeGuid = data.getString("bhvtypeGuid");
+        return getReturnMap(applicationRService.updateFuncBhvType(funcGuid, bhvtypeGuid));
+    }
+
 
     /**
      * 查询功能下全部的操作行为
@@ -909,42 +822,6 @@ public class AcAppController extends BaseController {
         return null;
 
     }
-
-
-    /**
-     * 删除功能对应的行为类型
-     *
-     * @param content
-     * @param request
-     * @param response
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/delFuncBhvType", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public String delFuncBhvType(@RequestBody String content, HttpServletRequest request,
-                                 HttpServletResponse response) {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("delFuncBhcType request : " + content);
-            }
-            JSONObject jsonObj = JSONObject.parseObject(content);    //传入的参数
-            String funcGuid = jsonObj.getString("funcGuid"); // 功能GUID
-            String idstr = jsonObj.getJSONArray("bhvtypeGuids").toJSONString();
-            List<String> bhvtypeGuids = JSONObject.parseArray(idstr, String.class); // 行为类型GUID
-
-            applicationRService.delFuncBhvType(funcGuid, bhvtypeGuids);
-
-            AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            logger.error("delFuncBhvType exception : ", e);
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
-            logger.error("delFuncBhvType exception : ", e);
-        }
-        return null;
-    }
-
     /**
      * 删除功能对应的行为定义
      *
@@ -1041,5 +918,85 @@ public class AcAppController extends BaseController {
             logger.error("disableApp exception : ", e);
         }
     }
+
+    /**
+     * 新增功能资源
+     * @param content
+     * @return
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_ADD,
+            operateDesc = "新增功能资源",
+            retType = ReturnType.Object,
+            id = "guidFunc",
+            name = "attrKey")
+    @ResponseBody
+    @RequestMapping(value = "/createAcFuncResource", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> createAcFuncResource(@RequestBody String content) {
+        JSONObject jsonObj = JSONObject.parseObject(content);
+
+        JSONObject data = jsonObj.getJSONObject("data");
+        AcFuncResource acFuncResource = JSONObject.parseObject(data.toJSONString(), AcFuncResource.class);
+        AcFuncResource funcResource = applicationRService.createAcFuncResource(acFuncResource);
+        return getReturnMap(funcResource);
+    }
+    /**
+     * 删除功能资源
+     * @param content
+     * @return
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_DELETE,
+            operateDesc = "删除功能资源",
+            retType = ReturnType.List,
+            id = "guidFunc",
+            name = "attrKey")
+    @ResponseBody
+    @RequestMapping(value = "/deleteAcFuncResource", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> deleteAcFuncResource(@RequestBody String content) {
+        JSONObject jsonObj = JSONObject.parseObject(content);
+        JSONArray data = jsonObj.getJSONArray("data");
+        List<AcFuncResource> acFuncResources = JSONObject.parseArray(data.toJSONString(), AcFuncResource.class);
+        List<AcFuncResource> funcResources = applicationRService.deleteAcFuncResource(acFuncResources);
+        return getReturnMap(funcResources);
+    }
+    /**
+     * 修改功能资源
+     * @param content
+     * @return
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,
+            operateDesc = "修改功能资源",
+            retType = ReturnType.Object,
+            id = "guidFunc",
+            name = "attrKey")
+    @ResponseBody
+    @RequestMapping(value = "/updateAcFuncResource", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> updateAcFuncResource(@RequestBody String content) {
+        JSONObject jsonObj = JSONObject.parseObject(content);
+        JSONObject data = jsonObj.getJSONObject("data");
+        AcFuncResource acFuncResource = JSONObject.parseObject(data.toJSONString(), AcFuncResource.class);
+        AcFuncResource funcResource = applicationRService.updateAcFuncResource(acFuncResource);
+        return getReturnMap(funcResource);
+    }
+
+    /**
+     * 查询功能资源
+     * @param content
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/queryAcFuncResource", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> queryAcFuncResource(@RequestBody String content) {
+        JSONObject jsonObj = JSONObject.parseObject(content);
+        JSONObject data = jsonObj.getJSONObject("data");
+        String funcGuid = data.getString("funcGuid");
+        List<AcFuncResource> funcResources = applicationRService.queryAcFuncResource(funcGuid);
+        return getReturnMap(funcResources);
+    }
+
+
+
 
 }

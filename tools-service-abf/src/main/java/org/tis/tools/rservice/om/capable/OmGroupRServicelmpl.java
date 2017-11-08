@@ -1,12 +1,5 @@
 package org.tis.tools.rservice.om.capable;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
@@ -30,7 +23,8 @@ import org.tis.tools.service.ac.AcAppService;
 import org.tis.tools.service.om.*;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
 
-import jdk.nashorn.internal.objects.annotations.Where;
+import java.math.BigDecimal;
+import java.util.*;
 
 public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService{
 	@Autowired
@@ -89,15 +83,7 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 	 * 新增的工作组状态为‘正常’；
 	 * 
 	 * </pre>
-	 * 
-	 * @param groupCode
-	 *            新工作组代码
-	 * @param groupType
-	 *            新工作组类型
-	 * @param groupName
-	 *            新工作组名称
-	 * @param orgCode
-	 *            隶属机构代码
+	 *
 	 * @return 新增的工作组对象
 	 * @throws ToolsRuntimeException
 	 */
@@ -296,9 +282,7 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 	public OmGroup createGroup(OmGroup group) throws ToolsRuntimeException {
 		//查询父工作组信息
 		WhereCondition wc = new WhereCondition();
-		wc.andEquals("guid", group.getGuidParents());
-		List<OmGroup> parentsList = omGroupService.query(wc);
-		OmGroup parentsGp = parentsList.get(0);
+		OmGroup parentsGp = omGroupService.loadByGuid(group.getGuidParents());
 		String parentsGroupSeq = parentsGp.getGroupSeq();
 		// 补充信息
 		group.setGuid(GUID.group());
@@ -374,7 +358,7 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 	}
 
 	@Override
-	public void deleteGroup(String groupCode) throws ToolsRuntimeException {
+	public OmGroup deleteGroup(String groupCode) throws ToolsRuntimeException {
 		//校验入参
 		if(StringUtil.isEmpty(groupCode)){
 			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
@@ -387,10 +371,11 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 		WhereCondition wc = new WhereCondition();
 		wc.andEquals("GROUP_CODE", groupCode);
 		omGroupService.deleteByCondition(wc);
+		return og;
 	}
 
 	@Override
-	public void cancelGroup(String groupCode) throws ToolsRuntimeException {
+	public OmGroup cancelGroup(String groupCode) throws ToolsRuntimeException {
 		OmGroup og = queryGroup(groupCode);
 		List<OmGroup> ogList = queryAllchild(groupCode);
 		for(OmGroup omGroup : ogList){
@@ -400,10 +385,11 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 		}
 		og.setGroupStatus(OMConstants.GROUP_STATUS_CANCEL);
 		omGroupService.update(og);
+		return og;
 	}
 
 	@Override
-	public void reenableGroup(String groupCode, boolean reenableChile) throws ToolsRuntimeException {
+	public OmGroup reenableGroup(String groupCode, boolean reenableChile) throws ToolsRuntimeException {
 		//调用方法中已经有参数检验
 		OmGroup og = queryGroup(groupCode);
 		List<OmGroup> ogList = queryAllchild(groupCode);
@@ -428,6 +414,7 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 					}
 				}
 			});
+			return og;
 		}else{
 			og.setGroupStatus(OMConstants.GROUP_STATUS_RUNNING);
 			transactionTemplate.execute(new TransactionCallback<OmGroup>() {
@@ -445,6 +432,7 @@ public class OmGroupRServicelmpl  extends BaseRService implements IGroupRService
 					}
 				}
 			});
+			return og;
 		}
 	}
 

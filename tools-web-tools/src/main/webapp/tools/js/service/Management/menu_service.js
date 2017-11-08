@@ -3,7 +3,7 @@
  */
 MetronicApp.factory('menu_service',['$http', '$q', function ($http,$q) {
     var service={};
-    //²éÑ¯ËùÓÐÓ¦ÓÃ
+    //ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½
     service.queryAllAcApp = function (subFrom) {
         var res = $http.post(manurl + "/AcMenuController/queryAllAcApp",subFrom).then(function (response) {
             return response.data;
@@ -11,7 +11,7 @@ MetronicApp.factory('menu_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
-    //²éÑ¯Ó¦ÓÃÏÂµÄ¸ú²Ëµ¥
+    //ï¿½ï¿½Ñ¯Ó¦ï¿½ï¿½ï¿½ÂµÄ¸ï¿½ï¿½Ëµï¿½
     service.queryRootMenu = function (subFrom) {
         var res = $http.post(manurl + "/AcMenuController/queryRootMenu",subFrom).then(function (response) {
             return response.data;
@@ -19,7 +19,7 @@ MetronicApp.factory('menu_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
-    //²éÑ¯Ó¦ÓÃÏÂ²Ëµ¥
+    //ï¿½ï¿½Ñ¯Ó¦ï¿½ï¿½ï¿½Â²Ëµï¿½
     service.queryRootMenuTree = function (subFrom) {
         var res = $http.post(manurl + "/AcMenuController/queryRootMenuTree",subFrom).then(function (response) {
             return response.data;
@@ -27,7 +27,7 @@ MetronicApp.factory('menu_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
-    //²éÑ¯²Ëµ¥ÏÂ×Ó²Ëµ¥
+    //ï¿½ï¿½Ñ¯ï¿½Ëµï¿½ï¿½ï¿½ï¿½Ó²Ëµï¿½
     service.queryChildMenu = function (subFrom) {
         var res = $http.post(manurl + "/AcMenuController/queryChildMenu",subFrom).then(function (response) {
             return response.data;
@@ -35,7 +35,7 @@ MetronicApp.factory('menu_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
-    //ÐÂÔö¸ù²Ëµ¥
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½
     service.createRootMenu = function (subFrom) {
         var res = $http.post(manurl + "/AcMenuController/createRootMenu",subFrom).then(function (response) {
             return response.data;
@@ -44,7 +44,7 @@ MetronicApp.factory('menu_service',['$http', '$q', function ($http,$q) {
     };
 
 
-    //ÐÂÔö×Ó²Ëµ¥
+    //ï¿½ï¿½ï¿½ï¿½ï¿½Ó²Ëµï¿½
     service.createChildMenu = function (subFrom) {
         var res = $http.post(manurl + "/AcMenuController/createChildMenu",subFrom).then(function (response) {
             return response.data;
@@ -53,7 +53,7 @@ MetronicApp.factory('menu_service',['$http', '$q', function ($http,$q) {
     };
 
 
-    //É¾³ý²Ëµ¥
+    //É¾ï¿½ï¿½ï¿½Ëµï¿½
     service.deleteMenu = function (subFrom) {
         var res = $http.post(manurl + "/AcMenuController/deleteMenu",subFrom).then(function (response) {
             return response.data;
@@ -61,7 +61,7 @@ MetronicApp.factory('menu_service',['$http', '$q', function ($http,$q) {
         return res;
     };
 
-    //ÐÞ¸Ä²Ëµ¥·½·¨
+    //ï¿½Þ¸Ä²Ëµï¿½ï¿½ï¿½ï¿½ï¿½
     service.editMenu = function (subFrom) {
         var res = $http.post(manurl + "/AcMenuController/editMenu",subFrom).then(function (response) {
             return response.data;

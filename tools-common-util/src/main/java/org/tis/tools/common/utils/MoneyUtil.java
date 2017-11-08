@@ -1,13 +1,13 @@
 package org.tis.tools.common.utils;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.commons.lang.StringUtils;
 
 /**
  * 提供金额计算的工具，避免因为精度问题导致金额不一致。

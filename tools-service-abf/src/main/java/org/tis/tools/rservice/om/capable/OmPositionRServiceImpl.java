@@ -175,7 +175,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 	}
 	
 	@Override
-	public void deletePosition(String positionCode) {
+	public OmPosition deletePosition(String positionCode) {
 		// 校验传入参数
 		if (StringUtil.isEmpty(positionCode)) {
 			throw new PositionManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("positionCode"));
@@ -203,7 +203,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 		}
 		//删除操作,附带删除岗位-人员关系表,下级岗位等
 		omPositionService.delete(position.getGuid());
-		//TODO
+		return position;
 	}
 
 	@Override
@@ -259,7 +259,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 	 * 注销岗位,若存在正常状态下级岗位则抛出异常.
 	 */
 	@Override
-	public void cancelPosition(String positionCode) throws ToolsRuntimeException {
+	public OmPosition cancelPosition(String positionCode) throws ToolsRuntimeException {
 		// 校验传入参数
 		if (StringUtil.isEmpty(positionCode)) {
 			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("positionCode"));
@@ -284,10 +284,11 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 		//通过校验之后更改状态
 		position.setPositionStatus(OMConstants.POSITION_STATUS_CANCEL);
 		omPositionService.update(position);
+		return position;
 	}
 
 	@Override
-	public void reenablePosition(String positionCode) throws ToolsRuntimeException {
+	public OmPosition reenablePosition(String positionCode) throws ToolsRuntimeException {
 		// 校验传入参数
 		if (StringUtil.isEmpty(positionCode)) {
 			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("positionCode"));
@@ -305,6 +306,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 		//通过校验之后更改状态
 		position.setPositionStatus(OMConstants.POSITION_STATUS_RUNNING);
 		omPositionService.update(position);
+		return position;
 	}
 
 	@Override

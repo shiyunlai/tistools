@@ -16,12 +16,18 @@ public class WebAppException extends RuntimeException {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+	private String code;
 	
-	public WebAppException(String err) {
-		super(err) ;
+	public WebAppException(String code, String message) {
+		super(message);
 	}
 
-	public WebAppException(String err,Throwable t) {
-		super(err,t) ;
+	public WebAppException(String code, String message, Throwable t) {
+		super(message,t) ;
+	}
+
+	public String getCode() {
+		return code;
 	}
 }

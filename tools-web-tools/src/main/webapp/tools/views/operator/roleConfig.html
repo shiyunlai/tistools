@@ -12,68 +12,108 @@
 <h3 class="page-title">
     <small></small>
 </h3>
+
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12"  >
         <div class="portlet light form-fit bordered">
             <div class="portlet-title">
                 <div class="caption">
                     <i class="icon-settings font-red"></i>
                     <span class="caption-subject font-red sbold uppercase">个人权限配置</span>
                 </div>
-                <div class="actions btn-set">
-                    <button type="button" name="back" class="btn btn-success" popover-trigger="mouseenter" ng-click="submit()" > 保存
-                    </button>
-                    <button type="button" name="back" class="btn default" ng-click="$root.settings.utils.back()"><i
-                            class="fa fa-angle-left"></i> <返回></返回>
-                    </button>
+                <!--<div class="actions btn-set">-->
+                    <!--<button type="button" name="back" class="btn btn-success" popover-trigger="mouseenter" ng-click="operconfig.submit(operconfig)" > 保存-->
+                    <!--</button>-->
+                    <!--<button type="button" name="back" class="btn default" ng-click="$root.settings.utils.back()"><i-->
+                            <!--class="fa fa-angle-left"></i> <返回></返回>-->
+                    <!--</button>-->
+                <!--</div>-->
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <form action="#" name="myform" class="form-horizontal clearfix">
+        <div class="form-body ">
+            <div class="col-md-6  col-md-offset-3"  >
+                <div class="form-group">
+                    <label class="control-label col-md-4"> 选择应用: </label>
+                    <div class="col-md-5">
+                        <select class="form-control"  name="select_app"  ng-model="operconfig.appselect">
+                            <option ng-repeat="d in operconfig.appselectApp" value="{{d.guid}}">{{d.appName}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" name="back"  class="btn btn-primary"    popover-trigger="mouseenter" ng-click="operconfig.search(operconfig.appselect)" > 查询
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!--页面修改，双循环-->
+<div class="row" style="margin-top:40px;" ng-show="operconfig.selectapp">
+    <div class="col-md-12"  ng-repeat="d in operconfig.dictkeyvalue track by $index">
+        <!--循环所有的业务字典-->
+        <div class="portlet light" style="border:1px solid #ccc">
+            <div class="portlet-title">
+                <div class="caption font-green-haze">
+                    <i class="icon-settings font-green-haze"></i>
+                    <span class="caption-subject bold uppercase">{{d.itemName}} </span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse">
+                    </a>
                 </div>
             </div>
             <div class="portlet-body form">
-                <div class="tab-content">
-                    <div  role="tabpanel">
-                        <form action="#" class="form-horizontal form-bordered">
-                            <div class="form-body">
-                                <div class="form-group">
-                                    <label class="control-label col-md-3">身份设置</label>
-                                    <div class="col-md-9">
-                                        <label class="radio-inline">
-                                            <input type="radio"  name="{{item.value}}" value="true" ng-model="item.bool"> 开启
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio"    name="{{item.value}}" value="false" ng-model="item.bool" > 关闭
-                                        </label>
-                                    </div>
+                <form role="form" class="form-horizontal"  ng-repeat="p in operconfig.Allpx[d.itemValue] track by $index | orderBy : p.displayOrder  ">
+                    <!--循环，根据每一项的itemValue循环，并且排序，这样把相同类型不同内容放在了一起-->
+                    <div class="form-body">
+                        <!--单选框，把颜色风格隐藏-->
+                        <div class="form-group form-md-line-input" ng-if="p.configStyle=='radio'"  ng-hide="p.configDict == 'DICT_STYLE_COLOR'">
+                            <label class="col-md-2 control-label" for="form_control_1">{{p.configName}}</label>
+                            <div class="col-md-10">
+                                <div class="md-radio-inline" style="margin-top:-2px;" ng-init="$settings.getDictData(p.configDict)">
+                                        <div class="md-radio" ng-repeat="s in $settings.diclist[p.configDict] track by $index">
+                                            <!--也是查询业务字典，只不过循环的是字典项-->
+                                            <div class="radio"  style="margin-bottom: 2%;" >
+                                                <label>
+                                                    <input type="radio" style="visibility: visible;" ng-checked="s.sendValue == p.configValue "    ng-model="p.configValue"  ng-change="operconfig.radiosele(p)"  name="testopselect"  id="optionsRadios2" value="{{s.sendValue}}">
+                                                    {{s.itemName}}
+                                                </label>
+                                            </div>
+                                        </div>
                                 </div>
                             </div>
-                            <div class="form-body">
-                                <div class="form-group">
-                                    <label class="control-label col-md-3">重组菜单</label>
-                                    <div class="col-md-9">
-                                        <label class="radio-inline">
-                                            <input type="radio" id="switchFlag_open"  name="{{item.value}}" value="true" ng-model="item.bool"> 开启
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio"  id="switchFlag_close"   name="{{item.value}}" value="false" ng-model="item.bool" > 关闭
-                                        </label>
+                        </div>
+                        <!--下拉框-->
+                        <div class="form-group form-md-line-input"  ng-if="p.configStyle=='select'">
+                            <label class="col-md-2 control-label" for="form_control_1">{{p.configName}}</label>
+                            <div class="col-md-10">
+                                <div class="from-group" ng-init="$settings.getDictData(p.configDict)">
+                                    <select   ng-model="p.configValue"   ng-init="$parent.select[$index] = p.configValue"  ng-change="operconfig.optionsselect(p)"   style="border:1px solid #ccc;border-radius:5px; padding-left:10px;" class="form-control  input-small input-inline">
+                                        <option ng-repeat="s in $settings.diclist[p.configDict] track by $index" value="{{s.sendValue}}">{{s.itemName}}</option>
+                                    </select>
                                     </div>
-                                </div>
                             </div>
-                            <div class="form-body">
-                                <div class="form-group">
-                                    <label class="control-label col-md-3">操作员管理</label>
-                                    <div class="col-md-9">
-                                        <label class="radio-inline">
-                                            <input type="radio"  name="{{item.value}}" value="true" ng-model="item.bool"> 开启
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio"     name="{{item.value}}" value="false" ng-model="item.bool" > 关闭
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                        </div>
+                        <!-- 开关框-->
+                        <!--<div class="form-group form-md-line-input" ng-if="p.configStyle=='toggle'">-->
+                            <!--<label class="col-md-2 control-label" for="form_control_1">{{p.configName}}</label>-->
+                            <!--<div class="col-md-10">-->
+                                <!--<div class="btn-group" ng-init="$settings.getDictData(p.configDict)">-->
+                                    <!--<div class="switch" data-on="primary" data-off="info"  ng-repeat="s in $settings.diclist[p.configDict] track by $index">-->
+                                        <!--<input name="status" type="checkbox" checked />-->
+                                    <!--</div>-->
+                              <!---->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>

@@ -10,6 +10,7 @@ import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.core.exception.ExceptionCodes;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.def.JNLConstants;
+import org.tis.tools.model.po.log.LogAbfChange;
 import org.tis.tools.model.po.log.LogAbfHistory;
 import org.tis.tools.model.po.log.LogAbfKeyword;
 import org.tis.tools.model.po.log.LogAbfOperate;
@@ -17,6 +18,7 @@ import org.tis.tools.model.vo.log.LogHistoryDetail;
 import org.tis.tools.model.vo.log.LogOperateDetail;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.log.exception.LogManagementException;
+import org.tis.tools.service.log.LogAbfChangeService;
 import org.tis.tools.service.log.LogAbfHistoryService;
 import org.tis.tools.service.log.LogAbfKeywordService;
 import org.tis.tools.service.log.LogAbfOperateService;
@@ -31,6 +33,8 @@ public class OperateLogRServiceImpl extends BaseRService implements IOperateLogR
     LogAbfHistoryService logAbfHistoryService;
     @Autowired
     LogAbfKeywordService logAbfKeywordService;
+    @Autowired
+    LogAbfChangeService logAbfChangeService;
 
     /**
      * 新增操作日志
@@ -71,6 +75,10 @@ public class OperateLogRServiceImpl extends BaseRService implements IOperateLogR
                             for (LogAbfKeyword logAbfKeyword : obj.getKeywords()) {
                                 logAbfKeyword.setGuidHistory(objGuid);
                                 logAbfKeywordService.insert(logAbfKeyword);
+                            }
+                            for (LogAbfChange logAbfChange: obj.getChanges()) {
+                                logAbfChange.setGuidHistory(objGuid);
+                                logAbfChangeService.insert(logAbfChange);
                             }
                         }
                     } catch (Exception e) {
@@ -144,9 +152,15 @@ public class OperateLogRServiceImpl extends BaseRService implements IOperateLogR
                     for(LogAbfKeyword keyword : keywords) {
                         map.get(keyword.getGuidHistory()).getKeywords().add(keyword);
                     }
+                    List<LogAbfChange> changes = logAbfChangeService.query(new WhereCondition().andIn(LogAbfChange.COLUMN_GUID_HISTORY, objGuids));
+                    for (LogAbfChange change : changes) {
+                        map.get(change.getGuidHistory()).getChanges().add(change);
+                    }
                 }
             }
             return detail;
+        } catch (LogManagementException e) {
+            throw e;
         } catch (Exception e) {
             throw new LogManagementException(ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap("OPERATE_LOG", e.getMessage()));
         }
@@ -170,36 +184,44 @@ public class OperateLogRServiceImpl extends BaseRService implements IOperateLogR
                 throw new LogManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap(objGuid, LogAbfHistory.TABLE_NAME));
             }
             List<LogOperateDetail> logDetails = new ArrayList<>();
-            if (objs.size() > 0) {
-                Map<String, LogHistoryDetail> logGuidMap = new HashMap<>();
-                Map<String, LogHistoryDetail> objGuidMap = new HashMap<>();
-                List<String> logGuids = new ArrayList<>();
-                List<String> objGUids = new ArrayList<>();
-                for (LogAbfHistory obj : objs) {
-                    logGuids.add(obj.getGuidOperate());
-                    objGUids.add(obj.getGuid());
-                    LogHistoryDetail objDetail = new LogHistoryDetail();
-                    objDetail.setObj(obj);
-                    objGuidMap.put(obj.getGuid(), objDetail);
-                    logGuidMap.put(obj.getGuidOperate(), objDetail);
-                }
-                WhereCondition wc = new WhereCondition();
-                wc.andIn(LogAbfOperate.COLUMN_GUID, logGuids);
-                wc.setOrderBy(LogAbfOperate.COLUMN_OPERATE_TIME + " DESC");
-                List<LogAbfOperate> logs = logAbfOperateService.query(wc);
-                List<LogAbfKeyword> keywords = logAbfKeywordService.query(new WhereCondition().andIn(LogAbfKeyword.COLUMN_GUID_HISTORY, objGUids));
-                for(LogAbfOperate log : logs) {
-                    LogOperateDetail detail = new LogOperateDetail();
-                    detail.setLog(log);
-                    detail.getAllObj().add(logGuidMap.get(log.getGuid()));
-                    logDetails.add(detail);
-                }
-                for(LogAbfKeyword keyword : keywords) {
-                    objGuidMap.get(keyword.getGuidHistory()).getKeywords().add(keyword);
-                }
+
+            Map<String, LogHistoryDetail> logGuidMap = new HashMap<>();
+            Map<String, LogHistoryDetail> objGuidMap = new HashMap<>();
+            List<String> logGuids = new ArrayList<>();
+            List<String> objGuids = new ArrayList<>();
+            for (LogAbfHistory obj : objs) {
+                logGuids.add(obj.getGuidOperate());
+                objGuids.add(obj.getGuid());
+                LogHistoryDetail objDetail = new LogHistoryDetail();
+                objDetail.setObj(obj);
+                objGuidMap.put(obj.getGuid(), objDetail);
+                logGuidMap.put(obj.getGuidOperate(), objDetail);
             }
+            WhereCondition wc = new WhereCondition();
+            wc.andIn(LogAbfOperate.COLUMN_GUID, logGuids);
+            wc.setOrderBy(LogAbfOperate.COLUMN_OPERATE_TIME + " DESC");
+            List<LogAbfOperate> logs = logAbfOperateService.query(wc);
+            List<LogAbfKeyword> keywords = logAbfKeywordService.query(new WhereCondition().andIn(LogAbfKeyword.COLUMN_GUID_HISTORY, objGuids));
+            List<LogAbfChange> changes = logAbfChangeService.query(new WhereCondition().andIn(LogAbfChange.COLUMN_GUID_HISTORY, objGuids));
+
+            for(LogAbfOperate log : logs) {
+                LogOperateDetail detail = new LogOperateDetail();
+                detail.setLog(log);
+                detail.getAllObj().add(logGuidMap.get(log.getGuid()));
+                logDetails.add(detail);
+            }
+            for(LogAbfKeyword keyword : keywords) {
+                objGuidMap.get(keyword.getGuidHistory()).getKeywords().add(keyword);
+            }
+            for (LogAbfChange change : changes) {
+                objGuidMap.get(change.getGuidHistory()).getChanges().add(change);
+            }
+
             return logDetails;
+        } catch (LogManagementException e) {
+            throw e;
         } catch (Exception e) {
+            logger.error("queryOperateHistoryList exception : ", e);
             throw new LogManagementException(ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap("OPERATE_LOG", e.getMessage()));
         }
     }

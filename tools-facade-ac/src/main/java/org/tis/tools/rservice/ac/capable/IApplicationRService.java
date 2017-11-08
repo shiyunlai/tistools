@@ -5,7 +5,6 @@ package org.tis.tools.rservice.ac.capable;
 
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.model.po.ac.*;
-import org.tis.tools.model.vo.ac.AcFuncVo;
 import org.tis.tools.rservice.ac.exception.AppManagementException;
 
 import java.util.Date;
@@ -144,23 +143,23 @@ public interface IApplicationRService {
 	/**
 	 * 新增功能(AC_FUNC)
 	 * @param acFunc 功能对象
-	 * @param acFuncResource 功能对应资源
-	 * return  AcFunc
+	 * @return  AcFunc
 	 */
-	 AcFunc createAcFunc(AcFunc acFunc,AcFuncResource acFuncResource);
+	 AcFunc createAcFunc(AcFunc acFunc);
 
 	
 	/**
 	 * 删除功能(AC_FUNC)
 	 * @param guid 记录guid
+	 * @return 删除的功能对象信息
 	 */
-	 void deleteAcFunc(String guid);
+	 AcFunc deleteAcFunc(String guid);
 	
 	/**
 	 * 更新功能(AC_FUNC)
 	 * @param acFunc 功能
 	 */
-	 void updateAcFunc(AcFunc acFunc);
+	 AcFunc updateAcFunc(AcFunc acFunc);
 
 	/**
 	 * 根据条件查询功能(AC_FUNC)
@@ -182,7 +181,7 @@ public interface IApplicationRService {
 	 * @param guid 条件
 	 * @return 满足条件的记录
 	 */
-	 List<AcFuncVo> queryAcFuncVo(String guid);
+	 List<AcFunc> queryAcFunc(String guid);
 	
 	
 	/**
@@ -192,8 +191,7 @@ public interface IApplicationRService {
 	 */
 	 List<AcFunc> queryAcGroupFunc(String groupGuid);
 	
-	
-	
+
 	/**
 	 * 新增菜单(AC_MENU)
 	 * @param acMenu 菜单对象
@@ -224,26 +222,26 @@ public interface IApplicationRService {
 	 * 新增功能资源对应(AC_FUNC_RESOURCE),新增t对象有值的字段
 	 * @param t 新值
 	 */
-	 void createAcFuncResource(AcFuncResource t);
+	 AcFuncResource createAcFuncResource(AcFuncResource t);
 
 	/**
 	 * 删除功能资源对应(AC_FUNC_RESOURCE)
-	 * @param guid 记录guid
+	 * @param acFuncResourceList 需要删除的资源集合
 	 */
-	 void deleteAcFuncResource(String guid);
+	List<AcFuncResource> deleteAcFuncResource(List<AcFuncResource> acFuncResourceList);
 
 	/**
 	 * 更新功能资源对应(AC_FUNC_RESOURCE),只修改t对象有值的字段
 	 * @param t 新值
 	 */
-	 void updateAcFuncResource(AcFuncResource t);
+	AcFuncResource updateAcFuncResource(AcFuncResource t);
 	
-		/**
+	/**
 	 * 根据条件查询功能资源对应(AC_FUNC_RESOURCE)
-	 * @param wc 条件
+	 * @param funcGuid 功能GUID
 	 * @return 满足条件的记录list
 	 */
-	 List<AcFuncResource> queryAcFuncResource(WhereCondition wc);
+	 List<AcFuncResource> queryAcFuncResource(String funcGuid);
 	
 	/**
 	 * 根据条件查询功能资源对应(AC_FUNC_RESOURCE)
@@ -400,16 +398,6 @@ public interface IApplicationRService {
 	 List<AcBhvDef> queryBhvDefByBhvType(String bhvtypeGuid);
 
 
-
-	/**
-	 * addBhctypeForFunc 功能添加行为类型(AC_BHVTYPE_DEF)
-	 *
-	 * @param funcGuid 功能GUID
-	 * @param bhvtypeGuids 功能GUID数组
-	 * 返回list
-	 */
-	 void addBhvtypeForFunc(String funcGuid, List bhvtypeGuids);
-
 	/**
 	 * addBhvDefForFunc 功能添加行为定义(AC_BHV_DEF)
 	 *
@@ -419,13 +407,23 @@ public interface IApplicationRService {
 	 */
 	 void addBhvDefForFunc(String funcGuid, List bhvDefGuids);
 
+	/**
+	 * 设置功能行为定义是否有效
+	 * @param funcBhvGuid
+	 * @param isEffective
+	 * @return
+	 * @throws AppManagementException
+	 */
+	 AcFuncBhv setFuncBhvStatus(String funcBhvGuid, String isEffective) throws AppManagementException;
 
 	/**
-	 * queryBhvDefInTypeForFunc 查询功能下指定行为类型的行为定义
-	 * @param funcGuid
-	 * @param bhvtypeGuid
+	 * 修改功能的行为类别
+	 * @param funcGuid 功能GUID
+	 * @param bhvtypeDefGuid 行为类别GUID
+	 * @return
+	 * @throws AppManagementException
 	 */
-	 List<Map> queryBhvDefInTypeForFunc(String funcGuid, String bhvtypeGuid);
+	 AcFunc updateFuncBhvType(String funcGuid, String bhvtypeDefGuid) throws AppManagementException;
 
 
 	/**
@@ -434,13 +432,6 @@ public interface IApplicationRService {
 	 * @return list
 	 */
 	 List<Map> queryAllBhvDefForFunc(String funcGuid);
-
-	/**
-	 * 删除功能下的行为类型
-	 * @param funcGuid
-	 * @param bhvtypeGuid
-	 */
-	 void delFuncBhvType(String funcGuid, List<String> bhvtypeGuid);
 
 	/**
 	 * 删除功能下的行为定义

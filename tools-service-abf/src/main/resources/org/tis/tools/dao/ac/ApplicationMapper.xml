@@ -31,8 +31,8 @@
 	<select id="queryAllBhvDefForFunc" resultType="map">
     	select <include refid="FuncBhvDef_Column_List2" />
 		from
-			AC_BHV_DEF a
-			JOIN AC_FUNC_BHV b ON a.GUID = b.GUID_BHV
+			AC_FUNC_BHV b
+			JOIN AC_BHV_DEF a ON a.GUID = b.GUID_BHV
 			JOIN AC_BHVTYPE_DEF c ON a.GUID_BEHTYPE = c.GUID
 		WHERE b.GUID_FUNC = #{funcGuid,jdbcType=VARCHAR}
   	</select>
@@ -132,6 +132,7 @@
 		,c.BHVTYPE_NAME AS bhvtypeName
 		,a.bhv_code as bhvCode
 		,a.bhv_name as bhvName
+		,b.guid as guidFuncBhv
 		,b.iseffective as iseffective
 	</sql>
 

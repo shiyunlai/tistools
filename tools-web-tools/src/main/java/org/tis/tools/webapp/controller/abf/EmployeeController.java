@@ -1,7 +1,5 @@
 package org.tis.tools.webapp.controller.abf;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.tis.tools.model.def.JNLConstants;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.po.om.OmPosition;
@@ -17,7 +16,7 @@ import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.log.OperateLog;
 import org.tis.tools.webapp.log.ReturnType;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,12 +41,10 @@ public class EmployeeController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/queryemployee", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public Map<String, Object> queryemployee(@RequestBody String content) {
+    public Map<String, Object> queryemployee() {
         List<OmEmployee> list = employeeRService.queryAllEmployyee();
         return getReturnMap(list);
-
     }
-
 
     /**
      * 新增人员信息
@@ -71,7 +68,7 @@ public class EmployeeController extends BaseController {
             return getReturnMap(emp);
         } else {
             employeeRService.updateEmployee(oe);
-            return getReturnMap("修改成功!");
+            return getReturnMap(oe);
         }
 
     }
@@ -96,8 +93,8 @@ public class EmployeeController extends BaseController {
             OmEmployee emp = employeeRService.createEmployee(oe);
             return getReturnMap(emp);
         } else {
-            employeeRService.updateEmployee(oe);
-            return getReturnMap("修改成功!");
+            OmEmployee emp = employeeRService.updateEmployee(oe);
+            return getReturnMap(emp);
         }
 
     }
@@ -193,12 +190,11 @@ public class EmployeeController extends BaseController {
      * @return
      */
     @OperateLog(
-            operateType = "update",  // 操作类型
+            operateType = JNLConstants.OPEARTE_TYPE_ADD,  // 操作类型
             operateDesc = "指派员工机构", // 操作描述
-            retType = ReturnType.Object, // 返回类型，对象或数组
-            id = "guid", // 操作对象标识
-            name = "employeeName", // 操作对象名
-            keys = {"guidPosition", "empCode", "guidOrg"}) // 操作对象的关键值的键值名
+            retType = ReturnType.Object, // 返回类型
+            id = "guidEmp", // 操作对象标识
+            keys = "guidOrg") // 操作对象的关键值的键值名
     @ResponseBody
     @RequestMapping(value = "/assignOrg",produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> assignOrg( @RequestBody String content) {
@@ -211,7 +207,11 @@ public class EmployeeController extends BaseController {
         } else {
             employeeRService.assignOrg(empCode, orgCode, false);
         }
-        return getReturnMap("指派成功!");
+        Map map = new HashMap();
+        map.put("empCode", empCode);
+        map.put("orgCode", orgCode);
+        map.put("isMain", isMain);
+        return getReturnMap(map);
     }
 
     /**
@@ -220,14 +220,20 @@ public class EmployeeController extends BaseController {
      * @param content
      * @return
      */
+    @OperateLog(
+            operateType = "update",  // 操作类型
+            operateDesc = "取消指派员工机构", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "guidEmp", // 操作对象标识
+            keys = "guidOrg") // 操作对象的关键值的键值名
     @ResponseBody
     @RequestMapping(value = "/disassignOrg",produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> disassignOrg( @RequestBody String content) {
         JSONObject jsonObj = JSONObject.parseObject(content);
         String empGuid = jsonObj.getString("empGuid");
         String orgGuid = jsonObj.getString("orgGuid");
-        employeeRService.deleteEmpOrg(orgGuid, empGuid);
-        return getReturnMap("取消指派成功!");
+
+        return getReturnMap(employeeRService.deleteEmpOrg(orgGuid, empGuid));
     }
 
     /**
@@ -314,19 +320,27 @@ public class EmployeeController extends BaseController {
        return getReturnMap("指定成功!");
     }
 
-
     /**
-     * 每个controller定义自己的返回信息变量
+     * 改变员工状态
+     * @param content
+     * @return
      */
-    private Map<String, Object> responseMsg;
-
-
-    @Override
-    public Map<String, Object> getResponseMessage() {
-        if (null == responseMsg) {
-            responseMsg = new HashMap<String, Object>();
-        }
-        return responseMsg;
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,
+            operateDesc = "修改员工状态",
+            retType = ReturnType.Object,
+            id = "guid",
+            name = "empName",
+            keys = "empstatus"
+    )
+    @ResponseBody
+    @RequestMapping(value="/changeEmpStatus" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
+    public Map<String, Object> changeEmpStatus(@RequestBody String content) {
+        JSONObject jsonObject= JSONObject.parseObject(content);
+        JSONObject data= jsonObject.getJSONObject("data");
+        String empGuid = data.getString("empGuid");
+        String status = data.getString("status");
+        Date date = data.getDate("date");
+        return getReturnMap(employeeRService.changeEmpStatus(empGuid, status, date));
     }
-
 }

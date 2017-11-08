@@ -4,7 +4,6 @@
 package org.tis.tools.common.utils;
 
 import java.text.MessageFormat;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -29,6 +28,11 @@ public class StringUtil {
 	
 	/**
 	 * 检查输入的参数中是否有空值
+	 * StringUtil.isEmpty(null, "zch")      = true
+	 * StringUtil.isEmpty("", "zch")        = true
+	 * StringUtil.isEmpty(" ", "zch")       = true
+	 * StringUtil.isEmpty("zch")     = false
+	 * StringUtil.isEmpty(" zch ") = false
 	 * @param strs
 	 * @return
 	 */

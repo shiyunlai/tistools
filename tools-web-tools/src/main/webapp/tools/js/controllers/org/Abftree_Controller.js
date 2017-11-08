@@ -107,7 +107,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                                         if(data.status == "error"){
                                             toastr['error']( data.retMessage);
                                         }else{
-                                            subFrom.orgCode = data.retMessage;
+                                            subFrom.orgCode = data.retMessage.orgCode;
                                             $scope.next = !next;
                                         }
                                     })
@@ -117,10 +117,9 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                                 subFrom.guidParents = null;
                                 //增加方法
                                 $scope.add = function (subFrom) {
-                                    //TODO.新增逻辑
                                     abftree_service.addorg(subFrom).then(function (data) {
                                         if (data.status == "success") {
-                                            toastr['success'](data.retMessage);
+                                            toastr['success']("新增成功!");
                                         } else {
                                             toastr['error'](data.retMessage);
                                         }
@@ -164,7 +163,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                                         if(data.status == "error"){
                                             toastr['error']( data.retMessage);
                                         }else{
-                                            subFrom.orgCode = data.retMessage;
+                                            subFrom.orgCode = data.retMessage.orgCode;
                                             $scope.next = !next;
                                         }
                                     })
@@ -174,10 +173,9 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                                 subFrom.guidParents = obj.original.guid;
                                 //增加方法
                                 $scope.add = function (subFrom) {
-                                    //TODO.新增逻辑
                                     abftree_service.addorg(subFrom).then(function (data) {
                                         if (data.status == "success") {
-                                            toastr['success'](data.retMessage);
+                                            toastr['success']("新增成功!");
                                         } else {
                                             toastr['error'](data.retMessage);
                                         }
@@ -203,7 +201,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                             subFrom.orgCode = obj.original.orgCode;
                             abftree_service.deleteOrg(subFrom).then(function (data) {
                                 if (data.status == "success") {
-                                    toastr['success'](data.retMessage);
+                                    toastr['success']("删除成功!");
                                     $("#container").jstree().refresh();
                                 } else {
                                     toastr['error'](data.retMessage);
@@ -227,11 +225,11 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                             if (data.status == "success") {
                                 //生成机构代码,成功继续执行复制.
                                 subFrom = {};
-                                subFrom.neworgCode = data.retMessage;
+                                subFrom.neworgCode = data.retMessage.orgCode;
                                 subFrom.copyCode = copyCode;
                                 abftree_service.copyOrg(subFrom).then(function (data) {
                                     if (data.status == "success") {
-                                        toastr['success'](data.retMessage);
+                                        toastr['success']("拷贝成功!");
                                         $("#container").jstree().refresh();
                                     } else {
                                         toastr['error'](data.retMessage);
@@ -273,7 +271,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                             subFrom.posCode = obj.original.positionCode;
                             abftree_service.deletePosition(subFrom).then(function (data) {
                                 if (data.status == "success") {
-                                    toastr['success'](data.retMessage);
+                                    toastr['success']("删除成功!");
                                     var sele = function sele() {
                                         var node = {};
                                         node.id = "99999"
@@ -419,7 +417,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
             console.log(data);
             abftree_service.moveOrg(subFrom).then(function (data) {
                 if (data.status == "success") {
-                    toastr['success'](data.retMessage);
+                    toastr['success']("移动成功!");
                     console.log(data);
                     $("#container").jstree().refresh();
                 } else {
@@ -546,7 +544,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
             subFrom.orgCode = $scope.abftree.item.orgCode;
             abftree_service.deleteOrg(subFrom).then(function (data) {
                 if (data.status == "success") {
-                    toastr['success'](data.retMessage);
+                    toastr['success']("删除成功!");
                     $("#container").jstree().refresh();
                 } else {
                     toastr['error'](data.retMessage);
@@ -569,7 +567,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                     abftree_service.enableorg(subFrom).then(function (data) {
                         console.log(data)
                         if (data.status == "success") {
-                            toastr['success'](data.retMessage);
+                            toastr['success']("启用成功!");
                             $("#container").jstree().refresh();
                         } else {
                             toastr['error'](data.retMessage);
@@ -591,7 +589,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
         abftree_service.enableorg(subFrom).then(function (data) {
             console.log(data)
             if (data.status == "success") {
-                toastr['success'](data.retMessage);
+                toastr['success']("停用成功!");
                 $("#container").jstree().refresh();
             } else {
                 toastr['error'](data.retMessage);
@@ -605,7 +603,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
         abftree_service.enableorg(subFrom).then(function (data) {
             console.log(data)
             if (data.status == "success") {
-                toastr['success'](data.retMessage);
+                toastr['success']("注销成功!");
                 $("#container").jstree().refresh();
             } else {
                 toastr['error'](data.retMessage);
@@ -618,8 +616,9 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
         subFrom.orgCode = $scope.abftree.item.orgCode;
         subFrom.flag = "2"
         abftree_service.enableorg(subFrom).then(function (data) {
+            console.log(data)
             if (data.status == "success") {
-                toastr['success'](data.retMessage);
+                toastr['success']("启用成功!");
                 $("#container").jstree().refresh();
             } else {
                 toastr['error'](data.retMessage);
@@ -633,7 +632,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
         subFrom.flag = "1";
         abftree_service.enableposition(subFrom).then(function (data) {
             if (data.status == "success") {
-                toastr['success'](data.retMessage);
+                toastr['success']("启用成功!");
                 $("#container").jstree().refresh();
             } else {
                 toastr['error'](data.retMessage);
@@ -646,7 +645,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
         subFrom.flag = "2";
         abftree_service.enableposition(subFrom).then(function (data) {
             if (data.status == "success") {
-                toastr['success'](data.retMessage);
+                toastr['success']("注销成功!");
                 $("#container").jstree().refresh();
             } else {
                 toastr['error'](data.retMessage);
@@ -658,7 +657,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
         subFrom.posCode = $scope.abftree.item.positionCode;
         abftree_service.deletePosition(subFrom).then(function (data) {
             if (data.status == "success") {
-                toastr['success'](data.retMessage);
+                toastr['success']("删除成功!");
                 $("#container").jstree().refresh();
             } else {
                 toastr['error'](data.retMessage);
@@ -680,7 +679,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
     abftree.save = function () {
         abftree_service.updateOrg($scope.position).then(function (data) {
             if (data.status == "success") {
-                toastr['success'](data.retMessage);
+                toastr['success']("保存成功!");
             } else {
                 toastr['error'](data.retMessage);
             }
@@ -720,7 +719,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                 {field: 'linkTel', displayName: '联系电话', enableHiding: false},
                 {field: 'createTime', displayName: '创建时间', enableHiding: false}
             ]
-            $scope.gridOptions2 = initgrid($scope, gridOptions2, filterFilter, com, true, selework);
+            $scope.gridOptions2 = initgrid($scope, gridOptions2, filterFilter, com, false, selework);
             //塞入测试数组
             list.push($scope.gridOptions2);
             var regridOptions2 = function () {
@@ -764,7 +763,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                                 if(data.status == "error"){
                                     toastr['error']( data.retMessage);
                                 }else{
-                                    subFrom.orgCode = data.retMessage;
+                                    subFrom.orgCode = data.retMessage.orgCode;
                                     $scope.next = !next;
                                 }
                             })
@@ -777,7 +776,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                             //TODO.新增逻辑
                             abftree_service.addorg(subFrom).then(function (data) {
                                 if (data.status == "success") {
-                                    toastr['success'](data.retMessage);
+                                    toastr['success']("操作成功!");
                                 } else {
                                     toastr['error'](data.retMessage);
                                 }
@@ -838,8 +837,8 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                 {field: 'gender', displayName: '性别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'},
                 {field: 'empstatus', displayName: '员工状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
                 {field: 'empDegree', displayName: '员工职级', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
-                {field: 'guidPostition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPostition | translatePosition) + $root.constant[row.entity.guidPostition]}}</div>'},
-                {field: 'guidempmajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidempmajor | translateEmp) + $root.constant[row.entity.guidempmajor]}}</div>'},
+                {field: 'guidPosition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
+                {field: 'guidEmpMajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpMajor | translateEmp) + $root.constant[row.entity.guidEmpMajor]}}</div>'},
                 {field: 'indate', displayName: '入职日期', enableHiding: false},
                 {field: 'otel', displayName: '办公电话', enableHiding: false}
             ]
@@ -887,8 +886,8 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                             {field: 'gender', displayName: '性别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'},
                             {field: 'empstatus', displayName: '员工状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
                             {field: 'empDegree', displayName: '员工职级', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
-                            {field: 'guidPostition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPostition | translatePosition) + $root.constant[row.entity.guidPostition]}}</div>'},
-                            {field: 'guidempmajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidempmajor | translateEmp) + $root.constant[row.entity.guidempmajor]}}</div>'},
+                            {field: 'guidPosition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
+                            {field: 'guidEmpMajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpMajor | translateEmp) + $root.constant[row.entity.guidEmpMajor]}}</div>'},
                             {field: 'indate', displayName: '入职日期', enableHiding: false},
                             {field: 'otel', displayName: '办公电话', enableHiding: false}
                         ]
@@ -936,7 +935,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                                 subFrom.empGuidlist = empGuidlist;
                                 abftree_service.addEmpOrg(subFrom).then(function (data) {
                                     if (data.status == "success") {
-                                        toastr['success'](data.retMessage);
+                                        toastr['success']("保存成功!");
                                     } else {
                                         toastr['error'](data.retMessage);
                                     }
@@ -1001,7 +1000,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                         subFrom.empGuidlist = empGuidlist;
                         abftree_service.deleteEmpOrg(subFrom).then(function (data) {
                             if (data.status == "success") {
-                                toastr['success'](data.retMessage);
+                                toastr['success']("删除成功!");
                             } else {
                                 toastr['error'](data.retMessage);
                             }
@@ -1072,8 +1071,8 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                 {field: 'gender', displayName: '性别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'},
                 {field: 'empstatus', displayName: '员工状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
                 {field: 'empDegree', displayName: '员工职级', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
-                {field: 'guidPostition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPostition | translatePosition) + $root.constant[row.entity.guidPostition]}}</div>'},
-                {field: 'guidempmajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidempmajor | translateEmp) + $root.constant[row.entity.guidempmajor]}}</div>'},
+                {field: 'guidPosition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
+                {field: 'guidEmpMajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpMajor | translateEmp) + $root.constant[row.entity.guidEmpMajor]}}</div>'},
                 {field: 'indate', displayName: '入职日期', enableHiding: false},
                 {field: 'otel', displayName: '办公电话', enableHiding: false}
             ]
@@ -1121,8 +1120,8 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                             {field: 'gender', displayName: '性别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'},
                             {field: 'empstatus', displayName: '员工状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
                             {field: 'empDegree', displayName: '员工职级', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
-                            {field: 'guidPostition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPostition | translatePosition) + $root.constant[row.entity.guidPostition]}}</div>'},
-                            {field: 'guidempmajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidempmajor | translateEmp) + $root.constant[row.entity.guidempmajor]}}</div>'},
+                            {field: 'guidPosition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
+                            {field: 'guidEmpMajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpMajor | translateEmp) + $root.constant[row.entity.guidEmpMajor]}}</div>'},
                             {field: 'indate', displayName: '入职日期', enableHiding: false},
                             {field: 'otel', displayName: '办公电话', enableHiding: false},
                         ]
@@ -1162,7 +1161,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                                 subFrom.empGuidlist = empGuidlist;
                                 abftree_service.addEmpPosition(subFrom).then(function (data) {
                                     if (data.status == "success") {
-                                        toastr['success'](data.retMessage);
+                                        toastr['success']("保存成功!");
                                     } else {
                                         toastr['error'](data.retMessage);
                                     }
@@ -1186,7 +1185,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                     toastr['error']("请选择需要删除的记录！");
                     return false;
                 } else {
-                    //TODO
                     if (confirm("确认要从本机构中删除此人员信息吗?")) {
                         var empGuidlist = [];
                         for (var i = 0; i < arr.length; i++) {
@@ -1197,7 +1195,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                         subFrom.empGuidlist = empGuidlist;
                         abftree_service.deleteEmpPosition(subFrom).then(function (data) {
                             if (data.status == "success") {
-                                toastr['success'](data.retMessage);
+                                toastr['success']("删除成功!");
                             } else {
                                 toastr['error'](data.retMessage);
                             }
@@ -1298,12 +1296,12 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                     toastr['error']("请选择一条需要删除的岗位信息!");
                     return false;
                 }
-                if (confirm("确定要删除此菜单？删除后不可恢复。")) {
+                if (confirm("确定要删除此岗位信息？删除后不可恢复。")) {
                     var subFrom = {};
                     subFrom.posCode = arr[0].positionCode;
                     abftree_service.deletePosition(subFrom).then(function (data) {
                         if (data.status == "success") {
-                            toastr['success'](data.retMessage);
+                            toastr['success']("删除成功!");
                             $("#container").jstree().refresh();
                         } else {
                             toastr['error'](data.retMessage);
@@ -1334,7 +1332,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
         console.log($scope.position)
         abftree_service.addposit($scope.position).then(function (data) {
             if (data.status == "success") {
-                toastr['success'](data.retMessage);
+                toastr['success']("修改成功!");
                 $("#container").jstree().refresh();
                 $scope.editflag = !$scope.editflag;
             } else {
@@ -1346,8 +1344,25 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
 
     //下级机构删除按钮
     abftree.deletexjjg = function () {
-        var a = getSelectedCount();
-        console.log(a);
+        var getSel = $scope.gridOptions2.getSelectedRows();
+        if(isNull(getSel) || getSel.length>1){
+            toastr['error']("请选则一条数据进行修改！");
+        }else{
+            if (confirm("确认要删除此机构吗?")) {
+                //TODO.删除逻辑
+                var subFrom = {};
+                subFrom.orgCode = getSel[0].orgCode;
+                abftree_service.deleteOrg(subFrom).then(function (data) {
+                    if (data.status == "success") {
+                        toastr['success']("删除成功!");
+                        $("#container").jstree().refresh();
+                    } else {
+                        toastr['error'](data.retMessage);
+                    }
+                })
+            }
+        }
+
     }
 
     //岗位下操作点击事件
@@ -1402,7 +1417,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                     subFrom.appGuid = arr[0].guid;
                     abftree_service.addAppPosition(subFrom).then(function (data) {
                         if (data.status == "success") {
-                            toastr['success'](data.retMessage);
+                            toastr['success']("添加成功!");
                             regwApplication();
                             $scope.cancel();
                         } else {
@@ -1428,7 +1443,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
         subFrom.appGuid = arr[0].guid;
         abftree_service.deleteAppPosition(subFrom).then(function (data) {
             if (data.status == "success") {
-                toastr['success'](data.retMessage);
+                toastr['success']("删除成功!");
                 regwApplication();
             } else {
                 toastr['error'](data.retMessage);
@@ -1459,7 +1474,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
             subFrom.orgGuid = $scope.abftree.item.guid;
             abftree_service.deletePosition(subFrom).then(function (data) {
                 if (data.status == "success") {
-                    toastr['success'](data.retMessage);
+                    toastr['success']("删除成功!");
                     regwlbgird(subFrom)
                     $("#container").jstree().refresh();
                 } else {
@@ -1529,13 +1544,11 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
             function ($scope, $modalInstance) {
                 //创建机构实例
                 $scope.subFrom = subFrom;
-                console.log(subFrom)
                 var next = true;
                 $scope.next = next;
                 //下一步
                 $scope.skip = function () {
                     abftree_service.initPosCode($scope.subFrom).then(function (data) {
-                        console.log(data)
                         if (data.status == "success") {
                             $scope.subFrom.positionCode = data.retMessage;
                         } else {
@@ -1547,8 +1560,9 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                 //增加方法
                 $scope.add = function (subFrom) {
                     abftree_service.addposit(subFrom).then(function (data) {
+                        console.log(data)
                         if (data.status == "success") {
-                            toastr['success'](data.retMessage);
+                            toastr['success']("新增成功!");
                             $("#container").jstree().refresh();
                             $scope.cancel();
                         } else {

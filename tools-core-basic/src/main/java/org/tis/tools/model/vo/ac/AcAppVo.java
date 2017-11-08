@@ -1,22 +1,18 @@
 package org.tis.tools.model.vo.ac;
 
+import org.tis.tools.common.utils.StringUtil;
+
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Locale;
-import java.util.Set;
-
-import org.tis.tools.common.utils.StringUtil;
-import org.tis.tools.model.po.ac.AcApp;
-import org.tis.tools.model.po.om.OmBusiorg;
-import org.tis.tools.model.po.om.OmOrg;
 
 /**
  * 业务机构详情（360信息）
  * 
  * @author megapro
  */
-public class AcAppVo{
+public class AcAppVo implements Serializable {
 
 	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;

@@ -1,6 +1,4 @@
-/**
- * Created by wangbo on 2017/9/22.
- */
+
 /*操作员功能行为权限控制器*/
 MetronicApp.controller('permission_controller', function ($rootScope, $scope, $state, $stateParams,common_service, filterFilter, $modal,$uibModal, $http, $timeout,$interval,i18nService) {
 
@@ -11,12 +9,17 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
         window.history.back(-1);
     }
 
-    var userid = $stateParams.id;//接受传入的值
+    //因为传入的是对象，拿到的是字符串，所以先转成json对象
+    var peaids = angular.fromJson($stateParams.id);
+    var userid = peaids.userid;//操作员userid
+    var operguid = peaids.operguid;//操作员guid
+    console.log(operguid)
     $scope.currRole = userid;//显示当前操作员
 
-    /*查询所有应用，稍后修改成操作员应用查询接口*/
-    var res = $rootScope.res.menu_service;//页面所需调用的服务
-    common_service.post(res.queryAllAcApp,{}).then(function(data){
+    var res = $rootScope.res.operator_service;//页面所需调用的服务
+    var subFrom = {};
+    subFrom.userId  = userid;
+    common_service.post(res.queryOperatorAllApp,subFrom).then(function(data){
         if(data.status == "success"){
             permiss.appselectApp= data.retMessage;
         }
@@ -28,7 +31,7 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
             if(!isNull(item)){
                 $scope.permiss.selectApp = true;
                 //调用刷新树方法，传入应用
-                //调用刷新列表方法，传入应用
+                queryjstree(userid,item);//查询所有树结构
         }else{
                 $scope.permiss.selectApp = false;
             }
@@ -59,106 +62,320 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
             $('#container').jstree(true).search(v);
         }, 250);
     }
-    //创建树结构
-    $('#container').jstree({
-        "core" : {
-            "themes": {
-                "responsive": false
-            },
-            "check_callback": true,
-            'data':[
-                {'id:':'js1',
-                  'text':'应用',
-                   'children':[
-                       {
-                           'id:':'js2',
-                           'text':'功能组',
-                           'children':[
-                               {
-                                   'id:':'js3',
-                                   'text':'功能',
-                               }
-                           ]
-                       }
-                   ]}
-            ]
-        },
-        "state" : { "key" : "demo3" },
-        'dnd': {
-            'dnd_start': function () {
-            },
-            'is_draggable':function (node) {
-                return true;
+
+    //根据用户和应用id查询功能树
+    var queryjstree = function (userid,appguid) {
+        var subFrom = {};
+        subFrom.userId  = userid;
+        subFrom.appGuid  = appguid;
+        common_service.post(res.getOperatorFuncInfo,subFrom).then(function(data){
+            if(data.status == "success"){
+                var jstree = [angular.fromJson(data.retMessage)];
+                //生成树结构
+                $('#container').jstree('destroy',false);//防止多次查询，先销毁
+                $("#container").jstree({
+                    "core" : {
+                        "themes" : {
+                            "responsive": false
+                        },
+                        "check_callback" : false,//在对树结构进行改变时，必须为true
+                        'data':jstree
+                    },
+                    "force_text": true,
+                    plugins: ["sort", "types", "themes", "html_data"],
+                    "checkbox": {
+                        "keep_selected_style": false,//是否默认选中
+                    },
+                    "types" : {
+                        "default" : {
+                            "icon" : "fa fa-folder icon-state-warning icon-lg"
+                        },
+                        "file" : {
+                            "icon" : "fa fa-file icon-state-warning icon-lg"
+                        }
+                    },
+                    "state" : { "key" : "demo3" },
+                    'dnd': {
+                        'is_draggable':function (node) {
+                            //用于控制节点是否可以拖拽.
+                            if(node.id == 3){
+                                return false;//根节点禁止拖拽
+                            }
+                            return true;
+                        },
+                        'always_copy':true//拖拽拷贝，非移除
+                    },
+                    'callback' : {
+                        move_node:function (node) {
+                        }
+                    },
+                    "plugins" : [ "state", "types","dnd","search" ,"wholerow"]// 插件引入 dnd拖拽插件 state缓存插件(刷新保存) types多种数据结构插件  checkbox复选框插件
+                }).bind("select_node.jstree", function (e, data) {
+                    if(data.node.original.isLeaf =='Y'){
+                        $scope.permiss.funcselect = true;
+                        queryfunlist(data.node.id,userid);//调用查询列表方法
+                        blackAdd(data.node.id);//调用添加特别禁止功能
+                        delblack(data.node.id);//调用移除特别禁止功能
+                        allow(data.node.id);//调用添加特别允许功能
+                        removeallow(data.node.id);//调用移除特别允许功能
+                    }else{
+                        $scope.permiss.funcselect = false;
+                    }
+                    $scope.$apply();
+                });
             }
-        },
-        'search':{
-            show_only_matches:true,
-        },
-        /*'sort': function (a, b) {
-            //排序插件，会两者比较，获取到节点的order属性，插件会自动两两比较。
-            return this.get_node(a).original.displayOrder > this.get_node(b).original.displayOrder ? 1 : -1;
-        },*/
-        'callback' : {
-
-        },
-        "plugins" : [ "dnd", "state", "types","search","sort" ]
-    }).bind("select_node.jstree", function (e, data) {
-
-    });
+        })
+    }
 
 
-    //表格创建
+    //查询操作员在某功能的行为白名单和黑名单
+    var queryfunlist= function (funcGuid,userid) {
+        var subFrom = {};
+        subFrom.data = {};
+        subFrom.data.userId  = userid;
+        subFrom.data.funcGuid  = funcGuid;
+        common_service.post(res.getOperatorFuncBhvInfo,subFrom).then(function(data){
+            console.log(data.retMessage)
+            var datas = data.retMessage;
+            if(data.status == "success"){
+                //已授予表格
+                if(!isNull(datas.auth)){
+                    $scope.notrolegird.data =datas.auth ;
+                    $scope.notrolegird.mydefalutData = datas.auth;
+                    $scope.notrolegird.getPage(1,$scope.notrolegird.paginationPageSize);
+                }else{
+                    $scope.notrolegird.data =[] ;
+                    $scope.notrolegird.mydefalutData = [];
+                    $scope.notrolegird.getPage(1,$scope.notrolegird.paginationPageSize);
+                }
+                //未授予
+                if(!isNull(datas.unauth)){
+                    $scope.tograntgird.data = datas.unauth;
+                    $scope.tograntgird.mydefalutData = datas.unauth;
+                    $scope.tograntgird.getPage(1,$scope.tograntgird.paginationPageSize);
+                }else{
+                    $scope.tograntgird.data =  [];
+                    $scope.tograntgird.mydefalutData = [];
+                    $scope.tograntgird.getPage(1,$scope.tograntgird.paginationPageSize);
+                }
+                //特别禁止
+                if(!isNull(datas.forbid)){
+                    $scope.alrolegird.data = datas.forbid;
+                    $scope.alrolegird.mydefalutData = datas.forbid;
+                    $scope.alrolegird.getPage(1,$scope.alrolegird.paginationPageSize);
+                }else{
+                    $scope.alrolegird.data =  [];
+                    $scope.alrolegird.mydefalutData = [];
+                    $scope.alrolegird.getPage(1,$scope.alrolegird.paginationPageSize);
+                }
+
+                //特别允许
+                if(!isNull(datas.permit)){
+                    $scope.permissiongird.data = datas.permit;
+                    $scope.permissiongird.mydefalutData = datas.permit;
+                    $scope.permissiongird.getPage(1,$scope.permissiongird.paginationPageSize);
+                }else{
+                    $scope.permissiongird.data =  [];
+                    $scope.permissiongird.mydefalutData = [];
+                    $scope.permissiongird.getPage(1,$scope.permissiongird.paginationPageSize);
+                }
+
+            }
+        })
+    }
+
     i18nService.setCurrentLang("zh-cn");
-    //未允许行为表格创建
+
+    //已授予表格创建
     var notrolegird = {};
     $scope.notrolegird = notrolegird;
-    var com = [
-        { field: "roleName", displayName:'行为名'},
+    var not = [
+        { field: "bhvName", displayName:'行为名称'},
+        { field: "bhvCode", displayName:'行为代码'}
     ];
     var f = function(row){
         if(row.isSelected){
-            $scope.selectRow = row.entity;
+            $scope.notrolRow = row.entity;
         }else{
-            $scope.selectRow = '';//制空
+            $scope.notrolRow = '';//制空
         }
     }
-    $scope.notrolegird = initgrid($scope,notrolegird,filterFilter,com,false,f);
-    $scope.notrolegird.enablePaginationControls = false;//禁止有分页
-    $scope.notrolegird.enableFiltering = false;//禁止有搜索
-    $scope.notrolegird.enableGridMenu = false;//禁止有菜单
-    $scope.notrolegird.data = [
-        {'roleName':'测试行为'}
+    $scope.notrolegird = initgrid($scope,notrolegird,filterFilter,not,false,f);
+    //添加特别禁止逻辑
+    var blackAdd = function (funtguid) {
+        $scope.permiss.add = function () {
+            /*var dats = $scope.notrolegird.getSelectedRows();
+            var dats = $scope.alrolegird.getSelectedRows();
+             if(!dats.length> 0){
+                 toastr['error']("请至少选择一个角色");
+                 return false;
+             }else{
+             }*/
+            /*多选有问题，会冲突，先单选测试*/
+            if($scope.notrolRow == ""){
+                toastr['error']("请至少选择一个角色进行添加");
+                return false;
+            }else{
+                var dates = $scope.notrolRow;
+                var subFrom = {};
+                subFrom.guidOperator = operguid;
+                subFrom.guidFuncBhv = dates.guidFuncBhv;
+                subFrom.authType = 0;//特别禁止
+                //调用查询接口,模拟多选
+                var tis = {};
+                tis.data = [];
+                tis.data.push(subFrom)
+                common_service.post(res.addAcOperatorBhv,tis).then(function(data){
+                    var datas = data.retMessage;
+                    if(data.status == "success"){
+                        toastr['success']("添加特别禁止成功");
+                        queryfunlist(funtguid,userid);//调用刷新类别方法，传入功能guid才行
+                    }
+                })
+            }
+        }
+    }
 
-    ]
 
 
-    //授予移除逻辑
 
 
-    //已允许行为表格生成
+    //特别禁止表格
     var alrolegird = {};
-    $scope.alrolegird = notrolegird;
-    var com1 = [
-        { field: "roleName", displayName:'行为名'}
+    $scope.alrolegird = alrolegird;
+    var alrs = [
+        { field: "bhvName", displayName:'行为名称'},
+        { field: "bhvCode", displayName:'行为代码'}
     ];
-    var f1 = function(row){
+    var fjinzhi = function(row){
         if(row.isSelected){
-            $scope.deleteGUid = row.entity;
+            $scope.alrols = row.entity;
         }else{
-            $scope.deleteGUid = '';//制空
+            delete $scope.alrols;//制空
+           $scope.alrols = '';//制空
         }
     }
-    $scope.alrolegird = initgrid($scope,alrolegird,filterFilter,com1,false,f1);
-    $scope.alrolegird.enablePaginationControls = false;//禁止有分页
-    $scope.alrolegird.enableFiltering = false;//禁止有搜索
-    $scope.alrolegird.enableGridMenu = false;//禁止有菜单
-    $scope.alrolegird.data = [
-        {'roleName':'查询行为'},
-        {'roleName':'测试行为'},
-        {'roleName':'新增行为'},
-        {'roleName':'删除行为'},
-        {'roleName':'特殊行为'},
-    ]
+    $scope.alrolegird = initgrid($scope,alrolegird,filterFilter,alrs,false,fjinzhi);
+
+
+    //移除特别禁止逻辑
+    var delblack = function (funtguid) {
+        $scope.permiss.del = function () {
+            if($scope.alrols == ""){
+                toastr['error']("请至少选择一个角色进行移除");
+                return false;
+            }else{
+                var dates = $scope.alrols;
+                var subFrom = {};
+                subFrom.guidOperator = operguid;
+                subFrom.guidFuncBhv = dates.guidFuncBhv;
+                subFrom.authType = 0;//特别禁止
+                //调用查询接口,模拟多选
+                var tis = {};
+                tis.data = [];
+                tis.data.push(subFrom)
+                common_service.post(res.removeAcOperatorBhv,tis).then(function(data){
+                    var datas = data.retMessage;
+                    if(data.status == "success"){
+                        toastr['success']("移除特别禁止成功");
+                        queryfunlist(funtguid,userid);//调用刷新类别方法，传入功能guid才行
+                    }
+                })
+            }
+        }
+    }
+
+
+
+    //未授予表格
+    var tograntgird = {};
+    $scope.tograntgird = tograntgird;
+    var togra = [
+        { field: "bhvName", displayName:'行为名称'},
+        { field: "bhvCode", displayName:'行为代码'}
+    ];
+    var ftogra = function(row){
+        if(row.isSelected){
+            $scope.ogran = row.entity;
+        }else{
+            delete $scope.ogran;//制空
+            $scope.ogran = '';//制空
+        }
+    }
+    $scope.tograntgird = initgrid($scope,tograntgird,filterFilter,togra,false,ftogra);
+
+    //添加特别允许
+    var allow = function (funtguid) {
+        $scope.permiss.pagina = function () {
+            if($scope.ogran == ""){
+                toastr['error']("请至少选择一个角色进行添加");
+                return false;
+            }else{
+                var dates = $scope.ogran;
+                var subFrom = {};
+                subFrom.guidOperator = operguid;
+                subFrom.guidFuncBhv = dates.guidFuncBhv;
+                subFrom.authType = 1;//特别允许
+                //调用查询接口,模拟多选
+                var tis = {};
+                tis.data = [];
+                tis.data.push(subFrom)
+                common_service.post(res.addAcOperatorBhv,tis).then(function(data){
+                    var datas = data.retMessage;
+                    if(data.status == "success"){
+                        toastr['success']("添加特别禁止成功");
+                        queryfunlist(funtguid,userid);//调用刷新类别方法，传入功能guid才行
+                    }
+                })
+            }
+        }
+    }
+
+
+    //特别允许表格
+    var permissiongird = {};
+    $scope.permissiongird = permissiongird;
+    var tossi = [
+        { field: "bhvName", displayName:'行为名称'},
+        { field: "bhvCode", displayName:'行为代码'}
+    ];
+    var ftopermi = function(row){
+        if(row.isSelected){
+            $scope.permiesss = row.entity;
+        }else{
+            delete $scope.permiesss;//制空
+            $scope.permiesss = '';//制空
+        }
+    }
+    $scope.permissiongird = initgrid($scope,permissiongird,filterFilter,tossi,true,ftopermi);
+    
+    //移除特别允许功能
+    var removeallow = function (funtguid) {
+        $scope.permiss.permiss = function () {
+            if($scope.permiesss == ""){
+                toastr['error']("请至少选择一个角色进行移除");
+                return false;
+            }else{
+                var dates = $scope.permiesss;
+                var subFrom = {};
+                subFrom.guidOperator = operguid;
+                subFrom.guidFuncBhv = dates.guidFuncBhv;
+                subFrom.authType = 1;//特别允许
+                //调用查询接口,模拟多选
+                var tis = {};
+                tis.data = [];
+                tis.data.push(subFrom)
+                common_service.post(res.removeAcOperatorBhv,tis).then(function(data){
+                    var datas = data.retMessage;
+                    if(data.status == "success"){
+                        toastr['success']("移除特别禁止成功");
+                        queryfunlist(funtguid,userid);//调用刷新类别方法，传入功能guid才行
+                    }
+                })
+            }
+        }
+    }
+
 
 
 });

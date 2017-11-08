@@ -1,0 +1,101 @@
+<div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
+    <div class="portlet-title">
+        <div class="caption">
+            <span class="caption-subject font-green-sharp bold uppercase">{{title}}</span>
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="remove" ng-click="cancel()">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body portlet light">
+        <form action="#" name="myform1" class="form-horizontal">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label col-md-2">操作员</label>
+                    <!--<div class="col-md-8">-->
+                    <!--<input type="text" class="form-control"-->
+                    <!--ng-model="subFrom.guidOperator"-->
+                    <!--/>-->
+                    <!--</div>-->
+                    <div class="col-md-10">
+                        <div class="col-md-12"  style="margin-top: 5px">
+                            <div class="col-md-3">
+                                <input type="radio"   name="fromtable" ng-model="emp.operflag" value="1"  checked/>当前操作员
+                            </div>
+                            <div class="col-md-3">
+                                <input type="radio"   name="fromtable" ng-model="emp.operflag" value="2" />选择已存在
+                            </div>
+                            <div class="col-md-3">
+                                <input type="radio"   name="fromtable" ng-model="emp.operflag" value="3" />不绑定操作员
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" ng-show="emp.operflag == '1'">
+                <div class="form-group">
+                    <label class="control-label col-md-4">操作员</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control"
+                               ng-model="subFrom.userId"
+                        />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" ng-show="emp.operflag == '2'">
+                <div class="form-group" ng-init="$settings.getCommData('OPER')">
+                    <label class="control-label col-md-4">操作员</label>
+                    <div class="col-md-8">
+                        <select class="form-control" ng-model="subFrom.userId">
+                            <option  ng-repeat="d in $settings.commlist['OPER'] track by $index"  value="{{d.userId}}">{{d.userId}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!--            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-md-4">可授权角色</label>
+                    <div class="col-md-8" ng-init="$settings.getCommData('ROLE')">
+                        <select class="form-control se1" ng-model="subFrom.specialty" multiple style="width: 100%">
+                            <option ng-repeat="d in $settings.commlist['ROLE'] track by $index"
+                                    value="{{d.guid}}">{{d.roleName}}
+                            </option>
+                        </select>
+                        <script type="text/javascript">
+                            $('.se1').select2({placeholder: "请选择"});
+                        </script>
+                    </div>
+                </div>
+            </div>-->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-md-4">可管理机构</label>
+                    <div class="col-md-8" ng-init="$settings.getCommData('ORG')">
+                        <select class="form-control se2" ng-model="subFrom.orgList" multiple style="width: 100%">
+                            <option ng-repeat="d in $settings.commlist['ORG'] track by $index"
+                                    value="{{d.guid}}">{{d.orgName}}
+                            </option>
+                        </select>
+                        <script type="text/javascript">
+                            $('.se2').select2({placeholder: "请选择"});
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label col-md-2"></label>
+                    <div class="col-md-10">
+                        <div class="actions btn-set" style="float: right;">
+                            <button type="button" name="back1" class="btn btn-primary" ng-click="add(subFrom)"> 保存
+                            </button>
+                            <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -3,6 +3,8 @@
  */
 package org.tis.tools.common.utils;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,8 +16,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.commons.lang.StringUtils;
 
 /**
  * 用来处理时间和日期的工具类

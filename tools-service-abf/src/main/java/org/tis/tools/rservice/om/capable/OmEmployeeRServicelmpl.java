@@ -1,6 +1,5 @@
 package org.tis.tools.rservice.om.capable;
 
-import jdk.nashorn.internal.objects.annotations.Where;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
@@ -8,8 +7,8 @@ import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
-import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.common.utils.StringUtil;
+import org.tis.tools.core.exception.ExceptionCodes;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.def.OMConstants;
 import org.tis.tools.model.po.om.*;
@@ -18,13 +17,15 @@ import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.om.exception.EmployeeManagementException;
 import org.tis.tools.rservice.om.exception.GroupManagementException;
 import org.tis.tools.rservice.om.exception.OrgManagementException;
+import org.tis.tools.service.ac.exception.ACExceptionCodes;
 import org.tis.tools.service.om.*;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
-import org.tis.tools.spi.om.IEmpCodeGenerator;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static org.tis.tools.common.utils.BasicUtil.wrap;
 
 public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRService {
 	@Autowired
@@ -119,7 +120,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 					status.setRollbackOnly();
 					e.printStackTrace();
 					throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
-							BasicUtil.wrap(e.getCause().getMessage()), "新增员工失败！{0}");
+							wrap(e.getCause().getMessage()), "新增员工失败！{0}");
 				}
 			}
 		});
@@ -243,7 +244,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 						e.printStackTrace();
 						throw new EmployeeManagementException(
 								OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
-								BasicUtil.wrap(e.getCause().getMessage()), "指派失败{0}");
+								wrap(e.getCause().getMessage()), "指派失败{0}");
 					}
 				}
 			});
@@ -253,7 +254,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 				//本身数据为主机构,抛出异常,不做任何处理
 				throw new EmployeeManagementException(
 						OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
-						BasicUtil.wrap("已经为主机构"));
+						wrap("已经为主机构"));
 			}else{
 				//更新数据
 				OmEmpOrg newOeo = list.get(0);
@@ -284,7 +285,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 							e.printStackTrace();
 							throw new EmployeeManagementException(
 									OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
-									BasicUtil.wrap(e.getCause().getMessage()), "指派失败{0}");
+									wrap(e.getCause().getMessage()), "指派失败{0}");
 						}
 					}
 				});
@@ -369,7 +370,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 						e.printStackTrace();
 						throw new EmployeeManagementException(
 								OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
-								BasicUtil.wrap(e.getCause().getMessage()), "指派失败{0}");
+								wrap(e.getCause().getMessage()), "指派失败{0}");
 					}
 				}
 			});
@@ -379,7 +380,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 				//本身数据为主机构,抛出异常,不做任何处理
 				throw new EmployeeManagementException(
 						OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
-						BasicUtil.wrap("已经为主机构"));
+						wrap("已经为主机构"));
 			}else{
 				//更新数据
 				OmEmpPosition newOep = list.get(0);
@@ -409,7 +410,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 							e.printStackTrace();
 							throw new EmployeeManagementException(
 									OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
-									BasicUtil.wrap(e.getCause().getMessage()), "指派失败{0}");
+									wrap(e.getCause().getMessage()), "指派失败{0}");
 						}
 					}
 				});
@@ -418,13 +419,13 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 	}
 
 	@Override
-	public void updateEmployee(OmEmployee newEmployee) throws ToolsRuntimeException {
+	public OmEmployee updateEmployee(OmEmployee newEmployee) throws ToolsRuntimeException {
 		WhereCondition wc = new WhereCondition();
 		wc.andEquals("EMP_CODE", newEmployee.getEmpCode());
 		List<OmEmployee> empList = omEmployeeService.query(wc);
 		if (empList.size() != 1) {
 			throw new OrgManagementException(OMExceptionCodes.EMPANIZATION_NOT_EXIST_BY_EMP_CODE,
-					BasicUtil.wrap(newEmployee.getEmpCode()), "员工代码代码{0}对应的员工不存在");
+					wrap(newEmployee.getEmpCode()), "员工代码代码{0}对应的员工不存在");
 		}
 		OmEmployee oldEmp = empList.get(0);
 		String oldEmpStatus = oldEmp.getEmpstatus();
@@ -435,10 +436,11 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		}
 		try {
 			omEmployeeService.update(newEmployee);
+			return newEmployee;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHEN_UPDATE_ORG_APP,
-					BasicUtil.wrap(e.getCause().getMessage()));
+					wrap(e));
 		}
 
 	}
@@ -467,12 +469,12 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		List<OmEmployee> empList = omEmployeeService.query(wc);
 		if(empList.size() != 1){
 			throw new EmployeeManagementException(OMExceptionCodes.EMPANIZATION_NOT_EXIST_BY_EMP_CODE,
-					BasicUtil.wrap(empCode));
+					wrap(empCode));
 		}
 		OmEmployee employee = empList.get(0);
 		if (StringUtils.equals(OMConstants.EMPLOYEE_STATUS_ONJOB, employee.getEmpstatus())) {
 			throw new EmployeeManagementException(OMExceptionCodes.FAILURE_WHEN_DEL_NOT_ONJOB,
-					BasicUtil.wrap(empCode, employee.getEmpstatus()));
+					wrap(empCode, employee.getEmpstatus()));
 		}
 
 		final String guid =employee.getGuid();
@@ -497,7 +499,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_DEEP_COPY_ORG,
-					BasicUtil.wrap(employee.getEmpCode(), e.getCause().getMessage()));
+					wrap(employee.getEmpCode(), e.getCause().getMessage()));
 		} finally {
 			return employee;
 		}
@@ -514,7 +516,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		List<OmEmployee> empList = omEmployeeService.query(wc);
 		if(empList.size() != 1){
 			throw new EmployeeManagementException(OMExceptionCodes.EMPANIZATION_NOT_EXIST_BY_EMP_CODE,
-					BasicUtil.wrap(empCode));
+					wrap(empCode));
 		}
 		return empList.get(0);
 	}
@@ -539,7 +541,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		List<OmOrg> ogList = OmOrgService.query(wc);
 		if(ogList.size() != 1){
 			throw new EmployeeManagementException(OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE,
-					BasicUtil.wrap(orgCode));
+					wrap(orgCode));
 		}
 		String orgGuid = ogList.get(0).getGuid();
 		List<OmEmployee> empList = queryEmployeeByGuid(orgGuid);
@@ -586,7 +588,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 	 * 添加人员-机构关系表数据
 	 */
 	@Override
-	public void insertEmpOrg(String orgGuid, String empGuid) {
+	public OmEmpOrg insertEmpOrg(String orgGuid, String empGuid) {
 		//校验入参
 		if(StringUtil.isEmpty(orgGuid)){
 			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
@@ -599,12 +601,13 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		oeo.setGuidOrg(orgGuid);
 		oeo.setIsmain("N");//默认为否
 		omEmpOrgService.insert(oeo);
+		return oeo;
 	}
 	/**
 	 * 删除
 	 */
 	@Override
-	public void deleteEmpOrg(String orgGuid, String empGuid) {
+	public OmEmpOrg deleteEmpOrg(String orgGuid, String empGuid) {
 		//校验入参
 		if(StringUtil.isEmpty(orgGuid)){
 			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
@@ -625,6 +628,10 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		wc.andEquals("GUID_ORG", orgGuid);
 		wc.andEquals("GUID_EMP", empGuid);
 		omEmpOrgService.deleteByCondition(wc);
+		OmEmpOrg empOrg = new OmEmpOrg();
+		empOrg.setGuidEmp(empGuid);
+		empOrg.setGuidOrg(orgGuid);
+		return empOrg;
 	}
 	
 
@@ -800,4 +807,58 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		return opList;
 	}
 
+	/**
+	 * 改变员工状态
+	 *
+	 * @param empGuid 员工GUID
+	 * @param status  员工状态
+	 * @return
+	 * @throws EmployeeManagementException
+	 * @see OMConstants#EMPLOYEE_STATUS_OFFER 在招
+	 * @see OMConstants#EMPLOYEE_STATUS_OFFJOB 离职
+	 * @see OMConstants#EMPLOYEE_STATUS_ONJOB 在职
+	 */
+	@Override
+	public OmEmployee changeEmpStatus(String empGuid, String status) throws EmployeeManagementException {
+		if(StringUtils.isBlank(empGuid)) {
+			throw new EmployeeManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap(OmEmployee.COLUMN_GUID, "changeEmpStatus"));
+		}
+		if(StringUtils.isBlank(status)) {
+			throw new EmployeeManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap(OmEmployee.COLUMN_EMPSTATUS, "changeEmpStatus"));
+		}
+		try {
+			OmEmployee omEmployee = omEmployeeService.loadByGuid(empGuid);
+			String old_status = omEmployee.getEmpstatus();
+			switch (status) {
+                /*改变状态为 在职
+                * 限制当前状态为： 在招
+                * */
+				case OMConstants.EMPLOYEE_STATUS_ONJOB :
+					if (!StringUtils.equals(old_status, OMConstants.EMPLOYEE_STATUS_OFFER)) {
+						throw new EmployeeManagementException(ACExceptionCodes.CURRENT_STATUS_IS_NOT_ALLOWED_CHANGE, wrap(old_status, OMConstants.EMPLOYEE_STATUS_ONJOB));
+					}
+					omEmployee.setEmpstatus(status);
+					break;
+                /*改变状态为 离职
+                * 限制当前状态为： 在职
+                * */
+				case OMConstants.EMPLOYEE_STATUS_OFFJOB :
+					if (!StringUtils.equals(old_status, OMConstants.EMPLOYEE_STATUS_ONJOB)) {
+						throw new EmployeeManagementException(ACExceptionCodes.CURRENT_STATUS_IS_NOT_ALLOWED_CHANGE, wrap(old_status, OMConstants.EMPLOYEE_STATUS_OFFJOB));
+					}
+					omEmployee.setEmpstatus(status);
+					break;
+				default:
+					throw new EmployeeManagementException(ACExceptionCodes.OPERATOR_STATUS_ERROR, old_status);
+			}
+			omEmployeeService.update(omEmployee);
+			return omEmployee;
+		} catch (EmployeeManagementException e) {
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new EmployeeManagementException(ExceptionCodes.FAILURE_WHEN_CALL, wrap("changeEmpStatus", e));
+		}
+	}
 }

@@ -27,6 +27,64 @@
 
     </select>
 
+
+    <select id="getAuthOperatorFuncBhv" resultType="map">
+        SELECT
+            <include refid="getAuthOperatorFuncBhvColumn"/>
+        FROM
+            (
+            SELECT
+                a.*
+            FROM
+                `ac_role_bhv` a
+            WHERE
+                a.guid_role IN ${roleGuid}
+                AND a.guid_func_bhv NOT IN ( SELECT d.GUID_FUNC_BHV FROM `ac_operator_bhv` d WHERE d.GUID_OPERATOR = #{operatorGuid} AND d.AUTH_TYPE = '0' )
+            ) aa,
+            `ac_func_bhv` b,
+            `ac_bhv_def` c
+        WHERE
+            b.GUID_FUNC = #{funcGuid}
+            AND b.ISEFFECTIVE = 'Y'
+            AND aa.guid_func_bhv = b.GUID
+            AND b.GUID_BHV = c.GUID
+    </select>
+
+
+    <select id="getAuthOperatorFuncFbdBhv" resultType="map">
+        SELECT
+        <include refid="getAuthOperatorFuncBhvColumn"/>
+        FROM
+            `ac_operator_bhv` a,
+            `ac_func_bhv` b,
+            `ac_bhv_def` c
+        WHERE
+            a.GUID_OPERATOR = #{operatorGuid}
+            AND b.GUID_FUNC = #{funcGuid}
+            AND a.AUTH_TYPE = '0'
+            AND b.ISEFFECTIVE = 'Y'
+            AND a.GUID_FUNC_BHV = b.GUID
+            AND b.GUID_BHV = c.GUID
+    </select>
+
+    <select id="getUnauthOperatorFuncPmtBhv" resultType="map">
+        SELECT
+        <include refid="getAuthOperatorFuncBhvColumn"/>
+        FROM
+            `ac_operator_bhv` a,
+            `ac_func_bhv` b,
+            `ac_bhv_def` c
+        WHERE
+            a.GUID_OPERATOR = #{operatorGuid}
+            AND b.GUID_FUNC = #{funcGuid}
+            AND a.AUTH_TYPE = '1'
+            AND b.ISEFFECTIVE = 'Y'
+            AND a.GUID_FUNC_BHV = b.GUID
+            AND b.GUID_BHV = c.GUID
+    </select>
+
+
+
     <select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
         select count(*) from AC_OPERATOR <include refid="Where_Clause"/>
     </select>
@@ -51,5 +109,13 @@
 		,a.guid_funcgroup as guidFuncgroup
         ,b.FUNC_NAME
         ,c.APP_NAME
+    </sql>
+
+    <sql id="getAuthOperatorFuncBhvColumn" >
+        c.guid as guid
+        ,c.guid_behtype as guidBehtype
+        ,c.bhv_code as bhvCode
+        ,c.bhv_name as bhvName
+        ,b.guid as guidFuncBhv
     </sql>
 </mapper>

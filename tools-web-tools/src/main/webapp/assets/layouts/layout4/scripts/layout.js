@@ -18,7 +18,6 @@ var Layout = function() {
         var sidebar = $('.page-sidebar');
         var body = $('body');
         var height;
-
         if (body.hasClass("page-footer-fixed") === true && body.hasClass("page-sidebar-fixed") === false) {
             var available_height = App.getViewPort().height - $('.page-footer').outerHeight(true) - $('.page-header').outerHeight(true);
             if (content.height() < available_height) {

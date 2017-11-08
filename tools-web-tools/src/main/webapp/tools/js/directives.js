@@ -74,7 +74,7 @@ MetronicApp.directive('translateConstants', ['$http',function($http) {
                 subFrom.dictKey = $(elm).attr("comtable");
                 console.log(subFrom.dictKey)
                 if(subFrom.dictKey == "ORG"){
-                    $http.post("http://localhost:8089/tis/om/org/queryAllorg").then(function (data) {
+                    $http.post(manurl + "/om/org/queryAllorg").then(function (data) {
                         var retval = "";
                         if (data.data.status == "success") {
                             for (var i = 0; i < data.data.retMessage.length; i++) {
@@ -90,7 +90,7 @@ MetronicApp.directive('translateConstants', ['$http',function($http) {
                         }
                     })
                 }else if(subFrom.dictKey == "POS"){
-                    $http.post("http://localhost:8089/tis/om/org/queryAllposition").then(function (data) {
+                    $http.post(manurl + "/om/org/queryAllposition").then(function (data) {
                         var retval = "";
                         if (data.data.status == "success") {
                             for (var i = 0; i < data.data.retMessage.length; i++) {
@@ -107,7 +107,7 @@ MetronicApp.directive('translateConstants', ['$http',function($http) {
                         }
                     })
                 }else if(subFrom.dictKey == "DUTY"){
-                    $http.post("http://localhost:8089/tis/om/duty/loadallduty").then(function (data) {
+                    $http.post(manurl + "/om/duty/loadallduty").then(function (data) {
                         var retval = "";
                         if (data.data.status == "success") {
                             for (var i = 0; i < data.data.retMessage.length; i++) {
@@ -124,7 +124,7 @@ MetronicApp.directive('translateConstants', ['$http',function($http) {
                         }
                     })
                 }else if(subFrom.dictKey == "EMP"){
-                    $http.post("http://localhost:8089/tis/om/emp/queryemployee").then(function (data) {
+                    $http.post(manurl + "/om/emp/queryemployee").then(function (data) {
                         var retval = "";
                         if (data.data.status == "success") {
                             for (var i = 0; i < data.data.retMessage.length; i++) {
@@ -142,7 +142,7 @@ MetronicApp.directive('translateConstants', ['$http',function($http) {
                 }else if(subFrom.dictKey == "GROUP"){
 
                 }else{
-                    $http.post("http://localhost:8089/tis/DictController/queryDictItemListByDictKey", subFrom).then(function (data) {
+                    $http.post(manurl + "/DictController/queryDictItemListByDictKey", subFrom).then(function (data) {
                         var retval = "";
                         if (data.data.status == "success") {
                             for (var i = 0; i < data.data.retMessage.length; i++) {

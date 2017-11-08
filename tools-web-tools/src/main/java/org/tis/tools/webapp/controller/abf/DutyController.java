@@ -1,14 +1,7 @@
 package org.tis.tools.webapp.controller.abf;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.beanutils.BeanUtils;
+import com.alibaba.dubbo.common.json.ParseException;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -17,19 +10,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.base.exception.ToolsRuntimeException;
-import org.tis.tools.model.po.ac.AcOperator;
 import org.tis.tools.model.po.om.OmDuty;
 import org.tis.tools.model.po.om.OmEmployee;
-import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.po.sys.SysDict;
 import org.tis.tools.model.po.sys.SysDictItem;
 import org.tis.tools.rservice.om.capable.IDutyRService;
 import org.tis.tools.rservice.sys.capable.IDictRService;
 import org.tis.tools.webapp.controller.BaseController;
+import org.tis.tools.webapp.log.OperateLog;
+import org.tis.tools.webapp.log.ReturnType;
 import org.tis.tools.webapp.util.AjaxUtils;
 
-import com.alibaba.dubbo.common.json.ParseException;
-import com.alibaba.fastjson.JSONObject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 职务定义功能
@@ -127,13 +124,12 @@ public class DutyController extends BaseController{
 	 * 生成职务列表
 	 * 
 	 * @param model
-	 * @param age
 	 * @param request
 	 * @param response
 	 * @return
 	 */
 	@RequestMapping(value = "/loadallduty")
-	public String loadallduty(ModelMap model, String age, HttpServletRequest request,
+	public String loadallduty(ModelMap model, HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
 			// 收到请求
@@ -150,34 +146,29 @@ public class DutyController extends BaseController{
 	
 	/**
 	 * 新增职务
-	 * 
-	 * @param model
+	 *
 	 * @param content
-	 * @param age
-	 * @param request
-	 * @param response
 	 * @return
 	 */
+	@OperateLog(
+			operateType = "add",  // 操作类型
+			operateDesc = "新增职务", // 操作描述
+			retType = ReturnType.Object, // 返回类型，对象或数组
+			id = "guid", // 操作对象标识
+			name = "dutyName", // 操作对象名
+			keys = {"dutyName","dutyCode"}) // 操作对象的关键值的键值名
+	@ResponseBody
 	@RequestMapping(value = "/addduty")
-	public String addduty(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
-			HttpServletResponse response) {
-		try {
-			// 收到请求
-			JSONObject jsonObj = JSONObject.parseObject(content);
-			String dutyCode = jsonObj.getString("dutyCode");
-			String dutyName = jsonObj.getString("dutyName");
-			String dutyType = jsonObj.getString("dutyType");
-			String remark = jsonObj.getString("remark");
-			String parentsCode = jsonObj.getString("parentsCode");
-			dutyRService.createDuty(dutyCode, dutyName, dutyType, parentsCode, remark);
-			AjaxUtils.ajaxJsonSuccessMessage(response, "新增成功!");
-		}catch (ToolsRuntimeException e) {// TODO
-			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-			e.printStackTrace();
-		} catch (Exception e) {
-			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
-		}
-		return null;
+	public Map<String, Object> addduty(@RequestBody String content) {
+		// 收到请求
+		JSONObject jsonObj = JSONObject.parseObject(content);
+		String dutyCode = jsonObj.getString("dutyCode");
+		String dutyName = jsonObj.getString("dutyName");
+		String dutyType = jsonObj.getString("dutyType");
+		String remark = jsonObj.getString("remark");
+		String parentsCode = jsonObj.getString("parentsCode");
+		OmDuty od = dutyRService.createDuty(dutyCode, dutyName, dutyType, parentsCode, remark);
+		return getReturnMap(od);
 	}
 	
 	
@@ -186,13 +177,12 @@ public class DutyController extends BaseController{
 	 * 
 	 * @param model
 	 * @param content
-	 * @param age
 	 * @param request
 	 * @param response
 	 * @return
 	 */
 	@RequestMapping(value = "/initdutyCode")
-	public String initdutyCode(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+	public String initdutyCode(ModelMap model, @RequestBody String content,  HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
 			// 收到请求
@@ -214,13 +204,12 @@ public class DutyController extends BaseController{
 	 * 
 	 * @param model
 	 * @param content
-	 * @param age
 	 * @param request
 	 * @param response
 	 * @return
 	 */
 	@RequestMapping(value = "/querydutybyType")
-	public String querydutybyType(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+	public String querydutybyType(ModelMap model, @RequestBody String content,  HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
 			// 收到请求
@@ -242,13 +231,12 @@ public class DutyController extends BaseController{
 	 * 
 	 * @param model
 	 * @param content
-	 * @param age
 	 * @param request
 	 * @param response
 	 * @return
 	 */
 	@RequestMapping(value = "/querychild")
-	public String querychild(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+	public String querychild(ModelMap model, @RequestBody String content,  HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
 			// 收到请求
@@ -269,13 +257,12 @@ public class DutyController extends BaseController{
 	 * 
 	 * @param model
 	 * @param content
-	 * @param age
 	 * @param request
 	 * @param response
 	 * @return
 	 */
 	@RequestMapping(value = "/queryempbudutyCode")
-	public String queryempbudutyCode(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
+	public String queryempbudutyCode(ModelMap model, @RequestBody String content,  HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
 			// 收到请求
@@ -294,58 +281,46 @@ public class DutyController extends BaseController{
 	
 	/**
 	 * 删除职务
-	 * 
-	 * @param model
+	 *
 	 * @param content
-	 * @param age
-	 * @param request
-	 * @param response
 	 * @return
 	 */
+	@OperateLog(
+			operateType = "delete",  // 操作类型
+			operateDesc = "删除职务", // 操作描述
+			retType = ReturnType.Object, // 返回类型，对象或数组
+			id = "guid", // 操作对象标识
+			name = "dutyName", // 操作对象名
+			keys = {"dutyName","dutyCode"}) // 操作对象的关键值的键值名
+	@ResponseBody
 	@RequestMapping(value = "/deletedutyByCode")
-	public String deletedutyByCode(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
-			HttpServletResponse response) {
-		try {
-			// 收到请求
-			JSONObject jsonObj = JSONObject.parseObject(content);
-			String dutyCode = jsonObj.getString("dutyCode");
-			dutyRService.deleteDuty(dutyCode);
-			AjaxUtils.ajaxJsonSuccessMessage(response,"删除成功!");
-		} catch (ToolsRuntimeException e) {// TODO
-			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-			e.printStackTrace();
-		} catch (Exception e) {
-			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
-		}
-		return null;
+	public Map<String, Object> deletedutyByCode( @RequestBody String content) {
+		JSONObject jsonObj = JSONObject.parseObject(content);
+		String dutyCode = jsonObj.getString("dutyCode");
+		OmDuty od = dutyRService.deleteDuty(dutyCode);
+		return getReturnMap(od);
 	}
 	/**
 	 * 更新职务
-	 * 
-	 * @param model
+	 *
 	 * @param content
-	 * @param age
-	 * @param request
-	 * @param response
 	 * @return
 	 */
+	@OperateLog(
+			operateType = "update",  // 操作类型
+			operateDesc = "修改职务", // 操作描述
+			retType = ReturnType.Object, // 返回类型，对象或数组
+			id = "guid", // 操作对象标识
+			name = "dutyName", // 操作对象名
+			keys = {"dutyName","dutyCode"}) // 操作对象的关键值的键值名
+	@ResponseBody
 	@RequestMapping(value = "/updateDuty")
-	public String updateDuty(ModelMap model, @RequestBody String content, String age, HttpServletRequest request,
-			HttpServletResponse response) {
-		try {
-			// 收到请求
-			JSONObject jsonObj = JSONObject.parseObject(content);
-			OmDuty od = new OmDuty();
-			BeanUtils.populate(od, jsonObj);
-			dutyRService.updateDuty(od);
-			AjaxUtils.ajaxJsonSuccessMessage(response,"更新成功!");
-		} catch (ToolsRuntimeException e) {// TODO
-			AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-			e.printStackTrace();
-		} catch (Exception e) {
-			AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
-		}
-		return null;
+	public Map<String, Object> updateDuty( @RequestBody String content) {
+		// 收到请求
+		JSONObject jsonObj = JSONObject.parseObject(content);
+		OmDuty od = JSONObject.parseObject(content, OmDuty.class);
+		dutyRService.updateDuty(od);
+		return getReturnMap(od);
 	}
 	
     /**

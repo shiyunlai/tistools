@@ -119,14 +119,14 @@
     font-weight: normal;
 }
 
-/*子页面样式*/
+/*锟斤拷页锟斤拷锟斤拷式*/
 .button{
     position: absolute;
     top:3px;
     right:25px;
 }
 
-/*限定长度样式*/
+/*锟睫讹拷锟斤拷锟斤拷锟斤拷式*/
 .verify{
     border-color: red;
 }
@@ -134,3 +134,4 @@
 .ver_size{
     color:red;
 }
+
