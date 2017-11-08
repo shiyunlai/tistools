@@ -1,18 +1,18 @@
 /**
  * 
  */
-package org.tools.service.txmodel.handler.tss;
+package org.tools.service.txmodel.impl.handler.tws;
 
 import org.tis.tools.common.utils.StringUtil;
-import org.tools.service.txmodel.TxContext;
-import org.tools.service.txmodel.handler.AbstractBhvHandler;
+import org.tools.service.txmodel.impl.handler.AbstractBhvHandler;
+import org.tools.service.txmodel.spi.engine.TxContext;
 
 /**
- * 超柜渠道（TSS）交易操作行为的处理器抽象实现
+ * 柜面渠道（TWS）交易操作行为的处理器抽象实现
  * @author megapro
  *
  */
-abstract class AbstractTSSBhvHandler extends AbstractBhvHandler {
+abstract class AbstractTWSBhvHandler extends AbstractBhvHandler {
 
 	/* (non-Javadoc)
 	 * @see org.tools.service.txmodel.IOperatorBhvHandler#canHandle(org.tools.service.txmodel.TxContext)

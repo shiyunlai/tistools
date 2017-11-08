@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tools.service.txmodel.command;
+package org.tools.service.txmodel.impl.command;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tis.tools.rservice.txmodel.TxModelEnums.BHVCODE;
 import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;
-import org.tools.service.txmodel.IOperatorBhvCommand;
-import org.tools.service.txmodel.IOperatorBhvHandler;
-import org.tools.service.txmodel.TxContext;
-import org.tools.service.txmodel.handler.DefaultOperatorBhvHandler;
+import org.tools.service.txmodel.impl.handler.DefaultOperatorBhvHandler;
+import org.tools.service.txmodel.spi.engine.IOperatorBhvCommand;
+import org.tools.service.txmodel.spi.engine.IOperatorBhvHandler;
+import org.tools.service.txmodel.spi.engine.TxContext;
 
 /**
  * 

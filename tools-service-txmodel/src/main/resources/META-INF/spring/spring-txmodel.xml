@@ -16,7 +16,12 @@
 		http://code.alibabatech.com/schema/dubbo 
 		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-	<!-- //FIXME 后期考虑以交易引擎为单位，进行配置文件拆分，以便实现每个交易引擎（TxEngine）独立一个配置文件 -->
+	<!-- 
+	//FIXME TODO 后期考虑以交易引擎为单位，进行配置文件拆分，以便实现每个交易引擎（TxEngine）独立一个配置文件
+	如：
+		账务类交易引擎的配置文件 spring-txmodel-accountEngine.xml
+		维护类交易引擎的配置文件 spring-txmodel-maintainEngine.xml ....
+	 -->
 
 	<!-- =======================================================
 	| txmode模块装配：引擎管理器（TxEngineManager）的装配
@@ -24,7 +29,7 @@
 	| 交易引擎
 	| 
 	============================================================= -->
-	<bean id="txEngineManager" class="org.tools.service.txmodel.TxEngineManager">
+	<bean id="txEngineManager" class="org.tools.service.txmodel.spi.engine.TxEngineManager">
 		<property name="txEngines">
 			<map>
 				<entry key="ACCOUNT" value-ref="accountTxEngine" />
@@ -40,7 +45,7 @@
 	| 2.配置引擎可以处理那些操作命令.
 	============================================================= -->
 	
-	<bean id="accountTxEngine" class="org.tools.service.txmodel.engine.AccountTxEngine">
+	<bean id="accountTxEngine" class="org.tools.service.txmodel.impl.engine.AccountTxEngine">
 		<property name="bhvType" value="ACCOUNT" />
 		<property name="commands">
 			<map>
@@ -49,6 +54,17 @@
 			</map>
 		</property>
 	</bean>
+	
+	<!-- 更多交易引擎
+	<bean id="maintainTxEngine" class="org.tools.service.txmodel.impl.engine.MaintainEngine">
+		<property name="bhvType" value="ACCOUNT" />
+		<property name="commands">
+			<map>
+				<entry key="OPEN_TX" value-ref="openTxBhvCommand" />
+				<entry key="CLOSE_TX" value-ref="closeTxBhvCommand" />
+			</map>
+		</property>
+	</bean> -->
     
     
 	<!-- ========================================================
@@ -57,7 +73,7 @@
 	============================================================= -->
 
 	<!-- 操作行为命令：打开交易 -->
-	<bean id="openTxBhvCommand" class="org.tools.service.txmodel.command.OpenTxBhvCommand">
+	<bean id="openTxBhvCommand" class="org.tools.service.txmodel.impl.command.OpenTxBhvCommand">
 		<property name="bhvCode" value="OPEN_TX" />
 		<property name="handlers">
 			<list>
@@ -68,7 +84,7 @@
 	</bean>
 	
 	<!-- 操作行为命令：关闭交易 -->
-	<bean id="closeTxBhvCommand" class="org.tools.service.txmodel.command.CloseTxBhvCommand">
+	<bean id="closeTxBhvCommand" class="org.tools.service.txmodel.impl.command.CloseTxBhvCommand">
 		<property name="bhvCode" value="CLOSE_TX" />
 		<property name="handlers">
 			<list>
@@ -84,17 +100,17 @@
 	| txmode模块装配：操作行为处理器 ( IOperatorBhvHandler ) 
 	| 交易操作请求的具体处理者
 	============================================================= -->
-	<bean id="twsOpenTxHandler" class="org.tools.service.txmodel.handler.tws.TWSOpenTxHandler">
+	<bean id="twsOpenTxHandler" class="org.tools.service.txmodel.impl.handler.tws.TWSOpenTxHandler">
 		<property name="name" value="打开柜面交易" />
 	</bean>
-	<bean id="tssOpenTxHandler" class="org.tools.service.txmodel.handler.tss.TSSOpenTxHandler">
+	<bean id="tssOpenTxHandler" class="org.tools.service.txmodel.impl.handler.tss.TSSOpenTxHandler">
 		<property name="name" value="打开超柜交易" />
 	</bean>
-	
-	<bean id="twsCloseTxHandler" class="org.tools.service.txmodel.handler.tws.TWSCloseTxHandler">
+
+	<bean id="twsCloseTxHandler" class="org.tools.service.txmodel.impl.handler.tws.TWSCloseTxHandler">
 		<property name="name" value="关闭柜面交易" />
 	</bean>
-	<bean id="tssCloseTxHandler" class="org.tools.service.txmodel.handler.tss.TSSCloseTxHandler">
+	<bean id="tssCloseTxHandler" class="org.tools.service.txmodel.impl.handler.tss.TSSCloseTxHandler">
 		<property name="name" value="关闭超柜交易" />
 	</bean>
 	

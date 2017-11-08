@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tools.service.txmodel.tx;
+package org.tools.service.txmodel.spi.tx;
 
 import org.tis.tools.rservice.txmodel.TxModelEnums.BHVTYPE;
 

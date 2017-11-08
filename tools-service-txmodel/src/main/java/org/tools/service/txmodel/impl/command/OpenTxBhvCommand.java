@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tools.service.txmodel.command;
+package org.tools.service.txmodel.impl.command;
 
 import org.tis.tools.rservice.txmodel.TxModelEnums.BHVCODE;
 

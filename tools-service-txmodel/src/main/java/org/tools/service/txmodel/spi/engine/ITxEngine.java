@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tools.service.txmodel;
+package org.tools.service.txmodel.spi.engine;
 
 import org.tis.tools.rservice.txmodel.TxModelEnums.BHVTYPE;
 import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;
@@ -15,6 +15,22 @@ import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;
  */
 public interface ITxEngine {
 
+	/**
+	 * 获取交易引擎的名称
+	 * @return
+	 */
+	public String getName() ; 
+	
+	public void setName(String name) ; 
+	
+	/**
+	 * 取引擎对应的行为分类
+	 * @return
+	 */
+	public BHVTYPE getBhvType() ; 
+	
+	public void setBhvType(BHVTYPE bhvType) ; 
+	
 	/**
 	 * <pre>
 	 * 为交易引擎增加一种操作行为命令
@@ -52,10 +68,4 @@ public interface ITxEngine {
 	 *
 	 */
 	public ITxResponse execute(TxContext context);
-	
-	/**
-	 * 取引擎对应的行为分类
-	 * @return
-	 */
-	public BHVTYPE getBhvType() ; 
 }

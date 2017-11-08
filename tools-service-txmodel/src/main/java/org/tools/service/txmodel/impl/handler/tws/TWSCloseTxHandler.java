@@ -1,10 +1,10 @@
 /**
  * 
  */
-package org.tools.service.txmodel.handler.tws;
+package org.tools.service.txmodel.impl.handler.tws;
 
 import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;
-import org.tools.service.txmodel.TxContext;
+import org.tools.service.txmodel.spi.engine.TxContext;
 
 /**
  * 交易操作行为处理器：柜面关闭交易</br>

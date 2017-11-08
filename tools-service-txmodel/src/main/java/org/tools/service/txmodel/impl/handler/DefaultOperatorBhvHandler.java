@@ -1,10 +1,10 @@
-package org.tools.service.txmodel.handler;
+package org.tools.service.txmodel.impl.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;
-import org.tools.service.txmodel.IOperatorBhvHandler;
-import org.tools.service.txmodel.TxContext;
+import org.tools.service.txmodel.spi.engine.IOperatorBhvHandler;
+import org.tools.service.txmodel.spi.engine.TxContext;
 
 /**
  * <pre>

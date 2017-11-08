@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tools.service.txmodel.engine;
+package org.tools.service.txmodel.impl.engine;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,10 +14,10 @@ import org.tis.tools.rservice.txmodel.TxModelEnums.BHVTYPE;
 import org.tis.tools.rservice.txmodel.exception.TxModelException;
 import org.tis.tools.rservice.txmodel.exception.TxModelExceptionCodes;
 import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;
-import org.tools.service.txmodel.IOperatorBhvCommand;
-import org.tools.service.txmodel.ITxEngine;
-import org.tools.service.txmodel.TxContext;
-import org.tools.service.txmodel.command.DoNothingBhvCommand;
+import org.tools.service.txmodel.impl.command.DoNothingBhvCommand;
+import org.tools.service.txmodel.spi.engine.IOperatorBhvCommand;
+import org.tools.service.txmodel.spi.engine.ITxEngine;
+import org.tools.service.txmodel.spi.engine.TxContext;
 
 /**
  * 抽象交易引擎
@@ -29,6 +29,11 @@ abstract class AbstractTxEngine implements ITxEngine {
 
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+	/**
+	 * 引擎名称 
+	 */
+	String name = null ; 
+	
 	/**
 	 * 该交易引擎对应的行为类型代码 </br>
 	 * 说明：每种行为分类由一个交易引擎负责实现和处理对应的操作行为
@@ -77,7 +82,31 @@ abstract class AbstractTxEngine implements ITxEngine {
 
 		//initCommand(); 已经使用spring进行初始化
 	}
+	
+	@Override
+	public String getName() {
+		return this.name;
+	}
 
+	@Override
+	public void setName(String name) {
+		this.name = name ; 
+	}
+	
+	@Override
+	public BHVTYPE getBhvType() {
+		return this.bhvType;
+	}
+
+	@Override
+	public void setBhvType(BHVTYPE bhvType) {
+		this.bhvType = bhvType ; 
+	}
+	
+	public void setBhvType(String bhvType){
+		this.bhvType = BHVTYPE.valueOf(bhvType) ; 
+	}
+	
 	@Override
 	public void registerCommand(IOperatorBhvCommand command) {
 
@@ -117,24 +146,6 @@ abstract class AbstractTxEngine implements ITxEngine {
 		return this.executeCommand;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.tools.service.txmodel.ITxEngine#getBhvTypeCode()
-	 */
-	@Override
-	public BHVTYPE getBhvType() {
-		return this.bhvType;
-	}
-	
-	public void setBhvType(String bhvType){
-		this.bhvType = BHVTYPE.valueOf(bhvType) ; 
-	}
-	
-	public void setBhvType(BHVTYPE bhvType){
-		this.bhvType =  bhvType ; 
-	}
-	
 	@Override
 	public ITxResponse execute(TxContext txContext) {
 

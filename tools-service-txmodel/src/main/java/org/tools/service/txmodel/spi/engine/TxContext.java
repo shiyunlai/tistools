@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tools.service.txmodel;
+package org.tools.service.txmodel.spi.engine;
 
 import java.io.Serializable;
 
@@ -10,7 +10,7 @@ import org.tis.tools.rservice.txmodel.spi.message.ITxRequest;
 import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;
 import org.tools.core.sdo.dataobject.DataObjectUtility;
 import org.tools.core.sdo.dataobject.DynamicDataObject;
-import org.tools.service.txmodel.tx.TxDefinition;
+import org.tools.service.txmodel.spi.tx.TxDefinition;
 
 /**
  * <pre>

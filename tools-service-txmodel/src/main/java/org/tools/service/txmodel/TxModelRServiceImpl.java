@@ -14,7 +14,10 @@ import org.tis.tools.rservice.txmodel.exception.TxModelExceptionCodes;
 import org.tis.tools.rservice.txmodel.impl.message.TxResponseImpl;
 import org.tis.tools.rservice.txmodel.spi.message.ITxRequest;
 import org.tis.tools.rservice.txmodel.spi.message.ITxResponse;
-import org.tools.service.txmodel.tx.TxDefinition;
+import org.tools.service.txmodel.spi.engine.ITxEngine;
+import org.tools.service.txmodel.spi.engine.TxContext;
+import org.tools.service.txmodel.spi.engine.TxEngineManager;
+import org.tools.service.txmodel.spi.tx.TxDefinition;
 
 /**
  * 
