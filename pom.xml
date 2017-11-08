@@ -11,6 +11,7 @@
 		<module>tools-common-assembly</module>
 		<module>tools-common-util</module>
 		<module>tools-core-basic</module>
+    	<module>tools-core-sdo</module>
 		<module>tools-core-service</module>
 		<module>tools-core-web</module>
 		<!-- 
@@ -25,14 +26,13 @@
 		<module>tools-facade-ac</module>
 		<module>tools-facade-sys</module>
 		<module>tools-facade-log</module>
+		<module>tools-facade-txmodel</module>
 		<module>tools-service-abf</module>
 		<module>tools-service-biztrace</module>
 		<module>tools-service-devmgr</module>
 		<module>tools-service-jnl</module>
-		<module>tools-web-tools</module>
-		<module>tools-facade-txmodel</module>
 		<module>tools-service-txmodel</module>
-    <module>tools-core-sdo</module>
+		<module>tools-web-tools</module>
   </modules>
 
 	<profiles>
