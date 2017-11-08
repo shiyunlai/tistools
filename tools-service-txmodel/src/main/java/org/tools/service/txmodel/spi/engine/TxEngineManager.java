@@ -9,7 +9,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tis.tools.rservice.txmodel.TxModelEnums.BHVTYPE;
-import org.tools.service.txmodel.impl.engine.AccountTxEngine;
 import org.tools.service.txmodel.impl.engine.DefaultTxEngine;
 
 /**
@@ -24,12 +23,6 @@ public class TxEngineManager {
 	private Map<BHVTYPE, ITxEngine> txEngines = new HashMap<BHVTYPE, ITxEngine>();
 
 	private TxEngineManager() {
-		/*
-		 * 初始化有哪些交易引擎 
-		 * //TODO 重构为Spring配置管理的方式
-		 */
-		register( new DefaultTxEngine() ) ;
-		register( new AccountTxEngine() ) ;
 	}
 
 	/**
