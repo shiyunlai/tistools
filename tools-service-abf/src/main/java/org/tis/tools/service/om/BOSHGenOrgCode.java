@@ -3,13 +3,11 @@
  */
 package org.tis.tools.service.om;
 
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tis.tools.rservice.om.exception.OrgManagementException;
-import org.tis.tools.rservice.sys.capable.DictConstants;
+import org.tis.tools.rservice.sys.capable.ISeqnoRService;
 import org.tis.tools.service.base.SequenceService;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
 import org.tis.tools.service.sys.SysDictServiceExt;
@@ -32,6 +30,9 @@ public class BOSHGenOrgCode implements IOrgCodeGenerator {
     @Autowired
     OmOrgService omOrgService;
 
+    @Autowired
+    ISeqnoRService seqnoRService;
+
     /**
      * <pre>
      * 生成一个未被使用的机构代码。
@@ -40,19 +41,20 @@ public class BOSHGenOrgCode implements IOrgCodeGenerator {
      * areaCode  地区码
      * </pre>
      *
-     * @param parms 参数
+     * @param orgDegree 机构等级
+     * @param areaCode  地区码
      * @return 机构代码
      * @throws OrgManagementException
      */
     @Override
-    public String genOrgCode(Map<String, String> parms) throws OrgManagementException {
+    public String genOrgCode(String orgDegree, String areaCode) throws OrgManagementException {
 
-        String orgDegree = parms.get("orgDegree");
+//        String orgDegree = parms.get("orgDegree");
         if (StringUtils.isEmpty(orgDegree)) {
             throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_GEN_ORGCODE, new Object[]{"orgDegree"});
         }
 
-        String areaCode = parms.get("areaCode");
+//        String areaCode = parms.get("areaCode");
         if (StringUtils.isEmpty(areaCode)) {
             throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_GEN_ORGCODE, new Object[]{"areaCode"});
         }
@@ -74,7 +76,8 @@ public class BOSHGenOrgCode implements IOrgCodeGenerator {
         // 地区码
         sb.append(areaCode);
         // 序号， 以 BOSHGenOrgCode.class.getName() 唯一key，顺序编号
-        sb.append(toSeqNO(sequenceService.getNextSeqNo(BOSHGenOrgCode.class.getName())));//五位机构顺序号
+//        sb.append(toSeqNO(sequenceService.getNextSeqNo(BOSHGenOrgCode.class.getName())));//五位机构顺序号
+        sb.append(toSeqNO(seqnoRService.getNextSequence("ORGCODE", "机构代码序号")));
 
         //TODO 检查机构代码未被使用，否则要重新生成，直到新机构代码可用
 //		WhereCondition wc = new WhereCondition() ; 
@@ -93,7 +96,7 @@ public class BOSHGenOrgCode implements IOrgCodeGenerator {
      * @param totalOrgCount
      * @return
      */
-    private Object toSeqNO(int totalOrgCount) {
+    private Object toSeqNO(long totalOrgCount) {
 
         String t = String.valueOf(totalOrgCount).toString();
 

@@ -29,7 +29,7 @@
 
 
     <select id="getAuthOperatorFuncBhv" resultType="map">
-        SELECT
+        SELECT DISTINCT
             <include refid="getAuthOperatorFuncBhvColumn"/>
         FROM
             (
@@ -52,7 +52,7 @@
 
 
     <select id="getAuthOperatorFuncFbdBhv" resultType="map">
-        SELECT
+        SELECT DISTINCT
         <include refid="getAuthOperatorFuncBhvColumn"/>
         FROM
             `ac_operator_bhv` a,
@@ -68,7 +68,7 @@
     </select>
 
     <select id="getUnauthOperatorFuncPmtBhv" resultType="map">
-        SELECT
+        SELECT DISTINCT
         <include refid="getAuthOperatorFuncBhvColumn"/>
         FROM
             `ac_operator_bhv` a,

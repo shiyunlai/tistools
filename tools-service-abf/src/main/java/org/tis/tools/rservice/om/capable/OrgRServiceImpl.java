@@ -3,16 +3,17 @@
  */
 package org.tis.tools.rservice.om.capable;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.tis.tools.base.WhereCondition;
-import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.common.utils.ObjectUtil;
 import org.tis.tools.common.utils.StringUtil;
 import org.tis.tools.common.utils.TimeUtil;
+import org.tis.tools.core.exception.ExceptionCodes;
 import org.tis.tools.model.def.ACConstants;
 import org.tis.tools.model.def.CommonConstants;
 import org.tis.tools.model.def.GUID;
@@ -30,9 +31,12 @@ import org.tis.tools.service.ac.AcRoleService;
 import org.tis.tools.service.ac.AcRoleServiceExt;
 import org.tis.tools.service.om.*;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
+import org.tis.tools.spi.om.IOrgCodeGenerator;
 
 import java.math.BigDecimal;
 import java.util.*;
+
+import static org.tis.tools.common.utils.BasicUtil.wrap;
 
 /**
  * <pre>
@@ -77,39 +81,39 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	OmPositionAppService omPositionAppService;
 	@Autowired
 	OmGroupAppService omGroupAppService;
+	@Autowired
+	IOrgCodeGenerator orgCodeGenerator;
 	
-	/* (non-Javadoc)
-	 * @see org.tis.tools.rservice.om.capable.IOrgRService#genOrgCode(java.lang.String, java.lang.String)
-	 */
-	@Override
-	public String genOrgCode(String areaCode, String orgDegree, String orgType) {
-		Map<String,String> parms = new HashMap<String,String>() ;
-		parms.put("orgDegree", orgDegree) ; 
-		parms.put("areaCode", areaCode) ; 
-		return boshGenOrgCode.genOrgCode(parms);
-	}
 
-	/* (non-Javadoc)
-	 * @see org.tis.tools.rservice.om.capable.IOrgRService#createRootOrg(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	/**
+	 *
+	 * @param areaCode
+	 * 			  区域代码
+	 * @param orgDegree
+	 *            机构等级
+	 * @param orgName
+	 *            机构名称
+	 * @param orgType
+	 *            机构类型
+	 * @return
+	 * @throws OrgManagementException
 	 */
 	@Override
-	public OmOrg createRootOrg(String orgCode, String orgName, String orgType, String orgDegree)
+	public OmOrg createRootOrg(String areaCode, String orgDegree, String orgName,  String orgType)
 			throws OrgManagementException {
 		//验证传入参数
-		if(StringUtil.isEmpty(orgCode)) {
-			throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_GEN_ORGCODE,new Object[]{"orgCode"});
-		}
-		if(StringUtil.isEmpty(orgName)) {
-			throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_GEN_ORGCODE,new Object[]{"orgName"});
-		}
-		if(StringUtil.isEmpty(orgType)) {
-			throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_GEN_ORGCODE,new Object[]{"orgType"});
+		if(StringUtil.isEmpty(areaCode)) {
+			throw new OrgManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("String areaCode", "createRootOrg"));
 		}
 		if(StringUtil.isEmpty(orgDegree)) {
-			throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_GEN_ORGCODE,new Object[]{"orgDegree"});
+			throw new OrgManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("String orgDegree", "createRootOrg"));
 		}
-
-
+		if(StringUtil.isEmpty(orgName)) {
+			throw new OrgManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("String orgName", "createRootOrg"));
+		}
+		if(StringUtil.isEmpty(orgType)) {
+			throw new OrgManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("String orgType", "createRootOrg"));
+		}
 		OmOrg org = new OmOrg();
 		// 补充信息
 		org.setGuid(GUID.org());// 补充GUID
@@ -125,26 +129,11 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		List<OmOrg> rootorgList = omOrgServiceExt.queryAllRoot();
 		org.setSortNo(new BigDecimal(rootorgList.size()));
 		// 收集入参
-		org.setOrgCode(orgCode);
+		org.setOrgCode(orgCodeGenerator.genOrgCode(orgDegree, areaCode));
 		org.setOrgName(orgName);
 		org.setOrgType(orgType);
 		org.setOrgDegree(orgDegree);
-		final OmOrg newOrg = org;
-		// 新增机构
-		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-			@Override
-			public void doInTransactionWithoutResult(TransactionStatus status) {
-				try {
-					omOrgService.insert(newOrg);
-				} catch (Exception e) {
-					status.setRollbackOnly();
-					e.printStackTrace();
-					throw new OrgManagementException(
-							OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
-							BasicUtil.wrap(e.getCause().getMessage()), "新增根节点机构失败！{0}");
-				}
-			}
-		});
+		omOrgService.insert(org);
 		return org;
 	}
 
@@ -157,47 +146,45 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 * 新建后，机构状态停留在‘停用’；
 	 * </pre>
 	 * 
-	 * @param orgCode
-	 *            机构代码
+	 * @param areaCode
+	 *            地区代码
 	 * @param orgName
 	 *            机构名称
 	 * @param orgType
 	 *            机构类型
 	 * @param orgDegree
 	 *            机构等级
-	 * @param parentsOrgCode
-	 *            父机构代码
-	 * @param sortNo
-	 *            位于机构树的排列顺序，如果为0或null，则排到最后。
+	 * @param guidParents
+	 *            父机构GUID
 	 * @return 新建机构信息
 	 * @throws OrgManagementException
 	 */
 	@Override
-	public OmOrg createChildOrg(String orgCode, String orgName, String orgType, String orgDegree, String parentsOrgCode,
-			int sortNo) throws OrgManagementException {
+	public OmOrg createChildOrg(String areaCode, String orgDegree, String orgName, String orgType, String guidParents)
+			throws OrgManagementException {
 		//验证传入参数
-		if(StringUtil.isEmpty(orgCode)) {
-			throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_GEN_ORGCODE,new Object[]{"orgCode"});
-		}
-		if(StringUtil.isEmpty(orgName)) {
-			throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_GEN_ORGCODE,new Object[]{"orgCode"});
-		}
-		if(StringUtil.isEmpty(orgType)) {
-			throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_GEN_ORGCODE,new Object[]{"orgType"});
+		if(StringUtil.isEmpty(areaCode)) {
+			throw new OrgManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("String areaCode", "createChildOrg"));
 		}
 		if(StringUtil.isEmpty(orgDegree)) {
-			throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_GEN_ORGCODE,new Object[]{"orgDegree"});
+			throw new OrgManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("String orgDegree", "createChildOrg"));
 		}
-		if(StringUtil.isEmpty(parentsOrgCode)) {
-			throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_GEN_ORGCODE,new Object[]{"parentsOrgCode"});
+		if(StringUtil.isEmpty(orgName)) {
+			throw new OrgManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("String orgName", "createChildOrg"));
+		}
+		if(StringUtil.isEmpty(orgType)) {
+			throw new OrgManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("String orgType", "createChildOrg"));
+		}
+		if(StringUtil.isEmpty(guidParents)) {
+			throw new OrgManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("String orgType", "createChildOrg"));
 		}
 		// 查询父机构信息
 		WhereCondition wc = new WhereCondition();
-		wc.andEquals("ORG_CODE", parentsOrgCode);
+		wc.andEquals("GUID", guidParents);
 		List<OmOrg> parentsOrgList = omOrgService.query(wc);
-		if(parentsOrgList.size() != 1) {
+		if(CollectionUtils.isEmpty(parentsOrgList)) {
 			throw new OrgManagementException(
-					OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, BasicUtil.wrap(parentsOrgCode), "父机构代码{0}对应的机构不存在");
+					OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, wrap(guidParents), "父机构{0}对应的机构不存在");
 		}
 		OmOrg parentsOrg = parentsOrgList.get(0);
 		String parentsOrgSeq = parentsOrg.getOrgSeq();
@@ -214,13 +201,13 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		String newOrgSeq = parentsOrgSeq + "." + org.getGuid();
 		org.setOrgSeq(newOrgSeq);// 设置机构序列,根据父机构的序列+"."+机构的GUID
 		// 收集入参
-		org.setOrgCode(orgCode);
+		org.setOrgCode(orgCodeGenerator.genOrgCode(orgDegree, areaCode));
 		org.setOrgName(orgName);
 		org.setOrgType(orgType);
 		org.setOrgDegree(orgDegree);
 		// 更新父节点机构 是否叶子节点 节点数 最新更新时间 和最新更新人员
 		parentsOrg.setLastUpdate(new Date());// 补充最近更新时间
-		parentsOrg.setUpdator("");// TODO暂时为空
+		parentsOrg.setUpdator("");// TODO 暂时为空
 		int count = parentsOrg.getSubCount().intValue() + 1;
 		parentsOrg.setSubCount(new BigDecimal(count));
 		parentsOrg.setIsleaf(CommonConstants.NO);
@@ -232,7 +219,6 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 			@Override
 			public void doInTransactionWithoutResult(TransactionStatus status) {
 				try {
-
 					omOrgService.insert(newOrg);//新增子节点
 					index ++;
 					omOrgService.update(finalParentsOrg);//更新父节点
@@ -241,7 +227,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 					status.setRollbackOnly();
 					throw new OrgManagementException(
 							index == 1 ? OMExceptionCodes.FAILURE_WHEN_CREATE_CHILD_ORG : OMExceptionCodes.FAILURE_WHRN_UPDATE_PARENT_ORG,
-							BasicUtil.wrap(e.getCause().getMessage()),
+							wrap(e.getCause().getMessage()),
 							index == 1 ? "新增子节点机构失败！{0}" : "更新父节点机构失败！{0}" );
 				}
 			}
@@ -334,7 +320,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 					status.setRollbackOnly();
 					throw new OrgManagementException(
 							index == 1 ? OMExceptionCodes.FAILURE_WHEN_CREATE_CHILD_ORG : OMExceptionCodes.FAILURE_WHRN_UPDATE_PARENT_ORG,
-							BasicUtil.wrap(e.getCause().getMessage()),
+							wrap(e.getCause().getMessage()),
 							index == 1 ? "新增子节点机构失败！{0}" : "更新父节点机构失败！{0}" );
 				}
 			}
@@ -363,7 +349,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		List<OmOrg> orgList=omOrgService.query(wc);
 		if(orgList.size() != 1) {
 			throw new OrgManagementException(
-					OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, BasicUtil.wrap(omOrg.getOrgCode()), "机构代码{0}对应的机构不存在");
+					OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, wrap(omOrg.getOrgCode()), "机构代码{0}对应的机构不存在");
 		}
 		OmOrg oldOrg = orgList.get(0);
 		String oldOrgStatus = oldOrg.getOrgStatus();
@@ -376,7 +362,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHEN_UPDATE_ORG_APP,
-					BasicUtil.wrap(e.getCause().getMessage()));
+					wrap(e.getCause().getMessage()));
 		}finally {
 			return omOrg;
 		}
@@ -415,7 +401,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		List<OmOrg> queryList = omOrgService.query(wc);
 		if(queryList.size() != 1) {
 			throw new OrgManagementException(
-					OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, BasicUtil.wrap(orgCode), "机构代码{0}对应的机构不存在");
+					OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, wrap(orgCode), "机构代码{0}对应的机构不存在");
 		}
 		OmOrg mvOrg = queryList.get(0);
 		OmOrg fromParentsOrg = new OmOrg();
@@ -426,7 +412,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 			queryList = omOrgService.query(wc);
 			if(queryList.size() != 1) {
 				throw new OrgManagementException(
-						OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, BasicUtil.wrap(orgCode), "机构代码{0}对应的机构不存在");
+						OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, wrap(orgCode), "机构代码{0}对应的机构不存在");
 			}
 			fromParentsOrg = queryList.get(0);
 		}
@@ -435,7 +421,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 			queryList = omOrgService.query(wc);
 			if(queryList.size() != 1) {
 				throw new OrgManagementException(
-						OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, BasicUtil.wrap(orgCode), "机构代码{0}对应的机构不存在");
+						OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, wrap(orgCode), "机构代码{0}对应的机构不存在");
 			}
 			toParentsOrg = queryList.get(0);
 		}
@@ -486,7 +472,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 					status.setRollbackOnly();
 					e.printStackTrace();
 					throw new OrgManagementException(
-							OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG, BasicUtil.wrap("AC_MENU", e.getCause().getMessage()));
+							OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG, wrap("AC_MENU", e.getCause().getMessage()));
 				}
 			}
 		});
@@ -506,12 +492,12 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		
 		if (omOrgServiceExt.isExit(newOrgCode)) {
 			throw new OrgManagementException(OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE,
-					BasicUtil.wrap(newOrgCode), "拷贝机构时，新机构代码{0}已经存在！");
+					wrap(newOrgCode), "拷贝机构时，新机构代码{0}已经存在！");
 		}
 		
 		if (!omOrgServiceExt.isExit(copyFromOrgCode)) {
 			throw new OrgManagementException(OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE,
-					BasicUtil.wrap(copyFromOrgCode), "拷贝机构时，找不到参照机构{0}！");
+					wrap(copyFromOrgCode), "拷贝机构时，找不到参照机构{0}！");
 		}
 		
 		//获取参照机构
@@ -538,7 +524,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_COPY_ORG,
-					BasicUtil.wrap(copyFromOrgCode, newOrgCode, e.getCause().getMessage()),
+					wrap(copyFromOrgCode, newOrgCode, e.getCause().getMessage()),
 					"将机构{0}拷贝为新机构{0}时，插入数据失败！{0}");
 		}
 		
@@ -597,7 +583,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_DEEP_COPY_ORG,
-					BasicUtil.wrap(copyFromOrgCode, newOrgCode, e.getCause().getMessage()), "深度拷贝机构{0}为新机构{0}时失败！{0}");
+					wrap(copyFromOrgCode, newOrgCode, e.getCause().getMessage()), "深度拷贝机构{0}为新机构{0}时失败！{0}");
 		}
 
 		// 返回的是机构详情信息，将拷贝时处理过哪些内容交代清楚
@@ -757,18 +743,18 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		OmOrg org = omOrgServiceExt.loadByOrgCode(orgCode);
 
 		if (StringUtils.equals(org.getOrgStatus(), OMConstants.ORG_STATUS_RUNNING)) {
-			throw new OrgManagementException(OMExceptionCodes.ORG_IS_RUNNING_NEEDLESS_ENABLED, BasicUtil.wrap(orgCode),
+			throw new OrgManagementException(OMExceptionCodes.ORG_IS_RUNNING_NEEDLESS_ENABLED, wrap(orgCode),
 					"机构 {0} 处于正常状态，无需执行启用处理！");
 		}
 
 		if (!StringUtils.equals(org.getOrgStatus(), OMConstants.ORG_STATUS_STOP)) {
 			throw new OrgManagementException(OMExceptionCodes.ORG_IS_NOT_STOP_WHEN_ENABLED,
-					BasicUtil.wrap(orgCode, org.getOrgStatus()), "机构 {0} 当前状态为 {1}，不能执行启用处理！");
+					wrap(orgCode, org.getOrgStatus()), "机构 {0} 当前状态为 {1}，不能执行启用处理！");
 		}
 		
 		if (TimeUtil.compareDate(endDate, startDate) == -1) {
 			throw new OrgManagementException(OMExceptionCodes.INVALID_DATE_SCOPE_WHEN_ENABLED,
-					BasicUtil.wrap(orgCode, endDate, startDate), "启用机构{0}时，失效日期{1}不应该早于生效日期{2}！");
+					wrap(orgCode, endDate, startDate), "启用机构{0}时，失效日期{1}不应该早于生效日期{2}！");
 		}
 
 		// 执行启用 根据guid修改状态、生效、失效日期
@@ -814,14 +800,14 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		// 查询是否存在
 		if(orgList.size() != 1) {
 			throw new OrgManagementException(
-					OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, BasicUtil.wrap(orgCode), "机构代码{0}对应的机构不存在");
+					OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, wrap(orgCode), "机构代码{0}对应的机构不存在");
 		}
 		OmOrg org = orgList.get(0);
 		Date enddate = org.getEndDate();
 		Date now = new Date();
 		if(now.after(enddate)){
 			throw new OrgManagementException(
-					OMExceptionCodes.ORG_IS_RUN_OUT, BasicUtil.wrap(orgCode), "机构代码{0}对应的机构已经过期失效");
+					OMExceptionCodes.ORG_IS_RUN_OUT, wrap(orgCode), "机构代码{0}对应的机构已经过期失效");
 		}
 		org.setOrgStatus(OMConstants.ORG_STATUS_RUNNING);// 更改状态
 		omOrgService.update(org);
@@ -845,7 +831,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		// 查询是否存在
 		if(orgList.size() != 1) {
 			throw new OrgManagementException(
-					OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, BasicUtil.wrap(orgCode), "机构代码{0}对应的机构不存在");
+					OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, wrap(orgCode), "机构代码{0}对应的机构不存在");
 		}
 		OmOrg org = orgList.get(0);
 		WhereCondition wc_ext = new WhereCondition(); // 用于查询下属机构
@@ -863,7 +849,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	public OmOrg cancelOrg(String orgCode) throws OrgManagementException {
 		// 校验传入参数
 		if(StringUtil.isEmpty(orgCode)) {
-			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap(orgCode));
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap(orgCode));
 		}
 		// 查询机构信息
 		WhereCondition wc = new WhereCondition();
@@ -872,7 +858,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		// 查询是否存在
 		if(orgList.size() != 1) {
 			throw new OrgManagementException(
-					OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, BasicUtil.wrap(orgCode), "机构代码{0}对应的机构不存在");
+					OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, wrap(orgCode), "机构代码{0}对应的机构不存在");
 		}
 		OmOrg org = orgList.get(0);
 		//查询子机构状态
@@ -898,7 +884,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		
 		if (!StringUtils.equals(OMConstants.ORG_STATUS_STOP, delOrg.getOrgStatus())) {
 			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHEN_DEL_MUST_STOP,
-					BasicUtil.wrap(orgCode, delOrg.getOrgStatus()), "不能删除非停用状态机构{0}！当前状态{1}");
+					wrap(orgCode, delOrg.getOrgStatus()), "不能删除非停用状态机构{0}！当前状态{1}");
 		}
 		
 //		if (!omOrgServiceExt.isEmptyOrg(delOrg.getGuid())) {
@@ -922,7 +908,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_DEEP_COPY_ORG,
-					BasicUtil.wrap(delOrg.getOrgCode(), e.getCause().getMessage()), "删除机构失败！机构{0} {1}");
+					wrap(delOrg.getOrgCode(), e.getCause().getMessage()), "删除机构失败！机构{0} {1}");
 		}finally {
 			return  delOrg;
 		}
@@ -1120,7 +1106,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		List<OmOrg> list = omOrgService.query(wc);
 		if(list.size() != 1){
 			throw new OrgManagementException(
-					OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, BasicUtil.wrap(orgCode), "机构代码{0}对应的机构不存在");
+					OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE, wrap(orgCode), "机构代码{0}对应的机构不存在");
 		}
 		String guid = list.get(0).getGuid();
 		return guid;
