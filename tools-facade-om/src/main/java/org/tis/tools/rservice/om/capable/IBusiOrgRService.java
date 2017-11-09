@@ -3,11 +3,11 @@
  */
 package org.tis.tools.rservice.om.capable;
 
-import java.util.List;
-
 import org.tis.tools.model.po.om.OmBusiorg;
 import org.tis.tools.model.vo.om.OmBusiorgDetail;
 import org.tis.tools.rservice.om.exception.BusiOrgManagementException;
+
+import java.util.List;
 
 /**
  * <pre>
@@ -131,9 +131,7 @@ public interface IBusiOrgRService {
 	 * 系统将orgCode转为对应的guid存储；
 	 * 
 	 * </pre>
-	 * 
-	 * @param newBusiorgCode
-	 *            新业务机构代码
+	 *
 	 * @param newBusiorgName
 	 *            新业务机构名称
 	 * @param orgCode
@@ -145,7 +143,7 @@ public interface IBusiOrgRService {
 	 * @return 新业务机构对象
 	 * @exception BusiOrgManagementException
 	 */
-	OmBusiorg createRealityBusiorg(String newBusiorgCode, String newBusiorgName, String orgCode, String busiDomain,
+	OmBusiorg createRealityBusiorg(String newBusiorgName, String orgCode, String busiDomain,
 			String parentsBusiorgCode) throws BusiOrgManagementException;
 	
 	/**
@@ -153,8 +151,7 @@ public interface IBusiOrgRService {
 	 * 新增业务机构（虚拟节点）
 	 * 
 	 * </pre>
-	 * 
-	 * @param newBusiorgCode
+	 *
 	 *            新业务机构代码
 	 * @param newBusiorgName
 	 *            新业务机构名称
@@ -165,7 +162,7 @@ public interface IBusiOrgRService {
 	 * @return 新业务机构对象
 	 * @throws BusiOrgManagementException
 	 */
-	OmBusiorg createDummyBusiorg(String newBusiorgCode, String newBusiorgName, String busiDomain,
+	OmBusiorg createDummyBusiorg(String newBusiorgName, String busiDomain,
 			String parentsBusiorgCode) throws BusiOrgManagementException;
 	
 	/**
@@ -178,14 +175,12 @@ public interface IBusiOrgRService {
 	 * 
 	 * @param fromBusiorgCode
 	 *            参考业务机构代码
-	 * @param newBusiorgCode
-	 *            新业务机构代码
 	 * @param toParentsBusiorgCode
 	 *            新业务机构的父业务机构
 	 * @return 新增的业务机构对象
 	 * @throws BusiOrgManagementException
 	 */
-	OmBusiorg copyBusiorg(String fromBusiorgCode, String newBusiorgCode, String toParentsBusiorgCode) throws BusiOrgManagementException;
+	OmBusiorg copyBusiorg(String fromBusiorgCode,  String toParentsBusiorgCode) throws BusiOrgManagementException;
 	
 	/**
 	 * <pre>
@@ -198,15 +193,13 @@ public interface IBusiOrgRService {
 	 * </pre>
 	 * 
 	 * @param fromBusiorgCode
-	 *            参考业务机构代码
-	 * @param newBusiorgCode
 	 *            新业务机构代码
 	 * @param toParentsBusiorgCode
 	 *            新业务机构的父业务机构
 	 * @return 新增的业务机构对象
 	 * @throws BusiOrgManagementException
 	 */
-	OmBusiorg copyBusiorgDeep(String fromBusiorgCode, String newBusiorgCode, String toParentsBusiorgCode) throws BusiOrgManagementException;
+	OmBusiorg copyBusiorgDeep(String fromBusiorgCode,  String toParentsBusiorgCode) throws BusiOrgManagementException;
 	
 	/**
 	 * <pre>

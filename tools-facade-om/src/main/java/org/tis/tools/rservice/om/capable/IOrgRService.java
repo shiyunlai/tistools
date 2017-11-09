@@ -177,12 +177,10 @@ public interface IOrgRService {
 	 * 
 	 * @param copyFromOrgCode
 	 *            源机构（必须指定）
-	 * @param newOrgCode
-	 *            新的机构代码（必须指定）
 	 * @return 新机构
 	 * @throws OrgManagementException
 	 */
-	OmOrg copyOrg(String copyFromOrgCode, String newOrgCode) throws OrgManagementException;
+	OmOrg copyOrg(String copyFromOrgCode) throws OrgManagementException;
 	
 	/**
 	 * <pre>
@@ -205,8 +203,6 @@ public interface IOrgRService {
 	 * 
 	 * @param copyFromOrgCode
 	 *            源机构（必须指定）
-	 * @param newOrgCode
-	 *            新的机构代码（必须指定）
 	 * @param copyOrgRole
 	 *            是否同时复制机构拥有的角色</br>
 	 *            true - 复制 </br>
@@ -230,7 +226,7 @@ public interface IOrgRService {
 	 * @return 新机构信息
 	 * @throws OrgManagementException
 	 */
-	OmOrg copyOrgDeep(String copyFromOrgCode, String newOrgCode, boolean copyOrgRole, boolean copyPosition,
+	OmOrg copyOrgDeep(String copyFromOrgCode, boolean copyOrgRole, boolean copyPosition,
 			boolean copyPositionRole, boolean copyGroup, boolean copyGroupRole) throws OrgManagementException;
 
 	/*

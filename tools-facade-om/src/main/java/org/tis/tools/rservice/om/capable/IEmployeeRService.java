@@ -117,12 +117,10 @@ public interface IEmployeeRService {
 	 * 
 	 * @param fromEmpCode
 	 *            参考员工代码（必输）
-	 * @param newEmpCode
-	 *            新员工代码（必输）
 	 * @return 新员工信息
 	 * @throws ToolsRuntimeException
 	 */
-	OmEmployee copyEmployee(String fromEmpCode, String newEmpCode) throws ToolsRuntimeException;
+	OmEmployee copyEmployee(String fromEmpCode) throws ToolsRuntimeException;
 	
 	/**
 	 * <pre>
@@ -139,12 +137,10 @@ public interface IEmployeeRService {
 	 *            参考员工代码（必输）
 	 * @param toOrgCode
 	 *            新员工所在机构
-	 * @param newEmpCode
-	 *            新员工代码（必输）
 	 * @return 新员工信息
 	 * @throws ToolsRuntimeException
 	 */
-	OmEmployee copyEmployee(String fromOrgCode, String fromEmpCode, String toOrgCode, String newEmpCode)
+	OmEmployee copyEmployee(String fromOrgCode, String fromEmpCode, String toOrgCode)
 			throws ToolsRuntimeException;
 	
 	/**
@@ -177,14 +173,12 @@ public interface IEmployeeRService {
 	 * 
 	 * @param fromEmpCode
 	 *            参考员工代码（必输）
-	 * @param newEmpCode
-	 *            新员工代码（必输）
 	 * @param copyConfig
 	 *            指定拷贝内容
 	 * @return
 	 * @throws ToolsRuntimeException
 	 */
-	OmEmployee copyEmployeeDeep(String fromEmpCode, String newEmpCode, EmployeeCopyConfig copyConfig)
+	OmEmployee copyEmployeeDeep(String fromEmpCode, EmployeeCopyConfig copyConfig)
 			throws ToolsRuntimeException;
 
 	/**

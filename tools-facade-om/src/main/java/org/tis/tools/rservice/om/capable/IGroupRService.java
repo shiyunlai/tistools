@@ -3,8 +3,6 @@
  */
 package org.tis.tools.rservice.om.capable;
 
-import java.util.List;
-
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcRole;
@@ -12,6 +10,8 @@ import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmGroup;
 import org.tis.tools.model.po.om.OmPosition;
 import org.tis.tools.model.vo.om.OmPositionDetail;
+
+import java.util.List;
 
 /**
 * <pre>
@@ -82,9 +82,7 @@ public interface IGroupRService {
 	 * 新增的工作组状态为‘正常’；
 	 * 
 	 * </pre>
-	 * 
-	 * @param groupCode
-	 *            新工作组代码
+	 *
 	 * @param groupType
 	 *            新工作组类型
 	 * @param groupName
@@ -96,7 +94,7 @@ public interface IGroupRService {
 	 * @return 新增的工作组对象
 	 * @throws ToolsRuntimeException
 	 */
-	OmGroup createGroup(String groupCode, String groupType, String groupName, String orgCode, String parentGroupCode )  throws ToolsRuntimeException ;
+	OmGroup createGroup(String groupType, String groupName, String orgCode, String parentGroupCode )  throws ToolsRuntimeException ;
 	
 	/**
 	 * <pre>
@@ -152,8 +150,6 @@ public interface IGroupRService {
 	 * 
 	 * @param fromGroupCode
 	 *            参考工作组代码
-	 * @param newGroupCode
-	 *            新工作组代码
 	 * @param toOrgCode
 	 *            新工作组隶属机构
 	 * @param toParentGroupCode
@@ -161,7 +157,7 @@ public interface IGroupRService {
 	 * @return 拷贝新增的工作组对象
 	 * @throws ToolsRuntimeException
 	 */
-	OmGroup copyGroup(String fromGroupCode, String newGroupCode, String toOrgCode, String toParentGroupCode )  throws ToolsRuntimeException ;
+	OmGroup copyGroup(String fromGroupCode, String toOrgCode, String toParentGroupCode )  throws ToolsRuntimeException ;
 	
 	/**
 	 * <pre>
@@ -177,8 +173,6 @@ public interface IGroupRService {
 	 * 
 	 * @param fromGroupCode
 	 *            参考工作组代码
-	 * @param newGroupCode
-	 *            新工作组代码
 	 * @param toOrgCode
 	 *            新工作组隶属机构
 	 * @param toParentGroupCode
@@ -202,7 +196,7 @@ public interface IGroupRService {
 	 * @return 拷贝新增的工作组对象
 	 * @throws ToolsRuntimeException
 	 */
-	OmGroup copyGroupDeep(String fromGroupCode, String newGroupCode, String toOrgCode, String toParentGroupCode,
+	OmGroup copyGroupDeep(String fromGroupCode, String toOrgCode, String toParentGroupCode,
 			boolean copyChild, boolean copyApp, boolean copyPosition, boolean copyEmployee ) throws ToolsRuntimeException ; 
 	
 	/**

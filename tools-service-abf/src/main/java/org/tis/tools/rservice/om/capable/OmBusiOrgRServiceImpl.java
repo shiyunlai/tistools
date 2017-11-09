@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.tis.tools.base.WhereCondition;
-import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.common.utils.StringUtil;
+import org.tis.tools.core.exception.ExceptionCodes;
 import org.tis.tools.model.def.CommonConstants;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.def.OMConstants;
@@ -21,7 +21,12 @@ import org.tis.tools.service.om.OmOrgService;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import static org.tis.tools.common.utils.BasicUtil.wrap;
 
 public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRService {
     /**
@@ -51,10 +56,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
      */
     @Override
     public String genBusiorgCode(String nodeType, String busiDomain) throws BusiOrgManagementException {
-        Map map = new HashMap();
-        map.put("nodeType", nodeType);
-        map.put("busiDomain", busiDomain);
-        return boshGenBusiOrgCode.genBusiOrgCode(map);
+        return boshGenBusiOrgCode.genBusiOrgCode(nodeType, busiDomain);
     }
 
     /**
@@ -66,7 +68,6 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
      *
      * </pre>
      *
-     * @param newBusiorgCode     新业务机构代码
      * @param newBusiorgName     新业务机构名称
      * @param orgCode            对应实体机构代码（来自OmOrg）
      * @param busiDomain         业务条线／套别（值来自业务字典DICT_OM_BUSIDOMAIN）
@@ -75,31 +76,28 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
      * @throws BusiOrgManagementException
      */
     @Override
-    public OmBusiorg createRealityBusiorg(String newBusiorgCode, String newBusiorgName, String orgCode, String busiDomain, String parentsBusiorgCode) throws BusiOrgManagementException {
+    public OmBusiorg createRealityBusiorg(String newBusiorgName, String orgCode, String busiDomain, String parentsBusiorgCode) throws BusiOrgManagementException {
         // 验证传入参数
-        if (StringUtil.isEmpty(newBusiorgCode)) {
-            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("newBusiorgCode"));
-        }
         if (StringUtil.isEmpty(newBusiorgName)) {
-            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("newBusiorgName"));
+            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("newBusiorgName"));
         }
         if (StringUtil.isEmpty(orgCode)) {
-            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("orgCode"));
+            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("orgCode"));
         }
         if (StringUtil.isEmpty(busiDomain)) {
-            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("busiDomain"));
+            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("busiDomain"));
         }
         /**
          * 机构码已存在
          */
-        if (isExitByBusiorgCode(newBusiorgCode)) {
-            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("busiDomain"));
-        }
+//        if (isExitByBusiorgCode(newBusiorgCode)) {
+//            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("busiDomain"));
+//        }
         OmBusiorg omBusiorg = new OmBusiorg();
         omBusiorg.setGuid(GUID.busiorg());
         omBusiorg.setNodeType(OMConstants.BUSIORG_NODE_TYPE_REALITY);
         //收集入参
-        omBusiorg.setBusiorgCode(newBusiorgCode);
+        omBusiorg.setBusiorgCode(boshGenBusiOrgCode.genBusiOrgCode(OMConstants.BUSIORG_NODE_TYPE_REALITY, busiDomain));
         omBusiorg.setBusiDomain(busiDomain);
         omBusiorg.setBusiorgName(newBusiorgName);
         //查询对应机构GUID
@@ -127,7 +125,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
                 e.printStackTrace();
                 throw new BusiOrgManagementException(
                         OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG,
-                        BasicUtil.wrap(e.getCause().getMessage()), "新增业务机构（实际机构）！{0}");
+                        wrap(e.getCause().getMessage()), "新增业务机构（实际机构）！{0}");
             }
         } else {
             OmBusiorg parentOmBusiorg = queryBusiorg(parentsBusiorgCode);
@@ -152,7 +150,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
                         e.printStackTrace();
                         throw new BusiOrgManagementException(
                                 OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG,
-                                BasicUtil.wrap(e.getCause().getMessage()), "新增业务机构（实际机构）！{0}");
+                                wrap(e.getCause().getMessage()), "新增业务机构（实际机构）！{0}");
                     }
                 }
             });
@@ -166,7 +164,6 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
      *
      * </pre>
      *
-     * @param newBusiorgCode     新业务机构代码
      * @param newBusiorgName     新业务机构名称
      * @param busiDomain         业务条线／套别（值来自业务字典DICT_OM_BUSIDOMAIN）
      * @param parentsBusiorgCode 父业务机构代码
@@ -174,28 +171,25 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
      * @throws BusiOrgManagementException
      */
     @Override
-    public OmBusiorg createDummyBusiorg(String newBusiorgCode, String newBusiorgName, String busiDomain, String parentsBusiorgCode) throws BusiOrgManagementException {
+    public OmBusiorg createDummyBusiorg(String newBusiorgName, String busiDomain, String parentsBusiorgCode) throws BusiOrgManagementException {
         // 验证传入参数
-        if (StringUtil.isEmpty(newBusiorgCode)) {
-            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("newBusiorgCode"));
-        }
         if (StringUtil.isEmpty(newBusiorgName)) {
-            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("newBusiorgName"));
+            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("newBusiorgName"));
         }
         if (StringUtil.isEmpty(busiDomain)) {
-            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("busiDomain"));
+            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("busiDomain"));
         }
         /**
          * 机构码已存在
          */
-        if (isExitByBusiorgCode(newBusiorgCode)) {
-            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("busiDomain"));
-        }
+//        if (isExitByBusiorgCode(newBusiorgCode)) {
+//            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("busiDomain"));
+//        }
         OmBusiorg omBusiorg = new OmBusiorg();
         omBusiorg.setGuid(GUID.busiorg());
         omBusiorg.setNodeType(OMConstants.BUSIORG_NODE_TYPE_DUMMY);
         //收集入参
-        omBusiorg.setBusiorgCode(newBusiorgCode);
+        omBusiorg.setBusiorgCode(boshGenBusiOrgCode.genBusiOrgCode(OMConstants.BUSIORG_NODE_TYPE_DUMMY, busiDomain));
         omBusiorg.setBusiDomain(busiDomain);
         omBusiorg.setBusiorgName(newBusiorgName);
         //判断是否是新增根机构
@@ -213,7 +207,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
                 e.printStackTrace();
                 throw new BusiOrgManagementException(
                         OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG,
-                        BasicUtil.wrap(e.getCause().getMessage()), "新增业务机构（实际机构）！{0}");
+                        wrap(e.getCause().getMessage()), "新增业务机构（实际机构）！{0}");
             }
         } else {
             OmBusiorg parentOmBusiorg = queryBusiorg(parentsBusiorgCode);
@@ -238,7 +232,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
                         e.printStackTrace();
                         throw new BusiOrgManagementException(
                                 OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG,
-                                BasicUtil.wrap(e.getCause().getMessage()), "新增业务机构（实际机构）！{0}");
+                                wrap(e.getCause().getMessage()), "新增业务机构（实际机构）！{0}");
                     }
                 }
             });
@@ -255,25 +249,24 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
      * </pre>
      *
      * @param fromBusiorgCode      参考业务机构代码
-     * @param newBusiorgCode       新业务机构代码
      * @param toParentsBusiorgCode 新业务机构的父业务机构
      * @return 新增的业务机构对象
      * @throws BusiOrgManagementException
      */
     @Override
-    public OmBusiorg copyBusiorg(String fromBusiorgCode, String newBusiorgCode, String toParentsBusiorgCode) throws BusiOrgManagementException {
-        if (!StringUtil.noEmpty(fromBusiorgCode, newBusiorgCode)) {
-            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+    public OmBusiorg copyBusiorg(String fromBusiorgCode, String toParentsBusiorgCode) throws BusiOrgManagementException {
+        if (!StringUtil.noEmpty(fromBusiorgCode)) {
+            throw new BusiOrgManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("String fromBusiorgCode", "copyBusiorg"));
         }
         /**
          * 机构码已存在
          */
-        if (isExitByBusiorgCode(newBusiorgCode)) {
-            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("busiDomain"));
-        }
+        /*if (isExitByBusiorgCode(newBusiorgCode)) {
+            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("busiDomain"));
+        }*/
         if (!isExitByBusiorgCode(fromBusiorgCode)) {
             throw new BusiOrgManagementException(OMExceptionCodes.NOT_EXIST_BY_BUSIORG_CODE,
-                    BasicUtil.wrap(fromBusiorgCode), "拷贝业务机构时，找不到参照业务机构{0}！");
+                    wrap(fromBusiorgCode), "拷贝业务机构时，找不到参照业务机构{0}！");
         }
         /**
          * 如果新业务机构的父业务机构代码不存在 默认为顶级业务机构
@@ -281,7 +274,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
         OmBusiorg newOmBusiorg = queryBusiorg(fromBusiorgCode);
         if (StringUtil.isEmpty(toParentsBusiorgCode)) {
             newOmBusiorg.setGuid(GUID.busiorg());
-            newOmBusiorg.setBusiorgCode(newBusiorgCode);
+            newOmBusiorg.setBusiorgCode(boshGenBusiOrgCode.genBusiOrgCode(newOmBusiorg.getNodeType(), newOmBusiorg.getBusiDomain()));
             newOmBusiorg.setBusiorgName(CODE_HEAD_COPYFROM + newOmBusiorg.getBusiorgName());
             newOmBusiorg.setIsleaf(CommonConstants.YES);
             newOmBusiorg.setSubCount(new BigDecimal("0"));
@@ -297,16 +290,16 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
                 e.printStackTrace();
                 throw new BusiOrgManagementException(
                         OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG,
-                        BasicUtil.wrap(e.getCause().getMessage()), "拷贝业务机构（实际机构）！{0}");
+                        wrap(e.getCause().getMessage()), "拷贝业务机构（实际机构）！{0}");
             }
         } else {
             if (!isExitByBusiorgCode(toParentsBusiorgCode)) {
                 throw new BusiOrgManagementException(OMExceptionCodes.NOT_EXIST_BY_BUSIORG_CODE,
-                        BasicUtil.wrap(fromBusiorgCode), "拷贝业务机构时，找不到目标父业务机构{0}！");
+                        wrap(fromBusiorgCode), "拷贝业务机构时，找不到目标父业务机构{0}！");
             }
             OmBusiorg parentsOmBusiorg = queryBusiorg(toParentsBusiorgCode);
             newOmBusiorg.setGuid(GUID.busiorg());
-            newOmBusiorg.setBusiorgCode(newBusiorgCode);
+            newOmBusiorg.setBusiorgCode(boshGenBusiOrgCode.genBusiOrgCode(newOmBusiorg.getNodeType(), newOmBusiorg.getBusiDomain()));
             newOmBusiorg.setBusiorgName(CODE_HEAD_COPYFROM + newOmBusiorg.getBusiorgName());
             newOmBusiorg.setSubCount(new BigDecimal("0"));
             newOmBusiorg.setGuidParents(toParentsBusiorgCode);
@@ -331,7 +324,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
                         e.printStackTrace();
                         throw new BusiOrgManagementException(
                                 OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG,
-                                BasicUtil.wrap(e.getCause().getMessage()), "拷贝业务机构（实际机构）！{0}");
+                                wrap(e.getCause().getMessage()), "拷贝业务机构（实际机构）！{0}");
                     }
                 }
             });
@@ -350,25 +343,22 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
      * </pre>
      *
      * @param fromBusiorgCode      参考业务机构代码
-     * @param newBusiorgCode       新业务机构代码
      * @param toParentsBusiorgCode 新业务机构的父业务机构
      * @return 新增的业务机构对象
      * @throws BusiOrgManagementException
      */
     @Override
-    public OmBusiorg copyBusiorgDeep(String fromBusiorgCode, String newBusiorgCode, String toParentsBusiorgCode) throws BusiOrgManagementException {
-        if (!StringUtil.noEmpty(fromBusiorgCode, newBusiorgCode)) {
-            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
-        }
+    public OmBusiorg copyBusiorgDeep(String fromBusiorgCode, String toParentsBusiorgCode) throws BusiOrgManagementException {
+
         /**
          * 机构码已存在
          */
-        if (isExitByBusiorgCode(newBusiorgCode)) {
-            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("busiDomain"));
-        }
+//        if (isExitByBusiorgCode(newBusiorgCode)) {
+//            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("busiDomain"));
+//        }
         if (!isExitByBusiorgCode(fromBusiorgCode)) {
             throw new BusiOrgManagementException(OMExceptionCodes.NOT_EXIST_BY_BUSIORG_CODE,
-                    BasicUtil.wrap(fromBusiorgCode), "拷贝业务机构时，找不到参照业务机构{0}！");
+                    wrap(fromBusiorgCode), "拷贝业务机构时，找不到参照业务机构{0}！");
         }
         /**
          * 如果新业务机构的父业务机构代码不存在 默认为顶级业务机构
@@ -382,7 +372,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
         BigDecimal mainLevel = newOmBusiorg.getBusiorgLevel();
         if (StringUtil.isEmpty(toParentsBusiorgCode)) {
             newOmBusiorg.setGuid(GUID.busiorg());
-            newOmBusiorg.setBusiorgCode(newBusiorgCode);
+            newOmBusiorg.setBusiorgCode(boshGenBusiOrgCode.genBusiOrgCode(newOmBusiorg.getNodeType(), newOmBusiorg.getBusiDomain()));
             newOmBusiorg.setBusiorgName(CODE_HEAD_COPYFROM + newOmBusiorg.getBusiorgName());
             newOmBusiorg.setGuidParents(null);
             newOmBusiorg.setBusiorgLevel(new BigDecimal("0"));
@@ -415,18 +405,18 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
                         e.printStackTrace();
                         throw new BusiOrgManagementException(
                                 OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG,
-                                BasicUtil.wrap(e.getCause().getMessage()), "深度拷贝业务机构（实际机构）！{0}");
+                                wrap(e.getCause().getMessage()), "深度拷贝业务机构（实际机构）！{0}");
                     }
                 }
             });
         } else {
             if (!isExitByBusiorgCode(toParentsBusiorgCode)) {
                 throw new BusiOrgManagementException(OMExceptionCodes.NOT_EXIST_BY_BUSIORG_CODE,
-                        BasicUtil.wrap(fromBusiorgCode), "拷贝业务机构时，找不到目标父业务机构{0}！");
+                        wrap(fromBusiorgCode), "拷贝业务机构时，找不到目标父业务机构{0}！");
             }
             OmBusiorg parentsOmBusiorg = queryBusiorg(toParentsBusiorgCode);
             newOmBusiorg.setGuid(GUID.busiorg());
-            newOmBusiorg.setBusiorgCode(newBusiorgCode);
+            newOmBusiorg.setBusiorgCode(boshGenBusiOrgCode.genBusiOrgCode(newOmBusiorg.getNodeType(), newOmBusiorg.getBusiDomain()));
             newOmBusiorg.setBusiorgName(CODE_HEAD_COPYFROM + newOmBusiorg.getBusiorgName());
             newOmBusiorg.setSubCount(new BigDecimal("0"));
             newOmBusiorg.setGuidParents(toParentsBusiorgCode);
@@ -464,7 +454,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
                         e.printStackTrace();
                         throw new BusiOrgManagementException(
                                 OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG,
-                                BasicUtil.wrap(e.getCause().getMessage()), "拷贝业务机构（实际机构）！{0}");
+                                wrap(e.getCause().getMessage()), "拷贝业务机构（实际机构）！{0}");
                     }
                 }
             });
@@ -490,11 +480,11 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
         }
         if (isExitByBusiorgCode(busiorgCode)) {
             throw new BusiOrgManagementException(OMExceptionCodes.NOT_EXIST_BY_BUSIORG_CODE,
-                    BasicUtil.wrap(busiorgCode), "移动业务机构时，新业务机构{0}已经存在！");
+                    wrap(busiorgCode), "移动业务机构时，新业务机构{0}已经存在！");
         }
         if (!isExitByBusiorgCode(fromParentsBusiorgCode)) {
             throw new BusiOrgManagementException(OMExceptionCodes.NOT_EXIST_BY_BUSIORG_CODE,
-                    BasicUtil.wrap(fromParentsBusiorgCode), "移动业务机构时，找不到参照业务机构{0}！");
+                    wrap(fromParentsBusiorgCode), "移动业务机构时，找不到参照业务机构{0}！");
         }
         OmBusiorg omBusiorg = queryBusiorg(busiorgCode);
         WhereCondition wc = new WhereCondition();
@@ -534,14 +524,14 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
                         e.printStackTrace();
                         throw new BusiOrgManagementException(
                                 OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG,
-                                BasicUtil.wrap(e.getCause().getMessage()), "移动业务机构（实际机构）！{0}");
+                                wrap(e.getCause().getMessage()), "移动业务机构（实际机构）！{0}");
                     }
                 }
             });
         } else {
             if (!isExitByBusiorgCode(toParentsBusiorgCode)) {
                 throw new BusiOrgManagementException(OMExceptionCodes.NOT_EXIST_BY_BUSIORG_CODE,
-                        BasicUtil.wrap(toParentsBusiorgCode), "移动业务机构时，找不到目标父业务机构{0}！");
+                        wrap(toParentsBusiorgCode), "移动业务机构时，找不到目标父业务机构{0}！");
             }
             OmBusiorg parentsOmBusiorg = queryBusiorg(toParentsBusiorgCode);
             omBusiorg.setGuidParents(toParentsBusiorgCode);
@@ -576,7 +566,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
                         e.printStackTrace();
                         throw new BusiOrgManagementException(
                                 OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG,
-                                BasicUtil.wrap(e.getCause().getMessage()), "拷贝业务机构（实际机构）！{0}");
+                                wrap(e.getCause().getMessage()), "拷贝业务机构（实际机构）！{0}");
                     }
                 }
             });
@@ -627,7 +617,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
             e.printStackTrace();
             throw new BusiOrgManagementException(
                     OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG,
-                    BasicUtil.wrap(e.getCause().getMessage()), "修改业务机构失败！{0}");
+                    wrap(e.getCause().getMessage()), "修改业务机构失败！{0}");
         }
     }
 
@@ -647,7 +637,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
     public OmBusiorg deleteBusiorg(String busiorgCode) throws BusiOrgManagementException {
         OmBusiorg omBusiorg = queryBusiorg(busiorgCode);
         if (null == omBusiorg) {
-            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("busiorgCode"));
+            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("busiorgCode"));
         }
         OmBusiorg obo = queryBusiorg(busiorgCode);
         String guid = obo.getGuid();
@@ -663,7 +653,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
                     e.printStackTrace();
                     throw new BusiOrgManagementException(
                             OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG,
-                            BasicUtil.wrap(e.getCause().getMessage()), "删除业务机构（实际机构）！{0}");
+                            wrap(e.getCause().getMessage()), "删除业务机构（实际机构）！{0}");
                 }
             }
         });
@@ -684,7 +674,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
         wc.andEquals("BUSIORG_CODE", busiorgCode);
         List<OmBusiorg> busiorgList = omBusiorgService.query(wc);
         if (busiorgList.size() != 1) {
-            throw new BusiOrgManagementException(OMExceptionCodes.NOT_EXIST_BY_BUSIORG_CODE, BasicUtil.wrap(busiorgCode));
+            throw new BusiOrgManagementException(OMExceptionCodes.NOT_EXIST_BY_BUSIORG_CODE, wrap(busiorgCode));
         }
         return busiorgList.get(0);
     }
@@ -700,7 +690,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
     //@Override
     public List<OmBusiorgDetail> queryBusiorgByDomain(String busiDomainCode, String level) {
         if (StringUtil.isEmpty(busiDomainCode)) {
-            throw new BusiOrgManagementException(OMExceptionCodes.NOT_EXIST_BY_BUSIORG_CODE, BasicUtil.wrap(""));
+            throw new BusiOrgManagementException(OMExceptionCodes.NOT_EXIST_BY_BUSIORG_CODE, wrap(""));
         }
         WhereCondition wc = new WhereCondition();
         wc.andEquals("BUSI_DOMAIN", busiDomainCode);
@@ -737,7 +727,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
     @Override
     public List<OmBusiorg> queryRootBusiorgByDomain(String busiDomainCode) {
         if (StringUtil.isEmpty(busiDomainCode)) {
-            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("busiDomainCode"));
+            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("busiDomainCode"));
         }
         WhereCondition wc = new WhereCondition();
         wc.andEquals("BUSI_DOMAIN", busiDomainCode);
@@ -750,7 +740,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
     @Override
     public List<OmBusiorg> queryAllBusiorgByDomain(String busiDomainCode) {
         if (StringUtil.isEmpty(busiDomainCode)) {
-            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("busiDomainCode"));
+            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("busiDomainCode"));
         }
         WhereCondition wc = new WhereCondition();
         wc.andEquals("BUSI_DOMAIN", busiDomainCode);
@@ -773,7 +763,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
     @Override
     public List<OmBusiorg> queryBusiorgByName(String busiorgName) {
         if (StringUtil.isEmpty(busiorgName)) {
-            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("busiorgName"));
+            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("busiorgName"));
         }
         WhereCondition wc = new WhereCondition();
         wc.andFullLike(OmBusiorg.COLUMN_BUSIORG_NAME, busiorgName);

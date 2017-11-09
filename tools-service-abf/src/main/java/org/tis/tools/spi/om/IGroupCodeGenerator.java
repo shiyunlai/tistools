@@ -3,8 +3,6 @@
  */
 package org.tis.tools.spi.om;
 
-import java.util.Map;
-
 import org.tis.tools.rservice.om.exception.GroupManagementException;
 
 /**
@@ -18,10 +16,10 @@ public interface IGroupCodeGenerator {
 	/**
 	 * 根据传入的参数，生成机构代码
 	 * 
-	 * @param parms
-	 *            参数
+	 * @param groupType
+	 *            工作组类型
 	 * @return 机构代码
 	 * @throws GroupManagementException
 	 */
-	public String genGroupCode(Map<String, String> parms) throws GroupManagementException;
+	String genGroupCode(String groupType) throws GroupManagementException;
 }

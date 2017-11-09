@@ -4,12 +4,9 @@
 package org.tis.tools.spi.om;
 
 import org.tis.tools.rservice.om.exception.BusiOrgManagementException;
-import org.tis.tools.rservice.om.exception.OrgManagementException;
-
-import java.util.Map;
 
 /**
- * 机构代码生成器接口
+ * 业务机构代码生成器接口
  * 
  * @author megapro
  *
@@ -17,12 +14,14 @@ import java.util.Map;
 public interface IBusiOrgCodeGenerator {
 
 	/**
-	 * 根据传入的参数，生成机构代码
-	 * 
-	 * @param parms
-	 *            参数
-	 * @return 机构代码
-	 * @throws OrgManagementException
+	 * <pre>
+	 * 生成一个未被使用的业务机构代码。
+	 * parms中需要指定的参数对包括：
+	 * </pre>
+	 * @param nodeType 节点类型
+	 * @param busiDomain 业务条线
+	 * @return
+	 * @throws BusiOrgManagementException
 	 */
-	public String genBusiOrgCode(Map<String, String> parms) throws BusiOrgManagementException;
+	String genBusiOrgCode(String nodeType, String busiDomain) throws BusiOrgManagementException;
 }

@@ -1031,9 +1031,8 @@ public class OrgManagerController extends BaseController {
     @RequestMapping(value = "/copyOrg")
     public Map<String, Object> copyOrg(@RequestBody String content) {
         JSONObject jsonObj = JSONObject.parseObject(content);
-        String neworgCode = jsonObj.getString("neworgCode");
         String copyCode = jsonObj.getString("copyCode");
-        OmOrg org = orgRService.copyOrg(copyCode, neworgCode);
+        OmOrg org = orgRService.copyOrg(copyCode);
         return getReturnMap(org);
     }
 

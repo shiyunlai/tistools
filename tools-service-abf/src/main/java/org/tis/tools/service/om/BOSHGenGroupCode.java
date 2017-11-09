@@ -1,16 +1,12 @@
 package org.tis.tools.service.om;
 
-import java.util.Map;
-
-
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.tis.tools.rservice.om.exception.DutyManagementException;
 import org.tis.tools.rservice.om.exception.GroupManagementException;
+import org.tis.tools.rservice.sys.capable.ISeqnoRService;
 import org.tis.tools.service.base.SequenceService;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
-import org.tis.tools.spi.om.IDutyCodeGenerator;
 import org.tis.tools.spi.om.IGroupCodeGenerator;
 
 @Service
@@ -18,10 +14,19 @@ public class BOSHGenGroupCode implements IGroupCodeGenerator{
 
 	@Autowired
 	SequenceService sequenceService ;
-	
+
+	@Autowired
+	ISeqnoRService seqnoRService;
+
+	/**
+	 *
+	 * @param groupType
+	 * @return
+	 * @throws GroupManagementException
+	 */
 	@Override
-	public String genGroupCode(Map<String, String> parms) throws GroupManagementException {
-		String groupType = parms.get("groupType") ;
+	public String genGroupCode(String groupType) throws GroupManagementException {
+//		String groupType = parms.get("groupType") ;
 		if(StringUtils.isEmpty(groupType)) {
 			throw new GroupManagementException(OMExceptionCodes.LAKE_PARMS_FOR_GEN_GROUPCODE,new Object[]{"groupType"}) ; 
 		}
@@ -47,7 +52,8 @@ public class BOSHGenGroupCode implements IGroupCodeGenerator{
 		}
 		// 开始生成
 		sb.append(type) ;
-		sb.append(toSeqNO(sequenceService.getNextSeqNo(BOSHGenGroupCode.class.getName()))) ;//五位机构顺序号
+//		sb.append(toSeqNO(sequenceService.getNextSeqNo(BOSHGenGroupCode.class.getName()))) ;//五位机构顺序号
+		sb.append(toSeqNO(seqnoRService.getNextSequence("GROUP_CODE", "工作组代码序号")));
 		return "GROUP"+sb.toString();
 	}
 	
@@ -56,9 +62,9 @@ public class BOSHGenGroupCode implements IGroupCodeGenerator{
 	 * @param totalOrgCount
 	 * @return
 	 */
-	private Object toSeqNO(int totalOrgCount) {
+	private Object toSeqNO(long totalOrgCount) {
 		
-		String t = String.valueOf(totalOrgCount).toString() ;
+		String t = String.valueOf(totalOrgCount) ;
 		
 		return org.tis.tools.common.utils.StringUtil.leftPad(t, 8, '0');
 		

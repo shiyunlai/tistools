@@ -1,11 +1,5 @@
 package org.tis.tools.rservice.om.capable;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
@@ -22,12 +16,12 @@ import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmPosition;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.om.exception.DutyManagementException;
-import org.tis.tools.service.om.BOSHGenDutyCode;
-import org.tis.tools.service.om.OmDutyService;
-import org.tis.tools.service.om.OmEmpPositionService;
-import org.tis.tools.service.om.OmEmployeeService;
-import org.tis.tools.service.om.OmPositionService;
+import org.tis.tools.service.om.*;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 	@Autowired
@@ -43,18 +37,15 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 	
 	@Override
 	public String genDutyCode(String dutyType) throws ToolsRuntimeException {
-		Map<String,String> parms = new HashMap<String,String>() ;
-		parms.put("dutyType", dutyType) ; 
-		return boshGenDutyCode.genDutyCode(parms);
+//		Map<String,String> parms = new HashMap<String,String>() ;
+//		parms.put("dutyType", dutyType) ;
+		return boshGenDutyCode.genDutyCode(dutyType);
 	}
 
 	@Override
-	public OmDuty createDuty(String dutyCode, String dutyName, String dutyType, String parentsDutyCode,String reMark)
+	public OmDuty createDuty(String dutyName, String dutyType, String parentsDutyCode,String reMark)
 			throws ToolsRuntimeException {
 		// 验证传入参数
-		if (StringUtil.isEmpty(dutyCode)) {
-			throw new DutyManagementException(OMExceptionCodes.LAKE_PARMS_FOR_CREAT_DUTY, BasicUtil.wrap("dutyCode"));
-		}
 		if (StringUtil.isEmpty(dutyName)) {
 			throw new DutyManagementException(OMExceptionCodes.LAKE_PARMS_FOR_CREAT_DUTY, BasicUtil.wrap("dutyName"));
 		}
@@ -67,7 +58,7 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 			// 新建根职务对象
 			OmDuty od = new OmDuty();
 			od.setGuid(GUID.duty());// 生成GUID
-			od.setDutyCode(dutyCode);
+			od.setDutyCode(boshGenDutyCode.genDutyCode(dutyType));
 			od.setDutyName(dutyName);
 			od.setDutyType(dutyType);
 			od.setDutyLevel(new BigDecimal(0));// 根职务0
@@ -100,7 +91,7 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 			OmDuty od = new OmDuty();
 			od.setGuid(GUID.duty());
 			od.setGuidParents(parentod.getGuid());
-			od.setDutyCode(dutyCode);
+			od.setDutyCode(boshGenDutyCode.genDutyCode(dutyType));
 			od.setDutyName(dutyName);
 			od.setDutyType(dutyType);
 			od.setDutyLevel(parentod.getDutyLevel().add(new BigDecimal("1")));

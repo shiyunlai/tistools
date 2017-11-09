@@ -162,12 +162,11 @@ public class DutyController extends BaseController{
 	public Map<String, Object> addduty(@RequestBody String content) {
 		// 收到请求
 		JSONObject jsonObj = JSONObject.parseObject(content);
-		String dutyCode = jsonObj.getString("dutyCode");
 		String dutyName = jsonObj.getString("dutyName");
 		String dutyType = jsonObj.getString("dutyType");
 		String remark = jsonObj.getString("remark");
 		String parentsCode = jsonObj.getString("parentsCode");
-		OmDuty od = dutyRService.createDuty(dutyCode, dutyName, dutyType, parentsCode, remark);
+		OmDuty od = dutyRService.createDuty(dutyName, dutyType, parentsCode, remark);
 		return getReturnMap(od);
 	}
 	
