@@ -3,14 +3,14 @@
  */
 package org.tis.tools.rservice.om.capable;
 
-import java.util.List;
-
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.ac.AcApp;
 import org.tis.tools.model.po.ac.AcRole;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmGroup;
 import org.tis.tools.model.po.om.OmPosition;
+
+import java.util.List;
 
 /**
  * <pre>
@@ -75,8 +75,6 @@ public interface IPositionRService {
 	 *            隶属机构代码
 	 * @param dutyCode
 	 *            所属职务代码
-	 * @param positionCode
-	 *            新增岗位代码
 	 * @param positionName
 	 *            新增岗位名称
 	 * @param positionType
@@ -86,7 +84,7 @@ public interface IPositionRService {
 	 * @return 新增岗位对象
 	 * @throws ToolsRuntimeException
 	 */
-	OmPosition createPosition(String orgCode, String dutyCode, String positionCode, String positionName,
+	OmPosition createPosition(String orgCode, String dutyCode, String positionName,
 			String positionType, String parentPositionCode) throws ToolsRuntimeException;
 
 	/**
@@ -117,14 +115,12 @@ public interface IPositionRService {
 	 * 
 	 * @param fromPositionCode
 	 *            原岗位代码
-	 * @param newPositionCode
-	 *            新岗位代码
 	 * @param toOrgCode
 	 *            新岗位所属机构
 	 * @return 新增岗位对象
 	 * @throws ToolsRuntimeException
 	 */
-	OmPosition copyPosition(String fromPositionCode, String newPositionCode, String toOrgCode)
+	OmPosition copyPosition(String fromPositionCode, String toOrgCode)
 			throws ToolsRuntimeException;
 
 	/**
@@ -144,8 +140,6 @@ public interface IPositionRService {
 	 * 
 	 * @param fromPositionCode
 	 *            原岗位代码
-	 * @param newPositionCode
-	 *            新岗位代码
 	 * @param toOrgCode
 	 *            新岗位隶属机构代码
 	 * @param copyChild
@@ -171,7 +165,7 @@ public interface IPositionRService {
 	 * @return 新增岗位对象
 	 * @throws ToolsRuntimeException
 	 */
-	OmPosition copyPositionDeep(String fromPositionCode, String newPositionCode, String toOrgCode, boolean copyChild,
+	OmPosition copyPositionDeep(String fromPositionCode, String toOrgCode, boolean copyChild,
 			boolean copyEmployee, boolean copyApp, boolean copyGroup, boolean copyRole)
 					throws ToolsRuntimeException;
 	

@@ -3,13 +3,13 @@
  */
 package org.tis.tools.rservice.om.capable;
 
-import java.util.List;
-
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.po.ac.AcRole;
 import org.tis.tools.model.po.om.OmDuty;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.po.om.OmPosition;
+
+import java.util.List;
 
 /**
  * 
@@ -57,9 +57,7 @@ public interface IDutyRService {
 	 * 说明：
 	 * 系统补全其余字段信息；
 	 * </pre>
-	 * 
-	 * @param dutyCode
-	 *            职务代码
+	 *
 	 * @param dutyName
 	 *            职务名称
 	 * @param dutyType
@@ -69,7 +67,7 @@ public interface IDutyRService {
 	 * @return 新职务对象
 	 * @throws ToolsRuntimeException
 	 */
-	OmDuty createDuty(String dutyCode, String dutyName, String dutyType, String parentsDutyCode,String reMark)
+	OmDuty createDuty(String dutyName, String dutyType, String parentsDutyCode,String reMark)
 			throws ToolsRuntimeException;
 
 	/**

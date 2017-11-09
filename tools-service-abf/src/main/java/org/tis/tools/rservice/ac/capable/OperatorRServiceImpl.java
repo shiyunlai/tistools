@@ -1171,18 +1171,16 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
                     new WhereCondition().andEquals(AcConfig.COLUMN_GUID_APP, appGuid));
             if(privateConfigs.size() > 0) {
                 Map<String, String> matchVal = new HashMap<>();
-                privateConfigs.stream().forEach(cfg ->
+                privateConfigs.forEach(cfg ->
                     matchVal.put(cfg.getGuidConfig(), cfg.getConfigValue())
                 );
 
-                List<AcConfig> afterHandleConfigs = defaultConfigs.stream().map(cfg -> {
+                return defaultConfigs.stream().map(cfg -> {
                     if (matchVal.containsKey(cfg.getGuid())) {
                         cfg.setConfigValue(matchVal.get(cfg.getGuid()));
                     }
                     return cfg;
                 }).collect(Collectors.toList());
-
-                return afterHandleConfigs;
             } else {
                 return defaultConfigs;
             }

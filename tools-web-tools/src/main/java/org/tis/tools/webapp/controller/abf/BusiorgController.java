@@ -183,9 +183,9 @@ public class BusiorgController  extends BaseController {
         String nodeType = jsonObject.getString("nodeType");
         OmBusiorg ob = new OmBusiorg();
         if("reality".equals(nodeType)){
-            ob = busiOrgRService.createRealityBusiorg(busiorgCode, busiorgName, orgCode, busiDomain, parentsBusiorgCode);
+            ob = busiOrgRService.createRealityBusiorg( busiorgName, orgCode, busiDomain, parentsBusiorgCode);
         }else if("dummy".equals(nodeType)){
-            ob = busiOrgRService.createDummyBusiorg(busiorgCode, busiorgName, busiDomain, parentsBusiorgCode);
+            ob = busiOrgRService.createDummyBusiorg(busiorgName, busiDomain, parentsBusiorgCode);
         }
         return getReturnMap(ob);
     }

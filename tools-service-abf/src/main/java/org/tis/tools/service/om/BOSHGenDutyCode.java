@@ -1,12 +1,10 @@
 package org.tis.tools.service.om;
 
-import java.util.Map;
-
-
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tis.tools.rservice.om.exception.DutyManagementException;
+import org.tis.tools.rservice.sys.capable.ISeqnoRService;
 import org.tis.tools.service.base.SequenceService;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
 import org.tis.tools.spi.om.IDutyCodeGenerator;
@@ -16,10 +14,17 @@ public class BOSHGenDutyCode implements IDutyCodeGenerator{
 
 	@Autowired
 	SequenceService sequenceService ;
-	
+	@Autowired
+	ISeqnoRService seqnoRService;
+
+	/**
+	 *
+	 * @param dutyType 职务类型
+	 * @return
+	 * @throws DutyManagementException
+	 */
 	@Override
-	public String genDutyCode(Map<String, String> parms) throws DutyManagementException {
-		String dutyType = parms.get("dutyType") ;
+	public String genDutyCode(String dutyType) throws DutyManagementException {
 		if(StringUtils.isEmpty(dutyType)) {
 			throw new DutyManagementException(OMExceptionCodes.LAKE_PARMS_FOR_GEN_DUTYCODE,new Object[]{"dutytype"}) ; 
 		}
@@ -35,7 +40,8 @@ public class BOSHGenDutyCode implements IDutyCodeGenerator{
 		
 		// 机构等级
 		sb.append(dutyType) ;
-		sb.append(toSeqNO(sequenceService.getNextSeqNo(BOSHGenDutyCode.class.getName()))) ;//五位机构顺序号
+//		sb.append(toSeqNO(sequenceService.getNextSeqNo(BOSHGenDutyCode.class.getName()))) ;//五位机构顺序号
+		sb.append(toSeqNO(seqnoRService.getNextSequence("DUTY_CODE", "职务代码序号")));
 		return "DUTY"+sb.toString();
 	}
 	
@@ -44,9 +50,9 @@ public class BOSHGenDutyCode implements IDutyCodeGenerator{
 	 * @param totalOrgCount
 	 * @return
 	 */
-	private Object toSeqNO(int totalOrgCount) {
+	private Object toSeqNO(long totalOrgCount) {
 		
-		String t = String.valueOf(totalOrgCount).toString() ;
+		String t = String.valueOf(totalOrgCount) ;
 		
 		return org.tis.tools.common.utils.StringUtil.leftPad(t, 8, '0');
 		

@@ -50,8 +50,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 	@Override
 	public String genEmpCode(String orgCode, String empDegree) throws ToolsRuntimeException {
 		//todo
-		String empCode = boshGenEmpCode.genEmpCode(null);
-		return empCode;
+		return boshGenEmpCode.genEmpCode();
 	}
 
 	@Override
@@ -96,6 +95,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		}
 		// 补充信息
 		newEmployee.setGuid(GUID.employee());
+		newEmployee.setEmpCode(boshGenEmpCode.genEmpCode());
 		newEmployee.setEmpstatus(OMConstants.EMPLOYEE_STATUS_OFFER);
 		newEmployee.setRegdate(new Date());
 		newEmployee.setCreatetime(new Date());
@@ -128,20 +128,20 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 	}
 
 	@Override
-	public OmEmployee copyEmployee(String fromEmpCode, String newEmpCode) throws ToolsRuntimeException {
+	public OmEmployee copyEmployee(String fromEmpCode) throws ToolsRuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public OmEmployee copyEmployee(String fromOrgCode, String fromEmpCode, String toOrgCode, String newEmpCode)
+	public OmEmployee copyEmployee(String fromOrgCode, String fromEmpCode, String toOrgCode)
 			throws ToolsRuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public OmEmployee copyEmployeeDeep(String fromEmpCode, String newEmpCode, EmployeeCopyConfig copyConfig)
+	public OmEmployee copyEmployeeDeep(String fromEmpCode, EmployeeCopyConfig copyConfig)
 			throws ToolsRuntimeException {
 		// TODO Auto-generated method stub
 		return null;

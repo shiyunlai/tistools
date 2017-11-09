@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.validation.beanvalidation.BeanValidationPostProcessor;
 import org.tis.tools.base.WhereCondition;
+import org.tis.tools.common.utils.BeanFieldValidateUtil;
 import org.tis.tools.common.utils.ObjectUtil;
 import org.tis.tools.common.utils.StringUtil;
 import org.tis.tools.common.utils.TimeUtil;
@@ -242,7 +244,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 * 
 	 * 说明：
 	 * 以OmOrg指定入参时，需要调用者指定父机构GUID；
-	 * 系统检查“机构代码、机构名称、机构类型、机构等级、父机构GUID”等必输字段，通过后新建机构；
+	 * 系统检查“机构名称、机构类型、机构等级、父机构GUID”等必输字段，通过后新建机构；
 	 * 新建后，机构状态停留在‘停用’；
 	 * </pre>
 	 * 
@@ -253,16 +255,29 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 */
 	@Override
 	public OmOrg createChildOrg(OmOrg org) throws OrgManagementException {
-		//验证 机构代码、机构名称、机构类型、机构等级、父机构GUID”等必输字段
-		String orgCode = org.getOrgCode();
+		if(org == null) {
+			throw new OrgManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("OmOrg org", "createChildOrg"));
+		}
+		String[] validateFields = {
+				"orgName", "orgType", "area", "orgDegree", "guidParents"
+		};
+		try {
+			String result = BeanFieldValidateUtil.checkObjFieldRequired(org, validateFields);
+			if (!StringUtils.isBlank(result)) {
+				throw new OrgManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, wrap(result, OmOrg.TABLE_NAME));
+			}
+		} catch (OrgManagementException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new OrgManagementException(ExceptionCodes.FAILURE_WHEN_CALL, wrap("createChildOrg", e));
+		}
+			//验证 、机构名称、机构类型、机构等级、父机构GUID”等必输字段
 		String orgName = org.getOrgName();
 		String orgType = org.getOrgType();
 		String orgDegree = org.getOrgDegree();
 		String guidParents = org.getGuidParents();
+		String area = org.getArea();
 
-		if(StringUtil.isEmpty(orgCode)) {
-			throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_GEN_ORGCODE,new Object[]{"orgCode"});
-		}
 		if(StringUtil.isEmpty(orgName)) {
 			throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_GEN_ORGCODE,new Object[]{"orgCode"});
 		}
@@ -288,6 +303,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		String parentsOrgSeq = parentsOrg.getOrgSeq();//父机构序列
 		// 补充信息
 		org.setGuid(GUID.org());// 补充GUID
+		org.setOrgCode(orgCodeGenerator.genOrgCode(orgDegree, area));
 		org.setOrgStatus(OMConstants.ORG_STATUS_STOP);// 补充机构状态，新增机构初始状态为 停用
 		org.setOrgLevel(parentsOrg.getOrgLevel().add(new BigDecimal("1")));// 补充机构层次，在父节点的层次上增1
 		org.setGuidParents(parentsOrg.getGuid());// 补充父机构，根节点没有父机构
@@ -484,17 +500,12 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 * @see org.tis.tools.rservice.om.capable.IOrgRService#copyOrg(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public OmOrg copyOrg(String copyFromOrgCode, String newOrgCode) throws OrgManagementException {
+	public OmOrg copyOrg(String copyFromOrgCode) throws OrgManagementException {
 		
-		if (!StringUtil.noEmpty(copyFromOrgCode, newOrgCode)) {
+		if (!StringUtil.noEmpty(copyFromOrgCode)) {
 			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
 		}
-		
-		if (omOrgServiceExt.isExit(newOrgCode)) {
-			throw new OrgManagementException(OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE,
-					wrap(newOrgCode), "拷贝机构时，新机构代码{0}已经存在！");
-		}
-		
+
 		if (!omOrgServiceExt.isExit(copyFromOrgCode)) {
 			throw new OrgManagementException(OMExceptionCodes.ORGANIZATION_NOT_EXIST_BY_ORG_CODE,
 					wrap(copyFromOrgCode), "拷贝机构时，找不到参照机构{0}！");
@@ -506,7 +517,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		//修改为新增机构
 		//注：其他未修改的值同参考机构
 		newOrg.setGuid(GUID.org());
-		newOrg.setOrgCode(newOrgCode) ;
+		newOrg.setOrgCode(boshGenOrgCode.genOrgCode(newOrg.getOrgDegree(), newOrg.getArea())) ;
 		newOrg.setOrgName(CODE_HEAD_COPYFROM+newOrg.getOrgName()) ;
 		newOrg.setOrgStatus(OMConstants.ORG_STATUS_STOP);//新机构状态 停用
 		newOrg.setOrgSeq(chgOrgSeq(newOrg.getOrgSeq(),newOrg.getGuid()));//设置新的机构序列
@@ -524,7 +535,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_COPY_ORG,
-					wrap(copyFromOrgCode, newOrgCode, e.getCause().getMessage()),
+					wrap(copyFromOrgCode, e),
 					"将机构{0}拷贝为新机构{0}时，插入数据失败！{0}");
 		}
 		
@@ -559,13 +570,13 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 * @see org.tis.tools.rservice.om.capable.IOrgRService#copyOrgDeep(java.lang.String, java.lang.String, boolean, boolean, boolean, boolean, boolean)
 	 */
 	@Override
-	public OmOrgDetail copyOrgDeep(String copyFromOrgCode, String newOrgCode, boolean copyOrgRole, boolean copyPosition,
+	public OmOrgDetail copyOrgDeep(String copyFromOrgCode, boolean copyOrgRole, boolean copyPosition,
 			boolean copyPositionRole, boolean copyGroup, boolean copyGroupRole) throws OrgManagementException {
 	
 		OmOrgDetail newOrgDetail = null;
 		
 		final String copyFromOrgCode1 = copyFromOrgCode ; 
-		final String newOrgCode1= newOrgCode ;
+//		final String newOrgCode1= newOrgCode ;
 		final boolean copyOrgRole1 = copyOrgRole ; 
 		final boolean copyPosition1 = copyPosition ; 
 		final boolean copyPositionRole1 = copyPositionRole ; 
@@ -576,14 +587,14 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 			newOrgDetail = transactionTemplate.execute(new TransactionCallback<OmOrgDetail>() {
 				@Override
 				public OmOrgDetail doInTransaction(TransactionStatus arg0) {
-					return doCopyOrgDeep(copyFromOrgCode1, newOrgCode1, copyOrgRole1, copyPosition1, copyPositionRole1, copyGroup1, copyGroupRole1) ;
+					return doCopyOrgDeep(copyFromOrgCode1, copyOrgRole1, copyPosition1, copyPositionRole1, copyGroup1, copyGroupRole1) ;
 				}
 			});
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_DEEP_COPY_ORG,
-					wrap(copyFromOrgCode, newOrgCode, e.getCause().getMessage()), "深度拷贝机构{0}为新机构{0}时失败！{0}");
+					wrap(copyFromOrgCode, e), "深度拷贝机构{0}为新机构{0}时失败！{0}");
 		}
 
 		// 返回的是机构详情信息，将拷贝时处理过哪些内容交代清楚
@@ -601,14 +612,14 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	 * @param copyGroupRole
 	 * @return
 	 */
-	private OmOrgDetail doCopyOrgDeep(String copyFromOrgCode, String newOrgCode, boolean copyOrgRole, boolean copyPosition,
+	private OmOrgDetail doCopyOrgDeep(String copyFromOrgCode,  boolean copyOrgRole, boolean copyPosition,
 			boolean copyPositionRole, boolean copyGroup, boolean copyGroupRole) {
 		
 		// 取出参照机构
 		OmOrg copyFromOrg = omOrgServiceExt.loadByOrgCode(copyFromOrgCode); 
 
 		logger.info("拷贝机构；");
-		OmOrg newOrg = copyOrg(copyFromOrgCode, newOrgCode) ; 
+		OmOrg newOrg = copyOrg(copyFromOrgCode) ;
 		OmOrgDetail newOrgDetail = new OmOrgDetail() ; 
 		ObjectUtil.copyAttributes(newOrg, newOrgDetail) ;
 		

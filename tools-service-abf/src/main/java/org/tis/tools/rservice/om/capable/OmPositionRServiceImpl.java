@@ -1,12 +1,12 @@
 package org.tis.tools.rservice.om.capable;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.tis.tools.base.WhereCondition;
-import org.tis.tools.base.exception.ToolsRuntimeException;
-import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.common.utils.StringUtil;
+import org.tis.tools.core.exception.ExceptionCodes;
 import org.tis.tools.model.def.CommonConstants;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.def.OMConstants;
@@ -22,7 +22,11 @@ import org.tis.tools.service.om.*;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import static org.tis.tools.common.utils.BasicUtil.wrap;
 
 public class OmPositionRServiceImpl extends BaseRService implements IPositionRService {
 	@Autowired
@@ -41,21 +45,27 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 	BOSHGenPositionCode boshGenPositionCode;
 
 	@Override
-	public String genPositionCode(String positionType) throws ToolsRuntimeException {
-		Map<String,String> parms = new HashMap<String,String>() ;
-		parms.put("positionType", positionType) ;
-		return boshGenPositionCode.genPositionCode(parms);
+	public String genPositionCode(String positionType) throws PositionManagementException {
+//		Map<String,String> parms = new HashMap<String,String>() ;
+//		parms.put("positionType", positionType) ;
+		return boshGenPositionCode.genPositionCode(positionType);
 	}
 
 	@Override
-	public OmPosition createPosition(String orgCode, String dutyCode, String positionCode, String positionName,
-			String positionType, String parentPositionCode) throws ToolsRuntimeException {
+	public OmPosition createPosition(String orgCode, String dutyCode, String positionName,
+			String positionType, String parentPositionCode) throws PositionManagementException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public OmPosition createPosition(OmPosition newOmPosition) throws ToolsRuntimeException {
+	public OmPosition createPosition(OmPosition newOmPosition) throws PositionManagementException {
+		if(newOmPosition == null) {
+			throw new PositionManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("OmPosition newOmPosition", "createPosition"));
+		}
+		if(StringUtils.isBlank(newOmPosition.getPositionType())) {
+			throw new PositionManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, wrap(OmPosition.COLUMN_POSITION_TYPE, OmPosition.TABLE_NAME));
+		}
 		// 验证 岗位代码,岗位名称,岗位类别,所属机构,所属职务必输字段.
 		String positionCode = newOmPosition.getPositionCode();
 		String positionName = newOmPosition.getPositionName();
@@ -93,6 +103,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 			// 根岗位新增
 			// 补充信息
 			newOmPosition.setGuid(GUID.position());// 补充GUID
+			newOmPosition.setPositionCode(boshGenPositionCode.genPositionCode(positionType));
 			newOmPosition.setPositionStatus(OMConstants.POSITION_STATUS_RUNNING);// 补充机构状态，新增机构初始状态为
 																					// 停用
 			newOmPosition.setPositionLevel(new BigDecimal("0"));// 补充机构层次，在父节点的层次上增1
@@ -111,7 +122,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 						e.printStackTrace();
 						status.setRollbackOnly();
 						throw new OrgManagementException(OMExceptionCodes.FAILURE_WHEN_CREATE_CHILD_ORG,
-								BasicUtil.wrap(e.getCause().getMessage()), "新增子节点机构失败！{0}");
+								wrap(e.getCause().getMessage()), "新增子节点机构失败！{0}");
 					}
 				}
 			});
@@ -129,6 +140,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 			String parentsOSeq = parentsOp.getPositionSeq();// 父岗位序列
 			// 补充信息
 			newOmPosition.setGuid(GUID.position());// 补充GUID
+			newOmPosition.setPositionCode(boshGenPositionCode.genPositionCode(positionType));
 			newOmPosition.setPositionStatus(OMConstants.POSITION_STATUS_RUNNING);// 补充机构状态，新增机构初始状态为
 																					// 停用
 			newOmPosition.setPositionLevel(parentsOp.getPositionLevel().add(new BigDecimal("1")));// 补充机构层次，在父节点的层次上增1
@@ -164,7 +176,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 						throw new OrgManagementException(
 								index == 1 ? OMExceptionCodes.FAILURE_WHEN_CREATE_CHILD_ORG
 										: OMExceptionCodes.FAILURE_WHRN_UPDATE_PARENT_ORG,
-								BasicUtil.wrap(e.getCause().getMessage()),
+								wrap(e.getCause().getMessage()),
 								index == 1 ? "新增子节点机构失败！{0}" : "更新父节点机构失败！{0}");
 					}
 				}
@@ -178,7 +190,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 	public OmPosition deletePosition(String positionCode) {
 		// 校验传入参数
 		if (StringUtil.isEmpty(positionCode)) {
-			throw new PositionManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("positionCode"));
+			throw new PositionManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("positionCode"));
 		}
 		// 查询机构信息
 		WhereCondition wc = new WhereCondition();
@@ -187,12 +199,12 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 		// 查询是否存在
 		if(opList.size() != 1) {
 			throw new PositionManagementException(
-					OMExceptionCodes.POSITANIZATION_NOT_EXIST_BY_POSIT_CODE, BasicUtil.wrap(positionCode), "机构代码{0}对应的机构不存在");
+					OMExceptionCodes.POSITANIZATION_NOT_EXIST_BY_POSIT_CODE, wrap(positionCode), "机构代码{0}对应的机构不存在");
 		}
 		OmPosition position = opList.get(0);
 		//检查当前状态,只能删除注销的岗位
 		if(position.getPositionStatus().equals(OMConstants.POSITION_STATUS_RUNNING)){
-			throw new PositionManagementException(OMExceptionCodes.POSITION_RUNNING_CANT_DELETE,BasicUtil.wrap(positionCode), "只能删除注销的岗位");
+			throw new PositionManagementException(OMExceptionCodes.POSITION_RUNNING_CANT_DELETE, wrap(positionCode), "只能删除注销的岗位");
 		}
 		// 检查下级岗位状态
 		List<OmPosition> childList = queryAllChilds(positionCode);
@@ -207,35 +219,35 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 	}
 
 	@Override
-	public OmPosition copyPosition(String fromPositionCode, String newPositionCode, String toOrgCode)
-			throws ToolsRuntimeException {
+	public OmPosition copyPosition(String fromPositionCode, String toOrgCode)
+			throws PositionManagementException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public OmPosition copyPositionDeep(String fromPositionCode, String newPositionCode, String toOrgCode,
+	public OmPosition copyPositionDeep(String fromPositionCode, String toOrgCode,
 			boolean copyChild, boolean copyEmployee, boolean copyApp, boolean copyGroup, boolean copyRole)
-			throws ToolsRuntimeException {
+			throws PositionManagementException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public OmPosition movePosition(String fromOrgCode, String fromParentPositionCode, String toOrgCode,
-			String toParentPositionCode) throws ToolsRuntimeException {
+			String toParentPositionCode) throws PositionManagementException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public OmPosition updatePosition(OmPosition position) throws ToolsRuntimeException {
+	public OmPosition updatePosition(OmPosition position) throws PositionManagementException {
 		WhereCondition wc = new WhereCondition();
 		wc.andEquals("POSITION_CODE", position.getPositionCode());
 		List<OmPosition> posList = omPositionService.query(wc);
 		if (posList.size() != 1) {
 			throw new OrgManagementException(OMExceptionCodes.POSITANIZATION_NOT_EXIST_BY_POSIT_CODE,
-					BasicUtil.wrap(position.getPositionCode()));
+					wrap(position.getPositionCode()));
 		}
 		OmPosition op = posList.get(0);
 		String oldstatus = position.getPositionStatus();
@@ -250,7 +262,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHEN_UPDATE_ORG_APP,
-					BasicUtil.wrap(e.getCause().getMessage()));
+					wrap(e.getCause().getMessage()));
 		}
 
 	}
@@ -259,10 +271,10 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 	 * 注销岗位,若存在正常状态下级岗位则抛出异常.
 	 */
 	@Override
-	public OmPosition cancelPosition(String positionCode) throws ToolsRuntimeException {
+	public OmPosition cancelPosition(String positionCode) throws PositionManagementException {
 		// 校验传入参数
 		if (StringUtil.isEmpty(positionCode)) {
-			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("positionCode"));
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("positionCode"));
 		}
 		// 查询机构信息
 		WhereCondition wc = new WhereCondition();
@@ -271,7 +283,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 		// 查询是否存在
 		if(opList.size() != 1) {
 			throw new OrgManagementException(
-					OMExceptionCodes.POSITANIZATION_NOT_EXIST_BY_POSIT_CODE, BasicUtil.wrap(positionCode), "机构代码{0}对应的机构不存在");
+					OMExceptionCodes.POSITANIZATION_NOT_EXIST_BY_POSIT_CODE, wrap(positionCode), "机构代码{0}对应的机构不存在");
 		}
 		OmPosition position = opList.get(0);
 		// 检查下级岗位状态
@@ -288,10 +300,10 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 	}
 
 	@Override
-	public OmPosition reenablePosition(String positionCode) throws ToolsRuntimeException {
+	public OmPosition reenablePosition(String positionCode) throws PositionManagementException {
 		// 校验传入参数
 		if (StringUtil.isEmpty(positionCode)) {
-			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("positionCode"));
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("positionCode"));
 		}
 		// 查询机构信息
 		WhereCondition wc = new WhereCondition();
@@ -300,7 +312,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 		// 查询是否存在
 		if(opList.size() != 1) {
 			throw new OrgManagementException(
-					OMExceptionCodes.POSITANIZATION_NOT_EXIST_BY_POSIT_CODE, BasicUtil.wrap(positionCode), "机构代码{0}对应的机构不存在");
+					OMExceptionCodes.POSITANIZATION_NOT_EXIST_BY_POSIT_CODE, wrap(positionCode), "机构代码{0}对应的机构不存在");
 		}
 		OmPosition position = opList.get(0);
 		//通过校验之后更改状态
@@ -314,14 +326,14 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 		// 校验传入参数
 		if (StringUtil.isEmpty(positionCode)) {
 			throw new PositionManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY,
-					BasicUtil.wrap("positionCode", "岗位代码"));
+					wrap("positionCode", "岗位代码"));
 		}
 		WhereCondition wc = new WhereCondition();
 		wc.andEquals("POSITION_CODE",positionCode);
 		List<OmPosition> opList = omPositionService.query(wc);
 		if(opList.size() != 1){
 			throw new PositionManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY,
-					BasicUtil.wrap("positionCode", "岗位代码"));
+					wrap("positionCode", "岗位代码"));
 		}
 		return opList.get(0);
 	}
@@ -344,7 +356,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 		// 校验传入参数
 		if (StringUtil.isEmpty(positionCode)) {
 			throw new PositionManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY,
-					BasicUtil.wrap("positionCode", "岗位代码"));
+					wrap("positionCode", "岗位代码"));
 		}
 		WhereCondition wc = new WhereCondition();
 		wc.andEquals("POSITION_CODE", positionCode);
@@ -363,7 +375,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 	public List<OmPosition> queryAllChilds(String positionCode) {
 		// 校验传入参数
 		if (StringUtil.isEmpty(positionCode)) {
-			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("positionCode"));
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("positionCode"));
 		}
 		// 获取GUID
 		String guid = queryGUIDbyPositionCod(positionCode);
@@ -389,7 +401,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 		List<OmPosition> list = omPositionService.query(wc);
 		if (list.size() != 1) {
 			throw new EmployeeManagementException(OMExceptionCodes.EMPANIZATION_NOT_EXIST_BY_EMP_CODE,
-					BasicUtil.wrap(positionCode));
+					wrap(positionCode));
 		}
 		List<OmEmployee> emplist = new ArrayList<>();
 		String guid = list.get(0).getGuid();
@@ -417,7 +429,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 		List<OmPosition> list = omPositionService.query(wc);
 		if (list.size() != 1) {
 			throw new EmployeeManagementException(OMExceptionCodes.EMPANIZATION_NOT_EXIST_BY_EMP_CODE,
-					BasicUtil.wrap(positionCode));
+					wrap(positionCode));
 		}
 		String guid = list.get(0).getGuid();
 		wc.clear();
@@ -437,7 +449,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 	public List<AcApp> queryApp(String positionCode) {
 		// 校验传入参数
 		if (StringUtil.isEmpty(positionCode)) {
-			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("positionCode"));
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("positionCode"));
 		}
 		WhereCondition wc = new WhereCondition();
 		OmPosition op = queryPosition(positionCode);
@@ -478,7 +490,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 		List<OmPosition> poList = omPositionService.query(wc);
 		if (poList.size() != 1) {
 			throw new EmployeeManagementException(OMExceptionCodes.POSITANIZATION_NOT_EXIST_BY_POSIT_CODE,
-					BasicUtil.wrap(positionCode));
+					wrap(positionCode));
 		}
 		String guid = poList.get(0).getGuid();
 		return guid;
@@ -501,10 +513,10 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 	public void addAppPosition(String appGuid, String positionGuid) {
 		// 校验传入参数
 		if (StringUtil.isEmpty(appGuid)) {
-			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("appGuid"));
 		}
 		if (StringUtil.isEmpty(positionGuid)) {
-			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("positionGuid"));
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("positionGuid"));
 		}
 		OmPositionApp oap = new OmPositionApp();
 		oap.setGuidApp(appGuid);
@@ -515,10 +527,10 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 	@Override
 	public void deleteAppPosition(String appGuid, String positionGuid) {
 		if (StringUtil.isEmpty(appGuid)) {
-			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("appGuid"));
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("appGuid"));
 		}
 		if (StringUtil.isEmpty(positionGuid)) {
-			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, BasicUtil.wrap("positionGuid"));
+			throw new OrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("positionGuid"));
 		}
 		WhereCondition wc = new WhereCondition();
 		wc.andEquals("GUID_POSITION", positionGuid);

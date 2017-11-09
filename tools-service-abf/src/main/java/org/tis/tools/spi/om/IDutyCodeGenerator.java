@@ -1,7 +1,5 @@
 package org.tis.tools.spi.om;
 
-import java.util.Map;
-
 import org.tis.tools.rservice.om.exception.DutyManagementException;
 
 /**
@@ -14,10 +12,10 @@ public interface IDutyCodeGenerator {
 	/**
 	 * 根据传入的参数，生成职务代码
 	 * 
-	 * @param parms
+	 * @param dutyType 职务类型
 	 *            参数
 	 * @return 职务代码
 	 * @throws DutyManagementException
 	 */
-	public String genDutyCode(Map<String, String> parms) throws DutyManagementException;
+	String genDutyCode(String dutyType) throws DutyManagementException;
 }
