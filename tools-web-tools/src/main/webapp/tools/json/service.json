@@ -80,7 +80,8 @@
     "deleteAcFuncResource": {"ctrl": "AcAppController", "func": "deleteAcFuncResource","emo":"删除功能资源"},
     "updateAcFuncResource": {"ctrl": "AcAppController", "func": "updateAcFuncResource","emo":"修改功能资源"},
     "queryAcFuncResource": {"ctrl": "AcAppController", "func": "queryAcFuncResource","emo":"查询功能资源"},
-    "updateFuncBhvType": {"ctrl": "AcAppController", "func": "updateFuncBhvType","emo":"修改行为类型"}
+    "updateFuncBhvType": {"ctrl": "AcAppController", "func": "updateFuncBhvType","emo":"修改行为类型"},
+    "setFuncBhvStatus": {"ctrl": "AcAppController", "func": "setFuncBhvStatus","emo":"设置功能行为是否有效"}
   },
   "menu_service" : {
     "queryAllAcApp": {"ctrl": "AcMenuController", "func": "queryAllAcApp","emo":"查询所有应用"},
@@ -119,7 +120,6 @@
     "queryAllOperatorIdentityRes": {"ctrl": "AcOperatorController", "func": "queryAllOperatorIdentityRes","emo":"查询操作员身份权限集列表"},
     "createOperatorIdentityres": {"ctrl": "AcOperatorController", "func": "createOperatorIdentityres","emo":"新增操作员身份权限"},
     "deleteOperatorIdentityres": {"ctrl": "AcOperatorController", "func": "deleteOperatorIdentityres","emo":"删除操作员身份权限"},
-    "editOperatorIdentityres": {"ctrl": "AcOperatorController", "func": "editOperatorIdentityres","emo":"修改操作员身份权限"},
     "queryRoleInOperatorByResType": {"ctrl": "AcOperatorController", "func": "queryRoleInOperatorByResType","emo":"根据资源类型查询操作员对应角色"},
     "queryOperatorByUserId": {"ctrl": "AcOperatorController", "func": "queryOperatorByUserId","emo":"根据USERID查询操作员GUID"},
     "queryOperatorUnauthorizedRoleList": {"ctrl": "AcOperatorController", "func": "queryOperatorUnauthorizedRoleList","emo":"根据USERID查询操作员未授权角色"},
@@ -142,7 +142,10 @@
     "getOperatorFuncInfo": {"ctrl": "AcOperatorController", "func": "getOperatorFuncInfo","emo":"根据用户和应用id查询功能树"},
     "getOperatorsNotLinkEmp": {"ctrl": "AcOperatorController", "func": "getOperatorsNotLinkEmp","emo":"获取没有关联员工的操作员"},
     "changeOperatorStatus": {"ctrl": "AcOperatorController", "func": "changeOperatorStatus","emo":" 改变操作员状态"},
-    "deleteOperator": {"ctrl": "AcOperatorController", "func": "deleteOperator","emo":" 删除操作员"}
+    "deleteOperator": {"ctrl": "AcOperatorController", "func": "deleteOperator","emo":" 删除操作员"},
+    "getOperatorFuncBhvInfo": {"ctrl": "AcOperatorController", "func": "getOperatorFuncBhvInfo","emo":" 获取操作员功能行为信息"},
+    "addAcOperatorBhv": {"ctrl": "AcOperatorController", "func": "addAcOperatorBhv","emo":" 添加操作员特殊功能行为权限"},
+    "removeAcOperatorBhv": {"ctrl": "AcOperatorController", "func": "removeAcOperatorBhv","emo":" 移除操作员特殊功能行为权限"}
   },
   "abftree_service" : {
     "loadmaintree": {"ctrl": "om/org", "func": "tree"},
@@ -183,7 +186,10 @@
     "removePartyRole": {"ctrl": "AcRoleController", "func": "removePartyRole","emo":"移除角色下的组织对象"},
     "addOperatorRole": {"ctrl": "AcRoleController", "func": "addOperatorRole","emo":"角色添加操作员"},
     "queryOperatorRole": {"ctrl": "AcRoleController", "func": "queryOperatorRole","emo":"查询角色下的操作员集合"},
-    "removeOperatorRole": {"ctrl": "AcRoleController", "func": "removeOperatorRole","emo":"移除角色下的操作员"}
+    "removeOperatorRole": {"ctrl": "AcRoleController", "func": "removeOperatorRole","emo":"移除角色下的操作员"},
+    "queryAcRoleBhvsByFuncGuid": {"ctrl": "AcRoleController", "func": "queryAcRoleBhvsByFuncGuid","emo":"查询角色拥有功能的权限行为"},
+    "addAcRoleBhvs": {"ctrl": "AcRoleController", "func": "addAcRoleBhvs","emo":"新增角色功能行为定义"},
+    "removeAcRoleBhvs": {"ctrl": "AcRoleController", "func": "removeAcRoleBhvs","emo":"删除角色功能行为定义"}
   },
   "systempara_service" : {
     "queryRunConfigList": {"ctrl": "AcRoleController", "func": "queryRunConfigList","emo":"查询系统运行参数列表"},

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by guwei (EMBRACE) -->
+<xs:schema xmlns="http://www.primeton.com/ibs/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/ibs/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="configuration">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any namespace="##any" processContents="lax" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="category" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>配置的类型</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="version" type="xs:string" use="required"/>
+			<xs:attribute name="author" type="xs:string" use="required"/>
+			<xs:attribute name="create-date" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ext-property">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:attribute name="key" type="xs:string" use="required"/>
+						<xs:attribute name="value" type="xs:string" use="required"/>
+						<xs:attribute name="description" type="xs:string"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

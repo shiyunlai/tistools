@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 (http://www.altova.com) by wjl (puyuan) -->
+<xs:schema xmlns="http://www.primeton.com/ibs/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/ibs/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:element name="device-connector">
+		<xs:annotation>
+			<xs:documentation>Comment describing your root element</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="connector-list">
+					<xs:complexType>
+						<xs:sequence maxOccurs="unbounded">
+							<xs:element ref="connector"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="connector">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ext-property"/>
+				<xs:element name="link-mode" type="xs:string"/>
+				<xs:element name="name" type="xs:string"/>
+				<xs:element name="driver-class" type="xs:string"/>
+				<xs:element name="description" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

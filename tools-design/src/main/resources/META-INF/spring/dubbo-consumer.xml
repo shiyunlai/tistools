@@ -20,4 +20,5 @@
 	
 	<import resource="dubbo-reference-abf.xml"/>
 	<import resource="dubbo-reference-jnl.xml"/>
+	<import resource="dubbo-reference-txmodel.xml"/>
 </beans>

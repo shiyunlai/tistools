@@ -568,7 +568,11 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
 
 function FormatDate (strTime) {
     var date = new Date(strTime);
-    return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+    if(date.getDate()<10){
+        return date.getFullYear()+"-"+(date.getMonth()+1)+"-0"+date.getDate();
+    }else{
+        return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+    }
 }
 
 /*封装grid刷新页*/
@@ -596,7 +600,6 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
         var subFrom = {};
         subFrom.roleGuid = roleGuid;
         abftree_service.queryRoleFun(subFrom).then(function (data) {
-            console.log(data.retMessage)
             if(data.status == "success" && !isNull(data.retMessage)){
                 $scope.mygrid.data =  data.retMessage;
                 $scope.mygrid.mydefalutData =  data.retMessage;
@@ -666,6 +669,7 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
         var subFrom = {};
         subFrom.guid = guid;
         abftree_service.queryRoleNot(subFrom).then(function (data) {
+            console.log(data);
             if(data.status == "success" && !isNull(data.retMessage)){
                 $scope.notrolegird.data =  data.retMessage;
                 $scope.notrolegird.mydefalutData =  data.retMessage;
@@ -681,6 +685,7 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
     renotrolegird();
     
     $scope.addRole = function (partyType) {
+        console.log(partyType)
         if($scope.addroleGuid == ""){
             toastr['error']("请选择一个角色");
             return false;
@@ -691,7 +696,7 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
             subFrom.partyType = partyType;
             abftree_service.addRoleParty(subFrom).then(function (data) {
                 if(data.status == "success"){
-                    toastr['success'](data.retMessage);
+                    toastr['success']('新增成功');
                     realrolegird();
                     renotrolegird();
                 }else{
@@ -700,7 +705,7 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
             })
         }
     }
-    $scope.deleteRole = function () {
+    $scope.deleteRole = function (partyType) {
         if($scope.deleteGUid == ""){
             toastr['error']("请选择一个角色");
             return false;
@@ -708,9 +713,10 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
             var subFrom = {};
             subFrom.partyGuid = guid;
             subFrom.roleGuid = $scope.deleteGUid;
+            subFrom.partyType = partyType;
             abftree_service.deleteRoleParty(subFrom).then(function (data) {
                 if(data.status == "success"){
-                    toastr['success'](data.retMessage);
+                    toastr['success']('移除成功');
                     realrolegird();
                     renotrolegird();
                 }else{

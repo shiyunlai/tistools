@@ -767,9 +767,11 @@ public class OrgManagerController extends BaseController {
         JSONObject jsonObj = JSONObject.parseObject(content);
         String partyGuid = jsonObj.getString("partyGuid");
         String roleGuid = jsonObj.getString("roleGuid");
+        String partyType = jsonObj.getString("partyType");
         AcPartyRole apr = new AcPartyRole();
         apr.setGuidParty(partyGuid);
         apr.setGuidRole(roleGuid);
+        apr.setPartyType(partyType);
         ArrayList<AcPartyRole> acPartyRoles = new ArrayList<>();
         acPartyRoles.add(apr);
         roleRService.removeRoleParty(acPartyRoles);

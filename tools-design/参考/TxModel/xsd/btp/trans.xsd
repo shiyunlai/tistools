@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<xs:schema xmlns="http://www.primeton.com/btp/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/btp/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:element name="trans">
+		<xs:annotation>
+			<xs:documentation>交易服务</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="name" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>交易名称</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="description" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>交易描述</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="timeout" type="xs:int" default="0" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>超时时间.单位:秒 ,小于等于0 表示无超时(对外部系统来说，表示错误) 交易执行时间</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="trans-type" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>交易类型</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="transaction-type"/>
+				<!--<xs:element name="need-checked" type="xs:boolean" default="false">
+					<xs:annotation>
+						<xs:documentation>是否支持复核</xs:documentation>
+					</xs:annotation>
+				</xs:element>-->
+				<xs:element name="business-journal-record" type="xs:boolean" default="true">
+					<xs:annotation>
+						<xs:documentation>是否记录业务流水日志</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="system-log-record" type="xs:boolean" default="true">
+					<xs:annotation>
+						<xs:documentation>是否记录系统日志</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<!--<xs:element name="output-vars" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>输出变量定义,从DataBus中获取指定的变量作为输出,多个变量之间用","分隔</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="flow-id" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>交易处理流程，对应到BTP一个处理流,需要是BTP处理流的全名称 (不包含后缀名称)</xs:documentation>
+					</xs:annotation>
+				</xs:element>-->
+				<xs:element name="process-flows">
+					<xs:annotation>
+						<xs:documentation>交易处理流列表：可以包含多个处理流。
+约束：全局事务情况下面，处理流只能有一个；无事务或者全局事务场景下，可以有多个处理流</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="process-flow" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>交易处理流程，对应到BTP一个处理流,需要是BTP处理流的全名称 (不包含后缀名称)</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="fun-code">
+										<xs:annotation>
+											<xs:documentation>处理流对应的功能码
+取值范围[0-N]</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="flow-id">
+										<xs:annotation>
+											<xs:documentation>处理流的全名称(不包含后缀名称)</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ext-class" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>交易的扩展实现类 (继承抽象类)
+必须实现Class:com.primeton.btp.api.engine.trans.ITransService</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="ext-property" minOccurs="0"/>
+			</xs:all>
+			<xs:attribute name="id" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>交易的id,相当于交易码</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="transaction-type">
+		<xs:annotation>
+			<xs:documentation>事务类型</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="NONE">
+					<xs:annotation>
+						<xs:documentation>无事务</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="GLOBAL">
+					<xs:annotation>
+						<xs:documentation>全局事务</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="LOCAL">
+					<xs:annotation>
+						<xs:documentation>本地事务</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+</xs:schema>

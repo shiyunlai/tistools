@@ -1,0 +1,129 @@
+/**
+ * 
+ */
+package org.tis.tools.rservice.txmodel.impl.message;
+
+import org.tis.tools.common.utils.FormattingUtil;
+import org.tis.tools.rservice.txmodel.spi.message.ITxControl;
+import org.tis.tools.rservice.txmodel.spi.message.ITxData;
+import org.tis.tools.rservice.txmodel.spi.message.ITxHeader;
+import org.tis.tools.rservice.txmodel.spi.message.ITxRequest;
+
+import com.alibaba.fastjson.JSON;
+
+/**
+ * 
+ * 交易请求实现类
+ * 
+ * @author megapro
+ *
+ */
+public class TxRequestImpl implements ITxRequest {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4206102931429636996L;
+
+	private String requestID ; 
+	private ITxControl txControl ; 
+	private ITxHeader txHeader ; 
+	private ITxData txData ; 
+	private String token ; 
+	
+	
+	public TxRequestImpl() {
+		super();
+		txControl = new TxControlImpl() ; 
+		txHeader = new TxHeaderImpl() ; 
+		txData = new TxDataImpl() ; 
+		token = null ; 
+	}
+	
+	public TxRequestImpl(ITxControl txControl, ITxHeader txHeader, ITxData txData, String token) {
+		super();
+		this.txControl = txControl;
+		this.txHeader = txHeader;
+		this.txData = txData;
+		this.token = token;
+	}
+
+	@Override
+	public ITxControl getTxControl() {
+		return this.txControl ;
+	}
+
+	@Override
+	public ITxHeader getTxHeader() {
+		return this.txHeader;
+	}
+
+	@Override
+	public ITxData getRequestData() {
+		return this.txData;
+	}
+
+	@Override
+	public String getToken() {
+		//TODO 生成token
+		this.token = "tokenstring" ; 
+		return this.token;
+	}
+	
+	/**
+	 * <pre>
+	 * 
+	 * 设置交易请求的token
+	 * 
+	 * token, 由交易请求者使用公钥对指定数据内容进行加密后生成basic64数据串
+	 * 
+	 * 每请求一个token
+	 * 
+	 * </pre>
+	 * 
+	 * @param token
+	 */
+	public void setToken(String token){
+		this.token = token ; 
+	}
+
+	/**
+	 * 检查当前请求数据是否有效 
+	 * 使用私钥解密token，并进行数据项检查，通过则认为合法
+	 * 
+	 * @return
+	 */
+	private boolean checkToken() {
+		// TODO Auto-generated method stub 使用私钥解密token，并进行数据项检查，通过则认为合法
+		return true;
+	}
+	
+	@Override
+	public String getRequestID() {
+		return this.requestID;
+	}
+	
+	public void setRequestID(String requestID) {
+		this.requestID = requestID;
+	}
+
+	@Override
+	public void setTxControl(ITxControl control) {
+		this.txControl = control ; 
+	}
+
+	@Override
+	public void setTxHeader(ITxHeader header) {
+		this.txHeader = header ; 
+	}
+
+	@Override
+	public void setRequestData(ITxData txData) {
+		this.txData = txData ; 
+	}
+	
+	@Override
+	public String toString(){
+		return  FormattingUtil.instance().formatJsonString( JSON.toJSONString(this) ) ; // 使用ali fastjson //FIXME 简化日志输出内容，减少toJSONString频繁操作导致的性能损耗
+	}
+}

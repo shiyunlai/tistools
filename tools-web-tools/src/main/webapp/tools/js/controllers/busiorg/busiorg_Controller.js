@@ -97,7 +97,6 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
                         "action": function (data) {
                             var inst = jQuery.jstree.reference(data.reference),
                                 obj = inst.get_node(data.reference);
-                            console.log(obj)
                             //生成代码
                             var subFrom = {};
                             subFrom.nodeType = "reality";
@@ -131,10 +130,9 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
                             if (confirm("确定要删除此机构嘛？删除后不可恢复。")) {
                                 var subFrom = {};
                                 subFrom.busiorgCode = obj.original.busiorgCode;
-                                console.log(obj.original.busiorgCode);
                                 busiorg_service.deletebusiorg(subFrom).then(function (data) {
-                                    if (data.status == "success") {
-                                        toastr['success'](data.retMessage);
+                                    if(data.status == "success"){
+                                        toastr['success']("删除成功"+data.retMessage);
                                         $("#busiorgtree").jstree().refresh();
                                     } else {
                                         toastr['error'](data.retMessage);
@@ -427,10 +425,10 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
         subFrom.busiorgCode = $scope.busiorg.item.busiorgCode;
         busiorg_service.deletebusiorg(subFrom).then(function (data) {
             if (data.status == "success") {
-                toastr['success'](data.retMessage);
+                toastr['success']('删除成功');
                 $("#busiorgtree").jstree().refresh();
             } else {
-                toastr['error'](data.retMessage);
+                toastr['error']('删除失败'+data.retMessage);
             }
         })
     }
@@ -503,7 +501,7 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
         subFrom.busiorgCode = busiorgCode;
         busiorg_service.deletebusiorg(subFrom).then(function (data) {
             if (data.status == "success") {
-                toastr['success'](data.retMessage);
+                toastr['success']('删除成功');
                 $("#busiorgtree").jstree().refresh();
             } else {
                 toastr['error'](data.retMessage);
@@ -524,7 +522,7 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
             $scope.add = function () {
                 busiorg_service.updatebusiorg($scope.subFrom).then(function (data) {
                     if (data.status == "success") {
-                        toastr['success'](data.retMessage);
+                        toastr['success']('修改成功');
                         $("#busiorgtree").jstree().refresh();
                         $scope.cancel();
                     } else {
@@ -574,11 +572,11 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
                             busiorg_service.addbusiorg(subFrom).then(function (data) {
                                 console.log(data)
                                 if (data.status == "success") {
-                                    toastr['success'](data.retMessage);
+                                    toastr['success']('新增业务机构成功');
+                                    $("#busiorgtree").jstree().refresh();
                                 } else {
                                     toastr['error'](data.retMessage);
                                 }
-                                $("#busiorgtree").jstree().refresh();
                                 $scope.cancel();
                             });
                         }

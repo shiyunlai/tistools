@@ -1,0 +1,172 @@
+{
+    "bhvCode"        : "commit-tx",
+    "bhvGUID"        : "123-123-123",
+    "channelID"      : "tws",
+    "dataMap"        : {
+        "ext-BigDecimal" : {
+            "dataType"       : "Field",
+            "length"         : 0,
+            "name"           : "ext-BigDecimal",
+            "nullField"      : false,
+            "protoValue"     : 100034,
+            "stringValue"    : "100034",
+            "value"          : 100034
+        },
+        "bhvGUID"        : {
+            "dataType"       : "Field",
+            "length"         : 0,
+            "name"           : "bhvGUID",
+            "nullField"      : false,
+            "protoValue"     : "123-123-123",
+            "stringValue"    : "123-123-123",
+            "value"          : "123-123-123"
+        },
+        "bhvCode"        : {
+            "dataType"       : "Field",
+            "length"         : 0,
+            "name"           : "bhvCode",
+            "nullField"      : false,
+            "protoValue"     : "commit-tx",
+            "stringValue"    : "commit-tx",
+            "value"          : "commit-tx"
+        },
+        "txSerialNo"     : {
+            "dataType"       : "Field",
+            "length"         : 0,
+            "name"           : "txSerialNo",
+            "nullField"      : false,
+            "protoValue"     : "123456789012",
+            "stringValue"    : "123456789012",
+            "value"          : "123456789012"
+        },
+        "userID"         : {
+            "dataType"       : "Field",
+            "length"         : 0,
+            "name"           : "userID",
+            "nullField"      : false,
+            "protoValue"     : "66000998",
+            "stringValue"    : "66000998",
+            "value"          : "66000998"
+        },
+        "ext-Boolean"    : {
+            "dataType"       : "Field",
+            "length"         : 0,
+            "name"           : "ext-Boolean",
+            "nullField"      : false,
+            "protoValue"     : false,
+            "stringValue"    : "false",
+            "value"          : false
+        },
+        "ext-int"        : {
+            "dataType"       : "Field",
+            "length"         : 0,
+            "name"           : "ext-int",
+            "nullField"      : false,
+            "protoValue"     : 123,
+            "stringValue"    : "123",
+            "value"          : 123
+        },
+        "ext-String"     : {
+            "dataType"       : "Field",
+            "length"         : 0,
+            "name"           : "ext-String",
+            "nullField"      : false,
+            "protoValue"     : "请求头中特别的数据4T24",
+            "stringValue"    : "请求头中特别的数据4T24",
+            "value"          : "请求头中特别的数据4T24"
+        },
+        "ext-Date"       : {
+            "dataType"       : "Field",
+            "length"         : 0,
+            "name"           : "ext-Date",
+            "nullField"      : false,
+            "protoValue"     : 1507336792048,
+            "stringValue"    : "2017-10-07",
+            "value"          : 1507336792048
+        },
+        "orgCode"        : {
+            "dataType"       : "Field",
+            "length"         : 0,
+            "name"           : "orgCode",
+            "nullField"      : false,
+            "protoValue"     : "66000",
+            "stringValue"    : "66000",
+            "value"          : "66000"
+        },
+        "terminalCode"   : {
+            "dataType"       : "Field",
+            "length"         : 0,
+            "name"           : "terminalCode",
+            "nullField"      : false,
+            "protoValue"     : "tws001",
+            "stringValue"    : "tws001",
+            "value"          : "tws001"
+        },
+        "txCode"         : {
+            "dataType"       : "Field",
+            "length"         : 0,
+            "name"           : "txCode",
+            "nullField"      : false,
+            "protoValue"     : "010505",
+            "stringValue"    : "010505",
+            "value"          : "010505"
+        },
+        "channelID"      : {
+            "dataType"       : "Field",
+            "length"         : 0,
+            "name"           : "channelID",
+            "nullField"      : false,
+            "protoValue"     : "tws",
+            "stringValue"    : "tws",
+            "value"          : "tws"
+        },
+        "ext-Integer"    : {
+            "dataType"       : "Field",
+            "length"         : 0,
+            "name"           : "ext-Integer",
+            "nullField"      : false,
+            "protoValue"     : 123,
+            "stringValue"    : "123",
+            "value"          : 123
+        },
+        "txDate"         : {
+            "dataType"       : "Field",
+            "length"         : 0,
+            "name"           : "txDate",
+            "nullField"      : false,
+            "protoValue"     : 1507336792048,
+            "stringValue"    : "2017-10-07",
+            "value"          : 1507336792048
+        }
+    },
+    "dataType"       : "Object",
+    "empty"          : false,
+    "metaObjectId"   : "DYNAMIC",
+    "orgCode"        : "66000",
+    "propertyNames"  : [
+        "ext-BigDecimal",
+        "bhvGUID",
+        "bhvCode",
+        "txSerialNo",
+        "userID",
+        "ext-Boolean",
+        "ext-int",
+        "ext-String",
+        "ext-Date",
+        "orgCode",
+        "terminalCode",
+        "txCode",
+        "channelID",
+        "ext-Integer",
+        "txDate"
+    ],
+    "protoValue"     : {
+        "$ref"           : "$.dataMap"
+    },
+    "terminalCode"   : "tws001",
+    "txCode"         : "010505",
+    "txDate"         : 1507336792048,
+    "txSerialNo"     : "123456789012",
+    "txTimestamp"    : "20171007083948052",
+    "userID"         : "66000998"
+}

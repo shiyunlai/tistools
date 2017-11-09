@@ -114,8 +114,10 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
                     if(data.node.original.isLeaf =='Y'){
                         $scope.permiss.funcselect = true;
                         queryfunlist(data.node.id,userid);//调用查询列表方法
-                        blackAdd(data.node.id);//调用新增黑名单
-                        delblack(data.node.id);//调用移除黑名单
+                        blackAdd(data.node.id);//调用添加特别禁止功能
+                        delblack(data.node.id);//调用移除特别禁止功能
+                        allow(data.node.id);//调用添加特别允许功能
+                        removeallow(data.node.id);//调用移除特别允许功能
                     }else{
                         $scope.permiss.funcselect = false;
                     }
@@ -129,30 +131,53 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
     //查询操作员在某功能的行为白名单和黑名单
     var queryfunlist= function (funcGuid,userid) {
         var subFrom = {};
-        subFrom.userId  = userid;
-        subFrom.funcGuid  = funcGuid;
-        common_service.post(res.queryOperatorBhvListInFunc,subFrom).then(function(data){
+        subFrom.data = {};
+        subFrom.data.userId  = userid;
+        subFrom.data.funcGuid  = funcGuid;
+        common_service.post(res.getOperatorFuncBhvInfo,subFrom).then(function(data){
+            console.log(data.retMessage)
             var datas = data.retMessage;
             if(data.status == "success"){
-                //白名单
-                if(!isNull(datas.whiteList)){
-                    $scope.notrolegird.data =datas.whiteList ;
-                    $scope.notrolegird.mydefalutData = datas.whiteList;
+                //已授予表格
+                if(!isNull(datas.auth)){
+                    $scope.notrolegird.data =datas.auth ;
+                    $scope.notrolegird.mydefalutData = datas.auth;
                     $scope.notrolegird.getPage(1,$scope.notrolegird.paginationPageSize);
                 }else{
-                    $scope.notrolegird.data =  [];
+                    $scope.notrolegird.data =[] ;
                     $scope.notrolegird.mydefalutData = [];
                     $scope.notrolegird.getPage(1,$scope.notrolegird.paginationPageSize);
                 }
-                //黑名单
-                if(!isNull(datas.blackList)){
-                    $scope.alrolegird.data = datas.blackList;
-                    $scope.alrolegird.mydefalutData = datas.blackList;
+                //未授予
+                if(!isNull(datas.unauth)){
+                    $scope.tograntgird.data = datas.unauth;
+                    $scope.tograntgird.mydefalutData = datas.unauth;
+                    $scope.tograntgird.getPage(1,$scope.tograntgird.paginationPageSize);
+                }else{
+                    $scope.tograntgird.data =  [];
+                    $scope.tograntgird.mydefalutData = [];
+                    $scope.tograntgird.getPage(1,$scope.tograntgird.paginationPageSize);
+                }
+                //特别禁止
+                if(!isNull(datas.forbid)){
+                    $scope.alrolegird.data = datas.forbid;
+                    $scope.alrolegird.mydefalutData = datas.forbid;
                     $scope.alrolegird.getPage(1,$scope.alrolegird.paginationPageSize);
                 }else{
                     $scope.alrolegird.data =  [];
                     $scope.alrolegird.mydefalutData = [];
                     $scope.alrolegird.getPage(1,$scope.alrolegird.paginationPageSize);
+                }
+
+                //特别允许
+                if(!isNull(datas.permit)){
+                    $scope.permissiongird.data = datas.permit;
+                    $scope.permissiongird.mydefalutData = datas.permit;
+                    $scope.permissiongird.getPage(1,$scope.permissiongird.paginationPageSize);
+                }else{
+                    $scope.permissiongird.data =  [];
+                    $scope.permissiongird.mydefalutData = [];
+                    $scope.permissiongird.getPage(1,$scope.permissiongird.paginationPageSize);
                 }
 
             }
@@ -161,12 +186,11 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
 
     i18nService.setCurrentLang("zh-cn");
 
-    //白名单表格创建
+    //已授予表格创建
     var notrolegird = {};
     $scope.notrolegird = notrolegird;
     var not = [
-        { field: "bhvtypeName", displayName:'行为类型'},
-        { field: "bhvName", displayName:'行为名'},
+        { field: "bhvName", displayName:'行为名称'},
         { field: "bhvCode", displayName:'行为代码'}
     ];
     var f = function(row){
@@ -177,10 +201,7 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
         }
     }
     $scope.notrolegird = initgrid($scope,notrolegird,filterFilter,not,false,f);
-   /* $scope.notrolegird.enableFiltering = false;//禁止有搜索
-    $scope.notrolegird.enableGridMenu = false;//禁止有菜单*/
-
-    //添加黑名单逻辑
+    //添加特别禁止逻辑
     var blackAdd = function (funtguid) {
         $scope.permiss.add = function () {
             /*var dats = $scope.notrolegird.getSelectedRows();
@@ -192,22 +213,22 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
              }*/
             /*多选有问题，会冲突，先单选测试*/
             if($scope.notrolRow == ""){
-                toastr['error']("请至少选择一个角色进行删除");
+                toastr['error']("请至少选择一个角色进行添加");
                 return false;
             }else{
                 var dates = $scope.notrolRow;
                 var subFrom = {};
                 subFrom.guidOperator = operguid;
-                subFrom.guidFuncBhv = dates.guid;
-                subFrom.authType = 0;
-                console.log(operguid)
+                subFrom.guidFuncBhv = dates.guidFuncBhv;
+                subFrom.authType = 0;//特别禁止
                 //调用查询接口,模拟多选
-                var tis = [];
-                tis.push(subFrom)
-                common_service.post(res.addOperatorBhvBlackList,tis).then(function(data){
+                var tis = {};
+                tis.data = [];
+                tis.data.push(subFrom)
+                common_service.post(res.addAcOperatorBhv,tis).then(function(data){
                     var datas = data.retMessage;
                     if(data.status == "success"){
-                        toastr['success']("添加成功");
+                        toastr['success']("添加特别禁止成功");
                         queryfunlist(funtguid,userid);//调用刷新类别方法，传入功能guid才行
                     }
                 })
@@ -219,53 +240,143 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
 
 
 
-
+    //特别禁止表格
     var alrolegird = {};
     $scope.alrolegird = alrolegird;
-    var alr = [
-        { field: "bhvtypeName", displayName:'行为类型'},
-        { field: "bhvName", displayName:'行为名'},
+    var alrs = [
+        { field: "bhvName", displayName:'行为名称'},
         { field: "bhvCode", displayName:'行为代码'}
     ];
-    var f2 = function(row){
+    var fjinzhi = function(row){
         if(row.isSelected){
-            $scope.selectRow2 = row.entity;
+            $scope.alrols = row.entity;
         }else{
-            delete $scope.selectRow2;//制空
-           $scope.selectRow2 = '';//制空
+            delete $scope.alrols;//制空
+           $scope.alrols = '';//制空
         }
     }
-    $scope.alrolegird = initgrid($scope,alrolegird,filterFilter,alr,true,f2);
-    // $scope.alrolegird.enableFiltering = false;//禁止有搜索
-    // $scope.alrolegird.enableGridMenu = false;//禁止有菜单
+    $scope.alrolegird = initgrid($scope,alrolegird,filterFilter,alrs,false,fjinzhi);
 
 
-    //移除黑名单逻辑
+    //移除特别禁止逻辑
     var delblack = function (funtguid) {
         $scope.permiss.del = function () {
-            var dats = $scope.alrolegird.getSelectedRows();
-            console.log(dats)
-            if(!dats.length> 0){
-                toastr['error']("请至少选择一个角色");
+            if($scope.alrols == ""){
+                toastr['error']("请至少选择一个角色进行移除");
+                return false;
             }else{
-                var tis = [];
-                for(var i =0;i<dats.length;i++){
-                    var subFrom = {};
-                    subFrom.guidOperator = operguid;
-                    subFrom.guidFuncBhv = dats[i].guid;
-                    tis.push(subFrom)
-                }
-                console.log(tis)
-                common_service.post(res.deleteOperatorBhvBlackList,tis).then(function(data){
-                    console.log(data)
+                var dates = $scope.alrols;
+                var subFrom = {};
+                subFrom.guidOperator = operguid;
+                subFrom.guidFuncBhv = dates.guidFuncBhv;
+                subFrom.authType = 0;//特别禁止
+                //调用查询接口,模拟多选
+                var tis = {};
+                tis.data = [];
+                tis.data.push(subFrom)
+                common_service.post(res.removeAcOperatorBhv,tis).then(function(data){
                     var datas = data.retMessage;
                     if(data.status == "success"){
+                        toastr['success']("移除特别禁止成功");
                         queryfunlist(funtguid,userid);//调用刷新类别方法，传入功能guid才行
                     }
                 })
             }
         }
     }
+
+
+
+    //未授予表格
+    var tograntgird = {};
+    $scope.tograntgird = tograntgird;
+    var togra = [
+        { field: "bhvName", displayName:'行为名称'},
+        { field: "bhvCode", displayName:'行为代码'}
+    ];
+    var ftogra = function(row){
+        if(row.isSelected){
+            $scope.ogran = row.entity;
+        }else{
+            delete $scope.ogran;//制空
+            $scope.ogran = '';//制空
+        }
+    }
+    $scope.tograntgird = initgrid($scope,tograntgird,filterFilter,togra,false,ftogra);
+
+    //添加特别允许
+    var allow = function (funtguid) {
+        $scope.permiss.pagina = function () {
+            if($scope.ogran == ""){
+                toastr['error']("请至少选择一个角色进行添加");
+                return false;
+            }else{
+                var dates = $scope.ogran;
+                var subFrom = {};
+                subFrom.guidOperator = operguid;
+                subFrom.guidFuncBhv = dates.guidFuncBhv;
+                subFrom.authType = 1;//特别允许
+                //调用查询接口,模拟多选
+                var tis = {};
+                tis.data = [];
+                tis.data.push(subFrom)
+                common_service.post(res.addAcOperatorBhv,tis).then(function(data){
+                    var datas = data.retMessage;
+                    if(data.status == "success"){
+                        toastr['success']("添加特别禁止成功");
+                        queryfunlist(funtguid,userid);//调用刷新类别方法，传入功能guid才行
+                    }
+                })
+            }
+        }
+    }
+
+
+    //特别允许表格
+    var permissiongird = {};
+    $scope.permissiongird = permissiongird;
+    var tossi = [
+        { field: "bhvName", displayName:'行为名称'},
+        { field: "bhvCode", displayName:'行为代码'}
+    ];
+    var ftopermi = function(row){
+        if(row.isSelected){
+            $scope.permiesss = row.entity;
+        }else{
+            delete $scope.permiesss;//制空
+            $scope.permiesss = '';//制空
+        }
+    }
+    $scope.permissiongird = initgrid($scope,permissiongird,filterFilter,tossi,true,ftopermi);
+    
+    //移除特别允许功能
+    var removeallow = function (funtguid) {
+        $scope.permiss.permiss = function () {
+            if($scope.permiesss == ""){
+                toastr['error']("请至少选择一个角色进行移除");
+                return false;
+            }else{
+                var dates = $scope.permiesss;
+                var subFrom = {};
+                subFrom.guidOperator = operguid;
+                subFrom.guidFuncBhv = dates.guidFuncBhv;
+                subFrom.authType = 1;//特别允许
+                //调用查询接口,模拟多选
+                var tis = {};
+                tis.data = [];
+                tis.data.push(subFrom)
+                common_service.post(res.removeAcOperatorBhv,tis).then(function(data){
+                    var datas = data.retMessage;
+                    if(data.status == "success"){
+                        toastr['success']("移除特别禁止成功");
+                        queryfunlist(funtguid,userid);//调用刷新类别方法，传入功能guid才行
+                    }
+                })
+            }
+        }
+    }
+
+
 
 });
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.tis</groupId>
 	<artifactId>tools</artifactId>
@@ -12,6 +11,7 @@
 		<module>tools-common-assembly</module>
 		<module>tools-common-util</module>
 		<module>tools-core-basic</module>
+    	<module>tools-core-sdo</module>
 		<module>tools-core-service</module>
 		<module>tools-core-web</module>
 		<!-- 
@@ -26,14 +26,14 @@
 		<module>tools-facade-ac</module>
 		<module>tools-facade-sys</module>
 		<module>tools-facade-log</module>
+		<module>tools-facade-txmodel</module>
 		<module>tools-service-abf</module>
 		<module>tools-service-biztrace</module>
 		<module>tools-service-devmgr</module>
 		<module>tools-service-jnl</module>
-		<module>tools-web-tools</module>
-		<module>tools-facade-txmodel</module>
 		<module>tools-service-txmodel</module>
-	</modules>
+		<module>tools-web-tools</module>
+  </modules>
 
 	<profiles>
 		<profile>
@@ -47,6 +47,7 @@
 				<tools-common-assembly-version>1.0.0</tools-common-assembly-version>
 				<tools-common-util-version>1.0.0</tools-common-util-version>
 				<tools-core-basic-version>1.0.0</tools-core-basic-version>
+				<tools-core-sdo-version>1.0.0</tools-core-sdo-version>
 				<tools-core-service-version>1.0.0</tools-core-service-version>
 				<tools-core-web-version>1.0.0</tools-core-web-version>
 				<tools-design-version>1.0.0</tools-design-version>
@@ -58,10 +59,12 @@
 				<tools-facade-ac-version>1.0.0</tools-facade-ac-version>
 				<tools-facade-sys-version>1.0.0</tools-facade-sys-version>
 				<tools-facade-log-version>1.0.0</tools-facade-log-version>
+				<tools-facade-txmodel-version>1.0.0</tools-facade-txmodel-version>
 				<tools-service-abf-version>1.0.0</tools-service-abf-version>
 				<tools-service-biztrace-version>1.0.0</tools-service-biztrace-version>
 				<tools-service-devmgr-version>1.0.0</tools-service-devmgr-version>
 				<tools-service-jnl-version>1.0.0</tools-service-jnl-version>
+				<tools-service-txmodel-version>1.0.0</tools-service-txmodel-version>
 				<tools-web-tools-version>1.0.0</tools-web-tools-version>
 			</properties>
 		</profile>
@@ -82,6 +85,7 @@
 		<tools-common-assembly-version>0.0.1-SNAPSHOT</tools-common-assembly-version>
 		<tools-common-util-version>0.0.1-SNAPSHOT</tools-common-util-version>
 		<tools-core-basic-version>0.0.1-SNAPSHOT</tools-core-basic-version>
+		<tools-core-sdo-version>0.0.1-SNAPSHOT</tools-core-sdo-version>
 		<tools-core-service-version>0.0.1-SNAPSHOT</tools-core-service-version>
 		<tools-core-web-version>0.0.1-SNAPSHOT</tools-core-web-version>
 		<tools-design-version>0.0.1-SNAPSHOT</tools-design-version>
@@ -156,6 +160,7 @@
 		<mysql-version>5.1.37</mysql-version>
 		<commons_pool_version>1.6</commons_pool_version>
 		<commons-lang_version>2.6</commons-lang_version>
+		<commons-io-version>2.5</commons-io-version>
 		<commons.collections.version>3.2.1</commons.collections.version>
 		<commons.beanutils.version>1.9.3</commons.beanutils.version>
 		<tomcat_embed_version>8.0.11</tomcat_embed_version>
@@ -236,6 +241,9 @@
 		<disconf_version>2.6.36-luban</disconf_version>
 		<dom4j_version>1.6.1</dom4j_version>
 		<jaxen_version>1.1.6</jaxen_version>
+		<xstream-version>1.4.7</xstream-version>
+		<xalan-version>2.7.1</xalan-version>
+		<apache-ant-version>1.8.4</apache-ant-version>
 	</properties>
 
 	<dependencyManagement>
@@ -258,6 +266,11 @@
 				<groupId>org.tis</groupId>
 				<artifactId>tools-core-basic</artifactId>
 				<version>${tools-core-basic-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.tis</groupId>
+				<artifactId>tools-core-sdo</artifactId>
+				<version>${tools-core-sdo-version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.tis</groupId>
@@ -681,6 +694,12 @@
 				<artifactId>commons-beanutils</artifactId>
 				<version>${commons.beanutils.version}</version>
 			</dependency>
+			<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons-io-version}</version>
+			</dependency>
 			<dependency>
 				<groupId>org.apache.tomcat.embed</groupId>
 				<artifactId>tomcat-embed-core</artifactId>
@@ -871,6 +890,27 @@
 				<groupId>jaxen</groupId>
 				<artifactId>jaxen</artifactId>
 				<version>${jaxen_version}</version>
+			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/com.thoughtworks.xstream/xstream -->
+			<dependency>
+			    <groupId>com.thoughtworks.xstream</groupId>
+			    <artifactId>xstream</artifactId>
+			    <version>${xstream-version}</version>
+			</dependency>
+			
+			<!-- https://mvnrepository.com/artifact/xalan/xalan -->
+			<dependency>
+			    <groupId>xalan</groupId>
+			    <artifactId>xalan</artifactId>
+			    <version>${xalan-version}</version>
+			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/org.apache.ant/ant -->
+			<dependency>
+				<groupId>org.apache.ant</groupId>
+				<artifactId>ant</artifactId>
+				<version>${apache-ant-version}</version>
 			</dependency>
 
 			<!--### Common libs end ### -->

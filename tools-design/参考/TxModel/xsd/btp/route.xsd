@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<xs:schema xmlns="http://www.primeton.com/btp/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/btp/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="common.xsd"/>
+	<!--=====================-->
+	<xs:element name="match-rule">
+		<xs:annotation>
+			<xs:documentation>核心服务匹配规则</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="ext-property" minOccurs="0"/>
+				<xs:element name="match-class" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>具体执行匹配的类,系统会将match-rule定义作为参数传入,实现接口com.primeton.btp.api.route.IMatcher</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="description" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>匹配规则的说明</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="match-rules">
+		<xs:annotation>
+			<xs:documentation>核心服务匹配规则集合,多个规则之间使用or关系</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="match-rule"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!--=====================-->
+	<xs:element name="route">
+		<xs:annotation>
+			<xs:documentation>核心服务路由</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element name="policy">
+					<xs:annotation>
+						<xs:documentation>路由策略</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="name" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>策略名称</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="description" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>策略的说明</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="target-url" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>目标服务器的url,http url </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="target-id" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>目标的标识，如果是主机服务的路由，则以主机服务的头为准</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="target-type" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>目标的类型,，如 TRANS_SERVER; HOST_TRANS_SERVER; ENDPOINT</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="match-rules" minOccurs="0"/>
+						</xs:all>
+						<xs:attribute name="id" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>路由策略的id</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>路由的id</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

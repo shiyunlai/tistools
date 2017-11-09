@@ -102,9 +102,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
                         console.log(obj)
-
                         openwindow($uibModal, 'views/Workgroup/addworkgroup_window.html', 'lg',
-
                             function ($scope, $modalInstance) {
                                 //创建机构实例
                                 var subFrom = {};
@@ -176,26 +174,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                             })
                         }
                     }
-                },
-                "拷贝菜单": {
-                    "label": "拷贝工作组",
-                    "action": function (node) {
-                        var inst = jQuery.jstree.reference(node.reference),
-                            obj = inst.get_node(node.reference);
-                        var og = $('#container').jstree(true).copy_node(obj, obj);
-                        // console.log(obj)
-                    }
-                },
-
-                "粘贴菜单": {
-                    "label": "粘贴工作组",
-                    "action": function (node) {
-                        var inst = jQuery.jstree.reference(node.reference),
-                            obj = inst.get_node(node.reference);
-                        var og = $('#container').jstree(true).paste(node);
-                        console.log(og)
-                    }
-                },
+                }
             }
             return it;
 
@@ -284,6 +263,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                     flag[a] = false;
                 }
                 flag.index = true;
+                reworkgroupgrid();
             } else {
                 for (var a in flag) {
                     flag[a] = false;
@@ -320,15 +300,19 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
     var reworkgroupgrid = function () {
         //调取工作组信息OM_GROUP
         Workgroup_service.loadallgroup().then(function (data) {
-            for (var i = 0; i < data.length; i++) {
-                data[i].startDate = FormatDate(data[i].startDate);
-                data[i].createtime = FormatDate(data[i].createtime);
-                data[i].endDate = FormatDate(data[i].endDate);
-                data[i].lastupdate = FormatDate(data[i].lastupdate);
+            if(data.status == 'success'){
+                var datas = data.retMessage;
+                for (var i = 0; i < datas.length; i++) {
+                    datas[i].startDate = FormatDate(datas[i].startDate);
+                    datas[i].createtime = FormatDate(datas[i].createtime);
+                    datas[i].endDate = FormatDate(datas[i].endDate);
+                    datas[i].lastupdate = FormatDate(datas[i].lastupdate);
+                }
+                $scope.workgroupgrid.data = datas;
+                $scope.workgroupgrid.mydefalutData = datas;
+                $scope.workgroupgrid.getPage(1, $scope.workgroupgrid.paginationPageSize);
+            }else{
             }
-            $scope.workgroupgrid.data = data;
-            $scope.workgroupgrid.mydefalutData = data;
-            $scope.workgroupgrid.getPage(1, $scope.workgroupgrid.paginationPageSize);
         })
     }
     reworkgroupgrid();
@@ -336,7 +320,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
 
     //新增根工作组
     workgroup.add = function (str) {
-        var parentgroupCode = $scope.sub.groupCode;
+        var guidParents = $scope.sub.guid;
         openwindow($uibModal, 'views/Workgroup/addworkgroup_window.html', 'lg',
             function ($scope, $modalInstance) {
                 //创建机构实例
@@ -344,7 +328,8 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                 $scope.subFrom = subFrom;
                 //标识,根-子节点
                 subFrom.flag = str;
-                subFrom.parentCode = parentgroupCode;
+                // subFrom.parentCode = parentgroupCode;
+                subFrom.guidParents = guidParents;
                 //增加方法
                 var next = false;
                 $scope.next = next;
@@ -397,11 +382,11 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
             subFrom.groupCode = item[0].groupCode;
             Workgroup_service.deletegroup(subFrom).then(function (data) {
                 if (data.status == "success") {
-                    console.log(data)
-                    toastr['success'](data.message);
-                    rexjgroup();
+                    toastr['success']('删除成功');
+                    reworkgroupgrid();
+                    $("#container").jstree().refresh();
                 } else {
-                    toastr['error'](data.message);
+                    toastr['error']('删除失败'+ data.message);
                 }
             })
         }
@@ -600,7 +585,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
         subFrom.flag = $scope.sub.groupStatus;
         Workgroup_service.enableGroup(subFrom).then(function (data) {
             if (data.status == "success") {
-                toastr['success'](data.retMessage);
+                toastr['success']('注销工作组成功');
             } else {
                 toastr['error'](data.retMessage);
             }
@@ -613,13 +598,14 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
         Workgroup_service.deletegroup(subFrom).then(function (data) {
             console.log(data)
             if (data.status == "success") {
-                toastr['success'](data.retMessage);
+                toastr['success']('删除工作组成功');
             } else {
-                toastr['error'](data.retMessage);
+                toastr['error']('删除工作组失败'+ data.retMessage);
             }
             $("#container").jstree().refresh();
         })
     }
+
     workgroup.editGroup = function () {
         $scope.subFrom = angular.copy($scope.sub);
         $scope.editflag = !$scope.editflag;
@@ -631,7 +617,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
         console.log($scope.subFrom)
         Workgroup_service.updateGroup($scope.subFrom).then(function (data) {
             if (data.status == "success") {
-                toastr['success'](data.retMessage);
+                toastr['success']("修改工作组成功");
             } else {
                 toastr['error'](data.retMessage);
             }
@@ -704,7 +690,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                         Workgroup_service.addEmpGroup(subFrom).then(function (data) {
                             console.log(data)
                             if (data.status == "success") {
-                                toastr['success'](data.retMessage);
+                                toastr['success']('添加成功');
                             } else {
                                 toastr['error'](data.retMessage);
                             }
@@ -740,7 +726,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
             Workgroup_service.deleteEmpGroup(subFrom).then(function (data) {
                 console.log(data)
                 if (data.status == "success") {
-                    toastr['success'](data.retMessage);
+                    toastr['success']('删除员工成功');
                 } else {
                     toastr['error'](data.retMessage);
                 }
@@ -808,7 +794,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                         Workgroup_service.addGroupPosition(subFrom).then(function (data) {
                             console.log(data)
                             if (data.status == "success") {
-                                toastr['success'](data.retMessage);
+                                toastr['success']('添加岗位成功');
                             } else {
                                 toastr['error'](data.retMessage);
                             }
@@ -842,7 +828,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
             Workgroup_service.deleteGroupPosition(subFrom).then(function (data) {
                 console.log(data)
                 if (data.status == "success") {
-                    toastr['success'](data.retMessage);
+                    toastr['success']('删除员工成功');
                 } else {
                     toastr['error'](data.retMessage);
                 }
@@ -1039,7 +1025,6 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
         var subFrom = {};
         subFrom.groupCode = $scope.sub.groupCode
         Workgroup_service.queryApp(subFrom).then(function (data) {
-            console.log(data)
             if (data.status == "success" && !isNull(data.retMessage)) {
                 $scope.appgrid.data = data.retMessage;
                 $scope.appgrid.mydefalutData = data.retMessage;

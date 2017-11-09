@@ -616,6 +616,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
         subFrom.orgCode = $scope.abftree.item.orgCode;
         subFrom.flag = "2"
         abftree_service.enableorg(subFrom).then(function (data) {
+            console.log(data)
             if (data.status == "success") {
                 toastr['success']("启用成功!");
                 $("#container").jstree().refresh();
@@ -718,7 +719,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                 {field: 'linkTel', displayName: '联系电话', enableHiding: false},
                 {field: 'createTime', displayName: '创建时间', enableHiding: false}
             ]
-            $scope.gridOptions2 = initgrid($scope, gridOptions2, filterFilter, com, true, selework);
+            $scope.gridOptions2 = initgrid($scope, gridOptions2, filterFilter, com, false, selework);
             //塞入测试数组
             list.push($scope.gridOptions2);
             var regridOptions2 = function () {
@@ -1343,8 +1344,25 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
 
     //下级机构删除按钮
     abftree.deletexjjg = function () {
-        var a = getSelectedCount();
-        console.log(a);
+        var getSel = $scope.gridOptions2.getSelectedRows();
+        if(isNull(getSel) || getSel.length>1){
+            toastr['error']("请选则一条数据进行修改！");
+        }else{
+            if (confirm("确认要删除此机构吗?")) {
+                //TODO.删除逻辑
+                var subFrom = {};
+                subFrom.orgCode = getSel[0].orgCode;
+                abftree_service.deleteOrg(subFrom).then(function (data) {
+                    if (data.status == "success") {
+                        toastr['success']("删除成功!");
+                        $("#container").jstree().refresh();
+                    } else {
+                        toastr['error'](data.retMessage);
+                    }
+                })
+            }
+        }
+
     }
 
     //岗位下操作点击事件

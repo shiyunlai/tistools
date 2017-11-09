@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<xs:schema xmlns="http://www.primeton.com/btp/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/btp/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:element name="inbound">
+		<xs:annotation>
+			<xs:documentation>接入</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="name" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>接入的名称</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="transport-id" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>所属transport的id</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="description" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>接入的描述</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="timeout" type="xs:int" default="0" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>超时时间.单位:秒 ,小于等于0 表示无超时</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="kernel-service-type"/>
+				<xs:element name="kernel-service-id" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>核心服务码</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="fun-code" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>服务功能码，如果某个服务中存在多个功能，可通过此处指定选择对应的功能（某个资源的多项功能，每项服务功能，由二次开发人员在开发交易/主机交易/事件服务/任务服务 的时定义完成，如：0:正常 ; 1:冲正;2复核录入；3复核</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="req-message-id" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>请求报文的标识</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="resp-message-id" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>响应报文的标识</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="is-one-way" type="xs:boolean">
+					<xs:annotation>
+						<xs:documentation>是否是单向，当为true的情况下,"process-type"才有意义</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="process-type" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>处理类型: REQUEST,RESPONSE</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="ext-property" minOccurs="0"/>
+				<xs:element name="ext-class" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>inbound的扩展实现类,实现接口com.primeton.btp.api.transportservice.ITransportService</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<!--
+				<xs:element name="interceptors" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>inbound的拦截器链</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence maxOccurs="unbounded">
+							<xs:element name="interceptor" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>拦截器实现类</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				-->
+			</xs:all>
+			<xs:attribute name="id" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>接入的id</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

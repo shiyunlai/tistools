@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<xs:schema xmlns="http://www.primeton.com/ibs/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/ibs/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:element name="serialno-generator-config">
+		<xs:annotation>
+			<xs:documentation>Comment describing your root element</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence minOccurs="0">
+				<xs:element name="serialno-generator-list">
+					<xs:complexType>
+						<xs:sequence maxOccurs="unbounded">
+							<xs:element name="serialno-generator">
+								<xs:annotation>
+									<xs:documentation>交易流水号生成器</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence minOccurs="0">
+										<xs:element ref="ext-property"/>
+									</xs:sequence>
+									<xs:attribute name="id" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation>交易流水号生成器ID，唯一标示</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="impl-class" use="required">
+										<xs:annotation>
+											<xs:documentation>交易流水号生成器实现类</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="serailno-len" use="required">
+										<xs:annotation>
+											<xs:documentation>交易流水号长度</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="serialno-pattern" use="required">
+										<xs:annotation>
+											<xs:documentation>交易流水号匹配模式</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="description" use="required">
+										<xs:annotation>
+											<xs:documentation>描述</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

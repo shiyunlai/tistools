@@ -1,7 +1,8 @@
 <div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
     <div class="portlet-title">
         <div class="caption">
-            <span class="caption-subject font-green-sharp bold uppercase">新增业务机构</span>
+            <!--<span class="caption-subject font-green-sharp bold uppercase" ng-if="!id">新增业务机构</span>-->
+            <span class="caption-subject font-green-sharp bold uppercase">编辑业务机构</span>
         </div>
         <div class="tools">
             <a href="javascript:;" class="remove" ng-click="cancel()">
@@ -25,10 +26,12 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">主管岗位:<span style="color:red">*</span></label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.guidPosition"
-                                   name="id" required/>
+                        <div class="col-md-8" ng-init="$settings.getCommData('POS')">
+                            <select class="form-control" ng-model="subFrom.guidPosition" required name="id" style="width: 100%">
+                                <option ng-repeat="d in $settings.commlist['POS'] track by $index"
+                                        value="{{d.guid}}">{{d.positionName}}
+                                </option>
+                            </select>
                         </div>
                     </div>
                 </div>

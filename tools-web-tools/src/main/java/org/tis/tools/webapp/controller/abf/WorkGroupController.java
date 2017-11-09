@@ -231,24 +231,11 @@ public class WorkGroupController extends BaseController {
      * @param response
      * @return
      */
-    @RequestMapping(value = "/queryall")
-    public String queryall(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-        try {
-            // 查询所有工作组
-            List<OmGroup> list = groupRService.queryAllGroup();
-            List<Map> l = new ArrayList<Map>();
-            for (OmGroup o : list) {
-                Map m1 = BeanUtils.describe(o);
-                l.add(m1);
-            }
-            AjaxUtils.ajaxJson(response, net.sf.json.JSONArray.fromObject(l).toString());
-        } catch (ToolsRuntimeException e) {// TODO
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            e.printStackTrace();
-        } catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, "SYS_0001", e.getMessage());
-        }
-        return null;
+    @ResponseBody
+    @RequestMapping(value = "/queryall", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> queryall(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+       
+            return getReturnMap(groupRService.queryAllGroup());
     }
 
     /**
@@ -320,7 +307,7 @@ public class WorkGroupController extends BaseController {
             name = "groupName", // 操作对象名
             keys = {"groupName","groupCode"}) // 操作对象的关键值的键值名
     @ResponseBody
-    @RequestMapping(value = "/updateGroup")
+    @RequestMapping(value = "/updateGroup", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> updateGroup(@RequestBody String content) {
         OmGroup og = JSONObject.parseObject(content, OmGroup.class);
         OmGroup reog = groupRService.updateGroup(og);

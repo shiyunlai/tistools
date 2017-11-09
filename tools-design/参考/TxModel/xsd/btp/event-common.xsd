@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.primeton.com/btp/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/btp/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:element name="udp" type="event-receiver-udp-type"/>
+	<xs:element name="jms" type="event-receiver-jms-type"/>
+	<xs:complexType name="event-receiver-jms-type">
+		<xs:sequence>
+			<xs:element name="initial-context-factory" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>初始化上下文工厂</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="provider-url" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>服务提供程序配置信息</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="principal" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>服务调用方的主体身份</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="password" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>服务调用方的主体证书</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="connection-factory-jndiname" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>连接工厂的JNDI名称</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="type" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>JMS的类型</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="destination-jndiname" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>目标的JNDI名称</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="ext-property" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="event-receiver-udp-type">
+		<xs:sequence>
+			<xs:element name="multicast-address" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>多播的IP</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="multicast-port" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>多播端口号</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="ext-property" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="event-receiver-type">
+		<xs:choice>
+			<xs:element name="udp" type="event-receiver-udp-type"/>
+			<xs:element name="jms" type="event-receiver-jms-type"/>
+			<xs:any namespace="##other"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="event-trigger">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="event-trigger-id" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>事件触发ID</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="event-id" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>事件ID</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="event-data" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>事件触发数据，xml字符串</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="event-subscriber">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="event-subscriber-id" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>事件订阅者ID</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="include-events" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>包含的事件ID,中间用','分隔(可以在前后使用'*')</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="exclude-events" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>不包含的事件ID,中间用','分隔(可以在前后使用'*')</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="event-subscribe-info" type="event-receiver-type">
+					<xs:annotation>
+						<xs:documentation>事件订阅者类型</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="event-receipt">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="event-subscriber-id" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>事件订阅者ID</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="event-id" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>事件ID</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="event-sequence" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>事件发送的流水</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="event-send">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="event-subscriber-id" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>事件订阅者ID</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="event-id" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>事件ID</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="event-serial-no" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>事件发送的流水</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="event-data" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>事件触发数据，xml字符串，三种数据类型：String、SDO和Serializable</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.primeton.com/btp/cfg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.primeton.com/btp/cfg" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!--=============-->
+	<xs:element name="configuration">
+		<xs:annotation>
+			<xs:documentation>BTF配置的根结点</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any namespace="##any" processContents="lax" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="category" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>配置的类型</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="version" type="xs:string" use="required"/>
+			<xs:attribute name="author" type="xs:string" use="required"/>
+			<xs:attribute name="create-date" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:group name="object-pool-group">
+		<xs:annotation>
+			<xs:documentation>对象池</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="min-size" type="xs:int" default="50" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>处理器的最小缓存数量</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="max-size" type="xs:int" default="50" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>处理器的最大缓存数量</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="increase-size" type="xs:int" default="1" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>每次增加的缓存数量</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="keep-alive-time" type="xs:int" default="60" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>缓存对象的最大空闲存活时间,单位:秒,小于等于0 表示无超时</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="checkout-timeout" type="xs:int" default="5" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>从对象池中获取对象的超时时间,单位:秒</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="factory-class" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>对象工厂类, 实现接口com.primeton.components.api.resmgr.pool.IResourceFactory </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:element name="work-threads">
+		<xs:annotation>
+			<xs:documentation>工作线程</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="min-size" type="xs:int" default="50">
+					<xs:annotation>
+						<xs:documentation>工作线程的最小线程数</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="max-size" type="xs:int" default="50">
+					<xs:annotation>
+						<xs:documentation>工作线程的最大线程熟</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="keep-alive-time" type="xs:int" default="60">
+					<xs:annotation>
+						<xs:documentation>工作线程的最大空闲存活时间,单位:秒,小于等于0 表示无超时</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="queue-size" type="xs:int" default="-1">
+					<xs:annotation>
+						<xs:documentation>队列长度.小于等于0 表示使用整型最大值</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="rejected-policy" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>当queue的size达到最大值后，对于新增的请求采取如何拒绝，实现接口java.util.concurrent.RejectedExecutionHandler
+
+默认值：java.util.concurrent.ThreadPoolExecutor$AbortPolicy</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ext-property">
+		<xs:annotation>
+			<xs:documentation>扩展属性</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="entry" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>条目</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="key" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>扩展属性的名称</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="value" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>[V]扩展属性的值</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="description" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>扩展属性的描述</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="kernel-service-type" type="KernelServiceType">
+		<xs:annotation>
+			<xs:documentation>核心服务类型</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<!--=============-->
+	<xs:simpleType name="KernelServiceType">
+		<xs:annotation>
+			<xs:documentation>核心服务的类型</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="TRANS">
+				<xs:annotation>
+					<xs:documentation>交易服务</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HOST_TRANS">
+				<xs:annotation>
+					<xs:documentation>主机交易服务</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EVENT">
+				<xs:annotation>
+					<xs:documentation>事件服务</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TASK">
+				<xs:annotation>
+					<xs:documentation>任务服务</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

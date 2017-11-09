@@ -8,7 +8,6 @@
 		<artifactId>tools</artifactId>
 		<version>1.0.0</version>
 	</parent>
-	<groupId>org.tis</groupId>
 	<artifactId>tools-facade-txmodel</artifactId>
 	<version>${tools-facade-txmodel-version}</version>
 	<name>tools-facade-txmodel</name>
@@ -26,6 +25,26 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.tis</groupId>
+			<artifactId>tools-core-sdo</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.tis</groupId>
+			<artifactId>tools-core-basic</artifactId>
+		</dependency>
+		<!-- junit test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit-dep</artifactId>
+			<scope>test</scope>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 </project>
