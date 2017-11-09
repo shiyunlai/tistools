@@ -317,7 +317,7 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
         if (StringUtils.isBlank(roleGuid)) {
             throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("String roleGuid", "configRoleFunc"));
         }
-        if (CollectionUtils.isEmpty(roleFuncList)) {
+        if (roleFuncList == null) {
             throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("List<AcFunc> funcList", "configRoleFunc"));
         }
         try {
@@ -356,6 +356,8 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                         }
                         // 新增
                         for (AcRoleFunc roleFunc : addList) {
+                            // 默认添加所有的角色行为定义
+                            // TODO
                             addRoleFunc(roleFunc);
                         }
                     } catch (ToolsRuntimeException e) {

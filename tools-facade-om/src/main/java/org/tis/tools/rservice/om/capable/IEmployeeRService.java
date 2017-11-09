@@ -12,6 +12,7 @@ import org.tis.tools.model.po.om.OmPosition;
 import org.tis.tools.model.vo.om.OmEmployeeDetail;
 import org.tis.tools.rservice.om.exception.EmployeeManagementException;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -446,5 +447,5 @@ public interface IEmployeeRService {
 	 * @throws EmployeeManagementException
 	 *
 	 */
-	OmEmployee changeEmpStatus(String empGuid, String status) throws EmployeeManagementException;
+	OmEmployee changeEmpStatus(String empGuid, String status, Date data) throws EmployeeManagementException;
 }

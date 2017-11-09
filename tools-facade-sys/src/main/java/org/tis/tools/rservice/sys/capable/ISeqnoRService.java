@@ -39,4 +39,27 @@ public interface ISeqnoRService {
      * @throws SysManagementException
      */
     void deleteSeqno(String seqKey) throws SysManagementException;
+
+    /**
+     * 获取下一个序列号
+     * @param seqKey 序号键值
+     * @return
+     * @throws SysManagementException
+     */
+    long getNextSequence(String seqKey, String seqName) throws SysManagementException;
+
+    /**
+     * 设置序号值
+     * @param seqKey
+     * @param value
+     * @throws SysManagementException
+     */
+    void setValue(String seqKey,long value) throws SysManagementException;
+
+    /**
+     *
+     * @param name
+     * @throws SysManagementException
+     */
+//    void removeSequence(String name) throws SysManagementException;
 }

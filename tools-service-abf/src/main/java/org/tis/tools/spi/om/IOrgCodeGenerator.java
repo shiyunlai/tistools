@@ -3,8 +3,6 @@
  */
 package org.tis.tools.spi.om;
 
-import java.util.Map;
-
 import org.tis.tools.rservice.om.exception.OrgManagementException;
 
 /**
@@ -17,11 +15,10 @@ public interface IOrgCodeGenerator {
 
 	/**
 	 * 根据传入的参数，生成机构代码
-	 * 
-	 * @param parms
-	 *            参数
-	 * @return 机构代码
+	 * @param orgDegree 机构等级
+	 * @param areaCode  地区码
+	 * @return
 	 * @throws OrgManagementException
 	 */
-	public String genOrgCode(Map<String, String> parms) throws OrgManagementException;
+	String genOrgCode(String orgDegree, String areaCode) throws OrgManagementException;
 }

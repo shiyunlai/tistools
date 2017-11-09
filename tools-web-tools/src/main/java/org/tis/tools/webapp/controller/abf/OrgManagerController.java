@@ -191,7 +191,7 @@ public class OrgManagerController extends BaseController {
         // 收到请求
         JSONObject jsonObj = JSONObject.parseObject(content);
         //用于返回
-        OmOrg org = new OmOrg();
+        OmOrg org;
         OmOrg og = JSONObject.parseObject(content, OmOrg.class);
         String flag = jsonObj.getString("flag");
 //            Date startDate = null;
@@ -208,20 +208,19 @@ public class OrgManagerController extends BaseController {
 //            System.out.println(og);
 //            og.setEndDate(endDate);
 //            og.setStartDate(startDate);
+        String area = og.getArea();
+        String orgName = og.getOrgName();
+        String orgType = og.getOrgType();
+        String orgDegree = og.getOrgDegree();
         if (flag.equals("root")) {
-            String orgCode = og.getOrgCode();
-            String orgName = og.getOrgName();
-            String orgType = og.getOrgType();
-            String orgDegree = og.getOrgDegree();
-            org = orgRService.createRootOrg(orgCode, orgName, orgType, orgDegree);
+            org = orgRService.createRootOrg(area, orgDegree, orgName, orgType);
         } else {
-            org = orgRService.createChildOrg(og);
+            org = orgRService.createChildOrg(area, orgDegree, orgName, orgType, og.getGuidParents());
         }
-
         return getReturnMap(org);
     }
 
-    @OperateLog(
+   /* @OperateLog(
             operateType = "add",  // 操作类型
             operateDesc = "生成机构代码", // 操作描述
             retType = ReturnType.Object, // 返回类型，对象或数组
@@ -240,7 +239,7 @@ public class OrgManagerController extends BaseController {
         Map map = new HashMap();
         map.put("orgCode", orgCode);
         return getReturnMap(map);
-    }
+    }*/
 
     /**
      * 更新机构

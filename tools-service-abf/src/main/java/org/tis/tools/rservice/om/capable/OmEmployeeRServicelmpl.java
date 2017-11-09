@@ -819,12 +819,15 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 	 * @see OMConstants#EMPLOYEE_STATUS_ONJOB 在职
 	 */
 	@Override
-	public OmEmployee changeEmpStatus(String empGuid, String status) throws EmployeeManagementException {
+	public OmEmployee changeEmpStatus(String empGuid, String status, Date date) throws EmployeeManagementException {
 		if(StringUtils.isBlank(empGuid)) {
 			throw new EmployeeManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap(OmEmployee.COLUMN_GUID, "changeEmpStatus"));
 		}
 		if(StringUtils.isBlank(status)) {
 			throw new EmployeeManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap(OmEmployee.COLUMN_EMPSTATUS, "changeEmpStatus"));
+		}
+		if(date == null) {
+			throw new EmployeeManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("Date date", "changeEmpStatus"));
 		}
 		try {
 			OmEmployee omEmployee = omEmployeeService.loadByGuid(empGuid);
@@ -838,6 +841,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 						throw new EmployeeManagementException(ACExceptionCodes.CURRENT_STATUS_IS_NOT_ALLOWED_CHANGE, wrap(old_status, OMConstants.EMPLOYEE_STATUS_ONJOB));
 					}
 					omEmployee.setEmpstatus(status);
+					omEmployee.setIndate(date);
 					break;
                 /*改变状态为 离职
                 * 限制当前状态为： 在职
@@ -847,6 +851,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 						throw new EmployeeManagementException(ACExceptionCodes.CURRENT_STATUS_IS_NOT_ALLOWED_CHANGE, wrap(old_status, OMConstants.EMPLOYEE_STATUS_OFFJOB));
 					}
 					omEmployee.setEmpstatus(status);
+					omEmployee.setOutdate(date);
 					break;
 				default:
 					throw new EmployeeManagementException(ACExceptionCodes.OPERATOR_STATUS_ERROR, old_status);
