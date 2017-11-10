@@ -188,95 +188,16 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                 if(isNull(subFrom)){
                     var subFrom = {
                         "empName": "第一个员工",
-                        "gender": "M",
+                       /* "gender": "M",
                         "empDegree": "P1",
                         "guidOrg": "ORG1502868449",
                         "guidPosition": "POSITION1502869376",
-                        "indate": "2017-07-19"
+                        "indate": "2017-07-19"*/
                     };
-                    //生成员工编号
-                    Emp_service.initEmpCode(subFrom).then(function (data) {
-                        if (data.status == "success") {
-                            subFrom.empCode = data.retMessage
-                        } else {
-                            toastr['error'](data.retMessage);
-                        }
-                    })
                 }
                 $scope.subFrom = subFrom;
                 //标题
                 $scope.title = "新增员工";
-                /*$scope.empadd = function () {
-                    //新增操作员
-                    // $scope.cancel();
-                    //打开第二个模态框
-                    openwindow($uibModal, 'views/emp/addemppart2_window.html', 'lg',
-                        function ($scope, $modalInstance) {
-                            $scope.subFrom = subFrom;
-                            console.log(pinyin.getFullChars(subFrom.empName));
-                            subFrom.userId = pinyin.getFullChars(subFrom.empName);
-                            $scope.title = "操作员信息";
-                            var emp = {};
-                            $scope.emp = emp;
-                            emp.operflag = "1";
-                            //增加方法
-                            $scope.add = function (subFrom) {
-                                var a = [];
-                                if(!isNull(subFrom.orgList)){
-                                    for (var i = 0; i < subFrom.orgList.length; i++) {
-                                        var b = {};
-                                        b.orgGuid = subFrom.orgList[i];
-                                        a.push((b));
-                                    }
-                                }
-                                subFrom.orgList = a;
-                                a = [];
-                                if(!isNull(subFrom.specialty)){
-                                    for (var i = 0; i < subFrom.specialty.length; i++) {
-                                        var b = {};
-                                        b.roleGuid = subFrom.specialty[i];
-                                        a.push((b));
-                                    }
-                                }
-                                subFrom.specialty = a;
-                                subFrom.orgList = JSON.stringify(subFrom.orgList);
-                                subFrom.specialty = JSON.stringify(subFrom.specialty);
-                                Emp_service.addemp(subFrom).then(function (data) {
-                                    if (data.status == "success") {
-                                        toastr['success']("新增成功!");
-                                    } else {
-                                        toastr['error'](data.retMessage);
-                                    }
-                                    reempgrid();
-                                    $scope.cancel();
-                                })
-
-                                if(emp.operflag == '1'){//只有是系统默认的时候才新增，否则不新增
-                                    //新增操作员
-                                    var res = $rootScope.res.operator_service;//页面所需调用的服务
-                                    var opersFrom = {}
-                                    opersFrom.operatorName= subFrom.empName;//操作员姓名
-                                    opersFrom.userId=subFrom.userId;
-                                    opersFrom.operatorStatus='stop';
-                                    opersFrom.lockLimit=5;
-                                    opersFrom.authMode='password';
-                                    opersFrom.password = '111111'//默认密码
-                                    opersFrom.menuType = 'default'//默认页面布局
-                                    common_service.post(res.createOperator,opersFrom).then(function(data){
-                                    })
-                                }
-                            }
-                            //返回
-                           /!* $scope.back = function () {
-                                $scope.cancel();
-                                emp.add(subFrom)
-                            }*!/
-                            $scope.cancel = function () {
-                                $modalInstance.dismiss('cancel');
-                            };
-                        })
-                    // $scope.next = !$scope.next;
-                }*/
                 $scope.empadd = function (item) {
                     var subFrom = item;
                     Emp_service.addemp(subFrom).then(function (data) {

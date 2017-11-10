@@ -25,9 +25,29 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">所属地域:<span style="color:red">*</span></label>
                         <div class="col-md-8">
-                            <select  ng-model="subFrom.AREA" class="form-control">
+                            <select  ng-model="subFrom.area" class="form-control">
                                 <option value="010">北京地区</option>
                                 <option value="021">上海地区</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">机构名称:<span style="color:red">*</span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="subFrom.orgName"
+                                   name="id" required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">机构类型:<span style="color:red">*</span></label>
+                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_OM_ORGTYPE')">
+                            <select class="form-control" ng-model="subFrom.orgType">
+                                <option ng-repeat="d in $settings.diclist['DICT_OM_ORGTYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>
                     </div>
@@ -38,7 +58,7 @@
                         <div class="col-md-10">
 
                             <div class="actions btn-set" style="float: right;">
-                                <button type="button" name="back" class="btn btn-primary" ng-click="skip()"> 下一步
+                                <button type="button" name="back" class="btn btn-primary" ng-click="skip(subFrom)"> 下一步
                                 </button>
 
                                 <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
@@ -76,25 +96,82 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">机构代码</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="subFrom.orgCode" name="id"/>
+                            <input type="text" class="form-control" ng-model="subFrom.orgCode" disabled name="id"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4">机构类型:<span style="color:red">*</span></label>
+                        <label class="control-label col-md-4">机构地址:</label>
                         <div class="col-md-8">
-                            <select class="form-control" ng-model="subFrom.orgType" required="">
-                                <option value="10">总公司</option>
-                                <option value="11">总部部门</option>
-                                <option value="20">分公司</option>
-                                <option value="21">分公司部门</option>
-                                <option value="90">营业网点</option>
-                            </select>
+                            <input type="text" class="form-control"
+                                   ng-model="subFrom.orgAddr"
+                                   name="id" />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">联系人姓名:</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="subFrom.linkMan"
+                                   name="id" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">邮编:</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="subFrom.zipcode"
+                                   name="id" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">联系电话:</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="subFrom.linkTel"
+                                   name="id" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">电子邮件:</label>
+                        <div class="col-md-8">
+                            <input type="email" class="form-control"
+                                   ng-model="subFrom.email"
+                                   name="id" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">网站地址:</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="subFrom.webUrl"
+                                   name="id" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-2">备注:</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control"
+                                   ng-model="subFrom.remark"
+                                   name="id" />
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">机构名称:<span style="color:red">*</span></label>
                         <div class="col-md-8">
@@ -103,14 +180,14 @@
                                    name="id" required/>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <div class="col-md-12">
                     <div class="form-group">
                         <label class="control-label col-md-2"></label>
                         <div class="col-md-10">
 
                             <div class="actions btn-set" style="float: right;">
-                                <button type="button" name="back" class="btn btn-primary" ng-disabled="bigform.$invalid" ng-click="add(subFrom)"> 保存
+                                <button type="button" name="back" class="btn btn-primary"  ng-click="add(subFrom)"> 保存
                                 </button>
 
                                 <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消

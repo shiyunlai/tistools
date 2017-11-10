@@ -63,18 +63,30 @@
                     </div>
                 </div>
                 <div class="col-md-12" >
-                    <div ui-grid="notrolegird" style="height:380px;"
-                         ui-grid-pagination
-                         ui-grid-selection ui-grid-resize-columns></div>
+                    <div ui-grid="notrolegird" style="height:360px;"
+                         ui-grid-pagination ui-grid-selection></div>
+                    <div style="float: right;margin-top: 20px;">
+                        <span>当前 {{ notrolegird.pagination.getPage() }} / {{ notrolegird.pagination.getTotalPages() }}</span>
+                        <button type="button" class="btn btn-success" ng-click="notrolegird.pagination.previousPage()">
+                            上一页
+                        </button>
+                        <button type="button" class="btn btn-success" ng-click="notrolegird.pagination.nextPage()">
+                            下一页
+                        </button>
+                       <!-- <button type="button" class="btn btn-success" ng-click="gridApi2.pagination.seek(3)">
+                            跳转到第3页
+                        </button>-->
+                    </div>
                 </div>
+
             </div>
             <div class="col-md-1" style="margin-top:11%;margin-left: -3%;"  ng-if="permiss.funcselect">
                 <div class="col-md-12" style="margin-left: 38%;">
-                    <button   type="button" name="back" class="btn btn-primary" ng-click="permiss.add()"> 添加特别禁止 >
+                    <button   type="button" name="back" class="btn btn-primary" ng-disabled="isYear" ng-click="permiss.add()"> 添加特别禁止 >
                     </button>
                 </div>
                 <div class="col-md-12" style="margin-top: 10px;margin-left: 38%;">
-                    <button  type="button" name="back" class="btn btn-danger" ng-click="permiss.del()"> < 移除特别禁止
+                    <button  type="button" name="back" class="btn btn-danger" ng-disabled="isYear" ng-click="permiss.del()"> < 移除特别禁止
                     </button>
                 </div>
             </div>
@@ -90,6 +102,15 @@
                          ui-grid-pagination
                          ui-grid-selection ui-grid-resize-columns></div>
                 </div>
+                <div style="float: right;margin-top: 20px;">
+                    <span>当前 {{ alrolegird.pagination.getPage() }} / {{ alrolegird.pagination.getTotalPages() }}</span>
+                    <button type="button" class="btn btn-success" ng-click="alrolegird.pagination.previousPage()">
+                        上一页
+                    </button>
+                    <button type="button" class="btn btn-success" ng-click="alrolegird.pagination.nextPage()">
+                        下一页
+                    </button>
+                </div>
             </div>
         </div>
         <div class="row" style="margin-top: 20px">
@@ -104,14 +125,23 @@
                          ui-grid-pagination
                          ui-grid-selection ui-grid-resize-columns></div>
                 </div>
+                <div style="float: right;margin-top: 20px;">
+                    <span>当前 {{ tograntgird.pagination.getPage() }} / {{ tograntgird.pagination.getTotalPages() }}</span>
+                    <button type="button" class="btn btn-success" ng-click="tograntgird.pagination.previousPage()">
+                        上一页
+                    </button>
+                    <button type="button" class="btn btn-success" ng-click="tograntgird.pagination.nextPage()">
+                        下一页
+                    </button>
+                </div>
             </div>
             <div class="col-md-1" style="margin-top:11%;margin-left: -3%;"  ng-if="permiss.funcselect">
                 <div class="col-md-12" style="margin-left: 38%;">
-                    <button   type="button" name="back" class="btn btn-primary" ng-click="permiss.pagina()"> 添加特别允许 >
+                    <button   type="button" name="back" class="btn btn-primary" ng-disabled="isYear" ng-click="permiss.pagina()"> 添加特别允许 >
                     </button>
                 </div>
                 <div class="col-md-12" style="margin-top: 10px;margin-left: 38%;">
-                    <button  type="button" name="back" class="btn btn-danger" ng-click="permiss.permiss()"> < 移除特别允许
+                    <button  type="button" name="back" class="btn btn-danger" ng-disabled="isYear" ng-click="permiss.permiss()"> < 移除特别允许
                     </button>
                 </div>
             </div>
@@ -126,6 +156,15 @@
                     <div ui-grid="permissiongird" style="height:380px;"
                          ui-grid-pagination
                          ui-grid-selection ui-grid-resize-columns></div>
+                    <div style="float: right;margin-top: 20px;">
+                        <span>当前 {{ permissiongird.pagination.getPage() }} / {{ permissiongird.pagination.getTotalPages() }}</span>
+                        <button type="button" class="btn btn-success" ng-click="permissiongird.pagination.previousPage()">
+                            上一页
+                        </button>
+                        <button type="button" class="btn btn-success" ng-click="permissiongird.pagination.nextPage()">
+                            下一页
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

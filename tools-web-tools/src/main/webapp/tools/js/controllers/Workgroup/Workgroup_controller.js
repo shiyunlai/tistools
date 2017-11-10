@@ -44,43 +44,41 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                         openwindow($uibModal, 'views/Workgroup/addworkgroup_window.html', 'lg',
                             function ($scope, $modalInstance) {
                                 //创建机构实例
-                                var subFrom = {};
-                                $scope.subFrom = subFrom;
-                                //标识,根-子节点
-                                subFrom.flag = "root";
                                 var next = false;
                                 $scope.next = next;
-                                $scope.skip = function () {
-                                    if (isNull(subFrom.groupType)) {
+                                $scope.skip = function (items) {
+                                    items.flag = "root";
+                                    var subFrom = {};
+                                    subFrom= items;
+                                    if (isNull(subFrom.groupType) || isNull(subFrom.groupName) || isNull(subFrom.guidOrg)) {
                                         toastr['error']("请填写相关信息!");
                                         return false;
                                     }
                                     //调用服务生成机构代码
-                                    Workgroup_service.initGroupCode(subFrom).then(function (data) {
+                                    Workgroup_service.addgroup(subFrom).then(function (data) {
+                                        console.log(data);
                                         if (data.status == "success") {
-                                            toastr['success']("生成成功!");
-                                            $scope.subFrom.groupCode = data.retMessage;
+                                            toastr['success']("新增成功!");
                                             $scope.next = !next;
+                                            var subFrom = {};
+                                            $scope.subFrom = subFrom;
+                                            subFrom.groupCode = data.retMessage.groupCode;
                                         } else {
                                             toastr['error'](data.retMessage);
                                         }
-                                    })
-                                }
-                                //增加方法
-                                $scope.add = function (subFrom) {
-                                    //TODO.新增逻辑
-                                    Workgroup_service.addgroup(subFrom).then(function (data) {
-                                        if (data.status == "success") {
-                                            toastr['success'](data.retMessage);
-                                            //刷新树和列表
-                                            $("#container").jstree().refresh();
-                                            reworkgroupgrid();
-                                            $scope.cancel();
-                                        } else {
-                                            toastr['error'](data.retMessage + " " + data.retCode);
-                                            $("#container").jstree().refresh();
-                                            reworkgroupgrid();
-                                            $scope.cancel();
+                                        $("#container").jstree().refresh();
+                                        $scope.add=function (subFrom) {
+                                            var datas = data.retMessage;
+                                            subFrom = datas;
+                                            Workgroup_service.updateGroup(subFrom).then(function (data) {
+                                                if (data.status == "success") {
+                                                    toastr['success']("添加成功!");
+                                                    $("#container").jstree().refresh();
+                                                    $scope.cancel();
+                                                } else {
+                                                    toastr['error'](data.retMessage);
+                                                }
+                                            })
                                         }
                                     });
                                 }
@@ -100,51 +98,49 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                     "label": "新建子工作组",
                     "action": function (data) {
                         var inst = jQuery.jstree.reference(data.reference),
-                            obj = inst.get_node(data.reference);
+                            obj = inst.get_node(data.reference)
                         console.log(obj)
                         openwindow($uibModal, 'views/Workgroup/addworkgroup_window.html', 'lg',
                             function ($scope, $modalInstance) {
-                                //创建机构实例
-                                var subFrom = {};
-                                $scope.subFrom = subFrom;
-                                //处理父工作组GUID
-                                subFrom.guidParents = obj.original.guid;
-                                //标识,根-子节点
-                                subFrom.flag = "child";
                                 var next = false;
                                 $scope.next = next;
-                                $scope.skip = function () {
-                                    if (isNull(subFrom.groupType)) {
+                                $scope.skip = function (items) {
+                                    items.flag = "child";
+                                    var subFrom = {};
+                                    subFrom= items;
+                                    if (isNull(subFrom.groupType) || isNull(subFrom.groupName) || isNull(subFrom.guidOrg)) {
                                         toastr['error']("请填写相关信息!");
                                         return false;
                                     }
+                                    subFrom.guidParents = obj.original.guid;
                                     //调用服务生成机构代码
-                                    Workgroup_service.initGroupCode(subFrom).then(function (data) {
+                                    Workgroup_service.addgroup(subFrom).then(function (data) {
                                         if (data.status == "success") {
-                                            toastr['success']("生成成功!");
-                                            $scope.subFrom.groupCode = data.retMessage;
+                                            toastr['success']("新增成功!");
                                             $scope.next = !next;
+                                            var subFrom = {};
+                                            $scope.subFrom = subFrom;
+                                            subFrom.groupCode = data.retMessage.groupCode;
                                         } else {
                                             toastr['error'](data.retMessage);
                                         }
-                                    })
-                                }
-                                //增加方法
-                                $scope.add = function (subFrom) {
-                                    //TODO.新增逻辑
-                                    Workgroup_service.addgroup(subFrom).then(function (data) {
-                                        if (data.status == "success") {
-                                            toastr['success'](data.retMessage);
-                                            //刷新树和列表
-                                            $("#container").jstree().refresh();
-                                            $scope.cancel();
-                                        } else {
-                                            toastr['error'](data.retMessage + " " + data.retCode);
-                                            $("#container").jstree().refresh();
-                                            $scope.cancel();
+                                        $("#container").jstree().refresh();
+                                        $scope.add=function (subFrom) {
+                                            var datas = data.retMessage;
+                                            subFrom = datas;
+                                            Workgroup_service.updateGroup(subFrom).then(function (data) {
+                                                if (data.status == "success") {
+                                                    toastr['success']("添加成功!");
+                                                    $("#container").jstree().refresh();
+                                                    $scope.cancel();
+                                                } else {
+                                                    toastr['error'](data.retMessage);
+                                                }
+                                            })
                                         }
                                     });
                                 }
+                                //增加方法
                                 $scope.cancel = function () {
                                     $modalInstance.dismiss('cancel');
                                 };
@@ -327,39 +323,45 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                 var subFrom = {};
                 $scope.subFrom = subFrom;
                 //标识,根-子节点
-                subFrom.flag = str;
                 // subFrom.parentCode = parentgroupCode;
-                subFrom.guidParents = guidParents;
                 //增加方法
                 var next = false;
                 $scope.next = next;
-                $scope.skip = function () {
-                    if (isNull(subFrom.groupType)) {
+                $scope.skip = function (items) {
+                    items.flag = str;
+                    items.guidParents = guidParents;
+                    var subFrom = {};
+                    subFrom= items;
+                    if (isNull(subFrom.groupType) || isNull(subFrom.groupName) || isNull(subFrom.guidOrg)) {
                         toastr['error']("请填写相关信息!");
                         return false;
                     }
                     //调用服务生成机构代码
-                    Workgroup_service.initGroupCode(subFrom).then(function (data) {
-                        if (data.status == "success") {
-                            toastr['success']("生成成功!");
-                            $scope.subFrom.groupCode = data.retMessage;
-                            $scope.next = !next;
-                        } else {
-                            toastr['error'](data.retMessage);
-                        }
-                    })
-                }
-                $scope.add = function (subFrom) {
-                    //TODO.新增逻辑
                     Workgroup_service.addgroup(subFrom).then(function (data) {
                         console.log(data);
                         if (data.status == "success") {
-                            toastr['success'](data.retMessage);
-                            reworkgroupgrid();
-                            $("#container").jstree().refresh();
-                            $scope.cancel();
+                            toastr['success']("新增成功!");
+                            $scope.next = !next;
+                            var subFrom = {};
+                            $scope.subFrom = subFrom;
+                            subFrom.groupCode = data.retMessage.groupCode;
                         } else {
-                            toastr['error']("新增失败！");
+                            toastr['error'](data.retMessage);
+                        }
+                        $("#container").jstree().refresh();
+                        $scope.add=function (subFrom) {
+                            var datas = data.retMessage;
+                            subFrom = datas;
+                            Workgroup_service.updateGroup(subFrom).then(function (data) {
+                                if (data.status == "success") {
+                                    toastr['success']("添加成功!");
+                                    $("#container").jstree().refresh();
+                                    reworkgroupgrid();
+                                    $scope.cancel();
+                                } else {
+                                    toastr['error'](data.retMessage);
+                                }
+                            })
                         }
                     });
                 }
@@ -596,7 +598,6 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
         var subFrom = {};
         subFrom.groupCode = $scope.sub.groupCode;
         Workgroup_service.deletegroup(subFrom).then(function (data) {
-            console.log(data)
             if (data.status == "success") {
                 toastr['success']('删除工作组成功');
             } else {
@@ -646,11 +647,11 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                 //定义表头名
                 var com = [{field: 'empCode', displayName: '员工代码', enableHiding: false},
                     {field: 'empName', displayName: '员工姓名', enableHiding: false},
-                    {field: 'gender', displayName: '性别', enableHiding: false},
-                    {field: 'empstatus', displayName: '员工状态', enableHiding: false},
-                    {field: 'empDegree', displayName: '员工职级', enableHiding: false},
+                    {field: 'gender', displayName: '性别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'},
+                    {field: 'empstatus', displayName: '员工状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
+                    {field: 'empDegree', displayName: '员工职级', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
                     {field: 'guidPosition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
-                    {field: 'guidEmpMajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpMajor | translateEmp) + $root.constant[row.entity.guidEmpMajor]}}</div>'},
+                    {field: 'guidempmajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidempmajor | translateEmp) + $root.constant[row.entity.guidempmajor]}}</div>'},
                     {field: 'indate', displayName: '入职日期', enableHiding: false},
                     {field: 'otel', displayName: '办公电话', enableHiding: false}
                 ]

@@ -143,6 +143,18 @@
     "templateUrl": "views/roleManage/rolePermission.html",
     "data": "{pageTitle: '角色权限配置'}",
     "controller": "rolePermission_controller"
+  },
+  "dataEntity": {
+    "url": "/dataEntity",
+    "templateUrl": "views/dataEntity/dataEntity.html",
+    "data": "{pageTitle: '数据实体管理'}",
+    "controller": "dataEntity_controller"
+  },
+  "dataDetails": {
+    "url": "/dataDetails",
+    "templateUrl": "views/dataEntity/dataDetails.html",
+    "data": "{pageTitle: '数据实体详情'}",
+    "controller": "dataDetails_controller"
   }
 }
 

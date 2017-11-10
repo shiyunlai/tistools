@@ -1,7 +1,7 @@
 /**
  * Created by wangbo on 2017/6/11.
  */
-angular.module('MetronicApp').controller('role_controller', function($scope ,$rootScope,$state,$modal,$timeout,$http,abftree_service,dictonary_service,common_service,i18nService,role_service,menu_service,operator_service,filterFilter,$uibModal,uiGridConstants) {
+angular.module('MetronicApp').controller('role_controller', function($scope ,$rootScope,$state,$modal,$http,abftree_service,$timeout,dictonary_service,common_service,i18nService,role_service,menu_service,operator_service,filterFilter,$uibModal,uiGridConstants) {
         var role = {};
         $scope.role = role;
         var res = $rootScope.res.abftree_service;//页面所需调用的服务
@@ -19,7 +19,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
         }
     })
 
-        var gridOptions = {};
+    var gridOptions = {};
         $scope.gridOptions = gridOptions;
         var com = [{ field: 'roleCode', displayName: '角色代码'},
             { field: "roleName", displayName:'角色名称'},
@@ -243,13 +243,18 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                         items.roleGuid = arrs.guid
                         role_service.queryRoleFunc(items).then(function(data){
                             var alldatas = data.retMessage;//拿到角色跟功能绑定的所有guid数组
+                            console.log(alldatas)
+                            var chenageDatas = []
+                            for(var i = 0; i < alldatas.length;i++){
+                                chenageDatas.push(alldatas[i].guidFunc);
+                            }
                             role_service.appQuery(subFrom).then(function (res){
                                 if(res.status == "success"){
                                     var datas = res.retMessage;
                                     var dataes =datas.data;//整体的树结构数组
                                     var type = datas.type;//类型
                                     var  its  =  [];
-                                    creatJstree(dataes,type,its,alldatas);//调用创建树结构
+                                    creatJstree(dataes,type,its,chenageDatas);//调用创建树结构
                                     $scope.jsonarray = angular.copy(its);
                                     callback.call(this, $scope.jsonarray);
                                     $timeout(function(){
@@ -325,29 +330,18 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                         dataes.groupList[i].icon = "fa  fa-th-list  icon-state-info icon-lg"
                         its.push(dataes.groupList[i])
                     }
-                    if(!isNull(dataes.funcList)){
-                        for(var i = 0 ;i <dataes.funcList.length;i++){
-                            dataes.funcList[i].text = dataes.funcList[i].funcName;
-                            dataes.funcList[i].children = false;
-                            dataes.funcList[i].id = dataes.funcList[i].guid;
-                            dataes.funcList[i].icon = "fa fa-wrench icon-state-info icon-lg"
-                            its.push(dataes.funcList[i])
-                        }
-                    }
-                }else{
-                    if(!isNull(dataes.funcList)){
-                        for(var j=0;j<alldatas.length;j++){
-                            for(var i = 0 ;i < dataes.funcList.length;i++){
-                                if(alldatas[j].guidFunc==dataes.funcList[i].guid){
-                                    dataes.funcList[i].text = dataes.funcList[i].funcName;
-                                    dataes.funcList[i].children = false;
-                                    dataes.funcList[i].id = dataes.funcList[i].guid;
-                                    dataes.funcList[i].icon = "fa fa-wrench icon-state-info icon-lg"
-                                    its.push(dataes.funcList[i])
-                                }
+                }
+                if(!isNull(dataes.funcList)){
+                    console.log(dataes.funcList)
+                        for (var i = 0; i < dataes.funcList.length; i++) {
+                            if(alldatas.indexOf(dataes.funcList[i].guid) != -1){
+                                dataes.funcList[i].text = dataes.funcList[i].funcName;
+                                dataes.funcList[i].children = false;
+                                dataes.funcList[i].id = dataes.funcList[i].guid;
+                                dataes.funcList[i].icon = "fa fa-wrench icon-state-info icon-lg"
+                                its.push(dataes.funcList[i])
                             }
                         }
-                    }
                 }
             }
         }
@@ -466,7 +460,6 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                     dataes[i].check_node =true;
                     its.push(dataes[i])
                 }
-
             }else if(type =="app"){
                 for(var i = 0 ;i <dataes.length;i++){
                     dataes[i].text = dataes[i].funcgroupName;
@@ -711,6 +704,7 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
             }
             $scope.roleflag.limit = true;
             $scope.roleflag.dist = false;
+            $scope.roleflag.entity = false;
             $scope.roleflag.operatorer = false;
         }else if (type == 1){
             for(var i in $scope.rolesflag){
@@ -719,6 +713,7 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
             $scope.roleflag.limit = false;
             $scope.roleflag.dist = true;
             $scope.roleflag.operatorer = false;
+            $scope.roleflag.entity = false;
             $scope.rolesflag.org = true;//初始化打开
             queryParrty(role.guid,DICT_AC_PARTYTYPE[0]);
         }else if (type == 3){
@@ -752,7 +747,16 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
             $scope.roleflag.operatorer = true;
             $scope.roleflag.limit = false;
             $scope.roleflag.dist = false;
+            $scope.roleflag.entity = false;
             queryOeper(role.guid);
+        }else if(type == 'entity'){
+            for(var i in $scope.rolesflag){
+                $scope.rolesflag[i] = false;//每一项全部不显示
+            }
+            $scope.roleflag.operatorer = false;
+            $scope.roleflag.limit = false;
+            $scope.roleflag.dist = false;
+            $scope.roleflag.entity = true;//页面展示
         }
     }
 

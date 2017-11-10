@@ -132,7 +132,7 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
                                 subFrom.busiorgCode = obj.original.busiorgCode;
                                 busiorg_service.deletebusiorg(subFrom).then(function (data) {
                                     if(data.status == "success"){
-                                        toastr['success']("删除成功"+data.retMessage);
+                                        toastr['success']("删除成功");
                                         $("#busiorgtree").jstree().refresh();
                                     } else {
                                         toastr['error'](data.retMessage);
@@ -393,10 +393,8 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
     //下级业务机构列表拉取
     var reloworgGrid = function () {
         var subFrom = {};
-        console.log($scope.busiorg.item)
         subFrom.busiDomain = $scope.busiorg.item.sendValue;
         busiorg_service.loadbusiorgbyType(subFrom).then(function (data) {
-            console.log(data.retMessage);
             if (data.status == "success") {
                 $scope.loworgGrid.data = data.retMessage;
                 $scope.loworgGrid.mydefalutData = data.retMessage;
@@ -557,14 +555,9 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
 
     /**-------------------------------封装方法----------------------------------*/
     var creatReatOrg = function (subFrom) {
-        busiorg_service.initcode(subFrom).then(function (data) {
-            console.log(data)
-            if (data.status == "success") {
-                var busiorgCode = data.retMessage;
                 openwindow($uibModal, 'views/busiorg/addBusiorg_window.html', 'lg',
                     function ($scope, $modalInstance) {
                         $scope.subFrom = subFrom;
-                        subFrom.busiorgCode = busiorgCode;
                         //增加方法
                         $scope.add = function (subFrom) {
                             //TODO.新增逻辑
@@ -583,13 +576,7 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
                         $scope.cancel = function () {
                             $modalInstance.dismiss('cancel');
                         };
-                    }
-                )
-            } else {
-                toastr['error'](data.retMessage);
-                return false;
-            }
+                    })
 
-        })
     }
 });
