@@ -73,15 +73,6 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                                 $scope.subFrom = subFrom;
                                 //首先生成职务代码,获取职务套别
                                 subFrom.dutyType = dutyType;
-                                console.log(subFrom)
-                                duty_service.initdutyCode(subFrom).then(function (data) {
-                                    console.log(data)
-                                    if(data.status == "success"){
-                                        subFrom.dutyCode = data.retMessage;
-                                    }else{
-                                        toastr['error'](data.retMessage);
-                                    }
-                                })
                                 $scope.save = function () {
                                     duty_service.addduty(subFrom).then(function (data) {
                                         console.log(data)
@@ -120,7 +111,6 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                             var dutyType = obj.original.dutyType;
                             var parentsCode = obj.original.dutyCode;
                         }
-
                         openwindow($uibModal, 'views/duty/addDuty_window.html', 'lg',
                             function ($scope, $modalInstance) {
                                 //创建职务实例
@@ -130,14 +120,6 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                                 subFrom.dutyType = dutyType;
                                 subFrom.parentsCode = parentsCode;
                                 console.log(subFrom)
-                                duty_service.initdutyCode(subFrom).then(function (data) {
-                                    console.log(data)
-                                    if(data.status == "success"){
-                                        subFrom.dutyCode = data.retMessage;
-                                    }else{
-                                        toastr['error'](data.retMessage);
-                                    }
-                                })
                                 $scope.save = function () {
                                     duty_service.addduty(subFrom).then(function (data) {
                                         if(data.status == "success"){
@@ -378,9 +360,9 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
             //定义表头名
             var com = [{ field: 'empCode', displayName: '员工代码', enableHiding: false},
                 { field: 'empName', displayName: '员工姓名', enableHiding: false},
-                { field: 'gender', displayName: '性别', enableHiding: false},
-                { field: 'empstatus', displayName: '员工状态', enableHiding: false},
-                { field: 'empDegree', displayName: '员工职级', enableHiding: false},
+                { field: 'gender', displayName: '性别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'},
+                { field: 'empstatus', displayName: '员工状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
+                { field: 'empDegree', displayName: '员工职级', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
                 {field: 'guidPosition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
                 {field: 'guidEmpMajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpMajor | translateEmp) + $root.constant[row.entity.guidEmpMajor]}}</div>'},
                 { field: 'indate', displayName: '入职日期', enableHiding: false},
@@ -522,14 +504,6 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                 //首先生成职务代码,获取职务套别
                 subFrom.dutyType = dutyType;
                 console.log(subFrom)
-                duty_service.initdutyCode(subFrom).then(function (data) {
-                    console.log(data)
-                    if(data.status == "success"){
-                        subFrom.dutyCode = data.retMessage;
-                    }else{
-                        toastr['error'](data.retMessage);
-                    }
-                })
                 $scope.save = function () {
                     duty_service.addduty(subFrom).then(function (data) {
                         if(data.status == "success"){
@@ -624,14 +598,6 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                 subFrom.dutyType = dutyType;
                 subFrom.parentsCode = parentsCode;
                 console.log(subFrom)
-                duty_service.initdutyCode(subFrom).then(function (data) {
-                    console.log(data)
-                    if(data.status == "success"){
-                        subFrom.dutyCode = data.retMessage;
-                    }else{
-                        toastr['error'](data.retMessage);
-                    }
-                })
                 $scope.save = function () {
                     duty_service.addduty(subFrom).then(function (data) {
                         if(data.status == "success"){

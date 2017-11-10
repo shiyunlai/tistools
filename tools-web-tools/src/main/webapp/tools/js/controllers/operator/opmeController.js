@@ -302,8 +302,9 @@ MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state
                 var subFrom = {};
                 subFrom.guidRole = $scope.selectRow.guid;//角色guid
                 subFrom.guidOperator = operatqx.operatorGuid;//操作员guid
-                var tis = [];
-                tis.push(subFrom)
+                var tis = {};
+                tis.data = []
+                tis.data.push(subFrom)
                 common_service.post(role.addOperatorRole,tis).then(function(data){
                     if(data.status == "success"){
                         toastr['success']("授予成功！");
@@ -359,10 +360,11 @@ MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state
             return false;
         }else{
             var subFrom = {};
-            subFrom.roleGuid = $scope.deleteGUid.guid;//角色guid
-            subFrom.operatorGuid = operatqx.operatorGuid;//操作员guid
-            var tis = [];
-            tis.push(subFrom)
+            subFrom.guidRole = $scope.deleteGUid.guid;//角色guid
+            subFrom.guidOperator = operatqx.operatorGuid;//操作员guid
+            var tis = {};
+            tis.data = [];
+            tis.data.push(subFrom)
             common_service.post(role.removeOperatorRole,tis).then(function(data){
                 if(data.status == "success"){
                     toastr['success']("删除成功！");
@@ -397,6 +399,7 @@ MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state
                         var menuAll = angular.fromJson(datas);
                         var tisMenu = [];;//绑定数组
                         tisMenu.push(menuAll)
+                        console.log(tisMenu)
                         //菜单一权限
                         $("#opercontainer").jstree({
                             "core" : {
@@ -437,7 +440,6 @@ MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state
                             plugins: ["sort", "types", "wholerow", "themes", "html_data"],
                         }).bind("select_node.jstree", function (e, data) {
                             operqxinpfo.funinfo = data.node.original;
-
                             if(data.node.original.isLeaf == 'Y'){
                                     $scope.operisleaf = true;
                             }else{

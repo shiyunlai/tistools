@@ -85,48 +85,51 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                     "action": function (data) {
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
-                        console.log(obj)
                         openwindow($uibModal, 'views/org/addrootorg_window.html', 'lg',
                             function ($scope, $modalInstance) {
                                 //创建机构实例
-                                var subFrom = {};
-                                $scope.subFrom = subFrom;
-                                //根机构标识
-                                subFrom.flag = "root";
-                                //存放机构等级字典翻译
                                 //生成机构代码
                                 var next = true;
                                 $scope.next = next;
-                                $scope.skip = function () {
-                                    if (isNull(subFrom.orgDegree) || isNull(subFrom.AREA)) {
+                                $scope.skip = function (items) {
+                                    items.flag = "root";
+                                    var subFrom = {};
+                                    subFrom= items;
+                                    if (isNull(subFrom.orgDegree) || isNull(subFrom.area)|| isNull(subFrom.orgName) || isNull(subFrom.orgType)) {
                                         toastr['error']("请填写相关信息!");
                                         return false;
                                     }
+                                    //处理新增机构父机构
+                                    subFrom.guidParents = null;
                                     //调用服务生成机构代码
-                                    abftree_service.initcode(subFrom).then(function (data) {
-                                        if(data.status == "error"){
-                                            toastr['error']( data.retMessage);
-                                        }else{
-                                            subFrom.orgCode = data.retMessage.orgCode;
-                                            $scope.next = !next;
-                                        }
-                                    })
-
-                                }
-                                //处理新增机构父机构
-                                subFrom.guidParents = null;
-                                //增加方法
-                                $scope.add = function (subFrom) {
                                     abftree_service.addorg(subFrom).then(function (data) {
                                         if (data.status == "success") {
                                             toastr['success']("新增成功!");
+                                            var next = false;
+                                            $scope.next = next;
+                                            var subFrom = {};
+                                            $scope.subFrom = subFrom;
+                                            subFrom.orgCode = data.retMessage.orgCode;
                                         } else {
                                             toastr['error'](data.retMessage);
                                         }
                                         $("#container").jstree().refresh();
-                                        $scope.cancel();
+                                        $scope.add=function (subFrom) {
+                                            var datas = data.retMessage;
+                                            subFrom = datas;
+                                            abftree_service.updateOrg(subFrom).then(function (data) {
+                                                if (data.status == "success") {
+                                                    toastr['success']("添加成功!");
+                                                    $("#container").jstree().refresh();
+                                                    $scope.cancel();
+                                                } else {
+                                                    toastr['error'](data.retMessage);
+                                                }
+                                            })
+                                        }
                                     });
                                 }
+
                                 $scope.cancel = function () {
                                     $modalInstance.dismiss('cancel');
                                 };
@@ -147,40 +150,45 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                         openwindow($uibModal, 'views/org/addorg_window.html', 'lg',
                             function ($scope, $modalInstance) {
                                 //创建机构实例
-                                var subFrom = {};
-                                $scope.subFrom = subFrom;
-                                subFrom.flag = "child";
                                 //生成机构代码
                                 var next = true;
                                 $scope.next = next;
-                                $scope.skip = function () {
-                                    if (isNull(subFrom.orgDegree) || isNull(subFrom.AREA)) {
+                                $scope.skip = function (items) {
+                                    items.flag = "child";
+                                    var subFrom = {};
+                                    subFrom= items;
+                                    if (isNull(subFrom.orgDegree) || isNull(subFrom.area) || isNull(subFrom.orgName) || isNull(subFrom.orgType)) {
                                         toastr['error']("请填写相关信息!");
                                         return false;
                                     }
+                                    //处理新增机构父机构
+                                    subFrom.guidParents = obj.original.guid;
                                     //调用服务生成机构代码
-                                    abftree_service.initcode(subFrom).then(function (data) {
-                                        if(data.status == "error"){
-                                            toastr['error']( data.retMessage);
-                                        }else{
-                                            subFrom.orgCode = data.retMessage.orgCode;
-                                            $scope.next = !next;
-                                        }
-                                    })
-
-                                }
-                                //处理新增机构父机构
-                                subFrom.guidParents = obj.original.guid;
-                                //增加方法
-                                $scope.add = function (subFrom) {
                                     abftree_service.addorg(subFrom).then(function (data) {
                                         if (data.status == "success") {
                                             toastr['success']("新增成功!");
+                                            var next = false;
+                                            $scope.next = next;
+                                            var subFrom = {};
+                                            $scope.subFrom = subFrom;
+                                            subFrom.orgCode = data.retMessage.orgCode;
                                         } else {
                                             toastr['error'](data.retMessage);
                                         }
                                         $("#container").jstree().refresh();
-                                        $scope.cancel();
+                                        $scope.add=function (subFrom) {
+                                            var datas = data.retMessage;
+                                            subFrom = datas;
+                                            abftree_service.updateOrg(subFrom).then(function (data) {
+                                                if (data.status == "success") {
+                                                    toastr['success']("添加成功!");
+                                                    $("#container").jstree().refresh();
+                                                    $scope.cancel();
+                                                } else {
+                                                    toastr['error'](data.retMessage);
+                                                }
+                                            })
+                                        }
                                     });
                                 }
                                 $scope.cancel = function () {
@@ -190,7 +198,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                         )
                     }
                 },
-
                 "删除菜单": {
                     "label": "删除机构",
                     "action": function (data) {
@@ -216,25 +223,17 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                         var inst = jQuery.jstree.reference(node.reference),
                             obj = inst.get_node(node.reference);
                         console.log(obj)
-                        var subFrom = {};
+                        /*var subFrom = {};
                         subFrom.orgDegree = obj.original.orgDegree;
-                        subFrom.AREA = obj.original.id.substr(5,3);
-                        console.log(subFrom)
+                        subFrom.AREA = obj.original.id.substr(5,3);*/
                         var copyCode = obj.original.orgCode;
-                        abftree_service.initcode(subFrom).then(function (data) {
+                        //生成机构代码,成功继续执行复制.
+                        var subFrom = {};
+                        subFrom.copyCode = copyCode;
+                        abftree_service.copyOrg(subFrom).then(function (data) {
                             if (data.status == "success") {
-                                //生成机构代码,成功继续执行复制.
-                                subFrom = {};
-                                subFrom.neworgCode = data.retMessage.orgCode;
-                                subFrom.copyCode = copyCode;
-                                abftree_service.copyOrg(subFrom).then(function (data) {
-                                    if (data.status == "success") {
-                                        toastr['success']("拷贝成功!");
-                                        $("#container").jstree().refresh();
-                                    } else {
-                                        toastr['error'](data.retMessage);
-                                    }
-                                })
+                                toastr['success']("拷贝成功!");
+                                $("#container").jstree().refresh();
                             } else {
                                 toastr['error'](data.retMessage);
                             }
@@ -753,37 +752,45 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                         //生成机构代码
                         var next = true;
                         $scope.next = next;
-                        $scope.skip = function () {
-                            if (isNull(subFrom.orgDegree) || isNull(subFrom.AREA)) {
+                        $scope.skip = function (items) {
+                            items.flag = "child";
+                            var subFrom = {};
+                            subFrom= items;
+                            if (isNull(subFrom.orgDegree) || isNull(subFrom.area) || isNull(subFrom.orgName) || isNull(subFrom.orgType)) {
                                 toastr['error']("请填写相关信息!");
                                 return false;
                             }
+                            //处理新增机构父机构
+                            subFrom.guidParents = id;
                             //调用服务生成机构代码
-                            abftree_service.initcode(subFrom).then(function (data) {
-                                if(data.status == "error"){
-                                    toastr['error']( data.retMessage);
-                                }else{
-                                    subFrom.orgCode = data.retMessage.orgCode;
-                                    $scope.next = !next;
-                                }
-                            })
-
-                        }
-                        //处理新增机构父机构
-                        subFrom.guidParents = id;
-                        //增加方法
-                        $scope.add = function (subFrom) {
-                            //TODO.新增逻辑
                             abftree_service.addorg(subFrom).then(function (data) {
                                 if (data.status == "success") {
-                                    toastr['success']("操作成功!");
+                                    toastr['success']("新增成功!");
+                                    var next = false;
+                                    $scope.next = next;
+                                    var subFrom = {};
+                                    $scope.subFrom = subFrom;
+                                    subFrom.orgCode = data.retMessage.orgCode;
                                 } else {
                                     toastr['error'](data.retMessage);
                                 }
                                 $("#container").jstree().refresh();
-                                $scope.cancel();
+                                $scope.add=function (subFrom) {
+                                    var datas = data.retMessage;
+                                    subFrom = datas;
+                                    abftree_service.updateOrg(subFrom).then(function (data) {
+                                        if (data.status == "success") {
+                                            toastr['success']("添加成功!");
+                                            $("#container").jstree().refresh();
+                                            $scope.cancel();
+                                        } else {
+                                            toastr['error'](data.retMessage);
+                                        }
+                                    })
+                                }
                             });
                         }
+                        //处理新增机构父机构
                         $scope.cancel = function () {
                             $modalInstance.dismiss('cancel');
                         };

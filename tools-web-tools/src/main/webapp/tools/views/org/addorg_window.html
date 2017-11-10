@@ -25,8 +25,28 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">所属地域:<span style="color:red">*</span></label>
                         <div class="col-md-8" ng-init="$settings.getDictData('DICT_SD_AREA')">
-                            <select class="form-control" ng-model="subFrom.AREA">
+                            <select class="form-control" ng-model="subFrom.area">
                                 <option ng-repeat="d in $settings.diclist['DICT_SD_AREA'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">机构名称:<span style="color:red">*</span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="subFrom.orgName"
+                                   name="id" required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">机构类型:<span style="color:red">*</span></label>
+                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_OM_ORGTYPE')">
+                            <select class="form-control" ng-model="subFrom.orgType">
+                                <option ng-repeat="d in $settings.diclist['DICT_OM_ORGTYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>
                     </div>
@@ -37,7 +57,7 @@
                         <div class="col-md-10">
 
                             <div class="actions btn-set" style="float: right;">
-                                <button type="button" name="back" class="btn btn-primary" ng-click="skip()"> 下一步
+                                <button type="button" name="back" class="btn btn-primary" ng-click="skip(subFrom)"> 下一步
                                 </button>
 
                                 <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
@@ -75,27 +95,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">机构代码</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="subFrom.orgCode" name="id"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">机构类型:<span style="color:red">*</span></label>
-                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_OM_ORGTYPE')">
-                            <select class="form-control" ng-model="subFrom.orgType">
-                                <option ng-repeat="d in $settings.diclist['DICT_OM_ORGTYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">机构名称:<span style="color:red">*</span></label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.orgName"
-                                   name="id" required/>
+                            <input type="text" class="form-control"  disabled ng-model="subFrom.orgCode" name="id"/>
                         </div>
                     </div>
                 </div>
@@ -177,7 +177,7 @@
                         <div class="col-md-10">
 
                             <div class="actions btn-set" style="float: right;">
-                                <button type="button" name="back" class="btn btn-primary" ng-disabled="bigform.$invalid" ng-click="add(subFrom)"> 保存
+                                <button type="button" name="back" class="btn btn-primary"  ng-click="add(subFrom)"> 保存
                                 </button>
 
                                 <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
