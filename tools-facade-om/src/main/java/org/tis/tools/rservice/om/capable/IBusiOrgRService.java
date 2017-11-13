@@ -307,4 +307,11 @@ public interface IBusiOrgRService {
 	 * @return
 	 */
 	List<OmBusiorg> queryBusiorgByName(String busiorgName);
+
+	/**
+	 * 通过业务机构GUID查询业务机构信息
+	 * @param busiorgGuid
+	 * @return
+	 */
+	OmBusiorg queryBusiorgByGuid(String busiorgGuid) throws BusiOrgManagementException;
 }

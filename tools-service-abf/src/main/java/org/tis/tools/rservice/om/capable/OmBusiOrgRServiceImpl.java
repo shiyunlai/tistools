@@ -26,6 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static org.tis.tools.common.utils.BasicUtil.surroundBracketsWithLFStr;
 import static org.tis.tools.common.utils.BasicUtil.wrap;
 
 public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRService {
@@ -773,6 +774,25 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
         }else{
             return list;
         }
+    }
+
+    /**
+     * 通过业务机构GUID查询业务机构信息
+     *
+     * @param busiorgGuid
+     * @return
+     */
+    @Override
+    public OmBusiorg queryBusiorgByGuid(String busiorgGuid) throws BusiOrgManagementException {
+        if (StringUtil.isEmpty(busiorgGuid)) {
+            throw new BusiOrgManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("busiorgGuid"));
+        }
+        OmBusiorg omBusiorg = omBusiorgService.loadByGuid(busiorgGuid);
+        if (omBusiorg == null) {
+            throw new BusiOrgManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY,
+                    wrap(surroundBracketsWithLFStr(OmBusiorg.COLUMN_GUID, busiorgGuid)));
+        }
+        return omBusiorg;
     }
 
     /**
