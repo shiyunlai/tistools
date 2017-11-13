@@ -42,9 +42,6 @@ public class BusiorgController  extends BaseController {
     @Autowired
     IOrgRService orgRService;
 
-
-
-
     /**
      * 展示业务机构树
      *
@@ -263,12 +260,9 @@ public class BusiorgController  extends BaseController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/updatebusiorg", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    @RequestMapping(value = "/queryBusiorgByGuid", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> queryBusiorgByGuid(@RequestBody String content) {
-        OmBusiorg obg = JSONObject.parseObject(content, OmBusiorg.class);
-        busiOrgRService.updateBusiorg(obg);
-        return getReturnMap(obg);
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        return getReturnMap(busiOrgRService.queryBusiorgByGuid(jsonObject.getJSONObject("data").getString("guid")));
     }
-
-
 }
