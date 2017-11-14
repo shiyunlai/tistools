@@ -123,7 +123,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                                    role.inint();
                                    role.rofault(items.guid);//刷新组织关系列表
                                    queryOeper(items.guid);//刷新操作员列表
-
                                }else{
                                    toastr['error']('修改失败'+'<br/>'+data.retMessage);
                                }
@@ -709,12 +708,12 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
         }else if (type == 1){
             for(var i in $scope.rolesflag){
                 $scope.rolesflag[i] = false;
+                $scope.rolesflag.zhiwei = true;//初始化打开职务
             }
             $scope.roleflag.limit = false;
             $scope.roleflag.dist = true;
             $scope.roleflag.operatorer = false;
             $scope.roleflag.entity = false;
-            $scope.rolesflag.org = true;//初始化打开
             queryParrty(role.guid,DICT_AC_PARTYTYPE[0]);
         }else if (type == 3){
             for(var i in $scope.rolesflag){

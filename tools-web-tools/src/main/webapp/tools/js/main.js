@@ -139,9 +139,8 @@ MetronicApp.factory('httpInterceptor', ['$log', function($log) {
             return response;
         }
     };
-
-
 }]);
+
 //引入http拦截器
 MetronicApp.config(['$httpProvider', function($httpProvider) {
     $httpProvider.interceptors.push('httpInterceptor');
@@ -1263,6 +1262,7 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider, routerProvider)
 //angular路由监控，跳转开始之前。
 MetronicApp.run(['$rootScope', '$state', function ($rootScope, $state) {
     $rootScope.$state = $state;
+    console.log($rootScope.$state)
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
         if(!isNull(toState.header)){
             $rootScope.Appfunc = toState.header;//把路由中对应的请求头，放入全局rootscope中。

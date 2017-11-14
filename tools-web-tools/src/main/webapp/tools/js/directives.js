@@ -68,7 +68,6 @@ MetronicApp.directive('translateConstants', ['$http',function($http) {
     return {
         require: 'ngModel',
         link: function (scope, elm, attrs, ctrl) {
-            console.log(ctrl)
             ctrl.$formatters.push(function (viewValue) {
                 var subFrom = {}
                 subFrom.dictKey = $(elm).attr("comtable");
@@ -140,7 +139,6 @@ MetronicApp.directive('translateConstants', ['$http',function($http) {
                         }
                     })
                 }else if(subFrom.dictKey == "GROUP"){
-
                 }else{
                     $http.post(manurl + "/DictController/queryDictItemListByDictKey", subFrom).then(function (data) {
                         var retval = "";

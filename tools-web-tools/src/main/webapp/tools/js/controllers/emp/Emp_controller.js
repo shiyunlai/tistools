@@ -88,6 +88,7 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
     //定义单选事件
     var sele = function (a,b) {
         if(a.isSelected){
+            console.log(a.entity)
             $scope.buttonflag = true;
             if(a.entity.empstatus == 'offer'){//如果人员状态是在招,那么入职按钮显示
                 $scope.empentry = true;
@@ -200,6 +201,7 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                 $scope.title = "新增员工";
                 $scope.empadd = function (item) {
                     var subFrom = item;
+                    console.log(subFrom)
                     Emp_service.addemp(subFrom).then(function (data) {
                         if (data.status == "success") {
                             toastr['success']("新增员工成功!");
@@ -209,8 +211,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                         } else {
                             toastr['error'](data.retMessage);
                         }
-
-
                     })
                 }
                 $scope.cancel = function () {
@@ -222,11 +222,17 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
     //详情按钮事件
     emp.detail = function () {
         var arr = $scope.empgrid.getSelectedRows();
-        if(!isNull(arr[0].indate)||!isNull(arr[0].birthdate) || !isNull(arr[0].createtime)|| !isNull(arr[0].outdate)){
-            arr[0].indate = moment(arr[0].indate).format('YYYY-MM-DD');
+        if(!isNull(arr[0].birthdate)){
             arr[0].birthdate = moment(arr[0].birthdate).format('YYYY-MM-DD');
+        }
+        if(!isNull(arr[0].createtime)){
             arr[0].createtime = moment(arr[0].createtime).format('YYYY-MM-DD');
+        }
+        if(!isNull(arr[0].outdate)){
             arr[0].outdate = moment(arr[0].outdate).format('YYYY-MM-DD');
+        }
+        if(!isNull( arr[0].indate)){
+            arr[0].indate = moment(arr[0].indate).format('YYYY-MM-DD');
         }
         $scope.item = angular.copy(arr[0]);
         if (isNull($scope.item)) {
@@ -683,11 +689,11 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                 }
                 //定义表头名
                 var com = [{field: 'orgCode', displayName: '机构代码'},
-                    {field: 'orgName', displayName: '机构名称'},
-                    {field: 'orgType', displayName: '机构类型'},
-                    {field: 'orgDegree', displayName: '机构等级'},
-                    {field: 'orgStatus', displayName: '机构状态'},
-                    {field: 'orgAddr', displayName: '机构地址'},
+                    {field: 'orgName', displayName: '机构名称', enableHiding: false},
+                    {field: 'orgType', displayName: '机构类型', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.orgType | translateConstants :\'DICT_OM_ORGTYPE\') + $root.constant[\'DICT_OM_ORGTYPE-\'+row.entity.orgType]}}</div>'},
+                    {field: 'orgDegree', displayName: '机构等级', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.orgDegree | translateConstants :\'DICT_OM_ORGDEGREE\') + $root.constant[\'DICT_OM_ORGDEGREE-\'+row.entity.orgDegree]}}</div>'},
+                    {field: 'orgStatus', displayName: '机构状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.orgStatus | translateConstants :\'DICT_OM_ORGSTATUS\') + $root.constant[\'DICT_OM_ORGSTATUS-\'+row.entity.orgStatus]}}</div>'},
+                    {field: 'orgAddr', displayName: '机构地址', enableHiding: false},
                     {field: 'createTime', displayName: '创建时间'}
                 ]
                 $scope.commonGrid = initgrid($scope, commonGrid, filterFilter, com, false, selework);
@@ -699,8 +705,13 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                     //调取工作组信息OM_GROUP
                     Emp_service.loadOrgNotInbyEmp(subFrom).then(function (data) {
                         if (data.status == "success" && !isNull(data.retMessage)) {
-                            $scope.commonGrid.data = data.retMessage;
-                            $scope.commonGrid.mydefalutData = data.retMessage;
+                            var datas = data.retMessage;
+                            console.log(datas)
+                            for(var i=0;i<datas.length;i++){
+                                datas[i].createTime = moment(datas[i].createTime).format('YYYY-MM-DD');
+                            }
+                            $scope.commonGrid.data = datas;
+                            $scope.commonGrid.mydefalutData = datas;
                             $scope.commonGrid.getPage(1, $scope.commonGrid.paginationPageSize);
                         } else {
                             $scope.commonGrid.data = [];
@@ -712,7 +723,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                 }
                 //拉取列表
                 recommonGrid();
-
                 $scope.add = function () {
                     var arr = $scope.commonGrid.getSelectedRows();
                     if (arr.length != 1) {
@@ -781,10 +791,10 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                 //定义表头名
                 var com = [{field: 'positionCode', displayName: '岗位代码'},
                     {field: 'positionName', displayName: '岗位名称'},
-                    {field: 'positionType', displayName: '岗位类型'},
-                    {field: 'positionStatus', displayName: '岗位状态'},
-                    {field: 'guidDuty', displayName: '所属职务'},
-                    {field: 'startDate', displayName: '有效开始日期'},
+                    {field: 'positionType', displayName: '岗位类型', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.positionType | translateConstants :\'DICT_OM_POSITYPE\') + $root.constant[\'DICT_OM_POSITYPE-\'+row.entity.positionType]}}</div>'},
+                    {field: 'positionStatus', displayName: '岗位状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.positionStatus | translateConstants :\'DICT_OM_POSISTATUS\') + $root.constant[\'DICT_OM_POSISTATUS-\'+row.entity.positionStatus]}}</div>'},
+                    {field: 'guidDuty', displayName: '所属职务', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidDuty | translateDuty) + $root.constant[row.entity.guidDuty]}}</div>'},
+                    {field: 'startDate', displayName: '有效开始日期', enableHiding: false},
                     {field: 'endDate', displayName: '有效截止日期'}
                 ]
                 $scope.commonGrid = initgrid($scope, commonGrid, filterFilter, com, false, selework);
@@ -795,7 +805,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                     console.log(subFrom.empCode);
                     //调取工作组信息OM_GROUP
                     Emp_service.loadPosNotInbyEmp(subFrom).then(function (data) {
-                        console.log(data)
                         if (data.status == "success" && !isNull(data.retMessage)) {
                             $scope.commonGrid.data = data.retMessage;
                             $scope.commonGrid.mydefalutData = data.retMessage;
