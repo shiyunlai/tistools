@@ -10,7 +10,8 @@
     "queryBhvDefByBhvType": {"ctrl": "AcAppController", "func": "queryBhvDefByBhvType","emo":"根据类型的GUID查询行为"}
   },
   "busiorg_service" : {
-    "dutytree": {"ctrl": "om/duty", "func": "dutytree"}
+    "dutytree": {"ctrl": "om/duty", "func": "dutytree"},
+    "queryBusiorgByGuid": {"ctrl": "om/duty", "func": "queryBusiorgByGuid"}
   },
   "dictonary_service" : {
     "createSysDict": {"ctrl": "DictController", "func": "createSysDict","emo":"新增业务字典"},

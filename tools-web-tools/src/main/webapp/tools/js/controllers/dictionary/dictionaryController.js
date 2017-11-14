@@ -72,7 +72,6 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
 
 //查询所有业务字典
     var  queryAlldict = function(){
-
         //监控单选框，配置数据
         $scope.$watch('dictFrom.Alldict',function(newvalue,oldvalue){
             if(newvalue == 'Root'){
@@ -80,6 +79,7 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                 subFrom.isQueryRoot = 'Y';
                 dictonary_service.querySysDictList(subFrom).then(function(data){
                     var datas = data.retMessage;
+                    console.log(datas)
                     if(data.status == "success"){
                         dictflag.dictnameL = datas;
                         $scope.gridOptions0.data =  datas;
@@ -94,6 +94,7 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                 subFrom.isQueryRoot = 'N';
                 dictonary_service.querySysDictList(subFrom).then(function(data){
                     var datas = data.retMessage;
+                    console.log(datas)
                     if(data.status == "success"){
                         dictflag.dictnameL = datas;
                         $scope.gridOptions0.data =  datas;
@@ -408,9 +409,9 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                 serFrom.dictKey = item.guidDict;
                 serFrom.itemValue = item.sendValue;
                 common_service.post(res.setDefaultDictValue,serFrom).then(function(data){
-
                     if(data.status == "success"){
                         toastr['success']( "设置默认值成功！");
+                        dictflag.initt();//调用刷新列表
                     }else{
                         toastr['success']( "设置默认值失败！");
                     }
@@ -710,7 +711,10 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                     common_service.post(res.queryDictTree,$scope.treeFrom).then(function(data){
                         if(data.status == 'success'){
                             var datas = data.retMessage;
-
+                            if(!isNull(datas.defaultValue)){
+                                var defaultValuedata = datas.defaultValue;
+                                $scope.defaultValuedata = defaultValuedata;
+                            }
                             var its = [];
                             if(!isNull(datas.rootName)){
                                 datas.text = datas.itemValue+'_'+datas.rootName;
@@ -720,7 +724,11 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                                 its.push(datas)
                             }else{
                                 for(var i =0;i <datas.length;i++){
-                                    datas[i].text = datas[i].guidDict+'_'+datas[i].itemName;
+                                    if(datas[i].sendValue == $scope.defaultValuedata ){
+                                        datas[i].text = datas[i].itemValue+'_'+datas[i].sendValue+'_'+datas[i].itemName + '*';
+                                    }else{
+                                        datas[i].text = datas[i].itemValue+'_'+datas[i].sendValue+'_'+datas[i].itemName;
+                                    }
                                     datas[i].children = true;
                                     if(datas[i].itemType == 'value'){
                                         datas[i].children = false;

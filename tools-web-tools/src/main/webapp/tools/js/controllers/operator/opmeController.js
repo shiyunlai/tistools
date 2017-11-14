@@ -260,6 +260,7 @@ MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state
     $scope.notrolegird = notrolegird;
     var com = [
         { field: "roleName", displayName:'角色名'},
+        { field: "guidApp", displayName:'所属应用',cellTemplate:'<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidApp | translateApp) + $root.constant[row.entity.guidApp]}}</div>'}
     ];
     var f = function(row){
         if(row.isSelected){
@@ -320,7 +321,8 @@ MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state
     var alrolegird = {};
     $scope.alrolegird = notrolegird;
     var com1 = [
-        { field: "roleName", displayName:'角色名'}
+        { field: "roleName", displayName:'角色名'},
+        { field: "guidApp", displayName:'所属应用',cellTemplate:'<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidApp | translateApp) + $root.constant[row.entity.guidApp]}}</div>'}
     ];
     var f1 = function(row){
         if(row.isSelected){
@@ -341,6 +343,7 @@ MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state
         subFrom.userId = operatqx.userid;
         common_service.post(res.queryOperatorAuthorizedRoleList,subFrom).then(function(data){
             var datas = data.retMessage;
+            console.log(datas);
             if(data.status == "success"){
                 $scope.alrolegird.data =  datas;
                 $scope.alrolegird.mydefalutData = datas;

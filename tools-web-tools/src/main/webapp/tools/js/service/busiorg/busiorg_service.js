@@ -28,7 +28,6 @@ MetronicApp.factory('busiorg_service',['$http', '$q', function ($http,$q) {
     }
 
     service.loadloworg = function (subFrom) {
-
         var res = $http.post(manurl + "/om/busiorg/busidomain",subFrom).then(function (response) {
             return response.data;
         });
@@ -36,7 +35,6 @@ MetronicApp.factory('busiorg_service',['$http', '$q', function ($http,$q) {
     }
 
     service.initcode = function (subFrom) {
-
         var res = $http.post(manurl + "/om/busiorg/initCode",subFrom).then(function (response) {
             return response.data;
         });
@@ -69,6 +67,15 @@ MetronicApp.factory('busiorg_service',['$http', '$q', function ($http,$q) {
     service.loadbusiorgbyType = function (subFrom) {
 
         var res = $http.post(manurl + "/om/busiorg/loadbusiorgbyType",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+
+
+    //根据guid查询业务机构名称
+    service.queryBusiorgByGuid = function (subFrom) {
+        var res = $http.post(manurl + "/om/busiorg/queryBusiorgByGuid",subFrom).then(function (response) {
             return response.data;
         });
         return res;

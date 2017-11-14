@@ -56,7 +56,6 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                                     }
                                     //调用服务生成机构代码
                                     Workgroup_service.addgroup(subFrom).then(function (data) {
-                                        console.log(data);
                                         if (data.status == "success") {
                                             toastr['success']("新增成功!");
                                             $scope.next = !next;
@@ -67,11 +66,11 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                                             toastr['error'](data.retMessage);
                                         }
                                         $("#container").jstree().refresh();
-                                        $scope.add=function (subFrom) {
-                                            var datas = data.retMessage;
-                                            subFrom = datas;
-                                            Workgroup_service.updateGroup(subFrom).then(function (data) {
+                                        $scope.add=function (items) {
+                                            var tis =Object.assign(data.retMessage, items);
+                                            Workgroup_service.updateGroup(tis).then(function (data) {
                                                 if (data.status == "success") {
+                                                    console.log(data)
                                                     toastr['success']("添加成功!");
                                                     $("#container").jstree().refresh();
                                                     $scope.cancel();
@@ -126,9 +125,8 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                                         }
                                         $("#container").jstree().refresh();
                                         $scope.add=function (subFrom) {
-                                            var datas = data.retMessage;
-                                            subFrom = datas;
-                                            Workgroup_service.updateGroup(subFrom).then(function (data) {
+                                            var tis =Object.assign(data.retMessage, items);
+                                            Workgroup_service.updateGroup(tis).then(function (data) {
                                                 if (data.status == "success") {
                                                     toastr['success']("添加成功!");
                                                     $("#container").jstree().refresh();
@@ -288,7 +286,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
         {field: 'guidEmpManager', displayName: '工作组管理员', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpManager | translateEmp) + $root.constant[row.entity.guidEmpManager]}}</div>'},
         {field: 'guidOrg', displayName: '所属机构', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidOrg | translateOrg) + $root.constant[row.entity.guidOrg]}}</div>'},
         {field: 'startDate', displayName: '工作组有效起始日', enableHiding: false},
-        {field: 'startDate', displayName: '工作组有效到期日', enableHiding: false},
+        {field: 'endDate', displayName: '工作组有效到期日', enableHiding: false},
         {field: 'lastupdate', displayName: '最后修改日', enableHiding: false}
     ]
     $scope.workgroupgrid = initgrid($scope, workgroupgrid, filterFilter, com, false, selework);
@@ -350,9 +348,8 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                         }
                         $("#container").jstree().refresh();
                         $scope.add=function (subFrom) {
-                            var datas = data.retMessage;
-                            subFrom = datas;
-                            Workgroup_service.updateGroup(subFrom).then(function (data) {
+                            var tis =Object.assign(data.retMessage, items);
+                            Workgroup_service.updateGroup(tis).then(function (data) {
                                 if (data.status == "success") {
                                     toastr['success']("添加成功!");
                                     $("#container").jstree().refresh();
@@ -753,9 +750,9 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                 //定义表头名
                 var com = [{field: 'positionCode', displayName: '岗位代码', enableHiding: false},
                     {field: 'positionName', displayName: '岗位名称', enableHiding: false},
-                    {field: 'positionType', displayName: '岗位类型', enableHiding: false},
-                    {field: 'positionStatus', displayName: '岗位状态', enableHiding: false},
-                    {field: 'guidDuty', displayName: '所属职务', enableHiding: false},
+                    {field: 'positionType', displayName: '岗位类型', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.positionType | translateConstants :\'DICT_OM_POSITYPE\') + $root.constant[\'DICT_OM_POSITYPE-\'+row.entity.positionType]}}</div>'},
+                    {field: 'positionStatus', displayName: '岗位状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.positionStatus | translateConstants :\'DICT_OM_GROUPSTATUS\') + $root.constant[\'DICT_OM_GROUPSTATUS-\'+row.entity.positionStatus]}}</div>'},
+                    {field: 'guidDuty', displayName: '所属职务', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidDuty | translateDuty) + $root.constant[row.entity.guidDuty]}}</div>'},
                     {field: 'startDate', displayName: '有效开始日期', enableHiding: false},
                     {field: 'endDate', displayName: '有效截止日期', enableHiding: false}
                 ]
@@ -1016,7 +1013,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
     //定义表头名
     var com = [
         {field: 'appName', displayName: '应用名称', enableHiding: false},
-        {field: 'appType', displayName: '应用类别', enableHiding: false},
+        {field: 'appType', displayName: '应用类别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.appType | translateConstants :\'DICT_AC_APPTYPE\') + $root.constant[\'DICT_AC_APPTYPE-\'+row.entity.appType]}}</div>'},
         {field: 'openDate', displayName: '开通时间', enableHiding: false},
         {field: 'appDesc', displayName: '功能描述', enableHiding: false}
     ];

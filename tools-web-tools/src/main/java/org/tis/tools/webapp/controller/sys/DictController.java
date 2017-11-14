@@ -594,7 +594,8 @@ public class DictController extends BaseController {
                 Map map=new HashMap();
                 map.put("rootName", dict.getDictName());
                 map.put("itemType", "dict");
-                map.put("itemValue", dictKey);
+                map.put("itemValue", dictKey);	
+                map.put("defaultValue", dict.getDefaultValue());
                 map.put("dictguid", dict.getGuid());
                 result.put("data", map);//返回给前台的数据
             } else {

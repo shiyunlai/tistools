@@ -161,8 +161,6 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
                 var subFrom = {};
                 subFrom.id = obj.id;
                 console.log(obj)
-
-
                 busiorg_service.loadmaintree(subFrom).then(function (datas) {
                     console.log(datas)
                     var data = datas.retMessage;
@@ -231,7 +229,6 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
         if (typeof data.node !== 'undefined') {//拿到结点详情
             // console.log(data.node.original.id.indexOf("@"));
             $scope.busiorg.item = {};
-            console.log(data.node);
             $scope.currNode = data.node.text;
             if (data.node.id == "00000") {
                 for (var i in $scope.flag) {
@@ -252,6 +249,16 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
                 }
                 $scope.flag.ywjgxq = true;
                 $scope.busiorg.item = data.node.original;
+                /*if(!isNull($scope.busiorg.item.guidParents)){
+                    //现在是每次都调用，以后改，封装，然后放在rootScope中，如果有直接拿 如果没有在调用
+                    var subFrom ={};
+                    subFrom.data = {};
+                    subFrom.data.guid = $scope.busiorg.item.guidParents;
+                    busiorg_service.queryBusiorgByGuid(subFrom).then(function (datas) {
+                        var dates = datas.retMessage;
+                        $scope.busiorg.item.guidParents  = dates.busiorgName
+                    })
+                }*/
             }
             ($scope.$$phase) ? null : $scope.$apply();
         }
@@ -369,8 +376,8 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
         {field: 'busiorgCode', displayName: '业务机构代码', enableHiding: false},
         {field: 'busiDomain', displayName: '业务线条', enableHiding: false},
         {field: 'busiorgName', displayName: '业务机构名称', enableHiding: false},
-        {field: 'guidOrg', displayName: '对应实体机构', enableHiding: false},
-        {field: 'guidPosition', displayName: '主管岗位', enableHiding: false},
+        {field: 'guidOrg', displayName: '对应实体机构', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidOrg | translateOrg) + $root.constant[row.entity.guidOrg]}}</div>'},
+        {field: 'guidPosition', displayName: '主管岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
         {field: 'orgCode', displayName: '机构代号', enableHiding: false}
     ]
     $scope.loworgGrid = initgrid($scope, loworgGrid, filterFilter, com, false, function () {
@@ -563,7 +570,6 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
                             //TODO.新增逻辑
                             console.log(subFrom)
                             busiorg_service.addbusiorg(subFrom).then(function (data) {
-                                console.log(data)
                                 if (data.status == "success") {
                                     toastr['success']('新增业务机构成功');
                                     $("#busiorgtree").jstree().refresh();

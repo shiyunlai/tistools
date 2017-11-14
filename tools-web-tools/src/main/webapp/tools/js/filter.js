@@ -65,12 +65,9 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
         return function (val, name) {
             var subFrom = {};
             subFrom.dictKey = name;
-            console.info(name + "-" + val)
-            // console.info($rootScope.constant)
             if (isNull($rootScope.constant[val])) {
                 $http.post(manurl +  "/om/emp/queryemployee").then(function (data) {
                     var retval = "";
-                    // console.log(data)
                     if (data.data.status == "success") {
                         for (var i = 0; i < data.data.retMessage.length; i++) {
                             if (val == data.data.retMessage[i].guid) {
@@ -151,7 +148,7 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
                                 // console.log(data.data.retMessage)
                                 retval = data.data.retMessage[i].appName;
                                 // console.log(retval)
-                                $rootScope.constant[val] = retval;
+                                $rootScope.constant[val] = retval;//把翻译的内容放在rootScope中，下次在用的时候，判断如果有就直接用，就不需要每次都调用后台了
                             }
                         }
                     }
@@ -174,7 +171,6 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
                             if (val == data.data.retMessage[i].guid) {
                                 // console.log(data.data.retMessage)
                                 retval = data.data.retMessage[i].dictName;
-                                 console.log(retval)
                                 $rootScope.constant[val] = retval;
                                 return;
                             }else{
