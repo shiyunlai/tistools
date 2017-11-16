@@ -2,7 +2,7 @@
  * Created by wangbo on 2017/9/24.
  */
 
-MetronicApp.controller('configuration_controller', function ($filter, $scope, $rootScope, common_service,filterFilter, $modal,$uibModal, $http, $timeout,$interval,i18nService) {
+MetronicApp.controller('configuration_controller', function ($filter, $scope, $state,$rootScope, common_service,filterFilter, $modal,$uibModal, $http, $timeout,$interval,i18nService) {
     var config = {};
     $scope.config = config;
     //查询所有个性化配置
@@ -42,7 +42,17 @@ MetronicApp.controller('configuration_controller', function ($filter, $scope, $r
         }
     }
     $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f);
-
+    
+    //查看历史记录
+    config.histroy = function () {
+        var getSel = $scope.gridOptions.getSelectedRows();
+        var confGuid= getSel[0].guid
+        if(isNull(getSel) || getSel.length>1){
+            toastr['error']("请选则一条数据进行修改！");
+        }else{
+            $state.go("loghistory",{id:confGuid});//跳转到历史页面
+        }
+    }
     //修改配置
     $scope.config.edit = function(){
         var queryallconfig =config.queryallconfig;//拿到列表刷新方法

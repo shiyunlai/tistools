@@ -467,7 +467,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                     $scope.abftree.item.area = '上海地区'
                 }
             }
-
             ($scope.$$phase) ? null : $scope.$apply();
         }
     });
@@ -651,7 +650,12 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
         $scope.editflag = !$scope.editflag;
         $scope.position = angular.copy($scope.abftree.item);
     }
-
+    //组织机构查询历史记录
+    abftree.histroy = function () {
+        var orgGuid = $scope.abftree.item.guid;
+        console.log(orgGuid)
+        $state.go("loghistory",{id:orgGuid});//跳转新页面
+    }
     //覆盖searchN方法
     abftree.searchN = function () {
 
@@ -1317,6 +1321,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
             }
         })
     }
+
 
 
     //下级机构删除按钮

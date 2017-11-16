@@ -1,4 +1,4 @@
-*/<!--角色管理-->
+<!--数据实体管理-->
 <div class="page-bar ng-scope" style="border-bottom: 1px solid #e7ecf1;">
     <ul class="page-breadcrumb">
         <li>
@@ -18,30 +18,312 @@
         <div class="portlet light bordered ">
             <div class="portlet-body">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-4">
                         <div class="portlet light" >
-                            <div class="portlet-body">
-                                <div ui-grid="gridOptions"  class="grid"
-                                     ui-grid-pagination ui-grid-exporter
-                                     ui-grid-selection ui-grid-resize-columns>
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-cogs font-green-sharp"></i>
+                                    <span class="caption-subject font-green-sharp bold uppercase">实体数据管理</span>
                                 </div>
-                                <div class="actions btn-set" style="float: right; margin-top:12px;">
-                                    <button type="button" name="back" class="btn btn-primary" ng-click="dataEnt_add()"> 新增
-                                    </button>
-                                    <button type="button" name="back" class="btn btn-primary" ng-click="dataEnt_edit(4)">  修改
-                                    </button>
-                                    <button type="button" name="back" class="btn btn-danger" ng-click="dataEnt_delete()"> 删除
-                                    </button>
-                                    <button type="button" name="back" class="btn btn-danger" ng-click="dataEnt.info()"> 查看实体属性
-                                    </button>
+                                <div class="tools">
+                                    <a href="javascript:;" ng-click="dataEnt.refresh()" class="reload">
+                                    </a>
                                 </div>
                             </div>
+                            <div class="portlet-body">
+                                <form id="s">
+                                    <input  type="search" id="q" ng-model="searchitem"/>
+                                    <button type="submit" ng-click="dataEnt.clear()">清空</button>
+                                </form>
+                                <div id="container" ></div>
+                            </div>
                         </div>
+                    </div>
+                    <div class="col-md-8" ng-if="dataEnt.dataEnis">
+                            <div class="portlet-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="portlet light" >
+                                            <ul class="nav nav-tabs padding-12 tab-color-blue background-blue">
+                                                <li ng-class="{true:'active',false:''}[dataEnt.dqst]">
+                                                    <a data-toggle="tab" href ng-class="{true:'link',false:''}[dataEnt.dqst]" ng-click="dataEnt.loadgwdata(0)">
+                                                        <i class="green ace-icon fa fa-bars bigger-120"></i>当前实体
+                                                    </a>
+                                                </li>
+                                                <li ng-class="{true:'active',false:''}[dataEnt.sssx]">
+                                                    <a data-toggle="tab" href ng-class="{true:'link',false:''}[dataEnt.sssx]" ng-click="dataEnt.loadgwdata(1)">
+                                                        <i class="green ace-icon fa fa-bars bigger-120"></i>实体属性
+                                                    </a>
+                                                </li>
+                                                <li ng-class="{true:'active',false:''}[dataEnt.sjfw]">
+                                                    <a  data-toggle="tab" href ng-class="{true:'link',false:''}[dataEnt.sjfw]" ng-click="dataEnt.loadgwdata(2)">
+                                                        <i class="green ace-icon fa fa-bars bigger-120"></i>数据范围权限
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <!--tab标签页签-->
+                                            <div class="tab-content portlet light clearfix "   ng-if="dataEnt.dqst">
+                                                <form action="#" name="myform" class="form-horizontal">
+                                                    <div class="form-body ">
+                                                        <div class="col-md-12" style="margin-bottom:10px;">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4"> 实体类型:<span ng-class="{required:myform.fromtable.$invalid}"  > * </span></label>
+                                                                <div class="col-md-8" style="margin-top:7px;">
+                                                                    <div class="col-md-2">
+                                                                        <input type="radio" required   name="fromtable"  ng-model="dataEnt.entityType" ng-checked='dataEnt.entityType==0'  value="0" />表
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <input type="radio" required  name="fromtable" ng-model="dataEnt.entityType"   ng-checked='dataEnt.entityType==1'  value="1" />视图
+                                                                    </div>
+                                                                    <div class="col-md-2" >
+                                                                        <input type="radio" required  name="fromtable" ng-model="dataEnt.entityType"  ng-checked='dataEnt.entityType==2'  value="2"/>查询实体
+                                                                    </div>
+                                                                    <div class="col-md-2" >
+                                                                        <input type="radio" required  name="fromtable" ng-model="dataEnt.entityType"  ng-checked='dataEnt.entityType==3'  value="3"/>内存对象
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6" >
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">隶属应用:<span ng-class="{required:myform.guidApp.$invalid}"  > * </span></label>
+                                                                <div class="col-md-8" ng-init="$settings.getCommData('APP')">
+                                                                    <select class="form-control"  name="guidApp" required  ng-model="dataEnt.guidApp" ng-disabled="!editflag">
+                                                                        <!-- 渲染，不能绑定同一个，不然每次点击，都会改变，重新渲染，所以ng-model绑定和渲染必须不同-->
+                                                                        <option ng-repeat="d in $settings.commlist['APP'] track by $index" value="{{d.guid}}">{{d.appName}}</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">实体名称<span ng-class="{required:myform.entityName.$invalid}"  > * </span></label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control"
+                                                                           ng-model="dataEnt.entityName"
+                                                                           name="entityName" required ng-disabled="!editflag"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6" ng-if="dataEnt.entityType=='0'">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">数据库表名:</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control"
+                                                                           ng-model="dataEnt.tableName"
+                                                                           name="id" ng-disabled="!editflag" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6" ng-if="dataEnt.entityType=='1'">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">视图名:</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control"
+                                                                           ng-model="dataEnt.tableName"
+                                                                           name="id" ng-disabled="!editflag"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6" ng-if="dataEnt.entityType=='2'">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">查询实体名:</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control"
+                                                                           ng-model="dataEnt.tableName"
+                                                                           name="id" ng-disabled="!editflag"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6" ng-if="dataEnt.entityType=='3'">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">内存对象:</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control"
+                                                                           ng-model="dataEnt.tableName" ng-disabled="!editflag"
+                                                                           name="id" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4"> 是否可增加:<span ng-class="{required:myform.isAdd.$invalid}"  > * </span></label>
+                                                                <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                                                                    <select class="form-control"   required   ng-model="dataEnt.isAdd" name="isAdd" ng-disabled="!editflag">
+                                                                        <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4"> 是否可删除:<span ng-class="{required:myform.idDel.$invalid}"  > * </span></label>
+                                                                <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                                                                    <select class="form-control"   required   ng-model="dataEnt.idDel" name="idDel" ng-disabled="!editflag">
+                                                                        <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4"> 是否可修改:<span ng-class="{required:myform.isModief.$invalid}"  > * </span></label>
+                                                                <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                                                                    <select class="form-control"   required   ng-model="dataEnt.isModief" name="isModief" ng-disabled="!editflag">
+                                                                        <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4"> 是否可查看:<span ng-class="{required:myform.isview.$invalid}"  > * </span></label>
+                                                                <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                                                                    <select class="form-control"   required   ng-model="dataEnt.isview" name="isview" ng-disabled="!editflag">
+                                                                        <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4"> 是否需要分页:<span ng-class="{required:myform.isPage.$invalid}"  > * </span></label>
+                                                                <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                                                                    <select class="form-control"   required   ng-model="dataEnt.isPage" name="isPage" ng-disabled="!editflag">
+                                                                        <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-2">实体描述:</label>
+                                                                <div class="col-md-10">
+                                                                    <input type="text" class="form-control"
+                                                                           ng-model="dataEnt.entityDesc" ng-disabled="!editflag"
+                                                                           name="id" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-2"></label>
+                                                                <div class="col-md-10">
+                                                                    <!--因为无法监控到数组，所以使用angular 的管道，在filter.js中定义tdCondStr来处理函数-->
+                                                                    <textarea class="form-control" readonly>{{dataEnt.qualityRatingExt | toCondStr}}</textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">删除记录检查引用关系</label>
+                                                                <div class="col-md-9">
+                                                                    <div class="form">
+                                                                        <!-- BEGIN FORM-->
+                                                                            <div class="form-body">
+                                                                                    <div class="col-md-12">
+                                                                                        <div ng-form="subform" class="col-md-4">表名</div>
+                                                                                        <div ng-form="subform" class="col-md-4">字段名</div>
+                                                                                        <div ng-form="subform" class="col-md-2">关系值</div>
+                                                                                        <div ng-form="subform" class="col-md-2">操作</div>
+                                                                                        <div class="col-md-12" style="border-bottom: 1px solid #ccc;margin-top:5px;">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-12"  style="margin:10px 0px;" ng-repeat="d in dataEnt.qualityRatingExt track by $index"  >
+                                                                                        <div ng-form="subform" class="col-md-4"><input ng-disabled="!editflag"  ng-model="d.tableName" type="text"  class="form-control  {{subform.$invalid&&'lanmo-warning'}}"/></div>
+                                                                                        <div ng-form="subform" class="col-md-4"><input ng-disabled="!editflag" ng-model="d.columeName" type="text"  class="form-control col-md-5 {{subform.$invalid&&'lanmo-warning'}}"/></div>
+                                                                                        <div ng-form="subform" class="col-md-2" ng-init="$settings.getDictData('DICT_YON')">
+                                                                                            <select class="form-control"   required   ng-model="d.isDel" name="isview" ng-disabled="!editflag">
+                                                                                                <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <div class="col-md-2" ng-if="editflag">
+                                                                                            <a  href ng-click="addQualityRatingExt()" class="btn btn-icon-only green"><i class="fa fa-plus"></i></a>
+                                                                                            <a  ng-if="qualityRatingExt.length>1" href ng-click="delQualityRatingExt($index)" class="btn btn-icon-only green"><i class="fa fa-minus"></i></a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                            </div>
+                                                                        <!-- END FORM-->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-2"></label>
+                                                                <div class="col-md-10">
+                                                                    <div class="actions btn-set" style="float: right;" ng-if="!editflag">
+                                                                        <button type="button" name="back" class="btn btn-primary" ng-click="dataEnt.dataEntEdit(dataEnt)"> 编辑实体
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="actions btn-set" style="float: right;" ng-if="editflag">
+                                                                        <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="dataEntAdd(dataEnt)" > 保存
+                                                                        </button>
+                                                                        <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存
+                                                                        </button>
+                                                                        <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="tab-content portlet light clearfix "   ng-if="dataEnt.sssx">
+                                                <div class="col-md-12" style="padding-left: 0px;">
+                                                    <div class="portlet-body portlet light">
+                                                        <div class="tab-content portlet light">
+                                                            <div ui-grid="gridAttributes"  class="grid"
+                                                                 ui-grid-pagination ui-grid-exporter
+                                                                 ui-grid-selection ui-grid-resize-columns>
+                                                            </div>
+                                                            <div class="actions btn-set" style="float: right; margin-top:12px;">
+                                                                <button type="button" name="back" class="btn btn-primary" ng-click="dataDet_add()"> 新增
+                                                                </button>
+                                                                <button type="button" name="back" class="btn btn-primary" ng-click="dataDet_edit(4)">  修改
+                                                                </button>
+                                                                <button type="button" name="back" class="btn btn-primary" ng-click="dataDett_details()">  查看详情
+                                                                </button>
+                                                                <button type="button" name="back" class="btn btn-danger" ng-click="dataDet_delete()"> 删除
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-content portlet light clearfix "   ng-if="dataEnt.sjfw">
+                                                <div class="col-md-12" style="padding-left: 0px;">
+                                                    <div class="portlet-body portlet light">
+                                                        <div class="tab-content portlet light">
+                                                            <div ui-grid="gridPermissions"  class="grid"
+                                                                 ui-grid-pagination ui-grid-exporter
+                                                                 ui-grid-selection ui-grid-resize-columns>
+                                                            </div>
+                                                            <div class="actions btn-set" style="float: right; margin-top:12px;">
+                                                                <button type="button" name="back" class="btn btn-primary" ng-click="dataDett_add()"> 新增
+                                                                </button>
+                                                                <button type="button" name="back" class="btn btn-primary" ng-click="dataDett_edit(4)">  修改
+                                                                </button>
+                                                                <button type="button" name="back" class="btn btn-primary" ng-click="dataDett_edit(4)">  查看详情
+                                                                </button>
+                                                                <button type="button" name="back" class="btn btn-danger" ng-click="dataDett_delete()"> 删除
+                                                                </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 
 

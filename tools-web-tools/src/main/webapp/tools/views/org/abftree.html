@@ -308,6 +308,9 @@
                                                 注销机构
                                             </button>
                                             <button type="button" name="back" class="btn btn-primary"
+                                                    ng-click="abftree.histroy()"> 查看历史详情
+                                            </button>
+                                            <button type="button" name="back" class="btn btn-primary"
                                                     ng-click="abftree.edit()"> 编辑机构
                                             </button>
                                             <button type="button" name="back" class="btn btn-danger"
@@ -646,6 +649,9 @@
                                                         <button ng-show="abftree.item.positionStatus == 'running'"
                                                                 type="button" name="back" class="btn btn-danger"
                                                                 ng-click="abftree.cancelposition()">注销岗位
+                                                        </button>
+                                                        <button type="button" name="back" class="btn btn-primary"
+                                                                ng-click="abftree.histroy()"> 查询历史记录
                                                         </button>
                                                         <button type="button" name="back" class="btn btn-primary"
                                                                 ng-click="abftree.edit()"> 编辑岗位

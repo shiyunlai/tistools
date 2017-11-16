@@ -158,6 +158,18 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
             }
         }
 
+    //查看角色历史
+    $scope.role_history = function () {
+        var dats = $scope.gridOptions.getSelectedRows();//拿到选择角色的数据
+        if($scope.selectRow){
+            var item = dats[0].guid;
+            $state.go("loghistory",{id:item});//跳转新页面
+        }else{
+            toastr['error']("请至少选择一条数据进行查看！");
+        }
+
+    }
+
     //角色权限配置页面
     $scope.role_Permission = function () {
         var dats = $scope.gridOptions.getSelectedRows();//拿到选择角色的数据

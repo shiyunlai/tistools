@@ -160,11 +160,8 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
                 $scope.jsonarray = jsonarray;
                 var subFrom = {};
                 subFrom.id = obj.id;
-                console.log(obj)
                 busiorg_service.loadmaintree(subFrom).then(function (datas) {
-                    console.log(datas)
                     var data = datas.retMessage;
-                    console.log(data);
                     if (!isNull(data)) {
                         if (isNull(data[0].id)) {
                             if (!isNull(data[0].itemName)) {
@@ -212,7 +209,6 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
             },
             'is_draggable': function (node) {
                 //用于控制节点是否可以拖拽.
-                console.log(node)
                 return true;
             }
         },
@@ -357,6 +353,11 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
         }
     }
 
+    //查询历史记录
+    $scope.busiorg.histroy = function () {
+        var busGuid = $scope.busiorg.item.guid;
+        $state.go("loghistory",{id:busGuid});//跳转到历史页面
+    }
 
     /**-----------------------------------生成各类列表-------------------------------- */
     //设置列表语言

@@ -263,4 +263,30 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
             return '';
         };
     }])
+    .filter('toCondStr', function () {
+        //预览删除记录检查引用关系
+        return function (val) {
+            if(val == null || val.length < 1)
+                return '';//if 不加上{}　代表单次匹配，加上｛｝　代表多次匹配
+            var str = '';
+            for (var i = 0; i < val.length; i++) {
+                if(!isNull(val[i].tableName) && !isNull(val[i].columeName) && !isNull(val[i].isDel)) {
+                    str += val[i].tableName + '.' + val[i].columeName + '/[' + val[i].isDel + ']';
+                    if (i !== val.length - 1)
+                        str += ';';//单次匹配，如果没有，那就默认为空
+                }
+            }
+            return str;
+        };
+    })
+    .filter('toRangeStr', function () {
+        //预览删除记录检查引用关系
+        return function (val) {
+            if(val == null || val.length < 1)
+                return '';//if 不加上{}　代表单次匹配，加上｛｝　代表多次匹配
+            var str = '';
+
+            return '';
+        };
+    })
 ;

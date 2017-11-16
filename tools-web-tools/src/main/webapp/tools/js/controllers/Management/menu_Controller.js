@@ -1,7 +1,7 @@
 /**
  * Created by wangbo on 2017/6/1.
  */
-angular.module('MetronicApp').controller('menu_controller', function($rootScope, $scope, $http,menu_service,common_service,i18nService,$timeout,filterFilter,$uibModal) {
+angular.module('MetronicApp').controller('menu_controller', function($rootScope,$state, $scope, $http,menu_service,common_service,i18nService,$timeout,filterFilter,$uibModal) {
     var menu = {};
     $scope.menu = menu;
     var subFrom = {};
@@ -483,6 +483,13 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
             confirm("请选择一项应用进行查询")
             $scope.menu.show = false;
         }
+    }
+
+
+    //查询历史记录
+    menu.histroy = function () {
+        var menuGuid =$scope.menu.item;
+        $state.go("loghistory",{id:menuGuid});//跳转到历史页面
     }
     /*2.菜单详情修改*/
     //编辑

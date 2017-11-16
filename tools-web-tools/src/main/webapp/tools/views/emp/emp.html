@@ -56,6 +56,8 @@
             </button>
             <!--<button type="button" name="back" class="btn btn-primary" ng-click="emp.setqx()"> 个人权限设置-->
             <!--</button>-->
+            <button type="button" name="back" class="btn btn-danger" ng-click="emp.histroy()" ng-disabled="!buttonflag"> 查询历史记录
+            </button>
             <button type="button" name="back" class="btn btn-danger" ng-click="emp.deletemp()" ng-disabled="!buttonflag"> 删除
             </button>
         </div>
@@ -324,7 +326,8 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control"
                                    ng-model="item.party"
-                                   ng-readonly="editflag"/>
+                                   ng-readonly="editflag" translate-constants comtable="DICT_SD_PARTY"/>
+
                         </div>
                     </div>
                 </div>

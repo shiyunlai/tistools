@@ -580,7 +580,6 @@ MetronicApp.controller('ThemePanelController', ['$scope','common_service','$root
     $scope.$on('$includeContentLoaded', function() {
         var color_ = localStorage.getItem("colors_")
         $('#style_color1').attr("href", Layout.getLayoutCssPath() + 'themes/' + color_ + ".css");//设置成我们想要的
-
         var res = $rootScope.res.login_service;//页面所需调用的服务
         common_service.post(res.pageInit,{}).then(function(data){
             if(data.status == "success"){
@@ -680,7 +679,6 @@ var strs = {
 MetronicApp.provider('router', function ($stateProvider) {
     //定义一个router服务
     var urlCollection;
-
     this.$get = function ($http, $state) {
         return {
             setUpRoutes: function () {
@@ -695,7 +693,6 @@ MetronicApp.provider('router', function ($stateProvider) {
             }
         }
     };
-
     this.setCollectionUrl = function (url) {
         urlCollection = url;
     }
