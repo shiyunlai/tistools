@@ -208,13 +208,11 @@
             success:function(data){
                 data = angular.fromJson(data);
                 if(data.status == "success"){
-                    sessionStorage.user = JSON.stringify(data.retMessage.user);
-                    sessionStorage.menus = data.retMessage.menu;
-                    sessionStorage.opertor = $("#opertor").find("option:selected").text();
+//                    sessionStorage.user = JSON.stringify(data.retMessage.user);
+//                    sessionStorage.menus = data.retMessage.menu;
+//                    sessionStorage.opertor = $("#opertor").find("option:selected").text();
                     window.location = "../tools/index.html";//如果正确，则进入主页
-                }else if(data.retCode == '2'){
-                    toastr['error'](data.retMessage, "登录失败！");
-                } else {
+                }else {
                     toastr['error']( data.retMessage);
                 }
             }

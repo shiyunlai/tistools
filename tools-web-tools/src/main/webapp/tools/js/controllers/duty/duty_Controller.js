@@ -1,7 +1,7 @@
 /**
  * Created by gaojie on 2017/7/26.
  */
-angular.module('MetronicApp').controller('duty_controller', function($rootScope, $scope,duty_service,abftree_service, $http, $timeout,i18nService,filterFilter,uiGridConstants,$uibModal,$state) {
+angular.module('MetronicApp').controller('duty_controller', function($rootScope, $scope,$state,duty_service,abftree_service, $http, $timeout,i18nService,filterFilter,uiGridConstants,$uibModal,$state) {
     $scope.$on('$viewContentLoaded', function () {
         // initialize core components
         App.initAjax();
@@ -403,7 +403,11 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
     
     
     
-    
+    //生成历史记录
+    duty.history = function () {
+        var dutyGuid = $scope.duty.item.guid;
+        $state.go("loghistory",{id:dutyGuid});//跳转到历史页面
+    }
     //生成职务列表
     var dutygrid = {};
     $scope.dutygrid = dutygrid;

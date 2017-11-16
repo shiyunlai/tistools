@@ -95,32 +95,6 @@
                         </div>
                     </div>
                 </div>
-                <!--<div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">入职日期</label>
-                        <div class="col-md-8">
-                            <div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
-                                    <span class="input-group-btn">
-                                        <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
-                                    </span>
-                                <input type="text" class="form-control" ng-model="subFrom.indate" readonly/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">离职日期</label>
-                        <div class="col-md-8">
-                            <div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
-                                    <span class="input-group-btn">
-                                        <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
-                                    </span>
-                                <input type="text" class="form-control" ng-model="subFrom.outdate" readonly/>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">办公电话</label>
@@ -254,10 +228,10 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">政治面貌</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.party"
-                            />
+                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_SD_PARTY')">
+                            <select class="form-control" ng-model="subFrom.party">
+                                <option ng-repeat="d in $settings.diclist['DICT_SD_PARTY'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                            </select>
                         </div>
                     </div>
                 </div>

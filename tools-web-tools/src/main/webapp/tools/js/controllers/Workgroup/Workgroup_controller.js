@@ -310,7 +310,11 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
         })
     }
     reworkgroupgrid();
-
+    //查询历史记录
+    workgroup.histroy= function () {
+        var workGuid = $scope.sub.guid;
+        $state.go("loghistory",{id:workGuid});//跳转新页面
+    }
 
     //新增根工作组
     workgroup.add = function (str) {

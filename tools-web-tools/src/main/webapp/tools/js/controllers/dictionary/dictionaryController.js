@@ -1,7 +1,7 @@
 /**
  * Created by wangbo on 2017/7/4.
  */
-angular.module('MetronicApp').controller('dictionary_controller', function($rootScope, $scope, $http,i18nService,$modal,filterFilter,common_service,$timeout,$uibModal,uiGridConstants,dictonary_service){
+angular.module('MetronicApp').controller('dictionary_controller', function($rootScope, $scope,$state, $http,i18nService,$modal,filterFilter,common_service,$timeout,$uibModal,uiGridConstants,dictonary_service){
 
     var res = $rootScope.res.dictonary_service;//页面所需调用的服务
 
@@ -35,7 +35,6 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
     var dictFrom = {};
     $scope.dictFrom = dictFrom;
     dictFrom.Alldict = 'All';
-
 
 
     var gridOptions0 = {};
@@ -94,7 +93,6 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                 subFrom.isQueryRoot = 'N';
                 dictonary_service.querySysDictList(subFrom).then(function(data){
                     var datas = data.retMessage;
-                    console.log(datas)
                     if(data.status == "success"){
                         dictflag.dictnameL = datas;
                         $scope.gridOptions0.data =  datas;
@@ -237,6 +235,16 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
             }
         }else{
             toastr['error']("请至少选中一条进行修改！");
+        }
+    }
+
+    //查看历史记录
+    dictflag.histroy = function () {
+        var getSel = $scope.gridOptions0.getSelectedRows();
+        if(isNull(getSel) || getSel.length>1){
+            toastr['error']("请至少选中一条进行重置！");
+        }else{
+            $state.go("loghistory",{id:getSel[0].guid});//跳转到历史页面
         }
     }
     /*删除业务字典提取*/

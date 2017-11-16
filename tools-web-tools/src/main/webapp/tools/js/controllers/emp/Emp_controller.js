@@ -219,6 +219,12 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
             }
         )
     }
+    //查看历史记录
+    emp.histroy = function () {
+        var arr = $scope.empgrid.getSelectedRows();
+        var item = arr[0].guid;
+        $state.go("loghistory",{id:item});//跳转新页面
+    }
     //详情按钮事件
     emp.detail = function () {
         var arr = $scope.empgrid.getSelectedRows();

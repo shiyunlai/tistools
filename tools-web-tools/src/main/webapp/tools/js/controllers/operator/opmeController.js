@@ -57,6 +57,15 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
     }
     $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,false,f);
 
+    //查询历史记录
+    operman.histroy = function () {
+        if($scope.selectRow) {
+            var items = $scope.selectRow.guid;
+            $state.go("loghistory",{id:items});//跳转到历史页面
+        }else{
+            toastr['error']("请至少选择一条数据进行查看！");
+        }
+    }
     //查询业务字典
     var tits = {};
     tits.dictKey='DICT_AC_OPERATOR_STATUS';

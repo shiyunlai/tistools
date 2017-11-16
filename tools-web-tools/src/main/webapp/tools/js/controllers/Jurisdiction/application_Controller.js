@@ -1,7 +1,7 @@
 /**
  * Created by wangbo on 2017/6/1.
  */
-angular.module('MetronicApp').controller('application_controller', function($rootScope, $scope ,$modal,$http,i18nService,common_service, $timeout,filterFilter,$uibModal,uiGridConstants,application_service) {
+angular.module('MetronicApp').controller('application_controller', function($rootScope, $scope ,$state,$modal,$http,i18nService,common_service, $timeout,filterFilter,$uibModal,uiGridConstants,application_service) {
     var biz = {};
     $scope.biz = biz;
     var item = {};
@@ -1130,6 +1130,11 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             $scope.openapp = true;
         }
 
+    }
+
+    //查询历史记录
+    $scope.biz.histroy = function () {
+        $state.go("loghistory",{id:$scope.dictionaryAdd.guid});//跳转到历史页面
     }
 
     //应用编辑方法
