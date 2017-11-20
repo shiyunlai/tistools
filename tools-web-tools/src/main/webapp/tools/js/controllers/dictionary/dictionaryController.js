@@ -1,7 +1,7 @@
 /**
  * Created by wangbo on 2017/7/4.
  */
-angular.module('MetronicApp').controller('dictionary_controller', function($rootScope, $scope,$state, $http,i18nService,$modal,filterFilter,common_service,$timeout,$uibModal,uiGridConstants,dictonary_service){
+angular.module('MetronicApp').controller('dictionary_controller', function($rootScope, $scope,$state,$filter, $http,i18nService,$modal,filterFilter,common_service,$timeout,$uibModal,uiGridConstants,dictonary_service){
 
     var res = $rootScope.res.dictonary_service;//页面所需调用的服务
 
@@ -77,8 +77,7 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                 var subFrom = {};
                 subFrom.isQueryRoot = 'Y';
                 dictonary_service.querySysDictList(subFrom).then(function(data){
-                    var datas = data.retMessage;
-                    console.log(datas)
+                    var datas = $filter('Arraysort')(data.retMessage);//调用管道排序
                     if(data.status == "success"){
                         dictflag.dictnameL = datas;
                         $scope.gridOptions0.data =  datas;
@@ -92,7 +91,7 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                 var subFrom = {};
                 subFrom.isQueryRoot = 'N';
                 dictonary_service.querySysDictList(subFrom).then(function(data){
-                    var datas = data.retMessage;
+                    var datas = $filter('Arraysort')(data.retMessage);//调用管道排序
                     if(data.status == "success"){
                         dictflag.dictnameL = datas;
                         $scope.gridOptions0.data =  datas;

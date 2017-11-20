@@ -132,6 +132,8 @@
 <script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
 <script src="../assets/pages/scripts/login-soft.js" type="text/javascript"></script>
 <script src="../assets/global/plugins/RXjs/Rx.min.js"></script>
+
+<script src="js/main.js"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
 
 <!--应用程序所用写在依赖之后，防止找不到对应的依赖-->
@@ -181,8 +183,9 @@
         }
     }
 
+
     var text = document.querySelector('#loginname');
-    Rx.Observable.fromEvent(text, 'keyup')
+    Rx.Observable.fromEvent(text, 'change')
             .debounceTime(1000)
             .pluck('target', 'value')
             .switchMap(url => $.ajax({url:"../AcAuthenticationController/checkUserStatus",type:"post",contentType:'application/json',data:JSON.stringify({userId:url}), processData:false,dataType:'json'}))
@@ -211,7 +214,8 @@
 //                    sessionStorage.user = JSON.stringify(data.retMessage.user);
 //                    sessionStorage.menus = data.retMessage.menu;
 //                    sessionStorage.opertor = $("#opertor").find("option:selected").text();
-                    window.location = "../tools/index.html";//如果正确，则进入主页
+//                    window.location = "../tools/index.html#/dashboard";//如果正确，则进入主页
+                    window.location = manurl+'/tools/index.html#/dashboard';//如果正确，则进入主页
                 }else {
                     toastr['error']( data.retMessage);
                 }

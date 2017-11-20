@@ -1,7 +1,7 @@
 /**
  * Created by wangbo on 2017/6/11.
  */
-angular.module('MetronicApp').controller('role_controller', function($scope ,$rootScope,$state,$modal,$http,abftree_service,$timeout,dictonary_service,common_service,i18nService,role_service,menu_service,operator_service,filterFilter,$uibModal,uiGridConstants) {
+angular.module('MetronicApp').controller('role_controller', function($scope ,$rootScope,$state,$modal,$http,abftree_service,$filter,$timeout,dictonary_service,common_service,i18nService,role_service,menu_service,operator_service,filterFilter,$uibModal,uiGridConstants) {
         var role = {};
         $scope.role = role;
         var res = $rootScope.res.abftree_service;//页面所需调用的服务
@@ -30,13 +30,13 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                     type: uiGridConstants.filter.SELECT,
                     selectOptions: [{ value: 'sys', label: '系统级'}, { value: 'app', label: '应用级' }]
                 }},
-            { field: "appName", displayName:'隶属应用',
-                filter:{
+            { field: "appName", displayName:'隶属应用'
+              /*  filter:{
                     //term: '0',//默认搜索那项
                     type: uiGridConstants.filter.SELECT,
                     //如果非常多，直接自己拼接，所有的数组，循环，拼接成这个样子就可以了。
-                    selectOptions: [{ value: 'ABF', label: '基础应用系统ABF'}]
-                }
+                    selectOptions:  [{ value: 'ABF', label: 'ABF'}, { value: 'TWS', label: '柜面系统' }]
+                }*/
             }
         ];
         var f = function(row){
@@ -49,36 +49,22 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
             }
         }
         $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,false,f);
-
-    //查询所有角色列表
-    role_service.queryRoleList(subFrom).then(function(data){
-        var  datas = data.retMessage;
-        if(data.status == "success"&& datas.length > 0){
-            $scope.gridOptions.data = datas;
-            $scope.gridOptions.mydefalutData = datas;
-            $scope.gridOptions.getPage(1, $scope.gridOptions.paginationPageSize);
-        }else{
-            toastr['error']('初始化查询失败'+'<br/>'+data.retMessage);
-        }
-    })
-
-
     //查询角色列表
-    role.inint = function(){
+    role.inint = function(items){
         var subFrom = {};
         role_service.queryRoleList(subFrom).then(function(data){
-            var  datas = data.retMessage;
-            if(data.status == "success"){
-                $scope.gridOptions.data =  datas;
-                $scope.gridOptions.mydefalutData = datas;
-                $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
-                $scope.rolePer = false;//角色分配权限按钮隐藏
-            }else{
-                toastr['error']('初始化查询失败'+'<br/>'+data.retMessage);
-            }
+            var datas = $filter('Arraysort')(data.retMessage);//调用管道排序
+                if(data.status == "success"){
+                    $scope.gridOptions.data =  datas;
+                    $scope.gridOptions.mydefalutData = datas;
+                    $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
+                    $scope.rolePer = false;//角色分配权限按钮隐藏
+                }else{
+                    toastr['error']('初始化查询失败'+'<br/>'+data.retMessage);
+                }
         })
     }
-
+    role.inint();
     //新增角色逻辑
     $scope.role_add = function(){
             openwindow($modal, 'views/roleManage/rolemanageAdd.html', 'lg',//弹出页面
@@ -87,10 +73,11 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                     $scope.add = function(item){
                         var subFrom = {};
                         subFrom = item;
+                        console.log(item)
                         role_service.createRole(subFrom).then(function(data){
                             if(data.status == "success"){
                                 toastr['success']("新增成功！");
-                                role.inint();
+                                role.inint(subFrom);//把新增的数据传过去
                                 $modalInstance.close();
                             }else{
                                 toastr['error']('初始化查询失败'+'<br/>'+data.retMessage);

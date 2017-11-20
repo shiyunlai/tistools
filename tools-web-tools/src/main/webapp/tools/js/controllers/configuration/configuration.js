@@ -20,6 +20,7 @@ MetronicApp.controller('configuration_controller', function ($filter, $scope, $s
     }
     config.queryallconfig();//调用查询所有配置
 
+
     //grid表格
     i18nService.setCurrentLang("zh-cn");
     var gridOptions = {};

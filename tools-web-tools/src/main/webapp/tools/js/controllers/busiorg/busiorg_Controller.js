@@ -1,7 +1,7 @@
 /**
  * Created by gaojie on 2017/8/2.
  */
-angular.module('MetronicApp').controller('busiorg_controller', function ($rootScope, $scope, busiorg_service, $http, $timeout, i18nService, filterFilter, uiGridConstants, $uibModal, $state, $location) {
+angular.module('MetronicApp').controller('busiorg_controller', function ($rootScope, $scope, busiorg_service, $http,$filter, $timeout, i18nService, filterFilter, uiGridConstants, $uibModal, $state, $location) {
     $scope.$on('$viewContentLoaded', function () {
         // initialize core components
         App.initAjax();
@@ -283,7 +283,6 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
         .map(url => loadsearchtree({"id": '#', "searchitem": url})).subscribe(data => console.log(data));
 
     var loadsearchtree = function (subFrom) {
-        console.log(subFrom)
         if (isNull(subFrom.searchitem)) {
             $scope.showtree = true;
             if ($("#searchtree").jstree()) {
@@ -388,7 +387,6 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
         //业务套别列表拉取方法
     var rebusiorgGrid = function () {
             busiorg_service.loadywtb().then(function (data) {
-                console.log(data.retMessage);
                 if (data.status == "success") {
                     $scope.busiorgGrid.data = data.retMessage;
                     $scope.busiorgGrid.mydefalutData = data.retMessage;
@@ -404,8 +402,9 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
         subFrom.busiDomain = $scope.busiorg.item.sendValue;
         busiorg_service.loadbusiorgbyType(subFrom).then(function (data) {
             if (data.status == "success") {
-                $scope.loworgGrid.data = data.retMessage;
-                $scope.loworgGrid.mydefalutData = data.retMessage;
+                var datas = $filter('Arraysort')(data.retMessage);//调用管道排序
+                $scope.loworgGrid.data = datas;
+                $scope.loworgGrid.mydefalutData = datas;
                 $scope.loworgGrid.getPage(1, $scope.busiorgGrid.paginationPageSize);
             } else {
 
