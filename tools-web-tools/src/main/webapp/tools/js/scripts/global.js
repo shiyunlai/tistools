@@ -483,6 +483,7 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
         exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
         exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
         exporterPdfHeader: { text: "My Header", style: 'headerStyle' },
+        sortInfo: {fields : 'guid', directions: 'desc'},
         exporterPdfFooter: function ( currentPage, pageCount ) {
             return { text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle' };
         },
@@ -520,17 +521,14 @@ function initgrid($scope, thisobj, filterFilter,com,bol,selection){
                 var grid=this.grid;
                 grid.options.data = thisobj.mydefalutData;
                 grid.columns.forEach(function(column) {
-                    console.log(column)
                     var everyFilters=[];
                     column.filters.forEach(function(filter) {
-                        console.log(column)
                         if(filter.term!=null&&filter.term!='undefined'){
                             everyFilters.push(filter);
                         }
                     });
                     if(everyFilters.length>0){
                         filterConditions[column.field]=everyFilters;//生成一个自己定义的对象,以便传给后台去操作
-                        console.log(everyFilters)
                     }
                 });
 
@@ -775,3 +773,5 @@ function table($scope,$window,list) {
         $scope.$apply();
     });
 }
+
+

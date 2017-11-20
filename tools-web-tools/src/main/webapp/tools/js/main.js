@@ -123,7 +123,7 @@ MetronicApp.factory('httpInterceptor', ['$log', function($log) {
         },
         //响应的方法
         response: function (response){
-            //console.log(response);//打印所有的响应
+            // console.log(response);//打印所有的响应
             if(response.status == '200'){//首先要请求成功
                 if(response.config.url.indexOf(manurl) ==0 ){//判断post请求，post请求的url都是marurl开头。
                     if(response.data.status =="success"){
@@ -135,7 +135,10 @@ MetronicApp.factory('httpInterceptor', ['$log', function($log) {
                         window.location = "../tools/login.html";//如果正确，则进入主页
                     }
                 }
+            }else{
+                window.location = "../tools/views/errorInfo/ServerException.html";//如果正确，则进入主页
             }
+
             return response;
         }
     };
@@ -258,12 +261,11 @@ MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http
                 });
             }
         }else if(type == "EMP"){
-            if(_.isNil(settings.commlist[type])) {
                 $http.post(manurl + "/om/emp/queryemployee").then(function (response) {
                     settings.commlist[type] = response.data.retMessage;
                     console.log(response.data.retMessage)
                 });
-            }
+
         }else if(type == "ROLE"){
             if(_.isNil(settings.commlist[type])) {
                 $http.post(manurl + "/AcRoleController/queryRoleList",{}).then(function (response) {
@@ -671,36 +673,31 @@ MetronicApp.controller('Memocontroller', ['$scope','Memo_service', function($sco
 
 }]);
 
-var strs = {
-
-};
 
 //服务端定义路由控制，这里主要作用就是取数据
 MetronicApp.provider('router', function ($stateProvider) {
-    //定义一个router服务
-    var urlCollection;
-    this.$get = function ($http, $state) {
-        return {
-            setUpRoutes: function () {
-                $http.get(urlCollection).success(function (collection) {
-                    for (var routeName in collection) {
-                        //对每一项进行循环
-                        if (!$state.get(routeName)) {
-                            $stateProvider.state(routeName, collection[routeName]);
+        var urlCollection;
+        urlCollection = 'json/test.json';
+        this.$get = function ($http, $state) {
+            return {
+                setUpRoutes: function () {
+                    $http.get(urlCollection).success(function (collection) {
+                        for (var routeName in collection) {
+                            if (!$state.get(routeName)) {
+                                $stateProvider.state(routeName, collection[routeName]);
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
-        }
-    };
-    this.setCollectionUrl = function (url) {
-        urlCollection = url;
-    }
-})
+        };
+        /*this.setCollectionUrl = function (url) {
+            urlCollection = url;
+        }*/
+    })
 
 //配置内容,首页写死，其他页面路由从后台拿取
 MetronicApp.config(function ($stateProvider, $urlRouterProvider, routerProvider) {
-    $urlRouterProvider.otherwise('/dashboard');
         $stateProvider
             .state('dashboard', {
                 url: '/dashboard',
@@ -724,8 +721,15 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider, routerProvider)
                         });
                     }]
                 }
-            });
-        routerProvider.setCollectionUrl('json/test.json');
+            })
+            .state('404', {
+                url: "/404",
+                templateUrl: "views/errorInfo/NonExistent.html",
+                data: {pageTitle: '访问不存在'},
+                controller: "errorInfo_controller"
+            })
+    // routerProvider.setCollectionUrl('json/test.json');
+    $urlRouterProvider.otherwise('/404');
     })
     .run(function (router) {
         router.setUpRoutes();
@@ -1259,7 +1263,7 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider, routerProvider)
 //angular路由监控，跳转开始之前。
 MetronicApp.run(['$rootScope', '$state', function ($rootScope, $state) {
     $rootScope.$state = $state;
-    console.log($rootScope.$state)
+    // console.log($rootScope.$state)
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
         if(!isNull(toState.header)){
             $rootScope.Appfunc = toState.header;//把路由中对应的请求头，放入全局rootscope中。

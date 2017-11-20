@@ -11,7 +11,6 @@ MetronicApp.directive("lengthLimit",function () {
         link :  function (scope, element) {
             element.on("input",function(){
                 var numlength = scope.numLength;
-                console.log(numlength)
                 if(scope.scopeModels.length>=numlength){
                     if(!element.hasClass('verify')){
                         element.addClass('verify').after('<i class="ver_size">最大值不能超过' + numlength + '个字符</i>');

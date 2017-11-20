@@ -259,6 +259,7 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
     function  creatFrom(id) {
         openwindow($modal, 'views/dataEntity/creatEntity.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
+                $scope.title = '新增实体属性'
                 //删除引用表关系 还未改成统一使用 dataEnt
                 var qualityRatingExt = [];//定义数组
                 $scope.qualityRatingExt = qualityRatingExt;
@@ -276,7 +277,7 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
                 };
 
                 $scope.add = function(){
-
+                    $modalInstance.dismiss('cancel');
                 }
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
@@ -288,8 +289,36 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
     
     //编辑实体
     dataEnt.dataEntEdit =function (item) {
-        $scope.copyEdit = angular.copy(item)
-        $scope.editflag = !$scope.editflag;//让保存取消方法显现,并且让文本框可以输入
+      /*  $scope.copyEdit = angular.copy(item)
+        $scope.editflag = !$scope.editflag;//让保存取消方法显现,并且让文本框可以输入*/
+        openwindow($modal, 'views/dataEntity/creatEntity.html', 'lg',//弹出页面
+            function ($scope, $modalInstance) {
+            $scope.title = '编辑实体属性'
+                //删除引用表关系 还未改成统一使用 dataEnt
+                var qualityRatingExt = [];//定义数组
+                $scope.qualityRatingExt = qualityRatingExt;
+                var item = {tableName : '',columeName : '',isDel:''};
+                qualityRatingExt.push(item);
+
+                //删一个
+                $scope.delQualityRatingExt = function (index) {
+                    qualityRatingExt.splice(index, 1);
+                };
+                //加一个
+                $scope.addQualityRatingExt = function () {
+                    var item = {tableName : '',columeName : '',isDel:''};
+                    qualityRatingExt.push(item);
+                };
+
+                $scope.add = function(){
+                    //刷新树结构，进行保存后台数据
+                    $modalInstance.dismiss('cancel');
+                }
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+
+            })
     }
 
     //当前实体信息

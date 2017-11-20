@@ -18,22 +18,21 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
     .filter('translateConstants', ['$http', '$rootScope', function ($http, $rootScope) {
         return function (val, name) {
             var subFrom = {};
+            console.log(val)
             subFrom.dictKey = name;
-            // console.info($rootScope.constant)
+            $rootScope.vals = val;
             if (isNull($rootScope.constant[name + "-" + val])) {
                 $http.post(manurl +  "/DictController/queryDictItemListByDictKey", subFrom).then(function (data) {
                     var retval = "";
                     if (data.data.status == "success") {
                         for (var i = 0; i < data.data.retMessage.length; i++) {
                             if (val == data.data.retMessage[i].sendValue) {
-                                // console.log(data.data.retMessage)
-                                retval = data.data.retMessage[i].itemName;
-                                // console.log(retval)
+                                //retval = data.data.retMessage[i].sendValue + '（' + data.data.retMessage[i].itemName + '）';
+                                retval = data.data.retMessage[i].itemName ;
                                 $rootScope.constant[name + "-" + val] = retval;
                             }
                         }
                     }
-
                 })
             }
             return '';
@@ -48,7 +47,6 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
                     if (data.data.status == "success") {
                         for (var i = 0; i < data.data.retMessage.length; i++) {
                             if (val == data.data.retMessage[i].guid) {
-                                // console.log(data.data.retMessage)
                                 retval = data.data.retMessage[i].positionName;
                                 // console.log(retval)
                                 $rootScope.constant[val] = retval;
@@ -114,7 +112,6 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
         return function (val, name) {
             var subFrom = {};
             subFrom.dictKey = name;
-            // console.info($rootScope.constant)
             if (isNull($rootScope.constant[val])) {
                 $http.post(manurl +  "/om/duty/loadallduty").then(function (data) {
                     var retval = "";
@@ -284,9 +281,105 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
         return function (val) {
             if(val == null || val.length < 1)
                 return '';//if 不加上{}　代表单次匹配，加上｛｝　代表多次匹配
-            var str = '';
 
-            return '';
+            //进行数组循环
+            var str = '';
+            for(var i=0,len=val.length;i<len;i++){
+                var str2 = '';
+                for(var j=0,len2=val[i].length;j<len2;j++){
+                    if(val[i][j].type){
+                        var sql = '';
+                        if(val[i][j].rlea){
+                            sql = val[i][j].rlea + '('+  val[i][j].type +' '+ val[i][j].guanxi +' '+ val[i][j].ce+')';
+                        }else{
+                            sql = '('+val[i][j].type +' '+ val[i][j].guanxi +' '+ val[i][j].ce+')';
+                        }
+                        str2 += sql;
+                    }
+                }
+                if(val[i][val[i].length-1].orAdd){
+                    str += '('+ str2 +')' + val[i][val[i].length-1].orAdd;
+                }else{
+                    str += '('+ str2 +')';
+                }
+
+            }
+            return str;
         };
     })
+    
+    //翻译岗位内容
+    .filter('SelectPosition', ['$http', '$rootScope', function ($http, $rootScope) {
+        return function (val) {
+            if (isNull($rootScope.constant[val])) {
+                var retval = [];//重新绘制的数组
+                $http.post(manurl +  "/om/org/queryAllposition").then(function (data) {
+                    var send = {}
+                    if (data.data.status == "success") {
+                        for (var i = 0; i < data.data.retMessage.length; i++) {
+                            if (val == data.data.retMessage[i].guid) {
+                                send.value = data.data.retMessage[i].guid;
+                                send.label = data.data.retMessage[i].positionName;
+                                retval.push(send)
+                                $rootScope.constant[val + 'post'] = retval;
+                            }
+                        }
+                    }
+                })
+            }
+            return retval;
+        };
+    }])
+    .filter('Arraysort', ['$http', '$rootScope', function ($http, $rootScope) {
+        //表格排序管道
+        return function (val) {
+            if(!isNull(val)) {
+                var index = 0;
+                for (var i = 0; i < val[0].guid.length; i++) {
+                    if (isNaN(val[0].guid[i])) {
+                        index++
+                    } else {
+                        break;
+                    }
+                }
+                var datas = val.sort(function (a, b) {
+                    return toNum(b) - toNum(a);
+                });
+
+                function toNum(str) {
+                    return parseInt(str.guid.slice(index))
+                }
+
+                for (var j = 0; j < datas.length; j++) {
+                }
+                return datas;
+            }else{
+                return [];
+            }
+        };
+    }])
+    //翻译表格业务字典测试,岗位也是一样，查询所有的然后拼接即可
+    .filter('translateSearch', ['$http', '$rootScope', function ($http, $rootScope) {
+        return function (val) {
+            var subFrom = {};
+            subFrom.dictKey = val;
+            console.log(subFrom)
+            $rootScope.vals = val;
+            var retval = [];
+            if (isNull($rootScope.constant[name + "-" + val])) {
+                $http.post(manurl +  "/DictController/queryDictItemListByDictKey", subFrom).then(function (data) {
+                    if (data.data.status == "success") {
+                        for (var i = 0; i < data.data.retMessage.length; i++) {
+                            var strs = {};
+                            strs.value = data.data.retMessage[i].sendValue;
+                            strs.label = data.data.retMessage[i].itemName;
+                            retval.push(strs);
+                            $rootScope.constant[val+'forEach'] = retval;
+                        }
+                    }
+                })
+            }
+            return retval;
+        };
+}])
 ;

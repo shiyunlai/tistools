@@ -1,7 +1,7 @@
 /**
  * Created by gaojie on 2017/6/26.
  */
-angular.module('MetronicApp').controller('Emp_controller', function ($rootScope, uiGridConstants, $scope, Emp_service, gridUtil, abftree_service,common_service, $window, $http, $timeout, i18nService, filterFilter, uiGridConstants, $uibModal, $state) {
+angular.module('MetronicApp').controller('Emp_controller', function ($rootScope, uiGridConstants,$filter, $scope, Emp_service, gridUtil, abftree_service,common_service, $window, $http, $timeout, i18nService, filterFilter, uiGridConstants, $uibModal, $state) {
     $scope.$on('$viewContentLoaded', function () {
         // initialize core components
         App.initAjax();
@@ -106,22 +106,37 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
         ($scope.$$phase) ? null : $scope.$apply();//避免报错的,意思是如果已经在进行脏检查就是Null啥都不干,如果没有,就执行脏检查
     }
     //定义表头名
-    var com = [{field: 'empCode', displayName: '员工代码'},
+    var com = [{field: 'empCode', displayName: '员工代码'
+        // sort:{direction:'desc'}  排序
+    },
         {field: 'empName', displayName: '员工姓名'},
         {
             field: 'gender',
             displayName: '性别',
-            cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'
+            cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>',
+            filter:{
+                //term: '0',//默认搜索那项
+                type: uiGridConstants.filter.SELECT,
+                selectOptions: [{ value: 'M', label: '男'}, { value: 'F', label: '女' },{ value: 'U', label: '未知' } ]
+            }
         },
         {
             field: 'empstatus',
             displayName: '员工状态',
-            cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'
+            cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>',
+            filter:{
+                type: uiGridConstants.filter.SELECT,
+                selectOptions:$filter('translateSearch')('DICT_OM_EMPSTATUS')||$rootScope.constant['DICT_OM_EMPSTATUS'+'forEach']
+            }
         },
         {
             field: 'empDegree',
             displayName: '员工职级',
-            cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'
+            cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>',
+            filter:{
+                type: uiGridConstants.filter.SELECT,
+                selectOptions:$filter('translateSearch')('DICT_OM_EMPDEGREE')||$rootScope.constant['DICT_OM_EMPDEGREE'+'forEach']
+            }
         },
         {
             field: 'guidPosition',

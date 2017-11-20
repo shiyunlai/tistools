@@ -1,7 +1,7 @@
 /**
  * Created by gaojie on 2017/6/29.
  */
-angular.module('MetronicApp').controller('Workgroup_controller', function ($rootScope, $scope, Workgroup_service, abftree_service, $http, $timeout, i18nService, filterFilter, uiGridConstants, $uibModal, $state) {
+angular.module('MetronicApp').controller('Workgroup_controller', function ($rootScope, $scope, Workgroup_service, abftree_service, $filter,$http, $timeout, i18nService, filterFilter, uiGridConstants, $uibModal, $state) {
     $scope.$on('$viewContentLoaded', function () {
         // initialize core components
         App.initAjax();
@@ -192,7 +192,6 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                 var subFrom = {};
                 subFrom.id = obj.id;
                 Workgroup_service.loadmaintree(subFrom).then(function (data) {
-                    console.log(data)
                     var data = data.retMessage;
                     for (var i = 0; i < data.length; i++) {
                         data[i].text = data[i].groupName;
@@ -283,7 +282,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
         {field: 'groupName', displayName: '工作组名称', enableHiding: false},
         {field: 'groupStatus', displayName: '工作组状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.groupStatus | translateConstants :\'DICT_OM_GROUPSTATUS\') + $root.constant[\'DICT_OM_GROUPSTATUS-\'+row.entity.groupStatus]}}</div>'},
         {field: 'groupType', displayName: '工作组类型', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.groupType | translateConstants :\'DICT_OM_GROUPTYPE\') + $root.constant[\'DICT_OM_GROUPTYPE-\'+row.entity.groupType]}}</div>'},
-        {field: 'guidEmpManager', displayName: '工作组管理员', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpManager | translateEmp) + $root.constant[row.entity.guidEmpManager]}}</div>'},
+        //{field: 'guidEmpManager', displayName: '工作组管理员', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpManager | translateEmp) + $root.constant[row.entity.guidEmpManager]}}</div>'},
         {field: 'guidOrg', displayName: '所属机构', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidOrg | translateOrg) + $root.constant[row.entity.guidOrg]}}</div>'},
         {field: 'startDate', displayName: '工作组有效起始日', enableHiding: false},
         {field: 'endDate', displayName: '工作组有效到期日', enableHiding: false},
@@ -295,7 +294,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
         //调取工作组信息OM_GROUP
         Workgroup_service.loadallgroup().then(function (data) {
             if(data.status == 'success'){
-                var datas = data.retMessage;
+                var datas = $filter('Arraysort')(data.retMessage);//调用管道排序
                 for (var i = 0; i < datas.length; i++) {
                     datas[i].startDate = FormatDate(datas[i].startDate);
                     datas[i].createtime = FormatDate(datas[i].createtime);
@@ -340,7 +339,6 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                     }
                     //调用服务生成机构代码
                     Workgroup_service.addgroup(subFrom).then(function (data) {
-                        console.log(data);
                         if (data.status == "success") {
                             toastr['success']("新增成功!");
                             $scope.next = !next;
@@ -465,7 +463,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                 {field: 'groupName', displayName: '工作组名称', enableHiding: false},
                 {field: 'groupStatus', displayName: '工作组状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.groupStatus | translateConstants :\'DICT_OM_GROUPSTATUS\') + $root.constant[\'DICT_OM_GROUPSTATUS-\'+row.entity.groupStatus]}}</div>'},
                 {field: 'groupType', displayName: '工作组类型', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.groupType | translateConstants :\'DICT_OM_GROUPTYPE\') + $root.constant[\'DICT_OM_GROUPTYPE-\'+row.entity.groupType]}}</div>'},
-                {field: 'guidEmpManager', displayName: '工作组管理员', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpManager | translateEmp) + $root.constant[row.entity.guidEmpManager]}}</div>'},
+                //{field: 'guidEmpManager', displayName: '工作组管理员', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpManager | translateEmp) + $root.constant[row.entity.guidEmpManager]}}</div>'},
                 {field: 'guidOrg', displayName: '所属机构', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidOrg | translatePosition) + $root.constant[row.entity.guidOrg]}}</div>'},
                 {field: 'startDate', displayName: '工作组有效起始日', enableHiding: false},
                 {field: 'startDate', displayName: '工作组有效到期日', enableHiding: false},
@@ -520,7 +518,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                 {field: 'empstatus', displayName: '员工状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
                 {field: 'empDegree', displayName: '员工职级', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
                 {field: 'guidPosition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
-                {field: 'guidempmajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidempmajor | translateEmp) + $root.constant[row.entity.guidempmajor]}}</div>'},
+                {field: 'guidEmpMajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpMajor | translateEmp) + $root.constant[row.entity.guidEmpMajor]}}</div>'},
                 {field: 'indate', displayName: '入职日期', enableHiding: false},
                 {field: 'otel', displayName: '办公电话', enableHiding: false}
             ]
@@ -652,7 +650,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                     {field: 'empstatus', displayName: '员工状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
                     {field: 'empDegree', displayName: '员工职级', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
                     {field: 'guidPosition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
-                    {field: 'guidempmajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidempmajor | translateEmp) + $root.constant[row.entity.guidempmajor]}}</div>'},
+                    {field: 'guidEmpMajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpMajor | translateEmp) + $root.constant[row.entity.guidEmpMajor]}}</div>'},
                     {field: 'indate', displayName: '入职日期', enableHiding: false},
                     {field: 'otel', displayName: '办公电话', enableHiding: false}
                 ]
@@ -855,7 +853,14 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                 $scope.commonGrid = commonGrid;
                 var com = [
                     {field: 'appName', displayName: '应用名称', enableHiding: false},
-                    {field: 'appType', displayName: '应用类别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.appType | translateConstants :\'DICT_AC_APPTYPE\') + $root.constant[\'DICT_AC_APPTYPE-\'+row.entity.appType]}}</div>'},
+                    {field: 'appType', displayName: '应用类别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.appType | translateConstants :\'DICT_AC_APPTYPE\') + $root.constant[\'DICT_AC_APPTYPE-\'+row.entity.appType]}}</div>',
+                        filter:{
+                            //term: '0',//默认搜索那项
+                            type: uiGridConstants.filter.SELECT,
+                            selectOptions: [{ value: 'local', label: '本地'}, { value: 'remote', label: '远程' }]
+                        }
+
+                    },
                     {field: 'openDate', displayName: '开通时间', enableHiding: false},
                     {field: 'appDesc', displayName: '功能描述', enableHiding: false}
                 ];
@@ -863,8 +868,6 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                 });
                 (function (subFrom) {
                     Workgroup_service.queryNotInApp(subFrom).then(function (data) {
-                        console.log(data)
-                        console.log(subFrom)
                         if (data.status == "success" && !isNull(data.retMessage)) {
                             $scope.commonGrid.data = data.retMessage;
                             $scope.commonGrid.mydefalutData = data.retMessage;
@@ -1017,7 +1020,14 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
     //定义表头名
     var com = [
         {field: 'appName', displayName: '应用名称', enableHiding: false},
-        {field: 'appType', displayName: '应用类别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.appType | translateConstants :\'DICT_AC_APPTYPE\') + $root.constant[\'DICT_AC_APPTYPE-\'+row.entity.appType]}}</div>'},
+        {field: 'appType', displayName: '应用类别', enableHiding: false,
+            cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.appType | translateConstants :\'DICT_AC_APPTYPE\') + $root.constant[\'DICT_AC_APPTYPE-\'+row.entity.appType]}}</div>',
+            filter:{
+                //term: '0',//默认搜索那项
+                type: uiGridConstants.filter.SELECT,
+                selectOptions: [{ value: 'local', label: '本地'}, { value: 'remote', label: '远程' }]
+            }
+            },
         {field: 'openDate', displayName: '开通时间', enableHiding: false},
         {field: 'appDesc', displayName: '功能描述', enableHiding: false}
     ];

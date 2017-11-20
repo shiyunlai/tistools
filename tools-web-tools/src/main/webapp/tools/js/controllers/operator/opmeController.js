@@ -2,7 +2,7 @@
  * Created by wangbo on 2017/6/20.
  */
 /*操作员管理控制器*/
-MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $state, $stateParams, filterFilter,operator_service,dictonary_service,common_service, $modal,$uibModal, $http, $timeout,$interval,i18nService) {
+MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $state, $stateParams,$filter, filterFilter,operator_service,dictonary_service,common_service, $modal,$uibModal, $http, $timeout,$interval,i18nService) {
     //grid表格
     i18nService.setCurrentLang("zh-cn");
     //查询操作员列表
@@ -14,6 +14,8 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
         operator_service.queryAllOperator(subFrom).then(function(data){
             var datas = data.retMessage;
             if(data.status == "success"){
+                var datas = $filter('Arraysort')(data.retMessage);//调用管道排序
+                console.log(datas);
                 $scope.gridOptions.data =  datas;
                 $scope.gridOptions.mydefalutData = datas;
                 $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
@@ -23,12 +25,23 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
         })
     }
     operman.queryAll();
+
+
     var gridOptions = {};
     $scope.gridOptions = gridOptions;
     var com = [{ field: 'operatorName', displayName: '操作员姓名'},
         { field: "userId", displayName:'登录用户名'},
-        { field: "authMode", displayName:'认证模式',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.authMode | translateConstants :\'DICT_AC_AUTHMODE\') + $root.constant[\'DICT_AC_AUTHMODE-\'+row.entity.authMode]}}</div>'},
-        { field: "operatorStatus",displayName:'操作员状态',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.operatorStatus | translateConstants :\'DICT_AC_OPERATOR_STATUS\') + $root.constant[\'DICT_AC_OPERATOR_STATUS-\'+row.entity.operatorStatus]}}</div>'},
+        { field: "authMode",
+            displayName:'认证模式',
+            cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.authMode | translateConstants :\'DICT_AC_AUTHMODE\') + $root.constant[\'DICT_AC_AUTHMODE-\'+row.entity.authMode]}}</div>',
+            /*filter:{
+                type: uiGridConstants.filter.SELECT,
+                selectOptions: [{ value: 'password', label: '密码'},{ value: 'dynpassword', label: '动态密码'},{ value: 'captcha', label: '验证码'},{ value: 'ldap', label: 'LDAP认证'},{ value: 'fingerprint', label: '指纹'},{ value: 'fingerprintcard', label: '指纹卡'}]
+            }*/
+        },
+        { field: "operatorStatus",displayName:'操作员状态',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.operatorStatus | translateConstants :\'DICT_AC_OPERATOR_STATUS\') + $root.constant[\'DICT_AC_OPERATOR_STATUS-\'+row.entity.operatorStatus]}}</div>',
+            selectOptions: [{ value: 'password', label: '密码'},{ value: 'dynpassword', label: '动态密码'},{ value: 'captcha', label: '验证码'},{ value: 'ldap', label: 'LDAP认证'},{ value: 'fingerprint', label: '指纹'},{ value: 'fingerprintcard', label: '指纹卡'}]
+        },
         { field: "menuType",displayName:'菜单风格',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.menuType | translateConstants :\'DICT_AC_MENUTYPE\') + $root.constant[\'DICT_AC_MENUTYPE-\'+row.entity.menuType]}}</div>'},
         { field: "lockLimit",displayName:'锁定次数限制'}
     ];

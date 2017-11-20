@@ -214,12 +214,12 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-12">
+                                                        <!--<div class="col-md-12">
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-3">删除记录检查引用关系</label>
                                                                 <div class="col-md-9">
                                                                     <div class="form">
-                                                                        <!-- BEGIN FORM-->
+                                                                        &lt;!&ndash; BEGIN FORM&ndash;&gt;
                                                                             <div class="form-body">
                                                                                     <div class="col-md-12">
                                                                                         <div ng-form="subform" class="col-md-4">表名</div>
@@ -243,11 +243,45 @@
                                                                                         </div>
                                                                                     </div>
                                                                             </div>
-                                                                        <!-- END FORM-->
+                                                                        &lt;!&ndash; END FORM&ndash;&gt;
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div>-->
+                                                        <!--<div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">删除记录检查引用关系</label>
+                                                                <div class="col-md-9">
+                                                                    <div class="form">
+                                                                        &lt;!&ndash; BEGIN FORM&ndash;&gt;
+                                                                            <div class="form-body">
+                                                                                    <div class="col-md-12">
+                                                                                        <div ng-form="subform" class="col-md-4">表名</div>
+                                                                                        <div ng-form="subform" class="col-md-4">字段名</div>
+                                                                                        <div ng-form="subform" class="col-md-2">关系值</div>
+                                                                                        <div ng-form="subform" class="col-md-2">操作</div>
+                                                                                        <div class="col-md-12" style="border-bottom: 1px solid #ccc;margin-top:5px;">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-12"  style="margin:10px 0px;" ng-repeat="d in dataEnt.qualityRatingExt track by $index"  >
+                                                                                        <div ng-form="subform" class="col-md-4"><input ng-disabled="!editflag"  ng-model="d.tableName" type="text"  class="form-control  {{subform.$invalid&&'lanmo-warning'}}"/></div>
+                                                                                        <div ng-form="subform" class="col-md-4"><input ng-disabled="!editflag" ng-model="d.columeName" type="text"  class="form-control col-md-5 {{subform.$invalid&&'lanmo-warning'}}"/></div>
+                                                                                        <div ng-form="subform" class="col-md-2" ng-init="$settings.getDictData('DICT_YON')">
+                                                                                            <select class="form-control"   required   ng-model="d.isDel" name="isview" ng-disabled="!editflag">
+                                                                                                <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <div class="col-md-2" ng-if="editflag">
+                                                                                            <a  href ng-click="addQualityRatingExt()" class="btn btn-icon-only green"><i class="fa fa-plus"></i></a>
+                                                                                            <a  ng-if="qualityRatingExt.length>1" href ng-click="delQualityRatingExt($index)" class="btn btn-icon-only green"><i class="fa fa-minus"></i></a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                            </div>
+                                                                        &lt;!&ndash; END FORM&ndash;&gt;
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>-->
                                                         <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-2"></label>

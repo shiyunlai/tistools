@@ -1,9 +1,8 @@
 /**
  * Created by gaojie on 2017/7/26.
  */
-angular.module('MetronicApp').controller('duty_controller', function($rootScope, $scope,$state,duty_service,abftree_service, $http, $timeout,i18nService,filterFilter,uiGridConstants,$uibModal,$state) {
+angular.module('MetronicApp').controller('duty_controller', function($rootScope, $scope,$state,$filter,duty_service,abftree_service, $http, $timeout,i18nService,filterFilter,uiGridConstants,$uibModal,$state) {
     $scope.$on('$viewContentLoaded', function () {
-        // initialize core components
         App.initAjax();
     });
     //定义主题信息
@@ -326,10 +325,10 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
             //生成下级职务列表
             var xjzwgrid = {};
             $scope.xjzwgrid = xjzwgrid;
-            var com = [{ field: 'dutyCode', displayName: '职务代码', enableHiding: false},
-                { field: 'dutyName', displayName: '职务名称', enableHiding: false},
-                { field: 'dutyType', displayName: '职务类型', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.dutyType | translateConstants :\'DICT_OM_DUTYTYPE\') + $root.constant[\'DICT_OM_DUTYTYPE-\'+row.entity.dutyType]}}</div>'},
-                { field: 'remark', displayName: '备注', enableHiding: false}]
+            var com = [{ field: 'dutyCode', displayName: '职务代码', enableHiding: true},
+                { field: 'dutyName', displayName: '职务名称', enableHiding: true},
+                { field: 'dutyType', displayName: '职务类型', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.dutyType | translateConstants :\'DICT_OM_DUTYTYPE\') + $root.constant[\'DICT_OM_DUTYTYPE-\'+row.entity.dutyType]}}</div>'},
+                { field: 'remark', displayName: '备注', enableHiding: true}]
             $scope.xjzwgrid = initgrid($scope,xjzwgrid,filterFilter,com,true,function () {
                 
             });
@@ -337,9 +336,10 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
                 var subFrom = {};
                 subFrom.dutyCode = $scope.duty.item.dutyCode;
                 duty_service.querychild(subFrom).then(function (data) {
+                    var datas = $filter('Arraysort')(data.retMessage);//调用管道排序
                     if(data.status == "success"){
-                        $scope.xjzwgrid.data =  data.retMessage;
-                        $scope.xjzwgrid.mydefalutData =  data.retMessage;
+                        $scope.xjzwgrid.data =  datas;
+                        $scope.xjzwgrid.mydefalutData =  datas;
                         $scope.xjzwgrid.getPage(1,$scope.xjzwgrid.paginationPageSize);
                     }else{
 
@@ -358,15 +358,15 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
             var zwrygrid = {};
             $scope.zwrygrid = zwrygrid;
             //定义表头名
-            var com = [{ field: 'empCode', displayName: '员工代码', enableHiding: false},
-                { field: 'empName', displayName: '员工姓名', enableHiding: false},
-                { field: 'gender', displayName: '性别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'},
-                { field: 'empstatus', displayName: '员工状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
-                { field: 'empDegree', displayName: '员工职级', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
-                {field: 'guidPosition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
-                {field: 'guidEmpMajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpMajor | translateEmp) + $root.constant[row.entity.guidEmpMajor]}}</div>'},
-                { field: 'indate', displayName: '入职日期', enableHiding: false},
-                { field: 'otel', displayName: '办公电话', enableHiding: false}
+            var com = [{ field: 'empCode', displayName: '员工代码', enableHiding: true},
+                { field: 'empName', displayName: '员工姓名', enableHiding: true},
+                { field: 'gender', displayName: '性别', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'},
+                { field: 'empstatus', displayName: '员工状态', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
+                { field: 'empDegree', displayName: '员工职级', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
+                {field: 'guidPosition', displayName: '基本岗位', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
+                {field: 'guidEmpMajor', displayName: '直接主管', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpMajor | translateEmp) + $root.constant[row.entity.guidEmpMajor]}}</div>'},
+                { field: 'indate', displayName: '入职日期', enableHiding: true},
+                { field: 'otel', displayName: '办公电话', enableHiding: true}
             ]
             $scope.zwrygrid = initgrid($scope,zwrygrid,filterFilter,com,true,function () {
                 
@@ -411,10 +411,10 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
     //生成职务列表
     var dutygrid = {};
     $scope.dutygrid = dutygrid;
-    var com = [{ field: 'dutyCode', displayName: '职务代码', enableHiding: false},
-        { field: 'dutyName', displayName: '职务名称', enableHiding: false},
-        { field: 'dutyType', displayName: '职务类型', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.dutyType | translateConstants :\'DICT_OM_DUTYTYPE\') + $root.constant[\'DICT_OM_DUTYTYPE-\'+row.entity.dutyType]}}</div>'},
-        { field: 'remark', displayName: '备注', enableHiding: false}
+    var com = [{ field: 'dutyCode', displayName: '职务代码', enableHiding: true},
+        { field: 'dutyName', displayName: '职务名称', enableHiding: true},
+        { field: 'dutyType', displayName: '职务类型', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.dutyType | translateConstants :\'DICT_OM_DUTYTYPE\') + $root.constant[\'DICT_OM_DUTYTYPE-\'+row.entity.dutyType]}}</div>'},
+        { field: 'remark', displayName: '备注', enableHiding: true}
     ]
     $scope.dutygrid = initgrid($scope,dutygrid,filterFilter,com,true,function () {
         
@@ -438,10 +438,10 @@ angular.module('MetronicApp').controller('duty_controller', function($rootScope,
     var redutygrid = function () {
         //调取所有职务信息
         duty_service.loadallduty().then(function (data) {
-            console.log(data.retMessage)
+            var datas = $filter('Arraysort')(data.retMessage);//调用管道排序
             if(data.status == "success"){
-                $scope.dutygrid.data =  data.retMessage;
-                $scope.dutygrid.mydefalutData =  data.retMessage;
+                $scope.dutygrid.data =  datas;
+                $scope.dutygrid.mydefalutData =  datas;
                 $scope.dutygrid.getPage(1,$scope.dutygrid.paginationPageSize);
             }else{
 
