@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
+import org.tis.tools.model.def.JNLConstants;
 import org.tis.tools.model.po.ac.*;
 import org.tis.tools.model.po.om.OmEmpOrg;
 import org.tis.tools.model.po.om.OmEmployee;
@@ -291,6 +292,13 @@ public class OrgManagerController extends BaseController {
      * @param content
      * @return
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_ADD,  // 操作类型
+            operateDesc = "新增岗位", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "guid", // 操作对象标识
+            name = "positionName", // 操作对象名
+            keys = {"positionCode", "guidOrg"}) // 操作对象的关键值的键值名
     @RequestMapping(value = "/addposit")
     @ResponseBody
     public Map<String, Object> addPosit(@RequestBody String content) {
@@ -525,7 +533,7 @@ public class OrgManagerController extends BaseController {
      */
     @OperateLog(
             operateType = "add",  // 操作类型
-            operateDesc = "为岗位添加人员", // 操作描述
+            operateDesc = "岗位添加人员", // 操作描述
             retType = ReturnType.Object, // 返回类型，对象或数组
             id = "guidPos", // 操作对象标识
             name = "guidPos", // 操作对象名

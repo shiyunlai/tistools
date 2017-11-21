@@ -3,10 +3,10 @@
  */
 package org.tools.design.provider.service;
 
-import java.util.List;
-
 import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.rservice.om.capable.IOrgRService;
+
+import java.util.List;
 
 /**
  * @author megapro
@@ -61,9 +61,9 @@ public class OMServiceTest {
 
 	private String testGenOrgCode() {
 		System.out.println("获取机构代码");
-		String orgCode = orgRService.genOrgCode("021", "4", "90");
+		String orgCode = orgRService.genOrgCode("021", "4");
 		System.out.println("orgCode is :" + orgCode);
-		return orgCode ; 
+		return orgCode ;
 	}
 	
 	private void testCreateRootOrg(String orgCode) {
@@ -74,8 +74,8 @@ public class OMServiceTest {
 	}
 	
 	private void testCopyOrg(String copyFrom, String copyTo) {
-		System.out.println("拷贝机构 copyFrom="+copyFrom+" copyTo="+copyTo);
-		OmOrg copied = orgRService.copyOrg(copyFrom, copyTo);
+		System.out.println("拷贝机构 copyFrom="+copyFrom);
+		OmOrg copied = orgRService.copyOrg(copyFrom);
 		System.out.println("拷贝所得机构：\n"+copied);
 	}
 	
@@ -86,4 +86,5 @@ public class OMServiceTest {
 			System.out.println(o);
 		}
 	}
+
 }

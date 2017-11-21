@@ -73,19 +73,27 @@ public interface IApplicationRService {
 	 List<AcApp> queryAcAppList(WhereCondition wc) throws AppManagementException;
 	
 	/**
-	 * 根据条件查询应用系统(AC_APP)
+	 * 根据GUID应用系统(AC_APP)
 	 * @param guid 
 	 * @return 满足条件的记录
 	 */
-	 AcApp queryAcApp(String guid);
-	
+	 AcApp queryAcApp(String guid) throws AppManagementException;
+
+	/**
+	 * 根据应用代码查询应用系统(AC_APP)
+	 * @param appCode
+	 * @return
+	 * @throws AppManagementException
+	 */
+	 AcApp queryAcAppByCode(String appCode) throws AppManagementException;
+
 	
 	/**
 	 * 根据条件查询应用系统(AC_APP)
 	 * @param 
 	 * @return 根目录list
 	 */
-	 List<AcApp> queryAcRootList();
+	 List<AcApp> queryAcRootList() throws AppManagementException;
 	
 	
 	/**
@@ -93,7 +101,7 @@ public interface IApplicationRService {
 	 * @param appGuid
 	 * @return 
 	 */
-	 List<AcFuncgroup> queryAcRootFuncgroup(String appGuid);
+	 List<AcFuncgroup> queryAcRootFuncgroup(String appGuid) throws AppManagementException;
 	
 	
 	/**
@@ -101,14 +109,14 @@ public interface IApplicationRService {
 	 * @param guidParent
 	 * @return 
 	 */
-	 List<AcFuncgroup> queryAcChildFuncgroup(String guidParent);
+	 List<AcFuncgroup> queryAcChildFuncgroup(String guidParent) throws AppManagementException;
 	
 	/**
 	 * 新增功能组(AC_FUNCGROUP)
 	 * @param acFuncgroup 功能组对象
 	 * return  AcFuncgroup
 	 */
-	 AcFuncgroup createAcFuncGroup(AcFuncgroup acFuncgroup);
+	 AcFuncgroup createAcFuncGroup(AcFuncgroup acFuncgroup) throws AppManagementException;
 
 
 	/**
@@ -321,7 +329,7 @@ public interface IApplicationRService {
 	 * 
 	 * @param acBhvtypeDef 行为类型
 	 */
-	 void functypeAdd(AcBhvtypeDef acBhvtypeDef);
+	AcBhvtypeDef functypeAdd(AcBhvtypeDef acBhvtypeDef);
 	
 	
 	/**
@@ -329,7 +337,7 @@ public interface IApplicationRService {
 	 * 
 	 * @param acBhvtypeDef 行为类型
 	 */
-	 void functypeEdit(AcBhvtypeDef acBhvtypeDef);
+	AcBhvtypeDef functypeEdit(AcBhvtypeDef acBhvtypeDef);
 	
 	
 	
@@ -338,7 +346,7 @@ public interface IApplicationRService {
 	 * 
 	 * @param guid 行为类型
 	 */
-	 void functypeDel(String guid);
+	AcBhvtypeDef functypeDel(String guid);
 	
 	/**
 	 * 查询行为类型(AC_BHVTYPE_DEF)
@@ -354,7 +362,7 @@ public interface IApplicationRService {
 	 * 
 	 * @param acBhvDef 功能操作行为
 	 */
-	 void funactAdd(AcBhvDef acBhvDef);
+	AcBhvDef funactAdd(AcBhvDef acBhvDef);
 	
 
 	/**
@@ -362,7 +370,7 @@ public interface IApplicationRService {
 	 * 
 	 * @param guids 条件
 	 */
-	 void funactDel(List guids);
+	List<AcBhvDef> funactDel(List guids);
 	
 	
 	/**
@@ -370,7 +378,7 @@ public interface IApplicationRService {
 	 * 
 	 * @param acBhvDef 功能操作行为
 	 */
-	 void funactEdit(AcBhvDef acBhvDef);
+	AcBhvDef funactEdit(AcBhvDef acBhvDef);
 	
 	
 	/**

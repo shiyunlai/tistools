@@ -41,18 +41,19 @@ public class AcOperatorServiceExt {
      * @return
      */
     public List<Map> getAuthOperatorFuncBhv(List<String> roleGuid, String operatorGuid, String funcGuid) {
-        if (!CollectionUtils.isEmpty(roleGuid)) {
-            StringBuilder sb = new StringBuilder("(");
+        StringBuilder sb = new StringBuilder("(");
+        if (CollectionUtils.isEmpty(roleGuid)) {
+            sb.append("''");
+        } else {
             for (int k = 0; k < roleGuid.size(); k++) {
                 sb.append("'").append(roleGuid.get(k)).append("'");
                 if (k != roleGuid.size() - 1) {
                     sb.append(",");
                 }
             }
-            sb.append(")");
-            return acOperatorMapperExt.getAuthOperatorFuncBhv(String.valueOf(sb), operatorGuid, funcGuid);
         }
-        return null;
+        sb.append(")");
+        return acOperatorMapperExt.getAuthOperatorFuncBhv(String.valueOf(sb), operatorGuid, funcGuid);
     }
 
     /**
@@ -73,6 +74,28 @@ public class AcOperatorServiceExt {
      */
     public List<Map> getUnauthOperatorFuncPmtBhv(String operatorGuid, String funcGuid) {
         return acOperatorMapperExt.getUnauthOperatorFuncPmtBhv(operatorGuid, funcGuid);
+    }
+
+    /**
+     * 查询操作员所有功能行为
+     * @param operatorGuid 操作员GUID
+     * @param roleGuid 角色GUID
+     * @return
+     */
+    public List<Map> getAllOperatorFuncPmtBhv(String operatorGuid, List<String> roleGuid) {
+        StringBuilder sb = new StringBuilder("(");
+        if (CollectionUtils.isEmpty(roleGuid)) {
+            sb.append("''");
+        } else {
+            for (int k = 0; k < roleGuid.size(); k++) {
+                sb.append("'").append(roleGuid.get(k)).append("'");
+                if (k != roleGuid.size() - 1) {
+                    sb.append(",");
+                }
+            }
+        }
+        sb.append(")");
+        return acOperatorMapperExt.getAllOperatorFuncPmtBhv(operatorGuid, String.valueOf(sb));
     }
 
 

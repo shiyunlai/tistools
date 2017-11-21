@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
-import org.springframework.validation.beanvalidation.BeanValidationPostProcessor;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.common.utils.BeanFieldValidateUtil;
 import org.tis.tools.common.utils.ObjectUtil;
@@ -85,7 +84,20 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	OmGroupAppService omGroupAppService;
 	@Autowired
 	IOrgCodeGenerator orgCodeGenerator;
-	
+
+
+	/**
+	 * 生成机构代码
+	 *
+	 * @param areaCode  区域代码
+	 * @param orgDegree 机构等级
+	 * @return 机构代码
+	 * @throws OrgManagementException
+	 */
+	@Override
+	public String genOrgCode(String areaCode, String orgDegree) throws OrgManagementException {
+		return orgCodeGenerator.genOrgCode(orgDegree, areaCode);
+	}
 
 	/**
 	 *
@@ -135,6 +147,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		org.setOrgName(orgName);
 		org.setOrgType(orgType);
 		org.setOrgDegree(orgDegree);
+		org.setArea(areaCode);
 		omOrgService.insert(org);
 		return org;
 	}
@@ -178,11 +191,12 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 			throw new OrgManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("String orgType", "createChildOrg"));
 		}
 		if(StringUtil.isEmpty(guidParents)) {
-			throw new OrgManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("String orgType", "createChildOrg"));
+			throw new OrgManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("String guidParents", "createChildOrg"));
 		}
 		// 查询父机构信息
 		WhereCondition wc = new WhereCondition();
 		wc.andEquals("GUID", guidParents);
+
 		List<OmOrg> parentsOrgList = omOrgService.query(wc);
 		if(CollectionUtils.isEmpty(parentsOrgList)) {
 			throw new OrgManagementException(
@@ -207,6 +221,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		org.setOrgName(orgName);
 		org.setOrgType(orgType);
 		org.setOrgDegree(orgDegree);
+		org.setArea(areaCode);
 		// 更新父节点机构 是否叶子节点 节点数 最新更新时间 和最新更新人员
 		parentsOrg.setLastUpdate(new Date());// 补充最近更新时间
 		parentsOrg.setUpdator("");// TODO 暂时为空
@@ -604,7 +619,6 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 	/**
 	 * 执行深度机构赋值
 	 * @param copyFromOrgCode
-	 * @param newOrgCode
 	 * @param copyOrgRole
 	 * @param copyPosition
 	 * @param copyPositionRole

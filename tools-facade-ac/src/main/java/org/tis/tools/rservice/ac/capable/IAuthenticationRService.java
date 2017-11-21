@@ -4,10 +4,10 @@
 package org.tis.tools.rservice.ac.capable;
 
 import org.tis.tools.base.exception.ToolsRuntimeException;
+import org.tis.tools.model.dto.shiro.AbfPermission;
 import org.tis.tools.model.po.ac.AcFunc;
 import org.tis.tools.model.po.ac.AcOperator;
 import org.tis.tools.model.po.ac.AcOperatorIdentity;
-import org.tis.tools.model.vo.ac.AcPermission;
 import org.tis.tools.rservice.ac.exception.AuthManagementException;
 
 import java.util.List;
@@ -70,6 +70,7 @@ public interface IAuthenticationRService {
      *
      */
     AcOperator loginCheck(String userId, String password, String identity, String appGuid) throws AuthManagementException;
+    AcOperator loginCheck2(String userId, String identity, String appCode) throws AuthManagementException;
 
     /**
      *  根据用户id和身份查询菜单信息
@@ -82,11 +83,12 @@ public interface IAuthenticationRService {
      *            用户ID
      * @param identity
      *             身份GUID
-     * @
+     * @param appCode
+     *              引用代码
      *
      * @throws AuthManagementException
      */
-    Map<String, Object> getInitInfoByUserIdAndIden(String userId, String identity, String appGuid) throws AuthManagementException;
+    Map<String, Object> getInitInfoByUserIdAndIden(String userId, String identity, String appCode) throws AuthManagementException;
 
 
     /**
@@ -130,7 +132,7 @@ public interface IAuthenticationRService {
      * @return
      * @throws AuthManagementException
      */
-    AcPermission getPermissions(String userId, String appCode) throws AuthManagementException;
+    AbfPermission getPermissions(String userId, String appCode) throws AuthManagementException;
 
 
     /**

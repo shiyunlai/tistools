@@ -377,7 +377,7 @@ public class ACExceptionCodes {
 	 */
 	public static final String FAILURE_WHEN_LOGIN  = R_EX_CODE("0070");
 	/**
-	 * 登录异常
+	 * 登录异常 身份与操作员不对应
 	 */
 	public static final String IDENTITY_NOT_CORRESPONDING_TO_USER  = R_EX_CODE("0071");
 

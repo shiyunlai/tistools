@@ -20,15 +20,16 @@
 			<bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter"/>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
-	<mvc:interceptors>
-		<!-- 多个拦截器，顺序执行 -->
+	<!--<mvc:interceptors>
+		&lt;!&ndash; 多个拦截器，顺序执行 &ndash;&gt;
 		<mvc:interceptor>
 			<mvc:mapping path="/**/"/>
 			<mvc:exclude-mapping path="/AcAuthenticationController/checkUserStatus"/>
 			<mvc:exclude-mapping path="/AcAuthenticationController/login"/>
-			<bean class="org.tis.tools.webapp.interceptor.LoginInterceptor"></bean>
+			<mvc:exclude-mapping path="/AcAuthenticationController/Shirologin"/>
+			<bean class="org.tis.tools.webapp.interceptor.LoginInterceptor"/>
 		</mvc:interceptor>
-	</mvc:interceptors>
+	</mvc:interceptors>-->
 
 	<!--<context:component-scan base-package="org.tis.tools.webapp.controller"/>-->
 

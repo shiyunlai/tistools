@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Param;
 import org.tis.tools.model.po.ac.AcFunc;
 
 import java.util.List;
+import java.util.Map;
 
 public interface AcFuncMapperExt {
 
@@ -14,4 +15,12 @@ public interface AcFuncMapperExt {
      * @return
      */
     List<AcFunc> queryFuncListInApp(@Param("appGuid") String appGuid);
+
+    /**
+     * 查询功能资源信息
+     * 用于组装路由
+     * @param funcGuids 功能GUID集合
+     * @return
+     */
+    List<Map> queryFuncResourcesWithFuncCode(@Param("funcGuids") String funcGuids);
 }

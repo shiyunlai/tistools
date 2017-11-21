@@ -67,6 +67,16 @@
 			<groupId>org.tis</groupId>
 			<artifactId>tools-common-util</artifactId>
 		</dependency>
+		<!--fastJson-->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+		</dependency>
+		<!--shiro-->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-core</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

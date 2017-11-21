@@ -3,20 +3,12 @@
  */
 package org.tools.design.test.om;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.tis.tools.base.WhereCondition;
-import org.tis.tools.common.utils.SequenceSimpleUtil;
-import org.tis.tools.model.po.sys.SysDict;
-import org.tis.tools.model.po.sys.SysDictItem;
+import org.tis.tools.base.exception.ToolsRuntimeException;
+import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.rservice.om.capable.IOrgRService;
-import org.tis.tools.rservice.sys.basic.ISysDictItemRService;
-import org.tis.tools.rservice.sys.basic.ISysDictRService;
 import org.tools.design.SpringJunitSupport;
-
-import junit.framework.Assert;
 
 /**
  * 
@@ -30,18 +22,18 @@ public class OrgRServiceTest extends SpringJunitSupport{
 	@Autowired
 	IOrgRService orgRService;
 	
-	@Autowired
-	ISysDictRService sysDictRService ; 
-	
-	@Autowired
-	ISysDictItemRService sysDictItemRService ; 
+//	@Autowired
+//	IDictRService sysDictRService ;
+//
+//	@Autowired
+//	ISysDictItemRService sysDictItemRService ;
 	
 	
 	
 	/*
 	 * 测试数据: 生成机构代码所需的数据
 	 */
-	private static String orgDegree = "0"; //机构等级
+	/*private static String orgDegree = "0"; //机构等级
 	private static String areaCode = "" ; //区域代码
 	private static String orgType = "" ; //机构类型
 	
@@ -95,7 +87,7 @@ public class OrgRServiceTest extends SpringJunitSupport{
 		sysDictItemRService.deleteByCondition(wcSysDictItem);
     }
 	
-	/**
+	*//**
 	 * <pre>
 	 * 案例1:生成机构代码成功
 	 * 判断：机构代码满足既定规则
@@ -103,7 +95,7 @@ public class OrgRServiceTest extends SpringJunitSupport{
 	 * 1.共10位；
 	 * 2.组成结构： 机构等级(两位) + 地区码(三位) + 序号(五位)
 	 * </pre>
-	 */
+	 *//*
 	@Test
 	public void genOrgCodeSucc() {
 		
@@ -117,16 +109,27 @@ public class OrgRServiceTest extends SpringJunitSupport{
 		
 	}
 	
-	/**
+	*//**
 	 * 案例2:生成机构代码失败，缺少所需的业务字典
-	 */
+	 *//*
 	@Test
 	public void genFailureCase() {
 		
+	}*/
+
+	@Test
+	public void copyOrg() throws ToolsRuntimeException {
+		try {
+			String copyCode = "ORGBS01000016";
+			OmOrg omOrg = orgRService.copyOrg(copyCode);
+			System.out.println(omOrg);
+		} catch (ToolsRuntimeException e) {
+			System.out.println("错误码：" + e.getCode());
+			System.out.println("错误信息：" + e.getMessage());
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
 	}
-	
-	
-	
 	
 	
 }

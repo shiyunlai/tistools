@@ -1,11 +1,11 @@
 package org.tools.design.test.ac;
 
+import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.def.ACConstants;
-import org.tis.tools.model.po.ac.AcConfig;
-import org.tis.tools.model.po.ac.AcRole;
+import org.tis.tools.model.po.ac.*;
 import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
 import org.tis.tools.rservice.ac.capable.IOperatorRService;
 import org.tools.design.SpringJunitSupport;
@@ -113,6 +113,98 @@ public class OperatorRServiceTest extends SpringJunitSupport {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void getOperatorFuncInfo() throws ToolsRuntimeException {
+
+        try {
+            String userId = "admin";
+            String appGuid = "APP1509196635";
+            AcOperatorFuncDetail operatorFuncInfo = operatorRService.getOperatorFuncInfo(userId, appGuid);
+            System.out.println(operatorFuncInfo);
+        } catch (ToolsRuntimeException e) {
+            System.out.println("错误码："+e.getCode());
+            System.out.println("错误信息："+e.getMessage());
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void changeOperatorStatus() throws ToolsRuntimeException {
+
+        try {
+            String userId = "admin";
+            String status = ACConstants.OPERATE_STATUS_LOGOUT;
+            AcOperator acOperator = operatorRService.changeOperatorStatus(userId, status);
+            System.out.println(acOperator);
+        } catch (ToolsRuntimeException e) {
+            System.out.println("错误码："+e.getCode());
+            System.out.println("错误信息："+e.getMessage());
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
+    }
+
+
+    @Test
+    public void getOperatorsNotLinkEmp() throws ToolsRuntimeException {
+        try {
+            List<AcOperator> operatorsNotLinkEmp = operatorRService.getOperatorsNotLinkEmp();
+            System.out.println(operatorsNotLinkEmp);
+        } catch (ToolsRuntimeException e) {
+            System.out.println("错误码："+e.getCode());
+            System.out.println("错误信息："+e.getMessage());
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void setDefaultOperatorIdentity() throws ToolsRuntimeException {
+        try {
+            String identityGuid= "3";
+            AcOperatorIdentity acOperatorIdentity = operatorRService.setDefaultOperatorIdentity(identityGuid);
+            System.out.println(acOperatorIdentity);
+        } catch (ToolsRuntimeException e) {
+            System.out.println("错误码："+e.getCode());
+            System.out.println("错误信息："+e.getMessage());
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void getOperatorFuncBhvInfo() throws ToolsRuntimeException {
+        try {
+            String funcGuid = "FUNC1500601486";
+            String userId = "renxy";
+            Map<String, List<Map>> operatorFuncBhvInfo = operatorRService.getOperatorFuncBhvInfo(userId, funcGuid);
+            System.out.println(operatorFuncBhvInfo);
+        } catch (ToolsRuntimeException e) {
+            System.out.println("错误码："+e.getCode());
+            System.out.println("错误信息："+e.getMessage());
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void addAcOperatorBhv() throws ToolsRuntimeException {
+        try {
+            String data = "[{\"guidFuncBhv\":\"BHVDEF1507626382\",\"guidOperator\":\"OPERATOR1509439057\",\"authType\":0}]";
+            List<AcOperatorBhv> acOperatorBhvs = JSON.parseArray(data, AcOperatorBhv.class);
+            operatorRService.addAcOperatorBhv(acOperatorBhvs);
+        } catch (ToolsRuntimeException e) {
+            System.out.println("错误码："+e.getCode());
+            System.out.println("错误信息："+e.getMessage());
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 
 
 }

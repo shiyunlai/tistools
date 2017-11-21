@@ -7,7 +7,7 @@
     <!-- Add rules here for anything that shouldn't be served up by Spring MVC. -->
     <rule>
         <from>/</from>
-        <to>/app/login</to>
+        <to>/tools/login.html</to>
     </rule>
     <rule>
         <from>/app/**</from>
