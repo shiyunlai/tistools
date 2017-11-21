@@ -8,12 +8,12 @@ import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.common.utils.BeanFieldValidateUtil;
-import org.tis.tools.common.utils.CryptographyUtil;
 import org.tis.tools.common.utils.StringUtil;
 import org.tis.tools.core.exception.ExceptionCodes;
 import org.tis.tools.model.def.ACConstants;
 import org.tis.tools.model.def.CommonConstants;
 import org.tis.tools.model.def.GUID;
+import org.tis.tools.model.dto.shiro.PasswordHelper;
 import org.tis.tools.model.po.ac.*;
 import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
@@ -142,7 +142,7 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
             acOperator.setOperatorStatus(ACConstants.OPERATE_STATUS_STOP);
             acOperator.setGuid(GUID.operaor());
             acOperator.setErrCount(new BigDecimal("0"));
-            acOperator.setPassword(CryptographyUtil.md5(acOperator.getPassword()));
+            acOperator.setPassword(PasswordHelper.generate(acOperator.getPassword(), acOperator.getGuid()));
             acOperatorService.insert(acOperator);
             return sensitiveInfoProcess(acOperator);
         } catch (OperatorManagementException oe) {
@@ -1484,6 +1484,7 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
                     if (!StringUtil.isEqualsIn(old_status, ACConstants.OPERATE_STATUS_LOGOUT, ACConstants.OPERATE_STATUS_PAUSE)) {
                         throw new OperatorManagementException(ACExceptionCodes.CURRENT_STATUS_IS_NOT_ALLOWED_CHANGE, wrap(old_status, ACConstants.OPERATE_STATUS_LOGIN));
                     }
+                    acOperator.setErrCount(new BigDecimal(0));
                     acOperator.setOperatorStatus(status);
                     break;
                 /*改变状态为 退出
@@ -1493,6 +1494,16 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
                     acOperator.setOperatorStatus(status);
                     break;
                 /*改变状态为 挂起
+                * 限制当前状态 为正常
+                * */
+                case ACConstants.OPERATE_STATUS_LOCK :
+                    if (!StringUtils.isEquals(old_status, ACConstants.OPERATE_STATUS_PAUSE)) {
+                        throw new OperatorManagementException(ACExceptionCodes.CURRENT_STATUS_IS_NOT_ALLOWED_CHANGE, wrap(old_status, ACConstants.OPERATE_STATUS_PAUSE));
+                    }
+                    acOperator.setLockTime(new Date());
+                    acOperator.setOperatorStatus(status);
+                    break;
+                /*改变状态为 锁定
                 * 限制当前状态 为正常
                 * */
                 case ACConstants.OPERATE_STATUS_PAUSE :

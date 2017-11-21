@@ -1,14 +1,16 @@
 package org.tis.tools.model.vo.ac;
 
-import org.apache.poi.ss.formula.functions.T;
-import org.codehaus.plexus.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.po.ac.AcMenu;
 import org.tis.tools.model.po.ac.AcOperatorMenu;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class AcMenuDetail implements Serializable {
     /** serialVersionUID */

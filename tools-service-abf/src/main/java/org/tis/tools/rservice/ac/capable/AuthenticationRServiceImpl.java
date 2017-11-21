@@ -10,8 +10,9 @@ import org.tis.tools.common.utils.StringUtil;
 import org.tis.tools.core.exception.ExceptionCodes;
 import org.tis.tools.model.def.ACConstants;
 import org.tis.tools.model.def.CommonConstants;
+import org.tis.tools.model.dto.shiro.AbfPermission;
+import org.tis.tools.model.dto.shiro.PasswordHelper;
 import org.tis.tools.model.po.ac.*;
-import org.tis.tools.model.vo.ac.AcPermission;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.ac.exception.AuthManagementException;
 import org.tis.tools.service.ac.*;
@@ -74,6 +75,12 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
     @Autowired
     IApplicationRService applicationRService;
 
+    @Autowired
+    AcOperatorServiceExt acOperatorServiceExt;
+
+    @Autowired
+    AcFuncServiceExt acFuncServiceExt;
+
     /**
      *   用户状态检查
      * a)	判断用户是否存在；
@@ -116,7 +123,7 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
             e.printStackTrace();
             throw new AuthManagementException(
                     ACExceptionCodes.CHECK_USER_STATUS_ERROR,
-                    wrap(e.getCause().getMessage()));
+                    wrap(e));
         }
 
     }
@@ -218,20 +225,48 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
         }
     }
 
+    @Override
+    public AcOperator loginCheck2(String userId, String identity, String appCode) throws AuthManagementException {
+        // 校验传入参数
+        if (StringUtils.isBlank(userId)) {
+            throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("userId"));
+        }
+        if (StringUtils.isBlank(identity)) {
+            throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("identity"));
+        }
+        if (StringUtils.isBlank(appCode)) {
+            throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("appCode"));
+        }
+        // 判断用户是否存在
+        List<AcOperator> acOperators = acOperatorService.query(new WhereCondition().andEquals("USER_ID", userId));
+        if (acOperators.size() != 1) {
+            throw new AuthManagementException(ACExceptionCodes.USER_ID_NOT_EXIST,
+                    wrap(surroundBracketsWithLFStr(AcOperator.COLUMN_USER_ID, userId)));
+        }
+        // 验证用户是否有该应用权限
+        List<AcApp> acApps = applicationRService.queryOperatorAllApp(userId);
+        long count = acApps.stream().filter(acApp -> StringUtils.isEquals(acApp.getAppCode(), appCode)).count();
+        if(count < 1) {
+            throw new AuthManagementException(ACExceptionCodes.PERMISSION_DENIED);
+        }
+        return acOperators.get(0);
+        //
+    }
+
     /**
      * 根据用户id和身份查询菜单信息等初始化信息
      * <p>
-     *   根据当前登陆身份的权限滤后的菜单——应用系统菜单（AC_MENU）或重组菜单（AC_OPERATOR_MENU）；
+     *   根据当前登陆身份的权限滤后的菜单——应用系统菜单（AC_MENU）或重组菜单（ ）；
      * 	用户在该应用系统中的快捷菜单（AC_OPERATOR_SHORTCUT）； TODO 快捷菜单
      * 	用户在该应用系统中的个性化配置（AC_OPERATOR_CONFIG）； TODO 个性化配置
      *
      * @param userId
      * @param identityGuid
-     * @param appGuid
+     * @param appCode
      * @throws AuthManagementException
      */
     @Override
-    public Map<String, Object> getInitInfoByUserIdAndIden(String userId, String identityGuid, String appGuid) throws AuthManagementException {
+    public Map<String, Object> getInitInfoByUserIdAndIden(String userId, String identityGuid, String appCode) throws AuthManagementException {
         // 校验传入参数
         if (StringUtils.isBlank(userId)) {
             throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("userId"));
@@ -239,38 +274,40 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
         if (StringUtils.isBlank(identityGuid)) {
             throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("identityGuid"));
         }
-        if (StringUtils.isBlank(appGuid)) {
-            throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("appGuid"));
+        if (StringUtils.isBlank(appCode)) {
+            throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("appCode"));
         }
         try {
             AcOperator operator = operatorRService.queryOperatorByUserId(userId);
-
-            List<AcConfig> acConfigs = operatorRService.queryOperatorConfig(userId, appGuid);
+            AcApp acApp = applicationRService.queryAcAppByCode(appCode);
+            List<AcConfig> acConfigs = operatorRService.queryOperatorConfig(userId, acApp.getGuid());
+            // 查询用户配置是否启用重组菜单
             final boolean[] enableRecombine = {false};
             acConfigs.stream()
-                    .filter(cfg -> StringUtils.isEquals(cfg.getGuidApp(), appGuid) &&
+                    .filter(cfg -> StringUtils.isEquals(cfg.getGuidApp(), acApp.getGuid()) &&
                             StringUtils.isEquals(cfg.getConfigType(), ACConstants.CONFIG_TYPE_MENUREORG) &&
                             StringUtils.isEquals(cfg.getConfigValue(), CommonConstants.YES))
                     .findFirst()
                     .ifPresent(a -> enableRecombine[0] = true);
-
             Map<String, Object> resultInfo = new HashMap<>();
             operator.setPassword(null);
+            resultInfo.put("configs", acConfigs);
             resultInfo.put("user", operator);
-            // 查询重组菜单
+            // 查询重组菜单 如果有重组菜单并且用户启用了重组菜单
             if (acOperatorMenuService.count(new WhereCondition()
-                    .andEquals(AcOperatorMenu.COLUMN_GUID_APP, appGuid)
+                    .andEquals(AcOperatorMenu.COLUMN_GUID_APP, acApp.getGuid())
                     .andEquals("GUID_OPERATOR", operator.getGuid())) > 0 && enableRecombine[0]) {
-                resultInfo.put("menu", menuRService.getOperatorMenuByUserId(userId, appGuid, identityGuid).toJson());
+                resultInfo.put("menu", menuRService.getOperatorMenuByUserId(userId, acApp.getGuid(), identityGuid).toJson());
             } else {
-                resultInfo.put("menu", menuRService.getMenuByUserId(userId, appGuid, identityGuid).toJson());
+                // 没有重组菜单或者用户配置没有启动重组带单，查询权限菜单
+                resultInfo.put("menu", menuRService.getMenuByUserId(userId, acApp.getGuid(), identityGuid).toJson());
             }
             // 查询资源信息
-            List<String> funcGuids = queryOperatorAuthFuncsInApp(userId, appGuid).stream().map(AcFunc::getGuid).collect(Collectors.toList());
-            List<AcFuncResource> resources = new ArrayList<>();
+            List<String> funcGuids = queryOperatorAuthFuncsInApp(userId, acApp.getGuid()).stream().map(AcFunc::getGuid).collect(Collectors.toList());
+            List<Map> resources = new ArrayList<>();
             if(CollectionUtils.isNotEmpty(funcGuids))
-                resources = acFuncResourceService.query(new WhereCondition().andIn(AcFuncResource.COLUMN_GUID_FUNC, funcGuids));
-            resultInfo.put("resouces", resources);
+                acFuncServiceExt.queryFuncResourcesWithFuncCode(funcGuids);
+            resultInfo.put("resources", resources);
             return resultInfo;
         } catch (ToolsRuntimeException ae) {
             throw ae;
@@ -313,10 +350,10 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
             AcOperator acOperator = acOperators.get(0);
             // 验证用户密码
             // 如果密码错误
-            if (! StringUtils.isEquals(acOperator.getPassword(),CryptographyUtil.md5(oldPwd))) {
+            if (! StringUtils.isEquals(acOperator.getPassword(), PasswordHelper.generate(oldPwd, acOperator.getGuid()))) {
                 throw new AuthManagementException(ACExceptionCodes.PASSWORD_IS_WRONG, wrap(userId));
             } else {
-                acOperator.setPassword(CryptographyUtil.md5(newPwd));
+                acOperator.setPassword(PasswordHelper.generate(newPwd, acOperator.getGuid()));
                 acOperator.setGuid(acOperator.getGuid());
                 // 保存数据库
                 acOperatorService.update(acOperator);
@@ -329,7 +366,7 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
             e.printStackTrace();
             throw new AuthManagementException(
                     ExceptionCodes.FAILURE_WHEN_UPDATE,
-                    wrap("AC_OPERATOR", e.getCause().getMessage()));
+                    wrap("AC_OPERATOR", e));
         }
     }
 
@@ -495,26 +532,54 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
      * @throws AuthManagementException
      */
     @Override
-    public AcPermission getPermissions(String userId, String appCode) throws AuthManagementException {
+    public AbfPermission getPermissions(String userId, String appCode) throws AuthManagementException {
         if (StringUtils.isBlank(userId)) {
             throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap("userId", "getViewPermissions"));
         }
         if (StringUtils.isBlank(appCode)) {
             throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap("appGuid", "getViewPermissions"));
         }
-        AcPermission acPermission = new AcPermission();
-        acPermission.setUserId(userId);
-        acPermission.setAppCode(appCode);
-        Set<String> funcCodes = new HashSet<>();
         List<AcApp> acApps = acAppService.query(new WhereCondition().andEquals(AcApp.COLUMN_APP_CODE, appCode));
-        if (CollectionUtils.isNotEmpty(acApps)) {
-            funcCodes = queryOperatorAuthFuncsInApp(userId, acApps.get(0).getGuid())
-                    .stream().map(AcFunc::getFuncCode).collect(Collectors.toSet());
+        if (CollectionUtils.isEmpty(acApps)) {
+            throw new AuthManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, wrap(surroundBracketsWithLFStr(AcApp.COLUMN_APP_CODE, appCode)
+                    , AcApp.TABLE_NAME));
         }
-        acPermission.setFunCodes(funcCodes);
+        AcApp acApp = acApps.get(0);
+        AcOperator acOperator = operatorRService.queryOperatorByUserId(userId);
+        AbfPermission abfPermission = new AbfPermission();
         // 获取所有角色信息
-        List<String> roles = roleRService.queryAllRoleByUserId(userId).stream().map(AcRole::getGuid).collect(Collectors.toList());
-
-        return acPermission;
+        List<String> roles = roleRService.queryAllRoleByUserId(userId)
+                .stream()
+                .filter(acRole -> StringUtils.isEquals(acRole.getGuidApp(), acApp.getGuid()))
+                .map(AcRole::getGuid)
+                .collect(Collectors.toList());
+        // 获取所有角色授予的所有行为类型
+        Map<String, List<Map>> funcBhvMap = acOperatorServiceExt
+                .getAllOperatorFuncPmtBhv(acOperator.getGuid(), roles)
+                .stream()
+                .collect(Collectors.groupingBy(map -> (String) map.get("funcCode")));
+        Set<String> bhvPermission = new HashSet<>();
+        List<AcFunc> acFuncs = queryOperatorAuthFuncsInApp(userId, acApp.getGuid());
+        for(AcFunc acFunc : acFuncs) {
+            String funcCode = acFunc.getFuncCode();
+            StringBuilder sb = new StringBuilder("+" + funcCode + "+");
+            sb.append("view,");// 添加视图权限
+            for (Map map : funcBhvMap.get(funcCode)) {
+                sb.append((String) map.get("bhvCode")).append(",");
+            }
+            sb.delete(sb.length() - 1, sb.length());
+            bhvPermission.add(String.valueOf(sb));
+        }
+        /*for (Map.Entry<String, List<Map>> entry : funcBhvMap.entrySet()) {
+            StringBuilder sb = new StringBuilder("+" + entry.getKey() + "+");
+            for (Map map : entry.getValue()) {
+                sb.append((String) map.get("bhvCode")).append(",");
+            }
+            sb.delete(sb.length() - 1, sb.length());
+            bhvPermission.add(String.valueOf(sb));
+        }*/
+        abfPermission.setBhvPermissions(bhvPermission);
+        // TODO 添加数据权限
+        return abfPermission;
     }
 }

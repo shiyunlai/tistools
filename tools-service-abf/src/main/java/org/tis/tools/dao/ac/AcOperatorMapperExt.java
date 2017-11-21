@@ -29,9 +29,9 @@ public interface AcOperatorMapperExt {
      * @return
      */
     List<Map> getAuthOperatorFuncBhv(
-            @Param("roleGuid")String roleGuid,
-            @Param("operatorGuid")String operatorGuid,
-            @Param("funcGuid")String funcGuid);
+            @Param("roleGuid")String roleGuid
+            , @Param("operatorGuid")String operatorGuid
+            , @Param("funcGuid")String funcGuid);
 
     /**
      * 查询操作员已授权功能中特别禁止行为
@@ -40,8 +40,8 @@ public interface AcOperatorMapperExt {
      * @return
      */
     List<Map> getAuthOperatorFuncFbdBhv(
-            @Param("operatorGuid")String operatorGuid,
-            @Param("funcGuid")String funcGuid);
+            @Param("operatorGuid")String operatorGuid
+            , @Param("funcGuid")String funcGuid);
 
     /**
      * 查询操作员未授权功能中特别允许行为
@@ -50,7 +50,17 @@ public interface AcOperatorMapperExt {
      * @return
      */
     List<Map> getUnauthOperatorFuncPmtBhv(
-            @Param("operatorGuid")String operatorGuid,
-            @Param("funcGuid")String funcGuid);
+            @Param("operatorGuid")String operatorGuid
+            , @Param("funcGuid")String funcGuid);
+
+    /**
+     * 查询操作员所有功能行为
+     * @param operatorGuid 操作员GUID
+     * @param roleGuids 角色GUID集合
+     * @return
+     */
+    List<Map> getAllOperatorFuncPmtBhv(
+            @Param("operatorGuid")String operatorGuid
+            , @Param("roleGuids")String roleGuids);
 
 }

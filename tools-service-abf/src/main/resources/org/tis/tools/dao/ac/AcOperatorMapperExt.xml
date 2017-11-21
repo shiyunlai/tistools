@@ -83,7 +83,38 @@
             AND b.GUID_BHV = c.GUID
     </select>
 
-
+    <select id="getAllOperatorFuncPmtBhv" resultType="map">
+    SELECT
+      b.func_code as funcCode,
+      c.bhv_code as bhvCode
+    FROM (
+      SELECT
+        t.*
+      FROM
+        ac_func_bhv t
+      WHERE
+        t.ISEFFECTIVE = 'Y'
+      AND t.GUID IN (
+        SELECT
+          t1.guid_func_bhv
+        FROM
+          ac_role_bhv t1
+        WHERE
+          t1.guid_role IN ${roleGuids}
+        UNION
+        SELECT
+        t2.GUID_FUNC_BHV
+        FROM
+        ac_operator_bhv t2
+        WHERE
+        t2.GUID_OPERATOR = #{operatorGuid}
+        AND t2.AUTH_TYPE = 'Y'
+        )
+      AND t1.guid_role NOT IN (
+        SELECT t2.GUID_FUNC_BHV FROM ac_operator_bhv t2 WHERE t2.GUID_OPERATOR = #{operatorGuid} AND t2.AUTH_TYPE = 'Y') a
+    LEFT JOIN ac_func b ON a.guid_func = b.guid
+    LEFT JOIN ac_BHV_def c ON a.guid_bhv = c.guid
+    </select>
 
     <select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
         select count(*) from AC_OPERATOR <include refid="Where_Clause"/>

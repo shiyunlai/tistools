@@ -3,18 +3,12 @@
  */
 package org.tis.tools.common.utils;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.tools.ant.DirectoryScanner;
+
+import java.io.*;
 
 /**
  * 文件处理工具类.<BR>
@@ -286,7 +280,7 @@ public final class FileUtil {
 	/**
 	 * 文件搜索
 	 *
-	 * @param dir
+	 * @param targetDir
 	 *            目标目录
 	 * @param includePatterns
 	 *            include匹配模式

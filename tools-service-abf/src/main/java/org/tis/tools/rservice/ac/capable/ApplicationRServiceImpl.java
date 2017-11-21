@@ -255,6 +255,32 @@ public class ApplicationRServiceImpl extends BaseRService implements
 					wrap(AcApp.TABLE_NAME, e));
 		}
 	}
+
+	/**
+	 * 根据应用代码查询应用系统(AC_APP)
+	 *
+	 * @param appCode 条件
+	 * @return 满足条件的记录
+	 */
+	@Override
+	public AcApp queryAcAppByCode(String appCode) throws AppManagementException {
+		try {
+			List<AcApp> acAppList = acAppService.query(new WhereCondition().andEquals(AcApp.COLUMN_APP_CODE, appCode));
+			if(acAppList.size()>0){
+				return acAppList.get(0);
+			}else{
+				throw new AppManagementException(
+						ExceptionCodes.NOT_FOUND_WHEN_QUERY, wrap(surroundBracketsWithLFStr(AcApp.COLUMN_APP_CODE, appCode), AcApp.TABLE_NAME));
+			}
+		} catch (ToolsRuntimeException e) {
+			throw e;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ExceptionCodes.FAILURE_WHEN_QUERY,
+					wrap(AcApp.TABLE_NAME, e));
+		}
+	}
 	
 	/**
 	 * 新增功能组(AC_FUNCGROUP)
@@ -1164,21 +1190,22 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 * @param acBhvtypeDef 行为类型
 	 */
 	@Override
-	public void functypeAdd(AcBhvtypeDef acBhvtypeDef) throws AppManagementException{
+	public AcBhvtypeDef functypeAdd(AcBhvtypeDef acBhvtypeDef) throws AppManagementException{
+		if (acBhvtypeDef == null)
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, wrap("acBhvtypeDef", AcBhvtypeDef.TABLE_NAME));
 		try {
-			transactionTemplate.execute(new TransactionCallback<AcBhvtypeDef>() {
-				@Override
-				public AcBhvtypeDef doInTransaction(TransactionStatus arg0) {
-					acBhvtypeDef.setGuid(GUID.bhvtypedef());
-					acBhvtypeDefService.insert(acBhvtypeDef);
-					return null;
-				}
-			});
+			acBhvtypeDef.setGuid(GUID.bhvtypedef());
+			String result = BeanFieldValidateUtil.checkObjFieldAllRequired(acBhvtypeDef);
+			if (StringUtils.isNotEmpty(result)) {
+				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, wrap(result, AcBhvtypeDef.TABLE_NAME));
+			}
+			acBhvtypeDefService.insert(acBhvtypeDef);
+			return acBhvtypeDef;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_BHVTYPE_DEF,
-					wrap(e), "新增行为类型失败！{0}");
+					ExceptionCodes.FAILURE_WHEN_INSERT,
+					wrap(AcBhvtypeDef.TABLE_NAME, e));
 		}
 	}
 
@@ -1188,20 +1215,27 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 * @param guid 行为类型
 	 */
 	@Override
-	public void functypeDel(String guid) throws AppManagementException{
+	public AcBhvtypeDef functypeDel(String guid) throws AppManagementException{
+		if (StringUtils.isBlank(guid))
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, wrap("guid", AcBhvtypeDef.TABLE_NAME));
+		AcBhvtypeDef acBhvtypeDef = acBhvtypeDefService.loadByGuid(guid);
+		if (acBhvtypeDef == null)
+			throw new AppManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, wrap(surroundBracketsWithLFStr(AcBhvtypeDef.COLUMN_GUID, guid),
+					AcBhvtypeDef.TABLE_NAME));
 		try {
-			transactionTemplate.execute(new TransactionCallback<AcBhvtypeDef>() {
+			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 				@Override
-				public AcBhvtypeDef doInTransaction(TransactionStatus arg0) {
+				protected void doInTransactionWithoutResult(TransactionStatus status) {
 					acBhvtypeDefService.delete(guid);
-					return null;
+					acBhvDefService.deleteByCondition(new WhereCondition().andEquals(AcBhvDef.COLUMN_GUID_BEHTYPE, acBhvtypeDef.getGuid()));
 				}
 			});
+			return acBhvtypeDef;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_BHVTYPE_DEF,
-					wrap(e), "删除行为类型失败！{0}");
+					ExceptionCodes.FAILURE_WHEN_DELETE,
+					wrap(AcBhvtypeDef.TABLE_NAME, e));
 		}
 	}
 
@@ -1211,20 +1245,21 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 * @param acBhvtypeDef 行为类型
 	 */
 	@Override
-	public void functypeEdit(AcBhvtypeDef acBhvtypeDef) throws AppManagementException{
+	public AcBhvtypeDef functypeEdit(AcBhvtypeDef acBhvtypeDef) throws AppManagementException{
+		if (acBhvtypeDef == null)
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, wrap("acBhvtypeDef", AcBhvtypeDef.TABLE_NAME));
 		try {
-			transactionTemplate.execute(new TransactionCallback<AcBhvtypeDef>() {
-				@Override
-				public AcBhvtypeDef doInTransaction(TransactionStatus arg0) {
-					acBhvtypeDefService.update(acBhvtypeDef);
-					return null;
-				}
-			});
+			String result = BeanFieldValidateUtil.checkObjFieldAllRequired(acBhvtypeDef);
+			if (StringUtils.isNotEmpty(result)) {
+				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_UPDATE, wrap(result, AcBhvtypeDef.TABLE_NAME));
+			}
+			acBhvtypeDefService.update(acBhvtypeDef);
+			return acBhvtypeDef;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_BHVTYPE_DEF,
-					wrap(e), "修改行为类型失败！{0}");
+					ExceptionCodes.FAILURE_WHEN_UPDATE,
+					wrap(AcBhvtypeDef.TABLE_NAME, e));
 		}
 	}
 
@@ -1255,21 +1290,25 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 * @param acBhvDef 功能操作行为
 	 */
 	@Override
-	public void funactAdd(AcBhvDef acBhvDef)  throws AppManagementException{
+	public AcBhvDef funactAdd(AcBhvDef acBhvDef)  throws AppManagementException {
+		if (acBhvDef == null)
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, wrap("acBhvDef", AcBhvDef.TABLE_NAME));
+		acBhvDef.setGuid(GUID.bhvdef());
 		try {
-			transactionTemplate.execute(new TransactionCallback<AcBhvtypeDef>() {
-				@Override
-				public AcBhvtypeDef doInTransaction(TransactionStatus arg0) {
-					acBhvDef.setGuid(GUID.bhvdef());
-					acBhvDefService.insert(acBhvDef);
-					return null;
-				}
-			});
+			String result = BeanFieldValidateUtil.checkObjFieldAllRequired(acBhvDef);
+			if (StringUtils.isNotEmpty(result)) {
+				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, wrap(result, AcBhvDef.TABLE_NAME));
+			}
+			acBhvDefService.insert(acBhvDef);
+			return acBhvDef;
+		} catch (ToolsRuntimeException e) {
+			e.printStackTrace();
+			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_CREATE_AC_BHV_DEF,
-					wrap(e), "新增功能操作行为失败！{0}");
+					ExceptionCodes.FAILURE_WHEN_INSERT,
+					wrap(AcBhvDef.TABLE_NAME, e));
 		}
 	}
 
@@ -1279,31 +1318,26 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 * @param guids 条件
 	 */
 	@Override
-	public void funactDel(List guids) throws AppManagementException{
+	public List<AcBhvDef> funactDel(List guids) throws AppManagementException{
 
 		if(CollectionUtils.isEmpty(guids)) {
 			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, "功能操作行为GUID数组为空");
 		}
-		WhereCondition wc = new WhereCondition();
-		wc.andIn("GUID_FUNC", guids);
-		if(acFuncBhvService.count(wc) > 0) {
+		if(acFuncBhvService.count(new WhereCondition().andIn("GUID_FUNC", guids)) > 0) {
 			throw new AppManagementException(
 					ACExceptionCodes.AC_BHV_DEF_CAN_NOT_DELETE_WHEN_ASSIGNED, "不能删除已经指配的行为类型");
 		}
-		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-			@Override
-			public void doInTransactionWithoutResult(TransactionStatus status) {
-				try {
-					acBhvDefService.deleteByCondition(new WhereCondition().andIn("GUID",guids));
-				} catch (Exception e) {
-					status.setRollbackOnly();
-					e.printStackTrace();
-					throw new AppManagementException(
-							ACExceptionCodes.FAILURE_WHRN_DELETE_AC_BHV_DEF,
-							wrap(e), "删除功能操作行为失败！{0}");
-				}
-			}
-		});
+		WhereCondition wc = new WhereCondition();
+		List<AcBhvDef> list = acBhvDefService.query(wc);
+		try {
+			acBhvDefService.deleteByCondition(wc);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AppManagementException(
+					ACExceptionCodes.FAILURE_WHRN_DELETE_AC_BHV_DEF,
+					wrap(e), "删除功能操作行为失败！{0}");
+		}
+		return list;
 	}
 
 	/**
@@ -1312,26 +1346,22 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 * @param acBhvDef 行为类型
 	 */
 	@Override
-	public void funactEdit(AcBhvDef acBhvDef) throws AppManagementException{
+	public AcBhvDef funactEdit(AcBhvDef acBhvDef) throws AppManagementException{
+
+		if (acBhvDef == null)
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, wrap("AcBhvDef", AcBhvDef.TABLE_NAME));
 		try {
-			transactionTemplate.execute(new TransactionCallback<AcBhvDef>() {
-				@Override
-				public AcBhvDef doInTransaction(TransactionStatus arg0) {
-					
-					WhereCondition wc =new WhereCondition();
-					wc.andEquals("GUID", acBhvDef.getGuid());
-					AcBhvDef acBhvDefdata = acBhvDefService.query(wc ).get(0);
-					acBhvDefdata.setBhvCode(acBhvDef.getBhvCode());
-					acBhvDefdata.setBhvName(acBhvDef.getBhvName());
-					acBhvDefService.update(acBhvDefdata);
-					return null;
-				}
-			});
+			String result = BeanFieldValidateUtil.checkObjFieldAllRequired(acBhvDef);
+			if (StringUtils.isNotEmpty(result)) {
+				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_UPDATE, wrap(result, AcBhvDef.TABLE_NAME));
+			}
+			acBhvDefService.update(acBhvDef);
+			return acBhvDef;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
-					ACExceptionCodes.FAILURE_WHRN_UPDATE_AC_BHV_DEF,
-					wrap(e), "修改功能操作行为失败！{0}");
+					ExceptionCodes.FAILURE_WHEN_UPDATE,
+					wrap(AcBhvDef.TABLE_NAME, e));
 		}
 	}
 
@@ -1591,7 +1621,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 * @param openDate
 	 */
 	@Override
-	public void enableApp(String appGuid, Date openDate) {
+	public void enableApp(String appGuid, Date openDate) throws AppManagementException{
 		// 校验传入参数
 		if(StringUtil.isEmpty(appGuid)) {
 			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("appGuid"));
@@ -1619,7 +1649,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 * @param appGuid
 	 */
 	@Override
-	public void disableApp(String appGuid) {
+	public void disableApp(String appGuid) throws AppManagementException {
 		// 校验传入参数
 		if(StringUtil.isEmpty(appGuid)) {
 			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("appGuid"));

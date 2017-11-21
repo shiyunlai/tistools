@@ -4,6 +4,8 @@ import com.alibaba.dubbo.common.json.ParseException;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.cache.CacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.base.exception.ToolsRuntimeException;
+import org.tis.tools.model.def.ACConstants;
 import org.tis.tools.model.def.JNLConstants;
 import org.tis.tools.model.po.ac.*;
 import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
@@ -35,6 +38,9 @@ public class AcOperatorController extends BaseController {
     IRoleRService roleRService;
     @Autowired
     IApplicationRService applicationRService;
+
+    @Autowired
+    CacheManager cacheManager;
 
     /**
      * 查询操作员列表
@@ -536,7 +542,11 @@ public class AcOperatorController extends BaseController {
         JSONObject data = jsonObject.getJSONObject("data");
         String userId = data.getString("userId");
         String status = data.getString("status");
-        return getReturnMap(operatorRService.changeOperatorStatus(userId, status));
+        AcOperator acOperator = operatorRService.changeOperatorStatus(userId, status);
+        if(StringUtils.equals(status, ACConstants.OPERATE_STATUS_LOGIN)) {
+            cacheManager.getCache("passwordRetryCache").remove(userId);
+        }
+        return getReturnMap(acOperator);
     }
 
     /**

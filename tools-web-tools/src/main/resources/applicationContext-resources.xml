@@ -17,7 +17,7 @@
 
 
 
-	<!-- disconf自动扫描的package范围，支持扫描多包，逗号分隔 -->
+	<!-- 使用托管方式的disconf配置(无代码侵入) 其中以下*.properties文件的配置信息会被placehold-->
 	<bean id="disconfMgrBean" class="com.baidu.disconf.client.DisconfMgrBean"
 	      destroy-method="destroy">
 	    <property name="scanPackage" value="org.tis.tools.config"/>
@@ -75,8 +75,7 @@
         <property name="minEvictableIdleTimeMillis" value="1800000" />
         <property name="numTestsPerEvictionRun" value="3" />
 	</bean>
-	
-	
+
 	<!-- oracle数据源（使用oracle数据库时再打开）
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
@@ -157,7 +156,7 @@
         <property name="dataSource" ref="dataSource" />
         <property name="typeAliasesPackage" value="org.tis.tools.dao.mapper" />
     </bean>
-        <!-- scan for mappers and let them be autowired -->
+	<!-- scan for mappers and let them be autowired -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="org.tis.tools.dao.mapper" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory1" />
@@ -165,6 +164,7 @@
 
 	<import resource="applicationContext-service.xml"/>
 	<import resource="dubbo-consumer.xml" />
+	<import resource="spring-shiro-web.xml" />
 
 
   

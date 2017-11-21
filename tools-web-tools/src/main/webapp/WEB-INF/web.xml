@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
 
-    <display-name>ranyun project</display-name>
+    <display-name>tistools project</display-name>
 
+    <!-- Spring配置文件开始  -->
     <!-- [INSERT FRAGMENT HERE] -->
     <!-- Define the basename for a resource bundle for I18N -->
-
     <filter>
         <filter-name>rewriteFilter</filter-name>
         <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
@@ -27,6 +27,22 @@
         </init-param>
     </filter>
 
+    <!-- shiro 安全过滤器 -->
+    <filter>
+        <filter-name>shiroFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <async-supported>true</async-supported>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>shiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 
     <!--<filter>
         <filter-name>lazyLoadingFilter</filter-name>
@@ -34,10 +50,10 @@
     </filter>-->
     <!-- Use "org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter" if you're using JPA -->
 
-    <filter>
+    <!--<filter>
         <filter-name>sitemesh</filter-name>
         <filter-class>com.opensymphony.module.sitemesh.filter.PageFilter</filter-class>
-    </filter>
+    </filter>-->
 
     <!-- Context Configuration locations for Spring XML files -->
     <context-param>
@@ -50,12 +66,12 @@
         </param-value>
     </context-param>
 
-    <filter-mapping>
+   <!-- <filter-mapping>
         <filter-name>sitemesh</filter-name>
         <url-pattern>/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
-    </filter-mapping>
+    </filter-mapping>-->
     <filter-mapping>
         <filter-name>encodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -72,6 +88,10 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    <!-- Spring配置文件结束  -->
+
+
+
 
     <servlet>
         <servlet-name>dispatcher</servlet-name>

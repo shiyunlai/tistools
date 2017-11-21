@@ -190,7 +190,7 @@ public class AcAppController extends BaseController {
      */
     @OperateLog(
             operateType = JNLConstants.OPEARTE_TYPE_UPDATE,
-            operateDesc = "删除功能组",
+            operateDesc = "修改功能组",
             retType = ReturnType.Object,
             id = "guid",
             name = "funcgroupName"
@@ -290,7 +290,7 @@ public class AcAppController extends BaseController {
      */
     /*@ResponseBody
     @RequestMapping(value = "/acFuncResourceEdit", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public String acFuncResourceEdit(@RequestBody String content, HttpServletRequest request,
+    public Map<String, Object> acFuncResourceEdit(@RequestBody String content, HttpServletRequest request,
                                      HttpServletResponse response) {
 
         try {
@@ -335,7 +335,7 @@ public class AcAppController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/acFuncResouceQuery", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public String acFuncResouceQuery(@RequestBody String content, HttpServletRequest request,
+    public Map<String, Object> acFuncResouceQuery(@RequestBody String content, HttpServletRequest request,
                                      HttpServletResponse response) {
 
         try {
@@ -367,7 +367,7 @@ public class AcAppController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/queryAllFunc", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public String queryAllFunc(@RequestBody String content, HttpServletRequest request,
+    public Map<String, Object> queryAllFunc(@RequestBody String content, HttpServletRequest request,
                                HttpServletResponse response) {
 
         try {
@@ -393,7 +393,7 @@ public class AcAppController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/importFunc", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public String importFunc(@RequestBody String content, HttpServletRequest request,
+    public Map<String, Object> importFunc(@RequestBody String content, HttpServletRequest request,
                              HttpServletResponse response) {
 
         try {
@@ -418,124 +418,89 @@ public class AcAppController extends BaseController {
      * functypeAdd新增行为类型
      *
      * @param content
-     * @param request
-     * @param response
      * @return
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_ADD,
+            operateDesc = "新增行为类型",
+            retType = ReturnType.Object,
+            id = "guid",
+            name = "bhvtypeName",
+            keys = "bhvtypeCode"
+    )
     @ResponseBody
     @RequestMapping(value = "/functypeAdd", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public String functypeAdd(@RequestBody String content, HttpServletRequest request,
-                              HttpServletResponse response) {
+    public Map<String, Object> functypeAdd(@RequestBody String content) {
+        AcBhvtypeDef acBhvtypeDef = JSONObject.parseObject(content, AcBhvtypeDef.class);    //传入的参数
+        return getReturnMap(applicationRService.functypeAdd(acBhvtypeDef));
 
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("functypeAdd request : " + content);
-            }
-
-            JSONObject jsonObj = JSONObject.parseObject(content);    //传入的参数
-            String bhvtypeCode = jsonObj.getString("bhvtypeCode");
-            String bhvtypeName = jsonObj.getString("bhvtypeName");
-            AcBhvtypeDef acBhvtypeDef = new AcBhvtypeDef();
-            acBhvtypeDef.setBhvtypeCode(bhvtypeCode);
-            acBhvtypeDef.setBhvtypeName(bhvtypeName);
-
-            applicationRService.functypeAdd(acBhvtypeDef);
-            AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            logger.error("functypeAdd exception : ", e);
-        }
-        return null;
     }
 
     /**
      * functypeDel删除行为类型
      *
      * @param content
-     * @param request
-     * @param response
      * @return
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_DELETE,
+            operateDesc = "删除行为类型",
+            retType = ReturnType.Object,
+            id = "guid",
+            name = "bhvtypeName",
+            keys = "bhvtypeCode"
+    )
     @ResponseBody
     @RequestMapping(value = "/functypeDel", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public String functypeDel(@RequestBody String content, HttpServletRequest request,
-                              HttpServletResponse response) {
+    public Map<String, Object> functypeDel(@RequestBody String content) {
 
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("functypeDel request : " + content);
-            }
+        JSONObject jsonObj = JSONObject.parseObject(content);    //传入的参数
+        String guid = jsonObj.getString("id");
+        AcBhvtypeDef acBhvtypeDef = applicationRService.functypeDel(guid);
+        return getReturnMap(acBhvtypeDef);
 
-            JSONObject jsonObj = JSONObject.parseObject(content);    //传入的参数
-            String guid = jsonObj.getString("id");
-            applicationRService.functypeDel(guid);
-            AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            logger.error("functypeDel exception : ", e);
-        }
-        return null;
     }
 
     /**
      * functypeEdit 修改行为类型
      *
      * @param content
-     * @param request
-     * @param response
      * @return
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,
+            operateDesc = "修改行为类型",
+            retType = ReturnType.Object,
+            id = "guid",
+            name = "bhvtypeName",
+            keys = "bhvtypeCode"
+    )
     @ResponseBody
     @RequestMapping(value = "/functypeEdit", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public String functypeEdit(@RequestBody String content, HttpServletRequest request,
-                               HttpServletResponse response) {
-
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("functypeEdit request : " + content);
-            }
-
-            JSONObject jsonObj = JSONObject.parseObject(content);    //传入的参数
-            String guid = jsonObj.getString("id");
-            String bhvtypeCode = jsonObj.getString("bhvtypeCode");
-            String bhvtypeName = jsonObj.getString("bhvtypeName");
-            AcBhvtypeDef acBhvtypeDef = new AcBhvtypeDef();
-            acBhvtypeDef.setGuid(guid);
-            acBhvtypeDef.setBhvtypeCode(bhvtypeCode);
-            acBhvtypeDef.setBhvtypeName(bhvtypeName);
-            applicationRService.functypeEdit(acBhvtypeDef);
-            AjaxUtils.ajaxJsonSuccessMessage(response, "");//返回给前台的结
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            logger.error("functypeEdit exception : ", e);
-        }
-        return null;
+    public Map<String, Object> functypeEdit(@RequestBody String content) {
+        JSONObject jsonObj = JSONObject.parseObject(content);    //传入的参数
+        String guid = jsonObj.getString("id");
+        String bhvtypeCode = jsonObj.getString("bhvtypeCode");
+        String bhvtypeName = jsonObj.getString("bhvtypeName");
+        AcBhvtypeDef acBhvtypeDef = new AcBhvtypeDef();
+        acBhvtypeDef.setGuid(guid);
+        acBhvtypeDef.setBhvtypeCode(bhvtypeCode);
+        acBhvtypeDef.setBhvtypeName(bhvtypeName);
+        return getReturnMap(applicationRService.functypeEdit(acBhvtypeDef));
     }
 
     /**
      * functypequery 查询行为类型
      *
      * @param content
-     * @param request
-     * @param response
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/functypequery", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public String functypequery(@RequestBody String content, HttpServletRequest request,
-                                HttpServletResponse response) {
+    public Map<String, Object> functypequery(@RequestBody String content) {
 
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("functypequery request : " + content);
-            }
-            List<AcBhvtypeDef> list = applicationRService.functypequery();
-            AjaxUtils.ajaxJsonSuccessMessage(response, list);//返回给前台的结
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response, e.getCode(), e.getMessage());
-            logger.error("functypequery exception : ", e);
-        }
-        return null;
+        List<AcBhvtypeDef> list = applicationRService.functypequery();
+        return getReturnMap(list);
     }
 
 
@@ -549,7 +514,7 @@ public class AcAppController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/funactAdd", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public String funactAdd(@RequestBody String content, HttpServletRequest request,
+    public Map<String, Object> funactAdd(@RequestBody String content, HttpServletRequest request,
                             HttpServletResponse response) {
 
         try {
@@ -586,7 +551,7 @@ public class AcAppController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/funactDel", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public String funactDel(@RequestBody String content, HttpServletRequest request,
+    public Map<String, Object> funactDel(@RequestBody String content, HttpServletRequest request,
                             HttpServletResponse response) {
 
         try {
@@ -619,7 +584,7 @@ public class AcAppController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/funactEdit", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public String funactEdit(@RequestBody String content, HttpServletRequest request,
+    public Map<String, Object> funactEdit(@RequestBody String content, HttpServletRequest request,
                              HttpServletResponse response) {
 
         try {
@@ -659,7 +624,7 @@ public class AcAppController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/queryBhvtypeDefByFunc", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public String queryBhvtypeDefByFunc(@RequestBody String content, HttpServletRequest request,
+    public Map<String, Object> queryBhvtypeDefByFunc(@RequestBody String content, HttpServletRequest request,
                                         HttpServletResponse response) {
         try {
             if (logger.isInfoEnabled()) {
@@ -691,7 +656,7 @@ public class AcAppController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/queryBhvDefByBhvType", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public String queryBhvDefByBhvType(@RequestBody String content, HttpServletRequest request,
+    public Map<String, Object> queryBhvDefByBhvType(@RequestBody String content, HttpServletRequest request,
                                        HttpServletResponse response) {
         try {
             if (logger.isInfoEnabled()) {
@@ -722,7 +687,7 @@ public class AcAppController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/addBhvDefForFunc", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public String addBhcDefForFunc(@RequestBody String content, HttpServletRequest request,
+    public Map<String, Object> addBhcDefForFunc(@RequestBody String content, HttpServletRequest request,
                                    HttpServletResponse response) {
         try {
             if (logger.isInfoEnabled()) {
@@ -800,7 +765,7 @@ public class AcAppController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/queryAllBhvDefForFunc", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public String queryAllBhcDefForFunc(@RequestBody String content, HttpServletRequest request,
+    public Map<String, Object> queryAllBhcDefForFunc(@RequestBody String content, HttpServletRequest request,
                                         HttpServletResponse response) {
         try {
             if (logger.isInfoEnabled()) {
@@ -832,7 +797,7 @@ public class AcAppController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/delFuncBhvDef", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public String delFuncBhvDef(@RequestBody String content, HttpServletRequest request,
+    public Map<String, Object> delFuncBhvDef(@RequestBody String content, HttpServletRequest request,
                                 HttpServletResponse response) {
         try {
             if (logger.isInfoEnabled()) {

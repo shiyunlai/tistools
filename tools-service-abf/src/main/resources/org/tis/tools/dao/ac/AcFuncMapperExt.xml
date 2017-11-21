@@ -16,6 +16,17 @@
         AND b.GUID_APP = #{appGuid}
     </select>
 
+    <select id="queryFuncResourcesWithFuncCode" resultType="map">
+        SELECT <include refid="Func_Resources_Column_List" />
+        FROM
+          AC_FUNC_RESOURCE a
+        LEFT JOIN
+          AC_FUNC b
+        ON
+          a.GUID_FUNC in ${funcGuids}
+        AND a.GUID_FUNC = b.GUID
+    </select>
+
     <sql id="Base_Column_List" >
         a.guid as guid
         ,a.guid_funcgroup as guidFuncgroup
@@ -27,5 +38,15 @@
         ,a.func_type as funcType
         ,a.ischeck as ischeck
         ,a.ismenu as ismenu
+    </sql>
+
+    <sql id="Func_Resources_Column_List" >
+        b.func_code as funcCode
+        ,b.func_name as funcName
+        ,a.guid_func as guidFunc
+        ,a.attr_type as attrType
+        ,a.attr_key as attrKey
+        ,a.attr_value as attrValue
+        ,a.memo as memo
     </sql>
 </mapper>
