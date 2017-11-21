@@ -125,7 +125,7 @@
                 /assets/** = anon
                 /tools/** = anon
                 /AcAuthenticationController/checkUserStatus = anon
-                /AcAuthenticationController/Shirologin = anon
+                /AcAuthenticationController/login = anon
                 /** = abfLogin
             </value>
         </property>

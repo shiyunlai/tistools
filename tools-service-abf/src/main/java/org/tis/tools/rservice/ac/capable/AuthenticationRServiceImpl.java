@@ -150,7 +150,7 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
      * @return 用户检查结果
      * @throws ToolsRuntimeException
      */
-    @Override
+    /*@Override
     public AcOperator loginCheck(String userId, String password, String identityGuid, String appGuid) throws AuthManagementException {
         try {
             // 校验传入参数
@@ -223,10 +223,10 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
                     ACExceptionCodes.FAILURE_WHEN_LOGIN,
                     wrap(e));
         }
-    }
+    }*/
 
     @Override
-    public AcOperator loginCheck2(String userId, String identity, String appCode) throws AuthManagementException {
+    public AcOperator loginCheck(String userId, String identity, String appCode) throws AuthManagementException {
         // 校验传入参数
         if (StringUtils.isBlank(userId)) {
             throw new AuthManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("userId"));

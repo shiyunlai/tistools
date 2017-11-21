@@ -26,7 +26,6 @@ import org.tis.tools.rservice.ac.capable.IOperatorRService;
 import org.tis.tools.shiro.authenticationToken.UserIdPasswordIdentityToken;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.exception.WebAppException;
-import org.tis.tools.webapp.log.LogThreadLocal;
 import org.tis.tools.webapp.log.OperateLog;
 import org.tis.tools.webapp.log.ReturnType;
 
@@ -60,7 +59,7 @@ public class AcAuthenticationController extends BaseController {
     /**
      * 登录
      */
-    @OperateLog(
+   /* @OperateLog(
             operateType = JNLConstants.OPEARTE_TYPE_LOGIN,
             operateDesc = "登录ABF",
             retType = ReturnType.Object,
@@ -83,7 +82,7 @@ public class AcAuthenticationController extends BaseController {
         httpSession.setAttribute("operatorName", acOperator.getOperatorName());
         httpSession.setAttribute("app", appGuid);
         return getReturnMap(acOperator);
-    }
+    }*/
 
     @OperateLog(
             operateType = JNLConstants.OPEARTE_TYPE_LOGIN,
@@ -93,8 +92,8 @@ public class AcAuthenticationController extends BaseController {
             name = "operatorName"
     )
     @ResponseBody
-    @RequestMapping(value="/Shirologin", produces ="application/json;charset=UTF-8", method= RequestMethod.POST)
-    public Map<String, Object> Shirologin(@RequestBody String content) {
+    @RequestMapping(value="/login", produces ="application/json;charset=UTF-8", method= RequestMethod.POST)
+    public Map<String, Object> login(@RequestBody String content) {
         JSONObject jsonObject= JSONObject.parseObject(content);
         String userId = jsonObject.getString("userId");
         String password = jsonObject.getString("password");
