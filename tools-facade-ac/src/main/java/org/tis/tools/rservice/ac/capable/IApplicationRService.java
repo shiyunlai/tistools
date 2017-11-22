@@ -124,28 +124,28 @@ public interface IApplicationRService {
 	 * @param guid
 	 * @return
 	 */
-	AcFuncgroup deleteAcFuncGroup(String guid);
+	AcFuncgroup deleteAcFuncGroup(String guid) throws AppManagementException;
 
 	/**
 	 * 更新功能组(AC_FUNCGROUP)
 	 * @param t
 	 * @return
 	 */
-	 AcFuncgroup updateAcFuncgroup(AcFuncgroup t);
+	 AcFuncgroup updateAcFuncgroup(AcFuncgroup t) throws AppManagementException;
 	
 	/**
 	 * 根据条件查询功能组(AC_FUNCGROUP)
 	 * @param wc 条件
 	 * @return 满足条件的记录list
 	 */
-	 List<AcFuncgroup> queryAcFuncgroup(WhereCondition wc);
+	 List<AcFuncgroup> queryAcFuncgroup(WhereCondition wc) throws AppManagementException;
 	
 	/**
 	 * 根据条件查询功能组(AC_FUNCGROUP)
 	 * @param guid 条件
 	 * @return 满足条件的记录list
 	 */
-	 AcFuncgroup queryFuncgroup(String guid);
+	 AcFuncgroup queryFuncgroup(String guid) throws AppManagementException;
 	
 	
 	/**
@@ -153,7 +153,7 @@ public interface IApplicationRService {
 	 * @param acFunc 功能对象
 	 * @return  AcFunc
 	 */
-	 AcFunc createAcFunc(AcFunc acFunc);
+	 AcFunc createAcFunc(AcFunc acFunc) throws AppManagementException;
 
 	
 	/**
@@ -161,27 +161,27 @@ public interface IApplicationRService {
 	 * @param guid 记录guid
 	 * @return 删除的功能对象信息
 	 */
-	 AcFunc deleteAcFunc(String guid);
+	 AcFunc deleteAcFunc(String guid) throws AppManagementException;
 	
 	/**
 	 * 更新功能(AC_FUNC)
 	 * @param acFunc 功能
 	 */
-	 AcFunc updateAcFunc(AcFunc acFunc);
+	 AcFunc updateAcFunc(AcFunc acFunc) throws AppManagementException;
 
 	/**
 	 * 根据条件查询功能(AC_FUNC)
 	 * @param wc 条件
 	 * @return 满足条件的记录list
 	 */
-	 List<AcFunc> queryAcFunc(WhereCondition wc);
+	 List<AcFunc> queryAcFunc(WhereCondition wc) throws AppManagementException;
 	
 	/**
 	 * 根据条件查询功能(AC_FUNC)
 	 * @param guid 条件
 	 * @return 满足条件的记录list
 	 */
-	 AcFunc queryFunc(String guid);
+	 AcFunc queryFunc(String guid) throws AppManagementException;
 	
 	
 	/**
@@ -189,7 +189,7 @@ public interface IApplicationRService {
 	 * @param guid 条件
 	 * @return 满足条件的记录
 	 */
-	 List<AcFunc> queryAcFunc(String guid);
+	 List<AcFunc> queryAcFunc(String guid) throws AppManagementException;
 	
 	
 	/**
@@ -197,7 +197,7 @@ public interface IApplicationRService {
 	 * @param groupGuid 条件
 	 * @return 满足条件的记录list
 	 */
-	 List<AcFunc> queryAcGroupFunc(String groupGuid);
+	 List<AcFunc> queryAcGroupFunc(String groupGuid) throws AppManagementException;
 	
 
 	/**
@@ -205,108 +205,108 @@ public interface IApplicationRService {
 	 * @param acMenu 菜单对象
 	 * return  AcMenu
 	 */
-	 AcMenu createAcMenu(AcMenu acMenu);
+	 AcMenu createAcMenu(AcMenu acMenu) throws AppManagementException;
 	
 	/**
 	 * 删除菜单(AC_MENU)
 	 * @param guid 记录guid
 	 */
-	 void deleteAcMenu(String guid);
+	 void deleteAcMenu(String guid) throws AppManagementException;
 	
 	/**
 	 * 更新菜单(AC_MENU),只修改t对象有值的字段
 	 * @param t 新值
 	 */
-	 void updateAcMenu(AcMenu t);
+	 void updateAcMenu(AcMenu t) throws AppManagementException;
 	
 	/**
 	 * 根据条件查询菜单(AC_MENU)
 	 * @param wc 条件
 	 * @return 满足条件的记录list
 	 */
-	 List<AcMenu> queryAcMenu(WhereCondition wc);
+	 List<AcMenu> queryAcMenu(WhereCondition wc) throws AppManagementException;
 	
 	/**
 	 * 新增功能资源对应(AC_FUNC_RESOURCE),新增t对象有值的字段
 	 * @param t 新值
 	 */
-	 AcFuncResource createAcFuncResource(AcFuncResource t);
+	 AcFuncResource createAcFuncResource(AcFuncResource t) throws AppManagementException;
 
 	/**
 	 * 删除功能资源对应(AC_FUNC_RESOURCE)
 	 * @param acFuncResourceList 需要删除的资源集合
 	 */
-	List<AcFuncResource> deleteAcFuncResource(List<AcFuncResource> acFuncResourceList);
+	List<AcFuncResource> deleteAcFuncResource(List<AcFuncResource> acFuncResourceList) throws AppManagementException;
 
 	/**
 	 * 更新功能资源对应(AC_FUNC_RESOURCE),只修改t对象有值的字段
 	 * @param t 新值
 	 */
-	AcFuncResource updateAcFuncResource(AcFuncResource t);
+	AcFuncResource updateAcFuncResource(AcFuncResource t) throws AppManagementException;
 	
 	/**
 	 * 根据条件查询功能资源对应(AC_FUNC_RESOURCE)
 	 * @param funcGuid 功能GUID
 	 * @return 满足条件的记录list
 	 */
-	 List<AcFuncResource> queryAcFuncResource(String funcGuid);
+	 List<AcFuncResource> queryAcFuncResource(String funcGuid) throws AppManagementException;
 	
 	/**
 	 * 根据条件查询功能资源对应(AC_FUNC_RESOURCE)
 	 * @param guid 条件
 	 * @return 满足条件的记录
 	 */
-	 AcFuncResource queryFuncResource(String  guid);
+	 AcFuncResource queryFuncResource(String  guid) throws AppManagementException;
 	
 	/**
 	 * 新增操作员(AC_OPERATOR),新增t对象有值的字段
 	 * @param t 新值
 	 */
-	 void createAcOperator(AcOperator t);
+	 void createAcOperator(AcOperator t) throws AppManagementException;
 	
 	/**
 	 * 删除操作员(AC_OPERATOR)
 	 * @param guid 记录guid
 	 */
-	 void deleteAcOperator(String guid);
+	 void deleteAcOperator(String guid) throws AppManagementException;
 	
 	/**
 	 * 更新操作员(AC_OPERATOR),只修改t对象有值的字段
 	 * @param t 新值
 	 */
-	 void updateAcOperator(AcOperator t);
+	 void updateAcOperator(AcOperator t) throws AppManagementException;
 		
 	/**
 	 * 根据条件查询操作员(AC_OPERATOR)
 	 * @param wc 条件
 	 * @return 满足条件的记录list
 	 */
-	 List<AcOperator> queryAcOperator(WhereCondition wc);
+	 List<AcOperator> queryAcOperator(WhereCondition wc) throws AppManagementException;
 	
 	/**
 	 * 增加功能操作行为(AC_FUNC_BEHAVIOR),增加t对象有值的字段
 	 * @param t 新值
 	 */
-	 void createAcFuncBehavior(AcFuncBehavior t);
+	 void createAcFuncBehavior(AcFuncBehavior t) throws AppManagementException;
 	
 	/**
 	 * 删除功能操作行为(AC_FUNC_BEHAVIOR)
 	 * @param guid 记录guid
 	 */
-	 void deleteAcFuncBehavior(String guid);
+	 void deleteAcFuncBehavior(String guid) throws AppManagementException;
 	
 	/**
 	 * 更新功能操作行为(AC_FUNC_BEHAVIOR),只修改t对象有值的字段
 	 * @param t 新值
 	 */
-	 void updateAcFuncBehavior(AcFuncBehavior t);
+	 void updateAcFuncBehavior(AcFuncBehavior t) throws AppManagementException;
 	
 	/**
 	 * 根据条件查询功能操作行为(AC_FUNC_BEHAVIOR)
 	 * @param wc 条件
 	 * @return 满足条件的记录list
 	 */
-	 List<AcFuncBehavior> queryAcFuncBehavior(WhereCondition wc);
+	 List<AcFuncBehavior> queryAcFuncBehavior(WhereCondition wc) throws AppManagementException;
 		
 	
 	
@@ -314,7 +314,7 @@ public interface IApplicationRService {
 	 * 根据条件查询功能操作行为(AC_FUNC_BEHAVIOR)
 	 * @return 满足条件的记录list
 	 */
-	 List<AcFunc> queryAllFunc();
+	 List<AcFunc> queryAllFunc() throws AppManagementException;
 	
 	/**
 	 * 导入功能(AC_FUNC)
@@ -322,14 +322,14 @@ public interface IApplicationRService {
 	 * @param guidFuncgroup 功能组guid
 	 * @param list 功能列表
 	 */
-	 void importFunc(String guidFuncgroup,List list);
+	 void importFunc(String guidFuncgroup,List list) throws AppManagementException;
 	
 	/**
 	 * 新增行为类型(AC_BHVTYPE_DEF)
 	 * 
 	 * @param acBhvtypeDef 行为类型
 	 */
-	AcBhvtypeDef functypeAdd(AcBhvtypeDef acBhvtypeDef);
+	AcBhvtypeDef functypeAdd(AcBhvtypeDef acBhvtypeDef) throws AppManagementException;
 	
 	
 	/**
@@ -337,7 +337,7 @@ public interface IApplicationRService {
 	 * 
 	 * @param acBhvtypeDef 行为类型
 	 */
-	AcBhvtypeDef functypeEdit(AcBhvtypeDef acBhvtypeDef);
+	AcBhvtypeDef functypeEdit(AcBhvtypeDef acBhvtypeDef) throws AppManagementException;
 	
 	
 	
@@ -346,14 +346,14 @@ public interface IApplicationRService {
 	 * 
 	 * @param guid 行为类型
 	 */
-	AcBhvtypeDef functypeDel(String guid);
+	AcBhvtypeDef functypeDel(String guid) throws AppManagementException;
 	
 	/**
 	 * 查询行为类型(AC_BHVTYPE_DEF)
 	 *
 	 * 返回list
 	 */
-	 List<AcBhvtypeDef> functypequery();
+	 List<AcBhvtypeDef> functypequery() throws AppManagementException;
 	
 	
 	
@@ -362,7 +362,7 @@ public interface IApplicationRService {
 	 * 
 	 * @param acBhvDef 功能操作行为
 	 */
-	AcBhvDef funactAdd(AcBhvDef acBhvDef);
+	AcBhvDef funactAdd(AcBhvDef acBhvDef) throws AppManagementException;
 	
 
 	/**
@@ -370,7 +370,7 @@ public interface IApplicationRService {
 	 * 
 	 * @param guids 条件
 	 */
-	List<AcBhvDef> funactDel(List guids);
+	List<AcBhvDef> funactDel(List guids) throws AppManagementException;
 	
 	
 	/**
@@ -378,7 +378,7 @@ public interface IApplicationRService {
 	 * 
 	 * @param acBhvDef 功能操作行为
 	 */
-	AcBhvDef funactEdit(AcBhvDef acBhvDef);
+	AcBhvDef funactEdit(AcBhvDef acBhvDef) throws AppManagementException;
 	
 	
 	/**
@@ -387,7 +387,7 @@ public interface IApplicationRService {
 	 * @param guid 功能操作行为
 	 * 返回list
 	 */
-	 List<AcBhvDef> funactQuery(String guid);
+	 List<AcBhvDef> funactQuery(String guid) throws AppManagementException;
 
 	/**
 	 * 通过功能GUID查询功能操作行为(AC_BHVTYPE_DEF)
@@ -395,7 +395,7 @@ public interface IApplicationRService {
 	 * @param funcGuid 功能GUID
 	 * 返回list
 	 */
-	 List<AcBhvtypeDef> queryBhvtypeDefByFunc(String funcGuid);
+	 List<AcBhvtypeDef> queryBhvtypeDefByFunc(String funcGuid) throws AppManagementException;
 
 	/**
 	 * queryBhvDefByBhvType 根据行为类型的GUID查询所有的操作行为(AC_BHV_DEF)
@@ -403,7 +403,7 @@ public interface IApplicationRService {
 	 * @param bhvtypeGuid 行为类型GUID
 	 * 返回list
 	 */
-	 List<AcBhvDef> queryBhvDefByBhvType(String bhvtypeGuid);
+	 List<AcBhvDef> queryBhvDefByBhvType(String bhvtypeGuid) throws AppManagementException;
 
 
 	/**
@@ -413,7 +413,7 @@ public interface IApplicationRService {
 	 * @param bhvDefGuids 功能GUID数组
 	 * 返回list
 	 */
-	 void addBhvDefForFunc(String funcGuid, List bhvDefGuids);
+	 void addBhvDefForFunc(String funcGuid, List bhvDefGuids) throws AppManagementException;
 
 	/**
 	 * 设置功能行为定义是否有效
@@ -439,34 +439,34 @@ public interface IApplicationRService {
 	 * @param funcGuid 功能GUID
 	 * @return list
 	 */
-	 List<Map> queryAllBhvDefForFunc(String funcGuid);
+	 List<Map> queryAllBhvDefForFunc(String funcGuid) throws AppManagementException;
 
 	/**
 	 * 删除功能下的行为定义
 	 * @param funcGuid
 	 * @param bhvDefGuid
 	 */
-	 void delFuncBhvDef(String funcGuid, List<String> bhvDefGuid);
+	 void delFuncBhvDef(String funcGuid, List<String> bhvDefGuid) throws AppManagementException;
 
 	/**
 	 * 开通应用
 	 * @param appGuid
 	 * @param openDate
 	 */
-	 void enableApp(String appGuid, Date openDate);
+	 void enableApp(String appGuid, Date openDate) throws AppManagementException;
 
 	/**
 	 * 关闭应用
 	 * @param appGuid
 	 */
-	 void disableApp(String appGuid);
+	 void disableApp(String appGuid) throws AppManagementException;
 
 	/**
 	 * 查询应用下所有功能
 	 *
 	 * @param  appGuid 应用GUID
 	 */
-	List<AcFunc> queryFuncListInApp(String appGuid);
+	List<AcFunc> queryFuncListInApp(String appGuid) throws AppManagementException;
 
 	/**
 	 * 查询操作员已拥有的应用集合
@@ -476,6 +476,7 @@ public interface IApplicationRService {
 	 * @throws AppManagementException 应用
 	 */
 	List<AcApp> queryOperatorAllApp(String userId) throws AppManagementException;
+
 
 
 }

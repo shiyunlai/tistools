@@ -55,7 +55,7 @@ public class UserRealm extends AuthorizingRealm {
         if(StringUtils.isBlank(userId)) {
             throw new AccountException("用户名不能为空");
         }
-        AcOperator user = authenticationRService.loginCheck2(userId, identity, appCode);
+        AcOperator user = authenticationRService.loginCheck(userId, identity, appCode);
         if(user == null) {
             throw new UnknownAccountException();//没找到帐号
         }

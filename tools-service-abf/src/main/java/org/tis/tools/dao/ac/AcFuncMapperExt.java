@@ -23,4 +23,12 @@ public interface AcFuncMapperExt {
      * @return
      */
     List<Map> queryFuncResourcesWithFuncCode(@Param("funcGuids") String funcGuids);
+
+    /**
+     * 根据功能行为查询功能和行为信息
+     *
+     * @param bhvCode 行为代码
+     * @return
+     */
+    List<Map> queryFuncInfoByBhvCode(@Param("bhvCode") String bhvCode);
 }

@@ -1604,6 +1604,30 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
     }
 
     /**
+     * 获取操作员拥有的功能下功能行为代码
+     *
+     * @param userId
+     * @param funcCode
+     * @return
+     * @throws OperatorManagementException
+     */
+    @Override
+    public List<String> getPmtFuncBhvByCode(String userId, String funcCode) throws OperatorManagementException {
+        if(StringUtils.isBlank(funcCode))
+            throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("funcCode(String)", "getPmtFuncBhvByCode"));
+        List<AcFunc> funcList = acFuncService.query(new WhereCondition().andEquals(AcFunc.COLUMN_FUNC_CODE, funcCode));
+        if(CollectionUtils.isEmpty(funcList)) {
+            throw new OperatorManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY,
+                    wrap(surroundBracketsWithLFStr(AcFunc.COLUMN_FUNC_CODE, funcCode), AcFunc.TABLE_NAME));
+        }
+        Map<String, List<Map>> operatorFuncBhvInfo = getOperatorFuncBhvInfo(userId, funcList.get(0).getGuid());
+        List<String> bhvCodes = new ArrayList<>();
+        operatorFuncBhvInfo.get("auth").forEach(map -> bhvCodes.add((String)map.get("bhvCode")));
+        operatorFuncBhvInfo.get("permit").forEach(map -> bhvCodes.add((String)map.get("bhvCode")));
+        return bhvCodes;
+    }
+
+    /**
      * 添加操作员特殊功能行为
      *
      * @param acOperatorBhvs

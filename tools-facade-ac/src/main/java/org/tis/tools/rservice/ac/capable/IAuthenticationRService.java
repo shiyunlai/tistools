@@ -69,8 +69,8 @@ public interface IAuthenticationRService {
      * @throws ToolsRuntimeException
      *
      */
-    AcOperator loginCheck(String userId, String password, String identity, String appGuid) throws AuthManagementException;
-    AcOperator loginCheck2(String userId, String identity, String appCode) throws AuthManagementException;
+//    AcOperator loginCheck(String userId, String password, String identity, String appGuid) throws AuthManagementException;
+    AcOperator loginCheck(String userId, String identity, String appCode) throws AuthManagementException;
 
     /**
      *  根据用户id和身份查询菜单信息
@@ -133,6 +133,14 @@ public interface IAuthenticationRService {
      * @throws AuthManagementException
      */
     AbfPermission getPermissions(String userId, String appCode) throws AuthManagementException;
+
+    /**
+     * 根据行为code获取行为权限字符串
+     * @param bhvCode
+     * @return
+     * @throws AuthManagementException
+     */
+    List<String> getPermStrByBhvCode(String bhvCode) throws AuthManagementException;
 
 
     /**

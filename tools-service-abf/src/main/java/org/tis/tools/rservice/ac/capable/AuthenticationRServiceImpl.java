@@ -5,7 +5,6 @@ import com.alibaba.dubbo.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
-import org.tis.tools.common.utils.CryptographyUtil;
 import org.tis.tools.common.utils.StringUtil;
 import org.tis.tools.core.exception.ExceptionCodes;
 import org.tis.tools.model.def.ACConstants;
@@ -18,7 +17,6 @@ import org.tis.tools.rservice.ac.exception.AuthManagementException;
 import org.tis.tools.service.ac.*;
 import org.tis.tools.service.ac.exception.ACExceptionCodes;
 
-import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -128,28 +126,28 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
 
     }
 
-    /**
-     * 用户登录
-     * a)	用户必须存在；
-     * b)	用户状态只能是“退出、正常、挂起”，否则报错提示；
-     * c)	验证用户密码（关于密码，新建用户时，加密存储；采用加密传输；加密方法提供为工具类 CryptographyUtil）；
-     * d)	认证错误即锁定解锁的相关处理——密码错误时需要记录“错误登陆次数”；达到“锁定次数限制”时，更新状态变为“锁定”，记录“锁定时间”（由管理员解锁后才能再登陆——用户管理中需要增加解锁功能）；
-     *      如果密码正确则重置错误登陆次数＝0；
-     * e)	登陆验证通过，修改用户状态为“正常”，记录“最近登陆时间”；
-     * f)	如果验证通过，返回以下用户信息，用作主界面展示：
-     * 	用户信息（AC_OPERATOR）；
-     * 	根据当前登陆身份的权限滤后的菜单——应用系统菜单（AC_MENU）或重组菜单（AC_OPERATOR_MENU）；
-     * 	用户在该应用系统中的快捷菜单（AC_OPERATOR_SHORTCUT）；
-     * 	用户在该应用系统中的个性化配置（AC_OPERATOR_CONFIG）；
-     * XXX 密码失效日期逻辑？
-     * @param userId   用户名
-     * @param password
-     * @param identityGuid
-     * @param appGuid
-     *
-     * @return 用户检查结果
-     * @throws ToolsRuntimeException
-     */
+//    /**
+//     * 用户登录
+//     * a)	用户必须存在；
+//     * b)	用户状态只能是“退出、正常、挂起”，否则报错提示；
+//     * c)	验证用户密码（关于密码，新建用户时，加密存储；采用加密传输；加密方法提供为工具类 CryptographyUtil）；
+//     * d)	认证错误即锁定解锁的相关处理——密码错误时需要记录“错误登陆次数”；达到“锁定次数限制”时，更新状态变为“锁定”，记录“锁定时间”（由管理员解锁后才能再登陆——用户管理中需要增加解锁功能）；
+//     *      如果密码正确则重置错误登陆次数＝0；
+//     * e)	登陆验证通过，修改用户状态为“正常”，记录“最近登陆时间”；
+//     * f)	如果验证通过，返回以下用户信息，用作主界面展示：
+//     * 	用户信息（AC_OPERATOR）；
+//     * 	根据当前登陆身份的权限滤后的菜单——应用系统菜单（AC_MENU）或重组菜单（AC_OPERATOR_MENU）；
+//     * 	用户在该应用系统中的快捷菜单（AC_OPERATOR_SHORTCUT）；
+//     * 	用户在该应用系统中的个性化配置（AC_OPERATOR_CONFIG）；
+//     * XXX 密码失效日期逻辑？
+//     * @param userId   用户名
+//     * @param password
+//     * @param identityGuid
+//     * @param appGuid
+//     *
+//     * @return 用户检查结果
+//     * @throws ToolsRuntimeException
+//     */
     /*@Override
     public AcOperator loginCheck(String userId, String password, String identityGuid, String appGuid) throws AuthManagementException {
         try {
@@ -581,5 +579,30 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
         abfPermission.setBhvPermissions(bhvPermission);
         // TODO 添加数据权限
         return abfPermission;
+    }
+
+    /**
+     * 根据行为code获取行为权限字符串
+     *
+     * @param bhvCode
+     * @return
+     * @throws AuthManagementException
+     */
+    @Override
+    public List<String> getPermStrByBhvCode(String bhvCode) throws AuthManagementException {
+        if (StringUtils.isBlank(bhvCode)) {
+           throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("bhvCode(String)", "getPermStrByBhvCode"));
+        }
+        try {
+            List<Map> maps = acFuncServiceExt.queryFuncInfoByBhvCode(bhvCode);
+            List<String> perms = new ArrayList<>();
+            for (Map m : maps) {
+                perms.add("+" + m.get("funcCode") + "+" + m.get("bhvCode"));
+            }
+            return perms;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new AuthManagementException(ExceptionCodes.FAILURE_WHEN_CALL, wrap("getPermStrByBhvCode", e));
+        }
     }
 }
