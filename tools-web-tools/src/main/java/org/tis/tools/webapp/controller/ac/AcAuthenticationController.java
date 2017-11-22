@@ -215,24 +215,16 @@ public class AcAuthenticationController extends BaseController {
         String funcCode = data.getString("funcCode");
         if(SecurityUtils.getSubject().isPermitted("+" + funcCode + "+view")) {
             // TODO 获取页面权限信息返回
-            return getReturnMap(null);
+            List<String> bhvCodes = operatorRService
+                    .getPmtFuncBhvByCode(
+                            (String) SecurityUtils.getSubject().getSession().getAttribute("userId"),
+                            funcCode);
+            return getReturnMap(bhvCodes);
         } else {
             throw new UnauthorizedException("功能权限不足！");
         }
     }
 
-    /**
-     * 功能操作检查
-     * @param httpSession
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value="/funcOperateCheck" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
-    public Map<String, Object> funcOperateCheck(HttpSession httpSession) {
-        String userId = (String) httpSession.getAttribute("userId");
-        String identityGuid = (String) httpSession.getAttribute("identity");
-        String appGuid = (String) httpSession.getAttribute("app");
-        return getReturnMap(authenticationRService.getInitInfoByUserIdAndIden(userId, identityGuid, appGuid));
-    }
+
 
 }

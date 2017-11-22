@@ -10,7 +10,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
 
-public class AbfShiroLoginFilter extends AdviceFilter {
+public class AbfLoginFilter extends AdviceFilter {
+
+
 
     /**
      * 在访问controller前判断是否登录，返回错误信息，不进行重定向。
@@ -22,11 +24,14 @@ public class AbfShiroLoginFilter extends AdviceFilter {
     @Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
         Subject subject = SecurityUtils.getSubject();
-        if(subject.isAuthenticated()) {
-            return true;
+        // 验证是否登录
+        if(!subject.isAuthenticated()) {
+            AjaxUtils.ajaxJsonFailMessage((HttpServletResponse) response, "SYS_4444", "会话失效，请重新登录");
+            return false;
         }
-        AjaxUtils.ajaxJsonFailMessage((HttpServletResponse) response, "SYS_4444", "会话失效，请重新登录");
-        return false;
+        // 验证行为权限
+        return true;
+
     }
 
 }

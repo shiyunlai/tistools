@@ -27,6 +27,20 @@
         AND a.GUID_FUNC = b.GUID
     </select>
 
+    <select id="queryFuncInfoByBhvCode" resultType="map">
+        SELECT
+            b.FUNC_CODE as funcCode,
+            a.BHV_CODE as bhvCode
+        FROM
+            `ac_bhv_def` a,
+            `ac_func` b,
+            `ac_func_bhv` c
+        WHERE
+            a.BHV_CODE = #{bhvCode}
+            AND a.guid = c.GUID_BHV
+            AND b.guid = c.GUID_FUNC
+    </select>
+
     <sql id="Base_Column_List" >
         a.guid as guid
         ,a.guid_funcgroup as guidFuncgroup

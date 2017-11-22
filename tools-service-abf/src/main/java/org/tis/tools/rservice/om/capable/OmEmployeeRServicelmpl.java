@@ -858,7 +858,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 			}
 			omEmployeeService.update(omEmployee);
 			return omEmployee;
-		} catch (EmployeeManagementException e) {
+		} catch (ToolsRuntimeException e) {
 			e.printStackTrace();
 			throw e;
 		} catch (Exception e) {

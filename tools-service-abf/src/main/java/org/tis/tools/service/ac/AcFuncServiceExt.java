@@ -46,5 +46,15 @@ public class AcFuncServiceExt {
         return  acFuncMapperExt.queryFuncResourcesWithFuncCode(String.valueOf(sb));
     }
 
+    /**
+     * 根据功能行为查询功能和行为信息
+     *
+     * @param bhvCode 行为代码
+     * @return
+     */
+    public List<Map> queryFuncInfoByBhvCode(String bhvCode) {
+        return  acFuncMapperExt.queryFuncInfoByBhvCode(bhvCode);
+    }
+
 
 }

@@ -318,6 +318,16 @@ public interface IOperatorRService {
     Map<String, List<Map>> getOperatorFuncBhvInfo(String userId, String funcGuid) throws OperatorManagementException;
 
     /**
+     * 获取操作员拥有的功能下功能行为代码
+     *
+     * @param userId
+     * @param funcCode
+     * @return
+     * @throws OperatorManagementException
+     */
+    List<String> getPmtFuncBhvByCode(String userId, String funcCode) throws OperatorManagementException;
+
+    /**
      * 添加操作员特殊功能行为
      * @param acOperatorBhv
      * @throws OperatorManagementException

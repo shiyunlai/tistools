@@ -107,7 +107,8 @@
         <property name="loginUrl" value="/login.jsp"/>
     </bean>-->
 
-    <bean id="abfShiroLoginFilter" class="org.tis.tools.shiro.filter.AbfShiroLoginFilter"/>
+    <bean id="abfLoginFilter" class="org.tis.tools.shiro.filter.AbfLoginFilter"/>
+    <bean id="abfPermissionFilter" class="org.tis.tools.shiro.filter.AbfPermissionFilter"/>
 
     <!-- Shiro的Web过滤器 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
@@ -117,7 +118,8 @@
         <property name="unauthorizedUrl" value="${abf.web.url}/unauthorized.html"/>
         <property name="filters">
             <util:map>
-                <entry key="abfLogin" value-ref="abfShiroLoginFilter"/>
+                <entry key="abfLogin" value-ref="abfLoginFilter"/>
+                <entry key="abfPerm" value-ref="abfPermissionFilter"/>
             </util:map>
         </property>
         <property name="filterChainDefinitions">
@@ -126,7 +128,8 @@
                 /tools/** = anon
                 /AcAuthenticationController/checkUserStatus = anon
                 /AcAuthenticationController/login = anon
-                /** = abfLogin
+                /AcAuthenticationController/** = abfLogin
+                /** = abfLogin,abfPerm
             </value>
         </property>
     </bean>
