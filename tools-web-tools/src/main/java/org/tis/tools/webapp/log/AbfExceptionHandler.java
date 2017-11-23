@@ -80,6 +80,7 @@ public class AbfExceptionHandler {
         logger.error(request.getPathInfo() + "权限异常-ShiroException :", ex);
         return map;
     }
+
     /**
      * WebApp层异常
      */

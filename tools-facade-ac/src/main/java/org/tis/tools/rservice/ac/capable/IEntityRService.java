@@ -41,10 +41,12 @@ public interface IEntityRService {
 
     /**
      * 查询数据实体对象集合
+     * @param appGuid 应用GUID
+     * @param entityType 实体类型
      * @return
      * @throws EntityManagementException
      */
-    List<AcEntity> queryAcEntityList() throws EntityManagementException;
+    List<AcEntity> queryAcEntityList(String appGuid, String entityType) throws EntityManagementException;
 
     /**
      * 新增实体属性
