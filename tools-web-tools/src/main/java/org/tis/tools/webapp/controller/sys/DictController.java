@@ -1,7 +1,6 @@
 package org.tis.tools.webapp.controller.sys;
 
 import com.alibaba.fastjson.JSONObject;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -22,13 +21,14 @@ import org.tis.tools.webapp.util.AjaxUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.text.ParseException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhaoch on 2017/7/18.
@@ -42,6 +42,7 @@ public class DictController extends BaseController {
     @Autowired
     IDictRService dictRService;
 
+    @ResponseBody
     @RequestMapping("importDict")
     public void importDict(@RequestParam("file") MultipartFile file, HttpServletResponse response) {
         try {
@@ -93,253 +94,149 @@ public class DictController extends BaseController {
     /**
      * 新增业务字典
      * @param content
-     * @param request
-     * @param response
      * @return
-     * @throws ToolsRuntimeException
-     * @throws ParseException
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_ADD,
+            operateDesc = "新增业务字典",
+            retType = ReturnType.Object,
+            id = "guid",
+            name = "dictName",
+            keys = {"dictKey", "dictType"}
+    )
     @ResponseBody
-    @RequestMapping(value="/createSysDict" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String createSysDict(@RequestBody String content, HttpServletRequest request,
-                                HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("createSysDict request : " + content);
-            }
-            JSONObject jsonObject= JSONObject.parseObject(content);
-            SysDict sysDict = new SysDict();
-            BeanUtils.populate(sysDict, jsonObject);
-            SysDict retDict = dictRService.addDict(sysDict);
-            AjaxUtils.ajaxJsonSuccessMessage(response,retDict);
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("createSysDict exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("createSysDict exception : ", e);
-        }
-        return null;
+    @RequestMapping(value="/createSysDict", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> createSysDict(@RequestBody String content) {
+        SysDict sysDict = JSONObject.parseObject(content, SysDict.class);
+        return getReturnMap(dictRService.addDict(sysDict));
     }
 
     /**
      * 删除业务字典
      * @param content
-     * @param request
-     * @param response
      * @return
      * @throws ToolsRuntimeException
      * @throws ParseException
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_DELETE,
+            operateDesc = "删除业务字典",
+            retType = ReturnType.Object,
+            id = "guid",
+            name = "dictName",
+            keys = {"dictKey", "dictType"}
+    )
     @ResponseBody
-    @RequestMapping(value="/deleteSysDict" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String deleteSysDict(@RequestBody String content, HttpServletRequest request,
-                                HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("deleteSysDict request : " + content);
-            }
-            JSONObject jsonObject= JSONObject.parseObject(content);
-            String dictGuid = jsonObject.getString("dictGuid");
-            dictRService.deleteDict(dictGuid);
-            AjaxUtils.ajaxJsonSuccessMessage(response,"");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("deleteSysDict exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("deleteSysDict exception : ", e);
-        }
-        return null;
+    @RequestMapping(value="/deleteSysDict", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> deleteSysDict(@RequestBody String content) {
+        JSONObject jsonObject= JSONObject.parseObject(content);
+        String dictGuid = jsonObject.getString("dictGuid");
+        return getReturnMap(dictRService.deleteDict(dictGuid));
     }
 
     /**
      * 修改业务字典
      * @param content
-     * @param request
-     * @param response
-     * @return
-     * @throws ToolsRuntimeException
-     * @throws ParseException
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,
+            operateDesc = "修改业务字典",
+            retType = ReturnType.Object,
+            id = "guid",
+            name = "dictName",
+            keys = {"dictKey", "dictType"}
+    )
     @ResponseBody
-    @RequestMapping(value="/editSysDict" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String editSysDict(@RequestBody String content, HttpServletRequest request,
-                           HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("editSysDict request : " + content);
-            }
-            JSONObject jsonObject= JSONObject.parseObject(content);
-            SysDict sysDict = new SysDict();
-            BeanUtils.populate(sysDict, jsonObject);
-            dictRService.editSysDict(sysDict);
-            AjaxUtils.ajaxJsonSuccessMessage(response,"");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("editSysDict exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("editSysDict exception : ", e);
-        }
-        return null;
+    @RequestMapping(value="/editSysDict", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> editSysDict(@RequestBody String content) {
+        SysDict sysDict = JSONObject.parseObject(content, SysDict.class);
+        dictRService.editSysDict(sysDict);
+        return getReturnMap(sysDict);
     }
 
     /**
      * 查询单个业务字典
      * @param content
-     * @param request
-     * @param response
-     * @return
-     * @throws ToolsRuntimeException
-     * @throws ParseException
      */
     @ResponseBody
-    @RequestMapping(value="/querySysDict" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String querySysDict(@RequestBody String content, HttpServletRequest request,
-                                 HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("querySysDict request : " + content);
-            }
-            JSONObject jsonObject= JSONObject.parseObject(content);
-            String dictGuid = jsonObject.getString("dictGuid");
-            SysDict sysDict = dictRService.querySysDictByGuid(dictGuid);
-            AjaxUtils.ajaxJsonSuccessMessage(response,sysDict);
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("querySysDict exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("querySysDict exception : ", e);
-        }
-        return null;
+    @RequestMapping(value="/querySysDict", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> querySysDict(@RequestBody String content) {
+        JSONObject jsonObject= JSONObject.parseObject(content);
+        String dictGuid = jsonObject.getString("dictGuid");
+        SysDict sysDict = dictRService.querySysDictByGuid(dictGuid);
+        return getReturnMap(sysDict);
     }
 
     /**
      * 新增业务字典项
      * @param content
-     * @param request
-     * @param response
-     * @return
-     * @throws ToolsRuntimeException
-     * @throws ParseException
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_ADD,
+            operateDesc = "新增业务字典项",
+            retType = ReturnType.Object,
+            id = "guid",
+            name = "itemName",
+            keys = {"guidDict", "itemType"}
+    )
     @ResponseBody
-    @RequestMapping(value="/createSysDictItem" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String createSysDictItem(@RequestBody String content, HttpServletRequest request,
-                                HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("createSysDictItem request : " + content);
-            }
-            JSONObject jsonObject= JSONObject.parseObject(content);
-            SysDictItem sysDictItem = new SysDictItem();
-            BeanUtils.populate(sysDictItem, jsonObject);
-            SysDictItem retDictItem = dictRService.addDictItem(sysDictItem);
-            AjaxUtils.ajaxJsonSuccessMessage(response,retDictItem);
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("createSysDict exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("createSysDict exception : ", e);
-        }
-        return null;
+    @RequestMapping(value="/createSysDictItem", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> createSysDictItem(@RequestBody String content) {
+        SysDictItem sysDictItem = JSONObject.parseObject(content, SysDictItem.class);
+        return getReturnMap(dictRService.addDictItem(sysDictItem));
     }
 
     /**
      * 删除业务字典项
      * @param content
-     * @param request
-     * @param response
-     * @return
-     * @throws ToolsRuntimeException
-     * @throws ParseException
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_DELETE,
+            operateDesc = "删除业务字典项",
+            retType = ReturnType.Object,
+            id = "guid",
+            name = "itemName",
+            keys = {"guidDict", "itemType"}
+    )
     @ResponseBody
-    @RequestMapping(value="/deleteSysDictItem" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String deleteSysDictItem(@RequestBody String content, HttpServletRequest request,
-                                HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("deleteSysDictItem request : " + content);
-            }
-            JSONObject jsonObject= JSONObject.parseObject(content);
-            String dictItemGuid = jsonObject.getString("dictItemGuid");
-            dictRService.deleteDictItem(dictItemGuid);
-            AjaxUtils.ajaxJsonSuccessMessage(response,"");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("deleteSysDictItem exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("deleteSysDictItem exception : ", e);
-        }
-        return null;
+    @RequestMapping(value="/deleteSysDictItem", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> deleteSysDictItem(@RequestBody String content) {
+        JSONObject jsonObject= JSONObject.parseObject(content);
+        String dictItemGuid = jsonObject.getString("dictItemGuid");
+        return getReturnMap(dictRService.deleteDictItem(dictItemGuid));
     }
 
     /**
      * 修改业务字典项
      * @param content
-     * @param request
-     * @param response
-     * @return
-     * @throws ToolsRuntimeException
-     * @throws ParseException
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,
+            operateDesc = "修改业务字典项",
+            retType = ReturnType.Object,
+            id = "guid",
+            name = "itemName",
+            keys = {"guidDict", "itemType"}
+    )
     @ResponseBody
-    @RequestMapping(value="/editSysDictItem" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String editSysDictItem(@RequestBody String content, HttpServletRequest request,
-                           HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("editSysDictItem request : " + content);
-            }
-            JSONObject jsonObject= JSONObject.parseObject(content);
-            SysDictItem sysDictItem = new SysDictItem();
-            BeanUtils.populate(sysDictItem, jsonObject);
-            dictRService.editSysDictItem(sysDictItem);
-            AjaxUtils.ajaxJsonSuccessMessage(response,"");
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("editSysDictItem exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("editSysDictItem exception : ", e);
-        }
-        return null;
+    @RequestMapping(value="/editSysDictItem", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> editSysDictItem(@RequestBody String content) {
+        SysDictItem sysDictItem = JSONObject.parseObject(content, SysDictItem.class);
+        dictRService.editSysDictItem(sysDictItem);
+        return getReturnMap(sysDictItem);
     }
 
     /**
      * 查询单个业务字典项
      * @param content
-     * @param request
-     * @param response
-     * @return
-     * @throws ToolsRuntimeException
-     * @throws ParseException
      */
     @ResponseBody
-    @RequestMapping(value="/querySysDictItem" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String querySysDictItem(@RequestBody String content, HttpServletRequest request,
-                                 HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("querySysDictItem request : " + content);
-            }
-            JSONObject jsonObject= JSONObject.parseObject(content);
-            String dictItemGuid = jsonObject.getString("dictItemGuid");
-            SysDictItem sysDict = dictRService.querySysDictItemByGuid(dictItemGuid );
-            AjaxUtils.ajaxJsonSuccessMessage(response,sysDict);
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("querySysDictItem exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("querySysDictItem exception : ", e);
-        }
-        return null;
+    @RequestMapping(value="/querySysDictItem", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> querySysDictItem(@RequestBody String content) {
+        JSONObject jsonObject= JSONObject.parseObject(content);
+        String dictItemGuid = jsonObject.getString("dictItemGuid");
+        SysDictItem sysDict = dictRService.querySysDictItemByGuid(dictItemGuid );
+       return getReturnMap(sysDict);
     }
     
     
@@ -357,33 +254,13 @@ public class DictController extends BaseController {
     /**
      * 根据业务字典的guid查询对应所有字典项
      * @param content
-     * @param request
-     * @param response
-     * @return
-     * @throws ToolsRuntimeException
-     * @throws ParseException
      */
     @ResponseBody
     @RequestMapping(value="/querySysDictItemList" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
-    public String querySysDictItemList(@RequestBody String content, HttpServletRequest request,
-                                 HttpServletResponse response) throws ToolsRuntimeException, ParseException {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("querySysDictItemList request : " + content);
-            }
-            JSONObject jsonObject= JSONObject.parseObject(content);
-            String dictGuid = jsonObject.getString("dictGuid");
-
-            List<SysDictItem> sysDictItems = dictRService.querySysDictItems(dictGuid);
-            AjaxUtils.ajaxJsonSuccessMessage(response,sysDictItems);
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("querySysDictItemList exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("querySysDictItemList exception : ", e);
-        }
-        return null;
+    public Map<String, Object> querySysDictItemList(@RequestBody String content) {
+        JSONObject jsonObject= JSONObject.parseObject(content);
+        String dictGuid = jsonObject.getString("dictGuid");
+        return getReturnMap(dictRService.querySysDictItems(dictGuid));
     }
     
     
@@ -392,51 +269,20 @@ public class DictController extends BaseController {
      *
      */
     @ResponseBody
-    @RequestMapping(value="/queryDictItemListByDictKey" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String queryDictItemListByDictKey(@RequestBody String content, HttpServletRequest request,
-                                       HttpServletResponse response) {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("queryDictItemListByDictKey request : " + content);
-            }
-            JSONObject jsonObject= JSONObject.parseObject(content);
-            String dictKey = jsonObject.getString("dictKey");
-
-            List<SysDictItem> sysDictItems = dictRService.queryDictItemListByDictKey(dictKey);
-            AjaxUtils.ajaxJsonSuccessMessage(response,sysDictItems);
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("queryDictItemListByDictKey exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("queryDictItemListByDictKey exception : ", e);
-        }
-        return null;
+    @RequestMapping(value="/queryDictItemListByDictKey", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> queryDictItemListByDictKey(@RequestBody String content) {
+        JSONObject jsonObject= JSONObject.parseObject(content);
+        String dictKey = jsonObject.getString("dictKey");
+        return getReturnMap(dictRService.queryDictItemListByDictKey(dictKey));
     }
     
     /**
      * 查询所有字典项
-     *
      */
     @ResponseBody
-    @RequestMapping(value="/queryAllDictItem" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String queryAllDictItem(@RequestBody String content, HttpServletRequest request,
-                                       HttpServletResponse response) {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("queryDictItemListByDictKey request : " + content);
-            }
-            JSONObject jsonObject= JSONObject.parseObject(content);
-            List<SysDictItem> sysDictItems = dictRService.querySysDictItemList();
-            AjaxUtils.ajaxJsonSuccessMessage(response,sysDictItems);
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("queryDictItemListByDictKey exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("queryDictItemListByDictKey exception : ", e);
-        }
-        return null;
+    @RequestMapping(value="/queryAllDictItem", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> queryAllDictItem() {
+        return getReturnMap(dictRService.querySysDictItemList());
     }
 
 
@@ -444,6 +290,7 @@ public class DictController extends BaseController {
      * 导出所有业务字典为excel
      *
      */
+    @ResponseBody
     @RequestMapping(value="/exportDictExcel",method= RequestMethod.GET)
     public void exportDictExcel(HttpServletRequest request, HttpServletResponse response) {
         OutputStream out = null;
@@ -570,47 +417,32 @@ public class DictController extends BaseController {
             } catch (IOException e) {}
         }
     }
-
-    
     
     /**
      * 查询业务字典对应树结构
      */
-    @RequestMapping(value="/queryDictTree" ,method=RequestMethod.POST)
-    public String queryDictTree(@RequestBody String content, HttpServletRequest request,
-                           HttpServletResponse response) {
-        Map<String, Object> result = new HashMap<String, Object>();
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("queryDictTree request : " + content);
-            }
-            JSONObject jsonObj = JSONObject.parseObject(content);
-            String id = jsonObj.getString("id");
-            String dictKey = jsonObj.getString("dictKey");
-            //通过id判断需要加载的节点
-
-            if("#".equals(id)){
-            	SysDict dict = dictRService.queryDict(dictKey);
-                Map map=new HashMap();
-                map.put("rootName", dict.getDictName());
-                map.put("itemType", "dict");
-                map.put("itemValue", dictKey);	
-                map.put("defaultValue", dict.getDefaultValue());
-                map.put("dictguid", dict.getGuid());
-                result.put("data", map);//返回给前台的数据
-            } else {
-                List<SysDictItem> sysDictItems = dictRService.queryDictItemListByDictKey(dictKey);
-                result.put("data", sysDictItems);//返回给前台的数据
-            }
-            AjaxUtils.ajaxJsonSuccessMessage(response, result.get("data"));
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("queryDictTree exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("queryDictTree exception : ", e);
+    @ResponseBody
+    @RequestMapping(value="/queryDictTree", produces = "application/json;charset=UTF-8", method=RequestMethod.POST)
+    public Map<String, Object> queryDictTree(@RequestBody String content) {
+        Map<String, Object> result = new HashMap<>();
+        JSONObject jsonObj = JSONObject.parseObject(content);
+        String id = jsonObj.getString("id");
+        String dictKey = jsonObj.getString("dictKey");
+        //通过id判断需要加载的节点
+        if("#".equals(id)){
+            SysDict dict = dictRService.queryDict(dictKey);
+            Map map=new HashMap();
+            map.put("rootName", dict.getDictName());
+            map.put("itemType", "dict");
+            map.put("itemValue", dictKey);
+            map.put("defaultValue", dict.getDefaultValue());
+            map.put("dictguid", dict.getGuid());
+            result.put("data", map);//返回给前台的数据
+        } else {
+            List<SysDictItem> sysDictItems = dictRService.queryDictItemListByDictKey(dictKey);
+            result.put("data", sysDictItems);//返回给前台的数据
         }
-        return null;
+        return getReturnMap(result.get("data"));
     }
 
     
@@ -619,28 +451,20 @@ public class DictController extends BaseController {
      *
      */
     @ResponseBody
-    @RequestMapping(value="/queryDict" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
-    public String queryDict(@RequestBody String content, HttpServletRequest request,
-                                       HttpServletResponse response) {
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("queryDict request : " + content);
-            }
-            
-            JSONObject jsonObject= JSONObject.parseObject(content);
-            String dictKey = jsonObject.getString("dictKey");
-            SysDict dict = dictRService.queryDict(dictKey);
-            AjaxUtils.ajaxJsonSuccessMessage(response,dict);
-        } catch (ToolsRuntimeException e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,e.getCode(), e.getMessage());
-            logger.error("queryDict exception : ", e);
-        }catch (Exception e) {
-            AjaxUtils.ajaxJsonErrorMessage(response,"SYS_0001", e.getMessage());
-            logger.error("queryDict exception : ", e);
-        }
-        return null;
+    @RequestMapping(value="/queryDict", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> queryDict(@RequestBody String content) {
+        JSONObject jsonObject= JSONObject.parseObject(content);
+        String dictKey = jsonObject.getString("dictKey");
+        SysDict dict = dictRService.queryDict(dictKey);
+        return getReturnMap(dict);
     }
 
+
+
+    /**
+     * 修改字典项默认值
+     *
+     */
     @OperateLog(
             operateType = JNLConstants.OPEARTE_TYPE_UPDATE,
             operateDesc = "设置字典默认字典项",
@@ -649,29 +473,13 @@ public class DictController extends BaseController {
             name = "dictName",
             keys = "defaultValue"
     )
-    /**
-     * 修改字典项默认值
-     *
-     */
     @ResponseBody
-    @RequestMapping(value="/setDefaultDictValue" ,produces = "application/json;charset=UTF-8",method= RequestMethod.POST)
+    @RequestMapping(value="/setDefaultDictValue", produces = "application/json;charset=UTF-8", method= RequestMethod.POST)
     public Map<String, Object> setDefaultDictValue(@RequestBody String content) {
         JSONObject obj = JSONObject.parseObject(content);
         String dictKey = obj.getString("dictKey");
         String itemValue = obj.getString("itemValue");
         return getReturnMap(dictRService.setDefaultDictValue(dictKey, itemValue));
     }
-    
-    /**
-     * 要求子类构造自己的响应数据
-     *
-     * @return
-     */
-    @Override
-    public Map<String, Object> getResponseMessage() {
-        if( null == responseMsg ){
-            responseMsg = new HashMap<String, Object>() ;
-        }
-        return responseMsg;
-    }
+
 }

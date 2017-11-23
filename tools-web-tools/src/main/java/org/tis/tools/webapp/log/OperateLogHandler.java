@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
@@ -15,12 +17,12 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.model.def.JNLConstants;
+import org.tis.tools.model.po.ac.AcOperator;
 import org.tis.tools.model.vo.log.LogOperateDetail;
 import org.tis.tools.model.vo.log.OperateLogBuilder;
 import org.tis.tools.rservice.log.capable.IOperateLogRService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Map;
@@ -78,17 +80,17 @@ public class OperateLogHandler {
     public void enterOperateController(JoinPoint point, OperateLog log) throws Throwable {
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        HttpSession session = request.getSession();
-
+//        HttpSession session = request.getSession();
+        Session session = SecurityUtils.getSubject().getSession();
+        AcOperator acOperator = (AcOperator) session.getAttribute("userInfo");
         OperateLogBuilder logBuilder = new OperateLogBuilder();
         logBuilder.start()
                 .setOperateFrom("ABF") // FIXME 从哪设置该值
                 .setUserId(StringUtils.equals(log.operateType(),"login") ? "" : session.getAttribute("userId").toString())
-                .setOperatorName(StringUtils.equals(log.operateType(), "login") ? "" : session.getAttribute("operatorName").toString())
+                .setOperatorName(StringUtils.equals(log.operateType(), "login") ? "" : acOperator.getOperatorName())
                 .setOperateType(log.operateType())
                 .setProcessDesc(log.operateDesc())
                 .setRestfulUrl(request.getPathInfo());
-
         LogThreadLocal.setLogBuilderLocal(logBuilder);
     }
 

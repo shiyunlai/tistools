@@ -2,7 +2,6 @@ package org.tis.tools.rservice.sys.capable;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tis.tools.base.WhereCondition;
-import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.common.utils.StringUtil;
 import org.tis.tools.core.exception.ExceptionCodes;
 import org.tis.tools.model.def.GUID;
@@ -13,6 +12,9 @@ import org.tis.tools.service.sys.SysRunConfigService;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.tis.tools.common.utils.BasicUtil.surroundBracketsWithLFStr;
+import static org.tis.tools.common.utils.BasicUtil.wrap;
 
 /**
  * 系统运行参数服务实现
@@ -39,7 +41,7 @@ public class RunConfigRServiceImpl extends BaseRService implements IRunConfigRSe
             e.printStackTrace();
             throw new SysManagementException(
                     ExceptionCodes.FAILURE_WHEN_QUERY,
-                    BasicUtil.wrap("SYS_RUN_CONFIG",e.getCause().getMessage()));
+                    wrap("SYS_RUN_CONFIG", e));
         }
         return SysRunConfigList;
     }
@@ -64,44 +66,40 @@ public class RunConfigRServiceImpl extends BaseRService implements IRunConfigRSe
      * @throws SysManagementException
      */
     @Override
-    public void createSysRunConfig(SysRunConfig sysRunConfig) throws SysManagementException {
+    public SysRunConfig createSysRunConfig(SysRunConfig sysRunConfig) throws SysManagementException {
 
         try {
             if(null == sysRunConfig) {
-                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("SysRunConfig","SYS_RUN_CONFIG"));
+                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, wrap("SysRunConfig","SYS_RUN_CONFIG"));
             }
             // 校验传入参数
             if(StringUtil.isEmpty(sysRunConfig.getGuidApp())) {
-                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("GUIDAPP","SYS_RUN_CONFIG"));
+                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, wrap("GUIDAPP","SYS_RUN_CONFIG"));
             }
             if(StringUtil.isEmpty(sysRunConfig.getGroupName())) {
-                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("GROUPNAME","SYS_RUN_CONFIG"));
+                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, wrap("GROUPNAME","SYS_RUN_CONFIG"));
             }
             if(StringUtil.isEmpty(sysRunConfig.getKeyName())) {
-                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("KEYNAME","SYS_RUN_CONFIG"));
+                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, wrap("KEYNAME","SYS_RUN_CONFIG"));
             }
             if(StringUtil.isEmpty(sysRunConfig.getValue())) {
-                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("VALUE","SYS_RUN_CONFIG"));
+                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, wrap("VALUE","SYS_RUN_CONFIG"));
             }
             if(StringUtil.isEmpty(sysRunConfig.getValueFrom())) {
-                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("VALUEFROM","SYS_RUN_CONFIG"));
+                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, wrap("VALUEFROM","SYS_RUN_CONFIG"));
             }
-
-
-
-
             /** 添加GUID和系统参数*/
             String guid = GUID.runConfig();
             sysRunConfig.setGuid(guid);
-            sysRunConfigService.insert(sysRunConfig);;
-
+            sysRunConfigService.insert(sysRunConfig);
+            return sysRunConfig;
         } catch (SysManagementException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new SysManagementException(
                     ExceptionCodes.FAILURE_WHEN_INSERT,
-                    BasicUtil.wrap("SYS_RUN_CONFIG",e.getCause().getMessage()));
+                    wrap("SYS_RUN_CONFIG", e));
         }
 
     }
@@ -129,23 +127,23 @@ public class RunConfigRServiceImpl extends BaseRService implements IRunConfigRSe
 
         try {
             if(null == sysRunConfig) {
-                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap("SysRunConfig","SYS_RUN_CONFIG"));
+                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, wrap("SysRunConfig","SYS_RUN_CONFIG"));
             }
             // 校验传入参数
             if(StringUtil.isEmpty(sysRunConfig.getGuidApp())) {
-                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap("GUIDAPP","SYS_RUN_CONFIG"));
+                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, wrap("GUIDAPP","SYS_RUN_CONFIG"));
             }
             if(StringUtil.isEmpty(sysRunConfig.getGroupName())) {
-                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap("GROUPNAME","SYS_RUN_CONFIG"));
+                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, wrap("GROUPNAME","SYS_RUN_CONFIG"));
             }
             if(StringUtil.isEmpty(sysRunConfig.getKeyName())) {
-                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap("KEYNAME","SYS_RUN_CONFIG"));
+                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, wrap("KEYNAME","SYS_RUN_CONFIG"));
             }
             if(StringUtil.isEmpty(sysRunConfig.getValue())) {
-                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap("VALUE","SYS_RUN_CONFIG"));
+                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, wrap("VALUE","SYS_RUN_CONFIG"));
             }
             if(StringUtil.isEmpty(sysRunConfig.getValueFrom())) {
-                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap("VALUEFROM","SYS_RUN_CONFIG"));
+                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, wrap("VALUEFROM","SYS_RUN_CONFIG"));
             }
             sysRunConfigService.update(sysRunConfig);
 
@@ -155,7 +153,7 @@ public class RunConfigRServiceImpl extends BaseRService implements IRunConfigRSe
             e.printStackTrace();
             throw new SysManagementException(
                     ExceptionCodes.FAILURE_WHEN_UPDATE,
-                    BasicUtil.wrap("SYS_RUN_CONFIG" ,e.getCause().getMessage()));
+                    wrap("SYS_RUN_CONFIG", e));
         }
 
     }
@@ -174,21 +172,24 @@ public class RunConfigRServiceImpl extends BaseRService implements IRunConfigRSe
      * @throws SysManagementException
      */
     @Override
-    public void deleteSysRunConfig(String guid) throws SysManagementException {
+    public SysRunConfig deleteSysRunConfig(String guid) throws SysManagementException {
         try {
             if(null == guid) {
-                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, BasicUtil.wrap("GUID","SYS_RUN_CONFIG"));
+                throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE, wrap("GUID","SYS_RUN_CONFIG"));
             }
-
-            sysRunConfigService.delete(guid);;
-
+            SysRunConfig sysRunConfig = sysRunConfigService.loadByGuid(guid);
+            if (sysRunConfig == null)
+                throw new SysManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY,
+                        wrap(surroundBracketsWithLFStr(SysRunConfig.COLUMN_GUID, guid), SysRunConfig.TABLE_NAME));
+            sysRunConfigService.delete(guid);
+            return sysRunConfig;
         } catch (SysManagementException ae) {
             throw ae;
         } catch (Exception e) {
             e.printStackTrace();
             throw new SysManagementException(
                     ExceptionCodes.FAILURE_WHEN_DELETE,
-                    BasicUtil.wrap("SYS_RUN_CONFIG",e.getCause().getMessage()));
+                    wrap("SYS_RUN_CONFIG", e));
         }
     }
 }

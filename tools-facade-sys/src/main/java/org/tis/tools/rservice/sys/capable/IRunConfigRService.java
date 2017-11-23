@@ -43,7 +43,7 @@ public interface IRunConfigRService {
      * @return  void
      * @throws SysManagementException
      */
-    void createSysRunConfig(SysRunConfig sysRunConfig) throws SysManagementException;
+    SysRunConfig createSysRunConfig(SysRunConfig sysRunConfig) throws SysManagementException;
 
     /**
      * <p>修改系统运行参数</p>
@@ -77,6 +77,6 @@ public interface IRunConfigRService {
      * @param guid
      * @throws SysManagementException
      */
-    void deleteSysRunConfig(String guid) throws SysManagementException;
+    SysRunConfig deleteSysRunConfig(String guid) throws SysManagementException;
 
 }

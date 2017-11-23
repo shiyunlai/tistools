@@ -124,7 +124,7 @@ public interface IDictRService {
 	 * 			业务字典GUID
 	 * @throws SysManagementException
 	 */
-	void deleteDict(String dictGuid) throws SysManagementException;
+	SysDict deleteDict(String dictGuid) throws SysManagementException;
 
 
 	/**
@@ -134,7 +134,7 @@ public interface IDictRService {
 	 * 			字典项GUID
 	 * @throws SysManagementException
 	 */
-	void deleteDictItem(String dictItemGuid) throws SysManagementException;
+	SysDictItem deleteDictItem(String dictItemGuid) throws SysManagementException;
 
 	/**
 	 * 查询所有业务字典
