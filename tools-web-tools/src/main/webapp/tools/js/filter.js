@@ -18,7 +18,6 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
     .filter('translateConstants', ['$http', '$rootScope', function ($http, $rootScope) {
         return function (val, name) {
             var subFrom = {};
-            console.log(val)
             subFrom.dictKey = name;
             $rootScope.vals = val;
             if (isNull($rootScope.constant[name + "-" + val])) {
@@ -86,8 +85,6 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
         return function (val, name) {
             var subFrom = {};
             subFrom.dictKey = name;
-            console.info(name + "-" + val)
-            // console.info($rootScope.constant)
             if (isNull($rootScope.constant[val])) {
                 $http.post(manurl +  "/om/org/queryAllorg").then(function (data) {
                     var retval = "";
@@ -363,10 +360,9 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
         return function (val) {
             var subFrom = {};
             subFrom.dictKey = val;
-            console.log(subFrom)
             $rootScope.vals = val;
             var retval = [];
-            if (isNull($rootScope.constant[name + "-" + val])) {
+            if (isNull($rootScope.constant[val])) {
                 $http.post(manurl +  "/DictController/queryDictItemListByDictKey", subFrom).then(function (data) {
                     if (data.data.status == "success") {
                         for (var i = 0; i < data.data.retMessage.length; i++) {
@@ -382,4 +378,26 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
             return retval;
         };
 }])
+    .filter('tranSearchPosition', ['$http', '$rootScope', function ($http, $rootScope) {
+        return function (val) {
+            var retval = [];
+            if (isNull($rootScope.constant[val])) {
+                $http.post(manurl +  "/om/org/queryAllposition").then(function (data) {
+                    if (data.data.status == "success") {
+                        for (var i = 0; i < data.data.retMessage.length; i++) {
+                            if (data.data.status == "success") {
+                                var strs = {};
+                                strs.value = data.data.retMessage[i].guid;
+                                strs.label = data.data.retMessage[i].positionName;
+                                retval.push(strs);
+                                $rootScope.constant['Position'] = retval;
+                            }
+                        }
+                    }
+
+                })
+            }
+            return retval;
+        };
+    }])
 ;

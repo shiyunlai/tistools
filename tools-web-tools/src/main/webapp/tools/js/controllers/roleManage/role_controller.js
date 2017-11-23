@@ -53,7 +53,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
     role.inint = function(items){
         var subFrom = {};
         role_service.queryRoleList(subFrom).then(function(data){
-            var datas = $filter('Arraysort')(data.retMessage);//调用管道排序
+                var datas = $filter('Arraysort')(data.retMessage);//调用管道排序
                 if(data.status == "success"){
                     $scope.gridOptions.data =  datas;
                     $scope.gridOptions.mydefalutData = datas;
@@ -358,6 +358,7 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
         });
     }
     creaJstree()//调用创建树
+
     //修改配置
     $scope.role.edidConfig = function () {
         $scope.edit = true;
@@ -687,7 +688,7 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
         queryParrty(id,DICT_AC_PARTYTYPE[0]);//重新查询组织信息
         queryParrty(id,DICT_AC_PARTYTYPE[1]);//重新查询工作组信息
         queryParrty(id,DICT_AC_PARTYTYPE[2]);//重新查询岗位信息
-        queryParrty(id,DICT_AC_PARTYTYPE[3]);//重新查询服务信息
+        queryParrty(id,DICT_AC_PARTYTYPE[3]);//重新查询职务信息
         queryOeper(id)//查询操作员列表
     }
 
@@ -713,7 +714,7 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
             $scope.roleflag.dist = true;
             $scope.roleflag.operatorer = false;
             $scope.roleflag.entity = false;
-            queryParrty(role.guid,DICT_AC_PARTYTYPE[0]);
+            queryParrty(role.guid,DICT_AC_PARTYTYPE[3]);//重新查询职务信息
         }else if (type == 3){
             for(var i in $scope.rolesflag){
                 $scope.rolesflag[i] = false;

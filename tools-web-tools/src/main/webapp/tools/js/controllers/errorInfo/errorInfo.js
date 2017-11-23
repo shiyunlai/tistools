@@ -8,5 +8,5 @@ angular.module('MetronicApp').controller('errorInfo_controller', function($rootS
     $scope.backhome = function(){
         $state.go("dashboard")
     }
-
+    console.log($rootScope.funcCode)
 });

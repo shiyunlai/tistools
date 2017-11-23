@@ -142,7 +142,7 @@
 
 
 <script>
-    $("input").on('keyup',function(){
+    $("input").on('change',function(){
         var namelangth =  $("#loginname").val().length;
         var passlength = $("#password").val().length;
 //        if(namelangth>=5&&passlength>=6){
@@ -199,7 +199,8 @@
         form.userId = $("#loginname").val();
         form.password = $("#password").val();
         form.identityGuid =$("#opertor").val();
-        form.appGuid = 'APP1499956132';
+//        form.appGuid = 'APP1499956132';
+        form.appCode = 'ABF';
         $.ajax({
             url:"../AcAuthenticationController/login",
             type:"post",
@@ -213,7 +214,7 @@
                 if(data.status == "success"){
 //                    sessionStorage.user = JSON.stringify(data.retMessage.user);
 //                    sessionStorage.menus = data.retMessage.menu;
-//                    sessionStorage.opertor = $("#opertor").find("option:selected").text();
+                    sessionStorage.opertor = $("#opertor").find("option:selected").text();
 //                    window.location = "../tools/index.html#/dashboard";//如果正确，则进入主页
                     window.location = manurl+'/tools/index.html#/dashboard';//如果正确，则进入主页
                 }else {
