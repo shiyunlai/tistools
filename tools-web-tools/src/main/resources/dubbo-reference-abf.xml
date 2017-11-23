@@ -102,6 +102,13 @@
 			version="${roleRService.version}"
 			interface="org.tis.tools.rservice.ac.capable.IRoleRService"
 			check="false"/>
+
+	<dubbo:reference
+			id="entityRService"
+			group="ac"
+			version="${entityRService.version}"
+			interface="org.tis.tools.rservice.ac.capable.IEntityRService"
+			check="false"/>
 	<!--AC - END-->
 
 	<!--SYS - START-->

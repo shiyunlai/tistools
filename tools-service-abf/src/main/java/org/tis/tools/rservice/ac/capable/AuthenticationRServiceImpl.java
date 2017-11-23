@@ -303,8 +303,9 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
             // 查询资源信息
             List<String> funcGuids = queryOperatorAuthFuncsInApp(userId, acApp.getGuid()).stream().map(AcFunc::getGuid).collect(Collectors.toList());
             List<Map> resources = new ArrayList<>();
-            if(CollectionUtils.isNotEmpty(funcGuids))
-                acFuncServiceExt.queryFuncResourcesWithFuncCode(funcGuids);
+            if(CollectionUtils.isNotEmpty(funcGuids)) {
+                resources = acFuncServiceExt.queryFuncResourcesWithFuncCode(funcGuids);
+            }
             resultInfo.put("resources", resources);
             return resultInfo;
         } catch (ToolsRuntimeException ae) {

@@ -71,4 +71,10 @@
 		   protocol="dubbo" timeout="3000" />
     <bean id="roleRServiceImpl" class="org.tis.tools.rservice.ac.capable.RoleRServiceImpl"/>
 
+   <dubbo:service
+		   interface="org.tis.tools.rservice.ac.capable.IEntityRService" group="ac" version="${IEntityRService.version}"
+		   ref="entityRService"
+		   protocol="dubbo" timeout="3000" />
+    <bean id="entityRService" class="org.tis.tools.rservice.ac.capable.EntityRServiceImpl"/>
+
 </beans>
