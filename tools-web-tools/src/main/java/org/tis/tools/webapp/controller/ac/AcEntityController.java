@@ -2,6 +2,7 @@ package org.tis.tools.webapp.controller.ac;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,8 +13,12 @@ import org.tis.tools.model.def.JNLConstants;
 import org.tis.tools.model.po.ac.AcDatascope;
 import org.tis.tools.model.po.ac.AcEntity;
 import org.tis.tools.model.po.ac.AcEntityfield;
+import org.tis.tools.rservice.ac.capable.IApplicationRService;
 import org.tis.tools.rservice.ac.capable.IEntityRService;
+import org.tis.tools.rservice.ac.capable.IMenuRService;
+import org.tis.tools.rservice.sys.capable.IDictRService;
 import org.tis.tools.webapp.controller.BaseController;
+import org.tis.tools.webapp.exception.WebAppException;
 import org.tis.tools.webapp.log.OperateLog;
 import org.tis.tools.webapp.log.ReturnType;
 
@@ -26,14 +31,34 @@ public class AcEntityController extends BaseController {
     
     @Autowired
     IEntityRService entityRService;
+    @Autowired
+    IApplicationRService applicationRService;
+    @Autowired
+    IMenuRService menuRService;
+    @Autowired
+    IDictRService dictRService;
 
     /**
      * 查询实体对象列表
      */
     @ResponseBody
-    @RequestMapping(value = "/queryAcEntityList", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public Map<String, Object> queryRoleList() {
-        return getReturnMap(entityRService.queryAcEntityList());
+    @RequestMapping(value = "/queryAcEntityTreeList", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> queryRoleTreeList(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        JSONObject data = jsonObject.getJSONObject("data");
+        String type = data.getString("type"); // 1.app应用 2.entityType实体类型 3.entity 实体
+        if (StringUtils.equals(type, "app")) {
+            return getReturnMap(menuRService.queryAllAcApp());
+        } else if (StringUtils.equals(type, "entityType")) {
+            return getReturnMap(dictRService.queryDictItemListByDictKey("DICT_AC_ENTITYTYPE"));
+        } else if (StringUtils.equals(type, "entityType")) {
+            String appGuid = data.getString("appGuid");
+            String entityType = data.getString("entityType");
+            return getReturnMap(entityRService.queryAcEntityList(appGuid, entityType));
+        } else {
+            throw new WebAppException("WEB-444", "未知的数据！");
+        }
+
     }
 
     /**

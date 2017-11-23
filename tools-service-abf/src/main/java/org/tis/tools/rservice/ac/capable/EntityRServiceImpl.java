@@ -146,15 +146,26 @@ public class EntityRServiceImpl extends BaseRService implements IEntityRService 
         }
     }
 
+
     /**
      * 查询数据实体对象集合
      *
+     * @param appGuid    应用GUID
+     * @param entityType 实体类型
      * @return
      * @throws EntityManagementException
      */
     @Override
-    public List<AcEntity> queryAcEntityList() throws EntityManagementException {
-        List<AcEntity> list = acEntityService.query(new WhereCondition());
+    public List<AcEntity> queryAcEntityList(String appGuid, String entityType) throws EntityManagementException {
+        if(StringUtils.isNotBlank(appGuid)) {
+            throw new EntityManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap("appGuid(String)", AcEntity.TABLE_NAME));
+        }
+        if(StringUtils.isNotBlank(entityType)) {
+            throw new EntityManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap("entityType(String)", AcEntity.TABLE_NAME));
+        }
+        List<AcEntity> list = acEntityService.query(new WhereCondition()
+                .andEquals(AcEntity.COLUMN_GUID_APP, appGuid)
+                .andEquals(AcEntity.COLUMN_ENTITY_TYPE, entityType));
         return list;
     }
 
