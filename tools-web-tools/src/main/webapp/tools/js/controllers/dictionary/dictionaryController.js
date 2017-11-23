@@ -1,7 +1,7 @@
 /**
  * Created by wangbo on 2017/7/4.
  */
-angular.module('MetronicApp').controller('dictionary_controller', function($rootScope, $scope, $http,i18nService,$modal,filterFilter,common_service,$timeout,$uibModal,uiGridConstants,dictonary_service){
+angular.module('MetronicApp').controller('dictionary_controller', function($rootScope, $scope,$state,$filter, $http,i18nService,$modal,filterFilter,common_service,$timeout,$uibModal,uiGridConstants,dictonary_service){
 
     var res = $rootScope.res.dictonary_service;//页面所需调用的服务
 
@@ -35,7 +35,6 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
     var dictFrom = {};
     $scope.dictFrom = dictFrom;
     dictFrom.Alldict = 'All';
-
 
 
     var gridOptions0 = {};
@@ -72,14 +71,13 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
 
 //查询所有业务字典
     var  queryAlldict = function(){
-
         //监控单选框，配置数据
         $scope.$watch('dictFrom.Alldict',function(newvalue,oldvalue){
             if(newvalue == 'Root'){
                 var subFrom = {};
                 subFrom.isQueryRoot = 'Y';
                 dictonary_service.querySysDictList(subFrom).then(function(data){
-                    var datas = data.retMessage;
+                    var datas = $filter('Arraysort')(data.retMessage);//调用管道排序
                     if(data.status == "success"){
                         dictflag.dictnameL = datas;
                         $scope.gridOptions0.data =  datas;
@@ -93,7 +91,7 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                 var subFrom = {};
                 subFrom.isQueryRoot = 'N';
                 dictonary_service.querySysDictList(subFrom).then(function(data){
-                    var datas = data.retMessage;
+                    var datas = $filter('Arraysort')(data.retMessage);//调用管道排序
                     if(data.status == "success"){
                         dictflag.dictnameL = datas;
                         $scope.gridOptions0.data =  datas;
@@ -236,6 +234,16 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
             }
         }else{
             toastr['error']("请至少选中一条进行修改！");
+        }
+    }
+
+    //查看历史记录
+    dictflag.histroy = function () {
+        var getSel = $scope.gridOptions0.getSelectedRows();
+        if(isNull(getSel) || getSel.length>1){
+            toastr['error']("请至少选中一条进行重置！");
+        }else{
+            $state.go("loghistory",{id:getSel[0].guid});//跳转到历史页面
         }
     }
     /*删除业务字典提取*/
@@ -408,9 +416,9 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                 serFrom.dictKey = item.guidDict;
                 serFrom.itemValue = item.sendValue;
                 common_service.post(res.setDefaultDictValue,serFrom).then(function(data){
-
                     if(data.status == "success"){
                         toastr['success']( "设置默认值成功！");
+                        dictflag.initt();//调用刷新列表
                     }else{
                         toastr['success']( "设置默认值失败！");
                     }
@@ -710,7 +718,10 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                     common_service.post(res.queryDictTree,$scope.treeFrom).then(function(data){
                         if(data.status == 'success'){
                             var datas = data.retMessage;
-
+                            if(!isNull(datas.defaultValue)){
+                                var defaultValuedata = datas.defaultValue;
+                                $scope.defaultValuedata = defaultValuedata;
+                            }
                             var its = [];
                             if(!isNull(datas.rootName)){
                                 datas.text = datas.itemValue+'_'+datas.rootName;
@@ -720,7 +731,11 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
                                 its.push(datas)
                             }else{
                                 for(var i =0;i <datas.length;i++){
-                                    datas[i].text = datas[i].guidDict+'_'+datas[i].itemName;
+                                    if(datas[i].sendValue == $scope.defaultValuedata ){
+                                        datas[i].text = datas[i].itemValue+'_'+datas[i].sendValue+'_'+datas[i].itemName + '*';
+                                    }else{
+                                        datas[i].text = datas[i].itemValue+'_'+datas[i].sendValue+'_'+datas[i].itemName;
+                                    }
                                     datas[i].children = true;
                                     if(datas[i].itemType == 'value'){
                                         datas[i].children = false;

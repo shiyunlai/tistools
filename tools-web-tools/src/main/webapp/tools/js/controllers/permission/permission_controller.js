@@ -8,12 +8,10 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
     $scope.myback = function(){
         window.history.back(-1);
     }
-
     //因为传入的是对象，拿到的是字符串，所以先转成json对象
     var peaids = angular.fromJson($stateParams.id);
     var userid = peaids.userid;//操作员userid
     var operguid = peaids.operguid;//操作员guid
-    console.log(operguid)
     $scope.currRole = userid;//显示当前操作员
 
     var res = $rootScope.res.operator_service;//页面所需调用的服务
@@ -112,14 +110,20 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
                     "plugins" : [ "state", "types","dnd","search" ,"wholerow"]// 插件引入 dnd拖拽插件 state缓存插件(刷新保存) types多种数据结构插件  checkbox复选框插件
                 }).bind("select_node.jstree", function (e, data) {
                     if(data.node.original.isLeaf =='Y'){
-                        $scope.permiss.funcselect = true;
                         queryfunlist(data.node.id,userid);//调用查询列表方法
                         blackAdd(data.node.id);//调用添加特别禁止功能
                         delblack(data.node.id);//调用移除特别禁止功能
                         allow(data.node.id);//调用添加特别允许功能
                         removeallow(data.node.id);//调用移除特别允许功能
+                        $scope.permiss.funcselect = true;
+                        $scope.isYear = false;
                     }else{
-                        $scope.permiss.funcselect = false;
+                        // $scope.permiss.funcselect = false;
+                        $scope.isYear = true;//禁止点击
+                        $scope.notrolegird.data =[] ;//数据全部清空
+                        $scope.tograntgird.data =  [];
+                        $scope.alrolegird.data =  [];
+                        $scope.permissiongird.data =  [];
                     }
                     $scope.$apply();
                 });
@@ -141,43 +145,26 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
                 //已授予表格
                 if(!isNull(datas.auth)){
                     $scope.notrolegird.data =datas.auth ;
-                    $scope.notrolegird.mydefalutData = datas.auth;
-                    $scope.notrolegird.getPage(1,$scope.notrolegird.paginationPageSize);
                 }else{
                     $scope.notrolegird.data =[] ;
-                    $scope.notrolegird.mydefalutData = [];
-                    $scope.notrolegird.getPage(1,$scope.notrolegird.paginationPageSize);
                 }
                 //未授予
                 if(!isNull(datas.unauth)){
                     $scope.tograntgird.data = datas.unauth;
-                    $scope.tograntgird.mydefalutData = datas.unauth;
-                    $scope.tograntgird.getPage(1,$scope.tograntgird.paginationPageSize);
                 }else{
                     $scope.tograntgird.data =  [];
-                    $scope.tograntgird.mydefalutData = [];
-                    $scope.tograntgird.getPage(1,$scope.tograntgird.paginationPageSize);
                 }
                 //特别禁止
                 if(!isNull(datas.forbid)){
                     $scope.alrolegird.data = datas.forbid;
-                    $scope.alrolegird.mydefalutData = datas.forbid;
-                    $scope.alrolegird.getPage(1,$scope.alrolegird.paginationPageSize);
                 }else{
                     $scope.alrolegird.data =  [];
-                    $scope.alrolegird.mydefalutData = [];
-                    $scope.alrolegird.getPage(1,$scope.alrolegird.paginationPageSize);
                 }
-
                 //特别允许
                 if(!isNull(datas.permit)){
                     $scope.permissiongird.data = datas.permit;
-                    $scope.permissiongird.mydefalutData = datas.permit;
-                    $scope.permissiongird.getPage(1,$scope.permissiongird.paginationPageSize);
                 }else{
                     $scope.permissiongird.data =  [];
-                    $scope.permissiongird.mydefalutData = [];
-                    $scope.permissiongird.getPage(1,$scope.permissiongird.paginationPageSize);
                 }
 
             }
@@ -186,13 +173,15 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
 
     i18nService.setCurrentLang("zh-cn");
 
-    //已授予表格创建
-    var notrolegird = {};
-    $scope.notrolegird = notrolegird;
-    var not = [
-        { field: "bhvName", displayName:'行为名称'},
-        { field: "bhvCode", displayName:'行为代码'}
-    ];
+    $scope.notrolegird = {
+        enablePaginationControls: false,
+        paginationPageSize: 10,
+        multiSelect:false,
+        columnDefs: [
+            { field: "bhvName", displayName:'行为名称'},
+            { field: "bhvCode", displayName:'行为代码'}
+        ]
+    };
     var f = function(row){
         if(row.isSelected){
             $scope.notrolRow = row.entity;
@@ -200,7 +189,12 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
             $scope.notrolRow = '';//制空
         }
     }
-    $scope.notrolegird = initgrid($scope,notrolegird,filterFilter,not,false,f);
+
+    $scope.notrolegird.onRegisterApi = function (gridApi) {
+        $scope.notrolegird = gridApi;
+        $scope.notrolegird.selection.on.rowSelectionChanged($scope,f);
+    }
+
     //添加特别禁止逻辑
     var blackAdd = function (funtguid) {
         $scope.permiss.add = function () {
@@ -241,22 +235,27 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
 
 
     //特别禁止表格
-    var alrolegird = {};
-    $scope.alrolegird = alrolegird;
-    var alrs = [
-        { field: "bhvName", displayName:'行为名称'},
-        { field: "bhvCode", displayName:'行为代码'}
-    ];
-    var fjinzhi = function(row){
+    $scope.alrolegird = {
+        enablePaginationControls: false,
+        paginationPageSize: 10,
+        multiSelect:false,
+        columnDefs: [
+            { field: "bhvName", displayName:'行为名称'},
+            { field: "bhvCode", displayName:'行为代码'}
+        ]
+    };
+    var alrol = function(row){
         if(row.isSelected){
             $scope.alrols = row.entity;
         }else{
-            delete $scope.alrols;//制空
-           $scope.alrols = '';//制空
+            $scope.alrols = '';//制空
         }
     }
-    $scope.alrolegird = initgrid($scope,alrolegird,filterFilter,alrs,false,fjinzhi);
 
+    $scope.alrolegird.onRegisterApi = function (gridApi) {
+        $scope.alrolegird = gridApi;
+        $scope.alrolegird.selection.on.rowSelectionChanged($scope,alrol);
+    }
 
     //移除特别禁止逻辑
     var delblack = function (funtguid) {
@@ -288,12 +287,15 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
 
 
     //未授予表格
-    var tograntgird = {};
-    $scope.tograntgird = tograntgird;
-    var togra = [
-        { field: "bhvName", displayName:'行为名称'},
-        { field: "bhvCode", displayName:'行为代码'}
-    ];
+    $scope.tograntgird = {
+        enablePaginationControls: false,
+        paginationPageSize: 10,
+        multiSelect:false,
+        columnDefs: [
+            { field: "bhvName", displayName:'行为名称'},
+            { field: "bhvCode", displayName:'行为代码'}
+        ]
+    };
     var ftogra = function(row){
         if(row.isSelected){
             $scope.ogran = row.entity;
@@ -302,7 +304,11 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
             $scope.ogran = '';//制空
         }
     }
-    $scope.tograntgird = initgrid($scope,tograntgird,filterFilter,togra,false,ftogra);
+    $scope.tograntgird.onRegisterApi = function (gridApi) {
+        $scope.tograntgird = gridApi;
+        $scope.tograntgird.selection.on.rowSelectionChanged($scope,ftogra);
+    }
+
 
     //添加特别允许
     var allow = function (funtguid) {
@@ -348,7 +354,29 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
         }
     }
     $scope.permissiongird = initgrid($scope,permissiongird,filterFilter,tossi,true,ftopermi);
-    
+
+
+    $scope.permissiongird = {
+        enablePaginationControls: false,
+        paginationPageSize: 10,
+        multiSelect:false,
+        columnDefs: [
+            { field: "bhvName", displayName:'行为名称'},
+            { field: "bhvCode", displayName:'行为代码'}
+        ]
+    };
+    var ftopermi = function(row) {
+        if (row.isSelected) {
+            $scope.permiesss = row.entity;
+        } else {
+            delete $scope.permiesss;//制空
+            $scope.permiesss = '';//制空
+        }
+    }
+    $scope.permissiongird.onRegisterApi = function (gridApi) {
+        $scope.permissiongird = gridApi;
+        $scope.permissiongird.selection.on.rowSelectionChanged($scope,ftopermi);
+    }
     //移除特别允许功能
     var removeallow = function (funtguid) {
         $scope.permiss.permiss = function () {

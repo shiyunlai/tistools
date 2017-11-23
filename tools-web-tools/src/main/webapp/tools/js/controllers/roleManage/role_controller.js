@@ -1,7 +1,7 @@
 /**
  * Created by wangbo on 2017/6/11.
  */
-angular.module('MetronicApp').controller('role_controller', function($scope ,$rootScope,$state,$modal,$timeout,$http,abftree_service,dictonary_service,common_service,i18nService,role_service,menu_service,operator_service,filterFilter,$uibModal,uiGridConstants) {
+angular.module('MetronicApp').controller('role_controller', function($scope ,$rootScope,$state,$modal,$http,abftree_service,$filter,$timeout,dictonary_service,common_service,i18nService,role_service,menu_service,operator_service,filterFilter,$uibModal,uiGridConstants) {
         var role = {};
         $scope.role = role;
         var res = $rootScope.res.abftree_service;//页面所需调用的服务
@@ -19,7 +19,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
         }
     })
 
-        var gridOptions = {};
+    var gridOptions = {};
         $scope.gridOptions = gridOptions;
         var com = [{ field: 'roleCode', displayName: '角色代码'},
             { field: "roleName", displayName:'角色名称'},
@@ -30,13 +30,13 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                     type: uiGridConstants.filter.SELECT,
                     selectOptions: [{ value: 'sys', label: '系统级'}, { value: 'app', label: '应用级' }]
                 }},
-            { field: "appName", displayName:'隶属应用',
-                filter:{
+            { field: "appName", displayName:'隶属应用'
+              /*  filter:{
                     //term: '0',//默认搜索那项
                     type: uiGridConstants.filter.SELECT,
                     //如果非常多，直接自己拼接，所有的数组，循环，拼接成这个样子就可以了。
-                    selectOptions: [{ value: 'ABF', label: '基础应用系统ABF'}]
-                }
+                    selectOptions:  [{ value: 'ABF', label: 'ABF'}, { value: 'TWS', label: '柜面系统' }]
+                }*/
             }
         ];
         var f = function(row){
@@ -49,36 +49,22 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
             }
         }
         $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,false,f);
-
-    //查询所有角色列表
-    role_service.queryRoleList(subFrom).then(function(data){
-        var  datas = data.retMessage;
-        if(data.status == "success"&& datas.length > 0){
-            $scope.gridOptions.data = datas;
-            $scope.gridOptions.mydefalutData = datas;
-            $scope.gridOptions.getPage(1, $scope.gridOptions.paginationPageSize);
-        }else{
-            toastr['error']('初始化查询失败'+'<br/>'+data.retMessage);
-        }
-    })
-
-
     //查询角色列表
-    role.inint = function(){
+    role.inint = function(items){
         var subFrom = {};
         role_service.queryRoleList(subFrom).then(function(data){
-            var  datas = data.retMessage;
-            if(data.status == "success"){
-                $scope.gridOptions.data =  datas;
-                $scope.gridOptions.mydefalutData = datas;
-                $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
-                $scope.rolePer = false;//角色分配权限按钮隐藏
-            }else{
-                toastr['error']('初始化查询失败'+'<br/>'+data.retMessage);
-            }
+                var datas = $filter('Arraysort')(data.retMessage);//调用管道排序
+                if(data.status == "success"){
+                    $scope.gridOptions.data =  datas;
+                    $scope.gridOptions.mydefalutData = datas;
+                    $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
+                    $scope.rolePer = false;//角色分配权限按钮隐藏
+                }else{
+                    toastr['error']('初始化查询失败'+'<br/>'+data.retMessage);
+                }
         })
     }
-
+    role.inint();
     //新增角色逻辑
     $scope.role_add = function(){
             openwindow($modal, 'views/roleManage/rolemanageAdd.html', 'lg',//弹出页面
@@ -87,10 +73,11 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                     $scope.add = function(item){
                         var subFrom = {};
                         subFrom = item;
+                        console.log(item)
                         role_service.createRole(subFrom).then(function(data){
                             if(data.status == "success"){
                                 toastr['success']("新增成功！");
-                                role.inint();
+                                role.inint(subFrom);//把新增的数据传过去
                                 $modalInstance.close();
                             }else{
                                 toastr['error']('初始化查询失败'+'<br/>'+data.retMessage);
@@ -123,7 +110,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                                    role.inint();
                                    role.rofault(items.guid);//刷新组织关系列表
                                    queryOeper(items.guid);//刷新操作员列表
-
                                }else{
                                    toastr['error']('修改失败'+'<br/>'+data.retMessage);
                                }
@@ -158,6 +144,18 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                 toastr['error']("请至少选择一条数据进行删除！");
             }
         }
+
+    //查看角色历史
+    $scope.role_history = function () {
+        var dats = $scope.gridOptions.getSelectedRows();//拿到选择角色的数据
+        if($scope.selectRow){
+            var item = dats[0].guid;
+            $state.go("loghistory",{id:item});//跳转新页面
+        }else{
+            toastr['error']("请至少选择一条数据进行查看！");
+        }
+
+    }
 
     //角色权限配置页面
     $scope.role_Permission = function () {
@@ -243,13 +241,18 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                         items.roleGuid = arrs.guid
                         role_service.queryRoleFunc(items).then(function(data){
                             var alldatas = data.retMessage;//拿到角色跟功能绑定的所有guid数组
+                            console.log(alldatas)
+                            var chenageDatas = []
+                            for(var i = 0; i < alldatas.length;i++){
+                                chenageDatas.push(alldatas[i].guidFunc);
+                            }
                             role_service.appQuery(subFrom).then(function (res){
                                 if(res.status == "success"){
                                     var datas = res.retMessage;
                                     var dataes =datas.data;//整体的树结构数组
                                     var type = datas.type;//类型
                                     var  its  =  [];
-                                    creatJstree(dataes,type,its,alldatas);//调用创建树结构
+                                    creatJstree(dataes,type,its,chenageDatas);//调用创建树结构
                                     $scope.jsonarray = angular.copy(its);
                                     callback.call(this, $scope.jsonarray);
                                     $timeout(function(){
@@ -325,29 +328,18 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                         dataes.groupList[i].icon = "fa  fa-th-list  icon-state-info icon-lg"
                         its.push(dataes.groupList[i])
                     }
-                    if(!isNull(dataes.funcList)){
-                        for(var i = 0 ;i <dataes.funcList.length;i++){
-                            dataes.funcList[i].text = dataes.funcList[i].funcName;
-                            dataes.funcList[i].children = false;
-                            dataes.funcList[i].id = dataes.funcList[i].guid;
-                            dataes.funcList[i].icon = "fa fa-wrench icon-state-info icon-lg"
-                            its.push(dataes.funcList[i])
-                        }
-                    }
-                }else{
-                    if(!isNull(dataes.funcList)){
-                        for(var j=0;j<alldatas.length;j++){
-                            for(var i = 0 ;i < dataes.funcList.length;i++){
-                                if(alldatas[j].guidFunc==dataes.funcList[i].guid){
-                                    dataes.funcList[i].text = dataes.funcList[i].funcName;
-                                    dataes.funcList[i].children = false;
-                                    dataes.funcList[i].id = dataes.funcList[i].guid;
-                                    dataes.funcList[i].icon = "fa fa-wrench icon-state-info icon-lg"
-                                    its.push(dataes.funcList[i])
-                                }
+                }
+                if(!isNull(dataes.funcList)){
+                    console.log(dataes.funcList)
+                        for (var i = 0; i < dataes.funcList.length; i++) {
+                            if(alldatas.indexOf(dataes.funcList[i].guid) != -1){
+                                dataes.funcList[i].text = dataes.funcList[i].funcName;
+                                dataes.funcList[i].children = false;
+                                dataes.funcList[i].id = dataes.funcList[i].guid;
+                                dataes.funcList[i].icon = "fa fa-wrench icon-state-info icon-lg"
+                                its.push(dataes.funcList[i])
                             }
                         }
-                    }
                 }
             }
         }
@@ -366,6 +358,7 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
         });
     }
     creaJstree()//调用创建树
+
     //修改配置
     $scope.role.edidConfig = function () {
         $scope.edit = true;
@@ -466,7 +459,6 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                     dataes[i].check_node =true;
                     its.push(dataes[i])
                 }
-
             }else if(type =="app"){
                 for(var i = 0 ;i <dataes.length;i++){
                     dataes[i].text = dataes[i].funcgroupName;
@@ -696,7 +688,7 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
         queryParrty(id,DICT_AC_PARTYTYPE[0]);//重新查询组织信息
         queryParrty(id,DICT_AC_PARTYTYPE[1]);//重新查询工作组信息
         queryParrty(id,DICT_AC_PARTYTYPE[2]);//重新查询岗位信息
-        queryParrty(id,DICT_AC_PARTYTYPE[3]);//重新查询服务信息
+        queryParrty(id,DICT_AC_PARTYTYPE[3]);//重新查询职务信息
         queryOeper(id)//查询操作员列表
     }
 
@@ -711,16 +703,18 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
             }
             $scope.roleflag.limit = true;
             $scope.roleflag.dist = false;
+            $scope.roleflag.entity = false;
             $scope.roleflag.operatorer = false;
         }else if (type == 1){
             for(var i in $scope.rolesflag){
                 $scope.rolesflag[i] = false;
+                $scope.rolesflag.zhiwei = true;//初始化打开职务
             }
             $scope.roleflag.limit = false;
             $scope.roleflag.dist = true;
             $scope.roleflag.operatorer = false;
-            $scope.rolesflag.org = true;//初始化打开
-            queryParrty(role.guid,DICT_AC_PARTYTYPE[0]);
+            $scope.roleflag.entity = false;
+            queryParrty(role.guid,DICT_AC_PARTYTYPE[3]);//重新查询职务信息
         }else if (type == 3){
             for(var i in $scope.rolesflag){
                 $scope.rolesflag[i] = false;
@@ -752,7 +746,16 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
             $scope.roleflag.operatorer = true;
             $scope.roleflag.limit = false;
             $scope.roleflag.dist = false;
+            $scope.roleflag.entity = false;
             queryOeper(role.guid);
+        }else if(type == 'entity'){
+            for(var i in $scope.rolesflag){
+                $scope.rolesflag[i] = false;//每一项全部不显示
+            }
+            $scope.roleflag.operatorer = false;
+            $scope.roleflag.limit = false;
+            $scope.roleflag.dist = false;
+            $scope.roleflag.entity = true;//页面展示
         }
     }
 

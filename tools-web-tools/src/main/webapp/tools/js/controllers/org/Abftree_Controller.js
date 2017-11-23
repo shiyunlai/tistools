@@ -1,7 +1,7 @@
 /**
  * Created by gaojie on 2017/5/9.
  */
-angular.module('MetronicApp').controller('abftree_controller', function ($rootScope, $scope,$window, abftree_service, $http, $timeout, i18nService, filterFilter, uiGridConstants, $uibModal, $state,dictonary_service) {
+angular.module('MetronicApp').controller('abftree_controller', function ($rootScope, $scope,$window, abftree_service, $http, $timeout,$filter, i18nService, filterFilter, uiGridConstants, $uibModal, $state,dictonary_service) {
     $scope.$on('$viewContentLoaded', function () {
         // initialize core components
         App.initAjax();
@@ -57,6 +57,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
     var dndflag = false;
     $scope.dndflag = dndflag;
 
+
     //生成公共方法
     initController($scope, abftree, "abftree", abftree, filterFilter);
     var item = {};
@@ -76,7 +77,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
     var items = function customMenu(node) {
         // The default set of all items
         var control;
-        console.log(node);
         if (node.parent == "#") {
             var it = {
                 "新建菜单": {
@@ -85,48 +85,50 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                     "action": function (data) {
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
-                        console.log(obj)
                         openwindow($uibModal, 'views/org/addrootorg_window.html', 'lg',
                             function ($scope, $modalInstance) {
                                 //创建机构实例
-                                var subFrom = {};
-                                $scope.subFrom = subFrom;
-                                //根机构标识
-                                subFrom.flag = "root";
-                                //存放机构等级字典翻译
                                 //生成机构代码
                                 var next = true;
                                 $scope.next = next;
-                                $scope.skip = function () {
-                                    if (isNull(subFrom.orgDegree) || isNull(subFrom.AREA)) {
+                                $scope.skip = function (items) {
+                                    items.flag = "root";
+                                    var subFrom = {};
+                                    subFrom= items;
+                                    if (isNull(subFrom.orgDegree) || isNull(subFrom.area)|| isNull(subFrom.orgName) || isNull(subFrom.orgType)) {
                                         toastr['error']("请填写相关信息!");
                                         return false;
                                     }
+                                    //处理新增机构父机构
+                                    subFrom.guidParents = null;
                                     //调用服务生成机构代码
-                                    abftree_service.initcode(subFrom).then(function (data) {
-                                        if(data.status == "error"){
-                                            toastr['error']( data.retMessage);
-                                        }else{
-                                            subFrom.orgCode = data.retMessage.orgCode;
-                                            $scope.next = !next;
-                                        }
-                                    })
-
-                                }
-                                //处理新增机构父机构
-                                subFrom.guidParents = null;
-                                //增加方法
-                                $scope.add = function (subFrom) {
                                     abftree_service.addorg(subFrom).then(function (data) {
                                         if (data.status == "success") {
                                             toastr['success']("新增成功!");
+                                            var next = false;
+                                            $scope.next = next;
+                                            var subFrom = {};
+                                            $scope.subFrom = subFrom;
+                                            subFrom.orgCode = data.retMessage.orgCode;
                                         } else {
                                             toastr['error'](data.retMessage);
                                         }
                                         $("#container").jstree().refresh();
-                                        $scope.cancel();
+                                        $scope.add=function (subFrom) {
+                                            var tis =Object.assign(data.retMessage, subFrom);
+                                            abftree_service.updateOrg(tis).then(function (data) {
+                                                if (data.status == "success") {
+                                                    toastr['success']("添加成功!");
+                                                    $("#container").jstree().refresh();
+                                                    $scope.cancel();
+                                                } else {
+                                                    toastr['error'](data.retMessage);
+                                                }
+                                            })
+                                        }
                                     });
                                 }
+
                                 $scope.cancel = function () {
                                     $modalInstance.dismiss('cancel');
                                 };
@@ -147,40 +149,44 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                         openwindow($uibModal, 'views/org/addorg_window.html', 'lg',
                             function ($scope, $modalInstance) {
                                 //创建机构实例
-                                var subFrom = {};
-                                $scope.subFrom = subFrom;
-                                subFrom.flag = "child";
                                 //生成机构代码
                                 var next = true;
                                 $scope.next = next;
-                                $scope.skip = function () {
-                                    if (isNull(subFrom.orgDegree) || isNull(subFrom.AREA)) {
+                                $scope.skip = function (items) {
+                                    items.flag = "child";
+                                    var subFrom = {};
+                                    subFrom= items;
+                                    if (isNull(subFrom.orgDegree) || isNull(subFrom.area) || isNull(subFrom.orgName) || isNull(subFrom.orgType)) {
                                         toastr['error']("请填写相关信息!");
                                         return false;
                                     }
+                                    //处理新增机构父机构
+                                    subFrom.guidParents = obj.original.guid;
                                     //调用服务生成机构代码
-                                    abftree_service.initcode(subFrom).then(function (data) {
-                                        if(data.status == "error"){
-                                            toastr['error']( data.retMessage);
-                                        }else{
-                                            subFrom.orgCode = data.retMessage.orgCode;
-                                            $scope.next = !next;
-                                        }
-                                    })
-
-                                }
-                                //处理新增机构父机构
-                                subFrom.guidParents = obj.original.guid;
-                                //增加方法
-                                $scope.add = function (subFrom) {
                                     abftree_service.addorg(subFrom).then(function (data) {
                                         if (data.status == "success") {
                                             toastr['success']("新增成功!");
+                                            var next = false;
+                                            $scope.next = next;
+                                            var subFrom = {};
+                                            $scope.subFrom = subFrom;
+                                            subFrom.orgCode = data.retMessage.orgCode;
                                         } else {
                                             toastr['error'](data.retMessage);
                                         }
                                         $("#container").jstree().refresh();
-                                        $scope.cancel();
+                                        $scope.add=function (subFrom) {
+                                            var tis =Object.assign(data.retMessage, subFrom);
+                                            abftree_service.updateOrg(tis).then(function (data) {
+                                                if (data.status == "success") {
+                                                    toastr['success']("添加成功!");
+                                                    $("#container").jstree().refresh();
+                                                    $scope.cancel();
+                                                } else {
+                                                    toastr['error'](data.retMessage);
+                                                }
+                                            })
+                                        }
                                     });
                                 }
                                 $scope.cancel = function () {
@@ -190,7 +196,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                         )
                     }
                 },
-
                 "删除菜单": {
                     "label": "删除机构",
                     "action": function (data) {
@@ -215,26 +220,17 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                     "action": function (node) {
                         var inst = jQuery.jstree.reference(node.reference),
                             obj = inst.get_node(node.reference);
-                        console.log(obj)
-                        var subFrom = {};
+                        /*var subFrom = {};
                         subFrom.orgDegree = obj.original.orgDegree;
-                        subFrom.AREA = obj.original.id.substr(5,3);
-                        console.log(subFrom)
+                        subFrom.AREA = obj.original.id.substr(5,3);*/
                         var copyCode = obj.original.orgCode;
-                        abftree_service.initcode(subFrom).then(function (data) {
+                        //生成机构代码,成功继续执行复制.
+                        var subFrom = {};
+                        subFrom.copyCode = copyCode;
+                        abftree_service.copyOrg(subFrom).then(function (data) {
                             if (data.status == "success") {
-                                //生成机构代码,成功继续执行复制.
-                                subFrom = {};
-                                subFrom.neworgCode = data.retMessage.orgCode;
-                                subFrom.copyCode = copyCode;
-                                abftree_service.copyOrg(subFrom).then(function (data) {
-                                    if (data.status == "success") {
-                                        toastr['success']("拷贝成功!");
-                                        $("#container").jstree().refresh();
-                                    } else {
-                                        toastr['error'](data.retMessage);
-                                    }
-                                })
+                                toastr['success']("拷贝成功!");
+                                $("#container").jstree().refresh();
                             } else {
                                 toastr['error'](data.retMessage);
                             }
@@ -252,7 +248,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                     "action": function (data) {
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
-                        console.log(obj)
                         var subFrom = {};
                         subFrom.guidParents = obj.original.guid;
                         subFrom.guidOrg = obj.original.guidOrg;
@@ -295,7 +290,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                     "action": function (data) {
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);
-                        console.log(obj);
                         var subFrom = {};
                         //处理新增机构父机构
                         subFrom.guidParents = "";
@@ -309,7 +303,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
         }
 
     };
-    ;
+
     //组织机构树
     $("#container").jstree({
         "core": {
@@ -381,7 +375,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                 }
             },
             'dnd_start': function () {
-                console.log("start");
             },
         },
         'search': {
@@ -389,7 +382,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
         },
         'callback': {
             move_node: function (node) {
-                console.log(node)
             }
         },
         'sort': function (a, b) {
@@ -399,14 +391,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
 
         "plugins": ["dnd", "state", "types", "contextmenu","sort","search"]
     }).bind("copy.jstree", function (node, e, data) {
-        console.log(e);
-        console.log(data);
-        console.log(node);
     }).bind("paste.jstree", function (a, b, c, d) {
-        console.log(a);
-        console.log(b);
-        console.log(c);
-        console.log(d);
     }).bind("move_node.jstree", function (e, data) {
         var subFrom = {};
         subFrom.mvOrgCode = data.node.id;
@@ -414,11 +399,9 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
         subFrom.fromOrgCode = data.old_parent;
         subFrom.position = data.position;
         if (confirm("确认要移动此机构吗?")) {
-            console.log(data);
             abftree_service.moveOrg(subFrom).then(function (data) {
                 if (data.status == "success") {
                     toastr['success']("移动成功!");
-                    console.log(data);
                     $("#container").jstree().refresh();
                 } else {
                     toastr['error'](data.retMessage);
@@ -434,7 +417,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
             // console.log(data.node.original.id.indexOf("@"));
             $scope.abftree.item = {};
             $scope.currNode = data.node.text;
-            console.log(data.node)
             if (data.node.original.id.indexOf("POSIT") == 0) {
                 for (var i in $scope.flag) {
                     flag[i] = false;
@@ -478,8 +460,12 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                 $scope.flag.xqxx = true;
                 $scope.tabflag = true;
                 $scope.abftree.item = data.node.original;
+                if(data.node.original.area == '010'){
+                    $scope.abftree.item.area = '北京地区'
+                }else{
+                    $scope.abftree.item.area = '上海地区'
+                }
             }
-
             ($scope.$$phase) ? null : $scope.$apply();
         }
     });
@@ -504,16 +490,12 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
     //     }, 250);
     // });
     abftree.searchtree = function () {
-
-
-
     }
 
     var to = false;
     $('#q').keyup(function () {
         if(to) { clearTimeout(to); }
         $('#container').jstree().load_all();
-        console.log(11111)
         to = setTimeout(function () {
             var v = $('#q').val();
             $('#container').jstree(true).search(v);
@@ -587,7 +569,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
         subFrom.orgCode = orgCode;
         subFrom.flag = "3"
         abftree_service.enableorg(subFrom).then(function (data) {
-            console.log(data)
             if (data.status == "success") {
                 toastr['success']("停用成功!");
                 $("#container").jstree().refresh();
@@ -601,7 +582,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
         subFrom.orgCode = $scope.abftree.item.orgCode;
         subFrom.flag = "1"
         abftree_service.enableorg(subFrom).then(function (data) {
-            console.log(data)
             if (data.status == "success") {
                 toastr['success']("注销成功!");
                 $("#container").jstree().refresh();
@@ -616,7 +596,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
         subFrom.orgCode = $scope.abftree.item.orgCode;
         subFrom.flag = "2"
         abftree_service.enableorg(subFrom).then(function (data) {
-            console.log(data)
             if (data.status == "success") {
                 toastr['success']("启用成功!");
                 $("#container").jstree().refresh();
@@ -670,7 +649,12 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
         $scope.editflag = !$scope.editflag;
         $scope.position = angular.copy($scope.abftree.item);
     }
-
+    //组织机构查询历史记录
+    abftree.histroy = function () {
+        var orgGuid = $scope.abftree.item.guid;
+        console.log(orgGuid)
+        $state.go("loghistory",{id:orgGuid});//跳转新页面
+    }
     //覆盖searchN方法
     abftree.searchN = function () {
 
@@ -684,7 +668,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                 toastr['error'](data.retMessage);
             }
             $("#container").jstree().refresh();
-            console.log(data)
             $scope.editflag = !$scope.editflag;
         })
 
@@ -695,7 +678,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
     abftree.loaddata = function (type) {
         //type加载的数据,0--下级机构,1--员工信息,2--岗位信息,999-机构详情
         if (type == 0) {
-            console.log($scope.abftree.item.guid)
             $scope.flag.xqxx = false;
             $scope.flag.xjjg = true;
             $scope.flag.ygxx = false;
@@ -708,16 +690,16 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
 
             }
             //定义表头名
-            var com = [{field: 'orgCode', displayName: '机构代码', enableHiding: false},
-                {field: 'orgName', displayName: '机构名称', enableHiding: false},
-                {field: 'orgType', displayName: '机构类型', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.orgType | translateConstants :\'DICT_OM_ORGTYPE\') + $root.constant[\'DICT_OM_ORGTYPE-\'+row.entity.orgType]}}</div>'},
-                {field: 'orgDegree', displayName: '机构等级', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.orgDegree | translateConstants :\'DICT_OM_ORGDEGREE\') + $root.constant[\'DICT_OM_ORGDEGREE-\'+row.entity.orgDegree]}}</div>'},
-                {field: 'orgStatus', displayName: '机构状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.orgStatus | translateConstants :\'DICT_OM_ORGSTATUS\') + $root.constant[\'DICT_OM_ORGSTATUS-\'+row.entity.orgStatus]}}</div>'},
-                {field: 'orgAddr', displayName: '机构地址', enableHiding: false},
-                {field: 'guidEmpMaster', displayName: '机构主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpMaster | translateEmp) + $root.constant[row.entity.guidEmpMaster]}}</div>'},
-                {field: 'linkMan', displayName: '联系人姓名', enableHiding: false},
-                {field: 'linkTel', displayName: '联系电话', enableHiding: false},
-                {field: 'createTime', displayName: '创建时间', enableHiding: false}
+            var com = [{field: 'orgCode', displayName: '机构代码', enableHiding: true},
+                {field: 'orgName', displayName: '机构名称', enableHiding: true},
+                {field: 'orgType', displayName: '机构类型', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.orgType | translateConstants :\'DICT_OM_ORGTYPE\') + $root.constant[\'DICT_OM_ORGTYPE-\'+row.entity.orgType]}}</div>'},
+                {field: 'orgDegree', displayName: '机构等级', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.orgDegree | translateConstants :\'DICT_OM_ORGDEGREE\') + $root.constant[\'DICT_OM_ORGDEGREE-\'+row.entity.orgDegree]}}</div>'},
+                {field: 'orgStatus', displayName: '机构状态', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.orgStatus | translateConstants :\'DICT_OM_ORGSTATUS\') + $root.constant[\'DICT_OM_ORGSTATUS-\'+row.entity.orgStatus]}}</div>'},
+                {field: 'orgAddr', displayName: '机构地址', enableHiding: true},
+                {field: 'guidEmpMaster', displayName: '机构主管', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpMaster | translateEmp) + $root.constant[row.entity.guidEmpMaster]}}</div>'},
+                {field: 'linkMan', displayName: '联系人姓名', enableHiding: true},
+                {field: 'linkTel', displayName: '联系电话', enableHiding: true},
+                {field: 'createTime', displayName: '创建时间', enableHiding: true}
             ]
             $scope.gridOptions2 = initgrid($scope, gridOptions2, filterFilter, com, false, selework);
             //塞入测试数组
@@ -725,10 +707,8 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
             var regridOptions2 = function () {
                 var subFrom = {};
                 subFrom.orgCode = $scope.abftree.item.orgCode;
-                console.log(subFrom.orgCode)
                 //调取工作组信息OM_GROUP
                 abftree_service.loadxjjg(subFrom).then(function (data) {
-                    console.log(data.retMessage)
                     if (data.status == "success") {
                         $scope.gridOptions2.data = data.retMessage;
                         $scope.gridOptions2.mydefalutData = data.retMessage;
@@ -753,37 +733,44 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                         //生成机构代码
                         var next = true;
                         $scope.next = next;
-                        $scope.skip = function () {
-                            if (isNull(subFrom.orgDegree) || isNull(subFrom.AREA)) {
+                        $scope.skip = function (items) {
+                            items.flag = "child";
+                            var subFrom = {};
+                            subFrom= items;
+                            if (isNull(subFrom.orgDegree) || isNull(subFrom.area) || isNull(subFrom.orgName) || isNull(subFrom.orgType)) {
                                 toastr['error']("请填写相关信息!");
                                 return false;
                             }
+                            //处理新增机构父机构
+                            subFrom.guidParents = id;
                             //调用服务生成机构代码
-                            abftree_service.initcode(subFrom).then(function (data) {
-                                if(data.status == "error"){
-                                    toastr['error']( data.retMessage);
-                                }else{
-                                    subFrom.orgCode = data.retMessage.orgCode;
-                                    $scope.next = !next;
-                                }
-                            })
-
-                        }
-                        //处理新增机构父机构
-                        subFrom.guidParents = id;
-                        //增加方法
-                        $scope.add = function (subFrom) {
-                            //TODO.新增逻辑
                             abftree_service.addorg(subFrom).then(function (data) {
                                 if (data.status == "success") {
-                                    toastr['success']("操作成功!");
+                                    toastr['success']("新增成功!");
+                                    var next = false;
+                                    $scope.next = next;
+                                    var subFrom = {};
+                                    $scope.subFrom = subFrom;
+                                    subFrom.orgCode = data.retMessage.orgCode;
                                 } else {
                                     toastr['error'](data.retMessage);
                                 }
                                 $("#container").jstree().refresh();
-                                $scope.cancel();
+                                $scope.add=function (subFrom) {
+                                    var tis =Object.assign(data.retMessage, subFrom);
+                                    abftree_service.updateOrg(tis).then(function (data) {
+                                        if (data.status == "success") {
+                                            toastr['success']("添加成功!");
+                                            $("#container").jstree().refresh();
+                                            $scope.cancel();
+                                        } else {
+                                            toastr['error'](data.retMessage);
+                                        }
+                                    })
+                                }
                             });
                         }
+                        //处理新增机构父机构
                         $scope.cancel = function () {
                             $modalInstance.dismiss('cancel');
                         };
@@ -802,7 +789,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                     }
                     $scope.flag.index = true;
                     $scope.flag.xqxx = true;
-                    console.log($scope.flag);
                     var node = {};
                     node.id = arr[0].orgCode;
                     var node2 = {};
@@ -831,29 +817,54 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
             var selework = function () {
 
             }
+
+
             //定义表头名
-            var com = [{field: 'empCode', displayName: '员工代码', enableHiding: false},
-                {field: 'empName', displayName: '员工姓名', enableHiding: false},
-                {field: 'gender', displayName: '性别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'},
-                {field: 'empstatus', displayName: '员工状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
-                {field: 'empDegree', displayName: '员工职级', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
-                {field: 'guidPosition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
-                {field: 'guidEmpMajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpMajor | translateEmp) + $root.constant[row.entity.guidEmpMajor]}}</div>'},
-                {field: 'indate', displayName: '入职日期', enableHiding: false},
-                {field: 'otel', displayName: '办公电话', enableHiding: false}
+            var com = [{field: 'empCode', displayName: '员工代码', enableHiding: true},
+                {field: 'empName', displayName: '员工姓名', enableHiding: true},
+                {field: 'gender', displayName: '性别', enableHiding: true,
+                        cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>',
+                    filter:{
+                        //term: '0',//默认搜索那项
+                        type: uiGridConstants.filter.SELECT,
+                        selectOptions: [{ value: 'M', label: '男'}, { value: 'F', label: '女' },{ value: 'U', label: '未知' } ]
+                    }},
+                {   field: 'empstatus',
+                    displayName: '员工状态',
+                    enableHiding: true,
+                    cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP" ng-model="testssss">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>',
+                    filter:{
+                        type: uiGridConstants.filter.SELECT,
+                        selectOptions:$filter('translateSearch')('DICT_OM_EMPSTATUS')||$rootScope.constant['DICT_OM_EMPSTATUS'+'forEach']
+                    }
+                    },
+                {field: 'empDegree', displayName: '员工职级', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>',
+                    filter:{
+                        type: uiGridConstants.filter.SELECT,
+                        selectOptions:$filter('translateSearch')('DICT_OM_EMPDEGREE')||$rootScope.constant['DICT_OM_EMPDEGREE'+'forEach']
+                    }
+                },
+
+                {field: 'guidPosition', displayName: '基本岗位', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>',
+                },
+                {field: 'guidEmpMajor', displayName: '直接主管', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpMajor | translateEmp) + $root.constant[row.entity.guidEmpMajor]}}</div>'},
+                {field: 'indate', displayName: '入职日期', enableHiding: true},
+                {field: 'otel', displayName: '办公电话', enableHiding: true}
             ]
             $scope.gridOptions1 = initgrid($scope, gridOptions1, filterFilter, com, true, selework);
+
             list.push($scope.gridOptions1)
             var regridOptions1 = function () {
                 var subFrom = {};
                 subFrom.guid = $scope.abftree.item.guid;
-                console.log(subFrom.guid)
-                //调取工作组信息OM_GROUP
                 abftree_service.loadempbyorg(subFrom).then(function (data) {
-                    console.log(data)
                     if (data.status == "success" && !isNull(data.retMessage)) {
-                        $scope.gridOptions1.data = data.retMessage;
-                        $scope.gridOptions1.mydefalutData = data.retMessage;
+                        var datas = data.retMessage;
+                        for(var i=0;i<datas.length;i++){
+                            datas[i].indate = moment(datas[i].indate).format('YYYY-MM-DD')
+                        }
+                        $scope.gridOptions1.data = datas;
+                        $scope.gridOptions1.mydefalutData = datas;
                         $scope.gridOptions1.getPage(1, $scope.gridOptions1.paginationPageSize);
                     } else {
                         $scope.gridOptions1.data = [];
@@ -868,7 +879,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
 
             //机构下新增人员信息
             abftree.addyg = function () {
-                console.log($scope.abftree.item.guid);
                 var id = $scope.abftree.item.guid;
                 openwindow($uibModal, 'views/org/addsearhgrid_window.html', 'lg',
                     function ($scope, $modalInstance) {
@@ -878,36 +888,29 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                         $scope.commonGrid = commonGrid;
                         //定义单选事件
                         var selework = function () {
-
                         }
                         //定义表头名
-                        var com = [{field: 'empCode', displayName: '员工代码', enableHiding: false},
-                            {field: 'empName', displayName: '员工姓名', enableHiding: false},
-                            {field: 'gender', displayName: '性别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'},
-                            {field: 'empstatus', displayName: '员工状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
-                            {field: 'empDegree', displayName: '员工职级', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
-                            {field: 'guidPosition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
-                            {field: 'guidEmpMajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpMajor | translateEmp) + $root.constant[row.entity.guidEmpMajor]}}</div>'},
-                            {field: 'indate', displayName: '入职日期', enableHiding: false},
-                            {field: 'otel', displayName: '办公电话', enableHiding: false}
+                        var com = [{field: 'empCode', displayName: '员工代码', enableHiding: true},
+                            {field: 'empName', displayName: '员工姓名', enableHiding: true},
+                            {field: 'gender', displayName: '性别', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'},
+                            {field: 'empstatus', displayName: '员工状态', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
+                            {field: 'empDegree', displayName: '员工职级', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
+                            {field: 'guidPosition', displayName: '基本岗位', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
+                            {field: 'guidEmpMajor', displayName: '直接主管', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpMajor | translateEmp) + $root.constant[row.entity.guidEmpMajor]}}</div>'},
+                            {field: 'indate', displayName: '入职日期', enableHiding: true},
+                            {field: 'otel', displayName: '办公电话', enableHiding: true}
                         ]
                         $scope.commonGrid = initgrid($scope, commonGrid, filterFilter, com, true, selework);
-
                         var recommonGrid = function () {
                             var subFrom = {};
                             subFrom.guid = id;
-                            console.log(subFrom.guid)
-                            //调取工作组信息OM_GROUP
                             abftree_service.loadempNotinorg(subFrom).then(function (data) {
+                                console.log(data.retMessage)
                                 if (data.status == "success") {
-                                    // for(var i = 0;i<data.retMessage.length;i++){
-                                    //     data.retMessage[i].birthdate = FormatDate(data.retMessage[i].birthdate);
-                                    //     data.retMessage[i].indate = FormatDate(data.retMessage[i].indate);
-                                    //     data.retMessage[i].outdate = FormatDate(data.retMessage[i].outdate);
-                                    //     data.retMessage[i].regdate = FormatDate(data.retMessage[i].regdate);
-                                    //     data.retMessage[i].lastmodytime = FormatDate(data.retMessage[i].lastmodytime);
-                                    //     data.retMessage[i].createtime = FormatDate(data.retMessage[i].createtime);
-                                    // }
+                                    var datas = data.retMessage;
+                                    for(var i=0;i<datas.length;i++){
+                                        datas[i].indate = moment(datas[i].indate).format('YYYY-MM-DD')
+                                    }
                                     $scope.commonGrid.data = data.retMessage;
                                     $scope.commonGrid.mydefalutData = data.retMessage;
                                     $scope.commonGrid.getPage(1, $scope.commonGrid.paginationPageSize);
@@ -1057,7 +1060,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
             for (var i in $scope.gwflag) {
                 $scope.gwflag[i] = false;
             }
-            console.log($scope.abftree.item);
             $scope.gwflag.gwyg = true;
             //生成岗位员工列表
             var gwemp = {};
@@ -1066,15 +1068,15 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
             //
             // }
             //定义表头名
-            var com = [{field: 'empCode', displayName: '员工代码', enableHiding: false},
-                {field: 'empName', displayName: '员工姓名', enableHiding: false},
-                {field: 'gender', displayName: '性别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'},
-                {field: 'empstatus', displayName: '员工状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
-                {field: 'empDegree', displayName: '员工职级', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
-                {field: 'guidPosition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
-                {field: 'guidEmpMajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpMajor | translateEmp) + $root.constant[row.entity.guidEmpMajor]}}</div>'},
-                {field: 'indate', displayName: '入职日期', enableHiding: false},
-                {field: 'otel', displayName: '办公电话', enableHiding: false}
+            var com = [{field: 'empCode', displayName: '员工代码', enableHiding: true},
+                {field: 'empName', displayName: '员工姓名', enableHiding: true},
+                {field: 'gender', displayName: '性别', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'},
+                {field: 'empstatus', displayName: '员工状态', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
+                {field: 'empDegree', displayName: '员工职级', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
+                {field: 'guidPosition', displayName: '基本岗位', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
+                {field: 'guidEmpMajor', displayName: '直接主管', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpMajor | translateEmp) + $root.constant[row.entity.guidEmpMajor]}}</div>'},
+                {field: 'indate', displayName: '入职日期', enableHiding: true},
+                {field: 'otel', displayName: '办公电话', enableHiding: true}
             ]
             $scope.gwemp = initgrid($scope, gwemp, filterFilter, com, true, function () {
             });
@@ -1115,15 +1117,15 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
 
                         }
                         //定义表头名
-                        var com = [{field: 'empCode', displayName: '员工代码', enableHiding: false},
-                            {field: 'empName', displayName: '员工姓名', enableHiding: false},
-                            {field: 'gender', displayName: '性别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'},
-                            {field: 'empstatus', displayName: '员工状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
-                            {field: 'empDegree', displayName: '员工职级', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
-                            {field: 'guidPosition', displayName: '基本岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
-                            {field: 'guidEmpMajor', displayName: '直接主管', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpMajor | translateEmp) + $root.constant[row.entity.guidEmpMajor]}}</div>'},
-                            {field: 'indate', displayName: '入职日期', enableHiding: false},
-                            {field: 'otel', displayName: '办公电话', enableHiding: false},
+                        var com = [{field: 'empCode', displayName: '员工代码', enableHiding: true},
+                            {field: 'empName', displayName: '员工姓名', enableHiding: true},
+                            {field: 'gender', displayName: '性别', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'},
+                            {field: 'empstatus', displayName: '员工状态', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'},
+                            {field: 'empDegree', displayName: '员工职级', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'},
+                            {field: 'guidPosition', displayName: '基本岗位', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
+                            {field: 'guidEmpMajor', displayName: '直接主管', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpMajor | translateEmp) + $root.constant[row.entity.guidEmpMajor]}}</div>'},
+                            {field: 'indate', displayName: '入职日期', enableHiding: true},
+                            {field: 'otel', displayName: '办公电话', enableHiding: true},
                         ]
                         $scope.commonGrid = initgrid($scope, commonGrid, filterFilter, com, true, selework);
 
@@ -1215,10 +1217,10 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
             var gwApplication = {};
             $scope.gwApplication = gwApplication;
             var com = [
-                {field: 'appName', displayName: '应用名称', enableHiding: false},
-                {field: 'appType', displayName: '应用类别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.appType | translateConstants :\'DICT_AC_APPTYPE\') + $root.constant[\'DICT_AC_APPTYPE-\'+row.entity.appType]}}</div>'},
-                {field: 'openDate', displayName: '开通时间', enableHiding: false},
-                {field: 'appDesc', displayName: '功能描述', enableHiding: false}
+                {field: 'appName', displayName: '应用名称', enableHiding: true},
+                {field: 'appType', displayName: '应用类别', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.appType | translateConstants :\'DICT_AC_APPTYPE\') + $root.constant[\'DICT_AC_APPTYPE-\'+row.entity.appType]}}</div>'},
+                {field: 'openDate', displayName: '开通时间', enableHiding: true},
+                {field: 'appDesc', displayName: '功能描述', enableHiding: true}
             ];
             $scope.gwApplication = initgrid($scope, gwApplication, filterFilter, com, false, function () {
 
@@ -1235,13 +1237,13 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
             $scope.xjPosition = xjPosition;
 
             //定义表头名
-            var com = [{field: 'positionCode', displayName: '岗位代码', enableHiding: false},
-                {field: 'positionName', displayName: '岗位名称', enableHiding: false},
-                {field: 'positionType', displayName: '岗位类型', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.positionType | translateConstants :\'DICT_OM_POSITYPE\') + $root.constant[\'DICT_OM_POSITYPE-\'+row.entity.positionType]}}</div>'},
-                {field: 'positionStatus', displayName: '岗位状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.positionStatus | translateConstants :\'DICT_OM_POSISTATUS\') + $root.constant[\'DICT_OM_POSISTATUS-\'+row.entity.positionStatus]}}</div>'},
-                {field: 'guidDuty', displayName: '所属职务', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidDuty | translateDuty) + $root.constant[row.entity.guidDuty]}}</div>'},
-                {field: 'startDate', displayName: '有效开始日期', enableHiding: false},
-                {field: 'endDate', displayName: '有效截止日期', enableHiding: false}
+            var com = [{field: 'positionCode', displayName: '岗位代码', enableHiding: true},
+                {field: 'positionName', displayName: '岗位名称', enableHiding: true},
+                {field: 'positionType', displayName: '岗位类型', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.positionType | translateConstants :\'DICT_OM_POSITYPE\') + $root.constant[\'DICT_OM_POSITYPE-\'+row.entity.positionType]}}</div>'},
+                {field: 'positionStatus', displayName: '岗位状态', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.positionStatus | translateConstants :\'DICT_OM_POSISTATUS\') + $root.constant[\'DICT_OM_POSISTATUS-\'+row.entity.positionStatus]}}</div>'},
+                {field: 'guidDuty', displayName: '所属职务', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidDuty | translateDuty) + $root.constant[row.entity.guidDuty]}}</div>'},
+                {field: 'startDate', displayName: '有效开始日期', enableHiding: true},
+                {field: 'endDate', displayName: '有效截止日期', enableHiding: true}
             ]
             $scope.xjPosition = initgrid($scope, xjPosition, filterFilter, com, true, function () {
             });
@@ -1342,6 +1344,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
     }
 
 
+
     //下级机构删除按钮
     abftree.deletexjjg = function () {
         var getSel = $scope.gridOptions2.getSelectedRows();
@@ -1387,10 +1390,10 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                 var commonGrid = {};
                 $scope.commonGrid = commonGrid;
                 var com = [
-                    {field: 'appName', displayName: '应用名称', enableHiding: false},
-                    {field: 'appType', displayName: '应用类别', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.appType | translateConstants :\'DICT_AC_APPTYPE\') + $root.constant[\'DICT_AC_APPTYPE-\'+row.entity.appType]}}</div>'},
-                    {field: 'openDate', displayName: '开通时间', enableHiding: false},
-                    {field: 'appDesc', displayName: '功能描述', enableHiding: false}
+                    {field: 'appName', displayName: '应用名称', enableHiding: true},
+                    {field: 'appType', displayName: '应用类别', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.appType | translateConstants :\'DICT_AC_APPTYPE\') + $root.constant[\'DICT_AC_APPTYPE-\'+row.entity.appType]}}</div>'},
+                    {field: 'openDate', displayName: '开通时间', enableHiding: true},
+                    {field: 'appDesc', displayName: '功能描述', enableHiding: true}
                 ];
                 $scope.commonGrid = initgrid($scope, commonGrid, filterFilter, com, true, function () {
                 });
@@ -1485,18 +1488,17 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
             })
         }
     }
-
     /**--------------------------------各类列表生成--------------------------*/
         //机构下所有岗位列表生成
     var gwlbgird = {};
     $scope.gwlbgird = gwlbgird;
-    var com = [{field: 'positionCode', displayName: '岗位代码', enableHiding: false},
-        {field: 'positionName', displayName: '岗位名称', enableHiding: false},
-        {field: 'positionType', displayName: '岗位类型', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.positionType | translateConstants :\'DICT_OM_POSITYPE\') + $root.constant[\'DICT_OM_POSITYPE-\'+row.entity.positionType]}}</div>'},
-        {field: 'positionStatus', displayName: '岗位状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.positionStatus | translateConstants :\'DICT_OM_POSISTATUS\') + $root.constant[\'DICT_OM_POSISTATUS-\'+row.entity.positionStatus]}}</div>'},
-        {field: 'guidDuty', displayName: '所属职务', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidDuty | translateDuty) + $root.constant[row.entity.guidDuty]}}</div>'},
-        {field: 'startDate', displayName: '有效开始日期', enableHiding: false},
-        {field: 'endDate', displayName: '有效截止日期', enableHiding: false}
+    var com = [{field: 'positionCode', displayName: '岗位代码', enableHiding: true},
+        {field: 'positionName', displayName: '岗位名称', enableHiding: true},
+        {field: 'positionType', displayName: '岗位类型', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.positionType | translateConstants :\'DICT_OM_POSITYPE\') + $root.constant[\'DICT_OM_POSITYPE-\'+row.entity.positionType]}}</div>'},
+        {field: 'positionStatus', displayName: '岗位状态', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.positionStatus | translateConstants :\'DICT_OM_POSISTATUS\') + $root.constant[\'DICT_OM_POSISTATUS-\'+row.entity.positionStatus]}}</div>'},
+        {field: 'guidDuty', displayName: '所属职务', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidDuty | translateDuty) + $root.constant[row.entity.guidDuty]}}</div>'},
+        {field: 'startDate', displayName: '有效开始日期', enableHiding: true},
+        {field: 'endDate', displayName: '有效截止日期', enableHiding: true}
     ]
     $scope.gwlbgird = initgrid($scope, gwlbgird, filterFilter, com, true, function () {
     });
@@ -1546,32 +1548,45 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                 $scope.subFrom = subFrom;
                 var next = true;
                 $scope.next = next;
+                $scope.title = '新增岗位'
                 //下一步
-                $scope.skip = function () {
-                    abftree_service.initPosCode($scope.subFrom).then(function (data) {
-                        if (data.status == "success") {
-                            $scope.subFrom.positionCode = data.retMessage;
-                        } else {
-                            toastr['error'](data.retMessage);
-                        }
-                    })
-                    $scope.next = !$scope.next;
-                }
-                //增加方法
-                $scope.add = function (subFrom) {
+                $scope.skip = function (items) {
+                    var subFrom = {};
+                    subFrom= items;
+                    $scope.title = '完善岗位'
+                    if (isNull(subFrom.positionType) || isNull(subFrom.guidDuty) || isNull(subFrom.positionName)) {
+                        toastr['error']("请填写相关信息!");
+                        return false;
+                    }
+                    //调用服务生成机构代码
                     abftree_service.addposit(subFrom).then(function (data) {
-                        console.log(data)
                         if (data.status == "success") {
                             toastr['success']("新增成功!");
+                            var next = false;
+                            $scope.next = next;
                             $("#container").jstree().refresh();
-                            $scope.cancel();
+                            var subFrom = {};
+                            $scope.subFrom = subFrom;
+                            subFrom.positionCode = data.retMessage.positionCode;
                         } else {
                             toastr['error'](data.retMessage);
                         }
-                        if (!isNull(fun)) {
-                            fun();
-                        }
+                        $scope.add=function (subFrom) {
+                            var tims = Object.assign(subFrom, data.retMessage);
+                            abftree_service.addposit(tims).then(function (data) {
+                                if (data.status == "success") {
+                                    toastr['success']("新增成功!");
+                                    $("#container").jstree().refresh();
+                                    $scope.cancel();
+                                } else {
+                                    toastr['error'](data.retMessage);
+                                }
+                                if (!isNull(fun)) {
+                                    fun();
+                                }
+                            });
 
+                        }
                     });
                 }
                 $scope.cancel = function () {

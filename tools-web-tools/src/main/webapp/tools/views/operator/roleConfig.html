@@ -73,7 +73,7 @@
                     <!--循环，根据每一项的itemValue循环，并且排序，这样把相同类型不同内容放在了一起-->
                     <div class="form-body">
                         <!--单选框，把颜色风格隐藏-->
-                        <div class="form-group form-md-line-input" ng-if="p.configStyle=='radio'"  ng-hide="p.configDict == 'DICT_STYLE_COLOR'">
+                        <div class="form-group form-md-line-input" ng-if="p.configStyle=='radio'">
                             <label class="col-md-2 control-label" for="form_control_1">{{p.configName}}</label>
                             <div class="col-md-10">
                                 <div class="md-radio-inline" style="margin-top:-2px;" ng-init="$settings.getDictData(p.configDict)">

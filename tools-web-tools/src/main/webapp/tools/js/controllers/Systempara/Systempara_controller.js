@@ -2,7 +2,7 @@
  * Created by wangbo on 2017/7/26.
  */
 
-angular.module('MetronicApp').controller('systempara_controller', function($rootScope, $scope, $http,dictonary_service,menu_service,systempara_service,$timeout,filterFilter,$uibModal,i18nService) {
+angular.module('MetronicApp').controller('systempara_controller', function($rootScope,$state, $scope, $http,dictonary_service,menu_service,systempara_service,$timeout,filterFilter,$uibModal,i18nService) {
     var sys = {};
     $scope.sys = sys;
 
@@ -35,7 +35,18 @@ angular.module('MetronicApp').controller('systempara_controller', function($root
         }else{
         }
     })
-
+    
+    
+    //查询历史记录
+    sys.histroy = function () {
+        var getSel = $scope.gridOptions.getSelectedRows();
+        var sysGuid = getSel[0].guid;
+        if(isNull(getSel) || getSel.length>1){
+            toastr['error']("请选则一条数据进行修改！");
+        }else{
+            $state.go("loghistory",{id:sysGuid});//跳转到历史页面
+        }
+    }
 
     dictonary_service.querySysDictList(subFrom).then(function(data){
         if(data.status == "success"){

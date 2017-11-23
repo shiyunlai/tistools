@@ -132,6 +132,8 @@
 <script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
 <script src="../assets/pages/scripts/login-soft.js" type="text/javascript"></script>
 <script src="../assets/global/plugins/RXjs/Rx.min.js"></script>
+
+<script src="js/main.js"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
 
 <!--应用程序所用写在依赖之后，防止找不到对应的依赖-->
@@ -140,7 +142,7 @@
 
 
 <script>
-    $("input").on('keyup',function(){
+    $("input").on('change',function(){
         var namelangth =  $("#loginname").val().length;
         var passlength = $("#password").val().length;
 //        if(namelangth>=5&&passlength>=6){
@@ -181,8 +183,9 @@
         }
     }
 
+
     var text = document.querySelector('#loginname');
-    Rx.Observable.fromEvent(text, 'keyup')
+    Rx.Observable.fromEvent(text, 'change')
             .debounceTime(1000)
             .pluck('target', 'value')
             .switchMap(url => $.ajax({url:"../AcAuthenticationController/checkUserStatus",type:"post",contentType:'application/json',data:JSON.stringify({userId:url}), processData:false,dataType:'json'}))
@@ -196,7 +199,8 @@
         form.userId = $("#loginname").val();
         form.password = $("#password").val();
         form.identityGuid =$("#opertor").val();
-        form.appGuid = 'APP1499956132';
+//        form.appGuid = 'APP1499956132';
+        form.appCode = 'ABF';
         $.ajax({
             url:"../AcAuthenticationController/login",
             type:"post",
@@ -208,13 +212,12 @@
             success:function(data){
                 data = angular.fromJson(data);
                 if(data.status == "success"){
-                    sessionStorage.user = JSON.stringify(data.retMessage.user);
-                    sessionStorage.menus = data.retMessage.menu;
+//                    sessionStorage.user = JSON.stringify(data.retMessage.user);
+//                    sessionStorage.menus = data.retMessage.menu;
                     sessionStorage.opertor = $("#opertor").find("option:selected").text();
-                    window.location = "../tools/index.html";//如果正确，则进入主页
-                }else if(data.retCode == '2'){
-                    toastr['error'](data.retMessage, "登录失败！");
-                } else {
+//                    window.location = "../tools/index.html#/dashboard";//如果正确，则进入主页
+                    window.location = manurl+'/tools/index.html#/dashboard';//如果正确，则进入主页
+                }else {
                     toastr['error']( data.retMessage);
                 }
             }

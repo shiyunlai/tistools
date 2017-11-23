@@ -122,14 +122,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6" style=" visibility: hidden;">
+                       <!--     <div class="col-md-6" style=" visibility: hidden;">
                                 <div class="form-group">
                                     <label class="control-label col-md-4"></label>
                                     <div class="col-md-8">
                                         <input type="text" class="form-control" name="id" readonly/>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label col-md-4">工作组代码</label>
@@ -209,6 +209,9 @@
                                             </button>
                                             <button type="button" name="back" class="btn btn-primary"
                                                     ng-click="workgroup.editGroup()"> 编辑工作组
+                                            </button>
+                                            <button type="button" name="back" class="btn btn-danger"
+                                                    ng-click="workgroup.histroy()"> 查询历史记录
                                             </button>
                                             <button type="button" name="back" class="btn btn-danger"
                                                     ng-click="workgroup.deleteGroup()"> 删除工作组

@@ -2,7 +2,7 @@
  * Created by wangbo on 2017/6/20.
  */
 /*操作员管理控制器*/
-MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $state, $stateParams, filterFilter,operator_service,dictonary_service,common_service, $modal,$uibModal, $http, $timeout,$interval,i18nService) {
+MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $state, $stateParams,$filter, filterFilter,operator_service,dictonary_service,common_service, $modal,$uibModal, $http, $timeout,$interval,i18nService) {
     //grid表格
     i18nService.setCurrentLang("zh-cn");
     //查询操作员列表
@@ -14,6 +14,8 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
         operator_service.queryAllOperator(subFrom).then(function(data){
             var datas = data.retMessage;
             if(data.status == "success"){
+                var datas = $filter('Arraysort')(data.retMessage);//调用管道排序
+                console.log(datas);
                 $scope.gridOptions.data =  datas;
                 $scope.gridOptions.mydefalutData = datas;
                 $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
@@ -23,12 +25,23 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
         })
     }
     operman.queryAll();
+
+
     var gridOptions = {};
     $scope.gridOptions = gridOptions;
     var com = [{ field: 'operatorName', displayName: '操作员姓名'},
         { field: "userId", displayName:'登录用户名'},
-        { field: "authMode", displayName:'认证模式',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.authMode | translateConstants :\'DICT_AC_AUTHMODE\') + $root.constant[\'DICT_AC_AUTHMODE-\'+row.entity.authMode]}}</div>'},
-        { field: "operatorStatus",displayName:'操作员状态',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.operatorStatus | translateConstants :\'DICT_AC_OPERATOR_STATUS\') + $root.constant[\'DICT_AC_OPERATOR_STATUS-\'+row.entity.operatorStatus]}}</div>'},
+        { field: "authMode",
+            displayName:'认证模式',
+            cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.authMode | translateConstants :\'DICT_AC_AUTHMODE\') + $root.constant[\'DICT_AC_AUTHMODE-\'+row.entity.authMode]}}</div>',
+            /*filter:{
+                type: uiGridConstants.filter.SELECT,
+                selectOptions: [{ value: 'password', label: '密码'},{ value: 'dynpassword', label: '动态密码'},{ value: 'captcha', label: '验证码'},{ value: 'ldap', label: 'LDAP认证'},{ value: 'fingerprint', label: '指纹'},{ value: 'fingerprintcard', label: '指纹卡'}]
+            }*/
+        },
+        { field: "operatorStatus",displayName:'操作员状态',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.operatorStatus | translateConstants :\'DICT_AC_OPERATOR_STATUS\') + $root.constant[\'DICT_AC_OPERATOR_STATUS-\'+row.entity.operatorStatus]}}</div>',
+            selectOptions: [{ value: 'password', label: '密码'},{ value: 'dynpassword', label: '动态密码'},{ value: 'captcha', label: '验证码'},{ value: 'ldap', label: 'LDAP认证'},{ value: 'fingerprint', label: '指纹'},{ value: 'fingerprintcard', label: '指纹卡'}]
+        },
         { field: "menuType",displayName:'菜单风格',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.menuType | translateConstants :\'DICT_AC_MENUTYPE\') + $root.constant[\'DICT_AC_MENUTYPE-\'+row.entity.menuType]}}</div>'},
         { field: "lockLimit",displayName:'锁定次数限制'}
     ];
@@ -57,6 +70,15 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
     }
     $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,false,f);
 
+    //查询历史记录
+    operman.histroy = function () {
+        if($scope.selectRow) {
+            var items = $scope.selectRow.guid;
+            $state.go("loghistory",{id:items});//跳转到历史页面
+        }else{
+            toastr['error']("请至少选择一条数据进行查看！");
+        }
+    }
     //查询业务字典
     var tits = {};
     tits.dictKey='DICT_AC_OPERATOR_STATUS';
@@ -260,6 +282,7 @@ MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state
     $scope.notrolegird = notrolegird;
     var com = [
         { field: "roleName", displayName:'角色名'},
+        { field: "guidApp", displayName:'所属应用',cellTemplate:'<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidApp | translateApp) + $root.constant[row.entity.guidApp]}}</div>'}
     ];
     var f = function(row){
         if(row.isSelected){
@@ -302,8 +325,9 @@ MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state
                 var subFrom = {};
                 subFrom.guidRole = $scope.selectRow.guid;//角色guid
                 subFrom.guidOperator = operatqx.operatorGuid;//操作员guid
-                var tis = [];
-                tis.push(subFrom)
+                var tis = {};
+                tis.data = []
+                tis.data.push(subFrom)
                 common_service.post(role.addOperatorRole,tis).then(function(data){
                     if(data.status == "success"){
                         toastr['success']("授予成功！");
@@ -319,7 +343,8 @@ MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state
     var alrolegird = {};
     $scope.alrolegird = notrolegird;
     var com1 = [
-        { field: "roleName", displayName:'角色名'}
+        { field: "roleName", displayName:'角色名'},
+        { field: "guidApp", displayName:'所属应用',cellTemplate:'<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidApp | translateApp) + $root.constant[row.entity.guidApp]}}</div>'}
     ];
     var f1 = function(row){
         if(row.isSelected){
@@ -340,6 +365,7 @@ MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state
         subFrom.userId = operatqx.userid;
         common_service.post(res.queryOperatorAuthorizedRoleList,subFrom).then(function(data){
             var datas = data.retMessage;
+            console.log(datas);
             if(data.status == "success"){
                 $scope.alrolegird.data =  datas;
                 $scope.alrolegird.mydefalutData = datas;
@@ -359,10 +385,11 @@ MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state
             return false;
         }else{
             var subFrom = {};
-            subFrom.roleGuid = $scope.deleteGUid.guid;//角色guid
-            subFrom.operatorGuid = operatqx.operatorGuid;//操作员guid
-            var tis = [];
-            tis.push(subFrom)
+            subFrom.guidRole = $scope.deleteGUid.guid;//角色guid
+            subFrom.guidOperator = operatqx.operatorGuid;//操作员guid
+            var tis = {};
+            tis.data = [];
+            tis.data.push(subFrom)
             common_service.post(role.removeOperatorRole,tis).then(function(data){
                 if(data.status == "success"){
                     toastr['success']("删除成功！");
@@ -397,6 +424,7 @@ MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state
                         var menuAll = angular.fromJson(datas);
                         var tisMenu = [];;//绑定数组
                         tisMenu.push(menuAll)
+                        console.log(tisMenu)
                         //菜单一权限
                         $("#opercontainer").jstree({
                             "core" : {
@@ -437,7 +465,6 @@ MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state
                             plugins: ["sort", "types", "wholerow", "themes", "html_data"],
                         }).bind("select_node.jstree", function (e, data) {
                             operqxinpfo.funinfo = data.node.original;
-
                             if(data.node.original.isLeaf == 'Y'){
                                     $scope.operisleaf = true;
                             }else{

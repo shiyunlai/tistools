@@ -189,6 +189,10 @@ public class AcAuthenticationController extends BaseController {
                     case "data" :
                         state.setData(attrValue);
                         break;
+                    case "controller" :
+                        state.setController(attrValue);
+                        break;
+
                     default:
                         throw new WebAppException("WEB-555", "功能资源配置格式不正确");
                 }

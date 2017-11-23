@@ -5,6 +5,7 @@
 /* Metronic App */
 var isdebug = false;
 var manurl = 'http://localhost:8089/tis';
+// var manurl = 'http://106.15.103.14:8080/tis';
 
 var MetronicApp = angular.module("MetronicApp", [
     "ui.router",
@@ -73,46 +74,6 @@ MetronicApp.config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
     });
 }]);
 
-/********************************************
- BEGIN: BREAKING CHANGE in AngularJS v1.3.x:
- *********************************************/
-/**
- `$controller` will no longer look for controllers on `window`.
- The old behavior of looking on `window` for controllers was originally intended
- for use in examples, demos, and toy apps. We found that allowing global controller
- functions encouraged poor practices, so we resolved to disable this behavior by
- default.
-
- To migrate, register your controllers with modules rather than exposing them
- as globals:
-
- Before:
-
- ```javascript
- function MyController() {
-  // ...
-}
- ```
-
- After:
-
- ```javascript
- angular.module('myApp', []).controller('MyController', [function() {
-  // ...
-}]);
-
- Although it's not recommended, you can re-enable the old behavior like this:
-
- ```javascript
- angular.module('myModule').config(['$controllerProvider', function($controllerProvider) {
-  // this option might be handy for migrating old apps, but please don't use it
-  // in new ones!
-  $controllerProvider.allowGlobals();
-}]);
- **/
-
-
-
 
 MetronicApp.factory('httpInterceptor', ['$log', function($log) {
     return {
@@ -123,7 +84,7 @@ MetronicApp.factory('httpInterceptor', ['$log', function($log) {
         },
         //响应的方法
         response: function (response){
-            //console.log(response);//打印所有的响应
+            // console.log(response);//打印所有的响应
             if(response.status == '200'){//首先要请求成功
                 if(response.config.url.indexOf(manurl) ==0 ){//判断post请求，post请求的url都是marurl开头。
                     if(response.data.status =="success"){
@@ -132,16 +93,18 @@ MetronicApp.factory('httpInterceptor', ['$log', function($log) {
                         //console.log('失败的请求,进行处理 ')
                     }else if(response.data.status =="failed"){
                         toastr['error']("登陆失效，请重新登陆!");
-                        window.location = "../tools/login.html";//如果正确，则进入主页
+                        //window.location = "../tools/login.html";//如果正确，则进入主页
                     }
                 }
+            }else{
+                window.location = "../tools/views/errorInfo/ServerException.html";//如果不正确，则进入500页面，说明服务器异常
             }
+
             return response;
         }
     };
-
-
 }]);
+
 //引入http拦截器
 MetronicApp.config(['$httpProvider', function($httpProvider) {
     $httpProvider.interceptors.push('httpInterceptor');
@@ -152,8 +115,6 @@ MetronicApp.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.headers.common = { 'My-Header' : 'testceshi' }
 }]);
 */
-
-
 
 //AngularJS v1.3.x workaround for old style controller declarition in HTML
 MetronicApp.config(['$controllerProvider', function($controllerProvider) {
@@ -167,7 +128,7 @@ MetronicApp.config(['$controllerProvider', function($controllerProvider) {
  *********************************************/
 
 /* Setup global settings */
-MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http) {
+MetronicApp.factory('settings', ['$rootScope','$http','common_service', function($rootScope,$http,common_service) {
     // supported languages
     var settings = {
         utils:{},
@@ -190,7 +151,6 @@ MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http
             });
         }
     }
-
     settings.utils.back=function(){
         window.history.back()
     }
@@ -213,6 +173,7 @@ MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http
     $rootScope.settings = settings;
     var constant = {};
     $rootScope.constant = constant;
+
     $rootScope.formatT = function(val){
         var mm="";
         if(val!=null&&val!=''){
@@ -237,9 +198,8 @@ MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http
             });
         }
     }
-
-
     settings.commlist = {};
+
     /**
      * 获取机构-人员-工作组-职务-岗位
      * 翻译guid-objName
@@ -259,12 +219,10 @@ MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http
                 });
             }
         }else if(type == "EMP"){
-            if(_.isNil(settings.commlist[type])) {
                 $http.post(manurl + "/om/emp/queryemployee").then(function (response) {
                     settings.commlist[type] = response.data.retMessage;
-                    console.log(response.data.retMessage)
                 });
-            }
+
         }else if(type == "ROLE"){
             if(_.isNil(settings.commlist[type])) {
                 $http.post(manurl + "/AcRoleController/queryRoleList",{}).then(function (response) {
@@ -308,26 +266,30 @@ MetronicApp.factory('settings', ['$rootScope','$http', function($rootScope,$http
     }
 
 
-
     return settings;
 }]);
 
 /* Setup App Main Controller */
-MetronicApp.controller('AppController', ['$scope','$rootScope','$http','$q', function($scope, $rootScope,$http,$q) {
-   /* $scope.$on('$viewContentLoaded', function() {
-        App.initComponents(); // init core components
-        //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive
-    });*/
-    /*var res = $http.get(manurl + '/tools/json/service.json').then(function (response) {
-        $rootScope.res = response.data;//绑定到rootscope中，在其他页面可以直接调用
-        return response;
-    })*/
+MetronicApp.controller('AppController', ['$scope','$rootScope','$http','$q','common_service','$state', function($scope, $rootScope,$http,$q,common_service,$state) {
+    // $state.go("403");//跳转到未授权页面
     var res = $http.get('./json/service.json').then(function (response) {
         $rootScope.res = response.data;//绑定到rootscope中，在其他页面可以直接调用
         return response;
     })
 
-}]);
+
+
+    var ret ={ctrl: "AcAuthenticationController", func: "pageInit", emo: "页面初始化"};
+    common_service.post(ret,{}).then(function(data){
+        console.log(data)
+        if(data.status == "success"){
+            $rootScope.userconfig = data.retMessage;
+        }
+    })
+
+}]).run(function (router) {
+    router.setUpRoutes();
+});
 
 
 /***
@@ -337,37 +299,37 @@ MetronicApp.controller('AppController', ['$scope','$rootScope','$http','$q', fun
  ***/
 
 /* Setup Layout Part - Header */
-MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope', '$http','$uibModal','common_service','$state', function($scope,filterFilter,$rootScope,$http,$uibModal,common_service,$state) {
+MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope', '$http','$uibModal','common_service','$state','$timeout', function($scope,filterFilter,$rootScope,$http,$uibModal,common_service,$state,$timeout) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
         Demo.init();
-        // var res = $rootScope.res.login_service;//页面所需调用的服务
-        var ret ={ctrl: "AcAuthenticationController", func: "pageInit", emo: "页面初始化"};
-        common_service.post(ret,{}).then(function(data){
-            if(data.status == "success"){
-                var session = data.retMessage.user;
-                session.opertor = sessionStorage.opertor;//身份绑定;
-                $scope.userId = session.userId;//绑定登陆信息
-                userinfo(data.retMessage.user);//登陆信息页面
-                passedit(data.retMessage.user);//修改密码页面
+        $timeout(function () {
+            var session  = $rootScope.userconfig;//拿去所有大数据
+            if(!isNull(session)){
+                $scope.userId = session.user.userId;//绑定登陆信息
+                session.user.opertor = sessionStorage.opertor;//身份绑定;
+                userinfo(session.user);//登陆信息页面
+                passedit(session.user);//修改密码页面
                 opermenu($scope.userId);//重组菜单入口
-                persona(session);//个性化配置入口
-                $rootScope.menus = angular.fromJson(data.retMessage.menu);
+                persona(session.user);//个性化配置入口
+            }else{
+                //如果拿不到数据，以防万一 才调用后台拿取数据
+                var ret ={ctrl: "AcAuthenticationController", func: "pageInit", emo: "页面初始化"};
+                common_service.post(ret,{}).then(function(data){
+                    if(data.status == "success"){
+                        var session = data.retMessage.user;
+                        session.opertor = sessionStorage.opertor;//身份绑定;
+                        $scope.userId = session.userId;//绑定登陆信息
+                        userinfo(data.retMessage.user);//登陆信息页面
+                        passedit(data.retMessage.user);//修改密码页面
+                        opermenu($scope.userId);//重组菜单入口
+                        persona(session);//个性化配置入口
+                        $rootScope.menus = angular.fromJson(data.retMessage.menu);
+                    }
+                })
             }
-        })
-        /*var res = $rootScope.res.login_service;//页面所需调用的服务
-        common_service.post(res.pageInit,{}).then(function(data){
-            if(data.status == "success"){
-                 var session = data.retMessage.user;
-                session.opertor = sessionStorage.opertor;//身份绑定;
-                $scope.userId = session.userId;//绑定登陆信息
-                userinfo(data.retMessage.user);//登陆信息页面
-                passedit(data.retMessage.user);//修改密码页面
-                opermenu($scope.userId);//重组菜单入口
-                persona(session);//个性化配置入口
-                $rootScope.menus = angular.fromJson(data.retMessage.menu);
-            }
-        })*/
+        },300)
+
     });
     //个人信息页面
     function userinfo(item){
@@ -379,7 +341,7 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
                     $scope.operatorName = item.operatorName;
                     $scope.menuType = item.menuType;
                     $scope.lastLogin =moment(item.lastLogin).format('YYYY-MM-DD HH:mm:ss');
-                    $scope.opertor = item.opertor;
+                    $scope.opertor =item.opertor;
                     $scope.cancel = function () {
                         $modalInstance.dismiss('cancel');
                     };
@@ -390,7 +352,6 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
     //修改密码页面
     function passedit(datas){
         $scope.improved = function(){
-           /* var res = $rootScope.res.login_service;*/
             var ret ={"ctrl": "AcAuthenticationController", "func": "updatePassword","emo":"修改密码"};
             openwindow($uibModal, 'views/landinginfor/Improved.html','lg',
                 function ($scope, $modalInstance) {
@@ -405,7 +366,6 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
                                 $modalInstance.close();
                             }
                         })
-
                     }
                     $scope.cancel = function () {
                         $modalInstance.dismiss('cancel');
@@ -421,17 +381,17 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
            common_service.post(res,{}).then(function(data){
                if(data.status == "success"){
                    window.location = "../tools/login.html";//如果正确，则进入主页
+                   sessionStorage.clear('toState');
+                   sessionStorage.clear('toParams');
                }
            })
        }
     }
-
     //重组菜单
     function opermenu(item){
         $scope.opermenus = function(){
             $state.go("Reorganizemenu",{id:item})
         }
-
     }
     //个性化配置页面
     function persona(item){
@@ -443,18 +403,41 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
     }
 }]);
 
+
+MetronicApp.controller('QuickSidebarController', ['$scope', function($scope) {
+    $scope.$on('$includeContentLoaded', function() {
+        setTimeout(function(){
+            QuickSidebar.init(); // init quick sidebar
+        }, 2000)
+    });
+}]);
+
+
 /* Setup Layout Part - Sidebar */
+MetronicApp.controller('PageHeadController', ['$scope', function($scope) {
+    $scope.$on('$includeContentLoaded', function() {
+        Demo.init(); // init theme panel
+    });
+}]);
+
+
+/* Setup Layout Part - Footer */
+MetronicApp.controller('FooterController', ['$scope', function($scope) {
+    $scope.$on('$includeContentLoaded', function() {
+        Layout.initFooter(); // init footer
+    });
+}]);
+
+//菜单控制器
 MetronicApp.controller('SidebarController', ['$scope', '$timeout','$rootScope','common_service',function($scope,$timeout,$rootScope,common_service) {
     $scope.$on('$includeContentLoaded', function () {
         Layout.initSidebar(); // init sidebar
-        //拿不到数据,目前先写死 在找原因
-        //调用菜单
-        /*var res = $rootScope.res.login_service;//页面所需调用的服务
-        common_service.post(res.pageInit, {}).then(function (data) {*/
-            var ret ={ctrl: "AcAuthenticationController", func: "pageInit", emo: "页面初始化"};
-            common_service.post(ret, {}).then(function (data) {
-            if (data.status == "success") {
-                var sessionjson = angular.fromJson(data.retMessage.menu);
+        //定时器，去取数据
+        console.log($rootScope.userconfig)
+        $timeout(function () {
+            console.log($rootScope.userconfig)
+            if(!isNull($rootScope.userconfig)){
+                var sessionjson = angular.fromJson($rootScope.userconfig.menu);
                 $scope.menusAndTrans = angular.copy(sessionjson);
                 $scope.issearchmenu = false;//让搜索菜单隐藏
                 //搜索框改变事件调用
@@ -471,18 +454,50 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout','$rootScope','
                 $scope.search = function (searchParam) {
                     //如果不是数组,说明有搜索值,那就进行处理
                     if (_.isEmpty(searchParam)) { //如果是数组
-                      /*  $('.search').slideDown();//让搜索的内容隐藏
-                        $(".ids1").slideUp();//让原本的树结构显显示*!/*/
+                        /*  $('.search').slideDown();//让搜索的内容隐藏
+                          $(".ids1").slideUp();//让原本的树结构显显示*/
                     }else{
                         $scope.issearchmenu = true;//让搜索菜单隐藏
                         $scope.searchParam = searchParam;//把搜索内容复制过去
                         search([sessionjson], searchParam);//调用搜索方法，传入搜索的值
-                       //看是否能用动画来做
+                        //看是否能用动画来做
                     }
-                };
+                }
+            }else{
+                //万一拿不到数据，才请求后台，以防万一
+                var ret ={ctrl: "AcAuthenticationController", func: "pageInit", emo: "页面初始化"};
+                common_service.post(ret, {}).then(function (data) {
+                    if (data.status == "success") {
+                        var sessionjson = angular.fromJson(data.retMessage.menu);
+                        $scope.menusAndTrans = angular.copy(sessionjson);
+                        $scope.issearchmenu = false;//让搜索菜单隐藏
+                        //搜索框改变事件调用
+                        $scope.test = function (searchParam) {
+                            if (_.isEmpty(searchParam)) { //如果是数组
+                                // $('.search').html('');//制空
+                                $scope.searchParam = '';//把搜索内容复制过去
+                                $('.search').slideUp();//让搜索的内容隐藏
+                                $(".ids1").slideDown();//让原本的树结构显示
+                                $scope.issearchmenu = false;//让搜索菜单隐藏
+                            }
+                        }
+                        //调用搜索逻辑
+                        $scope.search = function (searchParam) {
+                            //如果不是数组,说明有搜索值,那就进行处理
+                            if (_.isEmpty(searchParam)) { //如果是数组
+                                /!*  $('.search').slideDown();//让搜索的内容隐藏
+                                $(".ids1").slideUp();//让原本的树结构显显示*!/
+                            }else{
+                                $scope.issearchmenu = true;//让搜索菜单隐藏
+                                $scope.searchParam = searchParam;//把搜索内容复制过去
+                                search([sessionjson], searchParam);//调用搜索方法，传入搜索的值
+                                //看是否能用动画来做
+                            }
+                        };
+                    }
+                })
             }
-        })
-
+        },300)
         function search(all, key) { //包装了一个搜索方法，只要数据结构做成类似的，这个直接拿来用。
             // $('.search').html('');//制空
             var sum = 0;//标识，判断第几次循环
@@ -510,7 +525,6 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout','$rootScope','
                     }
                     $(".search" + sum).append(html);//追加到li中
                 }
-
                 for(var j =0;j<data.length;j++){//循环，拿到第一层,与本身这层进行判断，找到对应的层级，guid和parentguid匹配
                     var array = [];
                     for(var i =0; i<num.length;i++){//循环所有的子级，然后进行匹配
@@ -525,7 +539,6 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout','$rootScope','
                                 console.log(array[i])
                             }*/
                             if(array[i].label.indexOf(key) == 0){
-                                console.log(array[i])
                                 htmltwo += '<li><a style="height: 41px;line-height: 31px;"  href="#/'+array[i].href + '"><i class="'+array[i].icon+'"></i><span class="title">'+array[i].label+'</span></a></li>'
                                 // htmltwo += '<li class="start nav-item"><a  style="height: 41px;line-height: 31px;"   href="javascript:;"><i class="'+array[i].icon+'"></i><span class="title">'+array[i].label+'</span><span class="arrow "></span></a><ul class="sub-menu search'+ sumer +'"id="'+ array[i].guid+'"></ul></li>'
                             }
@@ -547,52 +560,37 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout','$rootScope','
                     return num;
                 }
             }
-
         }
     });
 }]);
 
-MetronicApp.controller('QuickSidebarController', ['$scope', function($scope) {
-    $scope.$on('$includeContentLoaded', function() {
-        setTimeout(function(){
-            QuickSidebar.init(); // init quick sidebar
-        }, 2000)
-    });
-}]);
-
-/* Setup Layout Part - Sidebar */
-/*
-MetronicApp.controller('PageHeadController', ['$scope', function($scope) {
-    $scope.$on('$includeContentLoaded', function() {
-        Demo.init(); // init theme panel
-    });
-}]);
-
-*/
-
-/* Setup Layout Part - Footer */
-MetronicApp.controller('FooterController', ['$scope', function($scope) {
-    $scope.$on('$includeContentLoaded', function() {
-        Layout.initFooter(); // init footer
-    });
-}]);
-
-MetronicApp.controller('ThemePanelController', ['$scope','common_service','$rootScope', '$http' ,function($scope,common_service,$rootScope,$http) {
+//自定义主题控制器
+MetronicApp.controller('ThemePanelController', ['$scope','common_service','$rootScope', '$http' ,'$timeout',function($scope,common_service,$rootScope,$http,$timeout) {
     $scope.$on('$includeContentLoaded', function() {
         var color_ = localStorage.getItem("colors_")
-        $('#style_color1').attr("href", Layout.getLayoutCssPath() + 'themes/' + color_ + ".css");//设置成我们想要的
-
-        var res = $rootScope.res.login_service;//页面所需调用的服务
-        common_service.post(res.pageInit,{}).then(function(data){
-            if(data.status == "success"){
-                var session = data.retMessage.user;
-                //获取用户选择的配置信息
-                getsubColor(session)
-                //存储用户选择颜色信息
+        if(!isNull(color_)){
+            $('#style_color1').attr("href", Layout.getLayoutCssPath() + 'themes/' + color_ + ".css");//设置成我们想要的
+        }
+        $timeout(function () {
+            if(!isNull($rootScope.userconfig)){
+                var  session = $rootScope.userconfig.user;//取出用户信息
+                getsubColor($rootScope.userconfig)
                 subjectColor(session.guid)
-
+            }else{
+                var res = $rootScope.res.login_service;//页面所需调用的服务
+                common_service.post(res.pageInit,{}).then(function(data){
+                    if(data.status == "success"){
+                        var session = data.retMessage.user;
+                        //存储用户选择颜色信息
+                        subjectColor(session.guid);
+                        //获取
+                        getsubColor($rootScope.userconfig)
+                    }
+                })
             }
-        })
+
+        },300)
+
         Demo.init(); // init theme panel
         //存储主题风格颜色内容
         function subjectColor(operguid){
@@ -614,7 +612,14 @@ MetronicApp.controller('ThemePanelController', ['$scope','common_service','$root
         }
         //取用户存储的主题风格颜色
         function getsubColor(item){
-            var subFrom = {}
+            var configArray = item.configs;
+            for(var i=0;i<configArray.length;i++){
+                if(configArray[i].configDict == "DICT_STYLE_COLOR"){
+                    var color_ = configArray[i].configValue;//用户之前存储的颜色
+                    $('#style_color1').attr("href", Layout.getLayoutCssPath() + 'themes/' + color_ + ".css");//设置成用户之前保存的
+                }
+            }
+            /*var subFrom = {}
             subFrom.userId= item.userId;
             subFrom.appGuid= 'APP1499956132';
             var res = $rootScope.res.operator_service;//页面所需调用的服务
@@ -630,13 +635,10 @@ MetronicApp.controller('ThemePanelController', ['$scope','common_service','$root
 
                     }
                 }
-            })
+            })*/
         }
-
     });
 }]);
-
-
 
 MetronicApp.controller('Memocontroller', ['$scope','Memo_service', function($scope,Memo_service) {
     var promise = Memo_service.search({})//查询
@@ -673,67 +675,98 @@ MetronicApp.controller('Memocontroller', ['$scope','Memo_service', function($sco
 
 }]);
 
-var strs = {
 
-};
 
 //服务端定义路由控制，这里主要作用就是取数据
 MetronicApp.provider('router', function ($stateProvider) {
-    //定义一个router服务
-    var urlCollection;
-
-    this.$get = function ($http, $state) {
-        return {
-            setUpRoutes: function () {
-                $http.get(urlCollection).success(function (collection) {
-                    for (var routeName in collection) {
-                        //对每一项进行循环
-                        if (!$state.get(routeName)) {
-                            $stateProvider.state(routeName, collection[routeName]);
+        this.$get = function ($http, $state,$rootScope,$timeout,common_service) {
+            var ret ={ctrl: "AcAuthenticationController", func: "pageInit", emo: "页面初始化"};
+            return {
+                setUpRoutes: function () {
+                    common_service.post(ret,{}).then(function(data){
+                        var datas = data.retMessage.resources;
+                        var collection = JSON.parse(datas)
+                        if(data.status == "success"){
+                            for (var routeName in collection) {
+                                if (!$state.get(routeName)) {
+                                    $stateProvider.state(routeName, collection[routeName]);
+                                }
+                            }
+                            //如何判断是第一次？这是一个问题,还存在一个问题，如果地址栏发生改变，那么会跳转到原来存储的位置,解决思路--地址栏发生改变就清空
+                            if(!isNull(sessionStorage.getItem('toState'))){
+                                $state.go(sessionStorage.getItem('toState'),{id:sessionStorage.getItem('toParams')})
+                            }
                         }
-                    }
-                });
+                    })
+                    /*$http.get('json/test.json').success(function (collection) {
+                        console.log(collection)
+                        for (var routeName in collection) {
+                            if (!$state.get(routeName)) {
+                                // console.log(collection[routeName])
+                                $stateProvider.state(routeName, collection[routeName]);
+                            }
+                        }
+                        //如何判断是第一次？这是一个问题,还存在一个问题，如果地址栏发生改变，那么会跳转到原来存储的位置,解决思路--地址栏发生改变就清空
+                        if(!isNull(sessionStorage.getItem('toState'))){
+                            $state.go(sessionStorage.getItem('toState'),{id:sessionStorage.getItem('toParams')})
+                        }
+                    });*/
+                }
             }
-        }
-    };
+        };
+    })
 
-    this.setCollectionUrl = function (url) {
-        urlCollection = url;
-    }
-})
+
+
 
 //配置内容,首页写死，其他页面路由从后台拿取
 MetronicApp.config(function ($stateProvider, $urlRouterProvider, routerProvider) {
-    $urlRouterProvider.otherwise('/dashboard');
-        $stateProvider
-            .state('dashboard', {
-                url: '/dashboard',
-                templateUrl: "views/dashboard.html",
-                data: {pageTitle: '控制台'},
-                controller: "DashboardController",
-                resolve: {
-                    deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                        return $ocLazyLoad.load({
-                            name: 'MetronicApp',
-                            insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
-                            files: [
-                                '../assets/global/plugins/morris/morris.css',
-                                '../assets/global/plugins/morris/morris.min.js',
-                                '../assets/global/plugins/morris/raphael-min.js',
-                                '../assets/global/plugins/jquery.sparkline.min.js',
+            $stateProvider
+                .state('dashboard', {
+                    url: '/dashboard',
+                    templateUrl: "views/dashboard.html",
+                    data: {pageTitle: '控制台'},
+                    controller: "DashboardController",
+                    resolve: {
+                        deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'MetronicApp',
+                                insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                                files: [
+                                    '../assets/global/plugins/morris/morris.css',
+                                    '../assets/global/plugins/morris/morris.min.js',
+                                    '../assets/global/plugins/morris/raphael-min.js',
+                                    '../assets/global/plugins/jquery.sparkline.min.js',
 
-                                '../assets/pages/scripts/dashboard.min.js',
-                                'js/controllers/DashboardController.js',
-                            ]
-                        });
-                    }]
-                }
-            });
-        routerProvider.setCollectionUrl('json/test.json');
+                                    '../assets/pages/scripts/dashboard.min.js',
+                                    'js/controllers/DashboardController.js',
+                                ]
+                            });
+                        }]
+                    }
+                })
+                .state('NonExistent', {
+                    url: "/403",
+                    templateUrl: "views/errorInfo/Nopermission.html",
+                    data: {pageTitle: '无权限访问'},
+                    controller: "errorInfo_controller"
+                })
+                .state('Nopermission', {
+                    url: "/404",
+                    templateUrl: "views/errorInfo/NonExistent.html",
+                    data: {pageTitle: '访问不存在'},
+                    controller: "errorInfo_controller"
+                })
+                .state('ServerException', {
+                    url: "/500",
+                    templateUrl: "views/errorInfo/ServerException.html",
+                    data: {pageTitle: '服务器异常'},
+                    controller: "errorInfo_controller"
+                })
+        $urlRouterProvider.otherwise('/dashboard');
+
     })
-    .run(function (router) {
-        router.setUpRoutes();
-    });
+
 
 
 /* Setup Rounting For All Pages */
@@ -1260,10 +1293,34 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider, routerProvider)
 
 }]);*/
 
+
 //angular路由监控，跳转开始之前。
-MetronicApp.run(['$rootScope', '$state', function ($rootScope, $state) {
+MetronicApp.run(['$rootScope', '$state','$http','common_service', function ($rootScope, $state,$http,common_service) {
     $rootScope.$state = $state;
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+        console.log(toState);
+        var subFrom = {};
+        subFrom.funcCode = toState.funcCode;
+        var ret ={"ctrl": "AcAuthenticationController", "func": "viewCheck","emo":"用于路由跳转判断"};
+        common_service.post(ret,{data:subFrom}).then(function(data){
+            console.log(data)
+        })
+
+
+        if(toState.name !=='dashboard'){//如果不是首页保存到临时存储中
+            sessionStorage.setItem('toState',toState.name);
+            sessionStorage.setItem('toParams',toParams.id);//把传入的值也放进存储中,刷新也保存着
+        }
+        if(toState.name =='dashboard' && fromState.name !==''){//如果新目标是首页并且原本的路由不是空，那就代表首页刷新
+            sessionStorage.setItem('toState',toState.name);
+        }
+
+        if(toState.name=='Systempara'){
+            event.preventDefault();// 取消默认跳转行为
+            $rootScope.funcCode = '123123';//传值
+            // $state.go("NonExistent");//跳转到未授权页面
+            //那最新的路由保存到localhost中，然后在刷新的时候跳转过去，取出来
+        }
         if(!isNull(toState.header)){
             $rootScope.Appfunc = toState.header;//把路由中对应的请求头，放入全局rootscope中。
         }

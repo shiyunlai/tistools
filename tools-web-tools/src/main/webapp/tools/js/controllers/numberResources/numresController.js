@@ -55,7 +55,6 @@ MetronicApp.controller('numres_controller', function ($filter, $scope, $state,nu
     }
     $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,false,f);
 
-
     //重置序号
     $scope.numresReset =function(){
         var getSel = $scope.gridOptions.getSelectedRows();

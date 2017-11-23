@@ -125,15 +125,25 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6" style=" visibility: hidden;">
+                            <!--<div class="col-md-6" style=" visibility: hidden;">
                                 <div class="form-group form-control col-md-8">
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label col-md-4">机构代码</label>
                                     <div class="col-md-8">
                                         <input type="text" class="form-control" ng-model="abftree.item.orgCode"
+                                               name="id" ng-readonly="!editflag"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">所属地域</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"
+                                               ng-model="abftree.item.area"
                                                name="id" ng-readonly="!editflag"/>
                                     </div>
                                 </div>
@@ -296,6 +306,9 @@
                                             <button ng-show="abftree.item.orgStatus=='running'" type="button"
                                                     name="back" class="btn btn-danger" ng-click="abftree.cancelorg()">
                                                 注销机构
+                                            </button>
+                                            <button type="button" name="back" class="btn btn-primary"
+                                                    ng-click="abftree.histroy()"> 查看历史详情
                                             </button>
                                             <button type="button" name="back" class="btn btn-primary"
                                                     ng-click="abftree.edit()"> 编辑机构
@@ -636,6 +649,9 @@
                                                         <button ng-show="abftree.item.positionStatus == 'running'"
                                                                 type="button" name="back" class="btn btn-danger"
                                                                 ng-click="abftree.cancelposition()">注销岗位
+                                                        </button>
+                                                        <button type="button" name="back" class="btn btn-primary"
+                                                                ng-click="abftree.histroy()"> 查询历史记录
                                                         </button>
                                                         <button type="button" name="back" class="btn btn-primary"
                                                                 ng-click="abftree.edit()"> 编辑岗位

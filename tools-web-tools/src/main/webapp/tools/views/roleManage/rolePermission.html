@@ -40,6 +40,11 @@
                             <!-- 也是列表，可以新增删除-->
                         </a>
                     </li>
+                    <li ng-class="{true:'active',false:''}[roleflag.entity]">
+                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[roleflag.entity]" ng-click="role.loadgwdata('entity')">
+                            <i class="green ace-icon fa fa-bars bigger-120"></i>角色的实体范围管理
+                        </a>
+                    </li>
                 </ul>
                 <div class="tab-content portlet light" ng-show="roleflag.limit">
                     <div class="portlet-body col-md-6">
@@ -48,7 +53,7 @@
                             <button type="submit" ng-click="role.clear()">清空</button>
                         </form>-->
                         <div id="container"></div>
-                        <button type="button" name="back" class="btn btn-primary" style="margin-top:15px; margin-left: 20px;"  ng-if="!edit" ng-click="role.edidConfig()"> 修改配置
+                        <button type="button" name="back" class="btn btn-primary" style="margin-top:15px; margin-left: 20px;"  ng-if="!edit" ng-click="role.edidConfig()"> 修改功能范围
                         </button>
                         <button type="button" name="back" class="btn btn-primary" style="margin-top:15px; margin-left: 20px;" ng-if="edit" ng-click="role.checkAll()"> 保存
                         </button>
@@ -68,14 +73,14 @@
                 </div>
                 <div class="tab-content portlet light" ng-if="roleflag.dist">
                     <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" >
+                        <li ng-class="{true:'active',false:''}[rolesflag.zhiwei]">
+                            <a  data-toggle="tab" href ng-class="{true:'link',false:''}[rolesflag.zhiwei]" ng-click="role.loadgwdata(6)">
+                                <i class="green ace-icon fa fa-bars bigger-120"></i>职务
+                            </a>
+                        </li>
                         <li ng-class="{true:'active',false:''}[rolesflag.org]">
                             <a  data-toggle="tab" href ng-class="{true:'link',false:''}[rolesflag.org]"  ng-click="role.loadgwdata(3)">
                                 <i class="green ace-icon fa fa-bars bigger-120"></i>机构
-                            </a>
-                        </li>
-                        <li ng-class="{true:'active',false:''}[rolesflag.worklist]">
-                            <a  data-toggle="tab" href ng-class="{true:'link',false:''}[rolesflag.worklist]" ng-click="role.loadgwdata(4)">
-                                <i class="green ace-icon fa fa-bars bigger-120"></i>工作组
                             </a>
                         </li>
                         <li ng-class="{true:'active',false:''}[rolesflag.post]">
@@ -83,9 +88,9 @@
                                 <i class="green ace-icon fa fa-bars bigger-120"></i>岗位
                             </a>
                         </li>
-                        <li ng-class="{true:'active',false:''}[rolesflag.zhiwei]">
-                            <a  data-toggle="tab" href ng-class="{true:'link',false:''}[rolesflag.zhiwei]" ng-click="role.loadgwdata(6)">
-                                <i class="green ace-icon fa fa-bars bigger-120"></i>职务
+                        <li ng-class="{true:'active',false:''}[rolesflag.worklist]">
+                            <a  data-toggle="tab" href ng-class="{true:'link',false:''}[rolesflag.worklist]" ng-click="role.loadgwdata(4)">
+                                <i class="green ace-icon fa fa-bars bigger-120"></i>工作组
                             </a>
                         </li>
                     </ul>
@@ -160,6 +165,10 @@
                         <button type="button" name="back" class="btn btn-danger" ng-click="role.operaDelete()"> 删除
                         </button>
                     </div>
+                </div>
+                <!--数据实体范围-->
+                <div class="tab-content portlet light" ng-if="roleflag.entity">
+                    <p>角色实体范围管理</p>
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 /**
  * Created by gaojie on 2017/6/26.
  */
-angular.module('MetronicApp').controller('Emp_controller', function ($rootScope, uiGridConstants, $scope, Emp_service, gridUtil, abftree_service,common_service, $window, $http, $timeout, i18nService, filterFilter, uiGridConstants, $uibModal, $state) {
+angular.module('MetronicApp').controller('Emp_controller', function ($rootScope, uiGridConstants,$filter, $scope, Emp_service, gridUtil, abftree_service,common_service, $window, $http, $timeout, i18nService, filterFilter, uiGridConstants, $uibModal, $state) {
     $scope.$on('$viewContentLoaded', function () {
         // initialize core components
         App.initAjax();
@@ -105,27 +105,46 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
         ($scope.$$phase) ? null : $scope.$apply();//避免报错的,意思是如果已经在进行脏检查就是Null啥都不干,如果没有,就执行脏检查
     }
     //定义表头名
-    var com = [{field: 'empCode', displayName: '员工代码'},
+    var com = [{field: 'empCode', displayName: '员工代码'
+        // sort:{direction:'desc'}  排序
+    },
         {field: 'empName', displayName: '员工姓名'},
         {
             field: 'gender',
             displayName: '性别',
-            cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>'
+            cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>',
+            filter:{
+                //term: '0',//默认搜索那项
+                type: uiGridConstants.filter.SELECT,
+                selectOptions: [{ value: 'M', label: '男'}, { value: 'F', label: '女' },{ value: 'U', label: '未知' } ]
+            }
         },
         {
             field: 'empstatus',
             displayName: '员工状态',
-            cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>'
+            cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empstatus | translateConstants :\'DICT_OM_EMPSTATUS\') + $root.constant[\'DICT_OM_EMPSTATUS-\'+row.entity.empstatus]}}</div>',
+            filter:{
+                type: uiGridConstants.filter.SELECT,
+                selectOptions:$filter('translateSearch')('DICT_OM_EMPSTATUS')||$rootScope.constant['DICT_OM_EMPSTATUS'+'forEach']
+            }
         },
         {
             field: 'empDegree',
             displayName: '员工职级',
-            cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>'
+            cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>',
+            filter:{
+                type: uiGridConstants.filter.SELECT,
+                selectOptions:$filter('translateSearch')('DICT_OM_EMPDEGREE')||$rootScope.constant['DICT_OM_EMPDEGREE'+'forEach']
+            }
         },
         {
             field: 'guidPosition',
             displayName: '基本岗位',
-            cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'
+            cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>',
+            filter:{
+                type: uiGridConstants.filter.SELECT,
+                selectOptions:$filter('tranSearchPosition')('position')||$rootScope.constant['Position']
+            }
         },
         {field: 'guidEmpMajor',
             displayName: '直接主管',
@@ -160,7 +179,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
     }
     $scope.formatLocation = function (a, b) {
         var list = $rootScope.$settings.diclist[b];
-        console.log(list)
         return 123;
     }
 
@@ -188,95 +206,16 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                 if(isNull(subFrom)){
                     var subFrom = {
                         "empName": "第一个员工",
-                        "gender": "M",
+                       /* "gender": "M",
                         "empDegree": "P1",
                         "guidOrg": "ORG1502868449",
                         "guidPosition": "POSITION1502869376",
-                        "indate": "2017-07-19"
+                        "indate": "2017-07-19"*/
                     };
-                    //生成员工编号
-                    Emp_service.initEmpCode(subFrom).then(function (data) {
-                        if (data.status == "success") {
-                            subFrom.empCode = data.retMessage
-                        } else {
-                            toastr['error'](data.retMessage);
-                        }
-                    })
                 }
                 $scope.subFrom = subFrom;
                 //标题
                 $scope.title = "新增员工";
-                /*$scope.empadd = function () {
-                    //新增操作员
-                    // $scope.cancel();
-                    //打开第二个模态框
-                    openwindow($uibModal, 'views/emp/addemppart2_window.html', 'lg',
-                        function ($scope, $modalInstance) {
-                            $scope.subFrom = subFrom;
-                            console.log(pinyin.getFullChars(subFrom.empName));
-                            subFrom.userId = pinyin.getFullChars(subFrom.empName);
-                            $scope.title = "操作员信息";
-                            var emp = {};
-                            $scope.emp = emp;
-                            emp.operflag = "1";
-                            //增加方法
-                            $scope.add = function (subFrom) {
-                                var a = [];
-                                if(!isNull(subFrom.orgList)){
-                                    for (var i = 0; i < subFrom.orgList.length; i++) {
-                                        var b = {};
-                                        b.orgGuid = subFrom.orgList[i];
-                                        a.push((b));
-                                    }
-                                }
-                                subFrom.orgList = a;
-                                a = [];
-                                if(!isNull(subFrom.specialty)){
-                                    for (var i = 0; i < subFrom.specialty.length; i++) {
-                                        var b = {};
-                                        b.roleGuid = subFrom.specialty[i];
-                                        a.push((b));
-                                    }
-                                }
-                                subFrom.specialty = a;
-                                subFrom.orgList = JSON.stringify(subFrom.orgList);
-                                subFrom.specialty = JSON.stringify(subFrom.specialty);
-                                Emp_service.addemp(subFrom).then(function (data) {
-                                    if (data.status == "success") {
-                                        toastr['success']("新增成功!");
-                                    } else {
-                                        toastr['error'](data.retMessage);
-                                    }
-                                    reempgrid();
-                                    $scope.cancel();
-                                })
-
-                                if(emp.operflag == '1'){//只有是系统默认的时候才新增，否则不新增
-                                    //新增操作员
-                                    var res = $rootScope.res.operator_service;//页面所需调用的服务
-                                    var opersFrom = {}
-                                    opersFrom.operatorName= subFrom.empName;//操作员姓名
-                                    opersFrom.userId=subFrom.userId;
-                                    opersFrom.operatorStatus='stop';
-                                    opersFrom.lockLimit=5;
-                                    opersFrom.authMode='password';
-                                    opersFrom.password = '111111'//默认密码
-                                    opersFrom.menuType = 'default'//默认页面布局
-                                    common_service.post(res.createOperator,opersFrom).then(function(data){
-                                    })
-                                }
-                            }
-                            //返回
-                           /!* $scope.back = function () {
-                                $scope.cancel();
-                                emp.add(subFrom)
-                            }*!/
-                            $scope.cancel = function () {
-                                $modalInstance.dismiss('cancel');
-                            };
-                        })
-                    // $scope.next = !$scope.next;
-                }*/
                 $scope.empadd = function (item) {
                     var subFrom = item;
                     Emp_service.addemp(subFrom).then(function (data) {
@@ -288,8 +227,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                         } else {
                             toastr['error'](data.retMessage);
                         }
-
-
                     })
                 }
                 $scope.cancel = function () {
@@ -298,14 +235,26 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
             }
         )
     }
+    //查看历史记录
+    emp.histroy = function () {
+        var arr = $scope.empgrid.getSelectedRows();
+        var item = arr[0].guid;
+        $state.go("loghistory",{id:item});//跳转新页面
+    }
     //详情按钮事件
     emp.detail = function () {
         var arr = $scope.empgrid.getSelectedRows();
-        if(!isNull(arr[0].indate)||!isNull(arr[0].birthdate) || !isNull(arr[0].createtime)|| !isNull(arr[0].outdate)){
-            arr[0].indate = moment(arr[0].indate).format('YYYY-MM-DD');
+        if(!isNull(arr[0].birthdate)){
             arr[0].birthdate = moment(arr[0].birthdate).format('YYYY-MM-DD');
+        }
+        if(!isNull(arr[0].createtime)){
             arr[0].createtime = moment(arr[0].createtime).format('YYYY-MM-DD');
+        }
+        if(!isNull(arr[0].outdate)){
             arr[0].outdate = moment(arr[0].outdate).format('YYYY-MM-DD');
+        }
+        if(!isNull( arr[0].indate)){
+            arr[0].indate = moment(arr[0].indate).format('YYYY-MM-DD');
         }
         $scope.item = angular.copy(arr[0]);
         if (isNull($scope.item)) {
@@ -328,7 +277,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
             }
         })
         common_service.post(res.queryRoleList,{}).then(function(data){
-            console.log(data)
             var roleList = data.retMessage;
             var a = [];
             if(!isNull($scope.item.specialty)){
@@ -342,7 +290,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                 }
                 $scope.item.specialty = a.join(",");
             }
-            console.log(a)
         })
 
         for (var i in $scope.flag) {
@@ -422,18 +369,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                                     }
                                 }
                                 subFrom.orgList = a;
-                                /* //管理角色 暂时不需要 注释掉
-                                a = [];
-                                if (!isNull(subFrom.specialty)) {
-                                    for (var i = 0; i < subFrom.specialty.length; i++) {
-                                        var b = {};
-                                        b.roleGuid = subFrom.specialty[i];
-                                        a.push((b));
-                                    }
-                                }
-                               subFrom.specialty = JSON.stringify(subFrom.specialty);
-                                subFrom.specialty = a;
-                                  */
                                 subFrom.orgList = JSON.stringify(subFrom.orgList);//所有的组织机构信息
                                 Emp_service.addemp(subFrom).then(function (data) {
                                     if (data.status == "success") {
@@ -464,8 +399,15 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                                 operFrom.data.empGuid = subFrom.guid;
                                 operFrom.data.status = 'onjob';
                                 operFrom.data.date = tims;//传入时间
+                                if(!isNull(subFrom.userId)){
+                                    operFrom.data.userId = subFrom.userId;//传入时间
+                                }
+                                if(!isNull(subFrom.orgList)){
+                                    operFrom.data.orgList = subFrom.orgList;
+                                }
                                 common_service.post(ret.changeEmpStatus,operFrom).then(function(data){
                                     if (data.status == "success") {
+                                        console.log(data)
                                         toastr['success']("入职成功!");
                                         reempgrid();//刷新列表
                                         Allfalse()
@@ -527,7 +469,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
             }
             openwindow($uibModal, 'views/emp/addemppartedit.html', 'lg',
                 function ($scope, $modalInstance) {
-                    console.log(arr[0])
                     //创建员工实例
                     var subFrom = {};
                     $scope.subFrom = subFrom;
@@ -580,7 +521,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                          */
                         subFrom.orgList = JSON.stringify(subFrom.orgList);
                         Emp_service.addemp(subFrom).then(function (data) {
-                            console.log(data)
                             if (data.status == "success") {
                                 toastr['success']('修改成功');
                             } else {
@@ -638,9 +578,7 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
         } else {
             var subFrom = {};
             subFrom.empCode = arr[0].empCode;
-            console.log(subFrom)
             Emp_service.deletemp(subFrom).then(function (data) {
-                console.log(data)
                 if (data.status == "success") {
                     toastr['success']("删除成功!");
                 } else {
@@ -762,11 +700,11 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                 }
                 //定义表头名
                 var com = [{field: 'orgCode', displayName: '机构代码'},
-                    {field: 'orgName', displayName: '机构名称'},
-                    {field: 'orgType', displayName: '机构类型'},
-                    {field: 'orgDegree', displayName: '机构等级'},
-                    {field: 'orgStatus', displayName: '机构状态'},
-                    {field: 'orgAddr', displayName: '机构地址'},
+                    {field: 'orgName', displayName: '机构名称', enableHiding: false},
+                    {field: 'orgType', displayName: '机构类型', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.orgType | translateConstants :\'DICT_OM_ORGTYPE\') + $root.constant[\'DICT_OM_ORGTYPE-\'+row.entity.orgType]}}</div>'},
+                    {field: 'orgDegree', displayName: '机构等级', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.orgDegree | translateConstants :\'DICT_OM_ORGDEGREE\') + $root.constant[\'DICT_OM_ORGDEGREE-\'+row.entity.orgDegree]}}</div>'},
+                    {field: 'orgStatus', displayName: '机构状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.orgStatus | translateConstants :\'DICT_OM_ORGSTATUS\') + $root.constant[\'DICT_OM_ORGSTATUS-\'+row.entity.orgStatus]}}</div>'},
+                    {field: 'orgAddr', displayName: '机构地址', enableHiding: false},
                     {field: 'createTime', displayName: '创建时间'}
                 ]
                 $scope.commonGrid = initgrid($scope, commonGrid, filterFilter, com, false, selework);
@@ -774,12 +712,15 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                 var recommonGrid = function () {
                     var subFrom = {};
                     subFrom.empCode = empCode;
-                    console.log(subFrom.empCode);
                     //调取工作组信息OM_GROUP
                     Emp_service.loadOrgNotInbyEmp(subFrom).then(function (data) {
                         if (data.status == "success" && !isNull(data.retMessage)) {
-                            $scope.commonGrid.data = data.retMessage;
-                            $scope.commonGrid.mydefalutData = data.retMessage;
+                            var datas = data.retMessage;
+                            for(var i=0;i<datas.length;i++){
+                                datas[i].createTime = moment(datas[i].createTime).format('YYYY-MM-DD');
+                            }
+                            $scope.commonGrid.data = datas;
+                            $scope.commonGrid.mydefalutData = datas;
                             $scope.commonGrid.getPage(1, $scope.commonGrid.paginationPageSize);
                         } else {
                             $scope.commonGrid.data = [];
@@ -791,7 +732,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                 }
                 //拉取列表
                 recommonGrid();
-
                 $scope.add = function () {
                     var arr = $scope.commonGrid.getSelectedRows();
                     if (arr.length != 1) {
@@ -860,10 +800,10 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                 //定义表头名
                 var com = [{field: 'positionCode', displayName: '岗位代码'},
                     {field: 'positionName', displayName: '岗位名称'},
-                    {field: 'positionType', displayName: '岗位类型'},
-                    {field: 'positionStatus', displayName: '岗位状态'},
-                    {field: 'guidDuty', displayName: '所属职务'},
-                    {field: 'startDate', displayName: '有效开始日期'},
+                    {field: 'positionType', displayName: '岗位类型', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.positionType | translateConstants :\'DICT_OM_POSITYPE\') + $root.constant[\'DICT_OM_POSITYPE-\'+row.entity.positionType]}}</div>'},
+                    {field: 'positionStatus', displayName: '岗位状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.positionStatus | translateConstants :\'DICT_OM_POSISTATUS\') + $root.constant[\'DICT_OM_POSISTATUS-\'+row.entity.positionStatus]}}</div>'},
+                    {field: 'guidDuty', displayName: '所属职务', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidDuty | translateDuty) + $root.constant[row.entity.guidDuty]}}</div>'},
+                    {field: 'startDate', displayName: '有效开始日期', enableHiding: false},
                     {field: 'endDate', displayName: '有效截止日期'}
                 ]
                 $scope.commonGrid = initgrid($scope, commonGrid, filterFilter, com, false, selework);
@@ -871,10 +811,8 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                 var recommonGrid = function () {
                     var subFrom = {};
                     subFrom.empCode = empCode;
-                    console.log(subFrom.empCode);
                     //调取工作组信息OM_GROUP
                     Emp_service.loadPosNotInbyEmp(subFrom).then(function (data) {
-                        console.log(data)
                         if (data.status == "success" && !isNull(data.retMessage)) {
                             $scope.commonGrid.data = data.retMessage;
                             $scope.commonGrid.mydefalutData = data.retMessage;
@@ -1848,7 +1786,6 @@ provides: [Pinyin]
 
             // 提取拼音
             _getFullChar: function (str) {
-                console.log(str)
                 for (var key in this.full_dict) {
                     if (-1 !== this.full_dict[key].indexOf(str)) {
                         return this._capitalize(key);

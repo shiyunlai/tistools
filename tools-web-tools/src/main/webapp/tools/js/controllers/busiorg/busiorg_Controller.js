@@ -1,7 +1,7 @@
 /**
  * Created by gaojie on 2017/8/2.
  */
-angular.module('MetronicApp').controller('busiorg_controller', function ($rootScope, $scope, busiorg_service, $http, $timeout, i18nService, filterFilter, uiGridConstants, $uibModal, $state, $location) {
+angular.module('MetronicApp').controller('busiorg_controller', function ($rootScope, $scope, busiorg_service, $http,$filter, $timeout, i18nService, filterFilter, uiGridConstants, $uibModal, $state, $location) {
     $scope.$on('$viewContentLoaded', function () {
         // initialize core components
         App.initAjax();
@@ -132,7 +132,7 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
                                 subFrom.busiorgCode = obj.original.busiorgCode;
                                 busiorg_service.deletebusiorg(subFrom).then(function (data) {
                                     if(data.status == "success"){
-                                        toastr['success']("删除成功"+data.retMessage);
+                                        toastr['success']("删除成功");
                                         $("#busiorgtree").jstree().refresh();
                                     } else {
                                         toastr['error'](data.retMessage);
@@ -160,13 +160,8 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
                 $scope.jsonarray = jsonarray;
                 var subFrom = {};
                 subFrom.id = obj.id;
-                console.log(obj)
-
-
                 busiorg_service.loadmaintree(subFrom).then(function (datas) {
-                    console.log(datas)
                     var data = datas.retMessage;
-                    console.log(data);
                     if (!isNull(data)) {
                         if (isNull(data[0].id)) {
                             if (!isNull(data[0].itemName)) {
@@ -214,7 +209,6 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
             },
             'is_draggable': function (node) {
                 //用于控制节点是否可以拖拽.
-                console.log(node)
                 return true;
             }
         },
@@ -231,7 +225,6 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
         if (typeof data.node !== 'undefined') {//拿到结点详情
             // console.log(data.node.original.id.indexOf("@"));
             $scope.busiorg.item = {};
-            console.log(data.node);
             $scope.currNode = data.node.text;
             if (data.node.id == "00000") {
                 for (var i in $scope.flag) {
@@ -252,6 +245,16 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
                 }
                 $scope.flag.ywjgxq = true;
                 $scope.busiorg.item = data.node.original;
+                /*if(!isNull($scope.busiorg.item.guidParents)){
+                    //现在是每次都调用，以后改，封装，然后放在rootScope中，如果有直接拿 如果没有在调用
+                    var subFrom ={};
+                    subFrom.data = {};
+                    subFrom.data.guid = $scope.busiorg.item.guidParents;
+                    busiorg_service.queryBusiorgByGuid(subFrom).then(function (datas) {
+                        var dates = datas.retMessage;
+                        $scope.busiorg.item.guidParents  = dates.busiorgName
+                    })
+                }*/
             }
             ($scope.$$phase) ? null : $scope.$apply();
         }
@@ -280,7 +283,6 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
         .map(url => loadsearchtree({"id": '#', "searchitem": url})).subscribe(data => console.log(data));
 
     var loadsearchtree = function (subFrom) {
-        console.log(subFrom)
         if (isNull(subFrom.searchitem)) {
             $scope.showtree = true;
             if ($("#searchtree").jstree()) {
@@ -350,6 +352,11 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
         }
     }
 
+    //查询历史记录
+    $scope.busiorg.histroy = function () {
+        var busGuid = $scope.busiorg.item.guid;
+        $state.go("loghistory",{id:busGuid});//跳转到历史页面
+    }
 
     /**-----------------------------------生成各类列表-------------------------------- */
     //设置列表语言
@@ -369,8 +376,8 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
         {field: 'busiorgCode', displayName: '业务机构代码', enableHiding: false},
         {field: 'busiDomain', displayName: '业务线条', enableHiding: false},
         {field: 'busiorgName', displayName: '业务机构名称', enableHiding: false},
-        {field: 'guidOrg', displayName: '对应实体机构', enableHiding: false},
-        {field: 'guidPosition', displayName: '主管岗位', enableHiding: false},
+        {field: 'guidOrg', displayName: '对应实体机构', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidOrg | translateOrg) + $root.constant[row.entity.guidOrg]}}</div>'},
+        {field: 'guidPosition', displayName: '主管岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
         {field: 'orgCode', displayName: '机构代号', enableHiding: false}
     ]
     $scope.loworgGrid = initgrid($scope, loworgGrid, filterFilter, com, false, function () {
@@ -380,7 +387,6 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
         //业务套别列表拉取方法
     var rebusiorgGrid = function () {
             busiorg_service.loadywtb().then(function (data) {
-                console.log(data.retMessage);
                 if (data.status == "success") {
                     $scope.busiorgGrid.data = data.retMessage;
                     $scope.busiorgGrid.mydefalutData = data.retMessage;
@@ -393,13 +399,12 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
     //下级业务机构列表拉取
     var reloworgGrid = function () {
         var subFrom = {};
-        console.log($scope.busiorg.item)
         subFrom.busiDomain = $scope.busiorg.item.sendValue;
         busiorg_service.loadbusiorgbyType(subFrom).then(function (data) {
-            console.log(data.retMessage);
             if (data.status == "success") {
-                $scope.loworgGrid.data = data.retMessage;
-                $scope.loworgGrid.mydefalutData = data.retMessage;
+                var datas = $filter('Arraysort')(data.retMessage);//调用管道排序
+                $scope.loworgGrid.data = datas;
+                $scope.loworgGrid.mydefalutData = datas;
                 $scope.loworgGrid.getPage(1, $scope.busiorgGrid.paginationPageSize);
             } else {
 
@@ -557,20 +562,14 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
 
     /**-------------------------------封装方法----------------------------------*/
     var creatReatOrg = function (subFrom) {
-        busiorg_service.initcode(subFrom).then(function (data) {
-            console.log(data)
-            if (data.status == "success") {
-                var busiorgCode = data.retMessage;
                 openwindow($uibModal, 'views/busiorg/addBusiorg_window.html', 'lg',
                     function ($scope, $modalInstance) {
                         $scope.subFrom = subFrom;
-                        subFrom.busiorgCode = busiorgCode;
                         //增加方法
                         $scope.add = function (subFrom) {
                             //TODO.新增逻辑
                             console.log(subFrom)
                             busiorg_service.addbusiorg(subFrom).then(function (data) {
-                                console.log(data)
                                 if (data.status == "success") {
                                     toastr['success']('新增业务机构成功');
                                     $("#busiorgtree").jstree().refresh();
@@ -583,13 +582,7 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
                         $scope.cancel = function () {
                             $modalInstance.dismiss('cancel');
                         };
-                    }
-                )
-            } else {
-                toastr['error'](data.retMessage);
-                return false;
-            }
+                    })
 
-        })
     }
 });

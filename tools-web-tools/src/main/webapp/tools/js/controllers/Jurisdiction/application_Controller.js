@@ -1,7 +1,7 @@
 /**
  * Created by wangbo on 2017/6/1.
  */
-angular.module('MetronicApp').controller('application_controller', function($rootScope, $scope ,$modal,$http,i18nService,common_service, $timeout,filterFilter,$uibModal,uiGridConstants,application_service) {
+angular.module('MetronicApp').controller('application_controller', function($rootScope, $scope ,$state,$modal,$http,i18nService,common_service, $timeout,filterFilter,$uibModal,uiGridConstants,application_service) {
     var biz = {};
     $scope.biz = biz;
     var item = {};
@@ -905,9 +905,9 @@ angular.module('MetronicApp').controller('application_controller', function($roo
     var gridOptions3 = {};
     $scope.gridOptions3 = gridOptions3;
     var com3 = [{ field: 'funcName', displayName: '功能名称'},
-        { field: "funcType", displayName:'功能类型'},
+        { field: "funcType", displayName:'功能类型',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.funcType | translateConstants :\'DICT_AC_FUNCTYPE\') + $root.constant[\'DICT_AC_FUNCTYPE-\'+row.entity.funcType]}}</div>'},
         { field: "ismenu", displayName:'是否定义为菜单',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.ismenu | translateConstants :\'DICT_YON\') + $root.constant[\'DICT_YON-\'+row.entity.ismenu]}}</div>'},
-        { field: "guidFuncgroup", displayName:'所属功能组'}
+        // { field: "guidFuncgroup", displayName:'所属功能组'}
     ];
     //自定义点击事件
     var f3 = function(row){
@@ -1130,6 +1130,11 @@ angular.module('MetronicApp').controller('application_controller', function($roo
             $scope.openapp = true;
         }
 
+    }
+
+    //查询历史记录
+    $scope.biz.histroy = function () {
+        $state.go("loghistory",{id:$scope.dictionaryAdd.guid});//跳转到历史页面
     }
 
     //应用编辑方法

@@ -135,7 +135,6 @@
     "url": "/configuration",
     "templateUrl": "views/configuration/configuration.html",
     "data": "{pageTitle: '个性化配置管理'}",
-    "header":"{appguid:'APPtest111',funguid:'FUN00101'}",
     "controller": "configuration_controller"
   },
   "rolePermission": {
@@ -143,7 +142,32 @@
     "templateUrl": "views/roleManage/rolePermission.html",
     "data": "{pageTitle: '角色权限配置'}",
     "controller": "rolePermission_controller"
+  },
+  "dataEntity": {
+    "url": "/dataEntity",
+    "templateUrl": "views/dataEntity/dataEntity.html",
+    "data": "{pageTitle: '数据实体管理'}",
+    "controller": "dataEntity_controller"
+  },
+  "Nopermission": {
+    "url": "/403",
+    "templateUrl": "views/errorInfo/Nopermission.html",
+    "data": "{pageTitle: '无权限访问'}",
+    "controller": "errorInfo_controller"
+  },
+  "NonExistent": {
+    "url": "/404",
+    "templateUrl": "views/errorInfo/NonExistent.html",
+    "data": "{pageTitle: '访问不存在'}",
+    "controller": "errorInfo_controller"
+  },
+  "ServerException": {
+    "url": "/500",
+    "templateUrl": "views/errorInfo/ServerException.html",
+    "data": "{pageTitle: '服务器异常'}",
+    "controller": "errorInfo_controller"
   }
+
 }
 
 

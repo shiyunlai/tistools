@@ -8,11 +8,15 @@
         <li>
             <a href="#">角色管理</a>
         </li>
+        <li>
+            {{datase}}
+        </li>
     </ul>
 </div>
 <h3 class="page-title">
     <small></small>
 </h3>
+
 <div class="row" ng-form="bigform">
     <div class="col-md-12" >
         <div class="portlet light bordered ">
@@ -38,6 +42,8 @@
                                     <button type="button" name="back" class="btn btn-primary" ng-click="role_edit(4)">  修改
                                     </button>
                                     <button type="button" name="back" class="btn btn-danger" ng-click="role_delete()"> 删除
+                                    </button>
+                                    <button type="button" name="back" class="btn btn-danger" ng-click="role_history()"> 查看历史详情
                                     </button>
                                     <button type="button" name="back" class="btn btn-danger" ng-disabled="!rolePer" ng-click="role_Permission()"> 角色权限配置
                                     </button>
