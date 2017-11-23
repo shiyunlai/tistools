@@ -43,7 +43,7 @@ public class AcEntityController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/queryAcEntityTreeList", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public Map<String, Object> queryRoleTreeList(@RequestBody String content) {
+    public Map<String, Object> queryAcEntityTreeList(@RequestBody String content) {
         JSONObject jsonObject = JSONObject.parseObject(content);
         JSONObject data = jsonObject.getJSONObject("data");
         String type = data.getString("type"); // 1.app应用 2.entityType实体类型 3.entity 实体
