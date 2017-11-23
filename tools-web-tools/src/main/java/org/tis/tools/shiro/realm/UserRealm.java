@@ -1,6 +1,7 @@
 package org.tis.tools.shiro.realm;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -15,8 +16,6 @@ import org.tis.tools.rservice.ac.capable.IAuthenticationRService;
 import org.tis.tools.rservice.ac.capable.IOperatorRService;
 import org.tis.tools.rservice.ac.capable.IRoleRService;
 import org.tis.tools.shiro.authenticationToken.UserIdPasswordIdentityToken;
-
-import java.util.Map;
 
 public class UserRealm extends AuthorizingRealm {
 
@@ -34,9 +33,8 @@ public class UserRealm extends AuthorizingRealm {
 
     // 获取授权信息
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        Map map = (Map)principals.getPrimaryPrincipal();
-        String userId = (String) map.get("userId");
-        String appCode = (String) map.get("appCode");
+        String appCode = (String) SecurityUtils.getSubject().getSession().getAttribute("appCode");
+        String userId = (String) principals.getPrimaryPrincipal();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 
 //        Set<String> roles = roleRService.queryAllRoleByUserId(userId).stream().map(AcRole::getRoleCode).collect(Collectors.toSet());
