@@ -12,7 +12,6 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
-import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.common.utils.StringUtil;
 import org.tis.tools.core.exception.ExceptionCodes;
 import org.tis.tools.model.def.CommonConstants;
@@ -32,6 +31,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.tis.tools.common.utils.BasicUtil.surroundBracketsWithLFStr;
+import static org.tis.tools.common.utils.BasicUtil.wrap;
 
 /**
  * 业务字典服务实现
@@ -60,10 +62,10 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 	public String queryActualValue(@PathParam("dictKey") String dictKey, @PathParam("itemValue") String itemValue)
 			throws ToolsRuntimeException {
 		if (StringUtil.isEmpty(dictKey)) {
-			throw new SysManagementException(SYSExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("DICT_KEY", "DICT_ITEM_VALUE"));
+			throw new SysManagementException(SYSExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap("DICT_KEY", "DICT_ITEM_VALUE"));
 		}
 		if (StringUtil.isEmpty(itemValue)) {
-			throw new SysManagementException(SYSExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap("DICT_ITEM", "DICT_ITEM_VALUE"));
+			throw new SysManagementException(SYSExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap("DICT_ITEM", "DICT_ITEM_VALUE"));
 		}
 		return sysDictServiceExt.getActualValue(dictKey, itemValue);
 	}
@@ -76,30 +78,30 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 	public SysDict addDict(SysDict dict) throws SysManagementException {
 		try {
 			if (null == dict) {
-				throw new SysManagementException(SYSExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("SysDict", "SYS_DICT"));
+				throw new SysManagementException(SYSExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, wrap("SysDict", "SYS_DICT"));
 			}
 			//FROM_TYPE 为必须字段
 			if (StringUtils.isBlank(dict.getFromType())) {
 				throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
-						BasicUtil.wrap("FROM_TYPE", "SYS_DICT"));
+						wrap("FROM_TYPE", "SYS_DICT"));
 			}
 
 			//DICT_KEY 为必须字段
 			if (StringUtils.isBlank(dict.getDictKey())) {
 				throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
-						BasicUtil.wrap("DICT_KEY", "SYS_DICT"));
+						wrap("DICT_KEY", "SYS_DICT"));
 			}
 
 			//DICT_TYPE 为必须字段
 			if (StringUtils.isBlank(dict.getDictType())) {
 				throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
-						BasicUtil.wrap("DICT_TYPE", "SYS_DICT"));
+						wrap("DICT_TYPE", "SYS_DICT"));
 			}
 
 			//DICT_NAME 为必须字段
 			if (StringUtils.isBlank(dict.getDictName())) {
 				throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
-						BasicUtil.wrap("DICT_NAME", "SYS_DICT"));
+						wrap("DICT_NAME", "SYS_DICT"));
 			}
 			//获取字典来源
 			String fromType = dict.getFromType();
@@ -107,35 +109,35 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 			if(!SysConstants.DICT_TYPE_FROM_DICT_ITEM.equals(fromType)) {
 				if (StringUtils.isBlank(dict.getUseForKey())) {
 					throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
-							BasicUtil.wrap("USE_FOR_KEY", "SYS_DICT"));
+							wrap("USE_FOR_KEY", "SYS_DICT"));
 				}
 				if (StringUtils.isBlank(dict.getUseForName())) {
 					throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
-							BasicUtil.wrap("USE_FOR_NAME", "SYS_DICT"));
+							wrap("USE_FOR_NAME", "SYS_DICT"));
 				}
 			}
 			//如果字典来源为单表，FROM_TABLE 不能为空
 			if(SysConstants.DICT_TYPE_FROM_SINGLE_TABLE.equals(fromType)) {
 				if (StringUtils.isBlank(dict.getFromTable())) {
 					throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
-							BasicUtil.wrap("FROM_TABLE", "SYS_DICT"));
+							wrap("FROM_TABLE", "SYS_DICT"));
 				}
 			}
 			//如果字典来源为多表或视图，SQL_FILTER 不能为空
 			if(SysConstants.DICT_TYPE_FROM_TABLES_OR_VIEW.equals(fromType)) {
 				if (StringUtils.isBlank(dict.getSqlFilter())) {
 					throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
-							BasicUtil.wrap("SQL_FILTER", "SYS_DICT"));
+							wrap("SQL_FILTER", "SYS_DICT"));
 				}
 			}
 			dict.setGuid(GUID.dict());//补充GUID
 			sysDictService.insert(dict);
-		} catch (SysManagementException ae) {
+		} catch (ToolsRuntimeException ae) {
 			throw ae;
 		} catch (Exception e) {
 			logger.warn("insert SYS_DICT失败！",e);
 			throw new SysManagementException(SYSExceptionCodes.FAILURE_WHEN_INSERT,
-					BasicUtil.wrap("SYS_DICT", e.getMessage()));
+					wrap("SYS_DICT", e.getMessage()));
 		}
 		return dict ; 
 	}
@@ -149,43 +151,43 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 	public SysDictItem addDictItem(SysDictItem dictItem) throws SysManagementException {
 
 		if (null == dictItem) {
-			throw new SysManagementException(SYSExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("SysDictItem", "SYS_DICT_ITEM"));
+			throw new SysManagementException(SYSExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, wrap("SysDictItem", "SYS_DICT_ITEM"));
 		}
 
 		// GUID_DICT 为必须字段
 		if (StringUtils.isBlank(dictItem.getGuidDict())) {
 			throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
-					BasicUtil.wrap("GUID_DICT", "SYS_DICT_ITEM"));
+					wrap("GUID_DICT", "SYS_DICT_ITEM"));
 		}
 
 		// ITEM_NAME 为必须字段
 		if (StringUtils.isBlank(dictItem.getItemName())) {
 			throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
-					BasicUtil.wrap("ITEM_NAME", "SYS_DICT_ITEM"));
+					wrap("ITEM_NAME", "SYS_DICT_ITEM"));
 		}
 
 		// ITEM_TYPE 为必须字段
 		if (StringUtils.isBlank(dictItem.getItemType())) {
 			throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
-					BasicUtil.wrap("ITEM_TYPE", "SYS_DICT_ITEM"));
+					wrap("ITEM_TYPE", "SYS_DICT_ITEM"));
 		}
 
 		// ITEM_VALUE 为必须字段
 		if (StringUtils.isBlank(dictItem.getItemValue())) {
 			throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
-					BasicUtil.wrap("ITEM_VALUE", "SYS_DICT_ITEM"));
+					wrap("ITEM_VALUE", "SYS_DICT_ITEM"));
 		}
 
 		// 如果ITEM_TYPE为字典，对应字典必须存在
 		if (StringUtils.equals(dictItem.getItemType(), SysConstants.DICT_ITEM_TYPE_DICT)) {
 			if (sysDictService.count(new WhereCondition().andEquals(SysDict.COLUMN_DICT_KEY, dictItem.getItemValue())) < 1) {
-				throw new SysManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap(dictItem.getItemValue(), "SYS_DICT"));
+				throw new SysManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, wrap(dictItem.getItemValue(), "SYS_DICT"));
 			}
 		}
 		// SEND_VALUE 为必须字段
 		if (StringUtils.isBlank(dictItem.getSendValue())) {
 			throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
-					BasicUtil.wrap("SEND_VALUE", "SYS_DICT_ITEM"));
+					wrap("SEND_VALUE", "SYS_DICT_ITEM"));
 		}
 
 		dictItem.setGuid(GUID.dictItem());// 补充GUID
@@ -195,7 +197,7 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 		} catch (Exception e) {
 			logger.warn("insert SYS_DICT_ITEM失败！",e);
 			throw new SysManagementException(SYSExceptionCodes.FAILURE_WHEN_INSERT,
-					BasicUtil.wrap("SYS_DICT_ITEM", e.getMessage()));
+					wrap("SYS_DICT_ITEM", e.getMessage()));
 		}
 		
 		return dictItem ; 
@@ -226,23 +228,23 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 			// ITEM_NAME 为必须字段
 			if (StringUtils.isBlank(dictKey)) {
 				throw new SysManagementException(SYSExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY,
-						BasicUtil.wrap("DICT_KEY", "SYS_DICT"));
+						wrap("DICT_KEY", "SYS_DICT"));
 			}
 			WhereCondition wc = new WhereCondition() ;
 			wc.andEquals(SysDict.COLUMN_DICT_KEY, dictKey) ;
 			List<SysDict> dicts = sysDictService.query(wc) ;
 			if( null == dicts || dicts.size() == 0 ){
 				throw new SysManagementException(
-						SYSExceptionCodes.NOT_FOUND_SYS_DICT, BasicUtil.wrap(dictKey));
+						SYSExceptionCodes.NOT_FOUND_SYS_DICT, wrap(dictKey));
 			}
 			return dicts.get(0);
-		} catch (SysManagementException ae) {
+		} catch (ToolsRuntimeException ae) {
 			throw ae;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new SysManagementException(
 					SYSExceptionCodes.FAILURE_WHEN_QUERY,
-					BasicUtil.wrap("SYS_DICT", e.getCause().getMessage()));
+					wrap("SYS_DICT", e));
 		}
 	}
 
@@ -262,11 +264,11 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 		//DICT_TYPE 为必须字段
 		if (StringUtils.isBlank(dictKey)) {
 			throw new SysManagementException(SYSExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY,
-					BasicUtil.wrap("DICT_KEY", "SYS_DICT_ITEM"));
+					wrap("DICT_KEY", "SYS_DICT_ITEM"));
 		}
 		if (StringUtils.isBlank(itemValue)) {
 			throw new SysManagementException(SYSExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY,
-					BasicUtil.wrap("ITEM_VALUE", "SYS_DICT_ITEM"));
+					wrap("ITEM_VALUE", "SYS_DICT_ITEM"));
 		}
 		return sysDictServiceExt.getDictItem(dictKey, itemValue);
 	}
@@ -281,38 +283,38 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 	public void editSysDict(SysDict dict) throws SysManagementException {
 		try {
 			if (null == dict) {
-				throw new SysManagementException(SYSExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap("SYS_DICT", "SYS_DICT"));
+				throw new SysManagementException(SYSExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, wrap("SYS_DICT", "SYS_DICT"));
 			}
 			//DICT_KEY 为必须字段
 			if (StringUtils.isBlank(dict.getDictKey())) {
 				throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
-						BasicUtil.wrap("DICT_KEY", "SYS_DICT"));
+						wrap("DICT_KEY", "SYS_DICT"));
 			}
 			//GUID为必须字段
 			if (StringUtils.isBlank(dict.getGuid())) {
 				throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
-						BasicUtil.wrap("GUID", "SYS_DICT"));
+						wrap("GUID", "SYS_DICT"));
 			}
 
 			//DICT_TYPE 为必须字段
 			if (StringUtils.isBlank(dict.getDictType())) {
 				throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
-						BasicUtil.wrap("DICT_TYPE", "SYS_DICT"));
+						wrap("DICT_TYPE", "SYS_DICT"));
 			}
 
 			//DICT_NAME 为必须字段
 			if (StringUtils.isBlank(dict.getDictName())) {
 				throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
-						BasicUtil.wrap("DICT_NAME", "SYS_DICT"));
+						wrap("DICT_NAME", "SYS_DICT"));
 			}
 			sysDictService.update(dict);
-		} catch (SysManagementException se) {
+		} catch (ToolsRuntimeException se) {
 			throw se;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new SysManagementException(
 					SYSExceptionCodes.FAILURE_WHEN_UPDATE,
-					BasicUtil.wrap("SYS_DICT", e.getCause().getMessage()));
+					wrap("SYS_DICT", e));
 		}
 	}
 
@@ -326,43 +328,43 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 	public void editSysDictItem(SysDictItem dictItem) throws SysManagementException {
 		try {
 			if (null == dictItem) {
-				throw new SysManagementException(SYSExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap("SYS_DICT_ITEM", "SYS_DICT_ITEM"));
+				throw new SysManagementException(SYSExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, wrap("SYS_DICT_ITEM", "SYS_DICT_ITEM"));
 			}
 			//GUID 为必须字段
 			if (StringUtils.isBlank(dictItem.getGuid())) {
 				throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
-						BasicUtil.wrap("GUID", "SYS_DICT_ITEM"));
+						wrap("GUID", "SYS_DICT_ITEM"));
 			}
 			if (StringUtils.isBlank(dictItem.getGuidDict())) {
 				throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
-						BasicUtil.wrap("GUID_DICT", "SYS_DICT_ITEM"));
+						wrap("GUID_DICT", "SYS_DICT_ITEM"));
 			}
 
 			// ITEM_NAME 为必须字段
 			if (StringUtils.isBlank(dictItem.getItemName())) {
 				throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
-						BasicUtil.wrap("ITEM_NAME", "SYS_DICT_ITEM"));
+						wrap("ITEM_NAME", "SYS_DICT_ITEM"));
 			}
 
 			// ITEM_VALUE 为必须字段
 			if (StringUtils.isBlank(dictItem.getItemValue())) {
 				throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
-						BasicUtil.wrap("ITEM_VALUE", "SYS_DICT_ITEM"));
+						wrap("ITEM_VALUE", "SYS_DICT_ITEM"));
 			}
 
 			// SEND_VALUE 为必须字段
 			if (StringUtils.isBlank(dictItem.getSendValue())) {
 				throw new SysManagementException(SYSExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
-						BasicUtil.wrap("SEND_VALUE", "SYS_DICT_ITEM"));
+						wrap("SEND_VALUE", "SYS_DICT_ITEM"));
 			}
 			sysDictItemService.update(dictItem);
-		} catch (SysManagementException se) {
+		} catch (ToolsRuntimeException se) {
 			throw se;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new SysManagementException(
 					SYSExceptionCodes.FAILURE_WHEN_UPDATE,
-					BasicUtil.wrap("SYS_DICT_ITEM", e.getCause().getMessage()));
+					wrap("SYS_DICT_ITEM", e));
 		}
 	}
 
@@ -373,12 +375,17 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 	 * @throws SysManagementException
 	 */
 	@Override
-	public void deleteDict(String dictGuid) throws SysManagementException {
+	public SysDict deleteDict(String dictGuid) throws SysManagementException {
 		try {
 			//GUID 为必须字段
 			if (StringUtils.isBlank(dictGuid)) {
 				throw new SysManagementException(SYSExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE,
-						BasicUtil.wrap("GUID", "SYS_DICT"));
+						wrap("GUID", "SYS_DICT"));
+			}
+			SysDict sysDict = sysDictService.loadByGuid(dictGuid);
+			if(sysDict == null) {
+				throw new SysManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, 
+						wrap(surroundBracketsWithLFStr(SysDict.COLUMN_GUID, dictGuid), SysDict.TABLE_NAME));
 			}
 			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 				@Override
@@ -390,18 +397,18 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 						status.setRollbackOnly();
 						e.printStackTrace();
 						throw new SysManagementException(
-								SYSExceptionCodes.FAILURE_WHEN_DELETE, BasicUtil.wrap(e.getCause().getMessage()));
+								SYSExceptionCodes.FAILURE_WHEN_DELETE, wrap(e));
 					}
 				}
 			});
-
-		} catch (SysManagementException se) {
+			return sysDict;
+		} catch (ToolsRuntimeException se) {
 			throw se;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new SysManagementException(
 					SYSExceptionCodes.FAILURE_WHEN_DELETE,
-					BasicUtil.wrap( "SYS_DICT", e.getCause().getMessage()));
+					wrap( "SYS_DICT", e));
 		}
 	}
 
@@ -412,22 +419,27 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 	 * @throws SysManagementException
 	 */
 	@Override
-	public void deleteDictItem(String dictItemGuid) throws SysManagementException {
+	public SysDictItem deleteDictItem(String dictItemGuid) throws SysManagementException {
 		try {
 			//GUID 为必须字段
 			if (StringUtils.isBlank(dictItemGuid)) {
 				throw new SysManagementException(SYSExceptionCodes.NOT_ALLOW_NULL_WHEN_DELETE,
-						BasicUtil.wrap("GUID", "SYS_DICT_ITEM"));
+						wrap("GUID", "SYS_DICT_ITEM"));
+			}
+			SysDictItem sysDictItem = sysDictItemService.loadByGuid(dictItemGuid);
+			if (sysDictItem == null) {
+				throw new SysManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY,
+						wrap(surroundBracketsWithLFStr(SysDictItem.COLUMN_GUID, dictItemGuid)), SysDictItem.TABLE_NAME);
 			}
 			sysDictItemService.delete(dictItemGuid);
-
-		} catch (SysManagementException se) {
+			return sysDictItem;
+		} catch (ToolsRuntimeException se) {
 			throw se;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new SysManagementException(
 					SYSExceptionCodes.FAILURE_WHEN_DELETE,
-					BasicUtil.wrap( "SYS_DICT_ITEM", e.getCause().getMessage()));
+					wrap( "SYS_DICT_ITEM", e));
 		}
 	}
 
@@ -450,7 +462,7 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 			e.printStackTrace();
 			throw new SysManagementException(
 					SYSExceptionCodes.FAILURE_WHEN_DELETE,
-					BasicUtil.wrap( "SYS_DICT_ITEM", e.getCause().getMessage()));
+					wrap( "SYS_DICT_ITEM", e));
 		}
 	}
 
@@ -469,7 +481,7 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 			//GUID 为必须字段
 			if (StringUtils.isBlank(dictGuid)) {
 				throw new SysManagementException(SYSExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY,
-						BasicUtil.wrap("DICT_GUID", "SYS_DICT_ITEMS"));
+						wrap("DICT_GUID", "SYS_DICT_ITEMS"));
 			}
 			//通过GUID查询该业务字典
 			SysDict sysDict = querySysDictByGuid(dictGuid);
@@ -488,13 +500,13 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 				sysDictItems = sysDictServiceExt.queryDictItemFromTableOrView(sysDict.getUseForKey(), sysDict.getUseForName(), sysDict.getSqlFilter());
 			}
 			return sysDictItems;
-		} catch (SysManagementException se) {
+		} catch (ToolsRuntimeException se) {
 			throw se;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new SysManagementException(
 					SYSExceptionCodes.FAILURE_WHEN_QUERY,
-					BasicUtil.wrap( "SYS_DICT_ITEM", e.getCause().getMessage()));
+					wrap( "SYS_DICT_ITEM", e));
 		}
 	}
 
@@ -511,21 +523,21 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 			//GUID 为必须字段
 			if (StringUtils.isBlank(dictGuid)) {
 				throw new SysManagementException(SYSExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY,
-						BasicUtil.wrap("GUID", "SYS_DICT"));
+						wrap("GUID", "SYS_DICT"));
 			}
 			List<SysDict> sysDicts = sysDictService.query(new WhereCondition().andEquals("GUID", dictGuid));
 			if(sysDicts == null || sysDicts.size() != 1) {
 				throw new SysManagementException(SYSExceptionCodes.NOT_FOUND_SYS_DICT_WITH_GUID,
-						BasicUtil.wrap(dictGuid));
+						wrap(dictGuid));
 			}
 			return sysDicts.get(0);
-		} catch (SysManagementException se) {
+		} catch (ToolsRuntimeException se) {
 			throw se;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new SysManagementException(
 					SYSExceptionCodes.FAILURE_WHEN_QUERY,
-					BasicUtil.wrap( "SYS_DICT", e.getCause().getMessage()));
+					wrap( "SYS_DICT", e));
 		}
 	}
 
@@ -542,21 +554,21 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 			//GUID 为必须字段
 			if (StringUtils.isBlank(dictItemGuid)) {
 				throw new SysManagementException(SYSExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY,
-						BasicUtil.wrap("GUID", "SYS_DICT_ITEM"));
+						wrap("GUID", "SYS_DICT_ITEM"));
 			}
 			List<SysDictItem> sysDictItems = sysDictItemService.query(new WhereCondition().andEquals("GUID", dictItemGuid));
 			if(sysDictItems == null || sysDictItems.size() != 1) {
 				throw new SysManagementException(SYSExceptionCodes.NOT_FOUND_SYS_DICT_ITEM_WITH_GUID,
-						BasicUtil.wrap(dictItemGuid));
+						wrap(dictItemGuid));
 			}
 			return sysDictItems.get(0);
-		} catch (SysManagementException se) {
+		} catch (ToolsRuntimeException se) {
 			throw se;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new SysManagementException(
 					SYSExceptionCodes.FAILURE_WHEN_QUERY,
-					BasicUtil.wrap( "SYS_DICT_ITEM", e.getCause().getMessage()));
+					wrap( "SYS_DICT_ITEM", e));
 		}
 	}
 
@@ -573,17 +585,17 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 			//GUID 为必须字段
 			if (StringUtils.isBlank(dictKey)) {
 				throw new SysManagementException(SYSExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY,
-						BasicUtil.wrap("DICT_KEY", "SYS_DICT_ITEM"));
+						wrap("DICT_KEY", "SYS_DICT_ITEM"));
 			}
 			SysDict sysDict = queryDict(dictKey);
 			return querySysDictItems(sysDict.getGuid());
-		} catch (SysManagementException se) {
+		} catch (ToolsRuntimeException se) {
 			throw se;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new SysManagementException(
 					SYSExceptionCodes.FAILURE_WHEN_QUERY,
-					BasicUtil.wrap( "SYS_DICT_ITEM", e.getCause().getMessage()));
+					wrap( "SYS_DICT_ITEM", e));
 		}
 	}
 
@@ -597,13 +609,13 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 	public List<SysDictItem> querySysDictItemList() throws SysManagementException {
 		try {
 			return sysDictItemService.query(new WhereCondition());
-		} catch (SysManagementException se) {
+		} catch (ToolsRuntimeException se) {
 			throw se;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new SysManagementException(
 					SYSExceptionCodes.FAILURE_WHEN_QUERY,
-					BasicUtil.wrap( "SYS_DICT_ITEM", e.getCause().getMessage()));
+					wrap( "SYS_DICT_ITEM", e));
 		}
 	}
 
@@ -618,28 +630,28 @@ public class DictRServiceImpl extends BaseRService  implements IDictRService  {
 	@Override
 	public SysDict setDefaultDictValue(String dictGuid, String itemValue) throws SysManagementException {
 		if(StringUtils.isBlank(dictGuid)) {
-			throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap(SysDict.COLUMN_GUID, "SYS_DICT"));
+			throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, wrap(SysDict.COLUMN_GUID, "SYS_DICT"));
 		}
 		if(StringUtils.isBlank(itemValue)) {
-			throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, BasicUtil.wrap(SysDict.COLUMN_DEFAULT_VALUE, "SYS_DICT"));
+			throw new SysManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, wrap(SysDict.COLUMN_DEFAULT_VALUE, "SYS_DICT"));
 		}
 		try {
 			List<SysDict> sysDicts = sysDictService.query(new WhereCondition().andEquals(SysDict.COLUMN_GUID, dictGuid));
 			if(sysDicts.size() < 1) {
-				throw new SysManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap(SysDict.COLUMN_GUID, "SYS_DICT"));
+				throw new SysManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, wrap(SysDict.COLUMN_GUID, "SYS_DICT"));
 			}
 			SysDict sysDict = sysDicts.get(0);
 			sysDict.setDefaultValue(itemValue);
 			sysDictService.update(sysDict);
 			return sysDict;
 
-		} catch (SysManagementException se) {
+		} catch (ToolsRuntimeException se) {
 			throw se;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new SysManagementException(
 					SYSExceptionCodes.FAILURE_WHEN_UPDATE,
-					BasicUtil.wrap( "SYS_DICT", e.getCause().getMessage()));
+					wrap( "SYS_DICT", e));
 		}
 	}
 }

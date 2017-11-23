@@ -299,20 +299,35 @@ public class OrgManagerController extends BaseController {
             id = "guid", // 操作对象标识
             name = "positionName", // 操作对象名
             keys = {"positionCode", "guidOrg"}) // 操作对象的关键值的键值名
-    @RequestMapping(value = "/addposit")
+    @RequestMapping(value = "/createPosition", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> addPosit(@RequestBody String content) {
+    public Map<String, Object> createPosition(@RequestBody String content) {
         // 收到请求
         JSONObject jsonObj = JSONObject.parseObject(content);
-        OmPosition op = JSONObject.parseObject(content, OmPosition.class);
-        String guid = op.getGuid();
-        if ("".equals(guid) || guid == null) {
-            OmPosition omPosition = positionRService.createPosition(op);
-            return getReturnMap(omPosition);
-        } else {
-            OmPosition omPosition = positionRService.updatePosition(op);
-            return getReturnMap(omPosition);
-        }
+        OmPosition op = JSONObject.parseObject(jsonObj.getString("data"), OmPosition.class);
+        return getReturnMap(positionRService.createPosition(op));
+    }
+    /**
+     * 修改岗位信息
+     *
+     * @param content
+     * @return
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,  // 操作类型
+            operateDesc = "修改岗位", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "guid", // 操作对象标识
+            name = "positionName", // 操作对象名
+            keys = {"positionCode", "guidOrg"}) // 操作对象的关键值的键值名
+    @RequestMapping(value = "/updatePosition", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> updatePosition(@RequestBody String content) {
+        // 收到请求
+        JSONObject jsonObj = JSONObject.parseObject(content);
+        OmPosition op = JSONObject.parseObject(jsonObj.getString("data"), OmPosition.class);
+        OmPosition omPosition = positionRService.updatePosition(op);
+        return getReturnMap(omPosition);
     }
 
 
