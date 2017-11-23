@@ -77,7 +77,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
     var items = function customMenu(node) {
         // The default set of all items
         var control;
-        console.log(node);
         if (node.parent == "#") {
             var it = {
                 "新建菜单": {
@@ -1061,7 +1060,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
             for (var i in $scope.gwflag) {
                 $scope.gwflag[i] = false;
             }
-            console.log($scope.abftree.item);
             $scope.gwflag.gwyg = true;
             //生成岗位员工列表
             var gwemp = {};
@@ -1562,7 +1560,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                     }
                     //调用服务生成机构代码
                     abftree_service.addposit(subFrom).then(function (data) {
-                        console.log(data.retMessage)
                         if (data.status == "success") {
                             toastr['success']("新增成功!");
                             var next = false;

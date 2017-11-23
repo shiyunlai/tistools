@@ -71,6 +71,10 @@ angular.module('MetronicApp').controller('operconfig_controller', function($root
         common_service.post(res.saveOperatorLog,subFrom).then(function(data){
             var datas = data.retMessage;
             if(data.status == "success"){
+                if(datas.guidConfig =='OPERATORCFG1507720783'){
+                    var configValue = datas.configValue;
+                    $('#style_color1').attr("href", Layout.getLayoutCssPath() + 'themes/' + configValue + ".css");//设置成用户之前保存的
+                }
                 toastr['success']("修改成功");
             }
         })

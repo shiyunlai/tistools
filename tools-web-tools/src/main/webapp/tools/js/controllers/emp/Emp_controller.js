@@ -88,7 +88,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
     //定义单选事件
     var sele = function (a,b) {
         if(a.isSelected){
-            console.log(a.entity)
             $scope.buttonflag = true;
             if(a.entity.empstatus == 'offer'){//如果人员状态是在招,那么入职按钮显示
                 $scope.empentry = true;
@@ -141,7 +140,11 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
         {
             field: 'guidPosition',
             displayName: '基本岗位',
-            cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'
+            cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>',
+            filter:{
+                type: uiGridConstants.filter.SELECT,
+                selectOptions:$filter('tranSearchPosition')('position')||$rootScope.constant['Position']
+            }
         },
         {field: 'guidEmpMajor',
             displayName: '直接主管',
@@ -176,7 +179,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
     }
     $scope.formatLocation = function (a, b) {
         var list = $rootScope.$settings.diclist[b];
-        console.log(list)
         return 123;
     }
 
@@ -216,7 +218,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                 $scope.title = "新增员工";
                 $scope.empadd = function (item) {
                     var subFrom = item;
-                    console.log(subFrom)
                     Emp_service.addemp(subFrom).then(function (data) {
                         if (data.status == "success") {
                             toastr['success']("新增员工成功!");
@@ -276,7 +277,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
             }
         })
         common_service.post(res.queryRoleList,{}).then(function(data){
-            console.log(data)
             var roleList = data.retMessage;
             var a = [];
             if(!isNull($scope.item.specialty)){
@@ -290,7 +290,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                 }
                 $scope.item.specialty = a.join(",");
             }
-            console.log(a)
         })
 
         for (var i in $scope.flag) {
@@ -370,18 +369,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                                     }
                                 }
                                 subFrom.orgList = a;
-                                /* //管理角色 暂时不需要 注释掉
-                                a = [];
-                                if (!isNull(subFrom.specialty)) {
-                                    for (var i = 0; i < subFrom.specialty.length; i++) {
-                                        var b = {};
-                                        b.roleGuid = subFrom.specialty[i];
-                                        a.push((b));
-                                    }
-                                }
-                               subFrom.specialty = JSON.stringify(subFrom.specialty);
-                                subFrom.specialty = a;
-                                  */
                                 subFrom.orgList = JSON.stringify(subFrom.orgList);//所有的组织机构信息
                                 Emp_service.addemp(subFrom).then(function (data) {
                                     if (data.status == "success") {
@@ -412,8 +399,15 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                                 operFrom.data.empGuid = subFrom.guid;
                                 operFrom.data.status = 'onjob';
                                 operFrom.data.date = tims;//传入时间
+                                if(!isNull(subFrom.userId)){
+                                    operFrom.data.userId = subFrom.userId;//传入时间
+                                }
+                                if(!isNull(subFrom.orgList)){
+                                    operFrom.data.orgList = subFrom.orgList;
+                                }
                                 common_service.post(ret.changeEmpStatus,operFrom).then(function(data){
                                     if (data.status == "success") {
+                                        console.log(data)
                                         toastr['success']("入职成功!");
                                         reempgrid();//刷新列表
                                         Allfalse()
@@ -475,7 +469,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
             }
             openwindow($uibModal, 'views/emp/addemppartedit.html', 'lg',
                 function ($scope, $modalInstance) {
-                    console.log(arr[0])
                     //创建员工实例
                     var subFrom = {};
                     $scope.subFrom = subFrom;
@@ -528,7 +521,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                          */
                         subFrom.orgList = JSON.stringify(subFrom.orgList);
                         Emp_service.addemp(subFrom).then(function (data) {
-                            console.log(data)
                             if (data.status == "success") {
                                 toastr['success']('修改成功');
                             } else {
@@ -586,9 +578,7 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
         } else {
             var subFrom = {};
             subFrom.empCode = arr[0].empCode;
-            console.log(subFrom)
             Emp_service.deletemp(subFrom).then(function (data) {
-                console.log(data)
                 if (data.status == "success") {
                     toastr['success']("删除成功!");
                 } else {
@@ -722,12 +712,10 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                 var recommonGrid = function () {
                     var subFrom = {};
                     subFrom.empCode = empCode;
-                    console.log(subFrom.empCode);
                     //调取工作组信息OM_GROUP
                     Emp_service.loadOrgNotInbyEmp(subFrom).then(function (data) {
                         if (data.status == "success" && !isNull(data.retMessage)) {
                             var datas = data.retMessage;
-                            console.log(datas)
                             for(var i=0;i<datas.length;i++){
                                 datas[i].createTime = moment(datas[i].createTime).format('YYYY-MM-DD');
                             }
@@ -823,7 +811,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                 var recommonGrid = function () {
                     var subFrom = {};
                     subFrom.empCode = empCode;
-                    console.log(subFrom.empCode);
                     //调取工作组信息OM_GROUP
                     Emp_service.loadPosNotInbyEmp(subFrom).then(function (data) {
                         if (data.status == "success" && !isNull(data.retMessage)) {
@@ -1799,7 +1786,6 @@ provides: [Pinyin]
 
             // 提取拼音
             _getFullChar: function (str) {
-                console.log(str)
                 for (var key in this.full_dict) {
                     if (-1 !== this.full_dict[key].indexOf(str)) {
                         return this._capitalize(key);

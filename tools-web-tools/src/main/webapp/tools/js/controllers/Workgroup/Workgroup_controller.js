@@ -98,7 +98,6 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                     "action": function (data) {
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference)
-                        console.log(obj)
                         openwindow($uibModal, 'views/Workgroup/addworkgroup_window.html', 'lg',
                             function ($scope, $modalInstance) {
                                 var next = false;
@@ -125,7 +124,8 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                                         }
                                         $("#container").jstree().refresh();
                                         $scope.add=function (subFrom) {
-                                            var tis =Object.assign(data.retMessage, items);
+                                            var tis =Object.assign(data.retMessage, subFrom);
+                                            console.log(tis)
                                             Workgroup_service.updateGroup(tis).then(function (data) {
                                                 if (data.status == "success") {
                                                     toastr['success']("添加成功!");
@@ -249,7 +249,6 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
     }).bind("changed.jstree", function (e, data) {
         if (typeof data.node !== 'undefined') {//拿到结点详情
             // console.log(data.node.original.id.indexOf("@"));
-            console.log(data.node.original);
             $scope.indextitle = data.node.text;
             if (data.node.original.id == "00000") {
                 for (var a in flag) {

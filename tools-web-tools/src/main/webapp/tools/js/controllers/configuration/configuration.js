@@ -89,7 +89,6 @@ MetronicApp.controller('configuration_controller', function ($filter, $scope, $s
                         })
                     });
                     $scope.add = function(item){//保存新增的函数
-                        console.log(item)
                         var subFrom = {};
                         subFrom = item;
                         var res = $rootScope.res.operator_service;//页面所需调用的服务
@@ -151,7 +150,7 @@ MetronicApp.controller('configuration_controller', function ($filter, $scope, $s
             }
         )
     }
-    //删除序号资源
+    //删除配置
     $scope.config.del = function(){
         var getSel = $scope.gridOptions.getSelectedRows();
         if(isNull(getSel) || getSel.length<1){

@@ -8,12 +8,10 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
     $scope.myback = function(){
         window.history.back(-1);
     }
-
     //因为传入的是对象，拿到的是字符串，所以先转成json对象
     var peaids = angular.fromJson($stateParams.id);
     var userid = peaids.userid;//操作员userid
     var operguid = peaids.operguid;//操作员guid
-    console.log(operguid)
     $scope.currRole = userid;//显示当前操作员
 
     var res = $rootScope.res.operator_service;//页面所需调用的服务
