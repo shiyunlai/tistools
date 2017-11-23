@@ -41,7 +41,7 @@ public class AbfPermissionFilter extends AdviceFilter {
                 return true;
             }
         }
-        AjaxUtils.ajaxJsonFailMessage((HttpServletResponse) response, "SYS_4445", "没有当前功能行为权限");
+        AjaxUtils.ajaxJsonForbidMessage((HttpServletResponse) response);
         return false;
     }
 

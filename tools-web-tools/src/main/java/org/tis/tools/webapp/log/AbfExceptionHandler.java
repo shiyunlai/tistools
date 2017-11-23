@@ -4,6 +4,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -52,16 +53,29 @@ public class AbfExceptionHandler {
     @ExceptionHandler(ShiroException.class)
     public Map<String, Object> handleShiroException(ShiroException ex) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        String msg = "";
-        if(ex instanceof IncorrectCredentialsException)
+        String msg ;
+        String status;
+        String code;
+        if (ex instanceof IncorrectCredentialsException) {
+            code = "AUTH-440";
+            status = ERROR;
             msg = "密码错误，连续五次错误帐号会被锁定！";
-        else if(ex instanceof ExcessiveAttemptsException)
+        } else if (ex instanceof ExcessiveAttemptsException) {
+            code = "AUTH-445";
+            status = ERROR;
             msg = "达到最大错误次数，请联系管理员或稍后再试！";
-        else
+        } else if (ex instanceof UnauthorizedException) {
+            code = "AUTH-403";
+            status = FORBID;
+            msg = "没有当前功能或行为的权限！";
+        } else {
+            code = "AUTH-444";
+            status = ERROR;
             msg = StringUtils.isBlank(ex.getMessage()) ? ex.getMessage() : ex.getCause().getMessage();
+        }
         Map<String, Object> map = new HashMap<>();
-        map.put(RETCODE, "SYS-4440");
-        map.put(STATUS, FAILED);
+        map.put(RETCODE, code);
+        map.put(STATUS, status);
         map.put(RETMESSAGE, msg);
         logger.error(request.getPathInfo() + "权限异常-ShiroException :", ex);
         return map;

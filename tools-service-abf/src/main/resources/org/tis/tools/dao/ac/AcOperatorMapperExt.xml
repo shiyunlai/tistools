@@ -108,10 +108,10 @@
         ac_operator_bhv t2
         WHERE
         t2.GUID_OPERATOR = #{operatorGuid}
-        AND t2.AUTH_TYPE = 'Y'
+        AND t2.AUTH_TYPE = '1'
         )
-      AND t1.guid_role NOT IN (
-        SELECT t2.GUID_FUNC_BHV FROM ac_operator_bhv t2 WHERE t2.GUID_OPERATOR = #{operatorGuid} AND t2.AUTH_TYPE = 'Y') a
+      AND t.guid NOT IN (
+        SELECT t2.GUID_FUNC_BHV FROM ac_operator_bhv t2 WHERE t2.GUID_OPERATOR = #{operatorGuid} AND t2.AUTH_TYPE = '0')) a
     LEFT JOIN ac_func b ON a.guid_func = b.guid
     LEFT JOIN ac_BHV_def c ON a.guid_bhv = c.guid
     </select>

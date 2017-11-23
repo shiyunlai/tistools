@@ -70,7 +70,7 @@ public class RouteState implements Serializable {
                 "    \"templateUrl\": \"" + templateUrl + "\",\n" +
                 "    \"controller\": \"" + controller + "\",\n" +
                 "    \"data\": \"" + data + "\",\n" +
-                "    \"funcCode\": \"" + funcCode + "\",\n" +
+                "    \"funcCode\": \"" + funcCode + "\"" +
                 "  }";
     }
 }

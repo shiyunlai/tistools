@@ -563,8 +563,10 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
             String funcCode = acFunc.getFuncCode();
             StringBuilder sb = new StringBuilder("+" + funcCode + "+");
             sb.append("view,");// 添加视图权限
-            for (Map map : funcBhvMap.get(funcCode)) {
-                sb.append((String) map.get("bhvCode")).append(",");
+            if(funcBhvMap.get(funcCode) != null ) {
+                for (Map map : funcBhvMap.get(funcCode)) {
+                    sb.append((String) map.get("bhvCode")).append(",");
+                }
             }
             sb.delete(sb.length() - 1, sb.length());
             bhvPermission.add(String.valueOf(sb));

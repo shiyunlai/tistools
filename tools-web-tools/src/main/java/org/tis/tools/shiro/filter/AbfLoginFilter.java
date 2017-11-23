@@ -26,7 +26,7 @@ public class AbfLoginFilter extends AdviceFilter {
         Subject subject = SecurityUtils.getSubject();
         // 验证是否登录
         if(!subject.isAuthenticated()) {
-            AjaxUtils.ajaxJsonFailMessage((HttpServletResponse) response, "SYS_4444", "会话失效，请重新登录");
+            AjaxUtils.ajaxJsonAuthMessage((HttpServletResponse) response);
             return false;
         }
         // 验证行为权限

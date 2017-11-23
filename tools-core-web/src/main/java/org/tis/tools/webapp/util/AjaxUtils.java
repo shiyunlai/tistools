@@ -6,17 +6,15 @@
  */
 package org.tis.tools.webapp.util;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import org.apache.log4j.Logger;
+
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.log4j.Logger;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 
 
 /**
@@ -87,6 +85,19 @@ public class AjaxUtils {
      * </p>
      */
     public static final String FAILED = "failed";
+
+    /**
+     * <p>
+     * Field UNAUTH: 未验证
+     * </p>
+     */
+    public static final String UNAUTH = "unAuth";
+    /**
+     * <p>
+     * Field FORBID: 拒绝
+     * </p>
+     */
+    public static final String FORBID = "forbid";
 
     /**
      * <p>
@@ -359,5 +370,32 @@ public class AjaxUtils {
     	jsonMap.put(RETMESSAGE, retMessage);
         String jsonString = JSON.toJSONString(jsonMap);
     	return ajax(response, jsonString, "text/html");
+    }
+
+    /**
+     * <p>Description: 登录失效，输出JSON错误消息，返回null</p>
+     * @param response HttpServletResponse对象
+     * @return null
+     */
+    public static String ajaxJsonAuthMessage(HttpServletResponse response) {
+    	Map<String, Object> jsonMap = new HashMap<String, Object>();
+    	jsonMap.put(RETCODE, "AUTH-401");
+    	jsonMap.put(STATUS, UNAUTH);
+    	jsonMap.put(RETMESSAGE, "会话失效，请重新登录！");
+        String jsonString = JSON.toJSONString(jsonMap);
+    	return ajax(response, jsonString, "application/json");
+    }
+    /**
+     * <p>Description: 权限不足，输出JSON错误消息，返回null</p>
+     * @param response HttpServletResponse对象
+     * @return null
+     */
+    public static String ajaxJsonForbidMessage(HttpServletResponse response) {
+    	Map<String, Object> jsonMap = new HashMap<String, Object>();
+    	jsonMap.put(RETCODE, "AUTH-403");
+    	jsonMap.put(STATUS, FORBID);
+    	jsonMap.put(RETMESSAGE, "没有当前功能或行为的权限！");
+        String jsonString = JSON.toJSONString(jsonMap);
+    	return ajax(response, jsonString, "application/json");
     }
 }
