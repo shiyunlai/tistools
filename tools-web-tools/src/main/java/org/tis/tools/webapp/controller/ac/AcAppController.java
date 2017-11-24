@@ -195,18 +195,16 @@ public class AcAppController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/groupEdit", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> groupEdit(@RequestBody String content) {
-
-            JSONObject jsonObj = JSONObject.parseObject(content);    //传入的参数
-            String guid = jsonObj.getString("id");
-            AcFuncgroup acFuncgroup = applicationRService.queryFuncgroup(guid);
-
-            String funcgroupName = jsonObj.getString("funcgroupName");
-            String groupLevel = jsonObj.getString("groupLevel");
-            String guidParents = jsonObj.getString("guidParents");
-            acFuncgroup.setFuncgroupName(funcgroupName);
-            acFuncgroup.setGroupLevel(new BigDecimal(groupLevel));
-            acFuncgroup.setGuidParents(guidParents);
-            return getReturnMap(applicationRService.updateAcFuncgroup(acFuncgroup));
+        JSONObject jsonObj = JSONObject.parseObject(content);    //传入的参数
+        String guid = jsonObj.getString("id");
+        AcFuncgroup acFuncgroup = applicationRService.queryFuncgroup(guid);
+        String funcgroupName = jsonObj.getString("funcgroupName");
+        String groupLevel = jsonObj.getString("groupLevel");
+        String guidParents = jsonObj.getString("guidParents");
+        acFuncgroup.setFuncgroupName(funcgroupName);
+        acFuncgroup.setGroupLevel(new BigDecimal(groupLevel));
+        acFuncgroup.setGuidParents(guidParents);
+        return getReturnMap(applicationRService.updateAcFuncgroup(acFuncgroup));
     }
 
     /**
@@ -386,7 +384,6 @@ public class AcAppController extends BaseController {
     public Map<String, Object> functypeAdd(@RequestBody String content) {
         AcBhvtypeDef acBhvtypeDef = JSONObject.parseObject(content, AcBhvtypeDef.class);    //传入的参数
         return getReturnMap(applicationRService.functypeAdd(acBhvtypeDef));
-
     }
 
     /**
@@ -482,7 +479,6 @@ public class AcAppController extends BaseController {
         acBhvDef.setGuidBehtype(guidBehtype);
         return getReturnMap(applicationRService.funactAdd(acBhvDef));
     }
-
 
     /**
      * funactDel 删除功能操作行为
@@ -724,12 +720,11 @@ public class AcAppController extends BaseController {
             operateDesc = "新增功能资源",
             retType = ReturnType.Object,
             id = "guidFunc",
-            name = "attrKey")
+            keys = "attrKey")
     @ResponseBody
     @RequestMapping(value = "/createAcFuncResource", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> createAcFuncResource(@RequestBody String content) {
         JSONObject jsonObj = JSONObject.parseObject(content);
-
         JSONObject data = jsonObj.getJSONObject("data");
         AcFuncResource acFuncResource = JSONObject.parseObject(data.toJSONString(), AcFuncResource.class);
         AcFuncResource funcResource = applicationRService.createAcFuncResource(acFuncResource);
@@ -746,7 +741,7 @@ public class AcAppController extends BaseController {
             operateDesc = "删除功能资源",
             retType = ReturnType.List,
             id = "guidFunc",
-            name = "attrKey")
+            keys = "attrKey")
     @ResponseBody
     @RequestMapping(value = "/deleteAcFuncResource", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> deleteAcFuncResource(@RequestBody String content) {
@@ -767,7 +762,7 @@ public class AcAppController extends BaseController {
             operateDesc = "修改功能资源",
             retType = ReturnType.Object,
             id = "guidFunc",
-            name = "attrKey")
+            keys = "attrKey")
     @ResponseBody
     @RequestMapping(value = "/updateAcFuncResource", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> updateAcFuncResource(@RequestBody String content) {
