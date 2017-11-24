@@ -1444,7 +1444,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 * @param bhvDefGuids 行为类型GUID数组
 	 */
 	@Override
-	public void addBhvDefForFunc(String funcGuid, List bhvDefGuids) throws AppManagementException{
+	public List<AcFuncBhv> addBhvDefForFunc(String funcGuid, List bhvDefGuids) throws AppManagementException{
 		// 校验传入参数
 		if(StringUtil.isEmpty(funcGuid)) {
 			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, "功能GUID为空{0}");
@@ -1458,6 +1458,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 						.andIn("GUID_BHV", bhvDefGuids)) > 0) {
 			throw new AppManagementException(ACExceptionCodes.DUPLICATE_ADD_FUNC_BHV_DEF, "重复添加功能行为定义{0}");
 		}
+		List<AcFuncBhv> retList = new ArrayList<>();
 		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 			@Override
 			public void doInTransactionWithoutResult(TransactionStatus status) {
@@ -1468,6 +1469,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 						afb.setGuidBhv((String) bhvDefGuid);
 						afb.setGuidFunc(funcGuid);
 						afb.setIseffective(CommonConstants.YES);
+						retList.add(afb);
 						acFuncBhvService.insert(afb);
 					}
 				} catch (Exception e) {
@@ -1479,6 +1481,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 				}
 			}
 		});
+		return retList;
 	}
 
 	/**
@@ -1593,7 +1596,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 * @param bhvDefGuid
 	 */
 	@Override
-	public void delFuncBhvDef(String funcGuid, List<String> bhvDefGuid) throws AppManagementException{
+	public List<AcFuncBhv> delFuncBhvDef(String funcGuid, List<String> bhvDefGuid) throws AppManagementException{
 		// 校验传入参数
 		if(StringUtil.isEmpty(funcGuid)) {
 			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, "功能GUID为空{0}");
@@ -1601,11 +1604,14 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		if(CollectionUtils.isEmpty(bhvDefGuid)) {
 			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, "功能GUID为空{0}");
 		}
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals("GUID_FUNC", funcGuid).andIn("GUID_BHV", bhvDefGuid);
 		try {
-			acFuncBhvService.deleteByCondition(
-				new WhereCondition()
-						.andEquals("GUID_FUNC", funcGuid)
-						.andIn("GUID_BHV", bhvDefGuid));
+			List<AcFuncBhv> list = acFuncBhvService.query(wc);
+			if(CollectionUtils.isEmpty(list))
+				throw new AppManagementException(ExceptionCodes.NOT_FOUND_WHEN_DELETE, wrap(AcFuncBhv.TABLE_NAME));
+			acFuncBhvService.deleteByCondition(wc);
+			return list;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
@@ -1621,7 +1627,7 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 * @param openDate
 	 */
 	@Override
-	public void enableApp(String appGuid, Date openDate) throws AppManagementException{
+	public AcApp enableApp(String appGuid, Date openDate) throws AppManagementException{
 		// 校验传入参数
 		if(StringUtil.isEmpty(appGuid)) {
 			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("appGuid"));
@@ -1630,11 +1636,19 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("openDate"));
 		}
 		try {
-			AcApp app = new AcApp();
+			AcApp app = acAppService.loadByGuid(appGuid);
+			if(app == null) {
+				throw new AppManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY,
+						wrap(surroundBracketsWithLFStr(AcApp.COLUMN_GUID, appGuid), AcApp.TABLE_NAME));
+			}
+			if(StringUtils.isEquals(app.getIsopen(), CommonConstants.YES))
+				throw new AppManagementException(ACExceptionCodes.FAILURE_WHEN_ENABLE_ACAPP,
+						wrap("The current app is already open!"));
 			app.setIsopen(CommonConstants.YES);//设置开通状态为YES
 			app.setOpenDate(openDate); //设置开通时间
 			acAppService.updateByCondition(
 					new WhereCondition().andEquals("GUID", appGuid), app);
+			return app;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(
@@ -1649,17 +1663,24 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	 * @param appGuid
 	 */
 	@Override
-	public void disableApp(String appGuid) throws AppManagementException {
+	public AcApp disableApp(String appGuid) throws AppManagementException {
 		// 校验传入参数
 		if(StringUtil.isEmpty(appGuid)) {
 			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("appGuid"));
 		}
 		try {
-			AcApp app = new AcApp();
+			AcApp app = acAppService.loadByGuid(appGuid);
+			if(app == null) {
+				throw new AppManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY,
+						wrap(surroundBracketsWithLFStr(AcApp.COLUMN_GUID, appGuid), AcApp.TABLE_NAME));
+			}
+			if(StringUtils.isEquals(app.getIsopen(), CommonConstants.NO))
+				throw new AppManagementException(ACExceptionCodes.FAILURE_WHEN_DISABLE_ACAPP,
+						wrap("The current app is already close!"));
 			app.setIsopen(CommonConstants.NO);//设置开通状态为YES
 			app.setOpenDate(null); //设置开通时间为空
-			acAppService.updateByCondition(
-					new WhereCondition().andEquals("GUID", appGuid), app);
+			acAppService.updateByCondition(new WhereCondition().andEquals("GUID", appGuid), app);
+			return app;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AppManagementException(

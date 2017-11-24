@@ -139,6 +139,8 @@ public class ExceptionCodes {
 	 * 异常：对象不能为空.<br>
 	 */
 	public static final String FAILURE_WHEN_CALL = R_EX_CODE("0020");
+
+	public static final String NOT_FOUND_WHEN_DELETE = R_EX_CODE("0021");
 	
 	/**
 	 * 以烤串方式拼接异常码

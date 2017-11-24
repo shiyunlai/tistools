@@ -5,10 +5,7 @@ package org.tis.tools.rservice.om.capable;
 
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.model.def.OMConstants;
-import org.tis.tools.model.po.om.OmEmpOrg;
-import org.tis.tools.model.po.om.OmEmployee;
-import org.tis.tools.model.po.om.OmOrg;
-import org.tis.tools.model.po.om.OmPosition;
+import org.tis.tools.model.po.om.*;
 import org.tis.tools.model.vo.om.OmEmployeeDetail;
 import org.tis.tools.rservice.om.exception.EmployeeManagementException;
 
@@ -208,7 +205,7 @@ public interface IEmployeeRService {
 	 * @param isMain
 	 * @throws ToolsRuntimeException
 	 */
-	void assignPosition(String empCode,String positionCode,boolean isMain) throws ToolsRuntimeException;
+	OmEmpPosition assignPosition(String empCode, String positionCode, boolean isMain) throws ToolsRuntimeException;
 	/**
 	 * <pre>
 	 * 指定员工（empCode）的主机构（mainOrgCode）
@@ -224,7 +221,7 @@ public interface IEmployeeRService {
 	 *            机构代码，作为员工的最新主机构
 	 * @throws ToolsRuntimeException
 	 */
-	void fixMainOrg(String empCode, String mainOrgCode) throws ToolsRuntimeException;
+	OmEmpOrg fixMainOrg(String empCode, String mainOrgCode) throws ToolsRuntimeException;
 
 	/**
 	 * 设置员工主岗位
@@ -232,7 +229,7 @@ public interface IEmployeeRService {
 	 * @param positionCode 指定主岗位编号
 	 * @throws ToolsRuntimeException
 	 */
-	void fixMainPosition(String empCode,String positionCode) throws ToolsRuntimeException;
+	OmEmpPosition fixMainPosition(String empCode,String positionCode) throws ToolsRuntimeException;
 	/**
 	 * <pre>
 	 * 修改员工信息

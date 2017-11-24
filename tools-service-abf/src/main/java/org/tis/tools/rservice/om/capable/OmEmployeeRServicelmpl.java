@@ -193,7 +193,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 	 * @throws ToolsRuntimeException
 	 */
 	@Override
-	public void fixMainOrg(String empCode, String mainOrgCode) throws ToolsRuntimeException {
+	public OmEmpOrg fixMainOrg(String empCode, String mainOrgCode) throws ToolsRuntimeException {
 		//校验入参
 		if(StringUtil.isEmpty(empCode)){
 			throw new EmployeeManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
@@ -201,6 +201,8 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		if(StringUtil.isEmpty(mainOrgCode)){
 			throw new EmployeeManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
 		}
+		// 返回的员工机构对象
+		OmEmpOrg[] retObj = new OmEmpOrg[1];
 		OmEmployee emp = queryEmployeeBrief(empCode);
 		OmOrg org = orgRService.queryOrg(mainOrgCode);
 		WhereCondition wc = new WhereCondition();
@@ -226,7 +228,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 				public void doInTransactionWithoutResult(TransactionStatus status) {
 					try {
 						//判断是否有主机构
-						if(!oeoList.isEmpty()){
+						if (!oeoList.isEmpty()) {
 							OmEmpOrg oeo = oeoList.get(0);
 							oeo.setIsmain("N");
 							wc.clear();
@@ -236,6 +238,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 						}
 						//插入一条新信息
 						omEmpOrgService.insert(newOeo);
+						retObj[0] = newOeo;
 						//更新员工信息
 						emp.setGuidOrg(newOeo.getGuidOrg());
 						omEmployeeService.update(emp);
@@ -277,6 +280,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 							wc.andEquals(OmEmpOrg.COLUMN_GUID_EMP, newOeo.getGuidEmp());
 							wc.andEquals(OmEmpOrg.COLUMN_GUID_ORG, newOeo.getGuidOrg());
 							omEmpOrgService.updateByCondition(wc,newOeo);
+							retObj[0] = newOeo;
 							//更新员工信息
 							emp.setGuidOrg(newOeo.getGuidOrg());
 							omEmployeeService.update(emp);
@@ -291,10 +295,11 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 				});
 			}
 		}
+		return retObj[0];
 	}
 
 	@Override
-	public void assignPosition(String empCode, String positionCode, boolean isMain) throws ToolsRuntimeException {
+	public OmEmpPosition assignPosition(String empCode, String positionCode, boolean isMain) throws ToolsRuntimeException {
 		//校验入参
 		if(StringUtil.isEmpty(empCode)){
 			throw new EmployeeManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
@@ -303,22 +308,23 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 			throw new EmployeeManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
 		}
 		//isMain,是主机构先更新员工信息
+		OmEmpPosition newOep = new OmEmpPosition();
 		OmEmployee emp = queryEmployeeBrief(empCode);
 		OmPosition op = positionRService.queryPosition(positionCode);
 		if(isMain){
 			//指定新的主机构
 			fixMainPosition(empCode, positionCode);
 		}else{//不是主机构,仅操作emporg
-			OmEmpPosition newOep = new OmEmpPosition();
 			newOep.setGuidEmp(emp.getGuid());
 			newOep.setGuidPosition(op.getGuid());
 			newOep.setIsmain("N");
 			omEmpPositionService.insert(newOep);
 		}
+		return newOep;
 	}
 
 	@Override
-	public void fixMainPosition(String empCode, String positionCode) throws ToolsRuntimeException {
+	public OmEmpPosition fixMainPosition(String empCode, String positionCode) throws ToolsRuntimeException {
 		//校验入参
 		if(StringUtil.isEmpty(empCode)){
 			throw new EmployeeManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
@@ -326,13 +332,13 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		if(StringUtil.isEmpty(positionCode)){
 			throw new EmployeeManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
 		}
+		final OmEmpPosition[] retObj = {new OmEmpPosition()};
 		OmEmployee emp = queryEmployeeBrief(empCode);
 		OmPosition op = positionRService.queryPosition(positionCode);
 		WhereCondition wc = new WhereCondition();
 		wc.andEquals(OmEmpPosition.COLUMN_ISMAIN, "Y");
 		wc.andEquals(OmEmpPosition.COLUMN_GUID_EMP, emp.getGuid());
 		List<OmEmpPosition> oepList = omEmpPositionService.query(wc);
-
 
 		//判断是新增信息,还是已经存在
 		wc.clear();
@@ -362,6 +368,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 
 						//插入一条新信息
 						omEmpPositionService.insert(newOep);
+						retObj[0] = newOep;
 						//更新员工信息
 						emp.setGuidPosition(newOep.getGuidPosition());
 						omEmployeeService.update(emp);
@@ -402,6 +409,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 							wc.andEquals(OmEmpPosition.COLUMN_GUID_EMP, newOep.getGuidEmp());
 							wc.andEquals(OmEmpPosition.COLUMN_GUID_POSITION, newOep.getGuidPosition());
 							omEmpPositionService.updateByCondition(wc,newOep);
+							retObj[0] = newOep;
 							//更新员工信息
 							emp.setGuidPosition(newOep.getGuidPosition());
 							omEmployeeService.update(emp);
@@ -416,6 +424,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 				});
 			}
 		}
+		return retObj[0];
 	}
 
 	@Override
