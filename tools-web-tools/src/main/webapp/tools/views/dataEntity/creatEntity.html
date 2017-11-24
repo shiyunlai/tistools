@@ -16,16 +16,16 @@
                         <label class="control-label col-md-4"> 实体类型:<span ng-class="{required:myform.fromtable.$invalid}"  > * </span></label>
                         <div class="col-md-8" style="margin-top:7px;">
                             <div class="col-md-2">
-                                <input type="radio" required   name="fromtable"  ng-model="dataEnt.entityType" ng-checked='dataEnt.entityType==0'  value="0" />表
+                                <input type="radio" required   name="fromtable"  ng-model="dataEnt.entityType" ng-checked ="dataEnt.entityType=='table'"  value="table" />表
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" required  name="fromtable" ng-model="dataEnt.entityType"   ng-checked='dataEnt.entityType==1'  value="1" />视图
+                                <input type="radio" required  name="fromtable" ng-model="dataEnt.entityType"  ng-checked ="dataEnt.entityType=='view'"   value="view" />视图
                             </div>
                             <div class="col-md-2" >
-                                <input type="radio" required  name="fromtable" ng-model="dataEnt.entityType"  ng-checked='dataEnt.entityType==2'  value="2"/>查询实体
+                                <input type="radio" required  name="fromtable" ng-model="dataEnt.entityType"  ng-checked ="dataEnt.entityType=='query'"  value="query"/>查询实体
                             </div>
                             <div class="col-md-2" >
-                                <input type="radio" required  name="fromtable" ng-model="dataEnt.entityType"  ng-checked='dataEnt.entityType==3'  value="3"/>内存对象
+                                <input type="radio" required  name="fromtable" ng-model="dataEnt.entityType"  ng-checked ="dataEnt.entityType=='cache'"  value="cache"/>内存对象
                             </div>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6" ng-if="dataEnt.entityType=='0'">
+                <div class="col-md-6" ng-if="dataEnt.entityType=='table'">
                     <div class="form-group">
                         <label class="control-label col-md-4">数据库表名:</label>
                         <div class="col-md-8">
@@ -61,7 +61,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6" ng-if="dataEnt.entityType=='1'">
+                <div class="col-md-6" ng-if="dataEnt.entityType=='view'">
                     <div class="form-group">
                         <label class="control-label col-md-4">视图名:</label>
                         <div class="col-md-8">
@@ -71,7 +71,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6" ng-if="dataEnt.entityType=='2'">
+                <div class="col-md-6" ng-if="dataEnt.entityType=='query'">
                     <div class="form-group">
                         <label class="control-label col-md-4">查询实体名:</label>
                         <div class="col-md-8">
@@ -81,7 +81,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6" ng-if="dataEnt.entityType=='3'">
+                <div class="col-md-6" ng-if="dataEnt.entityType=='cache'">
                     <div class="form-group">
                         <label class="control-label col-md-4">内存对象:</label>
                         <div class="col-md-8">
@@ -95,7 +95,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4"> 是否可增加:<span ng-class="{required:myform.isAdd.$invalid}"  > * </span></label>
                         <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
-                            <select class="form-control"   required   ng-model="dataEnt.isAdd" name="isAdd">
+                            <select class="form-control"   required   ng-model="dataEnt.isadd" name="isAdd">
                                 <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>
@@ -105,7 +105,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4"> 是否可删除:<span ng-class="{required:myform.idDel.$invalid}"  > * </span></label>
                         <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
-                            <select class="form-control"   required   ng-model="dataEnt.idDel" name="idDel">
+                            <select class="form-control"   required   ng-model="dataEnt.isdel" name="idDel">
                                 <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>
@@ -115,7 +115,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4"> 是否可修改:<span ng-class="{required:myform.isModief.$invalid}"  > * </span></label>
                         <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
-                            <select class="form-control"   required   ng-model="dataEnt.isModief" name="isModief">
+                            <select class="form-control"   required   ng-model="dataEnt.ismodify" name="isModief">
                                 <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>
@@ -135,7 +135,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4"> 是否需要分页:<span ng-class="{required:myform.isPage.$invalid}"  > * </span></label>
                         <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
-                            <select class="form-control"   required   ng-model="dataEnt.isPage" name="isPage">
+                            <select class="form-control"   required   ng-model="dataEnt.ispage" name="isPage">
                                 <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>
@@ -178,9 +178,8 @@
                                             <tr  ng-repeat="d in qualityRatingExt track by $index"  >
                                                 <td ng-form="subform" width="25%"><input ng-model="d.tableName" type="text"  class="form-control {{subform.$invalid&&'lanmo-warning'}}"/></td>
                                                 <td ng-form="subform" width="25%"><input ng-model="d.columeName" type="text"  class="form-control {{subform.$invalid&&'lanmo-warning'}}"/></td>
-
                                                 <td ng-form="subform" width="15%" ng-init="$settings.getDictData('DICT_YON')">
-                                                        <select class="form-control"   required   ng-model="d.isDel" name="isview">
+                                                        <select class="form-control"      ng-model="d.isDel" name="isview">
                                                             <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                                                         </select>
                                                 </td>

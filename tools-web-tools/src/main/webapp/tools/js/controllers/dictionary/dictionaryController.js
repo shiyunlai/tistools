@@ -237,7 +237,7 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
         }
     }
 
-    //查看历史记录
+    //查看概况
     dictflag.histroy = function () {
         var getSel = $scope.gridOptions0.getSelectedRows();
         if(isNull(getSel) || getSel.length>1){

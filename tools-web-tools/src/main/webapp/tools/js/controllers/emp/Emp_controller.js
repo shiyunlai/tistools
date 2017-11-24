@@ -235,7 +235,7 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
             }
         )
     }
-    //查看历史记录
+    //查看概况
     emp.histroy = function () {
         var arr = $scope.empgrid.getSelectedRows();
         var item = arr[0].guid;

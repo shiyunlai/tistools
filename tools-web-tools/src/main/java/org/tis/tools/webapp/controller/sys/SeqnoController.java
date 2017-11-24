@@ -36,7 +36,7 @@ public class SeqnoController extends BaseController {
     ISeqnoRService seqnoRService;
 
     /**
-     * 查询系统运行参数列表
+     * 查询序号资源表
      *
      */
     @ResponseBody
@@ -60,7 +60,7 @@ public class SeqnoController extends BaseController {
     }
 
     /**
-     * 新增系统运行参数
+     * 新增序号资源表
      */
     /*@ResponseBody
     @RequestMapping(value="/createSeqno" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
@@ -84,7 +84,7 @@ public class SeqnoController extends BaseController {
     }*/
 
     /**
-     * 修改系统运行参数
+     * 修改序号资源表
      */
     @ResponseBody
     @RequestMapping(value="/editSeqno" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)
@@ -108,7 +108,7 @@ public class SeqnoController extends BaseController {
     }
 
     /**
-     * 删除系统运行参数
+     * 删除序号资源表
      */
     @ResponseBody
     @RequestMapping(value="/deleteSeqno" ,produces = "text/plain;charset=UTF-8",method= RequestMethod.POST)

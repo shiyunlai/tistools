@@ -91,53 +91,6 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
                         $scope.menuFrom = menuFrom;
                         $scope.menuFrom.isleaf = 'N';//默认为N
                         $scope.menuFrom.displayOrder = 0;//默认为0
-                        /*$scope.ceshi = function(item){
-                            if(item == 'Y'){
-                                //逻辑
-                                $scope.selectfunc = true;
-                                $scope.selectfuncs = function(){
-                                    openwindow($uibModal, 'views/Management/selectfunc.html', 'lg',
-                                        function ($scope, $modalInstance) {
-                                            var gridOptions = {};
-                                            $scope.gridOptions = gridOptions;
-                                            var com = [
-                                                { field: "funcName", displayName:'功能名称'}
-                                            ];
-                                            //自定义点击事件
-                                            var f1 = function(row){
-                                                if(row.isSelected){
-                                                    $scope.selectRow = row.entity;
-                                                }else{
-                                                    delete $scope.selectRow;//制空
-                                                }
-                                            }
-                                            $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,false,f1);
-                                            //调用查询应用下功能服务
-                                            var  subFrom = {};
-                                            subFrom.appGuid =menu.guidApp;
-                                            common_service.post(res.queryAllFuncInApp,subFrom).then(function(data){
-                                                var datas  = data.retMessage;
-                                                $scope.gridOptions.data = datas;
-                                                $scope.gridOptions.mydefalutData = datas;
-                                                $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
-                                            })
-                                            $scope.importAdd = function(){
-                                                var dats = $scope.gridOptions.getSelectedRows();
-                                                if(dats.length >=0){
-                                                    $modalInstance.close();
-                                                    menuFrom.infosava = dats[0];
-                                                    menuFrom.guidFunc =dats[0].funcName;
-                                                }
-                                            }
-                                            $scope.cancel = function () {
-                                                $modalInstance.dismiss('cancel');
-                                            };
-                                        })
-                                }
-                            }else{
-                                $scope.selectfunc = false;
-                            }
-                        }*/
                         $scope.add = function (item) {
                             var guidApp = menu.appselect
                             var subFrom = {};
@@ -486,7 +439,7 @@ angular.module('MetronicApp').controller('menu_controller', function($rootScope,
     }
 
 
-    //查询历史记录
+    //查看概况
     menu.histroy = function () {
         var menuGuid =$scope.menu.item;
         $state.go("loghistory",{id:menuGuid});//跳转到历史页面

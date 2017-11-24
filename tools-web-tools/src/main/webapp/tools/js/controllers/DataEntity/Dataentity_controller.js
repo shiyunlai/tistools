@@ -6,6 +6,8 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
     //定义公共对象
     var dataEnt = {};
     $scope.dataEnt = dataEnt;
+    //实体服务请求方法
+    var res = $rootScope.res.entity_service;//页面所需调用的服务
     //表格内容
     var dataEntFrom = {}
     $scope.dataEntFrom = dataEntFrom;
@@ -15,7 +17,9 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
         $("#container").jstree().refresh();
     }
 
-
+    //判断页签逻辑
+    var dataEntIf = {};
+    $scope.dataEntIf = dataEntIf;
     //搜索方法
     $scope.searchitem = "";
     var to = false;
@@ -31,113 +35,12 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
     dataEnt.clear = function () {
         $scope.searchitem = "";
     }
-
-
-    //树结构数据模拟
-    var aymssys = [
-            {
-                "id": "1",
-                "text": "数据实体",
-                "state": {
-                    "opened": true,          //展示第一个层级下面的node
-                    "disabled": true         //该根节点不可点击
-                },
-                "children":
-                    [
-                        {
-                            "id": "2",
-                            "text": "ABF应用",
-                            "type":"app",
-                            "children":
-                                [
-                                    {
-                                        "id": "3",
-                                        "text": "表",
-                                        "type":'biao',
-                                        "children": [
-                                            {
-                                                "id": "4",
-                                                "text": "机构-OM_ORG",
-                                                "type":'biao',
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "id": "31",
-                                        "text": "视图",
-                                        "type":'shitu',
-                                        "children": [
-                                            {
-                                                "id": "41",
-                                                "text": "机构-OM_ORG_VIEW",
-                                                "type":'shitu'
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "id": "311",
-                                        "text": "查询实体",
-                                        "type":'shiti',
-                                        "children": [
-                                            {
-                                                "id": "411",
-                                                "text": "机构-OM_ORG_SDO",
-                                                "type":'shiti',
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "id": "3111",
-                                        "text": "内存对象类型",
-                                        "type":'neicun',
-                                        "children": [
-                                            {
-                                                "id": "4111",
-                                                "text": "机构-OM_ORG_RAM",
-                                                "type":'neicun'
-                                            }
-                                        ]
-                                    }
-                                ]
-                        },
-                        {
-                            "id": "6",
-                            "text": "测试应用",
-                            "type":'app',
-                            "children":
-                                [
-                                    {
-                                        "id": "61",
-                                        "text": "Test",
-                                        "type":'biao',
-                                        "children": [
-                                            {
-                                                "id": "611",
-                                                "text": "表类型1",
-                                                "type":'biao',
-                                                "children":
-                                                    [
-                                                        {
-                                                            "id": "6111",
-                                                            "text": "表类型1子类型",
-                                                            "type":'biao',
-                                                        }
-                                                    ]
-                                            }
-                                        ]
-                                    }
-                                ]
-                        }
-                    ]
-            }
-        ]
-
     //定义树结构右击
     //树自定义右键功能(根据类型判断)
     var items = function customMenu(node) {
         var judge = node.original;
         var control;
-        if(judge.type == 'app'){
+        if(judge.types == 'appType'){
             var it = {
                 "刷新":{
                     "label":"刷新",
@@ -148,7 +51,7 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
             }
             return it;
         }
-        if(judge.type == 'biao'|| judge.type == 'shitu' ||judge.type == 'shiti' || judge.type == 'neicun'){
+        if(judge.types == 'enType'){
             var it = {
                 "新增实体":{
                     "id":"createc",
@@ -160,30 +63,6 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
                         creatFrom(objGuid)//传入guid
                     }
                 },
-                "删除实体":{
-                    "label":"删除实体",
-                    "action":function(data){
-                        var inst = jQuery.jstree.reference(data.reference),
-                            obj = inst.get_node(data.reference);
-                        var guid = obj.id;
-                        var ids = $scope.biz.item.id;
-                        if(confirm("确定删除选中的应用吗？删除应用将删除该应用下的所有功能组")){
-                            var guids = {};
-                            guids.id = guid;//删除传入的必须是json格式
-                            application_service.appDel(guids).then(function(data){
-                                if(data.status == "success"){
-                                    toastr['success']("删除成功!");
-                                    $scope.dictionaryAdd = {};
-                                    $("#container").jstree().refresh();
-                                    $scope.biz.apptab = false;
-                                    biz.initt(ids);//调用查询服务,传入点击树的id，查询
-                                }else{
-                                    toastr['error']('删除失败'+'<br/>'+data.retMessage);
-                                }
-                            })
-                        }
-                    }
-                },
                 '刷新':{
                     "label":"刷新",
                     "action":function(data){
@@ -192,11 +71,30 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
                 }
             }
             return it;
+        }else if(judge.types == 'eneits'){
+            var it = {
+                "删除实体":{
+                    "label":"删除实体",
+                    "action":function(data){
+                        var inst = jQuery.jstree.reference(data.reference),
+                            obj = inst.get_node(data.reference);
+                        if(confirm("确定删除选中的实体吗？")){
+                            dataEnt.deleteAcEntity(obj.original.guid);
+                        }
+                    }
+                },
+                "刷新":{
+                    "label":"刷新",
+                    "action":function(data){
+                        $("#container").jstree().refresh();
+                    }
+                }
+            }
+            return it;
+
         }
 
     };
-
-
     //树结构生成
     $("#container").jstree({
         "core": {
@@ -204,7 +102,80 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
                 "responsive": false
             },
             "check_callback": true,
-            'data':aymssys
+            'data':function(obj, callback){
+                console.log(obj)
+                // obj.text='实体管理'
+                var jsonarray = [];
+                $scope.jsonarray = jsonarray;
+                var subFrom = {};
+                var its = [];
+                if(obj.id == '#'){
+                    var data ={};
+                    data.text = '实体属性';
+                    data.children = true;
+                    data.types = 'root';
+                    its.push(data);
+                    $scope.jsonarray = angular.copy(its);
+                    callback.call(this, $scope.jsonarray);
+                }else if(obj.original.types =='root'){
+                    var subFrom  = {};
+                    subFrom.type = 'app';//查询所有应用
+                    common_service.post(res.queryAcEntityTreeList,{data:subFrom}).then(function(data){
+                        if(data.status == "success"){
+                            var datas = data.retMessage;
+                            for(var i =0;i <datas.length;i++){
+                                datas[i].text = datas[i].appName;
+                                datas[i].children = true;
+                                datas[i].id = datas[i].guid;
+                                datas[i].types = 'appType';
+                                datas[i].icon = "fa  fa-files-o icon-state-info icon-lg"
+                                its.push(datas[i]);
+                            }
+                            $scope.jsonarray = angular.copy(its);
+                            callback.call(this, $scope.jsonarray);
+                        }
+                    })
+                }else if(obj.original.types =='appType'){
+                    var subFrom  = {};
+                    subFrom.type = 'entityType';//查询所有类型
+                    subFrom.appGuid = obj.id;//应用Guid
+                    common_service.post(res.queryAcEntityTreeList,{data:subFrom}).then(function(data){
+                        if(data.status == "success"){
+                            var datas = data.retMessage;
+                            for(var i =0;i <datas.length;i++){
+                                datas[i].text = datas[i].itemName;
+                                datas[i].children = true;
+                                datas[i].id = datas[i].guid;
+                                datas[i].types = 'enType';
+                                datas[i].icon = "fa  fa-files-o icon-state-info icon-lg"
+                                its.push(datas[i]);
+                            }
+                            $scope.jsonarray = angular.copy(its);
+                            callback.call(this, $scope.jsonarray);
+                        }
+                    })
+                }else if(obj.original.types =='enType'){
+                    var subFrom  = {};
+                    subFrom.type = 'entity';//查询所有实体
+                    subFrom.appGuid = obj.parent;
+                    subFrom.entity = obj.original.itemValue;
+                    common_service.post(res.queryAcEntityTreeList,{data:subFrom}).then(function(data){
+                        var datas = data.retMessage;
+                        if(data.status == "success"){
+                                for(var i =0;i <datas.length;i++){
+                                    datas[i].text = datas[i].entityName;
+                                    datas[i].children = false;
+                                    datas[i].id = datas[i].guid;
+                                    datas[i].types = 'eneits';
+                                    datas[i].icon = "fa  fa-files-o icon-state-info icon-lg"
+                                    its.push(datas[i]);
+                                }
+                                $scope.jsonarray = angular.copy(its);
+                                callback.call(this, $scope.jsonarray);
+                        }
+                    })
+                }
+            }
         },
         "types": {
             "default": {
@@ -244,16 +215,67 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
         "plugins": ["dnd", "state", "types", "contextmenu","sort","search"]
     }).bind("select_node.jstree", function (e, data) {
         if (typeof data.node !== 'undefined') {//拿到结点详情
-            $scope.dataEnt.item = data.node.original;//绑定内容给全局
-            if(data.node.original.type == 'app'){
-                $scope.dataEnt.dataEnis = false;
+            $scope.dataEnt = data.node.original;//绑定内容给页面
+            if(data.node.original.types == 'eneits'){
+                $scope.dataEntIf.dataEnis = true;//只有点击实体属性的时候，才让右侧内容显示
             }else{
-                $scope.dataEnt.dataEnis = true;//让右侧内容显示
+                $scope.dataEntIf.dataEnis = false;
             }
             ($scope.$$phase) ? null : $scope.$apply();
         }
     });
 
+    //查询实体属性方法
+    dataEnt.queryAcEntityfieldList = function () {
+        var subFrom = {};
+        subFrom.entityGuid = entityGuid;//传入实体的guid
+        common_service.post(res.queryAcEntityfieldList,{data:subFrom}).then(function(data){
+            if(data.status == "success"){
+
+            }
+        })
+    }
+
+    //新增实体对象
+    dataEnt.createAcEntity = function (item,$modalInstance) {
+        var subFrom = {};
+        subFrom=item;
+        common_service.post(res.createAcEntity,{data:subFrom}).then(function(data){
+            if(data.status == "success"){
+                toastr['success']("新增成功!");
+                $("#container").jstree().refresh();
+                $modalInstance.dismiss('cancel');
+            }
+        })
+    }
+
+    //删除实体对象
+    dataEnt.deleteAcEntity = function (item) {
+        var tis = [];
+        tis.push(item);
+        common_service.post(res.deleteAcEntity,{data:tis}).then(function(data){
+            console.log(data)
+            if(data.status == "success"){
+                toastr['success']("删除成功!");
+                $("#container").jstree().refresh();
+            }
+        })
+    }
+
+    //删除记录检查引用方法调用
+    dataEnt.conversion=function (item) {
+        if(!isNull(item)){
+            var str = '';
+            for (var i = 0; i < item.length; i++) {
+                if(!isNull(item[i].tableName) && !isNull(item[i].columeName) && !isNull(item[i].isDel)) {
+                    str += item[i].tableName + '.' + item[i].columeName + '/[' + item[i].isDel + ']';
+                    if (i !== item.length - 1)
+                        str += ';';//单次匹配，如果没有，那就默认为空
+                }
+            }
+            return str;
+        }
+    }
 
     //新增表结构实体类型
     function  creatFrom(id) {
@@ -276,8 +298,11 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
                     qualityRatingExt.push(item);
                 };
 
-                $scope.add = function(){
-                    $modalInstance.dismiss('cancel');
+                $scope.add = function(item){
+                    var preview = dataEnt.conversion(qualityRatingExt);//调用查询方法
+                    item.checkref = preview;
+                    //拼接传给后台
+                    dataEnt.createAcEntity(item,$modalInstance);
                 }
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
@@ -287,19 +312,44 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
     }
 
     
-    //编辑实体
-    dataEnt.dataEntEdit =function (item) {
-      /*  $scope.copyEdit = angular.copy(item)
-        $scope.editflag = !$scope.editflag;//让保存取消方法显现,并且让文本框可以输入*/
+    //编辑实体方法
+    $scope.dataEntEdit =function (item) {
+        console.log(item)
+        var EntDatas = $scope.dataEnt;
         openwindow($modal, 'views/dataEntity/creatEntity.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
-            $scope.title = '编辑实体属性'
+                $scope.title = '编辑实体属性'
+                var dataEnt = {};
+                $scope.dataEnt = dataEnt;
+                $scope.dataEnt = angular.copy(EntDatas);
+                var EntStr = EntDatas.checkRef;//拿到字符串
+                var EntArray = [];//定义空数组,来接受
+                //截取原先字符串
+                var arr = EntStr.split(";");
+                for(var i =0;i<arr.length;i++){
+                    //获取/和.的index？
+                    var y = arr[i].indexOf('.');//切割.
+                    var x = arr[i].indexOf('/');//切割/
+                    var spot = arr[i].substring(0,y);//根据.切割字符串
+                    var Slash = arr[i].substring(y+1,x);//根据/切割字符串
+                    var Whether = arr[i].substring(x+2,x+3);//最后切出Y/N
+                    var Mosaic = {};//定义对象来接收
+                    Mosaic.tableName = spot;
+                    Mosaic.columeName = Slash;
+                    Mosaic.isDel = Whether;
+                    EntArray.push(Mosaic);
+                }
                 //删除引用表关系 还未改成统一使用 dataEnt
                 var qualityRatingExt = [];//定义数组
                 $scope.qualityRatingExt = qualityRatingExt;
-                var item = {tableName : '',columeName : '',isDel:''};
-                qualityRatingExt.push(item);
-
+                if(!isNull(EntArray)){//是否存在，存在那就拼接
+                    for(var i =0;i<EntArray.length;i++){
+                        qualityRatingExt.push(EntArray[i]);
+                    }
+                }else{
+                    var item = {tableName : '',columeName : '',isDel:''};
+                    qualityRatingExt.push(item);
+                }
                 //删一个
                 $scope.delQualityRatingExt = function (index) {
                     qualityRatingExt.splice(index, 1);
@@ -310,9 +360,34 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
                     qualityRatingExt.push(item);
                 };
 
-                $scope.add = function(){
-                    //刷新树结构，进行保存后台数据
-                    $modalInstance.dismiss('cancel');
+                $scope.add = function(item){
+                    var subFrom = {};
+                    dataEnt.conversion=function (item) {
+                        if(!isNull(item)){
+                            var str = '';
+                            for (var i = 0; i < item.length; i++) {
+                                if(!isNull(item[i].tableName) && !isNull(item[i].columeName) && !isNull(item[i].isDel)) {
+                                    str += item[i].tableName + '.' + item[i].columeName + '/[' + item[i].isDel + ']';
+                                    if (i !== item.length - 1)
+                                        str += ';';//单次匹配，如果没有，那就默认为空
+                                }
+                            }
+                            return str;
+                        }
+                    };//删除关系数据转换
+                    var preview = dataEnt.conversion(qualityRatingExt);
+                    item.checkref = preview;
+                    item.checkRef = preview;
+                    //调用更新接口
+                    subFrom=item;
+                    //修改接口报错
+                    common_service.post(res.editAcEntity,{data:subFrom}).then(function(data){
+                        if(data.status == "success"){
+                            toastr['success']("修改成功!");
+                            $("#container").jstree().refresh();
+                            $modalInstance.dismiss('cancel');
+                        }
+                    })
                 }
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
@@ -321,51 +396,26 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
             })
     }
 
-    //当前实体信息
-    function Current () {
-        //放在dataEnt数组中，这样就好拿数据了
-        dataEnt.qualityRatingExt = [];
-        var item = {tableName : '',columeName : '',isDel:''};
-        dataEnt.qualityRatingExt.push(item);
-        //数组从后台拿 即可,目前先写空，保证效果
-        //删一个
-        $scope.delQualityRatingExt = function (index) {
-            dataEnt.qualityRatingExt.splice(index, 1);
-        };
-        //加一个
-        $scope.addQualityRatingExt = function () {
-            var item = {tableName : '',columeName : '',isDel:''};
-            dataEnt.qualityRatingExt.push(item);
-        };
-
-        $scope.dataEntAdd = function (item) {
-            $scope.editflag = !$scope.editflag;//让保存取消方法显现,并且让文本框可以输入
-        }
-
-    }
-
-
-
     //tab页签控制
     //默认当前实体打开
-    dataEnt.dqst = true;
-    Current();//默认调用当前实体信息
-    dataEnt.loadgwdata = function (type) {
+    dataEntIf.dqst = true;
+    dataEntIf.loadgwdata = function (type) {
         if(type == 0){
-            dataEnt.dqst = true;
-            dataEnt.sssx = false;
-            dataEnt.sjfw = false;//隐藏
-            Current();//调用当前实体
+            dataEntIf.dqst = true;
+            dataEntIf.sssx = false;
+            dataEntIf.sjfw = false;//隐藏
         }else if (type == 1) {
-            dataEnt.dqst = false;
-            dataEnt.sssx = true;
-            dataEnt.sjfw = false;//隐藏
+            getData();//查询实体属性树
+            dataEntIf.dqst = false;
+            dataEntIf.sssx = true;
+            dataEntIf.sjfw = false;//隐藏
         }else if(type == 2){
-            dataEnt.sssx = false;
-            dataEnt.sjfw = true;//显示
-            dataEnt.dqst = false;
+            dataEntIf.sssx = false;
+            dataEntIf.sjfw = true;//显示
+            dataEntIf.dqst = false;
         }
     }
+
 
 
 //实体属性表格
@@ -373,7 +423,10 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
     $scope.gridAttributes = gridAttributes;
     var grid = [
         { field: "fieldName", displayName:'属性名称'},
-        { field: "fieldType", displayName:'字段类型'}
+        { field: "fieldType", displayName:'字段类型'},
+        { field: "refType", displayName:'引用类型'},
+        { field: "doclistCode", displayName:'代码大类'},
+        { field: "ismodify", displayName:'是否可修改'}
     ];
     var f = function(row){
         if(row.isSelected){
@@ -382,35 +435,50 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
             $scope.gridAt = '';//制空
         }
     }
-    $scope.gridAttributes = initgrid($scope,gridAttributes,filterFilter,grid,false,f);
-    //模拟获取数据渲染表格
+    $scope.gridAttributes = initgrid($scope,gridAttributes,filterFilter,grid,true,f);
+
+
+    // 查询实体属性方法
     function getData() {
-        var permit= [
-            {'fieldName':'测试','fieldType':0001},
-            {'fieldName':'测试','fieldType':0002},
-            {'fieldName':'测试','fieldType':0003},
-            {'fieldName':'测试','fieldType':0004},
-            {'fieldName':'测试','fieldType':0005},
-            {'fieldName':'测试','fieldType':0006},
-            {'fieldName':'测试','fieldType':0007},
-            {'fieldName':'测试','fieldType':0008},
-            {'fieldName':'测试','fieldType':0009},
-            {'fieldName':'测试','fieldType':0000},
-            {'fieldName':'测试','fieldType':0001},
-            {'fieldName':'测试','fieldType':0002}
-        ]
-        $scope.gridAttributes.data = permit;
-        $scope.gridAttributes.mydefalutData = permit;
-        $scope.gridAttributes.getPage(1,$scope.gridAttributes.paginationPageSize);
+        var subFrom = {};
+        subFrom.entityGuid = $scope.dataEnt.guid;
+        console.log(subFrom)
+        common_service.post(res.queryAcEntityfieldList,{data:subFrom}).then(function(data){
+           var datas  = data.retMessage;
+            if(data.status == "success"){
+                $scope.gridAttributes.data = datas;
+                $scope.gridAttributes.mydefalutData = datas;
+                $scope.gridAttributes.getPage(1,$scope.gridAttributes.paginationPageSize);
+            }else{
+                $scope.gridAttributes.data = [];
+                $scope.gridAttributes.mydefalutData = [];
+                $scope.gridAttributes.getPage(1,$scope.gridAttributes.paginationPageSize);
+            }
+        })
     }
-    getData();
-    //新增属性
+
+    //新增实体属性方法
+    var createAcEntityfield = function (item,$modalInstance) {
+        var subFrom = {};
+        subFrom=item;
+        common_service.post(res.createAcEntityfield,{data:subFrom}).then(function(data){
+            if(data.status == "success"){
+                toastr['success']("新增属性成功!");
+                $("#container").jstree().refresh();
+                getData();//查询实体属性树;
+                $modalInstance.dismiss('cancel');
+            }
+        })
+    }
+    //新增实体属性
     $scope.dataDet_add = function () {
+        var guidEntity = $scope.dataEnt.guid;
         openwindow($modal, 'views/dataEntity/Entityattribute.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
                 $scope.title = '新增实体属性'
                 $scope.add = function(item){
-                    console.log(item)
+                    item.guidEntity = guidEntity;
+                    createAcEntityfield(item,$modalInstance)
                 }
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
@@ -420,14 +488,25 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
     //修改属性
     $scope.dataDet_edit = function () {
         var getSel = $scope.gridAttributes.getSelectedRows();//拿到数据
+        var entityDate = getSel[0]
         if(isNull(getSel) || getSel.length>1){
             toastr['error']("请至少选中一条数据来修改！");
         }else{
             openwindow($modal, 'views/dataEntity/Entityattribute.html', 'lg',//弹出页面
                 function ($scope, $modalInstance) {
+                    var  dataEntFrom = {};
+                    $scope.dataEntFrom = entityDate;
                     $scope.title = '修改实体属性'
                     $scope.add = function(item){
-                        toastr['success']("修改成功！");
+                        var subFrom = {};
+                        subFrom=item;
+                        common_service.post(res.editAcEntityfield,{data:subFrom}).then(function(data){
+                            if(data.status == "success"){
+                                toastr['success']("修改属性成功!");
+                                getData();//查询实体属性树;
+                                $modalInstance.dismiss('cancel');
+                            }
+                        })
                     }
                     $scope.cancel = function () {
                         $modalInstance.dismiss('cancel');
@@ -439,25 +518,37 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
     //删除属性
     $scope.dataDet_delete = function () {
         var getSel = $scope.gridAttributes.getSelectedRows();//拿到数据
-        if(isNull(getSel) || getSel.length>1){
+        if(isNull(getSel) || getSel.length<1){
             toastr['error']("请至少选中一条数据来删除！");
         }else{
-            toastr['success']("删除成功！");
+            if(confirm('确定删除改配置吗')){
+                var tis = [];
+                for(var i =0;i<getSel.length;i++){
+                    tis.push(getSel[i].guid);
+                }
+                console.log(tis)
+                common_service.post(res.deleteAcEntityfield,{data:tis}).then(function(data){
+                    if(data.status == "success"){
+                        toastr['success']("删除成功！");
+                        getData();//查询实体属性树;
+                    }
+                    })
+            }
         }
     }
 
     //查看详情
     $scope.dataDett_details = function () {
         var getSel = $scope.gridAttributes.getSelectedRows();//拿到数据
+        var entityDate = getSel[0]
         if(isNull(getSel) || getSel.length>1){
             toastr['error']("请至少选中一条数据来查看详情！");
         }else{
-            openwindow($modal, 'views/dataEntity/Entityattribute.html', 'lg',//弹出页面
+            openwindow($modal, 'views/dataEntity/EntityLooking.html', 'lg',//弹出页面
                 function ($scope, $modalInstance) {
+                    var  dataEntFrom = {};
+                    $scope.dataEntFrom = entityDate;
                     $scope.title = '查看实体属性'
-                    $scope.add = function(item){
-                        toastr['success']("修改成功！");
-                    }
                     $scope.cancel = function () {
                         $modalInstance.dismiss('cancel');
                     };
@@ -508,7 +599,6 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
         openwindow($modal, 'views/dataEntity/Entityauthority.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
                 $scope.title = '新增范围数据权限'
-
                 var dataEnt = {};
                 $scope.dataEnt = dataEnt;
                 $scope.dataEnt.qualityRatingExt = [];
@@ -542,7 +632,6 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
                     dataEnt.cardArray.push(items);
                 };
                 $scope.add = function(){
-                    console.log(dataEnt)
                 }
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');

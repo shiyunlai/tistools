@@ -157,10 +157,10 @@ public class EntityRServiceImpl extends BaseRService implements IEntityRService 
      */
     @Override
     public List<AcEntity> queryAcEntityList(String appGuid, String entityType) throws EntityManagementException {
-        if(StringUtils.isNotBlank(appGuid)) {
+        if(StringUtils.isBlank(appGuid)) {
             throw new EntityManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap("appGuid(String)", AcEntity.TABLE_NAME));
         }
-        if(StringUtils.isNotBlank(entityType)) {
+        if(StringUtils.isBlank(entityType)) {
             throw new EntityManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap("entityType(String)", AcEntity.TABLE_NAME));
         }
         List<AcEntity> list = acEntityService.query(new WhereCondition()

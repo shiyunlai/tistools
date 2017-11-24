@@ -308,7 +308,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
         })
     }
     reworkgroupgrid();
-    //查询历史记录
+    //查看概况
     workgroup.histroy= function () {
         var workGuid = $scope.sub.guid;
         $state.go("loghistory",{id:workGuid});//跳转新页面

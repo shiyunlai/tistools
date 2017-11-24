@@ -13,7 +13,7 @@
   },
   "dictonary_service" : {
     "createSysDict": {"ctrl": "DictController", "func": "createSysDict","emo":"新增业务字典"},
-      "deleteSysDict": {"ctrl": "DictController", "func": "deleteSysDict","emo":"删除业务字典"},
+    "deleteSysDict": {"ctrl": "DictController", "func": "deleteSysDict","emo":"删除业务字典"},
     "editSysDict": {"ctrl": "DictController", "func": "editSysDict","emo":"修改业务字典"},
     "querySysDict": {"ctrl": "DictController", "func": "querySysDict","emo":"查询单个业务字典"},
     "createSysDictItem": {"ctrl": "DictController", "func": "createSysDictItem","emo":"新增业务字典项"},
@@ -31,13 +31,13 @@
   },
   "duty_service" : {
     "dutytree": {"ctrl": "om/duty", "func": "dutytree","em":"查询职务树"},
-    "loadallduty": {"ctrl": "om/duty", "func": "loadallduty"},
+    "loadallduty": {"ctrl": "om/duty", "func": "loadallduty","emo":"生成职务列表"},
     "addduty": {"ctrl": "om/duty", "func": "addduty","em":"新增职务"},
-    "initdutyCode": {"ctrl": "om/duty", "func": "initdutyCode"},
-    "querydutybyType": {"ctrl": "om/duty", "func": "querydutybyType"},
-    "querychild": {"ctrl": "om/duty", "func": "querychild"},
-    "queryempbudutyCode": {"ctrl": "om/duty", "func": "queryempbudutyCode"},
-    "deletedutyByCode": {"ctrl": "om/duty", "func": "deletedutyByCode"},
+    "initdutyCode": {"ctrl": "om/duty", "func": "initdutyCode","emo":"生成职务代码"},
+    "querydutybyType": {"ctrl": "om/duty", "func": "querydutybyType","emo":" 通过职务套别查询职务"},
+    "querychild": {"ctrl": "om/duty", "func": "querychild","emo":" 查询下级职务"},
+    "queryempbudutyCode": {"ctrl": "om/duty", "func": "queryempbudutyCode","emo":" 查询职务下人员,用过岗位查询"},
+    "deletedutyByCode": {"ctrl": "om/duty", "func": "deletedutyByCode","emo":" 删除职务"},
     "updateDuty": {"ctrl": "om/duty", "func": "updateDuty","em":"更新职务"},
     "queryDucyList": {"ctrl": "om/duty", "func": "queryDutyList","em":"查询所有职务"}
   },
@@ -121,9 +121,9 @@
     "deleteOperatorMenu": {"ctrl": "AcMenuController", "func": "deleteOperatorMenu","emo":"删除重组子菜单"}
   },
   "numres_service" : {
-    "querySeqnoList": {"ctrl": "SeqnoController", "func": "querySeqnoList","emo":"查询系统运行参数列表"},
-    "editSeqno": {"ctrl": "SeqnoController", "func": "editSeqno","emo":"修改系统运行参数列表"},
-    "deleteSeqno": {"ctrl": "SeqnoController", "func": "deleteSeqno","emo":"删除系统运行参数列表"}
+    "querySeqnoList": {"ctrl": "SeqnoController", "func": "querySeqnoList","emo":"查询序号资源表"},
+    "editSeqno": {"ctrl": "SeqnoController", "func": "editSeqno","emo":"修改序号资源表"},
+    "deleteSeqno": {"ctrl": "SeqnoController", "func": "deleteSeqno","emo":"删除序号资源表"}
   },
   "operator_service" : {
     "queryAllOperator": {"ctrl": "AcOperatorController", "func": "queryAllOperator","emo":"查询操作员列表"},
@@ -172,7 +172,7 @@
     "loadempNotinorg": {"ctrl": "om/org", "func": "loadempNotinorg","emo":"拉取不在当前机构下的员工列表,用于为该机构新添人员"},
     "loadxjjg": {"ctrl": "om/org", "func": "loadxjjg","emo":"加载下级机构列表数据"},
     "addorg": {"ctrl": "om/org", "func": "add","emo":" 新增机构综合"},
-    "initcode": {"ctrl": "om/org", "func": "initcode"},
+    "initcode": {"ctrl": "om/org", "func": "initcode","emo":"生成默认序号"},
     "updateOrg": {"ctrl": "om/org", "func": "updateOrg","emo":" 更新机构"},
     "deleteOrg": {"ctrl": "om/org", "func": "deleteOrg","emo":" 删除机构"},
     "addposit": {"ctrl": "om/org", "func": "addposit","emo":" 新增岗位信息"},
@@ -221,7 +221,7 @@
     "removeAcRoleBhvs": {"ctrl": "AcRoleController", "func": "removeAcRoleBhvs","emo":"删除角色功能行为定义"}
   },
   "entity_service" : {
-    "queryAcEntityList": {"ctrl": "entity", "func": "queryAcEntityList","emo":"查询实体对象列表"},
+    "queryAcEntityTreeList": {"ctrl": "entity", "func": "queryAcEntityTreeList","emo":"查询实体对象列表"},
     "createAcEntity": {"ctrl": "entity", "func": "createAcEntity","emo":"新增实体对象"},
     "editAcEntity": {"ctrl": "entity", "func": "editAcEntity","emo":"修改实体对象"},
     "deleteAcEntity": {"ctrl": "entity", "func": "deleteAcEntity","emo":"删除实体对象"},
@@ -235,10 +235,10 @@
     "deleteAcDatescope": {"ctrl": "entity", "func": "deleteAcDatescope","emo":"删除实体数据范围权限"}
   },
   "systempara_service" : {
-    "queryRunConfigList": {"ctrl": "AcRoleController", "func": "queryRunConfigList","emo":"查询系统运行参数列表"},
-    "createRunConfig": {"ctrl": "AcRoleController", "func": "createRunConfig","emo":"新增系统参数"},
-    "editRunConfig": {"ctrl": "AcRoleController", "func": "editRunConfig","emo":"修改系统参数"},
-    "deleteRunConfig": {"ctrl": "AcRoleController", "func": "deleteRunConfig","emo":"删除系统参数"}
+    "queryRunConfigList": {"ctrl": "RunConfigController", "func": "queryRunConfigList","emo":"查询系统运行参数列表"},
+    "createRunConfig": {"ctrl": "RunConfigController", "func": "createRunConfig","emo":"新增系统参数"},
+    "editRunConfig": {"ctrl": "RunConfigController", "func": "editRunConfig","emo":"修改系统参数"},
+    "deleteRunConfig": {"ctrl": "RunConfigController", "func": "deleteRunConfig","emo":"删除系统参数"}
   },
   "Workgroup_service" : {
     "loadmaintree": {"ctrl": "om/workgroup", "func": "workgrouptree","emo":"展示工作组树"},

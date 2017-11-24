@@ -70,7 +70,7 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
     }
     $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,false,f);
 
-    //查询历史记录
+    //查看概况
     operman.histroy = function () {
         if($scope.selectRow) {
             var items = $scope.selectRow.guid;
