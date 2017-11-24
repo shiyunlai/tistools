@@ -18,13 +18,9 @@ MetronicApp.factory('common_service',['$rootScope','$http', '$q',function ($root
                 return response.data;
             });
         }
-        return res;s
+        return res;
     };
 
-
-
-    //���õ�service���Ժ�Ͳ���Ҫÿ��ҳ�涼дservice�ˣ�ֱ����ÿ��ҳ������common_service,Ȼ����main.js �������õ�API
-    //service.post(API.app_service,subFrom)  ֱ���������ü���
 
 /*
     service.get = function (api) {

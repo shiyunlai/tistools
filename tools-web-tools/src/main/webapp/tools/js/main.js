@@ -91,15 +91,14 @@ MetronicApp.factory('httpInterceptor', ['$log', function($log) {
                         //console.log('成功的请求')
                     }else if(response.data.status =="error"){
                         //console.log('失败的请求,进行处理 ')
-                    }else if(response.data.status =="failed"){
+                    }else if(response.data.status =="unAuth"){
                         toastr['error']("登陆失效，请重新登陆!");
-                        //window.location = "../tools/login.html";//如果正确，则进入主页
+                        window.location = "../tools/login.html";//如果正确，则进入主页
                     }
                 }
             }else{
                 window.location = "../tools/views/errorInfo/ServerException.html";//如果不正确，则进入500页面，说明服务器异常
             }
-
             return response;
         }
     };
@@ -281,7 +280,6 @@ MetronicApp.controller('AppController', ['$scope','$rootScope','$http','$q','com
 
     var ret ={ctrl: "AcAuthenticationController", func: "pageInit", emo: "页面初始化"};
     common_service.post(ret,{}).then(function(data){
-        console.log(data)
         if(data.status == "success"){
             $rootScope.userconfig = data.retMessage;
         }
@@ -303,7 +301,8 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
         Demo.init();
-        $timeout(function () {
+        console.log($rootScope.userconfig)
+        /*$timeout(function () {
             var session  = $rootScope.userconfig;//拿去所有大数据
             if(!isNull(session)){
                 $scope.userId = session.user.userId;//绑定登陆信息
@@ -312,7 +311,7 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
                 passedit(session.user);//修改密码页面
                 opermenu($scope.userId);//重组菜单入口
                 persona(session.user);//个性化配置入口
-            }else{
+            }else{*/
                 //如果拿不到数据，以防万一 才调用后台拿取数据
                 var ret ={ctrl: "AcAuthenticationController", func: "pageInit", emo: "页面初始化"};
                 common_service.post(ret,{}).then(function(data){
@@ -327,8 +326,8 @@ MetronicApp.controller('HeaderController', ['$scope','filterFilter','$rootScope'
                         $rootScope.menus = angular.fromJson(data.retMessage.menu);
                     }
                 })
-            }
-        },300)
+           /* }
+        },300)*/
 
     });
     //个人信息页面
@@ -434,7 +433,7 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout','$rootScope','
         Layout.initSidebar(); // init sidebar
         //定时器，去取数据
         console.log($rootScope.userconfig)
-        $timeout(function () {
+        /*$timeout(function () {
             console.log($rootScope.userconfig)
             if(!isNull($rootScope.userconfig)){
                 var sessionjson = angular.fromJson($rootScope.userconfig.menu);
@@ -454,8 +453,8 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout','$rootScope','
                 $scope.search = function (searchParam) {
                     //如果不是数组,说明有搜索值,那就进行处理
                     if (_.isEmpty(searchParam)) { //如果是数组
-                        /*  $('.search').slideDown();//让搜索的内容隐藏
-                          $(".ids1").slideUp();//让原本的树结构显显示*/
+                        /!*  $('.search').slideDown();//让搜索的内容隐藏
+                          $(".ids1").slideUp();//让原本的树结构显显示*!/
                     }else{
                         $scope.issearchmenu = true;//让搜索菜单隐藏
                         $scope.searchParam = searchParam;//把搜索内容复制过去
@@ -463,7 +462,7 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout','$rootScope','
                         //看是否能用动画来做
                     }
                 }
-            }else{
+            }else{*/
                 //万一拿不到数据，才请求后台，以防万一
                 var ret ={ctrl: "AcAuthenticationController", func: "pageInit", emo: "页面初始化"};
                 common_service.post(ret, {}).then(function (data) {
@@ -485,8 +484,8 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout','$rootScope','
                         $scope.search = function (searchParam) {
                             //如果不是数组,说明有搜索值,那就进行处理
                             if (_.isEmpty(searchParam)) { //如果是数组
-                                /!*  $('.search').slideDown();//让搜索的内容隐藏
-                                $(".ids1").slideUp();//让原本的树结构显显示*!/
+                                 /* $('.search').slideDown();//让搜索的内容隐藏
+                                $(".ids1").slideUp();//让原本的树结构显显示*/
                             }else{
                                 $scope.issearchmenu = true;//让搜索菜单隐藏
                                 $scope.searchParam = searchParam;//把搜索内容复制过去
@@ -496,8 +495,8 @@ MetronicApp.controller('SidebarController', ['$scope', '$timeout','$rootScope','
                         };
                     }
                 })
-            }
-        },300)
+           /* }
+        },300)*/
         function search(all, key) { //包装了一个搜索方法，只要数据结构做成类似的，这个直接拿来用。
             // $('.search').html('');//制空
             var sum = 0;//标识，判断第几次循环
@@ -571,12 +570,12 @@ MetronicApp.controller('ThemePanelController', ['$scope','common_service','$root
         if(!isNull(color_)){
             $('#style_color1').attr("href", Layout.getLayoutCssPath() + 'themes/' + color_ + ".css");//设置成我们想要的
         }
-        $timeout(function () {
+       /* $timeout(function () {
             if(!isNull($rootScope.userconfig)){
                 var  session = $rootScope.userconfig.user;//取出用户信息
                 getsubColor($rootScope.userconfig)
                 subjectColor(session.guid)
-            }else{
+            }else{*/
                 var res = $rootScope.res.login_service;//页面所需调用的服务
                 common_service.post(res.pageInit,{}).then(function(data){
                     if(data.status == "success"){
@@ -587,9 +586,9 @@ MetronicApp.controller('ThemePanelController', ['$scope','common_service','$root
                         getsubColor($rootScope.userconfig)
                     }
                 })
-            }
+            /*}
 
-        },300)
+        },300)*/
 
         Demo.init(); // init theme panel
         //存储主题风格颜色内容
@@ -612,11 +611,13 @@ MetronicApp.controller('ThemePanelController', ['$scope','common_service','$root
         }
         //取用户存储的主题风格颜色
         function getsubColor(item){
-            var configArray = item.configs;
-            for(var i=0;i<configArray.length;i++){
-                if(configArray[i].configDict == "DICT_STYLE_COLOR"){
-                    var color_ = configArray[i].configValue;//用户之前存储的颜色
-                    $('#style_color1').attr("href", Layout.getLayoutCssPath() + 'themes/' + color_ + ".css");//设置成用户之前保存的
+            if(!isNull(item.configs)){
+                var configArray = item.configs;
+                for(var i=0;i<configArray.length;i++){
+                    if(configArray[i].configDict == "DICT_STYLE_COLOR"){
+                        var color_ = configArray[i].configValue;//用户之前存储的颜色
+                        $('#style_color1').attr("href", Layout.getLayoutCssPath() + 'themes/' + color_ + ".css");//设置成用户之前保存的
+                    }
                 }
             }
             /*var subFrom = {}
@@ -684,8 +685,11 @@ MetronicApp.provider('router', function ($stateProvider) {
             return {
                 setUpRoutes: function () {
                     common_service.post(ret,{}).then(function(data){
+                        console.log(data)
                         var datas = data.retMessage.resources;
-                        var collection = JSON.parse(datas)
+                        if(!isNull(datas)){
+                            var collection = JSON.parse(datas)
+                        }
                         if(data.status == "success"){
                             for (var routeName in collection) {
                                 if (!$state.get(routeName)) {
@@ -745,13 +749,13 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider, routerProvider)
                         }]
                     }
                 })
-                .state('NonExistent', {
+                .state('Nopermission', {
                     url: "/403",
                     templateUrl: "views/errorInfo/Nopermission.html",
                     data: {pageTitle: '无权限访问'},
                     controller: "errorInfo_controller"
                 })
-                .state('Nopermission', {
+                .state('NonExistent', {
                     url: "/404",
                     templateUrl: "views/errorInfo/NonExistent.html",
                     data: {pageTitle: '访问不存在'},
@@ -769,542 +773,24 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider, routerProvider)
 
 
 
-/* Setup Rounting For All Pages */
-/*MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-
-    // Redirect any unmatched url
-    $urlRouterProvider.otherwise("/dashboard.html");
-    $stateProvider
-        // Dashboard
-        .state('dashboard', {
-            url: "/dashboard.html",
-            templateUrl: "views/dashboard.html",
-            data: {pageTitle: '控制台'},
-            controller: "DashboardController",
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                    return $ocLazyLoad.load({
-                        name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
-                        files: [
-                            '../assets/global/plugins/morris/morris.css',
-                            '../assets/global/plugins/morris/morris.min.js',
-                            '../assets/global/plugins/morris/raphael-min.js',
-                            '../assets/global/plugins/jquery.sparkline.min.js',
-
-                            '../assets/pages/scripts/dashboard.min.js',
-                            'js/controllers/DashboardController.js',
-                        ]
-                    });
-                }]
-            }
-        })
-
-        // AngularJS plugins
-        .state('fileupload', {
-            url: "/file_upload.html",
-            templateUrl: "views/file_upload.html",
-            data: {pageTitle: 'AngularJS File Upload'},
-            controller: "GeneralPageController",
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                    return $ocLazyLoad.load([{
-                        name: 'angularFileUpload',
-                        files: [
-                            '../assets/global/plugins/angularjs/plugins/angular-file-upload/angular-file-upload.min.js',
-                        ]
-                    }, {
-                        name: 'MetronicApp',
-                        files: [
-                            'js/controllers/GeneralPageController.js'
-                        ]
-                    }]);
-                }]
-            }
-        })
-
-        // UI Select
-        .state('uiselect', {
-            url: "/ui_select.html",
-            templateUrl: "views/ui_select.html",
-            data: {pageTitle: 'AngularJS Ui Select'},
-            controller: "UISelectController",
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                    return $ocLazyLoad.load([{
-                        name: 'ui.select',
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
-                        files: [
-                            '../assets/global/plugins/angularjs/plugins/ui-select/select.min.css',
-                            '../assets/global/plugins/angularjs/plugins/ui-select/select.min.js'
-                        ]
-                    }, {
-                        name: 'MetronicApp',
-                        files: [
-                            'js/controllers/UISelectController.js'
-                        ]
-                    }]);
-                }]
-            }
-        })
-
-        // UI Bootstrap
-        .state('uibootstrap', {
-            url: "/ui_bootstrap.html",
-            templateUrl: "views/ui_bootstrap.html",
-            data: {pageTitle: 'AngularJS UI Bootstrap'},
-            controller: "GeneralPageController",
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                    return $ocLazyLoad.load([{
-                        name: 'MetronicApp',
-                        files: [
-                            'js/controllers/GeneralPageController.js'
-                        ]
-                    }]);
-                }]
-            }
-        })
-
-        // Tree View
-        .state('tree', {
-            url: "/tree",
-            templateUrl: "views/tree.html",
-            data: {pageTitle: 'jQuery Tree View'},
-            controller: "GeneralPageController",
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                    return $ocLazyLoad.load([{
-                        name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
-                        files: [
-                            '../assets/global/plugins/jstree/dist/themes/default/style.min.css',
-
-                            '../assets/global/plugins/jstree/dist/jstree.min.js',
-                            '../assets/pages/scripts/ui-tree.min.js',
-                            'js/controllers/GeneralPageController.js'
-                        ]
-                    }]);
-                }]
-            }
-        })
-
-        // Form Tools
-        .state('formtools', {
-            url: "/form-tools",
-            templateUrl: "views/form_tools.html",
-            data: {pageTitle: 'Form Tools'},
-            controller: "GeneralPageController",
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                    return $ocLazyLoad.load([{
-                        name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
-                        files: [
-                            '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css',
-                            '../assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css',
-                            '../assets/global/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css',
-                            '../assets/global/plugins/typeahead/typeahead.css',
-
-                            '../assets/global/plugins/fuelux/js/spinner.min.js',
-                            '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
-                            '../assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js',
-                            '../assets/global/plugins/jquery.input-ip-address-control-1.0.min.js',
-                            '../assets/global/plugins/bootstrap-pwstrength/pwstrength-bootstrap.min.js',
-                            '../assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js',
-                            '../assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js',
-                            '../assets/global/plugins/bootstrap-touchspin/bootstrap.touchspin.js',
-                            '../assets/global/plugins/typeahead/handlebars.min.js',
-                            '../assets/global/plugins/typeahead/typeahead.bundle.min.js',
-                            '../assets/pages/scripts/components-form-tools-2.min.js',
-
-                            'js/controllers/GeneralPageController.js'
-                        ]
-                    }]);
-                }]
-            }
-        })
-
-        // Date & Time Pickers
-        .state('pickers', {
-            url: "/pickers",
-            templateUrl: "views/pickers.html",
-            data: {pageTitle: 'Date & Time Pickers'},
-            controller: "GeneralPageController",
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                    return $ocLazyLoad.load([{
-                        name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
-                        files: [
-                            '../assets/global/plugins/clockface/css/clockface.css',
-                            '../assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
-                            '../assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css',
-                            '../assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css',
-                            '../assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css',
-
-                            '../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
-                            '../assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js',
-                            '../assets/global/plugins/clockface/js/clockface.js',
-                            '../assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js',
-                            '../assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js',
-
-                            '../assets/pages/scripts/components-date-time-pickers.min.js',
-
-                            'js/controllers/GeneralPageController.js'
-                        ]
-                    }]);
-                }]
-            }
-        })
-
-        // Custom Dropdowns
-        .state('dropdowns', {
-            url: "/dropdowns",
-            templateUrl: "views/dropdowns.html",
-            data: {pageTitle: 'Custom Dropdowns'},
-            controller: "GeneralPageController",
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                    return $ocLazyLoad.load([{
-                        name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
-                        files: [
-                            '../assets/global/plugins/bootstrap-select/css/bootstrap-select.min.css',
-                            '../assets/global/plugins/select2/css/select2.min.css',
-                            '../assets/global/plugins/select2/css/select2-bootstrap.min.css',
-
-                            '../assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js',
-                            '../assets/global/plugins/select2/js/select2.full.min.js',
-
-                            '../assets/pages/scripts/components-bootstrap-select.min.js',
-                            '../assets/pages/scripts/components-select2.min.js',
-
-                            'js/controllers/GeneralPageController.js'
-                        ]
-                    }]);
-                }]
-            }
-        })
-
-        // Advanced Datatables
-        .state('datatablesAdvanced', {
-            url: "/datatables/managed.html",
-            templateUrl: "views/datatables/managed.html",
-            data: {pageTitle: 'Advanced Datatables'},
-            controller: "GeneralPageController",
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                    return $ocLazyLoad.load({
-                        name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
-                        files: [
-                            '../assets/global/plugins/datatables/datatables.min.css',
-                            '../assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css',
-
-                            '../assets/global/plugins/datatables/datatables.all.min.js',
-
-                            '../assets/pages/scripts/table-datatables-managed.min.js',
-
-                            'js/controllers/GeneralPageController.js'
-                        ]
-                    });
-                }]
-            }
-        })
-
-        // Ajax Datetables
-        .state('datatablesAjax', {
-            url: "/datatables/ajax.html",
-            templateUrl: "views/datatables/ajax.html",
-            data: {pageTitle: 'Ajax Datatables'},
-            controller: "GeneralPageController",
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                    return $ocLazyLoad.load({
-                        name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
-                        files: [
-                            '../assets/global/plugins/datatables/datatables.min.css',
-                            '../assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css',
-                            '../assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
-
-                            '../assets/global/plugins/datatables/datatables.all.min.js',
-                            '../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
-                            '../assets/global/scripts/datatable.min.js',
-
-                            'js/scripts/table-ajax.js',
-                            'js/controllers/GeneralPageController.js'
-                        ]
-                    });
-                }]
-            }
-        })
-
-        // User Profile
-        .state("profile", {
-            url: "/profile",
-            templateUrl: "views/profile/main.html",
-            data: {pageTitle: 'User Profile'},
-            controller: "UserProfileController",
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                    return $ocLazyLoad.load({
-                        name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
-                        files: [
-                            '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css',
-                            '../assets/pages/css/profile.css',
-                            '../assets/global/plugins/jquery.sparkline.min.js',
-                            '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
-                            '../assets/pages/scripts/profile.min.js',
-                            'js/controllers/UserProfileController.js'
-                        ]
-                    });
-                }]
-            }
-        })
-
-        // User Profile Dashboard
-        .state("profile.dashboard", {
-            url: "/dashboard",
-            templateUrl: "views/profile/dashboard.html",
-            data: {pageTitle: 'User Profile'}
-        })
-
-        // User Profile Account
-        .state("profile.account", {
-            url: "/account",
-            templateUrl: "views/profile/account.html",
-            data: {pageTitle: 'User Account'}
-        })
-
-        // User Profile Help
-        .state("profile.help", {
-            url: "/help",
-            templateUrl: "views/profile/help.html",
-            data: {pageTitle: 'User Help'}
-        })
-
-        .state("commonCaller",{
-            url:"/commonCaller.html",
-            templateUrl:"views/common/commonCaller.html",
-            data: {pageTitle: '通用Controller调用'},
-            controller:"commonCaller_controller"
-        })
-
-        .state("biztraceHandle",{
-            url:"/biztraceHandle.html",
-            templateUrl:"views/biztrace/biztraceHandle.html",
-            data: {pageTitle: '业务日志分析'},
-            controller:"biztraceHandle_controller"
-        })
-
-        .state("biztrace",{
-            url:"/biztraceQuery.html",
-            templateUrl:"views/biztrace/biztraceQuery.html",
-            data: {pageTitle: '业务日志查询'},
-            controller:"biztraceQuery_controller",
-        })
-
-        .state("biztraceSum",{
-            url:"/biztraceSumQuery.html",
-            templateUrl:"views/biztrace/biztraceSumQuery.html",
-            data: {pageTitle: '业务日志汇总查询'},
-            controller:"biztraceSumQuery_controller"
-        })
-
-        .state("redis_clean",{
-            url:"/redisClean.html",
-            templateUrl:"views/biztrace/redisClean.html",
-            data: {pageTitle: 'redis清理'},
-            controller:"redisClean_controller"
-        })
-
-        .state("listcheck",{
-            url:"/listcheck.html",
-            templateUrl:"views/LPC/listcheck.html",
-            data: {pageTitle: '清单-包检查'},
-            controller:"ListCheck_controller"
-        })
-
-        .state("featureReg",{
-            url:"/featureReg.html",
-            templateUrl:"views/LPC/featureReg.html",
-            data: {pageTitle: '开发分支登记'},
-            controller:"FeatureReg_controller"
-        })
-        .state("abftree",{
-            url:"/abftree.html",
-            templateUrl:"views/org/abftree.html",
-            data: {pageTitle: '组织机构管理'},
-            controller:"abftree_controller"
-        })
-        .state("applicationFun",{
-            url:"/applicationFun.html",
-            templateUrl:"views/Jurisdiction/applicationFun.html",
-            data: {pageTitle: '应用功能管理'},
-            controller:"application_controller",
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                    return $ocLazyLoad.load([{
-                        name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before',
-                        files: [
-                            '../assets/global/plugins/angular-ui-grid/ui-grid2.min.js'
-                            // '../assets/global/plugins/angular-ui-grid/ui-grid.js'
-                        ]
-                    }]);
-                }]
-            }
-        })
-        .state("menuManagement",{
-            url:"/menuManagement.html",
-            templateUrl:"views/Management/menuManagement.html",
-            data: {pageTitle: '菜单管理'},
-            controller:"menu_controller"
-        })
-        .state("roleManagement",{
-            url:"/roleManagement.html",
-            templateUrl:"views/roleManage/roleManagement.html",
-            data: {pageTitle: '角色管理'},
-            controller:"role_controller"
-        })
-        .state("behavior",{
-            url:"/behavior.html",
-            templateUrl:"views/behavior/behavior.html",
-            data: {pageTitle: '功能管理'},
-            controller:"behavior_controller"
-        })
-        .state("opManage",{
-            url:"/opManage.html",
-            templateUrl:"views/operator/opManage.html",
-            data: {pageTitle: '操作员管理'},
-            controller:"opmanage_controller"
-        })
-        .state("operatsetqx",{
-            url:"/operatsetqx.html/{id:.*}",
-            templateUrl:"views/operator/operatsetqx.html",
-            data: {pageTitle: '操作员个人配置'},
-            controller:"operat_controller"
-        })
-        .state("permission",{
-            url:"/permission.html/{id:.*}",
-            templateUrl:"views/permission/permission.html",
-            data: {pageTitle: '操作员功能行为权限配置'},
-            controller:"permission_controller"
-        })
-        .state("Reorganizemenu",{
-            url:"/Reorganizemenu.html/{id:.*}",
-            templateUrl:"views/operator/Reorganizemenu.html",
-            data: {pageTitle: '重组菜单'},
-            controller:"reomenu_controller"
-        })
-        .state("roleConfig",{
-            url:"/roleConfig.html/{id:.*}",
-            templateUrl:"views/operator/roleConfig.html",
-            data: {pageTitle: '操作员个性配置'},
-            controller:"operconfig_controller"
-        })
-        .state("shortcutMenu",{
-            url:"/shortcutMenu.html",
-            templateUrl:"views/shortcutMenu/shortcutMenu.html",
-            data: {pageTitle: '快捷菜单'},
-            controller:"shortcutMenu_controller"
-        })
-        .state("operstatus",{
-            url:"/operstatus.html",
-            templateUrl:"views/operator/operstatus.html",
-            data: {pageTitle: '操作员身份'},
-            controller:"operstatus_controller"
-        })
-        .state("emp",{
-            url:"/Emp.html",
-            templateUrl:"views/emp/emp.html",
-            data: {pageTitle: '员工管理'},
-            controller:"Emp_controller"
-        })
-        .state("Workgroup", {
-            url: "/Workgroup.html",
-            templateUrl: "views/Workgroup/Workgroup.html",
-            data: {pageTitle: '工作组管理'},
-            controller: "Workgroup_controller"
-        })
-        .state("dictionary",{
-            url:"/dictionary.html",
-            templateUrl:"views/dictionary/dictionary.html",
-            data: {pageTitle: '业务字典'},
-            controller:"dictionary_controller"
-        })
-        .state("numberResources",{
-            url:"/numberResources.html",
-            templateUrl:"views/numberResources/numberResources.html",
-            data: {pageTitle: '序号资源表'},
-            controller:"numres_controller"
-        })
-        .state("duty",{
-            url:"/duty.html",
-            templateUrl:"views/duty/duty.html",
-            data: {pageTitle: '职务定义'},
-            controller:"duty_controller"
-        })
-        .state("Systempara",{
-            url:"/Systempara.html",
-            templateUrl:"views/Systempara/Systempara.html",
-            data: {pageTitle: '序号资源表'},
-            controller:"systempara_controller"
-        })
-        .state("busiorg",{
-            url:"/busiorg.html",
-            templateUrl:"views/busiorg/busiorg.html",
-            data: {pageTitle: '业务机构'},
-            controller:"busiorg_controller"
-        })
-        .state("transtime",{
-            url:"/transtimeer.html",
-            templateUrl:"views/transtimes/transtimeer.html",
-            data: {pageTitle: '定时器'},
-            controller:"transtime_controller"
-        })
-        .state("journal",{
-            url:"/journal.html",
-            templateUrl:"views/journal/journal.html",
-            data: {pageTitle: '日志页面'},
-            controller:"journal_controller"
-        })
-        .state("journinfo",{
-            url:"/journinfo.html/{id:.*}",
-            templateUrl:"views/journal/journinfo.html",
-            data: {pageTitle: '日志详情页面'},
-            controller:"jourinfo_controller"
-        })
-        .state("loghistory",{
-            url:"/loghistory.html/{id:.*}",
-            templateUrl:"views/journal/loghistory.html",
-            data: {pageTitle: '日志历史页面'},
-            controller:"loghistory_controller"
-        })
-        .state("configuration",{
-            url:"/configuration.html",
-            templateUrl:"views/configuration/configuration.html",
-            data: {pageTitle: '个性化配置管理'},
-            controller:"configuration_controller"
-        })
-
-}]);*/
-
 
 //angular路由监控，跳转开始之前。
 MetronicApp.run(['$rootScope', '$state','$http','common_service', function ($rootScope, $state,$http,common_service) {
     $rootScope.$state = $state;
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-        console.log(toState);
-        var subFrom = {};
-        subFrom.funcCode = toState.funcCode;
-        var ret ={"ctrl": "AcAuthenticationController", "func": "viewCheck","emo":"用于路由跳转判断"};
-        common_service.post(ret,{data:subFrom}).then(function(data){
-            console.log(data)
-        })
+        if(toState.name !=='dashboard'&& toState.name !==''&& toState.name !=='NonExistent'&& toState.name !=='Nopermission'){
+            var subFrom = {};
+            subFrom.funcCode = toState.funcCode;//新路由的功能id
+            var ret ={"ctrl": "AcAuthenticationController", "func": "viewCheck","emo":"用于路由跳转权限判断"};
+            common_service.post(ret,{data:subFrom}).then(function(data){
+                if(data.status == 'forbid'){
+                    alert(1)
+                    event.preventDefault();// 取消默认跳转行为
+                    $state.go('Nopermission');//无权限，跳转
+                }
+            })
+        }
+
 
 
         if(toState.name !=='dashboard'){//如果不是首页保存到临时存储中
@@ -1315,12 +801,12 @@ MetronicApp.run(['$rootScope', '$state','$http','common_service', function ($roo
             sessionStorage.setItem('toState',toState.name);
         }
 
-        if(toState.name=='Systempara'){
+        /*if(toState.name=='Systempara'){
             event.preventDefault();// 取消默认跳转行为
             $rootScope.funcCode = '123123';//传值
             // $state.go("NonExistent");//跳转到未授权页面
             //那最新的路由保存到localhost中，然后在刷新的时候跳转过去，取出来
-        }
+        }*/
         if(!isNull(toState.header)){
             $rootScope.Appfunc = toState.header;//把路由中对应的请求头，放入全局rootscope中。
         }

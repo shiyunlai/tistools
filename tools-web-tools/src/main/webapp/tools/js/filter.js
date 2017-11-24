@@ -146,7 +146,6 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
                             }
                         }
                     }
-
                 })
             }
             return '';

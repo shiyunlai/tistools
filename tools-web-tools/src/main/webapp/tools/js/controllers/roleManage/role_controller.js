@@ -241,7 +241,6 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                         items.roleGuid = arrs.guid
                         role_service.queryRoleFunc(items).then(function(data){
                             var alldatas = data.retMessage;//拿到角色跟功能绑定的所有guid数组
-                            console.log(alldatas)
                             var chenageDatas = []
                             for(var i = 0; i < alldatas.length;i++){
                                 chenageDatas.push(alldatas[i].guidFunc);

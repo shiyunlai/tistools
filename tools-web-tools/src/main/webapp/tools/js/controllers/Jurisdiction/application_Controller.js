@@ -1132,7 +1132,7 @@ angular.module('MetronicApp').controller('application_controller', function($roo
 
     }
 
-    //查询历史记录
+    //查看概况
     $scope.biz.histroy = function () {
         $state.go("loghistory",{id:$scope.dictionaryAdd.guid});//跳转到历史页面
     }

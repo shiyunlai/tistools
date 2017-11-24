@@ -334,7 +334,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                             data[i].children = true;
                             data[i].id = data[i].guid;
                             data[i].icon = 'fa fa-users icon-state-info icon-lg'
-
                         }
                     } else {
                         for (var i = 0; i < data.length; i++) {
@@ -649,7 +648,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
         $scope.editflag = !$scope.editflag;
         $scope.position = angular.copy($scope.abftree.item);
     }
-    //组织机构查询历史记录
+    //组织机构查看概况
     abftree.histroy = function () {
         var orgGuid = $scope.abftree.item.guid;
         console.log(orgGuid)

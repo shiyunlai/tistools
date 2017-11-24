@@ -37,7 +37,7 @@ angular.module('MetronicApp').controller('systempara_controller', function($root
     })
     
     
-    //查询历史记录
+    //查看概况
     sys.histroy = function () {
         var getSel = $scope.gridOptions.getSelectedRows();
         var sysGuid = getSel[0].guid;

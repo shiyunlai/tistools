@@ -15,7 +15,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">属性名称:</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="dataEntFrom.fieldName"  />
+                            <input type="text" class="form-control" ng-model="dataEntFrom.fieldName" ng-disabled="!editflag" />
                         </div>
                     </div>
                 </div>
@@ -23,7 +23,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">引用类型</label>
                         <div class="col-md-8">
-                            <select class="form-control" ng-model="dataEntFrom.refType">
+                            <select class="form-control" ng-model="dataEntFrom.refType" ng-disabled="!editflag">
                                 <option value="0">业务字典</option>
                                 <option value="1">其他表</option>
                             </select>
@@ -34,7 +34,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">字段类型</label>
                         <div class="col-md-8">
-                            <select class="form-control" ng-model="dataEntFrom.fieldType">
+                            <select class="form-control" ng-model="dataEntFrom.fieldType" ng-disabled="!editflag">
                                 <option value="0">字符串</option>
                                 <option value="1">整数</option>
                                 <option value="2">小数</option>
@@ -50,7 +50,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">显示格式:</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="dataEntFrom.displayFormat"  />
+                            <input type="text" class="form-control" ng-model="dataEntFrom.displayFormat" ng-disabled="!editflag" />
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">代码大类:</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="dataEntFrom.doclistCode"  />
+                            <input type="text" class="form-control" ng-model="dataEntFrom.doclistCode" ng-disabled="!editflag" />
                         </div>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">数据库列名:</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="dataEntFrom.columnName"  />
+                            <input type="text" class="form-control" ng-model="dataEntFrom.columnName" ng-disabled="!editflag" />
                         </div>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">宽度:</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="dataEntFrom.width"  />
+                            <input type="text" class="form-control" ng-model="dataEntFrom.width" ng-disabled="!editflag" />
                         </div>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4"> 是否可修改:<span ng-class="{required:myform.isModify.$invalid}"  > * </span></label>
                         <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
-                            <select class="form-control"   required   ng-model="dataEntFrom.ismodify" name="isModify">
+                            <select class="form-control"   required   ng-model="dataEntFrom.ismodify" name="isModify" ng-disabled="!editflag">
                                 <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>
@@ -92,7 +92,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4"> 是否显示:<span ng-class="{required:myform.isDisplay.$invalid}"  > * </span></label>
                         <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
-                            <select class="form-control"   required   ng-model="dataEntFrom.isdisplay" name="isDisplay">
+                            <select class="form-control"   required   ng-model="dataEntFrom.isdisplay" name="isDisplay" ng-disabled="!editflag">
                                 <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>
@@ -102,7 +102,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4"> 是否必须填写:<span ng-class="{required:myform.isInput.$invalid}"  > * </span></label>
                         <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
-                            <select class="form-control"   required   ng-model="dataEntFrom.isinput" name="isInput">
+                            <select class="form-control"   required   ng-model="dataEntFrom.isinput" name="isInput" ng-disabled="!editflag">
                                 <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>
@@ -112,7 +112,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4"> 是否是主键:<span ng-class="{required:myform.isPk.$invalid}"  > * </span></label>
                         <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
-                            <select class="form-control"   required   ng-model="dataEntFrom.ispk" name="isPk">
+                            <select class="form-control"   required   ng-model="dataEntFrom.ispk" name="isPk" ng-disabled="!editflag">
                                 <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>
@@ -122,7 +122,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4"> 是否自动产生主键:<span ng-class="{required:myform.isAutokey.$invalid}"  > * </span></label>
                         <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
-                            <select class="form-control"   required   ng-model="dataEntFrom.isautokey" name="isAutokey">
+                            <select class="form-control"   required   ng-model="dataEntFrom.isautokey" name="isAutokey" ng-disabled="!editflag">
                                 <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>
@@ -132,7 +132,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-2">外键录入URL:</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" ng-model="dataEntFrom.fkInputurl"  />
+                            <input type="text" class="form-control" ng-model="dataEntFrom.fkInputurl" ng-disabled="!editflag" />
                         </div>
                     </div>
                 </div>
@@ -141,7 +141,7 @@
                         <label class="control-label col-md-4">外键描述字段名:</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="dataEntFrom.fkFielddesc"/>
+                                   ng-model="dataEntFrom.fkFielddesc" ng-disabled="!editflag"/>
                         </div>
                     </div>
                 </div>
@@ -150,7 +150,7 @@
                         <label class="control-label col-md-4">外键列名:</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="dataEntFrom.fkColumnname"
+                                   ng-model="dataEntFrom.fkColumnname"  ng-disabled="!editflag"
                             />
                         </div>
                     </div>
@@ -160,7 +160,7 @@
                         <label class="control-label col-md-4">外键表名:</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control"
-                                   ng-model="dataEntFrom.fkTablename"
+                                   ng-model="dataEntFrom.fkTablename" ng-disabled="!editflag"
                             />
                         </div>
                     </div>
@@ -169,7 +169,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-2">属性描述:</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" ng-model="dataEntFrom.fieldDesc"  />
+                            <input type="text" class="form-control" ng-model="dataEntFrom.fieldDesc" ng-disabled="!editflag" />
                         </div>
                     </div>
                 </div>
@@ -178,10 +178,6 @@
                         <label class="control-label col-md-2"></label>
                         <div class="col-md-10">
                             <div class="actions btn-set" style="float: right;">
-                                <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="add(dataEntFrom)" > 保存
-                                </button>
-                                <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存
-                                </button>
                                 <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
                                 </button>
                             </div>

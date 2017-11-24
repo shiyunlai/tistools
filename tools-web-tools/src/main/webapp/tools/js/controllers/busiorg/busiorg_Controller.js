@@ -352,7 +352,7 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
         }
     }
 
-    //查询历史记录
+    //查看概况
     $scope.busiorg.histroy = function () {
         var busGuid = $scope.busiorg.item.guid;
         $state.go("loghistory",{id:busGuid});//跳转到历史页面

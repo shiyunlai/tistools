@@ -44,7 +44,7 @@ MetronicApp.controller('configuration_controller', function ($filter, $scope, $s
     }
     $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f);
     
-    //查看历史记录
+    //查看概况
     config.histroy = function () {
         var getSel = $scope.gridOptions.getSelectedRows();
         var confGuid= getSel[0].guid
