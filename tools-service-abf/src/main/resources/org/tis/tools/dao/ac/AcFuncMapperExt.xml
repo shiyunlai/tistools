@@ -19,12 +19,11 @@
     <select id="queryFuncResourcesWithFuncCode" resultType="map">
         SELECT <include refid="Func_Resources_Column_List" />
         FROM
-          AC_FUNC_RESOURCE a
+          (SELECT * FROM AC_FUNC_RESOURCE t WHERE t.GUID_FUNC IN ${funcGuids} ) a
         LEFT JOIN
           AC_FUNC b
         ON
-          a.GUID_FUNC in ${funcGuids}
-        AND a.GUID_FUNC = b.GUID
+          a.GUID_FUNC = b.GUID
     </select>
 
     <select id="queryFuncInfoByBhvCode" resultType="map">
