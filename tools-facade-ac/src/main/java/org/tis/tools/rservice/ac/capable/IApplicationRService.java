@@ -413,7 +413,7 @@ public interface IApplicationRService {
 	 * @param bhvDefGuids 功能GUID数组
 	 * 返回list
 	 */
-	 void addBhvDefForFunc(String funcGuid, List bhvDefGuids) throws AppManagementException;
+	 List<AcFuncBhv> addBhvDefForFunc(String funcGuid, List bhvDefGuids) throws AppManagementException;
 
 	/**
 	 * 设置功能行为定义是否有效
@@ -446,20 +446,20 @@ public interface IApplicationRService {
 	 * @param funcGuid
 	 * @param bhvDefGuid
 	 */
-	 void delFuncBhvDef(String funcGuid, List<String> bhvDefGuid) throws AppManagementException;
+	 List<AcFuncBhv> delFuncBhvDef(String funcGuid, List<String> bhvDefGuid) throws AppManagementException;
 
 	/**
 	 * 开通应用
 	 * @param appGuid
 	 * @param openDate
 	 */
-	 void enableApp(String appGuid, Date openDate) throws AppManagementException;
+	 AcApp enableApp(String appGuid, Date openDate) throws AppManagementException;
 
 	/**
 	 * 关闭应用
 	 * @param appGuid
 	 */
-	 void disableApp(String appGuid) throws AppManagementException;
+	AcApp disableApp(String appGuid) throws AppManagementException;
 
 	/**
 	 * 查询应用下所有功能

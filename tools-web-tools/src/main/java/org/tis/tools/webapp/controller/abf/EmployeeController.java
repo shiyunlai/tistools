@@ -80,7 +80,7 @@ public class EmployeeController extends BaseController {
      */
     @OperateLog(
             operateType = "update",  // 操作类型
-            operateDesc = "更新员工信息", // 操作描述
+            operateDesc = "修改员工", // 操作描述
             retType = ReturnType.Object, // 返回类型，对象或数组
             id = "guid", // 操作对象标识
             name = "employeeName", // 操作对象名
@@ -221,7 +221,7 @@ public class EmployeeController extends BaseController {
      * @return
      */
     @OperateLog(
-            operateType = "update",  // 操作类型
+            operateType = JNLConstants.OPEARTE_TYPE_DELETE,  // 操作类型
             operateDesc = "取消指派员工机构", // 操作描述
             retType = ReturnType.Object, // 返回类型，对象或数组
             id = "guidEmp", // 操作对象标识
@@ -232,8 +232,8 @@ public class EmployeeController extends BaseController {
         JSONObject jsonObj = JSONObject.parseObject(content);
         String empGuid = jsonObj.getString("empGuid");
         String orgGuid = jsonObj.getString("orgGuid");
-
-        return getReturnMap(employeeRService.deleteEmpOrg(orgGuid, empGuid));
+        employeeRService.deleteEmpOrg(orgGuid, empGuid);
+        return getReturnMap(jsonObj);
     }
 
     /**
@@ -242,6 +242,12 @@ public class EmployeeController extends BaseController {
      * @param content
      * @return
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_ADD,  // 操作类型
+            operateDesc = "指派员工机构", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "guidEmp", // 操作对象标识
+            keys = "guidOrg") // 操作对象的关键值的键值名
     @ResponseBody
     @RequestMapping(value = "/assignPos",produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> assignPos( @RequestBody String content) {
@@ -250,19 +256,24 @@ public class EmployeeController extends BaseController {
         String posCode = jsonObj.getString("posCode");
         String isMain = jsonObj.getString("isMain");
         if ("true".equals(isMain)) {
-            employeeRService.assignPosition(empCode, posCode, true);
+            return getReturnMap(employeeRService.assignPosition(empCode, posCode, true));
         } else {
-            employeeRService.assignPosition(empCode, posCode, false);
+            return getReturnMap(employeeRService.assignPosition(empCode, posCode, false));
         }
-        return getReturnMap("指派成功!");
     }
 
     /**
-     * 取消指派机构
+     * 取消指派员工岗位
      *
      * @param content
      * @return
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_DELETE,  // 操作类型
+            operateDesc = "取消指派员工岗位", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "guidEmp", // 操作对象标识
+            keys = "guidOrg") // 操作对象的关键值的键值名
     @ResponseBody
     @RequestMapping(value = "/disassignPos",produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> disassignPos(@RequestBody String content) {
@@ -270,23 +281,9 @@ public class EmployeeController extends BaseController {
         String empGuid = jsonObj.getString("empGuid");
         String posGuid = jsonObj.getString("posGuid");
         employeeRService.deleteEmpPosition(posGuid, empGuid);
-        return getReturnMap("取消指派成功!");
+        return getReturnMap(jsonObj);
     }
 
-    /**
-     * 生成员工代码
-     *
-     * @param content
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/initEmpCode",produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public Map<String, Object> initEmpCode( @RequestBody String content) {
-        // 收到请求
-        JSONObject jsonObj = JSONObject.parseObject(content);
-        String empCode = employeeRService.genEmpCode(null, null);
-        return getReturnMap(empCode);
-    }
 
     /**
      * 指定新的主机构
@@ -294,14 +291,19 @@ public class EmployeeController extends BaseController {
      * @param content
      * @return
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,  // 操作类型
+            operateDesc = "指定员工主机构", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "guidEmp", // 操作对象标识
+            keys = "guidOrg") // 操作对象的关键值的键值名
     @ResponseBody
     @RequestMapping(value = "/fixmainOrg",produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> fixmainOrg(@RequestBody String content) {
         JSONObject jsonObj = JSONObject.parseObject(content);
         String empCode = jsonObj.getString("empCode");
         String orgCode = jsonObj.getString("orgCode");
-        employeeRService.fixMainOrg(empCode, orgCode);
-        return getReturnMap("指定成功!");
+        return getReturnMap(employeeRService.fixMainOrg(empCode, orgCode));
     }
 
     /**
@@ -310,14 +312,19 @@ public class EmployeeController extends BaseController {
      * @param content
      * @return
      */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,  // 操作类型
+            operateDesc = "指定员工主岗位", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "guidEmp", // 操作对象标识
+            keys = "guidEmp") // 操作对象的关键值的键值名
     @ResponseBody
     @RequestMapping(value = "/fixmainPos",produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> fixmainPos(@RequestBody String content) {
         JSONObject jsonObj = JSONObject.parseObject(content);
         String empCode = jsonObj.getString("empCode");
         String posCode = jsonObj.getString("posCode");
-        employeeRService.fixMainPosition(empCode, posCode);
-       return getReturnMap("指定成功!");
+        return getReturnMap(employeeRService.fixMainPosition(empCode, posCode));
     }
 
     /**

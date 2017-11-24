@@ -3,7 +3,7 @@
  */
 package org.tis.tools.rservice.om.capable;
 
-import org.apache.commons.collections.CollectionUtils;
+import com.alibaba.dubbo.common.utils.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
