@@ -35,7 +35,7 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
     dataEnt.clear = function () {
         $scope.searchitem = "";
     }
-    //定义树结构右击
+
     //树自定义右键功能(根据类型判断)
     var items = function customMenu(node) {
         var judge = node.original;
@@ -103,7 +103,6 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
             },
             "check_callback": true,
             'data':function(obj, callback){
-                console.log(obj)
                 // obj.text='实体管理'
                 var jsonarray = [];
                 $scope.jsonarray = jsonarray;
@@ -114,10 +113,11 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
                     data.text = '实体属性';
                     data.children = true;
                     data.types = 'root';
+                    data.id = 'root';
                     its.push(data);
                     $scope.jsonarray = angular.copy(its);
                     callback.call(this, $scope.jsonarray);
-                }else if(obj.original.types =='root'){
+                }else if(obj.id =='root'){
                     var subFrom  = {};
                     subFrom.type = 'app';//查询所有应用
                     common_service.post(res.queryAcEntityTreeList,{data:subFrom}).then(function(data){
@@ -145,7 +145,7 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
                             for(var i =0;i <datas.length;i++){
                                 datas[i].text = datas[i].itemName;
                                 datas[i].children = true;
-                                datas[i].id = datas[i].guid;
+                                datas[i].id = obj.id + datas[i].guid;
                                 datas[i].types = 'enType';
                                 datas[i].icon = "fa  fa-files-o icon-state-info icon-lg"
                                 its.push(datas[i]);
@@ -217,6 +217,8 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
         if (typeof data.node !== 'undefined') {//拿到结点详情
             $scope.dataEnt = data.node.original;//绑定内容给页面
             if(data.node.original.types == 'eneits'){
+                getData();
+                getDatas();
                 $scope.dataEntIf.dataEnis = true;//只有点击实体属性的时候，才让右侧内容显示
             }else{
                 $scope.dataEntIf.dataEnis = false;
@@ -254,7 +256,6 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
         var tis = [];
         tis.push(item);
         common_service.post(res.deleteAcEntity,{data:tis}).then(function(data){
-            console.log(data)
             if(data.status == "success"){
                 toastr['success']("删除成功!");
                 $("#container").jstree().refresh();
@@ -405,11 +406,12 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
             dataEntIf.sssx = false;
             dataEntIf.sjfw = false;//隐藏
         }else if (type == 1) {
-            getData();//查询实体属性树
+            getData();//查询实体属性方法
             dataEntIf.dqst = false;
             dataEntIf.sssx = true;
             dataEntIf.sjfw = false;//隐藏
         }else if(type == 2){
+            getDatas();//查询实体范围方法
             dataEntIf.sssx = false;
             dataEntIf.sjfw = true;//显示
             dataEntIf.dqst = false;
@@ -436,13 +438,10 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
         }
     }
     $scope.gridAttributes = initgrid($scope,gridAttributes,filterFilter,grid,true,f);
-
-
     // 查询实体属性方法
     function getData() {
         var subFrom = {};
         subFrom.entityGuid = $scope.dataEnt.guid;
-        console.log(subFrom)
         common_service.post(res.queryAcEntityfieldList,{data:subFrom}).then(function(data){
            var datas  = data.retMessage;
             if(data.status == "success"){
@@ -456,7 +455,6 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
             }
         })
     }
-
     //新增实体属性方法
     var createAcEntityfield = function (item,$modalInstance) {
         var subFrom = {};
@@ -514,7 +512,6 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
                 })
         }
     }
-
     //删除属性
     $scope.dataDet_delete = function () {
         var getSel = $scope.gridAttributes.getSelectedRows();//拿到数据
@@ -536,7 +533,6 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
             }
         }
     }
-
     //查看详情
     $scope.dataDett_details = function () {
         var getSel = $scope.gridAttributes.getSelectedRows();//拿到数据
@@ -555,12 +551,18 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
                 })
         }
     }
+
+
+
+
     //实体范围权限表格
     var gridPermissions = {};
     $scope.gridPermissions = gridPermissions;
     var gridPer = [
-        { field: "bhvName", displayName:'行为名称'},
-        { field: "bhvCode", displayName:'行为代码'}
+        { field: "entityName", displayName:'实体名称'},
+        { field: "privName", displayName:'数据范围权限名称'},
+        { field: "dataOpType", displayName:'数据操作类型'},
+        { field: "filterSqlString", displayName:'SQL查询条件'}
     ];
     var fPer = function(row){
         if(row.isSelected){
@@ -571,31 +573,45 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
     }
     $scope.gridPermissions = initgrid($scope,gridPermissions,filterFilter,gridPer,false,fPer);
 
-    //模拟获取数据渲染表格
+    ////查询实体范围接口
     function getDatas() {
-        var permit= [
-            {'bhvName':'范围','bhvCode':0001},
-            {'bhvName':'范围','bhvCode':0002},
-            {'bhvName':'范围','bhvCode':0003},
-            {'bhvName':'范围','bhvCode':0004},
-            {'bhvName':'范围','bhvCode':0005},
-            {'bhvName':'范围','bhvCode':0006},
-            {'bhvName':'范围','bhvCode':0007},
-            {'bhvName':'范围','bhvCode':0008},
-            {'bhvName':'范围','bhvCode':0009},
-            {'bhvName':'范围','bhvCode':0000},
-            {'bhvName':'范围','bhvCode':0001},
-            {'bhvName':'范围','bhvCode':0002}
-        ]
-        $scope.gridPermissions.data = permit;
-        $scope.gridPermissions.mydefalutData = permit;
-        $scope.gridPermissions.getPage(1,$scope.gridPermissions.paginationPageSize);
+        var subFrom = {};
+        subFrom.entityGuid = $scope.dataEnt.guid;
+        common_service.post(res.queryAcDatascopeList,{data:subFrom}).then(function(data){
+            var datas  = data.retMessage;
+            console.log(datas);
+            if(data.status == "success"){
+                $scope.gridPermissions.data = datas;
+                $scope.gridPermissions.mydefalutData = datas;
+                $scope.gridPermissions.getPage(1,$scope.gridPermissions.paginationPageSize);
+            }else{
+                $scope.gridPermissions.data = [];
+                $scope.gridPermissions.mydefalutData = [];
+                $scope.gridPermissions.getPage(1,$scope.gridPermissions.paginationPageSize);
+            }
+        })
     }
     getDatas();
 
 
+    //新增范围接口
+    var createAcDatascope = function (item,$modalInstance) {
+        var subFrom = {};
+        subFrom=item;
+        common_service.post(res.createAcDatascope,{data:subFrom}).then(function(data){
+            if(data.status == "success"){
+                toastr['success']("新增属性成功!");
+                $("#container").jstree().refresh();
+                getDatas();//查询实体范围列表;
+                $modalInstance.dismiss('cancel');
+            }
+        })
+    }
+
+
     //新增范围
     $scope.dataDett_add = function () {
+        var guidEntity = $scope.dataEnt.guid;
         openwindow($modal, 'views/dataEntity/Entityauthority.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
                 $scope.title = '新增范围数据权限'
@@ -631,7 +647,10 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
                     items.push(item);
                     dataEnt.cardArray.push(items);
                 };
-                $scope.add = function(){
+                $scope.add = function(item){
+                    item.guidEntity = guidEntity;
+                    item.filterSqlString = 'cets';
+                    createAcDatascope(item,$modalInstance)
                 }
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
@@ -639,23 +658,98 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
 
             })
     }
+    //修改接口
+    var editAcDatascope = function (item,$modalInstance) {
+        var subFrom = {};
+        subFrom=item;
+        common_service.post(res.editAcDatascope,{data:subFrom}).then(function(data){
+            console.log(data)
+            if(data.status == "success"){
+                toastr['success']("新增属性成功!");
+                getDatas();//查询实体范围列表;
+                $modalInstance.dismiss('cancel');
+            }
+        })
+    }
     //修改范围
     $scope.dataDett_edit = function () {
         var getSel = $scope.gridPermissions.getSelectedRows();//拿到数据
+        var guidEntity = $scope.dataEnt.guid;
+        console.log(getSel)
         if(isNull(getSel) || getSel.length>1){
             toastr['error']("请至少选中一条数据来修改！");
         }else{
-            toastr['success']("修改成功！");
+            openwindow($modal, 'views/dataEntity/Entityauthority.html', 'lg',//弹出页面
+                function ($scope, $modalInstance) {
+                    $scope.title = '修改范围数据权限'
+                    var dataEnt = {};
+                    $scope.dataEnt = dataEnt;
+                    $scope.dataEnt.qualityRatingExt = [];
+                    $scope.dataEnt.cardArray = [];
+
+                    //回选
+                    var dataEntFrom = {};
+                    $scope.dataEntFrom = getSel[0];
+
+                    var items = []
+                    var item = {};
+                    items.push(item);
+                    dataEnt.cardArray.push(items);
+
+                    //条件删除
+                    $scope.delQualityRatingExt = function (d,index) {
+                        d.splice(index, 1);
+                    };
+
+                    //条件新增
+                    $scope.addQualityRatingExt = function (index) {
+                        var item = {};
+                        dataEnt.cardArray[index].push(item)
+                    };
+
+                    //卡片删一个
+                    $scope.carddelQualityRatingExt = function (index) {
+                        dataEnt.cardArray.splice(index, 1);
+                    };
+                    //卡片加一个
+                    $scope.cardaddQualityRatingExt = function () {
+                        var items = []
+                        var item = {};
+                        items.push(item);
+                        dataEnt.cardArray.push(items);
+                    };
+                    $scope.add = function(item){
+                        // item.guidEntity = getSel[0].guid;
+                        item.guidEntity = guidEntity;
+                        item.filterSqlString = 'cets';
+                        editAcDatascope(item,$modalInstance)
+                    }
+                    $scope.cancel = function () {
+                        $modalInstance.dismiss('cancel');
+                    };
+
+                })
         }
     }
 
     //删除范围
     $scope.dataDett_delete = function () {
         var getSel = $scope.gridPermissions.getSelectedRows();//拿到数据
-        if(isNull(getSel) || getSel.length>1){
+        if(isNull(getSel) || getSel.length<1){
             toastr['error']("请至少选中一条数据来删除！");
         }else{
-            toastr['success']("删除成功！");
+            if(confirm('确定删除实体配置吗')){
+                var tis = [];
+                for(var i =0;i<getSel.length;i++){
+                    tis.push(getSel[i].guid);
+                }
+                common_service.post(res.deleteAcDatescope,{data:tis}).then(function(data){
+                    if(data.status == "success"){
+                        toastr['success']("删除成功！");
+                        getDatas();//查询实体范围列表;
+                    }
+                })
+            }
         }
     }
 

@@ -333,7 +333,7 @@
 		,width as width
 		,default_value as defaultValue
 		,min_value as minValue
-		,max_value as maxValue
+		,max_value as `maxValue`
 		,length_value as lengthValue
 		,precision_value as precisionValue
 		,validate_type as validateType

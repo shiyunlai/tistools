@@ -347,7 +347,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                             }
                         }
                     }
-
                     $scope.jsonarray = angular.copy(data);
                     callback.call(this, $scope.jsonarray);
                 })
