@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 系统运行参数表
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：sys
  * 模型：SYS_RUN_CONFIG 系统运行参数表
  *
@@ -48,6 +48,22 @@ public class SysRunConfig implements Serializable {
 	public static final String COLUMN_VALUE = "value" ; 
 	/** DESCRIPTION ：参数描述<br/><br/>参数功能描述 */
 	public static final String COLUMN_DESCRIPTION = "description" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.sys.SysRunConfig";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** GUID_APP字段名<br/> */
+    public static final String NAME_GUID_APP = "应用系统GUID" ;
+    /** GROUP_NAME字段名<br/> */
+    public static final String NAME_GROUP_NAME = "参数组别" ;
+    /** KEY_NAME字段名<br/> */
+    public static final String NAME_KEY_NAME = "参数键" ;
+    /** VALUE_FROM字段名<br/> */
+    public static final String NAME_VALUE_FROM = "值来源类型" ;
+    /** VALUE字段名<br/> */
+    public static final String NAME_VALUE = "参数值" ;
+    /** DESCRIPTION字段名<br/> */
+    public static final String NAME_DESCRIPTION = "参数描述" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

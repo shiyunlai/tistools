@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 操作员与权限集（角色）对应关系
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_OPERATOR_ROLE 操作员与权限集（角色）对应关系
  *
@@ -40,6 +40,14 @@ public class AcOperatorRole implements Serializable {
 	public static final String COLUMN_GUID_ROLE = "guid_role" ; 
 	/** AUTH ：是否可分级授权<br/><br/>预留字段，暂不使用。意图将操作员所拥有的权限赋予其他操作员。 */
 	public static final String COLUMN_AUTH = "auth" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcOperatorRole";
+    /** GUID_OPERATOR字段名<br/> */
+    public static final String NAME_GUID_OPERATOR = "操作员GUID" ;
+    /** GUID_ROLE字段名<br/> */
+    public static final String NAME_GUID_ROLE = "拥有角色GUID" ;
+    /** AUTH字段名<br/> */
+    public static final String NAME_AUTH = "是否可分级授权" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：操作员GUID<br/>描述： */

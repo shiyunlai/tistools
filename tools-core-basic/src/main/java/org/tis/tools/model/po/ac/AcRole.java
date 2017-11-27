@@ -4,15 +4,19 @@
  */
 package org.tis.tools.model.po.ac;
 
-import org.tis.tools.common.utils.StringUtil;
-
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.sql.Blob;
+import java.sql.Time;
+import java.util.Date;
+
+import org.tis.tools.common.utils.StringUtil;
 
 /**
  * 
  * <pre>
  * 权限集(角色)
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_ROLE 权限集(角色)
  *
@@ -42,6 +46,20 @@ public class AcRole implements Serializable {
 	public static final String COLUMN_ROLE_TYPE = "role_type" ; 
 	/** ROLE_DESC ：角色描述<br/><br/> */
 	public static final String COLUMN_ROLE_DESC = "role_desc" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcRole";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** GUID_APP字段名<br/> */
+    public static final String NAME_GUID_APP = "隶属应用GUID" ;
+    /** ROLE_CODE字段名<br/> */
+    public static final String NAME_ROLE_CODE = "角色代码" ;
+    /** ROLE_NAME字段名<br/> */
+    public static final String NAME_ROLE_NAME = "角色名称" ;
+    /** ROLE_TYPE字段名<br/> */
+    public static final String NAME_ROLE_TYPE = "角色类别" ;
+    /** ROLE_DESC字段名<br/> */
+    public static final String NAME_ROLE_DESC = "角色描述" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
@@ -185,19 +203,5 @@ public class AcRole implements Serializable {
 	
 	public String toString(){
 		return StringUtil.toString(this) ; 
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null)
-			return false;
-		if (this == obj) {
-			return true;
-		}
-		if (obj instanceof AcRole) {
-			AcRole other = (AcRole) obj;
-			return (other.getGuid()).equals(this.getGuid());
-		}
-		return false;
 	}
 }

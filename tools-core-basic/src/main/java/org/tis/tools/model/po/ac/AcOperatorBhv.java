@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 操作员特殊功能行为配置
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_OPERATOR_BHV 操作员特殊功能行为配置
  *
@@ -42,6 +42,14 @@ public class AcOperatorBhv implements Serializable {
 	public static final String COLUMN_GUID_FUNC_BHV = "guid_func_bhv" ; 
 	/** AUTH_TYPE ：授权标志<br/><br/>取值来自业务菜单：DICT_AC_AUTHTYPE 如：特别禁止、特别允许 */
 	public static final String COLUMN_AUTH_TYPE = "auth_type" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcOperatorBhv";
+    /** GUID_OPERATOR字段名<br/> */
+    public static final String NAME_GUID_OPERATOR = "操作员GUID" ;
+    /** GUID_FUNC_BHV字段名<br/> */
+    public static final String NAME_GUID_FUNC_BHV = "操作行为GUID" ;
+    /** AUTH_TYPE字段名<br/> */
+    public static final String NAME_AUTH_TYPE = "授权标志" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：操作员GUID<br/>描述： */

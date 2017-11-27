@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 操作员重组菜单
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_OPERATOR_MENU 操作员重组菜单
  *
@@ -69,6 +69,42 @@ public class AcOperatorMenu implements Serializable {
 	public static final String COLUMN_OPEN_MODE = "open_mode" ; 
 	/** SUB_COUNT ：子节点数<br/><br/> */
 	public static final String COLUMN_SUB_COUNT = "sub_count" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcOperatorMenu";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** GUID_OPERATOR字段名<br/> */
+    public static final String NAME_GUID_OPERATOR = "操作员GUID" ;
+    /** GUID_APP字段名<br/> */
+    public static final String NAME_GUID_APP = "应用GUID" ;
+    /** GUID_FUNC字段名<br/> */
+    public static final String NAME_GUID_FUNC = "功能GUID" ;
+    /** MENU_NAME字段名<br/> */
+    public static final String NAME_MENU_NAME = "菜单名称" ;
+    /** MENU_LABEL字段名<br/> */
+    public static final String NAME_MENU_LABEL = "菜单显示（中文）" ;
+    /** GUID_PARENTS字段名<br/> */
+    public static final String NAME_GUID_PARENTS = "父菜单GUID" ;
+    /** ISLEAF字段名<br/> */
+    public static final String NAME_ISLEAF = "是否叶子菜单" ;
+    /** UI_ENTRY字段名<br/> */
+    public static final String NAME_UI_ENTRY = "UI入口" ;
+    /** MENU_LEVEL字段名<br/> */
+    public static final String NAME_MENU_LEVEL = "菜单层次" ;
+    /** GUID_ROOT字段名<br/> */
+    public static final String NAME_GUID_ROOT = "根菜单GUID" ;
+    /** DISPLAY_ORDER字段名<br/> */
+    public static final String NAME_DISPLAY_ORDER = "显示顺序" ;
+    /** IMAGE_PATH字段名<br/> */
+    public static final String NAME_IMAGE_PATH = "菜单图片路径" ;
+    /** EXPAND_PATH字段名<br/> */
+    public static final String NAME_EXPAND_PATH = "菜单展开图片路径" ;
+    /** MENU_SEQ字段名<br/> */
+    public static final String NAME_MENU_SEQ = "菜单路径序列" ;
+    /** OPEN_MODE字段名<br/> */
+    public static final String NAME_OPEN_MODE = "页面打开方式" ;
+    /** SUB_COUNT字段名<br/> */
+    public static final String NAME_SUB_COUNT = "子节点数" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

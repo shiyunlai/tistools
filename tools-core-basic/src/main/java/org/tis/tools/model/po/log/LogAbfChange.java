@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 记录日志差异值
- * 模型文件 ： D:\tistools\tools-core-basic\model\JNL-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\jnl-mysql.erm
  * 业务域：log
  * 模型：LOG_ABF_CHANGE 记录日志差异值
  *
@@ -40,6 +40,14 @@ public class LogAbfChange implements Serializable {
 	public static final String COLUMN_CHANGE_KEY = "change_key" ; 
 	/** CHANGE_VALUE ：改变项键值<br/><br/> */
 	public static final String COLUMN_CHANGE_VALUE = "change_value" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.log.LogAbfChange";
+    /** GUID_HISTORY字段名<br/> */
+    public static final String NAME_GUID_HISTORY = "操作记录" ;
+    /** CHANGE_KEY字段名<br/> */
+    public static final String NAME_CHANGE_KEY = "改变项键名" ;
+    /** CHANGE_VALUE字段名<br/> */
+    public static final String NAME_CHANGE_VALUE = "改变项键值" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：操作记录<br/>描述： */

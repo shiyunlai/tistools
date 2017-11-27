@@ -4,17 +4,19 @@
  */
 package org.tis.tools.model.po.om;
 
-import org.tis.tools.common.utils.StringUtil;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Blob;
+import java.sql.Time;
 import java.util.Date;
+
+import org.tis.tools.common.utils.StringUtil;
 
 /**
  * 
  * <pre>
  * 机构信息表
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：om
  * 模型：OM_ORG 机构信息表
  *
@@ -89,6 +91,64 @@ public class OmOrg implements Serializable {
 	public static final String COLUMN_SUB_COUNT = "sub_count" ; 
 	/** REMARK ：备注<br/><br/> */
 	public static final String COLUMN_REMARK = "remark" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.om.OmOrg";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** ORG_CODE字段名<br/> */
+    public static final String NAME_ORG_CODE = "机构代码" ;
+    /** ORG_NAME字段名<br/> */
+    public static final String NAME_ORG_NAME = "机构名称" ;
+    /** ORG_TYPE字段名<br/> */
+    public static final String NAME_ORG_TYPE = "机构类型" ;
+    /** ORG_DEGREE字段名<br/> */
+    public static final String NAME_ORG_DEGREE = "机构等级" ;
+    /** ORG_STATUS字段名<br/> */
+    public static final String NAME_ORG_STATUS = "机构状态" ;
+    /** ORG_LEVEL字段名<br/> */
+    public static final String NAME_ORG_LEVEL = "机构层次" ;
+    /** GUID_PARENTS字段名<br/> */
+    public static final String NAME_GUID_PARENTS = "父机构GUID" ;
+    /** ORG_SEQ字段名<br/> */
+    public static final String NAME_ORG_SEQ = "机构序列" ;
+    /** ORG_ADDR字段名<br/> */
+    public static final String NAME_ORG_ADDR = "机构地址" ;
+    /** ZIPCODE字段名<br/> */
+    public static final String NAME_ZIPCODE = "邮编" ;
+    /** GUID_POSITION字段名<br/> */
+    public static final String NAME_GUID_POSITION = "机构主管岗位GUID" ;
+    /** GUID_EMP_MASTER字段名<br/> */
+    public static final String NAME_GUID_EMP_MASTER = "机构主管人员GUID" ;
+    /** GUID_EMP_MANAGER字段名<br/> */
+    public static final String NAME_GUID_EMP_MANAGER = "机构管理员GUID" ;
+    /** LINK_MAN字段名<br/> */
+    public static final String NAME_LINK_MAN = "联系人姓名" ;
+    /** LINK_TEL字段名<br/> */
+    public static final String NAME_LINK_TEL = "联系电话" ;
+    /** EMAIL字段名<br/> */
+    public static final String NAME_EMAIL = "电子邮件" ;
+    /** WEB_URL字段名<br/> */
+    public static final String NAME_WEB_URL = "网站地址" ;
+    /** START_DATE字段名<br/> */
+    public static final String NAME_START_DATE = "生效日期" ;
+    /** END_DATE字段名<br/> */
+    public static final String NAME_END_DATE = "失效日期" ;
+    /** AREA字段名<br/> */
+    public static final String NAME_AREA = "所属地域" ;
+    /** CREATE_TIME字段名<br/> */
+    public static final String NAME_CREATE_TIME = "创建时间" ;
+    /** LAST_UPDATE字段名<br/> */
+    public static final String NAME_LAST_UPDATE = "最近更新时间" ;
+    /** UPDATOR字段名<br/> */
+    public static final String NAME_UPDATOR = "最近更新人员" ;
+    /** SORT_NO字段名<br/> */
+    public static final String NAME_SORT_NO = "排列顺序编号" ;
+    /** ISLEAF字段名<br/> */
+    public static final String NAME_ISLEAF = "是否叶子节点" ;
+    /** SUB_COUNT字段名<br/> */
+    public static final String NAME_SUB_COUNT = "子节点数" ;
+    /** REMARK字段名<br/> */
+    public static final String NAME_REMARK = "备注" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
@@ -725,19 +785,5 @@ public class OmOrg implements Serializable {
 	
 	public String toString(){
 		return StringUtil.toString(this) ; 
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null)
-			return false;
-		if (this == obj) {
-			return true;
-		}
-		if (obj instanceof OmOrg) {
-			OmOrg other = (OmOrg) obj;
-			return (other.getGuid()).equals(this.getGuid());
-		}
-		return false;
 	}
 }
