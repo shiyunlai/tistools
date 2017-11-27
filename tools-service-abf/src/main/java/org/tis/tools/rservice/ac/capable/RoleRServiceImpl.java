@@ -81,6 +81,9 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
     @Autowired
     AcRoleBhvService acRoleBhvService;
 
+    @Autowired
+    AcFuncBhvService acFuncBhvService;
+
     /**
      * <p>查询所有角色</p>
      * <p>
@@ -399,26 +402,39 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
      */
     @Override
     public void addRoleFunc(AcRoleFunc acRoleFunc) throws RoleManagementException {
-        try {
-            if (null == acRoleFunc) {
-                throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, wrap("AC_ROLE_FUNC", "AC_ROLE_FUNC"));
-            }
-            // 校验必要参数
-            if (StringUtils.isBlank(acRoleFunc.getGuidFunc())) {
-                throw new RoleManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, wrap("GUID_FUNC", "AC_ROLE_FUNC"));
-            }
-            if (StringUtils.isBlank(acRoleFunc.getGuidRole())) {
-                throw new RoleManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, wrap("GUID_ROLE", "AC_ROLE_FUNC"));
-            }
-            acRoleFuncService.insert(acRoleFunc);
-        } catch (ToolsRuntimeException ae) {
-            throw ae;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RoleManagementException(
-                    ExceptionCodes.FAILURE_WHEN_INSERT,
-                    wrap("AC_ROLE_FUNC", e));
+        if (null == acRoleFunc) {
+            throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, wrap("AC_ROLE_FUNC", "AC_ROLE_FUNC"));
         }
+        // 校验必要参数
+        if (StringUtils.isBlank(acRoleFunc.getGuidFunc())) {
+            throw new RoleManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, wrap("GUID_FUNC", "AC_ROLE_FUNC"));
+        }
+        if (StringUtils.isBlank(acRoleFunc.getGuidRole())) {
+            throw new RoleManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, wrap("GUID_ROLE", "AC_ROLE_FUNC"));
+        }
+        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+            @Override
+            public void doInTransactionWithoutResult(TransactionStatus status) {
+                try {
+                    acRoleFuncService.insert(acRoleFunc);
+                    // 如果功能有行为权限，全部添加
+                    List<AcFuncBhv> acFuncBhvs = acFuncBhvService.query(new WhereCondition().andEquals(AcFuncBhv.COLUMN_GUID_FUNC, acRoleFunc.getGuidFunc()));
+                    for(AcFuncBhv acFuncBhv : acFuncBhvs) {
+                        AcRoleBhv acRoleBhv = new AcRoleBhv();
+                        acRoleBhv.setGuidRole(acRoleFunc.getGuidRole());
+                        acRoleBhv.setGuidFuncBhv(acFuncBhv.getGuid());
+                        acRoleBhvService.insert(acRoleBhv);
+                    }
+                } catch (Exception e) {
+                    status.setRollbackOnly();
+                    e.printStackTrace();
+                    logger.error("addRoleFunc exception: ", e);
+                    throw new RoleManagementException(
+                            ExceptionCodes.FAILURE_WHEN_INSERT,
+                            wrap("AC_ROLE_FUNC", e));
+                }
+            }
+        });
     }
 
     /**
