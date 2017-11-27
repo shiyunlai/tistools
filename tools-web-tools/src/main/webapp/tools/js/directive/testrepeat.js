@@ -1,4 +1,4 @@
-MetronicApp.directive('testRepeats', ['$http','common_service',function($http,common_service) {
+MetronicApp.directive('testRepeats', ['$http',function($http) {
     return {
         require: 'ngModel',
         link: function (scope, elm, attrs, ctrl) {
@@ -47,7 +47,6 @@ MetronicApp.directive('testRepeats', ['$http','common_service',function($http,co
                                 htmltwo += '<li class="start nav-item"><a  style="height: 41px;line-height: 31px;"   href="javascript:;"><i class="'+array[i].icon+'"></i><span class="title">'+array[i].label+'</span><span class="arrow "></span></a><ul class="sub-menu ids'+ sumer +'"id="'+ array[i].guid+'"></ul></li>'
                             }
                         })
-
                         $('#'+data[j].guid).append(htmltwo);//追加到对应的父节点的标签中
                     }
                     /*   if(isNull(data.children)){//标识,如果有children,那么就一直递归下去*/

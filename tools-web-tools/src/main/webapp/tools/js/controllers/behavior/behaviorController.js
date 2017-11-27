@@ -220,7 +220,7 @@ angular.module('MetronicApp').controller('behavior_controller', function($rootSc
     //修改行为方法
     $scope.beha.beacEdit = function(id){
         var it = $scope.gridOptions1.getSelectedRows();//多选事件
-        console.log(it);
+        console.log(it)
         var guid = $scope.selectRow.guid;
         if(!isNull(it)){
             var ids = it[0].guid;
@@ -233,6 +233,7 @@ angular.module('MetronicApp').controller('behavior_controller', function($rootSc
                     //修改页面代码逻辑
                     $scope.add = function(item){//保存新增的函数
                         item.id = ids;//要修改的guid
+                        console.log(item)
                         behavior_service.funactEdit(item).then(function(data){
                             if(data.status == "success"){
                                 toastr['success']("修改成功！");

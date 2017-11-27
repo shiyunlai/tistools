@@ -73,7 +73,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                     $scope.add = function(item){
                         var subFrom = {};
                         subFrom = item;
-                        console.log(item)
                         role_service.createRole(subFrom).then(function(data){
                             if(data.status == "success"){
                                 toastr['success']("新增成功！");
@@ -184,6 +183,7 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
     //组织类别
     var  DICT_AC_PARTYTYPE   = ['organization','workgroup','position','duty'];
 
+
     //查询对应功能权限
     function queryBhvs(item){
         var res = $rootScope.res.role_service;
@@ -222,6 +222,16 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
     function creaJstree(){
     //创建树
         var control=function(id,arrs){
+            var items = {};
+            items.roleGuid = arrs.guid;
+            role_service.queryRoleFunc(items).then(function(data){
+                var alldatas = data.retMessage;//拿到角色跟功能绑定的所有guid数组
+                var chenageDatas = [];
+                for(var i = 0; i < alldatas.length;i++){
+                    chenageDatas.push(alldatas[i].guidFunc);
+                }
+                $scope.chenageDatas = chenageDatas;
+            })
             $('#container').jstree('destroy',false);//删除重新加载，只删除数据。
             $("#container").jstree({
                 "core" : {
@@ -237,30 +247,20 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                         }else{
                             subFrom.id = obj.id;
                         }
-                        var items = {};
-                        items.roleGuid = arrs.guid
-                        role_service.queryRoleFunc(items).then(function(data){
-                            var alldatas = data.retMessage;//拿到角色跟功能绑定的所有guid数组
-                            var chenageDatas = []
-                            for(var i = 0; i < alldatas.length;i++){
-                                chenageDatas.push(alldatas[i].guidFunc);
-                            }
                             role_service.appQuery(subFrom).then(function (res){
                                 if(res.status == "success"){
                                     var datas = res.retMessage;
                                     var dataes =datas.data;//整体的树结构数组
                                     var type = datas.type;//类型
                                     var  its  =  [];
-                                    creatJstree(dataes,type,its,chenageDatas);//调用创建树结构
+                                    creatJstree(dataes,type,its,$scope.chenageDatas);//调用创建树结构
                                     $scope.jsonarray = angular.copy(its);
                                     callback.call(this, $scope.jsonarray);
-                                    $timeout(function(){
+                                    /*$timeout(function(){
                                         $('#container').jstree().open_all();
-                                    },80)
+                                    },80)*/
                                 }
                             })
-                        })
-
                     },
                 },
                 "force_text": true,
@@ -329,7 +329,6 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                     }
                 }
                 if(!isNull(dataes.funcList)){
-                    console.log(dataes.funcList)
                         for (var i = 0; i < dataes.funcList.length; i++) {
                             if(alldatas.indexOf(dataes.funcList[i].guid) != -1){
                                 dataes.funcList[i].text = dataes.funcList[i].funcName;
@@ -364,6 +363,25 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
         $scope.funcedit = false;//让列表消失
         //干掉原来的树，让新的树显示
         var control=function(id,arrs){
+            var items = {};
+            items.roleGuid = arrs.guid
+            role_service.queryRoleFunc(items).then(function(data){
+                //获取表中所有角色功能
+                var alldatas = data.retMessage;
+                $scope.alldatas = alldatas;
+                if(data.status == "success"){
+                    if(alldatas.length!==0){
+                        $timeout(function(){
+                            for(var i = 0; i<alldatas.length;i++){
+                                $('#container').jstree(true).check_node(alldatas[i].guidFunc);//选中
+                            }
+                        },600)
+                    }
+                     $timeout(function(){
+                         $('#container').jstree().open_all();
+                     },30)
+                }
+            })
             $('#container').jstree('destroy',false);//删除重新加载，只删除数据。
             $("#container").jstree({
                 "core" : {
@@ -388,26 +406,6 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                             creatJstree(datas,dataes,type,its);//调用创建树结构
                             $scope.jsonarray = angular.copy(its);
                             callback.call(this, $scope.jsonarray);
-                            var items = {};
-                            items.roleGuid = arrs.guid
-                            role_service.queryRoleFunc(items).then(function(data){
-                                //获取表中所有角色功能
-                                var alldatas = data.retMessage;
-                                if(data.status == "success"){
-                                    if(alldatas.length!==0){
-                                        $timeout(function(){
-                                            for(var i = 0; i<alldatas.length;i++){
-                                                $('#container').jstree(true).check_node(alldatas[i].guidFunc);//选中
-                                            }
-                                        },50)
-                                    }
-                                    $timeout(function(){
-                                        $('#container').jstree().open_all();
-                                    },30)
-                                }else{
-
-                                }
-                            })
                         })
                     },
                 },
@@ -446,6 +444,7 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
             }).bind("copy.jstree", function (node,e, data ) {
             })
         }
+
         //封装创建树结构函数
         function creatJstree(datas,dataes,type,its) {
             if(type=='root'){
@@ -505,33 +504,33 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
     //点击保存权限分配
     $scope.role.checkAll = function(){
         var nodes=$("#container").jstree("get_checked");//获取所有选中的节点
-        if(nodes.length>=0 ) {
-            var subFrom = {};
-            subFrom.roleGuid = gridDate.guid;
-            subFrom.funcList = [];
-            for (var i = 0; i < nodes.length; i++) {
-                if (nodes[i].indexOf('FUNC') == 0 && nodes[i].indexOf('FUNCGROUP') !== 0) {
-                    var item = {};
-                    item.guidFunc = nodes[i];
-                    item.guidFuncgroup = $("#container").jstree().get_node(nodes[i]).parent;
-                    item.guidApp = gridDate.guidApp;
-                    subFrom.funcList.push(item);
+        if(nodes.length>=0) {
+            if(confirm('如果取消功能，会删除改功能对应所有行为?')){
+                var subFrom = {};
+                subFrom.roleGuid = gridDate.guid;
+                subFrom.funcList = [];
+                for (var i = 0; i < nodes.length; i++) {
+                    if (nodes[i].indexOf('FUNC') == 0 && nodes[i].indexOf('FUNCGROUP') !== 0) {
+                        var item = {};
+                        item.guidFunc = nodes[i];
+                        item.guidFuncgroup = $("#container").jstree().get_node(nodes[i]).parent;
+                        item.guidApp = gridDate.guidApp;
+                        subFrom.funcList.push(item);
+                    }
                 }
+                role_service.configRoleFunc({data:subFrom}).then(function (data) {
+                    var datas = data.retMessage;
+                    if (data.status == "success") {
+                        toastr['success']('保存权限成功');
+                        creaJstree();//调用创建树结构
+                        $scope.edit = false;//保存按钮隐藏
+                    } else {
+                        toastr['error']('保存权限失败' + '<br/>' + data.retMessage);
+                    }
+                })
             }
-            role_service.configRoleFunc({data:subFrom}).then(function (data) {
-                var datas = data.retMessage;
-                if (data.status == "success") {
-                    toastr['success']('保存权限成功');
-                    creaJstree();//调用创建树结构
-                    $scope.edit = false;//保存按钮隐藏
-                } else {
-                    toastr['error']('保存权限失败' + '<br/>' + data.retMessage);
-                }
-            })
         }
     }
-
-
 
     //新增功能行为方法
     $scope.role.funclist = function(){
@@ -630,7 +629,6 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
         }
     }
 
-
     /* tab 栏切换逻辑 */
     var roleflag = {};
     $scope.roleflag = roleflag;
@@ -695,6 +693,7 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
 
     //控制页切换代码
     role.loadgwdata = function (type) {
+
         role.guid = gridDate.guid;
         if(type == 0){
             for(var i in $scope.rolesflag){
@@ -748,13 +747,14 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
             $scope.roleflag.entity = false;
             queryOeper(role.guid);
         }else if(type == 'entity'){
+            alert("点击")
             for(var i in $scope.rolesflag){
                 $scope.rolesflag[i] = false;//每一项全部不显示
             }
             $scope.roleflag.operatorer = false;
             $scope.roleflag.limit = false;
             $scope.roleflag.dist = false;
-            $scope.roleflag.entity = true;//页面展示
+            $scope.roleflag.entity = true;//实体范围页面展示
         }
     }
 
@@ -1221,7 +1221,6 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
     }
     $scope.gridOptioner = initgrid($scope,gridOptioner,filterFilter,comer,true,fer);
 
-
     //新增操作员逻辑
     $scope.role.operaAdd = function(){
         openwindow($modal, 'views/roleManage/roleoperAdd.html', 'lg',//弹出页面
@@ -1314,4 +1313,234 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
             toastr['error']("请最少选中一条进行删除！");
         }
     }
+
+    //生成实体结构树
+    var Entityjstree = function () {
+        console.log("执行")
+        $("#entitconter").jstree({
+            "core": {
+                "themes": {
+                    "responsive": false
+                },
+                "check_callback": true,
+                'data': [
+                    {
+                        "id": "1",
+                        "text": "民事案由(2008版)",
+                        "state": {
+                            "opened": true,          //展示第一个层级下面的node
+                            "disabled": true         //该根节点不可点击
+                        },
+                        "children":
+                            [
+                                {
+                                    "id": "2",
+                                    "text": "人格权纠纷",
+                                    "children":
+                                        [
+                                            {
+                                                "id": "3",
+                                                "text": "人格权纠纷",
+                                                "children": [
+                                                    {
+                                                        "id": "4",
+                                                        "text": "生命权、健康权、身体权纠纷",
+                                                        "children":
+                                                            [
+                                                                {
+                                                                    "id": "5",
+                                                                    "types":"eneits",
+                                                                    "text": "道路交通事故人身损害赔偿纠纷"
+                                                                }
+                                                            ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                }
+                            ]
+                    }
+                ]
+            },
+            "types": {
+                "default": {
+                    "icon": "fa fa-folder icon-state-warning icon-lg"
+                },
+                "file": {
+                    "icon": "fa fa-file icon-state-warning icon-lg"
+                }
+            },
+            "state": {"key": "demo3"},
+            'dnd': {
+                'is_draggable': function (node) {
+                    //用于控制节点是否可以拖拽.
+                    var node = node[0];
+                    if (node.id == "99999" || node.id.indexOf("GW") == 0) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+            },
+            'search': {
+                show_only_matches: true,
+            },
+            'callback': {
+                move_node: function (node) {
+                }
+            },
+            "plugins": ["dnd", "state", "types","sort","search"]
+        }).bind("select_node.jstree", function (e, data) {
+            if (typeof data.node !== 'undefined') {//拿到结点详情
+                $scope.dataEnt = data.node.original;//绑定内容给页面
+                if(data.node.original.types == 'eneits'){
+
+                    $scope.eneitsGrid = true;//只有点击实体属性的时候，才让右侧内容显示
+                }else{
+                    $scope.eneitsGrid = false;
+                }
+                ($scope.$$phase) ? null : $scope.$apply();
+            }
+        });
+    }
+    Entityjstree()
+    //修改实体范围
+    $scope.role.editEntity = function () {
+        alert("修改实体成功")
+    }
+    //保存实体范围内容
+    $scope.role.EntAll = function () {
+        alert("保存实体范围成功")
+    }
+
+    //实体表格
+
+
+    //功能对应行为列表
+    var grideditEntity = {};
+    $scope.grideditEntity = grideditEntity;
+    var grideditcom =[{ field: 'entityName', displayName: '实体名称'},
+        { field: "entityfrom", displayName:'实体范围'},
+    ];
+    var fFunenetit = function(row){
+        if(row.isSelected){
+            $scope.selectRow2 = row.entity;
+        }else{
+            delete $scope.selectRow2;//制空
+        }
+    }
+    $scope.grideditEntity = initgrid($scope,grideditEntity,filterFilter,grideditcom,true,fFunenetit);
+    $scope.grideditEntity.data = [
+        {"entityName":"实体测试一","entityfrom":"实体范围一"},
+        {"entityName":"实体测试二","entityfrom":"实体范围二"},
+        {"entityName":"实体测试三","entityfrom":"实体范围三"},
+        {"entityName":"实体测试四","entityfrom":"实体范围四"},
+        {"entityName":"实体测试五","entityfrom":"实体范围五"},
+    ]
+
+    //新增实体范围
+    $scope.role.funEntityclist = function(){
+        var funcGuid = $scope.role.item;//点击值guid
+        openwindow($modal, 'views/roleManage/roleFunc.html', 'lg',//弹出页面
+            function ($scope, $modalInstance) {
+                var gridOptions = {};
+                $scope.gridOptions = gridOptions;
+                var com = [{ field: 'bhvName', displayName: '行为名称'},
+                    { field: "bhvCode", displayName:'行为代码'},
+                ];
+                //自定义点击事件
+                var f1 = function(row){
+                    if(row.isSelected){
+                        $scope.selectRow = row.entity;
+                    }else{
+                        delete $scope.selectRow;//制空
+                    }
+                }
+                $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
+                var queryfunc  = $rootScope.res.application_service;
+                var subFrom ={};
+                subFrom.funcGuid = funcGuid.guid;
+                common_service.post(queryfunc.queryAllBhvDefForFunc,subFrom).then(function(data){
+                    if(data.status == "success"){
+                        var datas  = data.retMessage;
+                        $scope.gridOptions.data =  datas;
+                        $scope.gridOptions.mydefalutData = datas;
+                        $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
+                    }else{
+                        var datas  = [];
+                        $scope.gridOptions.data =  datas;
+                        $scope.gridOptions.mydefalutData = datas;
+                        $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
+                    }
+                })
+                //导入方法
+                $scope.importAdd = function () {
+                    var dats = $scope.gridOptions.getSelectedRows();
+                    if(dats.length >0){
+                        var tis = {};
+                        tis.data = [];
+                        for(var i =0; i<dats.length; i++){
+                            var subFrom = {};
+                            subFrom.guidRole = gridDate.guid;//角色guid
+                            subFrom.guidFuncBhv=dats[i].guidFuncBhv;
+                            subFrom.guidApp = gridDate.guidApp;
+                            tis.data.push(subFrom)
+                        }
+                        var res = $rootScope.res.role_service;
+                        common_service.post(res.addAcRoleBhvs,tis).then(function(data){
+                            if(data.status == "success"){
+                                toastr['success']("导入成功！");
+                                $modalInstance.close();
+                                queryBhvs(funcGuid);//重新查询列表
+                            }else{
+                                toastr['error']('导入失败'+'<br/>'+data.retMessage);
+                            }
+                        })
+
+                    }else{
+                        toastr['error']("请至少选中一个！");
+                    }
+                }
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            })
+    }
+
+
+    //删除实体范围
+    $scope.role.DeleteEntityfunc = function(){
+        var dats = $scope.gridFuncedit.getSelectedRows();
+        var funcGuid = $scope.role.item;//点击值guid
+        if(dats.length>0){
+            if(confirm('确定要删除行为类型吗?')){
+                var tis = {};
+                tis.data = [];
+                for(var i =0;i<dats.length;i++){
+                    var subFrom = {};
+                    subFrom.guidRole = gridDate.guid;//角色guid
+                    subFrom.guidFuncBhv= dats[i].guidFuncBhv;
+                    subFrom.guidApp = gridDate.guidApp;
+                    tis.data.push(subFrom);
+                }
+                var res = $rootScope.res.role_service;
+                common_service.post(res.removeAcRoleBhvs,tis).then(function(data){
+                    if(data.status == "success"){
+                        toastr['success']("删除对应行为成功！");
+                        queryBhvs(funcGuid);//重新查询列表
+                    }else{
+                        toastr['error']('删除对应行为失败'+'<br/>'+data.retMessage);
+                    }
+                })
+            }
+        }else{
+            toastr['error']("请最少选中一条进行删除！");
+        }
+    }
 });
+
+
+
+
+
+

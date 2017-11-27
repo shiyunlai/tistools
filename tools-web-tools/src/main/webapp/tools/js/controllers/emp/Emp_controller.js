@@ -1,7 +1,7 @@
 /**
  * Created by gaojie on 2017/6/26.
  */
-angular.module('MetronicApp').controller('Emp_controller', function ($rootScope, uiGridConstants,$filter, $scope, Emp_service, gridUtil, abftree_service,common_service, $window, $http, $timeout, i18nService, filterFilter, uiGridConstants, $uibModal, $state) {
+angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,$filter, $scope, Emp_service, gridUtil, abftree_service,common_service, $window, $http, $timeout, i18nService, filterFilter, uiGridConstants, $uibModal, $state) {
     $scope.$on('$viewContentLoaded', function () {
         // initialize core components
         App.initAjax();
@@ -322,7 +322,7 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                     $scope.title = "修改员工信息";
                     //更新操作员基础信息方法
                     $scope.empadd = function (subFrom) {
-                        Emp_service.addemp(subFrom).then(function (data) {
+                        Emp_service.updateemployee(subFrom).then(function (data) {
                             if (data.status == "success") {
                                 toastr['success']('修改成功');
                             } else {
@@ -370,9 +370,9 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                                 }
                                 subFrom.orgList = a;
                                 subFrom.orgList = JSON.stringify(subFrom.orgList);//所有的组织机构信息
-                                Emp_service.addemp(subFrom).then(function (data) {
+                                Emp_service.updateemployee(subFrom).then(function (data) {
                                     if (data.status == "success") {
-                                    } else {
+                                    }else {
                                         toastr['error']("绑定失败!" + data.retMessage);
                                     }
                                 })
@@ -798,22 +798,27 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
 
                 }
                 //定义表头名
-                var com = [{field: 'positionCode', displayName: '岗位代码'},
-                    {field: 'positionName', displayName: '岗位名称'},
-                    {field: 'positionType', displayName: '岗位类型', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.positionType | translateConstants :\'DICT_OM_POSITYPE\') + $root.constant[\'DICT_OM_POSITYPE-\'+row.entity.positionType]}}</div>'},
-                    {field: 'positionStatus', displayName: '岗位状态', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.positionStatus | translateConstants :\'DICT_OM_POSISTATUS\') + $root.constant[\'DICT_OM_POSISTATUS-\'+row.entity.positionStatus]}}</div>'},
-                    {field: 'guidDuty', displayName: '所属职务', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidDuty | translateDuty) + $root.constant[row.entity.guidDuty]}}</div>'},
-                    {field: 'startDate', displayName: '有效开始日期', enableHiding: false},
-                    {field: 'endDate', displayName: '有效截止日期'}
+                var com = [{field: 'positionCode', displayName: '岗位代码',enableHiding: true},
+                    {field: 'positionName', displayName: '岗位名称',enableHiding: true},
+                    {field: 'positionType', displayName: '岗位类型', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.positionType | translateConstants :\'DICT_OM_POSITYPE\') + $root.constant[\'DICT_OM_POSITYPE-\'+row.entity.positionType]}}</div>'},
+                    {field: 'positionStatus', displayName: '岗位状态', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.positionStatus | translateConstants :\'DICT_OM_POSISTATUS\') + $root.constant[\'DICT_OM_POSISTATUS-\'+row.entity.positionStatus]}}</div>'},
+                    {field: 'guidDuty', displayName: '所属职务', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidDuty | translateDuty) + $root.constant[row.entity.guidDuty]}}</div>'},
+                    {field: 'startDate', displayName: '有效开始日期', enableHiding: true},
+                    {field: 'endDate', displayName: '有效截止日期',enableHiding: true}
                 ]
-                $scope.commonGrid = initgrid($scope, commonGrid, filterFilter, com, false, selework);
-
+                $scope.commonGrid = initgrid($scope, commonGrid, filterFilter, com, true, selework);
                 var recommonGrid = function () {
                     var subFrom = {};
                     subFrom.empCode = empCode;
                     //调取工作组信息OM_GROUP
                     Emp_service.loadPosNotInbyEmp(subFrom).then(function (data) {
                         if (data.status == "success" && !isNull(data.retMessage)) {
+                            var datas = data.retMessage;
+                            console.log(datas);
+                            for(var i=0;i<datas.length;i++){
+                                datas[i].startDate = moment(datas[i].startDate).format('YYYY-MM-DD');
+                                datas[i].endDate = moment(datas[i].endDate).format('YYYY-MM-DD');
+                            }
                             $scope.commonGrid.data = data.retMessage;
                             $scope.commonGrid.mydefalutData = data.retMessage;
                             $scope.commonGrid.getPage(1, $scope.commonGrid.paginationPageSize);

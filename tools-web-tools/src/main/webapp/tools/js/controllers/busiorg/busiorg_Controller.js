@@ -352,9 +352,12 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
         }
     }
 
+
+
     //查看概况
     $scope.busiorg.histroy = function () {
         var busGuid = $scope.busiorg.item.guid;
+        console.log()
         $state.go("loghistory",{id:busGuid});//跳转到历史页面
     }
 
@@ -372,13 +375,13 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
     //下级业务机构列表
     var loworgGrid = {};
     $scope.loworgGrid = loworgGrid;
-    com = [{field: 'nodeType', displayName: '节点类型', enableHiding: false},
-        {field: 'busiorgCode', displayName: '业务机构代码', enableHiding: false},
-        {field: 'busiDomain', displayName: '业务线条', enableHiding: false},
-        {field: 'busiorgName', displayName: '业务机构名称', enableHiding: false},
-        {field: 'guidOrg', displayName: '对应实体机构', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidOrg | translateOrg) + $root.constant[row.entity.guidOrg]}}</div>'},
-        {field: 'guidPosition', displayName: '主管岗位', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
-        {field: 'orgCode', displayName: '机构代号', enableHiding: false}
+    com = [{field: 'nodeType', displayName: '节点类型', enableHiding: true},
+        {field: 'busiorgCode', displayName: '业务机构代码', enableHiding: true},
+        {field: 'busiDomain', displayName: '业务线条', enableHiding: true},
+        {field: 'busiorgName', displayName: '业务机构名称', enableHiding: true},
+        {field: 'guidOrg', displayName: '对应实体机构', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidOrg | translateOrg) + $root.constant[row.entity.guidOrg]}}</div>'},
+        {field: 'guidPosition', displayName: '主管岗位', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidPosition | translatePosition) + $root.constant[row.entity.guidPosition]}}</div>'},
+        {field: 'orgCode', displayName: '机构代号', enableHiding: true}
     ]
     $scope.loworgGrid = initgrid($scope, loworgGrid, filterFilter, com, false, function () {
     });
@@ -410,6 +413,18 @@ angular.module('MetronicApp').controller('busiorg_controller', function ($rootSc
 
             }
         })
+    }
+
+
+    //查看表格概况
+    $scope.busiorg.histroyList = function () {
+        var getSel = $scope.loworgGrid.getSelectedRows();
+        console.log(getSel);
+        if(isNull(getSel) || getSel.length>1){
+            toastr['error']("请至少选中一条进行重置！");
+        }else{
+            $state.go("loghistory",{id:getSel[0].guid});//跳转到历史页面
+        }
     }
 
     /**-----------------------------------各类按钮事件定义-------------------------------- */

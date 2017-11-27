@@ -336,7 +336,6 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                         toastr['error']("请填写相关信息!");
                         return false;
                     }
-                    //调用服务生成机构代码
                     Workgroup_service.addgroup(subFrom).then(function (data) {
                         if (data.status == "success") {
                             toastr['success']("新增成功!");
@@ -349,7 +348,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                         }
                         $("#container").jstree().refresh();
                         $scope.add=function (subFrom) {
-                            var tis =Object.assign(data.retMessage, items);
+                            var tis =Object.assign(data.retMessage, subFrom);
                             Workgroup_service.updateGroup(tis).then(function (data) {
                                 if (data.status == "success") {
                                     toastr['success']("添加成功!");
@@ -585,7 +584,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
         subFrom.flag = $scope.sub.groupStatus;
         Workgroup_service.enableGroup(subFrom).then(function (data) {
             if (data.status == "success") {
-                toastr['success']('注销工作组成功');
+                toastr['success']('工作组状态更改成功');
             } else {
                 toastr['error'](data.retMessage);
             }

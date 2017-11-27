@@ -24,22 +24,19 @@
                     <div class="form-group">
                         <label class="control-label col-md-4"> 数据操作类型:</label>
                         <div class="col-md-8" ng-init="$settings.getDictData('DICT_AC_DATAOPTYPE')">
-                            <select class="form-control test123"   ng-model="dataEntFrom.dataopType" style="width: 100%">
+                            <select class="form-control"   ng-model="dataEntFrom.dataOpType" style="width: 100%">
                                 <!--<option ng-repeat="x in dictlist" value="{{x.guid}}">{{x.dictKey+'-&#45;&#45;'+x.dictName}}</option>-->
-                                <!--多选估计要循环，此时先单选-->
                                 <option ng-repeat="d in $settings.diclist['DICT_AC_DATAOPTYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                {{d.sendValue}}
                             </select>
                         </div>
                     </div>
                 </div>
-                <script type="text/javascript">
-                    $('.test123').select2();
-                </script>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">实体名称:</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="dataEntFrom.EentityName" />
+                            <input type="text" class="form-control" ng-model="dataEntFrom.entityName" />
                         </div>
                     </div>
                 </div>
