@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 操作员快捷菜单
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_OPERATOR_SHORTCUT 操作员快捷菜单
  *
@@ -49,6 +49,22 @@ public class AcOperatorShortcut implements Serializable {
 	public static final String COLUMN_IMAGE_PATH = "image_path" ; 
 	/** SHORTCUT_KEY ：快捷按键<br/><br/>如：CTRL+1 表示启动TX010505，本字段记录 CTRL+1 这个信息 */
 	public static final String COLUMN_SHORTCUT_KEY = "shortcut_key" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcOperatorShortcut";
+    /** GUID_OPERATOR字段名<br/> */
+    public static final String NAME_GUID_OPERATOR = "操作员GUID" ;
+    /** GUID_FUNC字段名<br/> */
+    public static final String NAME_GUID_FUNC = "功能GUID" ;
+    /** GUID_FUNCGROUP字段名<br/> */
+    public static final String NAME_GUID_FUNCGROUP = "功能组GUID" ;
+    /** GUID_APP字段名<br/> */
+    public static final String NAME_GUID_APP = "应用GUID" ;
+    /** ORDER_NO字段名<br/> */
+    public static final String NAME_ORDER_NO = "排列顺序" ;
+    /** IMAGE_PATH字段名<br/> */
+    public static final String NAME_IMAGE_PATH = "快捷菜单图片路径" ;
+    /** SHORTCUT_KEY字段名<br/> */
+    public static final String NAME_SHORTCUT_KEY = "快捷按键" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：操作员GUID<br/>描述： */

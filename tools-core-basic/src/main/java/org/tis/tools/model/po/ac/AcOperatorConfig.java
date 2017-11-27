@@ -4,19 +4,15 @@
  */
 package org.tis.tools.model.po.ac;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.sql.Blob;
-import java.sql.Time;
-import java.util.Date;
-
 import org.tis.tools.common.utils.StringUtil;
+
+import java.io.Serializable;
 
 /**
  * 
  * <pre>
  * 操作员个性配置
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_OPERATOR_CONFIG 操作员个性配置
  *
@@ -47,6 +43,14 @@ public class AcOperatorConfig implements Serializable {
 	public static final String COLUMN_GUID_CONFIG = "guid_config" ; 
 	/** CONFIG_VALUE ：配置值<br/><br/> */
 	public static final String COLUMN_CONFIG_VALUE = "config_value" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcOperatorConfig";
+    /** GUID_OPERATOR字段名<br/> */
+    public static final String NAME_GUID_OPERATOR = "操作员GUID" ;
+    /** GUID_CONFIG字段名<br/> */
+    public static final String NAME_GUID_CONFIG = "配置GUID" ;
+    /** CONFIG_VALUE字段名<br/> */
+    public static final String NAME_CONFIG_VALUE = "配置值" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：操作员GUID<br/>描述： */

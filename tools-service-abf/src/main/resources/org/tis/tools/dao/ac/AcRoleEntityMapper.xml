@@ -116,11 +116,11 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid_role as guidRole
-		,guid_entity as guidEntity
-		,isadd as isadd
-		,isdel as isdel
-		,ismodify as ismodify
-		,isview as isview
+		 guid_role as `guidRole`
+		,guid_entity as `guidEntity`
+		,isadd as `isadd`
+		,isdel as `isdel`
+		,ismodify as `ismodify`
+		,isview as `isview`
 	</sql>
 </mapper>

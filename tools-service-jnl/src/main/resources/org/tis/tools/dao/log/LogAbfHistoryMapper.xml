@@ -125,12 +125,12 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid as guid
-		,guid_operate as guidOperate
-		,obj_from as objFrom
-		,obj_type as objType
-		,obj_guid as objGuid
-		,obj_name as objName
-		,obj_value as objValue
+		 guid as `guid`
+		,guid_operate as `guidOperate`
+		,obj_from as `objFrom`
+		,obj_type as `objType`
+		,obj_guid as `objGuid`
+		,obj_name as `objName`
+		,obj_value as `objValue`
 	</sql>
 </mapper>

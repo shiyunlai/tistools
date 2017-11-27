@@ -98,9 +98,9 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid as guid
-		,chn_code as chnCode
-		,chn_name as chnName
-		,chn_remark as chnRemark
+		 guid as `guid`
+		,chn_code as `chnCode`
+		,chn_name as `chnName`
+		,chn_remark as `chnRemark`
 	</sql>
 </mapper>

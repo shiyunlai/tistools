@@ -45,6 +45,18 @@ public class AcFuncResource implements Serializable {
 	public static final String COLUMN_ATTR_VALUE = "attr_value" ; 
 	/** MEMO ：备注<br/><br/> */
 	public static final String COLUMN_MEMO = "memo" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcFuncResource";
+    /** GUID_FUNC字段名<br/> */
+    public static final String NAME_GUID_FUNC = "对应功能GUID" ;
+    /** ATTR_TYPE字段名<br/> */
+    public static final String NAME_ATTR_TYPE = "属性类型" ;
+    /** ATTR_KEY字段名<br/> */
+    public static final String NAME_ATTR_KEY = "属性名" ;
+    /** ATTR_VALUE字段名<br/> */
+    public static final String NAME_ATTR_VALUE = "属性值" ;
+    /** MEMO字段名<br/> */
+    public static final String NAME_MEMO = "备注" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：对应功能GUID<br/>描述： */

@@ -57,6 +57,30 @@ public class AcFunc implements Serializable {
 	public static final String COLUMN_ISCHECK = "ischeck" ; 
 	/** ISMENU ：可否定义为菜单<br/><br/>取值来自业务菜单：DICT_YON。 该功能是否可以作为菜单入口，如果作为菜单入口，则会展示在菜单树（有些接口服务功能无需挂在菜单上） */
 	public static final String COLUMN_ISMENU = "ismenu" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcFunc";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** GUID_FUNCGROUP字段名<br/> */
+    public static final String NAME_GUID_FUNCGROUP = "隶属功能组GUID" ;
+    /** FUNC_CODE字段名<br/> */
+    public static final String NAME_FUNC_CODE = "功能编号" ;
+    /** FUNC_NAME字段名<br/> */
+    public static final String NAME_FUNC_NAME = "功能名称" ;
+    /** FUNC_DESC字段名<br/> */
+    public static final String NAME_FUNC_DESC = "功能描述" ;
+    /** FUNC_ACTION字段名<br/> */
+    public static final String NAME_FUNC_ACTION = "功能调用入口" ;
+    /** PARA_INFO字段名<br/> */
+    public static final String NAME_PARA_INFO = "输入参数" ;
+    /** FUNC_TYPE字段名<br/> */
+    public static final String NAME_FUNC_TYPE = "功能类型" ;
+    /** GUID_BHVTYPE_DEF字段名<br/> */
+    public static final String NAME_GUID_BHVTYPE_DEF = "行为类型" ;
+    /** ISCHECK字段名<br/> */
+    public static final String NAME_ISCHECK = "是否验证权限" ;
+    /** ISMENU字段名<br/> */
+    public static final String NAME_ISMENU = "可否定义为菜单" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

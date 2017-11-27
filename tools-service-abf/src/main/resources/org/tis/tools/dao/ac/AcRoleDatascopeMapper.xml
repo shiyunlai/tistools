@@ -80,7 +80,7 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid_role as guidRole
-		,guid_datascope as guidDatascope
+		 guid_role as `guidRole`
+		,guid_datascope as `guidDatascope`
 	</sql>
 </mapper>

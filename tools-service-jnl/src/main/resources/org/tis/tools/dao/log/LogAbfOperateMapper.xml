@@ -29,7 +29,7 @@
 			#{guid,jdbcType=VARCHAR},
 			#{operateFrom,jdbcType=VARCHAR},
 			#{operateType,jdbcType=VARCHAR},
-			#{operateTime,jdbcType=TIMESTAMP},
+			#{operateTime,jdbcType=DATE},
 			#{operateResult,jdbcType=VARCHAR},
 			#{operateDesc,jdbcType=VARCHAR},
 			#{operatorName,jdbcType=VARCHAR},
@@ -57,7 +57,7 @@
 			operate_type = #{operateType,jdbcType=VARCHAR},
 		</if>
 		<if test="operateTime != null" >
-			operate_time = #{operateTime,jdbcType=TIMESTAMP},
+			operate_time = #{operateTime,jdbcType=DATE},
 		</if>
 		<if test="operateResult != null" >
 			operate_result = #{operateResult,jdbcType=VARCHAR},
@@ -102,7 +102,7 @@
 		guid = #{guid,jdbcType=VARCHAR},
 		operate_from = #{operateFrom,jdbcType=VARCHAR},
 		operate_type = #{operateType,jdbcType=VARCHAR},
-		operate_time = #{operateTime,jdbcType=TIMESTAMP},
+		operate_time = #{operateTime,jdbcType=DATE},
 		operate_result = #{operateResult,jdbcType=VARCHAR},
 		operate_desc = #{operateDesc,jdbcType=VARCHAR},
 		operator_name = #{operatorName,jdbcType=VARCHAR},
@@ -139,7 +139,7 @@
         	operate_type = #{domain.operateType,jdbcType=VARCHAR},
       	</if>
 		<if test="domain.operateTime != null" >
-        	operate_time = #{domain.operateTime,jdbcType=TIMESTAMP},
+        	operate_time = #{domain.operateTime,jdbcType=DATE},
       	</if>
 		<if test="domain.operateResult != null" >
         	operate_result = #{domain.operateResult,jdbcType=VARCHAR},
@@ -197,20 +197,20 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid as guid
-		,operate_from as operateFrom
-		,operate_type as operateType
-		,operate_time as operateTime
-		,operate_result as operateResult
-		,operate_desc as operateDesc
-		,operator_name as operatorName
-		,user_id as userId
-		,app_code as appCode
-		,app_name as appName
-		,func_code as funcCode
-		,func_name as funcName
-		,restful_url as restfulUrl
-		,stack_trace as stackTrace
-		,process_desc as processDesc
+		 guid as `guid`
+		,operate_from as `operateFrom`
+		,operate_type as `operateType`
+		,operate_time as `operateTime`
+		,operate_result as `operateResult`
+		,operate_desc as `operateDesc`
+		,operator_name as `operatorName`
+		,user_id as `userId`
+		,app_code as `appCode`
+		,app_name as `appName`
+		,func_code as `funcCode`
+		,func_name as `funcName`
+		,restful_url as `restfulUrl`
+		,stack_trace as `stackTrace`
+		,process_desc as `processDesc`
 	</sql>
 </mapper>

@@ -152,15 +152,15 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid as guid
-		,guid_app as guidApp
-		,config_type as configType
-		,config_name as configName
-		,config_dict as configDict
-		,config_style as configStyle
-		,config_value as configValue
-		,enabled as enabled
-		,display_order as displayOrder
-		,config_desc as configDesc
+		 guid as `guid`
+		,guid_app as `guidApp`
+		,config_type as `configType`
+		,config_name as `configName`
+		,config_dict as `configDict`
+		,config_style as `configStyle`
+		,config_value as `configValue`
+		,enabled as `enabled`
+		,display_order as `displayOrder`
+		,config_desc as `configDesc`
 	</sql>
 </mapper>

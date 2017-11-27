@@ -188,19 +188,19 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid as guid
-		,guid_app as guidApp
-		,entity_name as entityName
-		,table_name as tableName
-		,entity_desc as entityDesc
-		,display_order as displayOrder
-		,entity_type as entityType
-		,isadd as isadd
-		,isdel as isdel
-		,ismodify as ismodify
-		,isview as isview
-		,ispage as ispage
-		,page_len as pageLen
-		,check_ref as checkRef
+		 guid as `guid`
+		,guid_app as `guidApp`
+		,entity_name as `entityName`
+		,table_name as `tableName`
+		,entity_desc as `entityDesc`
+		,display_order as `displayOrder`
+		,entity_type as `entityType`
+		,isadd as `isadd`
+		,isdel as `isdel`
+		,ismodify as `ismodify`
+		,isview as `isview`
+		,ispage as `ispage`
+		,page_len as `pageLen`
+		,check_ref as `checkRef`
 	</sql>
 </mapper>

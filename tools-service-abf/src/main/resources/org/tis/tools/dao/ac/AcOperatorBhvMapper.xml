@@ -89,8 +89,8 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid_operator as guidOperator
-		,guid_func_bhv as guidFuncBhv
-		,auth_type as authType
+		 guid_operator as `guidOperator`
+		,guid_func_bhv as `guidFuncBhv`
+		,auth_type as `authType`
 	</sql>
 </mapper>

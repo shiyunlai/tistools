@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 数据范围权限
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_DATASCOPE 数据范围权限
  *
@@ -46,6 +46,20 @@ public class AcDatascope implements Serializable {
 	public static final String COLUMN_ENTITY_NAME = "entity_name" ; 
 	/** FILTER_SQL_STRING ：过滤SQL<br/><br/>例： (orgSEQ IS NULL or orgSEQ like '$[SessionEntity/orgSEQ]%') 通过本SQL，限定了数据范围 */
 	public static final String COLUMN_FILTER_SQL_STRING = "filter_sql_string" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcDatascope";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** GUID_ENTITY字段名<br/> */
+    public static final String NAME_GUID_ENTITY = "实体GUID" ;
+    /** PRIV_NAME字段名<br/> */
+    public static final String NAME_PRIV_NAME = "数据范围权限名称" ;
+    /** DATA_OP_TYPE字段名<br/> */
+    public static final String NAME_DATA_OP_TYPE = "数据操作类型" ;
+    /** ENTITY_NAME字段名<br/> */
+    public static final String NAME_ENTITY_NAME = "实体名称" ;
+    /** FILTER_SQL_STRING字段名<br/> */
+    public static final String NAME_FILTER_SQL_STRING = "过滤SQL" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

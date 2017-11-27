@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 个性化配置
- * 模型文件 ： D:\work\workspace\ws1\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_CONFIG 个性化配置
  *
@@ -54,6 +54,28 @@ public class AcConfig implements Serializable {
 	public static final String COLUMN_DISPLAY_ORDER = "display_order" ; 
 	/** CONFIG_DESC ：配置描述说明<br/><br/> */
 	public static final String COLUMN_CONFIG_DESC = "config_desc" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcConfig";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** GUID_APP字段名<br/> */
+    public static final String NAME_GUID_APP = "应用GUID" ;
+    /** CONFIG_TYPE字段名<br/> */
+    public static final String NAME_CONFIG_TYPE = "配置类型" ;
+    /** CONFIG_NAME字段名<br/> */
+    public static final String NAME_CONFIG_NAME = "配置名" ;
+    /** CONFIG_DICT字段名<br/> */
+    public static final String NAME_CONFIG_DICT = "配置值字典" ;
+    /** CONFIG_STYLE字段名<br/> */
+    public static final String NAME_CONFIG_STYLE = "配置风格" ;
+    /** CONFIG_VALUE字段名<br/> */
+    public static final String NAME_CONFIG_VALUE = "默认配置值" ;
+    /** ENABLED字段名<br/> */
+    public static final String NAME_ENABLED = "是否启用" ;
+    /** DISPLAY_ORDER字段名<br/> */
+    public static final String NAME_DISPLAY_ORDER = "显示顺序" ;
+    /** CONFIG_DESC字段名<br/> */
+    public static final String NAME_CONFIG_DESC = "配置描述说明" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述： */

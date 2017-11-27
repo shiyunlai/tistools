@@ -6,8 +6,8 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.util.CollectionUtils;
 import org.tis.tools.base.WhereCondition;
-import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.core.exception.ExceptionCodes;
+import org.tis.tools.model.def.AbfEntityHelper;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.def.JNLConstants;
 import org.tis.tools.model.po.log.LogAbfChange;
@@ -18,12 +18,12 @@ import org.tis.tools.model.vo.log.LogHistoryDetail;
 import org.tis.tools.model.vo.log.LogOperateDetail;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.log.exception.LogManagementException;
-import org.tis.tools.service.log.LogAbfChangeService;
-import org.tis.tools.service.log.LogAbfHistoryService;
-import org.tis.tools.service.log.LogAbfKeywordService;
-import org.tis.tools.service.log.LogAbfOperateService;
+import org.tis.tools.service.log.*;
+import org.tis.tools.service.log.exception.LOGExceptionCodes;
 
 import java.util.*;
+
+import static org.tis.tools.common.utils.BasicUtil.wrap;
 
 public class OperateLogRServiceImpl extends BaseRService implements IOperateLogRService {
 
@@ -36,6 +36,9 @@ public class OperateLogRServiceImpl extends BaseRService implements IOperateLogR
     @Autowired
     LogAbfChangeService logAbfChangeService;
 
+    @Autowired
+    LogServiceExt logServiceExt;
+
     /**
      * 新增操作日志
      *
@@ -45,17 +48,17 @@ public class OperateLogRServiceImpl extends BaseRService implements IOperateLogR
     @Override
     public void createOperatorLog(LogOperateDetail log) throws LogManagementException {
         if (null == log || null == log.getInstance()) {
-            throw new LogManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, BasicUtil.wrap("", "LOG_OPERATE"));
+            throw new LogManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT, wrap("", "LOG_OPERATE"));
         }
         LogAbfOperate logAbfOperate = log.getInstance();
         // 校验 TODO 不完善
         if (StringUtils.isBlank(logAbfOperate.getOperateFrom())) {
             throw new LogManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT,
-                    BasicUtil.wrap(LogAbfOperate.COLUMN_OPERATE_FROM, LogAbfOperate.TABLE_NAME));
+                    wrap(LogAbfOperate.COLUMN_OPERATE_FROM, LogAbfOperate.TABLE_NAME));
         }
         if (StringUtils.isBlank(logAbfOperate.getOperateResult())) {
             throw new LogManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT,
-                    BasicUtil.wrap(LogAbfOperate.COLUMN_OPERATE_RESULT, LogAbfOperate.TABLE_NAME));
+                    wrap(LogAbfOperate.COLUMN_OPERATE_RESULT, LogAbfOperate.TABLE_NAME));
         }
         try {
             transactionTemplate.execute(new TransactionCallbackWithoutResult() {
@@ -85,7 +88,7 @@ public class OperateLogRServiceImpl extends BaseRService implements IOperateLogR
                         status.setRollbackOnly();
                         e.printStackTrace();
                         throw new LogManagementException(
-                                ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap("LOG_OPERATE", e.getMessage()));
+                                ExceptionCodes.FAILURE_WHEN_INSERT, wrap("LOG_OPERATE", e.getMessage()));
                     }
                 }
             });
@@ -94,7 +97,7 @@ public class OperateLogRServiceImpl extends BaseRService implements IOperateLogR
         } catch (Exception e) {
             e.printStackTrace();
             throw new LogManagementException(
-                    ExceptionCodes.FAILURE_WHEN_INSERT, BasicUtil.wrap("LOG_OPERATE", e.getMessage()));
+                    ExceptionCodes.FAILURE_WHEN_INSERT, wrap("LOG_OPERATE", e.getMessage()));
         }
     }
 
@@ -113,7 +116,7 @@ public class OperateLogRServiceImpl extends BaseRService implements IOperateLogR
         } catch (Exception e) {
             e.printStackTrace();
             throw new LogManagementException(
-                    ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap(LogAbfOperate.TABLE_NAME, e.getMessage()));
+                    ExceptionCodes.FAILURE_WHEN_QUERY, wrap(LogAbfOperate.TABLE_NAME, e.getMessage()));
         }
     }
 
@@ -127,12 +130,12 @@ public class OperateLogRServiceImpl extends BaseRService implements IOperateLogR
     @Override
     public LogOperateDetail queryOperateDetail(String logGuid) throws LogManagementException {
         if(StringUtils.isBlank(logGuid)) {
-            throw new LogManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap(LogAbfOperate.COLUMN_GUID, "OPERATE_LOG"));
+            throw new LogManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap(LogAbfOperate.COLUMN_GUID, "OPERATE_LOG"));
         }
         try {
             LogAbfOperate logAbfOperate = logAbfOperateService.loadByGuid(logGuid);
             if(logAbfOperate == null) {
-                throw new LogManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap(logGuid, LogAbfOperate.TABLE_NAME));
+                throw new LogManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, wrap(logGuid, LogAbfOperate.TABLE_NAME));
             }
             LogOperateDetail detail = new LogOperateDetail();
             detail.setLog(logAbfOperate);
@@ -162,7 +165,7 @@ public class OperateLogRServiceImpl extends BaseRService implements IOperateLogR
         } catch (LogManagementException e) {
             throw e;
         } catch (Exception e) {
-            throw new LogManagementException(ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap("OPERATE_LOG", e.getMessage()));
+            throw new LogManagementException(ExceptionCodes.FAILURE_WHEN_QUERY, wrap("OPERATE_LOG", e.getMessage()));
         }
     }
 
@@ -174,14 +177,24 @@ public class OperateLogRServiceImpl extends BaseRService implements IOperateLogR
      * @throws LogManagementException
      */
     @Override
-    public List<LogOperateDetail> queryOperateHistoryList(String objGuid) throws LogManagementException {
+    public Map<String, Object> queryOperateHistoryList(String objGuid) throws LogManagementException {
         if(StringUtils.isBlank(objGuid)) {
-            throw new LogManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap(LogAbfHistory.COLUMN_OBJ_GUID, "OPERATE_LOG"));
+            throw new LogManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap(LogAbfHistory.COLUMN_OBJ_GUID, "OPERATE_LOG"));
+        }
+        Map<String, Object> resultMap = new HashMap<>();
+        String tableName = AbfEntityHelper.getTableName(objGuid);
+        if(StringUtils.isBlank(tableName)) {
+            throw new LogManagementException(LOGExceptionCodes.NOT_FOUND_CORRESPONDING_ENTITY, wrap(objGuid));
         }
         try {
+            Map<String, Object> entityInfo = AbfEntityHelper.transEntity(logServiceExt.getEntityInfo(tableName, objGuid), objGuid);
+            if (entityInfo == null) {
+                throw new LogManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, wrap(objGuid, LogAbfHistory.TABLE_NAME));
+            }
+            resultMap.put("subject", entityInfo);
             List<LogAbfHistory> objs = logAbfHistoryService.query(new WhereCondition().andEquals(LogAbfHistory.COLUMN_OBJ_GUID, objGuid));
             if(CollectionUtils.isEmpty(objs)) {
-                throw new LogManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, BasicUtil.wrap(objGuid, LogAbfHistory.TABLE_NAME));
+                resultMap.put("list", new ArrayList<>());
             }
             List<LogOperateDetail> logDetails = new ArrayList<>();
 
@@ -216,13 +229,13 @@ public class OperateLogRServiceImpl extends BaseRService implements IOperateLogR
             for (LogAbfChange change : changes) {
                 objGuidMap.get(change.getGuidHistory()).getChanges().add(change);
             }
-
-            return logDetails;
+            resultMap.put("list", logDetails);
+            return resultMap;
         } catch (LogManagementException e) {
             throw e;
         } catch (Exception e) {
             logger.error("queryOperateHistoryList exception : ", e);
-            throw new LogManagementException(ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap("OPERATE_LOG", e.getMessage()));
+            throw new LogManagementException(ExceptionCodes.FAILURE_WHEN_QUERY, wrap("OPERATE_LOG", e.getMessage()));
         }
     }
 
@@ -236,14 +249,14 @@ public class OperateLogRServiceImpl extends BaseRService implements IOperateLogR
     @Override
     public List<LogAbfOperate> queryLoginHistory(String userId) throws LogManagementException {
         if(StringUtils.isBlank(userId)) {
-            throw new LogManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, BasicUtil.wrap(LogAbfOperate.COLUMN_USER_ID, "OPERATE_LOG"));
+            throw new LogManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap(LogAbfOperate.COLUMN_USER_ID, "OPERATE_LOG"));
         }
         try {
             return logAbfOperateService.query(new WhereCondition()
                     .andEquals(LogAbfOperate.COLUMN_OPERATE_TYPE, JNLConstants.OPEARTE_TYPE_LOGIN)
                     .andEquals(LogAbfOperate.COLUMN_USER_ID, userId));
         } catch (Exception e) {
-            throw new LogManagementException(ExceptionCodes.FAILURE_WHEN_QUERY, BasicUtil.wrap("OPERATE_LOG", e.getMessage()));
+            throw new LogManagementException(ExceptionCodes.FAILURE_WHEN_QUERY, wrap("OPERATE_LOG", e.getMessage()));
         }
     }
 }

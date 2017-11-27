@@ -89,8 +89,8 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid_identity as guidIdentity
-		,ac_resourcetype as acResourcetype
-		,guid_ac_resource as guidAcResource
+		 guid_identity as `guidIdentity`
+		,ac_resourcetype as `acResourcetype`
+		,guid_ac_resource as `guidAcResource`
 	</sql>
 </mapper>

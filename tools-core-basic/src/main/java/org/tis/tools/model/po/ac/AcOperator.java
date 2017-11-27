@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 操作员
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_OPERATOR 操作员
  *
@@ -70,6 +70,44 @@ public class AcOperator implements Serializable {
 	public static final String COLUMN_MAC_CODE = "mac_code" ; 
 	/** IP_ADDRESS ：允许IP地址<br/><br/>允许设置多个IP地址 */
 	public static final String COLUMN_IP_ADDRESS = "ip_address" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcOperator";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** USER_ID字段名<br/> */
+    public static final String NAME_USER_ID = "登录用户名" ;
+    /** PASSWORD字段名<br/> */
+    public static final String NAME_PASSWORD = "密码" ;
+    /** OPERATOR_NAME字段名<br/> */
+    public static final String NAME_OPERATOR_NAME = "操作员姓名" ;
+    /** OPERATOR_STATUS字段名<br/> */
+    public static final String NAME_OPERATOR_STATUS = "操作员状态" ;
+    /** INVAL_DATE字段名<br/> */
+    public static final String NAME_INVAL_DATE = "密码失效日期" ;
+    /** AUTH_MODE字段名<br/> */
+    public static final String NAME_AUTH_MODE = "认证模式" ;
+    /** LOCK_LIMIT字段名<br/> */
+    public static final String NAME_LOCK_LIMIT = "锁定次数限制" ;
+    /** ERR_COUNT字段名<br/> */
+    public static final String NAME_ERR_COUNT = "当前错误登录次数" ;
+    /** LOCK_TIME字段名<br/> */
+    public static final String NAME_LOCK_TIME = "锁定时间" ;
+    /** UNLOCK_TIME字段名<br/> */
+    public static final String NAME_UNLOCK_TIME = "解锁时间" ;
+    /** MENU_TYPE字段名<br/> */
+    public static final String NAME_MENU_TYPE = "菜单风格" ;
+    /** LAST_LOGIN字段名<br/> */
+    public static final String NAME_LAST_LOGIN = "最近登录时间" ;
+    /** START_DATE字段名<br/> */
+    public static final String NAME_START_DATE = "有效开始日期" ;
+    /** END_DATE字段名<br/> */
+    public static final String NAME_END_DATE = "有效截止日期" ;
+    /** VALID_TIME字段名<br/> */
+    public static final String NAME_VALID_TIME = "允许时间范围" ;
+    /** MAC_CODE字段名<br/> */
+    public static final String NAME_MAC_CODE = "允许MAC码" ;
+    /** IP_ADDRESS字段名<br/> */
+    public static final String NAME_IP_ADDRESS = "允许IP地址" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

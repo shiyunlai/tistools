@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 业务机构
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：om
  * 模型：OM_BUSIORG 业务机构
  *
@@ -69,6 +69,36 @@ public class OmBusiorg implements Serializable {
 	public static final String COLUMN_ISLEAF = "isleaf" ; 
 	/** SUB_COUNT ：子节点数<br/><br/> */
 	public static final String COLUMN_SUB_COUNT = "sub_count" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.om.OmBusiorg";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** NODE_TYPE字段名<br/> */
+    public static final String NAME_NODE_TYPE = "节点类型" ;
+    /** BUSIORG_CODE字段名<br/> */
+    public static final String NAME_BUSIORG_CODE = "业务机构代码" ;
+    /** BUSI_DOMAIN字段名<br/> */
+    public static final String NAME_BUSI_DOMAIN = "业务条线" ;
+    /** BUSIORG_NAME字段名<br/> */
+    public static final String NAME_BUSIORG_NAME = "业务机构名称" ;
+    /** BUSIORG_LEVEL字段名<br/> */
+    public static final String NAME_BUSIORG_LEVEL = "业务机构层次" ;
+    /** GUID_ORG字段名<br/> */
+    public static final String NAME_GUID_ORG = "对应实体机构GUID" ;
+    /** GUID_PARENTS字段名<br/> */
+    public static final String NAME_GUID_PARENTS = "父业务机构GUID" ;
+    /** GUID_POSITION字段名<br/> */
+    public static final String NAME_GUID_POSITION = "主管岗位" ;
+    /** ORG_CODE字段名<br/> */
+    public static final String NAME_ORG_CODE = "机构代号" ;
+    /** SEQNO字段名<br/> */
+    public static final String NAME_SEQNO = "序列号" ;
+    /** SORTNO字段名<br/> */
+    public static final String NAME_SORTNO = "排列顺序编号" ;
+    /** ISLEAF字段名<br/> */
+    public static final String NAME_ISLEAF = "是否叶子节点" ;
+    /** SUB_COUNT字段名<br/> */
+    public static final String NAME_SUB_COUNT = "子节点数" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 应用系统
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_APP 应用系统
  *
@@ -64,6 +64,38 @@ public class AcApp implements Serializable {
 	public static final String COLUMN_IP_ADDR = "ip_addr" ; 
 	/** IP_PORT ：端口<br/><br/> */
 	public static final String COLUMN_IP_PORT = "ip_port" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcApp";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** APP_CODE字段名<br/> */
+    public static final String NAME_APP_CODE = "应用代码" ;
+    /** APP_NAME字段名<br/> */
+    public static final String NAME_APP_NAME = "应用名称" ;
+    /** APP_TYPE字段名<br/> */
+    public static final String NAME_APP_TYPE = "应用类型" ;
+    /** ISOPEN字段名<br/> */
+    public static final String NAME_ISOPEN = "是否开通" ;
+    /** OPEN_DATE字段名<br/> */
+    public static final String NAME_OPEN_DATE = "开通时间" ;
+    /** URL字段名<br/> */
+    public static final String NAME_URL = "访问地址" ;
+    /** APP_DESC字段名<br/> */
+    public static final String NAME_APP_DESC = "应用描述" ;
+    /** GUID_EMP_MAINTENANCE字段名<br/> */
+    public static final String NAME_GUID_EMP_MAINTENANCE = "管理维护人员" ;
+    /** GUID_ROLE_MAINTENANCE字段名<br/> */
+    public static final String NAME_GUID_ROLE_MAINTENANCE = "应用管理角色" ;
+    /** REMARK字段名<br/> */
+    public static final String NAME_REMARK = "备注" ;
+    /** INIWP字段名<br/> */
+    public static final String NAME_INIWP = "是否接入集中工作平台" ;
+    /** INTASKCENTER字段名<br/> */
+    public static final String NAME_INTASKCENTER = "是否接入集中任务中心" ;
+    /** IP_ADDR字段名<br/> */
+    public static final String NAME_IP_ADDR = "IP" ;
+    /** IP_PORT字段名<br/> */
+    public static final String NAME_IP_PORT = "端口" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
@@ -405,19 +437,5 @@ public class AcApp implements Serializable {
 	
 	public String toString(){
 		return StringUtil.toString(this) ; 
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null)
-			return false;
-		if (this == obj) {
-			return true;
-		}
-		if (obj instanceof AcApp) {
-			AcApp other = (AcApp) obj;
-			return (other.getGuid()).equals(this.getGuid());
-		}
-		return false;
 	}
 }

@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 实体
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_ENTITY 实体
  *
@@ -62,6 +62,36 @@ public class AcEntity implements Serializable {
 	public static final String COLUMN_PAGE_LEN = "page_len" ; 
 	/** CHECK_REF ：删除记录检查引用关系<br/><br/>根据引用关系定义，检查关联记录是否需要同步删除； 引用关系定义格式： table.column/[Y/N];table.column/[Y/N];... 举例： 假如，存在实体acct，且引用关系定义如下 guid:tws_abc.acct_guid/Y;tws_nnn.acctid/N; 当前删除acct实体guid＝9988的记录，系统自动执行引用关系删除，逻辑如下： 查找tws_abc 表，acct_guid = 9988 的记录，并删除； 查找tws_nnn 表，acctid=9988的记录，但不删除； 如果采用系统默认的命名方式，规则可以简化为： guid:tws_abc/Y;tws_nnn/N; 则 查找tws_abc 表，acct_guid = 9988 的记录，并删除； 查找tws_nnn 表，acct_guid = 9988 的记录，但不删除； 前提，必须基于实体的GUID进行引用。 */
 	public static final String COLUMN_CHECK_REF = "check_ref" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcEntity";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** GUID_APP字段名<br/> */
+    public static final String NAME_GUID_APP = "隶属应用GUID" ;
+    /** ENTITY_NAME字段名<br/> */
+    public static final String NAME_ENTITY_NAME = "实体名称" ;
+    /** TABLE_NAME字段名<br/> */
+    public static final String NAME_TABLE_NAME = "数据库表名" ;
+    /** ENTITY_DESC字段名<br/> */
+    public static final String NAME_ENTITY_DESC = "实体描述" ;
+    /** DISPLAY_ORDER字段名<br/> */
+    public static final String NAME_DISPLAY_ORDER = "顺序" ;
+    /** ENTITY_TYPE字段名<br/> */
+    public static final String NAME_ENTITY_TYPE = "实体类型" ;
+    /** ISADD字段名<br/> */
+    public static final String NAME_ISADD = "是否可增加" ;
+    /** ISDEL字段名<br/> */
+    public static final String NAME_ISDEL = "是否可删除" ;
+    /** ISMODIFY字段名<br/> */
+    public static final String NAME_ISMODIFY = "可修改" ;
+    /** ISVIEW字段名<br/> */
+    public static final String NAME_ISVIEW = "可查看" ;
+    /** ISPAGE字段名<br/> */
+    public static final String NAME_ISPAGE = "是否需要分页显示" ;
+    /** PAGE_LEN字段名<br/> */
+    public static final String NAME_PAGE_LEN = "每页记录数" ;
+    /** CHECK_REF字段名<br/> */
+    public static final String NAME_CHECK_REF = "删除记录检查引用关系" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

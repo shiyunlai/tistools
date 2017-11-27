@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 身份权限集
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_OPERATOR_IDENTITYRES 身份权限集
  *
@@ -43,6 +43,14 @@ public class AcOperatorIdentityres implements Serializable {
 	public static final String COLUMN_AC_RESOURCETYPE = "ac_resourcetype" ; 
 	/** GUID_AC_RESOURCE ：资源GUID<br/><br/>根据资源类型对应到不同权限资源的GUID */
 	public static final String COLUMN_GUID_AC_RESOURCE = "guid_ac_resource" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcOperatorIdentityres";
+    /** GUID_IDENTITY字段名<br/> */
+    public static final String NAME_GUID_IDENTITY = "身份GUID" ;
+    /** AC_RESOURCETYPE字段名<br/> */
+    public static final String NAME_AC_RESOURCETYPE = "资源类型" ;
+    /** GUID_AC_RESOURCE字段名<br/> */
+    public static final String NAME_GUID_AC_RESOURCE = "资源GUID" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：身份GUID<br/>描述： */

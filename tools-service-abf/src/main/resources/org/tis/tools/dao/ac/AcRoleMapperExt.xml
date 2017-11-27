@@ -76,7 +76,6 @@
     </select>
 
     <select id="queryAcRoleBhvsByFuncGuid" resultType="map"  >
-
         SELECT
           <include refid="queryAcRoleBhvsByFuncGuid_Column" />
         FROM

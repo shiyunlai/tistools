@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 序号资源表
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：sys
  * 模型：SYS_SEQNO 序号资源表
  *
@@ -44,6 +44,18 @@ public class SysSeqno implements Serializable {
 	public static final String COLUMN_RESET = "reset" ; 
 	/** RESET_PARAMS ：重置处理参数<br/><br/>重置程序执行时的输入参数，通过本参数指定六重置周期，重置执行时间，重置起始数字等 */
 	public static final String COLUMN_RESET_PARAMS = "reset_params" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.sys.SysSeqno";
+    /** SEQ_NAME字段名<br/> */
+    public static final String NAME_SEQ_NAME = "序号资源名称" ;
+    /** SEQ_KEY字段名<br/> */
+    public static final String NAME_SEQ_KEY = "序号键值" ;
+    /** SEQ_NO字段名<br/> */
+    public static final String NAME_SEQ_NO = "序号数" ;
+    /** RESET字段名<br/> */
+    public static final String NAME_RESET = "重置方式" ;
+    /** RESET_PARAMS字段名<br/> */
+    public static final String NAME_RESET_PARAMS = "重置处理参数" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：序号资源名称<br/>描述：序号资源的名称，如:柜员660001的交易流水序号资源 */

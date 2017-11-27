@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 操作日志
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\JNL-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\jnl-mysql.erm
  * 业务域：log
  * 模型：LOG_ABF_OPERATE 操作日志
  *
@@ -64,6 +64,38 @@ public class LogAbfOperate implements Serializable {
 	public static final String COLUMN_STACK_TRACE = "stack_trace" ; 
 	/** PROCESS_DESC ：处理描述<br/><br/>记录功能执行时的业务处理信息 */
 	public static final String COLUMN_PROCESS_DESC = "process_desc" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.log.LogAbfOperate";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** OPERATE_FROM字段名<br/> */
+    public static final String NAME_OPERATE_FROM = "操作渠道" ;
+    /** OPERATE_TYPE字段名<br/> */
+    public static final String NAME_OPERATE_TYPE = "操作类型" ;
+    /** OPERATE_TIME字段名<br/> */
+    public static final String NAME_OPERATE_TIME = "操作时间" ;
+    /** OPERATE_RESULT字段名<br/> */
+    public static final String NAME_OPERATE_RESULT = "操作结果" ;
+    /** OPERATE_DESC字段名<br/> */
+    public static final String NAME_OPERATE_DESC = "操作描述" ;
+    /** OPERATOR_NAME字段名<br/> */
+    public static final String NAME_OPERATOR_NAME = "操作员姓名" ;
+    /** USER_ID字段名<br/> */
+    public static final String NAME_USER_ID = "操作员" ;
+    /** APP_CODE字段名<br/> */
+    public static final String NAME_APP_CODE = "应用代码" ;
+    /** APP_NAME字段名<br/> */
+    public static final String NAME_APP_NAME = "应用名称" ;
+    /** FUNC_CODE字段名<br/> */
+    public static final String NAME_FUNC_CODE = "功能编号" ;
+    /** FUNC_NAME字段名<br/> */
+    public static final String NAME_FUNC_NAME = "功能名称" ;
+    /** RESTFUL_URL字段名<br/> */
+    public static final String NAME_RESTFUL_URL = "服务地址" ;
+    /** STACK_TRACE字段名<br/> */
+    public static final String NAME_STACK_TRACE = "异常堆栈" ;
+    /** PROCESS_DESC字段名<br/> */
+    public static final String NAME_PROCESS_DESC = "处理描述" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier） */

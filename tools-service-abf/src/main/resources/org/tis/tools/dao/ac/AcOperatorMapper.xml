@@ -224,23 +224,23 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid as guid
-		,user_id as userId
-		,password as password
-		,operator_name as operatorName
-		,operator_status as operatorStatus
-		,inval_date as invalDate
-		,auth_mode as authMode
-		,lock_limit as lockLimit
-		,err_count as errCount
-		,lock_time as lockTime
-		,unlock_time as unlockTime
-		,menu_type as menuType
-		,last_login as lastLogin
-		,start_date as startDate
-		,end_date as endDate
-		,valid_time as validTime
-		,mac_code as macCode
-		,ip_address as ipAddress
+		 guid as `guid`
+		,user_id as `userId`
+		,password as `password`
+		,operator_name as `operatorName`
+		,operator_status as `operatorStatus`
+		,inval_date as `invalDate`
+		,auth_mode as `authMode`
+		,lock_limit as `lockLimit`
+		,err_count as `errCount`
+		,lock_time as `lockTime`
+		,unlock_time as `unlockTime`
+		,menu_type as `menuType`
+		,last_login as `lastLogin`
+		,start_date as `startDate`
+		,end_date as `endDate`
+		,valid_time as `validTime`
+		,mac_code as `macCode`
+		,ip_address as `ipAddress`
 	</sql>
 </mapper>

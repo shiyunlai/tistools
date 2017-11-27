@@ -107,10 +107,10 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid_func as guidFunc
-		,attr_type as attrType
-		,attr_key as attrKey
-		,attr_value as attrValue
-		,memo as memo
+		 guid_func as `guidFunc`
+		,attr_type as `attrType`
+		,attr_key as `attrKey`
+		,attr_value as `attrValue`
+		,memo as `memo`
 	</sql>
 </mapper>
