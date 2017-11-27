@@ -152,15 +152,15 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid as guid
-		,duty_code as dutyCode
-		,duty_name as dutyName
-		,duty_type as dutyType
-		,guid_parents as guidParents
-		,isleaf as isleaf
-		,sub_count as subCount
-		,duty_level as dutyLevel
-		,duty_seq as dutySeq
-		,remark as remark
+		 guid as `guid`
+		,duty_code as `dutyCode`
+		,duty_name as `dutyName`
+		,duty_type as `dutyType`
+		,guid_parents as `guidParents`
+		,isleaf as `isleaf`
+		,sub_count as `subCount`
+		,duty_level as `dutyLevel`
+		,duty_seq as `dutySeq`
+		,remark as `remark`
 	</sql>
 </mapper>

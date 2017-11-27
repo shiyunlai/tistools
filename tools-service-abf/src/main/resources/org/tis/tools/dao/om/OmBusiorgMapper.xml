@@ -188,19 +188,19 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid as guid
-		,node_type as nodeType
-		,busiorg_code as busiorgCode
-		,busi_domain as busiDomain
-		,busiorg_name as busiorgName
-		,busiorg_level as busiorgLevel
-		,guid_org as guidOrg
-		,guid_parents as guidParents
-		,guid_position as guidPosition
-		,org_code as orgCode
-		,seqno as seqno
-		,sortno as sortno
-		,isleaf as isleaf
-		,sub_count as subCount
+		 guid as `guid`
+		,node_type as `nodeType`
+		,busiorg_code as `busiorgCode`
+		,busi_domain as `busiDomain`
+		,busiorg_name as `busiorgName`
+		,busiorg_level as `busiorgLevel`
+		,guid_org as `guidOrg`
+		,guid_parents as `guidParents`
+		,guid_position as `guidPosition`
+		,org_code as `orgCode`
+		,seqno as `seqno`
+		,sortno as `sortno`
+		,isleaf as `isleaf`
+		,sub_count as `subCount`
 	</sql>
 </mapper>

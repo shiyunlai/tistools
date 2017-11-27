@@ -125,12 +125,12 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid_operator as guidOperator
-		,guid_func as guidFunc
-		,guid_funcgroup as guidFuncgroup
-		,guid_app as guidApp
-		,order_no as orderNo
-		,image_path as imagePath
-		,shortcut_key as shortcutKey
+		 guid_operator as `guidOperator`
+		,guid_func as `guidFunc`
+		,guid_funcgroup as `guidFuncgroup`
+		,guid_app as `guidApp`
+		,order_no as `orderNo`
+		,image_path as `imagePath`
+		,shortcut_key as `shortcutKey`
 	</sql>
 </mapper>

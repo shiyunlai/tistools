@@ -98,9 +98,9 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid_role as guidRole
-		,guid_entityfield as guidEntityfield
-		,ismodify as ismodify
-		,isview as isview
+		 guid_role as `guidRole`
+		,guid_entityfield as `guidEntityfield`
+		,ismodify as `ismodify`
+		,isview as `isview`
 	</sql>
 </mapper>

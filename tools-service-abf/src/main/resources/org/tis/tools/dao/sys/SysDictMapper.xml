@@ -179,18 +179,18 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid as guid
-		,dict_key as dictKey
-		,dict_type as dictType
-		,dict_name as dictName
-		,dict_desc as dictDesc
-		,guid_parents as guidParents
-		,default_value as defaultValue
-		,from_table as fromTable
-		,use_for_key as useForKey
-		,use_for_name as useForName
-		,seqno as seqno
-		,sql_filter as sqlFilter
-		,from_type as fromType
+		 guid as `guid`
+		,dict_key as `dictKey`
+		,dict_type as `dictType`
+		,dict_name as `dictName`
+		,dict_desc as `dictDesc`
+		,guid_parents as `guidParents`
+		,default_value as `defaultValue`
+		,from_table as `fromTable`
+		,use_for_key as `useForKey`
+		,use_for_name as `useForName`
+		,seqno as `seqno`
+		,sql_filter as `sqlFilter`
+		,from_type as `fromType`
 	</sql>
 </mapper>

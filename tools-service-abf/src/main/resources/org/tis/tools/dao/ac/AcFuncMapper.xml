@@ -161,16 +161,16 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid as guid
-		,guid_funcgroup as guidFuncgroup
-		,func_code as funcCode
-		,func_name as funcName
-		,func_desc as funcDesc
-		,func_action as funcAction
-		,para_info as paraInfo
-		,func_type as funcType
-		,guid_bhvtype_def as guidBhvtypeDef
-		,ischeck as ischeck
-		,ismenu as ismenu
+		 guid as `guid`
+		,guid_funcgroup as `guidFuncgroup`
+		,func_code as `funcCode`
+		,func_name as `funcName`
+		,func_desc as `funcDesc`
+		,func_action as `funcAction`
+		,para_info as `paraInfo`
+		,func_type as `funcType`
+		,guid_bhvtype_def as `guidBhvtypeDef`
+		,ischeck as `ischeck`
+		,ismenu as `ismenu`
 	</sql>
 </mapper>

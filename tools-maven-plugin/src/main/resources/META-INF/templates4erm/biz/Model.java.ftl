@@ -38,6 +38,12 @@ public class ${humpClassName(table.id)} implements Serializable {
 	/** ${field.id?upper_case} ：${field.name}<br/><br/>${field.desc} */
 	public static final String COLUMN_${field.id?upper_case} = "${field.id}" ; 
 	</#list>
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "${packageName}.${humpClassName(table.id)}";
+	<#list table.fields as field>
+    /** ${field.id?upper_case}字段名<br/> */
+    public static final String NAME_${field.id?upper_case} = "${field.name}" ;
+	</#list>
 	
 	<#list table.fields as field>
 	<#assign fieldIdVar="${humpClassName(field.id)?uncap_first}">

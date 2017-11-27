@@ -125,12 +125,12 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid as guid
-		,guid_app as guidApp
-		,group_name as groupName
-		,key_name as keyName
-		,value_from as valueFrom
-		,value as value
-		,description as description
+		 guid as `guid`
+		,guid_app as `guidApp`
+		,group_name as `groupName`
+		,key_name as `keyName`
+		,value_from as `valueFrom`
+		,value as `value`
+		,description as `description`
 	</sql>
 </mapper>

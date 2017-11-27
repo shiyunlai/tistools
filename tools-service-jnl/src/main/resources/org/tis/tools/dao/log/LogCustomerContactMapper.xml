@@ -143,14 +143,14 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid as guid
-		,contact_time as contactTime
-		,chn_code as chnCode
-		,teller_no as tellerNo
-		,instno as instno
-		,obj_value as objValue
-		,cust_no as custNo
-		,cust_name as custName
-		,biz_type as bizType
+		 guid as `guid`
+		,contact_time as `contactTime`
+		,chn_code as `chnCode`
+		,teller_no as `tellerNo`
+		,instno as `instno`
+		,obj_value as `objValue`
+		,cust_no as `custNo`
+		,cust_name as `custName`
+		,biz_type as `bizType`
 	</sql>
 </mapper>

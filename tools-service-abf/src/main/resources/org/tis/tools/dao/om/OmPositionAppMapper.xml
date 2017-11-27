@@ -80,7 +80,7 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid_position as guidPosition
-		,guid_app as guidApp
+		 guid_position as `guidPosition`
+		,guid_app as `guidApp`
 	</sql>
 </mapper>

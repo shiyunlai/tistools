@@ -89,8 +89,8 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid_history as guidHistory
-		,change_key as changeKey
-		,change_value as changeValue
+		 guid_history as `guidHistory`
+		,change_key as `changeKey`
+		,change_value as `changeValue`
 	</sql>
 </mapper>

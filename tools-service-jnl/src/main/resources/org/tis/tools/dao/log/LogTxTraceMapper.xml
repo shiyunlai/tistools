@@ -161,16 +161,16 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid as guid
-		,instno as instno
-		,teller_no as tellerNo
-		,chn_code as chnCode
-		,bhv_code as bhvCode
-		,bhv_name as bhvName
-		,happen_time as happenTime
-		,trans_sno as transSno
-		,trans_code as transCode
-		,tws_code as twsCode
-		,remark_info as remarkInfo
+		 guid as `guid`
+		,instno as `instno`
+		,teller_no as `tellerNo`
+		,chn_code as `chnCode`
+		,bhv_code as `bhvCode`
+		,bhv_name as `bhvName`
+		,happen_time as `happenTime`
+		,trans_sno as `transSno`
+		,trans_code as `transCode`
+		,tws_code as `twsCode`
+		,remark_info as `remarkInfo`
 	</sql>
 </mapper>

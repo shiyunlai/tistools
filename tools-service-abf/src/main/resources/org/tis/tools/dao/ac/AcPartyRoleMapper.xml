@@ -89,8 +89,8 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 party_type as partyType
-		,guid_party as guidParty
-		,guid_role as guidRole
+		 party_type as `partyType`
+		,guid_party as `guidParty`
+		,guid_role as `guidRole`
 	</sql>
 </mapper>
