@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 人员工作组对应关系
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：om
  * 模型：OM_EMP_GROUP 人员工作组对应关系
  *
@@ -39,6 +39,12 @@ public class OmEmpGroup implements Serializable {
 	public static final String COLUMN_GUID_EMP = "guid_emp" ; 
 	/** GUID_GROUP ：隶属工作组GUID<br/><br/> */
 	public static final String COLUMN_GUID_GROUP = "guid_group" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.om.OmEmpGroup";
+    /** GUID_EMP字段名<br/> */
+    public static final String NAME_GUID_EMP = "员工GUID" ;
+    /** GUID_GROUP字段名<br/> */
+    public static final String NAME_GUID_GROUP = "隶属工作组GUID" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：员工GUID<br/>描述： */

@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 岗位
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：om
  * 模型：OM_POSITION 岗位
  *
@@ -71,6 +71,42 @@ public class OmPosition implements Serializable {
 	public static final String COLUMN_LASTUPDATE = "lastupdate" ; 
 	/** UPDATOR ：最近更新人员<br/><br/> */
 	public static final String COLUMN_UPDATOR = "updator" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.om.OmPosition";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** GUID_ORG字段名<br/> */
+    public static final String NAME_GUID_ORG = "隶属机构GUID" ;
+    /** POSITION_CODE字段名<br/> */
+    public static final String NAME_POSITION_CODE = "岗位代码" ;
+    /** POSITION_NAME字段名<br/> */
+    public static final String NAME_POSITION_NAME = "岗位名称" ;
+    /** POSITION_TYPE字段名<br/> */
+    public static final String NAME_POSITION_TYPE = "岗位类别" ;
+    /** POSITION_STATUS字段名<br/> */
+    public static final String NAME_POSITION_STATUS = "岗位状态" ;
+    /** ISLEAF字段名<br/> */
+    public static final String NAME_ISLEAF = "是否叶子岗位" ;
+    /** SUB_COUNT字段名<br/> */
+    public static final String NAME_SUB_COUNT = "子节点数" ;
+    /** POSITION_LEVEL字段名<br/> */
+    public static final String NAME_POSITION_LEVEL = "岗位层次" ;
+    /** POSITION_SEQ字段名<br/> */
+    public static final String NAME_POSITION_SEQ = "岗位序列" ;
+    /** GUID_PARENTS字段名<br/> */
+    public static final String NAME_GUID_PARENTS = "父岗位GUID" ;
+    /** GUID_DUTY字段名<br/> */
+    public static final String NAME_GUID_DUTY = "所属职务GUID" ;
+    /** START_DATE字段名<br/> */
+    public static final String NAME_START_DATE = "岗位有效开始日期" ;
+    /** END_DATE字段名<br/> */
+    public static final String NAME_END_DATE = "岗位有效截止日期" ;
+    /** CREATETIME字段名<br/> */
+    public static final String NAME_CREATETIME = "创建时间" ;
+    /** LASTUPDATE字段名<br/> */
+    public static final String NAME_LASTUPDATE = "最近更新时间" ;
+    /** UPDATOR字段名<br/> */
+    public static final String NAME_UPDATOR = "最近更新人员" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */
@@ -463,21 +499,4 @@ public class OmPosition implements Serializable {
 	public String toString(){
 		return StringUtil.toString(this) ; 
 	}
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null)
-			return false;
-		if (this == obj) {
-			return true;
-		}
-		if (obj instanceof OmPosition) {
-			OmPosition other = (OmPosition) obj;
-			return (other.getGuid()).equals(this.getGuid());
-		}
-		return false;
-	}
-	
-	
 }

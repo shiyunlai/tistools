@@ -262,14 +262,6 @@ public class GUID {
 	public static String logObject() {
 		return SequenceSimpleUtil.instance.GUID("OBJLOG");
 	}
-	/**
-	 * 取一个操作对象关键值（LOG_ABF_KEYWORD）的数据主键值
-	 *
-	 * @return
-	 */
-	public static String logKeyword() {
-		return SequenceSimpleUtil.instance.GUID("KEYLOG");
-	}
 
 	/**
 	 * 取一个操作员个性配置(AC_OPERATOR_CONFIG)的数据主键值

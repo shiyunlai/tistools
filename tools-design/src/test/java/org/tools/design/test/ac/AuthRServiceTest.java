@@ -39,7 +39,7 @@ public class AuthRServiceTest extends SpringJunitSupport {
             String userId = "shiyunl";
             String identityGuid = "IDENTITY1509334971";
             String appGuid = "APP1499956132";
-            AcOperator acOperator = authenticationRService.loginCheck(userId, password, identityGuid, appGuid);
+            AcOperator acOperator = authenticationRService.loginCheck(userId, identityGuid, appGuid);
 //            Map<String, Object> initInfoByUserIdAndIden = authenticationRService.getInitInfoByUserIdAndIden(userId, identityGuid, appGuid);
 
             System.out.println(acOperator);

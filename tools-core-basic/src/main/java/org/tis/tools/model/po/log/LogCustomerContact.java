@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 客户接触日志
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\JNL-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\jnl-mysql.erm
  * 业务域：log
  * 模型：LOG_CUSTOMER_CONTACT 客户接触日志
  *
@@ -55,6 +55,26 @@ public class LogCustomerContact implements Serializable {
 	public static final String COLUMN_CUST_NAME = "cust_name" ; 
 	/** BIZ_TYPE ：业务类型<br/><br/>对银行业务的类型划分 见业务字典： DICT_BIZ_TYPE */
 	public static final String COLUMN_BIZ_TYPE = "biz_type" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.log.LogCustomerContact";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** CONTACT_TIME字段名<br/> */
+    public static final String NAME_CONTACT_TIME = "接触时间" ;
+    /** CHN_CODE字段名<br/> */
+    public static final String NAME_CHN_CODE = "渠道代码" ;
+    /** TELLER_NO字段名<br/> */
+    public static final String NAME_TELLER_NO = "柜员代码" ;
+    /** INSTNO字段名<br/> */
+    public static final String NAME_INSTNO = "网点代码" ;
+    /** OBJ_VALUE字段名<br/> */
+    public static final String NAME_OBJ_VALUE = "对象值" ;
+    /** CUST_NO字段名<br/> */
+    public static final String NAME_CUST_NO = "客户编号" ;
+    /** CUST_NAME字段名<br/> */
+    public static final String NAME_CUST_NAME = "客户名称" ;
+    /** BIZ_TYPE字段名<br/> */
+    public static final String NAME_BIZ_TYPE = "业务类型" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier） */

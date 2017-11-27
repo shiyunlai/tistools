@@ -107,10 +107,10 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid as guid
-		,guid_operator as guidOperator
-		,identity_name as identityName
-		,identity_flag as identityFlag
-		,seq_no as seqNo
+		 guid as `guid`
+		,guid_operator as `guidOperator`
+		,identity_name as `identityName`
+		,identity_flag as `identityFlag`
+		,seq_no as `seqNo`
 	</sql>
 </mapper>

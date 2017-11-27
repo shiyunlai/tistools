@@ -113,7 +113,7 @@ public class EntityRServiceImpl extends BaseRService implements IEntityRService 
             return acEntities;
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("deleteAcEntity exception: " , e);
+            logger.error("deleteAcEntity exception: ", e);
             throw new EntityManagementException(ExceptionCodes.FAILURE_WHEN_DELETE, wrap(AcEntity.TABLE_NAME, e));
         }
     }
@@ -330,6 +330,7 @@ public class EntityRServiceImpl extends BaseRService implements IEntityRService 
         if (acDatascope == null)
             throw new EntityManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE, wrap("acEntityfield", AcDatascope.TABLE_NAME));
         try {
+            acDatascope.setGuid(GUID.dataScope());
             String s = BeanFieldValidateUtil.checkObjFieldAllRequired(acDatascope);
             if(StringUtils.isNotBlank(s)) {
                 throw new EntityManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_UPDATE, wrap(s, AcDatascope.TABLE_NAME));

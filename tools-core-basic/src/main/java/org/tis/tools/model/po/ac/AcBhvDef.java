@@ -4,19 +4,15 @@
  */
 package org.tis.tools.model.po.ac;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.sql.Blob;
-import java.sql.Time;
-import java.util.Date;
-
 import org.tis.tools.common.utils.StringUtil;
+
+import java.io.Serializable;
 
 /**
  * 
  * <pre>
  * 功能操作行为定义
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_BHV_DEF 功能操作行为定义
  *
@@ -42,6 +38,16 @@ public class AcBhvDef implements Serializable {
 	public static final String COLUMN_BHV_CODE = "bhv_code" ; 
 	/** BHV_NAME ：行为名称<br/><br/> */
 	public static final String COLUMN_BHV_NAME = "bhv_name" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcBhvDef";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** GUID_BEHTYPE字段名<br/> */
+    public static final String NAME_GUID_BEHTYPE = "操作类型GUID" ;
+    /** BHV_CODE字段名<br/> */
+    public static final String NAME_BHV_CODE = "行为代码" ;
+    /** BHV_NAME字段名<br/> */
+    public static final String NAME_BHV_NAME = "行为名称" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

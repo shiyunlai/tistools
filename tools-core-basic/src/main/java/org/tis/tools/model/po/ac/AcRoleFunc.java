@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 权限集(角色)功能对应关系
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_ROLE_FUNC 权限集(角色)功能对应关系
  *
@@ -42,6 +42,16 @@ public class AcRoleFunc implements Serializable {
 	public static final String COLUMN_GUID_APP = "guid_app" ; 
 	/** GUID_FUNCGROUP ：功能组GUID<br/><br/>冗余字段 */
 	public static final String COLUMN_GUID_FUNCGROUP = "guid_funcgroup" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcRoleFunc";
+    /** GUID_ROLE字段名<br/> */
+    public static final String NAME_GUID_ROLE = "角色GUID" ;
+    /** GUID_FUNC字段名<br/> */
+    public static final String NAME_GUID_FUNC = "拥有功能GUID" ;
+    /** GUID_APP字段名<br/> */
+    public static final String NAME_GUID_APP = "应用GUID" ;
+    /** GUID_FUNCGROUP字段名<br/> */
+    public static final String NAME_GUID_FUNCGROUP = "功能组GUID" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：角色GUID<br/>描述： */

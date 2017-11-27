@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 职务定义表
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：om
  * 模型：OM_DUTY 职务定义表
  *
@@ -54,6 +54,28 @@ public class OmDuty implements Serializable {
 	public static final String COLUMN_DUTY_SEQ = "duty_seq" ; 
 	/** REMARK ：备注<br/><br/> */
 	public static final String COLUMN_REMARK = "remark" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.om.OmDuty";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** DUTY_CODE字段名<br/> */
+    public static final String NAME_DUTY_CODE = "职务代码" ;
+    /** DUTY_NAME字段名<br/> */
+    public static final String NAME_DUTY_NAME = "职务名称" ;
+    /** DUTY_TYPE字段名<br/> */
+    public static final String NAME_DUTY_TYPE = "职务套别" ;
+    /** GUID_PARENTS字段名<br/> */
+    public static final String NAME_GUID_PARENTS = "父职务GUID" ;
+    /** ISLEAF字段名<br/> */
+    public static final String NAME_ISLEAF = "是否叶子节点" ;
+    /** SUB_COUNT字段名<br/> */
+    public static final String NAME_SUB_COUNT = "子节点数" ;
+    /** DUTY_LEVEL字段名<br/> */
+    public static final String NAME_DUTY_LEVEL = "职务层次" ;
+    /** DUTY_SEQ字段名<br/> */
+    public static final String NAME_DUTY_SEQ = "职务序列" ;
+    /** REMARK字段名<br/> */
+    public static final String NAME_REMARK = "备注" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

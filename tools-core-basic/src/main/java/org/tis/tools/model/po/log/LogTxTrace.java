@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 交易操作日志
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\JNL-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\jnl-mysql.erm
  * 业务域：log
  * 模型：LOG_TX_TRACE 交易操作日志
  *
@@ -56,6 +56,30 @@ public class LogTxTrace implements Serializable {
 	public static final String COLUMN_TWS_CODE = "tws_code" ; 
 	/** REMARK_INFO ：备注信息<br/><br/>记录操作过程中的备注信息，比如存储操作前后某些字典的变化对照 */
 	public static final String COLUMN_REMARK_INFO = "remark_info" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.log.LogTxTrace";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** INSTNO字段名<br/> */
+    public static final String NAME_INSTNO = "网点代码" ;
+    /** TELLER_NO字段名<br/> */
+    public static final String NAME_TELLER_NO = "柜员代码" ;
+    /** CHN_CODE字段名<br/> */
+    public static final String NAME_CHN_CODE = "渠道代码" ;
+    /** BHV_CODE字段名<br/> */
+    public static final String NAME_BHV_CODE = "行为代码" ;
+    /** BHV_NAME字段名<br/> */
+    public static final String NAME_BHV_NAME = "行为名称" ;
+    /** HAPPEN_TIME字段名<br/> */
+    public static final String NAME_HAPPEN_TIME = "发生时间" ;
+    /** TRANS_SNO字段名<br/> */
+    public static final String NAME_TRANS_SNO = "交易流水号" ;
+    /** TRANS_CODE字段名<br/> */
+    public static final String NAME_TRANS_CODE = "交易代码" ;
+    /** TWS_CODE字段名<br/> */
+    public static final String NAME_TWS_CODE = "工作站编码" ;
+    /** REMARK_INFO字段名<br/> */
+    public static final String NAME_REMARK_INFO = "备注信息" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier） */

@@ -241,7 +241,7 @@ angular.module('MetronicApp').controller('dictionary_controller', function($root
     dictflag.histroy = function () {
         var getSel = $scope.gridOptions0.getSelectedRows();
         if(isNull(getSel) || getSel.length>1){
-            toastr['error']("请至少选中一条进行重置！");
+            toastr['error']("请至少选中一条进行查看！");
         }else{
             $state.go("loghistory",{id:getSel[0].guid});//跳转到历史页面
         }

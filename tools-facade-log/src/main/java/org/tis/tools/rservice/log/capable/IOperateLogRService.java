@@ -5,6 +5,7 @@ import org.tis.tools.model.vo.log.LogOperateDetail;
 import org.tis.tools.rservice.log.exception.LogManagementException;
 
 import java.util.List;
+import java.util.Map;
 
 /***
  *  <pre>
@@ -39,10 +40,10 @@ public interface IOperateLogRService {
     /**
      * 查询对象的操作历史
      * @param objGuid 对象GUID
-     * @return 操作日志集合
+     * @return 操作对象 + 操作日志历史集合
      * @throws LogManagementException
      */
-    List<LogOperateDetail> queryOperateHistoryList(String objGuid) throws LogManagementException;
+    Map<String, Object> queryOperateHistoryList(String objGuid) throws LogManagementException;
 
     /**
      * 查询操作员的登录历史

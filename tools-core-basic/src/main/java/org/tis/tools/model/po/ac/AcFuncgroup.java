@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 功能组
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_FUNCGROUP 功能组
  *
@@ -53,6 +53,24 @@ public class AcFuncgroup implements Serializable {
 	public static final String COLUMN_ISLEAF = "isleaf" ; 
 	/** SUB_COUNT ：子节点数<br/><br/>对功能组进行子节点的增加、删除时需要同步维护 */
 	public static final String COLUMN_SUB_COUNT = "sub_count" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcFuncgroup";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** GUID_APP字段名<br/> */
+    public static final String NAME_GUID_APP = "隶属应用GUID" ;
+    /** FUNCGROUP_NAME字段名<br/> */
+    public static final String NAME_FUNCGROUP_NAME = "功能组名称" ;
+    /** GUID_PARENTS字段名<br/> */
+    public static final String NAME_GUID_PARENTS = "父功能组GUID" ;
+    /** GROUP_LEVEL字段名<br/> */
+    public static final String NAME_GROUP_LEVEL = "节点层次" ;
+    /** FUNCGROUP_SEQ字段名<br/> */
+    public static final String NAME_FUNCGROUP_SEQ = "功能组路径序列" ;
+    /** ISLEAF字段名<br/> */
+    public static final String NAME_ISLEAF = "是否叶子节点" ;
+    /** SUB_COUNT字段名<br/> */
+    public static final String NAME_SUB_COUNT = "子节点数" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

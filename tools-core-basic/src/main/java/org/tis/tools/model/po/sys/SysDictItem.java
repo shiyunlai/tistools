@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 业务字典项
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：sys
  * 模型：SYS_DICT_ITEM 业务字典项
  *
@@ -50,6 +50,24 @@ public class SysDictItem implements Serializable {
 	public static final String COLUMN_SEQNO = "seqno" ; 
 	/** ITEM_DESC ：字典项说明<br/><br/> */
 	public static final String COLUMN_ITEM_DESC = "item_desc" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.sys.SysDictItem";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** GUID_DICT字段名<br/> */
+    public static final String NAME_GUID_DICT = "隶属业务字典" ;
+    /** ITEM_NAME字段名<br/> */
+    public static final String NAME_ITEM_NAME = "字典项名称" ;
+    /** ITEM_TYPE字段名<br/> */
+    public static final String NAME_ITEM_TYPE = "字典项类型" ;
+    /** ITEM_VALUE字段名<br/> */
+    public static final String NAME_ITEM_VALUE = "字典项" ;
+    /** SEND_VALUE字段名<br/> */
+    public static final String NAME_SEND_VALUE = "实际值" ;
+    /** SEQNO字段名<br/> */
+    public static final String NAME_SEQNO = "顺序号" ;
+    /** ITEM_DESC字段名<br/> */
+    public static final String NAME_ITEM_DESC = "字典项说明" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

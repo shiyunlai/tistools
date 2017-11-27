@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 操作员特殊权限配置
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_OPERATOR_FUNC 操作员特殊权限配置
  *
@@ -48,6 +48,22 @@ public class AcOperatorFunc implements Serializable {
 	public static final String COLUMN_GUID_APP = "guid_app" ; 
 	/** GUID_FUNCGROUP ：功能组GUID<br/><br/>冗余字段 */
 	public static final String COLUMN_GUID_FUNCGROUP = "guid_funcgroup" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcOperatorFunc";
+    /** GUID_OPERATOR字段名<br/> */
+    public static final String NAME_GUID_OPERATOR = "操作员GUID" ;
+    /** GUID_FUNC字段名<br/> */
+    public static final String NAME_GUID_FUNC = "功能GUID" ;
+    /** AUTH_TYPE字段名<br/> */
+    public static final String NAME_AUTH_TYPE = "授权标志" ;
+    /** START_DATE字段名<br/> */
+    public static final String NAME_START_DATE = "有效开始日期" ;
+    /** END_DATE字段名<br/> */
+    public static final String NAME_END_DATE = "有效截至日期" ;
+    /** GUID_APP字段名<br/> */
+    public static final String NAME_GUID_APP = "应用GUID" ;
+    /** GUID_FUNCGROUP字段名<br/> */
+    public static final String NAME_GUID_FUNCGROUP = "功能组GUID" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：操作员GUID<br/>描述： */

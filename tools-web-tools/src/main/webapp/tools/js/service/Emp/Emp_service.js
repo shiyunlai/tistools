@@ -52,6 +52,12 @@ MetronicApp.factory('Emp_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     }
+    service.updateemployee = function (subFrom) {
+        var res = $http.post(manurl + "/om/emp/updateemployee",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
     service.fixmainOrg = function (subFrom) {
         var res = $http.post(manurl + "/om/emp/fixmainOrg",subFrom).then(function (response) {
             return response.data;

@@ -107,10 +107,10 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 seq_name as seqName
-		,seq_key as seqKey
-		,seq_no as seqNo
-		,reset as reset
-		,reset_params as resetParams
+		 seq_name as `seqName`
+		,seq_key as `seqKey`
+		,seq_no as `seqNo`
+		,reset as `reset`
+		,reset_params as `resetParams`
 	</sql>
 </mapper>

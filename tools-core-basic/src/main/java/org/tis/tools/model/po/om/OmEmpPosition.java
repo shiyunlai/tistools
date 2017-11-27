@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 员工岗位对应关系
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：om
  * 模型：OM_EMP_POSITION 员工岗位对应关系
  *
@@ -40,6 +40,14 @@ public class OmEmpPosition implements Serializable {
 	public static final String COLUMN_GUID_POSITION = "guid_position" ; 
 	/** ISMAIN ：是否主岗位<br/><br/>取值来自业务菜单：DICT_YON 只能有一个主岗位 */
 	public static final String COLUMN_ISMAIN = "ismain" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.om.OmEmpPosition";
+    /** GUID_EMP字段名<br/> */
+    public static final String NAME_GUID_EMP = "员工GUID" ;
+    /** GUID_POSITION字段名<br/> */
+    public static final String NAME_GUID_POSITION = "所在岗位GUID" ;
+    /** ISMAIN字段名<br/> */
+    public static final String NAME_ISMAIN = "是否主岗位" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：员工GUID<br/>描述： */

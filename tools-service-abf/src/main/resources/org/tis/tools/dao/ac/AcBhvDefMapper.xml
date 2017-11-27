@@ -98,9 +98,9 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid as guid
-		,guid_behtype as guidBehtype
-		,bhv_code as bhvCode
-		,bhv_name as bhvName
+		 guid as `guid`
+		,guid_behtype as `guidBehtype`
+		,bhv_code as `bhvCode`
+		,bhv_name as `bhvName`
 	</sql>
 </mapper>

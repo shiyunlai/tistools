@@ -6,6 +6,7 @@ MetronicApp.controller('numres_controller', function ($filter, $scope, $state,nu
 
     var numres = {};
     $scope.numres = numres;
+
     //查询所有系统资源
     var subFrom= {} ;
     numres_service.querySeqnoList(subFrom).then(function (data) {
@@ -34,7 +35,6 @@ MetronicApp.controller('numres_controller', function ($filter, $scope, $state,nu
         })
     }
 
-
     //grid表格
     i18nService.setCurrentLang("zh-cn");
     var gridOptions = {};
@@ -54,6 +54,7 @@ MetronicApp.controller('numres_controller', function ($filter, $scope, $state,nu
         }
     }
     $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,false,f);
+
 
     //重置序号
     $scope.numresReset =function(){
@@ -77,9 +78,11 @@ MetronicApp.controller('numres_controller', function ($filter, $scope, $state,nu
         }
     }
 
+
     //修改序号
     $scope.numresEdit = function(){
         var getSel = $scope.gridOptions.getSelectedRows();
+        console.log(getSel);
         if(isNull(getSel) || getSel.length>1){
             toastr['error']("请选则一条数据进行修改！");
         }else{
@@ -137,6 +140,7 @@ MetronicApp.controller('numres_controller', function ($filter, $scope, $state,nu
             )
         }
     }
+
     //删除序号资源
     $scope.numresDel = function(){
         var getSel = $scope.gridOptions.getSelectedRows();

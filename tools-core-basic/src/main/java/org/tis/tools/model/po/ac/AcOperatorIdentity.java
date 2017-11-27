@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 操作员身份
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_OPERATOR_IDENTITY 操作员身份
  *
@@ -47,6 +47,18 @@ public class AcOperatorIdentity implements Serializable {
 	public static final String COLUMN_IDENTITY_FLAG = "identity_flag" ; 
 	/** SEQ_NO ：显示顺序<br/><br/> */
 	public static final String COLUMN_SEQ_NO = "seq_no" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcOperatorIdentity";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** GUID_OPERATOR字段名<br/> */
+    public static final String NAME_GUID_OPERATOR = "操作员GUID" ;
+    /** IDENTITY_NAME字段名<br/> */
+    public static final String NAME_IDENTITY_NAME = "身份名称" ;
+    /** IDENTITY_FLAG字段名<br/> */
+    public static final String NAME_IDENTITY_FLAG = "默认身份标志" ;
+    /** SEQ_NO字段名<br/> */
+    public static final String NAME_SEQ_NO = "显示顺序" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

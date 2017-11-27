@@ -40,6 +40,14 @@ public class AcRoleBhv implements Serializable {
 	public static final String COLUMN_GUID_FUNC_BHV = "guid_func_bhv" ; 
 	/** GUID_APP ：应用GUID<br/><br/> */
 	public static final String COLUMN_GUID_APP = "guid_app" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcRoleBhv";
+    /** GUID_ROLE字段名<br/> */
+    public static final String NAME_GUID_ROLE = "角色GUID" ;
+    /** GUID_FUNC_BHV字段名<br/> */
+    public static final String NAME_GUID_FUNC_BHV = "拥有功能行为" ;
+    /** GUID_APP字段名<br/> */
+    public static final String NAME_GUID_APP = "应用GUID" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：角色GUID<br/>描述： */

@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 工作组
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：om
  * 模型：OM_GROUP 工作组
  *
@@ -71,6 +71,44 @@ public class OmGroup implements Serializable {
 	public static final String COLUMN_LASTUPDATE = "lastupdate" ; 
 	/** UPDATOR ：最近更新人员<br/><br/> */
 	public static final String COLUMN_UPDATOR = "updator" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.om.OmGroup";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** GROUP_CODE字段名<br/> */
+    public static final String NAME_GROUP_CODE = "工作组代码" ;
+    /** GROUP_NAME字段名<br/> */
+    public static final String NAME_GROUP_NAME = "工作组名称" ;
+    /** GROUP_TYPE字段名<br/> */
+    public static final String NAME_GROUP_TYPE = "工作组类型" ;
+    /** GROUP_STATUS字段名<br/> */
+    public static final String NAME_GROUP_STATUS = "工作组状态" ;
+    /** GROUP_DESC字段名<br/> */
+    public static final String NAME_GROUP_DESC = "工作组描述" ;
+    /** GUID_EMP_MANAGER字段名<br/> */
+    public static final String NAME_GUID_EMP_MANAGER = "负责人" ;
+    /** GUID_ORG字段名<br/> */
+    public static final String NAME_GUID_ORG = "隶属机构GUID" ;
+    /** GUID_PARENTS字段名<br/> */
+    public static final String NAME_GUID_PARENTS = "父工作组GUID" ;
+    /** ISLEAF字段名<br/> */
+    public static final String NAME_ISLEAF = "是否叶子节点" ;
+    /** SUB_COUNT字段名<br/> */
+    public static final String NAME_SUB_COUNT = "子节点数" ;
+    /** GROUP_LEVEL字段名<br/> */
+    public static final String NAME_GROUP_LEVEL = "工作组层次" ;
+    /** GROUP_SEQ字段名<br/> */
+    public static final String NAME_GROUP_SEQ = "工作组序列" ;
+    /** START_DATE字段名<br/> */
+    public static final String NAME_START_DATE = "工作组有效开始日期" ;
+    /** END_DATE字段名<br/> */
+    public static final String NAME_END_DATE = "工作组有效截止日期" ;
+    /** CREATETIME字段名<br/> */
+    public static final String NAME_CREATETIME = "创建时间" ;
+    /** LASTUPDATE字段名<br/> */
+    public static final String NAME_LASTUPDATE = "最近更新时间" ;
+    /** UPDATOR字段名<br/> */
+    public static final String NAME_UPDATOR = "最近更新人员" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

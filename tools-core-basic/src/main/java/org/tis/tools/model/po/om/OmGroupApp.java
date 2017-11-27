@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 工作组应用列表
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：om
  * 模型：OM_GROUP_APP 工作组应用列表
  *
@@ -38,6 +38,12 @@ public class OmGroupApp implements Serializable {
 	public static final String COLUMN_GUID_GROUP = "guid_group" ; 
 	/** GUID_APP ：应用GUID<br/><br/> */
 	public static final String COLUMN_GUID_APP = "guid_app" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.om.OmGroupApp";
+    /** GUID_GROUP字段名<br/> */
+    public static final String NAME_GUID_GROUP = "工作组GUID" ;
+    /** GUID_APP字段名<br/> */
+    public static final String NAME_GUID_APP = "应用GUID" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：工作组GUID<br/>描述： */

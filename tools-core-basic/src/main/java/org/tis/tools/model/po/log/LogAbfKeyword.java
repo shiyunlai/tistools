@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 记录关键值
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\JNL-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\jnl-mysql.erm
  * 业务域：log
  * 模型：LOG_ABF_KEYWORD 记录关键值
  *
@@ -40,6 +40,14 @@ public class LogAbfKeyword implements Serializable {
 	public static final String COLUMN_PARAM = "param" ; 
 	/** VALUE ：关键值<br/><br/> */
 	public static final String COLUMN_VALUE = "value" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.log.LogAbfKeyword";
+    /** GUID_HISTORY字段名<br/> */
+    public static final String NAME_GUID_HISTORY = "操作记录" ;
+    /** PARAM字段名<br/> */
+    public static final String NAME_PARAM = "关键值名称" ;
+    /** VALUE字段名<br/> */
+    public static final String NAME_VALUE = "关键值" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：操作记录<br/>描述： */

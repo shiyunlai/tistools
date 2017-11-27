@@ -73,7 +73,7 @@ public class EmployeeController extends BaseController {
 
     }
     /**
-     * 新增人员信息
+     * 修改人员信息
      *
      * @param content
      * @return

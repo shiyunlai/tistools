@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 组织对象与角色对应关系
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_PARTY_ROLE 组织对象与角色对应关系
  *
@@ -40,6 +40,14 @@ public class AcPartyRole implements Serializable {
 	public static final String COLUMN_GUID_PARTY = "guid_party" ; 
 	/** GUID_ROLE ：拥有角色GUID<br/><br/> */
 	public static final String COLUMN_GUID_ROLE = "guid_role" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcPartyRole";
+    /** PARTY_TYPE字段名<br/> */
+    public static final String NAME_PARTY_TYPE = "组织对象类型" ;
+    /** GUID_PARTY字段名<br/> */
+    public static final String NAME_GUID_PARTY = "组织对象GUID" ;
+    /** GUID_ROLE字段名<br/> */
+    public static final String NAME_GUID_ROLE = "拥有角色GUID" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：组织对象类型<br/>描述：取值范围，见业务字典 DICT_OM_PARTYTYPE 如：机构、工作组、岗位、职务 */

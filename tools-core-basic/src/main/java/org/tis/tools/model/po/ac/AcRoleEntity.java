@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 角色实体关系
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_ROLE_ENTITY 角色实体关系
  *
@@ -47,6 +47,20 @@ public class AcRoleEntity implements Serializable {
 	public static final String COLUMN_ISMODIFY = "ismodify" ; 
 	/** ISVIEW ：可查看<br/><br/>取值来自业务菜单： DICT_YON */
 	public static final String COLUMN_ISVIEW = "isview" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcRoleEntity";
+    /** GUID_ROLE字段名<br/> */
+    public static final String NAME_GUID_ROLE = "角色GUID" ;
+    /** GUID_ENTITY字段名<br/> */
+    public static final String NAME_GUID_ENTITY = "拥有实体GUID" ;
+    /** ISADD字段名<br/> */
+    public static final String NAME_ISADD = "可增加" ;
+    /** ISDEL字段名<br/> */
+    public static final String NAME_ISDEL = "可删除" ;
+    /** ISMODIFY字段名<br/> */
+    public static final String NAME_ISMODIFY = "可修改" ;
+    /** ISVIEW字段名<br/> */
+    public static final String NAME_ISVIEW = "可查看" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：角色GUID<br/>描述： */

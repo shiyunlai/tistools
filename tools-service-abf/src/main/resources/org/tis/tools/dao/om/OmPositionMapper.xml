@@ -215,22 +215,22 @@
 	</sql>
   
 	<sql id="Base_Column_List" >
-		 guid as guid
-		,guid_org as guidOrg
-		,position_code as positionCode
-		,position_name as positionName
-		,position_type as positionType
-		,position_status as positionStatus
-		,isleaf as isleaf
-		,sub_count as subCount
-		,position_level as positionLevel
-		,position_seq as positionSeq
-		,guid_parents as guidParents
-		,guid_duty as guidDuty
-		,start_date as startDate
-		,end_date as endDate
-		,createtime as createtime
-		,lastupdate as lastupdate
-		,updator as updator
+		 guid as `guid`
+		,guid_org as `guidOrg`
+		,position_code as `positionCode`
+		,position_name as `positionName`
+		,position_type as `positionType`
+		,position_status as `positionStatus`
+		,isleaf as `isleaf`
+		,sub_count as `subCount`
+		,position_level as `positionLevel`
+		,position_seq as `positionSeq`
+		,guid_parents as `guidParents`
+		,guid_duty as `guidDuty`
+		,start_date as `startDate`
+		,end_date as `endDate`
+		,createtime as `createtime`
+		,lastupdate as `lastupdate`
+		,updator as `updator`
 	</sql>
 </mapper>

@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 功能操作行为
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_FUNC_BHV 功能操作行为
  *
@@ -47,6 +47,16 @@ public class AcFuncBhv implements Serializable {
 	public static final String COLUMN_GUID_BHV = "guid_bhv" ; 
 	/** ISEFFECTIVE ：是否有效<br/><br/>见业务字典： DICT_YON Y 有效（默认都是有效的操作行为） N 无效 */
 	public static final String COLUMN_ISEFFECTIVE = "iseffective" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcFuncBhv";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** GUID_FUNC字段名<br/> */
+    public static final String NAME_GUID_FUNC = "功能GUID" ;
+    /** GUID_BHV字段名<br/> */
+    public static final String NAME_GUID_BHV = "行为GUID" ;
+    /** ISEFFECTIVE字段名<br/> */
+    public static final String NAME_ISEFFECTIVE = "是否有效" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

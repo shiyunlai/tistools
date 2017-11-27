@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 业务字典
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：sys
  * 模型：SYS_DICT 业务字典
  *
@@ -60,6 +60,34 @@ public class SysDict implements Serializable {
 	public static final String COLUMN_SQL_FILTER = "sql_filter" ; 
 	/** FROM_TYPE ：字典项来源类型<br/><br/>来源类型:0:来自字典项 1:来自单表 2:多表或视图 */
 	public static final String COLUMN_FROM_TYPE = "from_type" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.sys.SysDict";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** DICT_KEY字段名<br/> */
+    public static final String NAME_DICT_KEY = "业务字典" ;
+    /** DICT_TYPE字段名<br/> */
+    public static final String NAME_DICT_TYPE = "类型" ;
+    /** DICT_NAME字段名<br/> */
+    public static final String NAME_DICT_NAME = "字典名称" ;
+    /** DICT_DESC字段名<br/> */
+    public static final String NAME_DICT_DESC = "解释说明" ;
+    /** GUID_PARENTS字段名<br/> */
+    public static final String NAME_GUID_PARENTS = "父字典GUID" ;
+    /** DEFAULT_VALUE字段名<br/> */
+    public static final String NAME_DEFAULT_VALUE = "业务字典默认值" ;
+    /** FROM_TABLE字段名<br/> */
+    public static final String NAME_FROM_TABLE = "字典项来源表" ;
+    /** USE_FOR_KEY字段名<br/> */
+    public static final String NAME_USE_FOR_KEY = "作为字典项的列" ;
+    /** USE_FOR_NAME字段名<br/> */
+    public static final String NAME_USE_FOR_NAME = "作为字典项名称的列" ;
+    /** SEQNO字段名<br/> */
+    public static final String NAME_SEQNO = "顺序号" ;
+    /** SQL_FILTER字段名<br/> */
+    public static final String NAME_SQL_FILTER = "过滤条件" ;
+    /** FROM_TYPE字段名<br/> */
+    public static final String NAME_FROM_TYPE = "字典项来源类型" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

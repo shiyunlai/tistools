@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 实体属性
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_ENTITYFIELD 实体属性
  *
@@ -90,6 +90,64 @@ public class AcEntityfield implements Serializable {
 	public static final String COLUMN_ISPK = "ispk" ; 
 	/** ISAUTOKEY ：是否自动产生主键<br/><br/>取值来自业务菜单： DICT_YON */
 	public static final String COLUMN_ISAUTOKEY = "isautokey" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcEntityfield";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** GUID_ENTITY字段名<br/> */
+    public static final String NAME_GUID_ENTITY = "隶属实体GUID" ;
+    /** FIELD_NAME字段名<br/> */
+    public static final String NAME_FIELD_NAME = "属性名称" ;
+    /** FIELD_DESC字段名<br/> */
+    public static final String NAME_FIELD_DESC = "属性描述" ;
+    /** DISPLAY_FORMAT字段名<br/> */
+    public static final String NAME_DISPLAY_FORMAT = "显示格式" ;
+    /** DOCLIST_CODE字段名<br/> */
+    public static final String NAME_DOCLIST_CODE = "代码大类" ;
+    /** CHECKBOX_VALUE字段名<br/> */
+    public static final String NAME_CHECKBOX_VALUE = "CHECKBOX_VALUE" ;
+    /** FK_INPUTURL字段名<br/> */
+    public static final String NAME_FK_INPUTURL = "外键录入URL" ;
+    /** FK_FIELDDESC字段名<br/> */
+    public static final String NAME_FK_FIELDDESC = "外键描述字段名" ;
+    /** FK_COLUMNNAME字段名<br/> */
+    public static final String NAME_FK_COLUMNNAME = "外键列名" ;
+    /** FK_TABLENAME字段名<br/> */
+    public static final String NAME_FK_TABLENAME = "外键表名" ;
+    /** DESC_FIELDNAME字段名<br/> */
+    public static final String NAME_DESC_FIELDNAME = "描述字段名" ;
+    /** REF_TYPE字段名<br/> */
+    public static final String NAME_REF_TYPE = "引用类型" ;
+    /** FIELD_TYPE字段名<br/> */
+    public static final String NAME_FIELD_TYPE = "字段类型" ;
+    /** DISPLAY_ORDER字段名<br/> */
+    public static final String NAME_DISPLAY_ORDER = "顺序" ;
+    /** COLUMN_NAME字段名<br/> */
+    public static final String NAME_COLUMN_NAME = "数据库列名" ;
+    /** WIDTH字段名<br/> */
+    public static final String NAME_WIDTH = "宽度" ;
+    /** DEFAULT_VALUE字段名<br/> */
+    public static final String NAME_DEFAULT_VALUE = "缺省值" ;
+    /** MIN_VALUE字段名<br/> */
+    public static final String NAME_MIN_VALUE = "最小值" ;
+    /** MAX_VALUE字段名<br/> */
+    public static final String NAME_MAX_VALUE = "最大值" ;
+    /** LENGTH_VALUE字段名<br/> */
+    public static final String NAME_LENGTH_VALUE = "长度" ;
+    /** PRECISION_VALUE字段名<br/> */
+    public static final String NAME_PRECISION_VALUE = "小数位" ;
+    /** VALIDATE_TYPE字段名<br/> */
+    public static final String NAME_VALIDATE_TYPE = "页面校验类型" ;
+    /** ISMODIFY字段名<br/> */
+    public static final String NAME_ISMODIFY = "是否可修改" ;
+    /** ISDISPLAY字段名<br/> */
+    public static final String NAME_ISDISPLAY = "是否显示" ;
+    /** ISINPUT字段名<br/> */
+    public static final String NAME_ISINPUT = "是否必须填写" ;
+    /** ISPK字段名<br/> */
+    public static final String NAME_ISPK = "是否是主键" ;
+    /** ISAUTOKEY字段名<br/> */
+    public static final String NAME_ISAUTOKEY = "是否自动产生主键" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier），系统自动生成； */

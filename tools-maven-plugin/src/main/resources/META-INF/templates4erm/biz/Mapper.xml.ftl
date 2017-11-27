@@ -95,7 +95,7 @@
   
 	<sql id="Base_Column_List" >
 	  <#list table.fields as field><#if field.physical !="false">
-		<#if field_index == 0> ${field.id} as ${humpClassName(field.id)?uncap_first}<#else>,${field.id} as ${humpClassName(field.id)?uncap_first}</#if></#if>
+		<#if field_index == 0> ${field.id} as `${humpClassName(field.id)?uncap_first}`<#else>,${field.id} as `${humpClassName(field.id)?uncap_first}`</#if></#if>
 	  </#list>
 	</sql>
 </mapper>

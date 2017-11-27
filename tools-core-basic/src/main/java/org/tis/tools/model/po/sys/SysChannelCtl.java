@@ -4,19 +4,15 @@
  */
 package org.tis.tools.model.po.sys;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.sql.Blob;
-import java.sql.Time;
-import java.util.Date;
-
 import org.tis.tools.common.utils.StringUtil;
+
+import java.io.Serializable;
 
 /**
  * 
  * <pre>
  * 渠道参数控制表
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：sys
  * 模型：SYS_CHANNEL_CTL 渠道参数控制表
  *
@@ -42,6 +38,16 @@ public class SysChannelCtl implements Serializable {
 	public static final String COLUMN_CHN_NAME = "chn_name" ; 
 	/** CHN_REMARK ：渠道备注信息<br/><br/> */
 	public static final String COLUMN_CHN_REMARK = "chn_remark" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.sys.SysChannelCtl";
+    /** GUID字段名<br/> */
+    public static final String NAME_GUID = "数据主键" ;
+    /** CHN_CODE字段名<br/> */
+    public static final String NAME_CHN_CODE = "渠道代码" ;
+    /** CHN_NAME字段名<br/> */
+    public static final String NAME_CHN_NAME = "渠道名称" ;
+    /** CHN_REMARK字段名<br/> */
+    public static final String NAME_CHN_REMARK = "渠道备注信息" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：数据主键<br/>描述：全局唯一标识符（GUID，Globally Unique Identifier） */

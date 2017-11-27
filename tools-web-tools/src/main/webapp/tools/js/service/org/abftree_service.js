@@ -85,8 +85,15 @@ MetronicApp.factory('abftree_service',['$http', '$q', function ($http,$q) {
         });
         return res;
     }
-    service.addposit = function (subFrom) {
-        var res = $http.post(manurl + "/om/org/addposit",subFrom).then(function (response) {
+    service.createPosition = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/createPosition",subFrom).then(function (response) {
+            return response.data;
+        });
+        return res;
+    }
+    //修改岗位
+    service.updatePosition = function (subFrom) {
+        var res = $http.post(manurl + "/om/org/updatePosition",subFrom).then(function (response) {
             return response.data;
         });
         return res;

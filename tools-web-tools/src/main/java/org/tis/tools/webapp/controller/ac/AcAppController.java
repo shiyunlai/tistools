@@ -524,9 +524,11 @@ public class AcAppController extends BaseController {
         String guid = jsonObj.getString("id");
         String bhvCode = jsonObj.getString("bhvCode");
         String bhvName = jsonObj.getString("bhvName");
+        String guidBehtype = jsonObj.getString("guidBehtype");
         AcBhvDef acBhvDef = new AcBhvDef();
         acBhvDef.setBhvCode(bhvCode);
         acBhvDef.setBhvName(bhvName);
+        acBhvDef.setGuidBehtype(guidBehtype);
         acBhvDef.setGuid(guid);
         return getReturnMap(applicationRService.funactEdit(acBhvDef));
     }

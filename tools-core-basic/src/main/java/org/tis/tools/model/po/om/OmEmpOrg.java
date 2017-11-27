@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 员工隶属机构关系表
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：om
  * 模型：OM_EMP_ORG 员工隶属机构关系表
  *
@@ -41,6 +41,14 @@ public class OmEmpOrg implements Serializable {
 	public static final String COLUMN_GUID_ORG = "guid_org" ; 
 	/** ISMAIN ：是否主机构<br/><br/>取值来自业务菜单： DICT_YON 必须有且只能有一个主机构，默认N，人员管理时程序检查当前是否只有一条主机构； */
 	public static final String COLUMN_ISMAIN = "ismain" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.om.OmEmpOrg";
+    /** GUID_EMP字段名<br/> */
+    public static final String NAME_GUID_EMP = "员工GUID" ;
+    /** GUID_ORG字段名<br/> */
+    public static final String NAME_GUID_ORG = "隶属机构GUID" ;
+    /** ISMAIN字段名<br/> */
+    public static final String NAME_ISMAIN = "是否主机构" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：员工GUID<br/>描述： */

@@ -16,7 +16,7 @@ import org.tis.tools.common.utils.StringUtil;
  * 
  * <pre>
  * 角色数据范围权限对应
- * 模型文件 ： E:\tools\tistools\tools-core-basic\model\ABF-mysql.erm
+ * 模型文件 ： D:\tistools\tools-core-basic\model\ABF-mysql.erm
  * 业务域：ac
  * 模型：AC_ROLE_DATASCOPE 角色数据范围权限对应
  *
@@ -39,6 +39,12 @@ public class AcRoleDatascope implements Serializable {
 	public static final String COLUMN_GUID_ROLE = "guid_role" ; 
 	/** GUID_DATASCOPE ：拥有数据范围GUID<br/><br/> */
 	public static final String COLUMN_GUID_DATASCOPE = "guid_datascope" ; 
+	/** 对应的类名 */
+	public static final String CLASS_NAME = "org.tis.tools.model.po.ac.AcRoleDatascope";
+    /** GUID_ROLE字段名<br/> */
+    public static final String NAME_GUID_ROLE = "角色GUID" ;
+    /** GUID_DATASCOPE字段名<br/> */
+    public static final String NAME_GUID_DATASCOPE = "拥有数据范围GUID" ;
 	
 	
 	/** 字段类型：varchar<br/>字段名：角色GUID<br/>描述： */
