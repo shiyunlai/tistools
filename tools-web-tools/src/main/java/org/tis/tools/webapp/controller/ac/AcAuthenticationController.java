@@ -26,6 +26,7 @@ import org.tis.tools.rservice.ac.capable.IOperatorRService;
 import org.tis.tools.shiro.authenticationToken.UserIdPasswordIdentityToken;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.exception.WebAppException;
+import org.tis.tools.webapp.log.LogThreadLocal;
 import org.tis.tools.webapp.log.OperateLog;
 import org.tis.tools.webapp.log.ReturnType;
 
@@ -106,6 +107,7 @@ public class AcAuthenticationController extends BaseController {
         subject.login(token);
         Session session = subject.getSession();
         AcOperator acOperator = operatorRService.queryOperatorByUserId(userId);
+        LogThreadLocal.getLogBuilderLocal().getLog().setUserId(userId).setOperatorName(acOperator.getOperatorName());
         session.setAttribute("identity", identityGuid);
         session.setAttribute("userInfo", acOperator);
         session.setAttribute("userId", userId);
