@@ -3,6 +3,9 @@ package org.tis.tools.rservice.ac.capable;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.util.CollectionUtils;
 import org.tis.tools.base.WhereCondition;
@@ -23,8 +26,19 @@ import org.tis.tools.service.om.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static org.tis.tools.common.utils.BasicUtil.surroundBracketsWithLFStr;
 import static org.tis.tools.common.utils.BasicUtil.wrap;
 
+/**
+ *
+ * propagation :事务的传播行为
+ * isolation :事务的隔离级别
+ * readOnly :只读
+ * rollbackFor :发生哪些异常回滚
+ * noRollbackFor :发生哪些异常不回滚
+ * rollbackForClassName 根据异常类名回滚
+ */
+@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, readOnly = false, rollbackFor = Exception.class)
 public class RoleRServiceImpl extends BaseRService implements IRoleRService {
 
     @Autowired
@@ -1317,6 +1331,7 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
         }
     }
 
+
     /**
      * 批量添加角色在功能下的行为列表
      *
@@ -1395,5 +1410,335 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                 }
             }
         });
+    }
+
+    /**
+     * 添加角色与实体关系
+     *
+     * @param acRoleEntities
+     * @throws RoleManagementException
+     */
+    @Override
+    public void addAcRoleEntity(List<AcRoleEntity> acRoleEntities) throws RoleManagementException {
+        if (CollectionUtils.isEmpty(acRoleEntities))
+            throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT,
+                    wrap("acRoleEntities", AcRoleEntity.TABLE_NAME));
+        try {
+            for (AcRoleEntity acRoleEntity : acRoleEntities) {
+                String s = BeanFieldValidateUtil.checkObjFieldAllRequired(acRoleEntity);
+                if (StringUtils.isNotBlank(s))
+                    throw new RoleManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
+                            wrap(s, AcRoleEntity.TABLE_NAME));
+                WhereCondition wc = new WhereCondition();
+                wc.andEquals(AcRoleEntity.COLUMN_GUID_ENTITY, acRoleEntity.getGuidEntity())
+                        .andEquals(AcRoleEntity.COLUMN_GUID_ROLE, acRoleEntity.getGuidRole());
+                if (acRoleEntityService.count(wc) > 0)
+                    throw new RoleManagementException(ExceptionCodes.DUPLICATE_WHEN_INSERT,
+                            wrap(surroundBracketsWithLFStr(AcRoleEntity.COLUMN_GUID_ENTITY, acRoleEntity.getGuidEntity()),
+                                    AcRoleEntity.TABLE_NAME));
+                acRoleEntityService.insert(acRoleEntity);
+            }
+        } catch (ToolsRuntimeException e) {
+            logger.error("addAcRoleEntity exception: ", e);
+            throw e;
+        } catch (Exception e) {
+            logger.error("addAcRoleEntity exception: ", e);
+            throw new RoleManagementException(ExceptionCodes.FAILURE_WHEN_INSERT, wrap(AcRoleEntity.TABLE_NAME, e));
+        }
+    }
+
+    /**
+     * 修改角色与实体关系
+     *
+     * @param acRoleEntity
+     * @throws RoleManagementException
+     */
+    @Override
+    public void updateAcRoleEntity(AcRoleEntity acRoleEntity) throws RoleManagementException {
+        if (acRoleEntity == null)
+            throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE,
+                    wrap("acRoleEntity", AcRoleEntity.TABLE_NAME));
+        try {
+            String s = BeanFieldValidateUtil.checkObjFieldAllRequired(acRoleEntity);
+            if (StringUtils.isNotBlank(s))
+                throw new RoleManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_UPDATE,
+                        wrap(s, AcRoleEntity.TABLE_NAME));
+            acRoleEntityService.update(acRoleEntity);
+        } catch (ToolsRuntimeException e) {
+            logger.error("updateAcRoleEntity exception: ", e);
+            throw e;
+        } catch (Exception e) {
+            logger.error("updateAcRoleEntity exception: ", e);
+            throw new RoleManagementException(ExceptionCodes.FAILURE_WHEN_UPDATE, wrap(AcRoleEntity.TABLE_NAME, e));
+        }
+    }
+
+    /**
+     * 移除角色与实体关系
+     *
+     * @param acRoleEntities
+     * @throws RoleManagementException
+     */
+    @Override
+    public void removeAcRoleEntity(List<AcRoleEntity> acRoleEntities) throws RoleManagementException {
+        if (CollectionUtils.isEmpty(acRoleEntities))
+            throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT,
+                    wrap("acRoleEntities", AcRoleEntity.TABLE_NAME));
+        List<String> guids = new ArrayList<>();
+        try {
+            for (AcRoleEntity acRoleEntity : acRoleEntities) {
+                String s = BeanFieldValidateUtil.checkObjFieldRequired(acRoleEntity, new String[]{"guidRole", "guidEntity"});
+                if (StringUtils.isNotBlank(s))
+                    throw new RoleManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_DELETE,
+                            wrap(s, AcRoleEntity.TABLE_NAME));
+                guids.add(acRoleEntity.getGuidEntity() + "," + acRoleEntity.getGuidRole());
+            }
+            acRoleEntityService.deleteByCondition(new WhereCondition()
+                    .andIn(AcRoleEntity.COLUMN_GUID_ENTITY + "," + AcRoleEntity.COLUMN_GUID_ROLE, guids));
+        } catch (ToolsRuntimeException e) {
+            logger.error("removeAcRoleEntity exception: ", e);
+            throw e;
+        } catch (Exception e) {
+            logger.error("removeAcRoleEntity exception: ", e);
+            throw new RoleManagementException(ExceptionCodes.FAILURE_WHEN_DELETE, wrap(AcRoleEntity.TABLE_NAME, e));
+        }
+    }
+
+    /**
+     * 查询角色下的实体
+     *
+     * @param roleGuid
+     * @param entityType
+     * @return
+     * @throws RoleManagementException
+     */
+    @Override
+    public List<Map> getAcRoleEntitiesByEntityType(String roleGuid, String entityType) throws RoleManagementException {
+        if (StringUtils.isBlank(roleGuid)) {
+            throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("roleGuid", "getAcRoleEntitiesByEntityType"));
+        }
+        if (StringUtils.isBlank(entityType)) {
+            throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("funcGuid", "getAcRoleEntitiesByEntityType"));
+        }
+        try {
+            return acRoleServiceExt.getAcRoleEntitiesByEntityType(roleGuid, entityType);
+        } catch (Exception e) {
+            logger.error("getAcRoleEntitiesByEntityType exception: ", e);
+            throw new RoleManagementException(ExceptionCodes.FAILURE_WHEN_CALL, wrap("getAcRoleEntitiesByEntityType", e));
+        }
+    }
+
+    /**
+     * 添加角色与实体属性关系
+     *
+     * @param acRoleEntityfields
+     * @throws RoleManagementException
+     */
+    @Override
+    public void addAcRoleEntityfield(List<AcRoleEntityfield> acRoleEntityfields) throws RoleManagementException {
+        if (CollectionUtils.isEmpty(acRoleEntityfields))
+            throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT,
+                    wrap("acRoleEntityfields", AcRoleEntityfield.TABLE_NAME));
+        try {
+            for (AcRoleEntityfield acRoleEntityfield : acRoleEntityfields) {
+                String s = BeanFieldValidateUtil.checkObjFieldAllRequired(acRoleEntityfield);
+                if (StringUtils.isNotBlank(s))
+                    throw new RoleManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
+                            wrap(s, AcRoleEntity.TABLE_NAME));
+                WhereCondition wc = new WhereCondition();
+                wc.andEquals(AcRoleEntityfield.COLUMN_GUID_ENTITYFIELD, acRoleEntityfield.getGuidEntityfield())
+                        .andEquals(AcRoleEntityfield.COLUMN_GUID_ROLE, acRoleEntityfield.getGuidRole());
+                if (acRoleEntityfieldService.count(wc) > 0)
+                    throw new RoleManagementException(ExceptionCodes.DUPLICATE_WHEN_INSERT,
+                            wrap(surroundBracketsWithLFStr(AcRoleEntityfield.COLUMN_GUID_ENTITYFIELD,
+                                    acRoleEntityfield.getGuidEntityfield()),
+                                    AcRoleEntityfield.TABLE_NAME));
+                acRoleEntityfieldService.insert(acRoleEntityfield);
+            }
+        } catch (ToolsRuntimeException e) {
+            logger.error("addAcRoleEntityfield exception: ", e);
+            throw e;
+        } catch (Exception e) {
+            logger.error("addAcRoleEntityfield exception: ", e);
+            throw new RoleManagementException(ExceptionCodes.FAILURE_WHEN_INSERT, wrap(AcRoleEntityfield.TABLE_NAME, e));
+        }
+    }
+
+    /**
+     * 修改角色与实体属性关系
+     *
+     * @param acRoleEntityfield
+     * @throws RoleManagementException
+     */
+    @Override
+    public void updateAcRoleEntityfield(AcRoleEntityfield acRoleEntityfield) throws RoleManagementException {
+        if (acRoleEntityfield == null)
+            throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_UPDATE,
+                    wrap("acRoleEntityfield", AcRoleEntityfield.TABLE_NAME));
+        try {
+            String s = BeanFieldValidateUtil.checkObjFieldAllRequired(acRoleEntityfield);
+            if (StringUtils.isNotBlank(s))
+                throw new RoleManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_UPDATE,
+                        wrap(s, AcRoleEntityfield.TABLE_NAME));
+            acRoleEntityfieldService.update(acRoleEntityfield);
+        } catch (ToolsRuntimeException e) {
+            logger.error("updateAcRoleEntityfield exception: ", e);
+            throw e;
+        } catch (Exception e) {
+            logger.error("updateAcRoleEntityfield exception: ", e);
+            throw new RoleManagementException(ExceptionCodes.FAILURE_WHEN_UPDATE, wrap(AcRoleEntityfield.TABLE_NAME, e));
+        }
+    }
+
+    /**
+     * 移除角色与实体属性关系
+     *
+     * @param acRoleEntityfields
+     * @throws RoleManagementException
+     */
+    @Override
+    public void removeAcRoleEntityfield(List<AcRoleEntityfield> acRoleEntityfields) throws RoleManagementException {
+        if (CollectionUtils.isEmpty(acRoleEntityfields))
+            throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT,
+                    wrap("acRoleEntityfields", AcRoleEntityfield.TABLE_NAME));
+        List<String> guids = new ArrayList<>();
+        try {
+            for (AcRoleEntityfield acRoleEntityfield : acRoleEntityfields) {
+                String s = BeanFieldValidateUtil.checkObjFieldRequired(acRoleEntityfield, new String[]{"guidRole", "guidEntityfield"});
+                if (StringUtils.isNotBlank(s))
+                    throw new RoleManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_DELETE,
+                            wrap(s, AcRoleEntityfield.TABLE_NAME));
+                guids.add(acRoleEntityfield.getGuidEntityfield() + "," + acRoleEntityfield.getGuidRole());
+            }
+            acRoleEntityfieldService.deleteByCondition(new WhereCondition()
+                    .andIn(AcRoleEntityfield.COLUMN_GUID_ENTITYFIELD + "," + AcRoleEntityfield.COLUMN_GUID_ROLE, guids));
+        } catch (ToolsRuntimeException e) {
+            logger.error("removeAcRoleEntityfield exception: ", e);
+            throw e;
+        } catch (Exception e) {
+            logger.error("removeAcRoleEntityfield exception: ", e);
+            throw new RoleManagementException(ExceptionCodes.FAILURE_WHEN_DELETE, wrap(AcRoleEntityfield.TABLE_NAME, e));
+        }
+    }
+
+    /**
+     * 查询角色在实体下的实体属性
+     *
+     * @param roleGuid   角色GUID
+     * @param entityGuid 实体GUID
+     * @return
+     * @throws RoleManagementException
+     */
+    @Override
+    public List<Map> getAcRoleEntitityfieldsByEntityGuid(String roleGuid, String entityGuid) throws RoleManagementException {
+        if (StringUtils.isBlank(roleGuid)) {
+            throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL,
+                    wrap("roleGuid", "getAcRoleEntitityfieldsByEntityGuid"));
+        }
+        if (StringUtils.isBlank(entityGuid)) {
+            throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL,
+                    wrap("entityGuid", "getAcRoleEntitityfieldsByEntityGuid"));
+        }
+        try {
+            return acRoleServiceExt.getAcRoleEntitityfieldsByEntityGuid(roleGuid, entityGuid);
+        } catch (Exception e) {
+            logger.error("getAcRoleEntitityfieldsByEntityGuid exception: ", e);
+            throw new RoleManagementException(ExceptionCodes.FAILURE_WHEN_CALL,
+                    wrap("getAcRoleEntitityfieldsByEntityGuid", e));
+        }
+    }
+
+    /**
+     * 添加角色与数据范围关系
+     *
+     * @param acRoleDatascopes
+     * @throws RoleManagementException
+     */
+    @Override
+    public void addAcRoleDatascope(List<AcRoleDatascope> acRoleDatascopes) throws RoleManagementException {
+        if (CollectionUtils.isEmpty(acRoleDatascopes))
+            throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT,
+                    wrap("acRoleDatascopes", AcRoleDatascope.TABLE_NAME));
+        try {
+            for (AcRoleDatascope acRoleDatascope : acRoleDatascopes) {
+                String s = BeanFieldValidateUtil.checkObjFieldAllRequired(acRoleDatascope);
+                if (StringUtils.isNotBlank(s))
+                    throw new RoleManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT,
+                            wrap(s, AcRoleDatascope.TABLE_NAME));
+                WhereCondition wc = new WhereCondition();
+                wc.andEquals(AcRoleDatascope.COLUMN_GUID_DATASCOPE, acRoleDatascope.getGuidDatascope())
+                        .andEquals(AcRoleDatascope.COLUMN_GUID_ROLE, acRoleDatascope.getGuidRole());
+                if (acRoleDatascopeService.count(wc) > 0)
+                    throw new RoleManagementException(ExceptionCodes.DUPLICATE_WHEN_INSERT,
+                            wrap(surroundBracketsWithLFStr(AcRoleDatascope.COLUMN_GUID_DATASCOPE,
+                                    acRoleDatascope.getGuidDatascope()),
+                                    AcRoleDatascope.TABLE_NAME));
+                acRoleDatascopeService.insert(acRoleDatascope);
+            }
+        } catch (ToolsRuntimeException e) {
+            logger.error("addAcRoleDatascope exception: ", e);
+            throw e;
+        } catch (Exception e) {
+            logger.error("addAcRoleDatascope exception: ", e);
+            throw new RoleManagementException(ExceptionCodes.FAILURE_WHEN_INSERT, wrap(AcRoleDatascope.TABLE_NAME, e));
+        }
+    }
+
+    /**
+     * 移除角色与数据范围关系
+     *
+     * @param acRoleDatascopes
+     * @throws RoleManagementException
+     */
+    @Override
+    public void removeAcRoleDatascope(List<AcRoleDatascope> acRoleDatascopes) throws RoleManagementException {
+        if (CollectionUtils.isEmpty(acRoleDatascopes))
+            throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_INSERT,
+                    wrap("acRoleDatascopes", AcRoleDatascope.TABLE_NAME));
+        List<String> guids = new ArrayList<>();
+        try {
+            for (AcRoleDatascope acRoleDatascope : acRoleDatascopes) {
+                String s = BeanFieldValidateUtil.checkObjFieldRequired(acRoleDatascope, new String[]{"guidRole", "guidDatascope"});
+                if (StringUtils.isNotBlank(s))
+                    throw new RoleManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_DELETE,
+                            wrap(s, AcRoleDatascope.TABLE_NAME));
+                guids.add(acRoleDatascope.getGuidDatascope() + "," + acRoleDatascope.getGuidRole());
+            }
+            acRoleEntityfieldService.deleteByCondition(new WhereCondition()
+                    .andIn(AcRoleDatascope.COLUMN_GUID_DATASCOPE + "," + AcRoleDatascope.COLUMN_GUID_ROLE, guids));
+        } catch (ToolsRuntimeException e) {
+            logger.error("removeAcRoleDatascope exception: ", e);
+            throw e;
+        } catch (Exception e) {
+            logger.error("removeAcRoleDatascope exception: ", e);
+            throw new RoleManagementException(ExceptionCodes.FAILURE_WHEN_DELETE, wrap(AcRoleDatascope.TABLE_NAME, e));
+        }
+    }
+
+    /**
+     * 查询角色在实体下的数据范围
+     *
+     * @param roleGuid   角色GUID
+     * @param entityGuid 实体GUID
+     * @return
+     * @throws RoleManagementException
+     */
+    @Override
+    public List<Map> getAcRoleDatascopesByEntityGuid(String roleGuid, String entityGuid) throws RoleManagementException {
+        if (StringUtils.isBlank(roleGuid)) {
+            throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL,
+                    wrap("roleGuid", "getAcRoleDatascopesByEntityGuid"));
+        }
+        if (StringUtils.isBlank(entityGuid)) {
+            throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL,
+                    wrap("entityGuid", "getAcRoleDatascopesByEntityGuid"));
+        }
+        try {
+            return acRoleServiceExt.getAcRoleDatascopesByEntityGuid(roleGuid, entityGuid);
+        } catch (Exception e) {
+            logger.error("getAcRoleDatascopesByEntityGuid exception: ", e);
+            throw new RoleManagementException(ExceptionCodes.FAILURE_WHEN_CALL,
+                    wrap("getAcRoleDatascopesByEntityGuid", e));
+        }
     }
 }

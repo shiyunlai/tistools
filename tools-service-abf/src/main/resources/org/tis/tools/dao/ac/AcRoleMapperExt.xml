@@ -111,6 +111,41 @@
         and t.guid_func_bhv = t2.GUID
     </delete>
 
+    <select id="getAcRoleEntitiesByEntityType" resultType="map" >
+        SELECT
+            <include refid="getAcRoleEntitiesByEntityType_column"/>
+        FROM
+            ac_role_entity a,
+            ac_entity b
+        WHERE
+            a.GUID_ROLE = #{roleGuid}
+            AND b.ENTITY_TYPE = #{entityType}
+    </select>
+
+    <select id="getAcRoleEntitityfieldsByEntityGuid" resultType="map" >
+        SELECT
+            <include refid="getAcRoleEntitityfieldsByEntityGuid_column"/>
+        FROM
+            ac_role_entityfield a,
+            ac_entityfield b
+        WHERE
+            a.GUID_ROLE = #{roleGuid}
+        AND a.GUID_ENTITYFIELD = b.GUID
+        AND b.GUID_ENTITY = #{entityGuid}
+    </select>
+
+    <select id="getAcRoleDatascopesByEntityGuid" resultType="map" >
+        SELECT
+            <include refid="getAcRoleDatascopesByEntityGuid_column"/>
+        FROM
+            AC_ROLE_DATASCOPE a,
+            AC_DATASCOPE b
+        WHERE
+            a.GUID_ROLE = #{roleGuid}
+        AND a.GUID_DATASCOPE = b.GUID
+        AND b.GUID_ENTITY = #{entityGuid}
+    </select>
+
 
 
     <sql id="Where_Clause">
@@ -160,6 +195,30 @@
 		,c.bhv_code as bhvCode
 		,c.bhv_name as bhvName
         ,b.guid as guidFuncBhv
+    </sql>
+
+    <sql id="getAcRoleEntitiesByEntityType_column">
+        a.guid_role as `guidRole`
+        ,a.guid_entity as `guidEntity`
+        ,a.isadd as `isadd`
+        ,a.isdel as `isdel`
+        ,a.ismodify as `ismodify`
+        ,a.isview as `isview`
+        ,b.entity_name as `entityName`
+    </sql>
+
+    <sql id="getAcRoleEntitityfieldsByEntityGuid_column" >
+        a.guid_role as `guidRole`
+        ,a.guid_entityfield as `guidEntityfield`
+        ,a.ismodify as `ismodify`
+        ,a.isview as `isview`
+        ,b.field_name as `fieldName`
+    </sql>
+
+    <sql id="getAcRoleDatascopesByEntityGuid_column" >
+        a.guid_role as `guidRole`
+        ,a.guid_datascope as `guidDatascope`
+        ,b.priv_name as `privName`
     </sql>
 
 

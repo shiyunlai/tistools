@@ -421,4 +421,88 @@ public interface IRoleRService {
      */
     void removeAcRoleBhvs(List<AcRoleBhv> acRoleBhvs) throws RoleManagementException;
 
+    /**
+     * 添加角色与实体关系
+     * @param acRoleEntities
+     * @throws RoleManagementException
+     */
+    void addAcRoleEntity(List<AcRoleEntity> acRoleEntities) throws RoleManagementException;
+
+    /**
+     * 修改角色与实体关系
+     * @param acRoleEntity
+     * @throws RoleManagementException
+     */
+    void updateAcRoleEntity(AcRoleEntity acRoleEntity) throws RoleManagementException;
+
+    /**
+     * 移除角色与实体关系
+     * @param acRoleEntities
+     * @throws RoleManagementException
+     */
+    void removeAcRoleEntity(List<AcRoleEntity> acRoleEntities) throws RoleManagementException;
+
+    /**
+     * 查询角色下的实体
+     * @param roleGuid
+     * @return
+     * @throws RoleManagementException
+     */
+    List<Map> getAcRoleEntitiesByEntityType(String roleGuid, String entityType) throws RoleManagementException;
+
+    /**
+     * 添加角色与实体属性关系
+     * @param acRoleEntityfields
+     * @throws RoleManagementException
+     */
+    void addAcRoleEntityfield(List<AcRoleEntityfield> acRoleEntityfields) throws RoleManagementException;
+
+    /**
+     * 修改角色与实体属性关系
+     * @param acRoleEntityfield
+     * @throws RoleManagementException
+     */
+    void updateAcRoleEntityfield(AcRoleEntityfield acRoleEntityfield) throws RoleManagementException;
+
+    /**
+     * 移除角色与实体属性关系
+     * @param acRoleEntityfields
+     * @throws RoleManagementException
+     */
+    void removeAcRoleEntityfield(List<AcRoleEntityfield> acRoleEntityfields) throws RoleManagementException;
+
+    /**
+     * 查询角色在实体下的实体属性
+     * @param roleGuid 角色GUID
+     * @param entityGuid 实体GUID
+     * @return
+     * @throws RoleManagementException
+     */
+    List<Map> getAcRoleEntitityfieldsByEntityGuid(String roleGuid, String entityGuid) throws RoleManagementException;
+
+    /**
+     * 添加角色与数据范围关系
+     * @param acRoleDatascopes
+     * @throws RoleManagementException
+     */
+    void addAcRoleDatascope(List<AcRoleDatascope> acRoleDatascopes) throws RoleManagementException;
+
+    /**
+     * 移除角色与数据范围关系
+     * @param acRoleDatascopes
+     * @throws RoleManagementException
+     */
+    void removeAcRoleDatascope(List<AcRoleDatascope> acRoleDatascopes) throws RoleManagementException;
+
+    /**
+     * 查询角色在实体下的数据范围
+     * @param roleGuid 角色GUID
+     * @param entityGuid 实体GUID
+     * @return
+     * @throws RoleManagementException
+     */
+    List<Map> getAcRoleDatascopesByEntityGuid(String roleGuid, String entityGuid) throws RoleManagementException;
+
+
+
 }

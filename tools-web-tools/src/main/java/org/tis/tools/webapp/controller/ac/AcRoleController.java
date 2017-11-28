@@ -3,6 +3,7 @@ package org.tis.tools.webapp.controller.ac;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +14,9 @@ import org.tis.tools.model.def.JNLConstants;
 import org.tis.tools.model.po.ac.*;
 import org.tis.tools.rservice.ac.capable.IApplicationRService;
 import org.tis.tools.rservice.ac.capable.IRoleRService;
+import org.tis.tools.rservice.sys.capable.IDictRService;
 import org.tis.tools.webapp.controller.BaseController;
+import org.tis.tools.webapp.exception.WebAppException;
 import org.tis.tools.webapp.log.OperateLog;
 import org.tis.tools.webapp.log.ReturnType;
 
@@ -34,6 +37,8 @@ public class AcRoleController extends BaseController {
 
     @Autowired
     IApplicationRService applicationRService;
+    @Autowired
+    IDictRService dictRService;
 
     /**
      * 查询角色列表
@@ -335,4 +340,206 @@ public class AcRoleController extends BaseController {
         roleRService.removeAcRoleBhvs(acRoleBhvs);
         return getReturnMap(acRoleBhvs);
     }
+
+    /**
+     * 角色与实体树查询
+     * @param content
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/acRoleEntityTree", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> acRoleEntityTree(@RequestBody String content) {
+
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        JSONObject data = jsonObject.getJSONObject("data");
+        String type = data.getString("type"); // 1.entityType实体类型 2.entity 实体
+        if (StringUtils.equals(type, "entityType")) {
+            return getReturnMap(dictRService.queryDictItemListByDictKey("DICT_AC_ENTITYTYPE"));
+        } else if (StringUtils.equals(type, "entity")) {
+            String roleGuid = data.getString("roleGuid");
+            String entityType = data.getString("entityType");
+            return getReturnMap(roleRService.getAcRoleEntitiesByEntityType(roleGuid, entityType));
+        } else {
+            throw new WebAppException("WEB-444", "未知的请求数据！");
+        }
+    }
+
+
+    /**
+     * 新增角色与实体关系
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_ADD,  // 操作类型
+            operateDesc = "新增角色与实体关系", // 操作描述
+            retType = ReturnType.List, // 返回类型，对象或数组
+            id = "guidRole", // 操作对象标识
+            keys = {"guidEntity"})
+    @ResponseBody
+    @RequestMapping(value = "/addAcRoleEntity", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> addAcRoleEntity(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        List<AcRoleEntity> acRoleEntities = JSON.parseArray(jsonObject.getString("data"), AcRoleEntity.class);
+        roleRService.addAcRoleEntity(acRoleEntities);
+        return getReturnMap(acRoleEntities);
+    }
+
+    /**
+     * 删除角色与实体关系
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_DELETE,  // 操作类型
+            operateDesc = "删除角色与实体关系", // 操作描述
+            retType = ReturnType.List, // 返回类型，对象或数组
+            id = "guidRole", // 操作对象标识
+            keys = {"guidEntity"})
+    @ResponseBody
+    @RequestMapping(value = "/deleteAcRoleEntity", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> removeAcRoleEntity(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        List<AcRoleEntity> acRoleEntities = JSON.parseArray(jsonObject.getString("data"), AcRoleEntity.class);
+        roleRService.removeAcRoleEntity(acRoleEntities);
+        return getReturnMap(acRoleEntities);
+    }
+
+    /**
+     * 修改角色与实体关系
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,  // 操作类型
+            operateDesc = "修改角色与实体关系", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "guidRole", // 操作对象标识
+            keys = {"guidEntity"})
+    @ResponseBody
+    @RequestMapping(value = "/updateAcRoleEntity", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> updateAcRoleEntity(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        AcRoleEntity acRoleEntity = JSON.parseObject(jsonObject.getString("data"), AcRoleEntity.class);
+        roleRService.updateAcRoleEntity(acRoleEntity);
+        return getReturnMap(acRoleEntity);
+    }
+
+    /**
+     * 新增角色与实体属性关系
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_ADD,  // 操作类型
+            operateDesc = "新增角色与实体属性关系", // 操作描述
+            retType = ReturnType.List, // 返回类型，对象或数组
+            id = "guidRole", // 操作对象标识
+            keys = {"guidEntityfield"})
+    @ResponseBody
+    @RequestMapping(value = "/addAcRoleEntityfield", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> addAcRoleEntityfield(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        List<AcRoleEntityfield> acRoleEntityfields = JSON.parseArray(jsonObject.getString("data"), AcRoleEntityfield.class);
+        roleRService.addAcRoleEntityfield(acRoleEntityfields);
+        return getReturnMap(acRoleEntityfields);
+    }
+
+    /**
+     * 删除角色与实体属性关系
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_DELETE,  // 操作类型
+            operateDesc = "删除角色与实体属性关系", // 操作描述
+            retType = ReturnType.List, // 返回类型，对象或数组
+            id = "guidRole", // 操作对象标识
+            keys = {"guidEntityfield"})
+    @ResponseBody
+    @RequestMapping(value = "/deleteAcRoleEntityfield", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> deleteAcRoleEntityfield(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        List<AcRoleEntityfield> acRoleEntityfields = JSON.parseArray(jsonObject.getString("data"), AcRoleEntityfield.class);
+        roleRService.removeAcRoleEntityfield(acRoleEntityfields);
+        return getReturnMap(acRoleEntityfields);
+    }
+
+    /**
+     * 修改角色与实体属性关系
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,  // 操作类型
+            operateDesc = "修改角色与实体属性关系", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "guidRole", // 操作对象标识
+            keys = {"guidEntityfield"})
+    @ResponseBody
+    @RequestMapping(value = "/updateAcRoleEntityfield", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> updateAcRoleEntityfield(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        AcRoleEntityfield acRoleEntityfields = JSON.parseObject(jsonObject.getString("data"), AcRoleEntityfield.class);
+        roleRService.updateAcRoleEntityfield(acRoleEntityfields);
+        return getReturnMap(acRoleEntityfields);
+    }
+
+    /**
+     * 查询角色实体下的属性
+     * @param content
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getAcRoleEntities", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> getAcRoleEntities(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        JSONObject data = jsonObject.getJSONObject("data");
+        String roleGuid = data.getString("roleGuid");
+        String entityType = data.getString("entityType");
+        return getReturnMap(roleRService.getAcRoleEntitiesByEntityType(roleGuid, entityType));
+    }
+
+    /**
+     * 新增角色与实体数据范围关系
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_ADD,  // 操作类型
+            operateDesc = "新增角色与实体数据范围关系", // 操作描述
+            retType = ReturnType.List, // 返回类型，对象或数组
+            id = "guidRole", // 操作对象标识
+            keys = {"guidDatascope"})
+    @ResponseBody
+    @RequestMapping(value = "/addAcRoleDatascope", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> addAcRoleDatascope(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        List<AcRoleDatascope> acRoleDatascopes = JSON.parseArray(jsonObject.getString("data"), AcRoleDatascope.class);
+        roleRService.addAcRoleDatascope(acRoleDatascopes);
+        return getReturnMap(acRoleDatascopes);
+    }
+
+    /**
+     * 删除角色与实体数据范围关系
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_DELETE,  // 操作类型
+            operateDesc = "新增角色与实体数据范围关系", // 操作描述
+            retType = ReturnType.List, // 返回类型，对象或数组
+            id = "guidRole", // 操作对象标识
+            keys = {"guidDatascope"})
+    @ResponseBody
+    @RequestMapping(value = "/deleteAcRoleDatascope", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> deleteAcRoleDatascope(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        List<AcRoleDatascope> acRoleDatascopes = JSON.parseArray(jsonObject.getString("data"), AcRoleDatascope.class);
+        roleRService.removeAcRoleDatascope(acRoleDatascopes);
+        return getReturnMap(acRoleDatascopes);
+    }
+
+    /**
+     * 查询角色实体下的数据范围
+     * @param content
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getAcRoleDatascopes", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> getAcRoleDatascopes(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        JSONObject data = jsonObject.getJSONObject("data");
+        String roleGuid = data.getString("roleGuid");
+        String entityType = data.getString("entityType");
+        return getReturnMap(roleRService.getAcRoleDatascopesByEntityGuid(roleGuid, entityType));
+    }
+
+
+
+
 }
