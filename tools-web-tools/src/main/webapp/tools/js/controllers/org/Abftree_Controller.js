@@ -821,7 +821,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
             var com = [{field: 'empCode', displayName: '员工代码', enableHiding: true},
                 {field: 'empName', displayName: '员工姓名', enableHiding: true},
                 {field: 'gender', displayName: '性别', enableHiding: true,
-                        cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>',
+                    cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.gender | translateConstants :\'DICT_OM_GENDER\') + $root.constant[\'DICT_OM_GENDER-\'+row.entity.gender]}}</div>',
                     filter:{
                         //term: '0',//默认搜索那项
                         type: uiGridConstants.filter.SELECT,
@@ -835,7 +835,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                         type: uiGridConstants.filter.SELECT,
                         selectOptions:$filter('translateSearch')('DICT_OM_EMPSTATUS')||$rootScope.constant['DICT_OM_EMPSTATUS'+'forEach']
                     }
-                    },
+                },
                 {field: 'empDegree', displayName: '员工职级', enableHiding: true,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.empDegree | translateConstants :\'DICT_OM_EMPDEGREE\') + $root.constant[\'DICT_OM_EMPDEGREE-\'+row.entity.empDegree]}}</div>',
                     filter:{
                         type: uiGridConstants.filter.SELECT,
@@ -1330,7 +1330,7 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
     //编辑岗位保存事件
     abftree.savePosition = function () {
         console.log($scope.position)
-        abftree_service.addposit($scope.position).then(function (data) {
+        abftree_service.updatePosition({data:$scope.position}).then(function (data) {
             if (data.status == "success") {
                 toastr['success']("修改成功!");
                 $("#container").jstree().refresh();
@@ -1556,24 +1556,24 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                         toastr['error']("请填写相关信息!");
                         return false;
                     }
-                    //调用服务生成机构代码
-                    abftree_service.addposit(subFrom).then(function (data) {
+                    abftree_service.createPosition({data:subFrom}).then(function (data) {
+                        console.log(data)
                         if (data.status == "success") {
-                            toastr['success']("新增成功!");
                             var next = false;
                             $scope.next = next;
                             $("#container").jstree().refresh();
                             var subFrom = {};
                             $scope.subFrom = subFrom;
                             subFrom.positionCode = data.retMessage.positionCode;
+                            toastr['success']("新增成功!");
                         } else {
                             toastr['error'](data.retMessage);
                         }
                         $scope.add=function (subFrom) {
                             var tims = Object.assign(subFrom, data.retMessage);
-                            abftree_service.addposit(tims).then(function (data) {
+                            abftree_service.updatePosition({data:tims}).then(function (data) {
                                 if (data.status == "success") {
-                                    toastr['success']("新增成功!");
+                                    toastr['success']("更新成功!");
                                     $("#container").jstree().refresh();
                                     $scope.cancel();
                                 } else {

@@ -464,7 +464,7 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                 //{field: 'guidEmpManager', displayName: '工作组管理员', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidEmpManager | translateEmp) + $root.constant[row.entity.guidEmpManager]}}</div>'},
                 {field: 'guidOrg', displayName: '所属机构', enableHiding: false,cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.guidOrg | translatePosition) + $root.constant[row.entity.guidOrg]}}</div>'},
                 {field: 'startDate', displayName: '工作组有效起始日', enableHiding: false},
-                {field: 'startDate', displayName: '工作组有效到期日', enableHiding: false},
+                {field: 'endDate', displayName: '工作组有效到期日', enableHiding: false},
                 {field: 'lastupdate', displayName: '最后修改日', enableHiding: false}
             ]
             $scope.xjworkgroupgrid = initgrid($scope, xjworkgroupgrid, filterFilter, com2, false, xjselework);

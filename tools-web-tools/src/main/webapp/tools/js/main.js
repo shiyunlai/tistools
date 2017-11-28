@@ -224,7 +224,7 @@ MetronicApp.factory('settings', ['$rootScope','$http','common_service', function
 }]);
 
 /* Setup App Main Controller */
-MetronicApp.controller('AppController', ['$scope','$rootScope','$http','$q','common_service','$state','$uibModal', function($scope, $rootScope,$http,$q,common_service,$state,$uibModal) {
+MetronicApp.controller('AppController', ['$scope','$rootScope','$http','$q','common_service','$state','$uibModal','$timeout', function($scope, $rootScope,$http,$q,common_service,$state,$uibModal,$timeout) {
     $scope.$on('$includeContentLoaded', function() {
         Demo.init(); // init theme panel 初始化主题风格
     });
@@ -250,8 +250,11 @@ MetronicApp.controller('AppController', ['$scope','$rootScope','$http','$q','com
             //2.0 菜单栏调用信息
             var sessionjson = angular.fromJson(data.retMessage.menu);
             $scope.menusAndTrans = angular.copy(sessionjson);
-            Layout.initSidebar(); // 初始化菜单
+            console.log($scope.menusAndTrans);
             $scope.issearchmenu = false;//让搜索菜单隐藏
+            $timeout(function () {
+                Layout.initSidebar(); // 初始化菜单
+            },500)
             //菜单搜索框改变事件调用
             $scope.test = function (searchParam) {
                 if (_.isEmpty(searchParam)) { //如果是数组
@@ -559,8 +562,6 @@ MetronicApp.controller('Memocontroller', ['$scope','Memo_service', function($sco
 
 }]);
 
-
-
 //服务端定义路由控制，这里主要作用就是取数据
 MetronicApp.provider('router', function ($stateProvider,$urlRouterProvider) {
     this.$get = function ($http, $state,$rootScope,$timeout,common_service) {
@@ -568,8 +569,8 @@ MetronicApp.provider('router', function ($stateProvider,$urlRouterProvider) {
         return {
             setUpRoutes: function () {
                 $timeout(function () {
-                    var datas =$rootScope.userconfig.resources;
-                    if(!isNull(datas)){
+                    if(!isNull($rootScope.userconfig)){
+                        var datas =$rootScope.userconfig.resources;
                         var collection = JSON.parse(datas);
                         for (var routeName in collection) {
                             if (!$state.get(routeName)) {
@@ -582,8 +583,9 @@ MetronicApp.provider('router', function ($stateProvider,$urlRouterProvider) {
                         }
                         $urlRouterProvider.otherwise('/dashboard');
                     }
-                },1000)
+                },3000)
                 /*common_service.post(ret,{}).then(function(data){
+                    console.log(data)
                     var datas = data.retMessage.resources;
                     if(!isNull(datas)){
                         var collection = JSON.parse(datas)
@@ -598,15 +600,13 @@ MetronicApp.provider('router', function ($stateProvider,$urlRouterProvider) {
                         if(!isNull(sessionStorage.getItem('toState'))){
                             $state.go(sessionStorage.getItem('toState'),{id:sessionStorage.getItem('toParams')});
                         }
+                        $urlRouterProvider.otherwise('/dashboard');
                     }
                 })*/
             }
         }
     };
 })
-
-
-
 
 //配置内容,首页写死，其他页面路由从后台拿取
 MetronicApp.config(function ($stateProvider, $urlRouterProvider, routerProvider) {
@@ -661,9 +661,6 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider, routerProvider)
 }).run(function (router) {
     router.setUpRoutes();
 });
-
-
-
 
 //angular路由监控，跳转开始之前。
 MetronicApp.run(['$rootScope', '$state','$http','common_service', function ($rootScope, $state,$http,common_service) {

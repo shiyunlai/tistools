@@ -17,9 +17,14 @@ angular.module('MetronicApp').controller('journal_controller', function($rootSco
         //{ field: 'operatorName', displayName: '操作员姓名'},
         { field: 'processDesc', displayName: '操作描述'},
         //{ field: 'restfulUrl', displayName: '服务地址'},
-        { field: 'userId', displayName: '操作员'}
-        //{ field: 'edit', displayName: '详情',cellTemplate: '<a  style="text-decoration:none; display: block;" ng-click = "ceshi()" class="ui-grid-cell-contents" title="TOOLTIP">详情</a>'}
+        { field: 'userId', displayName: '操作员'},
+        { field: 'edit', displayName: '查看详情',cellTemplate: '<a ng-click="grid.appScope.stategohistory(row.entity)" style="text-decoration: none;display:block;margin-top: 5px;margin-left: 3px;">详情</a>'}
     ];
+
+    $scope.stategohistory = function(item){
+        var items = item.guid;//数据信息;
+        $state.go("journinfo",{id:items})
+    }
     var f = function(row){
         if(row.isSelected){
             $scope.selectRow = row.entity;
@@ -41,6 +46,7 @@ angular.module('MetronicApp').controller('journal_controller', function($rootSco
 
     $scope.logdetails.look = function(){
         var getSel = $scope.gridOptions.getSelectedRows();
+        console.log(getSel[0])
         if(isNull(getSel) || getSel.length>1){
             toastr['error']("请至少选中一条数据来查看！");
         }else{
@@ -229,7 +235,26 @@ angular.module('MetronicApp').controller('loghistory_controller', function($root
         subFrom.objGuid = objGuid;
         //请求数据
         common_service.post(res.queryOperateHistoryList,subFrom).then(function(data){
-            var datas = data.retMessage;
+            var datas = data.retMessage.list;//时间轴数据
+            var infodatas = data.retMessage.subject;
+            console.log(infodatas)
+            //对详情进行处理，去除()内的英文
+
+            function subObj(obj) {
+                var array = [];
+                for(var i in obj){
+                    var  strs = {};
+                    var number = i.indexOf('(');
+                    var skip = i.substring(0,number);//得到截取的内容
+                    strs.key = skip;
+                    strs.value = obj[i];
+                    array.push(strs);
+                }
+                return array;
+            }
+
+            var infoList = subObj(infodatas);//前台渲染数据
+            $scope.infoList = infoList;
             if(data.status == "success"){
                 for(var i = 0;i<datas.length;i++){
                     datas[i].instance.operateYmder = moment(datas[i].instance.operateTime).format('YYYY-MM-DD');

@@ -18,74 +18,93 @@
 <h3 class="page-title">
     <small></small>
 </h3>
-<div class="container">
     <div class="page-container">
-        <div class="page-content-wrapper">
-            <div class="portlet light">
-                <div class="portlet-body">
-                    <div class="row" style="margin-left: -169px; margin-right: 260px;">
-                        <!--左侧详情-->
-                        <div class="col-md-6">
-                            <p>左侧详情内容</p>
-                        </div>
-                        <!--右侧历史记录-->
-                        <div class="col-md-6">
-                            <div class="col-md-12"  ng-show="!login">
-                                <ul class="timeline">
-                                    <li ng-repeat="d in loghistory.history track by $index" ng-class="{'timeline-noline':$last,'timeline-green':d.instance.operateResult =='succ','!timeline-yellow':d.instance.operateResult =='fail'}">
-                                        <div class="timeline-time">
+            <div class="col-md-12">
+            <div class="page-content-wrapper">
+                <div class="portlet light">
+                    <div class="portlet-body">
+                        <div class="col-md-12" ng-show="!login">
+                            <!--左侧详情-->
+                            <div class="col-md-5">
+                                <div class="portlet box blue">
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <i class="fa fa-gift"></i>基本信息
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body form">
+                                        <form role="form" class="form-horizontal form-bordered">
+                                            <div class="form-body">
+                                                <div class="form-group" ng-repeat="d in infoList track by $index">
+                                                    <label class="col-md-5 control-label" style="text-align: center;padding-top:15px;">{{d.key}}</label>
+                                                    <div class="col-md-7">
+                                                        {{d.value}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--右侧历史记录-->
+                            <div class="col-md-7">
+                                <div class="col-md-12">
+                                    <ul class="timeline">
+                                        <li ng-repeat="d in loghistory.history track by $index" ng-class="{'timeline-noline':$last,'timeline-green':d.instance.operateResult =='succ','!timeline-yellow':d.instance.operateResult =='fail'}">
+                                            <div class="timeline-time">
                                         <span class="date">
                                             {{d.instance.operateYmder}} </span>
-                                        <span class="time">
+                                                <span class="time">
                                              {{d.instance.operateYmdess}}</span>
-                                        </div>
-                                        <div class="timeline-icon">
-                                        </div>
-                                        <div class="timeline-body">
-                                            <h2>操作内容:{{d.instance.processDesc}} <span style="font-weight: normal;font-size: 14px;" class="pull-right">状态:{{d.instance.operateResult}}</span> </h2>
-                                            <div class="timeline-content">
-                                                用户名:{{d.instance.userId}}
                                             </div>
-                                            <div class="timeline-footer">
-                                                <a  class="nav-link pull-left" ng-click="jsonlook(d.allObj[0])">
-                                                    查看对象详情 <i class="m-icon-swapright m-icon-white"></i>
-                                                </a>
-                                                <a href="javascript:;" class="nav-link pull-right" ng-click="loghistory.look(d.instance.guid)">
-                                                    查看操作详情 <i class="m-icon-swapright m-icon-white"></i>
-                                                </a>
+                                            <div class="timeline-icon">
                                             </div>
-                                        </div>
-                                    </li>
+                                            <div class="timeline-body">
+                                                <h2>操作内容:{{d.instance.processDesc}} <span style="font-weight: normal;font-size: 14px;" class="pull-right">状态:{{d.instance.operateResult}}</span> </h2>
+                                                <div class="timeline-content">
+                                                    用户名:{{d.instance.userId}}
+                                                </div>
+                                                <div class="timeline-footer">
+                                                    <a  class="nav-link pull-left" ng-click="jsonlook(d.allObj[0])">
+                                                        查看对象详情 <i class="m-icon-swapright m-icon-white"></i>
+                                                    </a>
+                                                    <a href="javascript:;" class="nav-link pull-right" ng-click="loghistory.look(d.instance.guid)">
+                                                        查看操作详情 <i class="m-icon-swapright m-icon-white"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </li>
 
-                                </ul>
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="col-md-12"  ng-show="login">
-                                <ul class="timeline">
-                                    <!--<li ng-repeat="d in loghistory.history track by $index" ng-class="{'timeline-noline':$last,'timeline-blue':$index%6 ==0,'timeline-yellow':$index%6 ==1,'timeline-green':$index%6 ==2,'timeline-purple':$index%6 ==3,'timeline-red':$index%7 ==4,'timeline-grey':$index%6 ==5}">-->
-                                    <li ng-repeat="d in loghistory.history track by $index" ng-class="{'timeline-noline':$last,'timeline-green':d.operateResult =='succ','!timeline-blue':d.operateResult =='fail','!timeline-blue':d.operateType =='login'}">
-                                        <div class="timeline-time">
+                        </div>
+                        <!--登陆日志-->
+                        <div class="col-md-12"  ng-show="login" style="margin-left: -169px; margin-right: 260px;">
+                            <ul class="timeline">
+                                <!--<li ng-repeat="d in loghistory.history track by $index" ng-class="{'timeline-noline':$last,'timeline-blue':$index%6 ==0,'timeline-yellow':$index%6 ==1,'timeline-green':$index%6 ==2,'timeline-purple':$index%6 ==3,'timeline-red':$index%7 ==4,'timeline-grey':$index%6 ==5}">-->
+                                <li ng-repeat="d in loghistory.history track by $index" ng-class="{'timeline-noline':$last,'timeline-green':d.operateResult =='succ','!timeline-blue':d.operateResult =='fail','!timeline-blue':d.operateType =='login'}">
+                                    <div class="timeline-time">
                                 <span class="date">
                                     {{d.operateYmder}} </span>
-                                            <span class="time">
+                                        <span class="time">
                                      {{d.operateYmdess}}</span>
+                                    </div>
+                                    <div class="timeline-icon">
+                                        <!--图标展示 -->
+                                    </div>
+                                    <div class="timeline-body">
+                                        <h2>操作内容:{{d.processDesc}} <span style="font-weight: normal;font-size: 14px;" class="pull-right">状态:{{d.operateResult}}</span> </h2>
+                                        <div class="timeline-content">
+                                            用户名:{{d.userId}}
                                         </div>
-                                        <div class="timeline-icon">
-                                            <!--图标展示 -->
-                                        </div>
-                                        <div class="timeline-body">
-                                            <h2>操作内容:{{d.processDesc}} <span style="font-weight: normal;font-size: 14px;" class="pull-right">状态:{{d.operateResult}}</span> </h2>
-                                            <div class="timeline-content">
-                                                用户名:{{d.userId}}
-                                            </div>
-                                        </div>
-                                    </li>
+                                    </div>
+                                </li>
 
-                                </ul>
-                            </div>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>

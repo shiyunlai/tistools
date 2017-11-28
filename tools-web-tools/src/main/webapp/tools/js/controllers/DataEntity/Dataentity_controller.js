@@ -3,15 +3,19 @@
  */
 
 MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $rootScope, common_service,filterFilter, $state,$modal,$uibModal, $http, $timeout,$interval,i18nService) {
+
     //定义公共对象
     var dataEnt = {};
     $scope.dataEnt = dataEnt;
+
     //实体服务请求方法
     var res = $rootScope.res.entity_service;//页面所需调用的服务
+
     //表格内容
     var dataEntFrom = {}
     $scope.dataEntFrom = dataEntFrom;
     i18nService.setCurrentLang("zh-cn");//表格翻译
+
     //刷新树方法
     dataEnt.refresh = function () {
         $("#container").jstree().refresh();
@@ -20,6 +24,7 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
     //判断页签逻辑
     var dataEntIf = {};
     $scope.dataEntIf = dataEntIf;
+
     //搜索方法
     $scope.searchitem = "";
     var to = false;
@@ -162,16 +167,16 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
                     common_service.post(res.queryAcEntityTreeList,{data:subFrom}).then(function(data){
                         var datas = data.retMessage;
                         if(data.status == "success"){
-                                for(var i =0;i <datas.length;i++){
-                                    datas[i].text = datas[i].entityName;
-                                    datas[i].children = false;
-                                    datas[i].id = datas[i].guid;
-                                    datas[i].types = 'eneits';
-                                    datas[i].icon = "fa  fa-files-o icon-state-info icon-lg"
-                                    its.push(datas[i]);
-                                }
-                                $scope.jsonarray = angular.copy(its);
-                                callback.call(this, $scope.jsonarray);
+                            for(var i =0;i <datas.length;i++){
+                                datas[i].text = datas[i].entityName;
+                                datas[i].children = false;
+                                datas[i].id = datas[i].guid;
+                                datas[i].types = 'eneits';
+                                datas[i].icon = "fa  fa-files-o icon-state-info icon-lg"
+                                its.push(datas[i]);
+                            }
+                            $scope.jsonarray = angular.copy(its);
+                            callback.call(this, $scope.jsonarray);
                         }
                     })
                 }
@@ -312,7 +317,6 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
             })
     }
 
-    
     //编辑实体方法
     $scope.dataEntEdit =function (item) {
         console.log(item)
@@ -418,9 +422,7 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
         }
     }
 
-
-
-//实体属性表格
+    //实体属性表格
     var gridAttributes = {};
     $scope.gridAttributes = gridAttributes;
     var grid = [
@@ -438,12 +440,13 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
         }
     }
     $scope.gridAttributes = initgrid($scope,gridAttributes,filterFilter,grid,true,f);
+
     // 查询实体属性方法
     function getData() {
         var subFrom = {};
         subFrom.entityGuid = $scope.dataEnt.guid;
         common_service.post(res.queryAcEntityfieldList,{data:subFrom}).then(function(data){
-           var datas  = data.retMessage;
+            var datas  = data.retMessage;
             if(data.status == "success"){
                 $scope.gridAttributes.data = datas;
                 $scope.gridAttributes.mydefalutData = datas;
@@ -455,6 +458,7 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
             }
         })
     }
+
     //新增实体属性方法
     var createAcEntityfield = function (item,$modalInstance) {
         var subFrom = {};
@@ -468,6 +472,7 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
             }
         })
     }
+
     //新增实体属性
     $scope.dataDet_add = function () {
         var guidEntity = $scope.dataEnt.guid;
@@ -483,6 +488,7 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
                 };
             })
     }
+
     //修改属性
     $scope.dataDet_edit = function () {
         var getSel = $scope.gridAttributes.getSelectedRows();//拿到数据
@@ -512,6 +518,7 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
                 })
         }
     }
+
     //删除属性
     $scope.dataDet_delete = function () {
         var getSel = $scope.gridAttributes.getSelectedRows();//拿到数据
@@ -523,16 +530,16 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
                 for(var i =0;i<getSel.length;i++){
                     tis.push(getSel[i].guid);
                 }
-                console.log(tis)
                 common_service.post(res.deleteAcEntityfield,{data:tis}).then(function(data){
                     if(data.status == "success"){
                         toastr['success']("删除成功！");
                         getData();//查询实体属性树;
                     }
-                    })
+                })
             }
         }
     }
+
     //查看详情
     $scope.dataDett_details = function () {
         var getSel = $scope.gridAttributes.getSelectedRows();//拿到数据
@@ -552,12 +559,10 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
         }
     }
 
-
-
-
     //实体范围权限表格
     var gridPermissions = {};
     $scope.gridPermissions = gridPermissions;
+
     var gridPer = [
         { field: "entityName", displayName:'实体名称'},
         { field: "privName", displayName:'数据范围权限名称'},
@@ -579,7 +584,6 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
         subFrom.entityGuid = $scope.dataEnt.guid;
         common_service.post(res.queryAcDatascopeList,{data:subFrom}).then(function(data){
             var datas  = data.retMessage;
-            console.log(datas);
             if(data.status == "success"){
                 $scope.gridPermissions.data = datas;
                 $scope.gridPermissions.mydefalutData = datas;
@@ -592,7 +596,6 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
         })
     }
     getDatas();
-
 
     //新增范围接口
     var createAcDatascope = function (item,$modalInstance) {
@@ -608,13 +611,12 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
         })
     }
 
-
     //新增范围
     $scope.dataDett_add = function () {
         var guidEntity = $scope.dataEnt.guid;
         openwindow($modal, 'views/dataEntity/Entityauthority.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
-                $scope.title = '新增范围数据权限'
+                $scope.title = '新增范围数据权限';
                 var dataEnt = {};
                 $scope.dataEnt = dataEnt;
                 $scope.dataEnt.qualityRatingExt = [];
@@ -658,6 +660,7 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
 
             })
     }
+
     //修改接口
     var editAcDatascope = function (item,$modalInstance) {
         var subFrom = {};
@@ -671,6 +674,7 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
             }
         })
     }
+
     //修改范围
     $scope.dataDett_edit = function () {
         var getSel = $scope.gridPermissions.getSelectedRows();//拿到数据
@@ -752,6 +756,5 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
             }
         }
     }
-
 
 });

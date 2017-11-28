@@ -39,7 +39,7 @@ Timeline UI Base
 /* The date/time */
 .timeline > li .timeline-time {
     display: block;
-    width: 15%;
+    width: 14%;
     text-align: right;
     position: absolute;
 }
@@ -58,7 +58,7 @@ Timeline UI Base
 
 .timeline > li .timeline-time span.time {
     font-weight: 300;
-    font-size: 38px;
+    font-size: 32px;
     line-height: 38px;
 }
 
