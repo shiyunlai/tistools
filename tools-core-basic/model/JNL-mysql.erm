@@ -12,7 +12,7 @@
 	<category_index>2</category_index>
 	<zoom>1.0</zoom>
 	<x>-16</x>
-	<y>618</y>
+	<y>234</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -187,7 +187,7 @@
 			</connections>
 			<display>true</display>
 			<creation_date>2017-01-18 19:04:59</creation_date>
-			<updated_date>2017-10-16 15:29:35</updated_date>
+			<updated_date>2017-11-28 11:30:19</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value>open branch plus</value>
@@ -1054,7 +1054,7 @@
 			<description></description>
 			<logical_name>操作时间</logical_name>
 			<physical_name>OPERATE_TIME</physical_name>
-			<type>date</type>
+			<type>timestamp</type>
 		</word>
 		<word>
 			<id>51</id>
@@ -7631,7 +7631,7 @@
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type>date</type>
+					<type>timestamp</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>
