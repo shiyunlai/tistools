@@ -4,6 +4,7 @@ package org.tis.tools.dao.ac;
 import org.apache.ibatis.annotations.Param;
 import org.tis.tools.model.po.ac.AcRole;
 import org.tis.tools.model.po.ac.AcRoleBhv;
+import org.tis.tools.rservice.ac.exception.RoleManagementException;
 
 import java.util.List;
 import java.util.Map;
@@ -58,4 +59,32 @@ public interface AcRoleMapperExt {
      * @param funcGuids 查询的功能GUID
      */
     void deleteAcRoleBhvsByFuncGuid(@Param("roleGuid")String roleGuid, @Param("funcGuids")String funcGuids);
+
+    /**
+     * 查询角色的实体列表
+     * @param roleGuid 需要查询的角色GUID
+     * @param entityType 查询的实体类型
+     * @return
+     */
+    List<Map> getAcRoleEntitiesByEntityType(@Param("roleGuid")String roleGuid, @Param("entityType")String entityType);
+
+    /**
+     * 查询角色在实体下的实体属性
+     *
+     * @param roleGuid   角色GUID
+     * @param entityGuid 实体GUID
+     * @return
+     * @throws RoleManagementException
+     */
+    List<Map> getAcRoleEntitityfieldsByEntityGuid(@Param("roleGuid")String roleGuid, @Param("entityGuid")String entityGuid);
+
+    /**
+     * 查询角色在实体下的数据范围
+     *
+     * @param roleGuid   角色GUID
+     * @param entityGuid 实体GUID
+     * @return
+     * @throws RoleManagementException
+     */
+    List<Map> getAcRoleDatascopesByEntityGuid(@Param("roleGuid")String roleGuid, @Param("entityGuid")String entityGuid);
 }

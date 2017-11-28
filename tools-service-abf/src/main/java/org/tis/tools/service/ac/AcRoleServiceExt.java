@@ -13,6 +13,7 @@ import org.tis.tools.dao.ac.AcRoleMapperExt;
 import org.tis.tools.model.po.ac.AcPartyRole;
 import org.tis.tools.model.po.ac.AcRole;
 import org.tis.tools.model.po.ac.AcRoleBhv;
+import org.tis.tools.rservice.ac.exception.RoleManagementException;
 
 import java.util.HashSet;
 import java.util.List;
@@ -154,5 +155,38 @@ public class AcRoleServiceExt {
 		}
 	}
 
+	/**
+	 * 查询角色的实体列表
+	 *
+	 * @param roleGuid 需要查询的角色GUID
+	 * @param entityType 查询的实体类型
+	 * @return 返回该角色拥有此功能的实体列表 {@link org.tis.tools.model.po.ac.AcRoleEntity}
+	 */
+    public List<Map> getAcRoleEntitiesByEntityType(String roleGuid, String entityType) {
+		return acRoleMapperExt.getAcRoleEntitiesByEntityType(roleGuid, entityType);
+    }
 
+	/**
+	 * 查询角色在实体下的实体属性
+	 *
+	 * @param roleGuid   角色GUID
+	 * @param entityGuid 实体GUID
+	 * @return
+	 * @throws RoleManagementException
+	 */
+	public List<Map> getAcRoleEntitityfieldsByEntityGuid(String roleGuid, String entityGuid) {
+		return acRoleMapperExt.getAcRoleEntitityfieldsByEntityGuid(roleGuid, entityGuid);
+	}
+
+	/**
+	 * 查询角色在实体下的数据范围
+	 *
+	 * @param roleGuid   角色GUID
+	 * @param entityGuid 实体GUID
+	 * @return
+	 * @throws RoleManagementException
+	 */
+	public List<Map> getAcRoleDatascopesByEntityGuid(String roleGuid, String entityGuid) {
+		return acRoleMapperExt.getAcRoleDatascopesByEntityGuid(roleGuid, entityGuid);
+	}
 }
