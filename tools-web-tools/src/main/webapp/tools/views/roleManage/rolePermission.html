@@ -6,7 +6,7 @@
             <i class="fa fa-circle"></i>
         </li>
         <li>
-            <a href="#">角色功能管理</a>
+            <a href="#">{{RoleName}}</a>
         </li>
     </ul>
     <div class="actions btn-set">
@@ -48,10 +48,6 @@
                 </ul>
                 <div class="tab-content portlet light" ng-show="roleflag.limit">
                     <div class="portlet-body col-md-6">
-                       <!-- <form id="s">
-                            <input type="search" ng-model="searchitem" id="q"/>
-                            <button type="submit" ng-click="role.clear()">清空</button>
-                        </form>-->
                         <div id="container"></div>
                         <button type="button" name="back" class="btn btn-primary" style="margin-top:15px; margin-left: 20px;"  ng-if="!edit" ng-click="role.edidConfig()"> 修改功能范围
                         </button>
@@ -168,23 +164,164 @@
                 </div>
                 <!--数据实体范围-->
                 <div class="tab-content portlet light" ng-show="roleflag.entity">
-                    <div class="portlet-body col-md-6">
+                    <div class="portlet-body col-md-5">
                         <div id="entitconter"></div>
                         <button type="button" name="back" class="btn btn-primary" style="margin-top:15px; margin-left: 20px;"  ng-if="!edit" ng-click="role.editEntity()"> 修改实体范围
                         </button>
                         <button type="button" name="back" class="btn btn-primary" style="margin-top:15px; margin-left: 20px;" ng-if="edit" ng-click="role.EntAll()"> 保存
                         </button>
                     </div>
-                    <div class="col-md-6" ng-if="eneitsGrid">
-                        <div ui-grid="grideditEntity" class="grid"
-                             ui-grid-pagination
-                             ui-grid-selection ui-grid-resize-columns>
+                    <div class="tab-content portlet light col-md-7"  ng-if="eneitsGrid">
+                        <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" >
+                            <li ng-class="{true:'active',false:''}[eneitsflag.current]">
+                                <a  data-toggle="tab" href ng-class="{true:'link',false:''}[eneitsflag.current]" ng-click="role.eneisflag('current')">
+                                    <i class="green ace-icon fa fa-bars bigger-120"></i>当前实体
+                                </a>
+                            </li>
+                            <li ng-class="{true:'active',false:''}[eneitsflag.Attributes]">
+                                <a  data-toggle="tab" href ng-class="{true:'link',false:''}[eneitsflag.Attributes]"  ng-click="role.eneisflag('Attributes')">
+                                    <i class="green ace-icon fa fa-bars bigger-120"></i>实体属性
+                                </a>
+                            </li>
+                            <li ng-class="{true:'active',false:''}[eneitsflag.range]">
+                                <a  data-toggle="tab" href ng-class="{true:'link',false:''}[eneitsflag.range]" ng-click="role.eneisflag('range')">
+                                    <i class="green ace-icon fa fa-bars bigger-120"></i>实体范围
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content portlet light" ng-if="eneitsflag.current">
+                            <form action="#" name="myform" class="form-horizontal clear" ng-if="!editflag">
+                                <div class="form-body portlet light">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 是否可增加:<span ng-class="{required:myform.isAdd.$invalid}"  > * </span></label>
+                                            <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                                                <select class="form-control"   required ng-readonly="!editflag"  ng-model="dataEnt.isadd" name="isAdd">
+                                                    <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 是否可删除:<span ng-class="{required:myform.idDel.$invalid}"  > * </span></label>
+                                            <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                                                <select class="form-control" ng-readonly="!editflag"  required   ng-model="dataEnt.isdel" name="idDel">
+                                                    <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 是否可修改:<span ng-class="{required:myform.isModief.$invalid}"  > * </span></label>
+                                            <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                                                <select class="form-control" ng-readonly="!editflag"  required   ng-model="dataEnt.ismodify" name="isModief">
+                                                    <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 是否可查看:<span ng-class="{required:myform.isview.$invalid}"  > * </span></label>
+                                            <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                                                <select class="form-control" ng-readonly="!editflag"  required   ng-model="dataEnt.isview" name="isview">
+                                                    <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2"></label>
+                                            <div class="col-md-10">
+                                                <div class="actions btn-set" style="float: right;">
+                                                    <button type="button" name="back" class="btn btn-primary"
+                                                            ng-click="role.entityEdit(dataEnt)"> 编辑实体
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <form action="#" name="myform" class="form-horizontal clear" ng-if="editflag">
+                                <div class="form-body portlet light">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 是否可增加:<span ng-class="{required:myform.isAdd.$invalid}"  > * </span></label>
+                                            <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                                                <select class="form-control"   required   ng-model="dataEnt.isadd" name="isAdd">
+                                                    <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 是否可删除:<span ng-class="{required:myform.idDel.$invalid}"  > * </span></label>
+                                            <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                                                <select class="form-control"   required   ng-model="dataEnt.isdel" name="idDel">
+                                                    <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 是否可修改:<span ng-class="{required:myform.isModief.$invalid}"  > * </span></label>
+                                            <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                                                <select class="form-control"   required   ng-model="dataEnt.ismodify" name="isModief">
+                                                    <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 是否可查看:<span ng-class="{required:myform.isview.$invalid}"  > * </span></label>
+                                            <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                                                <select class="form-control"   required   ng-model="dataEnt.isview" name="isview">
+                                                    <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="actions btn-set" style="float: right;">
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="role.entitySave(dataEnt)"> 保存
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-danger" ng-click="role.entityCancel()"> 取消
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                        <div style="margin-top: 20px;float:right;">
-                            <button type="button" name="back" class="btn btn-primary" ng-click="role.funEntityclist()"> 新增功能范围
-                            </button>
-                            <button type="button" name="back" class="btn btn-danger" ng-click="role.DeleteEntityfunc()"> 删除功能范围
-                            </button>
+                        <div class="tab-content portlet light" ng-if="eneitsflag.Attributes">
+                            <div ui-grid="gridAttributes"   class="grid"
+                                 ui-grid-pagination
+                                 ui-grid-selection ui-grid-resize-columns>
+                            </div>
+                            <div class="actions btn-set" style="float: right; margin-top:12px;">
+                                <button type="button" name="back" class="btn btn-primary" ng-click="role.AttributesAdd()"> 新增实体属性
+                                </button>
+                                <button type="button" name="back" class="btn btn-primary" ng-click="role.AttributesEdit()"> 修改实体属性
+                                </button>
+                                <button type="button" name="back" class="btn btn-danger" ng-click="role_AttributesDel()"> 删除实体属性
+                                </button>
+                            </div>
+                        </div>
+                        <div class="tab-content portlet light" ng-if="eneitsflag.range">
+                            <div ui-grid="grideditEntity" class="grid"
+                                 ui-grid-pagination
+                                 ui-grid-selection ui-grid-resize-columns>
+                            </div>
+                            <div class="actions btn-set" style="float: right; margin-top:12px;">
+                                <button type="button" name="back" class="btn btn-primary" ng-click="role.funEntityclist()"> 新增功能范围
+                                </button>
+                                <button type="button" name="back" class="btn btn-danger" ng-click="role.DeleteEntityfunc()"> 删除功能范围
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

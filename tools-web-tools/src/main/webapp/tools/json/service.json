@@ -218,7 +218,21 @@
     "removeOperatorRole": {"ctrl": "AcRoleController", "func": "removeOperatorRole","emo":"移除角色下的操作员"},
     "queryAcRoleBhvsByFuncGuid": {"ctrl": "AcRoleController", "func": "queryAcRoleBhvsByFuncGuid","emo":"查询角色拥有功能的权限行为"},
     "addAcRoleBhvs": {"ctrl": "AcRoleController", "func": "addAcRoleBhvs","emo":"新增角色功能行为定义"},
-    "removeAcRoleBhvs": {"ctrl": "AcRoleController", "func": "removeAcRoleBhvs","emo":"删除角色功能行为定义"}
+    "removeAcRoleBhvs": {"ctrl": "AcRoleController", "func": "removeAcRoleBhvs","emo":"删除角色功能行为定义"},
+
+    "acRoleEntityTree": {"ctrl": "AcRoleController", "func": "acRoleEntityTree","emo":"角色与实体树查询"},
+    "addAcRoleEntity": {"ctrl": "AcRoleController", "func": "addAcRoleEntity","emo":"新增角色与实体关系"},
+    "deleteAcRoleEntity": {"ctrl": "AcRoleController", "func": "deleteAcRoleEntity","emo":"删除角色与实体关系"},
+    "updateAcRoleEntity": {"ctrl": "AcRoleController", "func": "updateAcRoleEntity","emo":"修改角色与实体关系"},
+    "addAcRoleEntityfield": {"ctrl": "AcRoleController", "func": "addAcRoleEntityfield","emo":"新增角色与实体属性关系"},
+    "deleteAcRoleEntityfield": {"ctrl": "AcRoleController", "func": "deleteAcRoleEntityfield","emo":"删除角色与实体属性关系"},
+    "updateAcRoleEntityfield": {"ctrl": "AcRoleController", "func": "updateAcRoleEntityfield","emo":"修改角色与实体属性关系"},
+    "getAcRoleEntitityfields": {"ctrl": "AcRoleController", "func": "getAcRoleEntitityfields","emo":"查询角色实体下的属性"},
+    "addAcRoleDatascope": {"ctrl": "AcRoleController", "func": "addAcRoleDatascope","emo":"新增角色与实体数据范围关系"},
+    "deleteAcRoleDatascope": {"ctrl": "AcRoleController", "func": "deleteAcRoleDatascope","emo":"新增角色与实体数据范围关系"},
+    "getAcRoleDatascopes": {"ctrl": "AcRoleController", "func": "getAcRoleDatascopes","emo":"查询角色实体下的数据范围"},
+    "queryAcEntityfieldList": {"ctrl": "AcRoleController", "func": "queryAcEntityfieldList","emo":"查询实体属性列表"},
+    "queryAcDatascopeList": {"ctrl": "AcRoleController", "func": "queryAcDatascopeList","emo":"查询数据范围权限列表"}
   },
   "entity_service" : {
     "queryAcEntityTreeList": {"ctrl": "entity", "func": "queryAcEntityTreeList","emo":"查询实体对象列表"},

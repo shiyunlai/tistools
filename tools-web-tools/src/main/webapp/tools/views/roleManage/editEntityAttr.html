@@ -1,0 +1,47 @@
+<!--修改实体属性-->
+<div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs font-green-sharp"></i>
+            <span class="caption-subject font-green-sharp bold uppercase">修改实体属性</span>
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="remove" ng-click="cancel()">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body portlet light">
+        <form action="#" name="myform" class="form-horizontal ">
+            <div class="form-body ">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 是否可修改:</label>
+                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                            <select class="form-control"      ng-model="subFrom.isview"  name="isview">
+                                <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 是否可查看:</label>
+                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                            <select class="form-control"     ng-model="subFrom.ismodify" name="ismodify">
+                                <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-md-offset-10">
+                    <div class="actions btn-set">
+                        <button type="button" name="back" class="btn btn-primary" ng-click="add(subFrom)"> 保存
+                        </button>
+                        <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.model.def.JNLConstants;
 import org.tis.tools.model.po.ac.*;
 import org.tis.tools.rservice.ac.capable.IApplicationRService;
+import org.tis.tools.rservice.ac.capable.IEntityRService;
 import org.tis.tools.rservice.ac.capable.IRoleRService;
 import org.tis.tools.rservice.sys.capable.IDictRService;
 import org.tis.tools.webapp.controller.BaseController;
@@ -34,6 +35,9 @@ public class AcRoleController extends BaseController {
 
     @Autowired
     IRoleRService roleRService;
+
+    @Autowired
+    IEntityRService entityRService;
 
     @Autowired
     IApplicationRService applicationRService;
@@ -341,6 +345,7 @@ public class AcRoleController extends BaseController {
         return getReturnMap(acRoleBhvs);
     }
 
+
     /**
      * 角色与实体树查询
      * @param content
@@ -349,7 +354,6 @@ public class AcRoleController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/acRoleEntityTree", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> acRoleEntityTree(@RequestBody String content) {
-
         JSONObject jsonObject = JSONObject.parseObject(content);
         JSONObject data = jsonObject.getJSONObject("data");
         String type = data.getString("type"); // 1.entityType实体类型 2.entity 实体
@@ -419,6 +423,7 @@ public class AcRoleController extends BaseController {
         return getReturnMap(acRoleEntity);
     }
 
+
     /**
      * 新增角色与实体属性关系
      */
@@ -474,18 +479,30 @@ public class AcRoleController extends BaseController {
     }
 
     /**
+     * 查询实体属性列表
+     */
+    @ResponseBody
+    @RequestMapping(value = "/queryAcEntityfieldList", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> queryAcEntityfieldList(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        String guid = jsonObject.getJSONObject("data").getString("entityGuid");
+        return getReturnMap(entityRService.queryAcEntityfieldList(guid));
+    }
+
+
+    /**
      * 查询角色实体下的属性
      * @param content
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/getAcRoleEntities", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public Map<String, Object> getAcRoleEntities(@RequestBody String content) {
+    @RequestMapping(value = "/getAcRoleEntitityfields", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> getAcRoleEntitityfields(@RequestBody String content) {
         JSONObject jsonObject = JSONObject.parseObject(content);
         JSONObject data = jsonObject.getJSONObject("data");
         String roleGuid = data.getString("roleGuid");
-        String entityType = data.getString("entityType");
-        return getReturnMap(roleRService.getAcRoleEntitiesByEntityType(roleGuid, entityType));
+        String entityGuid = data.getString("entityGuid");
+        return getReturnMap(roleRService.getAcRoleEntitityfieldsByEntityGuid(roleGuid, entityGuid));
     }
 
     /**
@@ -537,6 +554,18 @@ public class AcRoleController extends BaseController {
         String roleGuid = data.getString("roleGuid");
         String entityType = data.getString("entityType");
         return getReturnMap(roleRService.getAcRoleDatascopesByEntityGuid(roleGuid, entityType));
+    }
+
+
+    /**
+     * 查询数据范围权限列表
+     */
+    @ResponseBody
+    @RequestMapping(value = "/queryAcDatascopeList", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> queryAcDatascopeList(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        String guid = jsonObject.getJSONObject("data").getString("entityGuid");
+        return getReturnMap(entityRService.queryAcDatascopeList(guid));
     }
 
 

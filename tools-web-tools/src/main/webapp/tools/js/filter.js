@@ -277,7 +277,6 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
         return function (val) {
             if(val == null || val.length < 1)
                 return '';//if 不加上{}　代表单次匹配，加上｛｝　代表多次匹配
-
             //进行数组循环
             var str = '';
             for(var i=0,len=val.length;i<len;i++){
@@ -285,25 +284,26 @@ MetronicApp.filter('highlightTrust2Html', ['$sce', function ($sce) {
                 for(var j=0,len2=val[i].length;j<len2;j++){
                     if(val[i][j].type){
                         var sql = '';
-                        if(val[i][j].rlea){
+                        if(val[i][j].rlea){//如果存在多个
                             sql = val[i][j].rlea + '('+  val[i][j].type +' '+ val[i][j].guanxi +' '+ val[i][j].ce+')';
                         }else{
-                            sql = '('+val[i][j].type +' '+ val[i][j].guanxi +' '+ val[i][j].ce+')';
+                            sql = '('+ val[i][j].type +' '+ val[i][j].guanxi +' '+ val[i][j].ce+')';
                         }
                         str2 += sql;
                     }
                 }
-                if(val[i][val[i].length-1].orAdd){
-                    str += '('+ str2 +')' + val[i][val[i].length-1].orAdd;
+                if(JSON.stringify(val[0]) == "[{}]"){
                 }else{
-                    str += '('+ str2 +')';
+                    if(val[i].orAdd){//如果存在 这样没问题的
+                        str = str + '('+ str2 +')' + val[i].orAdd +"(";
+                    }else{
+                        str +=  str2;
+                    }
                 }
-
             }
             return str;
         };
     })
-    
     //翻译岗位内容
     .filter('SelectPosition', ['$http', '$rootScope', function ($http, $rootScope) {
         return function (val) {

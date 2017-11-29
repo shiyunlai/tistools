@@ -119,7 +119,8 @@
             ac_entity b
         WHERE
             a.GUID_ROLE = #{roleGuid}
-            AND b.ENTITY_TYPE = #{entityType}
+        AND a.GUID_ENTITY = b.GUID
+        AND b.ENTITY_TYPE = #{entityType}
     </select>
 
     <select id="getAcRoleEntitityfieldsByEntityGuid" resultType="map" >
