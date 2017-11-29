@@ -27,7 +27,6 @@
                             <select class="form-control"   ng-model="dataEntFrom.dataOpType" style="width: 100%">
                                 <!--<option ng-repeat="x in dictlist" value="{{x.guid}}">{{x.dictKey+'-&#45;&#45;'+x.dictName}}</option>-->
                                 <option ng-repeat="d in $settings.diclist['DICT_AC_DATAOPTYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
-                                {{d.sendValue}}
                             </select>
                         </div>
                     </div>
@@ -45,7 +44,7 @@
                         <label class="control-label col-md-2"></label>
                         <div class="col-md-10">
                             <!--因为无法监控到数组，所以使用angular 的管道，在filter.js中定义tdCondStr来处理函数-->
-                            <textarea class="form-control" readonly>{{dataEnt.cardArray | toRangeStr}}</textarea>
+                            <textarea class="form-control"  ng-model="dataEntFrom.filterSqlString" readonly></textarea>
                         </div>
                     </div>
                 </div>
@@ -85,52 +84,52 @@
                                                 </div>
                                                 <div class="col-md-2">
                                                     <select class="form-control" ng-model="dd.type">
-                                                        <option value="0">A</option>
-                                                        <option value="1">B</option>
-                                                        <option value="2">C</option>
-                                                        <option value="3">D</option>
+                                                        <option value="A">A</option>
+                                                        <option value="B">B</option>
+                                                        <option value="C">C</option>
+                                                        <option value="D">D</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-2">
-                                                    <select  class="form-control" ng-if="dd.type == '0'" ng-model="dd.guanxi">
-                                                        <option value="eq">等于</option>
-                                                        <option value="neq">不等于</option>
-                                                        <option value="gt">大于</option>
-                                                        <option value="ge">大于等于</option>
-                                                        <option value="lt">小于</option>
-                                                        <option value="le">小于等于</option>
+                                                    <select  class="form-control" ng-if="dd.type == 'A'" ng-model="dd.guanxi">
+                                                        <option value="=">等于</option>
+                                                        <option value="!=">不等于</option>
+                                                        <option value=">">大于</option>
+                                                        <option value=">=">大于等于</option>
+                                                        <option value="<">小于</option>
+                                                        <option value="<=">小于等于</option>
                                                     </select>
-                                                    <select  class="form-control"  ng-if="dd.type == '3'" ng-model="dd.guanxi">
+                                                    <select  class="form-control"  ng-if="dd.type == 'C'" ng-model="dd.guanxi">
                                                         <option value="start">起于</option>
                                                         <option value="end">止于</option>
                                                     </select>
-                                                    <select  class="form-control" ng-if="dd.type == '1'" ng-model="dd.guanxi">
-                                                        <option value="eq">等于</option>
-                                                        <option value="neq">不等于</option>
+                                                    <select  class="form-control" ng-if="dd.type == 'D'" ng-model="dd.guanxi">
+                                                        <option value="=">等于</option>
+                                                        <option value="!=">不等于</option>
                                                     </select>
                                                     <select class="form-control"  ng-if="dd.type == undefined">
                                                     </select>
-
-                                                    <select class="form-control" ng-if="dd.type == '2'" ng-model="dd.guanxi" ng-init="dd.guanxi='lk'">
-                                                        <option value="lk">包含</option>
+                                                    <select class="form-control" ng-if="dd.type == 'B'" ng-model="dd.guanxi" ng-init="dd.guanxi='like'">
+                                                        <option value="like">包含</option>
                                                         <option value="nlk">不包含</option>
                                                         <option value="eq">等于</option>
                                                         <option value="neq">不等于</option>
                                                     </select>
                                                 </div>
-                                                <div style="text-align: left;" class="col-md-4"  ng-if="dd.type != '1' && dd.type != '3'">
+                                                <div style="text-align: left;" class="col-md-4"  ng-if="dd.type != 'A' && dd.type != 'C'">
                                                     <input type="text"  class="form-control"  ng-model="dd.ce">
                                                 </div>
-                                                <div style="text-align: left;" class="col-md-4"   ng-if="dd.type == '1'">
-                                                    <select  class="form-control" ng-model="t.c">
-                                                        <!--<option ng-repeat="c in a track by $index" value="{{c}}">{{c.CODE_CHI_NAME}}</option>-->
-                                                        <option value="0"> > </option>
-                                                        <option value="1"> < </option>
-                                                        <option value="2"> != </option>
-                                                        <option value="3"> = </option>
-                                                    </select>
+                                                <div style="text-align: left;" class="col-md-4"   ng-if="dd.type == 'A'">
+                                                    <input type="text"  class="form-control"  ng-model="dd.ce">
+                                                    <!--<select  class="form-control" ng-model="t.c">
+                                                        &lt;!&ndash;<option ng-repeat="c in a track by $index" value="{{c}}">{{c.CODE_CHI_NAME}}</option>&ndash;&gt;
+                                                        <option value=">"> > </option>
+                                                        <option value="<"> < </option>
+                                                        <option value="!="> != </option>
+                                                        <option value="="> = </option>
+                                                    </select>-->
                                                 </div>
-                                                <div style="text-align: left;" class="col-md-4"  ng-if="dd.type == '3'">
+                                                <div style="text-align: left;" class="col-md-4"  ng-if="dd.type == 'C'">
                                                     <div start-view="month"
                                                          moment-picker="t.zhi.CODE_CHI_NAME"
                                                          format="YYYY-MM-DD">

@@ -236,6 +236,7 @@ MetronicApp.controller('AppController', ['$scope','$rootScope','$http','$q','com
     });
     var ret ={ctrl: "AcAuthenticationController", func: "pageInit", emo: "页面初始化"};
     common_service.post(ret,{}).then(function(data){
+        console.log(data)
         if(data.status == "success"){
             $rootScope.userconfig = data.retMessage;//绑定个全局使用
             //1.0头部请求信息
@@ -250,7 +251,6 @@ MetronicApp.controller('AppController', ['$scope','$rootScope','$http','$q','com
             //2.0 菜单栏调用信息
             var sessionjson = angular.fromJson(data.retMessage.menu);
             $scope.menusAndTrans = angular.copy(sessionjson);
-            console.log($scope.menusAndTrans);
             $scope.issearchmenu = false;//让搜索菜单隐藏
             $timeout(function () {
                 Layout.initSidebar(); // 初始化菜单
@@ -583,7 +583,7 @@ MetronicApp.provider('router', function ($stateProvider,$urlRouterProvider) {
                         }
                         $urlRouterProvider.otherwise('/dashboard');
                     }
-                },3000)
+                },2000)
                 /*common_service.post(ret,{}).then(function(data){
                     console.log(data)
                     var datas = data.retMessage.resources;

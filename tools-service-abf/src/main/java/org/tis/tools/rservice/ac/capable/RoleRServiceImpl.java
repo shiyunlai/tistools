@@ -1463,7 +1463,10 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
             if (StringUtils.isNotBlank(s))
                 throw new RoleManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_UPDATE,
                         wrap(s, AcRoleEntity.TABLE_NAME));
-            acRoleEntityService.update(acRoleEntity);
+            WhereCondition wc = new WhereCondition();
+            wc.andEquals(AcRoleEntity.COLUMN_GUID_ENTITY, acRoleEntity.getGuidEntity())
+                    .andEquals(AcRoleEntity.COLUMN_GUID_ROLE, acRoleEntity.getGuidRole());
+            acRoleEntityService.updateByCondition(wc, acRoleEntity);
         } catch (ToolsRuntimeException e) {
             logger.error("updateAcRoleEntity exception: ", e);
             throw e;
@@ -1491,10 +1494,10 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                 if (StringUtils.isNotBlank(s))
                     throw new RoleManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_DELETE,
                             wrap(s, AcRoleEntity.TABLE_NAME));
-                guids.add(acRoleEntity.getGuidEntity() + "," + acRoleEntity.getGuidRole());
+                guids.add(acRoleEntity.getGuidEntity() + acRoleEntity.getGuidRole());
             }
             acRoleEntityService.deleteByCondition(new WhereCondition()
-                    .andIn(AcRoleEntity.COLUMN_GUID_ENTITY + "," + AcRoleEntity.COLUMN_GUID_ROLE, guids));
+                    .andIn("concat(" + AcRoleEntity.COLUMN_GUID_ENTITY + "," + AcRoleEntity.COLUMN_GUID_ROLE + ")", guids));
         } catch (ToolsRuntimeException e) {
             logger.error("removeAcRoleEntity exception: ", e);
             throw e;
@@ -1580,7 +1583,10 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
             if (StringUtils.isNotBlank(s))
                 throw new RoleManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_UPDATE,
                         wrap(s, AcRoleEntityfield.TABLE_NAME));
-            acRoleEntityfieldService.update(acRoleEntityfield);
+            WhereCondition wc = new WhereCondition();
+            wc.andEquals(AcRoleEntityfield.COLUMN_GUID_ENTITYFIELD, acRoleEntityfield.getGuidEntityfield())
+                    .andEquals(AcRoleEntityfield.COLUMN_GUID_ROLE, acRoleEntityfield.getGuidRole());
+            acRoleEntityfieldService.updateByCondition(wc, acRoleEntityfield);
         } catch (ToolsRuntimeException e) {
             logger.error("updateAcRoleEntityfield exception: ", e);
             throw e;
@@ -1608,10 +1614,10 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                 if (StringUtils.isNotBlank(s))
                     throw new RoleManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_DELETE,
                             wrap(s, AcRoleEntityfield.TABLE_NAME));
-                guids.add(acRoleEntityfield.getGuidEntityfield() + "," + acRoleEntityfield.getGuidRole());
+                guids.add(acRoleEntityfield.getGuidEntityfield() + acRoleEntityfield.getGuidRole());
             }
             acRoleEntityfieldService.deleteByCondition(new WhereCondition()
-                    .andIn(AcRoleEntityfield.COLUMN_GUID_ENTITYFIELD + "," + AcRoleEntityfield.COLUMN_GUID_ROLE, guids));
+                    .andIn("concat(" + AcRoleEntityfield.COLUMN_GUID_ENTITYFIELD + "," + AcRoleEntityfield.COLUMN_GUID_ROLE + ")", guids));
         } catch (ToolsRuntimeException e) {
             logger.error("removeAcRoleEntityfield exception: ", e);
             throw e;
@@ -1702,10 +1708,10 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                 if (StringUtils.isNotBlank(s))
                     throw new RoleManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_DELETE,
                             wrap(s, AcRoleDatascope.TABLE_NAME));
-                guids.add(acRoleDatascope.getGuidDatascope() + "," + acRoleDatascope.getGuidRole());
+                guids.add(acRoleDatascope.getGuidDatascope() + acRoleDatascope.getGuidRole());
             }
-            acRoleEntityfieldService.deleteByCondition(new WhereCondition()
-                    .andIn(AcRoleDatascope.COLUMN_GUID_DATASCOPE + "," + AcRoleDatascope.COLUMN_GUID_ROLE, guids));
+            acRoleDatascopeService.deleteByCondition(new WhereCondition()
+                    .andIn("concat(" + AcRoleDatascope.COLUMN_GUID_DATASCOPE + "," + AcRoleDatascope.COLUMN_GUID_ROLE + ")", guids));
         } catch (ToolsRuntimeException e) {
             logger.error("removeAcRoleDatascope exception: ", e);
             throw e;
