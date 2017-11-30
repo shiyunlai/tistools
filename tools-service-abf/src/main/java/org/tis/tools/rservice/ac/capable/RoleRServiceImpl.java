@@ -1763,12 +1763,12 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
         if (StringUtils.isBlank(roleGuid)) {
             throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("String roleGuid", "configRoleFunc"));
         }
-        if (CollectionUtils.isEmpty(entityGuids)) {
+        if (entityGuids == null) {
             throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("List<AcFunc> funcList", "configRoleFunc"));
         }
         try {
             // 查询该角色配置前已有的实体
-            List<AcRoleEntity> olds = acRoleEntityService.query(new WhereCondition().andEquals(AcRoleEntity.COLUMN_GUID_ENTITY, roleGuid));
+            List<AcRoleEntity> olds = acRoleEntityService.query(new WhereCondition().andEquals(AcRoleEntity.COLUMN_GUID_ROLE, roleGuid));
             List<String> oldGuids = olds.stream().map(AcRoleEntity::getGuidEntity).collect(Collectors.toList());
             // 需要新增的集合
             List<AcRoleEntity> addList = new ArrayList<>();
@@ -1782,6 +1782,8 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                     keepList.add(entityGuid);
                 else {
                     AcRoleEntity acRoleEntity = new AcRoleEntity();
+                    acRoleEntity.setGuidEntity(entityGuid);
+                    acRoleEntity.setGuidRole(roleGuid);
                     acRoleEntity.setIsadd(CommonConstants.YES);
                     acRoleEntity.setIsdel(CommonConstants.YES);
                     acRoleEntity.setIsmodify(CommonConstants.YES);
