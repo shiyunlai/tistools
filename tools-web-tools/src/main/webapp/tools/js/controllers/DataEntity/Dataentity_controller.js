@@ -64,7 +64,7 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
                     "action":function(data){
                         var inst = jQuery.jstree.reference(data.reference),
                             obj = inst.get_node(data.reference);//得到值
-                        var objGuid = obj.original.id;
+                        var objGuid = obj;
                         creatFrom(objGuid)//传入guid
                     }
                 },
@@ -284,10 +284,15 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
     }
 
     //新增表结构实体类型
-    function  creatFrom(id) {
+    function  creatFrom(item) {
+        var items = item;
         openwindow($modal, 'views/dataEntity/creatEntity.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
                 $scope.title = '新增实体属性'
+                var dataEnt = {};
+                $scope.dataEnt = dataEnt;
+                $scope.dataEnt.entityType = items.original.itemValue;
+                $scope.dataEnt.guidApp = items.parent;
                 //删除引用表关系 还未改成统一使用 dataEnt
                 var qualityRatingExt = [];//定义数组
                 $scope.qualityRatingExt = qualityRatingExt;
@@ -304,9 +309,33 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
                     qualityRatingExt.push(item);
                 };
                 $scope.add = function(item){
+                    dataEnt.conversion=function (item) {
+                        if(!isNull(item)){
+                            var str = '';
+                            for (var i = 0; i < item.length; i++) {
+                                if(!isNull(item[i].tableName) && !isNull(item[i].columeName) && !isNull(item[i].isDel)) {
+                                    str += item[i].tableName + '.' + item[i].columeName + '/[' + item[i].isDel + ']';
+                                    if (i !== item.length - 1)
+                                        str += ';';//单次匹配，如果没有，那就默认为空
+                                }
+                            }
+                            return str;
+                        }
+                    }
                     var preview = dataEnt.conversion(qualityRatingExt);//调用查询方法
                     item.checkref = preview;
                     //拼接传给后台
+                    dataEnt.createAcEntity = function (item,$modalInstance) {
+                        var subFrom = {};
+                        subFrom=item;
+                        common_service.post(res.createAcEntity,{data:subFrom}).then(function(data){
+                            if(data.status == "success"){
+                                toastr['success']("新增成功!");
+                                $("#container").jstree().refresh();
+                                $modalInstance.dismiss('cancel');
+                            }
+                        })
+                    }
                     dataEnt.createAcEntity(item,$modalInstance);
                 }
                 $scope.cancel = function () {
@@ -425,10 +454,9 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
     $scope.gridAttributes = gridAttributes;
     var grid = [
         { field: "fieldName", displayName:'属性名称'},
-        { field: "fieldType", displayName:'字段类型'},
-        { field: "refType", displayName:'引用类型'},
+        { field: "fieldType", displayName:'字段类型',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.fieldType | translateConstants :\'DICT_FIELDTYPE\') + $root.constant[\'DICT_FIELDTYPE-\'+row.entity.fieldType]}}</div>'},
         { field: "doclistCode", displayName:'代码大类'},
-        { field: "ismodify", displayName:'是否可修改'}
+        { field: "ismodify", displayName:'是否可修改',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.ismodify | translateConstants :\'DICT_YON\') + $root.constant[\'DICT_YON-\'+row.entity.ismodify]}}</div>'}
     ];
     var f = function(row){
         if(row.isSelected){
@@ -445,6 +473,7 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
         subFrom.entityGuid = $scope.dataEnt.guid;
         common_service.post(res.queryAcEntityfieldList,{data:subFrom}).then(function(data){
             var datas  = data.retMessage;
+            $scope.dataEnt.EntityDates = datas;
             if(data.status == "success"){
                 $scope.gridAttributes.data = datas;
                 $scope.gridAttributes.mydefalutData = datas;
@@ -560,7 +589,6 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
     //实体范围权限表格
     var gridPermissions = {};
     $scope.gridPermissions = gridPermissions;
-
     var gridPer = [
         { field: "entityName", displayName:'实体名称'},
         { field: "privName", displayName:'数据范围权限名称'},
@@ -642,6 +670,7 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
     //新增范围
     $scope.dataDett_add = function () {
         var guidEntity = $scope.dataEnt.guid;
+        var EntityDates = $scope.dataEnt.EntityDates;
         openwindow($modal, 'views/dataEntity/Entityauthority.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
                 $scope.title = '新增范围数据权限';
@@ -649,11 +678,24 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
                 $scope.dataEnt = dataEnt;
                 $scope.dataEnt.qualityRatingExt = [];
                 $scope.dataEnt.cardArray = [];
+
+                //拼接成对应的方法
+                var EntiDates = [];
+                console.log(EntityDates)
+                for(var i =0;i<EntityDates.length;i++){
+                    var subFrom  ={};
+                    subFrom.key = EntityDates[i].columnName;
+                    subFrom.value = EntityDates[i].fieldType;
+                    EntiDates.push(subFrom)
+                }
+                console.log(EntiDates)
+                $scope.EntiDates = EntiDates;
+
+
                 var items = []
                 var item = {};
                 items.push(item);
                 dataEnt.cardArray.push(items);
-
                 //条件删除
                 $scope.delQualityRatingExt = function (d,index) {
                     d.splice(index, 1);
@@ -693,7 +735,6 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
         var subFrom = {};
         subFrom=item;
         common_service.post(res.editAcDatascope,{data:subFrom}).then(function(data){
-            console.log(data)
             if(data.status == "success"){
                 toastr['success']("新增属性成功!");
                 getDatas();//查询实体范围列表;
@@ -783,4 +824,56 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
         }
     }
 
+    //查看详情
+    $scope.dataDett_lookedit = function () {
+        var getSel = $scope.gridPermissions.getSelectedRows();//拿到数据
+        var guidEntity = $scope.dataEnt.guid;
+        if(isNull(getSel) || getSel.length>1){
+            toastr['error']("请至少选中一条数据来修改！");
+        }else{
+            openwindow($modal, 'views/dataEntity/EntityauthorityLook.html', 'lg',//弹出页面
+                function ($scope, $modalInstance) {
+                    $scope.title = '查看范围数据权限'
+                    var dataEnt = {};
+                    $scope.dataEnt = dataEnt;
+                    $scope.dataEnt.qualityRatingExt = [];
+                    $scope.dataEnt.cardArray = [];
+                    //回选
+                    var dataEntFrom = {};
+                    $scope.dataEntFrom = getSel[0];
+
+                    var items = []
+                    var item = {};
+                    items.push(item);
+                    dataEnt.cardArray.push(items);
+
+                    //条件删除
+                    $scope.delQualityRatingExt = function (d,index) {
+                        d.splice(index, 1);
+                    };
+
+                    //条件新增
+                    $scope.addQualityRatingExt = function (index) {
+                        var item = {};
+                        dataEnt.cardArray[index].push(item)
+                    };
+
+                    //卡片删一个
+                    $scope.carddelQualityRatingExt = function (index) {
+                        dataEnt.cardArray.splice(index, 1);
+                    };
+                    //卡片加一个
+                    $scope.cardaddQualityRatingExt = function () {
+                        var items = []
+                        var item = {};
+                        items.push(item);
+                        dataEnt.cardArray.push(items);
+                    };
+                    $scope.cancel = function () {
+                        $modalInstance.dismiss('cancel');
+                    };
+
+                })
+        }
+    }
 });

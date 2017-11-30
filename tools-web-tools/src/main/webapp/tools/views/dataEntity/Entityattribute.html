@@ -33,14 +33,10 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">字段类型</label>
-                        <div class="col-md-8">
+                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_FIELDTYPE')">
                             <select class="form-control" ng-model="dataEntFrom.fieldType">
-                                <option value="0">字符串</option>
-                                <option value="1">整数</option>
-                                <option value="2">小数</option>
-                                <option value="3">日期</option>
-                                <option value="4">CHECKBOX</option>
-                                <option value="5">引用</option>
+                                <!--<option value="0">字符串</option>-->
+                                <option ng-repeat="d in $settings.diclist['DICT_FIELDTYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>
                     </div>

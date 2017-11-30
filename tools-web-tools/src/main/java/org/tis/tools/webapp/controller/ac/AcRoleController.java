@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by zhaoch on 2017/7/16.
@@ -43,6 +44,7 @@ public class AcRoleController extends BaseController {
     IApplicationRService applicationRService;
     @Autowired
     IDictRService dictRService;
+
 
     /**
      * 查询角色列表
@@ -362,7 +364,19 @@ public class AcRoleController extends BaseController {
         } else if (StringUtils.equals(type, "entity")) {
             String roleGuid = data.getString("roleGuid");
             String entityType = data.getString("entityType");
-            return getReturnMap(roleRService.getAcRoleEntitiesByEntityType(roleGuid, entityType));
+            String isEdit = data.getString("isEdit");
+            if(StringUtils.equals(isEdit, "y")) {
+                String appGuid = data.getString("appGuid");
+                List<String> guids = roleRService.getAcRoleEntitiesByEntityType(roleGuid, entityType)
+                        .stream()
+                        .map(map -> (String) map.get("guidEntity")).collect(Collectors.toList());
+                Map<String, Object> map = new HashMap<>();
+                map.put("all", entityRService.queryAcEntityList(appGuid, entityType));
+                map.put("own", guids);
+                return getReturnMap(map);
+            } else {
+                return getReturnMap(roleRService.getAcRoleEntitiesByEntityType(roleGuid, entityType));
+            }
         } else {
             throw new WebAppException("WEB-444", "未知的请求数据！");
         }

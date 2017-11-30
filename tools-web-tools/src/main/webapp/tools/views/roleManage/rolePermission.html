@@ -166,9 +166,10 @@
                 <div class="tab-content portlet light" ng-show="roleflag.entity">
                     <div class="portlet-body col-md-5">
                         <div id="entitconter"></div>
+                        <!--<div id="entitschtree" ng-show="!entitschtree"></div>-->
                         <button type="button" name="back" class="btn btn-primary" style="margin-top:15px; margin-left: 20px;"  ng-if="!edit" ng-click="role.editEntity()"> 修改实体范围
                         </button>
-                        <button type="button" name="back" class="btn btn-primary" style="margin-top:15px; margin-left: 20px;" ng-if="edit" ng-click="role.EntAll()"> 保存
+                        <button type="button" name="back" class="btn btn-primary" style="margin-top:15px; margin-left: 20px;" ng-if="edit" ng-click="role.EntitySave()"> 保存
                         </button>
                     </div>
                     <div class="tab-content portlet light col-md-7"  ng-if="eneitsGrid">

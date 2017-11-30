@@ -50,7 +50,7 @@ Timeline UI Base
 }
 
 .timeline > li .timeline-time span.date {
-    font-size: 12px;
+    font-size: 22px;
     color: #aaa;
     display: block;
     font-weight: 300;
@@ -58,7 +58,7 @@ Timeline UI Base
 
 .timeline > li .timeline-time span.time {
     font-weight: 300;
-    font-size: 32px;
+    font-size: 17px;
     line-height: 38px;
 }
 

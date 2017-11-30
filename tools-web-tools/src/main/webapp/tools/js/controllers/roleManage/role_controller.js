@@ -442,10 +442,8 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                     move_node:function (node) {
                     }
                 },
-            }).bind("copy.jstree", function (node,e, data ) {
             })
         }
-
         //封装创建树结构函数
         function creatJstree(datas,dataes,type,its) {
             if(type=='root'){
@@ -1336,15 +1334,18 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
         }
     }
 
+
+
+    /*---------------------------------------------------------------实体内容------------------------------------------------------*/
     //查询角色下实体
     var Entityjstree = function (item) {
         var res = $rootScope.res.role_service;//页面所需调用的服务
+        $('#entitconter').jstree('destroy',false);//删除重新加载，只删除数据。
         $("#entitconter").jstree({
             "core": {
-                "themes": {
+                "themes" : {
                     "responsive": false
                 },
-                "check_callback": true,
                 'data': function (obj, callback) {
                     // obj.text='实体管理'
                     var jsonarray = [];
@@ -1392,7 +1393,7 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                                     datas[i].children = false;
                                     datas[i].id = datas[i].guidEntity;
                                     datas[i].types = 'eneits';
-                                    datas[i].icon = "fa  fa-files-o icon-state-info icon-lg"
+                                    datas[i].icon = "fa fa-file-text icon-state-info icon-lg"
                                     its.push(datas[i]);
                                 }
                                 $scope.jsonarray = angular.copy(its);
@@ -1403,35 +1404,22 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
 
                 }
             },
-            "types": {
-                "default": {
-                    "icon": "fa fa-folder icon-state-warning icon-lg"
+            "force_text": true,
+            plugins: ["sort", "types", "wholerow", "themes", "html_data","search"],
+            "checkbox": {
+                "keep_selected_style": false,//是否默认选中
+            },
+            "types" : {
+                "default" : {
+                    "icon" : "fa fa-folder icon-state-warning icon-lg"
                 },
-                "file": {
-                    "icon": "fa fa-file icon-state-warning icon-lg"
+                "file" : {
+                    "icon" : "fa fa-file icon-state-warning icon-lg"
                 }
             },
-            "state": {"key": "demo3"},
-            'dnd': {
-                'is_draggable': function (node) {
-                    //用于控制节点是否可以拖拽.
-                    var node = node[0];
-                    if (node.id == "99999" || node.id.indexOf("GW") == 0) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                }
-            },
-            'search': {
-                show_only_matches: true,
-            },
-            'callback': {
-                move_node: function (node) {
-                }
-            },
-            "plugins": ["dnd", "state", "types","sort","search"]
-        }).bind("select_node.jstree", function (e, data) {
+            "state" : { "key" : "demo3" }
+
+        }).bind("changed.jstree", function (e, data) {
             if (typeof data.node !== 'undefined') {//拿到结点详情
                 $scope.dataEnt = data.node.original;//绑定内容给页面
                 queryEntity(data.node.original.guidEntity);//调用查询实体属性的方法
@@ -1446,6 +1434,144 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
         });
     }
 
+    //配置页面
+    $scope.role.editEntity = function () {
+        $('#entitconter').jstree('destroy',false);//删除重新加载，只删除数据。
+        var guidApp = gridDate.guidApp;//应用的guid
+        //重新生成树结构 问题是如何只查询一个应用
+        $("#entitconter").jstree({
+            "core": {
+                "themes": {
+                    "responsive": false
+                },
+                "check_callback": true,
+                'data':function(obj, callback){
+                    // obj.text='实体管理'
+                    var jsonarray = [];
+                    $scope.jsonarray = jsonarray;
+                    var subFrom = {};
+                    var its = [];
+                    if(obj.id == '#'){
+                        var data ={};
+                        data.text = '实体';
+                        data.children = true;
+                        data.types = 'root';
+                        data.id = 'root';
+                        its.push(data);
+                        $scope.jsonarray = angular.copy(its);
+                        callback.call(this, $scope.jsonarray);
+                    }else if(obj.id =='root'){
+                        var subFrom  = {};
+                        subFrom.type = 'entityType';//查询类型
+                        subFrom.roleGuid = gridDate.guid;//角色guid
+                        common_service.post(roleservice.acRoleEntityTree,{data:subFrom}).then(function(data){
+                            if(data.status == "success"){
+                                var datas = data.retMessage;
+                                for(var i =0;i <datas.length;i++){
+                                    datas[i].text = datas[i].itemName;
+                                    datas[i].children = true;
+                                    datas[i].id = obj.id + datas[i].guid;
+                                    datas[i].types = 'enType';
+                                    datas[i].icon = "fa  fa-files-o icon-state-info icon-lg"
+                                    its.push(datas[i]);
+                                }
+                                $scope.jsonarray = angular.copy(its);
+                                callback.call(this, $scope.jsonarray);
+                            }
+                        })
+                    }else if(obj.original.types =='enType'){
+                        //查询角色拥有的实体
+                        var subFrom  = {};
+                        subFrom.type = 'entity';//查询所有实体
+                        subFrom.roleGuid = gridDate.guid;
+                        subFrom.appGuid = guidApp;
+                        subFrom.entityType = obj.original.itemValue;
+                        subFrom.isEdit = 'y';
+                        common_service.post(roleservice.acRoleEntityTree,{data:subFrom}).then(function(data){
+                            var datas = data.retMessage;
+                            var datasAll = datas.all;
+                            var datasOwn = datas.own;
+                            var tisAll = []
+                            if(data.status == "success"){
+                                for(var i =0;i <datasAll.length;i++){
+                                    datasAll[i].text = datasAll[i].entityName;
+                                    datasAll[i].children = false;
+                                    datasAll[i].id = datasAll[i].guid;
+                                    datasAll[i].types = 'eneits';
+                                    datasAll[i].icon = "fa fa-file-text icon-state-info icon-lg"
+                                    its.push(datasAll[i]);
+                                    tisAll.push(datasAll[i].id)
+                                }
+                                $timeout(function () {//勾选
+                                    for(var i =0;i<tisAll.length;i++){
+                                        for(var j =0;j<datasOwn.length;j++){
+                                            if(datasOwn[j] == datasAll[i].id){
+                                                $('#entitconter').jstree(true).check_node(datasOwn);//让对应的选中
+                                                break;
+                                            }
+                                        }
+                                    }
+                                },500)
+                                $scope.jsonarray = angular.copy(its);
+                                callback.call(this, $scope.jsonarray);
+                            }
+                        })
+                    }
+                }
+            },
+            "types": {
+                "default": {
+                    "icon": "fa fa-folder icon-state-warning icon-lg"
+                },
+                "file": {
+                    "icon": "fa fa-file icon-state-warning icon-lg"
+                }
+            },
+            "state": {"key": "demo3"},
+            'search': {
+                show_only_matches: true,
+            },
+            'callback': {
+                move_node: function (node) {
+                }
+            },
+            "plugins": ["state", "types","search","checkbox"],
+            "checkbox": {
+                "keep_selected_style": false,//是否默认选中
+            },
+        })
+        $timeout(function(){
+            $('#entitconter').jstree().open_all();
+        },30)
+        $scope.edit = true;//让保存按钮显示
+    }
+
+    //配置实体属性方法
+    $scope.role.EntitySave = function () {
+        var nodes=$("#entitconter").jstree("get_checked");//
+        $('#entitconter').jstree('destroy',true);//删除重新加载，只删除数据。
+        if(nodes.length>=0) {
+            if(confirm('如果删除实体，会删除实体对应的所有属性和范围')){
+                var subFrom = {};
+                subFrom.roleGuid = gridDate.guid;
+                subFrom.entityGuids= []
+                for(var i = 0;i<nodes.length;i++){
+                    if(nodes[i].indexOf('root') !== 0 ){//把实体类型的guid干掉，只保留实体的guid
+                        subFrom.entityGuids.push(nodes[i])
+                    }
+                }
+                common_service.post(roleservice.configRoleEntity,{data:subFrom}).then(function(data){
+                    if(data.status == "success"){
+                        toastr['success']("修改成功！");
+                        $scope.edit = false;//让配置按钮显示
+                    }else{
+                        toastr['error']("修改失败！"+'<br/>'+data.retMessage);
+                    }
+                })
+                Entityjstree(gridDate.guid);//调用刷新树
+            }
+        }
+    }
     //编辑当前实体方法
     $scope.role.entityEdit = function (item) {
         $scope.editflag = !$scope.editflag;
@@ -1470,7 +1596,6 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
     }
 
     //生成实体下属性表格
-
     var gridAttributes = {};
     $scope.gridAttributes = grideditEntity;
     var gridAttributestcom =[
@@ -1486,6 +1611,7 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
         }
     }
     $scope.gridAttributes = initgrid($scope,gridAttributes,filterFilter,gridAttributestcom,true,fFunenetit);
+
 
     //查询实体属性列表
     function  queryEntity(item) {
@@ -1645,7 +1771,6 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
         subFrom.entityType =item;//实体的GUID
         common_service.post(roleservice.getAcRoleDatascopes,{data:subFrom}).then(function(data){
             var datas = data.retMessage;
-            console.log(datas)
             if(data.status == 'success'){
                 $scope.grideditEntity.data =  datas;
                 $scope.grideditEntity.mydefalutData = datas;
@@ -1653,7 +1778,6 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
             }
         })
     }
-
 
     //新增实体范围
     $scope.role.funEntityclist = function(){
@@ -1697,7 +1821,6 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                 //导入实体范围方法
                 $scope.importAdd = function () {
                     var dats = $scope.gridOptions.getSelectedRows();
-                    console.log(dats)
                     if(dats.length >0){
                         for(var i =0; i<dats.length; i++){
                             dats[i].guidRole =roleguid;
@@ -1722,9 +1845,6 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                 };
             })
     }
-
-
-
 
     //删除实体范围
     $scope.role.DeleteEntityfunc = function(){
