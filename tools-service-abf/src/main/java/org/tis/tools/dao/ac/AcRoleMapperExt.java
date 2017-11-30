@@ -93,12 +93,12 @@ public interface AcRoleMapperExt {
      * @param roleGuid
      * @param entityGuid
      */
-    void deleteAcRoleEntityfieldByEntityGuid(String roleGuid, String entityGuid);
+    void deleteAcRoleEntityfieldByEntityGuid(@Param("roleGuid")String roleGuid, @Param("entityGuid")String entityGuid);
 
     /**
      * 通过实体GUID删除角色与数据范围对应关系
      * @param roleGuid
      * @param entityGuid
      */
-    void deleteAcRoleDatascopeByEntityGuid(String roleGuid, String entityGuid);
+    void deleteAcRoleDatascopeByEntityGuid(@Param("roleGuid")String roleGuid, @Param("entityGuid")String entityGuid);
 }
