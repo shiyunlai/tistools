@@ -70,16 +70,16 @@
                                                                 <label class="control-label col-md-4"> 实体类型:<span ng-class="{required:myform.fromtable.$invalid}"  > * </span></label>
                                                                 <div class="col-md-8" style="margin-top:7px;">
                                                                     <div class="col-md-2">
-                                                                        <input type="radio" required   name="fromtable"  ng-model="dataEnt.entityType" ng-checked ="dataEnt.entityType=='table'"  value="table" />表
+                                                                        <input type="radio" required   name="fromtable"  ng-model="dataEnt.entityType" ng-checked ="dataEnt.entityType=='table'" ng-disabled="!editflag" value="table" />表
                                                                     </div>
                                                                     <div class="col-md-2">
-                                                                        <input type="radio" required  name="fromtable" ng-model="dataEnt.entityType"  ng-checked ="dataEnt.entityType=='view'"   value="view" />视图
+                                                                        <input type="radio" required  name="fromtable" ng-model="dataEnt.entityType"  ng-checked ="dataEnt.entityType=='view'" ng-disabled="!editflag"  value="view" />视图
                                                                     </div>
                                                                     <div class="col-md-2" >
-                                                                        <input type="radio" required  name="fromtable" ng-model="dataEnt.entityType"  ng-checked ="dataEnt.entityType=='query'"  value="query"/>查询实体
+                                                                        <input type="radio" required  name="fromtable" ng-model="dataEnt.entityType"  ng-checked ="dataEnt.entityType=='query'" ng-disabled="!editflag" value="query"/>查询实体
                                                                     </div>
                                                                     <div class="col-md-2" >
-                                                                        <input type="radio" required  name="fromtable" ng-model="dataEnt.entityType"  ng-checked ="dataEnt.entityType=='cache'"  value="cache"/>内存对象
+                                                                        <input type="radio" required  name="fromtable" ng-model="dataEnt.entityType"  ng-checked ="dataEnt.entityType=='cache'" ng-disabled="!editflag" value="cache"/>内存对象
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -339,7 +339,7 @@
                                                                 </button>
                                                                 <button type="button" name="back" class="btn btn-primary" ng-click="dataDett_edit(4)">  修改
                                                                 </button>
-                                                                <button type="button" name="back" class="btn btn-primary" ng-click="dataDett_edit(4)">  查看详情
+                                                                <button type="button" name="back" class="btn btn-primary" ng-click="dataDett_lookedit(4)">  查看详情
                                                                 </button>
                                                                 <button type="button" name="back" class="btn btn-danger" ng-click="dataDett_delete()"> 删除
                                                                 </button>

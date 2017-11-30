@@ -232,7 +232,9 @@
     "deleteAcRoleDatascope": {"ctrl": "AcRoleController", "func": "deleteAcRoleDatascope","emo":"新增角色与实体数据范围关系"},
     "getAcRoleDatascopes": {"ctrl": "AcRoleController", "func": "getAcRoleDatascopes","emo":"查询角色实体下的数据范围"},
     "queryAcEntityfieldList": {"ctrl": "AcRoleController", "func": "queryAcEntityfieldList","emo":"查询实体属性列表"},
-    "queryAcDatascopeList": {"ctrl": "AcRoleController", "func": "queryAcDatascopeList","emo":"查询数据范围权限列表"}
+    "queryAcDatascopeList": {"ctrl": "AcRoleController", "func": "queryAcDatascopeList","emo":"查询数据范围权限列表"},
+    "queryAcEntityList": {"ctrl": "AcRoleController", "func": "queryAcEntityList","emo":"查询实体对象列表"},
+    "configRoleEntity": {"ctrl": "AcRoleController", "func": "configRoleEntity","emo":"角色配置实体权限"}
   },
   "entity_service" : {
     "queryAcEntityTreeList": {"ctrl": "entity", "func": "queryAcEntityTreeList","emo":"查询实体对象列表"},

@@ -58,7 +58,6 @@ public class AcEntityController extends BaseController {
         } else {
             throw new WebAppException("WEB-444", "未知的数据！");
         }
-
     }
 
     /**

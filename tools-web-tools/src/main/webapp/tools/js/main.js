@@ -568,7 +568,7 @@ MetronicApp.provider('router', function ($stateProvider,$urlRouterProvider) {
         var ret ={ctrl: "AcAuthenticationController", func: "pageInit", emo: "页面初始化"};
         return {
             setUpRoutes: function () {
-                $timeout(function () {
+                /*$timeout(function () {
                     if(!isNull($rootScope.userconfig)){
                         var datas =$rootScope.userconfig.resources;
                         var collection = JSON.parse(datas);
@@ -583,26 +583,28 @@ MetronicApp.provider('router', function ($stateProvider,$urlRouterProvider) {
                         }
                         $urlRouterProvider.otherwise('/dashboard');
                     }
-                },2000)
-                /*common_service.post(ret,{}).then(function(data){
-                    console.log(data)
-                    var datas = data.retMessage.resources;
-                    if(!isNull(datas)){
-                        var collection = JSON.parse(datas)
-                    }
-                    if(data.status == "success"){
-                        for (var routeName in collection) {
-                            if (!$state.get(routeName)) {
-                                $stateProvider.state(routeName, collection[routeName]);
+                },2000)*/
+                $timeout(function () {
+                    common_service.post(ret, {}).then(function (data) {
+                        console.log(data)
+                        var datas = data.retMessage.resources;
+                        if (!isNull(datas)) {
+                            var collection = JSON.parse(datas)
+                        }
+                        if (data.status == "success") {
+                            for (var routeName in collection) {
+                                if (!$state.get(routeName)) {
+                                    $stateProvider.state(routeName, collection[routeName]);
+                                }
                             }
+                            //如何判断是第一次？这是一个问题,还存在一个问题，如果地址栏发生改变，那么会跳转到原来存储的位置,解决思路--地址栏发生改变就清空
+                            if (!isNull(sessionStorage.getItem('toState'))) {
+                                $state.go(sessionStorage.getItem('toState'), {id: sessionStorage.getItem('toParams')});
+                            }
+                            $urlRouterProvider.otherwise('/dashboard');
                         }
-                        //如何判断是第一次？这是一个问题,还存在一个问题，如果地址栏发生改变，那么会跳转到原来存储的位置,解决思路--地址栏发生改变就清空
-                        if(!isNull(sessionStorage.getItem('toState'))){
-                            $state.go(sessionStorage.getItem('toState'),{id:sessionStorage.getItem('toParams')});
-                        }
-                        $urlRouterProvider.otherwise('/dashboard');
-                    }
-                })*/
+                    })
+                },1000)
             }
         }
     };

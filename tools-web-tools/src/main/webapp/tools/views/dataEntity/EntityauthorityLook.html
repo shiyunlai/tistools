@@ -60,7 +60,6 @@
                         </div>
                         <div class="form-body" style="padding: 0 100px;">
                             <div class="row" style="margin-top:40px;" >
-                                {{dataEnt.cardArray}}
                                 <div class="col-md-12"  ng-repeat="d in dataEnt.cardArray"  ng-init="outerIndex = $index">
                                     <div class="portlet light clearfix" style="border:1px solid #ccc">
                                         <div class="portlet-body form" >
@@ -82,22 +81,16 @@
                                                 </div>
                                                 <div class="col-md-2" ng-if="$index == 0">
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-2">
                                                     <select class="form-control" ng-model="dd.type">
-                                                        <option ng-repeat="d in EntiDates track by $index" value="{{d.value}}">{{d.key}}</option>
+                                                        <option value="A">A</option>
+                                                        <option value="B">B</option>
+                                                        <option value="C">C</option>
+                                                        <option value="D">D</option>
                                                     </select>
                                                 </div>
-                                                <!--关系符页面-->
                                                 <div class="col-md-2">
-                                                    <!--字符串类型-->
-                                                    <select class="form-control" ng-if="dd.type == 'string'" ng-model="dd.guanxi" ng-init="dd.guanxi='like'">
-                                                        <option value="like">包含</option>
-                                                        <option value="nlk">不包含</option>
-                                                        <option value="eq">等于</option>
-                                                        <option value="neq">不等于</option>
-                                                    </select>
-                                                    <!--小数类型/数值类型-->
-                                                    <select  class="form-control" ng-if="dd.type == 'Int'||dd.type=='Decimal'" ng-model="dd.guanxi">
+                                                    <select  class="form-control" ng-if="dd.type == 'A'" ng-model="dd.guanxi">
                                                         <option value="=">等于</option>
                                                         <option value="!=">不等于</option>
                                                         <option value=">">大于</option>
@@ -105,38 +98,41 @@
                                                         <option value="<">小于</option>
                                                         <option value="<=">小于等于</option>
                                                     </select>
-                                                    <!--时间类型-->
-                                                    <select  class="form-control"  ng-if="dd.type == 'Date'" ng-model="dd.guanxi">
+                                                    <select  class="form-control"  ng-if="dd.type == 'C'" ng-model="dd.guanxi">
                                                         <option value="start">起于</option>
                                                         <option value="end">止于</option>
                                                     </select>
-                                                    <!--<select  class="form-control" ng-if="dd.type == 'quote'" ng-model="dd.guanxi">
+                                                    <select  class="form-control" ng-if="dd.type == 'D'" ng-model="dd.guanxi">
                                                         <option value="=">等于</option>
                                                         <option value="!=">不等于</option>
-                                                    </select>-->
-                                                    <!--引用类型-->
+                                                    </select>
                                                     <select class="form-control"  ng-if="dd.type == undefined">
                                                     </select>
+                                                    <select class="form-control" ng-if="dd.type == 'B'" ng-model="dd.guanxi" ng-init="dd.guanxi='like'">
+                                                        <option value="like">包含</option>
+                                                        <option value="nlk">不包含</option>
+                                                        <option value="eq">等于</option>
+                                                        <option value="neq">不等于</option>
+                                                    </select>
                                                 </div>
-                                                <!--关系页面-->
-                                                <div class="col-md-3">
-                                                    <!--文本框-->
-                                                    <div style="text-align: left;"   ng-if="dd.type !== 'Date'">
-                                                        <input type="text"  class="form-control"  ng-model="dd.ce">
-                                                    </div>
-                                                    <div style="text-align: left;"   ng-if="dd.type == 'Date'">
-                                                        <div class="input-group date form_datetime" ng-init="$root.settings.utils.initpicker()"  >
-                                                                            <span class="input-group-btn">
-                                                                                <button class="btn default date-set"  type="button"><i  class="fa fa-calendar"></i></button>
-                                                                            </span>
-                                                            <input type="text" class="form-control" class="col-md-4" ng-model="dd.ce" readonly/>
-                                                        </div>
-
-                                                        <!--<div start-view="month"
-                                                             moment-picker="t.zhi.CODE_CHI_NAME"
-                                                             format="YYYY-MM-DD">
-                                                            <input class="form-control"   ng-model="dd.ce" ng-required="true" >
-                                                        </div>-->
+                                                <div style="text-align: left;" class="col-md-4"  ng-if="dd.type != 'A' && dd.type != 'C'">
+                                                    <input type="text"  class="form-control"  ng-model="dd.ce">
+                                                </div>
+                                                <div style="text-align: left;" class="col-md-4"   ng-if="dd.type == 'A'">
+                                                    <input type="text"  class="form-control"  ng-model="dd.ce">
+                                                    <!--<select  class="form-control" ng-model="t.c">
+                                                        &lt;!&ndash;<option ng-repeat="c in a track by $index" value="{{c}}">{{c.CODE_CHI_NAME}}</option>&ndash;&gt;
+                                                        <option value=">"> > </option>
+                                                        <option value="<"> < </option>
+                                                        <option value="!="> != </option>
+                                                        <option value="="> = </option>
+                                                    </select>-->
+                                                </div>
+                                                <div style="text-align: left;" class="col-md-4"  ng-if="dd.type == 'C'">
+                                                    <div start-view="month"
+                                                         moment-picker="t.zhi.CODE_CHI_NAME"
+                                                         format="YYYY-MM-DD">
+                                                        <input class="form-control"   ng-model="dd.ce" ng-required="true" >
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">
@@ -173,10 +169,6 @@
                         <label class="control-label col-md-2"></label>
                         <div class="col-md-10">
                             <div class="actions btn-set" style="float: right;">
-                                <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="add(dataEntFrom)" > 保存
-                                </button>
-                                <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存
-                                </button>
                                 <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
                                 </button>
                             </div>
