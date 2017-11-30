@@ -14,6 +14,7 @@ import org.tis.tools.common.utils.BasicUtil;
 import org.tis.tools.common.utils.BeanFieldValidateUtil;
 import org.tis.tools.core.exception.ExceptionCodes;
 import org.tis.tools.model.def.ACConstants;
+import org.tis.tools.model.def.CommonConstants;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.po.ac.*;
 import org.tis.tools.model.po.om.*;
@@ -1495,9 +1496,12 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                     throw new RoleManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_DELETE,
                             wrap(s, AcRoleEntity.TABLE_NAME));
                 guids.add(acRoleEntity.getGuidEntity() + acRoleEntity.getGuidRole());
+                acRoleServiceExt.deleteAcRoleEntityfieldByEntityGuid(acRoleEntity.getGuidRole(), acRoleEntity.getGuidEntity());
+                acRoleServiceExt.deleteAcRoleDatascopeByEntityGuid(acRoleEntity.getGuidRole(), acRoleEntity.getGuidEntity());
             }
             acRoleEntityService.deleteByCondition(new WhereCondition()
                     .andIn("concat(" + AcRoleEntity.COLUMN_GUID_ENTITY + "," + AcRoleEntity.COLUMN_GUID_ROLE + ")", guids));
+
         } catch (ToolsRuntimeException e) {
             logger.error("removeAcRoleEntity exception: ", e);
             throw e;
@@ -1746,5 +1750,64 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
             throw new RoleManagementException(ExceptionCodes.FAILURE_WHEN_CALL,
                     wrap("getAcRoleDatascopesByEntityGuid", e));
         }
+    }
+
+    /**
+     * 配置角色实体权限
+     * @param roleGuid 角色GUID
+     * @param entityGuids 实体GUID集合
+     * @return
+     * @throws RoleManagementException
+     */
+    public List<AcRoleEntity> configRoleEntity(String roleGuid, List<String> entityGuids) throws RoleManagementException {
+        if (StringUtils.isBlank(roleGuid)) {
+            throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("String roleGuid", "configRoleFunc"));
+        }
+        if (CollectionUtils.isEmpty(entityGuids)) {
+            throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("List<AcFunc> funcList", "configRoleFunc"));
+        }
+        try {
+            // 查询该角色配置前已有的实体
+            List<AcRoleEntity> olds = acRoleEntityService.query(new WhereCondition().andEquals(AcRoleEntity.COLUMN_GUID_ENTITY, roleGuid));
+            List<String> oldGuids = olds.stream().map(AcRoleEntity::getGuidEntity).collect(Collectors.toList());
+            // 需要新增的集合
+            List<AcRoleEntity> addList = new ArrayList<>();
+            // 保持不变的集合
+            List<String> keepList = new ArrayList<>();
+            for (String entityGuid : entityGuids) {
+                if (StringUtils.isBlank(entityGuid)) {
+                    throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("entityGuids(string)", "configRoleEntity"));
+                }
+                if (oldGuids.contains(entityGuid))
+                    keepList.add(entityGuid);
+                else {
+                    AcRoleEntity acRoleEntity = new AcRoleEntity();
+                    acRoleEntity.setIsadd(CommonConstants.YES);
+                    acRoleEntity.setIsdel(CommonConstants.YES);
+                    acRoleEntity.setIsmodify(CommonConstants.YES);
+                    acRoleEntity.setIsview(CommonConstants.YES);
+                    addList.add(acRoleEntity);
+                }
+            }
+            // 需要删除的
+            List<AcRoleEntity> removeList = olds.stream().filter(s -> !keepList.contains(s.getGuidEntity())).collect(Collectors.toList());
+            // 删除
+            if (!CollectionUtils.isEmpty(removeList)) {
+                removeAcRoleEntity(removeList);
+            }
+            // 新增
+            if (!CollectionUtils.isEmpty(addList)) {
+                addAcRoleEntity(addList);
+            }
+            return acRoleEntityService.query(new WhereCondition().andEquals(AcRoleEntity.COLUMN_GUID_ENTITY, roleGuid));
+        } catch (ToolsRuntimeException e) {
+            e.printStackTrace();
+            throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RoleManagementException(
+                    ExceptionCodes.FAILURE_WHEN_CALL, wrap("configRoleFunc", e));
+        }
+
     }
 }

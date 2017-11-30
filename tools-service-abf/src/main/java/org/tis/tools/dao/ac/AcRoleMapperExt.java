@@ -87,4 +87,18 @@ public interface AcRoleMapperExt {
      * @throws RoleManagementException
      */
     List<Map> getAcRoleDatascopesByEntityGuid(@Param("roleGuid")String roleGuid, @Param("entityGuid")String entityGuid);
+
+    /**
+     * 通过实体GUID删除角色与实体属性对应关系
+     * @param roleGuid
+     * @param entityGuid
+     */
+    void deleteAcRoleEntityfieldByEntityGuid(String roleGuid, String entityGuid);
+
+    /**
+     * 通过实体GUID删除角色与数据范围对应关系
+     * @param roleGuid
+     * @param entityGuid
+     */
+    void deleteAcRoleDatascopeByEntityGuid(String roleGuid, String entityGuid);
 }
