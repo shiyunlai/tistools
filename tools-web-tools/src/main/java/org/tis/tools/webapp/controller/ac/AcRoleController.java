@@ -368,6 +368,26 @@ public class AcRoleController extends BaseController {
         }
     }
 
+    /**
+     * 角色配置实体权限
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_UPDATE,
+            operateDesc = "配置角色与实体关系",
+            retType = ReturnType.List,
+            id = "guidRole",
+            keys = "guidEntity"
+    )
+    @ResponseBody
+    @RequestMapping(value = "/configRoleEntity", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> configRoleEntity(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        JSONObject data = jsonObject.getJSONObject("data");
+        String roleGuid = data.getString("roleGuid");
+        List<String> entityGuids = JSON.parseArray(data.getString("entityGuids"), String.class);
+        return getReturnMap(roleRService.configRoleEntity(roleGuid, entityGuids));
+    }
+
 
     /**
      * 新增角色与实体关系

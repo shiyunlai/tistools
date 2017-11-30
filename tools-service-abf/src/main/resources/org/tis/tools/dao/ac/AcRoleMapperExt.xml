@@ -147,6 +147,50 @@
         AND b.GUID_ENTITY = #{entityGuid}
     </select>
 
+    <delete id="deleteAcRoleEntityfieldByEntityGuid" >
+        DELETE
+        FROM
+            ac_role_entityfield
+        WHERE
+            GUID_ROLE = #{roleGuid}
+            AND GUID_ENTITYFIELD IN (
+                SELECT
+                    c.GUID_ENTITYFIELD
+                FROM (
+                         SELECT
+                             a.GUID_ENTITYFIELD
+                         FROM
+                             ac_role_entityfield a,
+                             ac_entityfield b
+                         WHERE
+                             a.GUID_role = #{roleGuid}
+                             AND b.GUID_ENTITY = #{entityGuid}
+                             AND a.GUID_ENTITYFIELD = b.GUID) c
+            );
+    </delete>
+
+    <delete id="deleteAcRoleDatascopeByEntityGuid" >
+        DELETE
+        FROM
+            ac_role_entityfield
+        WHERE
+            GUID_ROLE = #{roleGuid}
+            AND GUID_ENTITYFIELD IN (
+                SELECT
+                    c.GUID_ENTITYFIELD
+                FROM (
+                         SELECT
+                             a.GUID_ENTITYFIELD
+                         FROM
+                             ac_role_entityfield a,
+                             ac_entityfield b
+                         WHERE
+                             a.GUID_role = #{roleGuid}
+                             AND b.GUID_ENTITY = #{entityGuid}
+                             AND a.GUID_ENTITYFIELD = b.GUID) c
+            );
+    </delete>
+
 
 
     <sql id="Where_Clause">

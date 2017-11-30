@@ -189,4 +189,22 @@ public class AcRoleServiceExt {
 	public List<Map> getAcRoleDatascopesByEntityGuid(String roleGuid, String entityGuid) {
 		return acRoleMapperExt.getAcRoleDatascopesByEntityGuid(roleGuid, entityGuid);
 	}
+
+	/**
+	 * 通过实体GUID删除角色与实体属性对应关系
+	 * @param roleGuid
+	 * @param entityGuid
+	 */
+	public void deleteAcRoleEntityfieldByEntityGuid(String roleGuid, String entityGuid) {
+		acRoleMapperExt.deleteAcRoleEntityfieldByEntityGuid(roleGuid, entityGuid);
+	}
+
+	/**
+	 * 通过实体GUID删除角色与数据范围对应关系
+	 * @param roleGuid
+	 * @param entityGuid
+	 */
+	public void deleteAcRoleDatascopeByEntityGuid(String roleGuid, String entityGuid) {
+		acRoleMapperExt.deleteAcRoleDatascopeByEntityGuid(roleGuid, entityGuid);
+	}
 }

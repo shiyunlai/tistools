@@ -503,6 +503,15 @@ public interface IRoleRService {
      */
     List<Map> getAcRoleDatascopesByEntityGuid(String roleGuid, String entityGuid) throws RoleManagementException;
 
+    /**
+     * 配置角色实体权限
+     * @param roleGuid 角色GUID
+     * @param entityGuids 实体GUID集合
+     * @return
+     * @throws RoleManagementException
+     */
+    List<AcRoleEntity> configRoleEntity(String roleGuid, List<String> entityGuids) throws RoleManagementException;
+
 
 
 }
