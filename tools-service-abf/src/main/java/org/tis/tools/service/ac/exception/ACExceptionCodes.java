@@ -398,6 +398,11 @@ public class ACExceptionCodes {
 	 */
 	public static final String PERMISSION_DENIED = R_EX_CODE("0075");
 
+	/**
+	 * 默认身份不允许修改
+	 */
+    public static final String DEFAULT_IDENTITY_NOT_ALLOW = R_EX_CODE("0076");
+
     /**
 	 * 以烤串方式拼接异常码
 	 * @param code 业务域范围内的异常编码
