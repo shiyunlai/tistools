@@ -177,7 +177,7 @@ public interface IApplicationRService {
 	 List<AcFunc> queryAcFunc(WhereCondition wc) throws AppManagementException;
 	
 	/**
-	 * 根据条件查询功能(AC_FUNC)
+	 * 根据GUID查询功能(AC_FUNC)
 	 * @param guid 条件
 	 * @return 满足条件的记录list
 	 */
@@ -190,7 +190,15 @@ public interface IApplicationRService {
 	 * @return 满足条件的记录
 	 */
 	 List<AcFunc> queryAcFunc(String guid) throws AppManagementException;
-	
+
+	/**
+	 * 根据功能代码查询功能
+	 * @param funcCode
+	 * @return
+	 * @throws AppManagementException
+	 */
+	 AcFunc queryAcFuncByCode(String funcCode) throws AppManagementException;
+
 	
 	/**
 	 * 根据条件查询功能(AC_FUNC)
@@ -308,8 +316,7 @@ public interface IApplicationRService {
 	 */
 	 List<AcFuncBehavior> queryAcFuncBehavior(WhereCondition wc) throws AppManagementException;
 		
-	
-	
+
 	/**
 	 * 根据条件查询功能操作行为(AC_FUNC_BEHAVIOR)
 	 * @return 满足条件的记录list
