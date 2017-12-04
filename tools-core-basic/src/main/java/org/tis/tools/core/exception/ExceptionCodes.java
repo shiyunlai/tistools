@@ -112,7 +112,7 @@ public class ExceptionCodes {
 	public static final String FAILURE_WHEN_QUERY = R_EX_CODE("0014");
 
 	/**
-	 * 异常：.<br>
+	 * 异常：重复添加.<br>
 	 */
 	public static final String DUPLICATE_WHEN_INSERT = R_EX_CODE("0015");
 
@@ -141,8 +141,13 @@ public class ExceptionCodes {
 	public static final String FAILURE_WHEN_CALL = R_EX_CODE("0020");
 
 	public static final String NOT_FOUND_WHEN_DELETE = R_EX_CODE("0021");
-	
+
 	/**
+	 * 修改已存在的属性值
+	 */
+    public static final String DUPLICATE_WHEN_UPDATE = R_EX_CODE("0022");
+
+    /**
 	 * 以烤串方式拼接异常码
 	 * @param code 业务域范围内的异常编码
 	 * @return

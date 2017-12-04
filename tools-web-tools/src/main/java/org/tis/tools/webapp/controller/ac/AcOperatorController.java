@@ -609,6 +609,65 @@ public class AcOperatorController extends BaseController {
         return getReturnMap(acOperatorBhvs);
     }
 
+    /**
+     * 获取操作员功能信息
+     * 包含 已授权（从角色授权） 特别禁止
+     * 未授权 和 特别允许 列表
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getOperatorFuncAuthInfo", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> getOperatorFuncAuthInfo(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        JSONObject data = jsonObject.getJSONObject("data");
+        String userId = data.getString("userId");
+        String appGuid = data.getString("appGuid");
+        return getReturnMap(operatorRService.getOperatorFuncAuthInfo(userId, appGuid));
+    }
+
+    /**
+     * 添加操作员特殊功能权限
+     * @param content
+     * @return
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_ADD,
+            operateDesc = "新增操作员特殊功能权限",
+            retType = ReturnType.List,
+            id = "guidOperator",
+            keys = {"guidFunc", "authType"}
+    )
+    @ResponseBody
+    @RequestMapping(value = "/addAcOperatorFunc", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> addAcOperatorFunc(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        JSONArray data = jsonObject.getJSONArray("data");
+        List<AcOperatorFunc> acOperatorfuncs = JSON.parseArray(data.toJSONString(), AcOperatorFunc.class);
+        operatorRService.addAcOperatorFunc(acOperatorfuncs);
+        return getReturnMap(acOperatorfuncs);
+    }
+
+    /**
+     * 移除操作员特殊功能行为权限
+     * @param content
+     * @return
+     */
+    @OperateLog(
+            operateType = JNLConstants.OPEARTE_TYPE_DELETE,
+            operateDesc = "删除操作员特殊功能权限",
+            retType = ReturnType.List,
+            id = "guidOperator",
+            keys = {"guidFunc", "authType"}
+    )
+    @ResponseBody
+    @RequestMapping(value = "/removeAcOperatorFunc", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> removeAcOperatorFunc(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        JSONArray data = jsonObject.getJSONArray("data");
+        List<AcOperatorFunc> acOperatorfuncs = JSON.parseArray(data.toJSONString(), AcOperatorFunc.class);
+        operatorRService.removeAcOperatorFunc(acOperatorfuncs);
+        return getReturnMap(acOperatorfuncs);
+    }
+
 
 
 }

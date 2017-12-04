@@ -306,6 +306,18 @@ public interface IOperatorRService {
     List<AcOperator> getOperatorsNotLinkEmp() throws OperatorManagementException;
 
     /**
+     * 获取操作员功能权限信息
+     * 包含 已授权（从角色授权） 特别禁止
+     * 未授权（从功能所有行为筛选掉角色授权） 和 特别允许 列表
+     *
+     * @param userId
+     * @param appGuid
+     * @return
+     * @throws OperatorManagementException
+     */
+    Map<String, List<AcFunc>> getOperatorFuncAuthInfo(String userId, String appGuid) throws OperatorManagementException;
+
+    /**
      * 获取操作员功能行为信息
      * 包含 已授权（从角色授权） 特别禁止
      * 未授权（从功能所有行为筛选掉角色授权） 和 特别允许 列表
@@ -340,5 +352,19 @@ public interface IOperatorRService {
      * @throws OperatorManagementException
      */
     void removeAcOperatorBhv(List<AcOperatorBhv> acOperatorBhv) throws OperatorManagementException;
+
+    /**
+     * 添加操作员特殊功能
+     * @param acOperatorFuncs
+     * @throws OperatorManagementException
+     */
+    void addAcOperatorFunc(List<AcOperatorFunc> acOperatorFuncs) throws OperatorManagementException;
+
+    /**
+     * 移除操作员特殊功能
+     * @param acOperatorFuncs
+     * @throws OperatorManagementException
+     */
+    void removeAcOperatorFunc(List<AcOperatorFunc> acOperatorFuncs) throws OperatorManagementException;
 
 }

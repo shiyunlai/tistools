@@ -4,6 +4,9 @@ import com.alibaba.dubbo.common.utils.CollectionUtils;
 import com.alibaba.dubbo.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
@@ -31,6 +34,7 @@ import java.util.stream.Stream;
 import static org.tis.tools.common.utils.BasicUtil.surroundBracketsWithLFStr;
 import static org.tis.tools.common.utils.BasicUtil.wrap;
 
+@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, readOnly = false, rollbackFor = Exception.class)
 public class OperatorRServiceImpl extends BaseRService implements IOperatorRService {
 
     @Autowired
@@ -101,7 +105,7 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
 
 
     /**
-     * 新增操作员
+     * 新增操作员 同时添加默认操作员
      *
      * @param acOperator
      * @throws OperatorManagementException
@@ -144,6 +148,13 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
             acOperator.setErrCount(new BigDecimal("0"));
             acOperator.setPassword(PasswordHelper.generate(acOperator.getPassword(), acOperator.getGuid()));
             acOperatorService.insert(acOperator);
+            // 新增默认身份 该身份不允许被修改，被删除
+            AcOperatorIdentity acOperatorIdentity = new AcOperatorIdentity();
+            acOperatorIdentity.setGuid(GUID.identity());
+            acOperatorIdentity.setIdentityName("系统默认身份"); // 固定名称
+            acOperatorIdentity.setIdentityFlag(CommonConstants.YES);
+            acOperatorIdentity.setGuidOperator(acOperator.getGuid());
+            acOperatorIdentityService.insert(acOperatorIdentity);
             return sensitiveInfoProcess(acOperator);
         } catch (OperatorManagementException oe) {
             throw oe;
@@ -219,6 +230,9 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
                         wrap(acOperator.getOperatorStatus(), AcOperator.TABLE_NAME));
             }
             acOperatorService.delete(operatorGuid);
+            // 删除身份
+            acOperatorIdentityService.deleteByCondition(new WhereCondition()
+                    .andEquals(AcOperatorIdentity.COLUMN_GUID_OPERATOR, operatorGuid));
             return sensitiveInfoProcess(acOperator);
             /****************************************************************************************
              ****************************************************************************************
@@ -349,6 +363,9 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
             if (StringUtil.isEmpty(operatorIdentity.getIdentityName())) {
                 throw new OperatorManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("IDENTITY_NAME"));
             }
+            if (StringUtils.isEquals(operatorIdentity.getIdentityName(), "系统默认身份")) {
+                throw new OperatorManagementException(ACExceptionCodes.DEFAULT_IDENTITY_NOT_ALLOW);
+            }
             // TODO 序列必填？
             if(acOperatorIdentityService.count(new WhereCondition()
                     .andEquals(AcOperatorIdentity.COLUMN_GUID_OPERATOR, operatorIdentity.getGuidOperator())
@@ -388,11 +405,14 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
             if (StringUtil.isEmpty(operatorIdentity.getGuid())) {
                 throw new OperatorManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID"));
             }
+            if (StringUtils.isEquals(operatorIdentity.getIdentityName(), "系统默认身份")) {
+                throw new OperatorManagementException(ACExceptionCodes.DEFAULT_IDENTITY_NOT_ALLOW);
+            }
             if(acOperatorIdentityService.count(new WhereCondition()
                     .andEquals(AcOperatorIdentity.COLUMN_GUID_OPERATOR, operatorIdentity.getGuidOperator())
                     .andEquals(AcOperatorIdentity.COLUMN_IDENTITY_NAME, operatorIdentity.getIdentityName())
                     .andNotEquals(AcOperatorIdentity.COLUMN_GUID, operatorIdentity.getGuid())) > 0) {
-                throw new OperatorManagementException(ExceptionCodes.DUPLICATE_WHEN_INSERT,
+                throw new OperatorManagementException(ExceptionCodes.DUPLICATE_WHEN_UPDATE,
                         wrap(surroundBracketsWithLFStr(AcOperatorIdentity.COLUMN_IDENTITY_NAME, operatorIdentity.getIdentityName()),
                                 AcOperatorIdentity.TABLE_NAME));
             }
@@ -1555,6 +1575,85 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
 
 
     /**
+     * 获取操作员功能权限信息
+     * 包含 已授权（从角色授权） 特别禁止
+     * 未授权（从功能所有行为筛选掉角色授权） 和 特别允许 列表
+     *
+     * @param userId
+     * @param appGuid
+     * @return
+     * @throws OperatorManagementException
+     */
+    @Override
+    public Map<String, List<AcFunc>> getOperatorFuncAuthInfo(String userId, String appGuid) throws OperatorManagementException {
+        if(StringUtils.isBlank(userId)) {
+            throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("userId(String)", "getOperatorFuncAuthInfo"));
+        }
+        if(StringUtils.isBlank(appGuid)) {
+            throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("appGuid(String)", "getOperatorFuncAuthInfo"));
+        }
+        try {
+            // 操作员的所有角色
+            List<String> roleGuids = roleRService.queryAllRoleByUserId(userId).stream().map(AcRole::getGuid).collect(Collectors.toList());
+            String operatorGuid = queryOperatorByUserId(userId).getGuid();
+            // 查询角色所有功能
+            Set<String> roleFuncGuids = acRoleFuncService
+                    .query(new WhereCondition()
+                            .andEquals(AcRoleFunc.COLUMN_GUID_APP, appGuid)
+                            .andIn(AcRoleFunc.COLUMN_GUID_ROLE, roleGuids))
+                    .stream()
+                    .map(AcRoleFunc::getGuidFunc)
+                    .collect(Collectors.toSet());
+            // 查询应用下所有功能
+            List<AcFunc> all = applicationRService.queryFuncListInApp(appGuid)
+                    .stream()
+                    .filter(acFunc -> StringUtils.isEquals(acFunc.getIscheck(), CommonConstants.YES))
+                    .collect(Collectors.toList());
+
+            // 查询操作员功能
+            Map<String, List<AcOperatorFunc>> acOperatorFuncs = acOperatorFuncService.query(new WhereCondition().andEquals(AcOperatorFunc.COLUMN_GUID_OPERATOR, operatorGuid)
+                    .andEquals(AcOperatorFunc.COLUMN_GUID_APP, appGuid))
+                    .stream()
+                    .collect(Collectors.groupingBy(AcOperatorFunc::getAuthType));
+
+            List<AcFunc> forbidList = new ArrayList<>();
+            List<AcFunc> permitList = new ArrayList<>();
+            List<AcFunc> authList = new ArrayList<>();
+            List<AcFunc> unauthList = new ArrayList<>();
+            // 特别禁止
+            List<String> forbidGuids = acOperatorFuncs.get(ACConstants.AUTH_TYPE_FORBID)
+                    .stream().map(AcOperatorFunc::getGuidFunc).collect(Collectors.toList());
+            // 特别允许
+            List<String> permitGuids = acOperatorFuncs.get(ACConstants.AUTH_TYPE_PERMIT)
+                    .stream().map(AcOperatorFunc::getGuidFunc).collect(Collectors.toList());
+            // 已授权
+            List<String> authGuids = roleFuncGuids.stream().filter(s -> !forbidGuids.contains(s)).collect(Collectors.toList());
+
+            for (AcFunc acFunc : all) {
+                String guid = acFunc.getGuid();
+                if (forbidGuids.contains(guid)) {
+                    forbidList.add(acFunc);
+                } else if (permitGuids.contains(guid)) {
+                    permitList.add(acFunc);
+                } else if (authGuids.contains(guid)) {
+                    authList.add(acFunc);
+                } else {
+                    unauthList.add(acFunc);
+                }
+            }
+            Map<String, List<AcFunc>> map = new HashMap<>();
+            map.put("auth", authList);
+            map.put("forbid", forbidList);
+            map.put("unauth", unauthList);
+            map.put("permit", permitList);
+            return map;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new OperatorManagementException(ExceptionCodes.FAILURE_WHEN_CALL, wrap("getOperatorFuncAuthInfo", e));
+        }
+    }
+
+    /**
      * 获取操作员功能行为信息
      * 包含 已授权（从角色授权） 特别禁止
      * 未授权（从功能所有行为筛选掉角色授权） 和 特别允许 列表
@@ -1635,38 +1734,21 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
      */
     @Override
     public void addAcOperatorBhv(List<AcOperatorBhv> acOperatorBhvs) throws OperatorManagementException {
+        if (CollectionUtils.isEmpty(acOperatorBhvs)) {
+            throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("acOperatorBhvs", "addAcOperatorBhv"));
+        }
         try {
-            if (CollectionUtils.isEmpty(acOperatorBhvs)) {
-                throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("acOperatorBhvs", "addAcOperatorBhv"));
-            }
-            transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-                @Override
-                public void doInTransactionWithoutResult(TransactionStatus status) {
-                    try {
-                        for(AcOperatorBhv acOperatorBhv : acOperatorBhvs) {
-                            String result = BeanFieldValidateUtil.checkObjFieldAllRequired(acOperatorBhv);
-                            if (!StringUtils.isBlank(result)) {
-                                throw new OperatorManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, wrap(result, AcOperatorBhv.TABLE_NAME));
-                            }
-                            if(acOperatorBhvService.count(new WhereCondition().andEquals(AcOperatorBhv.COLUMN_GUID_OPERATOR, acOperatorBhv.getGuidOperator())
-                                .andEquals(AcOperatorBhv.COLUMN_GUID_FUNC_BHV, acOperatorBhv.getGuidFuncBhv())) > 0) {
-                                throw new OperatorManagementException(ExceptionCodes.DUPLICATE_WHEN_INSERT, wrap(acOperatorBhv.getGuidFuncBhv(), AcOperatorBhv.TABLE_NAME));
-                            }
-                            acOperatorBhvService.insert(acOperatorBhv);
-                        }
-                    } catch (ToolsRuntimeException e) {
-                        status.setRollbackOnly();
-                        e.printStackTrace();
-                        throw new OperatorManagementException(
-                                ExceptionCodes.FAILURE_WHEN_INSERT, wrap(AcOperatorBhv.TABLE_NAME, e));
-                    } catch (Exception e) {
-                        status.setRollbackOnly();
-                        e.printStackTrace();
-                        throw new OperatorManagementException(
-                                ExceptionCodes.FAILURE_WHEN_INSERT, wrap(AcOperatorBhv.TABLE_NAME, e));
-                    }
+            for(AcOperatorBhv acOperatorBhv : acOperatorBhvs) {
+                String result = BeanFieldValidateUtil.checkObjFieldAllRequired(acOperatorBhv);
+                if (!StringUtils.isBlank(result)) {
+                    throw new OperatorManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, wrap(result, AcOperatorBhv.TABLE_NAME));
                 }
-            });
+                if(acOperatorBhvService.count(new WhereCondition().andEquals(AcOperatorBhv.COLUMN_GUID_OPERATOR, acOperatorBhv.getGuidOperator())
+                    .andEquals(AcOperatorBhv.COLUMN_GUID_FUNC_BHV, acOperatorBhv.getGuidFuncBhv())) > 0) {
+                    throw new OperatorManagementException(ExceptionCodes.DUPLICATE_WHEN_INSERT, wrap(acOperatorBhv.getGuidFuncBhv(), AcOperatorBhv.TABLE_NAME));
+                }
+                acOperatorBhvService.insert(acOperatorBhv);
+            }
         } catch (ToolsRuntimeException oe) {
             throw oe;
         } catch (Exception e) {
@@ -1684,10 +1766,10 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
      */
     @Override
     public void removeAcOperatorBhv(List<AcOperatorBhv> acOperatorBhvs) throws OperatorManagementException {
+        if (CollectionUtils.isEmpty(acOperatorBhvs)) {
+            throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("acOperatorBhvs", "removeAcOperatorBhv"));
+        }
         try {
-            if (CollectionUtils.isEmpty(acOperatorBhvs)) {
-                throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("acOperatorBhvs", "removeAcOperatorBhv"));
-            }
             WhereCondition wc = new WhereCondition();
             for(int i = 0; i < acOperatorBhvs.size(); i ++) {
                 String result = BeanFieldValidateUtil.checkObjFieldNotRequired(acOperatorBhvs.get(i), new String[] {"iseffective"});
@@ -1707,6 +1789,91 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
             e.printStackTrace();
             throw new OperatorManagementException(
                     ExceptionCodes.FAILURE_WHEN_CALL, wrap("removeAcOperatorBhv", e));
+        }
+    }
+
+    /**
+     * 添加操作员特殊功能
+     *
+     * @param acOperatorFuncs
+     * @throws OperatorManagementException
+     */
+    @Override
+    public void addAcOperatorFunc(List<AcOperatorFunc> acOperatorFuncs) throws OperatorManagementException {
+        if (CollectionUtils.isEmpty(acOperatorFuncs)) {
+            throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("acOperatorFuncs", "addAcOperatorFunc"));
+        }
+        try {
+            for(AcOperatorFunc acOperatorFunc : acOperatorFuncs) {
+                String[] notReq = new String[] {"startDate", "endDate"};
+                String result = BeanFieldValidateUtil.checkObjFieldNotRequired(acOperatorFunc, notReq);
+                if (!StringUtils.isBlank(result)) {
+                    throw new OperatorManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, wrap(result, AcOperatorFunc.TABLE_NAME));
+                }
+                if(acOperatorBhvService.count(new WhereCondition().andEquals(AcOperatorFunc.COLUMN_GUID_OPERATOR, acOperatorFunc.getGuidOperator())
+                        .andEquals(AcOperatorFunc.COLUMN_GUID_FUNC, acOperatorFunc.getGuidFunc())) > 0) {
+                    throw new OperatorManagementException(ExceptionCodes.DUPLICATE_WHEN_INSERT, wrap(acOperatorFunc.getGuidFunc(), AcOperatorFunc.TABLE_NAME));
+                }
+                // 如果功能有行为权限，全部添加
+                List<AcFuncBhv> acFuncBhvs = acFuncBhvService.query(new WhereCondition().andEquals(AcFuncBhv.COLUMN_GUID_FUNC, acOperatorFunc.getGuidFunc()));
+                for(AcFuncBhv acFuncBhv : acFuncBhvs) {
+                    AcOperatorBhv operatorBhv = new AcOperatorBhv();
+                    operatorBhv.setGuidOperator(acOperatorFunc.getGuidOperator());
+                    operatorBhv.setGuidFuncBhv(acFuncBhv.getGuid());
+                    operatorBhv.setAuthType(ACConstants.AUTH_TYPE_PERMIT);
+                    acOperatorBhvService.insert(operatorBhv);
+                }
+                acOperatorFuncService.insert(acOperatorFunc);
+            }
+        } catch (ToolsRuntimeException oe) {
+            throw oe;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new OperatorManagementException(
+                    ExceptionCodes.FAILURE_WHEN_CALL, wrap("addAcOperatorFunc", e));
+        }
+    }
+
+    /**
+     * 移除操作员特殊功能
+     *
+     * @param acOperatorFuncs
+     * @throws OperatorManagementException
+     */
+    @Override
+    public void removeAcOperatorFunc(List<AcOperatorFunc> acOperatorFuncs) throws OperatorManagementException {
+        if (CollectionUtils.isEmpty(acOperatorFuncs)) {
+            throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("acOperatorFuncs", "removeAcOperatorFunc"));
+        }
+        try {
+            List<String> guids = new ArrayList<>();
+            Set<String> funcBhvGuids = new HashSet<>();
+            for(AcOperatorFunc acOperatorFunc : acOperatorFuncs) {
+                String[] notReq = new String[] {"startDate", "endDate"};
+                String result = BeanFieldValidateUtil.checkObjFieldNotRequired(acOperatorFunc, notReq);
+                if (!StringUtils.isBlank(result)) {
+                    throw new OperatorManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_DELETE, wrap(result, AcOperatorFunc.TABLE_NAME));
+                }
+                // 如果功能有行为权限，一并删除
+                funcBhvGuids.addAll(acFuncBhvService.query(new WhereCondition()
+                        .andEquals(AcFuncBhv.COLUMN_GUID_FUNC, acOperatorFunc.getGuidFunc()))
+                        .stream()
+                        .map(AcFuncBhv::getGuid).collect(Collectors.toSet()));
+                guids.add(acOperatorFunc.getGuidOperator() + acOperatorFunc.getGuidFunc());
+            }
+            if (CollectionUtils.isNotEmpty(funcBhvGuids)) {
+                acOperatorBhvService.deleteByCondition(new WhereCondition()
+                        .andEquals(AcOperatorBhv.COLUMN_GUID_OPERATOR, acOperatorFuncs.get(0).getGuidOperator())
+                        .andIn(AcOperatorBhv.COLUMN_GUID_FUNC_BHV, new ArrayList<>(funcBhvGuids)));
+            }
+            acOperatorFuncService.deleteByCondition(new WhereCondition()
+                    .andIn("concat(" + AcOperatorFunc.COLUMN_GUID_OPERATOR + "," + AcOperatorFunc.COLUMN_GUID_FUNC + ")", guids));
+        } catch (ToolsRuntimeException oe) {
+            throw oe;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new OperatorManagementException(
+                    ExceptionCodes.FAILURE_WHEN_CALL, wrap("removeAcOperatorFunc", e));
         }
     }
 
