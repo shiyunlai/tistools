@@ -9,7 +9,7 @@
 		<version>1.0.0</version>
 	</parent>
 	<artifactId>tools-core-service</artifactId>
-	<version>${tools-core-service-version}</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>tools-core-service</name>
 	<url>http://maven.apache.org</url>
 	<description>作为服务提供者基础能力的实现工程，将被各 tools-service-XXX引用</description>

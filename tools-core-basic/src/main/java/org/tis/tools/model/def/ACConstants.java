@@ -66,6 +66,13 @@ public interface ACConstants {
 	/** 个性化配置类型 页面布局配置**/
 	String CONFIG_TYPE_STYPE = "style";
 
+	/** 授权标志 特别开通**/
+	String AUTH_TYPE_PERMIT = "1";
+	/** 授权标志 特别禁止**/
+	String AUTH_TYPE_FORBID = "0";
+
+
+
 
 
 

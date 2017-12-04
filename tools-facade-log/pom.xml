@@ -9,7 +9,7 @@
 		<version>1.0.0</version>
 	</parent>
 	<artifactId>tools-facade-log</artifactId>
-	<version>${tools-facade-log-version}</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>tools-facade-log</name>
 	<url>http://maven.apache.org</url>
 	<properties>

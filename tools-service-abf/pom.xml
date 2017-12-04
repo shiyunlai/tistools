@@ -9,7 +9,7 @@
 		<version>1.0.0</version>
 	</parent>
 	<artifactId>tools-service-abf</artifactId>
-	<version>${tools-service-abf-version}</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>tools-service-abf</name>
 	<url>http://maven.apache.org</url>
 
@@ -254,8 +254,6 @@
 			<artifactId>javassist</artifactId>
 		</dependency>
 
-
-
 	</dependencies>
 
 	<!-- beg:编译输出部署安装包(以Main方式启动的dubbo服务提供者可重用以下build内容) -->
@@ -266,6 +264,19 @@
 				<artifactId>maven-dependency-plugin</artifactId>
 				<executions>
 					<execution>
+						<!--<id>copy-dependencies</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							&lt;!&ndash; ${project.build.directory}为Maven内置变量，缺省为target &ndash;&gt;
+							<outputDirectory>${project.build.directory}/runtime</outputDirectory>
+							&lt;!&ndash; 表示是否不包含间接依赖的包  &ndash;&gt;
+							<excludeTransitive>false</excludeTransitive>
+							&lt;!&ndash; 表示复制的jar文件去掉版本信息 &ndash;&gt;
+							<stripVersion>true</stripVersion>
+						</configuration>-->
 						<id>unpack</id>
 						<phase>package</phase>
 						<goals>
@@ -276,12 +287,12 @@
 								<artifactItem>
 									<groupId>org.tis</groupId>
 									<artifactId>${project.parent.artifactId}-common-assembly</artifactId>
-									<version>${tis_tools_version}</version>
 									<outputDirectory>${project.build.directory}/runtime</outputDirectory>
 									<includes>META-INF/assembly/**</includes>
 								</artifactItem>
 							</artifactItems>
 						</configuration>
+
 					</execution>
 				</executions>
 			</plugin>
@@ -290,6 +301,7 @@
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
 					<descriptor>src/main/assembly/assembly.xml</descriptor>
+					<!--<descriptorRefs>jar-with-dependencies</descriptorRefs>-->
 				</configuration>
 				<executions>
 					<execution>

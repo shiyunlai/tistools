@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>tools-core-web</artifactId>
 	<name>tools-core-web</name>
-	<version>${tools-core-web-version}</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<url>http://maven.apache.org</url>
 	<description>web工程的基础包，被web类应用模块依赖。</description>
 

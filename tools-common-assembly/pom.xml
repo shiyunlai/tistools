@@ -9,7 +9,7 @@
 		<version>1.0.0</version>
 	</parent>
 	<artifactId>tools-common-assembly</artifactId>
-	<version>${tools-common-assembly-version}</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>tools-common-assembly</name>
 	<url>http://maven.apache.org</url>
 
