@@ -5,6 +5,7 @@ package org.tis.tools.webapp.controller.ac;
  **/
 
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.session.Session;
@@ -16,11 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.model.def.ACConstants;
+import org.tis.tools.model.def.CommonConstants;
 import org.tis.tools.model.def.JNLConstants;
 import org.tis.tools.model.dto.route.AbfRoute;
 import org.tis.tools.model.dto.route.RouteState;
+import org.tis.tools.model.po.ac.AcFunc;
 import org.tis.tools.model.po.ac.AcOperator;
 import org.tis.tools.model.po.ac.AcOperatorIdentity;
+import org.tis.tools.rservice.ac.capable.IApplicationRService;
 import org.tis.tools.rservice.ac.capable.IAuthenticationRService;
 import org.tis.tools.rservice.ac.capable.IOperatorRService;
 import org.tis.tools.shiro.authenticationToken.UserIdPasswordIdentityToken;
@@ -31,6 +35,7 @@ import org.tis.tools.webapp.log.OperateLog;
 import org.tis.tools.webapp.log.ReturnType;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -47,6 +52,9 @@ public class AcAuthenticationController extends BaseController {
     IAuthenticationRService authenticationRService;
     @Autowired
     IOperatorRService operatorRService;
+
+    @Autowired
+    IApplicationRService applicationRService;
 
     @ResponseBody
     @RequestMapping(value="/checkUserStatus", produces ="application/json; charset=UTF-8", method= RequestMethod.POST)
@@ -219,13 +227,22 @@ public class AcAuthenticationController extends BaseController {
         // TODO 设置缓存生效需要清空缓存 clearAllCachedAuthorizationInfo、clearAllCachedAuthenticationInfo、clearAllCache
         // 视图权限，检查funCode是否在操作员权限中
         String funcCode = data.getString("funcCode");
+        Map<String, Object> result = new HashMap<>();
+        AcFunc acFunc = applicationRService.queryAcFuncByCode(funcCode);
+        if (StringUtils.equals(acFunc.getIscheck(), CommonConstants.NO)) {
+            result.put("isCheck", CommonConstants.NO);
+            return getReturnMap(result);
+        } else {
+            result.put("isCheck", CommonConstants.YES);
+        }
         if(SecurityUtils.getSubject().isPermitted("+" + funcCode + "+view")) {
             // TODO 获取页面权限信息返回
             List<String> bhvCodes = operatorRService
                     .getPmtFuncBhvByCode(
                             (String) SecurityUtils.getSubject().getSession().getAttribute("userId"),
                             funcCode);
-            return getReturnMap(bhvCodes);
+            result.put("bhvCodes", bhvCodes);
+            return getReturnMap(result);
         } else {
             throw new UnauthorizedException("功能权限不足！");
         }

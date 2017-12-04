@@ -1136,6 +1136,35 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		return acFuncVoList;
 	}
 
+	/**
+	 * 根据功能代码查询功能
+	 *
+	 * @param funcCode
+	 * @return
+	 * @throws AppManagementException
+	 */
+	@Override
+	public AcFunc queryAcFuncByCode(String funcCode) throws AppManagementException {
+		if (StringUtils.isBlank(funcCode)) {
+			throw new AppManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL,
+					wrap("funcCOde(String)", "queryAcFuncByCode"));
+		}
+		try {
+			List<AcFunc> acFuncs = acFuncService.query(new WhereCondition().andEquals(AcFunc.COLUMN_FUNC_CODE, funcCode));
+			if(CollectionUtils.isEmpty(acFuncs)) {
+				throw new AppManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY,
+						wrap(surroundBracketsWithLFStr(AcFunc.COLUMN_FUNC_CODE, funcCode), AcFunc.TABLE_NAME));
+			}
+			return acFuncs.get(0);
+		} catch (ToolsRuntimeException e) {
+			logger.error("queryAcFuncByCode exception: ", e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("queryAcFuncByCode exception: ", e);
+			throw new AppManagementException(ExceptionCodes.FAILURE_WHEN_CALL, wrap("queryAcFuncByCode", e));
+		}
+	}
+
 	@Override
 	public List<AcFunc> queryAllFunc() throws AppManagementException {
 		List<AcFunc> acFuncList = new ArrayList<AcFunc>();
