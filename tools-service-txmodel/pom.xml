@@ -9,7 +9,7 @@
 		<version>1.0.0</version>
 	</parent>
 	<artifactId>tools-service-txmodel</artifactId>
-	<version>${tools-service-txmodel-version}</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>tools-service-txmodel</name>
 	<url>http://maven.apache.org</url>
 	<properties>
@@ -222,8 +222,7 @@
 							<artifactItems>
 								<artifactItem>
 									<groupId>org.tis</groupId>
-									<artifactId>${project.parent.artifactId}-common-assembly</artifactId>
-									<version>${tis_tools_version}</version>
+									<artifactId>tools-common-assembly</artifactId>
 									<outputDirectory>${project.build.directory}/runtime</outputDirectory>
 									<includes>META-INF/assembly/**</includes>
 								</artifactItem>

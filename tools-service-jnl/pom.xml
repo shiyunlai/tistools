@@ -9,7 +9,7 @@
 		<version>1.0.0</version>
 	</parent>
 	<artifactId>tools-service-jnl</artifactId>
-	<version>${tools-service-jnl-version}</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>tools-service-jnl</name>
 	<url>http://maven.apache.org</url>
 
@@ -260,7 +260,6 @@
 								<artifactItem>
 									<groupId>org.tis</groupId>
 									<artifactId>${project.parent.artifactId}-common-assembly</artifactId>
-									<version>${tis_tools_version}</version>
 									<outputDirectory>${project.build.directory}/runtime</outputDirectory>
 									<includes>META-INF/assembly/**</includes>
 								</artifactItem>

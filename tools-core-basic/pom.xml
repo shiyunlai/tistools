@@ -9,7 +9,7 @@
 		<version>1.0.0</version>
 	</parent>
 	<artifactId>tools-core-basic</artifactId>
-	<version>${tools-core-basic-version}</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>tools-core-basic</name>
 	<url>http://maven.apache.org</url>
 	<properties>
@@ -84,7 +84,7 @@
 			<plugin>
 				<groupId>org.tis</groupId>
 				<artifactId>tools-maven-plugin</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>1.0.0</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

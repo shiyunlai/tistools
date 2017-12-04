@@ -9,7 +9,7 @@
 		<version>1.0.0</version>
 	</parent>
 	<artifactId>tools-facade-om</artifactId>
-	<version>${tools-facade-om-version}</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>tools-facade-om</name>
 	<url>http://maven.apache.org</url>
 

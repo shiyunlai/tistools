@@ -9,7 +9,7 @@
 		<version>1.0.0</version>
 	</parent>
 	<artifactId>tools-web-tools</artifactId>
-	<version>${tools-web-tools-version}</version>
+	<version>1.0.0</version>
 	<packaging>war</packaging>
 	<name>tools-web-tools</name>
 	<repositories>
@@ -91,37 +91,30 @@
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-facade-devmgr</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-facade-biztrace</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-facade-jnl</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-facade-log</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-facade-ac</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-facade-om</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.tis</groupId>
 			<artifactId>tools-facade-sys</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
 		<!-- disconf start -->
@@ -709,30 +702,28 @@
 			<version>2.9.0</version>
 		</dependency>
 
+		<!--shiro相关-->
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-core</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-ehcache</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-quartz</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-spring</artifactId>
 		</dependency>
+
 
     </dependencies>
 
@@ -808,6 +799,8 @@
 							</includes>
 						</scanTargetPattern>
 					</scanTargetPatterns>
+					<stopPort>9966</stopPort>
+					<stopKey>shutdown</stopKey>
 				</configuration>
 			</plugin>
 			<plugin>
