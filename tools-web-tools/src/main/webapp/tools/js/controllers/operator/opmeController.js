@@ -5,6 +5,7 @@
 MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $state, $stateParams,$filter, filterFilter,operator_service,dictonary_service,common_service, $modal,$uibModal, $http, $timeout,$interval,i18nService) {
     //grid表格
     i18nService.setCurrentLang("zh-cn");
+    var res = $rootScope.res.operator_service;//操作员请求所需服务
     //查询操作员列表
     var operman ={};
     $scope.operman = operman;
@@ -97,9 +98,9 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
                     var subFrom = {};
                     $scope.subFrom = subFrom;
                     subFrom.data = item;
-                    operator_service.createOperator(subFrom).then(function(data){
-                        if(data.status == "success"){
-                            toastr['success']( "新增成功！");
+                    common_service.post(res.createOperator,subFrom).then(function(data){
+                        if(data.status == 'success'){
+                            toastr['success']( "新增操作员成功！");
                             operman.queryAll();
                             $modalInstance.close();
                         }else{

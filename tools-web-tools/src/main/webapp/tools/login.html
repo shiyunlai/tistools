@@ -217,6 +217,8 @@
                     sessionStorage.opertor = $("#opertor").find("option:selected").text();
 //                    window.location = "../tools/index.html#/dashboard";//如果正确，则进入主页
                     window.location = manurl+'/tools/index.html#/dashboard';//如果正确，则进入主页
+                    sessionStorage.clear('toState');
+                    sessionStorage.clear('toParams');//清除缓存
                 }else {
                     toastr['error']( data.retMessage);
                 }

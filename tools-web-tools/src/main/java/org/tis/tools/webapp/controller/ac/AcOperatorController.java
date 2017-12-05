@@ -673,6 +673,7 @@ public class AcOperatorController extends BaseController {
         return getReturnMap(acOperatorfuncs);
     }
 
+
     @ResponseBody
     @RequestMapping(value = "/refreshOperator", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> refreshOperator(@RequestBody String content) {

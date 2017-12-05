@@ -6,7 +6,8 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
         // initialize core components
         App.initAjax();
     });
-    var res = $rootScope.res.role_service;
+    $scope.trus = true;
+    var res = $rootScope.res.role_service;//角色服务
     //定义主题对象
     var emp = {};
     $scope.emp = emp;
@@ -96,7 +97,7 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
             } else{
                 $scope.empleave= false;
             }
-            if(a.entity.empstatus == 'onjob'&& isNull(!a.entity.userId)){
+            if(a.entity.empstatus == 'onjob'&&isNull(!a.entity.userId)){
                 $scope.editoper = true;//如果是在职状态，并且存在操作员那么就出现编辑按钮
             }
         }else{
@@ -351,43 +352,42 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                     var tims = times.indate;
                     openwindow($uibModal, 'views/emp/addemppart2_window.html', 'lg',
                         function ($scope, $modalInstance) {
-                            var subFrom = arr[0]
+                            var subFrom = arr[0];
                             $scope.subFrom = subFrom;
                             subFrom.userId = pinyin.getFullChars(subFrom.empName);//把员工名字当做默认新建的操作员
                             $scope.title = "绑定操作员";
-                            var emp = {};
-                            $scope.emp = emp;
-                            emp.operflag = "1";
+                            subFrom.operflag = "1";
                             //添加绑定操作员信息以及可管理组织机构信息
-                            $scope.add = function (subFrom) {
+                            $scope.add = function (items) {
                                 var a = [];
-                                if (!isNull(subFrom.orgList)) {
-                                    for (var i = 0; i < subFrom.orgList.length; i++) {
+                                if (!isNull(items.orgList)) {
+                                    for (var i = 0; i < items.orgList.length; i++) {
                                         var b = {};
-                                        b.orgGuid = subFrom.orgList[i];
+                                        b.orgGuid = items.orgList[i];
                                         a.push((b));
                                     }
                                 }
-                                subFrom.orgList = a;
-                                subFrom.orgList = JSON.stringify(subFrom.orgList);//所有的组织机构信息
-                                Emp_service.updateemployee(subFrom).then(function (data) {
+                                items.orgList = a;
+                                items.orgList = JSON.stringify(items.orgList);//所有的组织机构信息
+                                Emp_service.updateemployee(items).then(function (data) {
                                     if (data.status == "success") {
                                     }else {
-                                        toastr['error']("绑定失败!" + data.retMessage);
+                                        // toastr['error']("绑定失败!" + data.retMessage);
                                     }
                                 })
-                                if(emp.operflag == '1'){//只有是系统默认的时候才新增，否则不新增
+                                if(items.operflag == '1'){//只有是系统默认的时候才新增，否则不新增
                                     //新增操作员
                                     var res = $rootScope.res.operator_service;//页面所需调用的服务
                                     var opersFrom = {}
-                                    opersFrom.operatorName= subFrom.empName;//操作员姓名
-                                    opersFrom.userId=subFrom.userId;
+                                    opersFrom.operatorName= items.empName;//操作员姓名
+                                    opersFrom.userId=items.userId;
                                     opersFrom.operatorStatus='stop';
                                     opersFrom.lockLimit=5;
                                     opersFrom.authMode='password';
                                     opersFrom.password = '111111'//默认密码
                                     opersFrom.menuType = 'default'//默认页面布局
-                                    common_service.post(res.createOperator,opersFrom).then(function(data){
+                                    common_service.post(res.createOperator,{data:opersFrom}).then(function(data){
+                                        console.log(data)
                                         if (data.status == "success") {
                                         }
                                     })
@@ -396,18 +396,17 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                                 var ret = $rootScope.res.Emp_service;//页面所需调用的服务
                                 var operFrom= {};
                                 operFrom.data = {};
-                                operFrom.data.empGuid = subFrom.guid;
+                                operFrom.data.empGuid = items.guid;
                                 operFrom.data.status = 'onjob';
                                 operFrom.data.date = tims;//传入时间
-                                if(!isNull(subFrom.userId)){
-                                    operFrom.data.userId = subFrom.userId;//传入时间
+                                if(!isNull(items.userId)){
+                                    operFrom.data.userId = items.userId;//传入入职人员
                                 }
-                                if(!isNull(subFrom.orgList)){
-                                    operFrom.data.orgList = subFrom.orgList;
+                                if(!isNull(items.orgList)){
+                                    operFrom.data.orgList = items.orgList;
                                 }
                                 common_service.post(ret.changeEmpStatus,operFrom).then(function(data){
                                     if (data.status == "success") {
-                                        console.log(data)
                                         toastr['success']("入职成功!");
                                         reempgrid();//刷新列表
                                         Allfalse()
@@ -510,15 +509,6 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                             a.push((b));
                         }
                         subFrom.orgList = a;
-                       /* a = [];
-                        for (var i = 0; i < subFrom.specialty.length; i++) {
-                            var b = {};
-                            b.roleGuid = subFrom.specialty[i];
-                            a.push((b));
-                        }
-                        subFrom.specialty = JSON.stringify(subFrom.specialty);
-                         subFrom.specialty = a;
-                         */
                         subFrom.orgList = JSON.stringify(subFrom.orgList);
                         Emp_service.addemp(subFrom).then(function (data) {
                             if (data.status == "success") {
