@@ -7,7 +7,6 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
 
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -25,7 +24,7 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 
     @Override
     public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
-        String userId = (String) ((Map)token.getPrincipal()).get("userId");
+        String userId = (String) token.getPrincipal();
         //retry count + 1
         AtomicInteger retryCount = passwordRetryCache.get(userId);
         if(retryCount == null) {
