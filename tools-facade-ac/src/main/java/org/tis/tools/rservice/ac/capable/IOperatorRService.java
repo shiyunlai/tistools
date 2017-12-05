@@ -4,6 +4,7 @@
 package org.tis.tools.rservice.ac.capable;
 
 import org.tis.tools.model.po.ac.*;
+import org.tis.tools.model.po.om.OmEmployee;
 import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
 import org.tis.tools.rservice.ac.exception.OperatorManagementException;
 
@@ -155,6 +156,15 @@ public interface IOperatorRService {
      */
 
     AcOperator queryOperatorByUserId(String userId) throws OperatorManagementException;
+
+    /**
+     * 根据用户名查询员工信息
+     *
+     * @param userId
+     * @return
+     * @throws OperatorManagementException
+     */
+    OmEmployee queryEmployeeByUserId(String userId) throws OperatorManagementException;
 
     /**
      * 查询操作员特殊功能权限集

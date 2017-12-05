@@ -1,7 +1,6 @@
 package org.tools.design.test.log;
 
-import java.util.List;
-
+import com.alibaba.fastjson.JSON;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,8 @@ import org.tis.tools.model.vo.log.OperateLogBuilder;
 import org.tis.tools.rservice.log.capable.IOperateLogRService;
 import org.tools.design.SpringJunitSupport;
 
-import com.alibaba.fastjson.JSON;
+import java.util.List;
+import java.util.Map;
 
 public class OperateLogRServiceTest extends SpringJunitSupport {
 
@@ -72,9 +72,8 @@ public class OperateLogRServiceTest extends SpringJunitSupport {
     @Test
     public void queryOperateHistoryListTest() {
         String objGuid = "MENU1504855790";
-        List<LogOperateDetail> logOperateDetails = operateLogRService.queryOperateHistoryList(objGuid);
-        String ret = JSON.toJSONString(logOperateDetails);
-        System.out.println(ret);
+        Map<String, Object> stringObjectMap = operateLogRService.queryOperateHistoryList(objGuid);
+        System.out.println(stringObjectMap);
 
     }
 

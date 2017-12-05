@@ -22,6 +22,7 @@ import org.tis.tools.service.ac.exception.ACExceptionCodes;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.tis.tools.common.utils.BasicUtil.surroundBracketsWithLFStr;
 import static org.tis.tools.common.utils.BasicUtil.wrap;
@@ -63,6 +64,9 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
     IRoleRService roleRService;
 
     @Autowired
+    IOperatorRService operatorRService;
+
+    @Autowired
     AcOperatorIdentityService acOperatorIdentityService;
 
     @Autowired
@@ -73,6 +77,12 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
 
     @Autowired
     AcOperatorFuncService acOperatorFuncService;
+
+    @Autowired
+    IAuthenticationRService authenticationRService;
+
+    @Autowired
+    AcOperatorServiceExt acOperatorServiceExt;
 
     /**
      * 查询所有应用系统
@@ -484,7 +494,6 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             } else {
                 acMenu.setGuidParents(operatorMenu.getGuidParents());
             }
-
             acMenu.setGuidOperator(operatorMenu.getGuidOperator());
             acMenu.setGuidApp(operatorMenu.getGuidApp());
             acMenu.setGuidParents(operatorMenu.getGuidParents());
@@ -645,7 +654,9 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                     .andEquals("ISLEAF", CommonConstants.NO));
 
             //查询当前用户拥有该应用的功能对应菜单
-            List<AcRole> acRoleList = roleRService.queryAllRoleByUserId(userId);
+            Set<String> funcGuidList = authenticationRService.queryOperatorAuthFuncsInApp(userId, appGuid)
+                    .stream().map(AcFunc::getGuid).collect(Collectors.toSet());
+            /*List<AcRole> acRoleList = roleRService.queryAllRoleByUserId(userId);
             Set<String> funcGuidList = new HashSet<>(); // 功能GUID
             Set<String> roleGuidList = new HashSet<>(); // 角色GUID
             for (AcRole acRole : acRoleList) {
@@ -666,8 +677,8 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                 for (AcOperatorFunc operatorFunc : acOperatorFuncs) {
                     funcGuidList.add(operatorFunc.getGuidFunc());
                 }
-            }
-            if (funcGuidList.size() > 0) {
+            }*/
+            if (CollectionUtils.isNotEmpty(funcGuidList)) {
                 // 获取功能下的菜单列表
                 List<AcMenu> menus = acMenuService.query(new WhereCondition().andIn("GUID_FUNC", new ArrayList<>(funcGuidList)));
                 menuList.addAll(menus);
@@ -706,36 +717,35 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             if (StringUtil.isEmpty(identityGuid)) {
                 throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_IDENTITY"));
             }
-            //查询当前应用的所有父菜单
-            List<AcMenu> menuList = acMenuService.query(new WhereCondition()
-                    .andEquals("GUID_APP", appGuid)
-                    .andEquals("ISLEAF", CommonConstants.NO));
-
-
-            List<AcMenu> menuByUserIdentity = acMenuServiceExt.getMenuByUserIdentity(identityGuid, appGuid);
-            menuList.addAll(menuByUserIdentity);
-            /*// 查询当前身份拥有的角色菜单
-            List<AcOperatorIdentityres> acOperatorIdentityres = acOperatorIdentityresService
-                    .query(new WhereCondition().andEquals(AcOperatorIdentityres.COLUMN_GUID_IDENTITY, identityGuid));
-            Set<String> roleGuidList = new HashSet<>();
-            Set<String> funcGuidList = new HashSet<>();
-            for (AcOperatorIdentityres res : acOperatorIdentityres) {
-                roleGuidList.add(res.getGuidAcResource());
-            }
-            if (roleGuidList.size() > 0) {
-                // 获取角色下的功能列表
-                List<AcRoleFunc> acRoleFuncs = acRoleFuncService.query(new WhereCondition().andIn("GUID_ROLE", new ArrayList<>(roleGuidList)));
-                for (AcRoleFunc roleFunc : acRoleFuncs) {
-                    funcGuidList.add(roleFunc.getGuidFunc());
+            Set<String> funcGuids = new HashSet<>();
+            // 查询当前身份下的资源
+            List<AcOperatorIdentityres> operatorIdentityresList = acOperatorIdentityresService.query(new WhereCondition()
+                    .andEquals(AcOperatorIdentityres.COLUMN_GUID_IDENTITY, identityGuid));
+            Set<String> roleGuids = new HashSet<>();
+            Set<String> partyGuids = new HashSet<>();
+            for (AcOperatorIdentityres res : operatorIdentityresList) {
+                String type = res.getAcResourcetype();
+                String guid = res.getGuidAcResource();
+                if (StringUtils.equals(ACConstants.RESOURCE_TYPE_ROLE, type)) {
+                    roleGuids.add(guid);
+                } else if (StringUtils.equals(ACConstants.RESOURCE_TYPE_FUNCTION, type)) {
+                    funcGuids.add(guid);
+                } else {
+                    partyGuids.add(guid);
                 }
             }
-            if (funcGuidList.size() > 0) {
-                // 获取功能下的菜单列表
-                List<AcMenu> menus = acMenuService.query(new WhereCondition().andIn("GUID_FUNC", new ArrayList<>(funcGuidList)));
-                menuList.addAll(menus);
-            }*/
+            // 组合功能
+            funcGuids.addAll(acOperatorServiceExt.getFuncListByIdentity(new ArrayList<>(partyGuids), new ArrayList<>(roleGuids)));
+            List<AcMenu> menuList = new ArrayList<>();
+            WhereCondition wc = new WhereCondition();
+            wc.andEquals(AcMenu.COLUMN_GUID_APP, appGuid).andEquals(AcMenu.COLUMN_ISLEAF, CommonConstants.NO);
+            if (funcGuids.size() > 0) {
+                wc.or().andEquals(AcMenu.COLUMN_GUID_APP, appGuid)
+                        .andIn(AcMenu.COLUMN_GUID_FUNC, new ArrayList<>(funcGuids));
+            }
+            // 获取功能下的菜单列表
+            menuList = acMenuService.query(wc);
             return createMenuTree(menuList);
-
         } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
@@ -795,7 +805,6 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
 
     /**
      * 根据用户id和身份查询应用重组菜单信息
-     *
      * @param userId
      * @param appGuid
      * @param identityGuid
@@ -804,80 +813,81 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
      */
     @Override
     public AcMenuDetail getOperatorMenuByUserId(String userId, String appGuid, String identityGuid) throws MenuManagementException {
+        // 校验传入参数
+        if (StringUtil.isEmpty(userId)) {
+            throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("USER_ID"));
+        }
+        if (StringUtil.isEmpty(appGuid)) {
+            throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_APP"));
+        }
+        if (StringUtil.isEmpty(identityGuid)) {
+            throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_IDENTITY"));
+        }
         try {
-            // 校验传入参数
-            if (StringUtil.isEmpty(userId)) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("USER_ID"));
+            AcOperator operator = operatorRService.queryOperatorByUserId(userId);
+            // 获取当前身份的功能菜单
+            // 判断当前操作员是否有该身份
+            List<AcOperatorIdentity> operatorIdentities = acOperatorIdentityService.query(new WhereCondition()
+                    .andEquals(AcOperatorIdentity.COLUMN_GUID_OPERATOR, operator.getGuid())
+                    .andEquals(AcOperatorIdentity.COLUMN_GUID, identityGuid));
+            if (CollectionUtils.isEmpty(operatorIdentities)) {
+                throw new MenuManagementException(ACExceptionCodes.IDENTITY_NOT_CORRESPONDING_TO_USER, wrap(identityGuid, userId));
             }
-            if (StringUtil.isEmpty(appGuid)) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_APP"));
-            }
-            if (StringUtil.isEmpty(identityGuid)) {
-                throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_IDENTITY"));
-            }
-            List<AcOperator> acOperators = acOperatorService.query(new WhereCondition().andEquals("USER_ID", userId));
-            if(CollectionUtils.isEmpty(acOperators)) {
-                throw new MenuManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, wrap("USER_ID "+ userId, "AC_OPERATOR"));
-            }
-            AcOperator operator = acOperators.get(0);
-
-            // 查询重组菜单
-            if (acOperatorMenuService.count(new WhereCondition()
-                    .andEquals(AcOperatorMenu.COLUMN_GUID_APP, appGuid)
-                    .andEquals("GUID_OPERATOR", operator.getGuid())) > 0) {
-
-                // 获取当前身份的功能菜单
-                // 判断当前操作员是否有该身份
-                if (acOperatorIdentityService.count(new WhereCondition()
-                        .andEquals(AcOperatorIdentity.COLUMN_GUID_OPERATOR, operator.getGuid())
-                        .andEquals(AcOperatorIdentity.COLUMN_GUID, identityGuid)) < 1) {
-                    throw new MenuManagementException(ACExceptionCodes.IDENTITY_NOT_CORRESPONDING_TO_USER, wrap(identityGuid, userId));
-                }
-                // 查询当前身份拥有的角色菜单
-                List<AcOperatorIdentityres> acOperatorIdentityres = acOperatorIdentityresService
-                        .query(new WhereCondition().andEquals(AcOperatorIdentityres.COLUMN_GUID_IDENTITY, identityGuid));
+            AcOperatorIdentity operatorIdentity = operatorIdentities.get(0);
+            Set<String> funcGuids = new HashSet<>(); // 功能GUID
+            // 如果为系统默认身份
+            if (StringUtils.equals(operatorIdentity.getIdentityName(), "系统默认身份")) {
+                funcGuids = authenticationRService.queryOperatorAuthFuncsInApp(userId, appGuid)
+                        .stream()
+                        .map(AcFunc::getGuid)
+                        .collect(Collectors.toSet());
+            } else {
+                // 查询当前身份下的资源
+                List<AcOperatorIdentityres> operatorIdentityresList = acOperatorIdentityresService.query(new WhereCondition()
+                        .andEquals(AcOperatorIdentityres.COLUMN_GUID_IDENTITY, identityGuid));
                 Set<String> roleGuids = new HashSet<>();
-                for (AcOperatorIdentityres res : acOperatorIdentityres) {
-                    roleGuids.add(res.getGuidAcResource());
-                }
-                Set<String> funcGuidList = new HashSet<>(); // 功能GUID
-                if (roleGuids.size() > 0) {
-                    // 获取角色下的功能列表
-                    List<AcRoleFunc> acRoleFuncs = acRoleFuncService.query(new WhereCondition().andIn("GUID_ROLE", new ArrayList<>(roleGuids)));
-                    for (AcRoleFunc roleFunc : acRoleFuncs) {
-                        funcGuidList.add(roleFunc.getGuidFunc());
+                Set<String> partyGuids = new HashSet<>();
+                for (AcOperatorIdentityres res : operatorIdentityresList) {
+                    String type = res.getAcResourcetype();
+                    String guid = res.getGuidAcResource();
+                    if (StringUtils.equals(ACConstants.RESOURCE_TYPE_ROLE, type)) {
+                        roleGuids.add(guid);
+                    } else if (StringUtils.equals(ACConstants.RESOURCE_TYPE_FUNCTION, type)) {
+                        funcGuids.add(guid);
+                    } else {
+                        partyGuids.add(guid);
                     }
                 }
-                Set<String> menuGuids = new HashSet<>();
-                if (funcGuidList.size() > 0) {
-                    // 获取功能下的菜单列表
-                    List<AcOperatorMenu> menus = acOperatorMenuService.query(new WhereCondition()
-                            .andEquals("GUID_APP", appGuid)
-                            .andEquals("GUID_OPERATOR", operator.getGuid())
-                            .andIn("GUID_FUNC", new ArrayList<>(funcGuidList)));
-                    for (AcOperatorMenu menu : menus) {
-                        menuGuids.add(menu.getGuid());
-                    }
-                }
-                WhereCondition wc = new WhereCondition();
-                wc.andEquals("GUID_APP", appGuid)
-                        .andEquals("GUID_OPERATOR", operator.getGuid())
-                        .andEquals("ISLEAF", CommonConstants.NO);
-                if (menuGuids.size() > 0) {
-                    wc.or().andIn("GUID", new ArrayList<>(menuGuids));
-                }
-                // 用于保存菜单列表
-                List<AcOperatorMenu> menuList = acOperatorMenuService.query(wc);
-                return createOperatorMenuTree(menuList);
+                // 组合功能
+                funcGuids.addAll(acOperatorServiceExt.getFuncListByIdentity(new ArrayList<>(partyGuids), new ArrayList<>(roleGuids)));
             }
-            return new AcMenuDetail();
+            Set<String> menuGuids = new HashSet<>();
+            if (funcGuids.size() > 0) {
+                // 获取功能下的菜单列表
+                List<AcOperatorMenu> menus = acOperatorMenuService.query(new WhereCondition()
+                        .andEquals("GUID_APP", appGuid)
+                        .andEquals("GUID_OPERATOR", operator.getGuid())
+                        .andIn("GUID_FUNC", new ArrayList<>(funcGuids)));
+                for (AcOperatorMenu menu : menus) {
+                    menuGuids.add(menu.getGuid());
+                }
+            }
+            WhereCondition wc = new WhereCondition();
+            wc.andEquals("GUID_APP", appGuid)
+                    .andEquals("GUID_OPERATOR", operator.getGuid())
+                    .andEquals("ISLEAF", CommonConstants.NO);
+            if (menuGuids.size() > 0) {
+                wc.or().andIn("GUID", new ArrayList<>(menuGuids));
+            }
+            // 用于保存菜单列表
+            List<AcOperatorMenu> menuList = acOperatorMenuService.query(wc);
+            return createOperatorMenuTree(menuList);
         } catch (ToolsRuntimeException ae) {
+            logger.error("getOperatorMenuByUserId", ae);
             throw ae;
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new MenuManagementException(
-                    ExceptionCodes.FAILURE_WHEN_QUERY,
-                    wrap("AC_OPERATOR_MENU", e));
+            logger.error("getOperatorMenuByUserId", e);
+            throw new MenuManagementException(ExceptionCodes.FAILURE_WHEN_CALL, wrap("getOperatorMenuByUserId", e));
         }
     }
 

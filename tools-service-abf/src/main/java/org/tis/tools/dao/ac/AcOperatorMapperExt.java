@@ -63,4 +63,11 @@ public interface AcOperatorMapperExt {
             @Param("operatorGuid")String operatorGuid
             , @Param("roleGuids")String roleGuids);
 
+    /**
+     * 查询操作员身份下的所有功能行为
+     * @param roleGuids 角色GUID
+     * @param partGuids 组织对象GUID
+     * @return
+     */
+    List<String> getFuncListByIdentity(@Param("partyGuids")String partGuids, @Param("roleGuids")String roleGuids);
 }

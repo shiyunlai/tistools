@@ -501,12 +501,17 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
                         .map(AcRoleFunc::getGuidFunc)
                         .collect(Collectors.toList()));
                 // 获取角色下的特殊功能列表
-                funcGuidList.addAll(acOperatorFuncService.query(new WhereCondition()
+                List<AcOperatorFunc> operatorFuncs = acOperatorFuncService.query(new WhereCondition()
                         .andEquals(AcOperatorFunc.COLUMN_GUID_APP, appGuid)
-                        .andEquals(AcOperatorFunc.COLUMN_GUID_OPERATOR, operator.getGuid()))
-                        .stream()
-                        .map(AcOperatorFunc::getGuidFunc)
-                        .collect(Collectors.toList()));
+                        .andEquals(AcOperatorFunc.COLUMN_GUID_OPERATOR, operator.getGuid()));
+                for (AcOperatorFunc acOperatorFunc : operatorFuncs) {
+                    String guidFunc = acOperatorFunc.getGuidFunc();
+                    if (StringUtils.isEquals(ACConstants.AUTH_TYPE_FORBID, guidFunc)) {
+                        funcGuidList.remove(guidFunc);
+                    } else {
+                        funcGuidList.add(guidFunc);
+                    }
+                }
             }
             List<AcFunc> funcList = new ArrayList<>();
             if(funcGuidList.size() > 0)

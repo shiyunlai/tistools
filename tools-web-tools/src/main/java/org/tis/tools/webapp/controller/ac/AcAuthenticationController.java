@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.UnauthorizedException;
+import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import org.tis.tools.rservice.ac.capable.IApplicationRService;
 import org.tis.tools.rservice.ac.capable.IAuthenticationRService;
 import org.tis.tools.rservice.ac.capable.IOperatorRService;
 import org.tis.tools.shiro.authenticationToken.UserIdPasswordIdentityToken;
+import org.tis.tools.shiro.realm.UserRealm;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.exception.WebAppException;
 import org.tis.tools.webapp.log.LogThreadLocal;
@@ -141,6 +143,11 @@ public class AcAuthenticationController extends BaseController {
         String newPwd = jsonObject.getString("newPwd");
         String oldPwd = jsonObject.getString("oldPwd");
         AcOperator acOperator = authenticationRService.updatePassword(userId, oldPwd, newPwd);
+        // 清楚缓存
+        RealmSecurityManager securityManager =
+                (RealmSecurityManager) SecurityUtils.getSecurityManager();
+        UserRealm userRealm = (UserRealm) securityManager.getRealms().iterator().next();
+        userRealm.clearCachedAuthenticationInfo(SecurityUtils.getSubject().getPrincipals());
         // 退出登录
         SecurityUtils.getSubject().logout();
         return getReturnMap(acOperator);

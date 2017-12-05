@@ -116,6 +116,24 @@
     LEFT JOIN ac_BHV_def c ON a.guid_bhv = c.guid
     </select>
 
+
+    <select id="getFuncListByIdentity" resultType="string"  >
+        SELECT
+            b.GUID_FUNC
+        FROM
+            ac_party_role a,
+            ac_role_func b
+        WHERE
+            a.GUID_PARTY IN ${partyGuids}
+            AND a.GUID_ROLE = b.GUID_ROLE UNION
+        SELECT
+            c.GUID_FUNC
+        FROM
+            ac_role_func c
+        WHERE
+            guid_role IN ${roleGuids}
+    </select>
+
     <select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
         select count(*) from AC_OPERATOR <include refid="Where_Clause"/>
     </select>

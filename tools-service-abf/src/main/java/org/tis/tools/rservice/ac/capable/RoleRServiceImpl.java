@@ -238,6 +238,8 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
             if (StringUtils.isBlank(acRole.getRoleType())) {
                 throw new RoleManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_UPDATE, wrap("ROLE_TYPE", "AC_ROLE"));
             }
+            // 所属应用不允许修改
+            acRole.setGuidApp(null);
             acRoleService.update(acRole);
             return acRole;
         } catch (ToolsRuntimeException ae) {
@@ -375,7 +377,6 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                         // 新增
                         for (AcRoleFunc roleFunc : addList) {
                             // 默认添加所有的角色行为定义
-                            // TODO
                             addRoleFunc(roleFunc);
                         }
                     } catch (ToolsRuntimeException e) {

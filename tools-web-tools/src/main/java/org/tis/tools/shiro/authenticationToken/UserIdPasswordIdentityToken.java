@@ -3,9 +3,6 @@ package org.tis.tools.shiro.authenticationToken;
 import org.apache.shiro.authc.HostAuthenticationToken;
 import org.apache.shiro.authc.RememberMeAuthenticationToken;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class UserIdPasswordIdentityToken implements HostAuthenticationToken, RememberMeAuthenticationToken {
      /*--------------------------------------------
     |             C O N S T A N T S             |
@@ -271,10 +268,10 @@ public class UserIdPasswordIdentityToken implements HostAuthenticationToken, Rem
      * @see org.apache.shiro.authc.AuthenticationToken#getPrincipal()
      */
     public Object getPrincipal() {
-        Map<String, String> map = new HashMap<>();
-        map.put("userId", getUserId());
-        map.put("appCode", getAppCode());
-        return map;
+//        Map<String, String> map = new HashMap<>();
+//        map.put("userId", );
+//        map.put("appCode", getAppCode());
+        return getUserId();
     }
 
     /**

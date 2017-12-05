@@ -5,7 +5,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.mgt.RealmSecurityManager;
+import org.apache.shiro.subject.SimplePrincipalCollection;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +24,7 @@ import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
 import org.tis.tools.rservice.ac.capable.IApplicationRService;
 import org.tis.tools.rservice.ac.capable.IOperatorRService;
 import org.tis.tools.rservice.ac.capable.IRoleRService;
+import org.tis.tools.shiro.realm.UserRealm;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.log.OperateLog;
 import org.tis.tools.webapp.log.ReturnType;
@@ -668,6 +673,32 @@ public class AcOperatorController extends BaseController {
         return getReturnMap(acOperatorfuncs);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/refreshOperator", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> refreshOperator(@RequestBody String content) {
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        JSONObject data = jsonObject.getJSONObject("data");
+        String userId = data.getString("userId");
+        RealmSecurityManager securityManager =
+                (RealmSecurityManager) SecurityUtils.getSecurityManager();
+        UserRealm userRealm = (UserRealm) securityManager.getRealms().iterator().next();
+        SimplePrincipalCollection principals = new SimplePrincipalCollection(userId, userRealm.getName());
+        Subject subject = SecurityUtils.getSubject();
+        subject.runAs(principals);
+        userRealm.clearCachedAuthorizationInfo(subject.getPrincipals());
+        userRealm.clearCachedAuthenticationInfo(subject.getPrincipals());
+        subject.releaseRunAs();
+        return getReturnMap(null);
+    }
 
+    @ResponseBody
+    @RequestMapping(value = "/refreshAll", produces = "application/json;charset=UTF-8", method = {RequestMethod.POST, RequestMethod.GET})
+    public Map<String, Object> refreshAll() {
+        RealmSecurityManager securityManager =
+                (RealmSecurityManager) SecurityUtils.getSecurityManager();
+        UserRealm userRealm = (UserRealm) securityManager.getRealms().iterator().next();
+        userRealm.clearAllCache();
+        return getReturnMap(null);
+    }
 
 }
