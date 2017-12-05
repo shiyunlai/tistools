@@ -1621,11 +1621,15 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
             List<AcFunc> authList = new ArrayList<>();
             List<AcFunc> unauthList = new ArrayList<>();
             // 特别禁止
-            List<String> forbidGuids = acOperatorFuncs.get(ACConstants.AUTH_TYPE_FORBID)
-                    .stream().map(AcOperatorFunc::getGuidFunc).collect(Collectors.toList());
+            List<String> forbidGuids = new ArrayList<>();
+            if(acOperatorFuncs.get(ACConstants.AUTH_TYPE_FORBID) != null )
+                forbidGuids.addAll(acOperatorFuncs.get(ACConstants.AUTH_TYPE_FORBID)
+                    .stream().map(AcOperatorFunc::getGuidFunc).collect(Collectors.toList()));
             // 特别允许
-            List<String> permitGuids = acOperatorFuncs.get(ACConstants.AUTH_TYPE_PERMIT)
-                    .stream().map(AcOperatorFunc::getGuidFunc).collect(Collectors.toList());
+            List<String> permitGuids = new ArrayList<>();
+            if (acOperatorFuncs.get(ACConstants.AUTH_TYPE_PERMIT) != null)
+                permitGuids.addAll(acOperatorFuncs.get(ACConstants.AUTH_TYPE_PERMIT)
+                    .stream().map(AcOperatorFunc::getGuidFunc).collect(Collectors.toList()));
             // 已授权
             List<String> authGuids = roleFuncGuids.stream().filter(s -> !forbidGuids.contains(s)).collect(Collectors.toList());
 
