@@ -188,7 +188,6 @@ MetronicApp.factory('settings', ['$rootScope','$http','common_service', function
         }else if(type == "DUTY"){
             if(_.isNil(settings.commlist[type])) {
                 $http.post(manurl + "/om/duty/loadallduty").then(function (response) {
-                    console.log(response)
                     settings.commlist[type] = response.data.retMessage;
                 });
             }
@@ -228,15 +227,12 @@ MetronicApp.controller('AppController', ['$scope','$rootScope','$http','$q','com
     $scope.$on('$includeContentLoaded', function() {
         Demo.init(); // init theme panel 初始化主题风格
     });
-
-
     var res = $http.get('./json/service.json').then(function (response) {
         $rootScope.res = response.data;//绑定到rootscope中，在其他页面可以直接调用
         return response;
     });
     var ret ={ctrl: "AcAuthenticationController", func: "pageInit", emo: "页面初始化"};
     common_service.post(ret,{}).then(function(data){
-        console.log(data)
         if(data.status == "success"){
             $rootScope.userconfig = data.retMessage;//绑定个全局使用
             //1.0头部请求信息
@@ -405,7 +401,6 @@ MetronicApp.controller('AppController', ['$scope','$rootScope','$http','$q','com
                             }*/
                     }
                 })
-
                 $('#'+data[j].guid).append(htmltwo);//追加到对应的父节点的标签中
             }
             if(sum<40){//标识,如果有children,那么就一直递归下去
@@ -415,8 +410,6 @@ MetronicApp.controller('AppController', ['$scope','$rootScope','$http','$q','com
             }
         }
     }
-
-
 }])
 
 
@@ -584,12 +577,11 @@ MetronicApp.provider('router', function ($stateProvider,$urlRouterProvider) {
                         $urlRouterProvider.otherwise('/dashboard');
                     }
                 },2000)*/
-                $timeout(function () {
+                // $timeout(function () {
                     common_service.post(ret, {}).then(function (data) {
-                        console.log(data)
                         var datas = data.retMessage.resources;
                         if (!isNull(datas)) {
-                            var collection = JSON.parse(datas)
+                            var collection = JSON.parse(datas);
                         }
                         if (data.status == "success") {
                             for (var routeName in collection) {
@@ -604,7 +596,7 @@ MetronicApp.provider('router', function ($stateProvider,$urlRouterProvider) {
                             $urlRouterProvider.otherwise('/dashboard');
                         }
                     })
-                },1000)
+                // },1000)
             }
         }
     };
@@ -660,6 +652,7 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider, routerProvider)
             data: {pageTitle: '重组菜单'},
             controller: "reomenu_controller"
         })
+    $urlRouterProvider.otherwise('/dashboard');
 }).run(function (router) {
     router.setUpRoutes();
 });
@@ -668,6 +661,14 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider, routerProvider)
 MetronicApp.run(['$rootScope', '$state','$http','common_service', function ($rootScope, $state,$http,common_service) {
     $rootScope.$state = $state;
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+            /*
+               index进入之后 还会回到原来的页面
+        console.log('原地址'+fromState.name)
+        console.log('新地址'+toState.name)
+        sessionStorage.clear('toState');
+            sessionStorage.clear('toParams');
+            $state.go('dashboard');
+            */
         if(toState.name !=='dashboard'){//如果不是首页保存到临时存储中
             sessionStorage.setItem('toState',toState.name);
             sessionStorage.setItem('toParams',toParams.id);//把传入的值也放进存储中,刷新也保存着
@@ -676,11 +677,18 @@ MetronicApp.run(['$rootScope', '$state','$http','common_service', function ($roo
         if(toState.name =='dashboard' && fromState.name !==''){//如果新目标是首页并且原本的路由不是空，那就代表首页刷新
             sessionStorage.setItem('toState',toState.name);
         }
+
         if(toState.name !=='dashboard'&& toState.name !==''&& toState.name !=='NonExistent'&& toState.name !=='Nopermission'){
             var subFrom = {};
             subFrom.funcCode = toState.funcCode;//新路由的功能id
             var ret ={"ctrl": "AcAuthenticationController", "func": "viewCheck","emo":"用于路由跳转权限判断"};
             common_service.post(ret,{data:subFrom}).then(function(data){
+                console.log(data)
+                if(data.status =='success'){
+                    var datas = data.retMessage;
+                    $rootScope.$broadcast('asycFinish',datas);//$rootScope传值，如果直接绑定会因为异步问题而undefined
+                }
+
                 if(data.status == 'forbid'){
                     event.preventDefault();// 取消默认跳转行为
                     $state.go('Nopermission');//无权限，跳转

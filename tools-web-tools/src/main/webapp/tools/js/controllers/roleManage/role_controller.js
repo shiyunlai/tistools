@@ -53,7 +53,9 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
     role.inint = function(items){
         var subFrom = {};
         role_service.queryRoleList(subFrom).then(function(data){
+            console.log(data)
                 var datas = $filter('Arraysort')(data.retMessage);//调用管道排序
+                console.log(datas)
                 if(data.status == "success"){
                     $scope.gridOptions.data =  datas;
                     $scope.gridOptions.mydefalutData = datas;
@@ -95,6 +97,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                var items = $scope.selectRow;
                openwindow($modal, 'views/roleManage/rolemanageAdd.html', 'lg',//弹出页面
                    function ($scope, $modalInstance) {
+                        $scope.editflag = true;//不允许修改
                        $scope.roleList = role.Appall;//循环渲染，在弹窗中
                        $scope.roleFrom = items;
                        $scope.id = id;
@@ -376,7 +379,7 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                             for(var i = 0; i<alldatas.length;i++){
                                 $('#container').jstree(true).check_node(alldatas[i].guidFunc);//选中
                             }
-                        },600)
+                        },1500)
                     }
                      $timeout(function(){
                          $('#container').jstree().open_all();
@@ -758,6 +761,7 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
             $scope.roleflag.entity = true;//实体范围页面展示
             $scope.eneitsflag.current = true;//默认显示当前实体
             Entityjstree(gridDate.guid);//传入角色guid;
+            $scope.edit = false;//让配置按钮显示
             //实体下tab页面
             role.eneisflag = function (type) {
                if(type == 'current'){
@@ -1338,7 +1342,7 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
 
     /*---------------------------------------------------------------实体内容------------------------------------------------------*/
     //查询角色下实体
-    var Entityjstree = function (item) {
+        var Entityjstree = function (item) {
         var res = $rootScope.res.role_service;//页面所需调用的服务
         $('#entitconter').jstree('destroy',false);//删除重新加载，只删除数据。
         $("#entitconter").jstree({
@@ -1417,7 +1421,11 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                     "icon" : "fa fa-file icon-state-warning icon-lg"
                 }
             },
-            "state" : { "key" : "demo3" }
+            "state" : { "key" : "demo3" },
+            'sort': function (a, b) {
+                //排序插件，会两者比较，获取到节点的order属性，插件会自动两两比较。
+                return this.get_node(a).original.seqno > this.get_node(b).original.seqno ? 1 : -1;
+            }
 
         }).bind("changed.jstree", function (e, data) {
             if (typeof data.node !== 'undefined') {//拿到结点详情
@@ -1511,7 +1519,7 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                                             }
                                         }
                                     }
-                                },500)
+                                },800)
                                 $scope.jsonarray = angular.copy(its);
                                 callback.call(this, $scope.jsonarray);
                             }
@@ -1535,10 +1543,14 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                 move_node: function (node) {
                 }
             },
-            "plugins": ["state", "types","search","checkbox"],
+            "plugins": ["state", "types","search","sort","checkbox"],
             "checkbox": {
                 "keep_selected_style": false,//是否默认选中
             },
+            'sort': function (a, b) {
+                //排序插件，会两者比较，获取到节点的order属性，插件会自动两两比较。
+                return this.get_node(a).original.seqno > this.get_node(b).original.seqno ? 1 : -1;
+            }
         })
         $timeout(function(){
             $('#entitconter').jstree().open_all();
@@ -1550,12 +1562,15 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
     $scope.role.EntitySave = function () {
         var nodes=$("#entitconter").jstree("get_checked");//
         $('#entitconter').jstree('destroy',true);//删除重新加载，只删除数据。
+        $scope.edit = false;//让配置按钮显示
         if(nodes.length>=0) {
             if(confirm('如果删除实体，会删除实体对应的所有属性和范围')){
+                $('#entitconter').jstree('destroy',true);//删除重新加载，只删除数据。
+                Entityjstree(gridDate.guid);//调用刷新树
                 var subFrom = {};
                 subFrom.roleGuid = gridDate.guid;
                 subFrom.entityGuids= []
-                for(var i = 0;i<nodes.length;i++){
+                for(var i = 0;i<nodes.le/ngth;i++){
                     if(nodes[i].indexOf('root') !== 0 ){//把实体类型的guid干掉，只保留实体的guid
                         subFrom.entityGuids.push(nodes[i])
                     }
@@ -1563,12 +1578,13 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                 common_service.post(roleservice.configRoleEntity,{data:subFrom}).then(function(data){
                     if(data.status == "success"){
                         toastr['success']("修改成功！");
-                        $scope.edit = false;//让配置按钮显示
+                        /*$('#entitconter').jstree('destroy',true);//删除重新加载，只删除数据。
+                        Entityjstree(gridDate.guid);//调用刷新树*/
                     }else{
                         toastr['error']("修改失败！"+'<br/>'+data.retMessage);
                     }
                 })
-                Entityjstree(gridDate.guid);//调用刷新树
+
             }
         }
     }

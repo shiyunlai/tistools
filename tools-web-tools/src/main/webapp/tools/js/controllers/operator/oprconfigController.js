@@ -320,7 +320,7 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
     //操作员名称，代码  应用系统名称 代码
     var com1 = [
         { field: "acResourcetype", displayName:'资源类型',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.acResourcetype | translateConstants :\'DICT_AC_RESOURCETYPE\') + $root.constant[\'DICT_AC_RESOURCETYPE-\'+row.entity.acResourcetype]}}</div>'},
-        { field: "roleName", displayName:'角色名称'},
+        { field: "roleName", displayName:'角色名称'}
     ];
     var f1 = function(row){
         if(row.isSelected){
@@ -363,7 +363,15 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                     //根据不同的类型去请求不同的数据，然后赋值给表格
                     if(newValue =='role'){
                         var com = [
-                            { field: "roleName", displayName:'角色名称'}
+                            { field: "roleName", displayName:'角色名称'},
+                            { field: "roleCode", displayName:'角色代码'},
+                            { field: "roleType", displayName:'角色类别',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.roleType | translateConstants :\'DICT_AC_ROLETYPE\') + $root.constant[\'DICT_AC_ROLETYPE-\'+row.entity.roleType]}}</div>',
+                                filter:{
+                                    //term: '0',//默认搜索那项
+                                    type: uiGridConstants.filter.SELECT,
+                                    selectOptions: [{ value: 'sys', label: '系统级'}, { value: 'app', label: '应用级' }]
+                                }
+                            }
                         ];
                         //查询操作员对应的角色
                         var  subFrom = {};
@@ -371,6 +379,7 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                         subFrom.resType = newValue;
                         common_service.post(res.queryRoleInOperatorByResType,subFrom).then(function(data){
                             var datas  = data.retMessage;
+                            console.log(data);
                             if(data.status == "success"){
                                 $scope.gridOptions.data = datas;
                             }
@@ -379,7 +388,9 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                         //导入
                     }else if(newValue=='function'){
                         var com = [
-                            { field: "roleName", displayName:'角色名称'}
+                            { field: "funcName", displayName:'功能名称'},
+                            { field: "funcCode", displayName:'功能代码'},
+                            // { field: "guidApp", displayName:'所属应用'},
                         ];
                         //查询操作员对应功能
                         var  subFrom = {};
@@ -387,6 +398,7 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                         subFrom.resType = newValue;
                         common_service.post(res.queryRoleInOperatorByResType,subFrom).then(function(data){
                             var datas = data.retMessage;
+                            console.log(data);
                             if(data.status == "success"){
                                 $scope.gridOptions.data = datas;
                                 $scope.gridOptions.mydefalutData = datas;
@@ -396,7 +408,15 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                         $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
                     }else if(newValue=='position'){
                         var com = [
-                            { field: "roleName", displayName:'角色名称'}
+                            { field: "roleName", displayName:'角色名称'},
+                            { field: "roleCode", displayName:'角色代码'},
+                            { field: "roleType", displayName:'角色类别',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.roleType | translateConstants :\'DICT_AC_ROLETYPE\') + $root.constant[\'DICT_AC_ROLETYPE-\'+row.entity.roleType]}}</div>',
+                                filter:{
+                                    //term: '0',//默认搜索那项
+                                    type: uiGridConstants.filter.SELECT,
+                                    selectOptions: [{ value: 'sys', label: '系统级'}, { value: 'app', label: '应用级' }]
+                                }
+                            }
                         ];
                         //查询操作员对应岗位
                         var  subFrom = {};
@@ -405,6 +425,7 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                         console.log(subFrom)
                         common_service.post(res.queryRoleInOperatorByResType,subFrom).then(function(data){
                             var datas  = data.retMessage;
+                            console.log(datas)
                             if(data.status == "success"){
                                 $scope.gridOptions.data = datas;
                             }
@@ -412,7 +433,15 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                         $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
                     }else if(newValue=='duty'){
                         var com = [
-                            { field: "roleName", displayName:'角色名称'}
+                            { field: "roleName", displayName:'角色名称'},
+                            { field: "roleCode", displayName:'角色代码'},
+                            { field: "roleType", displayName:'角色类别',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.roleType | translateConstants :\'DICT_AC_ROLETYPE\') + $root.constant[\'DICT_AC_ROLETYPE-\'+row.entity.roleType]}}</div>',
+                                filter:{
+                                    //term: '0',//默认搜索那项
+                                    type: uiGridConstants.filter.SELECT,
+                                    selectOptions: [{ value: 'sys', label: '系统级'}, { value: 'app', label: '应用级' }]
+                                }
+                            }
                         ];
                         //查询操作员对应职务
                         var  subFrom = {};
@@ -420,6 +449,7 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                         subFrom.resType = newValue;
                         common_service.post(res.queryRoleInOperatorByResType,subFrom).then(function(data){
                             var datas  = data.retMessage;
+                            console.log(data);
                             if(data.status == "success"){
                                 $scope.gridOptions.data = datas;
                             }
@@ -427,7 +457,15 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                         $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
                     }else if(newValue=='workgroup'){
                         var com = [
-                            { field: "roleName", displayName:'角色名称'}
+                            { field: "roleName", displayName:'角色名称'},
+                            { field: "roleCode", displayName:'角色代码'},
+                            { field: "roleType", displayName:'角色类别',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.roleType | translateConstants :\'DICT_AC_ROLETYPE\') + $root.constant[\'DICT_AC_ROLETYPE-\'+row.entity.roleType]}}</div>',
+                                filter:{
+                                    //term: '0',//默认搜索那项
+                                    type: uiGridConstants.filter.SELECT,
+                                    selectOptions: [{ value: 'sys', label: '系统级'}, { value: 'app', label: '应用级' }]
+                                }
+                            }
                         ];
                         //查询操作员对应工作组
                         var  subFrom = {};
@@ -435,6 +473,7 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                         subFrom.resType = newValue;
                         common_service.post(res.queryRoleInOperatorByResType,subFrom).then(function(data){
                             var datas  = data.retMessage;
+                            console.log(data);
                             if(data.status == "success"){
                                 $scope.gridOptions.data = datas;
                             }
@@ -442,7 +481,15 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                         $scope.gridOptions = initgrid($scope,gridOptions,filterFilter,com,true,f1);
                     }else if(newValue=='organization'){
                         var com = [
-                            { field: "roleName", displayName:'角色名称'}
+                            { field: "roleName", displayName:'角色名称'},
+                            { field: "roleCode", displayName:'角色代码'},
+                            { field: "roleType", displayName:'角色类别',cellTemplate: '<div  class="ui-grid-cell-contents" title="TOOLTIP">{{(row.entity.roleType | translateConstants :\'DICT_AC_ROLETYPE\') + $root.constant[\'DICT_AC_ROLETYPE-\'+row.entity.roleType]}}</div>',
+                                filter:{
+                                    //term: '0',//默认搜索那项
+                                    type: uiGridConstants.filter.SELECT,
+                                    selectOptions: [{ value: 'sys', label: '系统级'}, { value: 'app', label: '应用级' }]
+                                }
+                            }
                         ];
                         //查询操作员对应机构
                         var  subFrom = {};
@@ -450,6 +497,7 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
                         subFrom.resType = newValue;
                         common_service.post(res.queryRoleInOperatorByResType,subFrom).then(function(data){
                             var datas  = data.retMessage;
+                            console.log(data);
                             if(data.status == "success"){
                                 $scope.gridOptions.data = datas;
                             }
@@ -495,6 +543,7 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
     $scope.identypeDel = function(){
         var  opersguid = $scope.selectRow.guid;//身份对应guid
         var getSel = $scope.gridOptions1.getSelectedRows();
+        console.log(getSel[0])
         if(getSel.length == 0){
             toastr['error']("请选则一条数据进行删除！");
         }else{

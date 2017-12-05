@@ -47,7 +47,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">隶属应用:<span ng-class="{required:myform.dict_guidApp.$invalid}"  > * </span></label>
                         <div class="col-md-8">
-                            <select class="form-control" name="dict_guidApp" ng-model="roleFrom.guidApp"  required>
+                            <select class="form-control" name="dict_guidApp" ng-readonly="editflag" ng-model="roleFrom.guidApp"  required>
                                 <option ng-repeat="d in  roleList" value="{{d.guid}}">{{d.appName}}</option>
                             </select>
                             <span style="color:#ccc">一个角色只能归属一个应用</span>

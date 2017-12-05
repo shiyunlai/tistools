@@ -162,7 +162,10 @@
     "deleteConfig": {"ctrl": "AcOperatorConfig", "func": "deleteConfig","emo":"删除个性化配置"},
     "addConfig": {"ctrl": "AcOperatorConfig", "func": "addConfig","emo":"新增个性化配置"},
     "updateConfig": {"ctrl": "AcOperatorConfig", "func": "updateConfig","emo":"修改操作员个性化配置"},
-    "queryConfigList": {"ctrl": "AcOperatorConfig", "func": "queryConfigList","emo":"查询个性化配置列表"}
+    "queryConfigList": {"ctrl": "AcOperatorConfig", "func": "queryConfigList","emo":"查询个性化配置列表"},
+    "getOperatorFuncAuthInfo": {"ctrl": "AcOperatorController", "func": "getOperatorFuncAuthInfo","emo":"获取操作员功能信息(已授予，未授予)"},
+    "addAcOperatorFunc": {"ctrl": "AcOperatorController", "func": "addAcOperatorFunc","emo":"添加操作员特殊功能权限"},
+    "removeAcOperatorFunc": {"ctrl": "AcOperatorController", "func": "removeAcOperatorFunc","emo":"移除操作员特殊功能权限"}
   },
   "abftree_service" : {
     "loadmaintree": {"ctrl": "om/org", "func": "tree","emo":" 展示机构树"},

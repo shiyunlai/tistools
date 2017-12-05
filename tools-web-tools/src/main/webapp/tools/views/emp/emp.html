@@ -35,30 +35,30 @@
     </ul>
     <!-- 页签结束 -->
     <!-- 员工列表开始 -->
-    <div class="tab-content portlet light" ng-if="flag.yglb" id="test">
-        <div ui-grid="empgrid"
-             ui-grid-pagination
-             ui-grid-selection ui-grid-resize-columns></div>
+    <div class="tab-content portlet light"  ng-if="flag.yglb" id="test">
+            <div   ui-grid="empgrid"
+                   ui-grid-pagination
+                   ui-grid-selection ui-grid-resize-columns></div>
         <div class="actions btn-set" style="float: right;margin-top:20px;">
-            <button type="button" name="back" class="btn btn-primary" ng-click="emp.add({})"> 新增
+            <button type="button" name="back" class="btn btn-primary"   fun-active="/om/emp/addemployee" ng-click="emp.add({})"> 新增
             </button>
-            <button type="button" name="back" class="btn btn-primary" ng-click="emp.edit()" ng-disabled="!buttonflag"> 编辑基础信息
+            <button type="button" name="back" class="btn btn-primary"  fun-active="/om/emp/updateemployee" ng-click="emp.edit()" ng-disabled="!buttonflag"> 编辑基础信息
             </button>
-            <button type="button" name="back" class="btn btn-primary" ng-click="emp.editoper()" ng-if="editoper"> 编辑相关操作员
+            <button type="button" name="back" class="btn btn-primary"  fun-active="/om/emp/addemployee" ng-click="emp.editoper()" ng-if="editoper"> 编辑相关操作员
             </button>
-            <button type="button" name="back" class="btn btn-primary" ng-if="empentry" ng-click="emp.Entry()" > 入职
+            <button type="button" name="back" class="btn btn-primary"  fun-active="/om/emp/changeEmpStatus" ng-show="empentry" ng-click="emp.Entry()" > 入职
             </button>
-            <button type="button" name="back" class="btn btn-primary" ng-if="empleave" ng-click="emp.Leave()"> 离职
+            <button type="button" name="back" class="btn btn-primary"  fun-active="/om/emp/changeEmpStatus" ng-show="empleave" ng-click="emp.Leave()"> 离职
             </button>
-            <button type="button" name="back" class="btn btn-primary" ng-click="emp.detail()" ng-disabled="!buttonflag"> 查看详情
+            <button type="button" name="back" class="btn btn-primary"  fun-active="/om/emp/updateemployee" ng-click="emp.detail()"  ng-disabled="!buttonflag"> 查看详情
             </button>
-            <button type="button" name="back" class="btn btn-primary" ng-click="emp.belongorg()" ng-disabled="!buttonflag"> 个人所属组织设置
+            <button type="button" name="back" class="btn btn-primary"  fun-active="/om/emp/queryemployee" ng-click="emp.belongorg()" ng-disabled="!buttonflag"> 个人所属组织设置
             </button>
             <!--<button type="button" name="back" class="btn btn-primary" ng-click="emp.setqx()"> 个人权限设置-->
             <!--</button>-->
-            <button type="button" name="back" class="btn btn-danger" ng-click="emp.histroy()" ng-disabled="!buttonflag"> 查看概况
+            <button type="button" name="back" class="btn btn-danger" fun-active="/OperateLogController/queryOperateHistoryList"  ng-click="emp.histroy()"  ng-disabled="!buttonflag"> 查看概况
             </button>
-            <button type="button" name="back" class="btn btn-danger" ng-click="emp.deletemp()" ng-disabled="!buttonflag"> 删除
+            <button type="button" name="back" class="btn btn-danger"  fun-active="/om/emp/deletemp" ng-click="emp.deletemp()"  ng-disabled="!buttonflag"> 删除
             </button>
         </div>
     </div>

@@ -707,7 +707,7 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
                             .andEquals(AcOperatorFunc.COLUMN_AUTH_TYPE, ACConstants.AUTH_TYPE_PERMIT))
                             .stream().map(AcOperatorFunc::getGuidFunc).collect(Collectors.toSet());
                     if (CollectionUtils.isNotEmpty(funcGuids)) {
-                        return acFuncService.query(new WhereCondition().andIn(AcFunc.COLUMN_GUID, funcGuids));
+                        return acFuncService.query(new WhereCondition().andIn(AcFunc.COLUMN_GUID, new ArrayList<>(funcGuids)));
                     }
                     break;
                 case ACConstants.RESOURCE_TYPE_ORGANIZATION:
@@ -1846,7 +1846,7 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
                 if (!StringUtils.isBlank(result)) {
                     throw new OperatorManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, wrap(result, AcOperatorFunc.TABLE_NAME));
                 }
-                if(acOperatorBhvService.count(new WhereCondition().andEquals(AcOperatorFunc.COLUMN_GUID_OPERATOR, acOperatorFunc.getGuidOperator())
+                if(acOperatorFuncService.count(new WhereCondition().andEquals(AcOperatorFunc.COLUMN_GUID_OPERATOR, acOperatorFunc.getGuidOperator())
                         .andEquals(AcOperatorFunc.COLUMN_GUID_FUNC, acOperatorFunc.getGuidFunc())) > 0) {
                     throw new OperatorManagementException(ExceptionCodes.DUPLICATE_WHEN_INSERT, wrap(acOperatorFunc.getGuidFunc(), AcOperatorFunc.TABLE_NAME));
                 }
