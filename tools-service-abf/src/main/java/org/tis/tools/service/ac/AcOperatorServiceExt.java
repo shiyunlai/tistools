@@ -1,8 +1,8 @@
 package org.tis.tools.service.ac;
 
-import com.alibaba.dubbo.common.utils.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tis.tools.common.utils.StringUtil;
 import org.tis.tools.dao.ac.AcOperatorMapperExt;
 
 import java.util.List;
@@ -41,19 +41,7 @@ public class AcOperatorServiceExt {
      * @return
      */
     public List<Map> getAuthOperatorFuncBhv(List<String> roleGuid, String operatorGuid, String funcGuid) {
-        StringBuilder sb = new StringBuilder("(");
-        if (CollectionUtils.isEmpty(roleGuid)) {
-            sb.append("''");
-        } else {
-            for (int k = 0; k < roleGuid.size(); k++) {
-                sb.append("'").append(roleGuid.get(k)).append("'");
-                if (k != roleGuid.size() - 1) {
-                    sb.append(",");
-                }
-            }
-        }
-        sb.append(")");
-        return acOperatorMapperExt.getAuthOperatorFuncBhv(String.valueOf(sb), operatorGuid, funcGuid);
+        return acOperatorMapperExt.getAuthOperatorFuncBhv(StringUtil.list2String(roleGuid), operatorGuid, funcGuid);
     }
 
     /**
@@ -83,20 +71,19 @@ public class AcOperatorServiceExt {
      * @return
      */
     public List<Map> getAllOperatorFuncPmtBhv(String operatorGuid, List<String> roleGuid) {
-        StringBuilder sb = new StringBuilder("(");
-        if (CollectionUtils.isEmpty(roleGuid)) {
-            sb.append("''");
-        } else {
-            for (int k = 0; k < roleGuid.size(); k++) {
-                sb.append("'").append(roleGuid.get(k)).append("'");
-                if (k != roleGuid.size() - 1) {
-                    sb.append(",");
-                }
-            }
-        }
-        sb.append(")");
-        return acOperatorMapperExt.getAllOperatorFuncPmtBhv(operatorGuid, String.valueOf(sb));
+        return acOperatorMapperExt.getAllOperatorFuncPmtBhv(operatorGuid, StringUtil.list2String(roleGuid));
     }
+
+    /**
+     * 查询操作员所有功能行为
+     * @param roleGuids 角色GUID
+     * @param partGuids 组织对象GUID
+     * @return
+     */
+    public List<String> getFuncListByIdentity(List<String> partGuids, List<String> roleGuids) {
+        return acOperatorMapperExt.getFuncListByIdentity(StringUtil.list2String(partGuids), StringUtil.list2String(roleGuids));
+    }
+
 
 
 }

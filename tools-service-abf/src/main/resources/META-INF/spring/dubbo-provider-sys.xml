@@ -36,7 +36,7 @@
 	<dubbo:service
 		interface="org.tis.tools.rservice.sys.capable.IDictRService" group="sys" version="${IDictRService.version}"
 		ref="dictRServiceImpl"
-		protocol="dubbo"  timeout="3000" />
+		protocol="dubbo"  timeout="8000" />
 
 	<!--具体实现-->
  	<bean id="dictRServiceImpl" class="org.tis.tools.rservice.sys.capable.DictRServiceImpl" />
@@ -46,7 +46,7 @@
 	<dubbo:service
 		interface="org.tis.tools.rservice.sys.capable.IRunConfigRService" group="sys" version="${IRunConfigRService.version}"
 		ref="runConfigRServiceImpl"
-		protocol="dubbo"  timeout="3000" />
+		protocol="dubbo"  timeout="8000" />
 
 	<!--具体实现-->
  	<bean id="runConfigRServiceImpl" class="org.tis.tools.rservice.sys.capable.RunConfigRServiceImpl" />
@@ -55,7 +55,7 @@
 	<dubbo:service
 		interface="org.tis.tools.rservice.sys.capable.ISeqnoRService" group="sys" version="${ISeqnoRService.version}"
 		ref="seqnoRServiceImpl"
-		protocol="dubbo"  timeout="3000" />
+		protocol="dubbo"  timeout="8000" />
 
 	<!--具体实现-->
  	<bean id="seqnoRServiceImpl" class="org.tis.tools.rservice.sys.capable.SeqnoRServiceImpl" />

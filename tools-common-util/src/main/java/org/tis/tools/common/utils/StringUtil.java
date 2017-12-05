@@ -3,6 +3,7 @@
  */
 package org.tis.tools.common.utils;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.text.MessageFormat;
@@ -2462,5 +2463,28 @@ public class StringUtil {
 			}
 		}
 		return result.toString();
+	}
+
+	/**
+	 * 将包含String类型的数组转换为固定格式的字符串
+	 * 如果数组为null或者为空 返回 ”（‘’）“
+	 * 如果数组中有 ”Bob“， ”Amy“ 返回 ”（‘Bob’, 'Amy')“
+	 * @param list
+	 * @return
+	 */
+	public static String list2String(List<String> list) {
+		StringBuilder sb = new StringBuilder("(");
+		if (CollectionUtils.isEmpty(list)) {
+			sb.append("''");
+		} else {
+			for (int k = 0; k < list.size(); k++) {
+				sb.append("'").append(list.get(k)).append("'");
+				if (k != list.size() - 1) {
+					sb.append(",");
+				}
+			}
+		}
+		sb.append(")");
+		return String.valueOf(sb);
 	}
 }

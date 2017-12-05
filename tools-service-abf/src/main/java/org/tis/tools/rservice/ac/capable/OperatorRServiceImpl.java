@@ -664,7 +664,7 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
 
 
     /**
-     * 查询操作员不同资源类型下的所有角色
+     * 查询操作员不同资源类型下的资源
      *
      * @param operatorGuid
      * @param resType
@@ -672,7 +672,7 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
      * @throws OperatorManagementException
      */
     @Override
-    public List<AcRole> queryOperatorRoleByResType(String operatorGuid, String resType) throws OperatorManagementException {
+    public List queryOperatorRoleByResType(String operatorGuid, String resType) throws OperatorManagementException {
         try {
             if (StringUtils.isBlank(operatorGuid)) {
                 throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap("GUID_OPERATOR", "AC_ROLE"));
@@ -680,51 +680,52 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
             if (StringUtils.isBlank(resType)) {
                 throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap("RES_TYPE", "AC_ROLE"));
             }
-            List<AcRole> acRoleList = new ArrayList<>();
+            List resList = new ArrayList();
             AcOperator operator = acOperatorService.loadByGuid(operatorGuid);
-            if (null == operator) {
-                return acRoleList;
+            if (operator == null) {
+                throw new OperatorManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY,
+                        wrap(surroundBracketsWithLFStr(AcOperator.COLUMN_GUID, operatorGuid), AcOperator.TABLE_NAME));
             }
-            // 来自角色的权限资源和员工不相关
-            List<OmEmployee> omEmployees = omEmployeeService.query(new WhereCondition().andEquals("USER_ID", operator.getUserId()));
-            OmEmployee employee = new OmEmployee();
-            if (!StringUtils.isEquals(resType, ACConstants.RESOURCE_TYPE_ROLE)) {
-                if (CollectionUtils.isEmpty(omEmployees)) {
-                    return acRoleList;
-                }
-                employee = omEmployees.get(0);
-            }
+            // 查询相关员工
+            OmEmployee employee = queryEmployeeByUserId(operator.getUserId());
 
             switch (resType) {
                 case ACConstants.RESOURCE_TYPE_ROLE:
-                    List<AcOperatorRole> acOperatorRoles = acOperatorRoleService.query(new WhereCondition().andEquals("GUID_OPERATOR", operatorGuid));
+                    List<AcOperatorRole> acOperatorRoles = acOperatorRoleService.query(new WhereCondition()
+                            .andEquals(AcOperatorRole.COLUMN_GUID_OPERATOR, operatorGuid));
                     List<String> roleGuids = new ArrayList<>();
                     for (AcOperatorRole acOperatorRole : acOperatorRoles) {
                         roleGuids.add(acOperatorRole.getGuidRole());
                     }
                     if (roleGuids.size() > 0) {
-                        acRoleList = acRoleService.query(new WhereCondition().andIn("GUID", roleGuids));
+                        return acRoleService.query(new WhereCondition().andIn("GUID", roleGuids));
                     }
                     break;
                 case ACConstants.RESOURCE_TYPE_FUNCTION:
-                    // TODO 功能权限待完成
+                    Set<String> funcGuids = acOperatorFuncService.query(new WhereCondition()
+                            .andEquals(AcOperatorFunc.COLUMN_GUID_OPERATOR, operatorGuid)
+                            .andEquals(AcOperatorFunc.COLUMN_AUTH_TYPE, ACConstants.AUTH_TYPE_PERMIT))
+                            .stream().map(AcOperatorFunc::getGuidFunc).collect(Collectors.toSet());
+                    if (CollectionUtils.isNotEmpty(funcGuids)) {
+                        return acFuncService.query(new WhereCondition().andIn(AcFunc.COLUMN_GUID, funcGuids));
+                    }
                     break;
                 case ACConstants.RESOURCE_TYPE_ORGANIZATION:
-                    acRoleList = roleRService.queryEmpPartyRole(ACConstants.PARTY_TYPE_ORGANIZATION, employee.getGuid());
+                    resList = roleRService.queryEmpPartyRole(ACConstants.PARTY_TYPE_ORGANIZATION, employee.getGuid());
                     break;
                 case ACConstants.RESOURCE_TYPE_POSITION:
-                    acRoleList = roleRService.queryEmpPartyRole(ACConstants.PARTY_TYPE_POSITION, employee.getGuid());
+                    resList = roleRService.queryEmpPartyRole(ACConstants.PARTY_TYPE_POSITION, employee.getGuid());
                     break;
                 case ACConstants.RESOURCE_TYPE_DUTY:
-                    acRoleList = roleRService.queryEmpPartyRole(ACConstants.PARTY_TYPE_DUTY, employee.getGuid());
+                    resList = roleRService.queryEmpPartyRole(ACConstants.PARTY_TYPE_DUTY, employee.getGuid());
                     break;
                 case ACConstants.RESOURCE_TYPE_WORKGROUP:
-                    acRoleList = roleRService.queryEmpPartyRole(ACConstants.PARTY_TYPE_WORKGROUP, employee.getGuid());
+                    resList = roleRService.queryEmpPartyRole(ACConstants.PARTY_TYPE_WORKGROUP, employee.getGuid());
                     break;
                 default:
                     throw new OperatorManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, wrap("AC_RESOURCE_TYPE " + resType, "AC_ROLE"));
             }
-            return acRoleList;
+            return resList;
         } catch (ToolsRuntimeException ae) {
             throw ae;
         } catch (Exception e) {
@@ -750,9 +751,9 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
             }
             List<AcOperator> operatorList = acOperatorService.query(new WhereCondition().andEquals(AcOperator.COLUMN_USER_ID, userId));// 查询用户对应的操作员信息
             if (CollectionUtils.isEmpty(operatorList)) {
-                throw new OperatorManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, wrap("USER_ID " + userId, "AC_OPERATOR"));
+                throw new OperatorManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY,
+                        wrap(surroundBracketsWithLFStr(AcOperator.COLUMN_USER_ID, userId), AcOperator.TABLE_NAME));
             }
-
             AcOperator acOperator = operatorList.get(0);
             acOperator.setPassword(null);
             return acOperator;
@@ -763,6 +764,37 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
             e.printStackTrace();
             throw new OperatorManagementException(
                     ExceptionCodes.FAILURE_WHEN_QUERY, wrap("AC_OPERATOR", e));
+        }
+    }
+
+    /**
+     * 根据用户名查询员工信息
+     *
+     * @param userId
+     * @return
+     * @throws OperatorManagementException
+     */
+    @Override
+    public OmEmployee queryEmployeeByUserId(String userId) throws OperatorManagementException {
+        try {
+            if (StringUtils.isBlank(userId)) {
+                throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap(OmEmployee.COLUMN_USER_ID, OmEmployee.TABLE_NAME));
+            }
+            List<OmEmployee> employees = omEmployeeService.query(new WhereCondition().andEquals(OmEmployee.COLUMN_USER_ID, userId));// 查询用户对应的操作员信息
+            if (CollectionUtils.isEmpty(employees)) {
+                throw new OperatorManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY,
+                        wrap(surroundBracketsWithLFStr(OmEmployee.COLUMN_USER_ID, userId), OmEmployee.TABLE_NAME));
+            }
+            OmEmployee omEmployee = employees.get(0);
+            return omEmployee;
+
+        } catch (ToolsRuntimeException ae) {
+            logger.error("queryEmployeeByUserId exception: ", ae);
+            throw ae;
+        } catch (Exception e) {
+            logger.error("queryEmployeeByUserId exception: ", e);
+            throw new OperatorManagementException(
+                    ExceptionCodes.FAILURE_WHEN_QUERY, wrap(OmEmployee.TABLE_NAME, e));
         }
     }
 

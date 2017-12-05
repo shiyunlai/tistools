@@ -36,7 +36,7 @@
 	<dubbo:service 
 		interface="org.tis.tools.rservice.om.capable.IOrgRService" group="om" version="${IOrgRService.version}"
 		ref="orgRServiceImpl" 
-		protocol="dubbo"  timeout="3000" />
+		protocol="dubbo"  timeout="8000" />
  	
 	<!-- 具体实现 -->
     <bean id="orgRServiceImpl" class="org.tis.tools.rservice.om.capable.OrgRServiceImpl" />
@@ -44,7 +44,7 @@
 	<dubbo:service
 			interface="org.tis.tools.rservice.om.capable.IBusiOrgRService" group="om" version="${IBusiOrgRService.version}"
 			ref="OmBusiOrgRServiceImpl"
-			protocol="dubbo"  timeout="3000" />
+			protocol="dubbo"  timeout="8000" />
 
 	<!-- 具体实现 -->
 	<bean id="OmBusiOrgRServiceImpl" class="org.tis.tools.rservice.om.capable.OmBusiOrgRServiceImpl" />
@@ -53,7 +53,7 @@
 	<dubbo:service
 			interface="org.tis.tools.rservice.om.capable.IDutyRService" group="om" version="${IDutyRService.version}"
 			ref="DutyRServicelmpl"
-			protocol="dubbo"  timeout="3000" />
+			protocol="dubbo"  timeout="8000" />
 
 	<!-- 具体实现 -->
 	<bean id="DutyRServicelmpl" class="org.tis.tools.rservice.om.capable.DutyRServicelmpl" />
@@ -62,7 +62,7 @@
 	<dubbo:service
 			interface="org.tis.tools.rservice.om.capable.IEmployeeRService" group="om" version="${IEmployeeRService.version}"
 			ref="OmEmployeeRServicelmpl"
-			protocol="dubbo"  timeout="3000" />
+			protocol="dubbo"  timeout="8000" />
 
 	<!-- 具体实现 -->
 	<bean id="OmEmployeeRServicelmpl" class="org.tis.tools.rservice.om.capable.OmEmployeeRServicelmpl" />
@@ -71,7 +71,7 @@
 	<dubbo:service
 			interface="org.tis.tools.rservice.om.capable.IGroupRService" group="om" version="${IGroupRService.version}"
 			ref="omgroupRServicelmpl"
-			protocol="dubbo"  timeout="3000" />
+			protocol="dubbo"  timeout="8000" />
 
 	<!-- 具体实现 -->
 	<bean id="omgroupRServicelmpl" class="org.tis.tools.rservice.om.capable.OmGroupRServicelmpl" />
@@ -79,7 +79,7 @@
 	<dubbo:service
 			interface="org.tis.tools.rservice.om.capable.IPositionRService" group="om" version="${IPositionRService.version}"
 			ref="OmPositionRServiceImpl"
-			protocol="dubbo"  timeout="3000" />
+			protocol="dubbo"  timeout="8000" />
 
 	<!-- 具体实现 -->
 	<bean id="OmPositionRServiceImpl" class="org.tis.tools.rservice.om.capable.OmPositionRServiceImpl" />

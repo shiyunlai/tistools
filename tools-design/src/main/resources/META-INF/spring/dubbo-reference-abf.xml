@@ -36,6 +36,7 @@
 			version="0.4"
 			interface="org.tis.tools.rservice.om.capable.IEmployeeRService"
 			check="false"/>
+
 	<dubbo:reference
 			id="OmBusiOrgRServiceImpl"
 			group="om"
@@ -93,6 +94,13 @@
 			group="ac"
 			version="0.4"
 			interface="org.tis.tools.rservice.ac.capable.IRoleRService"
+			check="false"/>
+
+	<dubbo:reference
+			id="entityRService"
+			group="ac"
+			version="0.4"
+			interface="org.tis.tools.rservice.ac.capable.IEntityRService"
 			check="false"/>
 	<!--AC - END-->
 
