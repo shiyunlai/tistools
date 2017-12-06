@@ -411,6 +411,15 @@ public interface IEmployeeRService {
 	List<OmPosition> queryPosbyEmpCode(String empCode);
 
 	/**
+	 *查询指定人员所在所有工作组
+	 */
+	List<OmGroup> queryGroupByEmpCode(String empCode) throws EmployeeManagementException;
+	/**
+	 *查询指定人员所在所有职务
+	 */
+	List<OmDuty> queryDutyByEmpCode(String empCode) throws EmployeeManagementException;
+
+	/**
 	 * 查询可以为人员添加的机构
 	 */
 	List<OmOrg> queryCanAddOrgbyEmpCode(String empCode);

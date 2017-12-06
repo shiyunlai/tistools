@@ -1025,25 +1025,25 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
             Set<String> partyGuids = new HashSet<>();
             // 查询员工隶属的组织对象
             switch (partyType) {
-                case ACConstants.PARTY_TYPE_ORGANIZATION: //机构
+                case ACConstants.PARTY_TYPE_ORGANIZATION : // 机构
                     List<OmEmpOrg> omEmpOrgList = omEmpOrgService.query(new WhereCondition().andEquals("GUID_EMP", empGuid));
                     for (OmEmpOrg empOrg : omEmpOrgList) {
                         partyGuids.add(empOrg.getGuidOrg());
                     }
                     break;
-                case ACConstants.PARTY_TYPE_POSITION: // 岗位
+                case ACConstants.PARTY_TYPE_POSITION : // 岗位
                     List<OmEmpPosition> omEmpPositionList = omEmpPositionService.query(new WhereCondition().andEquals("GUID_EMP", empGuid));
                     for (OmEmpPosition empPosition : omEmpPositionList) {
                         partyGuids.add(empPosition.getGuidPosition());
                     }
                     break;
-                case ACConstants.PARTY_TYPE_WORKGROUP: // 工作组
+                case ACConstants.PARTY_TYPE_WORKGROUP : // 工作组
                     List<OmEmpGroup> omEmpGroupList = omEmpGroupService.query(new WhereCondition().andEquals("GUID_EMP", empGuid));
                     for (OmEmpGroup omEmpGroup : omEmpGroupList) {
                         partyGuids.add(omEmpGroup.getGuidGroup());
                     }
                     break;
-                case ACConstants.PARTY_TYPE_DUTY: // 职务
+                case ACConstants.PARTY_TYPE_DUTY : // 职务
                     // 首先查询员工对应的岗位
                     List<OmEmpPosition> omEmpPositions = omEmpPositionService.query(new WhereCondition().andEquals("GUID_EMP", empGuid));
                     List<String> posiGuids = new ArrayList<>();
@@ -1067,14 +1067,14 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
             if (partyGuids.size() > 0) {
                 List<AcPartyRole> acPartyRoles = acPartyRoleService.query(new WhereCondition()
                         .andEquals("PARTY_TYPE", partyType)
-                        .andIn("GUID_PARTY", new ArrayList<String>(partyGuids)));
+                        .andIn("GUID_PARTY", new ArrayList<>(partyGuids)));
                 // 用于存放所有角色的GUID
                 Set<String> roleGuids = new HashSet<>();
                 for (AcPartyRole acPartyRole : acPartyRoles) {
                     roleGuids.add(acPartyRole.getGuidRole());
                 }
                 if (roleGuids.size() > 0) {
-                    acRoleList = acRoleService.query(new WhereCondition().andIn("GUID", new ArrayList<String>(roleGuids)));
+                    acRoleList = acRoleService.query(new WhereCondition().andIn("GUID", new ArrayList<>(roleGuids)));
                 }
             }
             return acRoleList;
@@ -1147,7 +1147,6 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
             if (StringUtils.isBlank(userId)) {
                 throw new RoleManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap("USER_ID", "OperatorInheritRoleList"));
             }
-
             /** 查询对应操作员*/
             List<AcOperator> acOperators = acOperatorService.query(new WhereCondition().andEquals(AcOperator.COLUMN_USER_ID, userId));
             if (acOperators.size() != 1) {

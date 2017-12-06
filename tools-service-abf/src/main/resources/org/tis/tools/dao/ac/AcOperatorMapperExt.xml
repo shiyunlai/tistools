@@ -5,16 +5,6 @@
 
 <mapper namespace="org.tis.tools.dao.ac.AcOperatorMapperExt">
 
-
-    <select id="queryOperatorIdentityreses" resultType="map">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM
-        AC_OPERATOR_IDENTITYRES a LEFT JOIN AC_ROLE b ON a.GUID_AC_RESOURCE = b.GUID
-        WHERE
-        a.GUID_IDENTITY = #{identityGuid}
-    </select>
-
     <select id="queryOperatorFuncDetail" resultType="map">
         SELECT
             <include refid="OperatorFuncDetail_Column_List"/>

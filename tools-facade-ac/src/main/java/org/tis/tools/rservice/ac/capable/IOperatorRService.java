@@ -119,7 +119,7 @@ public interface IOperatorRService {
     void deleteOperatorIdentityres(List<AcOperatorIdentityres> identityresList) throws OperatorManagementException;
 
     /**
-     * 查询操作员身份对应的权限集合
+     * 查询操作员身份对应的资源集合
      * @param operatorIdentityGuid
      * @return
      * @throws OperatorManagementException
@@ -144,7 +144,7 @@ public interface IOperatorRService {
      * @return
      * @throws OperatorManagementException
      */
-    List<AcRole> queryOperatorRoleByResType(String operatorGuid, String resType) throws OperatorManagementException;
+    List queryOperatorResByResType(String operatorGuid, String resType) throws OperatorManagementException;
 
 
 

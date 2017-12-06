@@ -79,6 +79,12 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
     @Autowired
     AcFuncServiceExt acFuncServiceExt;
 
+    @Autowired
+    AcOperatorIdentityresService acOperatorIdentityresService;
+
+    @Autowired
+    AcPartyRoleService acPartyRoleService;
+
     /**
      *   用户状态检查
      * a)	判断用户是否存在；
@@ -526,17 +532,96 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
         }
     }
 
+    /**
+     * 查询操作员身份在应用下的已授权功能
+     *
+     * @param userId
+     * @param appGuid
+     * @return
+     * @throws AuthManagementException
+     */
+    @Override
+    public List<AcFunc> queryOperatorIdenAuthFuncsInApp(String userId, String appGuid, String identityGuid) throws AuthManagementException {
+        if (StringUtils.isBlank(userId)) {
+            throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL,
+                    wrap("userId(String)", "queryOperatorIdenAuthFuncsInApp"));
+        }
+        if (StringUtils.isBlank(appGuid)) {
+            throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL,
+                    wrap("appGuid(String)", "queryOperatorIdenAuthFuncsInApp"));
+        }
+        if (StringUtils.isBlank(appGuid)) {
+            throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL,
+                    wrap("identityGuid(String)", "queryOperatorIdenAuthFuncsInApp"));
+        }
+        List<AcFunc> list = new ArrayList<>();
+        Set<String> roleGuids = new HashSet<>();
+        Set<String> funcGuids = new HashSet<>();
+        Set<String> partyGuids = new HashSet<>();
+        try {
+            Map<String, List<AcOperatorIdentityres>> resMapList = acOperatorIdentityresService.query(
+                    new WhereCondition().andEquals(AcOperatorIdentityres.COLUMN_GUID_IDENTITY, identityGuid))
+                    .stream()
+                    .collect(Collectors.groupingBy(AcOperatorIdentityres::getAcResourcetype));
+            for (String type : resMapList.keySet()) {
+                if (StringUtils.isEquals(type, ACConstants.RESOURCE_TYPE_ROLE)) {
+                    roleGuids.addAll(resMapList.get(type).stream()
+                            .map(AcOperatorIdentityres::getGuidAcResource).collect(Collectors.toSet()));
+                } else if (StringUtils.isEquals(type, ACConstants.RESOURCE_TYPE_FUNCTION)) {
+                    funcGuids.addAll(resMapList.get(type).stream()
+                            .map(AcOperatorIdentityres::getGuidAcResource).collect(Collectors.toSet()));
+                } else {
+                    partyGuids.addAll(resMapList.get(type).stream()
+                            .map(AcOperatorIdentityres::getGuidAcResource).collect(Collectors.toSet()));
+                }
+            }
+            if (CollectionUtils.isNotEmpty(partyGuids)) {
+                roleGuids.addAll(acPartyRoleService.query(new WhereCondition()
+                        .andIn(AcPartyRole.COLUMN_GUID_PARTY, new ArrayList<>(partyGuids)))
+                        .stream()
+                        .map(AcPartyRole::getGuidRole)
+                        .collect(Collectors.toSet()));
+            }
+            if (CollectionUtils.isNotEmpty(roleGuids))
+                funcGuids.addAll(acRoleFuncService.query(new WhereCondition()
+                        .andEquals(AcRoleFunc.COLUMN_GUID_APP, appGuid)
+                        .andIn(AcRoleFunc.COLUMN_GUID_ROLE, new ArrayList<>(roleGuids)))
+                        .stream()
+                        .map(AcRoleFunc::getGuidFunc)
+                        .collect(Collectors.toSet()));
+            // 剔除特殊禁止功能和其他应用的特别允许功能
+            funcGuids.removeAll(acOperatorFuncService.query(new WhereCondition()
+                    .andEquals(AcOperatorFunc.COLUMN_GUID_APP, appGuid)
+                    .andEquals(AcOperatorFunc.COLUMN_AUTH_TYPE, ACConstants.AUTH_TYPE_FORBID)
+                    .or()
+                    .andNotEquals(AcOperatorFunc.COLUMN_GUID_APP, appGuid)
+                    .andEquals(AcOperatorFunc.COLUMN_AUTH_TYPE, ACConstants.AUTH_TYPE_PERMIT)
+            ).stream().map(AcOperatorFunc::getGuidFunc).collect(Collectors.toSet()));
+            if(CollectionUtils.isNotEmpty(funcGuids))
+                list.addAll(acFuncService.query(new WhereCondition()
+                        .andIn(AcFunc.COLUMN_GUID, new ArrayList<>(funcGuids))));
+            return list;
+        } catch (ToolsRuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new AuthManagementException(
+                    ExceptionCodes.FAILURE_WHEN_CALL,
+                    wrap("queryOperatorIdenAuthFuncsInApp", e));
+        }
+    }
+
 
     /**
      * 获取操作员的权限信息
      *
      * @param userId  用户名
      * @param appCode 应用code
+     * @param idetityGuid 身份GUID
      * @return
      * @throws AuthManagementException
      */
     @Override
-    public AbfPermission getPermissions(String userId, String appCode) throws AuthManagementException {
+    public AbfPermission getPermissions(String userId, String appCode, String idetityGuid) throws AuthManagementException {
         if (StringUtils.isBlank(userId)) {
             throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap("userId", "getViewPermissions"));
         }
@@ -563,7 +648,7 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
                 .stream()
                 .collect(Collectors.groupingBy(map -> (String) map.get("funcCode")));
         Set<String> bhvPermission = new HashSet<>();
-        List<AcFunc> acFuncs = queryOperatorAuthFuncsInApp(userId, acApp.getGuid());
+        List<AcFunc> acFuncs = queryOperatorIdenAuthFuncsInApp(userId, acApp.getGuid(), idetityGuid);
         for(AcFunc acFunc : acFuncs) {
             String funcCode = acFunc.getFuncCode();
             StringBuilder sb = new StringBuilder("+" + funcCode + "+");
