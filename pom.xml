@@ -677,7 +677,13 @@
 			<dependency>
 				<groupId>cglib</groupId>
 				<artifactId>cglib-nodep</artifactId>
-				<version>${cglib_version}</version>
+				<version>3.2.5</version>
+			</dependency>
+			<!-- https://mvnrepository.com/artifact/cglib/cglib -->
+			<dependency>
+				<groupId>cglib</groupId>
+				<artifactId>cglib</artifactId>
+				<version>3.2.5</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-lang</groupId>
@@ -950,7 +956,11 @@
 				<version>1.4.0</version>
 			</dependency>
 
-
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>23.5-jre</version>
+			</dependency>
 
 		</dependencies>
 	</dependencyManagement>

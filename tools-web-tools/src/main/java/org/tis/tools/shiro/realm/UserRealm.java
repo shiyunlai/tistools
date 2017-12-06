@@ -34,12 +34,12 @@ public class UserRealm extends AuthorizingRealm {
     // 获取授权信息
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         String appCode = (String) SecurityUtils.getSubject().getSession().getAttribute("appCode");
+        String identityGuid = (String) SecurityUtils.getSubject().getSession().getAttribute("identity");
         String userId = (String) principals.getPrimaryPrincipal();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-
 //        Set<String> roles = roleRService.queryAllRoleByUserId(userId).stream().map(AcRole::getRoleCode).collect(Collectors.toSet());
 //        authorizationInfo.setRoles(roles);
-        authorizationInfo.setStringPermissions(authenticationRService.getPermissions(userId, appCode).getBhvPermissions());
+        authorizationInfo.setStringPermissions(authenticationRService.getPermissions(userId, appCode, identityGuid).getBhvPermissions());
         return authorizationInfo;
     }
 

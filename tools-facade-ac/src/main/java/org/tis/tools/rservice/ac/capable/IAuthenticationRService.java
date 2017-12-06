@@ -129,10 +129,11 @@ public interface IAuthenticationRService {
      * 获取操作员在应用下的权限信息
      * @param userId 用户名
      * @param appCode 应用code
+     * @param identityGuid 身份guid
      * @return
      * @throws AuthManagementException
      */
-    AbfPermission getPermissions(String userId, String appCode) throws AuthManagementException;
+    AbfPermission getPermissions(String userId, String appCode, String identityGuid) throws AuthManagementException;
 
     /**
      * 根据行为code获取行为权限字符串
@@ -151,6 +152,15 @@ public interface IAuthenticationRService {
      * @throws AuthManagementException
      */
     List<AcFunc> queryOperatorAuthFuncsInApp(String userId, String appGuid) throws AuthManagementException;
+
+    /**
+     * 查询操作员身份在应用下的已授权功能
+     * @param userId
+     * @param appGuid
+     * @return
+     * @throws AuthManagementException
+     */
+    List<AcFunc> queryOperatorIdenAuthFuncsInApp(String userId, String appGuid, String identityGuid) throws AuthManagementException;
 
 
 }

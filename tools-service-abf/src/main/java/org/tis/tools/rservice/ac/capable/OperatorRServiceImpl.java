@@ -11,6 +11,7 @@ import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
 import org.tis.tools.common.utils.BeanFieldValidateUtil;
+import org.tis.tools.common.utils.ObjectUtil;
 import org.tis.tools.common.utils.StringUtil;
 import org.tis.tools.core.exception.ExceptionCodes;
 import org.tis.tools.model.def.ACConstants;
@@ -18,13 +19,14 @@ import org.tis.tools.model.def.CommonConstants;
 import org.tis.tools.model.def.GUID;
 import org.tis.tools.model.dto.shiro.PasswordHelper;
 import org.tis.tools.model.po.ac.*;
-import org.tis.tools.model.po.om.OmEmployee;
+import org.tis.tools.model.po.om.*;
 import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.ac.exception.OperatorManagementException;
+import org.tis.tools.rservice.om.capable.IEmployeeRService;
 import org.tis.tools.service.ac.*;
 import org.tis.tools.service.ac.exception.ACExceptionCodes;
-import org.tis.tools.service.om.OmEmployeeService;
+import org.tis.tools.service.om.*;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -102,6 +104,21 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
 
     @Autowired
     IAuthenticationRService authenticationRService;
+
+    @Autowired
+    OmOrgService omOrgService;
+
+    @Autowired
+    IEmployeeRService employeeRService;
+
+    @Autowired
+    OmDutyService omDutyService;
+
+    @Autowired
+    OmGroupService omGroupService;
+
+    @Autowired
+    OmPositionService omPositionService;
 
 
     /**
@@ -623,11 +640,67 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
      */
     @Override
     public List<Map> queryOperatorIdentityreses(String operatorIdentityGuid) throws OperatorManagementException {
+        if (StringUtil.isEmpty(operatorIdentityGuid)) {
+            throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL, wrap("operatorIdentityGuid(String)"));
+        }
+        List<Map> result = new ArrayList<>();
         try {
-            if (StringUtil.isEmpty(operatorIdentityGuid)) {
-                throw new OperatorManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_IDENTITY"));
+            Map<String, List<AcOperatorIdentityres>> resMapList = acOperatorIdentityresService.query(
+                    new WhereCondition().andEquals(AcOperatorIdentityres.COLUMN_GUID_IDENTITY, operatorIdentityGuid))
+                    .stream()
+                    .collect(Collectors.groupingBy(AcOperatorIdentityres::getAcResourcetype));
+            for (String type : resMapList.keySet()) {
+                if (StringUtils.isEquals(type, ACConstants.RESOURCE_TYPE_ROLE)) {
+                    List<String> guids = resMapList.get(type).stream()
+                            .map(AcOperatorIdentityres::getGuidAcResource).collect(Collectors.toList());
+                    acRoleService.query(new WhereCondition().andEquals(AcRole.COLUMN_GUID, guids)).forEach(o -> {
+                        Map<String, Object> map = ObjectUtil.beanToMap(o);
+                        map.put(AcOperatorIdentityres.COLUMN_AC_RESOURCETYPE, type);
+                        result.add(map);
+                    });
+                } else if (StringUtils.isEquals(type, ACConstants.RESOURCE_TYPE_FUNCTION)) {
+                    List<String> guids = resMapList.get(type).stream()
+                            .map(AcOperatorIdentityres::getGuidAcResource).collect(Collectors.toList());
+                    acFuncService.query(new WhereCondition().andEquals(AcFunc.COLUMN_GUID, guids)).forEach(o -> {
+                        Map<String, Object> map = ObjectUtil.beanToMap(o);
+                        map.put(AcOperatorIdentityres.COLUMN_AC_RESOURCETYPE, type);
+                        result.add(map);
+                    });
+                } else if (StringUtils.isEquals(type, ACConstants.RESOURCE_TYPE_ORGANIZATION)) {
+                    List<String> guids = resMapList.get(type).stream()
+                            .map(AcOperatorIdentityres::getGuidAcResource).collect(Collectors.toList());
+                    omOrgService.query(new WhereCondition().andEquals(OmOrg.COLUMN_GUID, guids)).forEach(o -> {
+                        Map<String, Object> map = ObjectUtil.beanToMap(o);
+                        map.put(AcOperatorIdentityres.COLUMN_AC_RESOURCETYPE, type);
+                        result.add(map);
+                    });
+                } else if (StringUtils.isEquals(type, ACConstants.RESOURCE_TYPE_DUTY)) {
+                    List<String> guids = resMapList.get(type).stream()
+                            .map(AcOperatorIdentityres::getGuidAcResource).collect(Collectors.toList());
+                    omDutyService.query(new WhereCondition().andEquals(OmDuty.COLUMN_GUID, guids)).forEach(o -> {
+                        Map<String, Object> map = ObjectUtil.beanToMap(o);
+                        map.put(AcOperatorIdentityres.COLUMN_AC_RESOURCETYPE, type);
+                        result.add(map);
+                    });
+                } else if (StringUtils.isEquals(type, ACConstants.RESOURCE_TYPE_WORKGROUP)) {
+                    List<String> guids = resMapList.get(type).stream()
+                            .map(AcOperatorIdentityres::getGuidAcResource).collect(Collectors.toList());
+                    omGroupService.query(new WhereCondition().andEquals(OmGroup.COLUMN_GUID, guids)).forEach(o -> {
+                        Map<String, Object> map = ObjectUtil.beanToMap(o);
+                        map.put(AcOperatorIdentityres.COLUMN_AC_RESOURCETYPE, type);
+                        result.add(map);
+                    });
+                } else if (StringUtils.isEquals(type, ACConstants.RESOURCE_TYPE_POSITION)) {
+                    List<String> guids = resMapList.get(type).stream()
+                            .map(AcOperatorIdentityres::getGuidAcResource).collect(Collectors.toList());
+                    omPositionService.query(new WhereCondition().andEquals(OmPosition.COLUMN_GUID, guids)).forEach(o -> {
+                        Map<String, Object> map = ObjectUtil.beanToMap(o);
+                        map.put(AcOperatorIdentityres.COLUMN_AC_RESOURCETYPE, type);
+                        result.add(map);
+                    });
+                }
             }
-            return acOperatorServiceExt.queryOperatorIdentityreses(operatorIdentityGuid);
+            return result;
         } catch (ToolsRuntimeException oe) {
             throw oe;
         } catch (Exception e) {
@@ -672,7 +745,7 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
      * @throws OperatorManagementException
      */
     @Override
-    public List queryOperatorRoleByResType(String operatorGuid, String resType) throws OperatorManagementException {
+    public List queryOperatorResByResType(String operatorGuid, String resType) throws OperatorManagementException {
         try {
             if (StringUtils.isBlank(operatorGuid)) {
                 throw new OperatorManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap("GUID_OPERATOR", "AC_ROLE"));
@@ -707,20 +780,20 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
                             .andEquals(AcOperatorFunc.COLUMN_AUTH_TYPE, ACConstants.AUTH_TYPE_PERMIT))
                             .stream().map(AcOperatorFunc::getGuidFunc).collect(Collectors.toSet());
                     if (CollectionUtils.isNotEmpty(funcGuids)) {
-                        return acFuncService.query(new WhereCondition().andIn(AcFunc.COLUMN_GUID, funcGuids));
+                        return acFuncService.query(new WhereCondition().andIn(AcFunc.COLUMN_GUID, new ArrayList<>(funcGuids)));
                     }
                     break;
                 case ACConstants.RESOURCE_TYPE_ORGANIZATION:
-                    resList = roleRService.queryEmpPartyRole(ACConstants.PARTY_TYPE_ORGANIZATION, employee.getGuid());
+                    resList = employeeRService.queryOrgbyEmpCode(employee.getEmpCode());
                     break;
                 case ACConstants.RESOURCE_TYPE_POSITION:
-                    resList = roleRService.queryEmpPartyRole(ACConstants.PARTY_TYPE_POSITION, employee.getGuid());
+                    resList = employeeRService.queryPosbyEmpCode(employee.getEmpCode());
                     break;
                 case ACConstants.RESOURCE_TYPE_DUTY:
-                    resList = roleRService.queryEmpPartyRole(ACConstants.PARTY_TYPE_DUTY, employee.getGuid());
+                    resList = employeeRService.queryDutyByEmpCode(employee.getEmpCode());
                     break;
                 case ACConstants.RESOURCE_TYPE_WORKGROUP:
-                    resList = roleRService.queryEmpPartyRole(ACConstants.PARTY_TYPE_WORKGROUP, employee.getGuid());
+                    resList = employeeRService.queryGroupByEmpCode(employee.getEmpCode());
                     break;
                 default:
                     throw new OperatorManagementException(ExceptionCodes.NOT_FOUND_WHEN_QUERY, wrap("AC_RESOURCE_TYPE " + resType, "AC_ROLE"));

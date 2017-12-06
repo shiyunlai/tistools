@@ -1,5 +1,6 @@
 package org.tis.tools.rservice.om.capable;
 
+import com.alibaba.dubbo.common.utils.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
@@ -24,6 +25,8 @@ import org.tis.tools.service.om.exception.OMExceptionCodes;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.tis.tools.common.utils.BasicUtil.wrap;
 
@@ -46,6 +49,10 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 	IPositionRService positionRService;
 	@Autowired
 	BOSHGenEmpCode boshGenEmpCode;
+	@Autowired
+	OmGroupService omGroupService;
+	@Autowired
+	OmDutyService omDutyService;
 
 	@Override
 	public String genEmpCode(String orgCode, String empDegree) throws ToolsRuntimeException {
@@ -790,6 +797,53 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 			}
 		}
 		return opList;
+	}
+
+	/**
+	 * 查询指定人员所在所有工作组
+	 *
+	 * @param empCode
+	 */
+	@Override
+	public List<OmGroup> queryGroupByEmpCode(String empCode) throws EmployeeManagementException {
+		if (StringUtils.isBlank(empCode))
+			throw new EmployeeManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL,
+					wrap("empCode(String)", "queryGroupByEmpCode"));
+		OmEmployee emp = queryEmployeeBrief(empCode);
+		try {
+			Set<String> groupGuids = omEmpGroupService.query(new WhereCondition()
+					.andEquals(OmEmpGroup.COLUMN_GUID_EMP, emp.getGuid()))
+					.stream().map(OmEmpGroup::getGuidEmp).collect(Collectors.toSet());
+			List<OmGroup> list = new ArrayList<>();
+			if(CollectionUtils.isNotEmpty(groupGuids))
+				list.addAll(omGroupService.query(new WhereCondition().andIn(OmGroup.COLUMN_GUID, new ArrayList<>(groupGuids))));
+			return list;
+		} catch (Exception e) {
+			logger.error("queryGroupbyEmpCode exception: ", e);
+			throw new EmployeeManagementException(ExceptionCodes.FAILURE_WHEN_CALL, wrap("queryGroupByEmpCode", e));
+		}
+	}
+	/**
+	 * 查询指定人员所在所有职务
+	 *
+	 * @param empCode
+	 */
+	@Override
+	public List<OmDuty> queryDutyByEmpCode(String empCode) throws EmployeeManagementException {
+		if (StringUtils.isBlank(empCode))
+			throw new EmployeeManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL,
+					wrap("empCode(String)", "queryDutyByEmpCode"));
+		List<OmPosition> positions = queryPosbyEmpCode(empCode);
+		try {
+			Set<String> dutyGuids = positions.stream().map(OmPosition::getGuidDuty).collect(Collectors.toSet());
+			List<OmDuty> list = new ArrayList<>();
+			if(CollectionUtils.isNotEmpty(dutyGuids))
+				list.addAll(omDutyService.query(new WhereCondition().andIn(OmDuty.COLUMN_GUID, new ArrayList<>(dutyGuids))));
+			return list;
+		} catch (Exception e) {
+			logger.error("queryDutyByEmpCode exception: ", e);
+			throw new EmployeeManagementException(ExceptionCodes.FAILURE_WHEN_CALL, wrap("queryGroupByEmpCode", e));
+		}
 	}
 
 	@Override

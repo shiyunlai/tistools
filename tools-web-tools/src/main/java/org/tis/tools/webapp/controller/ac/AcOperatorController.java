@@ -285,7 +285,7 @@ public class AcOperatorController extends BaseController {
         JSONObject jsonObject = JSONObject.parseObject(content);
         String operatorGuid = jsonObject.getString("operatorGuid");//操作员GUID
         String resType = jsonObject.getString("resType");//资源类型
-        List<AcRole> roleList = operatorRService.queryOperatorRoleByResType(operatorGuid, resType);
+        List<AcRole> roleList = operatorRService.queryOperatorResByResType(operatorGuid, resType);
         return getReturnMap(roleList);
     }
 
@@ -700,5 +700,4 @@ public class AcOperatorController extends BaseController {
         userRealm.clearAllCache();
         return getReturnMap(null);
     }
-
 }
