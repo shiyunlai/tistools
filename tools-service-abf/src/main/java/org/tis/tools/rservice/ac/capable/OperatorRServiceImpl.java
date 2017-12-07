@@ -1847,10 +1847,10 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
                     wrap(surroundBracketsWithLFStr(AcFunc.COLUMN_FUNC_CODE, funcCode), AcFunc.TABLE_NAME));
         }
         Map<String, List<Map>> operatorFuncBhvInfo = getOperatorFuncBhvInfo(userId, funcList.get(0).getGuid());
-        List<String> bhvCodes = new ArrayList<>();
+        Set<String> bhvCodes = new HashSet<>();
         operatorFuncBhvInfo.get("auth").forEach(map -> bhvCodes.add((String)map.get("bhvCode")));
         operatorFuncBhvInfo.get("permit").forEach(map -> bhvCodes.add((String)map.get("bhvCode")));
-        return bhvCodes;
+        return new ArrayList<>(bhvCodes);
     }
 
     /**
