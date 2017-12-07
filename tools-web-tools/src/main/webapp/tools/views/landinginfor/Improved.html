@@ -39,6 +39,7 @@
                                 <input type="text" class="form-control"
                                        ng-model="landingFrom.confirmPassword" required
                                        name="dict_key2" />
+                                <span style="margin-top: 10px;color: red;" ng-if="landingFrom.newPassword!=landingFrom.confirmPassword&&landingFrom.confirmPassword.length>0">*两次密码不正确</span>
                             </div>
                         </div>
                     </div>
@@ -47,9 +48,9 @@
                             <label class="control-label col-md-2"></label>
                             <div class="col-md-10">
                                 <div class="actions btn-set" style="float: right;">
-                                    <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="add(landingFrom)" > 保存
+                                    <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false&&landingFrom.newPassword==landingFrom.confirmPassword"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="add(landingFrom)" > 保存
                                     </button>
-                                    <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存
+                                    <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true||landingFrom.newPassword!==landingFrom.confirmPassword"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存
                                     </button>
                                     <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
                                     </button>

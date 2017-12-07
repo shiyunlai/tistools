@@ -9,7 +9,10 @@
     "delete": {"ctrl": "om/busiorg", "func": "delete","emo":"删除业务机构"},
     "deletebusiorg": {"ctrl": "om/busiorg", "func": "deletebusiorg","emo":"删除当前节点和所有子节点"},
     "updatebusiorg": {"ctrl": "om/busiorg", "func": "updatebusiorg","emo":"更新业务机构"},
-    "queryBusiorgByGuid": {"ctrl": "om/busiorg", "func": "queryBusiorgByGuid","emo":"根据GUID查询业务机构信息"}
+    "queryBusiorgByGuid": {"ctrl": "om/busiorg", "func": "queryBusiorgByGuid","emo":"根据GUID查询业务机构信息"},
+    "queryDictItemListByDictKey": {"ctrl": "DictController", "func": "queryDictItemListByDictKey","emo":"根据key查询业务字典项"},
+    "updateFuncBhvType ": {"ctrl": "AcAppController", "func": "updateFuncBhvType ","emo":"修改功能行为类型"},
+    "queryOperateHistoryList": {"ctrl": "OperateLogController", "func": "queryOperateHistoryList","emo":"查询操作对象历史日志"}
   },
   "dictonary_service" : {
     "createSysDict": {"ctrl": "DictController", "func": "createSysDict","emo":"新增业务字典"},
@@ -27,19 +30,24 @@
     "exportDictExcel": {"ctrl": "DictController", "func": "exportDictExcel","emo":" 导出所有业务字典为excel"},
     "queryDictTree": {"ctrl": "DictController", "func": "queryDictTree","emo":" 查询业务字典对应树结构"},
     "queryDict": {"ctrl": "DictController", "func": "queryDict","emo":" 根据key查询业务字典信息"},
-    "setDefaultDictValue": {"ctrl": "DictController", "func": "setDefaultDictValue","emo":" 修改业务字典项默认值"}
+    "setDefaultDictValue": {"ctrl": "DictController", "func": "setDefaultDictValue","emo":" 修改业务字典项默认值"},
+    "updateFuncBhvType ": {"ctrl": "AcAppController", "func": "updateFuncBhvType ","emo":"修改功能行为类型"},
+    "queryOperateHistoryList": {"ctrl": "OperateLogController", "func": "queryOperateHistoryList","emo":"查询操作对象历史日志"}
   },
   "duty_service" : {
-    "dutytree": {"ctrl": "om/duty", "func": "dutytree","em":"查询职务树"},
+    "dutytree": {"ctrl": "om/duty", "func": "dutytree","emo":"查询职务树"},
     "loadallduty": {"ctrl": "om/duty", "func": "loadallduty","emo":"生成职务列表"},
-    "addduty": {"ctrl": "om/duty", "func": "addduty","em":"新增职务"},
+    "addduty": {"ctrl": "om/duty", "func": "addduty","emo":"新增职务"},
     "initdutyCode": {"ctrl": "om/duty", "func": "initdutyCode","emo":"生成职务代码"},
     "querydutybyType": {"ctrl": "om/duty", "func": "querydutybyType","emo":" 通过职务套别查询职务"},
     "querychild": {"ctrl": "om/duty", "func": "querychild","emo":" 查询下级职务"},
     "queryempbudutyCode": {"ctrl": "om/duty", "func": "queryempbudutyCode","emo":" 查询职务下人员,用过岗位查询"},
     "deletedutyByCode": {"ctrl": "om/duty", "func": "deletedutyByCode","emo":" 删除职务"},
-    "updateDuty": {"ctrl": "om/duty", "func": "updateDuty","em":"更新职务"},
-    "queryDucyList": {"ctrl": "om/duty", "func": "queryDutyList","em":"查询所有职务"}
+    "updateDuty": {"ctrl": "om/duty", "func": "updateDuty","emo":"更新职务"},
+    "queryDucyList": {"ctrl": "om/duty", "func": "queryDutyList","emo":"查询所有职务"},
+    "queryDictItemListByDictKey": {"ctrl": "DictController", "func": "queryDictItemListByDictKey","emo":"根据key查询业务字典项"},
+    "updateFuncBhvType ": {"ctrl": "AcAppController", "func": "updateFuncBhvType ","emo":"修改功能行为类型"},
+    "queryOperateHistoryList": {"ctrl": "OperateLogController", "func": "queryOperateHistoryList","emo":"查询操作对象历史日志"}
   },
   "Emp_service" : {
     "queryemployee": {"ctrl": "om/emp", "func": "queryemployee","emo":"查询所有人员信息"},
@@ -57,7 +65,10 @@
     "initEmpCode": {"ctrl": "om/emp", "func": "initEmpCode","emo":"生成员工代码"},
     "fixmainOrg": {"ctrl": "om/emp", "func": "fixmainOrg","emo":"指定新的主机构"},
     "fixmainPos": {"ctrl": "om/emp", "func": "fixmainPos","emo":"指定新的主岗位"},
-    "changeEmpStatus": {"ctrl": "om/emp", "func": "changeEmpStatus","emo":"改变员工状态"}
+    "changeEmpStatus": {"ctrl": "om/emp", "func": "changeEmpStatus","emo":"改变员工状态"},
+    "queryDictItemListByDictKey": {"ctrl": "DictController", "func": "queryDictItemListByDictKey","emo":"根据key查询业务字典项"},
+    "updateFuncBhvType ": {"ctrl": "AcAppController", "func": "updateFuncBhvType ","emo":"修改功能行为类型"},
+    "queryOperateHistoryList": {"ctrl": "OperateLogController", "func": "queryOperateHistoryList","emo":"查询操作对象历史日志"}
   },
   "application_service" : {
     "appAdd": {"ctrl": "AcAppController", "func": "appAdd","emo":"新增应用服务"},
@@ -98,7 +109,9 @@
     "updateAcFuncResource": {"ctrl": "AcAppController", "func": "updateAcFuncResource","emo":"修改功能资源"},
     "queryAcFuncResource": {"ctrl": "AcAppController", "func": "queryAcFuncResource","emo":"查询功能资源"},
     "updateFuncBhvType": {"ctrl": "AcAppController", "func": "updateFuncBhvType","emo":"修改行为类型"},
-    "setFuncBhvStatus": {"ctrl": "AcAppController", "func": "setFuncBhvStatus","emo":"设置功能行为是否有效"}
+    "setFuncBhvStatus": {"ctrl": "AcAppController", "func": "setFuncBhvStatus","emo":"设置功能行为是否有效"},
+    "queryDictItemListByDictKey": {"ctrl": "DictController", "func": "queryDictItemListByDictKey","emo":"根据key查询业务字典项"},
+    "queryOperateHistoryList": {"ctrl": "OperateLogController", "func": "queryOperateHistoryList","emo":"查询操作对象历史日志"}
   },
   "menu_service" : {
     "queryAllAcApp": {"ctrl": "AcMenuController", "func": "queryAllAcApp","emo":"查询所有应用"},
@@ -118,12 +131,18 @@
     "createRootOperatorMenu": {"ctrl": "AcMenuController", "func": "createRootOperatorMenu","emo":"新增重组跟菜单"},
     "createChildOperatorMenu": {"ctrl": "AcMenuController", "func": "createChildOperatorMenu","emo":"新增重组子菜单"},
     "editOperatorMenu": {"ctrl": "AcMenuController", "func": "editOperatorMenu","emo":"修改重组子菜单"},
-    "deleteOperatorMenu": {"ctrl": "AcMenuController", "func": "deleteOperatorMenu","emo":"删除重组子菜单"}
+    "deleteOperatorMenu": {"ctrl": "AcMenuController", "func": "deleteOperatorMenu","emo":"删除重组子菜单"},
+    "queryDictItemListByDictKey": {"ctrl": "DictController", "func": "queryDictItemListByDictKey","emo":"根据key查询业务字典项"},
+    "updateFuncBhvType ": {"ctrl": "AcAppController", "func": "updateFuncBhvType ","emo":"修改功能行为类型"},
+    "queryOperateHistoryList": {"ctrl": "OperateLogController", "func": "queryOperateHistoryList","emo":"查询操作对象历史日志"}
   },
   "numres_service" : {
     "querySeqnoList": {"ctrl": "SeqnoController", "func": "querySeqnoList","emo":"查询序号资源表"},
     "editSeqno": {"ctrl": "SeqnoController", "func": "editSeqno","emo":"修改序号资源表"},
-    "deleteSeqno": {"ctrl": "SeqnoController", "func": "deleteSeqno","emo":"删除序号资源表"}
+    "deleteSeqno": {"ctrl": "SeqnoController", "func": "deleteSeqno","emo":"删除序号资源表"},
+    "queryDictItemListByDictKey": {"ctrl": "DictController", "func": "queryDictItemListByDictKey","emo":"根据key查询业务字典项"},
+    "updateFuncBhvType ": {"ctrl": "AcAppController", "func": "updateFuncBhvType ","emo":"修改功能行为类型"},
+    "queryOperateHistoryList": {"ctrl": "OperateLogController", "func": "queryOperateHistoryList","emo":"查询操作对象历史日志"}
   },
   "operator_service" : {
     "queryAllOperator": {"ctrl": "AcOperatorController", "func": "queryAllOperator","emo":"查询操作员列表"},
@@ -165,7 +184,12 @@
     "queryConfigList": {"ctrl": "AcOperatorConfig", "func": "queryConfigList","emo":"查询个性化配置列表"},
     "getOperatorFuncAuthInfo": {"ctrl": "AcOperatorController", "func": "getOperatorFuncAuthInfo","emo":"获取操作员功能信息(已授予，未授予)"},
     "addAcOperatorFunc": {"ctrl": "AcOperatorController", "func": "addAcOperatorFunc","emo":"添加操作员特殊功能权限"},
-    "removeAcOperatorFunc": {"ctrl": "AcOperatorController", "func": "removeAcOperatorFunc","emo":"移除操作员特殊功能权限"}
+    "removeAcOperatorFunc": {"ctrl": "AcOperatorController", "func": "removeAcOperatorFunc","emo":"移除操作员特殊功能权限"},
+    "refreshOperator": {"ctrl": "AcOperatorController", "func": "refreshOperator","emo":"清除单挑操作员缓存"},
+    "refreshAll": {"ctrl": "AcOperatorController", "func": "refreshAll","emo":"清除所有操作员缓存"},
+    "queryDictItemListByDictKey": {"ctrl": "DictController", "func": "queryDictItemListByDictKey","emo":"根据key查询业务字典项"},
+    "updateFuncBhvType ": {"ctrl": "AcAppController", "func": "updateFuncBhvType ","emo":"修改功能行为类型"},
+    "queryOperateHistoryList": {"ctrl": "OperateLogController", "func": "queryOperateHistoryList","emo":"查询操作对象历史日志"}
   },
   "abftree_service" : {
     "loadmaintree": {"ctrl": "om/org", "func": "tree","emo":" 展示机构树"},
@@ -189,7 +213,7 @@
     "enableorg": {"ctrl": "om/org", "func": "enableorg","emo":"启用-注销-停用机构"},
     "enableposition": {"ctrl": "om/org", "func": "enableposition","emo":"启用-注销-岗位"},
     "deletePosition": {"ctrl": "om/org", "func": "deletePosition","emo":"删除岗位"},
-    "queryAllorg": {"ctrl": "om/org", "func": "queryAllorg","em":"查询所有机构"},
+    "queryAllorg": {"ctrl": "om/org", "func": "queryAllorg","emo":"查询所有机构"},
     "queryAllposition": {"ctrl": "om/org", "func": "queryAllposition","emo":"查询所有岗位"},
     "queryRole": {"ctrl": "om/org", "func": "queryRole","emo":"查询机构已经拥有的角色"},
     "addRoleParty": {"ctrl": "om/org", "func": "addRoleParty","emo":"新增权限"},
@@ -203,7 +227,10 @@
     "queryAllposbyOrg": {"ctrl": "om/org", "func": "queryAllposbyOrg","emo":"未用到"},
     "initPosCode": {"ctrl": "om/org", "func": "initPosCode","emo":"初始化Code，未用到"},
     "copyOrg": {"ctrl": "om/org", "func": "copyOrg","emo":"拷贝机构"},
-    "moveOrg": {"ctrl": "om/org", "func": "moveOrg","emo":"拖动机构"}
+    "moveOrg": {"ctrl": "om/org", "func": "moveOrg","emo":"拖动机构"},
+    "queryDictItemListByDictKey": {"ctrl": "DictController", "func": "queryDictItemListByDictKey","emo":"根据key查询业务字典项"},
+    "updateFuncBhvType ": {"ctrl": "AcAppController", "func": "updateFuncBhvType ","emo":"修改功能行为类型"},
+    "queryOperateHistoryList": {"ctrl": "OperateLogController", "func": "queryOperateHistoryList","emo":"查询操作对象历史日志"}
   },
   "role_service" : {
     "queryRoleList": {"ctrl": "AcRoleController", "func": "queryRoleList","emo":"查询角色列表"},
@@ -222,7 +249,6 @@
     "queryAcRoleBhvsByFuncGuid": {"ctrl": "AcRoleController", "func": "queryAcRoleBhvsByFuncGuid","emo":"查询角色拥有功能的权限行为"},
     "addAcRoleBhvs": {"ctrl": "AcRoleController", "func": "addAcRoleBhvs","emo":"新增角色功能行为定义"},
     "removeAcRoleBhvs": {"ctrl": "AcRoleController", "func": "removeAcRoleBhvs","emo":"删除角色功能行为定义"},
-
     "acRoleEntityTree": {"ctrl": "AcRoleController", "func": "acRoleEntityTree","emo":"角色与实体树查询"},
     "addAcRoleEntity": {"ctrl": "AcRoleController", "func": "addAcRoleEntity","emo":"新增角色与实体关系"},
     "deleteAcRoleEntity": {"ctrl": "AcRoleController", "func": "deleteAcRoleEntity","emo":"删除角色与实体关系"},
@@ -237,7 +263,10 @@
     "queryAcEntityfieldList": {"ctrl": "AcRoleController", "func": "queryAcEntityfieldList","emo":"查询实体属性列表"},
     "queryAcDatascopeList": {"ctrl": "AcRoleController", "func": "queryAcDatascopeList","emo":"查询数据范围权限列表"},
     "queryAcEntityList": {"ctrl": "AcRoleController", "func": "queryAcEntityList","emo":"查询实体对象列表"},
-    "configRoleEntity": {"ctrl": "AcRoleController", "func": "configRoleEntity","emo":"角色配置实体权限"}
+    "configRoleEntity": {"ctrl": "AcRoleController", "func": "configRoleEntity","emo":"角色配置实体权限"},
+    "queryDictItemListByDictKey": {"ctrl": "DictController", "func": "queryDictItemListByDictKey","emo":"根据key查询业务字典项"},
+    "updateFuncBhvType ": {"ctrl": "AcAppController", "func": "updateFuncBhvType ","emo":"修改功能行为类型"},
+    "queryOperateHistoryList": {"ctrl": "OperateLogController", "func": "queryOperateHistoryList","emo":"查询操作对象历史日志"}
   },
   "entity_service" : {
     "queryAcEntityTreeList": {"ctrl": "entity", "func": "queryAcEntityTreeList","emo":"查询实体对象列表"},
@@ -251,18 +280,24 @@
     "queryAcDatascopeList": {"ctrl": "entity", "func": "queryAcDatascopeList","emo":"查询数据范围权限列表"},
     "createAcDatascope": {"ctrl": "entity", "func": "createAcDatascope","emo":"新增实体数据范围权限"},
     "editAcDatascope": {"ctrl": "entity", "func": "editAcDatascope","emo":"修改实体数据范围权限"},
-    "deleteAcDatescope": {"ctrl": "entity", "func": "deleteAcDatescope","emo":"删除实体数据范围权限"}
+    "deleteAcDatescope": {"ctrl": "entity", "func": "deleteAcDatescope","emo":"删除实体数据范围权限"},
+    "queryDictItemListByDictKey": {"ctrl": "DictController", "func": "queryDictItemListByDictKey","emo":"根据key查询业务字典项"},
+    "updateFuncBhvType ": {"ctrl": "AcAppController", "func": "updateFuncBhvType ","emo":"修改功能行为类型"},
+    "queryOperateHistoryList": {"ctrl": "OperateLogController", "func": "queryOperateHistoryList","emo":"查询操作对象历史日志"}
   },
   "systempara_service" : {
     "queryRunConfigList": {"ctrl": "RunConfigController", "func": "queryRunConfigList","emo":"查询系统运行参数列表"},
     "createRunConfig": {"ctrl": "RunConfigController", "func": "createRunConfig","emo":"新增系统参数"},
     "editRunConfig": {"ctrl": "RunConfigController", "func": "editRunConfig","emo":"修改系统参数"},
-    "deleteRunConfig": {"ctrl": "RunConfigController", "func": "deleteRunConfig","emo":"删除系统参数"}
+    "deleteRunConfig": {"ctrl": "RunConfigController", "func": "deleteRunConfig","emo":"删除系统参数"},
+    "queryDictItemListByDictKey": {"ctrl": "DictController", "func": "queryDictItemListByDictKey","emo":"根据key查询业务字典项"},
+    "updateFuncBhvType ": {"ctrl": "AcAppController", "func": "updateFuncBhvType ","emo":"修改功能行为类型"},
+    "queryOperateHistoryList": {"ctrl": "OperateLogController", "func": "queryOperateHistoryList","emo":"查询操作对象历史日志"}
   },
   "Workgroup_service" : {
     "loadmaintree": {"ctrl": "om/workgroup", "func": "workgrouptree","emo":"展示工作组树"},
     "searchtree": {"ctrl": "om/workgroup", "func": "searchtree","emo":"展示筛选树"},
-    "loadsearchtree": {"ctrl": "om/org", "func": "search"},
+    "loadsearchtree": {"ctrl": "om/org", "func": "search","emo":"未用到"},
     "loadempin": {"ctrl": "om/workgroup", "func": "loadempin","emo":"生成下级人员列表"},
     "loadempNotin": {"ctrl": "om/workgroup", "func": "loadempNotin","emo":"加载不在此工作组的人员列表(同属同一机构)"},
     "loadposin": {"ctrl": "om/workgroup", "func": "loadpositionin","emo":"生成下级岗位列表"},
@@ -279,11 +314,14 @@
     "addGroupPosition": {"ctrl": "om/workgroup", "func": "addGroupPosition","emo":"新添岗位"},
     "deleteEmpGroup": {"ctrl": "om/workgroup", "func": "deleteEmpGroup","emo":"删除人员-工作组关联"},
     "deleteGroupPosition": {"ctrl": "om/workgroup", "func": "deleteGroupPosition","emo":"删除岗位"},
-    "queryAllGroup": {"ctrl": "om/workgroup", "func": "queryAllGroup","em":"查询所有工作组"},
-    "queryApp": {"ctrl": "om/workgroup", "func": "queryApp","em":"查询工作组"},
-    "queryNotInApp": {"ctrl": "om/workgroup", "func": "queryNotInApp","em":"查询可以为工作组添加的应用"},
-    "addGroupApp": {"ctrl": "om/workgroup", "func": "addGroupApp","em":"新增工作组-应用记录"},
-    "deleteGroupApp": {"ctrl": "om/workgroup", "func": "deleteGroupApp","em":"删除工作组-应用记录"}
+    "queryAllGroup": {"ctrl": "om/workgroup", "func": "queryAllGroup","emo":"查询所有工作组"},
+    "queryApp": {"ctrl": "om/workgroup", "func": "queryApp","emo":"查询工作组"},
+    "queryNotInApp": {"ctrl": "om/workgroup", "func": "queryNotInApp","emo":"查询可以为工作组添加的应用"},
+    "addGroupApp": {"ctrl": "om/workgroup", "func": "addGroupApp","emo":"新增工作组-应用记录"},
+    "deleteGroupApp": {"ctrl": "om/workgroup", "func": "deleteGroupApp","emo":"删除工作组-应用记录"},
+    "queryDictItemListByDictKey": {"ctrl": "DictController", "func": "queryDictItemListByDictKey","emo":"根据key查询业务字典项"},
+    "updateFuncBhvType ": {"ctrl": "AcAppController", "func": "updateFuncBhvType ","emo":"修改功能行为类型"},
+    "queryOperateHistoryList": {"ctrl": "OperateLogController", "func": "queryOperateHistoryList","emo":"查询操作对象历史日志"}
   },
   "login_service" : {
     "updatePassword": {"ctrl": "AcAuthenticationController", "func": "updatePassword","emo":"修改密码"},
@@ -297,7 +335,9 @@
     "queryOperateLogList": {"ctrl": "OperateLogController", "func": "queryOperateLogList","emo":"查询操作日志列表"},
     "queryOperateHistoryList": {"ctrl": "OperateLogController", "func": "queryOperateHistoryList","emo":"查询操作对象历史日志"},
     "queryOperateDetail": {"ctrl": "OperateLogController", "func": "queryOperateDetail","emo":"查询操作日志详情"},
-    "queryLoginHistory": {"ctrl": "OperateLogController", "func": "queryLoginHistory","emo":"查询操作员登录日志"}
+    "queryLoginHistory": {"ctrl": "OperateLogController", "func": "queryLoginHistory","emo":"查询操作员登录日志"},
+    "queryDictItemListByDictKey": {"ctrl": "DictController", "func": "queryDictItemListByDictKey","emo":"根据key查询业务字典项"},
+    "updateFuncBhvType ": {"ctrl": "AcAppController", "func": "updateFuncBhvType ","emo":"修改功能行为类型"}
 
   }
 }

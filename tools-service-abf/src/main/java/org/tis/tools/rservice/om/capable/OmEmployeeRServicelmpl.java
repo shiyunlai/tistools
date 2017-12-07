@@ -813,7 +813,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		try {
 			Set<String> groupGuids = omEmpGroupService.query(new WhereCondition()
 					.andEquals(OmEmpGroup.COLUMN_GUID_EMP, emp.getGuid()))
-					.stream().map(OmEmpGroup::getGuidEmp).collect(Collectors.toSet());
+					.stream().map(OmEmpGroup::getGuidGroup).collect(Collectors.toSet());
 			List<OmGroup> list = new ArrayList<>();
 			if(CollectionUtils.isNotEmpty(groupGuids))
 				list.addAll(omGroupService.query(new WhereCondition().andIn(OmGroup.COLUMN_GUID, new ArrayList<>(groupGuids))));

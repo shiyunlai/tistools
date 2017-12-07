@@ -8,7 +8,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
         /* 左侧角色查询逻辑 */
         i18nService.setCurrentLang("zh-cn");
     //查询应用
-    var subFrom  = {};
+/*    var subFrom  = {};
     var headers ='FUN0001'
     menu_service.queryAllAcApp(subFrom,headers).then(function(data){
         if(data.status == "success"){
@@ -17,8 +17,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
         }else{
             toastr['error']('初始化查询失败'+'<br/>'+data.retMessage);
         }
-    })
-
+    })*/
     var gridOptions = {};
         $scope.gridOptions = gridOptions;
         var com = [{ field: 'roleCode', displayName: '角色代码'},
@@ -55,7 +54,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
         role_service.queryRoleList(subFrom).then(function(data){
             console.log(data)
                 var datas = $filter('Arraysort')(data.retMessage);//调用管道排序
-                console.log(datas)
                 if(data.status == "success"){
                     $scope.gridOptions.data =  datas;
                     $scope.gridOptions.mydefalutData = datas;
@@ -71,7 +69,7 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
     $scope.role_add = function(){
             openwindow($modal, 'views/roleManage/rolemanageAdd.html', 'lg',//弹出页面
                 function ($scope, $modalInstance) {
-                    $scope.roleList = role.Appall;//循环渲染，在弹窗中
+                    // $scope.roleList = role.Appall;//循环渲染，在弹窗中
                     $scope.add = function(item){
                         var subFrom = {};
                         subFrom = item;
@@ -98,7 +96,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
                openwindow($modal, 'views/roleManage/rolemanageAdd.html', 'lg',//弹出页面
                    function ($scope, $modalInstance) {
                         $scope.editflag = true;//不允许修改
-                       $scope.roleList = role.Appall;//循环渲染，在弹窗中
                        $scope.roleFrom = items;
                        $scope.id = id;
                        $scope.add = function(item){
@@ -564,10 +561,7 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                         $scope.gridOptions.mydefalutData = datas;
                         $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
                     }else{
-                        var datas  = [];
-                        $scope.gridOptions.data =  datas;
-                        $scope.gridOptions.mydefalutData = datas;
-                        $scope.gridOptions.getPage(1,$scope.gridOptions.paginationPageSize);
+                        toastr('error')
                     }
                 })
                 //导入方法

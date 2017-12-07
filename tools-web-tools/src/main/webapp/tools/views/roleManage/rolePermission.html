@@ -48,21 +48,27 @@
                 </ul>
                 <div class="tab-content portlet light" ng-show="roleflag.limit">
                     <div class="portlet-body col-md-6">
-                        <div id="container"></div>
-                        <button type="button" name="back" class="btn btn-primary" style="margin-top:15px; margin-left: 20px;"  ng-if="!edit" ng-click="role.edidConfig()"> 修改功能范围
+                        <!--是否允许查询角色功能-->
+                        <div fun-active="/AcRoleController/queryRoleFunc">
+                            <div  id="container"></div>
+                        </div>
+                        <button type="button" name="back" class="btn btn-primary" style="margin-top:15px; margin-left: 20px;" fun-active="/AcRoleController/configRoleFunc"  ng-if="!edit" ng-click="role.edidConfig()"> 修改功能范围
                         </button>
                         <button type="button" name="back" class="btn btn-primary" style="margin-top:15px; margin-left: 20px;" ng-if="edit" ng-click="role.checkAll()"> 保存
                         </button>
                     </div>
-                    <div class="col-md-6" ng-if="funcedit">
-                <div ui-grid="gridFuncedit" class="grid"
-                     ui-grid-pagination
-                     ui-grid-selection ui-grid-resize-columns>
-                </div>
+                    <div class="col-md-6" ng-show="funcedit">
+                        <!--是否有查询角色功能行为权限-->
+                        <div fun-active="/AcRoleController/queryAcRoleBhvsByFuncGuid">
+                            <div ui-grid="gridFuncedit" class="grid" ng-if="funcedit"
+                                 ui-grid-pagination
+                                 ui-grid-selection ui-grid-resize-columns>
+                            </div>
+                        </div>
                 <div  class="col-md-12"  style="margin-top: 20px;float: right;">
-                    <button type="button" name="back" class="btn btn-primary" ng-click="role.funclist()"> 新增
+                    <button type="button" name="back" class="btn btn-primary" fun-active="/AcAppController/queryAllBhvDefForFunc" ng-click="role.funclist()"> 新增
                     </button>
-                    <button type="button" name="back" class="btn btn-danger" ng-click="role_Deletefunc()"> 删除
+                    <button type="button" name="back" class="btn btn-danger" fun-active="/AcRoleController/removeAcRoleBhvs"  ng-click="role_Deletefunc()"> 删除
                     </button>
                 </div>
             </div>

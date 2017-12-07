@@ -36,15 +36,18 @@
     <!-- 页签结束 -->
     <!-- 员工列表开始 -->
     <div class="tab-content portlet light"  ng-if="flag.yglb" id="test">
-            <div   ui-grid="empgrid"
-                   ui-grid-pagination
-                   ui-grid-selection ui-grid-resize-columns></div>
+        <div fun-active="/om/emp/queryemployee" >
+            <div  ui-grid="empgrid"
+                  ui-grid-pagination
+                  ui-grid-selection ui-grid-resize-columns></div>
+        </div>
+
         <div class="actions btn-set" style="float: right;margin-top:20px;">
             <button type="button" name="back" class="btn btn-primary"   fun-active="/om/emp/addemployee" ng-click="emp.add({})"> 新增
             </button>
             <button type="button" name="back" class="btn btn-primary"  fun-active="/om/emp/updateemployee" ng-click="emp.edit()" ng-disabled="!buttonflag"> 编辑基础信息
             </button>
-            <button type="button" name="back" class="btn btn-primary"  fun-active="/om/emp/addemployee" ng-click="emp.editoper()" ng-if="editoper"> 编辑相关操作员
+            <button type="button" name="back" class="btn btn-primary"  fun-active="/om/emp/updateemployee" ng-click="emp.editoper()" ng-show="editoper"> 编辑相关操作员
             </button>
             <button type="button" name="back" class="btn btn-primary"  fun-active="/om/emp/changeEmpStatus" ng-show="empentry" ng-click="emp.Entry()" > 入职
             </button>
@@ -52,11 +55,11 @@
             </button>
             <button type="button" name="back" class="btn btn-primary"  fun-active="/om/emp/updateemployee" ng-click="emp.detail()"  ng-disabled="!buttonflag"> 查看详情
             </button>
-            <button type="button" name="back" class="btn btn-primary"  fun-active="/om/emp/queryemployee" ng-click="emp.belongorg()" ng-disabled="!buttonflag"> 个人所属组织设置
+            <button type="button" name="back" class="btn btn-primary"  fun-active="/om/emp/assignOrg" ng-click="emp.belongorg()" ng-disabled="!buttonflag"> 个人所属组织设置
             </button>
             <!--<button type="button" name="back" class="btn btn-primary" ng-click="emp.setqx()"> 个人权限设置-->
             <!--</button>-->
-            <button type="button" name="back" class="btn btn-danger" fun-active="/OperateLogController/queryOperateHistoryList"  ng-click="emp.histroy()"  ng-disabled="!buttonflag"> 查看概况
+            <button type="button" name="back" class="btn btn-danger" fun-active="/OperateLogController/queryOperateHistoryList"  ng-click="emp.histroyss()" > 查看概况
             </button>
             <button type="button" name="back" class="btn btn-danger"  fun-active="/om/emp/deletemp" ng-click="emp.deletemp()"  ng-disabled="!buttonflag"> 删除
             </button>
@@ -409,7 +412,7 @@
     </div>
     <!-- 员工详情信息结束 -->
     <!-- 员工组织归属开始 -->
-    <div class="tab-content portlet light clearfix" ng-if="flag.zzgs">
+    <div class="tab-content portlet light clearfix" ng-show="flag.zzgs">
         <div class="portlet-title col-md-12">
             <div class="portlet-title col-md-6">
                 <div class="portlet-title col-md-12">
@@ -417,16 +420,16 @@
                         <span class="caption-subject font-blue-sharp bold uppercase">员工-机构列表</span>
                     </div>
                     <div class="actions btn-set" style="float: right;">
-                        <button type="button" name="back" class="btn btn-primary" ng-click="emp.assignOrg()"> 新增指派
+                        <button type="button" name="back" class="btn btn-primary" fun-active="/om/emp/assignOrg" ng-click="emp.assignOrg()"> 新增指派
                         </button>
-                        <button type="button" name="back" class="btn btn-danger" ng-click="emp.disassignOrg()" ng-disabled="orgQx"> 取消指配
+                        <button type="button" name="back" class="btn btn-danger" fun-active="/om/emp/disassignOrg" ng-click="emp.disassignOrg()" ng-disabled="orgQx"> 取消指配
                         </button>
-                        <button type="button" name="back" class="btn btn-primary" ng-click="emp.fixmainOrg()" ng-disabled="orgZp"> 设为新主机构
+                        <button type="button" name="back" class="btn btn-primary" fun-active="/om/emp/fixmainOrg" ng-click="emp.fixmainOrg()" ng-disabled="orgZp"> 设为新主机构
                         </button>
                     </div>
                 </div>
-                <div class="col-md-12">
-                    <div ui-grid="orggrid"
+                <div class="col-md-12" fun-active="/om/emp/loadEmpOrg" >
+                    <div ui-grid="orggrid" ng-if="flag.zzgs"
                          ui-grid-pagination
                          ui-grid-selection ui-grid-resize-columns></div>
                 </div>
@@ -437,16 +440,16 @@
                         <span class="caption-subject font-blue-sharp bold uppercase">员工-岗位列表</span>
                     </div>
                     <div class="actions btn-set" style="float: right;">
-                        <button type="button" name="back" class="btn btn-primary" ng-click="emp.assignPos()"> 新增指派
+                        <button type="button" name="back" class="btn btn-primary" fun-active="/om/emp/assignPos" ng-click="emp.assignPos()"> 新增指派
                         </button>
-                        <button type="button" name="back" class="btn btn-danger" ng-click="emp.disassignPos()" ng-disabled="posQx"> 取消指配
+                        <button type="button" name="back" class="btn btn-danger" fun-active="/om/emp/disassignPos" ng-click="emp.disassignPos()" ng-disabled="posQx"> 取消指配
                         </button>
-                        <button type="button" name="back" class="btn btn-primary" ng-click="emp.fixmainPos()" ng-disabled="posZp"> 设为新主岗位
+                        <button type="button" name="back" class="btn btn-primary" fun-active="/om/emp/fixmainPos" ng-click="emp.fixmainPos()" ng-disabled="posZp"> 设为新主岗位
                         </button>
                     </div>
                 </div>
-                <div class="col-md-12">
-                    <div ui-grid="postgrid"
+                <div class="col-md-12" fun-active="/om/emp/loadEmpPos">
+                    <div ui-grid="postgrid" ng-if="flag.zzgs"
                          ui-grid-pagination ui-grid-empty-base-layer
                          ui-grid-selection ui-grid-resize-columns></div>
                 </div>
@@ -454,77 +457,4 @@
         </div>
     </div>
     <!-- 员工组织归属结束 -->
-    <!-- 人员权限开始 -->
-    <!--<div class="tab-content portlet light clearfix" ng-if="flag.ryqx">-->
-        <!--<div class="col-md-6">-->
-            <!--<div class="portlet-title col-md-12">-->
-                <!--<div class="caption col-md-10">-->
-                    <!--<span class="caption-subject font-blue-sharp bold uppercase">已授予角色列表</span>-->
-                <!--</div>-->
-                <!--<div class="actions btn-set col-md-2" style="float: right;">-->
-                    <!--<button type="button" name="back" class="btn btn-danger" ng-click="emp.back()"> 删除-->
-                    <!--</button>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="col-md-12">-->
-                <!--<div ui-grid="alrolegird" style="height:200px;"-->
-                     <!--ui-grid-pagination-->
-                     <!--ui-grid-selection ui-grid-resize-columns></div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="col-md-6">-->
-            <!--<div class="portlet-title col-md-12">-->
-                <!--<div class="caption col-md-10">-->
-                    <!--<span class="caption-subject font-blue-sharp bold uppercase">未授予角色列表</span>-->
-                <!--</div>-->
-                <!--<div class="actions btn-set col-md-2" style="float: right;">-->
-                    <!--<button type="button" name="back" class="btn btn-primary" ng-click=""> 添加-->
-                    <!--</button>-->
-
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="col-md-12">-->
-                <!--<div ui-grid="notrolegird" style="height:200px;"-->
-                     <!--ui-grid-pagination-->
-                     <!--ui-grid-selection ui-grid-resize-columns></div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="col-md-12">-->
-            <!--<div class="portlet-title col-md-12">-->
-                <!--<div class="caption col-md-10">-->
-                    <!--<span class="caption-subject font-blue-sharp bold uppercase">特别权限设置</span>-->
-                <!--</div>-->
-                <!--<div class="actions btn-set col-md-2" style="float: right;">-->
-                    <!--<button type="button" name="back" class="btn btn-primary" ng-click=""> 添加-->
-                    <!--</button>-->
-                    <!--<button type="button" name="back" class="btn btn-danger" ng-click="emp.back()"> 删除-->
-                    <!--</button>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="col-md-12">-->
-                <!--<div ui-grid="postgrid" style="height:200px;"-->
-                     <!--ui-grid-pagination-->
-                     <!--ui-grid-selection ui-grid-resize-columns></div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="col-md-12">-->
-            <!--<div class="portlet-title col-md-12">-->
-                <!--<div class="caption col-md-10">-->
-                    <!--<span class="caption-subject font-blue-sharp bold uppercase">继承的角色</span>-->
-                <!--</div>-->
-                <!--<div class="actions btn-set col-md-2" style="float: right;">-->
-                    <!--<button type="button" name="back" class="btn btn-primary" ng-click=""> 添加-->
-                    <!--</button>-->
-                    <!--<button type="button" name="back" class="btn btn-danger" ng-click="emp.back()"> 删除-->
-                    <!--</button>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="col-md-12">-->
-                <!--<div ui-grid="postgrid" style="height:200px;"-->
-                     <!--ui-grid-pagination-->
-                     <!--ui-grid-selection ui-grid-resize-columns></div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!-- 人员权限结束 -->
 </div>

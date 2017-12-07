@@ -653,49 +653,67 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
                 if (StringUtils.isEquals(type, ACConstants.RESOURCE_TYPE_ROLE)) {
                     List<String> guids = resMapList.get(type).stream()
                             .map(AcOperatorIdentityres::getGuidAcResource).collect(Collectors.toList());
-                    acRoleService.query(new WhereCondition().andEquals(AcRole.COLUMN_GUID, guids)).forEach(o -> {
+                    acRoleService.query(new WhereCondition().andIn(AcRole.COLUMN_GUID, guids)).forEach(o -> {
                         Map<String, Object> map = ObjectUtil.beanToMap(o);
-                        map.put(AcOperatorIdentityres.COLUMN_AC_RESOURCETYPE, type);
+                        map.put("resourceType", type);
+                        map.put("resourceName", o.getRoleName());
+                        map.put("resourceCode", o.getRoleCode());
+                        map.put("guidAcResource", o.getGuid());
                         result.add(map);
                     });
                 } else if (StringUtils.isEquals(type, ACConstants.RESOURCE_TYPE_FUNCTION)) {
                     List<String> guids = resMapList.get(type).stream()
                             .map(AcOperatorIdentityres::getGuidAcResource).collect(Collectors.toList());
-                    acFuncService.query(new WhereCondition().andEquals(AcFunc.COLUMN_GUID, guids)).forEach(o -> {
+                    acFuncService.query(new WhereCondition().andIn(AcFunc.COLUMN_GUID, guids)).forEach(o -> {
                         Map<String, Object> map = ObjectUtil.beanToMap(o);
-                        map.put(AcOperatorIdentityres.COLUMN_AC_RESOURCETYPE, type);
+                        map.put("resourceType", type);
+                        map.put("resourceName", o.getFuncName());
+                        map.put("resourceCode", o.getFuncCode());
+                        map.put("guidAcResource", o.getGuid());
                         result.add(map);
                     });
                 } else if (StringUtils.isEquals(type, ACConstants.RESOURCE_TYPE_ORGANIZATION)) {
                     List<String> guids = resMapList.get(type).stream()
                             .map(AcOperatorIdentityres::getGuidAcResource).collect(Collectors.toList());
-                    omOrgService.query(new WhereCondition().andEquals(OmOrg.COLUMN_GUID, guids)).forEach(o -> {
+                    omOrgService.query(new WhereCondition().andIn(OmOrg.COLUMN_GUID, guids)).forEach(o -> {
                         Map<String, Object> map = ObjectUtil.beanToMap(o);
-                        map.put(AcOperatorIdentityres.COLUMN_AC_RESOURCETYPE, type);
+                        map.put("resourceType", type);
+                        map.put("resourceName", o.getOrgName());
+                        map.put("resourceCode", o.getOrgCode());
+                        map.put("guidAcResource", o.getGuid());
                         result.add(map);
                     });
                 } else if (StringUtils.isEquals(type, ACConstants.RESOURCE_TYPE_DUTY)) {
                     List<String> guids = resMapList.get(type).stream()
                             .map(AcOperatorIdentityres::getGuidAcResource).collect(Collectors.toList());
-                    omDutyService.query(new WhereCondition().andEquals(OmDuty.COLUMN_GUID, guids)).forEach(o -> {
+                    omDutyService.query(new WhereCondition().andIn(OmDuty.COLUMN_GUID, guids)).forEach(o -> {
                         Map<String, Object> map = ObjectUtil.beanToMap(o);
-                        map.put(AcOperatorIdentityres.COLUMN_AC_RESOURCETYPE, type);
+                        map.put("resourceType", type);
+                        map.put("resourceName", o.getDutyName());
+                        map.put("resourceCode", o.getDutyCode());
+                        map.put("guidAcResource", o.getGuid());
                         result.add(map);
                     });
                 } else if (StringUtils.isEquals(type, ACConstants.RESOURCE_TYPE_WORKGROUP)) {
                     List<String> guids = resMapList.get(type).stream()
                             .map(AcOperatorIdentityres::getGuidAcResource).collect(Collectors.toList());
-                    omGroupService.query(new WhereCondition().andEquals(OmGroup.COLUMN_GUID, guids)).forEach(o -> {
+                    omGroupService.query(new WhereCondition().andIn(OmGroup.COLUMN_GUID, guids)).forEach(o -> {
                         Map<String, Object> map = ObjectUtil.beanToMap(o);
-                        map.put(AcOperatorIdentityres.COLUMN_AC_RESOURCETYPE, type);
+                        map.put("resourceType", type);
+                        map.put("resourceName", o.getGroupName());
+                        map.put("resourceCode", o.getGroupCode());
+                        map.put("guidAcResource", o.getGuid());
                         result.add(map);
                     });
                 } else if (StringUtils.isEquals(type, ACConstants.RESOURCE_TYPE_POSITION)) {
                     List<String> guids = resMapList.get(type).stream()
                             .map(AcOperatorIdentityres::getGuidAcResource).collect(Collectors.toList());
-                    omPositionService.query(new WhereCondition().andEquals(OmPosition.COLUMN_GUID, guids)).forEach(o -> {
+                    omPositionService.query(new WhereCondition().andIn(OmPosition.COLUMN_GUID, guids)).forEach(o -> {
                         Map<String, Object> map = ObjectUtil.beanToMap(o);
-                        map.put(AcOperatorIdentityres.COLUMN_AC_RESOURCETYPE, type);
+                        map.put("resourceType", type);
+                        map.put("resourceName", o.getPositionName());
+                        map.put("resourceCode", o.getPositionCode());
+                        map.put("guidAcResource", o.getGuid());
                         result.add(map);
                     });
                 }
