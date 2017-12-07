@@ -25,7 +25,7 @@ public class OperatorRServiceTest extends SpringJunitSupport {
         try {
             String empGuid = "111";
             String partyType = ACConstants.RESOURCE_TYPE_ROLE;
-            List<AcRole> acRoleList = operatorRService.queryOperatorRoleByResType(empGuid,partyType);
+            List<AcRole> acRoleList = operatorRService.queryOperatorResByResType(empGuid,partyType);
             System.out.println(acRoleList);
         } catch (ToolsRuntimeException e) {
             System.out.println("错误码："+e.getCode());
