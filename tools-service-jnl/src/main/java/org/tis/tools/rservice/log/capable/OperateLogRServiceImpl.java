@@ -210,24 +210,26 @@ public class OperateLogRServiceImpl extends BaseRService implements IOperateLogR
                 objGuidMap.put(obj.getGuid(), objDetail);
                 logGuidMap.put(obj.getGuidOperate(), objDetail);
             }
-            WhereCondition wc = new WhereCondition();
-            wc.andIn(LogAbfOperate.COLUMN_GUID, logGuids);
-            wc.setOrderBy(LogAbfOperate.COLUMN_OPERATE_TIME + " DESC");
-            List<LogAbfOperate> logs = logAbfOperateService.query(wc);
-            List<LogAbfKeyword> keywords = logAbfKeywordService.query(new WhereCondition().andIn(LogAbfKeyword.COLUMN_GUID_HISTORY, objGuids));
-            List<LogAbfChange> changes = logAbfChangeService.query(new WhereCondition().andIn(LogAbfChange.COLUMN_GUID_HISTORY, objGuids));
+            if (logGuids.size() > 0) {
+                WhereCondition wc = new WhereCondition();
+                wc.andIn(LogAbfOperate.COLUMN_GUID, logGuids);
+                wc.setOrderBy(LogAbfOperate.COLUMN_OPERATE_TIME + " DESC");
+                List<LogAbfOperate> logs = logAbfOperateService.query(wc);
+                List<LogAbfKeyword> keywords = logAbfKeywordService.query(new WhereCondition().andIn(LogAbfKeyword.COLUMN_GUID_HISTORY, objGuids));
+                List<LogAbfChange> changes = logAbfChangeService.query(new WhereCondition().andIn(LogAbfChange.COLUMN_GUID_HISTORY, objGuids));
 
-            for(LogAbfOperate log : logs) {
-                LogOperateDetail detail = new LogOperateDetail();
-                detail.setLog(log);
-                detail.getAllObj().add(logGuidMap.get(log.getGuid()));
-                logDetails.add(detail);
-            }
-            for(LogAbfKeyword keyword : keywords) {
-                objGuidMap.get(keyword.getGuidHistory()).getKeywords().add(keyword);
-            }
-            for (LogAbfChange change : changes) {
-                objGuidMap.get(change.getGuidHistory()).getChanges().add(change);
+                for (LogAbfOperate log : logs) {
+                    LogOperateDetail detail = new LogOperateDetail();
+                    detail.setLog(log);
+                    detail.getAllObj().add(logGuidMap.get(log.getGuid()));
+                    logDetails.add(detail);
+                }
+                for (LogAbfKeyword keyword : keywords) {
+                    objGuidMap.get(keyword.getGuidHistory()).getKeywords().add(keyword);
+                }
+                for (LogAbfChange change : changes) {
+                    objGuidMap.get(change.getGuidHistory()).getChanges().add(change);
+                }
             }
             resultMap.put("list", logDetails);
             return resultMap;
