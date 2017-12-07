@@ -754,6 +754,7 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                 funcGuids.addAll(acOperatorServiceExt.getFuncListByIdentity(new ArrayList<>(partyGuids), new ArrayList<>(roleGuids)));
                 // 剔除特殊禁止功能
                 funcGuids.removeAll(acOperatorFuncService.query(new WhereCondition()
+                        .andEquals(AcOperatorFunc.COLUMN_GUID_OPERATOR, operator.getGuid())
                         .andEquals(AcOperatorFunc.COLUMN_GUID_APP, appGuid)
                         .andEquals(AcOperatorFunc.COLUMN_AUTH_TYPE, ACConstants.AUTH_TYPE_FORBID)
                 ).stream().map(AcOperatorFunc::getGuidFunc).collect(Collectors.toSet()));
@@ -884,6 +885,7 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                 funcGuids.addAll(acOperatorServiceExt.getFuncListByIdentity(new ArrayList<>(partyGuids), new ArrayList<>(roleGuids)));
                 // 剔除特殊禁止功能
                 funcGuids.removeAll(acOperatorFuncService.query(new WhereCondition()
+                        .andEquals(AcOperatorFunc.COLUMN_GUID_OPERATOR, operator.getGuid())
                         .andEquals(AcOperatorFunc.COLUMN_GUID_APP, appGuid)
                         .andEquals(AcOperatorFunc.COLUMN_AUTH_TYPE, ACConstants.AUTH_TYPE_FORBID)
                 ).stream().map(AcOperatorFunc::getGuidFunc).collect(Collectors.toSet()));
