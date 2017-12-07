@@ -559,6 +559,14 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
         Set<String> funcGuids = new HashSet<>();
         Set<String> partyGuids = new HashSet<>();
         try {
+            // 查询对应身份
+            AcOperatorIdentity acOperatorIdentity = acOperatorIdentityService.loadByGuid(identityGuid);
+            if (acOperatorIdentity == null ) {
+                throw new AuthManagementException(ACExceptionCodes.IDENTITY_NOT_CORRESPONDING_TO_USER, wrap(identityGuid, userId));
+            }
+            if (StringUtils.isEquals(acOperatorIdentity.getIdentityName(), "系统默认身份")) {
+                return queryOperatorAuthFuncsInApp(userId, appGuid);
+            }
             Map<String, List<AcOperatorIdentityres>> resMapList = acOperatorIdentityresService.query(
                     new WhereCondition().andEquals(AcOperatorIdentityres.COLUMN_GUID_IDENTITY, identityGuid))
                     .stream()
@@ -616,17 +624,20 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
      *
      * @param userId  用户名
      * @param appCode 应用code
-     * @param idetityGuid 身份GUID
+     * @param identityGuid 身份GUID
      * @return
      * @throws AuthManagementException
      */
     @Override
-    public AbfPermission getPermissions(String userId, String appCode, String idetityGuid) throws AuthManagementException {
+    public AbfPermission getPermissions(String userId, String appCode, String identityGuid) throws AuthManagementException {
         if (StringUtils.isBlank(userId)) {
-            throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap("userId", "getViewPermissions"));
+            throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap("userId(String)", "getViewPermissions"));
         }
         if (StringUtils.isBlank(appCode)) {
-            throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap("appGuid", "getViewPermissions"));
+            throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap("appGuid(String)", "getViewPermissions"));
+        }
+        if (StringUtils.isBlank(identityGuid)) {
+            throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_QUERY, wrap("identityGuid(String)", "getViewPermissions"));
         }
         List<AcApp> acApps = acAppService.query(new WhereCondition().andEquals(AcApp.COLUMN_APP_CODE, appCode));
         if (CollectionUtils.isEmpty(acApps)) {
@@ -648,7 +659,7 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
                 .stream()
                 .collect(Collectors.groupingBy(map -> (String) map.get("funcCode")));
         Set<String> bhvPermission = new HashSet<>();
-        List<AcFunc> acFuncs = queryOperatorIdenAuthFuncsInApp(userId, acApp.getGuid(), idetityGuid);
+        List<AcFunc> acFuncs = queryOperatorIdenAuthFuncsInApp(userId, acApp.getGuid(), identityGuid);
         for(AcFunc acFunc : acFuncs) {
             String funcCode = acFunc.getFuncCode();
             StringBuilder sb = new StringBuilder("+" + funcCode + "+");
