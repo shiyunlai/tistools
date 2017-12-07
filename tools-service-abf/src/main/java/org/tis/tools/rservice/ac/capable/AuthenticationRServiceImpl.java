@@ -512,7 +512,7 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
                         .andEquals(AcOperatorFunc.COLUMN_GUID_OPERATOR, operator.getGuid()));
                 for (AcOperatorFunc acOperatorFunc : operatorFuncs) {
                     String guidFunc = acOperatorFunc.getGuidFunc();
-                    if (StringUtils.isEquals(ACConstants.AUTH_TYPE_FORBID, guidFunc)) {
+                    if (StringUtils.isEquals(ACConstants.AUTH_TYPE_FORBID, acOperatorFunc.getAuthType())) {
                         funcGuidList.remove(guidFunc);
                     } else {
                         funcGuidList.add(guidFunc);
@@ -554,6 +554,7 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
             throw new AuthManagementException(ExceptionCodes.NOT_ALLOW_NULL_WHEN_CALL,
                     wrap("identityGuid(String)", "queryOperatorIdenAuthFuncsInApp"));
         }
+        AcOperator operator = operatorRService.queryOperatorByUserId(userId);
         List<AcFunc> list = new ArrayList<>();
         Set<String> roleGuids = new HashSet<>();
         Set<String> funcGuids = new HashSet<>();
@@ -591,11 +592,13 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
                         .collect(Collectors.toSet()));
             // 剔除特殊禁止功能和其他应用的特别允许功能
             funcGuids.removeAll(acOperatorFuncService.query(new WhereCondition()
+                    .andEquals(AcOperatorFunc.COLUMN_GUID_OPERATOR, operator.getGuid())
                     .andEquals(AcOperatorFunc.COLUMN_GUID_APP, appGuid)
                     .andEquals(AcOperatorFunc.COLUMN_AUTH_TYPE, ACConstants.AUTH_TYPE_FORBID)
                     .or()
-                    .andNotEquals(AcOperatorFunc.COLUMN_GUID_APP, appGuid)
+                    .andEquals(AcOperatorFunc.COLUMN_GUID_OPERATOR, operator.getGuid())
                     .andEquals(AcOperatorFunc.COLUMN_AUTH_TYPE, ACConstants.AUTH_TYPE_PERMIT)
+                    .andNotEquals(AcOperatorFunc.COLUMN_GUID_APP, appGuid)
             ).stream().map(AcOperatorFunc::getGuidFunc).collect(Collectors.toSet()));
             if(CollectionUtils.isNotEmpty(funcGuids))
                 list.addAll(acFuncService.query(new WhereCondition()
