@@ -992,7 +992,7 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                 roleGuids.add(acOperatorRole.getGuidRole());
             }
             if (roleGuids.size() > 0) {
-                acRoleList = acRoleService.query(new WhereCondition().andIn("GUID", new ArrayList<String>(roleGuids)));
+                acRoleList = acRoleService.query(new WhereCondition().andIn("GUID", new ArrayList<>(roleGuids)));
             }
             return acRoleList;
         } catch (ToolsRuntimeException ae) {

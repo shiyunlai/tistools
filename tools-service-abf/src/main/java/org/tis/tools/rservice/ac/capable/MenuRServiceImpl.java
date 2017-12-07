@@ -717,25 +717,47 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
             if (StringUtil.isEmpty(identityGuid)) {
                 throw new MenuManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, wrap("GUID_IDENTITY"));
             }
-            Set<String> funcGuids = new HashSet<>();
-            // 查询当前身份下的资源
-            List<AcOperatorIdentityres> operatorIdentityresList = acOperatorIdentityresService.query(new WhereCondition()
-                    .andEquals(AcOperatorIdentityres.COLUMN_GUID_IDENTITY, identityGuid));
-            Set<String> roleGuids = new HashSet<>();
-            Set<String> partyGuids = new HashSet<>();
-            for (AcOperatorIdentityres res : operatorIdentityresList) {
-                String type = res.getAcResourcetype();
-                String guid = res.getGuidAcResource();
-                if (StringUtils.equals(ACConstants.RESOURCE_TYPE_ROLE, type)) {
-                    roleGuids.add(guid);
-                } else if (StringUtils.equals(ACConstants.RESOURCE_TYPE_FUNCTION, type)) {
-                    funcGuids.add(guid);
-                } else {
-                    partyGuids.add(guid);
-                }
+            AcOperator operator = operatorRService.queryOperatorByUserId(userId);
+            // 判断当前操作员是否有该身份
+            List<AcOperatorIdentity> operatorIdentities = acOperatorIdentityService.query(new WhereCondition()
+                    .andEquals(AcOperatorIdentity.COLUMN_GUID_OPERATOR, operator.getGuid())
+                    .andEquals(AcOperatorIdentity.COLUMN_GUID, identityGuid));
+            if (CollectionUtils.isEmpty(operatorIdentities)) {
+                throw new MenuManagementException(ACExceptionCodes.IDENTITY_NOT_CORRESPONDING_TO_USER, wrap(identityGuid, userId));
             }
-            // 组合功能
-            funcGuids.addAll(acOperatorServiceExt.getFuncListByIdentity(new ArrayList<>(partyGuids), new ArrayList<>(roleGuids)));
+            AcOperatorIdentity operatorIdentity = operatorIdentities.get(0);
+            Set<String> funcGuids = new HashSet<>(); // 功能GUID
+            // 如果为系统默认身份
+            if (StringUtils.equals(operatorIdentity.getIdentityName(), "系统默认身份")) {
+                funcGuids = authenticationRService.queryOperatorAuthFuncsInApp(userId, appGuid)
+                        .stream()
+                        .map(AcFunc::getGuid)
+                        .collect(Collectors.toSet());
+            } else {
+                // 查询当前身份下的资源
+                List<AcOperatorIdentityres> operatorIdentityresList = acOperatorIdentityresService.query(new WhereCondition()
+                        .andEquals(AcOperatorIdentityres.COLUMN_GUID_IDENTITY, identityGuid));
+                Set<String> roleGuids = new HashSet<>();
+                Set<String> partyGuids = new HashSet<>();
+                for (AcOperatorIdentityres res : operatorIdentityresList) {
+                    String type = res.getAcResourcetype();
+                    String guid = res.getGuidAcResource();
+                    if (StringUtils.equals(ACConstants.RESOURCE_TYPE_ROLE, type)) {
+                        roleGuids.add(guid);
+                    } else if (StringUtils.equals(ACConstants.RESOURCE_TYPE_FUNCTION, type)) {
+                        funcGuids.add(guid);
+                    } else {
+                        partyGuids.add(guid);
+                    }
+                }
+                // 组合功能
+                funcGuids.addAll(acOperatorServiceExt.getFuncListByIdentity(new ArrayList<>(partyGuids), new ArrayList<>(roleGuids)));
+                // 剔除特殊禁止功能
+                funcGuids.removeAll(acOperatorFuncService.query(new WhereCondition()
+                        .andEquals(AcOperatorFunc.COLUMN_GUID_APP, appGuid)
+                        .andEquals(AcOperatorFunc.COLUMN_AUTH_TYPE, ACConstants.AUTH_TYPE_FORBID)
+                ).stream().map(AcOperatorFunc::getGuidFunc).collect(Collectors.toSet()));
+            }
             List<AcMenu> menuList = new ArrayList<>();
             WhereCondition wc = new WhereCondition();
             wc.andEquals(AcMenu.COLUMN_GUID_APP, appGuid).andEquals(AcMenu.COLUMN_ISLEAF, CommonConstants.NO);
@@ -860,6 +882,11 @@ public class MenuRServiceImpl extends BaseRService implements IMenuRService{
                 }
                 // 组合功能
                 funcGuids.addAll(acOperatorServiceExt.getFuncListByIdentity(new ArrayList<>(partyGuids), new ArrayList<>(roleGuids)));
+                // 剔除特殊禁止功能
+                funcGuids.removeAll(acOperatorFuncService.query(new WhereCondition()
+                        .andEquals(AcOperatorFunc.COLUMN_GUID_APP, appGuid)
+                        .andEquals(AcOperatorFunc.COLUMN_AUTH_TYPE, ACConstants.AUTH_TYPE_FORBID)
+                ).stream().map(AcOperatorFunc::getGuidFunc).collect(Collectors.toSet()));
             }
             Set<String> menuGuids = new HashSet<>();
             if (funcGuids.size() > 0) {
