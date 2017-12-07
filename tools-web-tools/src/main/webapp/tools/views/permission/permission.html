@@ -61,7 +61,7 @@
                     <i class="green ace-icon fa fa-bars bigger-120"></i>角色功能配置
                 </a>
             </li>
-            <li ng-class="{true:'active',false:''}[proflat.funactive]">
+            <li ng-class="{true:'active',false:''}[proflat.funactive]" ng-if="!isselfts">
                 <a  data-toggle="tab" href ng-class="{true:'link',false:''}[proflat.funactive]" ng-click="permiss.loadgwdata(1)">
                     <i class="green ace-icon fa fa-bars bigger-120"></i>角色功能行为配置
                 </a>

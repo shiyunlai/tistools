@@ -194,6 +194,7 @@ MetronicApp.factory('settings', ['$rootScope','$http','common_service', function
         }else if(type == "APP"){
             if(_.isNil(settings.commlist[type])) {
                 $http.post(manurl + "/AcMenuController/queryAllAcApp",{}).then(function (response) {
+                    console.log(response)
                     settings.commlist[type] = response.data.retMessage;
                 });
             }

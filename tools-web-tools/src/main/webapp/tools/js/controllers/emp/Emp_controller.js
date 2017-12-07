@@ -1,7 +1,7 @@
 /**
  * Created by gaojie on 2017/6/26.
  */
-angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,$filter, $scope, Emp_service, gridUtil, abftree_service,common_service, $window, $http, $timeout, i18nService, filterFilter, uiGridConstants, $uibModal, $state) {
+angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,$filter,$state, $scope, Emp_service, gridUtil, abftree_service,common_service, $window, $http, $timeout, i18nService, filterFilter, uiGridConstants, $uibModal) {
     $scope.$on('$viewContentLoaded', function () {
         // initialize core components
         App.initAjax();
@@ -236,12 +236,18 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
             }
         )
     }
+
     //查看概况
-    emp.histroy = function () {
+    emp.histroyss = function () {
         var arr = $scope.empgrid.getSelectedRows();
-        var item = arr[0].guid;
-        $state.go("loghistory",{id:item});//跳转新页面
+        if(arr.length>0){
+            var item = arr[0].guid;
+            $state.go("loghistory",{id:item});//跳转到历史页面
+        }else{
+            toastr['error']("请至少选择一条数据进行查看！");
+        }
     }
+
     //详情按钮事件
     emp.detail = function () {
         var arr = $scope.empgrid.getSelectedRows();

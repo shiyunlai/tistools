@@ -1328,6 +1328,12 @@ public class ApplicationRServiceImpl extends BaseRService implements
 			if (StringUtils.isNotEmpty(result)) {
 				throw new AppManagementException(ExceptionCodes.LACK_PARAMETERS_WHEN_INSERT, wrap(result, AcBhvDef.TABLE_NAME));
 			}
+			if (acBhvDefService.count(new WhereCondition()
+					.andEquals(AcBhvDef.COLUMN_GUID_BEHTYPE, acBhvDef.getGuidBehtype())
+					.andEquals(AcBhvDef.COLUMN_BHV_CODE, acBhvDef.getBhvCode())) > 0)
+				throw new AppManagementException(ExceptionCodes.DUPLICATE_WHEN_INSERT,
+						wrap(surroundBracketsWithLFStr(AcBhvDef.COLUMN_BHV_CODE, acBhvDef.getBhvCode()),
+								AcBhvDef.TABLE_NAME));
 			acBhvDefService.insert(acBhvDef);
 			return acBhvDef;
 		} catch (ToolsRuntimeException e) {
@@ -1352,11 +1358,12 @@ public class ApplicationRServiceImpl extends BaseRService implements
 		if(CollectionUtils.isEmpty(guids)) {
 			throw new AppManagementException(ACExceptionCodes.PARMS_NOT_ALLOW_EMPTY, "功能操作行为GUID数组为空");
 		}
-		if(acFuncBhvService.count(new WhereCondition().andIn("GUID_FUNC", guids)) > 0) {
+		if(acFuncBhvService.count(new WhereCondition().andIn(AcFuncBhv.COLUMN_GUID_BHV, guids)) > 0) {
 			throw new AppManagementException(
 					ACExceptionCodes.AC_BHV_DEF_CAN_NOT_DELETE_WHEN_ASSIGNED, "不能删除已经指配的行为类型");
 		}
 		WhereCondition wc = new WhereCondition();
+		wc.andIn(AcBhvDef.COLUMN_GUID, guids);
 		List<AcBhvDef> list = acBhvDefService.query(wc);
 		try {
 			acBhvDefService.deleteByCondition(wc);

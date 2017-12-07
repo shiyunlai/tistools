@@ -32,20 +32,22 @@
                                 </div>
                             </div>-->
                             <div class="portlet-body">
-                                <div ui-grid="gridOptions"  class="grid"
-                                     ui-grid-pagination ui-grid-exporter
-                                     ui-grid-selection ui-grid-resize-columns>
+                                <div fun-active="/AcRoleController/queryRoleList">
+                                    <div ui-grid="gridOptions"  class="grid"
+                                         ui-grid-pagination ui-grid-exporter
+                                         ui-grid-selection ui-grid-resize-columns>
+                                    </div>
                                 </div>
                                 <div class="actions btn-set" style="float: right; margin-top:12px;">
-                                    <button type="button" name="back" class="btn btn-primary" ng-click="role_add()"> 新增
+                                    <button type="button" name="back" class="btn btn-primary" fun-active="/AcRoleController/createRole" ng-click="role_add()"> 新增
                                     </button>
-                                    <button type="button" name="back" class="btn btn-primary" ng-click="role_edit(4)">  修改
+                                    <button type="button" name="back" class="btn btn-primary" fun-active="/AcRoleController/editRole" ng-click="role_edit(4)">  修改
                                     </button>
-                                    <button type="button" name="back" class="btn btn-danger" ng-click="role_delete()"> 删除
+                                    <button type="button" name="back" class="btn btn-danger" fun-active="/AcRoleController/deleteRole" ng-click="role_delete()"> 删除
                                     </button>
-                                    <button type="button" name="back" class="btn btn-danger" ng-click="role_history()"> 查看概况
+                                    <button type="button" name="back" class="btn btn-danger" fun-active="/OperateLogController/queryOperateHistoryList" ng-click="role_history()"> 查看概况
                                     </button>
-                                    <button type="button" name="back" class="btn btn-danger" ng-disabled="!rolePer" ng-click="role_Permission()"> 角色权限配置
+                                    <button type="button" name="back" class="btn btn-danger" fun-active="/AcRoleController/queryRoleList"  ng-disabled="!rolePer" ng-click="role_Permission()"> 角色权限配置
                                     </button>
                                 </div>
                             </div>

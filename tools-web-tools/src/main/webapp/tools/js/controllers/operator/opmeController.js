@@ -232,8 +232,7 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
             }
         })
     }
-
-
+    
     //注销操作员状态
     $scope.operman.clear = function (item) {
         var res = $rootScope.res.operator_service;//页面所需调用的服务
@@ -251,7 +250,42 @@ MetronicApp.controller('opmanage_controller', function ($rootScope, $scope, $sta
             }
         })
     }
-
+    
+    //清除单挑操作员缓存
+    $scope.clearCache = function () {
+        var getSel = $scope.gridOptions.getSelectedRows();
+        console.log(getSel)
+        if(isNull(getSel) || getSel.length>1){
+            toastr['error']("请至少选择一个操作员进行清除！");
+        }else{
+            var subFrom = {};
+            subFrom.userId = getSel[0].userId;
+            common_service.post(res.refreshOperator, {data:subFrom}).then(function (data) {
+                console.log(data)
+                if(data.status == 'success'){
+                    toastr['success']( "清除缓存成功！");
+                    operman.queryAll();
+                }else{
+                    toastr['error']('清除缓存失败'+'<br/>'+data.retMessage);
+                }
+            })
+        }
+    }
+    //清除所有操作员缓存
+    $scope.clearCacheAll = function () {
+        if(confirm("您确认要删除所有操作员的缓存吗")){
+            var subFrom = {};
+            common_service.post(res.refreshAll, {data:subFrom}).then(function (data) {
+                console.log(data)
+                if(data.status == 'success'){
+                    toastr['success']( "更新权限信息成功！");
+                    operman.queryAll();
+                }else{
+                    toastr['error']('更新权限信息成功'+'<br/>'+data.retMessage);
+                }
+            })
+        }
+    }
 });
 
 
@@ -591,7 +625,6 @@ MetronicApp.controller('operat_controller', function ($rootScope, $scope, $state
     //继承角色表格生成
     var inheritgrid = {};
     $scope.inheritgrid = inheritgrid;
-    //操作员名称，代码  应用系统名称 代码
     //操作员名称，代码  应用系统名称 代码
     var com3 = [
         { field: 'roleName', displayName: '角色'}

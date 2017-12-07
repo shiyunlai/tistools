@@ -630,7 +630,7 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
     });
     $scope.alrolegird.enableFiltering = false;
     $scope.alrolegird.enableGridMenu = false;
-    $scope.alrolegird.enablePaginationControls = false;
+    $scope.alrolegird.enablePaginationControls = true;
     //未授予
     // var notrolegird = {};
     $scope.notrolegird = notrolegird;
@@ -645,7 +645,7 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
     });
     $scope.notrolegird.enableFiltering = false;
     $scope.notrolegird.enableGridMenu = false;
-    $scope.notrolegird.enablePaginationControls = false;
+    $scope.notrolegird.enablePaginationControls = true;
     //拉取已授予列表
     var realrolegird = function () {
         var subFrom = {};
@@ -667,7 +667,6 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
         var subFrom = {};
         subFrom.guid = guid;
         abftree_service.queryRoleNot(subFrom).then(function (data) {
-            console.log(data);
             if(data.status == "success" && !isNull(data.retMessage)){
                 $scope.notrolegird.data =  data.retMessage;
                 $scope.notrolegird.mydefalutData =  data.retMessage;

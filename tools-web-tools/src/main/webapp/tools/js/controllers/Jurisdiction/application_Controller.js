@@ -1470,7 +1470,8 @@ angular.module('MetronicApp').controller('application_controller', function($roo
                         return $scope.importadd;//数据方法
                     }
                     var com = [
-                        {field: "bhvName", displayName: '操作行为名称'}
+                        {field: "bhvName", displayName: '操作行为名称'},
+                        {field: "bhvCode", displayName: '操作行为代码'},
                     ];
                     //自定义点击事件
                     var f1 = function (row) {

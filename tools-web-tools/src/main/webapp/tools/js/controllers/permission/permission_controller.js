@@ -44,6 +44,8 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
         }
     }
 
+
+
     //查询应用内容显示
     $scope.permiss.search =function (item) {
            //让下方内容显示
@@ -137,7 +139,7 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
                         $scope.proflat.funcon = false;//功能显示
                         $scope.isYear = false;
                         $scope.permiss.funcselect = true;//配置角色功能行为显示
-
+                        $scope.isselfts =false;//控制tab二隐藏
                         blackAdd(data.node.id);//调用添加特别禁止功能
                         delblack(data.node.id);//调用移除特别禁止功能
                         allow(data.node.id);//调用添加特别允许功能
@@ -153,7 +155,7 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
                         delblackfunc();//调用功能移除禁止方法
                         allowfunc();//调用功能特别允许方法
                         removeallowfunc();//调用功能特别允许方法
-
+                        $scope.isselfts =true;
                         $scope.notrolegird.data =[] ;//数据全部清空
                         $scope.tograntgird.data =  [];
                         $scope.alrolegird.data =  [];
@@ -353,8 +355,10 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
 
 
     //添加特别允许功能
-    var allowfunc = function (funtguid) {
+    var allowfunc = function () {
+
         $scope.permiss.paginafunc = function () {
+
             if($scope.ogranfunc == ""){
                 toastr['error']("请至少选择一个角色进行添加");
                 return false;
@@ -442,7 +446,11 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
 
 
 
-
+    queryfunMap($scope.appGuid,userid);//查询操作员功能权限
+    blackFuncAdd();//添加功能特别禁止方法
+    delblackfunc();//调用功能移除禁止方法
+    allowfunc();//调用功能特别允许方法
+    removeallowfunc();//调用功能特别允许方法
 
 
 

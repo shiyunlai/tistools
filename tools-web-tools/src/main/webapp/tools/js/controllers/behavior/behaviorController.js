@@ -193,6 +193,32 @@ angular.module('MetronicApp').controller('behavior_controller', function($rootSc
             }
         })
     }
+
+
+
+
+    //新增所有行为
+   /* $scope.beha.beacAddAll = function () {
+        var guid = $scope.selectRow.guid;
+        var bhvtypeCode = $scope.selectRow.bhvtypeCode;
+        var res = $rootScope.res.log_service;
+        for(var k in res){
+            var subFrom = {};
+            subFrom.bhvCode  = '/'+res[k].ctrl+'/'+ res[k].func;
+            subFrom.bhvName = res[k].emo;
+            subFrom.guid = guid;
+            console.log(subFrom)
+            behavior_service.funactAdd(subFrom).then(function(data){
+                if(data.status == "success"){
+                    toastr['success']("批量新增成功！");
+                    beha.initt1(guid)
+                }else{
+                    toastr['error'](data.retCode,data.retMessage+"批量新增失败!");
+                }
+            })
+
+        }
+    }*/
     //新增行为
     $scope.beha.beacAdd = function () {
         var guid = $scope.selectRow.guid;
@@ -201,6 +227,7 @@ angular.module('MetronicApp').controller('behavior_controller', function($rootSc
                 //修改页面代码逻辑
                 $scope.add = function(item){//保存新增的函数
                     item.guid = guid;
+                    console.log(item)
                     behavior_service.funactAdd(item).then(function(data){
                         if(data.status == "success"){
                             toastr['success']("保存成功！");

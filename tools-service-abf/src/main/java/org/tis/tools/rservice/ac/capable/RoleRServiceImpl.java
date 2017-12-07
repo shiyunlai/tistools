@@ -967,7 +967,7 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                 }
                 // 职务
                 if (posiGuids.size() > 0) {
-                    List<OmPosition> omPositions = omPositionService.query(new WhereCondition().andIn("GUID", empGuid));
+                    List<OmPosition> omPositions = omPositionService.query(new WhereCondition().andIn(OmPosition.COLUMN_GUID, posiGuids));
                     for (OmPosition omPosition : omPositions) {
                         partyGuids.add(omPosition.getGuidDuty());
                     }

@@ -54,6 +54,7 @@ MetronicApp.controller('configuration_controller', function ($filter, $scope, $s
             $state.go("loghistory",{id:confGuid});//跳转到历史页面
         }
     }
+
     //修改配置
     $scope.config.edit = function(){
         var queryallconfig =config.queryallconfig;//拿到列表刷新方法
