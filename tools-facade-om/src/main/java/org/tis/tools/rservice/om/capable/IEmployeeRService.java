@@ -11,6 +11,7 @@ import org.tis.tools.rservice.om.exception.EmployeeManagementException;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
 * <pre>
@@ -411,6 +412,13 @@ public interface IEmployeeRService {
 	List<OmPosition> queryPosbyEmpCode(String empCode);
 
 	/**
+	 * 查询员工所有的岗位及对应的职务
+	 * @param empCode
+	 * @return
+	 */
+	List<Map> queryPosDutybyEmpCode(String empCode);
+
+	/**
 	 *查询指定人员所在所有工作组
 	 */
 	List<OmGroup> queryGroupByEmpCode(String empCode) throws EmployeeManagementException;
@@ -425,9 +433,14 @@ public interface IEmployeeRService {
 	List<OmOrg> queryCanAddOrgbyEmpCode(String empCode);
 
 	/**
-	 * 查询可以为人员添加的岗位
+	 * 查询机构下可以为人员添加的岗位
 	 */
-	List<OmPosition> queryCanAddPosbyEmpCode(String empCode);
+	List<OmPosition> queryCanAddPosbyEmpCode(String empCode, String orgGuid);
+
+	/**
+	 * 查询机构下可以为人员添加的工作组
+	 */
+	List<OmGroup> queryCanAddGroupbyEmpCode(String empCode, String orgGuid);
 
 
 	/**

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.model.def.JNLConstants;
 import org.tis.tools.model.po.om.OmEmployee;
+import org.tis.tools.model.po.om.OmGroup;
 import org.tis.tools.model.po.om.OmOrg;
 import org.tis.tools.model.po.om.OmPosition;
 import org.tis.tools.rservice.om.capable.IEmployeeRService;
@@ -154,6 +155,38 @@ public class EmployeeController extends BaseController {
     }
 
     /**
+     * 拉取人员-岗位及职务表
+     *
+     * @param content
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/loadEmpPosDuty",produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> loadEmpPosDuty(@RequestBody String content) {
+        // 收到请求
+        JSONObject jsonObj = JSONObject.parseObject(content);
+        String empCode = jsonObj.getString("empCode");
+        List<Map> list = employeeRService.queryPosDutybyEmpCode(empCode);
+        return getReturnMap(list);
+    }
+
+    /**
+     * 拉取人员-工作组表
+     *
+     * @param content
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/loadEmpGroup",produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> loadEmpGroup(@RequestBody String content) {
+        // 收到请求
+        JSONObject jsonObj = JSONObject.parseObject(content);
+        String empCode = jsonObj.getJSONObject("data").getString("empCode");
+        List<OmGroup> list = employeeRService.queryGroupByEmpCode(empCode);
+        return getReturnMap(list);
+    }
+
+    /**
      * 拉取可指派机构列表
      * @param content
      * @return
@@ -177,10 +210,28 @@ public class EmployeeController extends BaseController {
     @RequestMapping(value = "/loadPosNotInbyEmp",produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> loadPosNotInbyEmp(@RequestBody String content) {
         JSONObject jsonObj = JSONObject.parseObject(content);
-        String empCode = jsonObj.getString("empCode");
-        List<OmPosition> list = employeeRService.queryCanAddPosbyEmpCode(empCode);
+        JSONObject data = jsonObj.getJSONObject("data");
+        String empCode = data.getString("empCode");
+        String orgGuid = data.getString("orgGuid");
+        List<OmPosition> list = employeeRService.queryCanAddPosbyEmpCode(empCode, orgGuid);
         return getReturnMap(list);
+    }
 
+    /**
+     * 拉取可指派工作组列表
+     *
+     * @param content
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/loadGroupNotInbyEmp",produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public Map<String, Object> loadGroupNotInbyEmp(@RequestBody String content) {
+        JSONObject jsonObj = JSONObject.parseObject(content);
+        JSONObject data = jsonObj.getJSONObject("data");
+        String empCode = data.getString("empCode");
+        String orgGuid = data.getString("orgGuid");
+        List<OmGroup> list = employeeRService.queryCanAddGroupbyEmpCode(empCode, orgGuid);
+        return getReturnMap(list);
     }
 
     /**

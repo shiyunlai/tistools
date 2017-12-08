@@ -4,15 +4,17 @@
  */
 package org.tis.tools.service.om;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tis.tools.common.utils.StringUtil;
 import org.tis.tools.dao.om.OmOrgMapper;
 import org.tis.tools.dao.om.OmOrgMapperExt;
 import org.tis.tools.model.po.om.OmOrg;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -98,5 +100,14 @@ public class OmOrgServiceExt {
 
 	public void reorderOrg(String targetGuid, BigDecimal index, String flag){
 		omOrgMapperExt.reorderOrg(targetGuid, index, flag);
+	}
+
+	/**
+	 * 查询员工所有的岗位及对应的职务
+	 * @param posiGuids
+	 * @return
+	 */
+	public List<Map> queryPosDutybyEmpCode(List<String> posiGuids) {
+		return omOrgMapperExt.queryPosDutybyEmpCode(StringUtil.list2String(posiGuids));
 	}
 }

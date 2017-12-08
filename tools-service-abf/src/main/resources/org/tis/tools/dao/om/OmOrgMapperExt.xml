@@ -21,6 +21,19 @@
 		guid_parents is null or guid_parents = ''; 
 	</select>
 
+	<select id="queryPosDutybyEmpCode" resultType="map">
+		SELECT
+			a.*,
+			b.DUTY_NAME
+		FROM
+			om_position a,
+			om_duty b
+		WHERE
+			a.GUID_DUTY = b.GUID
+			AND a.guid IN ${posiGuids}
+	</select>
+
+
 	<update id="reorderOrg">
 		UPDATE
 		OM_ORG
@@ -75,5 +88,15 @@
 		,isleaf as isleaf
 		,sub_count as subCount
 		,remark as remark
+	</sql>
+
+	<sql id="queryPosDutybyEmpCode" >
+		a.guid as `guid`
+		,a.guid_org as `guidOrg`
+		,a.position_code as `positionCode`
+		,a.position_name as `positionName`
+		,a.position_type as `positionType`
+		,a.position_status as `positionStatus`
+		,b.duty_name as `dutyName`
 	</sql>
 </mapper>
