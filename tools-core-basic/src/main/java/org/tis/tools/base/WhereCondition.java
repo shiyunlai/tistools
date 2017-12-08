@@ -4,21 +4,16 @@
  */
 package org.tis.tools.base;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -229,6 +224,8 @@ public class WhereCondition  implements Serializable{
 					tmpSb.append(")");
 					sb.append(" ").append(clause).append(tmpSb.toString())
 							.append(" ");
+				} else {
+					sb.append(" ").append(clause).append("('') ");
 				}
 			} else if (value instanceof Date) {
 				sb.append(" ").append(clause).append(" '")

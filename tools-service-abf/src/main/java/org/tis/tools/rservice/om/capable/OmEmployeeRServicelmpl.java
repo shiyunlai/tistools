@@ -22,10 +22,7 @@ import org.tis.tools.service.ac.exception.ACExceptionCodes;
 import org.tis.tools.service.om.*;
 import org.tis.tools.service.om.exception.OMExceptionCodes;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.tis.tools.common.utils.BasicUtil.wrap;
@@ -53,6 +50,9 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 	OmGroupService omGroupService;
 	@Autowired
 	OmDutyService omDutyService;
+
+	@Autowired
+	OmOrgServiceExt orgServiceExt;
 
 	@Override
 	public String genEmpCode(String orgCode, String empDegree) throws ToolsRuntimeException {
@@ -794,9 +794,52 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		for(OmPosition op:opList){
 			if (op.getGuid().equals(mainguid)) {
 				op.setPositionName(op.getPositionName()+"(主)");
+				break;
 			}
 		}
 		return opList;
+	}
+
+	/**
+	 * 查询员工所有的岗位及对应的职务
+	 *
+	 * @param empCode
+	 * @return
+	 */
+	@Override
+	public List<Map> queryPosDutybyEmpCode(String empCode) {
+		//校验入参
+		if(StringUtil.isEmpty(empCode)){
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		List<Map> list = new ArrayList<>();
+		OmEmployee emp = queryEmployeeBrief(empCode);
+		WhereCondition wc = new WhereCondition();
+		wc.andEquals(OmEmpOrg.COLUMN_GUID_EMP, emp.getGuid());
+		List<OmEmpPosition> oepList = omEmpPositionService.query(wc);
+		//找出主岗位GUID
+		String mainguid = "";
+		if (oepList == null) {
+			return list;
+		}
+		List<String> guidList = new ArrayList<>();
+		for (OmEmpPosition oep : oepList) {
+			guidList.add(oep.getGuidPosition());
+			if (oep.getIsmain().equals("Y")) {
+				mainguid = oep.getGuidPosition();
+			}
+			break;
+		}
+		wc.clear();
+		wc.andIn(OmOrg.COLUMN_GUID, guidList);
+		list = orgServiceExt.queryPosDutybyEmpCode(guidList);
+		for (Map map: list) {
+			if (StringUtils.equals((String) map.get("guid"), mainguid)) {
+				map.put("positionName", map.get("positionName")+"(主)");
+				break;
+			}
+		}
+		return list;
 	}
 
 	/**
@@ -853,21 +896,44 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
 		}
 		List<OmOrg> orgList = orgRService.queryAllOrg();
-		List<OmOrg> inorgList = queryOrgbyEmpCode(empCode);
-		orgList.removeAll(inorgList);
-		return orgList;
+		Set<String> inorgList = queryOrgbyEmpCode(empCode).stream().map(OmOrg::getGuid).collect(Collectors.toSet());
+		return orgList.stream().filter(o -> !inorgList.contains(o.getGuid())).collect(Collectors.toList());
 	}
 
 	@Override
-	public List<OmPosition> queryCanAddPosbyEmpCode(String empCode) {
+	public List<OmPosition> queryCanAddPosbyEmpCode(String empCode, String orgGuid) {
 		//校验入参
-		if(StringUtil.isEmpty(empCode)){
+		if (StringUtil.isEmpty(empCode)) {
 			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
 		}
-		List<OmPosition> opList = positionRService.queryAllPosition();
-		List<OmPosition> inopList = queryPosbyEmpCode(empCode);
-		opList.removeAll(inopList);
-		return opList;
+		if (StringUtil.isEmpty(orgGuid)) {
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		List<String> inopList = queryPosbyEmpCode(empCode).stream().map(OmPosition::getGuid).collect(Collectors.toList());
+		return omPositionService.query(new WhereCondition()
+				.andEquals(OmPosition.COLUMN_GUID_ORG, orgGuid)
+				.andNotIn(OmPosition.COLUMN_GUID, inopList));
+	}
+
+	/**
+	 * 查询机构下可以为人员添加的工作组
+	 *
+	 * @param empCode
+	 * @param orgGuid
+	 */
+	@Override
+	public List<OmGroup> queryCanAddGroupbyEmpCode(String empCode, String orgGuid) {
+		//校验入参
+		if (StringUtil.isEmpty(empCode)) {
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		if (StringUtil.isEmpty(orgGuid)) {
+			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+		}
+		List<String> inopList = queryGroupByEmpCode(empCode).stream().map(OmGroup::getGuid).collect(Collectors.toList());
+		return omGroupService.query(new WhereCondition()
+				.andEquals(OmGroup.COLUMN_GUID_ORG, orgGuid)
+				.andNotIn(OmGroup.COLUMN_GUID, inopList));
 	}
 
 	/**

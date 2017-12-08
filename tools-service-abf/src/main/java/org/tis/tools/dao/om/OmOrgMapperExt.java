@@ -4,11 +4,12 @@
  */
 package org.tis.tools.dao.om;
 
-import java.math.BigDecimal;
-import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 import org.tis.tools.model.po.om.OmOrg;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -46,4 +47,11 @@ public interface OmOrgMapperExt {
 	 * @param flag
 	 */
 	public void reorderOrg(@Param("targetGuid")String targetGuid, @Param("index") BigDecimal index, @Param("flag") String flag);
+
+	/**
+	 * 查询员工所有的岗位及对应的职务
+	 * @param posiGuid
+	 * @return
+	 */
+	List<Map> queryPosDutybyEmpCode(@Param("posiGuid")String posiGuid);
 }
