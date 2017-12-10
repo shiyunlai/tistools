@@ -96,10 +96,10 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 			throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_CREATE_EMPLOYEE,
 					new Object[] { "EmpDegree" });
 		}
-		if (StringUtil.isEmpty(newEmployee.getGuidPosition())) {
-			throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_CREATE_EMPLOYEE,
-					new Object[] { "GuidPosition" });
-		}
+//		if (StringUtil.isEmpty(newEmployee.getGuidPosition())) {
+//			throw new OrgManagementException(OMExceptionCodes.LAKE_PARMS_FOR_CREATE_EMPLOYEE,
+//					new Object[] { "GuidPosition" });
+//		}
 		// 补充信息
 		newEmployee.setGuid(GUID.employee());
 		newEmployee.setEmpCode(boshGenEmpCode.genEmpCode());
@@ -107,22 +107,22 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		newEmployee.setRegdate(new Date());
 		newEmployee.setCreatetime(new Date());
 		newEmployee.setLastmodytime(new Date());
-		OmEmpOrg eoe = new OmEmpOrg();
-		eoe.setGuidEmp(newEmployee.getGuid());
-		eoe.setGuidOrg(newEmployee.getGuidOrg());
-		eoe.setIsmain("Y");
-		OmEmpPosition oep = new OmEmpPosition();
-		oep.setGuidPosition(newEmployee.getGuidPosition());
-		oep.setGuidEmp(newEmployee.getGuid());
-		oep.setIsmain("Y");
+//		OmEmpOrg eoe = new OmEmpOrg();
+//		eoe.setGuidEmp(newEmployee.getGuid());
+//		eoe.setGuidOrg(newEmployee.getGuidOrg());
+//		eoe.setIsmain("Y");
+//		OmEmpPosition oep = new OmEmpPosition();
+//		oep.setGuidPosition(newEmployee.getGuidPosition());
+//		oep.setGuidEmp(newEmployee.getGuid());
+//		oep.setIsmain("Y");
 		// 新增人员
 		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 			@Override
 			public void doInTransactionWithoutResult(TransactionStatus status) {
 				try {
 					omEmployeeService.insert(newEmployee);
-					omEmpOrgService.insert(eoe);
-					omEmpPositionService.insert(oep);
+//					omEmpOrgService.insert(eoe);
+//					omEmpPositionService.insert(oep);
 				} catch (Exception e) {
 					status.setRollbackOnly();
 					e.printStackTrace();
