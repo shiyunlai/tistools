@@ -23,8 +23,7 @@
 
 	<select id="queryPosDutybyEmpCode" resultType="map">
 		SELECT
-			a.*,
-			b.DUTY_NAME
+		<include refid="queryPosDutybyEmpCode"/>
 		FROM
 			om_position a,
 			om_duty b
