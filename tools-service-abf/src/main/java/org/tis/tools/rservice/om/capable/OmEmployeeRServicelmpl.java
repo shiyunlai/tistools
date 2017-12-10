@@ -807,10 +807,10 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 	 * @return
 	 */
 	@Override
-	public List<Map> queryPosDutybyEmpCode(String empCode) {
+	public List<Map> queryPosDutybyEmpCode(String empCode) throws EmployeeManagementException{
 		//校验入参
 		if(StringUtil.isEmpty(empCode)){
-			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
+			throw new EmployeeManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
 		}
 		List<Map> list = new ArrayList<>();
 		OmEmployee emp = queryEmployeeBrief(empCode);
@@ -828,7 +828,6 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 			if (oep.getIsmain().equals("Y")) {
 				mainguid = oep.getGuidPosition();
 			}
-			break;
 		}
 		wc.clear();
 		wc.andIn(OmOrg.COLUMN_GUID, guidList);
