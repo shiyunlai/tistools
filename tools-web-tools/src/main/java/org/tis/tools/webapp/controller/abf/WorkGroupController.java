@@ -1,14 +1,8 @@
 package org.tis.tools.webapp.controller.abf;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.beanutils.BeanUtils;
+import com.alibaba.dubbo.common.json.ParseException;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.TransactionStatus;
@@ -28,9 +22,12 @@ import org.tis.tools.webapp.log.OperateLog;
 import org.tis.tools.webapp.log.ReturnType;
 import org.tis.tools.webapp.util.AjaxUtils;
 
-import com.alibaba.dubbo.common.json.ParseException;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 机构管理功能
@@ -404,39 +401,19 @@ public class WorkGroupController extends BaseController {
     @OperateLog(
             operateType = "add",  // 操作类型
             operateDesc = "为工作组新增员工", // 操作描述
-            retType = ReturnType.List, // 返回类型，对象或数组
+            retType = ReturnType.Object, // 返回类型，对象或数组
             id = "guidGroup", // 操作对象标识
             name = "guidGroup", // 操作对象名
             keys = {"guidGroup","guidEmp"}) // 操作对象的关键值的键值名
     @ResponseBody
-    @RequestMapping(value = "/addEmpGroup")
+    @RequestMapping(value = "/addEmpGroup", produces ="application/json;charset=UTF-8", method= RequestMethod.POST)
     public Map<String, Object> addEmpGroup(@RequestBody String content) {
         JSONObject jsonObj = JSONObject.parseObject(content);
-        String groupGuid = jsonObj.getString("groupGuid");
-        List<Object> empguidList = jsonObj.getJSONArray("empGuidlist");
-        transactionTemplate.execute(new TransactionCallback<String>() {
-            @Override
-            public String doInTransaction(TransactionStatus status) {
-                try {
-                    for (Object o : empguidList) {
-                        employeeRService.insertEmpGroup(groupGuid, o.toString());
-                    }
-                    return "success";
-                } catch (Exception e) {
-                    status.setRollbackOnly();
-                    e.printStackTrace();
-                    throw e;
-                }
-            }
-        });
-        List<OmEmpGroup> list = new ArrayList<>();
-        for (Object o : empguidList) {
-            OmEmpGroup oeg = new OmEmpGroup();
-            oeg.setGuidEmp(o.toString());
-            oeg.setGuidGroup(groupGuid);
-            list.add(oeg);
-        }
-        return getReturnMap(list);
+        OmEmpGroup data = jsonObj.getObject("data", OmEmpGroup.class);
+        String groupGuid = data.getGuidGroup();
+        String empGuid = data.getGuidEmp();
+        employeeRService.insertEmpGroup(groupGuid, empGuid);
+        return getReturnMap(data);
     }
 
     /**
