@@ -5,8 +5,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -425,39 +423,19 @@ public class WorkGroupController extends BaseController {
     @OperateLog(
             operateType = "delete",  // 操作类型
             operateDesc = "为工作组删除员工", // 操作描述
-            retType = ReturnType.List, // 返回类型，对象或数组
+            retType = ReturnType.Object, // 返回类型，对象或数组
             id = "guidGroup", // 操作对象标识
             name = "guidGroup", // 操作对象名
             keys = {"guidGroup","guidEmp"}) // 操作对象的关键值的键值名
     @ResponseBody
-    @RequestMapping(value = "/deleteEmpGroup")
+    @RequestMapping(value = "/deleteEmpGroup", produces ="application/json;charset=UTF-8", method= RequestMethod.POST)
     public Map<String, Object> deleteEmpGroup(@RequestBody String content) {
-            JSONObject jsonObj = JSONObject.parseObject(content);
-            String groupGuid = jsonObj.getString("groupGuid");
-            List<Object> empguidList = jsonObj.getJSONArray("empGuidlist");
-            transactionTemplate.execute(new TransactionCallback<String>() {
-                @Override
-                public String doInTransaction(TransactionStatus status) {
-                    try {
-                        for (Object o : empguidList) {
-                            employeeRService.deleteEmpGroup(groupGuid, o.toString());
-                        }
-                        return "success";
-                    } catch (Exception e) {
-                        status.setRollbackOnly();
-                        e.printStackTrace();
-                        throw e;
-                    }
-                }
-            });
-        List<OmEmpGroup> list = new ArrayList<>();
-        for (Object o : empguidList) {
-            OmEmpGroup oeg = new OmEmpGroup();
-            oeg.setGuidEmp(o.toString());
-            oeg.setGuidGroup(groupGuid);
-            list.add(oeg);
-        }
-        return getReturnMap(list);
+        JSONObject jsonObj = JSONObject.parseObject(content);
+        OmEmpGroup data = jsonObj.getObject("data", OmEmpGroup.class);
+        String groupGuid = data.getGuidGroup();
+        String empGuid = data.getGuidEmp();
+        employeeRService.deleteEmpGroup(groupGuid, empGuid);
+        return getReturnMap(data);
     }
 
     /**
