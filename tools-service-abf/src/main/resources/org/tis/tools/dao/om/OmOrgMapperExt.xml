@@ -29,7 +29,7 @@
 			om_duty b
 		WHERE
 			a.GUID_DUTY = b.GUID
-			AND a.guid IN ${posiGuids}
+			AND a.guid IN ${posiGuid}
 	</select>
 
 
