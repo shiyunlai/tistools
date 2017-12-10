@@ -59,19 +59,12 @@ public class EmployeeController extends BaseController {
             retType = ReturnType.Object, // 返回类型，对象或数组
             id = "guid", // 操作对象标识
             name = "employeeName", // 操作对象名
-            keys = {"guidPosition", "empCode", "guidOrg"}) // 操作对象的关键值的键值名
+            keys = {"empCode"}) // 操作对象的关键值的键值名
     @ResponseBody
     @RequestMapping(value = "/addemployee", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> addemployee( @RequestBody String content) {
         OmEmployee oe = JSONObject.parseObject(content, OmEmployee.class);
-        if (oe.getGuid() == null || oe.getGuid() == "") {
-            OmEmployee emp = employeeRService.createEmployee(oe);
-            return getReturnMap(emp);
-        } else {
-            employeeRService.updateEmployee(oe);
-            return getReturnMap(oe);
-        }
-
+        return getReturnMap(employeeRService.createEmployee(oe));
     }
     /**
      * 修改人员信息
@@ -85,19 +78,12 @@ public class EmployeeController extends BaseController {
             retType = ReturnType.Object, // 返回类型，对象或数组
             id = "guid", // 操作对象标识
             name = "employeeName", // 操作对象名
-            keys = {"guidPosition", "empCode", "guidOrg"}) // 操作对象的关键值的键值名
+            keys = {"empCode"}) // 操作对象的关键值的键值名
     @ResponseBody
     @RequestMapping(value = "/updateemployee", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public Map<String, Object> updateemployee( @RequestBody String content) {
         OmEmployee oe = JSONObject.parseObject(content, OmEmployee.class);
-        if (oe.getGuid() == null || oe.getGuid() == "") {
-            OmEmployee emp = employeeRService.createEmployee(oe);
-            return getReturnMap(emp);
-        } else {
-            OmEmployee emp = employeeRService.updateEmployee(oe);
-            return getReturnMap(emp);
-        }
-
+        return getReturnMap(employeeRService.updateEmployee(oe));
     }
 
     /**
