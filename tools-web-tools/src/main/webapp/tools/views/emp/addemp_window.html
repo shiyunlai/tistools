@@ -11,245 +11,261 @@
     <div class="portlet-body portlet light">
         <form action="#" name="myform" class="form-horizontal ">
             <div class="form-body ">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">员工姓名:<span ng-class="{required:myform.empName.$invalid}"  > * </span></label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="subFrom.empName" name="empName" required   />
+                <div class="maininformation" ng-show="Expand">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">员工姓名:<span ng-class="{required:myform.empName.$invalid}"  > * </span></label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" ng-model="subFrom.empName" name="empName" required   />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">员工全名:<span ng-class="{required:myform.empRealname.$invalid}"  > * </span></label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="subFrom.empRealname"  name="empRealname" required/>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">员工全名:<span ng-class="{required:myform.empRealname.$invalid}"  > * </span></label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" ng-model="subFrom.empRealname"  name="empRealname" required/>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">性别:<span ng-class="{required:myform.gender.$invalid}"  > * </span></label>
-                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_OM_GENDER')">
-                            <select class="form-control" ng-model="subFrom.gender" name="gender" required>
-                                <option ng-repeat="d in $settings.diclist['DICT_OM_GENDER'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
-                            </select>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">性别:<span ng-class="{required:myform.gender.$invalid}"  > * </span></label>
+                            <div class="col-md-8" ng-init="$settings.getDictData('DICT_OM_GENDER')">
+                                <select class="form-control" ng-model="subFrom.gender" name="gender" required>
+                                    <option ng-repeat="d in $settings.diclist['DICT_OM_GENDER'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">员工职级:<span ng-class="{required:myform.empDegree.$invalid}"  > * </span></label>
-                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_OM_EMPDEGREE')">
-                            <select class="form-control" ng-model="subFrom.empDegree" name="empDegree" required>
-                                <option ng-repeat="d in $settings.diclist['DICT_OM_EMPDEGREE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
-                            </select>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">员工职级:<span ng-class="{required:myform.empDegree.$invalid}"  > * </span></label>
+                            <div class="col-md-8" ng-init="$settings.getDictData('DICT_OM_EMPDEGREE')">
+                                <select class="form-control" ng-model="subFrom.empDegree" name="empDegree" required>
+                                    <option ng-repeat="d in $settings.diclist['DICT_OM_EMPDEGREE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">主机构编号:<span ng-class="{required:myform.guidOrg.$invalid}"  > * </span></label>
-                        <div class="col-md-8" ng-init="$settings.getCommData('ORG')">
-                            <select class="form-control" ng-model="subFrom.guidOrg" name="guidOrg" required>
-                                <option ng-repeat="d in $settings.commlist['ORG'] track by $index" value="{{d.guid}}">{{d.orgName}}</option>
-                            </select>
+                    <!--<div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">主机构编号:<span ng-class="{required:myform.guidOrg.$invalid}"  > * </span></label>
+                            <div class="col-md-8" ng-init="$settings.getCommData('ORG')">
+                                <select class="form-control" ng-model="subFrom.guidOrg" name="guidOrg" required>
+                                    <option ng-repeat="d in $settings.commlist['ORG'] track by $index" value="{{d.guid}}">{{d.orgName}}</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group" ng-init="$settings.getCommData('POS')">
-                        <label class="control-label col-md-4">基本岗位:<span ng-class="{required:myform.guidPosition.$invalid}"  > * </span></label>
-                        <div class="col-md-8">
-                            <select class="form-control" ng-model="subFrom.guidPosition" name="guidPosition" required>
-                                <option ng-repeat="d in $settings.commlist['POS'] track by $index" value="{{d.guid}}">{{d.positionName}}</option>
-                            </select>
+                    <div class="col-md-6">
+                        <div class="form-group" ng-init="$settings.getCommData('POS')">
+                            <label class="control-label col-md-4">基本岗位:<span ng-class="{required:myform.guidPosition.$invalid}"  > * </span></label>
+                            <div class="col-md-8">
+                                <select class="form-control" ng-model="subFrom.guidPosition" name="guidPosition" required>
+                                    <option ng-repeat="d in $settings.commlist['POS'] track by $index" value="{{d.guid}}">{{d.positionName}}</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">直接主管:<span ng-class="{required:myform.guidEmpMajor.$invalid}"  > * </span></label>
-                        <div class="col-md-8"  ng-init="$settings.getCommData('EMP')">
-                            <select class="form-control" ng-model="subFrom.guidEmpMajor" name="guidEmpMajor" required>
-                                <option ng-repeat="d in $settings.commlist['EMP'] track by $index" value="{{d.guid}}">{{d.empName}}</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">办公电话</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.otel"
-                                    />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">办公地址</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.oaddress"
-                                    />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">办公邮编</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.ozipcode"
-                            />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">办公邮件</label>
-                        <div class="col-md-8">
-                            <input   type="text"   class="form-control"
-                                   ng-model="subFrom.oemail"   multiple-email name="user_email"
-                                    />
-                            <p style="color:red;" ng-if="!myform.user_email.$valid && myform.user_email.$viewValue.length>1">邮箱格式错误</p>
-                        </div>
-                            <!--<span style="color:red;margin-top:10px;" ng-if="myform.user_email.$valid && myform.user_email.$viewValue.length>8">√</span>-->
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">传真号码</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.faxno"
-                                    />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">手机号码</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.mobileno" multiple-phone  name="user_phone"
-                                    />
-                            <p style="color:red;" ng-if="!myform.user_phone.$valid && myform.user_phone.$viewValue.length>4">请输入正确的手机号码</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">MSN号码</label>
-                        <div class="col-md-8">
-                            <input class="form-control" style="" type="text" ng-model="subFrom.msn">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">出生日期</label>
-                        <div class="col-md-8">
-                            <div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
-                                    <span class="input-group-btn">
-                                        <button class="btn default date-set" type="button"><i style="line-height: 14px" class="fa fa-calendar"></i></button>
-                                    </span>
-                                <input type="text" class="form-control" ng-model="subFrom.birthdate" readonly/>
+                    </div>-->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">直接主管:<span ng-class="{required:myform.guidEmpMajor.$invalid}"  > * </span></label>
+                            <div class="col-md-8"  ng-init="$settings.getCommData('EMP')">
+                                <select class="form-control" ng-model="subFrom.guidEmpMajor" name="guidEmpMajor" required>
+                                    <option ng-repeat="d in $settings.commlist['EMP'] track by $index" value="{{d.guid}}">{{d.empName}}</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">证件号码</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.paperNo" multiple-certificates name="user_certificates"
-                                    />
-                            <p style="color:red;" ng-if="!myform.user_certificates.$valid && myform.user_certificates.$viewValue.length>=15">请输入15-18位有效证件号</p>
+                <div class="secondarinformation" ng-show="!Expand">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">办公电话</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control"
+                                       ng-model="subFrom.otel"
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">证件类型</label>
-                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_SD_PAPERTYPE')">
-                            <select class="form-control" ng-model="subFrom.paperType">
-                                <option ng-repeat="d in $settings.diclist['DICT_SD_PAPERTYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
-                            </select>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">办公地址</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control"
+                                       ng-model="subFrom.oaddress"
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">家庭电话</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.htel"/>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">办公邮编</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control"
+                                       ng-model="subFrom.ozipcode"
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">家庭邮编</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.hzipcode"
-                                    />
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">办公邮件</label>
+                            <div class="col-md-8">
+                                <input   type="text"   class="form-control"
+                                         ng-model="subFrom.oemail"   multiple-email name="user_email"
+                                />
+                                <!--<p style="color:red;" ng-if="!myform.user_email.$valid && myform.user_email.$viewValue.length>1">邮箱格式错误</p>-->
+                            </div>
+                            <!--<span style="color:red;margin-top:10px;" ng-if="myform.user_email.$valid && myform.user_email.$viewValue.length>8">√</span>-->
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">私人邮箱</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.pemail"  multiple-email  name="user_semail"
-                                    />
-                            <p style="color:red;" ng-if="!myform.user_semail.$valid && myform.user_semail.$viewValue.length>1">邮箱格式错误</p>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">传真号码</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control"
+                                       ng-model="subFrom.faxno"
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">政治面貌</label>
-                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_SD_PARTY')">
-                            <select class="form-control" ng-model="subFrom.party">
-                                <option ng-repeat="d in $settings.diclist['DICT_SD_PARTY'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
-                            </select>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">手机号码</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control"
+                                       ng-model="subFrom.mobileno" multiple-phone  name="user_phone"
+                                />
+                                <!--<p style="color:red;" ng-if="!myform.user_phone.$valid && myform.user_phone.$viewValue.length>4">请输入正确的手机号码</p>-->
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label class="control-label col-md-2">家庭地址</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.haddress"
-                                    />
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">MSN号码</label>
+                            <div class="col-md-8">
+                                <input class="form-control" style="" type="text" ng-model="subFrom.msn">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label class="control-label col-md-2">工作描述</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.workexp"
-                            />
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">出生日期</label>
+                            <div class="col-md-8">
+                                <div class="input-group date form_datetime"  ng-init="$root.settings.utils.initpicker()">
+                                    <span class="input-group-btn">
+                                        <button class="btn default date-set" type="button"><i style="line-height: 14px" class="fa fa-calendar"></i></button>
+                                    </span>
+                                    <input type="text" class="form-control" ng-model="subFrom.birthdate" readonly/>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label class="control-label col-md-2">备注</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control"
-                                   ng-model="subFrom.remark"
-                            />
+                    <div class="col-md-6">
+                        <!--<div class="form-group">
+                            <label class="control-label col-md-4">证件号码</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control"
+                                       ng-model="subFrom.paperNo" multiple-certificates name="user_certificates"
+                                />
+                                <p style="color:red;" ng-if="!myform.user_certificates.$valid && myform.user_certificates.$viewValue.length>=15">请输入15-18位有效证件号</p>
+                            </div>
+                        </div>-->
+                        <div class="form-group">
+                            <label class="control-label col-md-4">证件号码</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control"
+                                       ng-model="subFrom.paperNo"  name="user_certificates"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">证件类型</label>
+                            <div class="col-md-8" ng-init="$settings.getDictData('DICT_SD_PAPERTYPE')">
+                                <select class="form-control" ng-model="subFrom.paperType">
+                                    <option ng-repeat="d in $settings.diclist['DICT_SD_PAPERTYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">家庭电话</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control"
+                                       ng-model="subFrom.htel"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">家庭邮编</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control"
+                                       ng-model="subFrom.hzipcode"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">私人邮箱</label>
+                            <!--<div class="col-md-8">-->
+                                <!--<input type="text" class="form-control"-->
+                                       <!--ng-model="subFrom.pemail"  multiple-email  name="user_semail"-->
+                                <!--/>-->
+                                <!--<p style="color:red;" ng-if="!myform.user_semail.$valid && myform.user_semail.$viewValue.length>1">邮箱格式错误</p>-->
+                            <!--</div>-->
+                            <div class="col-md-8">
+                                <input type="text" class="form-control"
+                                       ng-model="subFrom.pemail"   name="user_semail"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">政治面貌</label>
+                            <div class="col-md-8" ng-init="$settings.getDictData('DICT_SD_PARTY')">
+                                <select class="form-control" ng-model="subFrom.party">
+                                    <option ng-repeat="d in $settings.diclist['DICT_SD_PARTY'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-2">家庭地址</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control"
+                                       ng-model="subFrom.haddress"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-2">工作描述</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control"
+                                       ng-model="subFrom.workexp"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-2">备注</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control"
+                                       ng-model="subFrom.remark"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -258,11 +274,15 @@
                         <label class="control-label col-md-2"></label>
                         <div class="col-md-10">
                             <div class="actions btn-set" style="float: right;">
+                                <button type="button" name="back"  class="btn btn-primary"  ng-if="Expand"   popover-trigger="mouseenter"  ng-click="perfect(subFrom)" > 完善其他信息
+                                </button>
                                 <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter"  ng-click="empadd(subFrom)" > 保存
                                 </button>
                                 <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存
                                 </button>
-                                <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
+                                <button type="button" name="back" class="btn btn-danger" ng-if="Expand" ng-click="cancel()"> 取消
+                                </button>
+                                <button type="button" name="back" class="btn btn-danger" ng-if="!Expand" ng-click="backcancel()"> 返回
                                 </button>
                             </div>
                         </div>

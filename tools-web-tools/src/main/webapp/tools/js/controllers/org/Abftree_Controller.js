@@ -1,10 +1,17 @@
 /**
  * Created by gaojie on 2017/5/9.
  */
-angular.module('MetronicApp').controller('abftree_controller', function ($rootScope, $scope,$window, abftree_service, $http, $timeout,$filter, i18nService, filterFilter, uiGridConstants, $uibModal, $state,dictonary_service) {
+angular.module('MetronicApp').controller('abftree_controller', function ($rootScope, $scope,$window, $ocLazyLoad,abftree_service, $http, $timeout,$filter, i18nService, filterFilter, uiGridConstants, $uibModal, $state,common_service) {
     $scope.$on('$viewContentLoaded', function () {
         // initialize core components
         App.initAjax();
+    });
+    $ocLazyLoad.load({//重新加载一次 main.js  保证拿到行为权限
+        name: 'MetronicApp',
+        insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+        files: [
+            'js/main.js'
+        ]
     });
     var abftree = {};
     $scope.abftree = abftree;
@@ -73,71 +80,290 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
     //     $("#container").jstree(true).search($("#q").val());
     // });
 
+
+    //拿到行为内容
+    var entityBhv ={};
+    $scope.entityBhv = entityBhv;
+    $scope.$on('asycFinish', function(event,data) {
+        entityBhv = data.bhvCodes;
+        //组织机构树
+        function orgJstree(entityBhv) {
+            //判断是否可以移动
+            var movetrue = false;
+            for(var i =0; i<entityBhv.length;i++){
+                if(entityBhv[i] == '/om/org/moveOrg'){
+                    movetrue=true;
+                    break;
+                }
+            }
+            if(movetrue){//如果为true，则可以拖动，反之不允许拖动
+                var plugins = ["dnd", "state", "types", "contextmenu","sort","search"];
+            }else{
+                var plugins = ["state", "types", "contextmenu","sort","search"];
+            }
+            //组织机构树
+            $("#container").jstree({
+                "core": {
+                    "themes": {
+                        "responsive": false
+                    },
+                    "check_callback": true,
+                    'data': function (obj, callback) {
+                        var jsonarray = [];
+                        $scope.jsonarray = jsonarray;
+                        var subFrom = {};
+                        subFrom.id = obj.id;
+                        if (!isNull(obj.original)) {
+                            subFrom.guidOrg = obj.original.guid;
+                            subFrom.positionCode = obj.original.positionCode;
+                        } else {
+                            subFrom.guidOrg = "";
+                            subFrom.positionCode = "";
+                        }
+                        abftree_service.loadmaintree(subFrom).then(function (datas) {
+                            var data = datas.retMessage;
+                            if (isNull(data)) {
+                            } else if (isNull(data[0].orgName)) {
+                                for (var i = 0; i < data.length; i++) {
+                                    data[i].text = data[i].positionName;
+                                    data[i].children = true;
+                                    data[i].id = data[i].guid;
+                                    data[i].icon = 'fa fa-users icon-state-info icon-lg'
+                                }
+                            } else {
+                                for (var i = 0; i < data.length; i++) {
+                                    data[i].text = data[i].orgName;
+                                    data[i].children = true;
+                                    data[i].id = data[i].orgCode;
+                                    data[i].icon = 'fa fa-institution  icon-state-info icon-lg';
+                                    data[i].position = parseInt(data[i].sortNo);
+                                    data[i].orgsName = data[i].orgName;
+                                    if (data[i].orgName == "岗位信息") {
+                                        console.log(data[i])
+                                        data[i].icon = 'fa fa-users  icon-state-info icon-lg';
+
+                                    }
+                                }
+                            }
+                            $scope.jsonarray = angular.copy(data);
+                            callback.call(this, $scope.jsonarray);
+                        })
+                    }
+                },
+                "types": {
+                    "default": {
+                        "icon": "fa fa-folder icon-state-warning icon-lg"
+                    },
+                    "file": {
+                        "icon": "fa fa-file icon-state-warning icon-lg"
+                    }
+                },
+                "state": {"key": "demo3"},
+                "contextmenu": {'items': items},
+                'dnd': {
+                    'is_draggable': function (node) {
+                        //用于控制节点是否可以拖拽.
+                        var node = node[0];
+                        if (node.id == "99999" || node.id.indexOf("GW") == 0) {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    },
+                    'dnd_start': function () {
+                    },
+                },
+                'search': {
+                    show_only_matches: true,
+                },
+                'callback': {
+                    move_node: function (node) {
+                    }
+                },
+                'sort': function (a, b) {
+                    //排序插件，会两者比较，获取到节点的order属性，插件会自动两两比较。
+                    return this.get_node(a).original.sortNo > this.get_node(b).original.sortNo ? 1 : -1;
+                },
+                "plugins":plugins
+            }).bind("copy.jstree", function (node, e, data) {
+            }).bind("paste.jstree", function (a, b, c, d) {
+            }).bind("move_node.jstree", function (e, data) {
+                var subFrom = {};
+                subFrom.mvOrgCode = data.node.id;
+                subFrom.toOrgCode = data.parent;
+                subFrom.fromOrgCode = data.old_parent;
+                subFrom.position = data.position;
+                if (confirm("确认要移动此机构吗?")) {
+                    abftree_service.moveOrg(subFrom).then(function (data) {
+                        if (data.status == "success") {
+                            toastr['success']("移动成功!");
+                            $("#container").jstree().refresh();
+                        } else {
+                            toastr['error'](data.retMessage);
+                            $("#container").jstree().refresh();
+                        }
+                    });
+                } else {
+
+                    $("#container").jstree().refresh();
+                }
+            }).bind("select_node.jstree", function (e, data) {
+                if (typeof data.node !== 'undefined') {//拿到结点详情
+                    // console.log(data.node.original.id.indexOf("@"));
+                    $scope.abftree.item = {};
+                    $scope.currNode = data.node.text;
+                    if (data.node.original.id.indexOf("POSIT") == 0) {
+                        for (var i in $scope.flag) {
+                            flag[i] = false;
+                        }
+                        for (var i in $scope.gwflag) {
+                            gwflag[i] = false;
+                        }
+                        $scope.flag.index = true;
+                        $scope.gwflag.gwxx = true;
+                        $scope.tabflag = false;
+                        $scope.abftree.item = data.node.original;
+                    } else if (data.node.original.id.indexOf("99999") == 0) {
+                        for (var i in $scope.flag) {
+                            flag[i] = false;
+                        }
+                        for (var i in $scope.gwflag) {
+                            gwflag[i] = false;
+                        }
+                        $scope.flag.index = false;
+                    } else if (data.node.original.id.indexOf("GW") == 0) {
+                        for (var i in $scope.gwflag) {
+                            gwflag[i] = false;
+                        }
+                        for (var i in $scope.flag) {
+                            flag[i] = false;
+                        }
+                        $scope.gwflag.gwlb = true;
+                        $scope.flag.index = true;
+                        var subFrom = {};
+                        subFrom.orgGuid = data.node.original.guid;
+                        $scope.abftree.item = data.node.original;
+                        regwlbgird(subFrom)
+                    } else {
+                        for (var i in $scope.gwflag) {
+                            gwflag[i] = false;
+                        }
+                        for (var i in $scope.flag) {
+                            flag[i] = false;
+                        }
+                        $scope.flag.index = true;
+                        $scope.flag.xqxx = true;
+                        $scope.tabflag = true;
+                        $scope.abftree.item = data.node.original;
+                        if(data.node.original.area == '010'){
+                            $scope.abftree.item.area = '北京地区'
+                        }else{
+                            $scope.abftree.item.area = '上海地区'
+                        }
+                    }
+                    ($scope.$$phase) ? null : $scope.$apply();
+                }
+            });
+            //dnd插件事件监听
+            $(document).on('dnd_start.vakata',function(e,data){
+            });
+
+        }
+        orgJstree(entityBhv)
+    })
+
     //树自定义右键功能
     var items = function customMenu(node) {
-        // The default set of all items
         var control;
-        if (node.parent == "#") {
-            var it = {
-                "新建菜单": {
-                    "id": "create",
-                    "label": "新建根机构",
-                    "action": function (data) {
-                        var inst = jQuery.jstree.reference(data.reference),
-                            obj = inst.get_node(data.reference);
-                        openwindow($uibModal, 'views/org/addrootorg_window.html', 'lg',
-                            function ($scope, $modalInstance) {
-                                //创建机构实例
-                                //生成机构代码
-                                var next = true;
-                                $scope.next = next;
-                                $scope.skip = function (items) {
-                                    items.flag = "root";
-                                    var subFrom = {};
-                                    subFrom= items;
-                                    if (isNull(subFrom.orgDegree) || isNull(subFrom.area)|| isNull(subFrom.orgName) || isNull(subFrom.orgType)) {
-                                        toastr['error']("请填写相关信息!");
-                                        return false;
-                                    }
-                                    //处理新增机构父机构
-                                    subFrom.guidParents = null;
-                                    //调用服务生成机构代码
-                                    abftree_service.addorg(subFrom).then(function (data) {
-                                        if (data.status == "success") {
-                                            toastr['success']("新增成功!");
-                                            var next = false;
-                                            $scope.next = next;
-                                            var subFrom = {};
-                                            $scope.subFrom = subFrom;
-                                            subFrom.orgCode = data.retMessage.orgCode;
-                                        } else {
-                                            toastr['error'](data.retMessage);
-                                        }
-                                        $("#container").jstree().refresh();
-                                        $scope.add=function (subFrom) {
-                                            var tis =Object.assign(data.retMessage, subFrom);
-                                            abftree_service.updateOrg(tis).then(function (data) {
-                                                if (data.status == "success") {
-                                                    toastr['success']("添加成功!");
-                                                    $("#container").jstree().refresh();
-                                                    $scope.cancel();
-                                                } else {
-                                                    toastr['error'](data.retMessage);
-                                                }
-                                            })
-                                        }
-                                    });
-                                }
+        var addrootOrg =false;//新增跟机构，子机构权限验证
+        var deleatOrg =false;//删除机构验证
+        var copyOrg =false;//拷贝机构验证
+        var addPost = false;//验证新增岗位
+        var deleatPost = false;//验证删除岗位
+        for(var i = 0;i<entityBhv.length;i++){
+            if(entityBhv[i] == '/om/org/add'){
+                addrootOrg= true;
+            }
+            if(entityBhv[i] == '/om/org/deleteOrg'){
+                deleatOrg=true;
+            }
+            if(entityBhv[i] == '/om/org/copyOrg'){
+                copyOrg=true;
+            }
+            if(entityBhv[i] == '/om/org/createPosition'){
+                addPost = true;
+            }
+            if(entityBhv[i] == '/om/org/deletePosition'){
+                deleatPost = true;
+            }
 
-                                $scope.cancel = function () {
-                                    $modalInstance.dismiss('cancel');
-                                };
-                            }
-                        )
+            if(copyOrg&&addrootOrg&&deleatOrg&&addPost&&deleatPost){
+                break;
+            }
+        }
+        if (node.parent == "#") {
+            if(addrootOrg){//是否有新增跟机构的权限
+                var it = {
+                    "新建菜单": {
+                        "id": "create",
+                        "label": "新建根机构",
+                        "action": function (data) {
+                            var inst = jQuery.jstree.reference(data.reference),
+                                obj = inst.get_node(data.reference);
+                            openwindow($uibModal, 'views/org/addrootorg_window.html', 'lg',
+                                function ($scope, $modalInstance) {
+                                    //创建机构实例
+                                    //生成机构代码
+                                    var next = true;
+                                    $scope.next = next;
+                                    $scope.skip = function (items) {
+                                        items.flag = "root";
+                                        var subFrom = {};
+                                        subFrom= items;
+                                        if (isNull(subFrom.orgDegree) || isNull(subFrom.area)|| isNull(subFrom.orgName) || isNull(subFrom.orgType)) {
+                                            toastr['error']("请填写相关信息!");
+                                            return false;
+                                        }
+                                        //处理新增机构父机构
+                                        subFrom.guidParents = null;
+                                        abftree_service.addorg(subFrom).then(function (data) {
+                                            if (data.status == "success") {
+                                                toastr['success']("新增成功!");
+                                                var next = false;
+                                                $scope.next = next;
+                                                var subFrom = {};
+                                                $scope.subFrom = subFrom;
+                                                subFrom.orgCode = data.retMessage.orgCode;
+                                            } else {
+                                                toastr['error'](data.retMessage);
+                                            }
+                                            $("#container").jstree().refresh();
+                                            $scope.add=function (subFrom) {
+                                                var tis =Object.assign(data.retMessage, subFrom);
+                                                abftree_service.updateOrg(tis).then(function (data) {
+                                                    if (data.status == "success") {
+                                                        toastr['success']("添加成功!");
+                                                        $("#container").jstree().refresh();
+                                                        $scope.cancel();
+                                                    } else {
+                                                        toastr['error'](data.retMessage);
+                                                    }
+                                                })
+                                            }
+                                        });
+                                    }
+
+                                    $scope.cancel = function () {
+                                        $modalInstance.dismiss('cancel');
+                                    };
+                                }
+                            )
+                        }
                     }
-                }
-            };
-            return it;
+                };
+        }
+                return it;
+
         } else if (!isNull(node.original.orgCode) && node.original.orgCode.indexOf("GW") != 0) {
             var it = {
                 "新建菜单": {
@@ -238,8 +464,16 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                     }
                 }
             }
+            if(!addrootOrg){//如果没有新增权限，那就移除掉
+                delete it.新建菜单;
+            }
+            if(!deleatOrg){//如果没有删除权限，那就移除掉
+                delete it.删除菜单;
+            }
+            if(!copyOrg){//如果没有拷贝权限，那就移除掉
+                delete it.拷贝菜单;
+            }
             return it;
-
         } else if (node.id.indexOf("POSITION") == 0) {
             var it = {
                 "新建菜单": {
@@ -255,7 +489,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                         creatNewPosition(subFrom, null);
                     }
                 },
-
                 "删除菜单": {
                     "label": "删除岗位",
                     "action": function (data) {
@@ -281,212 +514,41 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                     }
                 }
             }
-            return it;
-        } else {
-            var it = {
-                "新建菜单": {
-                    "id": "create",
-                    "label": "新建岗位",
-                    "action": function (data) {
-                        var inst = jQuery.jstree.reference(data.reference),
-                            obj = inst.get_node(data.reference);
-                        var subFrom = {};
-                        //处理新增机构父机构
-                        subFrom.guidParents = "";
-                        subFrom.guidOrg = obj.original.guid;
-                        creatNewPosition(subFrom, null);
-                    }
-                }
-
+            if(!addPost){//如果没有新增权限，那就移除掉
+                delete it.新建菜单;
+            }
+            if(!deleatPost){//如果没有删除权限，那就移除掉
+                delete it.删除菜单;
             }
             return it;
-        }
+        } else {
+            if(addPost){
+                var it = {
+                    "新建菜单": {
+                        "id": "create",
+                        "label": "新建岗位",
+                        "action": function (data) {
+                            var inst = jQuery.jstree.reference(data.reference),
+                                obj = inst.get_node(data.reference);
+                            var subFrom = {};
+                            //处理新增机构父机构
+                            subFrom.guidParents = "";
+                            subFrom.guidOrg = obj.original.guid;
+                            creatNewPosition(subFrom, null);
+                        }
+                    }
 
+                }
+                return it;
+            }
+        }
     };
 
-    //组织机构树
-    $("#container").jstree({
-        "core": {
-            "themes": {
-                "responsive": false
-            },
-            "check_callback": true,
-            'data': function (obj, callback) {
-                var jsonarray = [];
-                $scope.jsonarray = jsonarray;
-                var subFrom = {};
-                subFrom.id = obj.id;
-                if (!isNull(obj.original)) {
-                    subFrom.guidOrg = obj.original.guid;
-                    subFrom.positionCode = obj.original.positionCode;
-                } else {
-                    subFrom.guidOrg = "";
-                    subFrom.positionCode = "";
-                }
-
-                abftree_service.loadmaintree(subFrom).then(function (datas) {
-                    var data = datas.retMessage;
-                    if (isNull(data)) {
-
-                    } else if (isNull(data[0].orgName)) {
-                        for (var i = 0; i < data.length; i++) {
-                            data[i].text = data[i].positionName;
-                            data[i].children = true;
-                            data[i].id = data[i].guid;
-                            data[i].icon = 'fa fa-users icon-state-info icon-lg'
-                        }
-                    } else {
-                        for (var i = 0; i < data.length; i++) {
-                            data[i].text = data[i].orgName;
-                            data[i].children = true;
-                            data[i].id = data[i].orgCode;
-                            data[i].icon = 'fa fa-institution  icon-state-info icon-lg';
-                            data[i].position = parseInt(data[i].sortNo);
-                            if (data[i].orgName == "岗位信息") {
-                                data[i].icon = 'fa fa-users  icon-state-info icon-lg';
-                            }
-                        }
-                    }
-                    $scope.jsonarray = angular.copy(data);
-                    callback.call(this, $scope.jsonarray);
-                })
-            }
-        },
-        "types": {
-            "default": {
-                "icon": "fa fa-folder icon-state-warning icon-lg"
-            },
-            "file": {
-                "icon": "fa fa-file icon-state-warning icon-lg"
-            }
-        },
-        "state": {"key": "demo3"},
-        "contextmenu": {'items': items},
-        'dnd': {
-            'is_draggable': function (node) {
-                //用于控制节点是否可以拖拽.
-                var node = node[0];
-                if (node.id == "99999" || node.id.indexOf("GW") == 0) {
-                    return false;
-                } else {
-                    return true;
-                }
-            },
-            'dnd_start': function () {
-            },
-        },
-        'search': {
-            show_only_matches: true,
-        },
-        'callback': {
-            move_node: function (node) {
-            }
-        },
-        'sort': function (a, b) {
-            //排序插件，会两者比较，获取到节点的order属性，插件会自动两两比较。
-            return this.get_node(a).original.sortNo > this.get_node(b).original.sortNo ? 1 : -1;
-        },
-
-        "plugins": ["dnd", "state", "types", "contextmenu","sort","search"]
-    }).bind("copy.jstree", function (node, e, data) {
-    }).bind("paste.jstree", function (a, b, c, d) {
-    }).bind("move_node.jstree", function (e, data) {
-        var subFrom = {};
-        subFrom.mvOrgCode = data.node.id;
-        subFrom.toOrgCode = data.parent;
-        subFrom.fromOrgCode = data.old_parent;
-        subFrom.position = data.position;
-        if (confirm("确认要移动此机构吗?")) {
-            abftree_service.moveOrg(subFrom).then(function (data) {
-                if (data.status == "success") {
-                    toastr['success']("移动成功!");
-                    $("#container").jstree().refresh();
-                } else {
-                    toastr['error'](data.retMessage);
-                    $("#container").jstree().refresh();
-                }
-            });
-        } else {
-
-            $("#container").jstree().refresh();
-        }
-    }).bind("select_node.jstree", function (e, data) {
-        if (typeof data.node !== 'undefined') {//拿到结点详情
-            // console.log(data.node.original.id.indexOf("@"));
-            $scope.abftree.item = {};
-            $scope.currNode = data.node.text;
-            if (data.node.original.id.indexOf("POSIT") == 0) {
-                for (var i in $scope.flag) {
-                    flag[i] = false;
-                }
-                for (var i in $scope.gwflag) {
-                    gwflag[i] = false;
-                }
-                $scope.flag.index = true;
-                $scope.gwflag.gwxx = true;
-                $scope.tabflag = false;
-                $scope.abftree.item = data.node.original;
-            } else if (data.node.original.id.indexOf("99999") == 0) {
-                for (var i in $scope.flag) {
-                    flag[i] = false;
-                }
-                for (var i in $scope.gwflag) {
-                    gwflag[i] = false;
-                }
-                $scope.flag.index = false;
-            } else if (data.node.original.id.indexOf("GW") == 0) {
-                for (var i in $scope.gwflag) {
-                    gwflag[i] = false;
-                }
-                for (var i in $scope.flag) {
-                    flag[i] = false;
-                }
-                $scope.gwflag.gwlb = true;
-                $scope.flag.index = true;
-                var subFrom = {};
-                subFrom.orgGuid = data.node.original.guid;
-                $scope.abftree.item = data.node.original;
-                regwlbgird(subFrom)
-            } else {
-                for (var i in $scope.gwflag) {
-                    gwflag[i] = false;
-                }
-                for (var i in $scope.flag) {
-                    flag[i] = false;
-                }
-                $scope.flag.index = true;
-                $scope.flag.xqxx = true;
-                $scope.tabflag = true;
-                $scope.abftree.item = data.node.original;
-                if(data.node.original.area == '010'){
-                    $scope.abftree.item.area = '北京地区'
-                }else{
-                    $scope.abftree.item.area = '上海地区'
-                }
-            }
-            ($scope.$$phase) ? null : $scope.$apply();
-        }
-    });
-    //dnd插件事件监听
-    $(document).on('dnd_start.vakata',function(e,data){
-
-    });
 
 
     //jstree 自定义筛选事件
     //筛选字段
     $scope.searchitem = "";
-    // var to = false;
-    // $('#q').keyup(function () {
-    //     console.log(1)
-    //     if(to) {
-    //         clearTimeout(to);
-    //     }
-    //
-    //     to = setTimeout(function () {
-    //         $('#container').jstree(true).search($('#q').val());
-    //     }, 250);
-    // });
     abftree.searchtree = function () {
     }
 
@@ -1454,7 +1516,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
     //岗位信息下两个按钮事件
     //新增
     abftree.addpos = function () {
-        console.log($scope.abftree.item.guid)
         var guidOrg = $scope.abftree.item.guid;
         var subFrom = {};
         subFrom.guidParents = "";
@@ -1546,7 +1607,24 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                 $scope.subFrom = subFrom;
                 var next = true;
                 $scope.next = next;
-                $scope.title = '新增岗位'
+                //机构名称翻译方法
+                var res = $rootScope.res.abftree_service;//页面所需调用的服务
+                var retval = ''
+                common_service.post(res.queryAllorg,{}).then(function(data){
+                    if(data.status == "success"){
+                        for (var i = 0; i < data.retMessage.length; i++) {
+                            if (subFrom.guidOrg == data.retMessage[i].guid) {
+                                retval = data.retMessage[i].orgName;
+                                break;
+                            }
+                        }
+                        $scope.title = retval+'新增岗位'
+                    }else{
+                        $scope.title = '新增岗位'
+                    }
+                })
+                $scope.subFrom.positionType = '01';//机构岗位
+                $scope.orgType = true;//机构下新增岗位，禁止修改
                 //下一步
                 $scope.skip = function (items) {
                     var subFrom = {};
@@ -1557,7 +1635,6 @@ angular.module('MetronicApp').controller('abftree_controller', function ($rootSc
                         return false;
                     }
                     abftree_service.createPosition({data:subFrom}).then(function (data) {
-                        console.log(data)
                         if (data.status == "success") {
                             var next = false;
                             $scope.next = next;

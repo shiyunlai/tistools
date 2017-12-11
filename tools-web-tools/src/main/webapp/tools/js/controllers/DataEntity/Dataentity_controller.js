@@ -666,6 +666,8 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
             return str;
         }
     }
+    
+
 
     //新增范围
     $scope.dataDett_add = function () {
@@ -674,11 +676,20 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
         openwindow($modal, 'views/dataEntity/Entityauthority.html', 'lg',//弹出页面
             function ($scope, $modalInstance) {
                 $scope.title = '新增范围数据权限';
-
                 var dataEnt = {};
                 $scope.dataEnt = dataEnt;//双向绑定数据
                 $scope.dataEnt.qualityRatingExt = [];//定义条件数组
                 $scope.dataEnt.cardArray = [];//定义卡片
+
+                //打开新增按钮
+                dataEnt.Addpush = function () {
+                    $scope.isshow = true;
+                }
+
+                //关闭内容
+                $scope.ENtitycancel = function () {
+                    $scope.isshow = false;
+                }
 
                 //拼接成对应的方法
                 var EntiDates = [];

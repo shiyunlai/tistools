@@ -82,7 +82,8 @@
             <div class="form-actions" style="margin-left:0px;">
                 <label class="checkbox">
                     <input type="checkbox" name="remember" value="1"/> 记住我 </label>
-                <button id="login" type="submit" class="btn blue pull-right"  disabled>
+                <!--<button id="login" type="submit" class="btn blue pull-right"  disabled>-->
+                <button id="login" type="submit" class="btn blue pull-right">
                     登录 <i class="m-icon-swapright m-icon-white"></i>
                 </button>
             </div>
@@ -145,14 +146,49 @@
     $("input").on('change',function(){
         var namelangth =  $("#loginname").val().length;
         var passlength = $("#password").val().length;
-//        if(namelangth>=5&&passlength>=6){
-        if(passlength>=6){
+        /*if(passlength>=6){
             $('#login').removeAttr("disabled");
         }else{
             $('#login').attr('disabled',"true");
-        }
+        }*/
     })
+    $(function(){
+        $("body").keydown(function(){
+            if(event.keyCode == "13"){
+                var form = {};
+                form.userId = $("#loginname").val();
+                form.password = $("#password").val();
+                form.identityGuid =$("#opertor").val();
+//        form.appGuid = 'APP1499956132';
+                form.appCode = 'ABF';
+                $.ajax({
+                    url:"../AcAuthenticationController/login",
+                    type:"post",
+                    dataType:'json',
+                    data:JSON.stringify(form),
+                    headers:{token:'abck'},
+                    processData:false,
+                    contentType:'application/json',
+                    success:function(data){
+                        data = angular.fromJson(data);
+                        if(data.status == "success"){
+//                    sessionStorage.user = JSON.stringify(data.retMessage.user);
+//                    sessionStorage.menus = data.retMessage.menu;
+                            sessionStorage.opertor = $("#opertor").find("option:selected").text();
+//                    window.location = "../tools/index.html#/dashboard";//如果正确，则进入主页
+                            window.location = manurl+'/tools/index.html#/dashboard';//如果正确，则进入主页
+                            sessionStorage.clear('toState');
+                            sessionStorage.clear('toParams');//清除缓存
+                        }else {
+                            toastr['error']( data.retMessage);
+                        }
+                    }
+                });
+            }
 
+        })
+
+    })
     var render = function (data) {
         if(data.status == "success"){
             console.log(data);

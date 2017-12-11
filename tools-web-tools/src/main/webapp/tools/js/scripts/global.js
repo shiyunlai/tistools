@@ -578,7 +578,6 @@ function initpage($scope,thisobj,$timeout){
     $timeout(function() {
         $scope.thisobj.getPage($scope.gridApi.pagination.getPage(),$scope.thisobj.paginationPageSize);
     });
-
 }
 function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftree_service,toastr){
     //生成各个列表
@@ -682,7 +681,6 @@ function commRole (filterFilter,$scope,mygrid,alrolegird,notrolegird,guid,abftre
     renotrolegird();
     
     $scope.addRole = function (partyType) {
-        console.log(partyType)
         if($scope.addroleGuid == ""){
             toastr['error']("请选择一个角色");
             return false;

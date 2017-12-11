@@ -27,10 +27,10 @@
                     </a>
                 </div>
             </div>
-            <div class="portlet-body" style="overflow-y:auto; overflow-x:auto">
+            <div class="portlet-body" fun-active="/om/org/tree" style="overflow-y:auto; overflow-x:auto">
                 <form id="s">
                     <input  type="search" id="q" ng-model="searchitem"/>
-                    <button type="submit" ng-click="abftree.clear()">清空</button>
+                    <button  type="submit" ng-click="abftree.clear()">清空</button>
                 </form>
                 <div id="container" ></div>
                 <!--<div id="searchtree" ng-show="!showtree"></div>-->
@@ -39,7 +39,7 @@
     </div>
     <!-- 组织机构树 end -->
     <!-- 右侧展示页面 start -->
-    <div class="col-md-9 portlet light" style="height:100%;" ng-if="flag.index">
+    <div class="col-md-9 portlet light" style="height:100%;" ng-show="flag.index">
         <div class="portlet light">
             <div class="portlet-body portlet light">
                 <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="tabflag && !gwflag.gwlb">
@@ -294,26 +294,26 @@
                                     <label class="control-label col-md-2"></label>
                                     <div class="col-md-10">
                                         <div class="actions btn-set" style="float: right;">
-                                            <button ng-show="abftree.item.orgStatus=='stop'" type="button" name="back"
+                                            <button ng-show="abftree.item.orgStatus=='stop'" fun-active="/om/org/enableorg" type="button" name="back"
                                                     class="btn btn-primary" ng-click="abftree.enable()"> 启用机构
                                             </button>
-                                            <button ng-show="abftree.item.orgStatus=='cancel'" type="button" name="back"
+                                            <button ng-show="abftree.item.orgStatus=='cancel'" fun-active="/om/org/enableorg" type="button" name="back"
                                                     class="btn btn-primary" ng-click="abftree.reenable()"> 重新启用机构
                                             </button>
-                                            <button ng-show="abftree.item.orgStatus=='cancel'" type="button" name="back"
+                                            <button ng-show="abftree.item.orgStatus=='cancel'" fun-active="/om/org/enableorg" type="button" name="back"
                                                     class="btn btn-danger" ng-click="abftree.disenable()"> 停用机构
                                             </button>
-                                            <button ng-show="abftree.item.orgStatus=='running'" type="button"
+                                            <button ng-show="abftree.item.orgStatus=='running'" fun-active="/om/org/enableorg" type="button"
                                                     name="back" class="btn btn-danger" ng-click="abftree.cancelorg()">
                                                 注销机构
                                             </button>
-                                            <button type="button" name="back" class="btn btn-primary"
+                                            <button type="button" fun-active="/OperateLogController/queryOperateHistoryList" name="back" class="btn btn-primary"
                                                     ng-click="abftree.histroy()"> 查看概况
                                             </button>
-                                            <button type="button" name="back" class="btn btn-primary"
+                                            <button type="button" name="back" fun-active="/om/org/updateOrg" class="btn btn-primary"
                                                     ng-click="abftree.edit()"> 编辑机构
                                             </button>
-                                            <button type="button" name="back" class="btn btn-danger"
+                                            <button type="button" fun-active="/om/org/deleteEmpOrg" name="back" class="btn btn-danger"
                                                     ng-click="abftree.delete()"> 删除机构
                                             </button>
                                         </div>
@@ -479,49 +479,52 @@
                     <!-- 列表页 end-->
                 </div>
                 <!--下级机构-->
-                <div class="tab-content portlet light" ng-if="flag.xjjg">
-                    <div ui-grid="gridOptions2" id="test"
-                         ui-grid-edit ui-grid-pagination
-                         ui-grid-selection ui-grid-resize-columns></div>
+                <div class="tab-content portlet light" ng-show="flag.xjjg">
+                    <div fun-active="/om/org/loadxjjg">
+                        <div ui-grid="gridOptions2"  id="test" ng-if="flag.xjjg"
+                             ui-grid-edit ui-grid-pagination
+                             ui-grid-selection ui-grid-resize-columns></div>
+                    </div>
+
                     <div class="actions btn-set" style="float: right;">
-                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addxjjg()"> 新增
+                        <button type="button" name="back" class="btn btn-primary" fun-active="/om/org/add" ng-click="abftree.addxjjg()"> 新增
                         </button>
-                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.editxjjg()"> 编辑
+                        <button type="button" name="back" class="btn btn-primary" fun-active="/om/org/updateOrg" ng-click="abftree.editxjjg()"> 编辑
                         </button>
-                        <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletexjjg()"> 删除
+                        <button type="button" name="back" class="btn btn-danger" fun-active="/om/org/deleteOrg" ng-click="abftree.deletexjjg()"> 删除
                         </button>
                     </div>
                 </div>
                 <!--下级机构end-->
                 <!--员工信息-->
-                <div class="tab-content portlet light" ng-if="flag.ygxx">
-                    <div ui-grid="gridOptions1"
-                         ui-grid-edit ui-grid-pagination
-                         ui-grid-selection ui-grid-resize-columns></div>
+                <div class="tab-content portlet light" ng-show="flag.ygxx">
+                    <div fun-active="/om/org/loadempbyorg">
+                        <div ui-grid="gridOptions1" ng-if="flag.ygxx"
+                             ui-grid-edit ui-grid-pagination
+                             ui-grid-selection ui-grid-resize-columns></div>
+                    </div>
+
                     <div class="actions btn-set" style="float: right;">
-                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addyg()"> 添加
+                        <button type="button" name="back" class="btn btn-primary" fun-active="/om/org/loadempNotinorg" ng-click="abftree.addyg()"> 添加
                         </button>
-                        <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deleteyg()"> 删除
+                        <button type="button" name="back" class="btn btn-danger" fun-active="/om/org/deleteEmpOrg" ng-click="abftree.deleteyg()"> 删除
                         </button>
                     </div>
                 </div>
                 <!--员工信息end-->
                 <!--权限信息start-->
-                <div class="tab-content portlet light" ng-if="flag.qxxx">
+                <div class="tab-content portlet light" ng-show="flag.qxxx">
                     <div>
                         <div class="portlet-body form col-md-12">
                             <!-- BEGIN FORM-->
                             <div style="" class="col-md-6">
-                                <!--<select  id='myselect' multiple='multiple'>-->
-                                <!--<option ng-repeat="d in allrole track by $index" value="{{d.guid}}">{{d.roleName}}</option>-->
-                                <!--</select>-->
                                 <div class="actions btn-set col-md-12">
-                                    <button type="button" name="back" class="btn btn-danger" style="float: right;"
+                                    <button fun-active="/om/org/deleteRoleParty" type="button" name="back" class="btn btn-danger" style="float: right;"
                                             ng-click="deleteRole('organization')"> 删除
                                     </button>
                                 </div>
-                                <div class="actions btn-set col-md-12">
-                                    <div ui-grid="alrolegird"
+                                <div fun-active="/om/org/queryRole" class="actions btn-set col-md-12">
+                                    <div ui-grid="alrolegird" ng-if="flag.qxxx"
                                          ui-grid-edit ui-grid-pagination
                                          ui-grid-selection style="height:400px;">
                                     </div>
@@ -529,20 +532,20 @@
                             </div>
                             <div style="" class="col-md-6">
                                 <div class="actions btn-set col-md-12">
-                                    <button style="float: right;" type="button" name="back" class="btn btn-primary"
+                                    <button style="float: right;" type="button" fun-active="/om/org/addRoleParty"   name="back" class="btn btn-primary"
                                             ng-click="addRole('organization')"> 新增
                                     </button>
                                 </div>
-                                <div class="actions btn-set col-md-12">
-                                    <div ui-grid="notrolegird"
+                                <div class="actions btn-set col-md-12" fun-active="/om/org/queryRoleNot">
+                                    <div ui-grid="notrolegird" ng-if="flag.qxxx"
                                          ui-grid-edit ui-grid-pagination
                                          ui-grid-selection style="height:400px;">
                                     </div>
                                 </div>
                             </div>
                             <!-- END FORM-->
-                            <div class="portlet-body col-md-12">
-                                <div ui-grid="mygrid"
+                            <div class="portlet-body col-md-12" fun-active="/om/org/queryRoleFun">
+                                <div ui-grid="mygrid" ng-if="flag.qxxx"
                                      ui-grid-edit ui-grid-pagination
                                      ui-grid-selection>
                                 </div>
@@ -554,7 +557,7 @@
 
 
                 <!-- 岗位详情 -->
-                <div class="tab-content" ng-if="gwflag.gwxx">
+                <div class="tab-content" ng-show="gwflag.gwxx">
                     <div class="col-md-12" style="height:100%;">
                         <div class="portlet-body portlet light">
                             <div class="tab-content portlet light">
@@ -642,21 +645,21 @@
                                                 <div class="col-md-10">
                                                     <div class="actions btn-set" style="float: right;"
                                                          ng-if="!editflag">
-                                                        <button ng-show="abftree.item.positionStatus == 'cancel'"
+                                                        <button fun-active="/om/org/enableposition" ng-show="abftree.item.positionStatus == 'cancel'"
                                                                 type="button" name="back" class="btn btn-primary"
                                                                 ng-click="abftree.enableposition()"> 启用岗位
                                                         </button>
-                                                        <button ng-show="abftree.item.positionStatus == 'running'"
+                                                        <button fun-active="/om/org/enableposition" ng-show="abftree.item.positionStatus == 'running'"
                                                                 type="button" name="back" class="btn btn-danger"
                                                                 ng-click="abftree.cancelposition()">注销岗位
                                                         </button>
-                                                        <button type="button" name="back" class="btn btn-primary"
+                                                        <button fun-active="/OperateLogController/queryOperateHistoryList" type="button" name="back" class="btn btn-primary"
                                                                 ng-click="abftree.histroy()"> 查看概况
                                                         </button>
-                                                        <button type="button" name="back" class="btn btn-primary"
+                                                        <button fun-active="/om/org/updatePosition" type="button" name="back" class="btn btn-primary"
                                                                 ng-click="abftree.edit()"> 编辑岗位
                                                         </button>
-                                                        <button type="button" name="back" class="btn btn-danger"
+                                                        <button fun-active="/om/org/deletePosition"  type="button" name="back" class="btn btn-danger"
                                                                 ng-click="abftree.deletePosition()"> 删除岗位
                                                         </button>
                                                     </div>
@@ -758,61 +761,69 @@
                 </div>
                 <!-- 岗位详情 end -->
                 <!-- 岗位列表开始 -->
-                <div class="tab-content portlet light" ng-if="gwflag.gwlb">
-                    <div ui-grid="gwlbgird"
-                         ui-grid-edit ui-grid-pagination
-                         ui-grid-selection ui-grid-resize-columns></div>
-                    <div class="actions btn-set" style="float: right;">
-                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addpos()"> 添加岗位
+                <div class="tab-content portlet light" ng-show="gwflag.gwlb">
+                    <div fun-active="/om/org/queryAllposbyOrg">
+                        <div ui-grid="gwlbgird" ng-if="gwflag.gwlb"
+                             ui-grid-edit ui-grid-pagination
+                             ui-grid-selection ui-grid-resize-columns></div>
+                    </div>
+                    <div class="actions btn-set" style="float: right;margin-top:20px;">
+                        <button type="button"  fun-active="/om/org/createPosition"  name="back" class="btn btn-primary" ng-click="abftree.addpos()"> 添加岗位
                         </button>
-                        <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletepos()"> 删除岗位
+                        <button type="button" fun-active="/om/org/deletePosition" name="back" class="btn btn-danger" ng-click="abftree.deletepos()"> 删除岗位
                         </button>
                     </div>
                 </div>
                 <!-- 岗位列表开始 -->
-                <div class="tab-content portlet light" ng-if="gwflag.gwyg">
-                    <div ui-grid="gwemp"
-                         ui-grid-edit ui-grid-pagination
-                         ui-grid-selection ui-grid-resize-columns></div>
+                <div class="tab-content portlet light" ng-show="gwflag.gwyg">
+                    <div fun-active="/om/org/loadEmpbyPosition">
+                        <div ui-grid="gwemp" ng-if="gwflag.gwyg"
+                             ui-grid-edit ui-grid-pagination
+                             ui-grid-selection ui-grid-resize-columns></div>
+                    </div>
                     <div class="actions btn-set" style="float: right;">
-                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addgwry()"> 添加人员
+                        <button fun-active="/om/org/addEmpPosition" type="button" name="back" class="btn btn-primary" ng-click="abftree.addgwry()"> 添加人员
                         </button>
                         <!--<button type="button" name="back" class="btn btn-primary" ng-click=""> 编辑人员-->
                         <!--</button>-->
-                        <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletegwyg()"> 删除人员
+                        <button fun-active="/om/org/deleteEmpPosition" type="button" name="back" class="btn btn-danger" ng-click="abftree.deletegwyg()"> 删除人员
                         </button>
                     </div>
                 </div>
                 <!-- 岗位员工列表结束 -->
 
                 <!-- 岗位应用列表开始 -->
-                <div class="tab-content" ng-if="gwflag.gwyy">
-                    <div ui-grid="gwApplication"
-                         ui-grid-edit ui-grid-pagination
-                         ui-grid-selection ui-grid-resize-columns></div>
-                    <div class="actions btn-set" style="float: right;">
-                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addApp()"> 新增应用
+                <div class="tab-content"  ng-show="gwflag.gwyy">
+                    <div fun-active="/om/org/queryAppinPos">
+                        <div ui-grid="gwApplication"  ng-if="gwflag.gwyy"
+                             ui-grid-edit ui-grid-pagination
+                             ui-grid-selection ui-grid-resize-columns></div>
+                    </div>
+                    <div class="actions btn-set" style="float: right;margin-top: 20px;">
+                        <button fun-active="/om/org/addAppPosition" type="button" name="back" class="btn btn-primary" ng-click="abftree.addApp()"> 新增应用
                         </button>
 
-                        <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deleteApp()"> 删除应用
+                        <button fun-active="/om/org/deleteAppPosition" type="button" name="back" class="btn btn-danger" ng-click="abftree.deleteApp()"> 删除应用
                         </button>
                     </div>
                 </div>
                 <!-- 岗位应用列表结束 -->
 
                 <!-- 下级岗位列表开始 -->
-                <div class="tab-content" ng-if="gwflag.xjgw">
-                    <div ui-grid="xjPosition"
-                         ui-grid-edit ui-grid-pagination
-                         ui-grid-selection ui-grid-resize-columns></div>
+                <div class="tab-content" ng-show="gwflag.xjgw">
+                   <div fun-active="/om/org/loadxjposit">
+                       <div ui-grid="xjPosition" ng-if="gwflag.xjgw"
+                            ui-grid-edit ui-grid-pagination
+                            ui-grid-selection ui-grid-resize-columns></div>
+                   </div>
                     <div class="actions btn-set" style="float: right;">
-                        <button type="button" name="back" class="btn btn-primary" ng-click="abftree.addxjPosition()">
+                        <button fun-active="/om/org/createPosition" type="button" name="back" class="btn btn-primary" ng-click="abftree.addxjPosition()">
                             新增子岗位
                         </button>
                         <button type="button" name="back" class="btn btn-primary" ng-click="abftree.editxjPosition()">
                             查询岗位详情
                         </button>
-                        <button type="button" name="back" class="btn btn-danger" ng-click="abftree.deletexjPosition()">
+                        <button fun-active="/om/org/deletePosition" type="button" name="back" class="btn btn-danger" ng-click="abftree.deletexjPosition()">
                             删除岗位
                         </button>
                     </div>
@@ -820,7 +831,7 @@
                 <!-- 下级岗位列表结束 -->
 
                 <!-- 岗位权限列表开始 -->
-                <div class="tab-content" ng-if="gwflag.gwqx">
+                <div class="tab-content" ng-show="gwflag.gwqx">
                     <div>
                         <div class="portlet-body form col-md-12">
                             <!-- BEGIN FORM-->
@@ -829,12 +840,12 @@
                                 <!--<option ng-repeat="d in allrole track by $index" value="{{d.guid}}">{{d.roleName}}</option>-->
                                 <!--</select>-->
                                 <div class="actions btn-set col-md-12">
-                                    <button type="button" name="back" class="btn btn-danger" style="float: right;"
+                                    <button fun-active="/om/org/deleteRoleParty" type="button" name="back" class="btn btn-danger" style="float: right;"
                                             ng-click="deleteRole('position')"> 删除
                                     </button>
                                 </div>
-                                <div class="actions btn-set col-md-12">
-                                    <div ui-grid="alrolegird"
+                                <div class="actions btn-set col-md-12" fun-active="/om/org/queryRole">
+                                    <div ui-grid="alrolegird" ng-if="gwflag.gwqx"
                                          ui-grid-edit ui-grid-pagination
                                          ui-grid-selection style="height:200px;">
                                     </div>
@@ -842,20 +853,20 @@
                             </div>
                             <div style="" class="col-md-6">
                                 <div class="actions btn-set col-md-12">
-                                    <button style="float: right;" type="button" name="back" class="btn btn-primary"
+                                    <button fun-active="/om/org/addRoleParty" style="float: right;" type="button" name="back" class="btn btn-primary"
                                             ng-click="addRole('position')"> 新增
                                     </button>
                                 </div>
-                                <div class="actions btn-set col-md-12">
-                                    <div ui-grid="notrolegird"
+                                <div class="actions btn-set col-md-12" fun-active="/om/org/queryRoleNot">
+                                    <div ui-grid="notrolegird" ng-if="gwflag.gwqx"
                                          ui-grid-edit ui-grid-pagination
                                          ui-grid-selection style="height:200px;">
                                     </div>
                                 </div>
                             </div>
                             <!-- END FORM-->
-                            <div class="portlet-body col-md-12">
-                                <div ui-grid="mygrid"
+                            <div class="portlet-body col-md-12" fun-active="/om/org/queryRoleFun">
+                                <div ui-grid="mygrid" ng-if="gwflag.gwqx"
                                      ui-grid-edit ui-grid-pagination
                                      ui-grid-selection>
                                 </div>
