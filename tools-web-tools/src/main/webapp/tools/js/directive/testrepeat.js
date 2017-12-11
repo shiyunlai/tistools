@@ -27,7 +27,9 @@ MetronicApp.directive('testRepeats', ['$http',function($http) {
                             if(data[i].isLeaf == 'Y'){//如果是，那么按照最后一层循环
                                 html +=  '<li class="nav-item"><a href=" '+ data[i].href + '"><i class="'+data[i].icon+'"></i><span class="title">'+data[i].label+'</span></a><ul class="sub-menu ids'+ sumer +'" id="'+ data[i].guid +'"></ul></li>'
                             }else{//如果不是，按照正常循环方式
-                                html +=  '<li class="nav-item"><a href="javascript:;"><i class="'+data[i].icon+'"></i><span class="title">'+data[i].label+'</span> <span class="arrow"></span></a><ul class="sub-menu ids'+ sumer +'" id="'+ data[i].guid +'"></ul></li>'
+                                if(!isNull(data[i].children)){//必须有一个功能才会展示
+                                    html +=  '<li class="nav-item"><a href="javascript:;"><i class="'+data[i].icon+'"></i><span class="title">'+data[i].label+'</span> <span class="arrow"></span></a><ul class="sub-menu ids'+ sumer +'" id="'+ data[i].guid +'"></ul></li>'
+                                }
                             }
                         }
                         $(".ids" + sum).append(html);//追加到li中

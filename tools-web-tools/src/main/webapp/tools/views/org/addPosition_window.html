@@ -15,7 +15,7 @@
                     <div class="form-group" ng-init="$settings.getDictData('DICT_OM_POSITYPE')">
                         <label class="control-label col-md-4">岗位类型:</label>
                         <div class="col-md-8">
-                            <select class="form-control" ng-model="subFrom.positionType">
+                            <select class="form-control" ng-disabled="orgType" ng-model="subFrom.positionType">
                                 <option ng-repeat="d in $settings.diclist['DICT_OM_POSITYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
                             </select>
                         </div>

@@ -51,6 +51,7 @@ MetronicApp.factory('httpInterceptor', ['$log', function($log) {
                     }else if(response.data.status =="unAuth"){
                         toastr['error']("登陆失效，请重新登陆!");
                         window.location = "../tools/login.html";//如果正确，则进入主页
+                        //window.location = "http://106.15.103.14:8080/tis/tools/login.html";//如果正确，则进入主页
                     }
                 }
             }else{
@@ -193,6 +194,7 @@ MetronicApp.factory('settings', ['$rootScope','$http','common_service', function
             }
         }else if(type == "APP"){
             if(_.isNil(settings.commlist[type])) {
+                console.log(1)
                 $http.post(manurl + "/AcMenuController/queryAllAcApp",{}).then(function (response) {
                     console.log(response)
                     settings.commlist[type] = response.data.retMessage;
@@ -236,6 +238,7 @@ MetronicApp.controller('AppController', ['$scope','$rootScope','$http','$q','com
     common_service.post(ret,{}).then(function(data){
         if(data.status == "success"){
             $rootScope.userconfig = data.retMessage;//绑定个全局使用
+            $rootScope.$broadcast('anguRoute',data.retMessage);//$rootScope传值，如果直接绑定会因为异步问题而undefined
             //1.0头部请求信息
             var session  = $rootScope.userconfig;//拿去所有大数据
             $scope.userId = session.user.userId;//绑定登陆信息
@@ -411,7 +414,7 @@ MetronicApp.controller('AppController', ['$scope','$rootScope','$http','$q','com
             }
         }
     }
-}])
+}]);
 
 
 /***
@@ -556,15 +559,16 @@ MetronicApp.controller('Memocontroller', ['$scope','Memo_service', function($sco
 
 }]);
 
+
 //服务端定义路由控制，这里主要作用就是取数据
 MetronicApp.provider('router', function ($stateProvider,$urlRouterProvider) {
     this.$get = function ($http, $state,$rootScope,$timeout,common_service) {
         var ret ={ctrl: "AcAuthenticationController", func: "pageInit", emo: "页面初始化"};
         return {
             setUpRoutes: function () {
-                /*$timeout(function () {
-                    if(!isNull($rootScope.userconfig)){
-                        var datas =$rootScope.userconfig.resources;
+                $rootScope.$on('anguRoute', function (e, data) {//去取rootScope值
+                    if(!isNull(data)){
+                        var datas =data.resources;
                         var collection = JSON.parse(datas);
                         for (var routeName in collection) {
                             if (!$state.get(routeName)) {
@@ -577,27 +581,7 @@ MetronicApp.provider('router', function ($stateProvider,$urlRouterProvider) {
                         }
                         $urlRouterProvider.otherwise('/dashboard');
                     }
-                },2000)*/
-                // $timeout(function () {
-                    common_service.post(ret, {}).then(function (data) {
-                        var datas = data.retMessage.resources;
-                        if (!isNull(datas)) {
-                            var collection = JSON.parse(datas);
-                        }
-                        if (data.status == "success") {
-                            for (var routeName in collection) {
-                                if (!$state.get(routeName)) {
-                                    $stateProvider.state(routeName, collection[routeName]);
-                                }
-                            }
-                            //如何判断是第一次？这是一个问题,还存在一个问题，如果地址栏发生改变，那么会跳转到原来存储的位置,解决思路--地址栏发生改变就清空
-                            if (!isNull(sessionStorage.getItem('toState'))) {
-                                $state.go(sessionStorage.getItem('toState'), {id: sessionStorage.getItem('toParams')});
-                            }
-                            $urlRouterProvider.otherwise('/dashboard');
-                        }
-                    })
-                // },1000)
+                });
             }
         }
     };
@@ -621,7 +605,6 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider, routerProvider)
                             '../assets/global/plugins/morris/morris.min.js',
                             '../assets/global/plugins/morris/raphael-min.js',
                             '../assets/global/plugins/jquery.sparkline.min.js',
-
                             '../assets/pages/scripts/dashboard.min.js',
                             'js/controllers/DashboardController.js',
                         ]
@@ -654,22 +637,16 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider, routerProvider)
             controller: "reomenu_controller"
         })
     $urlRouterProvider.otherwise('/dashboard');
-}).run(function (router) {
-    router.setUpRoutes();
-});
+}).run(['router',function (router) {
+        router.setUpRoutes();
+}])
+
 
 //angular路由监控，跳转开始之前。
 MetronicApp.run(['$rootScope', '$state','$http','common_service', function ($rootScope, $state,$http,common_service) {
     $rootScope.$state = $state;
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-            /*
-               index进入之后 还会回到原来的页面
-        console.log('原地址'+fromState.name)
-        console.log('新地址'+toState.name)
-        sessionStorage.clear('toState');
-            sessionStorage.clear('toParams');
-            $state.go('dashboard');
-            */
+
         if(toState.name !=='dashboard'){//如果不是首页保存到临时存储中
             sessionStorage.setItem('toState',toState.name);
             sessionStorage.setItem('toParams',toParams.id);//把传入的值也放进存储中,刷新也保存着
@@ -678,13 +655,11 @@ MetronicApp.run(['$rootScope', '$state','$http','common_service', function ($roo
         if(toState.name =='dashboard' && fromState.name !==''){//如果新目标是首页并且原本的路由不是空，那就代表首页刷新
             sessionStorage.setItem('toState',toState.name);
         }
-
         if(toState.name !=='dashboard'&& toState.name !==''&& toState.name !=='NonExistent'&& toState.name !=='Nopermission'){
             var subFrom = {};
             subFrom.funcCode = toState.funcCode;//新路由的功能id
             var ret ={"ctrl": "AcAuthenticationController", "func": "viewCheck","emo":"用于路由跳转权限判断"};
             common_service.post(ret,{data:subFrom}).then(function(data){
-                console.log(data)
                 if(data.status =='success'){
                     var datas = data.retMessage;
                     $rootScope.$broadcast('asycFinish',datas);//$rootScope传值，如果直接绑定会因为异步问题而undefined

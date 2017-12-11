@@ -163,19 +163,24 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
     ];
     var f = function(row){
         if(row.isSelected){
-            $scope.selectRow = row.entity;
-            $scope.opensf.idenright = true;
-            //$scope.opensf.openguid = $scope.selectRow.guid;//绑定对应身份id给全局
-            //查询身份对应资源
-            var subFrom = {};
-            subFrom.identityGuid = $scope.selectRow.guid
-            common_service.post(res.queryAllOperatorIdentityRes,subFrom).then(function(data){
-                if(data.status == "success"){
-                    var datas = data.retMessage;
-                    $scope.gridOptions1.data = datas
-                }
+            if(row.entity.identityName =='系统默认身份'){
+                $scope.opensf.idenright = false;
+                toastr['error']('系统默认身份不允许操作');
+            }else{
+                $scope.selectRow = row.entity;
+                $scope.opensf.idenright = true;
+                //$scope.opensf.openguid = $scope.selectRow.guid;//绑定对应身份id给全局
+                //查询身份对应资源
+                var subFrom = {};
+                subFrom.identityGuid = $scope.selectRow.guid
+                common_service.post(res.queryAllOperatorIdentityRes,subFrom).then(function(data){
+                    if(data.status == "success"){
+                        var datas = data.retMessage;
+                        $scope.gridOptions1.data = datas
+                    }
 
-            })
+                })
+            }
         }else{
             delete $scope.selectRow;//制空
             $scope.opensf.idenright = false;
@@ -218,31 +223,36 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
         var info = $scope.opensf.info;
         if($scope.selectRow){
             var datas = $scope.selectRow;
-            openwindow($modal, 'views/operator/identAdd.html', 'lg',//弹出页面
-                function ($scope, $modalInstance) {
-                    if(!isNull(datas)){
-                        $scope.identFrom = angular.copy(datas);
-                    }
-                    $scope.id = id;
-                    $scope.add = function(item){
-                        var subFrom = {};
-                        subFrom = item;
-                        operator_service.editOperatorIdentity(subFrom).then(function(data){
-                            var datas = data.retMessage;
-                            if(data.status == "success"){
-                                toastr['success']("修改成功！");
-                                opensf.inittx(info.userid,info.username);//测试查询
-                                $modalInstance.close();
-                            }else{
-                                toastr['error'](data.retCode,data.retMessage+"初始化失败!");
-                            }
-                        })
-                    }
-                    $scope.cancel = function () {
-                        $modalInstance.dismiss('cancel');
-                    };
+            if(datas.identityName =='系统默认身份'){
+                toastr['error']("系统默认身份不允许修改！");
+            }else{
+                openwindow($modal, 'views/operator/identAdd.html', 'lg',//弹出页面
+                    function ($scope, $modalInstance) {
+                        if(!isNull(datas)){
+                            $scope.identFrom = angular.copy(datas);
+                        }
+                        $scope.id = id;
+                        $scope.add = function(item){
+                            var subFrom = {};
+                            subFrom = item;
+                            operator_service.editOperatorIdentity(subFrom).then(function(data){
+                                var datas = data.retMessage;
+                                if(data.status == "success"){
+                                    toastr['success']("修改成功！");
+                                    opensf.inittx(info.userid,info.username);//测试查询
+                                    $modalInstance.close();
+                                }else{
+                                    toastr['error'](data.retCode,data.retMessage+"初始化失败!");
+                                }
+                            })
+                        }
+                        $scope.cancel = function () {
+                            $modalInstance.dismiss('cancel');
+                        };
 
-                })
+                    })
+            }
+
         }else{
             toastr['error']("请至少选中一条身份进行修改！");
         }
@@ -253,21 +263,24 @@ angular.module('MetronicApp').controller('operstatus_controller', function($root
         if($scope.selectRow) {
             var info = $scope.opensf.info;
             var identityGuid = $scope.selectRow.guid;
-            if (confirm("确定删除选中的身份吗？删除身份将删除该身份下的所有权限")) {
-                var subFrom = {};
-                subFrom.identityGuid = identityGuid;
-                operator_service.deleteOperatorIdentity(subFrom).then(function (data) {
-                    console.log(data)
-                    if (data.status == "success") {
-                        toastr['success']("删除成功！");
-                        opensf.inittx(info.userid, info.username);//测试查询
-                    } else {
-                        toastr['error'](data.retCode, data.retMessage + "删除失败!");
-                    }
-                })
-            } else {
-                toastr['error']("请至少选中一条身份信息进行删除！");
+            if($scope.selectRow.identityName =='系统默认身份'){
+                toastr['error']("系统默认身份不允许删除！");
+            }else{
+                if (confirm("确定删除选中的身份吗？删除身份将删除该身份下的所有权限")) {
+                    var subFrom = {};
+                    subFrom.identityGuid = identityGuid;
+                    operator_service.deleteOperatorIdentity(subFrom).then(function (data) {
+                        console.log(data)
+                        if (data.status == "success") {
+                            toastr['success']("删除成功！");
+                            opensf.inittx(info.userid, info.username);//测试查询
+                        } else {
+                            toastr['error'](data.retCode, data.retMessage + "删除失败!");
+                        }
+                    })
+                }
             }
+
         }
     }
 

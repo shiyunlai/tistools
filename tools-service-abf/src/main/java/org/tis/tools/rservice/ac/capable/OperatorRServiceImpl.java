@@ -1994,6 +1994,9 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
                         .stream()
                         .map(AcFuncBhv::getGuid).collect(Collectors.toSet()));
                 guids.add(acOperatorFunc.getGuidOperator() + acOperatorFunc.getGuidFunc());
+                // 删除操作员身份资源中的功能
+                String userId = acOperatorService.loadByGuid(acOperatorFunc.getGuidOperator()).getUserId();
+                omCommonRService.deleteOperatorIdentityRes(userId, acOperatorFunc.getGuidFunc());
             }
             if (CollectionUtils.isNotEmpty(funcBhvGuids)) {
                 acOperatorBhvService.deleteByCondition(new WhereCondition()

@@ -33,6 +33,9 @@
                             <!-- 渲染，不能绑定同一个，不然每次点击，都会改变，重新渲染，所以ng-model绑定和渲染必须不同-->
                             <option ng-repeat="d in permiss.appselectApp" value="{{d.guid}}">{{d.appName}}</option>
                         </select>
+                        <!--<select class="form-control" name="dict_guidApp" ng-disabled="editflag" ng-model="permissFrom.appselect" required>
+                            <option ng-repeat="d in $settings.commlist['APP'] track by $index" value="{{d.guid}}">{{d.appName}}</option>
+                        </select>-->
                     </div>
                     <div class="col-md-2">
                         <button type="button" name="back"  class="btn btn-primary"    popover-trigger="mouseenter" ng-click="permiss.search(permissFrom.appselect)" > 查询
@@ -58,12 +61,12 @@
         <ul class="nav nav-tabs padding-12 tab-color-blue background-blue">
             <li ng-class="{true:'active',false:''}[proflat.funcon]">
                 <a data-toggle="tab" href ng-class="{true:'link',false:''}[proflat.funcon]" ng-click="permiss.loadgwdata(0)">
-                    <i class="green ace-icon fa fa-bars bigger-120"></i>角色功能配置
+                    <i class="green ace-icon fa fa-bars bigger-120"></i>操作员功能配置
                 </a>
             </li>
             <li ng-class="{true:'active',false:''}[proflat.funactive]" ng-if="!isselfts">
                 <a  data-toggle="tab" href ng-class="{true:'link',false:''}[proflat.funactive]" ng-click="permiss.loadgwdata(1)">
-                    <i class="green ace-icon fa fa-bars bigger-120"></i>角色功能行为配置
+                    <i class="green ace-icon fa fa-bars bigger-120"></i>操作员行为配置
                 </a>
             </li>
         </ul>

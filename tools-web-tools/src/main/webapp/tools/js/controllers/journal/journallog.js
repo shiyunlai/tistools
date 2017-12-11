@@ -22,8 +22,14 @@ angular.module('MetronicApp').controller('journal_controller', function($rootSco
     ];
 
     $scope.stategohistory = function(item){
-        var items = item.guid;//数据信息;
-        $state.go("journinfo",{id:items})
+        if(item.operateType == 'login'){
+            //直接去查看历史
+            var item = 'l'+item.userId;//到历史页面去调用，查询登陆的历史。 需要修改接口
+            $state.go("loghistory",{id:item});//跳转新页面
+        }else{
+            var items = item.guid;//数据信息;
+            $state.go("journinfo",{id:items})
+        }
     }
     var f = function(row){
         if(row.isSelected){
@@ -211,7 +217,7 @@ angular.module('MetronicApp').controller('loghistory_controller', function($root
         window.history.back(-1);
     }
     var objGuid = $stateParams.id;//拿到传入的对象guid
-
+    console.log(objGuid)
     //判断是否是登陆，如果是单独操作，否则还是原本的操作
     var subFrom = {};
     if(objGuid.substring(0,1) =='l'){

@@ -66,6 +66,11 @@
     "fixmainOrg": {"ctrl": "om/emp", "func": "fixmainOrg","emo":"指定新的主机构"},
     "fixmainPos": {"ctrl": "om/emp", "func": "fixmainPos","emo":"指定新的主岗位"},
     "changeEmpStatus": {"ctrl": "om/emp", "func": "changeEmpStatus","emo":"改变员工状态"},
+    "loadEmpGroup": {"ctrl": "om/emp", "func": "loadEmpGroup","emo":"拉取人员工作组列表"},
+    "loadEmpPosDuty": {"ctrl": "om/emp", "func": "loadEmpPosDuty","emo":"拉取人员-岗位及职务表"},
+    "addEmpGroup": {"ctrl": "om/emp", "func": "addEmpGroup","emo":"指派工作组"},
+    "deleteEmpGroup": {"ctrl": "om/emp", "func": "deleteEmpGroup","emo":"删除指派工作组"},
+    "loadGroupNotInbyEmp": {"ctrl": "om/emp", "func": "loadGroupNotInbyEmp","emo":"拉取可指派工作组列表"},
     "queryDictItemListByDictKey": {"ctrl": "DictController", "func": "queryDictItemListByDictKey","emo":"根据key查询业务字典项"},
     "updateFuncBhvType ": {"ctrl": "AcAppController", "func": "updateFuncBhvType ","emo":"修改功能行为类型"},
     "queryOperateHistoryList": {"ctrl": "OperateLogController", "func": "queryOperateHistoryList","emo":"查询操作对象历史日志"}

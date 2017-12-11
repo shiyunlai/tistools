@@ -80,7 +80,7 @@
                             </div>
                         </div>
                         <!--登陆日志-->
-                        <div class="col-md-12"  ng-show="login" style="margin-left: -169px; margin-right: 260px;">
+                        <div class="col-md-12"  ng-show="login"  style="margin-left: -169px; margin-right: 260px;">
                             <ul class="timeline">
                                 <!--<li ng-repeat="d in loghistory.history track by $index" ng-class="{'timeline-noline':$last,'timeline-blue':$index%6 ==0,'timeline-yellow':$index%6 ==1,'timeline-green':$index%6 ==2,'timeline-purple':$index%6 ==3,'timeline-red':$index%7 ==4,'timeline-grey':$index%6 ==5}">-->
                                 <li ng-repeat="d in loghistory.history track by $index" ng-class="{'timeline-noline':$last,'timeline-green':d.operateResult =='succ','!timeline-blue':d.operateResult =='fail','!timeline-blue':d.operateType =='login'}">

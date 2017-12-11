@@ -555,7 +555,6 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
         //拉取列表
         Workgroup_service.loadempin(subFrom).then(function (data) {
             data = data.retMessage;
-            console.log(data);
             $scope.xjempgrid.data = data;
             $scope.xjempgrid.mydefalutData = data;
             $scope.xjempgrid.getPage(1, $scope.xjempgrid.paginationPageSize);
@@ -630,7 +629,6 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
         subFrom.groupCode = $scope.sub.groupCode;
         subFrom.guidOrg = $scope.sub.guidOrg;
         var guid = $scope.sub.guid;
-        console.log(subFrom);
         openwindow($uibModal, 'views/org/addsearhgrid_window.html', 'lg',
             function ($scope, $modalInstance) {
                 $scope.title = "添加员工";
@@ -652,12 +650,11 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                     {field: 'indate', displayName: '入职日期', enableHiding: false},
                     {field: 'otel', displayName: '办公电话', enableHiding: false}
                 ]
-                $scope.commonGrid = initgrid($scope, commonGrid, filterFilter, com, true, selework);
+                $scope.commonGrid = initgrid($scope, commonGrid, filterFilter, com, false, selework);//先不做批量
 
                 var recommonGrid = function () {
                     //调取工作组信息OM_GROUP
                     Workgroup_service.loadempNotin(subFrom).then(function (data) {
-                        console.log(data.retMessage)
                         if (data.status == "success" && !isNull(data.retMessage)) {
                             $scope.commonGrid.data = data.retMessage;
                             $scope.commonGrid.mydefalutData = data.retMessage;
@@ -677,16 +674,17 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
                         toastr['error']("请选择需要添加的员工！");
                         return false;
                     } else {
+                        /* 先不做批量
                         var empGuidlist = [];
                         for (var i = 0; i < arr.length; i++) {
                             empGuidlist.push(arr[i].guid);
-                        }
+                        }*/
                         var subFrom = {};
-                        subFrom.groupGuid = guid;
-                        subFrom.empGuidlist = empGuidlist;
-                        console.log(subFrom)
-                        Workgroup_service.addEmpGroup(subFrom).then(function (data) {
-                            console.log(data)
+                    /*    subFrom.groupGuid = guid;
+                        subFrom.empGuidlist =empGuidlist;*/
+                        subFrom.guidGroup = guid;
+                        subFrom.guidEmp = arr[0].guid;
+                        Workgroup_service.addEmpGroup({data:subFrom}).then(function (data) {
                             if (data.status == "success") {
                                 toastr['success']('添加成功');
                             } else {
@@ -707,22 +705,22 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
     //删除人员
     workgroup.deletemp = function () {
         var guid = $scope.sub.guid;
-        console.log(subFrom);
         var arr = $scope.xjempgrid.getSelectedRows();
         if (arr.length == 0) {
             toastr['error']("请选择需要删除的员工！");
             return false;
         } else {
-            var empGuidlist = [];
+           /* var empGuidlist = [];
             for (var i = 0; i < arr.length; i++) {
                 empGuidlist.push(arr[i].guid);
             }
             var subFrom = {};
             subFrom.groupGuid = guid;
-            subFrom.empGuidlist = empGuidlist;
-            console.log(subFrom)
-            Workgroup_service.deleteEmpGroup(subFrom).then(function (data) {
-                console.log(data)
+            subFrom.empGuidlist = empGuidlist;*/
+           var subFrom = {};
+            subFrom.guidGroup = guid;
+            subFrom.guidEmp = arr[0].guid;
+            Workgroup_service.deleteEmpGroup({data:subFrom}).then(function (data) {
                 if (data.status == "success") {
                     toastr['success']('删除员工成功');
                 } else {
@@ -737,7 +735,6 @@ angular.module('MetronicApp').controller('Workgroup_controller', function ($root
         var subFrom = {};
         subFrom.groupCode = $scope.sub.groupCode;
         var guid = $scope.sub.guid;
-        console.log(subFrom);
         openwindow($uibModal, 'views/org/addsearhgrid_window.html', 'lg',
             function ($scope, $modalInstance) {
                 $scope.title = "添加岗位";
