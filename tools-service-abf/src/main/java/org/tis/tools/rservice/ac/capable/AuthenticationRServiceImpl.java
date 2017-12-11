@@ -662,6 +662,7 @@ public class AuthenticationRServiceImpl extends BaseRService implements IAuthent
                 .stream()
                 .collect(Collectors.groupingBy(map -> (String) map.get("funcCode")));
         Set<String> bhvPermission = new HashSet<>();
+        // 获取当前身份的功能权限
         List<AcFunc> acFuncs = queryOperatorIdenAuthFuncsInApp(userId, acApp.getGuid(), identityGuid);
         for(AcFunc acFunc : acFuncs) {
             String funcCode = acFunc.getFuncCode();

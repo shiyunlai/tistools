@@ -4,6 +4,9 @@ import com.alibaba.dubbo.common.utils.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.tis.tools.base.WhereCondition;
@@ -27,6 +30,7 @@ import java.util.stream.Collectors;
 
 import static org.tis.tools.common.utils.BasicUtil.wrap;
 
+@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, readOnly = false, rollbackFor = Exception.class)
 public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRService {
 	@Autowired
 	OmEmployeeService omEmployeeService;
@@ -50,6 +54,9 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 	OmGroupService omGroupService;
 	@Autowired
 	OmDutyService omDutyService;
+
+	@Autowired
+	OmCommonRService omCommonRService;
 
 	@Autowired
 	OmOrgServiceExt orgServiceExt;
@@ -644,6 +651,9 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		wc.andEquals("GUID_ORG", orgGuid);
 		wc.andEquals("GUID_EMP", empGuid);
 		omEmpOrgService.deleteByCondition(wc);
+		// 删除对应操作员身份资源下的机构
+		String userId = list.get(0).getUserId();
+		omCommonRService.deleteOperatorIdentityRes(userId, orgGuid);
 		OmEmpOrg empOrg = new OmEmpOrg();
 		empOrg.setGuidEmp(empGuid);
 		empOrg.setGuidOrg(orgGuid);
@@ -689,10 +699,13 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		wc.andEquals("GUID_POSITION", positionGuid);
 		wc.andEquals("GUID_EMP", empGuid);
 		omEmpPositionService.deleteByCondition(wc);
+		// 删除对应操作员身份关联资源
+		omCommonRService.deleteOperatorIdentityRes(list.get(0).getUserId(), positionGuid);
+		omCommonRService.deleteOperatorIdentityRes(list.get(0).getUserId(), posGuid);
 	}
 
 	@Override
-	public void insertEmpGroup(String groupGuid, String empGuid) {
+	public void insertEmpGroup(String groupGuid, String empGuid) throws EmployeeManagementException {
 		//校验入参
 		if(StringUtil.isEmpty(groupGuid)){
 			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
@@ -700,10 +713,15 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		if(StringUtil.isEmpty(empGuid)){
 			throw new GroupManagementException(OMExceptionCodes.PARMS_NOT_ALLOW_EMPTY);
 		}
-		OmEmpGroup oeg = new OmEmpGroup();
-		oeg.setGuidEmp(empGuid);
-		oeg.setGuidGroup(groupGuid);
-		omEmpGroupService.insert(oeg);
+		try {
+			OmEmpGroup oeg = new OmEmpGroup();
+			oeg.setGuidEmp(empGuid);
+			oeg.setGuidGroup(groupGuid);
+			omEmpGroupService.insert(oeg);
+		} catch (Exception e) {
+			logger.error("insertEmpGroup exception: ", e);
+			throw new EmployeeManagementException(ExceptionCodes.FAILURE_WHEN_INSERT, wrap(OmEmpGroup.TABLE_NAME, e));
+		}
 	}
 
 	@Override
@@ -719,6 +737,9 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		wc.andEquals("GUID_GROUP", groupGuid);
 		wc.andEquals("GUID_EMP", empGuid);
 		omEmpGroupService.deleteByCondition(wc);
+		// 删除对应操作员身份关联资源
+		OmEmployee omEmployee = omEmployeeService.loadByGuid(empGuid);
+		omCommonRService.deleteOperatorIdentityRes(omEmployee.getUserId(), groupGuid);
 	}
 
 	/**

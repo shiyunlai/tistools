@@ -64,4 +64,11 @@ public interface AcOperatorMapperExt {
      * @return
      */
     List<String> getFuncListByIdentity(@Param("partyGuids")String partGuids, @Param("roleGuids")String roleGuids);
+
+    /**
+     * 删除操作员下的资源
+     * @param userId 操作员ID
+     * @param resGuid 资源GUID
+     */
+    void deleteOperatorIdentityRes(@Param("userId")String userId, @Param("resGuid")String resGuid);
 }
