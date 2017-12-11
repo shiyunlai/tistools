@@ -394,7 +394,7 @@ public interface IEmployeeRService {
 	/**
 	 * 添加人员-工作组关系表数据
 	 */
-	void insertEmpGroup(String groupGuid,String empGuid);
+	void insertEmpGroup(String groupGuid,String empGuid) throws EmployeeManagementException;
 	
 	/**
 	 * 删除人员-工作组关系表数据

@@ -35,5 +35,7 @@
 
 	<!-- auto scan -->
 	<context:component-scan base-package="org.tis.tools.service" />
+
+	<bean id="omCommonRService" class="org.tis.tools.rservice.om.capable.OmCommonRService"/>
 	
 </beans>

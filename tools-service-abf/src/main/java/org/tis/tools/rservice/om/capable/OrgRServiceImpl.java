@@ -7,6 +7,9 @@ import com.alibaba.dubbo.common.utils.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.tis.tools.base.WhereCondition;
@@ -48,6 +51,7 @@ import static org.tis.tools.common.utils.BasicUtil.wrap;
  * @author megapro
  *
  */
+@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, readOnly = false, rollbackFor = Exception.class)
 public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 
 	/** 拷贝新增时，代码前缀  */
