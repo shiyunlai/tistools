@@ -134,7 +134,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 					status.setRollbackOnly();
 					e.printStackTrace();
 					throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
-							wrap(e.getCause().getMessage()), "新增员工失败！{0}");
+							wrap(e.getCause().getMessage()));
 				}
 			}
 		});
@@ -261,7 +261,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 						e.printStackTrace();
 						throw new EmployeeManagementException(
 								OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
-								wrap(e.getCause().getMessage()), "指派失败{0}");
+								wrap(e.getCause().getMessage()));
 					}
 				}
 			});
@@ -303,7 +303,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 							e.printStackTrace();
 							throw new EmployeeManagementException(
 									OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
-									wrap(e.getCause().getMessage()), "指派失败{0}");
+									wrap(e.getCause().getMessage()));
 						}
 					}
 				});
@@ -391,7 +391,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 						e.printStackTrace();
 						throw new EmployeeManagementException(
 								OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
-								wrap(e.getCause().getMessage()), "指派失败{0}");
+								wrap(e.getCause().getMessage()));
 					}
 				}
 			});
@@ -432,7 +432,7 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 							e.printStackTrace();
 							throw new EmployeeManagementException(
 									OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
-									wrap(e.getCause().getMessage()), "指派失败{0}");
+									wrap(e.getCause().getMessage()));
 						}
 					}
 				});
@@ -448,14 +448,13 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		List<OmEmployee> empList = omEmployeeService.query(wc);
 		if (empList.size() != 1) {
 			throw new OrgManagementException(OMExceptionCodes.EMPANIZATION_NOT_EXIST_BY_EMP_CODE,
-					wrap(newEmployee.getEmpCode()), "员工代码代码{0}对应的员工不存在");
+					wrap(newEmployee.getEmpCode()));
 		}
 		OmEmployee oldEmp = empList.get(0);
 		String oldEmpStatus = oldEmp.getEmpstatus();
 		String EmpStatus = newEmployee.getEmpstatus();
 		if (!oldEmpStatus.equals(EmpStatus)) {
-			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHEN_UPDATE_EMP_STATUS, null,
-					"员工状态不能直接通过修改而更新！{0}");
+			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHEN_UPDATE_EMP_STATUS, wrap());
 		}
 		try {
 			omEmployeeService.update(newEmployee);
@@ -653,7 +652,8 @@ public class OmEmployeeRServicelmpl extends BaseRService implements IEmployeeRSe
 		omEmpOrgService.deleteByCondition(wc);
 		// 删除对应操作员身份资源下的机构
 		String userId = list.get(0).getUserId();
-		omCommonRService.deleteOperatorIdentityRes(userId, orgGuid);
+		if (StringUtils.isNotBlank(userId))
+			omCommonRService.deleteOperatorIdentityRes(userId, orgGuid);
 		OmEmpOrg empOrg = new OmEmpOrg();
 		empOrg.setGuidEmp(empGuid);
 		empOrg.setGuidOrg(orgGuid);

@@ -83,7 +83,7 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 						status.setRollbackOnly();
 						e.printStackTrace();
 						throw new DutyManagementException(OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_DUTY,
-								BasicUtil.wrap(e.getCause().getMessage()), "新增根职务失败！{0}");
+								BasicUtil.wrap(e.getCause().getMessage()));
 					}
 				}
 			});
@@ -118,7 +118,7 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 						status.setRollbackOnly();
 						e.printStackTrace();
 						throw new DutyManagementException(OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_DUTY,
-								BasicUtil.wrap(e.getCause().getMessage()), "新增职务失败！{0}");
+								BasicUtil.wrap(e.getCause().getMessage()));
 					}
 				}
 			});

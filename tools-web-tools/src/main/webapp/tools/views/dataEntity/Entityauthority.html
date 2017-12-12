@@ -162,7 +162,7 @@
                         </div>
                     </form>
                 </div>
-                <!--<div class="col-md-12">
+                <div class="col-md-12">
                     <div class="form-group">
                         <label class="control-label col-md-2"></label>
                         <div class="col-md-10">
@@ -176,76 +176,7 @@
                             </div>
                         </div>
                     </div>
-                </div>-->
-                <div class="col-md-12">
-                    <div v-for='(item,index) of model' class='item' :key='index'>
-                        <Row type='flex' justify='space-between' class='title clearfix'>
-                            <Col span='4'>关系符</Col>
-                            <Col span='4'>字段</Col>
-                            <Col span='4'>逻辑符</Col>
-                            <Col span='4'>条件值</Col>
-                            <Col span='4'>编辑</Col>
-                        </Row>
-                        <div class='term' ref='term' v-for='(v,i) of model[index][0]' :key='i'>
-                            <Row type='flex' justify='space-between' class='line lineOne'>
-                                <Col span='4'>
-                                <Select v-if='i !== 0' v-model='model[index][0][i].relation'>
-                                    <Option value='and' label='并且'></Option>
-                                    <Option value='or' label='或者'></Option>
-                                </Select>
-                                </Col>
-                                <Col span='4'>
-                                <Select v-model='model[index][0][i].field'>
-                                    <Option value='fieldA' label='字段A'></Option>
-                                    <Option value='fieldB' label='字段B'></Option>
-                                    <Option value='fieldC' label='字段C'></Option>
-                                    <Option value='fieldD' label='字段D'></Option>
-                                </Select>
-                                </Col>
-                                <Col span='4'>
-                                <Select v-model='model[index][0][i].logical'>
-                                    <Option value='like' label='包含'></Option>
-                                    <Option value='nlk' label='不包含'></Option>
-                                    <Option value='eq' label='等于'></Option>
-                                    <Option value='neq' label='不等于'></Option>
-                                </Select>
-                                </Col>
-                                <Col span='4'>
-                                <Input v-model='model[index][0][i].condition'></Input>
-                                </Col>
-                                <Col span='4'>
-                                <Row>
-                                    <Col @click.native='handlePlusClick(index, i)' style='margin-top: 4px;margin-bottom: 4px;text-align: center;cursor: pointer;background: #39f; border-radius: 5px;color: white;' span='5'>
-                                    <Icon type='plus-round'></Icon>
-                                    </Col>
-                                    <Col @click.native='handleMinusClick(index, i)' offset='3' style='margin-top: 4px;margin-bottom: 4px;text-align: center;cursor: pointer;background: #39f; border-radius: 5px;color: white;' span='5'>
-                                    <Icon type='minus-round'></Icon>
-                                    </Col>
-                                </Row>
-                                </Col>
-                            </Row>
-                        </div>
-                        <Row class='addBtnArea' style='width:100%;position:absolute;bottom: -40px;'>
-                            <Col span='4' offset='8'>
-                            <Select v-model='model[index][1].connecter'>
-                                <Option value='and' label='并且'></Option>
-                                <Option value='or' label='或者'></Option>
-                            </Select>
-                            </Col>
-                            <Col offset='1' span='3'>
-                            <Row type='flex' justify='space-between'>
-                                <Col @click.native='handleAddLine(index)' span='6' style='background: #39f; margin-top: 4px;border-radius: 5px;color: white;text-align: center;cursor: pointer;'>
-                                <Icon type='plus-round'></Icon>
-                                </Col>
-                                <Col v-if='model.length !== 1' @click.native='handleMinusLine(index)' span='6' style='background: #39f; margin-top: 4px;border-radius: 5px;color: white;text-align: center;cursor: pointer;'>
-                                <Icon type='minus-round' ></Icon>
-                                </Col>
-                            </Row>
-                            </Col>
-                        </Row>
-                    </div>
                 </div>
-
             </div>
         </form>
     </div>

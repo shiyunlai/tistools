@@ -452,7 +452,7 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                                     operFrom.data = {};
                                     operFrom.data.empGuid = items.guid;
                                     operFrom.data.status = 'onjob';
-                                    operFrom.data.date = tims;//传入时间
+                                    operFrom.data.date = times;//传入时间
                                     if(!isNull(items.userId)){
                                         operFrom.data.userId = items.userId;//传入入职人员
                                     }
@@ -603,7 +603,7 @@ angular.module('MetronicApp').controller('Emp_controller', function ($rootScope,
                         }
                         subFrom.orgList = a;
                         subFrom.orgList = JSON.stringify(subFrom.orgList);
-                        Emp_service.addemp(subFrom).then(function (data) {
+                        Emp_service.updateemployee(subFrom).then(function (data) {
                             if (data.status == "success") {
                                 toastr['success']('修改成功');
                             } else {

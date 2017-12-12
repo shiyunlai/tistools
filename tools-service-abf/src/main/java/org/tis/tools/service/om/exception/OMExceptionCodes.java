@@ -59,10 +59,7 @@ public class OMExceptionCodes {
 	 */
 	public static final String ORG_IS_NOT_STOP_WHEN_ENABLED = R_EX_CODE("0008");
 
-	/**
-	 * 启用机构时，生效日期和失效日期范围无效
-	 */
-	public static final String INVALID_DATE_SCOPE_WHEN_ENABLED = R_EX_CODE("0008");
+
 
 	/**
 	 * 机构状态非停用，不能删除
@@ -211,6 +208,10 @@ public class OMExceptionCodes {
 	public static final String LAKE_PARMS_FOR_GEN_POSITION= R_EX_CODE("0042");
 
 
+	/**
+	 * 启用机构时，生效日期和失效日期范围无效
+	 */
+	public static final String INVALID_DATE_SCOPE_WHEN_ENABLED = R_EX_CODE("0043");
 	/**
 	 * 以烤串方式拼接异常码
 	 *
