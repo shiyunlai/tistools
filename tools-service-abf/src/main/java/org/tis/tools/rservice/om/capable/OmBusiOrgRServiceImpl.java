@@ -267,7 +267,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
         }*/
         if (!isExitByBusiorgCode(fromBusiorgCode)) {
             throw new BusiOrgManagementException(OMExceptionCodes.NOT_EXIST_BY_BUSIORG_CODE,
-                    wrap(fromBusiorgCode), "拷贝业务机构时，找不到参照业务机构{0}！");
+                    wrap(fromBusiorgCode));
         }
         /**
          * 如果新业务机构的父业务机构代码不存在 默认为顶级业务机构
@@ -291,7 +291,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
                 e.printStackTrace();
                 throw new BusiOrgManagementException(
                         OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG,
-                        wrap(e.getCause().getMessage()), "拷贝业务机构（实际机构）！{0}");
+                        wrap(e.getCause().getMessage()));
             }
         } else {
             if (!isExitByBusiorgCode(toParentsBusiorgCode)) {
@@ -325,7 +325,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
                         e.printStackTrace();
                         throw new BusiOrgManagementException(
                                 OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG,
-                                wrap(e.getCause().getMessage()), "拷贝业务机构（实际机构）！{0}");
+                                wrap(e.getCause().getMessage()));
                     }
                 }
             });
@@ -406,7 +406,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
                         e.printStackTrace();
                         throw new BusiOrgManagementException(
                                 OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG,
-                                wrap(e.getCause().getMessage()), "深度拷贝业务机构（实际机构）！{0}");
+                                wrap(e.getCause().getMessage()));
                     }
                 }
             });
@@ -455,7 +455,7 @@ public class OmBusiOrgRServiceImpl extends BaseRService implements IBusiOrgRServ
                         e.printStackTrace();
                         throw new BusiOrgManagementException(
                                 OMExceptionCodes.FAILURE_WHRN_CREAT_BUSIORG,
-                                wrap(e.getCause().getMessage()), "拷贝业务机构（实际机构）！{0}");
+                                wrap(e.getCause().getMessage()));
                     }
                 }
             });

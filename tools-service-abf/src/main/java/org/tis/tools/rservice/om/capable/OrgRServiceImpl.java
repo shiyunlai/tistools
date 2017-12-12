@@ -248,8 +248,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 					status.setRollbackOnly();
 					throw new OrgManagementException(
 							index == 1 ? OMExceptionCodes.FAILURE_WHEN_CREATE_CHILD_ORG : OMExceptionCodes.FAILURE_WHRN_UPDATE_PARENT_ORG,
-							wrap(e.getCause().getMessage()),
-							index == 1 ? "新增子节点机构失败！{0}" : "更新父节点机构失败！{0}" );
+							wrap(e.getCause().getMessage()));
 				}
 			}
 		});
@@ -355,8 +354,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 					status.setRollbackOnly();
 					throw new OrgManagementException(
 							index == 1 ? OMExceptionCodes.FAILURE_WHEN_CREATE_CHILD_ORG : OMExceptionCodes.FAILURE_WHRN_UPDATE_PARENT_ORG,
-							wrap(e.getCause().getMessage()),
-							index == 1 ? "新增子节点机构失败！{0}" : "更新父节点机构失败！{0}" );
+							wrap(e.getCause().getMessage()));
 				}
 			}
 		});
@@ -390,7 +388,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		String oldOrgStatus = oldOrg.getOrgStatus();
 		String orgStatus = omOrg.getOrgStatus();
 		if(!oldOrgStatus.equals(orgStatus)){
-			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_UPDATE_ORG_STATUS,null,"机构状态不能直接通过修改而更新！{0}");
+			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_UPDATE_ORG_STATUS, wrap());
 		}
 		try {
 			omOrgService.update(omOrg);
@@ -554,8 +552,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_COPY_ORG,
-					wrap(copyFromOrgCode, e),
-					"将机构{0}拷贝为新机构{0}时，插入数据失败！{0}");
+					wrap(copyFromOrgCode, e));
 		}
 		
 		return newOrg;
@@ -613,7 +610,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_DEEP_COPY_ORG,
-					wrap(copyFromOrgCode, e), "深度拷贝机构{0}为新机构{0}时失败！{0}");
+					wrap(copyFromOrgCode, e));
 		}
 
 		// 返回的是机构详情信息，将拷贝时处理过哪些内容交代清楚
@@ -772,18 +769,17 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		OmOrg org = omOrgServiceExt.loadByOrgCode(orgCode);
 
 		if (StringUtils.equals(org.getOrgStatus(), OMConstants.ORG_STATUS_RUNNING)) {
-			throw new OrgManagementException(OMExceptionCodes.ORG_IS_RUNNING_NEEDLESS_ENABLED, wrap(orgCode),
-					"机构 {0} 处于正常状态，无需执行启用处理！");
+			throw new OrgManagementException(OMExceptionCodes.ORG_IS_RUNNING_NEEDLESS_ENABLED, wrap(orgCode));
 		}
 
 		if (!StringUtils.equals(org.getOrgStatus(), OMConstants.ORG_STATUS_STOP)) {
 			throw new OrgManagementException(OMExceptionCodes.ORG_IS_NOT_STOP_WHEN_ENABLED,
-					wrap(orgCode, org.getOrgStatus()), "机构 {0} 当前状态为 {1}，不能执行启用处理！");
+					wrap(orgCode, org.getOrgStatus()));
 		}
 		
 		if (TimeUtil.compareDate(endDate, startDate) == -1) {
 			throw new OrgManagementException(OMExceptionCodes.INVALID_DATE_SCOPE_WHEN_ENABLED,
-					wrap(orgCode, endDate, startDate), "启用机构{0}时，失效日期{1}不应该早于生效日期{2}！");
+					wrap(orgCode, endDate, startDate));
 		}
 
 		// 执行启用 根据guid修改状态、生效、失效日期
@@ -836,7 +832,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		Date now = new Date();
 		if(now.after(enddate)){
 			throw new OrgManagementException(
-					OMExceptionCodes.ORG_IS_RUN_OUT, wrap(orgCode), "机构代码{0}对应的机构已经过期失效");
+					OMExceptionCodes.ORG_IS_RUN_OUT, wrap(orgCode));
 		}
 		org.setOrgStatus(OMConstants.ORG_STATUS_RUNNING);// 更改状态
 		omOrgService.update(org);
@@ -894,7 +890,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		List<OmOrg> childorgList = queryAllChilds(orgCode);
 		for(OmOrg og:childorgList){
 			if(og.getOrgStatus().equals(OMConstants.ORG_STATUS_RUNNING)){
-				throw new OrgManagementException(OMExceptionCodes.ORG_CHILDS_IS_RUNNING);
+				throw new OrgManagementException(OMExceptionCodes.ORG_CHILDS_IS_RUNNING,wrap());
 			}
 		}
 		//进行注销操作
@@ -913,7 +909,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		
 		if (!StringUtils.equals(OMConstants.ORG_STATUS_STOP, delOrg.getOrgStatus())) {
 			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHEN_DEL_MUST_STOP,
-					wrap(orgCode, delOrg.getOrgStatus()), "不能删除非停用状态机构{0}！当前状态{1}");
+					wrap(orgCode, delOrg.getOrgStatus()));
 		}
 		
 //		if (!omOrgServiceExt.isEmptyOrg(delOrg.getGuid())) {
@@ -937,7 +933,7 @@ public class OrgRServiceImpl extends BaseRService implements IOrgRService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHRN_DEEP_COPY_ORG,
-					wrap(delOrg.getOrgCode(), e.getCause().getMessage()), "删除机构失败！机构{0} {1}");
+					wrap(delOrg.getOrgCode(), e.getCause().getMessage()));
 		}finally {
 			return  delOrg;
 		}
