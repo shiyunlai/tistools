@@ -79,6 +79,9 @@ public class ApplicationRServiceImpl extends BaseRService implements
 	@Autowired
 	AcOperatorMenuService acOperatorMenuService;
 
+	@Autowired
+	AcOperatorIdentityresService acOperatorIdentityresService;
+
 
 
 	/**
@@ -564,6 +567,9 @@ public class ApplicationRServiceImpl extends BaseRService implements
 						acMenuService.deleteByCondition(wc);
 						// 删除重组菜单对应菜单
 						acOperatorMenuService.deleteByCondition(wc);
+						// 删除功能对应的操作员身份资源
+						acOperatorIdentityresService.deleteByCondition(new WhereCondition()
+							.andEquals(AcOperatorIdentityres.COLUMN_GUID_AC_RESOURCE, guid));
 						// 删除功能
 						acFuncService.delete(guid);
 					} catch (Exception e) {

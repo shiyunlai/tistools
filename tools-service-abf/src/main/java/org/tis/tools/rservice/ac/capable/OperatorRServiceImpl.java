@@ -24,6 +24,7 @@ import org.tis.tools.model.vo.ac.AcOperatorFuncDetail;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.ac.exception.OperatorManagementException;
 import org.tis.tools.rservice.om.capable.IEmployeeRService;
+import org.tis.tools.rservice.om.capable.OmCommonRService;
 import org.tis.tools.service.ac.*;
 import org.tis.tools.service.ac.exception.ACExceptionCodes;
 import org.tis.tools.service.om.*;
@@ -119,6 +120,9 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
 
     @Autowired
     OmPositionService omPositionService;
+
+    @Autowired
+    OmCommonRService omCommonRService;
 
 
     /**
@@ -1107,6 +1111,9 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
                                 + surroundBracketsWithLFStr(AcOperatorFunc.COLUMN_GUID_FUNC, funcGuid), AcOperatorFunc.TABLE_NAME));
             }
             acOperatorFuncService.deleteByCondition(wc);
+            // 删除操作员身份资源中的功能
+            String userId = acOperatorService.loadByGuid(operatorGuid).getUserId();
+            omCommonRService.deleteOperatorIdentityRes(userId, funcGuid);
             return acOperatorFuncs.get(0);
         } catch (ToolsRuntimeException ae) {
             throw ae;
@@ -1987,6 +1994,9 @@ public class OperatorRServiceImpl extends BaseRService implements IOperatorRServ
                         .stream()
                         .map(AcFuncBhv::getGuid).collect(Collectors.toSet()));
                 guids.add(acOperatorFunc.getGuidOperator() + acOperatorFunc.getGuidFunc());
+                // 删除操作员身份资源中的功能
+                String userId = acOperatorService.loadByGuid(acOperatorFunc.getGuidOperator()).getUserId();
+                omCommonRService.deleteOperatorIdentityRes(userId, acOperatorFunc.getGuidFunc());
             }
             if (CollectionUtils.isNotEmpty(funcBhvGuids)) {
                 acOperatorBhvService.deleteByCondition(new WhereCondition()

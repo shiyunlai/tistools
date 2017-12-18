@@ -2,6 +2,9 @@ package org.tis.tools.rservice.om.capable;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.base.exception.ToolsRuntimeException;
@@ -23,6 +26,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, readOnly = false, rollbackFor = Exception.class)
 public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 	@Autowired
 	OmDutyService omDutyService;
@@ -79,7 +83,7 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 						status.setRollbackOnly();
 						e.printStackTrace();
 						throw new DutyManagementException(OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_DUTY,
-								BasicUtil.wrap(e.getCause().getMessage()), "新增根职务失败！{0}");
+								BasicUtil.wrap(e.getCause().getMessage()));
 					}
 				}
 			});
@@ -114,7 +118,7 @@ public class DutyRServicelmpl extends BaseRService implements IDutyRService {
 						status.setRollbackOnly();
 						e.printStackTrace();
 						throw new DutyManagementException(OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_DUTY,
-								BasicUtil.wrap(e.getCause().getMessage()), "新增职务失败！{0}");
+								BasicUtil.wrap(e.getCause().getMessage()));
 					}
 				}
 			});

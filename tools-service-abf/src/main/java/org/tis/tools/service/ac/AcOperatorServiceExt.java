@@ -75,6 +75,13 @@ public class AcOperatorServiceExt {
         return acOperatorMapperExt.getFuncListByIdentity(StringUtil.list2String(partGuids), StringUtil.list2String(roleGuids));
     }
 
-
+    /**
+     * 删除操作员下的资源
+     * @param userId 操作员ID
+     * @param resGuid 资源GUID
+     */
+    public void deleteOperatorIdentityRes(String userId, String resGuid) {
+        acOperatorMapperExt.deleteOperatorIdentityRes(userId, resGuid);
+    }
 
 }

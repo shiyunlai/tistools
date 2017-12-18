@@ -124,6 +124,31 @@
             guid_role IN ${roleGuids}
     </select>
 
+    <delete id="deleteOperatorIdentityRes">
+        DELETE t
+        FROM
+            ac_operator_identityres t
+        WHERE
+            t.GUID_AC_RESOURCE = (
+                SELECT
+                    d.GUID_AC_RESOURCE
+                FROM
+                    (
+                        SELECT
+                            c.GUID_AC_RESOURCE
+                        FROM
+                            ac_operator a,
+                            ac_operator_identity b,
+                            ac_operator_identityres c
+                        WHERE
+                            a.guid = b.GUID_OPERATOR
+                            AND b.guid = c.GUID_IDENTITY
+                            AND a.USER_ID = #{userId}
+                            AND c.GUID_AC_RESOURCE = #{resGuid}
+                    ) d
+            )
+    </delete>
+
     <select id="count" resultType="int" parameterType="org.tis.tools.base.WhereCondition" >
         select count(*) from AC_OPERATOR <include refid="Where_Clause"/>
     </select>

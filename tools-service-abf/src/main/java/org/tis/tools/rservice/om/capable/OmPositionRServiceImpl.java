@@ -122,7 +122,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 						e.printStackTrace();
 						status.setRollbackOnly();
 						throw new OrgManagementException(OMExceptionCodes.FAILURE_WHEN_CREATE_CHILD_ORG,
-								wrap(e.getCause().getMessage()), "新增子节点机构失败！{0}");
+								wrap(e.getCause().getMessage()));
 					}
 				}
 			});
@@ -176,8 +176,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 						throw new OrgManagementException(
 								index == 1 ? OMExceptionCodes.FAILURE_WHEN_CREATE_CHILD_ORG
 										: OMExceptionCodes.FAILURE_WHRN_UPDATE_PARENT_ORG,
-								wrap(e.getCause().getMessage()),
-								index == 1 ? "新增子节点机构失败！{0}" : "更新父节点机构失败！{0}");
+								wrap(e.getCause().getMessage()));
 					}
 				}
 			});
@@ -199,18 +198,18 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 		// 查询是否存在
 		if(opList.size() != 1) {
 			throw new PositionManagementException(
-					OMExceptionCodes.POSITANIZATION_NOT_EXIST_BY_POSIT_CODE, wrap(positionCode), "机构代码{0}对应的机构不存在");
+					OMExceptionCodes.POSITANIZATION_NOT_EXIST_BY_POSIT_CODE, wrap(positionCode));
 		}
 		OmPosition position = opList.get(0);
 		//检查当前状态,只能删除注销的岗位
 		if(position.getPositionStatus().equals(OMConstants.POSITION_STATUS_RUNNING)){
-			throw new PositionManagementException(OMExceptionCodes.POSITION_RUNNING_CANT_DELETE, wrap(positionCode), "只能删除注销的岗位");
+			throw new PositionManagementException(OMExceptionCodes.POSITION_RUNNING_CANT_DELETE, wrap(positionCode));
 		}
 		// 检查下级岗位状态
 		List<OmPosition> childList = queryAllChilds(positionCode);
 		for(OmPosition op: childList){
 			if(op.getPositionStatus().equals(OMConstants.POSITION_STATUS_RUNNING)){
-				throw new PositionManagementException(OMExceptionCodes.POSITION_CHILDS_IS_RUNNING);
+				throw new PositionManagementException(OMExceptionCodes.POSITION_CHILDS_IS_RUNNING,wrap());
 			}
 		}
 		//删除操作,附带删除岗位-人员关系表,下级岗位等
@@ -253,8 +252,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 		String oldstatus = position.getPositionStatus();
 		String postatus = op.getPositionStatus();
 		if (!oldstatus.equals(postatus)) {
-			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHEN_UPDATE_POS_STATUS, null,
-					"机构状态不能直接通过修改而更新！{0}");
+			throw new OrgManagementException(OMExceptionCodes.FAILURE_WHEN_UPDATE_POS_STATUS, wrap());
 		}
 		try {
 			omPositionService.update(position);
@@ -283,14 +281,14 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 		// 查询是否存在
 		if(opList.size() != 1) {
 			throw new OrgManagementException(
-					OMExceptionCodes.POSITANIZATION_NOT_EXIST_BY_POSIT_CODE, wrap(positionCode), "机构代码{0}对应的机构不存在");
+					OMExceptionCodes.POSITANIZATION_NOT_EXIST_BY_POSIT_CODE, wrap(positionCode));
 		}
 		OmPosition position = opList.get(0);
 		// 检查下级岗位状态
 		List<OmPosition> childList = queryAllChilds(positionCode);
 		for(OmPosition op: childList){
 			if(op.getPositionStatus().equals(OMConstants.POSITION_STATUS_RUNNING)){
-				throw new PositionManagementException(OMExceptionCodes.POSITION_CHILDS_IS_RUNNING);
+				throw new PositionManagementException(OMExceptionCodes.POSITION_CHILDS_IS_RUNNING,wrap());
 			}
 		}
 		//通过校验之后更改状态
@@ -312,7 +310,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 		// 查询是否存在
 		if(opList.size() != 1) {
 			throw new OrgManagementException(
-					OMExceptionCodes.POSITANIZATION_NOT_EXIST_BY_POSIT_CODE, wrap(positionCode), "机构代码{0}对应的机构不存在");
+					OMExceptionCodes.POSITANIZATION_NOT_EXIST_BY_POSIT_CODE, wrap(positionCode));
 		}
 		OmPosition position = opList.get(0);
 		//通过校验之后更改状态
@@ -362,7 +360,7 @@ public class OmPositionRServiceImpl extends BaseRService implements IPositionRSe
 		wc.andEquals("POSITION_CODE", positionCode);
 		List<OmPosition> posList = omPositionService.query(wc);
 		if (posList.size() != 1) {
-			throw new PositionManagementException(OMExceptionCodes.POSITANIZATION_NOT_EXIST_BY_POSIT_CODE);
+			throw new PositionManagementException(OMExceptionCodes.POSITANIZATION_NOT_EXIST_BY_POSIT_CODE, wrap(positionCode));
 		}
 		String guidparent = posList.get(0).getGuid();
 		wc.clear();

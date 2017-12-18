@@ -20,6 +20,7 @@ import org.tis.tools.model.po.ac.*;
 import org.tis.tools.model.po.om.*;
 import org.tis.tools.rservice.BaseRService;
 import org.tis.tools.rservice.ac.exception.RoleManagementException;
+import org.tis.tools.rservice.om.capable.OmCommonRService;
 import org.tis.tools.service.ac.*;
 import org.tis.tools.service.ac.exception.ACExceptionCodes;
 import org.tis.tools.service.om.*;
@@ -98,6 +99,15 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
 
     @Autowired
     AcFuncBhvService acFuncBhvService;
+
+    @Autowired
+    IOperatorRService operatorRService;
+
+    @Autowired
+    OmCommonRService omCommonRService;
+
+    @Autowired
+    AcOperatorIdentityresService acOperatorIdentityresService;
 
     /**
      * <p>查询所有角色</p>
@@ -304,6 +314,9 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                         acPartyRoleService.deleteByCondition(wc);
                         // 角色与功能行为对应关系 AC_ROLE_BHV
                         acRoleBhvService.deleteByCondition(wc);
+                        // 删除操作员身份资源下的角色
+                        acOperatorIdentityresService.deleteByCondition(new WhereCondition()
+                                .andEquals(AcOperatorIdentityres.COLUMN_GUID_AC_RESOURCE, guid));
 
                         acRoleService.delete(guid);
                     } catch (Exception e) {
@@ -900,6 +913,8 @@ public class RoleRServiceImpl extends BaseRService implements IRoleRService {
                             acOperatorRoleService.deleteByCondition(new WhereCondition()
                                     .andEquals("GUID_OPERATOR", operatorRole.getGuidOperator())
                                     .andEquals("GUID_ROLE", operatorRole.getGuidRole()));
+                            String userId = acOperatorService.loadByGuid(operatorRole.getGuidOperator()).getUserId();
+                            omCommonRService.deleteOperatorIdentityRes(userId, operatorRole.getGuidRole());
                         }
                     } catch (ToolsRuntimeException te) {
                         status.setRollbackOnly();

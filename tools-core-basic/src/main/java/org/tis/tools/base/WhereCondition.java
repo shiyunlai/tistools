@@ -94,12 +94,12 @@ public class WhereCondition  implements Serializable{
 	}
 
 	private boolean isEmpty(String field, Object value) {
-		if (value != null && value instanceof List) {
+		/*if (value != null && value instanceof List) {
 			List l = (List) value;
 			if (l.size() < 1) {
 				return true;
 			}
-		}
+		}*/
 		if (field == null || "".equals(field) || value == null
 				|| "".equals(value))
 			return true;

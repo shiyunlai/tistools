@@ -411,6 +411,8 @@
         </form>
     </div>
     <!-- 员工详情信息结束 -->
+
+
     <!-- 员工组织归属开始 -->
     <div class="tab-content portlet light clearfix" ng-show="flag.zzgs">
         <div class="portlet-title col-md-12">
@@ -435,7 +437,22 @@
                 </div>
             </div>
             <div class="portlet-title col-md-6">
-                <div class="portlet-title col-md-12">
+                <!--岗位和职务tab栏-->
+                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue">
+                    <li ng-class="{true:'active',false:''}[empflag.emppost]">
+                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[empflag.emppost]" ng-click="emp.empBelongTo('post')">
+                            <i class="green ace-icon fa fa-bars bigger-120"></i>员工所属岗位
+                        </a>
+                    </li>
+                    <li ng-class="{true:'active',false:''}[empflag.empwork]">
+                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[empflag.empwork]" ng-click="emp.empBelongTo('duty')">
+                            <i class="green ace-icon fa fa-bars bigger-120"></i>员工所属工作组
+                        </a>
+                    </li>
+                </ul>
+                <!--员工岗位逻辑-->
+                <div class="tab-content portlet light"  ng-show="empflag.emppost" >
+                    <div class="portlet-title col-md-12">
                     <div class="caption">
                         <span class="caption-subject font-blue-sharp bold uppercase">员工-岗位列表</span>
                     </div>
@@ -448,10 +465,32 @@
                         </button>
                     </div>
                 </div>
-                <div class="col-md-12" fun-active="/om/emp/loadEmpPos">
-                    <div ui-grid="postgrid" ng-if="flag.zzgs"
-                         ui-grid-pagination ui-grid-empty-base-layer
-                         ui-grid-selection ui-grid-resize-columns></div>
+                    <div class="col-md-12" fun-active="/om/emp/loadEmpPos" >
+                        <div ui-grid="postgrid" ng-if="empflag.post"
+                             ui-grid-pagination ui-grid-empty-base-layer
+                             ui-grid-selection ui-grid-resize-columns></div>
+                    </div>
+                </div>
+                <!--员工-职务逻辑-->
+                <div class="tab-content portlet light"  ng-show="empflag.empwork" >
+                    <div class="portlet-title col-md-12">
+                        <div class="caption">
+                            <span class="caption-subject font-blue-sharp bold uppercase">员工-工作组列表</span>
+                        </div>
+                        <div class="actions btn-set" style="float: right;">
+                            <button type="button" name="back" class="btn btn-primary" fun-active="/om/emp/addEmpGroup" ng-click="emp.assignWork()"> 新增指派
+                            </button>
+                            <button type="button" name="back" class="btn btn-danger" fun-active="/om/emp/deleteEmpGroup" ng-click="emp.disassignWork()" ng-disabled="workQx"> 取消指配
+                            </button>
+                            <!--<button type="button" name="back" class="btn btn-primary" fun-active="/om/emp/fixmainPos" ng-click="emp.fixmainWork()" ng-disabled="posZp"> 设为新主职务
+                            </button>-->
+                        </div>
+                    </div>
+                    <div class="col-md-12" fun-active="/om/emp/loadEmpGroup">
+                        <div ui-grid="workgrid" ng-if="empflag.work"
+                             ui-grid-pagination ui-grid-empty-base-layer
+                             ui-grid-selection ui-grid-resize-columns></div>
+                    </div>
                 </div>
             </div>
         </div>

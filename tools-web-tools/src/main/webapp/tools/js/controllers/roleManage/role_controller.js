@@ -1,23 +1,20 @@
 /**
  * Created by wangbo on 2017/6/11.
  */
-angular.module('MetronicApp').controller('role_controller', function($scope ,$rootScope,$state,$modal,$http,abftree_service,$filter,$timeout,dictonary_service,common_service,i18nService,role_service,menu_service,operator_service,filterFilter,$uibModal,uiGridConstants) {
+angular.module('MetronicApp').controller('role_controller', function($scope ,$rootScope,$state,$modal,$http,$ocLazyLoad,abftree_service,$filter,$timeout,dictonary_service,common_service,i18nService,role_service,menu_service,operator_service,filterFilter,$uibModal,uiGridConstants) {
         var role = {};
         $scope.role = role;
         var res = $rootScope.res.abftree_service;//页面所需调用的服务
         /* 左侧角色查询逻辑 */
         i18nService.setCurrentLang("zh-cn");
-    //查询应用
-/*    var subFrom  = {};
-    var headers ='FUN0001'
-    menu_service.queryAllAcApp(subFrom,headers).then(function(data){
-        if(data.status == "success"){
-            var datas = data.retMessage;
-           role.Appall = datas;//所有应用数据，最终要在弹窗中渲染
-        }else{
-            toastr['error']('初始化查询失败'+'<br/>'+data.retMessage);
-        }
-    })*/
+
+    $ocLazyLoad.load({//重新加载一次 main.js  保证拿到行为权限
+        name: 'MetronicApp',
+        insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+        files: [
+            'js/main.js'
+        ]
+    });
     var gridOptions = {};
         $scope.gridOptions = gridOptions;
         var com = [{ field: 'roleCode', displayName: '角色代码'},
@@ -52,7 +49,6 @@ angular.module('MetronicApp').controller('role_controller', function($scope ,$ro
     role.inint = function(items){
         var subFrom = {};
         role_service.queryRoleList(subFrom).then(function(data){
-            console.log(data)
                 var datas = $filter('Arraysort')(data.retMessage);//调用管道排序
                 if(data.status == "success"){
                     $scope.gridOptions.data =  datas;
@@ -1564,7 +1560,7 @@ angular.module('MetronicApp').controller('rolePermission_controller', function($
                 var subFrom = {};
                 subFrom.roleGuid = gridDate.guid;
                 subFrom.entityGuids= []
-                for(var i = 0;i<nodes.le/ngth;i++){
+                for(var i = 0;i<nodes.length;i++){
                     if(nodes[i].indexOf('root') !== 0 ){//把实体类型的guid干掉，只保留实体的guid
                         subFrom.entityGuids.push(nodes[i])
                     }

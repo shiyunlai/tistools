@@ -18,8 +18,10 @@ MetronicApp.controller('permission_controller', function ($rootScope, $scope, $s
     var subFrom = {};
     subFrom.userId  = userid;
     common_service.post(res.queryOperatorAllApp,subFrom).then(function(data){
+        console.log(data)
         if(data.status == "success"){
             permiss.appselectApp= data.retMessage;
+
         }
     })
 

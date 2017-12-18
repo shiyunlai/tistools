@@ -8,10 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tis.tools.model.def.JNLConstants;
-import org.tis.tools.model.po.om.OmEmployee;
-import org.tis.tools.model.po.om.OmGroup;
-import org.tis.tools.model.po.om.OmOrg;
-import org.tis.tools.model.po.om.OmPosition;
+import org.tis.tools.model.po.om.*;
 import org.tis.tools.rservice.om.capable.IEmployeeRService;
 import org.tis.tools.webapp.controller.BaseController;
 import org.tis.tools.webapp.log.OperateLog;
@@ -220,6 +217,53 @@ public class EmployeeController extends BaseController {
         return getReturnMap(list);
     }
 
+    /**
+     * 工作组新添人员
+     *
+     * @param content
+     * @return
+     */
+    @OperateLog(
+            operateType = "add",  // 操作类型
+            operateDesc = "为工作组新增员工", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "guidGroup", // 操作对象标识
+            name = "guidGroup", // 操作对象名
+            keys = {"guidGroup","guidEmp"}) // 操作对象的关键值的键值名
+    @ResponseBody
+    @RequestMapping(value = "/addEmpGroup", produces ="application/json;charset=UTF-8", method= RequestMethod.POST)
+    public Map<String, Object> addEmpGroup(@RequestBody String content) {
+        JSONObject jsonObj = JSONObject.parseObject(content);
+        OmEmpGroup data = jsonObj.getObject("data", OmEmpGroup.class);
+        String groupGuid = data.getGuidGroup();
+        String empGuid = data.getGuidEmp();
+        employeeRService.insertEmpGroup(groupGuid, empGuid);
+        return getReturnMap(data);
+    }
+
+    /**
+     * 删除人员-工作组关联
+     *
+     * @param content
+     * @return
+     */
+    @OperateLog(
+            operateType = "delete",  // 操作类型
+            operateDesc = "为工作组删除员工", // 操作描述
+            retType = ReturnType.Object, // 返回类型，对象或数组
+            id = "guidGroup", // 操作对象标识
+            name = "guidGroup", // 操作对象名
+            keys = {"guidGroup","guidEmp"}) // 操作对象的关键值的键值名
+    @ResponseBody
+    @RequestMapping(value = "/deleteEmpGroup", produces ="application/json;charset=UTF-8", method= RequestMethod.POST)
+    public Map<String, Object> deleteEmpGroup(@RequestBody String content) {
+        JSONObject jsonObj = JSONObject.parseObject(content);
+        OmEmpGroup data = jsonObj.getObject("data", OmEmpGroup.class);
+        String groupGuid = data.getGuidGroup();
+        String empGuid = data.getGuidEmp();
+        employeeRService.deleteEmpGroup(groupGuid, empGuid);
+        return getReturnMap(data);
+    }
     /**
      * 指派机构
      *

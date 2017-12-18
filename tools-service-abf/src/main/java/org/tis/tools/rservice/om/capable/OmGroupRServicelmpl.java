@@ -120,7 +120,7 @@ public class OmGroupRServicelmpl extends BaseRService implements IGroupRService 
             e.printStackTrace();
             throw new OrgManagementException(
                     OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
-                    wrap(e.getCause().getMessage()), "新增根节点工作组失败！{0}");
+                    wrap(e.getCause().getMessage()));
         }
         return group;
     }
@@ -194,7 +194,7 @@ public class OmGroupRServicelmpl extends BaseRService implements IGroupRService 
                         e.printStackTrace();
                         throw new OrgManagementException(
                                 OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_GROUP,
-                                wrap(e.getCause().getMessage()), "新增根节点工作组失败！{0}");
+                                wrap(e.getCause().getMessage()));
                     }
                 }
             });
@@ -246,7 +246,7 @@ public class OmGroupRServicelmpl extends BaseRService implements IGroupRService 
                         e.printStackTrace();
                         throw new GroupManagementException(
                                 OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_GROUP,
-                                wrap(e.getCause().getMessage()), "新增子节点工作组失败！{0}");
+                                wrap(e.getCause().getMessage()));
                     }
                 }
             });
@@ -318,7 +318,7 @@ public class OmGroupRServicelmpl extends BaseRService implements IGroupRService 
                     e.printStackTrace();
                     throw new OrgManagementException(
                             OMExceptionCodes.FAILURE_WHRN_CREATE_ROOT_ORG,
-                            wrap(e.getCause().getMessage()), "新增根节点工作组失败！{0}");
+                            wrap(e.getCause().getMessage()));
                 }
             }
         });
@@ -358,7 +358,7 @@ public class OmGroupRServicelmpl extends BaseRService implements IGroupRService 
         OmGroup og = ogList.get(0);
         String oldStatus = og.getGroupStatus();
         if (!oldStatus.equals(newOmGroup.getGroupStatus())) {
-            throw new GroupManagementException(OMExceptionCodes.FAILURE_WHEN_UPDATE_GROUP_STATUS);
+            throw new GroupManagementException(OMExceptionCodes.FAILURE_WHEN_UPDATE_GROUP_STATUS,wrap());
         }
         omGroupService.update(newOmGroup);
         return newOmGroup;
@@ -373,7 +373,7 @@ public class OmGroupRServicelmpl extends BaseRService implements IGroupRService 
         //校验状态
         OmGroup og = queryGroup(groupCode);
         if (OMConstants.GROUP_STATUS_RUNNING.equals(og.getGroupStatus())) {
-            throw new GroupManagementException(OMExceptionCodes.FAILURE_DELETE_RERUNNING_GROUP);
+            throw new GroupManagementException(OMExceptionCodes.FAILURE_DELETE_RERUNNING_GROUP,wrap());
         }
         WhereCondition wc = new WhereCondition();
         wc.andEquals("GROUP_CODE", groupCode);
@@ -387,7 +387,7 @@ public class OmGroupRServicelmpl extends BaseRService implements IGroupRService 
         List<OmGroup> ogList = queryAllchild(groupCode);
         for (OmGroup omGroup : ogList) {
             if (omGroup.getGroupStatus().equals(OMConstants.GROUP_STATUS_RUNNING)) {
-                throw new GroupManagementException(OMExceptionCodes.GROUP_CHILDS_IS_RUNNING);
+                throw new GroupManagementException(OMExceptionCodes.GROUP_CHILDS_IS_RUNNING,wrap());
             }
         }
         og.setGroupStatus(OMConstants.GROUP_STATUS_CANCEL);
@@ -417,7 +417,7 @@ public class OmGroupRServicelmpl extends BaseRService implements IGroupRService 
                         e.printStackTrace();
                         throw new GroupManagementException(
                                 OMExceptionCodes.FAILURE_RERUNNING_GROUP,
-                                wrap(e.getCause().getMessage()), "启用工作组失败！{0}");
+                                wrap(e.getCause().getMessage()));
                     }
                 }
             });
@@ -435,7 +435,7 @@ public class OmGroupRServicelmpl extends BaseRService implements IGroupRService 
                         e.printStackTrace();
                         throw new GroupManagementException(
                                 OMExceptionCodes.FAILURE_RERUNNING_GROUP,
-                                wrap(e.getCause().getMessage()), "启用工作组失败！{0}");
+                                wrap(e.getCause().getMessage()));
                     }
                 }
             });
@@ -576,7 +576,7 @@ public class OmGroupRServicelmpl extends BaseRService implements IGroupRService 
                     e.printStackTrace();
                     throw new GroupManagementException(
                             OMExceptionCodes.FAILURE_ADD_POSITION_TO_GROUP,
-                            wrap(e.getCause().getMessage()), "新增岗位失败！{0}");
+                            wrap(e.getCause().getMessage()));
                 }
             }
         });
@@ -608,7 +608,7 @@ public class OmGroupRServicelmpl extends BaseRService implements IGroupRService 
                     e.printStackTrace();
                     throw new GroupManagementException(
                             OMExceptionCodes.FAILURE_DELETE_POSITION_TO_GROUP,
-                            wrap(e.getCause().getMessage()), "删除岗位失败！{0}");
+                            wrap(e.getCause().getMessage()));
                 }
             }
         });

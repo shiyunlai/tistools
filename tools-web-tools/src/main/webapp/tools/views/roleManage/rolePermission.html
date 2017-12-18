@@ -73,7 +73,7 @@
                 </div>
             </div>
         </div>
-                <div class="tab-content portlet light" ng-if="roleflag.dist">
+                <div class="tab-content portlet light" ng-show="roleflag.dist">
                     <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" >
                         <li ng-class="{true:'active',false:''}[rolesflag.zhiwei]">
                             <a  data-toggle="tab" href ng-class="{true:'link',false:''}[rolesflag.zhiwei]" ng-click="role.loadgwdata(6)">
@@ -96,89 +96,103 @@
                             </a>
                         </li>
                     </ul>
-                    <div class="tab-content portlet light" ng-if="rolesflag.org">
-                        <div ui-grid="gridOptions2" class="grid"
-                             ui-grid-pagination
-                             ui-grid-selection ui-grid-resize-columns>
+                    <div class="tab-content portlet light" ng-show="rolesflag.org">
+                        <div fun-active="/AcRoleController/queryRoleInParty">
+                            <div ui-grid="gridOptions2" class="grid" ng-if="rolesflag.org"
+                                 ui-grid-pagination
+                                 ui-grid-selection ui-grid-resize-columns>
+                            </div>
                         </div>
                         <div class="actions btn-set" style="float: right; margin-top:12px;">
-                            <button type="button" name="back" class="btn btn-primary" ng-click="role.orgAdd()"> 新增
+                            <button type="button" name="back" class="btn btn-primary" fun-active="/om/org/queryAllorg" ng-click="role.orgAdd()"> 新增
                             </button>
                             <!--<button type="button" name="back" class="btn btn-primary" ng-click="role_orgEdit(4)">  修改
                             </button>-->
-                            <button type="button" name="back" class="btn btn-danger" ng-click="role_orgDelete()"> 删除
+                            <button type="button" name="back" class="btn btn-danger"  fun-active="/AcRoleController/removePartyRole" ng-click="role_orgDelete()"> 删除
                             </button>
                         </div>
                     </div>
-                    <div class="tab-content portlet light" ng-if="rolesflag.worklist">
-                        <div ui-grid="gridOptions3"   class="grid"
-                             ui-grid-pagination
-                             ui-grid-selection ui-grid-resize-columns>
+                    <div class="tab-content portlet light" ng-show="rolesflag.worklist">
+                        <div fun-active="/AcRoleController/queryRoleInParty">
+                            <div ui-grid="gridOptions3"  ng-if="rolesflag.worklist"  class="grid"
+                                 ui-grid-pagination
+                                 ui-grid-selection ui-grid-resize-columns>
+                            </div>
                         </div>
                         <div class="actions btn-set" style="float: right; margin-top:12px;">
-                            <button type="button" name="back" class="btn btn-primary" ng-click="role.workAdd()"> 新增
+                            <button type="button" name="back" class="btn btn-primary" fun-active="/om/workgroup/queryAllGroup" ng-click="role.workAdd()"> 新增
                             </button>
                             <!--<button type="button" name="back" class="btn btn-primary" ng-click="role_workEdit(4)">  修改
                             </button>-->
-                            <button type="button" name="back" class="btn btn-danger" ng-click="role_workDelete()"> 删除
+                            <button type="button" name="back" class="btn btn-danger" fun-active="/AcRoleController/removePartyRole" ng-click="role_workDelete()"> 删除
                             </button>
                         </div>
                     </div>
-                    <div class="tab-content portlet light" ng-if="rolesflag.post">
-                        <div ui-grid="gridOptions4"   class="grid"
-                             ui-grid-pagination
-                             ui-grid-selection ui-grid-resize-columns>
+                    <div class="tab-content portlet light" ng-show="rolesflag.post">
+                        <div fun-active="/AcRoleController/queryRoleInParty">
+                            <div ui-grid="gridOptions4" ng-if="rolesflag.post"  class="grid"
+                                 ui-grid-pagination
+                                 ui-grid-selection ui-grid-resize-columns>
+                            </div>
                         </div>
+
                         <div class="actions btn-set" style="float: right; margin-top:12px;">
-                            <button type="button" name="back" class="btn btn-primary" ng-click="role.postAdd()"> 新增
+                            <button type="button" name="back" class="btn btn-primary" fun-active="/om/org/queryAllposition" ng-click="role.postAdd()"> 新增
                             </button>
                             <!--<button type="button" name="back" class="btn btn-primary" ng-click="role_postEdit(4)">  修改
                             </button>-->
-                            <button type="button" name="back" class="btn btn-danger" ng-click="role_postDelete()"> 删除
+                            <button type="button" name="back" class="btn btn-danger" fun-active="/AcRoleController/removePartyRole" ng-click="role_postDelete()"> 删除
                             </button>
                         </div>
                     </div>
-                    <div class="tab-content portlet light" ng-if="rolesflag.zhiwei">
-                        <div ui-grid="gridOptionzw"   class="grid"
-                             ui-grid-pagination
-                             ui-grid-selection ui-grid-resize-columns>
+                    <div class="tab-content portlet light" ng-show="rolesflag.zhiwei">
+                        <div fun-active="/AcRoleController/queryRoleInParty">
+                            <div ui-grid="gridOptionzw" ng-if="rolesflag.zhiwei"   class="grid"
+                                 ui-grid-pagination
+                                 ui-grid-selection ui-grid-resize-columns>
+                            </div>
                         </div>
+
                         <div class="actions btn-set" style="float: right; margin-top:12px;">
-                            <button type="button" name="back" class="btn btn-primary" ng-click="role.zhiwuAdd()"> 新增
+                            <button type="button" name="back" class="btn btn-primary"  fun-active="/om/duty/queryDutyList" ng-click="role.zhiwuAdd()"> 新增
                             </button>
                             <!--<button type="button" name="back" class="btn btn-primary" ng-click="role.zhiwuEdit(4)">  修改
                             </button>-->
-                            <button type="button" name="back" class="btn btn-danger" ng-click="role.zhiwuDelete()"> 删除
+                            <button type="button" name="back" class="btn btn-danger" fun-active="/AcRoleController/removePartyRole" ng-click="role.zhiwuDelete()"> 删除
                             </button>
                         </div>
                     </div>
                 </div>
                 <!-- 操作员tab-->
-                <div class="tab-content portlet light" ng-if="roleflag.operatorer">
-                    <div ui-grid="gridOptioner"  class="grid"
-                         ui-grid-pagination
-                         ui-grid-selection ui-grid-resize-columns>
+                <div class="tab-content portlet light" ng-show="roleflag.operatorer">
+                    <div fun-active="/AcRoleController/queryOperatorRole">
+                        <div ui-grid="gridOptioner" ng-if="roleflag.operatorer" class="grid"
+                             ui-grid-pagination
+                             ui-grid-selection ui-grid-resize-columns>
+                        </div>
                     </div>
                     <div class="actions btn-set" style="float: right; margin-top:12px;">
-                        <button type="button" name="back" class="btn btn-primary" ng-click="role.operaAdd()"> 新增
+                        <button type="button" name="back" class="btn btn-primary" fun-active="/AcOperatorController/queryAllOperator" ng-click="role.operaAdd()"> 新增
                         </button>
                         <!--<button type="button" name="back" class="btn btn-primary" ng-click="role.operaEdit(4)">  修改
                         </button>-->
-                        <button type="button" name="back" class="btn btn-danger" ng-click="role.operaDelete()"> 删除
+                        <button type="button" name="back" class="btn btn-danger" fun-active="/AcRoleController/removeOperatorRole" ng-click="role.operaDelete()"> 删除
                         </button>
                     </div>
                 </div>
                 <!--数据实体范围-->
                 <div class="tab-content portlet light" ng-show="roleflag.entity">
                     <div class="portlet-body col-md-5">
-                        <div id="entitconter"></div>
+                        <div fun-active="/AcRoleController/acRoleEntityTree">
+                            <div id="entitconter"></div>
+                        </div>
                         <!--<div id="entitschtree" ng-show="!entitschtree"></div>-->
-                        <button type="button" name="back" class="btn btn-primary" style="margin-top:15px; margin-left: 20px;"  ng-if="!edit" ng-click="role.editEntity()"> 修改实体范围
+                        <button type="button" name="back" class="btn btn-primary" style="margin-top:15px; margin-left: 20px;" fun-active="/AcRoleController/configRoleEntity" ng-if="!edit" ng-click="role.editEntity()"> 修改实体范围
                         </button>
                         <button type="button" name="back" class="btn btn-primary" style="margin-top:15px; margin-left: 20px;" ng-if="edit" ng-click="role.EntitySave()"> 保存
                         </button>
                     </div>
-                    <div class="tab-content portlet light col-md-7"  ng-if="eneitsGrid">
+                    <div class="tab-content portlet light col-md-7"  ng-show="eneitsGrid">
                         <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" >
                             <li ng-class="{true:'active',false:''}[eneitsflag.current]">
                                 <a  data-toggle="tab" href ng-class="{true:'link',false:''}[eneitsflag.current]" ng-click="role.eneisflag('current')">
@@ -196,7 +210,7 @@
                                 </a>
                             </li>
                         </ul>
-                        <div class="tab-content portlet light" ng-if="eneitsflag.current">
+                        <div class="tab-content portlet light" ng-show="eneitsflag.current">
                             <form action="#" name="myform" class="form-horizontal clear" ng-if="!editflag">
                                 <div class="form-body portlet light">
                                     <div class="col-md-6">
@@ -244,7 +258,7 @@
                                             <label class="control-label col-md-2"></label>
                                             <div class="col-md-10">
                                                 <div class="actions btn-set" style="float: right;">
-                                                    <button type="button" name="back" class="btn btn-primary"
+                                                    <button type="button" name="back"  fun-active="/AcRoleController/updateAcRoleEntity"  class="btn btn-primary"
                                                             ng-click="role.entityEdit(dataEnt)"> 编辑实体
                                                     </button>
                                                 </div>
@@ -304,29 +318,34 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="tab-content portlet light" ng-if="eneitsflag.Attributes">
-                            <div ui-grid="gridAttributes"   class="grid"
-                                 ui-grid-pagination
-                                 ui-grid-selection ui-grid-resize-columns>
+                        <div class="tab-content portlet light" ng-show="eneitsflag.Attributes">
+                            <!--查询实体下所有属性-->
+                            <div fun-active="/AcRoleController/getAcRoleEntitityfields">
+                                <div ui-grid="gridAttributes" ng-if="eneitsflag.Attributes"  class="grid"
+                                     ui-grid-pagination
+                                     ui-grid-selection ui-grid-resize-columns>
+                                </div>
                             </div>
                             <div class="actions btn-set" style="float: right; margin-top:12px;">
-                                <button type="button" name="back" class="btn btn-primary" ng-click="role.AttributesAdd()"> 新增实体属性
+                                <button type="button" name="back" class="btn btn-primary" fun-active="/AcRoleController/queryAcEntityfieldList" ng-click="role.AttributesAdd()"> 新增实体属性
                                 </button>
-                                <button type="button" name="back" class="btn btn-primary" ng-click="role.AttributesEdit()"> 修改实体属性
+                                <button type="button" name="back" class="btn btn-primary" fun-active="/AcRoleController/updateAcRoleEntityfield"  ng-click="role.AttributesEdit()"> 修改实体属性
                                 </button>
-                                <button type="button" name="back" class="btn btn-danger" ng-click="role_AttributesDel()"> 删除实体属性
+                                <button type="button" name="back" class="btn btn-danger" fun-active="/AcRoleController/deleteAcRoleEntityfield" ng-click="role_AttributesDel()"> 删除实体属性
                                 </button>
                             </div>
                         </div>
-                        <div class="tab-content portlet light" ng-if="eneitsflag.range">
-                            <div ui-grid="grideditEntity" class="grid"
-                                 ui-grid-pagination
-                                 ui-grid-selection ui-grid-resize-columns>
+                        <div class="tab-content portlet light" ng-show="eneitsflag.range">
+                            <div fun-active="/AcRoleController/getAcRoleDatascopes">
+                                <div ui-grid="grideditEntity" ng-if="eneitsflag.range" class="grid"
+                                     ui-grid-pagination
+                                     ui-grid-selection ui-grid-resize-columns>
+                                </div>
                             </div>
                             <div class="actions btn-set" style="float: right; margin-top:12px;">
-                                <button type="button" name="back" class="btn btn-primary" ng-click="role.funEntityclist()"> 新增功能范围
+                                <button type="button" name="back" class="btn btn-primary" fun-active="/AcRoleController/queryAcDatascopeList" ng-click="role.funEntityclist()"> 新增功能范围
                                 </button>
-                                <button type="button" name="back" class="btn btn-danger" ng-click="role.DeleteEntityfunc()"> 删除功能范围
+                                <button type="button" name="back" class="btn btn-danger" fun-active="/AcRoleController/deleteAcRoleDatascope" ng-click="role.DeleteEntityfunc()"> 删除功能范围
                                 </button>
                             </div>
                         </div>
