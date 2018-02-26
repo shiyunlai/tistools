@@ -12,7 +12,6 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.support.TransactionTemplate;
 import org.tis.tools.base.Page;
 import org.tis.tools.base.WhereCondition;
 import org.tis.tools.service.base.SequenceService;
@@ -38,10 +37,6 @@ import static org.tis.tools.webapp.util.AjaxUtils.*;
 abstract public class BaseController {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-
-    @Autowired
-    protected TransactionTemplate transactionTemplate;
 
     @Autowired
     protected SequenceService sequenceService;
