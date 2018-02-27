@@ -10,6 +10,7 @@ import org.tis.tools.webapp.util.AjaxUtils;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class AbfPermissionFilter extends AdviceFilter {
                 return true;
             }
         }
-        AjaxUtils.ajaxJsonForbidMessage((HttpServletResponse) response);
+        AjaxUtils.ajaxJsonForbidMessage((HttpServletRequest) request,(HttpServletResponse) response);
         return false;
     }
 
