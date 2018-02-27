@@ -244,6 +244,8 @@
 		<xstream-version>1.4.7</xstream-version>
 		<xalan-version>2.7.1</xalan-version>
 		<apache-ant-version>1.8.4</apache-ant-version>
+		<flyway-version>5.0.3</flyway-version>
+		
 	</properties>
 
 	<dependencyManagement>
@@ -960,6 +962,12 @@
 				<groupId>com.google.guava</groupId>
 				<artifactId>guava</artifactId>
 				<version>23.5-jre</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.flywaydb</groupId>
+			    <artifactId>flyway-core</artifactId>
+			    <version>${flyway-version}</version>
 			</dependency>
 
 		</dependencies>

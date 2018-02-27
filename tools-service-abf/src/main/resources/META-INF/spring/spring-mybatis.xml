@@ -160,9 +160,9 @@
     
     <!-- ================================= Spring事务管理 ======================= --> 
     
-    <!-- Transaction manager for a single JDBC DataSource -->
+    <!-- Transaction manager for a single JDBC DataSource . 必选在flyway 执行接受之后才初始化 depends-on="flyway"-->
     <bean id="transactionManager" 
-    	class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	class="org.springframework.jdbc.datasource.DataSourceTransactionManager"  depends-on="flyway">
         <property name="dataSource" ref="dataSource"/>
     </bean>
     
@@ -228,8 +228,8 @@
 	
 	<!-- ================================= 针对myBatis的配置项 ======================= -->  
 
-	<!-- define the SqlSessionFactory -->
-	<bean id="sqlSessionFactory1" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<!-- define the SqlSessionFactory . 必选在flyway 执行接受之后才初始化 depends-on="flyway"  -->
+	<bean id="sqlSessionFactory1" class="org.mybatis.spring.SqlSessionFactoryBean" depends-on="flyway">
 		<!-- 实例化sqlSessionFactory时需要使用上述配置好的数据源以及SQL映射文件 -->
 		<property name="dataSource" ref="dataSource" />
 		<property name="typeAliasesPackage"
@@ -238,7 +238,7 @@
 				   org.tis.tools.dao.sys" />
 	</bean>
     
-    <!-- <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <!-- <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" depends-on="flyway">
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:sql.cfg.xml" />
 		<property name="mapperLocations">
