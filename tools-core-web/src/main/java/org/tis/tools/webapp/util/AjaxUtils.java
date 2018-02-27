@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.apache.log4j.Logger;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -148,7 +149,6 @@ public class AjaxUtils {
 //            response.reset();
             response.setContentType(type + ";charset=UTF-8");
             response.setHeader("Access-Control-Allow-Credentials", "true");
-            response.setHeader("Access-Control-Allow-Origin", "*");
             response.setHeader("Cache-Control", "no-cache");
             response.setDateHeader("Expires", 0);
 //            String data=response.getHeader("Pragma");
@@ -378,12 +378,13 @@ public class AjaxUtils {
      * @param response HttpServletResponse对象
      * @return null
      */
-    public static String ajaxJsonAuthMessage(HttpServletResponse response) {
+    public static String ajaxJsonAuthMessage(HttpServletRequest request, HttpServletResponse response) {
     	Map<String, Object> jsonMap = new HashMap<String, Object>();
     	jsonMap.put(RETCODE, "AUTH-401");
     	jsonMap.put(STATUS, UNAUTH);
     	jsonMap.put(RETMESSAGE, "会话失效，请重新登录！");
         String jsonString = JSON.toJSONString(jsonMap);
+        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
     	return ajax(response, jsonString, "application/json");
     }
     /**
@@ -391,12 +392,13 @@ public class AjaxUtils {
      * @param response HttpServletResponse对象
      * @return null
      */
-    public static String ajaxJsonForbidMessage(HttpServletResponse response) {
+    public static String ajaxJsonForbidMessage(HttpServletRequest request, HttpServletResponse response) {
     	Map<String, Object> jsonMap = new HashMap<String, Object>();
     	jsonMap.put(RETCODE, "AUTH-403");
     	jsonMap.put(STATUS, FORBID);
     	jsonMap.put(RETMESSAGE, "没有当前功能或行为的权限！");
         String jsonString = JSON.toJSONString(jsonMap);
+        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
     	return ajax(response, jsonString, "application/json");
     }
 }
