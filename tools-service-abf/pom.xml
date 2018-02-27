@@ -230,24 +230,29 @@
 
 		<!-- kryo -->
 		<dependency>
-            <groupId>com.esotericsoftware.kryo</groupId>
-            <artifactId>kryo</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>de.javakaffee</groupId>
-            <artifactId>kryo-serializers</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>de.ruedigermoeller</groupId>
-            <artifactId>fst</artifactId>
-        </dependency>
+			<groupId>com.esotericsoftware.kryo</groupId>
+			<artifactId>kryo</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.javakaffee</groupId>
+			<artifactId>kryo-serializers</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.ruedigermoeller</groupId>
+			<artifactId>fst</artifactId>
+		</dependency>
 		<!-- DB mysql -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 
+		<!-- flyway依赖 -->
 
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
 
 	</dependencies>
 
@@ -259,19 +264,12 @@
 				<artifactId>maven-dependency-plugin</artifactId>
 				<executions>
 					<execution>
-						<!--<id>copy-dependencies</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							&lt;!&ndash; ${project.build.directory}为Maven内置变量，缺省为target &ndash;&gt;
-							<outputDirectory>${project.build.directory}/runtime</outputDirectory>
-							&lt;!&ndash; 表示是否不包含间接依赖的包  &ndash;&gt;
-							<excludeTransitive>false</excludeTransitive>
-							&lt;!&ndash; 表示复制的jar文件去掉版本信息 &ndash;&gt;
-							<stripVersion>true</stripVersion>
-						</configuration>-->
+						<!--<id>copy-dependencies</id> <phase>prepare-package</phase> <goals> 
+							<goal>copy-dependencies</goal> </goals> <configuration> &lt;!&ndash; ${project.build.directory}为Maven内置变量，缺省为target 
+							&ndash;&gt; <outputDirectory>${project.build.directory}/runtime</outputDirectory> 
+							&lt;!&ndash; 表示是否不包含间接依赖的包 &ndash;&gt; <excludeTransitive>false</excludeTransitive> 
+							&lt;!&ndash; 表示复制的jar文件去掉版本信息 &ndash;&gt; <stripVersion>true</stripVersion> 
+							</configuration> -->
 						<id>unpack</id>
 						<phase>package</phase>
 						<goals>
@@ -296,7 +294,7 @@
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
 					<descriptor>src/main/assembly/assembly.xml</descriptor>
-					<!--<descriptorRefs>jar-with-dependencies</descriptorRefs>-->
+					<!--<descriptorRefs>jar-with-dependencies</descriptorRefs> -->
 				</configuration>
 				<executions>
 					<execution>
@@ -316,6 +314,36 @@
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
+			</plugin>
+
+			<!-- 使用flyway 
+			在开发阶段，对开发环境进行数据库版本管理
+			mvn flyway:migration
+			mvn flyway:clean
+			 -->
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>5.0.3</version>
+				<configuration>
+					<driver>com.mysql.jdbc.Driver</driver>
+					<url>jdbc:mysql://139.196.145.67:3306/toolsdev?useUnicode=true&amp;characterEncoding=utf8</url>
+					<user>toolsdev</user>
+					<password>toolsdev</password>
+					<!-- 设置sql脚本文件的编码 -->
+					<encoding>UTF-8</encoding>
+					<!-- 设置执行migrate操作之前的validation行为 -->
+					<validationMode>ALL</validationMode>
+					<!-- 设置当validation失败时的系统行为 -->
+					<validationErrorMode>FAIL</validationErrorMode>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>${mysql-version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
