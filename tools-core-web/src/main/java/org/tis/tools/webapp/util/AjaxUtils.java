@@ -147,7 +147,8 @@ public class AjaxUtils {
         try {
 //            response.reset();
             response.setContentType(type + ";charset=UTF-8");
-          
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+            response.setHeader("Access-Control-Allow-Origin", "*");
             response.setHeader("Cache-Control", "no-cache");
             response.setDateHeader("Expires", 0);
 //            String data=response.getHeader("Pragma");
