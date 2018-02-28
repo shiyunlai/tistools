@@ -385,6 +385,7 @@ public class AjaxUtils {
     	jsonMap.put(RETMESSAGE, "会话失效，请重新登录！");
         String jsonString = JSON.toJSONString(jsonMap);
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type,token");
     	return ajax(response, jsonString, "application/json");
     }
     /**
@@ -399,6 +400,7 @@ public class AjaxUtils {
     	jsonMap.put(RETMESSAGE, "没有当前功能或行为的权限！");
         String jsonString = JSON.toJSONString(jsonMap);
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type,token");
     	return ajax(response, jsonString, "application/json");
     }
 }
