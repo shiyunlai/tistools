@@ -313,6 +313,8 @@ function openwindow($modal, url, size, ctl,resolve) {
     return modalInstance;
 }
 
+
+
 function stringToList(str){
     var value = {};
     value.data = [];

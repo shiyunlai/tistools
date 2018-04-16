@@ -239,6 +239,91 @@ MetronicApp.controller('transtime_controller', function ($rootScope, $scope, $st
             }
         }
     }
+
+
+
+
+
+
+
+
+    //测试开始
+    //1.初始化数据
+/*    var model = [[[{
+        relation: '',//关系
+        field: '',//字段
+        logical: '',//逻辑
+        condition: '',//条件
+    }],{connecter: ''}//连接器
+    ]];
+    $scope.model = model;*/
+
+
+
+/*
+
+    //新增方法
+    $scope.handlePlusClick = function (index, i) {
+        console.log(this.model[index][0][i].relation);
+        if(this.model[index][0].length >= 2 && !this.model[index][0][i].relation) {
+            alert('逻辑连接符不选，添加尼玛添加啊！！！')
+            return;
+        }
+        this.model[index][0].push(this.initModelItem(index)[0][0]);
+        console.log(this.model);
+        alert('添加成功')
+    }
+    
+    //删除方法
+    $scope.handleMinusClick = function (index, i) {
+        console.log(this.model[index][0]);
+        if (i === 0 && this.model[index][0].length === 1) {
+            alert('老铁，最后一项了，删不了了')
+            return;
+        }
+        this.model[index][0].splice(i, 1);
+        alert("删除成功")
+    }
+
+    //增加一层方法
+    $scope.handleAddLine = function (index) {
+        console.log(index)
+        if(!this.model[index][1].connecter) {
+            alert('逻辑连接符不选，添加尼玛添加啊！！！')
+            return;
+        }
+        var initModelItem = function (index) {
+            return [[
+                {
+                    relation: '',
+                    field: '',
+                    logical: '',
+                    condition: ''
+                },
+            ],{connecter: ''}]
+        }
+        this.model.splice(index + 1, 0, initModelItem(index));
+        this.$nextTick(() => {
+            alert("添加成功")
+    })
+    }
+
+
+    //删除一层方法
+    $scope.handleMinusLine = function (index) {
+        if(this.model.length === 1) {
+            alert("老铁，最后一项了，删不了了")
+            return;
+        }
+        this.model.splice(index, 1);
+        this.$nextTick(() => {
+            alert("删除成功")
+        })
+    }
+
+*/
+
+
 });
 
 

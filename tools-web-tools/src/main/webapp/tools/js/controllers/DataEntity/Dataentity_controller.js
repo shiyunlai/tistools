@@ -740,7 +740,7 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
                     console.log(dataEnt.cardArray)
                 };
 
-               /* $scope.add = function(item){
+                $scope.add = function(item){
                     item.guidEntity = guidEntity;
                     dataEnt.conFversion=function (val) {
                         if(!isNull(val)){
@@ -773,7 +773,7 @@ MetronicApp.controller('dataEntity_controller', function ($filter, $scope, $root
                     var produc =dataEnt.conFversion(dataEnt.cardArray);//传入数组，进行拆分和拼接
                     item.filterSqlString = produc;//传入后台
                     createAcDatascope(item,$modalInstance)
-                }*/
+                }
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                 };
