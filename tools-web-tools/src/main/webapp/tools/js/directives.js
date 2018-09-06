@@ -61,7 +61,7 @@ MetronicApp.directive('dropdownMenuHover', function () {
     link: function (scope, elem) {
       elem.dropdownHover();
     }
-  };  
+  };
 });
 //常量翻译
 MetronicApp.directive('translateConstants', ['$http',function($http) {

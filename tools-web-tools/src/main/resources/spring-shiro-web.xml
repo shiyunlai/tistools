@@ -27,10 +27,10 @@
         <property name="authenticationTokenClass" value="org.tis.tools.shiro.authenticationToken.UserIdPasswordIdentityToken"/>
         <property name="credentialsMatcher" ref="credentialsMatcher"/>
         <!--缓存 开发中关闭-->
-        <property name="cachingEnabled" value="false"/>
-        <property name="authenticationCachingEnabled" value="false"/>
+        <property name="cachingEnabled" value="true"/>
+        <property name="authenticationCachingEnabled" value="true"/>
         <property name="authenticationCacheName" value="authenticationCache"/>
-        <property name="authorizationCachingEnabled" value="false"/>
+        <property name="authorizationCachingEnabled" value="true"/>
         <property name="authorizationCacheName" value="authorizationCache"/>
     </bean>
 
@@ -130,6 +130,7 @@
                 /AcAuthenticationController/login = anon
                 /AcAuthenticationController/** = abfLogin
                 /** = abfLogin,abfPerm
+                <!--/** = abfLogin-->
             </value>
         </property>
     </bean>

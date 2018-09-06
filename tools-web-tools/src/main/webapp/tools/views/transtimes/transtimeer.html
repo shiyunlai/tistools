@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" href="http://unpkg.com/iview/dist/styles/iview.css">
 <div class="page-bar ng-scope" style="border-bottom: 1px solid #e7ecf1;">
     <ul class="page-breadcrumb">
         <li>
@@ -32,3 +33,75 @@
         </div>
     </div>
 </div>
+<!--<div class="col-md-12">
+
+    <div class="col-md-12"  ng-repeat="item in model track by $index"   ng-init="outerIndex = $index">
+        {{model[outerIndex]}}
+        <div class="col-md-12">
+            <div class="col-md-2">关系符</div>
+            <div class="col-md-2">字段</div>
+            <div class="col-md-2">逻辑符</div>
+            <div class="col-md-4">条件值</div>
+            <div class="col-md-2">编辑</div>
+            <div class="col-md-12" style="border-bottom: 1px solid #ccc;margin-top:5px;">
+            </div>
+        </div>
+         <div class="col-md-12" style="margin:10px 0px;" ng-repeat="items in model[outerIndex][0] track by $index"  ng-init="newIndex = $index" >
+             <div class="row">
+                     <div class="col-md-2">
+                         &lt;!&ndash;{{items[i].relation}}&ndash;&gt;
+                         <select class="form-control" ng-model='items[i].relation'>
+                             <option value="and">并且</option>
+                             <option value="or">或者</option>
+                         </select>
+                     </div>
+                     <div class="col-md-2">
+                     </div>
+                     <div class="col-md-2" >
+                         &lt;!&ndash;{{items[i].field}}&ndash;&gt;
+                         <select class="form-control" ng-model='items[i].field'>
+                             <option value="fieldA">字段A</option>
+                             <option value="fieldB">字段B</option>
+                             <option value="fieldC">字段C</option>
+                             <option value="fieldD">字段D</option>
+                         </select>
+                     </div>
+                     &lt;!&ndash;关系符页面&ndash;&gt;
+                     <div class="col-md-2" >
+                         &lt;!&ndash;{{items[i].logical}}&ndash;&gt;
+                         <select class="form-control" ng-model='items[i].logical'>
+                             <option value="like">包含</option>
+                             <option value="nlk">不包含</option>
+                             <option value="eq">等于</option>
+                             <option value="neq">不等于</option>
+                         </select>
+                     </div>
+                     &lt;!&ndash;关系页面&ndash;&gt;
+                     <div class="col-md-2">
+                         &lt;!&ndash;{{items[i].condition}}&ndash;&gt;
+                         <input class="form-control"  ng-model='items[i].condition' type="text">
+                     </div>
+                     <div class="col-md-2">
+                         <a  href ng-click="handlePlusClick(d)" class="btn btn-icon-only green col-md-5"><i class="fa fa-plus"></i></a>
+                         <a  href ng-click="handleMinusClick($index+1)" class="btn btn-icon-only green col-md-5"><i class="fa fa-minus"></i></a>
+                     </div>
+                </div>
+             <div class="row">
+                    <div class="col-md-2 col-md-offset-5" ng-model='model[index][1].connecter'>
+                        <select  class="form-control"    required  ng-change="selectchange(d.orAdd)"  ng-model="d.orAdd" ng-init="d.orAdd='and'">
+                            <option value="||">或者</option>
+                            <option value="&&">并且</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1">
+                        <Col  span='6' style='background: #39f; margin-top: 4px;border-radius: 5px;color: white;text-align: center;cursor: pointer;'>
+                        <a ng-click='handleAddLine(index)'  href  class="btn btn-icon-only green col-md-5"><i class="fa fa-minus"></i></a>
+                        <a ng-if='model.length !== 1' ng-click='handleMinusLine(index)' class="btn btn-icon-only green col-md-5"><i class="fa fa-minus"></i></a>
+                    </div>
+
+                </div>
+        </div>
+    </div>
+
+
+</div>-->
